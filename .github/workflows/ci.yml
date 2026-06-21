@@ -65,3 +65,34 @@ jobs:
 
       - name: Build and verify ALL proofs
         run: lake build
+
+      - name: Prover target attempt (artifact-only, non-blocking)
+        continue-on-error: true
+        env:
+          FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+        run: |
+          python3 scripts/prover_target_attempt.py \
+            --target zmod_from_mod_zero \
+            --fast-attempts 4 \
+            --heavy-attempts 2
+
+      - name: Add prover target report to summary
+        if: always()
+        run: |
+          echo "## Prover target attempt" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f prover-target-report.md ]; then
+            cat prover-target-report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No prover target report was produced." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload prover target report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prover-target-attempt-report
+          path: |
+            prover-target-report.md
+            prover-target-success.lean
+            ProverTargetAttempt.lean
+          if-no-files-found: ignore
