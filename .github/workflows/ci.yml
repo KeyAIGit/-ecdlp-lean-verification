@@ -15,6 +15,36 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Featherless API smoke test (non-blocking)
+        continue-on-error: true
+        env:
+          FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+        run: |
+          if [ -z "$FEATHERLESS_API_KEY" ]; then
+            echo "FEATHERLESS_API_KEY is missing or not available to this workflow."
+            exit 0
+          fi
+          echo "FEATHERLESS_API_KEY is present. Value is hidden."
+          status=$(curl -sS -o featherless_models.json -w "%{http_code}" \
+            "https://api.featherless.ai/v1/models?available_on_current_plan=true" \
+            -H "Authorization: Bearer ${FEATHERLESS_API_KEY}")
+          echo "Featherless HTTP status: ${status}"
+          if [ "$status" != "200" ]; then
+            echo "Featherless API response:"
+            cat featherless_models.json
+            exit 0
+          fi
+          python3 - <<'PY'
+          import json
+          with open('featherless_models.json', 'r', encoding='utf-8') as f:
+              payload = json.load(f)
+          ids = [m.get('id') for m in payload.get('data', []) if isinstance(m, dict) and m.get('id')]
+          print(f"Featherless available model count: {len(ids)}")
+          for name in ["Pythagoras-Prover-4B", "Goedel-Prover-V2-32B"]:
+              matches = [x for x in ids if name.lower() in x.lower()]
+              print(f"{name}: {'FOUND ' + str(matches[:3]) if matches else 'not found in current-plan list'}")
+          PY
+
       # Fast, cheap gate: fail before building if any proof is left incomplete.
       - name: Ensure no incomplete proofs remain
         run: |
