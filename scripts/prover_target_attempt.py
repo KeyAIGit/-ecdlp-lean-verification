@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Try to prove selected Lean targets with Featherless prover models.
 
-This is an artifact-only workflow: it writes reports and candidate Lean files,
-but it does not modify the verified proof base or commit model output to main.
+Artifact-only workflow: it writes reports and candidate Lean files, but it does
+not modify the verified proof base or commit model output to main.
+
+The agent protocol lives in AGENT.md. Prompts live in prompts/.
 """
 
 from __future__ import annotations
@@ -12,8 +14,6 @@ import json
 import os
 import re
 import subprocess
-import sys
-import textwrap
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -23,6 +23,7 @@ API_URL = "https://api.featherless.ai/v1/chat/completions"
 WORK_FILE = Path("ProverTargetAttempt.lean")
 REPORT_FILE = Path("prover-target-report.md")
 SUCCESS_FILE = Path("prover-target-success.lean")
+PROMPT_DIR = Path("prompts")
 
 PYTHAGORAS_4B = "Pythagoras-LM/Pythagoras-Prover-4B"
 GOEDEL_32B = "Goedel-LM/Goedel-Prover-V2-32B"
@@ -40,50 +41,55 @@ TARGETS: dict[str, Target] = {
     "nat_add_comm": Target(
         name="nat_add_comm",
         description="Tiny sanity target: commutativity of Nat addition.",
-        stem=textwrap.dedent(
-            """
-            import Mathlib
+        stem="""import Mathlib
 
-            example (a b : Nat) : a + b = b + a := by
-            """
-        ).lstrip(),
+example (a b : Nat) : a + b = b + a := by
+""",
         hint="This is a very small Nat arithmetic theorem.",
     ),
     "zmod_from_mod_zero": Target(
         name="zmod_from_mod_zero",
         description="Real target pattern used by Ecdlp.Targets.glv_eigenvalue_zmod.",
-        stem=textwrap.dedent(
-            """
-            import Mathlib
+        stem="""import Mathlib
 
-            namespace Ecdlp.ProverAttempt
+namespace Ecdlp.ProverAttempt
 
-            theorem zmod_from_mod_zero (n lam : Nat) (h : (lam ^ 2 + lam + 1) % n = 0) :
-                ((lam : ZMod n) ^ 2 + (lam : ZMod n) + 1) = 0 := by
-            """
-        ).lstrip(),
+theorem zmod_from_mod_zero (n lam : Nat) (h : (lam ^ 2 + lam + 1) % n = 0) :
+    ((lam : ZMod n) ^ 2 + (lam : ZMod n) + 1) = 0 := by
+""",
         hint=(
-            "Useful direction: convert the Nat mod-zero hypothesis to a divisibility fact, "
-            "then prove the corresponding natural number casts to zero in ZMod n. "
-            "Mathlib tactics like push_cast, ring, rw, exact, simpa, or linear_combination may help."
+            "Convert h to divisibility with Nat.dvd_of_mod_eq_zero; then show the corresponding "
+            "Nat cast is zero in ZMod n. Useful tools: obtain, rw, push_cast, "
+            "ZMod.natCast_self, ring, linear_combination, simpa."
         ),
     ),
     "lambda_cube_root_shape": Target(
         name="lambda_cube_root_shape",
         description="Small algebraic shape target related to cube-root identities.",
-        stem=textwrap.dedent(
-            """
-            import Mathlib
+        stem="""import Mathlib
 
-            namespace Ecdlp.ProverAttempt
+namespace Ecdlp.ProverAttempt
 
-            example {R : Type} [CommRing R] (x : R) (h : x ^ 2 + x + 1 = 0) :
-                x ^ 3 = 1 := by
-            """
-        ).lstrip(),
+example {R : Type} [CommRing R] (x : R) (h : x ^ 2 + x + 1 = 0) :
+    x ^ 3 = 1 := by
+""",
         hint="Use h and ring/linear algebraic manipulation in a commutative ring.",
     ),
 }
+
+
+def read_prompt(filename: str, fallback: str) -> str:
+    path = PROMPT_DIR / filename
+    if path.exists():
+        return path.read_text(encoding="utf-8")
+    return fallback
+
+
+def render_template(template: str, values: dict[str, str]) -> str:
+    result = template
+    for key, value in values.items():
+        result = result.replace("{{" + key + "}}", value)
+    return result
 
 
 def close_namespace_if_needed(stem: str) -> str:
@@ -121,7 +127,7 @@ def clean_candidate(text: str) -> str:
 
     cleaned = "\n".join(kept).strip()
     if not cleaned:
-        cleaned = "  simp"
+        cleaned = "simp"
 
     normalized = []
     for line in cleaned.splitlines():
@@ -132,54 +138,61 @@ def clean_candidate(text: str) -> str:
     return "\n".join(normalized).rstrip() + "\n"
 
 
-def make_prompt(target: Target, previous_error: str | None = None) -> str:
-    parts = [
-        "Complete this Lean 4 / Mathlib proof.",
-        "Return ONLY the proof body that should appear after `by`.",
-        "Do not include prose. Do not include Markdown fences. Do not repeat the theorem.",
-        "",
-        f"Target: {target.name}",
-        f"Hint: {target.hint}",
-        "",
-        "```lean",
-        target.stem.rstrip(),
-        "```",
-    ]
+def make_prompt(target: Target, previous_candidate: str | None, previous_error: str | None) -> str:
     if previous_error:
-        parts.extend(
-            [
-                "",
-                "Previous Lean error/output to repair:",
-                "```text",
-                previous_error[-4000:],
-                "```",
-            ]
+        template = read_prompt(
+            "lean_repair_prompt.md",
+            "Repair the Lean proof. Return only the proof body after by.\n{{THEOREM_STEM}}\n{{LEAN_ERROR}}",
         )
-    return "\n".join(parts)
+        return render_template(
+            template,
+            {
+                "THEOREM_STEM": target.stem.rstrip(),
+                "TARGET_HINT": target.hint,
+                "PREVIOUS_CANDIDATE": previous_candidate or "",
+                "LEAN_ERROR": previous_error[-5000:],
+            },
+        )
+
+    template = read_prompt(
+        "lean_prover_prompt.md",
+        "Complete this Lean proof. Return only the proof body after by.\n{{THEOREM_STEM}}",
+    )
+    return render_template(
+        template,
+        {
+            "THEOREM_STEM": target.stem.rstrip(),
+            "TARGET_HINT": target.hint,
+        },
+    )
 
 
-def call_model(api_key: str, model: str, target: Target, attempt: int, previous_error: str | None) -> str:
-    prompt = make_prompt(target, previous_error)
+def call_model(
+    api_key: str,
+    model: str,
+    target: Target,
+    attempt: int,
+    previous_candidate: str | None,
+    previous_error: str | None,
+) -> str:
+    prompt = make_prompt(target, previous_candidate, previous_error)
     temperature = min(0.9, 0.15 + 0.06 * attempt)
     payload = {
         "model": model,
         "messages": [
             {
                 "role": "system",
-                "content": "You are a Lean 4 theorem prover. Return only valid Lean proof code after `by`.",
+                "content": "You are a Lean 4 proof engineer. Return only valid Lean code after `by`.",
             },
             {"role": "user", "content": prompt},
         ],
         "temperature": temperature,
-        "max_tokens": 900,
+        "max_tokens": 1000,
     }
     request = urllib.request.Request(
         API_URL,
         data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
         method="POST",
     )
     try:
@@ -225,8 +238,9 @@ def main() -> int:
 
     api_key = os.environ.get("FEATHERLESS_API_KEY", "").strip()
     if not api_key:
-        print("FEATHERLESS_API_KEY is missing", file=sys.stderr)
-        return 2
+        print("FEATHERLESS_API_KEY is missing", flush=True)
+        REPORT_FILE.write_text("# Prover target attempt\n\nFEATHERLESS_API_KEY is missing.\n", encoding="utf-8")
+        return 0
 
     target = TARGETS[args.target]
     REPORT_FILE.write_text(
@@ -234,11 +248,13 @@ def main() -> int:
         f"Target: `{target.name}`\n\n"
         f"Description: {target.description}\n\n"
         f"Fast model: `{args.fast_model}` × {args.fast_attempts}\n\n"
-        f"Heavy model: `{args.heavy_model}` × {args.heavy_attempts}\n\n",
+        f"Heavy model: `{args.heavy_model}` × {args.heavy_attempts}\n\n"
+        f"Prompt source: `prompts/lean_prover_prompt.md`, `prompts/lean_repair_prompt.md`\n\n",
         encoding="utf-8",
     )
 
     previous_error: str | None = None
+    previous_candidate: str | None = None
     sequence: list[tuple[str, int, str]] = []
     sequence.extend((args.fast_model, i, "fast") for i in range(1, args.fast_attempts + 1))
     sequence.extend((args.heavy_model, i, "heavy") for i in range(1, args.heavy_attempts + 1))
@@ -247,19 +263,20 @@ def main() -> int:
     solved = False
 
     for model, attempt, phase in sequence:
-        print(f"{phase.upper()} attempt {attempt} with {model} on {target.name}")
+        print(f"{phase.upper()} attempt {attempt} with {model} on {target.name}", flush=True)
         try:
-            raw = call_model(api_key, model, target, attempt, previous_error)
+            raw = call_model(api_key, model, target, attempt, previous_candidate, previous_error)
         except Exception as exc:  # noqa: BLE001
             infrastructure_error = True
             msg = f"Model/API call failed for {model}: {exc}"
-            print(msg)
+            print(msg, flush=True)
             append_report(f"## {phase} attempt {attempt}: API/model failure\n\n```text\n{msg}\n```\n\n")
             continue
 
         candidate = clean_candidate(raw)
-        print("Candidate proof body:")
-        print(candidate)
+        previous_candidate = candidate
+        print("Candidate proof body:", flush=True)
+        print(candidate, flush=True)
         ok, output = run_lean(target, candidate)
         append_report(
             f"## {phase} attempt {attempt} — `{model}`\n\n"
@@ -269,21 +286,23 @@ def main() -> int:
         if ok:
             SUCCESS_FILE.write_text(WORK_FILE.read_text(encoding="utf-8"), encoding="utf-8")
             append_report("\n## Result\n\nSUCCESS: Lean accepted this candidate.\n")
-            print("SUCCESS: Lean accepted this candidate.")
+            print("SUCCESS: Lean accepted this candidate.", flush=True)
             solved = True
             break
 
         previous_error = output or "Lean rejected this candidate without output."
-        print("Lean rejected candidate; will pass error to next attempt.")
+        print("Lean rejected candidate; will pass error to next repair attempt.", flush=True)
 
     if not solved:
-        append_report("\n## Result\n\nNo candidate passed Lean in this run. This is not a verified failure of the theorem; it only means this attempt budget did not find a proof.\n")
-        print("NO PROOF FOUND within attempt budget. Workflow exits 0 because this is an artifact-only search.")
+        append_report(
+            "\n## Result\n\nNo candidate passed Lean in this run. "
+            "This is not a verified failure of the theorem; it only means this attempt budget did not find a proof.\n"
+        )
+        print("NO PROOF FOUND within attempt budget. Artifact-only search exits 0.", flush=True)
 
     if infrastructure_error:
         append_report("\nNote: at least one model/API call failed. Check whether the model is available on the current plan.\n")
 
-    # Exit 0 intentionally: failed proof search is a result, not a broken repository.
     return 0
 
 
