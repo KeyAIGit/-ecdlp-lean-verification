@@ -12,8 +12,9 @@ formalization table 07_Formalization/KG_CLAIM_FORMALIZATION_v1.csv).
     - `beta_field_eigenvalue` : beta^2 + beta + 1 ≡ 0 (mod p)
     - `beta_is_cube_root`     : beta^3 ≡ 1 (mod p)
     - plus `lambda_ne_one`, `lam_lt_n`, `beta_lt_p`
-- `Ecdlp/Statements.lean` - Mathlib-dependent formalization TARGETS (proofs pending,
-  some `sorry`). One target (`order_dvd_card`) is already discharged by Mathlib.
+- `Ecdlp/Lagrange.lean` - Mathlib proof that element order divides finite group order.
+- `Ecdlp/Statements.lean` - Mathlib-dependent formalization targets. The current ZMod target is closed with no `sorry`.
+- `VERIFIED.md` - ledger mapping claim IDs to verified Lean theorem names and files.
 
 ## Build
 Core verified file (no Mathlib):
@@ -26,3 +27,5 @@ Toolchain pinned in `lean-toolchain` (Lean v4.31.0); Mathlib rev pinned in `lake
 This is stage 2 (formalization agent output) of the autonomous research mechanism.
 Each `formalizable` claim in KG_CLAIM_FORMALIZATION_v1.csv becomes a theorem here;
 `native_decide` handles concrete arithmetic facts, Mathlib handles structural ones.
+
+Current ledger: 10 proved theorems, 0 open obligations.
