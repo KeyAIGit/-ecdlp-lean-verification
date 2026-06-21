@@ -7,16 +7,8 @@ on:
       - 'scripts/prover_smoke_test.py'
   workflow_dispatch:
     inputs:
-      model:
-        description: Featherless model ID
-        required: true
-        default: Pythagoras-LM/Pythagoras-Prover-4B
-        type: choice
-        options:
-          - Pythagoras-LM/Pythagoras-Prover-4B
-          - Goedel-LM/Goedel-Prover-V2-32B
       attempts:
-        description: Number of proof attempts
+        description: Number of proof attempts per model
         required: true
         default: '4'
 
@@ -26,6 +18,12 @@ permissions:
 jobs:
   prover-smoke:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        model:
+          - Pythagoras-LM/Pythagoras-Prover-4B
+          - Goedel-LM/Goedel-Prover-V2-32B
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -39,23 +37,34 @@ jobs:
       - name: Fetch prebuilt Mathlib cache
         run: lake exe cache get
 
-      - name: Run prover smoke test
+      - name: Run prover smoke test for ${{ matrix.model }}
+        id: prover
+        continue-on-error: true
         env:
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
-          INPUT_MODEL: ${{ inputs.model }}
           INPUT_ATTEMPTS: ${{ inputs.attempts }}
         run: |
-          MODEL="${INPUT_MODEL:-Pythagoras-LM/Pythagoras-Prover-4B}"
           ATTEMPTS="${INPUT_ATTEMPTS:-4}"
           python3 scripts/prover_smoke_test.py \
-            --model "$MODEL" \
+            --model "${{ matrix.model }}" \
             --attempts "$ATTEMPTS"
+
+      - name: Write job summary
+        if: always()
+        run: |
+          echo "## Prover smoke test" >> "$GITHUB_STEP_SUMMARY"
+          echo "Model: ${{ matrix.model }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Step outcome: ${{ steps.prover.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Step conclusion: ${{ steps.prover.conclusion }}" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f prover-smoke-report.md ]; then
+            cat prover-smoke-report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Upload prover smoke report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: prover-smoke-report
+          name: prover-smoke-report-${{ strategy.job-index }}
           path: |
             prover-smoke-report.md
             prover-smoke-success.lean
