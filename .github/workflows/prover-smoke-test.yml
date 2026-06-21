@@ -1,0 +1,55 @@
+name: Prover smoke test
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: Featherless model ID
+        required: true
+        default: Pythagoras-LM/Pythagoras-Prover-4B
+        type: choice
+        options:
+          - Pythagoras-LM/Pythagoras-Prover-4B
+          - Goedel-LM/Goedel-Prover-V2-32B
+      attempts:
+        description: Number of proof attempts
+        required: true
+        default: '4'
+
+permissions:
+  contents: read
+
+jobs:
+  prover-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install elan (Lean toolchain manager)
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch prebuilt Mathlib cache
+        run: lake exe cache get
+
+      - name: Run prover smoke test
+        env:
+          FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+        run: |
+          python3 scripts/prover_smoke_test.py \
+            --model "${{ inputs.model }}" \
+            --attempts "${{ inputs.attempts }}"
+
+      - name: Upload prover smoke report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prover-smoke-report
+          path: |
+            prover-smoke-report.md
+            prover-smoke-success.lean
+            ProverSmoke.lean
+          if-no-files-found: ignore
