@@ -1,9 +1,12 @@
 name: Verify Lean proofs
 
+# Triggers: every push, every pull request, manual run, and a daily re-check.
 on:
   push:
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'   # daily at 06:00 UTC: re-verify the whole base
 
 jobs:
   build:
@@ -12,7 +15,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install elan
+      # Fast, cheap gate: fail before building if any proof is left incomplete.
+      - name: Ensure no incomplete proofs remain
+        run: |
+          if grep -rniI 'sorry' Ecdlp/; then
+            echo "::error::Found 'sorry' in Ecdlp/ - a proof is incomplete"
+            exit 1
+          fi
+          echo "All proofs complete: no 'sorry' in Ecdlp/"
+
+      - name: Install elan (Lean toolchain manager)
         run: |
           curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
             | sh -s -- -y --default-toolchain none
@@ -21,5 +33,5 @@ jobs:
       - name: Fetch prebuilt Mathlib cache
         run: lake exe cache get
 
-      - name: Build and verify proofs
+      - name: Build and verify ALL proofs
         run: lake build
