@@ -1,0 +1,80 @@
+name: Prover target attempt
+
+on:
+  push:
+    paths:
+      - '.github/workflows/prover-target-attempt.yml'
+      - 'scripts/prover_target_attempt.py'
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Target theorem to try
+        required: true
+        default: zmod_from_mod_zero
+        type: choice
+        options:
+          - nat_add_comm
+          - zmod_from_mod_zero
+          - lambda_cube_root_shape
+      fast_attempts:
+        description: Pythagoras 4B attempts
+        required: true
+        default: '4'
+      heavy_attempts:
+        description: Goedel 32B attempts
+        required: true
+        default: '2'
+
+permissions:
+  contents: read
+
+jobs:
+  target-attempt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install elan (Lean toolchain manager)
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch prebuilt Mathlib cache
+        run: lake exe cache get
+
+      - name: Run target theorem attempt
+        env:
+          FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+          INPUT_TARGET: ${{ inputs.target }}
+          INPUT_FAST_ATTEMPTS: ${{ inputs.fast_attempts }}
+          INPUT_HEAVY_ATTEMPTS: ${{ inputs.heavy_attempts }}
+        run: |
+          TARGET="${INPUT_TARGET:-zmod_from_mod_zero}"
+          FAST_ATTEMPTS="${INPUT_FAST_ATTEMPTS:-4}"
+          HEAVY_ATTEMPTS="${INPUT_HEAVY_ATTEMPTS:-2}"
+          python3 scripts/prover_target_attempt.py \
+            --target "$TARGET" \
+            --fast-attempts "$FAST_ATTEMPTS" \
+            --heavy-attempts "$HEAVY_ATTEMPTS"
+
+      - name: Write job summary
+        if: always()
+        run: |
+          if [ -f prover-target-report.md ]; then
+            cat prover-target-report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No prover-target-report.md was produced." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload target attempt report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prover-target-attempt-report
+          path: |
+            prover-target-report.md
+            prover-target-success.lean
+            ProverTargetAttempt.lean
+          if-no-files-found: ignore
