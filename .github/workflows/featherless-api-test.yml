@@ -13,52 +13,42 @@ jobs:
   test-featherless:
     runs-on: ubuntu-latest
     steps:
-      - name: Check FEATHERLESS_API_KEY is configured
+      - name: Confirm secret exists
         env:
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
         run: |
           if [ -z "$FEATHERLESS_API_KEY" ]; then
-            echo "::error::FEATHERLESS_API_KEY is missing. Add it in Settings -> Secrets and variables -> Actions -> New repository secret."
+            echo "::error::FEATHERLESS_API_KEY is missing or not available to this workflow."
             exit 1
           fi
-          echo "FEATHERLESS_API_KEY is present. Secret value is not printed."
+          echo "Secret is present. Value is hidden."
 
-      - name: Check Featherless API and available prover models
+      - name: API smoke test
         env:
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
         run: |
           set -euo pipefail
-
-          check_model() {
-            local query="$1"
-            local output_file="$2"
-            local status
-            status=$(curl -sS -o "$output_file" -w "%{http_code}" \
-              "https://api.featherless.ai/v1/models?available_on_current_plan=true&q=${query}" \
-              -H "Content-Type: application/json" \
-              -H "Authorization: Bearer ${FEATHERLESS_API_KEY}")
-
-            echo "HTTP status for ${query}: ${status}"
-            if [ "$status" != "200" ]; then
-              echo "::error::Featherless API returned HTTP ${status} for ${query}."
-              cat "$output_file"
-              exit 1
-            fi
-
-            python3 - "$output_file" "$query" <<'PY'
-import json, sys
-path, query = sys.argv[1], sys.argv[2]
-with open(path, 'r', encoding='utf-8') as f:
+          status=$(curl -sS -o models.json -w "%{http_code}" \
+            "https://api.featherless.ai/v1/models?available_on_current_plan=true" \
+            -H "Authorization: Bearer ${FEATHERLESS_API_KEY}")
+          echo "HTTP status: ${status}"
+          if [ "$status" != "200" ]; then
+            echo "::error::Featherless API check failed with HTTP ${status}."
+            cat models.json
+            exit 1
+          fi
+          python3 - <<'PY'
+import json
+with open('models.json', 'r', encoding='utf-8') as f:
     payload = json.load(f)
 models = payload.get('data', [])
-ids = [m.get('id') for m in models if m.get('id')]
-print(f"Models returned for {query}: {ids[:10]}")
-if not ids:
-    print(f"::warning::No available models returned for query {query}. This may mean the model name differs, the account has no active plan, or the model is not available on the current plan.")
+ids = [m.get('id') for m in models if isinstance(m, dict) and m.get('id')]
+print(f"Available model count: {len(ids)}")
+for target in ["Pythagoras-LM/Pythagoras-Prover-4B", "Goedel-LM/Goedel-Prover-V2-32B"]:
+    matches = [m for m in ids if target.lower() in m.lower() or target.split('/')[-1].lower() in m.lower()]
+    if matches:
+        print(f"FOUND {target}: {matches[:5]}")
+    else:
+        print(f"WARNING: {target} not found in first response / current plan list")
+print("Featherless API authentication works.")
 PY
-          }
-
-          check_model "Pythagoras-Prover-4B" "pythagoras_models.json"
-          check_model "Goedel-Prover-V2-32B" "goedel_models.json"
-
-          echo "Featherless API key works for authenticated /v1/models checks."
