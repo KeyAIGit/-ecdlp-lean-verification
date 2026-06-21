@@ -6,11 +6,16 @@ on:
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *'   # every 6 hours during active prover trial/testing
+    - cron: '0 * * * *'   # aggressive prover trial mode: every hour
+
+concurrency:
+  group: prover-trial-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 55
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -82,8 +87,8 @@ PY
         run: |
           python3 scripts/prover_target_attempt.py \
             --target zmod_from_mod_zero \
-            --fast-attempts 4 \
-            --heavy-attempts 2
+            --fast-attempts 16 \
+            --heavy-attempts 8
 
       - name: Add prover target report to summary
         if: always() && github.event_name != 'pull_request'
