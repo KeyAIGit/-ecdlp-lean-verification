@@ -1,12 +1,12 @@
 name: Verify Lean proofs
 
-# Triggers: every push, every pull request, manual run, and a daily re-check.
+# Triggers: every push, every pull request, manual run, and scheduled agent re-checks.
 on:
   push:
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: '0 6 * * *'   # daily at 06:00 UTC: re-verify the whole base
+    - cron: '0 */6 * * *'   # every 6 hours during active prover trial/testing
 
 jobs:
   build:
@@ -51,7 +51,7 @@ PY
         run: |
           echo "## Prover target attempt" >> "$GITHUB_STEP_SUMMARY"
           echo "Skipped on pull_request run. GitHub does not reliably expose repository secrets to PR-triggered runs." >> "$GITHUB_STEP_SUMMARY"
-          echo "Use the blue 'Run Workflow' button on this workflow to run the prover with FEATHERLESS_API_KEY." >> "$GITHUB_STEP_SUMMARY"
+          echo "Use the blue 'Run Workflow' button or wait for the scheduled run to run the prover with FEATHERLESS_API_KEY." >> "$GITHUB_STEP_SUMMARY"
 
       # Fast, cheap gate: fail before building if any proof is left incomplete.
       - name: Ensure no incomplete proofs remain
