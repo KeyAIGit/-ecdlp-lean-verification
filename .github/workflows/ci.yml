@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Featherless API smoke test (non-blocking)
+        if: github.event_name != 'pull_request'
         continue-on-error: true
         env:
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
@@ -35,15 +36,22 @@ jobs:
             exit 0
           fi
           python3 - <<'PY'
-          import json
-          with open('featherless_models.json', 'r', encoding='utf-8') as f:
-              payload = json.load(f)
-          ids = [m.get('id') for m in payload.get('data', []) if isinstance(m, dict) and m.get('id')]
-          print(f"Featherless available model count: {len(ids)}")
-          for name in ["Pythagoras-Prover-4B", "Goedel-Prover-V2-32B"]:
-              matches = [x for x in ids if name.lower() in x.lower()]
-              print(f"{name}: {'FOUND ' + str(matches[:3]) if matches else 'not found in current-plan list'}")
-          PY
+import json
+with open('featherless_models.json', 'r', encoding='utf-8') as f:
+    payload = json.load(f)
+ids = [m.get('id') for m in payload.get('data', []) if isinstance(m, dict) and m.get('id')]
+print(f"Featherless available model count: {len(ids)}")
+for name in ["Pythagoras-Prover-4B", "Goedel-Prover-V2-32B"]:
+    matches = [x for x in ids if name.lower() in x.lower()]
+    print(f"{name}: {'FOUND ' + str(matches[:3]) if matches else 'not found in current-plan list'}")
+PY
+
+      - name: Explain prover skip on pull requests
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "## Prover target attempt" >> "$GITHUB_STEP_SUMMARY"
+          echo "Skipped on pull_request run. GitHub does not reliably expose repository secrets to PR-triggered runs." >> "$GITHUB_STEP_SUMMARY"
+          echo "Use the blue 'Run Workflow' button on this workflow to run the prover with FEATHERLESS_API_KEY." >> "$GITHUB_STEP_SUMMARY"
 
       # Fast, cheap gate: fail before building if any proof is left incomplete.
       - name: Ensure no incomplete proofs remain
@@ -67,6 +75,7 @@ jobs:
         run: lake build
 
       - name: Prover target attempt (artifact-only, non-blocking)
+        if: github.event_name != 'pull_request'
         continue-on-error: true
         env:
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
@@ -77,7 +86,7 @@ jobs:
             --heavy-attempts 2
 
       - name: Add prover target report to summary
-        if: always()
+        if: always() && github.event_name != 'pull_request'
         run: |
           echo "## Prover target attempt" >> "$GITHUB_STEP_SUMMARY"
           if [ -f prover-target-report.md ]; then
@@ -87,7 +96,7 @@ jobs:
           fi
 
       - name: Upload prover target report
-        if: always()
+        if: always() && github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: prover-target-attempt-report
