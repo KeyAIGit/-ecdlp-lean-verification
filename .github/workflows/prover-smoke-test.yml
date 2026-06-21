@@ -1,6 +1,10 @@
 name: Prover smoke test
 
 on:
+  push:
+    paths:
+      - '.github/workflows/prover-smoke-test.yml'
+      - 'scripts/prover_smoke_test.py'
   workflow_dispatch:
     inputs:
       model:
@@ -38,10 +42,14 @@ jobs:
       - name: Run prover smoke test
         env:
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+          INPUT_MODEL: ${{ inputs.model }}
+          INPUT_ATTEMPTS: ${{ inputs.attempts }}
         run: |
+          MODEL="${INPUT_MODEL:-Pythagoras-LM/Pythagoras-Prover-4B}"
+          ATTEMPTS="${INPUT_ATTEMPTS:-4}"
           python3 scripts/prover_smoke_test.py \
-            --model "${{ inputs.model }}" \
-            --attempts "${{ inputs.attempts }}"
+            --model "$MODEL" \
+            --attempts "$ATTEMPTS"
 
       - name: Upload prover smoke report
         if: always()
