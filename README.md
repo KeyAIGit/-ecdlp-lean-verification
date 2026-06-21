@@ -1,7 +1,7 @@
 # ECDLP Lean formalization (v0)
 
 Machine-checked layer for the ECDLP knowledge graph (corpus folder 15_Knowledge_Graph,
-formalization table 07_Formalization/KG_CLAIM_FORMORMALIZATION_v1.csv).
+formalization table 07_Formalization/KG_CLAIM_FORMALIZATION_v1.csv).
 
 ## Layout
 - `Ecdlp/Secp256k1Verified.lean` - PROVED on Lean core alone (no Mathlib). 9 theorems
