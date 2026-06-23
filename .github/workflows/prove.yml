@@ -34,6 +34,13 @@ jobs:
       - name: Fetch prebuilt Mathlib cache
         run: lake exe cache get
 
+      # `lake env lean` (used by the loop to check candidates) needs every imported
+      # olean present. `cache get` can return a partial cache, so build the project
+      # first to compile any cache-missing Mathlib files and the project itself —
+      # otherwise `import Mathlib` fails and every Tier-0 attempt fails fast.
+      - name: Build project (compile any cache-missing Mathlib + Ecdlp)
+        run: lake build
+
       - name: Run autonomous prover loop
         env:
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
