@@ -1,0 +1,16 @@
+{
+  "id": "000_smoke_nat_add_comm",
+  "name": "smoke_nat_add_comm",
+  "status": "searching",
+  "difficulty": "trivial",
+  "why_it_matters": "Smoke target that exercises the Layer 2 loop end-to-end. The zero-cost tactic ladder (Tier 0) should close it with no API call, demonstrating the cheap-first path. Not an ECDLP result.",
+  "default_budget": {
+    "pythagoras_4b_attempts": 1,
+    "goedel_32b_attempts": 0,
+    "escalate_if_failed": false
+  },
+  "stem_file": "Ecdlp/Targets/000_smoke_nat_add_comm.lean",
+  "hint": "Commutativity of Nat addition; expect `ring` or `omega`.",
+  "promotion_target_file": "Ecdlp/Proved/",
+  "verified_equivalent": ""
+}

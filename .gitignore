@@ -1,0 +1,11 @@
+# Transient prover work files (created in CI / local runs, never committed)
+ProverLoopAttempt.lean
+ProverTargetAttempt.lean
+prover-loop-report.md
+prover-target-report.md
+prover-target-success.lean
+featherless_models.json
+
+# Lean build output
+/.lake/
+/build/
