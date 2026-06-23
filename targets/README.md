@@ -19,6 +19,13 @@ A target is not a vague idea. A target is an atomic theorem/lemma candidate with
 - `verified`: merged into `Ecdlp/*.lean`, `lake build` green, listed in `VERIFIED.md`
 - `blocked`: target likely needs decomposition or statement revision
 
+## Stem files
+
+Each registry entry points at an open stem in `Ecdlp/Targets/<id>.lean` (the Lean
+statement ending in `:= by sorry`). The prover loop reads the stem from that file
+and the attempt budget from the JSON. Stems are not built and not gated (see
+`Ecdlp/Targets/README.md`); on success the proof is promoted to `Ecdlp/Proved/`.
+
 ## Promotion rule
 
 A target becomes `verified` only after:

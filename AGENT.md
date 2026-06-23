@@ -53,6 +53,21 @@ Close formal Lean targets without `sorry`, preserve a verified ledger, and never
 4. `lake build` runs green.
 5. The claim is added to `VERIFIED.md`.
 
+## Directory layout (proof base vs open targets)
+
+- `Ecdlp/Proved/*.lean` and the existing top-level `Ecdlp/*.lean` are the **built
+  proof base**: imported by `Ecdlp.lean`, verified by `lake build`, covered by the
+  no-`sorry` CI gate.
+- `Ecdlp/Targets/*.lean` are **open conjecture stems** (one `sorry` each). They are
+  **not** imported, **not** built, and **excluded** from the no-`sorry` gate, so a
+  green build still means every built theorem is fully proved. CI typechecks them in
+  a separate non-blocking step.
+- `targets/*.json` is the registry the prover loop reads (status, budget). `data/`
+  holds the read-only claim corpus for the Layer 3 generator.
+
+Promotion moves a Lean-accepted stem from `Targets/` to `Proved/`, adds its import,
+and appends a row to `VERIFIED.md`.
+
 ## Current priority
 
 Build a reliable pipeline before scaling attempts:
