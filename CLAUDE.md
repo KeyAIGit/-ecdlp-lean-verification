@@ -12,7 +12,7 @@ CI pass. Never add axioms.
 | Path | Role | Built by `lake build`? | no-`sorry` gate? |
 |---|---|---|---|
 | `Ecdlp/Secp256k1Verified.lean`, `Lagrange.lean`, `Statements.lean` | existing proved base | yes | yes |
-| `Ecdlp/Ontology.lean` | ECDLP objects the stems build on (planned, Stage C) | yes | yes |
+| `Ecdlp/Ontology.lean` | minimal ECDLP vocabulary the stems build on | yes | yes |
 | `Ecdlp/Proved/*.lean` | promoted proofs | yes (import in `Ecdlp.lean`) | yes |
 | `Ecdlp/Targets/*.lean` | open conjecture stems (one `sorry` each) | **no** (not imported) | **no** (excluded) |
 | `targets/*.json` | prover-loop registry (status, budget) | — | — |
