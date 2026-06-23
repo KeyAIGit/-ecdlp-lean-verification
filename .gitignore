@@ -9,3 +9,7 @@ featherless_models.json
 # Lean build output
 /.lake/
 /build/
+
+# Python
+__pycache__/
+*.pyc
