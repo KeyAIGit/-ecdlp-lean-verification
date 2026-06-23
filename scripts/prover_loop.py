@@ -25,6 +25,8 @@ import os
 import re
 import subprocess
 import sys
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -40,6 +42,26 @@ REGISTRY_DIR = Path("targets")
 REPORT_FILE = Path("prover-loop-report.md")
 CANDIDATES_DIR = Path("candidates")
 WORK_FILE = Path("ProverLoopAttempt.lean")
+API_MODELS_URL = "https://api.featherless.ai/v1/models?available_on_current_plan=true"
+
+
+def probe_models(api_key: str) -> dict:
+    """Report whether the two prover models are available on the current plan.
+    Surfaces the common failure mode (models not on plan -> every model call errors)."""
+    req = urllib.request.Request(API_MODELS_URL, headers={"Authorization": f"Bearer {api_key}"})
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            data = json.loads(r.read().decode("utf-8"))
+    except Exception as exc:  # noqa: BLE001
+        print(f"[loop] model-availability probe FAILED: {exc}", flush=True)
+        return {}
+    ids = [m.get("id", "") for m in data.get("data", []) if isinstance(m, dict)]
+    print(f"[loop] Featherless: {len(ids)} models available on current plan", flush=True)
+    avail = {}
+    for m in (PYTHAGORAS_4B, GOEDEL_32B):
+        short = m.split("/")[-1].lower()
+        avail[m] = any(short in x.lower() for x in ids)
+    return avail
 
 # Zero-cost first pass: each tactic is tried as the entire proof body.
 TACTIC_LADDER = ["rfl", "decide", "native_decide", "simp", "omega", "ring", "aesop"]
@@ -115,6 +137,10 @@ def main() -> int:
     args = ap.parse_args()
 
     api_key = os.environ.get("FEATHERLESS_API_KEY", "").strip()
+    print(f"[loop] FEATHERLESS_API_KEY present: {bool(api_key)}", flush=True)
+    avail = probe_models(api_key) if api_key else {}
+    for _m in (PYTHAGORAS_4B, GOEDEL_32B):
+        print(f"[loop] model on plan? {_m}: {avail.get(_m)}", flush=True)
     specs = load_specs()
     open_specs = [s for s in specs if s.get("status", "todo") in OPEN_STATUSES]
     if args.only:
@@ -164,6 +190,7 @@ def main() -> int:
         sequence = [(PYTHAGORAS_4B, i) for i in range(1, fast_n + 1)]
         sequence += [(GOEDEL_32B, i) for i in range(1, heavy_n + 1)]
 
+        print(f"[loop] {tid}: tier-0 no luck; trying models ({fast_n}x4B + {heavy_n}x32B)", flush=True)
         prev_cand: str | None = None
         prev_err: str | None = None
         solved = False
@@ -172,11 +199,13 @@ def main() -> int:
                 raw = call_model(api_key, model, target, attempt, prev_cand, prev_err)
             except Exception as exc:  # noqa: BLE001
                 report.append(f"- `{model}` attempt {attempt}: API error: {exc}\n")
+                print(f"[loop] {tid}: {model} #{attempt} API ERROR: {str(exc)[:200]}", flush=True)
                 continue
             cand = clean_candidate(raw)
             prev_cand = cand
             ok, out = run_lean(stem, cand)
             report.append(f"- `{model}` attempt {attempt}: {'OK' if ok else 'reject'}\n")
+            print(f"[loop] {tid}: {model} #{attempt}: {'OK' if ok else 'reject'}", flush=True)
             if ok:
                 full = build_file(stem, cand)
                 (CANDIDATES_DIR / f"{tid}.lean").write_text(full, encoding="utf-8")
