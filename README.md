@@ -14,6 +14,10 @@ formalization table 07_Formalization/KG_CLAIM_FORMALIZATION_v1.csv).
     - plus `lambda_ne_one`, `lam_lt_n`, `beta_lt_p`
 - `Ecdlp/Lagrange.lean` - Mathlib proof that element order divides finite group order.
 - `Ecdlp/Statements.lean` - Mathlib-dependent formalization targets. The current ZMod target is closed with no `sorry`.
+- `Ecdlp/Proved/` - promoted, machine-checked theorems (built and gated).
+- `Ecdlp/Targets/` - open conjecture stems (one `sorry` each); **not** built and **not**
+  gated, so the "green build = all proved" invariant holds. See each folder's README.
+- `data/` - read-only knowledge-graph corpus consumed by the Layer 3 generator.
 - `VERIFIED.md` - ledger mapping claim IDs to verified Lean theorem names and files.
 
 ## Build
@@ -29,3 +33,11 @@ Each `formalizable` claim in KG_CLAIM_FORMALIZATION_v1.csv becomes a theorem her
 `native_decide` handles concrete arithmetic facts, Mathlib handles structural ones.
 
 Current ledger: 10 proved theorems, 0 open obligations.
+
+## Authorship & AI disclosure
+The human maintainer is the author and bears intellectual responsibility for every
+claim of novelty and significance; correctness of each listed theorem is guaranteed
+by the Lean kernel. AI tooling (assistant models for formalization, code, and
+proof search) was used as an aid — it is disclosed here and is not an author. CI-bot
+commits are git metadata, not authorship. License and the final author list are set
+by the maintainer.

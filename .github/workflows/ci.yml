@@ -41,15 +41,15 @@ jobs:
             exit 0
           fi
           python3 - <<'PY'
-import json
-with open('featherless_models.json', 'r', encoding='utf-8') as f:
-    payload = json.load(f)
-ids = [m.get('id') for m in payload.get('data', []) if isinstance(m, dict) and m.get('id')]
-print(f"Featherless available model count: {len(ids)}")
-for name in ["Pythagoras-Prover-4B", "Goedel-Prover-V2-32B"]:
-    matches = [x for x in ids if name.lower() in x.lower()]
-    print(f"{name}: {'FOUND ' + str(matches[:3]) if matches else 'not found in current-plan list'}")
-PY
+          import json
+          with open('featherless_models.json', 'r', encoding='utf-8') as f:
+              payload = json.load(f)
+          ids = [m.get('id') for m in payload.get('data', []) if isinstance(m, dict) and m.get('id')]
+          print(f"Featherless available model count: {len(ids)}")
+          for name in ["Pythagoras-Prover-4B", "Goedel-Prover-V2-32B"]:
+              matches = [x for x in ids if name.lower() in x.lower()]
+              print(f"{name}: {'FOUND ' + str(matches[:3]) if matches else 'not found in current-plan list'}")
+          PY
 
       - name: Explain prover skip on pull requests
         if: github.event_name == 'pull_request'
@@ -58,14 +58,18 @@ PY
           echo "Skipped on pull_request run. GitHub does not reliably expose repository secrets to PR-triggered runs." >> "$GITHUB_STEP_SUMMARY"
           echo "Use the blue 'Run Workflow' button or wait for the scheduled run to run the prover with FEATHERLESS_API_KEY." >> "$GITHUB_STEP_SUMMARY"
 
-      # Fast, cheap gate: fail before building if any proof is left incomplete.
-      - name: Ensure no incomplete proofs remain
+      # Fast, cheap gate: fail before building if any BUILT proof is left incomplete.
+      # Scope: only *.lean files in the built proof base. Ecdlp/Targets/ holds open
+      # conjecture stems (with `sorry`) that are intentionally NOT imported/built, so
+      # they are excluded here. Restricting to *.lean avoids prose false-positives in
+      # README/markdown files that legitimately discuss `sorry`.
+      - name: Ensure no incomplete proofs remain (built proof base only)
         run: |
-          if grep -rniI 'sorry' Ecdlp/; then
-            echo "::error::Found 'sorry' in Ecdlp/ - a proof is incomplete"
+          if grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/; then
+            echo "::error::Found 'sorry' in a built Ecdlp/ Lean file - a proof is incomplete"
             exit 1
           fi
-          echo "All proofs complete: no 'sorry' in Ecdlp/"
+          echo "All built proofs complete: no 'sorry' outside Ecdlp/Targets/"
 
       - name: Install elan (Lean toolchain manager)
         run: |
@@ -78,6 +82,24 @@ PY
 
       - name: Build and verify ALL proofs
         run: lake build
+
+      # Open conjecture stems in Ecdlp/Targets/ are not part of the build graph. This
+      # step typechecks them so the generator's output is at least well-formed Lean.
+      # `sorry` is a warning (not an error), so a stem with `sorry` passes; a genuine
+      # syntax/type error is surfaced as a warning here but never blocks the build.
+      - name: Typecheck open target stems (non-blocking, sorry allowed)
+        continue-on-error: true
+        run: |
+          shopt -s nullglob
+          stems=(Ecdlp/Targets/*.lean)
+          if [ ${#stems[@]} -eq 0 ]; then
+            echo "No open target stems in Ecdlp/Targets/."
+            exit 0
+          fi
+          for f in "${stems[@]}"; do
+            echo "== lean typecheck: $f =="
+            lake env lean "$f" || echo "::warning::stem failed to typecheck: $f"
+          done
 
       - name: Prover target attempt (artifact-only, non-blocking)
         if: github.event_name != 'pull_request'

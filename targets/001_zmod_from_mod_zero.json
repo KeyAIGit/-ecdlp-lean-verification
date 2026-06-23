@@ -9,6 +9,7 @@
     "goedel_32b_attempts": 4,
     "escalate_if_failed": true
   },
+  "stem_file": "Ecdlp/Targets/001_zmod_from_mod_zero.lean",
   "lean_stem": "import Mathlib\n\nnamespace Ecdlp.ProverAttempt\n\ntheorem zmod_from_mod_zero (n lam : Nat) (h : (lam ^ 2 + lam + 1) % n = 0) :\n    ((lam : ZMod n) ^ 2 + (lam : ZMod n) + 1) = 0 := by\n",
   "hint": "Convert h to divisibility with Nat.dvd_of_mod_eq_zero; then show the corresponding Nat cast is zero in ZMod n. Useful tools: obtain, rw, push_cast, ZMod.natCast_self, ring, linear_combination, simpa.",
   "promotion_target_file": "Ecdlp/Statements.lean",

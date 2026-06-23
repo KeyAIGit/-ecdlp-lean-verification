@@ -1,0 +1,79 @@
+name: Autonomous prover (Layer 2)
+
+# Runs the registry prover loop (Tier 0 tactic ladder -> Featherless models) over
+# open targets. Lean-accepted candidates are surfaced as artifacts and, when found,
+# opened as a PR for human promotion. main is NEVER edited automatically: the Lean
+# kernel verifies each candidate, and a human reviews and merges the PR.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'   # daily
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: prove-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install elan (Lean toolchain manager)
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch prebuilt Mathlib cache
+        run: lake exe cache get
+
+      - name: Run autonomous prover loop
+        env:
+          FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+        run: python3 scripts/prover_loop.py
+
+      - name: Add loop report to job summary
+        if: always()
+        run: |
+          if [ -f prover-loop-report.md ]; then
+            cat prover-loop-report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No prover-loop-report.md was produced." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload loop artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prover-loop
+          path: |
+            prover-loop-report.md
+            candidates/
+          if-no-files-found: ignore
+
+      # Open (or update) a PR carrying any Lean-accepted candidate proofs for human
+      # promotion into Ecdlp/Proved/. No-op when there are no new candidates.
+      - name: Open PR with verified candidates
+        if: always()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          branch: prover/candidates
+          add-paths: candidates/
+          title: "Prover loop: verified candidate proofs for review"
+          commit-message: "prover loop: add Lean-accepted candidate proofs (for human promotion)"
+          body: |
+            The autonomous prover loop found Lean-accepted candidate proofs. Each
+            file under `candidates/` was verified by `lake env lean` in this run.
+
+            To promote: move the proof into `Ecdlp/Proved/`, add its import to
+            `Ecdlp.lean`, and append a row to `VERIFIED.md`. `main` is never edited
+            automatically; the Lean kernel is the judge and a human merges.
