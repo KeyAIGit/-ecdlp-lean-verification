@@ -1,0 +1,70 @@
+# Formalization-status registry (barriers & no-go map)
+
+What of the ECDLP knowledge corpus (`data/KG_CLAIM_FORMALIZATION_v1.csv`, 486
+atomic claims) can be machine-checked in Lean 4 + Mathlib today, and what cannot —
+and *why*. The "cannot" rows are the contribution: they are a precise map of the
+foundations that formal cryptography for ECDLP still lacks.
+
+Categories below are grounded in the corpus's own `formal_status` / `mathlib_area`
+annotations (the corpus authors' assessment), cross-checked against the verified
+base. This is a living document; counts are for the v1 corpus.
+
+## Summary
+
+| Status | Count | Meaning |
+|---|---|---|
+| **Proved** | 13 (see `VERIFIED.md`) | accepted by the Lean kernel, no `sorry` |
+| **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
+| **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
+| **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
+| **Partial: curve / polynomial depth** | ~33 | `EllipticCurve` (+Isogeny), `MvPolynomial` — Mathlib has the base, not the ECDLP constructions |
+| **Informal / meta** | ~133 | survey/commentary; not a formal statement by nature |
+| **Unassigned** | ~174 | needs human triage before a Lean area can be chosen |
+
+(Counts overlap at the margins and are indicative, not a partition.)
+
+## Proved (the tractable zone, realised)
+
+All in `Ecdlp/` and listed in `VERIFIED.md`. The structural theorems live in the
+group-theory zone and are the realised part of "Tractable now":
+
+- secp256k1 parameters & GLV/β eigenvalue facts — `native_decide` (concrete).
+- `order_dvd_card` (Lagrange), `cofactor_card_mul_index` (`#E = n·h` abstractly),
+  `orderOf_eq_card_of_prime` (prime order ⇒ generator, no small subgroup),
+  `cube_root_of_eigenvalue` (root of `x²+x+1` ⇒ `x³=1`) — Mathlib.
+
+## Barriers (the contribution)
+
+### B1. No cost model in Lean (~55 claims)
+Complexity statements — Pollard rho `Θ(√n)`, index calculus subexponential,
+distinguished-point parallel speedups, Shoup's generic `Ω(√p)` lower bound. Lean
+has no framework for "number of group operations" / oracle-query cost, so these
+cannot be stated faithfully, only their *structural* corollaries. **Foundation
+needed:** a generic-group / oracle cost model in Mathlib.
+
+### B2. Not in Mathlib — missing theories (~62 claims)
+- **Lattice reduction (24)** — HNP / biased-nonce ECDSA attacks (LLL/BKZ, CVP).
+  Mathlib has no lattice-reduction theory.
+- **Quantum circuit cost model (38)** — Shor-style ECDLP resource estimates.
+  Out of scope for Mathlib.
+
+### B3. Partial foundations — curve & polynomial depth (~33 claims)
+- **Summation / Semaev polynomials** (`MvPolynomial`, partial) — Mathlib has
+  multivariate polynomials but not the elliptic summation polynomials `Sₙ`.
+- **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
+  MOV/FR transfer reductions; the pairing is not in Mathlib.
+- **Point counting** — `#E(𝔽ₚ) = n` for the concrete curve needs a computation
+  Mathlib cannot do; the concrete fact is instead pinned via `native_decide`.
+
+### B4. Informal / meta (~133 claims)
+Survey scope, research-gap notes, applicability commentary — no formal statement
+to verify. Correctly excluded.
+
+## How to read this for research value
+- **Levels 1–2 (the asset):** everything under *Proved* and the rest of *Tractable
+  now* — a verified, reusable secp256k1 base and first formalizations.
+- **No-go / barrier results:** B1–B3 are publishable in themselves — a formal-methods
+  community needs to know exactly which foundations (cost model, lattice reduction,
+  Semaev polynomials, Weil pairing) are missing to formalize ECDLP cryptanalysis.
+- **Lottery (level 3):** a genuinely new structural / no-go result would come from
+  the *Tractable now* zone, not from forcing a barrier.

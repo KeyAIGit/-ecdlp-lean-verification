@@ -19,6 +19,8 @@ formalization table 07_Formalization/KG_CLAIM_FORMALIZATION_v1.csv).
   gated, so the "green build = all proved" invariant holds. See each folder's README.
 - `data/` - read-only knowledge-graph corpus consumed by the Layer 3 generator.
 - `VERIFIED.md` - ledger mapping claim IDs to verified Lean theorem names and files.
+- `BARRIERS.md` - formalization-status registry: what of the corpus is provable
+  now vs blocked, and which Mathlib foundations are missing (the no-go map).
 
 ## Build
 Core verified file (no Mathlib):
