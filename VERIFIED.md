@@ -59,8 +59,9 @@ git history and the GitHub Actions tab.
 | **Blind Schnorr signature unblinding** (e-cash) | `Ecdlp.Schnorr.blind_unblind` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved |
 | **MuSig2 coefficient-weighted key aggregation** | `Ecdlp.Schnorr.musig_key_aggregate` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 | **Threshold ElGamal partial-decryption combination** | `Ecdlp.Schnorr.threshold_elgamal_combine` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
+| **GLV eigenvalue has order exactly 3** (primitive cube root) | `Ecdlp.Proved.orderOf_eigenvalue_eq_three` | Ecdlp/Proved/CubeRoot.lean | Mathlib | proved |
 
-**Total: 51 theorems proved** (14 concrete facts via `native_decide`, 37 structural
+**Total: 52 theorems proved** (14 concrete facts via `native_decide`, 38 structural
 via Mathlib). **0 open obligations.** A verified discrete-log cryptography library:
 generic hardness (`Θ(√n)`, secp256k1 ≥128-bit), the soundness/completeness of
 deployed protocols (Schnorr/EdDSA, Diffie–Hellman, ElGamal, Pedersen, Okamoto,
