@@ -49,9 +49,9 @@ git history and the GitHub Actions tab.
 | **Aggregate Schnorr verification (MuSig/FROST/Taproot multisig)** | `Ecdlp.Schnorr.threshold_schnorr_aggregate` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 | **Feldman VSS share verification (DKG)** | `Ecdlp.Schnorr.feldman_vss_verify` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 | secp256k1 discriminant nonzero `Δ ≠ 0` in `𝔽_p` | `Ecdlp.Curve.secp256k1_Δ_ne_zero` | Ecdlp/Proved/Secp256k1Curve.lean | native_decide | proved |
-| **secp256k1 is a Mathlib `EllipticCurve`** (grounds the group law) | `Ecdlp.Curve.secp256k1.IsElliptic` (instance) | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib + native_decide | proved |
+| **secp256k1 is a Mathlib `EllipticCurve`** (grounds the group law) | `Ecdlp.Curve.secp256k1.IsElliptic` (instance) | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib + native_decide | proved² |
 | secp256k1 invariant `c₄ = 0` | `Ecdlp.Curve.secp256k1_c₄_eq_zero` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib | proved |
-| **secp256k1 j-invariant `j = 0`** (CM by `ℤ[ζ₃]` ⇒ GLV `λ`) | `Ecdlp.Curve.secp256k1_j_eq_zero` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib | proved |
+| **secp256k1 j-invariant `j = 0`** (CM by `ℤ[ζ₃]` ⇒ GLV `λ`) | `Ecdlp.Curve.secp256k1_j_eq_zero` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib | proved² |
 
 **Total: 44 theorems proved** (11 concrete facts via `native_decide`, 33 structural
 via Mathlib). **0 open obligations.** A verified discrete-log cryptography library:
@@ -64,6 +64,10 @@ Mathlib elliptic curve with `j = 0` (the CM structure behind its GLV endomorphis
 `[Fact n.Prime]` — the standard, published primality of the secp256k1 group order
 (SEC 2), which is not brute-force decidable for a 256-bit number. This is a
 hypothesis, **not an axiom**; the kernel still checks the full derivation.
+
+² The elliptic-curve facts are stated under `[Fact p.Prime]` (the published
+primality of the field characteristic, which makes `ZMod p` a field). Same status:
+a hypothesis, **not an axiom**.
 
 ## How this grows
 A new claim from `formalizable` becomes a theorem in `Ecdlp/`, gets committed,
