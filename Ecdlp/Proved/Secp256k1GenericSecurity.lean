@@ -39,4 +39,14 @@ theorem secp256k1_generic_security [Fact (Nat.Prime Secp256k1.n)]
   have h3 : (2 : ℕ) ^ 255 < q * q := lt_of_lt_of_le two_pow_255_lt_secp256k1_n hnqq
   omega
 
+/-- secp256k1's `⌈√n⌉` baby/giant steps number at most `2^128 + 1`: the baby-step
+giant-step method solves the secp256k1 discrete log in about `2^128` group
+operations — the matching upper bound to the `2^127` generic lower bound
+(`secp256k1_generic_security`). So secp256k1's generic security is tightly
+`√n ≈ 2^128`. -/
+theorem secp256k1_bsgs_steps_le : Nat.sqrt Secp256k1.n + 1 ≤ 2 ^ 128 + 1 := by
+  have h : Nat.sqrt Secp256k1.n < 2 ^ 128 := by
+    rw [Nat.sqrt_lt']; native_decide
+  omega
+
 end Ecdlp.GenericGroup

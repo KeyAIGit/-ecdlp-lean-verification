@@ -31,8 +31,10 @@ git history and the GitHub Actions tab.
 | baby-step giant-step decomposition (`O(√n)` upper bound) | `Ecdlp.GenericGroup.bsgs_decomp` | Ecdlp/Proved/BabyStepGiantStep.lean | Mathlib | proved |
 | baby/giant step count `n ≤ ⌈√n⌉²` (`Θ(√n)` closure) | `Ecdlp.GenericGroup.bsgs_steps_sq_ge` | Ecdlp/Proved/BabyStepGiantStep.lean | Mathlib | proved |
 | Pollard rho: a collision exists within `card` steps (pigeonhole) | `Ecdlp.GenericGroup.pollard_rho_collision` | Ecdlp/Proved/PollardRho.lean | Mathlib | proved |
+| Pollard rho ρ-shape: sequence is eventually periodic | `Ecdlp.GenericGroup.pollard_rho_periodic` | Ecdlp/Proved/PollardRho.lean | Mathlib | proved |
+| secp256k1 BSGS upper bound `⌈√n⌉ ≤ 2^128+1` (tight `√n` security) | `Ecdlp.GenericGroup.secp256k1_bsgs_steps_le` | Ecdlp/Proved/Secp256k1GenericSecurity.lean | native_decide | proved |
 
-**Total: 23 theorems proved** (9 concrete facts via `native_decide`, 14 structural
+**Total: 25 theorems proved** (10 concrete facts via `native_decide`, 15 structural
 via Mathlib). **0 open obligations.** The generic discrete-log complexity is now
 bracketed on both sides: `Ω(√p)` lower bound (`generic_dlog_query_bound`) and
 `O(√n)` upper bound (`bsgs_decomp`), i.e. `Θ(√n)`; Pollard rho's collision is

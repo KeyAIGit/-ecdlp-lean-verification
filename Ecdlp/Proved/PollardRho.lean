@@ -36,4 +36,21 @@ theorem pollard_rho_collision {α : Type*} [Fintype α] [DecidableEq α]
   · exact ⟨a, b, h, by omega, hfab⟩
   · exact ⟨b, a, h, by omega, hfab.symm⟩
 
+/-- **Pollard rho ρ-shape.** The iteration sequence is eventually periodic: there
+is a preperiod `μ` and a positive period `lam` with `f^[k + lam] x = f^[k] x` for
+all `k ≥ μ`. This is the full "rho" structure (a tail feeding into a cycle) the
+collision of `pollard_rho_collision` produces. -/
+theorem pollard_rho_periodic {α : Type*} [Fintype α] [DecidableEq α]
+    (f : α → α) (x : α) :
+    ∃ μ lam, 0 < lam ∧ ∀ k, μ ≤ k → f^[k + lam] x = f^[k] x := by
+  obtain ⟨i, j, hij, _, hfij⟩ := pollard_rho_collision f x
+  have step : ∀ t, f^[t + i] x = f^[t + j] x := by
+    intro t; simp only [Function.iterate_add_apply, hfij]
+  refine ⟨i, j - i, by omega, ?_⟩
+  intro k hk
+  obtain ⟨t, rfl⟩ : ∃ t, k = t + i := ⟨k - i, by omega⟩
+  have e1 : t + i + (j - i) = t + j := by omega
+  rw [e1]
+  exact (step t).symm
+
 end Ecdlp.GenericGroup
