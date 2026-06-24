@@ -11,3 +11,4 @@ import Ecdlp.Proved.BabyStepGiantStep
 import Ecdlp.Proved.PollardRho
 import Ecdlp.Proved.SchnorrSoundness
 import Ecdlp.Proved.DlogCompleteness
+import Ecdlp.Proved.DlogPrimitives
