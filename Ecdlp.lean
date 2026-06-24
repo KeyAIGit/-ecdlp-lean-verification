@@ -5,3 +5,7 @@ import Ecdlp.Ontology
 import Ecdlp.Proved.Cofactor
 import Ecdlp.Proved.PrimeOrder
 import Ecdlp.Proved.CubeRoot
+import Ecdlp.Proved.GenericGroupBound
+import Ecdlp.Proved.Secp256k1GenericSecurity
+import Ecdlp.Proved.BabyStepGiantStep
+import Ecdlp.Proved.PollardRho
