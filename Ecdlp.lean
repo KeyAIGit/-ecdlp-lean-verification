@@ -10,3 +10,4 @@ import Ecdlp.Proved.Secp256k1GenericSecurity
 import Ecdlp.Proved.BabyStepGiantStep
 import Ecdlp.Proved.PollardRho
 import Ecdlp.Proved.SchnorrSoundness
+import Ecdlp.Proved.DlogCompleteness

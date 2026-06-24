@@ -40,12 +40,14 @@ git history and the GitHub Actions tab.
 | Schnorr: extracted witness is unique | `Ecdlp.Schnorr.schnorr_witness_unique` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved |
 | **Pedersen computational binding ⇒ DLP** | `Ecdlp.Schnorr.pedersen_binding_extract` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved |
 | Schnorr soundness over secp256k1 scalar field | `Ecdlp.Secp256k1Schnorr.secp256k1_schnorr_extract` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved¹ |
+| **Schnorr/EdDSA signature correctness (completeness)** `s·G = R + c·P` | `Ecdlp.Schnorr.schnorr_verify` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
+| **Diffie–Hellman key agreement correctness** | `Ecdlp.Schnorr.dh_agree` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 
-**Total: 32 theorems proved** (10 concrete facts via `native_decide`, 22 structural
+**Total: 34 theorems proved** (10 concrete facts via `native_decide`, 24 structural
 via Mathlib). **0 open obligations.** The generic discrete-log complexity is
 bracketed `Θ(√n)` (`generic_dlog_query_bound` / `bsgs_decomp`); the discrete-log
-*protocols* (Schnorr proof of knowledge, Pedersen commitment) are proved sound by
-field-arithmetic extractors.
+*protocols* are proved sound (Schnorr extraction, Pedersen binding) **and** complete
+(Schnorr/EdDSA verification, Diffie–Hellman agreement).
 
 ¹ `secp256k1_generic_security` is stated conditional on the hypothesis
 `[Fact n.Prime]` — the standard, published primality of the secp256k1 group order
