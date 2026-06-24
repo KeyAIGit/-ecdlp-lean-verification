@@ -31,4 +31,29 @@ shared secret: Alice computes `a • (b • g)` from Bob's public `b • g`, Bob
 theorem dh_agree (g : G) (a b : ZMod n) : a • (b • g) = b • (a • g) := by
   rw [← mul_smul, ← mul_smul, mul_comm]
 
+open Finset in
+/-- **Aggregate Schnorr verification (MuSig / FROST / Taproot multisig).** If each
+party `i` holds key `Pᵢ = xᵢ·G`, nonce `Rᵢ = rᵢ·G`, and forms partial response
+`sᵢ = rᵢ + c·xᵢ` under a shared challenge `c`, then the aggregate response verifies
+against the aggregate key and nonce: `(∑ sᵢ)·G = (∑ Rᵢ) + c·(∑ Pᵢ)`. This is the
+correctness of Schnorr multisignatures (deployed in Bitcoin Taproot). -/
+theorem threshold_schnorr_aggregate {ι : Type*} (t : Finset ι) (g : G)
+    (P R : ι → G) (x r : ι → ZMod n) (c : ZMod n)
+    (hP : ∀ i, P i = x i • g) (hR : ∀ i, R i = r i • g) :
+    (∑ i ∈ t, (r i + c * x i)) • g = (∑ i ∈ t, R i) + c • ∑ i ∈ t, P i := by
+  simp only [hP, hR, Finset.sum_add_distrib, add_smul, Finset.sum_smul,
+    Finset.smul_sum, mul_smul]
+
+open Finset in
+/-- **Feldman verifiable secret sharing (VSS) — share verification.** With sharing
+polynomial `f(X) = ∑ⱼ aⱼ·Xʲ` and public coefficient commitments `Cⱼ = aⱼ·G`, the
+share `s = f(i)` verifies against the commitments: `s·G = ∑ⱼ (iʲ)·Cⱼ`. This lets
+each party check its share without the dealer's secret — the basis of distributed
+key generation (DKG). -/
+theorem feldman_vss_verify (g : G) (a : ℕ → ZMod n) (deg : ℕ) (i : ZMod n) :
+    (∑ j ∈ range (deg + 1), a j * i ^ j) • g
+      = ∑ j ∈ range (deg + 1), (i ^ j) • (a j • g) := by
+  rw [Finset.sum_smul]
+  exact Finset.sum_congr rfl (fun j _ => by rw [mul_comm, mul_smul])
+
 end Ecdlp.Schnorr
