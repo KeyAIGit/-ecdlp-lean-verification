@@ -55,6 +55,14 @@ theorem pedersen_binding_extract {a b a' b' h : F}
   field_simp
   linear_combination key
 
+
+/-- **Adaptor signature witness extraction.** A Schnorr adaptor (pre-)signature `s̃`
+for a statement with secret `t` is completed to a full signature `s = s̃ + t`. Given
+both the pre-signature and the completed signature, the secret is `t = s − s̃`. This
+is the extraction underlying atomic swaps and Lightning payment channels. -/
+theorem adaptor_extract {s s' t : F} (h : s = s' + t) : t = s - s' := by
+  rw [h]; ring
+
 end Ecdlp.Schnorr
 
 namespace Ecdlp.Secp256k1Schnorr
