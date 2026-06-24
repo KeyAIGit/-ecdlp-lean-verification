@@ -44,12 +44,14 @@ git history and the GitHub Actions tab.
 | **Diffie–Hellman key agreement correctness** | `Ecdlp.Schnorr.dh_agree` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 | **ElGamal decryption correctness** | `Ecdlp.Schnorr.elgamal_decrypt` | Ecdlp/Proved/DlogPrimitives.lean | Mathlib | proved |
 | **Pedersen commitments are additively homomorphic** | `Ecdlp.Schnorr.pedersen_homomorphic` | Ecdlp/Proved/DlogPrimitives.lean | Mathlib | proved |
+| **Okamoto identification — 2-witness extraction (soundness)** | `Ecdlp.Schnorr.okamoto_extract` | Ecdlp/Proved/DlogAdvanced.lean | Mathlib | proved |
+| **Chaum–Pedersen DLEQ (equality of discrete logs) — completeness** | `Ecdlp.DLEQ.chaum_pedersen_verify` | Ecdlp/Proved/DlogAdvanced.lean | Mathlib | proved |
 
-**Total: 36 theorems proved** (10 concrete facts via `native_decide`, 26 structural
+**Total: 38 theorems proved** (10 concrete facts via `native_decide`, 28 structural
 via Mathlib). **0 open obligations.** A verified discrete-log cryptography library:
-generic hardness (`Θ(√n)`, secp256k1 ≥128-bit), protocol soundness (Schnorr
-extraction, Pedersen binding), completeness (Schnorr/EdDSA, Diffie–Hellman), and
-primitive correctness (ElGamal, Pedersen homomorphism).
+generic hardness (`Θ(√n)`, secp256k1 ≥128-bit), and the soundness/completeness of
+deployed protocols — Schnorr/EdDSA, Diffie–Hellman, ElGamal, Pedersen, Okamoto,
+Chaum–Pedersen DLEQ.
 
 ¹ `secp256k1_generic_security` is stated conditional on the hypothesis
 `[Fact n.Prime]` — the standard, published primality of the secp256k1 group order

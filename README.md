@@ -14,7 +14,17 @@ formalization table 07_Formalization/KG_CLAIM_FORMALIZATION_v1.csv).
     - plus `lambda_ne_one`, `lam_lt_n`, `beta_lt_p`
 - `Ecdlp/Lagrange.lean` - Mathlib proof that element order divides finite group order.
 - `Ecdlp/Statements.lean` - Mathlib-dependent formalization targets. The current ZMod target is closed with no `sorry`.
-- `Ecdlp/Proved/` - promoted, machine-checked theorems (built and gated).
+- `Ecdlp/Proved/` - promoted, machine-checked theorems (built and gated). Includes a
+  **verified discrete-log cryptography library**:
+    - `GenericGroupBound.lean` - Shoup/Nechaev generic-group `Ω(√p)` lower bound for
+      the discrete log (first such in Mathlib); model-soundness lemmas.
+    - `BabyStepGiantStep.lean`, `PollardRho.lean` - matching `O(√n)` upper bounds, so
+      generic DLP is `Θ(√n)`.
+    - `Secp256k1GenericSecurity.lean` - secp256k1 ≥128-bit generic security (`2^127 < q`).
+    - `SchnorrSoundness.lean` - Schnorr proof-of-knowledge extraction; Pedersen binding ⇒ DLP.
+    - `DlogCompleteness.lean` - Schnorr/EdDSA verification; Diffie–Hellman agreement.
+    - `DlogPrimitives.lean` - ElGamal decryption; Pedersen homomorphism.
+    - `DlogAdvanced.lean` - Okamoto 2-witness extraction; Chaum–Pedersen DLEQ.
 - `Ecdlp/Targets/` - open conjecture stems (one `sorry` each); **not** built and **not**
   gated, so the "green build = all proved" invariant holds. See each folder's README.
 - `data/` - read-only knowledge-graph corpus consumed by the Layer 3 generator.
@@ -34,7 +44,9 @@ This is stage 2 (formalization agent output) of the autonomous research mechanis
 Each `formalizable` claim in KG_CLAIM_FORMALIZATION_v1.csv becomes a theorem here;
 `native_decide` handles concrete arithmetic facts, Mathlib handles structural ones.
 
-Current ledger: 10 proved theorems, 0 open obligations.
+Current ledger: 38 proved theorems, 0 open obligations (see `VERIFIED.md`).
+Beyond the corpus, the project now also hosts a verified discrete-log cryptography
+library (generic hardness + protocol soundness/completeness).
 
 ## Authorship & AI disclosure
 The human maintainer is the author and bears intellectual responsibility for every
