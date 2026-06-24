@@ -52,13 +52,17 @@ git history and the GitHub Actions tab.
 | **secp256k1 is a Mathlib `EllipticCurve`** (grounds the group law) | `Ecdlp.Curve.secp256k1.IsElliptic` (instance) | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib + native_decide | proved² |
 | secp256k1 invariant `c₄ = 0` | `Ecdlp.Curve.secp256k1_c₄_eq_zero` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib | proved |
 | **secp256k1 j-invariant `j = 0`** (CM by `ℤ[ζ₃]` ⇒ GLV `λ`) | `Ecdlp.Curve.secp256k1_j_eq_zero` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib | proved² |
+| secp256k1 `p ≡ 3 (mod 4)` (point decompression) | `Ecdlp.Curve.p_mod_four` | Ecdlp/Proved/Secp256k1Params.lean | native_decide | proved |
+| secp256k1 `3 ∣ (p−1)` (cube root `β` in `𝔽_p`) | `Ecdlp.Curve.three_dvd_p_sub_one` | Ecdlp/Proved/Secp256k1Params.lean | native_decide | proved |
+| secp256k1 `3 ∣ (n−1)` (GLV eigenvalue `λ` in `ℤ/n`) | `Ecdlp.Curve.three_dvd_n_sub_one` | Ecdlp/Proved/Secp256k1Params.lean | native_decide | proved |
+| **Adaptor signature witness extraction** (atomic swaps / Lightning) | `Ecdlp.Schnorr.adaptor_extract` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved |
 
-**Total: 44 theorems proved** (11 concrete facts via `native_decide`, 33 structural
+**Total: 48 theorems proved** (14 concrete facts via `native_decide`, 34 structural
 via Mathlib). **0 open obligations.** A verified discrete-log cryptography library:
 generic hardness (`Θ(√n)`, secp256k1 ≥128-bit), the soundness/completeness of
 deployed protocols (Schnorr/EdDSA, Diffie–Hellman, ElGamal, Pedersen, Okamoto,
-Chaum–Pedersen DLEQ, Schnorr multisig/Taproot, Feldman VSS), and secp256k1 as a
-Mathlib elliptic curve with `j = 0` (the CM structure behind its GLV endomorphism).
+Chaum–Pedersen DLEQ, Schnorr multisig/Taproot, Feldman VSS, adaptor signatures),
+and secp256k1 as a Mathlib elliptic curve (`j = 0`, the CM structure behind GLV).
 
 ¹ `secp256k1_generic_security` is stated conditional on the hypothesis
 `[Fact n.Prime]` — the standard, published primality of the secp256k1 group order
