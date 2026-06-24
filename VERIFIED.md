@@ -63,8 +63,9 @@ git history and the GitHub Actions tab.
 | **secp256k1 `β` has order 3 in `𝔽_p`** (GLV CM generator) | `Ecdlp.Curve.secp256k1_beta_orderOf` | Ecdlp/Proved/Secp256k1Order.lean | Mathlib + native_decide | proved² |
 | **secp256k1 `λ` has order 3 in `ℤ/n`** (GLV CM generator) | `Ecdlp.Curve.secp256k1_lambda_orderOf` | Ecdlp/Proved/Secp256k1Order.lean | Mathlib + native_decide | proved² |
 | **`X³ = 1` has exactly 3 roots in `𝔽_p`** (GLV cube-root count) | `Ecdlp.Curve.secp256k1_three_cube_roots_of_unity` | Ecdlp/Proved/Secp256k1Order.lean | Mathlib + native_decide | proved² |
+| **secp256k1 base point `G` is on the curve** (`Gy² ≡ Gx³+7 mod p`) | `Secp256k1.generator_on_curve` | Ecdlp/Secp256k1Verified.lean | native_decide | proved |
 
-**Total: 55 theorems proved** (14 concrete facts via `native_decide`, 41 structural
+**Total: 56 theorems proved** (15 concrete facts via `native_decide`, 41 structural
 via Mathlib). **0 open obligations.** A verified discrete-log cryptography library:
 generic hardness (`Θ(√n)`, secp256k1 ≥128-bit), the soundness/completeness of
 deployed protocols (Schnorr/EdDSA, Diffie–Hellman, ElGamal, Pedersen, Okamoto,
