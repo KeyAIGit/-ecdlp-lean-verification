@@ -68,9 +68,9 @@ at most one point: their difference `(f.b − g.b)·X + (f.a − g.a)` is a nonz
 polynomial of degree ≤ 1, so it has at most one root. -/
 theorem collisionSet_card_le_one (f g : Aff p) (h : f ≠ g) :
     (collisionSet f g).card ≤ 1 := by
-  rw [collisionSet, Finset.card_le_one]
+  rw [Finset.card_le_one]
   intro x hx y hy
-  simp only [Finset.mem_filter, Finset.mem_univ, true_and, Aff.eval] at hx hy
+  simp only [collisionSet, Finset.mem_filter, Finset.mem_univ, true_and, Aff.eval] at hx hy
   by_cases hb : f.b = g.b
   · -- equal slopes force equal intercepts, so `f = g`, contradicting `h`
     exfalso
@@ -102,6 +102,7 @@ exhibit a collision: a union bound over the `q·q − q` ordered pairs, each
 contributing at most one point by `collisionSet_card_le_one`. -/
 theorem badSet_card_le {q : ℕ} (F : Fin q → Aff p) (hF : Function.Injective F) :
     (badSet F).card ≤ q * q - q := by
+  unfold badSet
   refine (Finset.card_biUnion_le_card_mul _ _ 1 ?_).trans (le_of_eq ?_)
   · intro ij hij
     rw [Finset.mem_offDiag] at hij
