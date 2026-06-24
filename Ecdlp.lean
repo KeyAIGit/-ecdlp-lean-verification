@@ -12,3 +12,4 @@ import Ecdlp.Proved.PollardRho
 import Ecdlp.Proved.SchnorrSoundness
 import Ecdlp.Proved.DlogCompleteness
 import Ecdlp.Proved.DlogPrimitives
+import Ecdlp.Proved.DlogAdvanced
