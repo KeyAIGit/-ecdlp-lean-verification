@@ -130,4 +130,51 @@ theorem generic_dlog_query_bound {q : ℕ} (F : Fin q → Aff p)
     _ ≤ q * q - q := badSet_card_le F hF
     _ ≤ q * q := Nat.sub_le _ _
 
+/-- The bound restated with the square root: any generic discrete-log algorithm
+that succeeds on every input forms `q ≥ √p` group elements. -/
+theorem generic_dlog_sqrt_bound {q : ℕ} (F : Fin q → Aff p)
+    (hF : Function.Injective F)
+    (hsolve : ∀ x : ZMod p, ∃ i j, i ≠ j ∧ (F i).eval x = (F j).eval x) :
+    Real.sqrt p ≤ q := by
+  have h : p ≤ q * q := generic_dlog_query_bound F hF hsolve
+  have hpq : (p : ℝ) ≤ (q : ℝ) ^ 2 := by
+    have hc : (p : ℝ) ≤ (q : ℝ) * (q : ℝ) := by exact_mod_cast h
+    rw [pow_two]; exact hc
+  calc Real.sqrt p ≤ Real.sqrt ((q : ℝ) ^ 2) := Real.sqrt_le_sqrt hpq
+    _ = q := Real.sqrt_sq (by positivity)
+
+/-- **Quantitative Shoup bound.** Model a generic algorithm by its guess `A x`,
+which can depend on the true log `x` only through the collision pattern of the `q`
+formed elements; on the collision-free logs (`x ∉ badSet F`) that pattern is
+constant, so `A` is constant there (`hgen`). Then the algorithm guesses correctly
+for at most `q·q − q + 1` values of `x` — its success probability is at most
+`(q·q − q + 1) / p`. -/
+theorem generic_success_le {q : ℕ} (F : Fin q → Aff p) (hF : Function.Injective F)
+    (A : ZMod p → ZMod p)
+    (hgen : ∀ x y, x ∉ badSet F → y ∉ badSet F → A x = A y) :
+    (univ.filter (fun x => A x = x)).card ≤ q * q - q + 1 := by
+  classical
+  have hsplit : (univ.filter (fun x => A x = x))
+      ⊆ badSet F ∪ univ.filter (fun x => A x = x ∧ x ∉ badSet F) := by
+    intro x hx
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hx
+    by_cases hb : x ∈ badSet F
+    · exact Finset.mem_union_left _ hb
+    · refine Finset.mem_union_right _ ?_
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+      exact ⟨hx, hb⟩
+  have hgood : (univ.filter (fun x => A x = x ∧ x ∉ badSet F)).card ≤ 1 := by
+    rw [Finset.card_le_one]
+    intro x hx y hy
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hx hy
+    have hxy : A x = A y := hgen x y hx.2 hy.2
+    rw [hx.1, hy.1] at hxy
+    exact hxy
+  calc (univ.filter (fun x => A x = x)).card
+      ≤ (badSet F ∪ univ.filter (fun x => A x = x ∧ x ∉ badSet F)).card :=
+        Finset.card_le_card hsplit
+    _ ≤ (badSet F).card + (univ.filter (fun x => A x = x ∧ x ∉ badSet F)).card :=
+        Finset.card_union_le _ _
+    _ ≤ q * q - q + 1 := Nat.add_le_add (badSet_card_le F hF) hgood
+
 end Ecdlp.GenericGroup
