@@ -63,6 +63,13 @@ is the extraction underlying atomic swaps and Lightning payment channels. -/
 theorem adaptor_extract {s s' t : F} (h : s = s' + t) : t = s - s' := by
   rw [h]; ring
 
+
+/-- **Blind Schnorr signature unblinding.** A blinded response `s̃ = s − α` (with
+blinding factor `α`) is unblinded to a valid signature `s = s̃ + α`. The signer
+never learns `s`; the user recovers it. Used in blind-signature e-cash. -/
+theorem blind_unblind {s s' α : F} (h : s' = s - α) : s = s' + α := by
+  rw [h]; ring
+
 end Ecdlp.Schnorr
 
 namespace Ecdlp.Secp256k1Schnorr

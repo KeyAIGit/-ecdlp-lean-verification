@@ -56,4 +56,21 @@ theorem feldman_vss_verify (g : G) (a : ℕ → ZMod n) (deg : ℕ) (i : ZMod n)
   rw [Finset.sum_smul]
   exact Finset.sum_congr rfl (fun j _ => by rw [mul_comm, mul_smul])
 
+
+open Finset in
+/-- **MuSig key aggregation (coefficient-weighted).** The aggregate public key with
+per-signer coefficients `aᵢ` is `∑ aᵢ·Pᵢ`; for honest keys `Pᵢ = xᵢ·G` it equals
+`(∑ aᵢ·xᵢ)·G`, the public key of the aggregate secret `∑ aᵢ·xᵢ` (Bitcoin MuSig2). -/
+theorem musig_key_aggregate {ι : Type*} (t : Finset ι) (g : G) (P : ι → G)
+    (x a : ι → ZMod n) (hP : ∀ i, P i = x i • g) :
+    (∑ i ∈ t, a i • P i) = (∑ i ∈ t, a i * x i) • g := by
+  simp only [hP, Finset.sum_smul, mul_smul]
+
+/-- **Threshold ElGamal partial-decryption combination.** Combining the parties'
+partial decryptions `xᵢ·C₁` reconstructs the full mask `(∑ xᵢ)·C₁` needed to recover
+the plaintext. -/
+theorem threshold_elgamal_combine {ι : Type*} (t : Finset ι) (C₁ : G) (x : ι → ZMod n) :
+    (∑ i ∈ t, x i • C₁) = (∑ i ∈ t, x i) • C₁ := by
+  rw [Finset.sum_smul]
+
 end Ecdlp.Schnorr

@@ -56,8 +56,11 @@ git history and the GitHub Actions tab.
 | secp256k1 `3 ∣ (p−1)` (cube root `β` in `𝔽_p`) | `Ecdlp.Curve.three_dvd_p_sub_one` | Ecdlp/Proved/Secp256k1Params.lean | native_decide | proved |
 | secp256k1 `3 ∣ (n−1)` (GLV eigenvalue `λ` in `ℤ/n`) | `Ecdlp.Curve.three_dvd_n_sub_one` | Ecdlp/Proved/Secp256k1Params.lean | native_decide | proved |
 | **Adaptor signature witness extraction** (atomic swaps / Lightning) | `Ecdlp.Schnorr.adaptor_extract` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved |
+| **Blind Schnorr signature unblinding** (e-cash) | `Ecdlp.Schnorr.blind_unblind` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved |
+| **MuSig2 coefficient-weighted key aggregation** | `Ecdlp.Schnorr.musig_key_aggregate` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
+| **Threshold ElGamal partial-decryption combination** | `Ecdlp.Schnorr.threshold_elgamal_combine` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 
-**Total: 48 theorems proved** (14 concrete facts via `native_decide`, 34 structural
+**Total: 51 theorems proved** (14 concrete facts via `native_decide`, 37 structural
 via Mathlib). **0 open obligations.** A verified discrete-log cryptography library:
 generic hardness (`Θ(√n)`, secp256k1 ≥128-bit), the soundness/completeness of
 deployed protocols (Schnorr/EdDSA, Diffie–Hellman, ElGamal, Pedersen, Okamoto,
