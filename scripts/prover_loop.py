@@ -33,6 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from prover_target_attempt import (  # noqa: E402
     GOEDEL_32B,
     PYTHAGORAS_4B,
+    USER_AGENT,
     Target,
     call_model,
     clean_candidate,
@@ -48,7 +49,14 @@ API_MODELS_URL = "https://api.featherless.ai/v1/models?available_on_current_plan
 def probe_models(api_key: str) -> dict:
     """Report whether the two prover models are available on the current plan.
     Surfaces the common failure mode (models not on plan -> every model call errors)."""
-    req = urllib.request.Request(API_MODELS_URL, headers={"Authorization": f"Bearer {api_key}"})
+    req = urllib.request.Request(
+        API_MODELS_URL,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Accept": "application/json",
+            "User-Agent": USER_AGENT,
+        },
+    )
     try:
         with urllib.request.urlopen(req, timeout=60) as r:
             data = json.loads(r.read().decode("utf-8"))

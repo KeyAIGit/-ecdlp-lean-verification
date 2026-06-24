@@ -20,6 +20,9 @@ from dataclasses import dataclass
 from pathlib import Path
 
 API_URL = "https://api.featherless.ai/v1/chat/completions"
+# Featherless sits behind Cloudflare, which 403s (error 1010) the default
+# `Python-urllib` User-Agent. Send a browser-like UA so requests aren't blocked.
+USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 WORK_FILE = Path("ProverTargetAttempt.lean")
 REPORT_FILE = Path("prover-target-report.md")
 SUCCESS_FILE = Path("prover-target-success.lean")
@@ -192,7 +195,12 @@ def call_model(
     request = urllib.request.Request(
         API_URL,
         data=json.dumps(payload).encode("utf-8"),
-        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": USER_AGENT,
+        },
         method="POST",
     )
     try:
