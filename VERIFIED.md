@@ -18,9 +18,10 @@ git history and the GitHub Actions tab.
 | supporting: lam < n | `Secp256k1.lam_lt_n` | Ecdlp/Secp256k1Verified.lean | native_decide | proved |
 | supporting: beta < p | `Secp256k1.beta_lt_p` | Ecdlp/Secp256k1Verified.lean | native_decide | proved |
 | pollard-multistage-004 (Lagrange foundation) | `order_dvd_card` | Ecdlp/Lagrange.lean | Mathlib | proved |
+| sec2-secp256k1-group-006 / sec2-domain-parameters-001 (cofactor) | `Ecdlp.Proved.cofactor_card_mul_index` | Ecdlp/Proved/Cofactor.lean | Mathlib | proved |
 
-**Total: 10 theorems proved** (8 concrete secp256k1 facts via `native_decide`,
-2 structural via Mathlib). **0 open obligations.**
+**Total: 11 theorems proved** (8 concrete secp256k1 facts via `native_decide`,
+3 structural via Mathlib). **0 open obligations.**
 
 ## How this grows
 A new claim from `formalizable` becomes a theorem in `Ecdlp/`, gets committed,
