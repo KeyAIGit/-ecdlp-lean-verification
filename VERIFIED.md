@@ -46,12 +46,14 @@ git history and the GitHub Actions tab.
 | **Pedersen commitments are additively homomorphic** | `Ecdlp.Schnorr.pedersen_homomorphic` | Ecdlp/Proved/DlogPrimitives.lean | Mathlib | proved |
 | **Okamoto identification — 2-witness extraction (soundness)** | `Ecdlp.Schnorr.okamoto_extract` | Ecdlp/Proved/DlogAdvanced.lean | Mathlib | proved |
 | **Chaum–Pedersen DLEQ (equality of discrete logs) — completeness** | `Ecdlp.DLEQ.chaum_pedersen_verify` | Ecdlp/Proved/DlogAdvanced.lean | Mathlib | proved |
+| **Aggregate Schnorr verification (MuSig/FROST/Taproot multisig)** | `Ecdlp.Schnorr.threshold_schnorr_aggregate` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
+| **Feldman VSS share verification (DKG)** | `Ecdlp.Schnorr.feldman_vss_verify` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 
-**Total: 38 theorems proved** (10 concrete facts via `native_decide`, 28 structural
+**Total: 40 theorems proved** (10 concrete facts via `native_decide`, 30 structural
 via Mathlib). **0 open obligations.** A verified discrete-log cryptography library:
 generic hardness (`Θ(√n)`, secp256k1 ≥128-bit), and the soundness/completeness of
 deployed protocols — Schnorr/EdDSA, Diffie–Hellman, ElGamal, Pedersen, Okamoto,
-Chaum–Pedersen DLEQ.
+Chaum–Pedersen DLEQ, Schnorr multisig (Taproot), Feldman VSS.
 
 ¹ `secp256k1_generic_security` is stated conditional on the hypothesis
 `[Fact n.Prime]` — the standard, published primality of the secp256k1 group order
