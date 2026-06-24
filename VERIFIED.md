@@ -20,9 +20,10 @@ git history and the GitHub Actions tab.
 | pollard-multistage-004 (Lagrange foundation) | `order_dvd_card` | Ecdlp/Lagrange.lean | Mathlib | proved |
 | sec2-secp256k1-group-006 / sec2-domain-parameters-001 (cofactor) | `Ecdlp.Proved.cofactor_card_mul_index` | Ecdlp/Proved/Cofactor.lean | Mathlib | proved |
 | prime-order ⇒ generator (no small subgroup) | `Ecdlp.Proved.orderOf_eq_card_of_prime` | Ecdlp/Proved/PrimeOrder.lean | Mathlib | proved |
+| GLV eigenvalue is a cube root of unity (ring form) | `Ecdlp.Proved.cube_root_of_eigenvalue` | Ecdlp/Proved/CubeRoot.lean | Mathlib | proved |
 
-**Total: 12 theorems proved** (8 concrete secp256k1 facts via `native_decide`,
-4 structural via Mathlib). **0 open obligations.**
+**Total: 13 theorems proved** (8 concrete secp256k1 facts via `native_decide`,
+5 structural via Mathlib). **0 open obligations.**
 
 ## How this grows
 A new claim from `formalizable` becomes a theorem in `Ecdlp/`, gets committed,
