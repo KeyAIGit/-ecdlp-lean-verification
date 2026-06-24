@@ -47,4 +47,20 @@ in `CubeRoot.lean`): `j = 0` curves are exactly those with that endomorphism. -/
 theorem secp256k1_j_eq_zero : secp256k1.j = 0 :=
   secp256k1.j_eq_zero secp256k1_c₄_eq_zero
 
+
+/-- **The secp256k1 base point lies on the Mathlib elliptic curve.** The SEC2
+generator `G = (Gx, Gy)`, cast into `𝔽_p`, satisfies `secp256k1`'s Weierstrass
+equation — a genuine rational point of the Mathlib `EllipticCurve`. -/
+theorem secp256k1_generator_equation :
+    secp256k1.toAffine.Equation
+      (Secp256k1.Gx : ZMod Secp256k1.p) (Secp256k1.Gy : ZMod Secp256k1.p) := by
+  rw [WeierstrassCurve.Affine.equation_iff]
+  have hcast : ((Secp256k1.Gy ^ 2 : ℕ) : ZMod Secp256k1.p)
+      = ((Secp256k1.Gx ^ 3 + 7 : ℕ) : ZMod Secp256k1.p) := by
+    rw [ZMod.natCast_eq_natCast_iff]
+    exact Secp256k1.generator_on_curve
+  push_cast at hcast
+  simp only [secp256k1]
+  linear_combination hcast
+
 end Ecdlp.Curve
