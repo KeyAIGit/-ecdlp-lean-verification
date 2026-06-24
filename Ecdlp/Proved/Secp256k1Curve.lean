@@ -25,7 +25,21 @@ theorem secp256k1_Δ_ne_zero : secp256k1.Δ ≠ 0 := by native_decide
 
 /-- secp256k1 is a genuine elliptic curve: its discriminant is a unit in `𝔽_p`.
 This makes Mathlib's group law on `secp256k1.toAffine.Point` available for it. -/
-instance : secp256k1.IsElliptic :=
-  ⟨isUnit_iff_ne_zero.mpr secp256k1_Δ_ne_zero⟩
+instance : secp256k1.IsElliptic := by
+  refine ⟨?_⟩
+  rw [isUnit_iff_ne_zero]
+  exact secp256k1_Δ_ne_zero
+
+/-- The `c₄` invariant of secp256k1 vanishes (since `a₁ = a₂ = a₄ = 0`). -/
+theorem secp256k1_c₄_eq_zero : secp256k1.c₄ = 0 := by
+  simp only [WeierstrassCurve.c₄, WeierstrassCurve.b₂, WeierstrassCurve.b₄, secp256k1]
+  ring
+
+/-- **secp256k1 has j-invariant 0.** Equivalently, it has complex multiplication by
+`ℤ[ζ₃]` — it carries an order-3 automorphism. This is the structural reason for the
+GLV endomorphism `λ` (whose cube-root eigenvalue relation `λ² + λ + 1 = 0` is proved
+in `CubeRoot.lean`): `j = 0` curves are exactly those with that endomorphism. -/
+theorem secp256k1_j_eq_zero : secp256k1.j = 0 :=
+  WeierstrassCurve.j_eq_zero secp256k1_c₄_eq_zero
 
 end Ecdlp.Curve
