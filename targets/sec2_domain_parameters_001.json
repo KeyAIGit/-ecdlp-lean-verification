@@ -2,7 +2,7 @@
   "id": "sec2_domain_parameters_001",
   "name": "sec2_domain_parameters_001",
   "claim_id": "sec2-domain-parameters-001",
-  "status": "todo",
+  "status": "verified",
   "difficulty": "unknown",
   "template": "cofactor_card_index",
   "provability_score": "medium",
@@ -18,5 +18,6 @@
     "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
     "batch": "B01",
     "source_id": "sec2-v2"
-  }
+  },
+  "proved_as": "Ecdlp.Proved.cofactor_card_mul_index"
 }
