@@ -1,7 +1,7 @@
 {
   "id": "001_zmod_from_mod_zero",
   "name": "zmod_from_mod_zero",
-  "status": "searching",
+  "status": "verified",
   "difficulty": "medium",
   "why_it_matters": "This is the core cast/divisibility pattern behind Ecdlp.Targets.glv_eigenvalue_zmod. It turns a Nat modular-zero hypothesis into a vanishing identity in ZMod n.",
   "default_budget": {
@@ -13,5 +13,6 @@
   "lean_stem": "import Mathlib\n\nnamespace Ecdlp.ProverAttempt\n\ntheorem zmod_from_mod_zero (n lam : Nat) (h : (lam ^ 2 + lam + 1) % n = 0) :\n    ((lam : ZMod n) ^ 2 + (lam : ZMod n) + 1) = 0 := by\n",
   "hint": "Convert h to divisibility with Nat.dvd_of_mod_eq_zero; then show the corresponding Nat cast is zero in ZMod n. Useful tools: obtain, rw, push_cast, ZMod.natCast_self, ring, linear_combination, simpa.",
   "promotion_target_file": "Ecdlp/Statements.lean",
-  "verified_equivalent": "Ecdlp.Targets.glv_eigenvalue_zmod"
+  "verified_equivalent": "Ecdlp.Targets.glv_eigenvalue_zmod",
+  "proved_as": "Ecdlp.Targets.glv_eigenvalue_zmod"
 }
