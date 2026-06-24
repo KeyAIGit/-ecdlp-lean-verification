@@ -28,9 +28,13 @@ git history and the GitHub Actions tab.
 | quantitative Shoup bound: success count ≤ q·q−q+1 | `Ecdlp.GenericGroup.generic_success_le` | Ecdlp/Proved/GenericGroupBound.lean | Mathlib | proved |
 | secp256k1 group order `2^255 < n` | `Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n` | Ecdlp/Proved/Secp256k1GenericSecurity.lean | native_decide | proved |
 | **secp256k1 ≥ 128-bit generic security (`2^127 < q`)** | `Ecdlp.GenericGroup.secp256k1_generic_security` | Ecdlp/Proved/Secp256k1GenericSecurity.lean | Mathlib + native_decide | proved¹ |
+| baby-step giant-step decomposition (`O(√n)` upper bound) | `Ecdlp.GenericGroup.bsgs_decomp` | Ecdlp/Proved/BabyStepGiantStep.lean | Mathlib | proved |
+| baby/giant step count `n ≤ ⌈√n⌉²` (`Θ(√n)` closure) | `Ecdlp.GenericGroup.bsgs_steps_sq_ge` | Ecdlp/Proved/BabyStepGiantStep.lean | Mathlib | proved |
 
-**Total: 20 theorems proved** (9 concrete facts via `native_decide`, 11 structural
-via Mathlib). **0 open obligations.**
+**Total: 22 theorems proved** (9 concrete facts via `native_decide`, 13 structural
+via Mathlib). **0 open obligations.** The generic discrete-log complexity is now
+bracketed on both sides: `Ω(√p)` lower bound (`generic_dlog_query_bound`) and
+`O(√n)` upper bound (`bsgs_decomp`), i.e. `Θ(√n)`.
 
 ¹ `secp256k1_generic_security` is stated conditional on the hypothesis
 `[Fact n.Prime]` — the standard, published primality of the secp256k1 group order
