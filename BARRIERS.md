@@ -33,28 +33,30 @@ group-theory zone and are the realised part of "Tractable now":
   `orderOf_eq_card_of_prime` (prime order ⇒ generator, no small subgroup),
   `cube_root_of_eigenvalue` (root of `x²+x+1` ⇒ `x³=1`) — Mathlib.
 
-### Foundation formalized: the generic-group `Ω(√p)` lower bound
+### Foundation formalized: the generic-group `Ω(√p)`/`Θ(√n)` results
 Previously listed under B1 as blocked-by-missing-cost-model, the **Shoup/Nechaev
 generic lower bound is now machine-checked** (`Ecdlp/Proved/GenericGroupBound.lean`,
-`Secp256k1GenericSecurity.lean`). The key insight: its information-theoretic core
-needs no general cost model — the algebraic data available to a generic algorithm
-is exactly the set of affine forms `a + b·X` it has formed over `ZMod p`, and the
-bound is a collision count over that set. Results: `generic_dlog_query_bound`
-(`p ≤ q·q`), `generic_dlog_sqrt_bound` (`√p ≤ q`), `generic_success_le`
-(quantitative), and `secp256k1_generic_security` (`2^127 < q` — ≥128-bit generic
-security of secp256k1, conditional on the published primality of `n`). This is the
-first Mathlib-checked generic-group lower bound for the discrete log.
+`Secp256k1GenericSecurity.lean`, `BabyStepGiantStep.lean`, `PollardRho.lean`). The
+key insight: its information-theoretic core needs no general cost model — the
+algebraic data available to a generic algorithm is exactly the set of affine forms
+`a + b·X` it has formed over `ZMod p`, and the bound is a collision count over that
+set. Results: `generic_dlog_query_bound` (`p ≤ q·q`), `generic_dlog_sqrt_bound`
+(`√p ≤ q`), `generic_success_le` (quantitative), `secp256k1_generic_security`
+(`2^127 < q` — ≥128-bit generic security of secp256k1, conditional on the published
+primality of `n`); matching `O(√n)` upper bounds `bsgs_decomp` / `pollard_rho_*`
+(so generic DLP is `Θ(√n)`). This is the first Mathlib-checked generic-group lower
+bound for the discrete log.
 
 ## Barriers (the contribution)
 
 ### B1. No cost model in Lean (~54 claims)
-Remaining complexity statements — Pollard rho `Θ(√n)`, index calculus
-subexponential, distinguished-point parallel speedups. Lean has no framework for
-"number of group operations" / oracle-query cost, so these cannot be stated
-faithfully, only their *structural* corollaries. (The generic `Ω(√p)` *lower*
-bound, once here, is now formalized — see above — because its core sidesteps the
-cost model.) **Foundation still needed:** a general oracle / cost model in Mathlib
-for the matching *upper* bounds and `Θ` statements.
+Remaining complexity statements — index calculus subexponential, distinguished-point
+parallel speedups, exact `Θ` running times. Lean has no framework for "number of
+group operations" / oracle-query cost, so these cannot be stated faithfully, only
+their *structural* corollaries. (The generic `Ω(√p)` lower bound and `O(√n)` upper
+bounds are now formalized — see above — because their cores sidestep the cost
+model.) **Foundation still needed:** a general oracle / cost model in Mathlib for
+exact `Θ` statements.
 
 ### B2. Not in Mathlib — missing theories (~62 claims)
 - **Lattice reduction (24)** — HNP / biased-nonce ECDSA attacks (LLL/BKZ, CVP).
