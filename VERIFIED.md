@@ -33,8 +33,11 @@ git history and the GitHub Actions tab.
 | Pollard rho: a collision exists within `card` steps (pigeonhole) | `Ecdlp.GenericGroup.pollard_rho_collision` | Ecdlp/Proved/PollardRho.lean | Mathlib | proved |
 | Pollard rho ρ-shape: sequence is eventually periodic | `Ecdlp.GenericGroup.pollard_rho_periodic` | Ecdlp/Proved/PollardRho.lean | Mathlib | proved |
 | secp256k1 BSGS upper bound `⌈√n⌉ ≤ 2^128+1` (tight `√n` security) | `Ecdlp.GenericGroup.secp256k1_bsgs_steps_le` | Ecdlp/Proved/Secp256k1GenericSecurity.lean | native_decide | proved |
+| model soundness: `eval` is additive on forms (group mult ↔ form add) | `Ecdlp.GenericGroup.eval_add` | Ecdlp/Proved/GenericGroupBound.lean | Mathlib | proved |
+| model soundness: `eval` respects negation (group inverse ↔ form neg) | `Ecdlp.GenericGroup.eval_neg` | Ecdlp/Proved/GenericGroupBound.lean | Mathlib | proved |
+| model soundness: identity is the zero form | `Ecdlp.GenericGroup.eval_zero` | Ecdlp/Proved/GenericGroupBound.lean | Mathlib | proved |
 
-**Total: 25 theorems proved** (10 concrete facts via `native_decide`, 15 structural
+**Total: 28 theorems proved** (10 concrete facts via `native_decide`, 18 structural
 via Mathlib). **0 open obligations.** The generic discrete-log complexity is now
 bracketed on both sides: `Ω(√p)` lower bound (`generic_dlog_query_bound`) and
 `O(√n)` upper bound (`bsgs_decomp`), i.e. `Θ(√n)`; Pollard rho's collision is

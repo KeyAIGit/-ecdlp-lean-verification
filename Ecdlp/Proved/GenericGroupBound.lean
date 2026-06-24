@@ -177,4 +177,27 @@ theorem generic_success_le {q : ℕ} (F : Fin q → Aff p) (hF : Function.Inject
         Finset.card_union_le _ _
     _ ≤ q * q - q + 1 := Nat.add_le_add (badSet_card_le F hF) hgood
 
+/-! ### Soundness of the model
+
+A generic algorithm forms new group elements only by the group operations
+(multiply two known elements, invert one). On discrete-log information `a + b·X`
+those operations are componentwise addition and negation of the affine forms, and
+`eval` (the value at the true log) is a homomorphism for them. So the set of forms
+an algorithm can reach is *exactly* the affine forms over `ZMod p` — which is what
+makes the collision-counting bound above apply to every generic algorithm. -/
+
+/-- Multiplying two computed elements adds their forms; `eval` respects it. -/
+theorem eval_add (f g : Aff p) (x : ZMod p) :
+    (⟨f.a + g.a, f.b + g.b⟩ : Aff p).eval x = f.eval x + g.eval x := by
+  simp only [Aff.eval]; ring
+
+/-- Inverting a computed element negates its form; `eval` respects it. -/
+theorem eval_neg (f : Aff p) (x : ZMod p) :
+    (⟨-f.a, -f.b⟩ : Aff p).eval x = -f.eval x := by
+  simp only [Aff.eval]; ring
+
+/-- The identity element is the zero form. -/
+theorem eval_zero (x : ZMod p) : (⟨0, 0⟩ : Aff p).eval x = 0 := by
+  simp only [Aff.eval]; ring
+
 end Ecdlp.GenericGroup
