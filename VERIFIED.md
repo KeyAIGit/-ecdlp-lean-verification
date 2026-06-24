@@ -48,17 +48,26 @@ git history and the GitHub Actions tab.
 | **Chaum–Pedersen DLEQ (equality of discrete logs) — completeness** | `Ecdlp.DLEQ.chaum_pedersen_verify` | Ecdlp/Proved/DlogAdvanced.lean | Mathlib | proved |
 | **Aggregate Schnorr verification (MuSig/FROST/Taproot multisig)** | `Ecdlp.Schnorr.threshold_schnorr_aggregate` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 | **Feldman VSS share verification (DKG)** | `Ecdlp.Schnorr.feldman_vss_verify` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
+| secp256k1 discriminant nonzero `Δ ≠ 0` in `𝔽_p` | `Ecdlp.Curve.secp256k1_Δ_ne_zero` | Ecdlp/Proved/Secp256k1Curve.lean | native_decide | proved |
+| **secp256k1 is a Mathlib `EllipticCurve`** (grounds the group law) | `Ecdlp.Curve.secp256k1.IsElliptic` (instance) | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib + native_decide | proved² |
+| secp256k1 invariant `c₄ = 0` | `Ecdlp.Curve.secp256k1_c₄_eq_zero` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib | proved |
+| **secp256k1 j-invariant `j = 0`** (CM by `ℤ[ζ₃]` ⇒ GLV `λ`) | `Ecdlp.Curve.secp256k1_j_eq_zero` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib | proved² |
 
-**Total: 40 theorems proved** (10 concrete facts via `native_decide`, 30 structural
+**Total: 44 theorems proved** (11 concrete facts via `native_decide`, 33 structural
 via Mathlib). **0 open obligations.** A verified discrete-log cryptography library:
-generic hardness (`Θ(√n)`, secp256k1 ≥128-bit), and the soundness/completeness of
-deployed protocols — Schnorr/EdDSA, Diffie–Hellman, ElGamal, Pedersen, Okamoto,
-Chaum–Pedersen DLEQ, Schnorr multisig (Taproot), Feldman VSS.
+generic hardness (`Θ(√n)`, secp256k1 ≥128-bit), the soundness/completeness of
+deployed protocols (Schnorr/EdDSA, Diffie–Hellman, ElGamal, Pedersen, Okamoto,
+Chaum–Pedersen DLEQ, Schnorr multisig/Taproot, Feldman VSS), and secp256k1 as a
+Mathlib elliptic curve with `j = 0` (the CM structure behind its GLV endomorphism).
 
 ¹ `secp256k1_generic_security` is stated conditional on the hypothesis
 `[Fact n.Prime]` — the standard, published primality of the secp256k1 group order
 (SEC 2), which is not brute-force decidable for a 256-bit number. This is a
 hypothesis, **not an axiom**; the kernel still checks the full derivation.
+
+² The elliptic-curve facts are stated under `[Fact p.Prime]` (the published
+primality of the field characteristic, which makes `ZMod p` a field). Same status:
+a hypothesis, **not an axiom**.
 
 ## How this grows
 A new claim from `formalizable` becomes a theorem in `Ecdlp/`, gets committed,
