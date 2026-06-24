@@ -63,4 +63,19 @@ theorem secp256k1_generator_equation :
   simp only [secp256k1]
   linear_combination hcast
 
+
+/-- **The secp256k1 base point is nonsingular** — a smooth point, hence an actual
+element of the group `secp256k1.toAffine.Point`. (Uses `Gx ≠ 0`: the partial
+derivative `3·Gx² ≠ 0` is nonzero in `𝔽_p`.) -/
+theorem secp256k1_generator_nonsingular :
+    secp256k1.toAffine.Nonsingular
+      (Secp256k1.Gx : ZMod Secp256k1.p) (Secp256k1.Gy : ZMod Secp256k1.p) := by
+  rw [WeierstrassCurve.Affine.nonsingular_iff]
+  refine ⟨secp256k1_generator_equation, Or.inl ?_⟩
+  have hne : ((3 * Secp256k1.Gx ^ 2 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by
+    rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide
+  push_cast at hne
+  simp only [secp256k1, zero_mul, mul_zero, add_zero, zero_add]
+  exact fun h => hne h.symm
+
 end Ecdlp.Curve
