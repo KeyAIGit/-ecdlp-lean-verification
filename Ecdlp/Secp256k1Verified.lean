@@ -20,4 +20,12 @@ theorem beta_is_cube_root : beta^3 % p = 1 := by native_decide
 theorem lam_lt_n : lam < n := by native_decide
 theorem beta_lt_p : beta < p := by native_decide
 
+
+def Gx : Nat := 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
+def Gy : Nat := 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8
+
+/-- The secp256k1 base point `G = (Gx, Gy)` satisfies the curve equation
+`y² = x³ + 7` (mod `p`). -/
+theorem generator_on_curve : (Gy ^ 2) % p = (Gx ^ 3 + 7) % p := by native_decide
+
 end Secp256k1
