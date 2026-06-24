@@ -3,3 +3,4 @@ import Ecdlp.Lagrange
 import Ecdlp.Statements
 import Ecdlp.Ontology
 import Ecdlp.Proved.Cofactor
+import Ecdlp.Proved.PrimeOrder
