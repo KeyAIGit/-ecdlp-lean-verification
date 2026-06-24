@@ -36,12 +36,16 @@ git history and the GitHub Actions tab.
 | model soundness: `eval` is additive on forms (group mult ↔ form add) | `Ecdlp.GenericGroup.eval_add` | Ecdlp/Proved/GenericGroupBound.lean | Mathlib | proved |
 | model soundness: `eval` respects negation (group inverse ↔ form neg) | `Ecdlp.GenericGroup.eval_neg` | Ecdlp/Proved/GenericGroupBound.lean | Mathlib | proved |
 | model soundness: identity is the zero form | `Ecdlp.GenericGroup.eval_zero` | Ecdlp/Proved/GenericGroupBound.lean | Mathlib | proved |
+| **Schnorr special soundness / witness extraction** | `Ecdlp.Schnorr.schnorr_extract` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved |
+| Schnorr: extracted witness is unique | `Ecdlp.Schnorr.schnorr_witness_unique` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved |
+| **Pedersen computational binding ⇒ DLP** | `Ecdlp.Schnorr.pedersen_binding_extract` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved |
+| Schnorr soundness over secp256k1 scalar field | `Ecdlp.Secp256k1Schnorr.secp256k1_schnorr_extract` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved¹ |
 
-**Total: 28 theorems proved** (10 concrete facts via `native_decide`, 18 structural
-via Mathlib). **0 open obligations.** The generic discrete-log complexity is now
-bracketed on both sides: `Ω(√p)` lower bound (`generic_dlog_query_bound`) and
-`O(√n)` upper bound (`bsgs_decomp`), i.e. `Θ(√n)`; Pollard rho's collision is
-guaranteed by pigeonhole.
+**Total: 32 theorems proved** (10 concrete facts via `native_decide`, 22 structural
+via Mathlib). **0 open obligations.** The generic discrete-log complexity is
+bracketed `Θ(√n)` (`generic_dlog_query_bound` / `bsgs_decomp`); the discrete-log
+*protocols* (Schnorr proof of knowledge, Pedersen commitment) are proved sound by
+field-arithmetic extractors.
 
 ¹ `secp256k1_generic_security` is stated conditional on the hypothesis
 `[Fact n.Prime]` — the standard, published primality of the secp256k1 group order
