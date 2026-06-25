@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | 13 (see `VERIFIED.md`) | accepted by the Lean kernel, no `sorry` |
+| **Proved** | 85 (see `VERIFIED.md`) | accepted by the Lean kernel, no `sorry` |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -68,9 +68,23 @@ exact `Θ` statements.
 - **Summation / Semaev polynomials** (`MvPolynomial`, partial) — Mathlib has
   multivariate polynomials but not the elliptic summation polynomials `Sₙ`.
 - **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
-  MOV/FR transfer reductions; the pairing is not in Mathlib.
+  *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib.
 - **Point counting** — `#E(𝔽ₚ) = n` for the concrete curve needs a computation
   Mathlib cannot do; the concrete fact is instead pinned via `native_decide`.
+
+**Realized despite the barrier — the transfer *resistance* of secp256k1.** Although
+the transfer attacks themselves cannot yet be formalized (no pairing), the
+security-relevant boundary facts — that the attacks *cannot help against secp256k1* —
+are now machine-checked, sidestepping the missing foundation the same way the
+generic bound sidestepped the cost model:
+- `secp256k1_embedding_degree_gt_100` (`EmbeddingDegree.lean`) — `p^k ≢ 1 (mod n)`
+  for `1 ≤ k ≤ 100`, so the MOV/FR target field `𝔽_{p^k}` is intractably large.
+- `secp256k1_trace_ordinary_nonanomalous` (`TraceOfFrobenius.lean`) — trace `t ≠ 0`
+  (ordinary, not supersingular), `t ≠ 1` (not anomalous, so Smart/SSSA does not
+  apply), and `t² ≤ 4p` (Hasse). With Pohlig–Hellman (`PohligHellman.lean`) and the
+  generic `Θ(√n)` bound, **the tractable attack landscape is now saturated**: every
+  classical ECDLP attack expressible without a missing Mathlib foundation has a
+  verified node, and the rest are precisely the barriers above.
 
 ### B4. Informal / meta (~133 claims)
 Survey scope, research-gap notes, applicability commentary — no formal statement
