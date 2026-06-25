@@ -192,6 +192,7 @@ FRONTIER = {
     "B3-weil-pairing": [
         "secp256k1_j_eq_zero",
         "secp256k1_embedding_degree_gt_100",
+        "secp256k1_trace_ordinary_nonanomalous",
     ],
     "B3-point-counting": ["secp256k1_n_prime", "secp256k1_p_prime"],
 }

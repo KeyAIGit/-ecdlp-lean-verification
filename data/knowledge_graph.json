@@ -4,12 +4,12 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 64,
+    "theorems": 65,
     "barriers": 6,
-    "edges": 44,
+    "edges": 47,
     "by_method": {
       "Mathlib": 39,
-      "native_decide": 16,
+      "native_decide": 17,
       "Mathlib + native_decide": 9
     }
   },
@@ -717,6 +717,17 @@
       "method": "native_decide",
       "status": "proved",
       "gated": true
+    },
+    {
+      "id": "thm-064",
+      "name": "Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous",
+      "short_name": "secp256k1_trace_ordinary_nonanomalous",
+      "module": "Ecdlp.Proved.TraceOfFrobenius",
+      "file": "Ecdlp/Proved/TraceOfFrobenius.lean",
+      "claim": "secp256k1 trace of Frobenius: ordinary, non-anomalous, Hasse (`t≠0`, `t≠1`, `t≤4p`; Smart/SSSA + supersingular resistance)",
+      "method": "native_decide",
+      "status": "proved",
+      "gated": true
     }
   ],
   "barriers": [
@@ -841,6 +852,11 @@
     },
     {
       "from": "Ecdlp.Proved.Secp256k1GenericSecurity",
+      "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TraceOfFrobenius",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
     },
@@ -970,6 +986,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.TraceOfFrobenius",
+      "type": "imports"
+    },
+    {
       "from": "thm-015",
       "to": "B1-cost-model",
       "type": "frontier_of"
@@ -1006,6 +1027,11 @@
     },
     {
       "from": "thm-063",
+      "to": "B3-weil-pairing",
+      "type": "frontier_of"
+    },
+    {
+      "from": "thm-064",
       "to": "B3-weil-pairing",
       "type": "frontier_of"
     },
