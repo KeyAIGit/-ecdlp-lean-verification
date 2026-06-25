@@ -19,3 +19,4 @@ import Ecdlp.Proved.Secp256k1Order
 import Ecdlp.Proved.Secp256k1PrimeN
 import Ecdlp.Proved.Secp256k1PrimeP
 import Ecdlp.Proved.PohligHellman
+import Ecdlp.Proved.EmbeddingDegree
