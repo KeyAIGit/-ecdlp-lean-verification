@@ -4,12 +4,12 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 63,
+    "theorems": 64,
     "barriers": 6,
-    "edges": 41,
+    "edges": 44,
     "by_method": {
       "Mathlib": 39,
-      "native_decide": 15,
+      "native_decide": 16,
       "Mathlib + native_decide": 9
     }
   },
@@ -706,6 +706,17 @@
       "method": "Mathlib",
       "status": "proved",
       "gated": true
+    },
+    {
+      "id": "thm-063",
+      "name": "Ecdlp.Curve.secp256k1_embedding_degree_gt_100",
+      "short_name": "secp256k1_embedding_degree_gt_100",
+      "module": "Ecdlp.Proved.EmbeddingDegree",
+      "file": "Ecdlp/Proved/EmbeddingDegree.lean",
+      "claim": "secp256k1 has no small embedding degree (`p^k ≢ 1 mod n` for `1≤k≤100`; MOV/FR resistance)",
+      "method": "native_decide",
+      "status": "proved",
+      "gated": true
     }
   ],
   "barriers": [
@@ -816,6 +827,11 @@
     {
       "from": "Ecdlp.Proved.DlogAdvanced",
       "to": "Ecdlp.Proved.SchnorrSoundness",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.EmbeddingDegree",
+      "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
     },
     {
@@ -949,6 +965,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.EmbeddingDegree",
+      "type": "imports"
+    },
+    {
       "from": "thm-015",
       "to": "B1-cost-model",
       "type": "frontier_of"
@@ -980,6 +1001,11 @@
     },
     {
       "from": "thm-043",
+      "to": "B3-weil-pairing",
+      "type": "frontier_of"
+    },
+    {
+      "from": "thm-063",
       "to": "B3-weil-pairing",
       "type": "frontier_of"
     },

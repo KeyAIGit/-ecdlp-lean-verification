@@ -71,8 +71,9 @@ git history and the GitHub Actions tab.
 | **Pohlig–Hellman: projection to order-`d` subgroup** | `Ecdlp.PohligHellman.projection` | Ecdlp/Proved/PohligHellman.lean | Mathlib | proved |
 | **Pohlig–Hellman: component depends only on `x mod d`** | `Ecdlp.PohligHellman.component` | Ecdlp/Proved/PohligHellman.lean | Mathlib | proved |
 | **Pohlig–Hellman: CRT reconstruction** | `Ecdlp.PohligHellman.reconstruct` | Ecdlp/Proved/PohligHellman.lean | Mathlib | proved |
+| **secp256k1 has no small embedding degree** (`p^k ≢ 1 mod n` for `1≤k≤100`; MOV/FR resistance) | `Ecdlp.Curve.secp256k1_embedding_degree_gt_100` | Ecdlp/Proved/EmbeddingDegree.lean | native_decide | proved |
 
-**Total: 83 theorems proved** (15 concrete `native_decide` facts, 46 structural via
+**Total: 84 theorems proved** (16 concrete `native_decide` facts, 46 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,

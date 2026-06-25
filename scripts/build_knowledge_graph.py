@@ -189,7 +189,10 @@ FRONTIER = {
         "pollard_rho_collision",
         "secp256k1_generic_security",
     ],
-    "B3-weil-pairing": ["secp256k1_j_eq_zero"],
+    "B3-weil-pairing": [
+        "secp256k1_j_eq_zero",
+        "secp256k1_embedding_degree_gt_100",
+    ],
     "B3-point-counting": ["secp256k1_n_prime", "secp256k1_p_prime"],
 }
 
