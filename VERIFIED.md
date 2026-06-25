@@ -68,8 +68,11 @@ git history and the GitHub Actions tab.
 | **secp256k1 generator is nonsingular** (a group element) | `Ecdlp.Curve.secp256k1_generator_nonsingular` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib + native_decide | proved² |
 | **secp256k1 field prime `p` is prime** (full Pratt certificate) | `Ecdlp.Primality.secp256k1_p_prime` | Ecdlp/Proved/Secp256k1PrimeP.lean | Mathlib + native_decide | proved |
 | **secp256k1 group order `n` is prime** (full Pratt certificate) | `Ecdlp.Primality.secp256k1_n_prime` | Ecdlp/Proved/Secp256k1PrimeN.lean | Mathlib + native_decide | proved |
+| **Pohlig–Hellman: projection to order-`d` subgroup** | `Ecdlp.PohligHellman.projection` | Ecdlp/Proved/PohligHellman.lean | Mathlib | proved |
+| **Pohlig–Hellman: component depends only on `x mod d`** | `Ecdlp.PohligHellman.component` | Ecdlp/Proved/PohligHellman.lean | Mathlib | proved |
+| **Pohlig–Hellman: CRT reconstruction** | `Ecdlp.PohligHellman.reconstruct` | Ecdlp/Proved/PohligHellman.lean | Mathlib | proved |
 
-**Total: 80 theorems proved** (15 concrete `native_decide` facts, 43 structural via
+**Total: 83 theorems proved** (15 concrete `native_decide` facts, 46 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,
