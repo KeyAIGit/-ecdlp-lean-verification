@@ -9,7 +9,7 @@ open Nat
 theorem pr_4681609 : Nat.Prime 4681609 := by
   refine lucas_primality 4681609 (23 : ZMod 4681609) (by native_decide) ?_
   intro q hq hqd
-  rw [show (4681609 : ℕ) - 1 = 2 ^ 3 * 3 ^ 1 * 97 ^ 1 * 2011 ^ 1 by native_decide] at hqd
+  rw [show (4681609 : ℕ) - 1 = 2 ^ 3 * (3 ^ 1 * (97 ^ 1 * (2011 ^ 1))) by native_decide] at hqd
   rcases (Nat.Prime.dvd_mul hq).mp hqd with h | h
   · rw [(Nat.prime_dvd_prime_iff_eq hq (show Nat.Prime 2 by norm_num)).mp (hq.dvd_of_dvd_pow h)]; native_decide
   ·
@@ -24,7 +24,7 @@ theorem pr_4681609 : Nat.Prime 4681609 := by
 theorem pr_107361793816595537 : Nat.Prime 107361793816595537 := by
   refine lucas_primality 107361793816595537 (3 : ZMod 107361793816595537) (by native_decide) ?_
   intro q hq hqd
-  rw [show (107361793816595537 : ℕ) - 1 = 2 ^ 4 * 16699 ^ 1 * 85831 ^ 1 * 4681609 ^ 1 by native_decide] at hqd
+  rw [show (107361793816595537 : ℕ) - 1 = 2 ^ 4 * (16699 ^ 1 * (85831 ^ 1 * (4681609 ^ 1))) by native_decide] at hqd
   rcases (Nat.Prime.dvd_mul hq).mp hqd with h | h
   · rw [(Nat.prime_dvd_prime_iff_eq hq (show Nat.Prime 2 by norm_num)).mp (hq.dvd_of_dvd_pow h)]; native_decide
   ·
@@ -39,7 +39,7 @@ theorem pr_107361793816595537 : Nat.Prime 107361793816595537 := by
 theorem pr_44706919 : Nat.Prime 44706919 := by
   refine lucas_primality 44706919 (6 : ZMod 44706919) (by native_decide) ?_
   intro q hq hqd
-  rw [show (44706919 : ℕ) - 1 = 2 ^ 1 * 3 ^ 1 * 797 ^ 1 * 9349 ^ 1 by native_decide] at hqd
+  rw [show (44706919 : ℕ) - 1 = 2 ^ 1 * (3 ^ 1 * (797 ^ 1 * (9349 ^ 1))) by native_decide] at hqd
   rcases (Nat.Prime.dvd_mul hq).mp hqd with h | h
   · rw [(Nat.prime_dvd_prime_iff_eq hq (show Nat.Prime 2 by norm_num)).mp (hq.dvd_of_dvd_pow h)]; native_decide
   ·
@@ -54,7 +54,7 @@ theorem pr_44706919 : Nat.Prime 44706919 := by
 theorem pr_174723607534414371449 : Nat.Prime 174723607534414371449 := by
   refine lucas_primality 174723607534414371449 (3 : ZMod 174723607534414371449) (by native_decide) ?_
   intro q hq hqd
-  rw [show (174723607534414371449 : ℕ) - 1 = 2 ^ 3 * 17 ^ 1 * 59 ^ 1 * 4051 ^ 1 * 120233 ^ 1 * 44706919 ^ 1 by native_decide] at hqd
+  rw [show (174723607534414371449 : ℕ) - 1 = 2 ^ 3 * (17 ^ 1 * (59 ^ 1 * (4051 ^ 1 * (120233 ^ 1 * (44706919 ^ 1))))) by native_decide] at hqd
   rcases (Nat.Prime.dvd_mul hq).mp hqd with h | h
   · rw [(Nat.prime_dvd_prime_iff_eq hq (show Nat.Prime 2 by norm_num)).mp (hq.dvd_of_dvd_pow h)]; native_decide
   ·
@@ -75,7 +75,7 @@ theorem pr_174723607534414371449 : Nat.Prime 174723607534414371449 := by
 theorem pr_545358713 : Nat.Prime 545358713 := by
   refine lucas_primality 545358713 (5 : ZMod 545358713) (by native_decide) ?_
   intro q hq hqd
-  rw [show (545358713 : ℕ) - 1 = 2 ^ 3 * 41 ^ 1 * 59 ^ 1 * 28181 ^ 1 by native_decide] at hqd
+  rw [show (545358713 : ℕ) - 1 = 2 ^ 3 * (41 ^ 1 * (59 ^ 1 * (28181 ^ 1))) by native_decide] at hqd
   rcases (Nat.Prime.dvd_mul hq).mp hqd with h | h
   · rw [(Nat.prime_dvd_prime_iff_eq hq (show Nat.Prime 2 by norm_num)).mp (hq.dvd_of_dvd_pow h)]; native_decide
   ·
@@ -90,7 +90,7 @@ theorem pr_545358713 : Nat.Prime 545358713 := by
 theorem pr_1627771 : Nat.Prime 1627771 := by
   refine lucas_primality 1627771 (3 : ZMod 1627771) (by native_decide) ?_
   intro q hq hqd
-  rw [show (1627771 : ℕ) - 1 = 2 ^ 1 * 3 ^ 1 * 5 ^ 1 * 29 ^ 1 * 1871 ^ 1 by native_decide] at hqd
+  rw [show (1627771 : ℕ) - 1 = 2 ^ 1 * (3 ^ 1 * (5 ^ 1 * (29 ^ 1 * (1871 ^ 1)))) by native_decide] at hqd
   rcases (Nat.Prime.dvd_mul hq).mp hqd with h | h
   · rw [(Nat.prime_dvd_prime_iff_eq hq (show Nat.Prime 2 by norm_num)).mp (hq.dvd_of_dvd_pow h)]; native_decide
   ·
@@ -108,7 +108,7 @@ theorem pr_1627771 : Nat.Prime 1627771 := by
 theorem pr_297159362677 : Nat.Prime 297159362677 := by
   refine lucas_primality 297159362677 (2 : ZMod 297159362677) (by native_decide) ?_
   intro q hq hqd
-  rw [show (297159362677 : ℕ) - 1 = 2 ^ 2 * 3 ^ 2 * 11 ^ 1 * 461 ^ 1 * 1627771 ^ 1 by native_decide] at hqd
+  rw [show (297159362677 : ℕ) - 1 = 2 ^ 2 * (3 ^ 2 * (11 ^ 1 * (461 ^ 1 * (1627771 ^ 1)))) by native_decide] at hqd
   rcases (Nat.Prime.dvd_mul hq).mp hqd with h | h
   · rw [(Nat.prime_dvd_prime_iff_eq hq (show Nat.Prime 2 by norm_num)).mp (hq.dvd_of_dvd_pow h)]; native_decide
   ·
@@ -126,7 +126,7 @@ theorem pr_297159362677 : Nat.Prime 297159362677 := by
 theorem pr_29047611873442575647497758179 : Nat.Prime 29047611873442575647497758179 := by
   refine lucas_primality 29047611873442575647497758179 (2 : ZMod 29047611873442575647497758179) (by native_decide) ?_
   intro q hq hqd
-  rw [show (29047611873442575647497758179 : ℕ) - 1 = 2 ^ 1 * 293 ^ 1 * 305873 ^ 1 * 545358713 ^ 1 * 297159362677 ^ 1 by native_decide] at hqd
+  rw [show (29047611873442575647497758179 : ℕ) - 1 = 2 ^ 1 * (293 ^ 1 * (305873 ^ 1 * (545358713 ^ 1 * (297159362677 ^ 1)))) by native_decide] at hqd
   rcases (Nat.Prime.dvd_mul hq).mp hqd with h | h
   · rw [(Nat.prime_dvd_prime_iff_eq hq (show Nat.Prime 2 by norm_num)).mp (hq.dvd_of_dvd_pow h)]; native_decide
   ·
@@ -144,7 +144,7 @@ theorem pr_29047611873442575647497758179 : Nat.Prime 290476118734425756474977581
 theorem pr_341948486974166000522343609283189 : Nat.Prime 341948486974166000522343609283189 := by
   refine lucas_primality 341948486974166000522343609283189 (2 : ZMod 341948486974166000522343609283189) (by native_decide) ?_
   intro q hq hqd
-  rw [show (341948486974166000522343609283189 : ℕ) - 1 = 2 ^ 2 * 3 ^ 3 * 109 ^ 1 * 29047611873442575647497758179 ^ 1 by native_decide] at hqd
+  rw [show (341948486974166000522343609283189 : ℕ) - 1 = 2 ^ 2 * (3 ^ 3 * (109 ^ 1 * (29047611873442575647497758179 ^ 1))) by native_decide] at hqd
   rcases (Nat.Prime.dvd_mul hq).mp hqd with h | h
   · rw [(Nat.prime_dvd_prime_iff_eq hq (show Nat.Prime 2 by norm_num)).mp (hq.dvd_of_dvd_pow h)]; native_decide
   ·
@@ -159,7 +159,7 @@ theorem pr_341948486974166000522343609283189 : Nat.Prime 34194848697416600052234
 theorem pr_115792089237316195423570985008687907852837564279074904382605163141518161494337 : Nat.Prime 115792089237316195423570985008687907852837564279074904382605163141518161494337 := by
   refine lucas_primality 115792089237316195423570985008687907852837564279074904382605163141518161494337 (7 : ZMod 115792089237316195423570985008687907852837564279074904382605163141518161494337) (by native_decide) ?_
   intro q hq hqd
-  rw [show (115792089237316195423570985008687907852837564279074904382605163141518161494337 : ℕ) - 1 = 2 ^ 6 * 3 ^ 1 * 149 ^ 1 * 631 ^ 1 * 107361793816595537 ^ 1 * 174723607534414371449 ^ 1 * 341948486974166000522343609283189 ^ 1 by native_decide] at hqd
+  rw [show (115792089237316195423570985008687907852837564279074904382605163141518161494337 : ℕ) - 1 = 2 ^ 6 * (3 ^ 1 * (149 ^ 1 * (631 ^ 1 * (107361793816595537 ^ 1 * (174723607534414371449 ^ 1 * (341948486974166000522343609283189 ^ 1)))))) by native_decide] at hqd
   rcases (Nat.Prime.dvd_mul hq).mp hqd with h | h
   · rw [(Nat.prime_dvd_prime_iff_eq hq (show Nat.Prime 2 by norm_num)).mp (hq.dvd_of_dvd_pow h)]; native_decide
   ·

@@ -50,7 +50,10 @@ def ref(q):
 def emit(c):
     """One `pr_<m>` theorem (assumes children already emitted)."""
     m, a, facs = c["m"], c["a"], c["factors"]
-    prod = " * ".join(f"{q} ^ {e}" for q, e in facs)
+    _terms = [f"{q} ^ {e}" for q, e in facs]
+    prod = _terms[-1]
+    for _t in reversed(_terms[:-1]):
+        prod = f"{_t} * ({prod})"
     L = [f"theorem pr_{m} : Nat.Prime {m} := by",
          f"  refine lucas_primality {m} ({a} : ZMod {m}) (by native_decide) ?_",
          f"  intro q hq hqd",
