@@ -84,8 +84,9 @@ git history and the GitHub Actions tab.
 | collision equation, `ZMod` subtractive form `(a−c)=x(d−b)` | `Ecdlp.GenericGroup.collision_zmod` | Ecdlp/Proved/CollisionEquation.lean | Mathlib | proved |
 | **discrete-log recovery `x=(a−c)(d−b)⁻¹`** (collision solve, `d−b` a unit) | `Ecdlp.GenericGroup.collision_recovers_log` | Ecdlp/Proved/CollisionEquation.lean | Mathlib | proved |
 | **discrete log well-defined mod `n`** (`g^x=g^y ⇒ x≡y`) | `Ecdlp.GenericGroup.dlog_unique` | Ecdlp/Proved/CollisionEquation.lean | Mathlib | proved |
+| **`deg Ψ₂Sq = 3`** (2-torsion count: `#E[2] ≤ 4`) | `Ecdlp.Curve.secp256k1_Ψ₂Sq_natDegree` | Ecdlp/Proved/DivisionPolynomialDegree.lean | Mathlib + native_decide | proved |
 
-**Total: 96 theorems proved** (17 concrete `native_decide` facts, 57 structural via
+**Total: 97 theorems proved** (18 concrete `native_decide` facts, 57 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,
