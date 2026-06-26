@@ -21,3 +21,4 @@ import Ecdlp.Proved.Secp256k1PrimeP
 import Ecdlp.Proved.PohligHellman
 import Ecdlp.Proved.EmbeddingDegree
 import Ecdlp.Proved.TraceOfFrobenius
+import Ecdlp.Proved.DivisionPolynomial
