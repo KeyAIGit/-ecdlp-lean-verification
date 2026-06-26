@@ -2,11 +2,11 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**72 theorems** · **6 barriers** · **53 edges**
+**74 theorems** · **6 barriers** · **54 edges**
 
-By proof method: Mathlib (46), native_decide (17), Mathlib + native_decide (9)
+By proof method: Mathlib (48), native_decide (17), Mathlib + native_decide (9)
 
-By research area: curve-torsion (31), generic-hardness (16), protocol-soundness (16), primality (3), reduction (3), attack-resistance (2), params (1)
+By research area: curve-torsion (31), generic-hardness (17), protocol-soundness (16), primality (3), reduction (3), attack-resistance (2), params (1), other (1)
 
 ## Verified theorems by area
 
@@ -46,7 +46,7 @@ By research area: curve-torsion (31), generic-hardness (16), protocol-soundness 
 | `secp256k1_Ψ₃` | secp256k1 3-division polynomial `Ψ₃ = 3X⁴+84X` (3-torsion `E[3]`; the CM-by-ℤ[ζ₃] / GLV structure) | Mathlib | `DivisionPolynomial.lean` |
 | `secp256k1_Ψ₂Sq_root_of_two_torsion` | 2-torsion `x`-coordinate ⇒ root of `Ψ₂Sq` (division-polynomial↔torsion, rung 4 forward) | Mathlib | `TwoTorsion.lean` |
 
-### generic-hardness (16)
+### generic-hardness (17)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -66,6 +66,7 @@ By research area: curve-torsion (31), generic-hardness (16), protocol-soundness 
 | `eval_add` | model soundness: `eval` is additive on forms (group mult ↔ form add) | Mathlib | `GenericGroupBound.lean` |
 | `eval_neg` | model soundness: `eval` respects negation (group inverse ↔ form neg) | Mathlib | `GenericGroupBound.lean` |
 | `eval_zero` | model soundness: identity is the zero form | Mathlib | `GenericGroupBound.lean` |
+| `collision_modEq` | collision equation `a+xb ≡ c+xd (mod n)` (rho/BSGS solve step) | Mathlib | `CollisionEquation.lean` |
 
 ### protocol-soundness (16)
 
@@ -116,6 +117,12 @@ By research area: curve-torsion (31), generic-hardness (16), protocol-soundness 
 | theorem | claim | method | file |
 |---|---|---|---|
 | `p_mod_four` | secp256k1 `p ≡ 3 (mod 4)` (point decompression) | native_decide | `Secp256k1Params.lean` |
+
+### other (1)
+
+| theorem | claim | method | file |
+|---|---|---|---|
+| `collision_zmod` | collision equation, `ZMod` subtractive form `(a−c)=x(d−b) | Mathlib | `CollisionEquation.lean` |
 
 ## Barriers and their verified frontier
 

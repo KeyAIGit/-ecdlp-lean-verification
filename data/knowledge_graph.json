@@ -4,22 +4,23 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 72,
+    "theorems": 74,
     "barriers": 6,
-    "edges": 53,
+    "edges": 54,
     "by_method": {
-      "Mathlib": 46,
+      "Mathlib": 48,
       "native_decide": 17,
       "Mathlib + native_decide": 9
     },
     "by_area": {
       "curve-torsion": 31,
-      "generic-hardness": 16,
+      "generic-hardness": 17,
       "protocol-soundness": 16,
       "primality": 3,
       "reduction": 3,
       "attack-resistance": 2,
-      "params": 1
+      "params": 1,
+      "other": 1
     }
   },
   "theorems": [
@@ -958,6 +959,32 @@
       "area": "curve-torsion",
       "dependency_depth": 3,
       "gated": true
+    },
+    {
+      "id": "thm-072",
+      "name": "Ecdlp.GenericGroup.collision_modEq",
+      "short_name": "collision_modEq",
+      "module": "Ecdlp.Proved.CollisionEquation",
+      "file": "Ecdlp/Proved/CollisionEquation.lean",
+      "claim": "collision equation `a+xb ≡ c+xd (mod n)` (rho/BSGS solve step)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-073",
+      "name": "Ecdlp.GenericGroup.collision_zmod",
+      "short_name": "collision_zmod",
+      "module": "Ecdlp.Proved.CollisionEquation",
+      "file": "Ecdlp/Proved/CollisionEquation.lean",
+      "claim": "collision equation, `ZMod` subtractive form `(a−c)=x(d−b)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "other",
+      "dependency_depth": 0,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1238,6 +1265,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.TwoTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.CollisionEquation",
       "type": "imports"
     },
     {

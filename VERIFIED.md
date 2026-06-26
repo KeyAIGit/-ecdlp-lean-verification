@@ -80,8 +80,10 @@ git history and the GitHub Actions tab.
 | **secp256k1 2-division polynomial `Ψ₂Sq = 4X³+28`** (Mathlib torsion bridge; 2-torsion `x`-coords) | `Ecdlp.Curve.secp256k1_Ψ₂Sq` | Ecdlp/Proved/DivisionPolynomial.lean | Mathlib | proved |
 | **secp256k1 3-division polynomial `Ψ₃ = 3X⁴+84X`** (3-torsion `E[3]`; the CM-by-ℤ[ζ₃] / GLV structure) | `Ecdlp.Curve.secp256k1_Ψ₃` | Ecdlp/Proved/DivisionPolynomial.lean | Mathlib | proved |
 | **2-torsion `x`-coordinate ⇒ root of `Ψ₂Sq`** (division-polynomial↔torsion, rung 4 forward) | `Ecdlp.Curve.secp256k1_Ψ₂Sq_root_of_two_torsion` | Ecdlp/Proved/TwoTorsion.lean | Mathlib | proved |
+| **collision equation `a+xb ≡ c+xd (mod n)`** (rho/BSGS solve step) | `Ecdlp.GenericGroup.collision_modEq` | Ecdlp/Proved/CollisionEquation.lean | Mathlib | proved |
+| collision equation, `ZMod` subtractive form `(a−c)=x(d−b)` | `Ecdlp.GenericGroup.collision_zmod` | Ecdlp/Proved/CollisionEquation.lean | Mathlib | proved |
 
-**Total: 92 theorems proved** (17 concrete `native_decide` facts, 53 structural via
+**Total: 94 theorems proved** (17 concrete `native_decide` facts, 55 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,
