@@ -73,8 +73,13 @@ git history and the GitHub Actions tab.
 | **Pohlig–Hellman: CRT reconstruction** | `Ecdlp.PohligHellman.reconstruct` | Ecdlp/Proved/PohligHellman.lean | Mathlib | proved |
 | **secp256k1 has no small embedding degree** (`p^k ≢ 1 mod n` for `1≤k≤100`; MOV/FR resistance) | `Ecdlp.Curve.secp256k1_embedding_degree_gt_100` | Ecdlp/Proved/EmbeddingDegree.lean | native_decide | proved |
 | **secp256k1 trace of Frobenius: ordinary, non-anomalous, Hasse** (`t≠0`, `t≠1`, `t²≤4p`; Smart/SSSA + supersingular resistance) | `Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous` | Ecdlp/Proved/TraceOfFrobenius.lean | native_decide | proved |
+| secp256k1 `b₂ = 0` (Weierstrass invariant) | `Ecdlp.Curve.secp256k1_b₂` | Ecdlp/Proved/DivisionPolynomial.lean | Mathlib | proved |
+| secp256k1 `b₄ = 0` (Weierstrass invariant) | `Ecdlp.Curve.secp256k1_b₄` | Ecdlp/Proved/DivisionPolynomial.lean | Mathlib | proved |
+| secp256k1 `b₆ = 28` (Weierstrass invariant) | `Ecdlp.Curve.secp256k1_b₆` | Ecdlp/Proved/DivisionPolynomial.lean | Mathlib | proved |
+| secp256k1 `b₈ = 0` (Weierstrass invariant) | `Ecdlp.Curve.secp256k1_b₈` | Ecdlp/Proved/DivisionPolynomial.lean | Mathlib | proved |
+| **secp256k1 2-division polynomial `Ψ₂Sq = 4X³+28`** (Mathlib torsion bridge; 2-torsion `x`-coords) | `Ecdlp.Curve.secp256k1_Ψ₂Sq` | Ecdlp/Proved/DivisionPolynomial.lean | Mathlib | proved |
 
-**Total: 85 theorems proved** (17 concrete `native_decide` facts, 46 structural via
+**Total: 90 theorems proved** (17 concrete `native_decide` facts, 51 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,

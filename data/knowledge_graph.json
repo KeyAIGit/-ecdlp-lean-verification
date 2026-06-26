@@ -4,11 +4,11 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 65,
+    "theorems": 70,
     "barriers": 6,
-    "edges": 47,
+    "edges": 51,
     "by_method": {
-      "Mathlib": 39,
+      "Mathlib": 44,
       "native_decide": 17,
       "Mathlib + native_decide": 9
     }
@@ -728,6 +728,61 @@
       "method": "native_decide",
       "status": "proved",
       "gated": true
+    },
+    {
+      "id": "thm-065",
+      "name": "Ecdlp.Curve.secp256k1_b₂",
+      "short_name": "secp256k1_b₂",
+      "module": "Ecdlp.Proved.DivisionPolynomial",
+      "file": "Ecdlp/Proved/DivisionPolynomial.lean",
+      "claim": "secp256k1 `b₂ = 0` (Weierstrass invariant)",
+      "method": "Mathlib",
+      "status": "proved",
+      "gated": true
+    },
+    {
+      "id": "thm-066",
+      "name": "Ecdlp.Curve.secp256k1_b₄",
+      "short_name": "secp256k1_b₄",
+      "module": "Ecdlp.Proved.DivisionPolynomial",
+      "file": "Ecdlp/Proved/DivisionPolynomial.lean",
+      "claim": "secp256k1 `b₄ = 0` (Weierstrass invariant)",
+      "method": "Mathlib",
+      "status": "proved",
+      "gated": true
+    },
+    {
+      "id": "thm-067",
+      "name": "Ecdlp.Curve.secp256k1_b₆",
+      "short_name": "secp256k1_b₆",
+      "module": "Ecdlp.Proved.DivisionPolynomial",
+      "file": "Ecdlp/Proved/DivisionPolynomial.lean",
+      "claim": "secp256k1 `b₆ = 28` (Weierstrass invariant)",
+      "method": "Mathlib",
+      "status": "proved",
+      "gated": true
+    },
+    {
+      "id": "thm-068",
+      "name": "Ecdlp.Curve.secp256k1_b₈",
+      "short_name": "secp256k1_b₈",
+      "module": "Ecdlp.Proved.DivisionPolynomial",
+      "file": "Ecdlp/Proved/DivisionPolynomial.lean",
+      "claim": "secp256k1 `b₈ = 0` (Weierstrass invariant)",
+      "method": "Mathlib",
+      "status": "proved",
+      "gated": true
+    },
+    {
+      "id": "thm-069",
+      "name": "Ecdlp.Curve.secp256k1_Ψ₂Sq",
+      "short_name": "secp256k1_Ψ₂Sq",
+      "module": "Ecdlp.Proved.DivisionPolynomial",
+      "file": "Ecdlp/Proved/DivisionPolynomial.lean",
+      "claim": "secp256k1 2-division polynomial `Ψ₂Sq = 4X³+28` (Mathlib torsion bridge; 2-torsion `x`-coords)",
+      "method": "Mathlib",
+      "status": "proved",
+      "gated": true
     }
   ],
   "barriers": [
@@ -816,6 +871,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Targets.weil_pairing_nondegenerate",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.SchnorrSoundness",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -838,6 +898,11 @@
     {
       "from": "Ecdlp.Proved.DlogAdvanced",
       "to": "Ecdlp.Proved.SchnorrSoundness",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomial",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
@@ -991,6 +1056,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
       "from": "thm-015",
       "to": "B1-cost-model",
       "type": "frontier_of"
@@ -1032,6 +1102,11 @@
     },
     {
       "from": "thm-064",
+      "to": "B3-weil-pairing",
+      "type": "frontier_of"
+    },
+    {
+      "from": "thm-069",
       "to": "B3-weil-pairing",
       "type": "frontier_of"
     },
