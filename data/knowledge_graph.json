@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 71,
+    "theorems": 72,
     "barriers": 6,
-    "edges": 51,
+    "edges": 53,
     "by_method": {
-      "Mathlib": 45,
+      "Mathlib": 46,
       "native_decide": 17,
       "Mathlib + native_decide": 9
     },
     "by_area": {
-      "curve-torsion": 30,
+      "curve-torsion": 31,
       "generic-hardness": 16,
       "protocol-soundness": 16,
       "primality": 3,
@@ -945,6 +945,19 @@
       "area": "curve-torsion",
       "dependency_depth": 2,
       "gated": true
+    },
+    {
+      "id": "thm-071",
+      "name": "Ecdlp.Curve.secp256k1_Ψ₂Sq_root_of_two_torsion",
+      "short_name": "secp256k1_Ψ₂Sq_root_of_two_torsion",
+      "module": "Ecdlp.Proved.TwoTorsion",
+      "file": "Ecdlp/Proved/TwoTorsion.lean",
+      "claim": "2-torsion `x`-coordinate ⇒ root of `Ψ₂Sq` (division-polynomial↔torsion, rung 4 forward)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 3,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1033,11 +1046,6 @@
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Targets.weil_pairing_nondegenerate",
-      "to": "Ecdlp.Proved.Secp256k1Curve",
-      "type": "imports"
-    },
-    {
       "from": "Ecdlp.Proved.SchnorrSoundness",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -1045,6 +1053,11 @@
     {
       "from": "Ecdlp.Proved.Secp256k1PrimeP",
       "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TwoTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
     },
     {
@@ -1223,6 +1236,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.TwoTorsion",
+      "type": "imports"
+    },
+    {
       "from": "thm-015",
       "to": "B1-cost-model",
       "type": "frontier_of"
@@ -1269,6 +1287,11 @@
     },
     {
       "from": "thm-069",
+      "to": "B3-weil-pairing",
+      "type": "frontier_of"
+    },
+    {
+      "from": "thm-071",
       "to": "B3-weil-pairing",
       "type": "frontier_of"
     },

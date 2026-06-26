@@ -194,6 +194,7 @@ FRONTIER = {
         "secp256k1_embedding_degree_gt_100",
         "secp256k1_trace_ordinary_nonanomalous",
         "secp256k1_Ψ₂Sq",
+        "secp256k1_Ψ₂Sq_root_of_two_torsion",
     ],
     "B3-point-counting": ["secp256k1_n_prime", "secp256k1_p_prime"],
 }

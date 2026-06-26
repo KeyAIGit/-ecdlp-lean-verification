@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**71 theorems** · **6 barriers** · **51 edges**
+**72 theorems** · **6 barriers** · **53 edges**
 
-By proof method: Mathlib (45), native_decide (17), Mathlib + native_decide (9)
+By proof method: Mathlib (46), native_decide (17), Mathlib + native_decide (9)
 
-By research area: curve-torsion (30), generic-hardness (16), protocol-soundness (16), primality (3), reduction (3), attack-resistance (2), params (1)
+By research area: curve-torsion (31), generic-hardness (16), protocol-soundness (16), primality (3), reduction (3), attack-resistance (2), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (30)
+### curve-torsion (31)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -44,6 +44,7 @@ By research area: curve-torsion (30), generic-hardness (16), protocol-soundness 
 | `secp256k1_b₈` | secp256k1 `b₈ = 0` (Weierstrass invariant) | Mathlib | `DivisionPolynomial.lean` |
 | `secp256k1_Ψ₂Sq` | secp256k1 2-division polynomial `Ψ₂Sq = 4X³+28` (Mathlib torsion bridge; 2-torsion `x`-coords) | Mathlib | `DivisionPolynomial.lean` |
 | `secp256k1_Ψ₃` | secp256k1 3-division polynomial `Ψ₃ = 3X⁴+84X` (3-torsion `E[3]`; the CM-by-ℤ[ζ₃] / GLV structure) | Mathlib | `DivisionPolynomial.lean` |
+| `secp256k1_Ψ₂Sq_root_of_two_torsion` | 2-torsion `x`-coordinate ⇒ root of `Ψ₂Sq` (division-polynomial↔torsion, rung 4 forward) | Mathlib | `TwoTorsion.lean` |
 
 ### generic-hardness (16)
 
@@ -148,7 +149,7 @@ Each barrier is a foundation Mathlib lacks. The *frontier* lists verified theore
 - **Missing:** Weil pairing on EllipticCurve, isogeny machinery
 - **Blocks:** MOV/FR transfer reductions to finite-field DLP
 - **Partial progress:** Mathlib has the curve and isogeny base, not the pairing.
-- **Verified frontier:** `secp256k1_j_eq_zero`, `secp256k1_embedding_degree_gt_100`, `secp256k1_trace_ordinary_nonanomalous`, `secp256k1_Ψ₂Sq`
+- **Verified frontier:** `secp256k1_j_eq_zero`, `secp256k1_embedding_degree_gt_100`, `secp256k1_trace_ordinary_nonanomalous`, `secp256k1_Ψ₂Sq`, `secp256k1_Ψ₂Sq_root_of_two_torsion`
 
 ### B3-point-counting — Concrete point count #E(F_p) = n not kernel-computable
 
