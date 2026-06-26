@@ -4,11 +4,11 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 70,
+    "theorems": 71,
     "barriers": 6,
     "edges": 51,
     "by_method": {
-      "Mathlib": 44,
+      "Mathlib": 45,
       "native_decide": 17,
       "Mathlib + native_decide": 9
     }
@@ -780,6 +780,17 @@
       "module": "Ecdlp.Proved.DivisionPolynomial",
       "file": "Ecdlp/Proved/DivisionPolynomial.lean",
       "claim": "secp256k1 2-division polynomial `Ψ₂Sq = 4X³+28` (Mathlib torsion bridge; 2-torsion `x`-coords)",
+      "method": "Mathlib",
+      "status": "proved",
+      "gated": true
+    },
+    {
+      "id": "thm-070",
+      "name": "Ecdlp.Curve.secp256k1_Ψ₃",
+      "short_name": "secp256k1_Ψ₃",
+      "module": "Ecdlp.Proved.DivisionPolynomial",
+      "file": "Ecdlp/Proved/DivisionPolynomial.lean",
+      "claim": "secp256k1 3-division polynomial `Ψ₃ = 3X⁴+84X` (3-torsion `E[3]`; the CM-by-ℤ[ζ₃] / GLV structure)",
       "method": "Mathlib",
       "status": "proved",
       "gated": true
