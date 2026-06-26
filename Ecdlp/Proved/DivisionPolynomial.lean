@@ -51,4 +51,13 @@ theorem secp256k1_Ψ₂Sq : secp256k1.Ψ₂Sq = C 4 * X ^ 3 + C 28 := by
   rw [WeierstrassCurve.Ψ₂Sq, secp256k1_b₂, secp256k1_b₄, secp256k1_b₆]
   simp only [mul_zero, C_0, zero_mul, add_zero]
 
+/-- **The secp256k1 3-division polynomial is `Ψ₃ = 3X⁴ + 3·28·X = 3X⁴ + 84X`.** Its
+roots are the `x`-coordinates of the order-3 points — the 3-torsion `E[3]`. For
+secp256k1 this torsion is structurally special: the curve has `j = 0` / complex
+multiplication by `ℤ[ζ₃]` (the source of the GLV endomorphism `λ`), so the order-3
+structure is exactly the CM that `CubeRoot.lean` / `Secp256k1Order.lean` exploit. -/
+theorem secp256k1_Ψ₃ : secp256k1.Ψ₃ = 3 * X ^ 4 + 3 * C 28 * X := by
+  rw [WeierstrassCurve.Ψ₃, secp256k1_b₂, secp256k1_b₄, secp256k1_b₆, secp256k1_b₈]
+  simp only [mul_zero, C_0, zero_mul, add_zero]
+
 end Ecdlp.Curve
