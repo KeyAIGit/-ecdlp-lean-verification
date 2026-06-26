@@ -28,4 +28,11 @@ theorem secp256k1_Ψ₂Sq_natDegree : secp256k1.Ψ₂Sq.natDegree = 3 := by
   · rw [natDegree_C_mul h4, natDegree_X_pow]
   · rw [natDegree_C_mul h4, natDegree_X_pow, natDegree_C]; norm_num
 
+/-- **At most 3 two-torsion `x`-coordinates.** Since `Ψ₂Sq` has degree 3, it has at
+most 3 roots in `𝔽_p`; these are exactly the `x`-coordinates of the order-2 points,
+so secp256k1 has at most 3 nontrivial 2-torsion points (`#E[2] ≤ 4` with `O`). -/
+theorem secp256k1_two_torsion_x_card_le :
+    Multiset.card secp256k1.Ψ₂Sq.roots ≤ 3 :=
+  (Polynomial.card_roots' _).trans secp256k1_Ψ₂Sq_natDegree.le
+
 end Ecdlp.Curve
