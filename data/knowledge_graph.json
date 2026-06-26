@@ -4,11 +4,11 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 74,
+    "theorems": 76,
     "barriers": 6,
     "edges": 54,
     "by_method": {
-      "Mathlib": 48,
+      "Mathlib": 50,
       "native_decide": 17,
       "Mathlib + native_decide": 9
     },
@@ -18,9 +18,9 @@
       "protocol-soundness": 16,
       "primality": 3,
       "reduction": 3,
+      "other": 3,
       "attack-resistance": 2,
-      "params": 1,
-      "other": 1
+      "params": 1
     }
   },
   "theorems": [
@@ -980,6 +980,32 @@
       "module": "Ecdlp.Proved.CollisionEquation",
       "file": "Ecdlp/Proved/CollisionEquation.lean",
       "claim": "collision equation, `ZMod` subtractive form `(a−c)=x(d−b)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "other",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-074",
+      "name": "Ecdlp.GenericGroup.collision_recovers_log",
+      "short_name": "collision_recovers_log",
+      "module": "Ecdlp.Proved.CollisionEquation",
+      "file": "Ecdlp/Proved/CollisionEquation.lean",
+      "claim": "discrete-log recovery `x=(a−c)(d−b)⁻` (collision solve, `d−b` a unit)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "other",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-075",
+      "name": "Ecdlp.GenericGroup.dlog_unique",
+      "short_name": "dlog_unique",
+      "module": "Ecdlp.Proved.CollisionEquation",
+      "file": "Ecdlp/Proved/CollisionEquation.lean",
+      "claim": "discrete log well-defined mod `n` (`g^x=g^y ⇒ x≡y`)",
       "method": "Mathlib",
       "status": "proved",
       "area": "other",

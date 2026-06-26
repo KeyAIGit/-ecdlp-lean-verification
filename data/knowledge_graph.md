@@ -2,11 +2,11 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**74 theorems** · **6 barriers** · **54 edges**
+**76 theorems** · **6 barriers** · **54 edges**
 
-By proof method: Mathlib (48), native_decide (17), Mathlib + native_decide (9)
+By proof method: Mathlib (50), native_decide (17), Mathlib + native_decide (9)
 
-By research area: curve-torsion (31), generic-hardness (17), protocol-soundness (16), primality (3), reduction (3), attack-resistance (2), params (1), other (1)
+By research area: curve-torsion (31), generic-hardness (17), protocol-soundness (16), primality (3), reduction (3), other (3), attack-resistance (2), params (1)
 
 ## Verified theorems by area
 
@@ -105,6 +105,14 @@ By research area: curve-torsion (31), generic-hardness (17), protocol-soundness 
 | `component` | Pohlig–Hellman: component depends only on `x mod d | Mathlib | `PohligHellman.lean` |
 | `reconstruct` | Pohlig–Hellman: CRT reconstruction | Mathlib | `PohligHellman.lean` |
 
+### other (3)
+
+| theorem | claim | method | file |
+|---|---|---|---|
+| `collision_zmod` | collision equation, `ZMod` subtractive form `(a−c)=x(d−b) | Mathlib | `CollisionEquation.lean` |
+| `collision_recovers_log` | discrete-log recovery `x=(a−c)(d−b)⁻` (collision solve, `d−b` a unit) | Mathlib | `CollisionEquation.lean` |
+| `dlog_unique` | discrete log well-defined mod `n` (`g^x=g^y ⇒ x≡y`) | Mathlib | `CollisionEquation.lean` |
+
 ### attack-resistance (2)
 
 | theorem | claim | method | file |
@@ -117,12 +125,6 @@ By research area: curve-torsion (31), generic-hardness (17), protocol-soundness 
 | theorem | claim | method | file |
 |---|---|---|---|
 | `p_mod_four` | secp256k1 `p ≡ 3 (mod 4)` (point decompression) | native_decide | `Secp256k1Params.lean` |
-
-### other (1)
-
-| theorem | claim | method | file |
-|---|---|---|---|
-| `collision_zmod` | collision equation, `ZMod` subtractive form `(a−c)=x(d−b) | Mathlib | `CollisionEquation.lean` |
 
 ## Barriers and their verified frontier
 
