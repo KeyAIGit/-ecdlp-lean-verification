@@ -222,10 +222,58 @@ def short_name(full: str) -> str:
     return full.split()[0].split(".")[-1] if full else full
 
 
+# Coarse research areas, matched by keyword against (claim + module). First hit
+# wins; order matters (most specific first). Gives a future reasoner a stable
+# faceting of the corpus without re-reading every statement.
+AREA_RULES = [
+    ("primality", ["prime", "pratt", "primality"]),
+    ("attack-resistance", ["embedding degree", "anomalous", "trace of frobenius",
+                           "supersingular", "mov", "smart"]),
+    ("generic-hardness", ["generic", "shoup", "nechaev", "bsgs", "baby-step",
+                          "pollard", "query bound", "sqrt", "√"]),
+    ("reduction", ["pohlig", "crt", "reconstruct", "projection", "component"]),
+    ("protocol-soundness", ["schnorr", "pedersen", "okamoto", "chaum", "dleq",
+                            "elgamal", "diffie", "musig", "feldman", "adaptor",
+                            "blind", "threshold", "vss", "eddsa"]),
+    ("curve-torsion", ["division polynomial", "ψ", "torsion", "j-invariant",
+                       "j =", "discriminant", "δ", "c₄", "weierstrass", "b₂",
+                       "b₄", "b₆", "b₈", "elliptic", "nonsingular", "generator",
+                       "eigenvalue", "cube root", "order exactly 3", "β", "λ",
+                       "glv", "cofactor", "lagrange", "secp256k1verified",
+                       "lambda", "beta", "lam ", "base point", "on the curve"]),
+    ("params", ["p ≡", "special form", "mod four", "3 ∣", "divides"]),
+]
+
+
+def classify_area(claim: str, module: str) -> str:
+    hay = (claim + " " + module).lower()
+    for area, kws in AREA_RULES:
+        if any(k in hay for k in kws):
+            return area
+    return "other"
+
+
+def module_depth(module: str, imports: dict[str, list[str]],
+                 _cache: dict[str, int] | None = None) -> int:
+    """Longest intra-project import chain under `module` (0 = no project deps)."""
+    if _cache is None:
+        _cache = {}
+    if module in _cache:
+        return _cache[module]
+    _cache[module] = 0  # guard against cycles
+    deps = imports.get(module, [])
+    depth = 0 if not deps else 1 + max(
+        (module_depth(d, imports, _cache) for d in deps), default=0
+    )
+    _cache[module] = depth
+    return depth
+
+
 def build() -> dict:
     ledger = parse_ledger()
     imports = parse_imports()
     built_modules = set(imports.get("Ecdlp", []))  # what Ecdlp.lean gates
+    depth_cache: dict[str, int] = {}
 
     theorems = []
     for i, r in enumerate(ledger):
@@ -241,6 +289,8 @@ def build() -> dict:
                 "claim": r["claim"],
                 "method": r["method"],
                 "status": r["status"],
+                "area": classify_area(r["claim"], module),
+                "dependency_depth": module_depth(module, imports, depth_cache),
                 "gated": module in built_modules or module
                 in {"Ecdlp.Secp256k1Verified", "Ecdlp.Lagrange", "Ecdlp.Statements"},
             }
@@ -280,6 +330,7 @@ def build() -> dict:
             "barriers": len(BARRIERS),
             "edges": len(edges),
             "by_method": dict(method_hist.most_common()),
+            "by_area": dict(Counter(t["area"] for t in theorems).most_common()),
         },
         "theorems": theorems,
         "barriers": BARRIERS,
@@ -288,24 +339,102 @@ def build() -> dict:
     }
 
 
+OUT_MD = ROOT / "data" / "knowledge_graph.md"
+
+
+def render_markdown(graph: dict) -> str:
+    """A human/AI-readable rendering of the graph: the verified frontier grouped by
+    research area, then the barriers. Generated — edit the script, not this file."""
+    c = graph["counts"]
+    lines: list[str] = []
+    lines.append("# ECDLP verified knowledge graph (rendered view)")
+    lines.append("")
+    lines.append(
+        "> Auto-generated from `VERIFIED.md` + the Lean import surface by "
+        "`scripts/build_knowledge_graph.py`. Machine source of truth: "
+        "`data/knowledge_graph.json`. Every theorem below is kernel-checked "
+        "(no `sorry`, no axioms)."
+    )
+    lines.append("")
+    lines.append(
+        f"**{c['theorems']} theorems** · **{c['barriers']} barriers** · "
+        f"**{c['edges']} edges**"
+    )
+    lines.append("")
+    lines.append("By proof method: "
+                 + ", ".join(f"{k} ({v})" for k, v in c["by_method"].items()))
+    lines.append("")
+    lines.append("By research area: "
+                 + ", ".join(f"{k} ({v})" for k, v in c["by_area"].items()))
+    lines.append("")
+
+    # group theorems by area
+    by_area: dict[str, list[dict]] = {}
+    for t in graph["theorems"]:
+        by_area.setdefault(t["area"], []).append(t)
+    lines.append("## Verified theorems by area")
+    lines.append("")
+    for area in sorted(by_area, key=lambda a: -len(by_area[a])):
+        lines.append(f"### {area} ({len(by_area[area])})")
+        lines.append("")
+        lines.append("| theorem | claim | method | file |")
+        lines.append("|---|---|---|---|")
+        for t in by_area[area]:
+            lines.append(
+                f"| `{t['short_name']}` | {t['claim']} | {t['method']} | "
+                f"`{t['file'].split('/')[-1]}` |"
+            )
+        lines.append("")
+
+    # frontier: theorems sitting at a barrier boundary
+    frontier = [e for e in graph["edges"] if e["type"] == "frontier_of"]
+    id_to_thm = {t["id"]: t for t in graph["theorems"]}
+    lines.append("## Barriers and their verified frontier")
+    lines.append("")
+    lines.append(
+        "Each barrier is a foundation Mathlib lacks. The *frontier* lists verified "
+        "theorems sitting at that boundary — the realised edge of the missing work."
+    )
+    lines.append("")
+    for b in graph["barriers"]:
+        lines.append(f"### {b['id']} — {b['title']}")
+        lines.append("")
+        lines.append(f"- **Missing:** {b['missing_foundation']}")
+        lines.append(f"- **Blocks:** {b['blocks']}")
+        if b.get("partial_progress"):
+            lines.append(f"- **Partial progress:** {b['partial_progress']}")
+        fnodes = [id_to_thm[e["from"]] for e in frontier
+                  if e["to"] == b["id"] and e["from"] in id_to_thm]
+        if fnodes:
+            lines.append("- **Verified frontier:** "
+                         + ", ".join(f"`{t['short_name']}`" for t in fnodes))
+        lines.append("")
+    return "\n".join(lines) + "\n"
+
+
 def main() -> int:
     graph = build()
     text = json.dumps(graph, indent=2, ensure_ascii=False) + "\n"
+    md = render_markdown(graph)
     if "--check" in sys.argv:
-        if not OUT.exists():
-            print(f"missing {OUT}", file=sys.stderr)
-            return 1
-        if OUT.read_text() != text:
+        stale = []
+        if not OUT.exists() or OUT.read_text() != text:
+            stale.append(str(OUT))
+        if not OUT_MD.exists() or OUT_MD.read_text() != md:
+            stale.append(str(OUT_MD))
+        if stale:
             print(
-                f"{OUT} is stale; run: python3 scripts/build_knowledge_graph.py",
+                "stale; run: python3 scripts/build_knowledge_graph.py -> "
+                + ", ".join(stale),
                 file=sys.stderr,
             )
             return 1
-        print(f"{OUT} up to date ({graph['counts']['theorems']} theorems).")
+        print(f"up to date ({graph['counts']['theorems']} theorems).")
         return 0
     OUT.write_text(text)
+    OUT_MD.write_text(md)
     print(
-        f"wrote {OUT}: {graph['counts']['theorems']} theorems, "
+        f"wrote {OUT} and {OUT_MD}: {graph['counts']['theorems']} theorems, "
         f"{graph['counts']['barriers']} barriers, {graph['counts']['edges']} edges."
     )
     return 0

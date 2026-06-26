@@ -11,6 +11,15 @@
       "Mathlib": 45,
       "native_decide": 17,
       "Mathlib + native_decide": 9
+    },
+    "by_area": {
+      "curve-torsion": 30,
+      "generic-hardness": 16,
+      "protocol-soundness": 16,
+      "primality": 3,
+      "reduction": 3,
+      "attack-resistance": 2,
+      "params": 1
     }
   },
   "theorems": [
@@ -23,6 +32,8 @@
       "claim": "sec2-secp256k1-field-005",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -34,6 +45,8 @@
       "claim": "glv-subgroup-eigenvalue-006",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -45,6 +58,8 @@
       "claim": "glv-subgroup-eigenvalue-006 (ZMod form)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -56,6 +71,8 @@
       "claim": "supporting: lambda^3 = 1 mod n",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -67,6 +84,8 @@
       "claim": "supporting: lambda != 1",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -78,6 +97,8 @@
       "claim": "supporting: beta^2+beta+1 = 0 mod p",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -89,6 +110,8 @@
       "claim": "supporting: beta^3 = 1 mod p",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -100,6 +123,8 @@
       "claim": "supporting: lam < n",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -111,6 +136,8 @@
       "claim": "supporting: beta < p",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -122,6 +149,8 @@
       "claim": "pollard-multistage-004 (Lagrange foundation)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -133,6 +162,8 @@
       "claim": "sec2-secp256k1-group-006 / sec2-domain-parameters-001 (cofactor)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -144,6 +175,8 @@
       "claim": "prime-order ⇒ generator (no small subgroup)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "primality",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -155,6 +188,8 @@
       "claim": "GLV eigenvalue is a cube root of unity (ring form)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -166,6 +201,8 @@
       "claim": "generic-group: distinct affine forms collide ≤ once",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -177,6 +214,8 @@
       "claim": "generic-group: ≤ q·q−q colliding logs (union bound)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -188,6 +227,8 @@
       "claim": "generic-group DLP lower bound `p ≤ q·q` (Shoup/Nechaev `Ω(√p)`)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -199,6 +240,8 @@
       "claim": "generic-group lower bound, square-root form `√p ≤ q",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -210,6 +253,8 @@
       "claim": "quantitative Shoup bound: success count ≤ q·q−q+1",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -221,6 +266,8 @@
       "claim": "secp256k1 group order `2^255 < n",
       "method": "native_decide",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -232,6 +279,8 @@
       "claim": "secp256k1 ≥ 128-bit generic security (`2^127 < q`)",
       "method": "Mathlib + native_decide",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -243,6 +292,8 @@
       "claim": "baby-step giant-step decomposition (`O(√n)` upper bound)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -254,6 +305,8 @@
       "claim": "baby/giant step count `n ≤ ⌈√n⌉` (`Θ(√n)` closure)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -265,6 +318,8 @@
       "claim": "Pollard rho: a collision exists within `card` steps (pigeonhole)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -276,6 +331,8 @@
       "claim": "Pollard rho ρ-shape: sequence is eventually periodic",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -287,6 +344,8 @@
       "claim": "secp256k1 BSGS upper bound `⌈√n⌉ ≤ 2^128+1` (tight `√n` security)",
       "method": "native_decide",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -298,6 +357,8 @@
       "claim": "model soundness: `eval` is additive on forms (group mult ↔ form add)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -309,6 +370,8 @@
       "claim": "model soundness: `eval` respects negation (group inverse ↔ form neg)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -320,6 +383,8 @@
       "claim": "model soundness: identity is the zero form",
       "method": "Mathlib",
       "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -331,6 +396,8 @@
       "claim": "Schnorr special soundness / witness extraction",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -342,6 +409,8 @@
       "claim": "Schnorr: extracted witness is unique",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -353,6 +422,8 @@
       "claim": "Pedersen computational binding ⇒ DLP",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -364,6 +435,8 @@
       "claim": "Schnorr soundness over secp256k1 scalar field",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -375,6 +448,8 @@
       "claim": "Schnorr/EdDSA signature correctness (completeness) `s·G = R + c·P",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -386,6 +461,8 @@
       "claim": "Diffie–Hellman key agreement correctness",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -397,6 +474,8 @@
       "claim": "ElGamal decryption correctness",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -408,6 +487,8 @@
       "claim": "Pedersen commitments are additively homomorphic",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -419,6 +500,8 @@
       "claim": "Okamoto identification — 2-witness extraction (soundness)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 2,
       "gated": true
     },
     {
@@ -430,6 +513,8 @@
       "claim": "Chaum–Pedersen DLEQ (equality of discrete logs) — completeness",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 2,
       "gated": true
     },
     {
@@ -441,6 +526,8 @@
       "claim": "Aggregate Schnorr verification (MuSig/FROST/Taproot multisig)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -452,6 +539,8 @@
       "claim": "Feldman VSS share verification (DKG)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -463,6 +552,8 @@
       "claim": "secp256k1 discriminant nonzero `Δ ≠ 0` in `𝔽_p",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -474,6 +565,8 @@
       "claim": "secp256k1 is a Mathlib `EllipticCurve` (grounds the group law)",
       "method": "Mathlib + native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -485,6 +578,8 @@
       "claim": "secp256k1 invariant `c₄ = 0",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -496,6 +591,8 @@
       "claim": "secp256k1 j-invariant `j = 0` (CM by `ℤ[ζ₃]` ⇒ GLV `λ`)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -507,6 +604,8 @@
       "claim": "secp256k1 `p ≡ 3 (mod 4)` (point decompression)",
       "method": "native_decide",
       "status": "proved",
+      "area": "params",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -518,6 +617,8 @@
       "claim": "secp256k1 `3 ∣ (p−1)` (cube root `β` in `𝔽_p`)",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -529,6 +630,8 @@
       "claim": "secp256k1 `3 ∣ (n−1)` (GLV eigenvalue `λ` in `ℤ/n`)",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -540,6 +643,8 @@
       "claim": "Adaptor signature witness extraction (atomic swaps / Lightning)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -551,6 +656,8 @@
       "claim": "Blind Schnorr signature unblinding (e-cash)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -562,6 +669,8 @@
       "claim": "MuSig2 coefficient-weighted key aggregation",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -573,6 +682,8 @@
       "claim": "Threshold ElGamal partial-decryption combination",
       "method": "Mathlib",
       "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -584,6 +695,8 @@
       "claim": "GLV eigenvalue has order exactly 3 (primitive cube root)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -595,6 +708,8 @@
       "claim": "secp256k1 `β` has order 3 in `𝔽_p` (GLV CM generator)",
       "method": "Mathlib + native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -606,6 +721,8 @@
       "claim": "secp256k1 `λ` has order 3 in `ℤ/n` (GLV CM generator)",
       "method": "Mathlib + native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -617,6 +734,8 @@
       "claim": "X³ = 1` has exactly 3 roots in `𝔽_p` (GLV cube-root count)",
       "method": "Mathlib + native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -628,6 +747,8 @@
       "claim": "secp256k1 base point `G` is on the curve (`Gy ≡ Gx³+7 mod p`)",
       "method": "native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -639,6 +760,8 @@
       "claim": "secp256k1 generator is a point of the Mathlib `EllipticCurve",
       "method": "Mathlib + native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -650,6 +773,8 @@
       "claim": "secp256k1 generator is nonsingular (a group element)",
       "method": "Mathlib + native_decide",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -661,6 +786,8 @@
       "claim": "secp256k1 field prime `p` is prime (full Pratt certificate)",
       "method": "Mathlib + native_decide",
       "status": "proved",
+      "area": "primality",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -672,6 +799,8 @@
       "claim": "secp256k1 group order `n` is prime (full Pratt certificate)",
       "method": "Mathlib + native_decide",
       "status": "proved",
+      "area": "primality",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -683,6 +812,8 @@
       "claim": "Pohlig–Hellman: projection to order-`d` subgroup",
       "method": "Mathlib",
       "status": "proved",
+      "area": "reduction",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -694,6 +825,8 @@
       "claim": "Pohlig–Hellman: component depends only on `x mod d",
       "method": "Mathlib",
       "status": "proved",
+      "area": "reduction",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -705,6 +838,8 @@
       "claim": "Pohlig–Hellman: CRT reconstruction",
       "method": "Mathlib",
       "status": "proved",
+      "area": "reduction",
+      "dependency_depth": 0,
       "gated": true
     },
     {
@@ -716,6 +851,8 @@
       "claim": "secp256k1 has no small embedding degree (`p^k ≢ 1 mod n` for `1≤k≤100`; MOV/FR resistance)",
       "method": "native_decide",
       "status": "proved",
+      "area": "attack-resistance",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -727,6 +864,8 @@
       "claim": "secp256k1 trace of Frobenius: ordinary, non-anomalous, Hasse (`t≠0`, `t≠1`, `t≤4p`; Smart/SSSA + supersingular resistance)",
       "method": "native_decide",
       "status": "proved",
+      "area": "attack-resistance",
+      "dependency_depth": 1,
       "gated": true
     },
     {
@@ -738,6 +877,8 @@
       "claim": "secp256k1 `b₂ = 0` (Weierstrass invariant)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
       "gated": true
     },
     {
@@ -749,6 +890,8 @@
       "claim": "secp256k1 `b₄ = 0` (Weierstrass invariant)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
       "gated": true
     },
     {
@@ -760,6 +903,8 @@
       "claim": "secp256k1 `b₆ = 28` (Weierstrass invariant)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
       "gated": true
     },
     {
@@ -771,6 +916,8 @@
       "claim": "secp256k1 `b₈ = 0` (Weierstrass invariant)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
       "gated": true
     },
     {
@@ -782,6 +929,8 @@
       "claim": "secp256k1 2-division polynomial `Ψ₂Sq = 4X³+28` (Mathlib torsion bridge; 2-torsion `x`-coords)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
       "gated": true
     },
     {
@@ -793,6 +942,8 @@
       "claim": "secp256k1 3-division polynomial `Ψ₃ = 3X⁴+84X` (3-torsion `E[3]`; the CM-by-ℤ[ζ₃] / GLV structure)",
       "method": "Mathlib",
       "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
       "gated": true
     }
   ],

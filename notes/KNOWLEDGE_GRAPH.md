@@ -24,6 +24,15 @@ from general training data. The JSON graph is that substrate in loadable form.
 | `corpus` | summary of the 486-claim corpus by `formal_status` (the candidate frontier) |
 | `edges` | `imports` (file-level dependency between project modules) and `frontier_of` (a verified theorem sitting at the boundary of a barrier) |
 
+Each theorem node also carries `area` (a coarse research facet: `curve-torsion`,
+`generic-hardness`, `protocol-soundness`, `reduction`, `attack-resistance`,
+`primality`, `params`) and `dependency_depth` (longest intra-project import chain
+beneath its module). `counts.by_area` / `counts.by_method` summarise the corpus.
+
+A human/AI-readable rendering is generated alongside the JSON at
+`data/knowledge_graph.md` — the verified frontier grouped by area, then each
+barrier with its verified frontier nodes. Edit the generator, not these outputs.
+
 ## Regenerate / check
 
 ```sh
