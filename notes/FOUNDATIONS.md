@@ -52,9 +52,12 @@ transfer constructively, not just about its inapplicability here.
    order-2 `x`-coordinates (the roots of `X³+7`).
 3. **3-division polynomial** `Ψ₃ = 3X⁴ + 84X` for secp256k1, and its degree.
    *(next; a concrete `simp`/`ring` identity on top of the `b`-invariants.)*
-4. **`ψₙ` vanishing ⟺ `n`-torsion** — connect `ψₙ(x_P)=0` to `[n]P = O`. Needs the
-   division-polynomial/point-group bridge; Mathlib has the pieces but not the
-   equivalence as a packaged lemma. *(research-level, but bounded.)*
+4. **`ψₙ` vanishing ⟺ `n`-torsion** — connect `ψₙ(x_P)=0` to `[n]P = O`. The easy
+   forward direction for 2-torsion is ✓ **done** (`Ecdlp/Proved/TwoTorsion.lean`:
+   an order-2 `x`-coordinate is a root of `Ψ₂Sq`). The general statement — all `n`,
+   both directions, tied to actual point order — needs the division-polynomial/
+   point-group bridge; Mathlib has the pieces but not the equivalence as a packaged
+   lemma. *(research-level, but bounded.)*
 5. **`E[n]` as `(ℤ/n)²`** — the structure theorem. Hard; needs the algebraic
    closure / separability story.
 6. **Weil pairing** — define `eₙ` (e.g. via Miller's algorithm / Weil reciprocity),
@@ -64,9 +67,11 @@ Rungs 1–3 are tractable now (concrete polynomial identities). Rung 4 is the fi
 genuinely hard step and the right target for a focused effort. Rungs 5–6 are the
 multi-month core.
 
-## Open target stems (stated, not proved)
+## Status of the open rungs
 
-The Weil-pairing goal is recorded as an **open stem** in `Ecdlp/Targets/` (one
-`sorry`, not built, not gated) following the project rule that the generator
-*proposes* statements and only the kernel certifies proofs. See
-`Ecdlp/Targets/weil_pairing_nondegenerate.lean`.
+Rungs 1–3 and the easy direction of rung 4 are **proved** (`DivisionPolynomial.lean`,
+`TwoTorsion.lean`). The general rung-4 equivalence and rungs 5–6 (the `E[n]`
+structure theorem and the Weil pairing itself) remain open — they need Mathlib
+foundations that do not yet exist, per the project rule that the kernel, not the
+generator, certifies proofs. They are the right targets for a focused, human-
+directed (or server-prover) effort, not an overnight autonomous one.

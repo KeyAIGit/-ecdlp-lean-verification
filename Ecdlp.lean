@@ -22,3 +22,4 @@ import Ecdlp.Proved.PohligHellman
 import Ecdlp.Proved.EmbeddingDegree
 import Ecdlp.Proved.TraceOfFrobenius
 import Ecdlp.Proved.DivisionPolynomial
+import Ecdlp.Proved.TwoTorsion
