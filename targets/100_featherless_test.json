@@ -1,0 +1,16 @@
+{
+  "id": "100_featherless_test",
+  "name": "pow_card_eq_one_test",
+  "status": "searching",
+  "difficulty": "easy",
+  "why_it_matters": "Live end-to-end test of the Layer-2 prover loop and the Featherless model tier: a true finite-group fact (pow_card_eq_one) that the Tier-0 ladder may not close, so the loop escalates to the models and we can confirm the API responds. Temporary; remove after the test.",
+  "default_budget": {
+    "pythagoras_4b_attempts": 2,
+    "goedel_32b_attempts": 1,
+    "escalate_if_failed": true
+  },
+  "stem_file": "Ecdlp/Targets/100_featherless_test.lean",
+  "hint": "pow_card_eq_one",
+  "promotion_target_file": "Ecdlp/Proved/",
+  "verified_equivalent": ""
+}
