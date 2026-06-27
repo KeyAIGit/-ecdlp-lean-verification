@@ -47,4 +47,16 @@ theorem elgamal_additively_homomorphic (g P m₁ m₂ : G) (r₁ r₂ : ZMod n) 
   refine ⟨by rw [add_smul], ?_⟩
   rw [add_smul]; abel
 
+open Finset in
+/-- **Vector Pedersen commitments are homomorphic.** Summing per-index Pedersen
+commitments `aᵢ·g + bᵢ·h` over a set yields the commitment to the summed openings:
+`∑(aᵢ·g+bᵢ·h) + ∑(a'ᵢ·g+b'ᵢ·h) = ∑((aᵢ+a'ᵢ)·g + (bᵢ+b'ᵢ)·h)`. This is the additive
+structure behind vector commitments in Bulletproofs / confidential transactions. -/
+theorem pedersen_vector_homomorphic {ι : Type*} (t : Finset ι) (g h : G)
+    (a b a' b' : ι → ZMod n) :
+    (∑ i ∈ t, (a i • g + b i • h)) + (∑ i ∈ t, (a' i • g + b' i • h))
+      = ∑ i ∈ t, ((a i + a' i) • g + (b i + b' i) • h) := by
+  simp only [Finset.sum_add_distrib, add_smul]
+  abel
+
 end Ecdlp.Schnorr
