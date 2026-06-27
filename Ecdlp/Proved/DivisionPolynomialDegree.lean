@@ -35,4 +35,24 @@ theorem secp256k1_two_torsion_x_card_le :
     Multiset.card secp256k1.Ψ₂Sq.roots ≤ 3 :=
   (Polynomial.card_roots' _).trans secp256k1_Ψ₂Sq_natDegree.le
 
+/-- The 2-division polynomial is nonzero (it has degree 3), so the 2-torsion
+`x`-coordinates form a proper finite set, not all of `𝔽_p`. -/
+theorem secp256k1_Ψ₂Sq_ne_zero : secp256k1.Ψ₂Sq ≠ 0 := by
+  intro h
+  have h3 : secp256k1.Ψ₂Sq.natDegree = 3 := secp256k1_Ψ₂Sq_natDegree
+  rw [h, natDegree_zero] at h3
+  exact absurd h3 (by norm_num)
+
+/-- **`deg Ψ₃ = 4`** (3-torsion count: `#E[3] ≤ 9`). The 3-division polynomial
+`3X⁴ + 84X` has degree 4, so secp256k1 has at most 4 nontrivial 3-torsion
+`x`-coordinates. The 3-torsion is the GLV-relevant torsion (the curve's CM by
+`ℤ[ζ₃]` acts on `E[3]`). -/
+theorem secp256k1_Ψ₃_natDegree : secp256k1.Ψ₃.natDegree = 4 := by
+  have h3 : (3 : ZMod Secp256k1.p) ≠ 0 := by
+    have h : ((3 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by
+      rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide
+    simpa using h
+  rw [secp256k1_Ψ₃]
+  compute_degree! <;> first | exact h3 | norm_num
+
 end Ecdlp.Curve
