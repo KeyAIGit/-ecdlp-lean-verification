@@ -86,4 +86,15 @@ theorem schnorr_batch_verify {ι : Type*} (t : Finset ι) (g : G)
     (∑ i ∈ t, (r i + c i * x i)) • g = (∑ i ∈ t, R i) + ∑ i ∈ t, c i • P i := by
   simp only [hP, hR, Finset.sum_add_distrib, add_smul, Finset.sum_smul, mul_smul]
 
+/-- **Adaptor signature completeness.** A pre-signature `s' = r + c·x` against
+adaptor point `T = t·G` adapts to a full signature `s = s' + t`, which verifies
+against the `T`-shifted nonce: `s·G = (R + T) + c·P`. With `adaptor_extract`
+(soundness, `SchnorrSoundness.lean`) this gives both directions — the basis of
+atomic swaps and Lightning PTLCs, where revealing `s` leaks the adaptor secret `t`. -/
+theorem adaptor_complete (g P R T : G) (x r c t : ZMod n)
+    (hP : P = x • g) (hR : R = r • g) (hT : T = t • g) :
+    ((r + c * x) + t) • g = (R + T) + c • P := by
+  subst hP hR hT
+  rw [add_smul, add_smul, mul_smul]; abel
+
 end Ecdlp.Schnorr
