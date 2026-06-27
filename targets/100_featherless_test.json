@@ -1,16 +1,16 @@
 {
   "id": "100_featherless_test",
-  "name": "pow_card_eq_one_test",
+  "name": "lt_two_pow_test",
   "status": "searching",
-  "difficulty": "easy",
-  "why_it_matters": "Live end-to-end test of the Layer-2 prover loop and the Featherless model tier: a true finite-group fact (pow_card_eq_one) that the Tier-0 ladder may not close, so the loop escalates to the models and we can confirm the API responds. Temporary; remove after the test.",
+  "difficulty": "medium",
+  "why_it_matters": "Live end-to-end test of the Featherless model tier: `n < 2^n` needs induction, so the Tier-0 ladder cannot close it and the loop must escalate to the Featherless models -- confirming the API responds to an inference. Temporary; remove after the test.",
   "default_budget": {
     "pythagoras_4b_attempts": 2,
     "goedel_32b_attempts": 1,
     "escalate_if_failed": true
   },
   "stem_file": "Ecdlp/Targets/100_featherless_test.lean",
-  "hint": "pow_card_eq_one",
+  "hint": "Nat.lt_two_pow or induction on n",
   "promotion_target_file": "Ecdlp/Proved/",
   "verified_equivalent": ""
 }

@@ -84,3 +84,11 @@ jobs:
             To promote: move the proof into `Ecdlp/Proved/`, add its import to
             `Ecdlp.lean`, and append a row to `VERIFIED.md`. `main` is never edited
             automatically; the Lean kernel is the judge and a human merges.
+
+      # Echo the loop report to stdout as the final step so the per-target outcome
+      # (and any Featherless model attempts) is readable directly in the run log.
+      - name: Echo loop report to log
+        if: always()
+        run: |
+          echo "===== prover-loop-report.md ====="
+          cat prover-loop-report.md || echo "(no report produced)"
