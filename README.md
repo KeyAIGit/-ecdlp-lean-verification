@@ -44,9 +44,19 @@ This is stage 2 (formalization agent output) of the autonomous research mechanis
 Each `formalizable` claim in KG_CLAIM_FORMALIZATION_v1.csv becomes a theorem here;
 `native_decide` handles concrete arithmetic facts, Mathlib handles structural ones.
 
-Current ledger: 38 proved theorems, 0 open obligations (see `VERIFIED.md`).
-Beyond the corpus, the project now also hosts a verified discrete-log cryptography
-library (generic hardness + protocol soundness/completeness).
+Current ledger: **98 proved theorems, 0 open obligations, 0 axioms** (see
+`VERIFIED.md`). Beyond the corpus, the project hosts:
+- a verified discrete-log cryptography library (generic hardness + protocol
+  soundness/completeness), including the rho/BSGS **solve step** (collision ⇒
+  discrete-log recovery);
+- the **saturated classical attack landscape**: Pohlig–Hellman, anti-MOV/FR
+  (embedding degree > 100), anti-Smart/SSSA + supersingular (trace of Frobenius);
+- secp256k1 grounded as a Mathlib `EllipticCurve` with **machine-checked primality**
+  of `p` and `n` (full Pratt certificates), and a **division-polynomial / torsion**
+  foundation (`Ψ₂Sq`, `Ψ₃`, 2-torsion bridge, `#E[2] ≤ 4`) — see
+  `notes/FOUNDATIONS.md` for the roadmap toward the Weil pairing;
+- a machine-readable **knowledge graph** (`data/knowledge_graph.json` + rendered
+  `.md`) indexing every theorem, its dependencies, and the formalization barriers.
 
 ## Authorship & AI disclosure
 The human maintainer is the author and bears intellectual responsibility for every
