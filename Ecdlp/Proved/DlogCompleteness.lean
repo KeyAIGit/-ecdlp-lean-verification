@@ -73,4 +73,17 @@ theorem threshold_elgamal_combine {ι : Type*} (t : Finset ι) (C₁ : G) (x : �
     (∑ i ∈ t, x i • C₁) = (∑ i ∈ t, x i) • C₁ := by
   rw [Finset.sum_smul]
 
+open Finset in
+/-- **Batch Schnorr verification.** A verifier can check many signatures at once:
+with per-signature challenges `cᵢ` (each `sᵢ = rᵢ + cᵢ·xᵢ` against key `Pᵢ = xᵢ·G`
+and nonce `Rᵢ = rᵢ·G`), the batched equation `(∑ sᵢ)·G = (∑ Rᵢ) + ∑ cᵢ·Pᵢ` holds.
+Unlike `threshold_schnorr_aggregate` (one shared challenge), here each signature has
+its own challenge — the optimization used to verify blocks of independent Schnorr
+signatures with a single multi-scalar multiplication. -/
+theorem schnorr_batch_verify {ι : Type*} (t : Finset ι) (g : G)
+    (P R : ι → G) (x r c : ι → ZMod n)
+    (hP : ∀ i, P i = x i • g) (hR : ∀ i, R i = r i • g) :
+    (∑ i ∈ t, (r i + c i * x i)) • g = (∑ i ∈ t, R i) + ∑ i ∈ t, c i • P i := by
+  simp only [hP, hR, Finset.sum_add_distrib, add_smul, Finset.sum_smul, mul_smul]
+
 end Ecdlp.Schnorr
