@@ -89,8 +89,10 @@ git history and the GitHub Actions tab.
 | `Ψ₂Sq ≠ 0` (2-torsion is a proper finite set) | `Ecdlp.Curve.secp256k1_Ψ₂Sq_ne_zero` | Ecdlp/Proved/DivisionPolynomialDegree.lean | Mathlib | proved |
 | **`deg Ψ₃ = 4`** (3-torsion count `#E[3] ≤ 9`; GLV-relevant CM torsion) | `Ecdlp.Curve.secp256k1_Ψ₃_natDegree` | Ecdlp/Proved/DivisionPolynomialDegree.lean | Mathlib + native_decide | proved |
 | **batch Schnorr verification** (per-signature challenges `(∑sᵢ)G=∑Rᵢ+∑cᵢPᵢ`) | `Ecdlp.Schnorr.schnorr_batch_verify` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
+| **ElGamal ciphertext re-randomization** (mixnet unlinkability) | `Ecdlp.Schnorr.elgamal_rerandomize_decrypt` | Ecdlp/Proved/DlogPrimitives.lean | Mathlib | proved |
+| **ElGamal additive homomorphism** (e-voting homomorphic tally) | `Ecdlp.Schnorr.elgamal_additively_homomorphic` | Ecdlp/Proved/DlogPrimitives.lean | Mathlib | proved |
 
-**Total: 101 theorems proved** (19 concrete `native_decide` facts, 60 structural via
+**Total: 103 theorems proved** (19 concrete `native_decide` facts, 62 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,

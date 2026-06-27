@@ -2,11 +2,11 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**81 theorems** · **6 barriers** · **57 edges**
+**83 theorems** · **6 barriers** · **57 edges**
 
-By proof method: Mathlib (53), native_decide (17), Mathlib + native_decide (11)
+By proof method: Mathlib (55), native_decide (17), Mathlib + native_decide (11)
 
-By research area: curve-torsion (35), generic-hardness (17), protocol-soundness (17), primality (3), reduction (3), other (3), attack-resistance (2), params (1)
+By research area: curve-torsion (35), protocol-soundness (19), generic-hardness (17), primality (3), reduction (3), other (3), attack-resistance (2), params (1)
 
 ## Verified theorems by area
 
@@ -50,6 +50,30 @@ By research area: curve-torsion (35), generic-hardness (17), protocol-soundness 
 | `secp256k1_Ψ₂Sq_ne_zero` | Ψ₂Sq ≠ 0` (2-torsion is a proper finite set) | Mathlib | `DivisionPolynomialDegree.lean` |
 | `secp256k1_Ψ₃_natDegree` | deg Ψ₃ = 4` (3-torsion count `#E[3] ≤ 9`; GLV-relevant CM torsion) | Mathlib + native_decide | `DivisionPolynomialDegree.lean` |
 
+### protocol-soundness (19)
+
+| theorem | claim | method | file |
+|---|---|---|---|
+| `schnorr_extract` | Schnorr special soundness / witness extraction | Mathlib | `SchnorrSoundness.lean` |
+| `schnorr_witness_unique` | Schnorr: extracted witness is unique | Mathlib | `SchnorrSoundness.lean` |
+| `pedersen_binding_extract` | Pedersen computational binding ⇒ DLP | Mathlib | `SchnorrSoundness.lean` |
+| `secp256k1_schnorr_extract` | Schnorr soundness over secp256k1 scalar field | Mathlib | `SchnorrSoundness.lean` |
+| `schnorr_verify` | Schnorr/EdDSA signature correctness (completeness) `s·G = R + c·P | Mathlib | `DlogCompleteness.lean` |
+| `dh_agree` | Diffie–Hellman key agreement correctness | Mathlib | `DlogCompleteness.lean` |
+| `elgamal_decrypt` | ElGamal decryption correctness | Mathlib | `DlogPrimitives.lean` |
+| `pedersen_homomorphic` | Pedersen commitments are additively homomorphic | Mathlib | `DlogPrimitives.lean` |
+| `okamoto_extract` | Okamoto identification — 2-witness extraction (soundness) | Mathlib | `DlogAdvanced.lean` |
+| `chaum_pedersen_verify` | Chaum–Pedersen DLEQ (equality of discrete logs) — completeness | Mathlib | `DlogAdvanced.lean` |
+| `threshold_schnorr_aggregate` | Aggregate Schnorr verification (MuSig/FROST/Taproot multisig) | Mathlib | `DlogCompleteness.lean` |
+| `feldman_vss_verify` | Feldman VSS share verification (DKG) | Mathlib | `DlogCompleteness.lean` |
+| `adaptor_extract` | Adaptor signature witness extraction (atomic swaps / Lightning) | Mathlib | `SchnorrSoundness.lean` |
+| `blind_unblind` | Blind Schnorr signature unblinding (e-cash) | Mathlib | `SchnorrSoundness.lean` |
+| `musig_key_aggregate` | MuSig2 coefficient-weighted key aggregation | Mathlib | `DlogCompleteness.lean` |
+| `threshold_elgamal_combine` | Threshold ElGamal partial-decryption combination | Mathlib | `DlogCompleteness.lean` |
+| `schnorr_batch_verify` | batch Schnorr verification (per-signature challenges `(∑sᵢ)G=∑Rᵢ+∑cᵢPᵢ`) | Mathlib | `DlogCompleteness.lean` |
+| `elgamal_rerandomize_decrypt` | ElGamal ciphertext re-randomization (mixnet unlinkability) | Mathlib | `DlogPrimitives.lean` |
+| `elgamal_additively_homomorphic` | ElGamal additive homomorphism (e-voting homomorphic tally) | Mathlib | `DlogPrimitives.lean` |
+
 ### generic-hardness (17)
 
 | theorem | claim | method | file |
@@ -71,28 +95,6 @@ By research area: curve-torsion (35), generic-hardness (17), protocol-soundness 
 | `eval_neg` | model soundness: `eval` respects negation (group inverse ↔ form neg) | Mathlib | `GenericGroupBound.lean` |
 | `eval_zero` | model soundness: identity is the zero form | Mathlib | `GenericGroupBound.lean` |
 | `collision_modEq` | collision equation `a+xb ≡ c+xd (mod n)` (rho/BSGS solve step) | Mathlib | `CollisionEquation.lean` |
-
-### protocol-soundness (17)
-
-| theorem | claim | method | file |
-|---|---|---|---|
-| `schnorr_extract` | Schnorr special soundness / witness extraction | Mathlib | `SchnorrSoundness.lean` |
-| `schnorr_witness_unique` | Schnorr: extracted witness is unique | Mathlib | `SchnorrSoundness.lean` |
-| `pedersen_binding_extract` | Pedersen computational binding ⇒ DLP | Mathlib | `SchnorrSoundness.lean` |
-| `secp256k1_schnorr_extract` | Schnorr soundness over secp256k1 scalar field | Mathlib | `SchnorrSoundness.lean` |
-| `schnorr_verify` | Schnorr/EdDSA signature correctness (completeness) `s·G = R + c·P | Mathlib | `DlogCompleteness.lean` |
-| `dh_agree` | Diffie–Hellman key agreement correctness | Mathlib | `DlogCompleteness.lean` |
-| `elgamal_decrypt` | ElGamal decryption correctness | Mathlib | `DlogPrimitives.lean` |
-| `pedersen_homomorphic` | Pedersen commitments are additively homomorphic | Mathlib | `DlogPrimitives.lean` |
-| `okamoto_extract` | Okamoto identification — 2-witness extraction (soundness) | Mathlib | `DlogAdvanced.lean` |
-| `chaum_pedersen_verify` | Chaum–Pedersen DLEQ (equality of discrete logs) — completeness | Mathlib | `DlogAdvanced.lean` |
-| `threshold_schnorr_aggregate` | Aggregate Schnorr verification (MuSig/FROST/Taproot multisig) | Mathlib | `DlogCompleteness.lean` |
-| `feldman_vss_verify` | Feldman VSS share verification (DKG) | Mathlib | `DlogCompleteness.lean` |
-| `adaptor_extract` | Adaptor signature witness extraction (atomic swaps / Lightning) | Mathlib | `SchnorrSoundness.lean` |
-| `blind_unblind` | Blind Schnorr signature unblinding (e-cash) | Mathlib | `SchnorrSoundness.lean` |
-| `musig_key_aggregate` | MuSig2 coefficient-weighted key aggregation | Mathlib | `DlogCompleteness.lean` |
-| `threshold_elgamal_combine` | Threshold ElGamal partial-decryption combination | Mathlib | `DlogCompleteness.lean` |
-| `schnorr_batch_verify` | batch Schnorr verification (per-signature challenges `(∑sᵢ)G=∑Rᵢ+∑cᵢPᵢ`) | Mathlib | `DlogCompleteness.lean` |
 
 ### primality (3)
 
