@@ -4,18 +4,18 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 80,
+    "theorems": 81,
     "barriers": 6,
     "edges": 57,
     "by_method": {
-      "Mathlib": 52,
+      "Mathlib": 53,
       "native_decide": 17,
       "Mathlib + native_decide": 11
     },
     "by_area": {
       "curve-torsion": 35,
       "generic-hardness": 17,
-      "protocol-soundness": 16,
+      "protocol-soundness": 17,
       "primality": 3,
       "reduction": 3,
       "other": 3,
@@ -1062,6 +1062,19 @@
       "status": "proved",
       "area": "curve-torsion",
       "dependency_depth": 3,
+      "gated": true
+    },
+    {
+      "id": "thm-080",
+      "name": "Ecdlp.Schnorr.schnorr_batch_verify",
+      "short_name": "schnorr_batch_verify",
+      "module": "Ecdlp.Proved.DlogCompleteness",
+      "file": "Ecdlp/Proved/DlogCompleteness.lean",
+      "claim": "batch Schnorr verification (per-signature challenges `(∑sᵢ)G=∑Rᵢ+∑cᵢPᵢ`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 0,
       "gated": true
     }
   ],

@@ -2,11 +2,11 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**80 theorems** · **6 barriers** · **57 edges**
+**81 theorems** · **6 barriers** · **57 edges**
 
-By proof method: Mathlib (52), native_decide (17), Mathlib + native_decide (11)
+By proof method: Mathlib (53), native_decide (17), Mathlib + native_decide (11)
 
-By research area: curve-torsion (35), generic-hardness (17), protocol-soundness (16), primality (3), reduction (3), other (3), attack-resistance (2), params (1)
+By research area: curve-torsion (35), generic-hardness (17), protocol-soundness (17), primality (3), reduction (3), other (3), attack-resistance (2), params (1)
 
 ## Verified theorems by area
 
@@ -72,7 +72,7 @@ By research area: curve-torsion (35), generic-hardness (17), protocol-soundness 
 | `eval_zero` | model soundness: identity is the zero form | Mathlib | `GenericGroupBound.lean` |
 | `collision_modEq` | collision equation `a+xb ≡ c+xd (mod n)` (rho/BSGS solve step) | Mathlib | `CollisionEquation.lean` |
 
-### protocol-soundness (16)
+### protocol-soundness (17)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -92,6 +92,7 @@ By research area: curve-torsion (35), generic-hardness (17), protocol-soundness 
 | `blind_unblind` | Blind Schnorr signature unblinding (e-cash) | Mathlib | `SchnorrSoundness.lean` |
 | `musig_key_aggregate` | MuSig2 coefficient-weighted key aggregation | Mathlib | `DlogCompleteness.lean` |
 | `threshold_elgamal_combine` | Threshold ElGamal partial-decryption combination | Mathlib | `DlogCompleteness.lean` |
+| `schnorr_batch_verify` | batch Schnorr verification (per-signature challenges `(∑sᵢ)G=∑Rᵢ+∑cᵢPᵢ`) | Mathlib | `DlogCompleteness.lean` |
 
 ### primality (3)
 
