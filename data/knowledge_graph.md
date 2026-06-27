@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**77 theorems** · **6 barriers** · **57 edges**
+**78 theorems** · **6 barriers** · **57 edges**
 
-By proof method: Mathlib (50), native_decide (17), Mathlib + native_decide (10)
+By proof method: Mathlib (51), native_decide (17), Mathlib + native_decide (10)
 
-By research area: curve-torsion (32), generic-hardness (17), protocol-soundness (16), primality (3), reduction (3), other (3), attack-resistance (2), params (1)
+By research area: curve-torsion (33), generic-hardness (17), protocol-soundness (16), primality (3), reduction (3), other (3), attack-resistance (2), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (32)
+### curve-torsion (33)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -46,6 +46,7 @@ By research area: curve-torsion (32), generic-hardness (17), protocol-soundness 
 | `secp256k1_Ψ₃` | secp256k1 3-division polynomial `Ψ₃ = 3X⁴+84X` (3-torsion `E[3]`; the CM-by-ℤ[ζ₃] / GLV structure) | Mathlib | `DivisionPolynomial.lean` |
 | `secp256k1_Ψ₂Sq_root_of_two_torsion` | 2-torsion `x`-coordinate ⇒ root of `Ψ₂Sq` (division-polynomial↔torsion, rung 4 forward) | Mathlib | `TwoTorsion.lean` |
 | `secp256k1_Ψ₂Sq_natDegree` | deg Ψ₂Sq = 3` (2-torsion count: `#E[2] ≤ 4`) | Mathlib + native_decide | `DivisionPolynomialDegree.lean` |
+| `secp256k1_two_torsion_x_card_le` | ≤ 3 two-torsion `x`-coordinates (`#roots Ψ₂Sq ≤ 3`) | Mathlib | `DivisionPolynomialDegree.lean` |
 
 ### generic-hardness (17)
 
