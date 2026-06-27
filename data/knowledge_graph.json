@@ -4,17 +4,17 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 83,
+    "theorems": 84,
     "barriers": 6,
     "edges": 57,
     "by_method": {
-      "Mathlib": 55,
+      "Mathlib": 56,
       "native_decide": 17,
       "Mathlib + native_decide": 11
     },
     "by_area": {
       "curve-torsion": 35,
-      "protocol-soundness": 19,
+      "protocol-soundness": 20,
       "generic-hardness": 17,
       "primality": 3,
       "reduction": 3,
@@ -1097,6 +1097,19 @@
       "module": "Ecdlp.Proved.DlogPrimitives",
       "file": "Ecdlp/Proved/DlogPrimitives.lean",
       "claim": "ElGamal additive homomorphism (e-voting homomorphic tally)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-083",
+      "name": "Ecdlp.Schnorr.pedersen_vector_homomorphic",
+      "short_name": "pedersen_vector_homomorphic",
+      "module": "Ecdlp.Proved.DlogPrimitives",
+      "file": "Ecdlp/Proved/DlogPrimitives.lean",
+      "claim": "vector Pedersen commitment homomorphism (Bulletproofs / confidential tx)",
       "method": "Mathlib",
       "status": "proved",
       "area": "protocol-soundness",
