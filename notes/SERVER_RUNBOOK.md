@@ -90,6 +90,35 @@ step — mirror `.github/workflows/prove.yml` Stage B. Keep a human in the merge
   a human merges. The trust boundary is unchanged; the server only accelerates
   search. The kernel remains the only judge.
 
+## 6. GitHub Actions → server bridge (automation)
+
+`.github/workflows/server-run.yml` lets a GitHub Actions runner SSH into the server
+and run a command in the repo there (warm Lean + CAS), bringing the output back as a
+log + artifact. The runner has internet access, so this works even though the
+ephemeral dev sandbox cannot reach the box. Manual-only (`workflow_dispatch`) — it
+never auto-runs and does not touch the build gate.
+
+**One-time setup (you):**
+1. Server side: rebuild/create the box with the SSH **public** key (so it is in
+   `~/.ssh/authorized_keys`), then run steps 1–2 above so Lean+Mathlib are warm.
+2. GitHub → repo **Settings → Secrets and variables → Actions → New repository
+   secret**, add:
+   - `SSH_PRIVATE_KEY` — the OpenSSH **private** key (whole `-----BEGIN…END-----`).
+   - `SERVER_HOST` — the server IP (e.g. `23.88.61.86`).
+   - `SERVER_USER` *(optional)* — login user, defaults to `root`.
+
+**Run it:** GitHub → **Actions → "Run on server (warm Lean + CAS)" → Run workflow**.
+Leave the default command (a Lean + sympy smoke test) or type your own, e.g.
+`python3 -c "import sympy; print(sympy.factorint(<n>-1))"` or
+`lake env lean Ecdlp/Proved/EmbeddingDegree.lean`. The output appears in the run log
+and as the `server-output` artifact.
+
+**Security:** the private key lives only in the GitHub secret and is written to the
+runner's `~/.ssh` for the job. The command input is interpreted by the *server's*
+shell — only the repo owner can dispatch, so treat it as your own shell on the box.
+`StrictHostKeyChecking=accept-new` trusts the host key on first connect (TOFU); pin
+it later if you want stricter checking.
+
 ## Notes / honest limits
 
 - I can't SSH in from here, so I can't confirm the box's state — paste me
