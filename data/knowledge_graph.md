@@ -2,11 +2,11 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**85 theorems** · **6 barriers** · **57 edges**
+**86 theorems** · **6 barriers** · **57 edges**
 
-By proof method: Mathlib (57), native_decide (17), Mathlib + native_decide (11)
+By proof method: Mathlib (58), native_decide (17), Mathlib + native_decide (11)
 
-By research area: curve-torsion (35), protocol-soundness (21), generic-hardness (17), primality (3), reduction (3), other (3), attack-resistance (2), params (1)
+By research area: curve-torsion (35), protocol-soundness (21), generic-hardness (17), other (4), primality (3), reduction (3), attack-resistance (2), params (1)
 
 ## Verified theorems by area
 
@@ -98,6 +98,15 @@ By research area: curve-torsion (35), protocol-soundness (21), generic-hardness 
 | `eval_zero` | model soundness: identity is the zero form | Mathlib | `GenericGroupBound.lean` |
 | `collision_modEq` | collision equation `a+xb ≡ c+xd (mod n)` (rho/BSGS solve step) | Mathlib | `CollisionEquation.lean` |
 
+### other (4)
+
+| theorem | claim | method | file |
+|---|---|---|---|
+| `collision_zmod` | collision equation, `ZMod` subtractive form `(a−c)=x(d−b) | Mathlib | `CollisionEquation.lean` |
+| `collision_recovers_log` | discrete-log recovery `x=(a−c)(d−b)⁻` (collision solve, `d−b` a unit) | Mathlib | `CollisionEquation.lean` |
+| `dlog_unique` | discrete log well-defined mod `n` (`g^x=g^y ⇒ x≡y`) | Mathlib | `CollisionEquation.lean` |
+| `taproot_tweak_verify` | Taproot key-tweak verification (BIP-341 key-path spend, `Q=P+t·G`) | Mathlib | `DlogCompleteness.lean` |
+
 ### primality (3)
 
 | theorem | claim | method | file |
@@ -113,14 +122,6 @@ By research area: curve-torsion (35), protocol-soundness (21), generic-hardness 
 | `projection` | Pohlig–Hellman: projection to order-`d` subgroup | Mathlib | `PohligHellman.lean` |
 | `component` | Pohlig–Hellman: component depends only on `x mod d | Mathlib | `PohligHellman.lean` |
 | `reconstruct` | Pohlig–Hellman: CRT reconstruction | Mathlib | `PohligHellman.lean` |
-
-### other (3)
-
-| theorem | claim | method | file |
-|---|---|---|---|
-| `collision_zmod` | collision equation, `ZMod` subtractive form `(a−c)=x(d−b) | Mathlib | `CollisionEquation.lean` |
-| `collision_recovers_log` | discrete-log recovery `x=(a−c)(d−b)⁻` (collision solve, `d−b` a unit) | Mathlib | `CollisionEquation.lean` |
-| `dlog_unique` | discrete log well-defined mod `n` (`g^x=g^y ⇒ x≡y`) | Mathlib | `CollisionEquation.lean` |
 
 ### attack-resistance (2)
 

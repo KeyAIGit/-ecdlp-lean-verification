@@ -4,11 +4,11 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 85,
+    "theorems": 86,
     "barriers": 6,
     "edges": 57,
     "by_method": {
-      "Mathlib": 57,
+      "Mathlib": 58,
       "native_decide": 17,
       "Mathlib + native_decide": 11
     },
@@ -16,9 +16,9 @@
       "curve-torsion": 35,
       "protocol-soundness": 21,
       "generic-hardness": 17,
+      "other": 4,
       "primality": 3,
       "reduction": 3,
-      "other": 3,
       "attack-resistance": 2,
       "params": 1
     }
@@ -1126,6 +1126,19 @@
       "method": "Mathlib",
       "status": "proved",
       "area": "protocol-soundness",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-085",
+      "name": "Ecdlp.Schnorr.taproot_tweak_verify",
+      "short_name": "taproot_tweak_verify",
+      "module": "Ecdlp.Proved.DlogCompleteness",
+      "file": "Ecdlp/Proved/DlogCompleteness.lean",
+      "claim": "Taproot key-tweak verification (BIP-341 key-path spend, `Q=P+t·G`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "other",
       "dependency_depth": 0,
       "gated": true
     }
