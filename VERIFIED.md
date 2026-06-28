@@ -114,8 +114,9 @@ git history and the GitHub Actions tab.
 | **`deg preΨ₄ = 6`** (4-torsion bound up the tower) | `Ecdlp.Curve.secp256k1_preΨ₄_natDegree` | Ecdlp/Proved/FourDivisionPolynomial.lean | Mathlib + native_decide | proved |
 | **`preΨ₄ ≠ 0`** (proper finite root set) | `Ecdlp.Curve.secp256k1_preΨ₄_ne_zero` | Ecdlp/Proved/FourDivisionPolynomial.lean | Mathlib | proved |
 | **anomalous ⟺ trace one** (`#E=p ⟺ a_p=1`; Smart/SSSA scope) ³ | `Ecdlp.Curve.anomalous_iff_trace_one` | Ecdlp/Proved/AnomalousScope.lean | Mathlib | proved |
+| **GLV endomorphism preserves the curve** (`(x,y)↦(βx,y)` keeps `Y²=X³+7`, via `β³=1`) | `Ecdlp.Curve.secp256k1_glv_preserves_equation` | Ecdlp/Proved/GlvEndomorphism.lean | Mathlib + native_decide | proved |
 
-**Total: 126 theorems proved** (21 concrete `native_decide` facts, 83 structural via
+**Total: 127 theorems proved** (22 concrete `native_decide` facts, 83 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,
