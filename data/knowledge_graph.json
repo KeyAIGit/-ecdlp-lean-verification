@@ -4,11 +4,11 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 105,
+    "theorems": 106,
     "barriers": 6,
-    "edges": 69,
+    "edges": 70,
     "by_method": {
-      "Mathlib": 75,
+      "Mathlib": 76,
       "native_decide": 18,
       "Mathlib + native_decide": 12
     },
@@ -19,7 +19,7 @@
       "other": 5,
       "primality": 3,
       "reduction": 3,
-      "attack-resistance": 2,
+      "attack-resistance": 3,
       "params": 1
     }
   },
@@ -1388,6 +1388,19 @@
       "area": "curve-torsion",
       "dependency_depth": 4,
       "gated": true
+    },
+    {
+      "id": "thm-105",
+      "name": "Ecdlp.Curve.anomalous_iff_trace_one",
+      "short_name": "anomalous_iff_trace_one",
+      "module": "Ecdlp.Proved.AnomalousScope",
+      "file": "Ecdlp/Proved/AnomalousScope.lean",
+      "claim": "anomalous ⟺ trace one (`#E=p ⟺ a_p=1`; Smart/SSSA scope) ³",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "attack-resistance",
+      "dependency_depth": 0,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1748,6 +1761,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.AnomalousScope",
       "type": "imports"
     },
     {

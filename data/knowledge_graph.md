@@ -2,11 +2,11 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**105 theorems** · **6 barriers** · **69 edges**
+**106 theorems** · **6 barriers** · **70 edges**
 
-By proof method: Mathlib (75), native_decide (18), Mathlib + native_decide (12)
+By proof method: Mathlib (76), native_decide (18), Mathlib + native_decide (12)
 
-By research area: curve-torsion (53), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (2), params (1)
+By research area: curve-torsion (53), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
 
 ## Verified theorems by area
 
@@ -142,12 +142,13 @@ By research area: curve-torsion (53), protocol-soundness (21), generic-hardness 
 | `component` | Pohlig–Hellman: component depends only on `x mod d | Mathlib | `PohligHellman.lean` |
 | `reconstruct` | Pohlig–Hellman: CRT reconstruction | Mathlib | `PohligHellman.lean` |
 
-### attack-resistance (2)
+### attack-resistance (3)
 
 | theorem | claim | method | file |
 |---|---|---|---|
 | `secp256k1_embedding_degree_gt_100` | secp256k1 has no small embedding degree (`p^k ≢ 1 mod n` for `1≤k≤100`; MOV/FR resistance) | native_decide | `EmbeddingDegree.lean` |
 | `secp256k1_trace_ordinary_nonanomalous` | secp256k1 trace of Frobenius: ordinary, non-anomalous, Hasse (`t≠0`, `t≠1`, `t≤4p`; Smart/SSSA + supersingular resistance) | native_decide | `TraceOfFrobenius.lean` |
+| `anomalous_iff_trace_one` | anomalous ⟺ trace one (`#E=p ⟺ a_p=1`; Smart/SSSA scope) ³ | Mathlib | `AnomalousScope.lean` |
 
 ### params (1)
 
