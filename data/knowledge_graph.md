@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**92 theorems** · **6 barriers** · **58 edges**
+**100 theorems** · **6 barriers** · **66 edges**
 
-By proof method: Mathlib (64), native_decide (17), Mathlib + native_decide (11)
+By proof method: Mathlib (71), native_decide (18), Mathlib + native_decide (11)
 
-By research area: curve-torsion (41), protocol-soundness (21), generic-hardness (17), other (4), primality (3), reduction (3), attack-resistance (2), params (1)
+By research area: curve-torsion (48), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (2), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (41)
+### curve-torsion (48)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -55,6 +55,13 @@ By research area: curve-torsion (41), protocol-soundness (21), generic-hardness 
 | `torsionBy_eq_top` | the DL group is its own `n`-torsion (`G[n] = ⊤`; cofactor-1 shape) | Mathlib | `Torsion.lean` |
 | `torsionBy_eq_ker_nsmul` | E[n] = ker[n]` (torsion = kernel of the multiplication-by-`n` endomorphism) | Mathlib | `Torsion.lean` |
 | `zmultiples_le_torsionBy` | ⟨G⟩ ⊆ E[n]` (base-point subgroup lies in the `n`-torsion when `ord G ∣ n`) | Mathlib | `Torsion.lean` |
+| `secp256k1_mem_torsionBy_iff_addOrderOf_dvd` | secp256k1 `E[n]` = points of order dividing `n` (curve-named) | Mathlib | `CurveTorsion.lean` |
+| `secp256k1_torsionBy_eq_ker_nsmul` | secp256k1 `E[n] = ker[n]` (torsion = kernel of `[n]` on the curve group) | Mathlib | `CurveTorsion.lean` |
+| `secp256k1_G_ne_zero` | secp256k1 base point `G ≠ O` (SEC2 generator as a non-zero curve point) | Mathlib | `CurveTorsion.lean` |
+| `secp256k1_Ψ₃_ne_zero` | Ψ₃ ≠ 0` (3-torsion is a proper finite set) | Mathlib | `ThreeTorsion.lean` |
+| `secp256k1_three_torsion_x_card_le` | ≤ 4 three-torsion `x`-coordinates (`#E[3] ≤ 9`; GLV/CM torsion) | Mathlib | `ThreeTorsion.lean` |
+| `secp256k1_c₆` | secp256k1 `c₆ = -6048` (Weierstrass `c₆` invariant) | Mathlib | `Invariants.lean` |
+| `secp256k1_c_relation` | discriminant identity `1728·Δ = -c₆` (since `c₄ = 0`) | Mathlib | `Invariants.lean` |
 
 ### protocol-soundness (21)
 
@@ -104,7 +111,7 @@ By research area: curve-torsion (41), protocol-soundness (21), generic-hardness 
 | `eval_zero` | model soundness: identity is the zero form | Mathlib | `GenericGroupBound.lean` |
 | `collision_modEq` | collision equation `a+xb ≡ c+xd (mod n)` (rho/BSGS solve step) | Mathlib | `CollisionEquation.lean` |
 
-### other (4)
+### other (5)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -112,6 +119,7 @@ By research area: curve-torsion (41), protocol-soundness (21), generic-hardness 
 | `collision_recovers_log` | discrete-log recovery `x=(a−c)(d−b)⁻` (collision solve, `d−b` a unit) | Mathlib | `CollisionEquation.lean` |
 | `dlog_unique` | discrete log well-defined mod `n` (`g^x=g^y ⇒ x≡y`) | Mathlib | `CollisionEquation.lean` |
 | `taproot_tweak_verify` | Taproot key-tweak verification (BIP-341 key-path spend, `Q=P+t·G`) | Mathlib | `DlogCompleteness.lean` |
+| `secp256k1_c₆_ne_zero` | secp256k1 `c₆ ≠ 0` (`-6048 ≢ 0 mod p`) | native_decide | `Invariants.lean` |
 
 ### primality (3)
 

@@ -4,19 +4,19 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 92,
+    "theorems": 100,
     "barriers": 6,
-    "edges": 58,
+    "edges": 66,
     "by_method": {
-      "Mathlib": 64,
-      "native_decide": 17,
+      "Mathlib": 71,
+      "native_decide": 18,
       "Mathlib + native_decide": 11
     },
     "by_area": {
-      "curve-torsion": 41,
+      "curve-torsion": 48,
       "protocol-soundness": 21,
       "generic-hardness": 17,
-      "other": 4,
+      "other": 5,
       "primality": 3,
       "reduction": 3,
       "attack-resistance": 2,
@@ -1219,6 +1219,110 @@
       "area": "curve-torsion",
       "dependency_depth": 0,
       "gated": true
+    },
+    {
+      "id": "thm-092",
+      "name": "Ecdlp.Curve.secp256k1_mem_torsionBy_iff_addOrderOf_dvd",
+      "short_name": "secp256k1_mem_torsionBy_iff_addOrderOf_dvd",
+      "module": "Ecdlp.Proved.CurveTorsion",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "claim": "secp256k1 `E[n]` = points of order dividing `n` (curve-named)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-093",
+      "name": "Ecdlp.Curve.secp256k1_torsionBy_eq_ker_nsmul",
+      "short_name": "secp256k1_torsionBy_eq_ker_nsmul",
+      "module": "Ecdlp.Proved.CurveTorsion",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "claim": "secp256k1 `E[n] = ker[n]` (torsion = kernel of `[n]` on the curve group)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-094",
+      "name": "Ecdlp.Curve.secp256k1_G_ne_zero",
+      "short_name": "secp256k1_G_ne_zero",
+      "module": "Ecdlp.Proved.CurveTorsion",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "claim": "secp256k1 base point `G ≠ O` (SEC2 generator as a non-zero curve point)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-095",
+      "name": "Ecdlp.Curve.secp256k1_Ψ₃_ne_zero",
+      "short_name": "secp256k1_Ψ₃_ne_zero",
+      "module": "Ecdlp.Proved.ThreeTorsion",
+      "file": "Ecdlp/Proved/ThreeTorsion.lean",
+      "claim": "Ψ₃ ≠ 0` (3-torsion is a proper finite set)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-096",
+      "name": "Ecdlp.Curve.secp256k1_three_torsion_x_card_le",
+      "short_name": "secp256k1_three_torsion_x_card_le",
+      "module": "Ecdlp.Proved.ThreeTorsion",
+      "file": "Ecdlp/Proved/ThreeTorsion.lean",
+      "claim": "≤ 4 three-torsion `x`-coordinates (`#E[3] ≤ 9`; GLV/CM torsion)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-097",
+      "name": "Ecdlp.Curve.secp256k1_c₆",
+      "short_name": "secp256k1_c₆",
+      "module": "Ecdlp.Proved.Invariants",
+      "file": "Ecdlp/Proved/Invariants.lean",
+      "claim": "secp256k1 `c₆ = -6048` (Weierstrass `c₆` invariant)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-098",
+      "name": "Ecdlp.Curve.secp256k1_c₆_ne_zero",
+      "short_name": "secp256k1_c₆_ne_zero",
+      "module": "Ecdlp.Proved.Invariants",
+      "file": "Ecdlp/Proved/Invariants.lean",
+      "claim": "secp256k1 `c₆ ≠ 0` (`-6048 ≢ 0 mod p`)",
+      "method": "native_decide",
+      "status": "proved",
+      "area": "other",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-099",
+      "name": "Ecdlp.Curve.secp256k1_c_relation",
+      "short_name": "secp256k1_c_relation",
+      "module": "Ecdlp.Proved.Invariants",
+      "file": "Ecdlp/Proved/Invariants.lean",
+      "claim": "discriminant identity `1728·Δ = -c₆` (since `c₄ = 0`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1342,6 +1446,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.CurveTorsion",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CurveTorsion",
+      "to": "Ecdlp.Proved.Torsion",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.DlogAdvanced",
       "to": "Ecdlp.Proved.SchnorrSoundness",
       "type": "imports"
@@ -1349,6 +1463,16 @@
     {
       "from": "Ecdlp.Proved.DivisionPolynomial",
       "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
       "type": "imports"
     },
     {
@@ -1369,6 +1493,11 @@
     {
       "from": "Ecdlp.Proved.TraceOfFrobenius",
       "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.Invariants",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
@@ -1524,6 +1653,21 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.Torsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.CurveTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.ThreeTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.Invariants",
       "type": "imports"
     },
     {

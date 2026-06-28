@@ -100,8 +100,16 @@ git history and the GitHub Actions tab.
 | **the DL group is its own `n`-torsion** (`G[n] = ⊤`; cofactor-1 shape) | `Ecdlp.Torsion.torsionBy_eq_top` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
 | **`E[n] = ker[n]`** (torsion = kernel of the multiplication-by-`n` endomorphism) | `Ecdlp.Torsion.torsionBy_eq_ker_nsmul` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
 | **`⟨G⟩ ⊆ E[n]`** (base-point subgroup lies in the `n`-torsion when `ord G ∣ n`) | `Ecdlp.Torsion.zmultiples_le_torsionBy` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
+| **secp256k1 `E[n]` = points of order dividing `n`** (curve-named) | `Ecdlp.Curve.secp256k1_mem_torsionBy_iff_addOrderOf_dvd` | Ecdlp/Proved/CurveTorsion.lean | Mathlib | proved |
+| **secp256k1 `E[n] = ker[n]`** (torsion = kernel of `[n]` on the curve group) | `Ecdlp.Curve.secp256k1_torsionBy_eq_ker_nsmul` | Ecdlp/Proved/CurveTorsion.lean | Mathlib | proved |
+| **secp256k1 base point `G ≠ O`** (SEC2 generator as a non-zero curve point) | `Ecdlp.Curve.secp256k1_G_ne_zero` | Ecdlp/Proved/CurveTorsion.lean | Mathlib | proved |
+| **`Ψ₃ ≠ 0`** (3-torsion is a proper finite set) | `Ecdlp.Curve.secp256k1_Ψ₃_ne_zero` | Ecdlp/Proved/ThreeTorsion.lean | Mathlib | proved |
+| **≤ 4 three-torsion `x`-coordinates** (`#E[3] ≤ 9`; GLV/CM torsion) | `Ecdlp.Curve.secp256k1_three_torsion_x_card_le` | Ecdlp/Proved/ThreeTorsion.lean | Mathlib | proved |
+| **secp256k1 `c₆ = -6048`** (Weierstrass `c₆` invariant) | `Ecdlp.Curve.secp256k1_c₆` | Ecdlp/Proved/Invariants.lean | Mathlib | proved |
+| **secp256k1 `c₆ ≠ 0`** (`-6048 ≢ 0 mod p`) | `Ecdlp.Curve.secp256k1_c₆_ne_zero` | Ecdlp/Proved/Invariants.lean | native_decide | proved |
+| **discriminant identity `1728·Δ = -c₆²`** (since `c₄ = 0`) | `Ecdlp.Curve.secp256k1_c_relation` | Ecdlp/Proved/Invariants.lean | Mathlib | proved |
 
-**Total: 112 theorems proved** (19 concrete `native_decide` facts, 71 structural via
+**Total: 120 theorems proved** (20 concrete `native_decide` facts, 78 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,
