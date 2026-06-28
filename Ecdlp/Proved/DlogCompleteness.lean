@@ -96,4 +96,15 @@ theorem adaptor_complete (g P R T : G) (x r c t : ZMod n)
   subst hP hR hT
   rw [add_smul, add_smul, mul_smul]; abel
 
+/-- **Taproot key-tweak verification (BIP-341 key-path spend).** The output key is
+the internal key tweaked by `t`: `Q = P + t·G`. A signature with the tweaked secret
+`x + t` verifies against `Q`: `s·G = R + c·Q` where `s = r + c·(x + t)`. This is the
+correctness of Bitcoin Taproot key-path spending (and the same shape as the
+MuSig2+tweak aggregate key). -/
+theorem taproot_tweak_verify (g P R : G) (x r c t s : ZMod n)
+    (hP : P = x • g) (hR : R = r • g) (hs : s = r + c * (x + t)) :
+    s • g = R + c • (P + t • g) := by
+  subst hP hR hs
+  module
+
 end Ecdlp.Schnorr
