@@ -21,7 +21,7 @@ flowchart TB
     end
   end
 
-  subgraph HZ["Hetzner server 23.88.61.86 — durable, warm"]
+  subgraph HZ["Hetzner server <SERVER_HOST> — durable, warm"]
     LEAN["Warm Lean + Mathlib cache (~7GB / 40GB disk)"]
     CAS["CAS: PARI / sympy"]
   end

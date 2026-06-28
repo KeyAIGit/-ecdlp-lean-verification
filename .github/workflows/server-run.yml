@@ -7,7 +7,7 @@ name: Run on server (warm Lean + CAS)
 #
 # REQUIRED repository secrets (Settings → Secrets and variables → Actions):
 #   SSH_PRIVATE_KEY  — the OpenSSH private key whose public half is on the server
-#   SERVER_HOST      — the server IP / hostname (e.g. 23.88.61.86)
+#   SERVER_HOST      — the server IP / hostname (e.g. <SERVER_HOST>)
 # OPTIONAL:
 #   SERVER_USER      — login user (defaults to "root")
 #

@@ -8,7 +8,7 @@ name: Bootstrap server (one-time, password → key + Lean+CAS)
 # works and the password can be retired.
 #
 # REQUIRED repository secrets (Settings → Secrets and variables → Actions):
-#   SERVER_HOST      — server IP (e.g. 23.88.61.86)
+#   SERVER_HOST      — server IP (e.g. <SERVER_HOST>)
 #   SERVER_PASSWORD  — current root password (delete after success)
 #
 # Manual only. Idempotent.

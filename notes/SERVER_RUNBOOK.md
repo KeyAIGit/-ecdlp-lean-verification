@@ -13,17 +13,17 @@ with a **warm local Lean toolchain**, so each proof attempt is verified by
 
 ## 0. SECURITY FIRST (do this before anything else)
 
-The root password for `46.224.103.180` was posted in plain chat — **treat it as
+The root password for `<old-server-host>` was posted in plain chat — **treat it as
 compromised**. On a machine you trust:
 
 ```sh
 # 1) log in once with the current password, then immediately rotate it:
-ssh root@46.224.103.180
+ssh root@<old-server-host>
 passwd                      # set a new strong password
 
 # 2) add key-based auth (run the keygen on YOUR laptop, not the server):
 #    (local)  ssh-keygen -t ed25519 -C "ecdlp-prover"
-#    (local)  ssh-copy-id root@46.224.103.180
+#    (local)  ssh-copy-id root@<old-server-host>
 
 # 3) disable password login:
 sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
@@ -36,7 +36,7 @@ private key anywhere.
 ## 1. Bootstrap (Lean + Mathlib warm cache)
 
 ```sh
-ssh root@46.224.103.180
+ssh root@<old-server-host>
 git clone https://github.com/KeyAIGit/-ecdlp-lean-verification.git
 cd -ecdlp-lean-verification
 bash scripts/server-setup.sh          # elan + Lean v4.31.0 + `lake exe cache get` + build
@@ -104,7 +104,7 @@ never auto-runs and does not touch the build gate.
 2. GitHub → repo **Settings → Secrets and variables → Actions → New repository
    secret**, add:
    - `SSH_PRIVATE_KEY` — the OpenSSH **private** key (whole `-----BEGIN…END-----`).
-   - `SERVER_HOST` — the server IP (e.g. `23.88.61.86`).
+   - `SERVER_HOST` — the server IP (e.g. `<SERVER_HOST>`).
    - `SERVER_USER` *(optional)* — login user, defaults to `root`.
 
 **Run it:** GitHub → **Actions → "Run on server (warm Lean + CAS)" → Run workflow**.
