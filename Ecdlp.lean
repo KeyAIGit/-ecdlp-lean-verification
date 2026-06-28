@@ -31,3 +31,4 @@ import Ecdlp.Proved.ThreeTorsion
 import Ecdlp.Proved.Invariants
 import Ecdlp.Proved.FourDivisionPolynomial
 import Ecdlp.Proved.AnomalousScope
+import Ecdlp.Proved.GlvEndomorphism
