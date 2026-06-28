@@ -37,6 +37,21 @@ jobs:
           printf '%s\n' "$KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
+      - name: Provision Featherless key to server (if set)
+        env:
+          HOST: ${{ secrets.SERVER_HOST }}
+          SUSER: ${{ secrets.SERVER_USER }}
+          FK: ${{ secrets.FEATHERLESS_API_KEY }}
+        run: |
+          U="${SUSER:-root}"
+          if [ -n "$FK" ] && [ -n "$HOST" ]; then
+            # write the key to a 0600 file on the server via stdin (never in argv/ps)
+            ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20 \
+              "$U@$HOST" "umask 077; cat > ~/.featherless_key && echo featherless-key-provisioned" <<< "$FK"
+          else
+            echo "No FEATHERLESS_API_KEY secret (or HOST); skipping Featherless provisioning."
+          fi
+
       - name: Run command on server and capture output
         env:
           HOST: ${{ secrets.SERVER_HOST }}
