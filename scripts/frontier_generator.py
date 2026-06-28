@@ -49,6 +49,20 @@ STEMS: list[tuple[str, str, list[str], str, str]] = [
      "Euler/Lagrange: g ^ |G| = 1 in a finite group.",
      "theorem frontier_pow_card_eq_one {G : Type*} [Group G] [Fintype G] (g : G) :\n"
      "    g ^ Fintype.card G = 1 := by"),
+    ("frontier_neg_mem_torsionBy", "easy", ["intro x hx; exact neg_mem hx", "aesop", "exact?"],
+     "Torsion is closed under negation: -x is n-torsion when x is.",
+     "theorem frontier_neg_mem_torsionBy {A : Type*} [AddCommGroup A] (n : ℤ) (x : A)\n"
+     "    (hx : x ∈ AddSubgroup.torsionBy A n) : -x ∈ AddSubgroup.torsionBy A n := by"),
+    ("frontier_addOrderOf_dvd_iff", "easy", ["exact addOrderOf_dvd_iff_nsmul_eq_zero", "exact?"],
+     "Order divides n iff n-smul is zero (torsion ↔ order characterization).",
+     "theorem frontier_addOrderOf_dvd_iff {A : Type*} [AddGroup A] (a : A) (n : ℕ) :\n"
+     "    addOrderOf a ∣ n ↔ n • a = 0 := by"),
+    ("frontier_orderOf_one", "easy", ["simp", "exact orderOf_one", "exact?"],
+     "The identity has order 1.",
+     "theorem frontier_orderOf_one {G : Type*} [Group G] : orderOf (1 : G) = 1 := by"),
+    ("frontier_card_pos", "easy", ["exact Fintype.card_pos", "exact?", "positivity"],
+     "A finite group is nonempty: its cardinality is positive.",
+     "theorem frontier_card_pos {G : Type*} [Group G] [Fintype G] : 0 < Fintype.card G := by"),
 ]
 
 

@@ -1,0 +1,23 @@
+{
+  "id": "frontier_neg_mem_torsionBy",
+  "name": "frontier_neg_mem_torsionBy",
+  "claim_id": "frontier-frontier_neg_mem_torsionBy",
+  "status": "todo",
+  "difficulty": "easy",
+  "template": "frontier_expander",
+  "provability_score": "high",
+  "why_it_matters": "Torsion is closed under negation: -x is n-torsion when x is.",
+  "default_budget": {
+    "tier0_tactics": [
+      "intro x hx; exact neg_mem hx",
+      "aesop",
+      "exact?"
+    ],
+    "escalate_if_failed": true
+  },
+  "stem_file": "Ecdlp/Targets/frontier_neg_mem_torsionBy.lean",
+  "source": {
+    "family": "frontier-expander",
+    "from": "verified frontier"
+  }
+}

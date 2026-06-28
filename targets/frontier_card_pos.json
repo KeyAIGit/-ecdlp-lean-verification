@@ -1,0 +1,23 @@
+{
+  "id": "frontier_card_pos",
+  "name": "frontier_card_pos",
+  "claim_id": "frontier-frontier_card_pos",
+  "status": "todo",
+  "difficulty": "easy",
+  "template": "frontier_expander",
+  "provability_score": "high",
+  "why_it_matters": "A finite group is nonempty: its cardinality is positive.",
+  "default_budget": {
+    "tier0_tactics": [
+      "exact Fintype.card_pos",
+      "exact?",
+      "positivity"
+    ],
+    "escalate_if_failed": true
+  },
+  "stem_file": "Ecdlp/Targets/frontier_card_pos.lean",
+  "source": {
+    "family": "frontier-expander",
+    "from": "verified frontier"
+  }
+}

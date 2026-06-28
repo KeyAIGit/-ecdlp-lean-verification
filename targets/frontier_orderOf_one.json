@@ -1,0 +1,23 @@
+{
+  "id": "frontier_orderOf_one",
+  "name": "frontier_orderOf_one",
+  "claim_id": "frontier-frontier_orderOf_one",
+  "status": "todo",
+  "difficulty": "easy",
+  "template": "frontier_expander",
+  "provability_score": "high",
+  "why_it_matters": "The identity has order 1.",
+  "default_budget": {
+    "tier0_tactics": [
+      "simp",
+      "exact orderOf_one",
+      "exact?"
+    ],
+    "escalate_if_failed": true
+  },
+  "stem_file": "Ecdlp/Targets/frontier_orderOf_one.lean",
+  "source": {
+    "family": "frontier-expander",
+    "from": "verified frontier"
+  }
+}
