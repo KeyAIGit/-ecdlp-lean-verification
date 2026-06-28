@@ -1,0 +1,69 @@
+name: Run on server (warm Lean + CAS)
+
+# Bridge: a GitHub Actions runner SSHes into the Hetzner server and runs a command
+# inside the repo there, using the warm Lean toolchain + CAS. Brings the output
+# back as a log + artifact. Manual only (workflow_dispatch) — never auto-runs, so it
+# does not affect the build gate.
+#
+# REQUIRED repository secrets (Settings → Secrets and variables → Actions):
+#   SSH_PRIVATE_KEY  — the OpenSSH private key whose public half is on the server
+#   SERVER_HOST      — the server IP / hostname (e.g. 23.88.61.86)
+# OPTIONAL:
+#   SERVER_USER      — login user (defaults to "root")
+#
+# Server prerequisite (one-time): the box has the matching public key in
+# ~/.ssh/authorized_keys and Lean+Mathlib set up via scripts/server-setup.sh
+# (clone the repo to ~/-ecdlp-lean-verification first). See notes/SERVER_RUNBOOK.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: "Shell command to run on the server inside the repo dir"
+        required: false
+        default: >-
+          lake env lean Ecdlp/Proved/CubeRoot.lean && echo LEAN_OK;
+          python3 -c "import sympy; print('SYMPY_OK prime(2^127-1)?', sympy.isprime(2**127-1))"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH key
+        env:
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Run command on server and capture output
+        env:
+          HOST: ${{ secrets.SERVER_HOST }}
+          SUSER: ${{ secrets.SERVER_USER }}
+          CMD: ${{ github.event.inputs.command }}
+        run: |
+          set -o pipefail
+          U="${SUSER:-root}"
+          if [ -z "$HOST" ]; then echo "::error::SERVER_HOST secret is not set"; exit 1; fi
+          REMOTE='set -e
+            export PATH="$HOME/.elan/bin:$PATH"
+            if [ ! -d ~/-ecdlp-lean-verification ]; then
+              git clone --quiet https://github.com/KeyAIGit/-ecdlp-lean-verification.git ~/-ecdlp-lean-verification
+            fi
+            cd ~/-ecdlp-lean-verification
+            git pull --quiet || true
+            echo "=== running on $(hostname) ==="
+            '"$CMD"
+          ssh -i ~/.ssh/id_ed25519 \
+              -o StrictHostKeyChecking=accept-new \
+              -o ConnectTimeout=20 \
+              "$U@$HOST" "$REMOTE" 2>&1 | tee server-output.txt
+
+      - name: Upload server output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-output
+          path: server-output.txt
+          if-no-files-found: ignore
