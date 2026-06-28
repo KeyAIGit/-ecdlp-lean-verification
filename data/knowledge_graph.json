@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 102,
+    "theorems": 105,
     "barriers": 6,
-    "edges": 66,
+    "edges": 69,
     "by_method": {
-      "Mathlib": 73,
+      "Mathlib": 75,
       "native_decide": 18,
-      "Mathlib + native_decide": 11
+      "Mathlib + native_decide": 12
     },
     "by_area": {
-      "curve-torsion": 50,
+      "curve-torsion": 53,
       "protocol-soundness": 21,
       "generic-hardness": 17,
       "other": 5,
@@ -1349,6 +1349,45 @@
       "area": "curve-torsion",
       "dependency_depth": 2,
       "gated": true
+    },
+    {
+      "id": "thm-102",
+      "name": "Ecdlp.Curve.secp256k1_preΨ₄",
+      "short_name": "secp256k1_preΨ₄",
+      "module": "Ecdlp.Proved.FourDivisionPolynomial",
+      "file": "Ecdlp/Proved/FourDivisionPolynomial.lean",
+      "claim": "preΨ₄ = 2X⁶ + 280X³ − 784` (secp256k1 4-division polynomial auxiliary)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-103",
+      "name": "Ecdlp.Curve.secp256k1_preΨ₄_natDegree",
+      "short_name": "secp256k1_preΨ₄_natDegree",
+      "module": "Ecdlp.Proved.FourDivisionPolynomial",
+      "file": "Ecdlp/Proved/FourDivisionPolynomial.lean",
+      "claim": "deg preΨ₄ = 6` (4-torsion bound up the tower)",
+      "method": "Mathlib + native_decide",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-104",
+      "name": "Ecdlp.Curve.secp256k1_preΨ₄_ne_zero",
+      "short_name": "secp256k1_preΨ₄_ne_zero",
+      "module": "Ecdlp.Proved.FourDivisionPolynomial",
+      "file": "Ecdlp/Proved/FourDivisionPolynomial.lean",
+      "claim": "preΨ₄ ≠ 0` (proper finite root set)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1519,6 +1558,16 @@
     {
       "from": "Ecdlp.Proved.TraceOfFrobenius",
       "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourDivisionPolynomial",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourDivisionPolynomial",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
       "type": "imports"
     },
     {
@@ -1694,6 +1743,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.Invariants",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FourDivisionPolynomial",
       "type": "imports"
     },
     {

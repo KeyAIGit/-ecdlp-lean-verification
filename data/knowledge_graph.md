@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**102 theorems** · **6 barriers** · **66 edges**
+**105 theorems** · **6 barriers** · **69 edges**
 
-By proof method: Mathlib (73), native_decide (18), Mathlib + native_decide (11)
+By proof method: Mathlib (75), native_decide (18), Mathlib + native_decide (12)
 
-By research area: curve-torsion (50), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (2), params (1)
+By research area: curve-torsion (53), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (2), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (50)
+### curve-torsion (53)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -64,6 +64,9 @@ By research area: curve-torsion (50), protocol-soundness (21), generic-hardness 
 | `secp256k1_c_relation` | discriminant identity `1728·Δ = -c₆` (since `c₄ = 0`) | Mathlib | `Invariants.lean` |
 | `secp256k1_torsionBy_dvd_le` | secp256k1 torsion filtration (`E[m] ≤ E[n]` when `m ∣ n`, curve-named) | Mathlib | `CurveTorsion.lean` |
 | `secp256k1_zmultiples_le_torsionBy` | secp256k1 `⟨P⟩ ⊆ E[n]` (finite-order point's subgroup is `n`-torsion) | Mathlib | `CurveTorsion.lean` |
+| `secp256k1_preΨ₄` | preΨ₄ = 2X⁶ + 280X³ − 784` (secp256k1 4-division polynomial auxiliary) | Mathlib | `FourDivisionPolynomial.lean` |
+| `secp256k1_preΨ₄_natDegree` | deg preΨ₄ = 6` (4-torsion bound up the tower) | Mathlib + native_decide | `FourDivisionPolynomial.lean` |
+| `secp256k1_preΨ₄_ne_zero` | preΨ₄ ≠ 0` (proper finite root set) | Mathlib | `FourDivisionPolynomial.lean` |
 
 ### protocol-soundness (21)
 

@@ -110,8 +110,11 @@ git history and the GitHub Actions tab.
 | **discriminant identity `1728·Δ = -c₆²`** (since `c₄ = 0`) | `Ecdlp.Curve.secp256k1_c_relation` | Ecdlp/Proved/Invariants.lean | Mathlib | proved |
 | **secp256k1 torsion filtration** (`E[m] ≤ E[n]` when `m ∣ n`, curve-named) | `Ecdlp.Curve.secp256k1_torsionBy_dvd_le` | Ecdlp/Proved/CurveTorsion.lean | Mathlib | proved |
 | **secp256k1 `⟨P⟩ ⊆ E[n]`** (finite-order point's subgroup is `n`-torsion) | `Ecdlp.Curve.secp256k1_zmultiples_le_torsionBy` | Ecdlp/Proved/CurveTorsion.lean | Mathlib | proved |
+| **`preΨ₄ = 2X⁶ + 280X³ − 784`** (secp256k1 4-division polynomial auxiliary) | `Ecdlp.Curve.secp256k1_preΨ₄` | Ecdlp/Proved/FourDivisionPolynomial.lean | Mathlib | proved |
+| **`deg preΨ₄ = 6`** (4-torsion bound up the tower) | `Ecdlp.Curve.secp256k1_preΨ₄_natDegree` | Ecdlp/Proved/FourDivisionPolynomial.lean | Mathlib + native_decide | proved |
+| **`preΨ₄ ≠ 0`** (proper finite root set) | `Ecdlp.Curve.secp256k1_preΨ₄_ne_zero` | Ecdlp/Proved/FourDivisionPolynomial.lean | Mathlib | proved |
 
-**Total: 122 theorems proved** (20 concrete `native_decide` facts, 80 structural via
+**Total: 125 theorems proved** (21 concrete `native_decide` facts, 82 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,
