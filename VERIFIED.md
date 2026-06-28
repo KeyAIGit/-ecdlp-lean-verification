@@ -94,8 +94,12 @@ git history and the GitHub Actions tab.
 | **vector Pedersen commitment homomorphism** (Bulletproofs / confidential tx) | `Ecdlp.Schnorr.pedersen_vector_homomorphic` | Ecdlp/Proved/DlogPrimitives.lean | Mathlib | proved |
 | **adaptor signature completeness** (atomic swaps / Lightning PTLC) | `Ecdlp.Schnorr.adaptor_complete` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 | **Taproot key-tweak verification** (BIP-341 key-path spend, `Q=P+t·G`) | `Ecdlp.Schnorr.taproot_tweak_verify` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
+| **`E[n]` = points of order dividing `n`** (`P∈E[n] ⟺ ord P ∣ n`) | `Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
+| **torsion filtration** (`E[m] ≤ E[n]` when `m ∣ n`) | `Ecdlp.Torsion.torsionBy_dvd_le` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
+| **a `ZMod n`-module is killed by `n`** (`n • x = 0`) | `Ecdlp.Torsion.zmod_module_nsmul_eq_zero` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
+| **the DL group is its own `n`-torsion** (`G[n] = ⊤`; cofactor-1 shape) | `Ecdlp.Torsion.torsionBy_eq_top` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
 
-**Total: 106 theorems proved** (19 concrete `native_decide` facts, 65 structural via
+**Total: 110 theorems proved** (19 concrete `native_decide` facts, 69 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,

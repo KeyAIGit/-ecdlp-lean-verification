@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**86 theorems** · **6 barriers** · **57 edges**
+**90 theorems** · **6 barriers** · **58 edges**
 
-By proof method: Mathlib (58), native_decide (17), Mathlib + native_decide (11)
+By proof method: Mathlib (62), native_decide (17), Mathlib + native_decide (11)
 
-By research area: curve-torsion (35), protocol-soundness (21), generic-hardness (17), other (4), primality (3), reduction (3), attack-resistance (2), params (1)
+By research area: curve-torsion (39), protocol-soundness (21), generic-hardness (17), other (4), primality (3), reduction (3), attack-resistance (2), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (35)
+### curve-torsion (39)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -49,6 +49,10 @@ By research area: curve-torsion (35), protocol-soundness (21), generic-hardness 
 | `secp256k1_two_torsion_x_card_le` | ≤ 3 two-torsion `x`-coordinates (`#roots Ψ₂Sq ≤ 3`) | Mathlib | `DivisionPolynomialDegree.lean` |
 | `secp256k1_Ψ₂Sq_ne_zero` | Ψ₂Sq ≠ 0` (2-torsion is a proper finite set) | Mathlib | `DivisionPolynomialDegree.lean` |
 | `secp256k1_Ψ₃_natDegree` | deg Ψ₃ = 4` (3-torsion count `#E[3] ≤ 9`; GLV-relevant CM torsion) | Mathlib + native_decide | `DivisionPolynomialDegree.lean` |
+| `mem_torsionBy_iff_addOrderOf_dvd` | E[n]` = points of order dividing `n` (`P∈E[n] ⟺ ord P ∣ n`) | Mathlib | `Torsion.lean` |
+| `torsionBy_dvd_le` | torsion filtration (`E[m] ≤ E[n]` when `m ∣ n`) | Mathlib | `Torsion.lean` |
+| `zmod_module_nsmul_eq_zero` | a `ZMod n`-module is killed by `n` (`n • x = 0`) | Mathlib | `Torsion.lean` |
+| `torsionBy_eq_top` | the DL group is its own `n`-torsion (`G[n] = ⊤`; cofactor-1 shape) | Mathlib | `Torsion.lean` |
 
 ### protocol-soundness (21)
 

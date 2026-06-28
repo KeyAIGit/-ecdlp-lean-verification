@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 86,
+    "theorems": 90,
     "barriers": 6,
-    "edges": 57,
+    "edges": 58,
     "by_method": {
-      "Mathlib": 58,
+      "Mathlib": 62,
       "native_decide": 17,
       "Mathlib + native_decide": 11
     },
     "by_area": {
-      "curve-torsion": 35,
+      "curve-torsion": 39,
       "protocol-soundness": 21,
       "generic-hardness": 17,
       "other": 4,
@@ -1141,6 +1141,58 @@
       "area": "other",
       "dependency_depth": 0,
       "gated": true
+    },
+    {
+      "id": "thm-086",
+      "name": "Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd",
+      "short_name": "mem_torsionBy_iff_addOrderOf_dvd",
+      "module": "Ecdlp.Proved.Torsion",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "claim": "E[n]` = points of order dividing `n` (`P∈E[n] ⟺ ord P ∣ n`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-087",
+      "name": "Ecdlp.Torsion.torsionBy_dvd_le",
+      "short_name": "torsionBy_dvd_le",
+      "module": "Ecdlp.Proved.Torsion",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "claim": "torsion filtration (`E[m] ≤ E[n]` when `m ∣ n`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-088",
+      "name": "Ecdlp.Torsion.zmod_module_nsmul_eq_zero",
+      "short_name": "zmod_module_nsmul_eq_zero",
+      "module": "Ecdlp.Proved.Torsion",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "claim": "a `ZMod n`-module is killed by `n` (`n • x = 0`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-089",
+      "name": "Ecdlp.Torsion.torsionBy_eq_top",
+      "short_name": "torsionBy_eq_top",
+      "module": "Ecdlp.Proved.Torsion",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "claim": "the DL group is its own `n`-torsion (`G[n] = ⊤`; cofactor-1 shape)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1441,6 +1493,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.Torsion",
       "type": "imports"
     },
     {
