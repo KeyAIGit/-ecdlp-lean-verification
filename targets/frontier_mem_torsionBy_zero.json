@@ -1,0 +1,22 @@
+{
+  "id": "frontier_mem_torsionBy_zero",
+  "name": "frontier_mem_torsionBy_zero",
+  "claim_id": "frontier-frontier_mem_torsionBy_zero",
+  "status": "todo",
+  "difficulty": "easy",
+  "template": "frontier_expander",
+  "provability_score": "high",
+  "why_it_matters": "Membership in the 0-torsion is universal.",
+  "default_budget": {
+    "tier0_tactics": [
+      "simp",
+      "intro x; simp"
+    ],
+    "escalate_if_failed": true
+  },
+  "stem_file": "Ecdlp/Targets/frontier_mem_torsionBy_zero.lean",
+  "source": {
+    "family": "frontier-expander",
+    "from": "verified frontier"
+  }
+}

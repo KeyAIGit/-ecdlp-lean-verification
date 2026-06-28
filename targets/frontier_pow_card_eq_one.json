@@ -1,0 +1,22 @@
+{
+  "id": "frontier_pow_card_eq_one",
+  "name": "frontier_pow_card_eq_one",
+  "claim_id": "frontier-frontier_pow_card_eq_one",
+  "status": "todo",
+  "difficulty": "medium",
+  "template": "frontier_expander",
+  "provability_score": "medium",
+  "why_it_matters": "Euler/Lagrange: g ^ |G| = 1 in a finite group.",
+  "default_budget": {
+    "tier0_tactics": [
+      "exact pow_card_eq_one",
+      "exact?"
+    ],
+    "escalate_if_failed": true
+  },
+  "stem_file": "Ecdlp/Targets/frontier_pow_card_eq_one.lean",
+  "source": {
+    "family": "frontier-expander",
+    "from": "verified frontier"
+  }
+}

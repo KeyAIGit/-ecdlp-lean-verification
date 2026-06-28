@@ -1,0 +1,22 @@
+{
+  "id": "frontier_torsionBy_one_bot",
+  "name": "frontier_torsionBy_one_bot",
+  "claim_id": "frontier-frontier_torsionBy_one_bot",
+  "status": "todo",
+  "difficulty": "easy",
+  "template": "frontier_expander",
+  "provability_score": "high",
+  "why_it_matters": "Only the identity is 1-torsion: the 1-torsion subgroup is trivial.",
+  "default_budget": {
+    "tier0_tactics": [
+      "simp",
+      "aesop"
+    ],
+    "escalate_if_failed": true
+  },
+  "stem_file": "Ecdlp/Targets/frontier_torsionBy_one_bot.lean",
+  "source": {
+    "family": "frontier-expander",
+    "from": "verified frontier"
+  }
+}

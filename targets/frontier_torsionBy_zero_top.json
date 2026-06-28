@@ -1,0 +1,22 @@
+{
+  "id": "frontier_torsionBy_zero_top",
+  "name": "frontier_torsionBy_zero_top",
+  "claim_id": "frontier-frontier_torsionBy_zero_top",
+  "status": "todo",
+  "difficulty": "easy",
+  "template": "frontier_expander",
+  "provability_score": "high",
+  "why_it_matters": "Every element is 0-torsion: the 0-torsion subgroup is the whole group.",
+  "default_budget": {
+    "tier0_tactics": [
+      "simp",
+      "aesop"
+    ],
+    "escalate_if_failed": true
+  },
+  "stem_file": "Ecdlp/Targets/frontier_torsionBy_zero_top.lean",
+  "source": {
+    "family": "frontier-expander",
+    "from": "verified frontier"
+  }
+}

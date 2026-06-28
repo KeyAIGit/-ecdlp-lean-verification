@@ -1,0 +1,22 @@
+{
+  "id": "frontier_orderOf_dvd_card",
+  "name": "frontier_orderOf_dvd_card",
+  "claim_id": "frontier-frontier_orderOf_dvd_card",
+  "status": "todo",
+  "difficulty": "medium",
+  "template": "frontier_expander",
+  "provability_score": "medium",
+  "why_it_matters": "Lagrange: every element's order divides the group order (finite group).",
+  "default_budget": {
+    "tier0_tactics": [
+      "exact orderOf_dvd_card",
+      "exact?"
+    ],
+    "escalate_if_failed": true
+  },
+  "stem_file": "Ecdlp/Targets/frontier_orderOf_dvd_card.lean",
+  "source": {
+    "family": "frontier-expander",
+    "from": "verified frontier"
+  }
+}

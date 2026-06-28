@@ -1,0 +1,22 @@
+{
+  "id": "frontier_zero_mem_torsionBy",
+  "name": "frontier_zero_mem_torsionBy",
+  "claim_id": "frontier-frontier_zero_mem_torsionBy",
+  "status": "todo",
+  "difficulty": "easy",
+  "template": "frontier_expander",
+  "provability_score": "high",
+  "why_it_matters": "The identity is n-torsion for every n.",
+  "default_budget": {
+    "tier0_tactics": [
+      "simp",
+      "exact zero_mem _"
+    ],
+    "escalate_if_failed": true
+  },
+  "stem_file": "Ecdlp/Targets/frontier_zero_mem_torsionBy.lean",
+  "source": {
+    "family": "frontier-expander",
+    "from": "verified frontier"
+  }
+}
