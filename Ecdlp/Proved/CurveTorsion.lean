@@ -50,4 +50,19 @@ subgroup `⟨G⟩` that ECDLP operates in. -/
 theorem secp256k1_G_ne_zero : secp256k1_G ≠ 0 :=
   WeierstrassCurve.Affine.Point.some_ne_zero _
 
+/-- **Torsion filtration for secp256k1: `E[m] ≤ E[n]` when `m ∣ n`.** The curve-named
+instance of the monotone torsion lattice. -/
+theorem secp256k1_torsionBy_dvd_le {m k : ℤ} (h : m ∣ k) :
+    AddSubgroup.torsionBy secp256k1.toAffine.Point m
+      ≤ AddSubgroup.torsionBy secp256k1.toAffine.Point k :=
+  Ecdlp.Torsion.torsionBy_dvd_le h
+
+/-- **A finite-order point's subgroup lies in secp256k1 `E[n]`.** If a curve point `P`
+has order dividing `n`, the cyclic subgroup `⟨P⟩` it generates is `n`-torsion — the
+curve-named form of `⟨G⟩ ⊆ E[n]`. -/
+theorem secp256k1_zmultiples_le_torsionBy {n : ℕ} {P : secp256k1.toAffine.Point}
+    (h : addOrderOf P ∣ n) :
+    AddSubgroup.zmultiples P ≤ AddSubgroup.torsionBy secp256k1.toAffine.Point (n : ℤ) :=
+  Ecdlp.Torsion.zmultiples_le_torsionBy h
+
 end Ecdlp.Curve
