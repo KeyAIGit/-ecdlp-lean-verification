@@ -1,12 +1,12 @@
 name: Verify Lean proofs
 
-# Triggers: every push, every pull request, manual run, and scheduled agent re-checks.
+# Triggers: every push, every pull request, and manual run.
+# (The hourly `schedule` cron was removed — it rebuilt all of Mathlib every hour and
+# burned Actions minutes for no benefit. Verification runs on push / PR / dispatch.)
 on:
   push:
   pull_request:
   workflow_dispatch:
-  schedule:
-    - cron: '0 * * * *'   # aggressive prover trial mode: every hour
 
 concurrency:
   group: prover-trial-${{ github.ref }}
