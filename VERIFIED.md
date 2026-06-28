@@ -108,8 +108,10 @@ git history and the GitHub Actions tab.
 | **secp256k1 `c₆ = -6048`** (Weierstrass `c₆` invariant) | `Ecdlp.Curve.secp256k1_c₆` | Ecdlp/Proved/Invariants.lean | Mathlib | proved |
 | **secp256k1 `c₆ ≠ 0`** (`-6048 ≢ 0 mod p`) | `Ecdlp.Curve.secp256k1_c₆_ne_zero` | Ecdlp/Proved/Invariants.lean | native_decide | proved |
 | **discriminant identity `1728·Δ = -c₆²`** (since `c₄ = 0`) | `Ecdlp.Curve.secp256k1_c_relation` | Ecdlp/Proved/Invariants.lean | Mathlib | proved |
+| **secp256k1 torsion filtration** (`E[m] ≤ E[n]` when `m ∣ n`, curve-named) | `Ecdlp.Curve.secp256k1_torsionBy_dvd_le` | Ecdlp/Proved/CurveTorsion.lean | Mathlib | proved |
+| **secp256k1 `⟨P⟩ ⊆ E[n]`** (finite-order point's subgroup is `n`-torsion) | `Ecdlp.Curve.secp256k1_zmultiples_le_torsionBy` | Ecdlp/Proved/CurveTorsion.lean | Mathlib | proved |
 
-**Total: 120 theorems proved** (20 concrete `native_decide` facts, 78 structural via
+**Total: 122 theorems proved** (20 concrete `native_decide` facts, 80 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,

@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 100,
+    "theorems": 102,
     "barriers": 6,
     "edges": 66,
     "by_method": {
-      "Mathlib": 71,
+      "Mathlib": 73,
       "native_decide": 18,
       "Mathlib + native_decide": 11
     },
     "by_area": {
-      "curve-torsion": 48,
+      "curve-torsion": 50,
       "protocol-soundness": 21,
       "generic-hardness": 17,
       "other": 5,
@@ -1318,6 +1318,32 @@
       "module": "Ecdlp.Proved.Invariants",
       "file": "Ecdlp/Proved/Invariants.lean",
       "claim": "discriminant identity `1728·Δ = -c₆` (since `c₄ = 0`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-100",
+      "name": "Ecdlp.Curve.secp256k1_torsionBy_dvd_le",
+      "short_name": "secp256k1_torsionBy_dvd_le",
+      "module": "Ecdlp.Proved.CurveTorsion",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "claim": "secp256k1 torsion filtration (`E[m] ≤ E[n]` when `m ∣ n`, curve-named)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-101",
+      "name": "Ecdlp.Curve.secp256k1_zmultiples_le_torsionBy",
+      "short_name": "secp256k1_zmultiples_le_torsionBy",
+      "module": "Ecdlp.Proved.CurveTorsion",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "claim": "secp256k1 `⟨P⟩ ⊆ E[n]` (finite-order point's subgroup is `n`-torsion)",
       "method": "Mathlib",
       "status": "proved",
       "area": "curve-torsion",
