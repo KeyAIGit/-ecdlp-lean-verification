@@ -92,9 +92,8 @@ git history and the GitHub Actions tab.
 | **ElGamal ciphertext re-randomization** (mixnet unlinkability) | `Ecdlp.Schnorr.elgamal_rerandomize_decrypt` | Ecdlp/Proved/DlogPrimitives.lean | Mathlib | proved |
 | **ElGamal additive homomorphism** (e-voting homomorphic tally) | `Ecdlp.Schnorr.elgamal_additively_homomorphic` | Ecdlp/Proved/DlogPrimitives.lean | Mathlib | proved |
 | **vector Pedersen commitment homomorphism** (Bulletproofs / confidential tx) | `Ecdlp.Schnorr.pedersen_vector_homomorphic` | Ecdlp/Proved/DlogPrimitives.lean | Mathlib | proved |
-| **adaptor signature completeness** (atomic swaps / Lightning PTLC) | `Ecdlp.Schnorr.adaptor_complete` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 
-**Total: 105 theorems proved** (19 concrete `native_decide` facts, 64 structural via
+**Total: 104 theorems proved** (19 concrete `native_decide` facts, 63 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,

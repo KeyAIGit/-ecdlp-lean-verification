@@ -2,11 +2,11 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**85 theorems** · **6 barriers** · **57 edges**
+**84 theorems** · **6 barriers** · **57 edges**
 
-By proof method: Mathlib (57), native_decide (17), Mathlib + native_decide (11)
+By proof method: Mathlib (56), native_decide (17), Mathlib + native_decide (11)
 
-By research area: curve-torsion (35), protocol-soundness (21), generic-hardness (17), primality (3), reduction (3), other (3), attack-resistance (2), params (1)
+By research area: curve-torsion (35), protocol-soundness (20), generic-hardness (17), primality (3), reduction (3), other (3), attack-resistance (2), params (1)
 
 ## Verified theorems by area
 
@@ -50,7 +50,7 @@ By research area: curve-torsion (35), protocol-soundness (21), generic-hardness 
 | `secp256k1_Ψ₂Sq_ne_zero` | Ψ₂Sq ≠ 0` (2-torsion is a proper finite set) | Mathlib | `DivisionPolynomialDegree.lean` |
 | `secp256k1_Ψ₃_natDegree` | deg Ψ₃ = 4` (3-torsion count `#E[3] ≤ 9`; GLV-relevant CM torsion) | Mathlib + native_decide | `DivisionPolynomialDegree.lean` |
 
-### protocol-soundness (21)
+### protocol-soundness (20)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -74,7 +74,6 @@ By research area: curve-torsion (35), protocol-soundness (21), generic-hardness 
 | `elgamal_rerandomize_decrypt` | ElGamal ciphertext re-randomization (mixnet unlinkability) | Mathlib | `DlogPrimitives.lean` |
 | `elgamal_additively_homomorphic` | ElGamal additive homomorphism (e-voting homomorphic tally) | Mathlib | `DlogPrimitives.lean` |
 | `pedersen_vector_homomorphic` | vector Pedersen commitment homomorphism (Bulletproofs / confidential tx) | Mathlib | `DlogPrimitives.lean` |
-| `adaptor_complete` | adaptor signature completeness (atomic swaps / Lightning PTLC) | Mathlib | `DlogCompleteness.lean` |
 
 ### generic-hardness (17)
 

@@ -86,27 +86,4 @@ theorem schnorr_batch_verify {ι : Type*} (t : Finset ι) (g : G)
     (∑ i ∈ t, (r i + c i * x i)) • g = (∑ i ∈ t, R i) + ∑ i ∈ t, c i • P i := by
   simp only [hP, hR, Finset.sum_add_distrib, add_smul, Finset.sum_smul, mul_smul]
 
-/-- **Adaptor signature completeness.** A pre-signature `s' = r + c·x` against
-adaptor point `T = t·G` adapts to a full signature `s = s' + t`, which verifies
-against the `T`-shifted nonce: `s·G = (R + T) + c·P`. With `adaptor_extract`
-(soundness, `SchnorrSoundness.lean`) this gives both directions — the basis of
-atomic swaps and Lightning PTLCs, where revealing `s` leaks the adaptor secret `t`. -/
-theorem adaptor_complete (g P R T : G) (x r c t : ZMod n)
-    (hP : P = x • g) (hR : R = r • g) (hT : T = t • g) :
-    ((r + c * x) + t) • g = (R + T) + c • P := by
-  subst hP hR hT
-  rw [add_smul, add_smul, mul_smul]; abel
-
-/-- **Taproot key-tweak verification (BIP-341 key-path spend).** The output key is
-the internal key tweaked by `t`: `Q = P + t·G`. A signature with the tweaked secret
-`x + t` verifies against `Q`: `s·G = R + c·Q` where `s = r + c·(x + t)`. This is the
-correctness of Bitcoin Taproot key-path spending (and the same shape as the
-MuSig2+tweak aggregate key). -/
-theorem taproot_tweak_verify (g P R : G) (x r c t s : ZMod n)
-    (hP : P = x • g) (hR : R = r • g) (hs : s = r + c * (x + t)) :
-    s • g = R + c • (P + t • g) := by
-  subst hP hR hs
-  rw [mul_add, add_smul, add_smul, smul_add, mul_smul, mul_smul]
-  abel
-
 end Ecdlp.Schnorr
