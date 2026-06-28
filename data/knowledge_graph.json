@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 90,
+    "theorems": 92,
     "barriers": 6,
     "edges": 58,
     "by_method": {
-      "Mathlib": 62,
+      "Mathlib": 64,
       "native_decide": 17,
       "Mathlib + native_decide": 11
     },
     "by_area": {
-      "curve-torsion": 39,
+      "curve-torsion": 41,
       "protocol-soundness": 21,
       "generic-hardness": 17,
       "other": 4,
@@ -1188,6 +1188,32 @@
       "module": "Ecdlp.Proved.Torsion",
       "file": "Ecdlp/Proved/Torsion.lean",
       "claim": "the DL group is its own `n`-torsion (`G[n] = ⊤`; cofactor-1 shape)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-090",
+      "name": "Ecdlp.Torsion.torsionBy_eq_ker_nsmul",
+      "short_name": "torsionBy_eq_ker_nsmul",
+      "module": "Ecdlp.Proved.Torsion",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "claim": "E[n] = ker[n]` (torsion = kernel of the multiplication-by-`n` endomorphism)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-091",
+      "name": "Ecdlp.Torsion.zmultiples_le_torsionBy",
+      "short_name": "zmultiples_le_torsionBy",
+      "module": "Ecdlp.Proved.Torsion",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "claim": "⟨G⟩ ⊆ E[n]` (base-point subgroup lies in the `n`-torsion when `ord G ∣ n`)",
       "method": "Mathlib",
       "status": "proved",
       "area": "curve-torsion",

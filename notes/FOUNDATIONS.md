@@ -38,7 +38,7 @@ transfer constructively, not just about its inapplicability here.
 
 | Missing rung | Consequence | Difficulty |
 |---|---|---|
-| `n`-torsion subgroup `E[n]` as a group object | no `E[n] ≅ (ℤ/n)²` | high |
+| ~~`n`-torsion subgroup `E[n]` as a group object~~ ✓ **done** (Mathlib `AddSubgroup.torsionBy`, notation `A[n]`; our bridge in `Ecdlp/Proved/Torsion.lean`) | `E[n]` available; `E[n] ≅ (ℤ/n)²` still open | ~~high~~ closed |
 | **Weil pairing** `eₙ : E[n] × E[n] → μₙ` + bilinearity/non-degeneracy | no MOV/FR transfer, no pairing-based crypto | very high |
 | Tate pairing | alternative transfer | very high |
 | Isogenies as a developed theory | no degree/dual/kernel reasoning | high |
@@ -66,6 +66,24 @@ transfer constructively, not just about its inapplicability here.
 Rungs 1–3 are tractable now (concrete polynomial identities). Rung 4 is the first
 genuinely hard step and the right target for a focused effort. Rungs 5–6 are the
 multi-month core.
+
+### `E[n]` as a group object — closed via Mathlib (`Ecdlp/Proved/Torsion.lean`)
+
+The "rung 1" framing ("define `E[n]` from scratch") turned out to be partly already
+solved: Mathlib's `AddSubgroup.torsionBy A n` (notation `A[n]`) **is** `E[n] = ker[n]`,
+with a `Module (ZMod n)` structure (`torsionBy.zmodModule`). The genuinely-new work was
+the connective tissue tying it to ECDLP, now proved and in the ledger:
+
+| Theorem | Content |
+|---|---|
+| `mem_torsionBy_iff_addOrderOf_dvd` | `P ∈ E[n] ⟺ ord(P) ∣ n` |
+| `torsionBy_eq_ker_nsmul` | `E[n] = ker[n]` (kernel of `nsmulAddMonoidHom n`, the `[n]` map) |
+| `zmultiples_le_torsionBy` | `⟨G⟩ ⊆ E[n]` for the base point (`ord G ∣ n`) |
+| `torsionBy_dvd_le` | filtration `E[m] ≤ E[n]` for `m ∣ n` |
+| `torsionBy_eq_top` / `zmod_module_nsmul_eq_zero` | DL-model bridge: `G[n] = ⊤` (cofactor-1 shape) |
+
+What remains open (and needs Mathlib foundations that do not yet exist): the **structure
+theorem** `E[n] ≅ (ℤ/n)²` (rung 5) and the **Weil pairing** (rung 6).
 
 ## Status of the open rungs
 

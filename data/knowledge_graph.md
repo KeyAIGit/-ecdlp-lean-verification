@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**90 theorems** · **6 barriers** · **58 edges**
+**92 theorems** · **6 barriers** · **58 edges**
 
-By proof method: Mathlib (62), native_decide (17), Mathlib + native_decide (11)
+By proof method: Mathlib (64), native_decide (17), Mathlib + native_decide (11)
 
-By research area: curve-torsion (39), protocol-soundness (21), generic-hardness (17), other (4), primality (3), reduction (3), attack-resistance (2), params (1)
+By research area: curve-torsion (41), protocol-soundness (21), generic-hardness (17), other (4), primality (3), reduction (3), attack-resistance (2), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (39)
+### curve-torsion (41)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -53,6 +53,8 @@ By research area: curve-torsion (39), protocol-soundness (21), generic-hardness 
 | `torsionBy_dvd_le` | torsion filtration (`E[m] ≤ E[n]` when `m ∣ n`) | Mathlib | `Torsion.lean` |
 | `zmod_module_nsmul_eq_zero` | a `ZMod n`-module is killed by `n` (`n • x = 0`) | Mathlib | `Torsion.lean` |
 | `torsionBy_eq_top` | the DL group is its own `n`-torsion (`G[n] = ⊤`; cofactor-1 shape) | Mathlib | `Torsion.lean` |
+| `torsionBy_eq_ker_nsmul` | E[n] = ker[n]` (torsion = kernel of the multiplication-by-`n` endomorphism) | Mathlib | `Torsion.lean` |
+| `zmultiples_le_torsionBy` | ⟨G⟩ ⊆ E[n]` (base-point subgroup lies in the `n`-torsion when `ord G ∣ n`) | Mathlib | `Torsion.lean` |
 
 ### protocol-soundness (21)
 

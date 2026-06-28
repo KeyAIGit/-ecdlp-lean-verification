@@ -98,8 +98,10 @@ git history and the GitHub Actions tab.
 | **torsion filtration** (`E[m] ≤ E[n]` when `m ∣ n`) | `Ecdlp.Torsion.torsionBy_dvd_le` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
 | **a `ZMod n`-module is killed by `n`** (`n • x = 0`) | `Ecdlp.Torsion.zmod_module_nsmul_eq_zero` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
 | **the DL group is its own `n`-torsion** (`G[n] = ⊤`; cofactor-1 shape) | `Ecdlp.Torsion.torsionBy_eq_top` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
+| **`E[n] = ker[n]`** (torsion = kernel of the multiplication-by-`n` endomorphism) | `Ecdlp.Torsion.torsionBy_eq_ker_nsmul` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
+| **`⟨G⟩ ⊆ E[n]`** (base-point subgroup lies in the `n`-torsion when `ord G ∣ n`) | `Ecdlp.Torsion.zmultiples_le_torsionBy` | Ecdlp/Proved/Torsion.lean | Mathlib | proved |
 
-**Total: 110 theorems proved** (19 concrete `native_decide` facts, 69 structural via
+**Total: 112 theorems proved** (19 concrete `native_decide` facts, 71 structural via
 Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,
