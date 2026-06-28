@@ -27,10 +27,10 @@ substituting secp256k1's `b₂=b₄=b₈=0`, `b₆=28` into Mathlib's
 `2X⁶ + b₂X⁵ + 5b₄X⁴ + 10b₆X³ + 10b₈X² + (b₂b₈−b₄b₆)X + (b₄b₈−b₆²)` gives
 `2X⁶ + 280X³ − 784`. Extends `secp256k1_Ψ₂Sq` / `secp256k1_Ψ₃` one rung up. -/
 theorem secp256k1_preΨ₄ :
-    secp256k1.preΨ₄ = C 2 * X ^ 6 + C 280 * X ^ 3 + C (-784) := by
+    secp256k1.preΨ₄ = 2 * X ^ 6 + 280 * X ^ 3 - 784 := by
   rw [WeierstrassCurve.preΨ₄, secp256k1_b₂, secp256k1_b₄, secp256k1_b₆, secp256k1_b₈]
-  C_simp
-  ring1
+  simp only [map_zero, map_ofNat, map_mul, map_sub, map_pow]
+  ring
 
 /-- **`deg preΨ₄ = 6`** (4-torsion bound). The secp256k1 4-division auxiliary
 `2X⁶ + 280X³ − 784` has degree 6, so it has at most 6 roots in `𝔽_p`. Uses the
