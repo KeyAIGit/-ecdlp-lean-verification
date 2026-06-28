@@ -1,0 +1,13 @@
+{
+  "id": "smart_trace_one_scope_001",
+  "name": "smart_trace_one_scope",
+  "claim_id": "smart-trace-one-scope-001",
+  "status": "todo",
+  "difficulty": "easy",
+  "template": "manual_arithmetic",
+  "provability_score": "high",
+  "why_it_matters": "Anomalous-curve boundary (Smart/SSSA): #E(F_p)=p iff trace a_p=1.",
+  "default_budget": {"tier0_tactics": ["omega", "linarith", "decide"], "escalate_if_failed": true},
+  "stem_file": "Ecdlp/Targets/smart_trace_one_scope_001.lean",
+  "source": {"formal_status": "formalizable", "mathlib_area": "(arithmetic)", "batch": "manual-slice-1"}
+}
