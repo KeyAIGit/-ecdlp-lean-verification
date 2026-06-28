@@ -25,3 +25,4 @@ import Ecdlp.Proved.DivisionPolynomial
 import Ecdlp.Proved.TwoTorsion
 import Ecdlp.Proved.CollisionEquation
 import Ecdlp.Proved.DivisionPolynomialDegree
+import Ecdlp.Proved.Torsion
