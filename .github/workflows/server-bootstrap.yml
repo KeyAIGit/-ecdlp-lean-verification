@@ -2,16 +2,16 @@ name: Bootstrap server (one-time, password → key + Lean+CAS)
 
 # One-time bootstrap so the dev/automation never needs manual SSH. A GitHub Actions
 # runner (which CAN reach the server, unlike the dev sandbox) logs in with the
-# CURRENT root password, installs our public key into authorized_keys, then sets up
-# Lean+Mathlib+CAS. After this, the key-based `server-run.yml` works and the password
-# can be retired.
+# CURRENT root password, installs our public key, COPIES the repo to the server with
+# rsync (the repo is private, so the server can't clone it itself), then runs
+# server-setup.sh to install Lean+Mathlib+CAS. After this, key-based `server-run.yml`
+# works and the password can be retired.
 #
 # REQUIRED repository secrets (Settings → Secrets and variables → Actions):
 #   SERVER_HOST      — server IP (e.g. 23.88.61.86)
-#   SERVER_PASSWORD  — current root password (delete this secret after success)
+#   SERVER_PASSWORD  — current root password (delete after success)
 #
-# Manual only. Idempotent: safe to re-run (key not duplicated, clone guarded,
-# `lake exe cache get` resumable).
+# Manual only. Idempotent.
 
 on:
   workflow_dispatch:
@@ -20,38 +20,36 @@ jobs:
   bootstrap:
     runs-on: ubuntu-latest
     steps:
-      - name: Install sshpass
-        run: sudo apt-get update -q && sudo apt-get install -y -q sshpass
+      - name: Checkout repo (to copy to the server)
+        uses: actions/checkout@v4
 
-      - name: Install key + Lean+CAS over SSH (password)
+      - name: Install sshpass + rsync
+        run: sudo apt-get update -q && sudo apt-get install -y -q sshpass rsync
+
+      - name: Install key, copy repo, set up Lean+CAS
         env:
           HOST: ${{ secrets.SERVER_HOST }}
           PW: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          set -e
+          set -e -o pipefail
           if [ -z "$HOST" ] || [ -z "$PW" ]; then
             echo "::error::Set both SERVER_HOST and SERVER_PASSWORD repository secrets."; exit 1
           fi
-          cat > remote.sh <<'EOS'
-          set -e
           PUBKEY='ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKsAYCwq/iCpycx/jUvcMFbaywZc0D9lNAJ91yBjMN38 ecdlp-server'
-          mkdir -p ~/.ssh && chmod 700 ~/.ssh
-          grep -qF "$PUBKEY" ~/.ssh/authorized_keys 2>/dev/null || echo "$PUBKEY" >> ~/.ssh/authorized_keys
-          chmod 600 ~/.ssh/authorized_keys
-          echo "[bootstrap] public key installed in authorized_keys"
-          [ -d ~/-ecdlp-lean-verification ] || git clone --quiet https://github.com/KeyAIGit/-ecdlp-lean-verification.git ~/-ecdlp-lean-verification
-          cd ~/-ecdlp-lean-verification && git pull --quiet || true
-          echo "[bootstrap] repo ready; running server-setup.sh (Lean+Mathlib cache + CAS, 10+ min)..."
-          WITH_CAS=1 bash scripts/server-setup.sh
-          echo "[bootstrap] DONE — key-based access + Lean + CAS are ready"
-          EOS
-          sshpass -p "$PW" ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 \
-            root@"$HOST" 'bash -s' < remote.sh 2>&1 | tee bootstrap.log
+          SSHOPTS="-o StrictHostKeyChecking=accept-new -o ConnectTimeout=25"
 
-      - name: Upload bootstrap log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: bootstrap-log
-          path: bootstrap.log
-          if-no-files-found: ignore
+          echo "=== 1. install public key in authorized_keys ==="
+          sshpass -p "$PW" ssh $SSHOPTS root@"$HOST" \
+            "mkdir -p ~/.ssh && chmod 700 ~/.ssh && \
+             ( grep -qF '$PUBKEY' ~/.ssh/authorized_keys 2>/dev/null || echo '$PUBKEY' >> ~/.ssh/authorized_keys ) && \
+             chmod 600 ~/.ssh/authorized_keys && echo '[bootstrap] key installed'"
+
+          echo "=== 2. copy repo to server (rsync; private repo can't be cloned there) ==="
+          sshpass -p "$PW" rsync -az --delete -e "ssh $SSHOPTS" \
+            --exclude '.git' --exclude '.lake' --exclude '.elan' \
+            ./ root@"$HOST":/root/-ecdlp-lean-verification/
+          echo "[bootstrap] repo copied"
+
+          echo "=== 3. run server-setup.sh (Lean+Mathlib cache + CAS, 10+ min) ==="
+          sshpass -p "$PW" ssh $SSHOPTS root@"$HOST" \
+            "cd ~/-ecdlp-lean-verification && WITH_CAS=1 bash scripts/server-setup.sh && echo '[bootstrap] DONE'"
