@@ -106,7 +106,7 @@ theorem taproot_tweak_verify (g P R : G) (x r c t s : ZMod n)
     (hP : P = x • g) (hR : R = r • g) (hs : s = r + c * (x + t)) :
     s • g = R + c • (P + t • g) := by
   subst hP hR hs
-  simp only [mul_add, add_smul, smul_add, mul_smul]
+  rw [mul_add, add_smul, add_smul, smul_add, mul_smul, mul_smul]
   abel
 
 end Ecdlp.Schnorr
