@@ -28,3 +28,4 @@ import Ecdlp.Proved.DivisionPolynomialDegree
 import Ecdlp.Proved.Torsion
 import Ecdlp.Proved.CurveTorsion
 import Ecdlp.Proved.ThreeTorsion
+import Ecdlp.Proved.Invariants
