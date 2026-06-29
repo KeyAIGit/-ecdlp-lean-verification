@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 107,
+    "theorems": 108,
     "barriers": 6,
     "edges": 72,
     "by_method": {
       "Mathlib": 76,
       "native_decide": 18,
-      "Mathlib + native_decide": 13
+      "Mathlib + native_decide": 14
     },
     "by_area": {
-      "curve-torsion": 54,
+      "curve-torsion": 55,
       "protocol-soundness": 21,
       "generic-hardness": 17,
       "other": 5,
@@ -1409,6 +1409,19 @@
       "module": "Ecdlp.Proved.GlvEndomorphism",
       "file": "Ecdlp/Proved/GlvEndomorphism.lean",
       "claim": "GLV endomorphism preserves the curve (`(x,y)↦(βx,y)` keeps `Y=X³+7`, via `β³=1`)",
+      "method": "Mathlib + native_decide",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-107",
+      "name": "Ecdlp.Curve.secp256k1_glv_preserves_nonsingular",
+      "short_name": "secp256k1_glv_preserves_nonsingular",
+      "module": "Ecdlp.Proved.GlvEndomorphism",
+      "file": "Ecdlp/Proved/GlvEndomorphism.lean",
+      "claim": "GLV endomorphism preserves nonsingularity (smooth `(x,y)` ↦ smooth `(βx,y)`; `β` a unit)",
       "method": "Mathlib + native_decide",
       "status": "proved",
       "area": "curve-torsion",

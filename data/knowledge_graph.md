@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**107 theorems** · **6 barriers** · **72 edges**
+**108 theorems** · **6 barriers** · **72 edges**
 
-By proof method: Mathlib (76), native_decide (18), Mathlib + native_decide (13)
+By proof method: Mathlib (76), native_decide (18), Mathlib + native_decide (14)
 
-By research area: curve-torsion (54), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
+By research area: curve-torsion (55), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (54)
+### curve-torsion (55)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -68,6 +68,7 @@ By research area: curve-torsion (54), protocol-soundness (21), generic-hardness 
 | `secp256k1_preΨ₄_natDegree` | deg preΨ₄ = 6` (4-torsion bound up the tower) | Mathlib + native_decide | `FourDivisionPolynomial.lean` |
 | `secp256k1_preΨ₄_ne_zero` | preΨ₄ ≠ 0` (proper finite root set) | Mathlib | `FourDivisionPolynomial.lean` |
 | `secp256k1_glv_preserves_equation` | GLV endomorphism preserves the curve (`(x,y)↦(βx,y)` keeps `Y=X³+7`, via `β³=1`) | Mathlib + native_decide | `GlvEndomorphism.lean` |
+| `secp256k1_glv_preserves_nonsingular` | GLV endomorphism preserves nonsingularity (smooth `(x,y)` ↦ smooth `(βx,y)`; `β` a unit) | Mathlib + native_decide | `GlvEndomorphism.lean` |
 
 ### protocol-soundness (21)
 
