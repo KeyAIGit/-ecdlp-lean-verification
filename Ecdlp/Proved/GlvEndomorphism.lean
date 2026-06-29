@@ -47,4 +47,50 @@ theorem secp256k1_glv_preserves_equation
   rw [hcube]
   exact h
 
+/-- **The GLV endomorphism preserves nonsingularity.** If `(x, y)` is a smooth point of
+secp256k1, so is `(β·x, y)`. The smoothness witness for `Y² = X³ + 7` is
+`3x² ≠ 0 ∨ y ≠ -y` (the partial-derivative non-vanishing condition, with `a₁=a₂=a₃=a₄=0`).
+Under `x ↦ β·x` the second disjunct is untouched, and the first transfers because `β` is a
+unit (`β³ = 1` forces `β ≠ 0`, so `β²` is nonzero and `3(βx)² = 3β²x² ≠ 0 ⟺ 3x² ≠ 0`).
+Combined with `secp256k1_glv_preserves_equation`, this is the full `Nonsingular` half needed
+to lift `(x,y) ↦ (β·x, y)` to a map on `secp256k1.toAffine.Point`. -/
+theorem secp256k1_glv_preserves_nonsingular
+    [Fact (Nat.Prime Secp256k1.p)]
+    (x y : ZMod Secp256k1.p)
+    (h : secp256k1.toAffine.Nonsingular x y) :
+    secp256k1.toAffine.Nonsingular ((Secp256k1.beta : ZMod Secp256k1.p) * x) y := by
+  -- β² + β + 1 = 0 in 𝔽_p (lifted from the machine-checked Nat-level eigenvalue fact)
+  have hβeig : (Secp256k1.beta : ZMod Secp256k1.p) ^ 2
+      + (Secp256k1.beta : ZMod Secp256k1.p) + 1 = 0 := by
+    have h0 : ((Secp256k1.beta ^ 2 + Secp256k1.beta + 1 : ℕ) : ZMod Secp256k1.p) = 0 := by
+      rw [ZMod.natCast_eq_zero_iff]
+      exact Nat.dvd_of_mod_eq_zero Secp256k1.beta_field_eigenvalue
+    push_cast at h0
+    linear_combination h0
+  -- β ≠ 0: if β = 0 then β² + β + 1 = 1 ≠ 0, contradicting hβeig
+  have hβ0 : (Secp256k1.beta : ZMod Secp256k1.p) ≠ 0 := by
+    intro hb
+    rw [hb] at hβeig
+    norm_num at hβeig
+  -- β² ≠ 0 since β ≠ 0 (𝔽_p has no zero divisors)
+  have hβsq : (Secp256k1.beta : ZMod Secp256k1.p) ^ 2 ≠ 0 := pow_ne_zero 2 hβ0
+  rw [WeierstrassCurve.Affine.nonsingular_iff] at h ⊢
+  obtain ⟨heq, hsmooth⟩ := h
+  refine ⟨secp256k1_glv_preserves_equation x y heq, ?_⟩
+  -- reduce both smoothness conditions using the secp256k1 a-invariants
+  simp only [secp256k1, zero_mul, mul_zero, add_zero, zero_add, sub_zero, neg_zero] at hsmooth ⊢
+  -- hsmooth : (0 : ZMod p) ≠ 3 * x ^ 2  ∨  y ≠ -y
+  -- goal    : (0 : ZMod p) ≠ 3 * (β * x) ^ 2  ∨  y ≠ -y
+  rcases hsmooth with hx | hy
+  · -- left disjunct: transfer 3x² ≠ 0 to 3(βx)² ≠ 0
+    refine Or.inl ?_
+    -- 3 * (β * x) ^ 2 = β ^ 2 * (3 * x ^ 2)
+    have hxne : (3 : ZMod Secp256k1.p) * x ^ 2 ≠ 0 := fun h => hx h.symm
+    have : (3 : ZMod Secp256k1.p) * (Secp256k1.beta * x) ^ 2
+        = Secp256k1.beta ^ 2 * (3 * x ^ 2) := by ring
+    rw [this]
+    exact (mul_ne_zero hβsq hxne).symm
+  · -- right disjunct: y ≠ -y is unchanged
+    exact Or.inr hy
+
 end Ecdlp.Curve
