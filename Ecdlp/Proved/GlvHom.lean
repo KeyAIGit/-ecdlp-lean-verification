@@ -80,9 +80,11 @@ theorem glvPoint_add (P Q : secp256k1.toAffine.Point) :
           rintro ⟨he, hn⟩
           refine hxy ⟨mul_left_cancel₀ hβ0 he, ?_⟩
           rw [hnegY]; rw [hnegY] at hn; exact hn
+        -- `some.injEq` drops the `Nonsingular` proof field (a `Prop`, so
+        -- proof-irrelevant), leaving exactly the two coordinate equalities.
         rw [Point.add_some hxy, glvPoint_some, glvPoint_some, glvPoint_some,
           Point.add_some hxy', Point.some.injEq]
-        refine ⟨?_, ?_, proof_irrel_heq _ _⟩
+        refine ⟨?_, ?_⟩
         · -- X-coordinate: β·addX = addX after slope→β²·slope and addX→β·addX.
           rw [secp256k1_glv_slope, secp256k1_glv_addX]
         · -- Y-coordinate: unchanged after slope→β²·slope and addY invariance.
