@@ -69,7 +69,11 @@ jobs:
       # README/markdown files that legitimately discuss `sorry`.
       - name: Ensure no incomplete proofs remain (built proof base only)
         run: |
-          if grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/; then
+          # AxiomAudit.lean is a meta/audit harness (only `#print axioms` + docs that
+          # legitimately mention `sorryAx`); it contains no proofs and is not imported,
+          # so exclude it to avoid a prose false-positive. Its `sorryAx` check is the
+          # real, robust no-sorry gate for the audited theorems (scripts/check_axioms.py).
+          if grep -rniI --include='*.lean' --exclude-dir=Targets --exclude='AxiomAudit.lean' 'sorry' Ecdlp/; then
             echo "::error::Found 'sorry' in a built Ecdlp/ Lean file - a proof is incomplete"
             exit 1
           fi
