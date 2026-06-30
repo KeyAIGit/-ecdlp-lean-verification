@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+"""Axiom-audit checker (CI trust gate).
+
+Reads the output of `lake env lean Ecdlp/AxiomAudit.lean` (a sequence of
+`#print axioms` results) and FAILS (exit 1) if any audited result:
+
+  * depends on `sorryAx`  — a `sorry`/`admit` leaked into a built proof, or
+  * depends on any axiom outside the allowed trusted base.
+
+Allowed trusted base:
+  - propext, Classical.choice, Quot.sound  (Lean/Mathlib standard axioms)
+  - Lean.ofReduceBool                      (native_decide; trusts the compiler — disclosed)
+
+Usage:  python3 scripts/check_axioms.py axiom_audit.txt
+"""
+from __future__ import annotations
+
+import re
+import sys
+from pathlib import Path
+
+ALLOWED = {"propext", "Classical.choice", "Quot.sound", "Lean.ofReduceBool"}
+# `sorryAx` is the axiom Lean inserts for `sorry`/`admit`; it must never appear.
+FORBIDDEN_ALWAYS = {"sorryAx", "Lean.trustCompiler", "Lean.guardMsgsAx"}
+
+
+def main(argv: list[str]) -> int:
+    if len(argv) != 2:
+        print("usage: check_axioms.py <axiom_audit.txt>", file=sys.stderr)
+        return 2
+    text = Path(argv[1]).read_text(encoding="utf-8")
+
+    # A Lean error in the audit file (e.g. an unknown theorem name) means the audit is
+    # not actually checking what it claims — treat as failure so names stay correct.
+    if re.search(r"^\S*error:", text, re.MULTILINE) or "unknown identifier" in text:
+        print("AXIOM AUDIT FAILED: the audit file did not elaborate cleanly "
+              "(unknown name or error). Output:\n" + text)
+        return 1
+
+    # Each `#print axioms foo` yields either
+    #   'foo' depends on axioms: [a, b, c]
+    # or
+    #   'foo' does not depend on any axioms
+    blocks = re.findall(r"'([^']+)' depends on axioms: \[([^\]]*)\]", text)
+    nodep = re.findall(r"'([^']+)' does not depend on any axioms", text)
+
+    if not blocks and not nodep:
+        print("AXIOM AUDIT FAILED: no `#print axioms` output found — did the audit run?\n"
+              + text)
+        return 1
+
+    violations: list[str] = []
+    native_decide_users: list[str] = []
+    for name, axlist in blocks:
+        axioms = {a.strip() for a in axlist.split(",") if a.strip()}
+        bad = (axioms - ALLOWED) | (axioms & FORBIDDEN_ALWAYS)
+        if bad:
+            violations.append(f"  {name}: disallowed axiom(s) {sorted(bad)}")
+        if "Lean.ofReduceBool" in axioms:
+            native_decide_users.append(name)
+
+    print(f"axiom audit: {len(blocks) + len(nodep)} results checked, "
+          f"{len(native_decide_users)} use native_decide (Lean.ofReduceBool).")
+    for n in native_decide_users:
+        print(f"  [native_decide / compiler-trusted] {n}")
+
+    if violations:
+        print("\nAXIOM AUDIT FAILED — disallowed axioms found:")
+        print("\n".join(violations))
+        return 1
+
+    print("\nAXIOM AUDIT OK: every audited result depends only on the allowed trusted "
+          "base (no sorryAx, no custom axioms).")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv))

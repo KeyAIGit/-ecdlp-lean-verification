@@ -58,6 +58,10 @@ jobs:
           echo "Skipped on pull_request run. GitHub does not reliably expose repository secrets to PR-triggered runs." >> "$GITHUB_STEP_SUMMARY"
           echo "Use the blue 'Run Workflow' button or wait for the scheduled run to run the prover with FEATHERLESS_API_KEY." >> "$GITHUB_STEP_SUMMARY"
 
+      # Cheap doc gate: fail on count drift (the headline count regressed 3x).
+      - name: Check count consistency (docs)
+        run: python3 scripts/check_counts.py
+
       # Fast, cheap gate: fail before building if any BUILT proof is left incomplete.
       # Scope: only *.lean files in the built proof base. Ecdlp/Targets/ holds open
       # conjecture stems (with `sorry`) that are intentionally NOT imported/built, so
@@ -71,6 +75,17 @@ jobs:
           fi
           echo "All built proofs complete: no 'sorry' outside Ecdlp/Targets/"
 
+      # Close the latent hole: `sorry` is a warning, and the grep above skips Targets/.
+      # If any BUILT file ever imported a Targets stem, a `sorry` could reach the build
+      # graph undetected. Forbid `import Ecdlp.Targets` outside Targets/ itself.
+      - name: Ensure no built file imports an open target stem
+        run: |
+          if grep -rnI --include='*.lean' --exclude-dir=Targets 'import Ecdlp.Targets' Ecdlp/; then
+            echo "::error::A built Lean file imports Ecdlp.Targets (open stems carry 'sorry')"
+            exit 1
+          fi
+          echo "No built file imports Ecdlp.Targets."
+
       - name: Install elan (Lean toolchain manager)
         run: |
           curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
@@ -82,6 +97,17 @@ jobs:
 
       - name: Build and verify ALL proofs
         run: lake build
+
+      # Trust gate: assert no built result depends on `sorryAx` or any axiom outside the
+      # allowed base {propext, Classical.choice, Quot.sound, Lean.ofReduceBool}. This is
+      # what makes the "no axioms" claim machine-enforced rather than just documented; it
+      # also surfaces exactly which results extend the TCB via native_decide.
+      - name: Axiom audit (no sorryAx, no custom axioms)
+        run: |
+          lake env lean Ecdlp/AxiomAudit.lean > axiom_audit.txt 2>&1 \
+            || { echo "::error::axiom audit file failed to elaborate"; cat axiom_audit.txt; exit 1; }
+          cat axiom_audit.txt
+          python3 scripts/check_axioms.py axiom_audit.txt
 
       # Open conjecture stems in Ecdlp/Targets/ are not part of the build graph. This
       # step typechecks them so the generator's output is at least well-formed Lean.

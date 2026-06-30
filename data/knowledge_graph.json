@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 108,
+    "theorems": 114,
     "barriers": 6,
-    "edges": 72,
+    "edges": 86,
     "by_method": {
-      "Mathlib": 76,
+      "Mathlib": 82,
       "native_decide": 18,
       "Mathlib + native_decide": 14
     },
     "by_area": {
-      "curve-torsion": 55,
+      "curve-torsion": 61,
       "protocol-soundness": 21,
       "generic-hardness": 17,
       "other": 5,
@@ -1427,6 +1427,84 @@
       "area": "curve-torsion",
       "dependency_depth": 2,
       "gated": true
+    },
+    {
+      "id": "thm-108",
+      "name": "Ecdlp.Curve.secp256k1_glv_slope_of_X_ne",
+      "short_name": "secp256k1_glv_slope_of_X_ne",
+      "module": "Ecdlp.Proved.GlvSlope",
+      "file": "Ecdlp/Proved/GlvSlope.lean",
+      "claim": "GLV slope scaling, secant branch (`x₁≠x₂`: `slope(βx₁,βx₂)=β·slope`, via `β⁻=β`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-109",
+      "name": "Ecdlp.Curve.secp256k1_glv_slope_of_Y_ne",
+      "short_name": "secp256k1_glv_slope_of_Y_ne",
+      "module": "Ecdlp.Proved.GlvSlopeTangent",
+      "file": "Ecdlp/Proved/GlvSlopeTangent.lean",
+      "claim": "GLV slope scaling, tangent branch (doubling `x₁=x₂`: `3(βx)/(2y)=β·slope`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-110",
+      "name": "Ecdlp.Curve.secp256k1_glv_slope",
+      "short_name": "secp256k1_glv_slope",
+      "module": "Ecdlp.Proved.GlvSlopeAll",
+      "file": "Ecdlp/Proved/GlvSlopeAll.lean",
+      "claim": "GLV slope scaling, all branches (unconditional: GLV scales the addition slope by exactly `β`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 3,
+      "gated": true
+    },
+    {
+      "id": "thm-111",
+      "name": "Ecdlp.Curve.secp256k1_glv_addX",
+      "short_name": "secp256k1_glv_addX",
+      "module": "Ecdlp.Proved.GlvAddFormula",
+      "file": "Ecdlp/Proved/GlvAddFormula.lean",
+      "claim": "GLV β-equivariance of `addX` (`addX(βx₁,βx₂,βℓ)=β·addX`; new `X`-coord scales by `β`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-112",
+      "name": "Ecdlp.Curve.secp256k1_glv_addY",
+      "short_name": "secp256k1_glv_addY",
+      "module": "Ecdlp.Proved.GlvAddFormula",
+      "file": "Ecdlp/Proved/GlvAddFormula.lean",
+      "claim": "GLV β-equivariance of `addY` (`addY(βx₁,βx₂,y₁,βℓ)=addY`; `Y`-coord unchanged)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 2,
+      "gated": true
+    },
+    {
+      "id": "thm-113",
+      "name": "Ecdlp.Curve.glvPoint_add",
+      "short_name": "glvPoint_add",
+      "module": "Ecdlp.Proved.GlvHom",
+      "file": "Ecdlp/Proved/GlvHom.lean",
+      "claim": "GLV map is an additive endomorphism (`glvPoint(P+Q)=glvPoint P+glvPoint Q`, all branches; homomorphism half only — the `glvPoint=[λ]` eigenvalue property is not proved)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1515,6 +1593,26 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.GlvHom",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvHom",
+      "to": "Ecdlp.Proved.GlvEndomorphism",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvHom",
+      "to": "Ecdlp.Proved.GlvSlopeAll",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvHom",
+      "to": "Ecdlp.Proved.GlvAddFormula",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.SchnorrSoundness",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -1545,8 +1643,23 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.GlvSlopeTangent",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.Secp256k1PrimeN",
       "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvSlopeAll",
+      "to": "Ecdlp.Proved.GlvSlope",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvSlopeAll",
+      "to": "Ecdlp.Proved.GlvSlopeTangent",
       "type": "imports"
     },
     {
@@ -1590,6 +1703,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.GlvAddFormula",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.Secp256k1GenericSecurity",
       "to": "Ecdlp.Proved.GenericGroupBound",
       "type": "imports"
@@ -1597,6 +1715,11 @@
     {
       "from": "Ecdlp.Proved.Secp256k1GenericSecurity",
       "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvSlope",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
@@ -1802,6 +1925,31 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.GlvEndomorphism",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.GlvSlope",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.GlvSlopeTangent",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.GlvSlopeAll",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.GlvAddFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.GlvHom",
       "type": "imports"
     },
     {

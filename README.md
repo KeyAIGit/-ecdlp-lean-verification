@@ -47,8 +47,10 @@ This is stage 2 (formalization agent output) of the autonomous research mechanis
 Each `formalizable` claim in KG_CLAIM_FORMALIZATION_v1.csv becomes a theorem here;
 `native_decide` handles concrete arithmetic facts, Mathlib handles structural ones.
 
-Current ledger: **~99 named kernel-verified results, 0 open obligations, 0 axioms** —
-see `VERIFIED.md` for the canonical, live count (don't trust a hardcoded number here).
+Current ledger: **114 rows / ~105 distinct kernel-verified results, 0 `sorry`, 0 open
+obligations**, with **no custom axioms** (machine-enforced by the axiom-audit gate;
+`native_decide` facts additionally trust the compiler — see `TRUST_REPORT.md`). See
+`VERIFIED.md` for the canonical, live count (don't trust a hardcoded number here).
 Beyond the corpus, the project hosts:
 - a verified discrete-log cryptography library (generic hardness + protocol
   soundness/completeness), including the rho/BSGS **solve step** (collision ⇒

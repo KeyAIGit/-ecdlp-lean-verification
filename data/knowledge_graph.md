@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**108 theorems** · **6 barriers** · **72 edges**
+**114 theorems** · **6 barriers** · **86 edges**
 
-By proof method: Mathlib (76), native_decide (18), Mathlib + native_decide (14)
+By proof method: Mathlib (82), native_decide (18), Mathlib + native_decide (14)
 
-By research area: curve-torsion (55), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
+By research area: curve-torsion (61), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (55)
+### curve-torsion (61)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -69,6 +69,12 @@ By research area: curve-torsion (55), protocol-soundness (21), generic-hardness 
 | `secp256k1_preΨ₄_ne_zero` | preΨ₄ ≠ 0` (proper finite root set) | Mathlib | `FourDivisionPolynomial.lean` |
 | `secp256k1_glv_preserves_equation` | GLV endomorphism preserves the curve (`(x,y)↦(βx,y)` keeps `Y=X³+7`, via `β³=1`) | Mathlib + native_decide | `GlvEndomorphism.lean` |
 | `secp256k1_glv_preserves_nonsingular` | GLV endomorphism preserves nonsingularity (smooth `(x,y)` ↦ smooth `(βx,y)`; `β` a unit) | Mathlib + native_decide | `GlvEndomorphism.lean` |
+| `secp256k1_glv_slope_of_X_ne` | GLV slope scaling, secant branch (`x₁≠x₂`: `slope(βx₁,βx₂)=β·slope`, via `β⁻=β`) | Mathlib | `GlvSlope.lean` |
+| `secp256k1_glv_slope_of_Y_ne` | GLV slope scaling, tangent branch (doubling `x₁=x₂`: `3(βx)/(2y)=β·slope`) | Mathlib | `GlvSlopeTangent.lean` |
+| `secp256k1_glv_slope` | GLV slope scaling, all branches (unconditional: GLV scales the addition slope by exactly `β`) | Mathlib | `GlvSlopeAll.lean` |
+| `secp256k1_glv_addX` | GLV β-equivariance of `addX` (`addX(βx₁,βx₂,βℓ)=β·addX`; new `X`-coord scales by `β`) | Mathlib | `GlvAddFormula.lean` |
+| `secp256k1_glv_addY` | GLV β-equivariance of `addY` (`addY(βx₁,βx₂,y₁,βℓ)=addY`; `Y`-coord unchanged) | Mathlib | `GlvAddFormula.lean` |
+| `glvPoint_add` | GLV map is an additive endomorphism (`glvPoint(P+Q)=glvPoint P+glvPoint Q`, all branches; homomorphism half only — the `glvPoint=[λ]` eigenvalue property is not proved) | Mathlib | `GlvHom.lean` |
 
 ### protocol-soundness (21)
 

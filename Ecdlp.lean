@@ -37,3 +37,4 @@ import Ecdlp.Proved.GlvSlopeTangent
 import Ecdlp.Proved.GlvSlopeAll
 import Ecdlp.Proved.GlvAddFormula
 import Ecdlp.Proved.GlvHom
+import Ecdlp.Proved.GlvMonoidHom
