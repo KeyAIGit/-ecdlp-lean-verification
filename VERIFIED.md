@@ -121,8 +121,9 @@ git history and the GitHub Actions tab.
 | **GLV slope scaling, all branches** (unconditional: GLV scales the addition slope by exactly `β²`) | `Ecdlp.Curve.secp256k1_glv_slope` | Ecdlp/Proved/GlvSlopeAll.lean | Mathlib | proved |
 | **GLV β-equivariance of `addX`** (`addX(βx₁,βx₂,β²ℓ)=β·addX`; new `X`-coord scales by `β`) | `Ecdlp.Curve.secp256k1_glv_addX` | Ecdlp/Proved/GlvAddFormula.lean | Mathlib | proved |
 | **GLV β-equivariance of `addY`** (`addY(βx₁,βx₂,y₁,β²ℓ)=addY`; `Y`-coord unchanged) | `Ecdlp.Curve.secp256k1_glv_addY` | Ecdlp/Proved/GlvAddFormula.lean | Mathlib | proved |
+| **GLV endomorphism is additive** (`glvPoint(P+Q)=glvPoint P+glvPoint Q`; the homomorphism — completes the GLV object) | `Ecdlp.Curve.glvPoint_add` | Ecdlp/Proved/GlvHom.lean | Mathlib | proved |
 
-**~104 named theorems/instances**, each verified by the Lean kernel (**0 `sorry`, 0
+**~105 named theorems/instances**, each verified by the Lean kernel (**0 `sorry`, 0
 axioms, 0 open obligations**) — count the rows in the table above; this ledger is the
 canonical source of truth. *Honesty note:* the primality of `p` and `n` is established
 by full **Pratt certificates** (~22 recursive `native_decide` sub-lemmas, counted as 2
