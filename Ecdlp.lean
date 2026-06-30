@@ -35,3 +35,4 @@ import Ecdlp.Proved.GlvEndomorphism
 import Ecdlp.Proved.GlvSlope
 import Ecdlp.Proved.GlvSlopeTangent
 import Ecdlp.Proved.GlvSlopeAll
+import Ecdlp.Proved.GlvAddFormula
