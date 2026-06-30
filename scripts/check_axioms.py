@@ -19,9 +19,20 @@ import re
 import sys
 from pathlib import Path
 
-ALLOWED = {"propext", "Classical.choice", "Quot.sound", "Lean.ofReduceBool"}
+# Lean/Mathlib's three standard axioms — used by essentially every Mathlib proof.
+ALLOWED_STANDARD = {"propext", "Classical.choice", "Quot.sound"}
+# `native_decide` trusts the Lean COMPILER. Depending on the toolchain it shows up as the
+# generic `Lean.ofReduceBool` OR a per-declaration auxiliary axiom named like
+# `<decl>._native.native_decide.ax_<n>_<m>` (Lean v4.31). Both are the same compiler-trust
+# extension of the TCB — allowed, but flagged (catalogued in TRUST_REPORT.md).
+NATIVE_DECIDE_EXACT = {"Lean.ofReduceBool", "Lean.trustCompiler"}
 # `sorryAx` is the axiom Lean inserts for `sorry`/`admit`; it must never appear.
-FORBIDDEN_ALWAYS = {"sorryAx", "Lean.trustCompiler", "Lean.guardMsgsAx"}
+FORBIDDEN_ALWAYS = {"sorryAx", "Lean.guardMsgsAx"}
+
+
+def is_native_decide(ax: str) -> bool:
+    """True for compiler-trust axioms introduced by `native_decide`."""
+    return ax in NATIVE_DECIDE_EXACT or ".native_decide.ax" in ax or "_native.native_decide" in ax
 
 
 def main(argv: list[str]) -> int:
@@ -53,14 +64,24 @@ def main(argv: list[str]) -> int:
     native_decide_users: list[str] = []
     for name, axlist in blocks:
         axioms = {a.strip() for a in axlist.split(",") if a.strip()}
-        bad = (axioms - ALLOWED) | (axioms & FORBIDDEN_ALWAYS)
+        bad = set()
+        uses_native = False
+        for ax in axioms:
+            if ax in FORBIDDEN_ALWAYS:
+                bad.add(ax)
+            elif ax in ALLOWED_STANDARD:
+                pass
+            elif is_native_decide(ax):
+                uses_native = True
+            else:
+                bad.add(ax)
         if bad:
             violations.append(f"  {name}: disallowed axiom(s) {sorted(bad)}")
-        if "Lean.ofReduceBool" in axioms:
+        if uses_native:
             native_decide_users.append(name)
 
     print(f"axiom audit: {len(blocks) + len(nodep)} results checked, "
-          f"{len(native_decide_users)} use native_decide (Lean.ofReduceBool).")
+          f"{len(native_decide_users)} transitively use native_decide (compiler-trusted axiom).")
     for n in native_decide_users:
         print(f"  [native_decide / compiler-trusted] {n}")
 
