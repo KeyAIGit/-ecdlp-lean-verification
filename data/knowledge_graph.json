@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 114,
+    "theorems": 115,
     "barriers": 6,
-    "edges": 86,
+    "edges": 90,
     "by_method": {
-      "Mathlib": 82,
+      "Mathlib": 83,
       "native_decide": 18,
       "Mathlib + native_decide": 14
     },
     "by_area": {
-      "curve-torsion": 61,
+      "curve-torsion": 62,
       "protocol-soundness": 21,
       "generic-hardness": 17,
       "other": 5,
@@ -1505,6 +1505,19 @@
       "area": "curve-torsion",
       "dependency_depth": 4,
       "gated": true
+    },
+    {
+      "id": "thm-114",
+      "name": "Ecdlp.Curve.glvHom",
+      "short_name": "glvHom",
+      "module": "Ecdlp.Proved.GlvMonoidHom",
+      "file": "Ecdlp/Proved/GlvMonoidHom.lean",
+      "claim": "GLV endomorphism bundled as `AddMonoidHom` (`glvHom : Point →+ Point`; *supporting* — repackages `glvPoint_add`, no new content)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 5,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1588,6 +1601,11 @@
   },
   "edges": [
     {
+      "from": "Ecdlp.AxiomAudit",
+      "to": "Ecdlp",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Ontology",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -1665,6 +1683,16 @@
     {
       "from": "Ecdlp.Proved.Secp256k1Curve",
       "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvMonoidHom",
+      "to": "Ecdlp.Proved.GlvEndomorphism",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvMonoidHom",
+      "to": "Ecdlp.Proved.GlvHom",
       "type": "imports"
     },
     {
@@ -1950,6 +1978,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.GlvHom",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.GlvMonoidHom",
       "type": "imports"
     },
     {

@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**114 theorems** · **6 barriers** · **86 edges**
+**115 theorems** · **6 barriers** · **90 edges**
 
-By proof method: Mathlib (82), native_decide (18), Mathlib + native_decide (14)
+By proof method: Mathlib (83), native_decide (18), Mathlib + native_decide (14)
 
-By research area: curve-torsion (61), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
+By research area: curve-torsion (62), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (61)
+### curve-torsion (62)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -75,6 +75,7 @@ By research area: curve-torsion (61), protocol-soundness (21), generic-hardness 
 | `secp256k1_glv_addX` | GLV β-equivariance of `addX` (`addX(βx₁,βx₂,βℓ)=β·addX`; new `X`-coord scales by `β`) | Mathlib | `GlvAddFormula.lean` |
 | `secp256k1_glv_addY` | GLV β-equivariance of `addY` (`addY(βx₁,βx₂,y₁,βℓ)=addY`; `Y`-coord unchanged) | Mathlib | `GlvAddFormula.lean` |
 | `glvPoint_add` | GLV map is an additive endomorphism (`glvPoint(P+Q)=glvPoint P+glvPoint Q`, all branches; homomorphism half only — the `glvPoint=[λ]` eigenvalue property is not proved) | Mathlib | `GlvHom.lean` |
+| `glvHom` | GLV endomorphism bundled as `AddMonoidHom` (`glvHom : Point →+ Point`; *supporting* — repackages `glvPoint_add`, no new content) | Mathlib | `GlvMonoidHom.lean` |
 
 ### protocol-soundness (21)
 
