@@ -93,4 +93,26 @@ theorem secp256k1_glv_preserves_nonsingular
   · -- right disjunct: y ≠ -y is unchanged
     exact Or.inr hy
 
+/-- **The GLV endomorphism as a self-map of the secp256k1 point group.** Sends the
+point at infinity to itself and an affine point `(x, y)` to `(β·x, y)`, whose
+nonsingularity is supplied by `secp256k1_glv_preserves_nonsingular`. This packages the
+two preservation lemmas (rungs 1–2) into a genuine `Point → Point` map — the object on
+which the additive-homomorphism property `φ(P+Q)=φ(P)+φ(Q)` will be proved next. -/
+def glvPoint [Fact (Nat.Prime Secp256k1.p)] :
+    secp256k1.toAffine.Point → secp256k1.toAffine.Point
+  | .zero => .zero
+  | .some x y h => .some (↑Secp256k1.beta * x) y (secp256k1_glv_preserves_nonsingular x y h)
+
+@[simp]
+theorem glvPoint_zero [Fact (Nat.Prime Secp256k1.p)] :
+    glvPoint (0 : secp256k1.toAffine.Point) = 0 :=
+  rfl
+
+@[simp]
+theorem glvPoint_some [Fact (Nat.Prime Secp256k1.p)]
+    (x y : ZMod Secp256k1.p) (h : secp256k1.toAffine.Nonsingular x y) :
+    glvPoint (.some x y h)
+      = .some (↑Secp256k1.beta * x) y (secp256k1_glv_preserves_nonsingular x y h) :=
+  rfl
+
 end Ecdlp.Curve
