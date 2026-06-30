@@ -117,8 +117,12 @@ git history and the GitHub Actions tab.
 | **GLV endomorphism preserves the curve** (`(x,y)↦(βx,y)` keeps `Y²=X³+7`, via `β³=1`) | `Ecdlp.Curve.secp256k1_glv_preserves_equation` | Ecdlp/Proved/GlvEndomorphism.lean | Mathlib + native_decide | proved |
 | **GLV endomorphism preserves nonsingularity** (smooth `(x,y)` ↦ smooth `(βx,y)`; `β` a unit) | `Ecdlp.Curve.secp256k1_glv_preserves_nonsingular` | Ecdlp/Proved/GlvEndomorphism.lean | Mathlib + native_decide | proved |
 
-**Total: 128 theorems proved** (23 concrete `native_decide` facts, 83 structural via
-Mathlib, 22 recursive Pratt-certificate primality nodes). **0 open obligations.** A
+**~99 named theorems/instances**, each verified by the Lean kernel (**0 `sorry`, 0
+axioms, 0 open obligations**) — count the rows in the table above; this ledger is the
+canonical source of truth. *Honesty note:* the primality of `p` and `n` is established
+by full **Pratt certificates** (~22 recursive `native_decide` sub-lemmas, counted as 2
+named results here); earlier prose said "128 theorems" by counting those internal
+sub-lemmas individually — the ~99 named-result figure is the honest headline. A
 verified discrete-log cryptography library: generic hardness (`Θ(√n)`, secp256k1
 ≥128-bit), the soundness/completeness of deployed protocols (Schnorr/EdDSA,
 Diffie–Hellman, ElGamal, Pedersen, Okamoto, Chaum–Pedersen DLEQ, Schnorr

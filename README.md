@@ -14,7 +14,10 @@ formalization table 07_Formalization/KG_CLAIM_FORMALIZATION_v1.csv).
     - plus `lambda_ne_one`, `lam_lt_n`, `beta_lt_p`
 - `Ecdlp/Lagrange.lean` - Mathlib proof that element order divides finite group order.
 - `Ecdlp/Statements.lean` - Mathlib-dependent formalization targets. The current ZMod target is closed with no `sorry`.
-- `Ecdlp/Proved/` - promoted, machine-checked theorems (built and gated). Includes a
+- `Ecdlp/Proved/` - promoted, machine-checked theorems (built and gated). **See the
+  directory itself for the full, current module list** (torsion `E[n]`, division
+  polynomials Ψ₂–Ψ₄, the GLV endomorphism object, curve invariants, anomalous-scope,
+  collision/solve-step, …); the items below are illustrative, not exhaustive. Includes a
   **verified discrete-log cryptography library**:
     - `GenericGroupBound.lean` - Shoup/Nechaev generic-group `Ω(√p)` lower bound for
       the discrete log (first such in Mathlib); model-soundness lemmas.
@@ -44,8 +47,9 @@ This is stage 2 (formalization agent output) of the autonomous research mechanis
 Each `formalizable` claim in KG_CLAIM_FORMALIZATION_v1.csv becomes a theorem here;
 `native_decide` handles concrete arithmetic facts, Mathlib handles structural ones.
 
-Current ledger: **98 proved theorems, 0 open obligations, 0 axioms** (see
-`VERIFIED.md`). Beyond the corpus, the project hosts:
+Current ledger: **~99 named kernel-verified results, 0 open obligations, 0 axioms** —
+see `VERIFIED.md` for the canonical, live count (don't trust a hardcoded number here).
+Beyond the corpus, the project hosts:
 - a verified discrete-log cryptography library (generic hardness + protocol
   soundness/completeness), including the rho/BSGS **solve step** (collision ⇒
   discrete-log recovery);
