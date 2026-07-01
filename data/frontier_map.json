@@ -1,0 +1,3958 @@
+{
+  "meta": {
+    "purpose": "Machine-actionable frontier map of ECDLP formalization. Verified facts + precisely-mapped barriers. Asserts NO solution to ECDLP.",
+    "corpus_claims": 486,
+    "verified_ledger_rows": 116,
+    "frontier_completeness_pct": 64.2,
+    "regenerate": "python3 scripts/build_frontier_map.py"
+  },
+  "status_summary": {
+    "unassigned": 174,
+    "informal": 133,
+    "blocked": 118,
+    "tractable": 37,
+    "partial": 19,
+    "verified": 5
+  },
+  "foundations": {
+    "weil_pairing": {
+      "status": "missing_from_mathlib",
+      "mathlib_gap": "No Weil/Tate pairing eₙ. Needs divisors, function fields, Miller's algorithm. Gates the MOV/Frey-Rück transfer reduction itself.",
+      "leverage": "highest",
+      "effort": "months (research-grade)",
+      "blocks_corpus_claims": 4
+    },
+    "point_counting": {
+      "status": "missing_from_mathlib",
+      "mathlib_gap": "No Schoof / point-counting; #E(𝔽_p)=n cannot be computed (native_decide can't enumerate 2^256 points). Gates the GLV [λ]-eigenvalue claim and the ℤ/n-module structure needed to instantiate the protocol algebra.",
+      "leverage": "high",
+      "effort": "months (research-grade)",
+      "blocks_corpus_claims": 0
+    },
+    "cost_model": {
+      "status": "missing_from_mathlib",
+      "mathlib_gap": "No group-operation / oracle-query cost model, so exact Θ running times (index calculus, distinguished points) can't be stated. The generic Ω(√p) core was formalized by sidestepping this.",
+      "leverage": "medium",
+      "effort": "weeks-months",
+      "blocks_corpus_claims": 29
+    },
+    "lattice_reduction": {
+      "status": "missing_from_mathlib",
+      "mathlib_gap": "No LLL/BKZ/CVP. Blocks HNP / biased-nonce ECDSA attack formalizations.",
+      "leverage": "medium",
+      "effort": "months",
+      "blocks_corpus_claims": 21
+    },
+    "semaev_polynomials": {
+      "status": "partial_in_mathlib",
+      "mathlib_gap": "MvPolynomial exists but not the elliptic summation polynomials Sₙ (index calculus over extension fields).",
+      "leverage": "medium",
+      "effort": "weeks-months",
+      "blocks_corpus_claims": 38
+    },
+    "quantum_cost": {
+      "status": "out_of_scope",
+      "mathlib_gap": "No quantum circuit cost model (Shor-style resource estimates). Out of scope for Mathlib.",
+      "leverage": "low (out of scope)",
+      "effort": "n/a",
+      "blocks_corpus_claims": 26
+    },
+    "curve_depth": {
+      "status": "partial_in_mathlib",
+      "mathlib_gap": "Mathlib has EllipticCurve + group law, but not the deeper ECDLP constructions (higher division polynomials, torsion structure E[n]≅(ℤ/n)², isogeny depth). Partly tractable — the active Track-B DAG.",
+      "leverage": "medium",
+      "effort": "weeks each rung",
+      "blocks_corpus_claims": 20
+    }
+  },
+  "claims": [
+    {
+      "id": "shoup-generic-model-001",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "shoup-theorem1-probability-002",
+      "formal_status": "conditional",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "fhjrv-nonstandard-problems-007",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheon-oracle-generation-elgamal-007",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheon-single-target-secp-boundary-011",
+      "formal_status": "conditional",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-shifting-and-slp-equivalence-010",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-reverse-mestre-heuristic-004",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-no-residue-bias-evidence-016",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-parity-oracle-reduction-012",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-residue-oracle-ecdlp-014",
+      "formal_status": "conditional",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "glv-scalar-bias-warning-023",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-001",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-002",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-003",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-004",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-005",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-006",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-007",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-008",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-009",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-010",
+      "formal_status": "conditional",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-011",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-012",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-013",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-014",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-015",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bh-biased-016",
+      "formal_status": "conditional",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-001",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-002",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-003",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-004",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-005",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-006",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-007",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-008",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-009",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-010",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-011",
+      "formal_status": "conditional",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "bv-hnp-012",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-001",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-002",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-003",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-004",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-005",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-008",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-009",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-010",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-011",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-012",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-013",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-001",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-002",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-003",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-004",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-005",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-006",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-007",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-008",
+      "formal_status": "conditional",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-010",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-011",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-012",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-013",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-014",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-015",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "minerva-001",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "minerva-002",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "minerva-003",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "minerva-005",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "minerva-007",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "minerva-008",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "minerva-010",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "minerva-011",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "minerva-012",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "minerva-013",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "minerva-015",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "minerva-016",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-001",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-002",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-003",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-004",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-005",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-006",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-007",
+      "formal_status": "conditional",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-008",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-009",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-010",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-011",
+      "formal_status": "conditional",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-012",
+      "formal_status": "conditional",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "ns-ecdsa-013",
+      "formal_status": "conditional",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "pollard-lambda-005",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "pollard-multistage-004",
+      "formal_status": "formalizable",
+      "status": "verified",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": true
+    },
+    {
+      "id": "pollard-rho-collision-equation-002",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "pollard-rho-complexity-001",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "pollard-rho-memory-003",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "sec2-domain-parameters-001",
+      "formal_status": "formalizable",
+      "status": "verified",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": true
+    },
+    {
+      "id": "sec2-secp256k1-field-005",
+      "formal_status": "formalizable",
+      "status": "verified",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": true
+    },
+    {
+      "id": "sec2-secp256k1-group-006",
+      "formal_status": "formalizable",
+      "status": "verified",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": true
+    },
+    {
+      "id": "shoup-generic-lower-bound-003",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "teske-rho-baseline-006",
+      "formal_status": "formalizable",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "vow-distinguished-points-001",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "vow-naive-parallel-002",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "vow-shared-linear-speedup-003",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "vow-work-per-processor-004",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "diem2011-two-thirds-003",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "semaev-definition-001",
+      "formal_status": "formalizable",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "gg2014-relation-lower-bound-008",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheon-multidivisor-crt-004",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheon-optimal-divisor-exponents-008",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheon-pminus1-theorem-002",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "cheon-pplus1-theorem-005",
+      "formal_status": "formalizable",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "ghs-index-complexity-008",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ghs-theorem1-conditional-complexity-002",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "ghs-transfer-map-dlp-006",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "mov-generic-extension-degree-obstruction-003",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "mov-group-isomorphism-002",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "mov-random-q-success-probability-006",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "mov-supersingular-polynomial-reduction-004",
+      "formal_status": "formalizable",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "mov-weil-pairing-target-001",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "satoh-anomalous-definition-and-goal-001",
+      "formal_status": "formalizable",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "satoh-final-polynomial-time-dlp-007",
+      "formal_status": "formalizable",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "satoh-homomorphism-dichotomy-002",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "satoh-lambda-evaluation-complexity-005",
+      "formal_status": "formalizable",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "satoh-nonzero-lift-construction-006",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "satoh-zero-map-torsion-equivalence-003",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "smart-group-operation-complexity-004",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "smart-logarithm-quotient-formula-003",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "smart-padic-lift-reduction-002",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "smart-trace-one-scope-001",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-shifting-prime-definition-006",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hkt-theorem1-liftable-tuple-bound-005",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-dependence-recovers-log-003",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-generic-eds-dlog-baselines-017",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-net-zero-linear-relation-004",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-period-formula-007",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "stange-subnet-functoriality-003",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "stange-zero-iff-point-relation-009",
+      "formal_status": "formalizable",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "glv-endomorphism-definition-003",
+      "formal_status": "formalizable",
+      "status": "blocked",
+      "blocking_foundation": "weil_pairing",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
+      "verified": false
+    },
+    {
+      "id": "glv-euclidean-basis-vector-015",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "glv-frobenius-fast-example-004",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "glv-root-mod-n-condition-008",
+      "formal_status": "formalizable",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "glv-subgroup-eigenvalue-006",
+      "formal_status": "formalizable",
+      "status": "verified",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": true
+    },
+    {
+      "id": "teske-prime-order-proof-003",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "amadori-complexity-formula-003",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "amadori-prime-field-variant-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "amadori-relative-improvement-005",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "amadori-single-system-002",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "amadori-unresolved-system-cost-007",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "diem2011-decomposition-algorithm-005",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "diem2011-factor-base-004",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "diem2011-main-theorem-001",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "diem2011-relation-loop-007",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "diem2011-subexp-sequences-002",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "diem2011-success-probability-006",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "diem2013-decomposition-cost-005",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "diem2013-main-theorem-001",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "diem2013-new-decomposition-004",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "diem2013-not-all-instances-007",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "diem2013-success-probability-006",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "diem2013-three-fourths-003",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "gaudry-abelian-index-calculus-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "gaudry-basic-relation-probability-004",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "gaudry-decomposition-cost-003",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "gaudry-small-degree-limitation-008",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "semaev-binary-analogue-007",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "semaev-bounded-solver-dependency-004",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "semaev-open-question-006",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "semaev-prime-field-relation-003",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "semaev-recursion-degree-002",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "survey-ffd-lfd-006",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "survey-invariants-not-competitive-003",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "survey-not-practical-008",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "survey-scope-001",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "survey-symmetry-tradeoff-002",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "fghr-char2-limit-007",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "fghr-construction-bottleneck-008",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "fghr-symmetry-speedup-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "fhjrv-equivariance-002",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "fhjrv-factor-base-reduction-003",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "fhjrv-full2torsion-004",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "fhjrv-generalized-polynomials-001",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "fhjrv-higher-torsion-008",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "fhjrv-s8-record-005",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "fppr2012-multihomogeneous-002",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "fppr2012-pdp-reduction-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "fppr2012-rank-assumption-003",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "gg2014-binary-edwards-coordinate-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "gg2014-pollard-comparison-007",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "gg2014-sat-003",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "gg2014-symmetry-breaking-dreg-006",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "gg2014-symmetry-dreg-004",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "ky2015-dreg-growth-005",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ky2015-ffd-two-004",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "ky2015-npcomplete-001",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "ky2015-semaev2015-countertest-006",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ky2015-singular-npcomplete-002",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "ky2015-trace-morphism-003",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ky2015-trace-speedup-008",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "mm2017-aps-correction-005",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "mm2017-eval-algorithm-002",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "mm2017-experiments-008",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "mm2017-fast-evaluation-004",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "mm2017-random-factor-base-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "mm2017-sum-algorithm-003",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "pq2012-ffd-assumption-003",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "pq2012-ffd-bound-002",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "semaev2015-assumption1-003",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "semaev2015-cubic-system-002",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "semaev2015-experiments-004",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "semaev2015-k-greater-limit-008",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "semaev2015-splitting-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "st2013-delta-condition-003",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "st2013-delta-method-002",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "st2013-hybrid-results-004",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "st2013-pairslimit-007",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "st2013-replication-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "st2013-subfield-basis-005",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "st2013-subfield-speedup-006",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "st2013-unknown-complexity-008",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f4-compression-memory-011",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "f4-correctness-007",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f4-drl-design-004",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "f4-full-solving-pipeline-003",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "f4-minimum-degree-selection-008",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "f4-no-worst-case-improvement-002",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f4-open-optimization-014",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "f4-output-size-bottleneck-013",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f4-small-example-warning-009",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f4-strategy-sequentiality-005",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "f5-correctness-termination-009",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "f5-incremental-homogeneous-006",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f5-normalized-pair-criterion-005",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f5-overconstrained-warning-012",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f5-reducer-four-conditions-008",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "f5-regular-sequence-zero-002",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "f5-signature-criterion-001",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f5-signature-reuse-004",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "f5-zero-reduction-syzygy-010",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "galbraith-gaudry-zero-dimensional-002",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "galbraith-summation-solving-bottleneck-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "galbraith-three-variable-heuristic-006",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ghs-hyperelliptic-index-two-phase-007",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "satoh-explicit-mod-p2-evaluation-004",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-corollary-short-lift-program-014",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-height-decision-definition-003",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-large-coordinates-short-slp-012",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-partial-lifting-program-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-proposition1-polylog-slp-013",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-slp-definition-008",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hkt-asymptotic-lower-range-open-012",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hkt-construction-independent-bound-008",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hkt-lifting-two-obstacles-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hkt-no-direct-secp-attack-013",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hkt-proposition1-relation-coefficient-bound-004",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hkt-xedni-fixed-r-fails-asymptotically-009",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-constant-relation-bound-007",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-empirical-implementation-009",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-lift-curve-fit-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-linear-runtime-lower-bound-008",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-practical-negative-result-012",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-random-combinations-002",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-reverse-mestre-correlation-011",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-scope-not-all-lifting-013",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-theorem4-success-bound-006",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-eds-problem-definitions-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-elliptic-net-recurrence-003",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-fast-term-computation-010",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-hardness-duality-008",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-perfect-periodic-construction-005",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-perfect-periodic-point-computation-006",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-residue-conditions-015",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-residue-product-parity-013",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-three-term-x-coordinate-009",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "stange-arbitrary-field-net-polynomials-007",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "stange-curve-net-poset-isomorphism-013",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "stange-degenerate-cases-open-014",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "stange-elliptic-net-definition-001",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "stange-finite-initial-determination-004",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "stange-general-reconstruction-theorem-012",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "stange-laurentness-integrality-005",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "stange-net-polynomial-linear-relation-006",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "stange-rank-two-explicit-reconstruction-011",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "stange-rankone-eds-generalization-002",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "stange-scale-equivalence-normalization-010",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "stange-unique-net-polynomial-family-008",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "glv-domain-precomputation-017",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "glv-efficiency-versus-attack-boundary-024",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "glv-endomorphism-cost-threshold-009",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "weil_pairing",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
+      "verified": false
+    },
+    {
+      "id": "glv-jzero-orderthree-map-005",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "glv-kernel-lattice-formulation-014",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "glv-known-dlp-gain-small-factor-021",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "glv-point-multiplication-scope-001",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "glv-prime-field-generalization-007",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "weil_pairing",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
+      "verified": false
+    },
+    {
+      "id": "glv-rounding-norm-bound-018",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "glv-special-curve-caution-019",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "weil_pairing",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
+      "verified": false
+    },
+    {
+      "id": "glv-two-dimensional-decomposition-010",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "luo-concurrent-time-space-tradeoff-016",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "luo-exact-register-sharing-004",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "luo-explicit-reversible-circuit-011",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "luo-inversion-dominates-space-002",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "luo-length-register-location-arithmetic-003",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "luo-logical-not-physical-015",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "luo-modinv-qubits-005",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "luo-nonstandard-blocks-not-optimal-012",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "luo-open-implementation-boundary-013",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "luo-prime-field-scope-014",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "luo-space-objective-001",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "pz-ec-specialization-001",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "pz-eea-time-space-012",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "pz-group-shift-core-007",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "pz-hidden-sublattice-formulation-004",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "pz-input-register-elimination-008",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "pz-logical-not-physical-boundary-016",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "pz-modular-inversion-bottleneck-010",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "pz-power-two-qft-postprocessing-005",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "pz-prime-field-scope-002",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "pz-prime-known-order-assumption-003",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "pz-reversible-eea-011",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "pz-simplified-addition-rule-009",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "pz-unique-point-representation-006",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "rns-affine-point-addition-006",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "rns-binary-gcd-inversion-005",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "rns-exceptional-addition-boundary-017",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "rns-logical-resource-model-016",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "rns-montgomery-multiplication-benefit-004",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "rns-p256-2330-qubits-013",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "rns-prime-field-scope-002",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "rns-qubit-bound-009",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "rns-reversible-arithmetic-suite-003",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "rns-rsa-comparison-015",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "rns-secp256k1-target-recognition-018",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "rns-simulated-standard-curves-008",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "sch-affine-constant-addition-012",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "sch-disclosed-reproducible-design-003",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "sch-eea-dialog-bezout-split-014",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "sch-generic-prime-variant-002",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "sch-inplace-multiplication-bottleneck-013",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "sch-pointadd-gate-1446-006",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "sch-pointadd-space-1192-005",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "sch-secp-specific-circuits-001",
+      "formal_status": "formalizable_hard",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "sch-semiclassical-qft-recycling-011",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "sch-windowed-point-addition-core-010",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "shor-abelian-extension-reported-011",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "shor-bqp-small-error-model-003",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "shor-cyclic-field-generalization-010",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "shor-discrete-log-two-exp-two-qft-007",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "shor-good-output-constant-probability-008",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "shor-hypothetical-quantum-model-002",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "shor-order-finding-periodicity-005",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "shor-order-finding-repetition-006",
+      "formal_status": "formalizable_hard",
+      "status": "tractable",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "shor-polynomial-recovery-crt-009",
+      "formal_status": "formalizable_hard",
+      "status": "unassigned",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "shor-precision-decoherence-boundary-012",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "shor-qft-polynomial-construction-004",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "shor-quantum-polynomial-dlp-001",
+      "formal_status": "formalizable_hard",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "pollard-finite-field-limitation-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "sec2-security-estimate-002",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "shoup-pollard-generic-004",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "teske-constant-speedup-004",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "teske-pollard-walk-worse-001",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "teske-r-adding-walks-002",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "amadori-small_experiments-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "diem2013-subexp-range-002",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "gaudry-extension-field-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "gaudry-factor-base-size-002",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "gaudry-fq3-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "gaudry-large-prime-complexity-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "semaev-conditional-complexity-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "survey-no-consensus-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "survey-unrolling-conjecture-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "fghr-dihedral-reduction-004",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "fghr-experimental-speedup-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "fghr-main-complexity-002",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "fghr-security-estimates-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "fghr-symmetric-group-003",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "fhjrv-ipsec-relation-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "fppr2012-ecdlp-bound-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "fppr2012-gb-gap-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "fppr2012-open-f4-008",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "fppr2012-small-experiments-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "fppr2012-submacaulay-bound-004",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "gg2014-m4-feasible-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "gg2014-symmetry-breaking-002",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ky2015-ffd-variable-blindness-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "mm2017-complexities-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "pq2012-block-gb-bound-004",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "pq2012-crossover-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "pq2012-evidence-limit-008",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "pq2012-hfe-generalization-001",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "pq2012-semaev-assumption-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "pq2012-subexponential-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "semaev2015-asymptotic-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "semaev2015-fips-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "semaev2015-weaker-assumption-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f4-benchmark-methodology-012",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f5-no-worst-case-improvement-003",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f5-practical-zero-pairs-011",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "galbraith-diem-scope-004",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "galbraith-gaudry-total-complexity-003",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "galbraith-multivariate-independence-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "cheon-pairing-curve-example-009",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "cheon-parameter-divisor-survey-010",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "ghs-genus4-experiment-010",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ghs-genus4-vs-rho-experiment-011",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ghs-kernel-assumption-heuristic-004",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ghs-pollard-comparison-003",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "mov-supersingular-subexponential-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "mov-target-dlp-dominates-008",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "smart-worked-example-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-conjecture1-rank-one-frequency-002",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-height-decision-reduction-004",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-height-equivalence-open-011",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-shifting-prime-reduction-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-slp-reduction-009",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "hkt-bounded-height-random-points-obstruction-002",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hkt-index-calculus-success-probability-bound-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hkt-lang-only-unproved-assumption-003",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hkt-large-rank-construction-implication-011",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hkt-rank-growth-necessary-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "hkt-xedni-point-count-growth-010",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-bsd-heuristic-status-005",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "jacobson-xedni-discriminant-dependence-010",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-eds-association-product-reduction-011",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "lauter-stange-subexponential-equivalence-002",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "glv-160bit-operation-model-012",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
+      "verified": false
+    },
+    {
+      "id": "glv-claimed-speedup-002",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "glv-higher-power-lll-022",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "glv-runtime-ratio-estimates-013",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "glv-second-vector-heuristic-016",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "glv-simultaneous-multiplication-011",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "minerva-004",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "minerva-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "minerva-014",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "luo-comparison-2124-010",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "luo-ecc256-1333-qubits-009",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "luo-full-qubits-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "luo-full-toffoli-008",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "luo-modinv-toffoli-006",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "pz-160bit-about-1000-qubits-015",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "pz-qubits-roughly-6n-014",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "pz-total-runtime-cubic-013",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "rns-full-toffoli-bound-011",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "rns-liquii-implementation-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "rns-p256-126e11-toffoli-014",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "rns-point-addition-toffoli-bound-010",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "rns-precise-resource-estimates-001",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "rns-sequential-2n-additions-012",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "sch-full-gate-1462-2p25-008",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "sch-full-space-1208-2p26-007",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "sch-logical-empirical-boundary-016",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
+      "verified": false
+    },
+    {
+      "id": "sch-random-input-failure-bound-004",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "sch-single-run-discrete-log-009",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "sch-space-lower-frontier-015",
+      "formal_status": "informal_only",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "sec2-endomorphism-class-004",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "sec2-special-prime-003",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "shoup-ec-representation-gap-006",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "shoup-index-calculus-excluded-005",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "teske-generic-input-model-005",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "vow-cyclic-group-applicability-005",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "amadori-no-pollard-improvement-004",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "diem2011-semaev-prime-gap-008",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "diem2013-corrects-2011-008",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "survey-unrolling-004",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "mm2017-pollard-limit-007",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "f4-sparse-singular-matrices-010",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f4-symbolic-preprocessing-006",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f4-truncated-batch-reduction-001",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "f5-f4-style-implementation-007",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
+      "verified": false
+    },
+    {
+      "id": "cheon-auxiliary-input-distinction-001",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheon-distinguished-point-memory-003",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "cheon-oracle-generation-blind-signature-006",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(complexity: needs explicit cost model)",
+      "verified": false
+    },
+    {
+      "id": "ghs-composite-binary-field-scope-001",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ghs-fixed-parameter-asymptotic-boundary-009",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ghs-hidden-constant-crossover-warning-005",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "ghs-odd-characteristic-obstruction-013",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "ghs-prime-degree-binary-negative-result-012",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "mov-practical-modification-not-poly-reduction-007",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "mov-secp256k1-applicability-boundary-010",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "mov-special-families-only-009",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "satoh-cryptographic-exclusion-rule-009",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "satoh-nonprime-p-primary-extension-008",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "smart-secp256k1-boundary-006",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "cheng-huang-gjosteen-comparison-005",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(unassigned)",
+      "verified": false
+    },
+    {
+      "id": "glv-security-screening-020",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
+      "verified": false
+    },
+    {
+      "id": "hgs-lattice-006",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "(not in Mathlib: lattice reduction)",
+      "verified": false
+    },
+    {
+      "id": "ladderleak-009",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    },
+    {
+      "id": "minerva-009",
+      "formal_status": "scope_meta",
+      "status": "informal",
+      "blocking_foundation": null,
+      "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
+      "verified": false
+    }
+  ]
+}
