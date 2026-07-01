@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Build dashboard.html / index.html — the navigable home page of the environment.
 
+Visual identity matches the KeyAI pitch-deck brand (navy #001a3f, accent blue #1d85ff,
+rounded geometric type): a dark hero band, white/light-tint content sections, cards with
+a thin blue top rule, bold black section headings. Colors were sampled directly from the
+deck's rendered slides, not guessed.
+
 Consolidates live state (metrics, L1-L5 layers, tracks/checkpoints, frontier map, recent
 milestones) AND a full, auto-discovered navigation of every doc/data/script in the repo,
 grouped by purpose, so nothing is ever missing or hard to find. Unknown/new files fall
@@ -28,6 +33,7 @@ REPO = "https://github.com/KeyAIGit/-ecdlp-lean-verification"
 BLOB = f"{REPO}/blob/main"
 TREE = f"{REPO}/tree/main"
 
+# status-encoding colors (data semantics, not brand chrome — kept distinct on purpose)
 STATUS_COLOR = {
     "verified": "#22c55e", "tractable": "#84cc16", "partial": "#eab308",
     "blocked": "#ef4444", "informal": "#94a3b8", "unassigned": "#64748b",
@@ -56,12 +62,9 @@ LAYERS = [
     ("L4 Formalized objects", "GLV (cube-root + torsion-preserving), torsion, division polys", "growing"),
     ("L5 Engine", "AI+kernel pipeline; self-extensible substrate", "underused"),
 ]
-DOT = {"done": "#22c55e", "wip": "#eab308", "todo": "#64748b",
-       "strong": "#22c55e", "growing": "#84cc16", "exists": "#eab308", "underused": "#94a3b8"}
+DOT = {"done": "#22c55e", "wip": "#eab308", "todo": "#94a3b8",
+       "strong": "#22c55e", "growing": "#1d85ff", "exists": "#eab308", "underused": "#94a3b8"}
 
-# ---- navigation: every doc/data/script the repo has, grouped and described. ----
-# key = path relative to ROOT. Anything present on disk but not listed here is
-# auto-appended to the "Other" bucket, so nothing is ever silently missing.
 NAV = [
     ("Start here", [
         ("README.md", "Project overview, layout, build instructions"),
@@ -149,7 +152,6 @@ def nav_url(path: str, override: str | None) -> str:
 
 
 def discover_extra_files() -> list[str]:
-    """Any root *.md / notes/*.md / data files / scripts/*.py not already in NAV."""
     known = {entry[0] for _, items in NAV for entry in items}
     found: list[str] = []
     for pattern, base in [("*.md", ROOT), ("notes/*.md", ROOT),
@@ -244,73 +246,148 @@ def main() -> int:
 
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ECDLP environment — dashboard</title><style>
-:root{{--bg:#0b1020;--panel:#141b30;--line:#243049;--tx:#e2e8f0;--mut:#94a3b8;--acc:#60a5fa}}
-*{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--tx);
-font:15px/1.5 -apple-system,Segoe UI,Roboto,sans-serif}}a{{color:var(--acc);text-decoration:none}}
-.wrap{{max-width:1080px;margin:0 auto;padding:24px}}
-h1{{font-size:22px;margin:0 0 4px}}.sub{{color:var(--mut);margin:0 0 4px}}
-.stamp{{color:var(--mut);font-size:12px}}
-.honest{{background:#1e293b;border-left:3px solid var(--acc);padding:10px 14px;border-radius:6px;
-margin:16px 0;color:#cbd5e1;font-size:13px}}
-.cards{{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:18px 0}}
-.card{{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}}
-.cval{{font-size:22px;font-weight:700;color:#fff}}.clab{{color:var(--mut);font-size:12px;margin-top:2px}}
-.csub{{color:#64748b;font-size:11px;margin-top:4px}}
-h2{{font-size:16px;margin:30px 0 12px;color:#f1f5f9;border-bottom:1px solid var(--line);padding-bottom:8px}}
-.bar{{display:flex;height:22px;border-radius:6px;overflow:hidden;border:1px solid var(--line)}}
-.seg{{height:100%}}.legend{{margin-top:8px;font-size:12px;color:var(--mut)}}
-.lg{{margin-right:12px;white-space:nowrap}}.lg i{{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}}
-.frow{{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}}
-.fname{{width:170px;color:#cbd5e1}}.fbarwrap{{flex:1;background:#0f172a;border-radius:4px;height:14px;overflow:hidden}}
-.fbar{{height:100%;background:linear-gradient(90deg,#ef4444,#f97316)}}.fn{{width:28px;text-align:right;color:var(--mut)}}
-.grid2{{display:grid;grid-template-columns:1fr 1fr;gap:16px}}@media(max-width:700px){{.grid2{{grid-template-columns:1fr}}}}
-.track{{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:12px}}
-.track h3{{font-size:13px;margin:0 0 8px;color:#fff}}.track ul{{margin:0;padding:0;list-style:none}}
-.track li{{font-size:12.5px;color:#cbd5e1;margin:5px 0}}
-.dot{{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}}
-.layer{{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin:6px 0;font-size:13px}}
-.commits{{list-style:none;padding:0;margin:0}}.commits li{{padding:5px 0;border-bottom:1px solid var(--line);font-size:13px}}
-.commits code{{background:#0f172a;padding:1px 6px;border-radius:4px;color:#93c5fd}}
-.links a{{margin-right:16px;font-size:13px}}
-.navsection{{margin-bottom:22px}}
-.navsection h3{{font-size:13px;color:#93c5fd;margin:0 0 10px;text-transform:uppercase;letter-spacing:.04em}}
+<title>ECDLP environment — dashboard</title>
+<style>
+/* Self-hosted (variable-weight) fonts — no external CDN dependency, matches the KeyAI
+   deck's rounded geometric type: Baloo 2 for headings/display, Nunito for body. */
+@font-face {{font-family:"Baloo 2";font-style:normal;font-weight:500 800;font-display:swap;
+  src:url("fonts/Baloo2-Variable.woff2") format("woff2");}}
+@font-face {{font-family:"Nunito";font-style:normal;font-weight:400 900;font-display:swap;
+  src:url("fonts/Nunito-Variable.woff2") format("woff2");}}
+:root{{
+  --navy:#001a3f; --navy2:#052858; --blue:#1d85ff; --blue-dark:#0f66d1;
+  --tint:#e3ebf6; --tint2:#eef4fc; --ink:#000000; --gray:#687480; --mut:#94a4b4;
+  --white:#ffffff; --line:#dbe6f3;
+}}
+*{{box-sizing:border-box}}
+body{{margin:0;background:var(--white);color:var(--ink);
+  font-family:Nunito,-apple-system,Segoe UI,Roboto,sans-serif;font-size:15px;line-height:1.55}}
+h1,h2,h3,.disp{{font-family:"Baloo 2",Nunito,sans-serif;font-weight:700}}
+a{{color:var(--blue);text-decoration:none}}
+.wrap{{max-width:1080px;margin:0 auto;padding:0 24px}}
+
+/* ---- hero (navy, matches the deck's cover slide) ---- */
+.hero{{background:radial-gradient(120% 140% at 15% 0%,var(--navy2) 0%,var(--navy) 55%);
+  color:#fff;padding:56px 0 40px;position:relative;overflow:hidden}}
+.hero::after{{content:"λ";position:absolute;right:-40px;top:-60px;font-family:"Baloo 2";
+  font-size:340px;font-weight:800;color:#ffffff;opacity:.045;line-height:1;pointer-events:none}}
+.mark{{display:flex;align-items:center;gap:10px;margin-bottom:22px}}
+.mark .dot{{width:16px;height:16px;border:3px solid var(--blue);border-radius:50%;background:transparent}}
+.mark .stem{{width:3px;height:20px;background:var(--blue);margin-left:-9px;border-radius:2px}}
+.mark .word{{font-family:"Baloo 2";font-weight:700;font-size:20px;color:var(--blue);letter-spacing:.2px}}
+.hero h1{{font-size:34px;line-height:1.15;margin:0 0 10px;max-width:680px}}
+.hero .sub{{color:var(--blue);font-weight:700;font-size:15px;margin:0 0 6px}}
+.stamp{{color:#93a8c9;font-size:12px;margin:0 0 18px}}
+.stamp code{{background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px;color:#bcd4f5}}
+.honest{{background:rgba(255,255,255,.06);border-left:3px solid var(--blue);padding:12px 16px;
+  border-radius:8px;color:#d7e4f7;font-size:13.5px;max-width:760px;position:relative}}
+
+/* ---- metric cards ---- */
+.cardband{{padding:26px 0 6px}}
+.cards{{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}}
+.card{{background:#fff;border:1px solid var(--line);border-top:3px solid var(--blue);
+  border-radius:10px;padding:16px;box-shadow:0 1px 2px rgba(15,40,80,.04)}}
+.cval{{font-family:"Baloo 2";font-weight:800;font-size:23px;color:var(--navy)}}
+.clab{{color:var(--gray);font-size:12px;margin-top:3px;font-weight:700}}
+.csub{{color:var(--mut);font-size:11px;margin-top:4px}}
+
+/* ---- section bands (alternate white / light tint like the deck) ---- */
+section{{padding:34px 0}}
+section.tint{{background:var(--tint2)}}
+h2{{font-size:20px;margin:0 0 16px;color:var(--ink)}}
+h2 .accent{{color:var(--blue)}}
+
+/* ---- nav ---- */
+.navsection{{margin-bottom:26px}}
+.navsection h3{{font-family:"Baloo 2";font-weight:700;font-size:14px;color:var(--navy);
+  margin:0 0 12px;padding-left:10px;border-left:4px solid var(--blue)}}
 .navgrid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}}
-.navcard{{display:block;background:var(--panel);border:1px solid var(--line);border-radius:8px;
-padding:10px 12px;transition:border-color .15s,transform .15s}}
-.navcard:hover{{border-color:var(--acc);transform:translateY(-1px)}}
-.navname{{color:#fff;font-weight:600;font-size:13.5px}}
-.navpath{{color:#64748b;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;margin:2px 0}}
-.navdesc{{color:#94a3b8;font-size:12px;margin-top:3px;line-height:1.4}}
-</style></head><body><div class="wrap">
-<h1>ECDLP · verified environment for a strong AI</h1>
-<p class="sub">A machine-checked, machine-navigable substrate — L1 verified core · L2 frontier map · L3 navigable structure · L4 objects · L5 engine.</p>
-<p class="stamp">snapshot {stamp} · regenerate: <code>python3 scripts/build_dashboard.py</code></p>
-<div class="honest">Honest boundary: this maximizes a future reasoner's leverage and rigorously maps the frontier — it does <b>not</b> solve ECDLP, and the barriers below may be permanent.</div>
-<div class="cards">{cards_html}</div>
+.navcard{{display:block;background:#fff;border:1px solid var(--line);border-top:3px solid var(--blue);
+  border-radius:8px;padding:11px 13px;transition:transform .15s,box-shadow .15s}}
+.navcard:hover{{transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,40,80,.10)}}
+.navname{{color:var(--navy);font-weight:800;font-size:13.5px}}
+.navpath{{color:var(--mut);font-size:10.5px;font-family:ui-monospace,Menlo,monospace;margin:2px 0}}
+.navdesc{{color:var(--gray);font-size:12px;margin-top:3px;line-height:1.4}}
 
-<h2>Navigate the environment</h2>
+/* ---- frontier bar ---- */
+.bar{{display:flex;height:22px;border-radius:6px;overflow:hidden;border:1px solid var(--line)}}
+.seg{{height:100%}}.legend{{margin-top:10px;font-size:12px;color:var(--gray)}}
+.lg{{margin-right:14px;white-space:nowrap}}.lg i{{display:inline-block;width:10px;height:10px;
+  border-radius:2px;margin-right:5px;vertical-align:middle}}
+
+/* ---- foundations bars ---- */
+.frow{{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:13px}}
+.fname{{width:170px;color:var(--navy);font-weight:700}}
+.fbarwrap{{flex:1;background:var(--tint);border-radius:4px;height:14px;overflow:hidden}}
+.fbar{{height:100%;background:linear-gradient(90deg,var(--blue),var(--navy))}}
+.fn{{width:28px;text-align:right;color:var(--gray);font-weight:700}}
+
+.grid2{{display:grid;grid-template-columns:1fr 1fr;gap:20px}}
+@media(max-width:700px){{.grid2{{grid-template-columns:1fr}}}}
+
+/* ---- tracks & layers ---- */
+.track{{background:#fff;border:1px solid var(--line);border-top:3px solid var(--blue);
+  border-radius:10px;padding:14px 16px;margin-bottom:12px}}
+.track h3{{font-family:"Baloo 2";font-size:14px;margin:0 0 9px;color:var(--navy)}}
+.track ul{{margin:0;padding:0;list-style:none}}
+.track li{{font-size:12.5px;color:var(--gray);margin:6px 0}}
+.dot{{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}}
+.layer{{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);
+  border-radius:8px;padding:10px 14px;margin:7px 0;font-size:13px;color:var(--gray)}}
+.layer b{{color:var(--navy)}}
+
+/* ---- commits + footer links ---- */
+.commits{{list-style:none;padding:0;margin:0}}
+.commits li{{padding:6px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--gray)}}
+.commits code{{background:var(--tint);padding:1px 6px;border-radius:4px;color:var(--blue-dark);font-weight:700}}
+.links{{display:flex;gap:22px;flex-wrap:wrap}}
+.links a{{font-size:13.5px;font-weight:700}}
+footer{{padding:28px 0 40px;color:var(--mut);font-size:12px}}
+</style></head><body>
+
+<div class="hero"><div class="wrap">
+  <div class="mark"><span class="dot"></span><span class="stem"></span><span class="word">ECDLP&nbsp;·&nbsp;env</span></div>
+  <h1>Verified environment for<br>a strong AI</h1>
+  <p class="sub">L1 verified core · L2 frontier map · L3 navigable structure · L4 objects · L5 engine</p>
+  <p class="stamp">snapshot {stamp} · regenerate: <code>python3 scripts/build_dashboard.py</code></p>
+  <div class="honest">Honest boundary: this maximizes a future reasoner's leverage and rigorously maps the frontier — it does <b>not</b> solve ECDLP, and the barriers below may be permanent.</div>
+</div></div>
+
+<div class="cardband wrap">{cards_html}</div>
+
+<section class="wrap">
+<h2>Navigate the <span class="accent">environment</span></h2>
 {nav_html}
+</section>
 
+<section class="tint"><div class="wrap">
 <h2>Frontier map — {total} corpus claims ({completeness}% mapped)</h2>
 <div class="bar">{seg}</div><div class="legend">{legend}</div>
+</div></section>
 
-<div class="grid2" style="margin-top:16px">
-<div><h2 style="margin-top:0">Blocked by missing foundation</h2>{frows}</div>
-<div><h2 style="margin-top:0">Environment layers</h2>{layers_html}</div>
+<section><div class="wrap">
+<div class="grid2">
+<div><h2>Blocked by missing foundation</h2>{frows}</div>
+<div><h2>Environment layers</h2>{layers_html}</div>
 </div>
+</div></section>
 
+<section class="tint"><div class="wrap">
 <h2>Tracks &amp; checkpoints</h2>{tracks_html}
+</div></section>
 
+<section><div class="wrap">
 <h2>Recent build milestones</h2><ul class="commits">{commits_html}</ul>
+</div></section>
 
-<h2>Live views (real-time, external)</h2>
+<footer><div class="wrap">
 <div class="links">
 <a href="{REPO}/actions">▶ CI status (Actions)</a>
 <a href="{REPO}/commits/main">▶ commit feed</a>
 <a href="{REPO}">▶ repository root</a>
 </div>
-</div></body></html>"""
+</div></footer>
+</body></html>"""
     OUT.write_text(html, encoding="utf-8")
     (ROOT / "index.html").write_text(html, encoding="utf-8")
     print(f"wrote {OUT.relative_to(ROOT)} + index.html ({len(html)} bytes) — {vcount} results, "
