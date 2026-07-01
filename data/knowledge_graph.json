@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 118,
+    "theorems": 120,
     "barriers": 6,
-    "edges": 104,
+    "edges": 107,
     "by_method": {
-      "Mathlib": 86,
+      "Mathlib": 88,
       "native_decide": 18,
       "Mathlib + native_decide": 14
     },
     "by_area": {
-      "curve-torsion": 65,
+      "curve-torsion": 67,
       "protocol-soundness": 21,
       "generic-hardness": 17,
       "other": 5,
@@ -1557,6 +1557,32 @@
       "area": "curve-torsion",
       "dependency_depth": 6,
       "gated": true
+    },
+    {
+      "id": "thm-118",
+      "name": "Ecdlp.Curve.glvPoint_cube_eq_id",
+      "short_name": "glvPoint_cube_eq_id",
+      "module": "Ecdlp.Proved.GlvAutomorphism",
+      "file": "Ecdlp/Proved/GlvAutomorphism.lean",
+      "claim": "GLV endomorphism has order dividing 3 (`glvPoint³=id`: iterating `(x,y)↦(βx,y)` scales `x` by `β³=1`; the CM automorphism is order-3)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 3,
+      "gated": true
+    },
+    {
+      "id": "thm-119",
+      "name": "Ecdlp.Curve.glvPoint_bijective",
+      "short_name": "glvPoint_bijective",
+      "module": "Ecdlp.Proved.GlvAutomorphism",
+      "file": "Ecdlp/Proved/GlvAutomorphism.lean",
+      "claim": "GLV endomorphism is an automorphism (`glvPoint` is bijective — `glvPoint` is its two-sided inverse, from `glvPoint³=id`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 3,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1860,6 +1886,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.GlvAutomorphism",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvAutomorphism",
+      "to": "Ecdlp.Proved.GlvEndomorphism",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.Invariants",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
@@ -2092,6 +2128,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.GlvMinPoly",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.GlvAutomorphism",
       "type": "imports"
     },
     {

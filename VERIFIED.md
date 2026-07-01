@@ -126,9 +126,11 @@ git history and the GitHub Actions tab.
 | **GLV endomorphism is a primitive cube root of unity** (`φ²+φ+1=0`: `glvPoint²(P)+glvPoint(P)+P=0` for all `P`; the CM / `End(E)` structure behind GLV — reached with **no `λ`, no point-counting**) | `Ecdlp.Curve.secp256k1_glv_cube_relation` | Ecdlp/Proved/GlvCubeRelation.lean | Mathlib | proved |
 | **GLV endomorphism preserves `n`-torsion** (`glvPoint` maps `E[n]→E[n]`; restricts to an endomorphism of the torsion, still `φ²+φ+1=0` there — the scene where `[λ]` lives) | `Ecdlp.Curve.secp256k1_glv_preserves_torsion` | Ecdlp/Proved/GlvTorsion.lean | Mathlib | proved |
 | **GLV endomorphism satisfies its minimal polynomial in `End(E)`** (operator form: `glvHom∘glvHom+glvHom+id=0` as `AddMonoidHom`s — `φ²+φ+1=0` in the endomorphism ring, composable with Mathlib's hom API; *alternate/operator form* of `secp256k1_glv_cube_relation`) | `Ecdlp.Curve.glvHom_minpoly` | Ecdlp/Proved/GlvMinPoly.lean | Mathlib | proved |
+| **GLV endomorphism has order dividing 3** (`glvPoint³=id`: iterating `(x,y)↦(βx,y)` scales `x` by `β³=1`; the CM automorphism is order-3) | `Ecdlp.Curve.glvPoint_cube_eq_id` | Ecdlp/Proved/GlvAutomorphism.lean | Mathlib | proved |
+| **GLV endomorphism is an automorphism** (`glvPoint` is bijective — `glvPoint²` is its two-sided inverse, from `glvPoint³=id`) | `Ecdlp.Curve.glvPoint_bijective` | Ecdlp/Proved/GlvAutomorphism.lean | Mathlib | proved |
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**118 ledger rows / ~107 distinct kernel-verified results** (11 rows are alternate-form
+**120 ledger rows / ~109 distinct kernel-verified results** (11 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
 **0 `sorry`, 0 `admit`, 0 open obligations.**

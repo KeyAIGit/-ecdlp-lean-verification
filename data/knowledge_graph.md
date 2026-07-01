@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**118 theorems** · **6 barriers** · **104 edges**
+**120 theorems** · **6 barriers** · **107 edges**
 
-By proof method: Mathlib (86), native_decide (18), Mathlib + native_decide (14)
+By proof method: Mathlib (88), native_decide (18), Mathlib + native_decide (14)
 
-By research area: curve-torsion (65), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
+By research area: curve-torsion (67), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (65)
+### curve-torsion (67)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -79,6 +79,8 @@ By research area: curve-torsion (65), protocol-soundness (21), generic-hardness 
 | `secp256k1_glv_cube_relation` | GLV endomorphism is a primitive cube root of unity (`φ+φ+1=0`: `glvPoint(P)+glvPoint(P)+P=0` for all `P`; the CM / `End(E)` structure behind GLV — reached with no `λ`, no point-counting) | Mathlib | `GlvCubeRelation.lean` |
 | `secp256k1_glv_preserves_torsion` | GLV endomorphism preserves `n`-torsion (`glvPoint` maps `E[n]→E[n]`; restricts to an endomorphism of the torsion, still `φ+φ+1=0` there — the scene where `[λ]` lives) | Mathlib | `GlvTorsion.lean` |
 | `glvHom_minpoly` | GLV endomorphism satisfies its minimal polynomial in `End(E)` (operator form: `glvHom∘glvHom+glvHom+id=0` as `AddMonoidHom`s — `φ+φ+1=0` in the endomorphism ring, composable with Mathlib's hom API; *alternate/operator form* of `secp256k1_glv_cube_relation`) | Mathlib | `GlvMinPoly.lean` |
+| `glvPoint_cube_eq_id` | GLV endomorphism has order dividing 3 (`glvPoint³=id`: iterating `(x,y)↦(βx,y)` scales `x` by `β³=1`; the CM automorphism is order-3) | Mathlib | `GlvAutomorphism.lean` |
+| `glvPoint_bijective` | GLV endomorphism is an automorphism (`glvPoint` is bijective — `glvPoint` is its two-sided inverse, from `glvPoint³=id`) | Mathlib | `GlvAutomorphism.lean` |
 
 ### protocol-soundness (21)
 
