@@ -66,7 +66,7 @@ theorem secp256k1_glv_cube_relation (P : secp256k1.toAffine.Point) :
   have hnegY : ∀ a w : ZMod Secp256k1.p, secp256k1.toAffine.negY a w = -w := by
     intro a w; simp [WeierstrassCurve.Affine.negY, secp256k1]
   cases P with
-  | zero => simp
+  | zero => simp only [glvPoint_zero, add_zero]
   | some x y h =>
     simp only [glvPoint_some]
     set b : ZMod Secp256k1.p := (Secp256k1.beta : ZMod Secp256k1.p) with hbdef
