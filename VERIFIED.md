@@ -123,9 +123,10 @@ git history and the GitHub Actions tab.
 | **GLV β-equivariance of `addY`** (`addY(βx₁,βx₂,y₁,β²ℓ)=addY`; `Y`-coord unchanged) | `Ecdlp.Curve.secp256k1_glv_addY` | Ecdlp/Proved/GlvAddFormula.lean | Mathlib | proved |
 | **GLV map is an additive endomorphism** (`glvPoint(P+Q)=glvPoint P+glvPoint Q`, all branches; homomorphism half only — the `glvPoint=[λ]` eigenvalue property is **not** proved) | `Ecdlp.Curve.glvPoint_add` | Ecdlp/Proved/GlvHom.lean | Mathlib | proved |
 | GLV endomorphism bundled as `AddMonoidHom` (`glvHom : Point →+ Point`; *supporting* — repackages `glvPoint_add`, no new content) | `Ecdlp.Curve.glvHom` | Ecdlp/Proved/GlvMonoidHom.lean | Mathlib | proved |
+| **GLV endomorphism is a primitive cube root of unity** (`φ²+φ+1=0`: `glvPoint²(P)+glvPoint(P)+P=0` for all `P`; the CM / `End(E)` structure behind GLV — reached with **no `λ`, no point-counting**) | `Ecdlp.Curve.secp256k1_glv_cube_relation` | Ecdlp/Proved/GlvCubeRelation.lean | Mathlib | proved |
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**115 ledger rows / ~105 distinct kernel-verified results** (10 rows are alternate-form
+**116 ledger rows / ~106 distinct kernel-verified results** (10 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue — see the tagged rows above). **0 `sorry`, 0 `admit`, 0 open obligations.**
 

@@ -57,10 +57,11 @@ machinery used for `glvPoint_add` (Mathlib `WeierstrassCurve.Affine` addition + 
   doubling/tangent branch (or show `x = 0` has no curve point if `7` is a non-residue).
 
 ## Plan
-1. **`secp256k1_glv_cube_relation`**: `glvPoint (glvPoint P) + glvPoint P + P = 0` for all
-   `P`. (This file's target — the substantive next theorem.) It upgrades `glvHom` from "an
-   additive endomorphism" to "a primitive-cube-root-of-unity endomorphism", i.e. a verified
-   ring hom `ℤ[ζ₃] → End(E)` in spirit.
+1. **`secp256k1_glv_cube_relation`** ✅ **DONE** (`Ecdlp/Proved/GlvCubeRelation.lean`,
+   kernel-verified): `glvPoint (glvPoint P) + glvPoint P + P = 0` for all `P`. Upgrades
+   `glvHom` from "an additive endomorphism" to "a primitive-cube-root-of-unity
+   endomorphism" — a verified `ℤ[ζ₃] → End(E)` in spirit. This is a *different, reachable*
+   fact from `glvPoint = [λ]` (below), which stays blocked on point-counting.
 2. Only **after** `#E(𝔽_p) = n` exists (a separate, hard, point-counting project — likely
    out of reach without new Mathlib foundations) can `φ² + φ + 1 = 0` on `End(E)` be
    transferred to `[λ]` on `⟨G⟩`. Until then, `glvPoint = [λ]` stays explicitly open.
