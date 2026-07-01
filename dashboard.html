@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ECDLP environment — dashboard</title><style>
+:root{--bg:#0b1020;--panel:#141b30;--line:#243049;--tx:#e2e8f0;--mut:#94a3b8;--acc:#60a5fa}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);
+font:15px/1.5 -apple-system,Segoe UI,Roboto,sans-serif}a{color:var(--acc);text-decoration:none}
+.wrap{max-width:960px;margin:0 auto;padding:24px}
+h1{font-size:22px;margin:0 0 4px}.sub{color:var(--mut);margin:0 0 4px}
+.stamp{color:var(--mut);font-size:12px}
+.honest{background:#1e293b;border-left:3px solid var(--acc);padding:10px 14px;border-radius:6px;
+margin:16px 0;color:#cbd5e1;font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:18px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+.cval{font-size:22px;font-weight:700;color:#fff}.clab{color:var(--mut);font-size:12px;margin-top:2px}
+.csub{color:#64748b;font-size:11px;margin-top:4px}
+h2{font-size:15px;margin:26px 0 10px;color:#cbd5e1;border-bottom:1px solid var(--line);padding-bottom:6px}
+.bar{display:flex;height:22px;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.seg{height:100%}.legend{margin-top:8px;font-size:12px;color:var(--mut)}
+.lg{margin-right:12px;white-space:nowrap}.lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.frow{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+.fname{width:170px;color:#cbd5e1}.fbarwrap{flex:1;background:#0f172a;border-radius:4px;height:14px;overflow:hidden}
+.fbar{height:100%;background:linear-gradient(90deg,#ef4444,#f97316)}.fn{width:28px;text-align:right;color:var(--mut)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+.track{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.track h3{font-size:13px;margin:0 0 8px;color:#fff}.track ul{margin:0;padding:0;list-style:none}
+.track li{font-size:12.5px;color:#cbd5e1;margin:5px 0}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.layer{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin:6px 0;font-size:13px}
+.commits{list-style:none;padding:0;margin:0}.commits li{padding:5px 0;border-bottom:1px solid var(--line);font-size:13px}
+.commits code{background:#0f172a;padding:1px 6px;border-radius:4px;color:#93c5fd}
+.links a{margin-right:16px;font-size:13px}
+</style></head><body><div class="wrap">
+<h1>ECDLP · verified environment for a strong AI</h1>
+<p class="sub">A machine-checked, machine-navigable substrate — L1 verified core · L2 frontier map · L3 navigable structure · L4 objects · L5 engine.</p>
+<p class="stamp">snapshot 2026-07-01 19:52 UTC · regenerate: <code>python3 scripts/build_dashboard.py</code></p>
+<div class="honest">Honest boundary: this maximizes a future reasoner's leverage and rigorously maps the frontier — it does <b>not</b> solve ECDLP, and the barriers below may be permanent.</div>
+<div class="cards"><div class="card"><div class="cval">117 rows / ~107 distinct</div><div class="clab">Verified results</div><div class="csub">0 sorry · no custom axioms</div></div><div class="card"><div class="cval">79.8% mapped</div><div class="clab">Frontier map</div><div class="csub">486 corpus claims</div></div><div class="card"><div class="cval">181 claims</div><div class="clab">Foundations blocking</div><div class="csub">each = a research-grade gap</div></div><div class="card"><div class="cval">~10–15%</div><div class="clab">Honest substantive</div><div class="csub">rest = verified engineering</div></div></div>
+
+<h2>Frontier map — 486 corpus claims (79.8% mapped)</h2>
+<div class="bar"><div class="seg" style="width:1.0%;background:#22c55e" title="verified: 5"></div><div class="seg" style="width:8.0%;background:#84cc16" title="tractable: 39"></div><div class="seg" style="width:6.6%;background:#eab308" title="partial: 32"></div><div class="seg" style="width:30.5%;background:#ef4444" title="blocked: 148"></div><div class="seg" style="width:33.7%;background:#94a3b8" title="informal: 164"></div><div class="seg" style="width:20.2%;background:#64748b" title="unassigned: 98"></div></div><div class="legend"><span class="lg"><i style="background:#22c55e"></i>verified 5</span> <span class="lg"><i style="background:#84cc16"></i>tractable 39</span> <span class="lg"><i style="background:#eab308"></i>partial 32</span> <span class="lg"><i style="background:#ef4444"></i>blocked 148</span> <span class="lg"><i style="background:#94a3b8"></i>informal 164</span> <span class="lg"><i style="background:#64748b"></i>unassigned 98</span></div>
+
+<div class="grid2" style="margin-top:16px">
+<div><h2 style="margin-top:0">Blocked by missing foundation</h2><div class="frow"><div class="fname">semaev_polynomials</div><div class="fbarwrap"><div class="fbar" style="width:100%"></div></div><div class="fn">51</div></div><div class="frow"><div class="fname">cost_model</div><div class="fbarwrap"><div class="fbar" style="width:69%"></div></div><div class="fn">35</div></div><div class="frow"><div class="fname">curve_depth</div><div class="fbarwrap"><div class="fbar" style="width:65%"></div></div><div class="fn">33</div></div><div class="frow"><div class="fname">quantum_cost</div><div class="fbarwrap"><div class="fbar" style="width:57%"></div></div><div class="fn">29</div></div><div class="frow"><div class="fname">lattice_reduction</div><div class="fbarwrap"><div class="fbar" style="width:49%"></div></div><div class="fn">25</div></div><div class="frow"><div class="fname">weil_pairing</div><div class="fbarwrap"><div class="fbar" style="width:16%"></div></div><div class="fn">8</div></div><div class="frow"><div class="fname">point_counting</div><div class="fbarwrap"><div class="fbar" style="width:0%"></div></div><div class="fn">0</div></div></div>
+<div><h2 style="margin-top:0">Environment layers</h2><div class="layer"><span class="dot" style="background:#22c55e"></span><b>L1 Verified core</b> — kernel-checked theorems (absolute trust)</div><div class="layer"><span class="dot" style="background:#84cc16"></span><b>L2 Frontier map</b> — what's open/blocked &amp; by which missing foundation</div><div class="layer"><span class="dot" style="background:#eab308"></span><b>L3 Navigable structure</b> — machine-readable graph + queryable data</div><div class="layer"><span class="dot" style="background:#84cc16"></span><b>L4 Formalized objects</b> — GLV (cube-root + torsion-preserving), torsion, division polys</div><div class="layer"><span class="dot" style="background:#94a3b8"></span><b>L5 Engine</b> — AI+kernel pipeline; self-extensible substrate</div></div>
+</div>
+
+<h2>Tracks &amp; checkpoints</h2><div class="track"><h3>A — Frontier map (machine-actionable)</h3><ul><li><i class="dot" style="background:#22c55e"></i>A1 frontier_map.json + query</li><li><i class="dot" style="background:#eab308"></i>A2 status+foundation for every claim (79.8%)</li><li><i class="dot" style="background:#64748b"></i>A3 per-foundation unlock lists</li></ul></div><div class="track"><h3>B — Depth (verified foundations, DAG)</h3><ul><li><i class="dot" style="background:#22c55e"></i>GLV object: equation→hom→cube-root→torsion-preserving</li><li><i class="dot" style="background:#22c55e"></i>E[n] group object bridged</li><li><i class="dot" style="background:#64748b"></i>next rung → E[n]≅(ℤ/n)² (blocked by point-counting)</li></ul></div><div class="track"><h3>C — Engine &amp; extensibility</h3><ul><li><i class="dot" style="background:#22c55e"></i>CI trust gates (no-sorry, axiom audit, count/import)</li><li><i class="dot" style="background:#22c55e"></i>generator + prover loop</li><li><i class="dot" style="background:#64748b"></i>warm server node (idle — needs PAT)</li></ul></div>
+
+<h2>Recent build milestones</h2><ul class="commits"><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/28e3a36"><code>28e3a36</code></a> Ledger Track-B rung: GLV preserves n-torsion (117/~107); regen graph/coverage/frontier</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/cca6844"><code>cca6844</code></a> Track B rung: GLV endomorphism preserves n-torsion (glvPoint E[n] into E[n])</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/43e67bc"><code>43e67bc</code></a> Track A A2: content-heuristic triage of frontier map (completeness 64.2-&gt;79.8%, confidence-tagged)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/a31b50e"><code>a31b50e</code></a> Environment plan + Track A A1: machine-actionable frontier map (data/frontier_map.json, 64.2% complete)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/d9ba8cf"><code>d9ba8cf</code></a> Ledger cube relation: GLV endomorphism = primitive cube root of unity (116/~106); milestone</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/cabac62"><code>cabac62</code></a> Coverage benchmark: scripts/coverage_report.py + COVERAGE.md (honest 3-denominator progress metric)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/dc65de5"><code>dc65de5</code></a> GLV cube relation iter5: zero case via show-coerce Point.zero to 0</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/a3d8b62"><code>a3d8b62</code></a> GLV cube relation iter4: fix trivial zero case (some-case fully compiles)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/c2807c5"><code>c2807c5</code></a> GLV cube relation iter3: fix native_decide DecidableEq-via-Fact issue, unfold heq</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/4ee22a9"><code>4ee22a9</code></a> GLV cube relation iter2: Point.-prefix add lemmas; hoist native_decide above set b; fix hy0/hyne</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/4508317"><code>4508317</code></a> GLV cube relation (CM): glvPoint²(P)+glvPoint(P)+P=0 [φ²+φ+1=0] — first attempt</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/37b7b9a"><code>37b7b9a</code></a> Ledger glvHom (bundled AddMonoidHom) + sprint verified green; counts 114→115</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/27c3e73"><code>27c3e73</code></a> Axiom gate: recognize native_decide's per-decl axiom (Lean v4.31 form)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/f71e694"><code>f71e694</code></a> notes/GLV_LAMBDA.md: honest [λ] bottleneck + reachable substitute (φ²+φ+1=0)</li></ul>
+
+<h2>Live views (real-time, external)</h2>
+<div class="links">
+<a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/actions">▶ CI status (Actions)</a>
+<a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commits/main">▶ commit feed</a>
+<a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/VERIFIED.md">▶ ledger</a>
+<a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/COVERAGE.md">▶ coverage</a>
+<a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/frontier_map.json">▶ frontier map (json)</a>
+</div>
+</div></body></html>
