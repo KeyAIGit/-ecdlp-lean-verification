@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 117,
+    "theorems": 118,
     "barriers": 6,
-    "edges": 99,
+    "edges": 104,
     "by_method": {
-      "Mathlib": 85,
+      "Mathlib": 86,
       "native_decide": 18,
       "Mathlib + native_decide": 14
     },
     "by_area": {
-      "curve-torsion": 64,
+      "curve-torsion": 65,
       "protocol-soundness": 21,
       "generic-hardness": 17,
       "other": 5,
@@ -1544,6 +1544,19 @@
       "area": "curve-torsion",
       "dependency_depth": 6,
       "gated": true
+    },
+    {
+      "id": "thm-117",
+      "name": "Ecdlp.Curve.glvHom_minpoly",
+      "short_name": "glvHom_minpoly",
+      "module": "Ecdlp.Proved.GlvMinPoly",
+      "file": "Ecdlp/Proved/GlvMinPoly.lean",
+      "claim": "GLV endomorphism satisfies its minimal polynomial in `End(E)` (operator form: `glvHom∘glvHom+glvHom+id=0` as `AddMonoidHom`s — `φ+φ+1=0` in the endomorphism ring, composable with Mathlib's hom API; *alternate/operator form* of `secp256k1_glv_cube_relation`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 6,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1634,6 +1647,26 @@
     {
       "from": "Ecdlp.Ontology",
       "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvMinPoly",
+      "to": "Ecdlp.Proved.GlvEndomorphism",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvMinPoly",
+      "to": "Ecdlp.Proved.GlvHom",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvMinPoly",
+      "to": "Ecdlp.Proved.GlvMonoidHom",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvMinPoly",
+      "to": "Ecdlp.Proved.GlvCubeRelation",
       "type": "imports"
     },
     {
@@ -2054,6 +2087,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.GlvTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.GlvMinPoly",
       "type": "imports"
     },
     {

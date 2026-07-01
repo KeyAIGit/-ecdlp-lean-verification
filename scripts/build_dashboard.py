@@ -272,7 +272,7 @@ def main() -> int:
     # is a range/estimate — animating it as a precise count-up would misrepresent it
     # as more exact than it is, so it renders as static text instead.
     metric_cards = [
-        ("Verified results", vcount, None, f"~{vcount-10} distinct", "0 sorry · no custom axioms"),
+        ("Verified results", vcount, None, f"~{vcount-11} distinct", "0 sorry · no custom axioms"),
         ("Frontier mapped", completeness, None, "%", f"{total} corpus claims"),
         ("Foundations blocking", blocked_total, None, "claims", "each = a research-grade gap"),
         ("Honest substantive", None, "~10–15%", "", "rest = verified engineering"),

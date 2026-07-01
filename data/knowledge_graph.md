@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**117 theorems** · **6 barriers** · **99 edges**
+**118 theorems** · **6 barriers** · **104 edges**
 
-By proof method: Mathlib (85), native_decide (18), Mathlib + native_decide (14)
+By proof method: Mathlib (86), native_decide (18), Mathlib + native_decide (14)
 
-By research area: curve-torsion (64), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
+By research area: curve-torsion (65), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (64)
+### curve-torsion (65)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -78,6 +78,7 @@ By research area: curve-torsion (64), protocol-soundness (21), generic-hardness 
 | `glvHom` | GLV endomorphism bundled as `AddMonoidHom` (`glvHom : Point →+ Point`; *supporting* — repackages `glvPoint_add`, no new content) | Mathlib | `GlvMonoidHom.lean` |
 | `secp256k1_glv_cube_relation` | GLV endomorphism is a primitive cube root of unity (`φ+φ+1=0`: `glvPoint(P)+glvPoint(P)+P=0` for all `P`; the CM / `End(E)` structure behind GLV — reached with no `λ`, no point-counting) | Mathlib | `GlvCubeRelation.lean` |
 | `secp256k1_glv_preserves_torsion` | GLV endomorphism preserves `n`-torsion (`glvPoint` maps `E[n]→E[n]`; restricts to an endomorphism of the torsion, still `φ+φ+1=0` there — the scene where `[λ]` lives) | Mathlib | `GlvTorsion.lean` |
+| `glvHom_minpoly` | GLV endomorphism satisfies its minimal polynomial in `End(E)` (operator form: `glvHom∘glvHom+glvHom+id=0` as `AddMonoidHom`s — `φ+φ+1=0` in the endomorphism ring, composable with Mathlib's hom API; *alternate/operator form* of `secp256k1_glv_cube_relation`) | Mathlib | `GlvMinPoly.lean` |
 
 ### protocol-soundness (21)
 
