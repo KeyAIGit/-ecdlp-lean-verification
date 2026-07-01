@@ -347,6 +347,9 @@ a{{color:var(--blue);text-decoration:none}}
 .topnav{{position:sticky;top:0;z-index:100;background:rgba(0,26,63,.82);
   backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);
   border-bottom:1px solid rgba(255,255,255,.08)}}
+.scrollprog{{position:absolute;left:0;bottom:-1px;height:2px;width:0;
+  background:linear-gradient(90deg,var(--blue),#7db0ff);transform-origin:left;
+  transition:width .08s linear;box-shadow:0 0 8px rgba(29,133,255,.6)}}
 .topnav .in{{max-width:1080px;margin:0 auto;padding:0 24px;height:60px;display:flex;
   align-items:center;justify-content:space-between;gap:20px}}
 .brand{{display:flex;align-items:center;gap:9px;flex-shrink:0}}
@@ -521,6 +524,7 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
     <a href="#tracks">Tracks</a>
     <a href="#commits">Activity</a>
   </div>
+  <div class="scrollprog" id="scrollprog"></div>
 </div></nav>
 
 <div class="hero" id="top"><div class="wrap">
@@ -533,7 +537,7 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 </div></div>
 
 <main id="main">
-<div class="cardband wrap" id="metrics">{cards_html}</div>
+<div class="cardband wrap" id="metrics"><div class="cards">{cards_html}</div></div>
 
 <section class="wrap" id="navigate">
 <h2><span class="secnum">01</span>Navigate the <span class="accent">environment</span></h2>
@@ -600,6 +604,22 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 <script>
 (function(){{
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll-progress bar on the sticky nav — a quiet wayfinding cue on a long page.
+  var prog = document.getElementById('scrollprog');
+  if (prog) {{
+    var ticking = false;
+    function paint() {{
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      ticking = false;
+    }}
+    window.addEventListener('scroll', function(){{
+      if (!ticking) {{ ticking = true; requestAnimationFrame(paint); }}
+    }}, {{passive:true}});
+    paint();
+  }}
 
   // scroll-reveal — generous rootMargin so a fast flick-scroll can't skip an
   // element past the observer's check unseen, PLUS a hard failsafe timeout: this

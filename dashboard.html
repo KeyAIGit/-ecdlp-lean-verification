@@ -37,6 +37,9 @@ a{color:var(--blue);text-decoration:none}
 .topnav{position:sticky;top:0;z-index:100;background:rgba(0,26,63,.82);
   backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);
   border-bottom:1px solid rgba(255,255,255,.08)}
+.scrollprog{position:absolute;left:0;bottom:-1px;height:2px;width:0;
+  background:linear-gradient(90deg,var(--blue),#7db0ff);transform-origin:left;
+  transition:width .08s linear;box-shadow:0 0 8px rgba(29,133,255,.6)}
 .topnav .in{max-width:1080px;margin:0 auto;padding:0 24px;height:60px;display:flex;
   align-items:center;justify-content:space-between;gap:20px}
 .brand{display:flex;align-items:center;gap:9px;flex-shrink:0}
@@ -211,6 +214,7 @@ footer{background:var(--navy);color:#93a8c9;padding:32px 0}
     <a href="#tracks">Tracks</a>
     <a href="#commits">Activity</a>
   </div>
+  <div class="scrollprog" id="scrollprog"></div>
 </div></nav>
 
 <div class="hero" id="top"><div class="wrap">
@@ -218,12 +222,12 @@ footer{background:var(--navy);color:#93a8c9;padding:32px 0}
   <div class="herotop"><img src="assets/logo-wordmark.png" alt="keyAI"></div>
   <h1>Verified environment for<br>a strong AI</h1>
   <p class="sub">L1 verified core · L2 frontier map · L3 navigable structure · L4 objects · L5 engine</p>
-  <p class="stamp">snapshot 2026-07-01 21:24 UTC · regenerate: <code>python3 scripts/build_dashboard.py</code></p>
+  <p class="stamp">snapshot 2026-07-01 21:51 UTC · regenerate: <code>python3 scripts/build_dashboard.py</code></p>
   <div class="honest">Honest boundary: this maximizes a future reasoner's leverage and rigorously maps the frontier — it does <b>not</b> solve ECDLP, and the barriers below may be permanent.</div>
 </div></div>
 
 <main id="main">
-<div class="cardband wrap" id="metrics"><div class="card reveal"><div class="cval" data-count="117">0</div><div class="cunit">~107 distinct</div><div class="clab">Verified results</div><div class="csub">0 sorry · no custom axioms</div></div><div class="card reveal"><div class="cval" data-count="79.8">0</div><div class="cunit">%</div><div class="clab">Frontier mapped</div><div class="csub">486 corpus claims</div></div><div class="card reveal"><div class="cval" data-count="181">0</div><div class="cunit">claims</div><div class="clab">Foundations blocking</div><div class="csub">each = a research-grade gap</div></div><div class="card reveal"><div class="cval">~10–15%</div><div class="clab">Honest substantive</div><div class="csub">rest = verified engineering</div></div></div>
+<div class="cardband wrap" id="metrics"><div class="cards"><div class="card reveal"><div class="cval" data-count="117">0</div><div class="cunit">~107 distinct</div><div class="clab">Verified results</div><div class="csub">0 sorry · no custom axioms</div></div><div class="card reveal"><div class="cval" data-count="79.8">0</div><div class="cunit">%</div><div class="clab">Frontier mapped</div><div class="csub">486 corpus claims</div></div><div class="card reveal"><div class="cval" data-count="181">0</div><div class="cunit">claims</div><div class="clab">Foundations blocking</div><div class="csub">each = a research-grade gap</div></div><div class="card reveal"><div class="cval">~10–15%</div><div class="clab">Honest substantive</div><div class="csub">rest = verified engineering</div></div></div></div>
 
 <section class="wrap" id="navigate">
 <h2><span class="secnum">01</span>Navigate the <span class="accent">environment</span></h2>
@@ -273,7 +277,7 @@ footer{background:var(--navy);color:#93a8c9;padding:32px 0}
 </div></section>
 
 <section id="commits"><div class="wrap">
-<h2><span class="secnum">06</span>Recent build milestones</h2><ul class="commits"><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/ec2703a"><code>ec2703a</code></a> Rebrand dashboard to match the KeyAI deck: navy/blue palette, Baloo 2 + Nunito (self-hosted), card style</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/4dd9ef2"><code>4dd9ef2</code></a> Redesign main page: full auto-discovered navigation hub (44 links, 6 sections, no dead/missing entries)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/7d93f9b"><code>7d93f9b</code></a> Pages: also emit index.html so the site root shows the dashboard</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/3bf4f22"><code>3bf4f22</code></a> Observation interface: scripts/build_dashboard.py + dashboard.html (metrics, layers, tracks, frontier, milestones)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/28e3a36"><code>28e3a36</code></a> Ledger Track-B rung: GLV preserves n-torsion (117/~107); regen graph/coverage/frontier</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/cca6844"><code>cca6844</code></a> Track B rung: GLV endomorphism preserves n-torsion (glvPoint E[n] into E[n])</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/43e67bc"><code>43e67bc</code></a> Track A A2: content-heuristic triage of frontier map (completeness 64.2-&gt;79.8%, confidence-tagged)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/a31b50e"><code>a31b50e</code></a> Environment plan + Track A A1: machine-actionable frontier map (data/frontier_map.json, 64.2% complete)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/d9ba8cf"><code>d9ba8cf</code></a> Ledger cube relation: GLV endomorphism = primitive cube root of unity (116/~106); milestone</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/cabac62"><code>cabac62</code></a> Coverage benchmark: scripts/coverage_report.py + COVERAGE.md (honest 3-denominator progress metric)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/dc65de5"><code>dc65de5</code></a> GLV cube relation iter5: zero case via show-coerce Point.zero to 0</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/a3d8b62"><code>a3d8b62</code></a> GLV cube relation iter4: fix trivial zero case (some-case fully compiles)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/c2807c5"><code>c2807c5</code></a> GLV cube relation iter3: fix native_decide DecidableEq-via-Fact issue, unfold heq</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/4ee22a9"><code>4ee22a9</code></a> GLV cube relation iter2: Point.-prefix add lemmas; hoist native_decide above set b; fix hy0/hyne</li></ul>
+<h2><span class="secnum">06</span>Recent build milestones</h2><ul class="commits"><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/920ac07"><code>920ac07</code></a> Major dashboard redesign: real logo, sticky scrollspy nav, dataviz-method charts, a11y</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/ec2703a"><code>ec2703a</code></a> Rebrand dashboard to match the KeyAI deck: navy/blue palette, Baloo 2 + Nunito (self-hosted), card style</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/4dd9ef2"><code>4dd9ef2</code></a> Redesign main page: full auto-discovered navigation hub (44 links, 6 sections, no dead/missing entries)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/7d93f9b"><code>7d93f9b</code></a> Pages: also emit index.html so the site root shows the dashboard</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/3bf4f22"><code>3bf4f22</code></a> Observation interface: scripts/build_dashboard.py + dashboard.html (metrics, layers, tracks, frontier, milestones)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/28e3a36"><code>28e3a36</code></a> Ledger Track-B rung: GLV preserves n-torsion (117/~107); regen graph/coverage/frontier</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/cca6844"><code>cca6844</code></a> Track B rung: GLV endomorphism preserves n-torsion (glvPoint E[n] into E[n])</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/43e67bc"><code>43e67bc</code></a> Track A A2: content-heuristic triage of frontier map (completeness 64.2-&gt;79.8%, confidence-tagged)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/a31b50e"><code>a31b50e</code></a> Environment plan + Track A A1: machine-actionable frontier map (data/frontier_map.json, 64.2% complete)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/d9ba8cf"><code>d9ba8cf</code></a> Ledger cube relation: GLV endomorphism = primitive cube root of unity (116/~106); milestone</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/cabac62"><code>cabac62</code></a> Coverage benchmark: scripts/coverage_report.py + COVERAGE.md (honest 3-denominator progress metric)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/dc65de5"><code>dc65de5</code></a> GLV cube relation iter5: zero case via show-coerce Point.zero to 0</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/a3d8b62"><code>a3d8b62</code></a> GLV cube relation iter4: fix trivial zero case (some-case fully compiles)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/c2807c5"><code>c2807c5</code></a> GLV cube relation iter3: fix native_decide DecidableEq-via-Fact issue, unfold heq</li></ul>
 </div></section>
 </main>
 
@@ -290,6 +294,22 @@ footer{background:var(--navy);color:#93a8c9;padding:32px 0}
 <script>
 (function(){
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll-progress bar on the sticky nav — a quiet wayfinding cue on a long page.
+  var prog = document.getElementById('scrollprog');
+  if (prog) {
+    var ticking = false;
+    function paint() {
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+    }, {passive:true});
+    paint();
+  }
 
   // scroll-reveal — generous rootMargin so a fast flick-scroll can't skip an
   // element past the observer's check unseen, PLUS a hard failsafe timeout: this
