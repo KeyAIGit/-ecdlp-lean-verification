@@ -48,14 +48,25 @@ theorem secp256k1_glv_cube_relation (P : secp256k1.toAffine.Point) :
     have hne3 : ((3 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by
       rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide
     exact hne3 (by exact_mod_cast h3)
-  -- Closed arithmetic facts (kept ABOVE `set b`, so `native_decide` sees no local `let`).
-  have h7ne : (7 : ZMod Secp256k1.p) ≠ 0 := by native_decide
-  have h2ne : (2 : ZMod Secp256k1.p) ≠ 0 := by native_decide
+  -- Closed arithmetic facts. Route through `Nat.cast`/`ZMod.natCast_eq_zero_iff` rather
+  -- than `native_decide` directly on a `ZMod` (in)equality: the `DecidableEq (ZMod p)`
+  -- instance picked up here resolves through the ambient `[Fact p.Prime]` (`inst✝`), which
+  -- `native_decide` rejects as a "free variable" in the closed term it compiles. The
+  -- `Nat.dvd` route needs no `Fact` instance, matching the working pattern elsewhere in
+  -- this repo (e.g. `Secp256k1Curve.lean`'s `secp256k1_generator_nonsingular`).
+  have h7ne : (7 : ZMod Secp256k1.p) ≠ 0 := by
+    have h7 : ((7 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by
+      rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide
+    simpa using h7
+  have h2ne : (2 : ZMod Secp256k1.p) ≠ 0 := by
+    have h2 : ((2 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by
+      rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide
+    simpa using h2
   -- `negY _ y = -y` for secp256k1.
   have hnegY : ∀ a w : ZMod Secp256k1.p, secp256k1.toAffine.negY a w = -w := by
     intro a w; simp [WeierstrassCurve.Affine.negY, secp256k1]
   cases P with
-  | zero => simp only [glvPoint_zero, add_zero, zero_add]
+  | zero => simp
   | some x y h =>
     simp only [glvPoint_some]
     set b : ZMod Secp256k1.p := (Secp256k1.beta : ZMod Secp256k1.p) with hbdef
@@ -69,6 +80,7 @@ theorem secp256k1_glv_cube_relation (P : secp256k1.toAffine.Point) :
         have heq : secp256k1.toAffine.Equation 0 y :=
           ((WeierstrassCurve.Affine.nonsingular_iff 0 y).mp h).1
         rw [WeierstrassCurve.Affine.equation_iff] at heq
+        simp only [secp256k1] at heq
         rw [hy] at heq
         linear_combination -heq
       have hyne : y ≠ secp256k1.toAffine.negY (b * 0) y := by
