@@ -17,14 +17,11 @@ heart of GLV (it does NOT need the scalar `λ` or point counting; see `notes/GLV
 
 **Why it holds.** For `P = (x, y)`, the three points `P = (x,y)`, `φP = (βx, y)`,
 `φ²P = (β²x, y)` share the `Y`-coordinate `y`, so they are collinear on the horizontal
-line `Y = y` (whose three intersections with `Y² = X³ + 7` are exactly `x, βx, β²x`,
-the roots of `X³ = y² − 7`). Three collinear points sum to `O`. Concretely the first two
-already sum to `−P`: the secant/tangent slope is `0` (equal `Y`'s), giving new
-`X = −(β² + β)x = x` (using `β² + β = −1`) and `Y = −y`, i.e. `φ²P + φP = −P`.
-
-The proof splits on `x = 0` (the three points coincide at a 3-torsion point `(0, ±√7)`,
-handled by the doubling formula) vs `x ≠ 0` (`β²x ≠ βx`, the secant formula). In both
-cases the sum of the first two points plus `P` is closed to `0` by `add_of_Y_eq`.
+line `Y = y`. The first two already sum to `−P`: the secant/tangent slope is `0` (equal
+`Y`'s), giving new `X = −(β² + β)x = x` (using `β² + β = −1`) and `Y = −y`, i.e.
+`φ²P + φP = −P`; adding `P` gives `0` via `add_of_Y_eq`. The proof splits on `x = 0`
+(the three coincide at a 3-torsion point `(0, ±√7)`, doubling formula) vs `x ≠ 0`
+(`β²x ≠ βx`, secant formula).
 -/
 
 namespace Ecdlp.Curve
@@ -51,6 +48,9 @@ theorem secp256k1_glv_cube_relation (P : secp256k1.toAffine.Point) :
     have hne3 : ((3 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by
       rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide
     exact hne3 (by exact_mod_cast h3)
+  -- Closed arithmetic facts (kept ABOVE `set b`, so `native_decide` sees no local `let`).
+  have h7ne : (7 : ZMod Secp256k1.p) ≠ 0 := by native_decide
+  have h2ne : (2 : ZMod Secp256k1.p) ≠ 0 := by native_decide
   -- `negY _ y = -y` for secp256k1.
   have hnegY : ∀ a w : ZMod Secp256k1.p, secp256k1.toAffine.negY a w = -w := by
     intro a w; simp [WeierstrassCurve.Affine.negY, secp256k1]
@@ -59,24 +59,28 @@ theorem secp256k1_glv_cube_relation (P : secp256k1.toAffine.Point) :
   | some x y h =>
     simp only [glvPoint_some]
     set b : ZMod Secp256k1.p := (Secp256k1.beta : ZMod Secp256k1.p) with hbdef
-    -- goal: some (b*(b*x)) y _ + some (b*x) y _ + some x y h = 0
     by_cases hx0 : x = 0
     · -- Coincident / 3-torsion case: the three points are all `(0, y)`.
       subst hx0
       -- `(0,y)` on the curve forces `y² = 7`, so `y ≠ 0`.
       have hy0 : y ≠ 0 := by
         intro hy
+        apply h7ne
         have heq : secp256k1.toAffine.Equation 0 y :=
           ((WeierstrassCurve.Affine.nonsingular_iff 0 y).mp h).1
         rw [WeierstrassCurve.Affine.equation_iff] at heq
         rw [hy] at heq
-        simp only [secp256k1] at heq
-        revert heq; native_decide
+        linear_combination -heq
       have hyne : y ≠ secp256k1.toAffine.negY (b * 0) y := by
-        rw [hnegY]; intro hc; exact hy0 (by linear_combination hc / 2)
-      rw [add_of_Y_ne hyne]
+        rw [hnegY]; intro hc
+        apply hy0
+        have h2y : (2 : ZMod Secp256k1.p) * y = 0 := by linear_combination hc
+        rcases mul_eq_zero.mp h2y with h2 | hy
+        · exact absurd h2 h2ne
+        · exact hy
+      rw [Point.add_of_Y_ne hyne]
       have hxe : (b * (b * 0) : ZMod Secp256k1.p) = b * 0 := by ring
-      refine add_of_Y_eq ?_ ?_
+      refine Point.add_of_Y_eq ?_ ?_
       · rw [slope_of_Y_ne hxe hyne]
         simp only [WeierstrassCurve.Affine.addX, WeierstrassCurve.Affine.negY, secp256k1]
         ring
@@ -94,8 +98,8 @@ theorem secp256k1_glv_cube_relation (P : secp256k1.toAffine.Point) :
           · exact absurd h4 hb0
           · exact h5
         · exact absurd (sub_eq_zero.mp h3) hb1
-      rw [add_of_X_ne hne]
-      refine add_of_Y_eq ?_ ?_
+      rw [Point.add_of_X_ne hne]
+      refine Point.add_of_Y_eq ?_ ?_
       · -- new X-coordinate `= x`, using `β² + β + 1 = 0`.
         rw [slope_of_X_ne hne]
         simp only [sub_self, zero_div, WeierstrassCurve.Affine.addX, secp256k1]
