@@ -35,9 +35,12 @@ each frontier item = {id, statement, status ∈ {verified, open, blocked}, block
 mathlib_gap, unlocks (which/how-many claims), refs}. An agent ingests this to see the whole
 problem and where to push. Metric: **frontier completeness** = % of the 486 corpus claims
 with an assigned status + (if blocked) a named blocking foundation.
-- Checkpoint A1: `data/frontier_map.json` + generator, every barrier from BARRIERS.md encoded.
-- Checkpoint A2: every corpus claim assigned status + blocking foundation (or "tractable").
-- Checkpoint A3: a query interface (`scripts/frontier_query.py`: "what does the Weil pairing unlock?").
+- ✅ Checkpoint A1: `data/frontier_map.json` + generator, every barrier encoded; queryable
+  (`scripts/build_frontier_map.py --query <foundation>`).
+- 🔄 Checkpoint A2: assign status + blocking foundation to every claim. **79.8% done**
+  (corpus areas + content heuristics, each tagged `confidence: corpus|heuristic`); 98
+  hardest-to-classify still `unassigned` (honestly left, not force-fit).
+- Checkpoint A3: richer query interface + per-foundation "unlocks" claim lists.
 
 ### Track B — Depth: verified foundations, checkpointed DAG
 Grow L1/L4 by closing reachable objects, each a kernel-verified rung; when a foundation is

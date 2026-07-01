@@ -84,28 +84,63 @@ FOUNDATIONS = {
     },
 }
 
-# map a corpus mathlib_area string -> (status, blocking_foundation | None)
-def classify(formal_status: str, area: str) -> tuple[str, str | None]:
+# Content keyword heuristics for claims the corpus left mathlib_area-unassigned. Ordered by
+# priority. Each -> (status, blocking_foundation | None). Marked confidence="heuristic".
+HEURISTICS = [
+    # empirical / survey / commentary prose — not a formal math statement
+    (("the authors", "the paper", "the study", "recovered", "reports ", "no evidence",
+      "we survey", "in practice", "real-world", "dataset", "bitcoin", "ethereum", "ripple",
+      "https", "ssh", "hundreds of", "database"), "informal", None),
+    # quantum resource estimates
+    (("quantum", "shor", "qubit", "circuit"), "blocked", "quantum_cost"),
+    # lattice / HNP / biased-nonce
+    (("lattice", "lll", "bkz", " cvp", "hidden number", "biased nonce", "nonce reuse",
+      "bounded error term", "modular equation", "short vector"), "blocked", "lattice_reduction"),
+    # index calculus / Semaev summation polynomials
+    (("semaev", "summation polynomial", "index calculus", "relation step", "relation search",
+      "smooth", "factor base"), "blocked", "semaev_polynomials"),
+    # pairing / transfer / isogeny depth
+    (("weil", "tate pairing", " pairing", "mov", "frey", "embedding degree", "isogeny",
+      "supersingular"), "blocked", "weil_pairing"),
+    # complexity / cost statements
+    (("running time", "time complexity", "subexponential", "operations", "queries",
+      "oracle", "cost ", "parity", "number of group"), "blocked", "cost_model"),
+    # curve / torsion / division-polynomial / EDS / GLV depth (partly tractable, Track B)
+    (("torsion", "division polynomial", "elliptic divisibility", " eds", "endomorphism",
+      "lambda", "glv", "decomposition", "j-invariant", "trace of frobenius"), "partial", "curve_depth"),
+    # in-Mathlib group theory (order / subgroup / generic prime-order group facts)
+    (("prime order", "generic group", "order of", "subgroup", "cyclic", "lagrange",
+      "pohlig", "discrete log"), "tractable", None),
+]
+
+
+def classify(formal_status: str, area: str, statement: str = "") -> tuple[str, str | None, str]:
+    """Return (status, blocking_foundation|None, confidence). confidence in {corpus, heuristic}."""
     if formal_status in ("informal_only", "scope_meta"):
-        return "informal", None
+        return "informal", None, "corpus"
     a = area.lower()
     if "cost model" in a and "quantum" not in a:
-        return "blocked", "cost_model"
+        return "blocked", "cost_model", "corpus"
     if "quantum" in a:
-        return "blocked", "quantum_cost"
+        return "blocked", "quantum_cost", "corpus"
     if "lattice" in a:
-        return "blocked", "lattice_reduction"
+        return "blocked", "lattice_reduction", "corpus"
     if "mvpolynomial" in a:
-        return "blocked", "semaev_polynomials"
+        return "blocked", "semaev_polynomials", "corpus"
     if "isogeny" in a:
-        return "blocked", "weil_pairing"
+        return "blocked", "weil_pairing", "corpus"
     if "ellipticcurve" in a:
-        return "partial", "curve_depth"
+        return "partial", "curve_depth", "corpus"
     if "orderofelement" in a or "subgroup" in a:
-        return "tractable", None
-    if "unassigned" in a or not a:
-        return "unassigned", None
-    return "tractable", None
+        return "tractable", None, "corpus"
+    if not ("unassigned" in a or not a):
+        return "tractable", None, "corpus"
+    # mathlib_area unassigned by the corpus — fall back to content heuristics.
+    s = statement.lower()
+    for keys, status, foundation in HEURISTICS:
+        if any(k in s for k in keys):
+            return status, foundation, "heuristic"
+    return "unassigned", None, "heuristic"
 
 
 def main(argv: list[str]) -> int:
@@ -116,21 +151,24 @@ def main(argv: list[str]) -> int:
     claims = []
     status_ct: Counter = Counter()
     foundation_ct: Counter = Counter()
+    conf_ct: Counter = Counter()
     for r in rows:
         cid = (r.get("claim_id", "") or "").strip()
         fs = (r.get("formal_status", "") or "").strip()
         area = (r.get("mathlib_area", "") or "").strip()
-        status, foundation = classify(fs, area)
+        stmt = (r.get("formal_statement", "") or r.get("label", "") or "").strip()
+        status, foundation, confidence = classify(fs, area, stmt)
         verified = bool(cid and cid in vtext)
         if verified:
-            status = "verified"
+            status, confidence = "verified", "corpus"
         status_ct[status] += 1
+        conf_ct[confidence] += 1
         if foundation:
             foundation_ct[foundation] += 1
         claims.append({
             "id": cid, "formal_status": fs, "status": status,
-            "blocking_foundation": foundation, "mathlib_area": area,
-            "verified": verified,
+            "blocking_foundation": foundation, "confidence": confidence,
+            "mathlib_area": area, "verified": verified,
         })
 
     # attach unlock counts to the foundation registry
@@ -150,6 +188,7 @@ def main(argv: list[str]) -> int:
             "regenerate": "python3 scripts/build_frontier_map.py",
         },
         "status_summary": dict(status_ct.most_common()),
+        "confidence_summary": dict(conf_ct.most_common()),
         "foundations": foundations,
         "claims": claims,
     }
@@ -158,6 +197,7 @@ def main(argv: list[str]) -> int:
           f"frontier completeness {doc['meta']['frontier_completeness_pct']}% "
           f"(assigned status; {status_ct.get('unassigned',0)} still unassigned)")
     print("status:", dict(status_ct.most_common()))
+    print("confidence:", dict(conf_ct.most_common()))
     print("blocked-by-foundation:", dict(foundation_ct.most_common()))
     return 0
 

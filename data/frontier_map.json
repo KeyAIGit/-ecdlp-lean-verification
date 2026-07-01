@@ -3,16 +3,20 @@
     "purpose": "Machine-actionable frontier map of ECDLP formalization. Verified facts + precisely-mapped barriers. Asserts NO solution to ECDLP.",
     "corpus_claims": 486,
     "verified_ledger_rows": 116,
-    "frontier_completeness_pct": 64.2,
+    "frontier_completeness_pct": 79.8,
     "regenerate": "python3 scripts/build_frontier_map.py"
   },
   "status_summary": {
-    "unassigned": 174,
-    "informal": 133,
-    "blocked": 118,
-    "tractable": 37,
-    "partial": 19,
+    "informal": 164,
+    "blocked": 148,
+    "unassigned": 98,
+    "tractable": 39,
+    "partial": 32,
     "verified": 5
+  },
+  "confidence_summary": {
+    "corpus": 312,
+    "heuristic": 174
   },
   "foundations": {
     "weil_pairing": {
@@ -20,7 +24,7 @@
       "mathlib_gap": "No Weil/Tate pairing eₙ. Needs divisors, function fields, Miller's algorithm. Gates the MOV/Frey-Rück transfer reduction itself.",
       "leverage": "highest",
       "effort": "months (research-grade)",
-      "blocks_corpus_claims": 4
+      "blocks_corpus_claims": 8
     },
     "point_counting": {
       "status": "missing_from_mathlib",
@@ -34,43 +38,44 @@
       "mathlib_gap": "No group-operation / oracle-query cost model, so exact Θ running times (index calculus, distinguished points) can't be stated. The generic Ω(√p) core was formalized by sidestepping this.",
       "leverage": "medium",
       "effort": "weeks-months",
-      "blocks_corpus_claims": 29
+      "blocks_corpus_claims": 35
     },
     "lattice_reduction": {
       "status": "missing_from_mathlib",
       "mathlib_gap": "No LLL/BKZ/CVP. Blocks HNP / biased-nonce ECDSA attack formalizations.",
       "leverage": "medium",
       "effort": "months",
-      "blocks_corpus_claims": 21
+      "blocks_corpus_claims": 25
     },
     "semaev_polynomials": {
       "status": "partial_in_mathlib",
       "mathlib_gap": "MvPolynomial exists but not the elliptic summation polynomials Sₙ (index calculus over extension fields).",
       "leverage": "medium",
       "effort": "weeks-months",
-      "blocks_corpus_claims": 38
+      "blocks_corpus_claims": 51
     },
     "quantum_cost": {
       "status": "out_of_scope",
       "mathlib_gap": "No quantum circuit cost model (Shor-style resource estimates). Out of scope for Mathlib.",
       "leverage": "low (out of scope)",
       "effort": "n/a",
-      "blocks_corpus_claims": 26
+      "blocks_corpus_claims": 29
     },
     "curve_depth": {
       "status": "partial_in_mathlib",
       "mathlib_gap": "Mathlib has EllipticCurve + group law, but not the deeper ECDLP constructions (higher division polynomials, torsion structure E[n]≅(ℤ/n)², isogeny depth). Partly tractable — the active Track-B DAG.",
       "leverage": "medium",
       "effort": "weeks each rung",
-      "blocks_corpus_claims": 20
+      "blocks_corpus_claims": 33
     }
   },
   "claims": [
     {
       "id": "shoup-generic-model-001",
       "formal_status": "conditional",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -79,22 +84,25 @@
       "formal_status": "conditional",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
     {
       "id": "fhjrv-nonstandard-problems-007",
       "formal_status": "conditional",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "cheon-oracle-generation-elgamal-007",
       "formal_status": "conditional",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -103,6 +111,7 @@
       "formal_status": "conditional",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -111,6 +120,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -119,22 +129,25 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "lauter-stange-no-residue-bias-evidence-016",
       "formal_status": "conditional",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "lauter-stange-parity-oracle-reduction-012",
       "formal_status": "conditional",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -143,14 +156,16 @@
       "formal_status": "conditional",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
     {
       "id": "glv-scalar-bias-warning-023",
       "formal_status": "conditional",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -159,22 +174,25 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
     {
       "id": "bh-biased-002",
       "formal_status": "conditional",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "bh-biased-003",
       "formal_status": "conditional",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -183,14 +201,16 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
     {
       "id": "bh-biased-005",
       "formal_status": "conditional",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -199,22 +219,25 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "bh-biased-007",
       "formal_status": "conditional",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "bh-biased-008",
       "formal_status": "conditional",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -223,6 +246,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -231,14 +255,16 @@
       "formal_status": "conditional",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
     {
       "id": "bh-biased-011",
       "formal_status": "conditional",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -247,6 +273,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -255,6 +282,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -263,6 +291,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -271,6 +300,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -279,14 +309,16 @@
       "formal_status": "conditional",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
     {
       "id": "bv-hnp-001",
       "formal_status": "conditional",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -295,6 +327,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -303,14 +336,16 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
     {
       "id": "bv-hnp-004",
       "formal_status": "conditional",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "lattice_reduction",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -319,6 +354,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -327,6 +363,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -335,6 +372,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -343,6 +381,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -351,6 +390,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -359,6 +399,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -367,6 +408,7 @@
       "formal_status": "conditional",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -375,6 +417,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -383,6 +426,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -391,6 +435,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -399,6 +444,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -407,6 +453,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -415,6 +462,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -423,14 +471,16 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
     {
       "id": "hgs-lattice-009",
       "formal_status": "conditional",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -439,6 +489,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -447,6 +498,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -455,6 +507,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -463,6 +516,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -471,6 +525,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -479,6 +534,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -487,6 +543,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -495,6 +552,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -503,6 +561,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -511,6 +570,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -519,6 +579,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -527,6 +588,7 @@
       "formal_status": "conditional",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -535,6 +597,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -543,6 +606,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -551,6 +615,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -559,6 +624,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -567,6 +633,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -575,6 +642,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -583,6 +651,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -591,6 +660,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -599,6 +669,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -607,6 +678,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -615,6 +687,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -623,6 +696,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -631,6 +705,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -639,14 +714,16 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "minerva-012",
       "formal_status": "conditional",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -655,14 +732,16 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
     {
       "id": "minerva-015",
       "formal_status": "conditional",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -671,6 +750,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -679,6 +759,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -687,6 +768,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -695,6 +777,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -703,6 +786,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -711,6 +795,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -719,6 +804,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -727,6 +813,7 @@
       "formal_status": "conditional",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -735,6 +822,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -743,6 +831,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -751,6 +840,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -759,6 +849,7 @@
       "formal_status": "conditional",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -767,6 +858,7 @@
       "formal_status": "conditional",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -775,6 +867,7 @@
       "formal_status": "conditional",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -783,6 +876,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -791,6 +885,7 @@
       "formal_status": "formalizable",
       "status": "verified",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": true
     },
@@ -799,6 +894,7 @@
       "formal_status": "formalizable",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -807,6 +903,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -815,6 +912,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -823,6 +921,7 @@
       "formal_status": "formalizable",
       "status": "verified",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": true
     },
@@ -831,6 +930,7 @@
       "formal_status": "formalizable",
       "status": "verified",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": true
     },
@@ -839,6 +939,7 @@
       "formal_status": "formalizable",
       "status": "verified",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": true
     },
@@ -847,6 +948,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -855,6 +957,7 @@
       "formal_status": "formalizable",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -863,6 +966,7 @@
       "formal_status": "formalizable",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -871,14 +975,16 @@
       "formal_status": "formalizable",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "vow-shared-linear-speedup-003",
       "formal_status": "formalizable",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -887,6 +993,7 @@
       "formal_status": "formalizable",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -895,6 +1002,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -903,22 +1011,25 @@
       "formal_status": "formalizable",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
     {
       "id": "gg2014-relation-lower-bound-008",
       "formal_status": "formalizable",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "cheon-multidivisor-crt-004",
       "formal_status": "formalizable",
-      "status": "unassigned",
+      "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -927,6 +1038,7 @@
       "formal_status": "formalizable",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -935,6 +1047,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -943,14 +1056,16 @@
       "formal_status": "formalizable",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "ghs-index-complexity-008",
       "formal_status": "formalizable",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -959,6 +1074,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -967,22 +1083,25 @@
       "formal_status": "formalizable",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "mov-generic-extension-degree-obstruction-003",
       "formal_status": "formalizable",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "weil_pairing",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "mov-group-isomorphism-002",
       "formal_status": "formalizable",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -991,6 +1110,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -999,6 +1119,7 @@
       "formal_status": "formalizable",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -1007,6 +1128,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1015,6 +1137,7 @@
       "formal_status": "formalizable",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -1023,14 +1146,16 @@
       "formal_status": "formalizable",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "satoh-homomorphism-dichotomy-002",
       "formal_status": "formalizable",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1039,22 +1164,25 @@
       "formal_status": "formalizable",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "satoh-nonzero-lift-construction-006",
       "formal_status": "formalizable",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "satoh-zero-map-torsion-equivalence-003",
       "formal_status": "formalizable",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1063,6 +1191,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1071,6 +1200,7 @@
       "formal_status": "formalizable",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1079,14 +1209,16 @@
       "formal_status": "formalizable",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "smart-trace-one-scope-001",
       "formal_status": "formalizable",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1095,6 +1227,7 @@
       "formal_status": "formalizable",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1103,6 +1236,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1111,14 +1245,16 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
     {
       "id": "lauter-stange-generic-eds-dlog-baselines-017",
       "formal_status": "formalizable",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1127,6 +1263,7 @@
       "formal_status": "formalizable",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1135,6 +1272,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1143,6 +1281,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1151,6 +1290,7 @@
       "formal_status": "formalizable",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1159,6 +1299,7 @@
       "formal_status": "formalizable",
       "status": "blocked",
       "blocking_foundation": "weil_pairing",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
       "verified": false
     },
@@ -1167,6 +1308,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1175,6 +1317,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1183,6 +1326,7 @@
       "formal_status": "formalizable",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1191,6 +1335,7 @@
       "formal_status": "formalizable",
       "status": "verified",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": true
     },
@@ -1199,6 +1344,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1207,22 +1353,25 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
     {
       "id": "amadori-prime-field-variant-001",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "amadori-relative-improvement-005",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1231,6 +1380,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1239,6 +1389,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1247,14 +1398,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "diem2011-factor-base-004",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1263,14 +1416,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "diem2011-relation-loop-007",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1279,14 +1434,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "diem2011-success-probability-006",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1295,6 +1452,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -1303,6 +1461,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -1311,6 +1470,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1319,14 +1479,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "diem2013-success-probability-006",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1335,22 +1497,25 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "gaudry-abelian-index-calculus-001",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "gaudry-basic-relation-probability-004",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1359,6 +1524,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1367,6 +1533,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1375,6 +1542,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1383,6 +1551,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -1391,14 +1560,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "semaev-prime-field-relation-003",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1407,6 +1578,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1415,6 +1587,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1423,6 +1596,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1431,6 +1605,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -1439,6 +1614,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -1447,6 +1623,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -1455,6 +1632,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1463,14 +1641,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
     {
       "id": "fghr-symmetry-speedup-001",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1479,6 +1659,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1487,14 +1668,16 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
     {
       "id": "fhjrv-full2torsion-004",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1503,6 +1686,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1511,6 +1695,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1519,6 +1704,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1527,14 +1713,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "fppr2012-pdp-reduction-001",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "weil_pairing",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1543,6 +1731,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -1551,14 +1740,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "gg2014-pollard-comparison-007",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1567,6 +1758,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1575,6 +1767,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1583,6 +1776,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1591,6 +1785,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1599,6 +1794,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1607,14 +1803,16 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
     {
       "id": "ky2015-semaev2015-countertest-006",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1623,6 +1821,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1631,6 +1830,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1639,6 +1839,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1647,6 +1848,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1655,6 +1857,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1663,6 +1866,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1671,14 +1875,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
     {
       "id": "mm2017-random-factor-base-001",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1687,6 +1893,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1695,14 +1902,16 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
     {
       "id": "pq2012-ffd-bound-002",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "weil_pairing",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1711,14 +1920,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
     {
       "id": "semaev2015-cubic-system-002",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "weil_pairing",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1727,14 +1938,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
     {
       "id": "semaev2015-k-greater-limit-008",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1743,6 +1956,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1751,6 +1965,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1759,6 +1974,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1767,6 +1983,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1775,14 +1992,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
     {
       "id": "st2013-replication-001",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1791,6 +2010,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1799,6 +2019,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1807,14 +2028,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
     {
       "id": "f4-compression-memory-011",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1823,6 +2046,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1831,6 +2055,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1839,6 +2064,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -1847,6 +2073,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1855,14 +2082,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
     {
       "id": "f4-open-optimization-014",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1871,6 +2100,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1879,6 +2109,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1887,14 +2118,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "f5-correctness-termination-009",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1903,6 +2136,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1911,6 +2145,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1919,6 +2154,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1927,14 +2163,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "f5-regular-sequence-zero-002",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1943,6 +2181,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1951,6 +2190,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1959,6 +2199,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -1967,14 +2208,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "semaev_polynomials",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
     {
       "id": "galbraith-summation-solving-bottleneck-001",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1983,14 +2226,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "ghs-hyperelliptic-index-two-phase-007",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -1999,6 +2244,7 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -2007,6 +2253,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2015,6 +2262,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2023,14 +2271,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
     {
       "id": "cheng-huang-partial-lifting-program-001",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2039,6 +2289,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2047,14 +2298,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "hkt-asymptotic-lower-range-open-012",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2063,6 +2316,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2071,14 +2325,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "hkt-no-direct-secp-attack-013",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2087,14 +2343,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "hkt-xedni-fixed-r-fails-asymptotically-009",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2103,14 +2361,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "jacobson-xedni-empirical-implementation-009",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2119,6 +2379,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2127,6 +2388,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -2135,6 +2397,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2143,6 +2406,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2151,14 +2415,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "jacobson-xedni-scope-not-all-lifting-013",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2167,14 +2433,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "lauter-stange-eds-problem-definitions-001",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2183,6 +2451,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -2191,14 +2460,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "lauter-stange-hardness-duality-008",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2207,6 +2478,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -2215,6 +2487,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2223,22 +2496,25 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
     {
       "id": "lauter-stange-residue-product-parity-013",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "lauter-stange-three-term-x-coordinate-009",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2247,14 +2523,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "stange-curve-net-poset-isomorphism-013",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2263,6 +2541,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2271,6 +2550,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "lattice_reduction",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -2279,6 +2559,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2287,6 +2568,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2295,6 +2577,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2303,6 +2586,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2311,22 +2595,25 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
     {
       "id": "stange-rankone-eds-generalization-002",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "stange-scale-equivalence-normalization-010",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2335,6 +2622,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2343,14 +2631,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
     {
       "id": "glv-efficiency-versus-attack-boundary-024",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2359,6 +2649,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "weil_pairing",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
       "verified": false
     },
@@ -2367,6 +2658,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -2375,6 +2667,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2383,14 +2676,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "glv-point-multiplication-scope-001",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2399,6 +2694,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "weil_pairing",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
       "verified": false
     },
@@ -2407,6 +2703,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2415,14 +2712,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "weil_pairing",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
       "verified": false
     },
     {
       "id": "glv-two-dimensional-decomposition-010",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2431,6 +2730,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2439,6 +2739,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2447,6 +2748,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2455,6 +2757,7 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -2463,6 +2766,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2471,6 +2775,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2479,6 +2784,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2487,14 +2793,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
     {
       "id": "luo-open-implementation-boundary-013",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2503,6 +2811,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2511,6 +2820,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2519,6 +2829,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2527,6 +2838,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "cost_model",
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -2535,6 +2847,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2543,6 +2856,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2551,6 +2865,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2559,6 +2874,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2567,6 +2883,7 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -2575,6 +2892,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -2583,6 +2901,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2591,6 +2910,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -2599,14 +2919,16 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
     {
       "id": "pz-simplified-addition-rule-009",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2615,6 +2937,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2623,6 +2946,7 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -2631,6 +2955,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2639,6 +2964,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2647,14 +2973,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
     {
       "id": "rns-montgomery-multiplication-benefit-004",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2663,6 +2991,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2671,6 +3000,7 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -2679,14 +3009,16 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
     {
       "id": "rns-reversible-arithmetic-suite-003",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
-      "blocking_foundation": null,
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2695,6 +3027,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2703,6 +3036,7 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -2711,6 +3045,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2719,14 +3054,16 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
     {
       "id": "sch-disclosed-reproducible-design-003",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2735,6 +3072,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2743,14 +3081,16 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
     {
       "id": "sch-inplace-multiplication-bottleneck-013",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "informal",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2759,6 +3099,7 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -2767,6 +3108,7 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -2775,6 +3117,7 @@
       "formal_status": "formalizable_hard",
       "status": "partial",
       "blocking_foundation": "curve_depth",
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -2783,6 +3126,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2791,6 +3135,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2799,6 +3144,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -2807,6 +3153,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2815,6 +3162,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -2823,6 +3171,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2831,6 +3180,7 @@
       "formal_status": "formalizable_hard",
       "status": "unassigned",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2839,6 +3189,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2847,6 +3198,7 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -2855,14 +3207,16 @@
       "formal_status": "formalizable_hard",
       "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
     {
       "id": "shor-polynomial-recovery-crt-009",
       "formal_status": "formalizable_hard",
-      "status": "unassigned",
+      "status": "tractable",
       "blocking_foundation": null,
+      "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2871,6 +3225,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2879,6 +3234,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2887,6 +3243,7 @@
       "formal_status": "formalizable_hard",
       "status": "blocked",
       "blocking_foundation": "quantum_cost",
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -2895,6 +3252,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2903,6 +3261,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -2911,6 +3270,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2919,6 +3279,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -2927,6 +3288,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2935,6 +3297,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2943,6 +3306,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2951,6 +3315,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -2959,6 +3324,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2967,6 +3333,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2975,6 +3342,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -2983,6 +3351,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -2991,6 +3360,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -2999,6 +3369,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3007,6 +3378,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3015,6 +3387,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3023,6 +3396,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3031,6 +3405,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3039,6 +3414,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3047,6 +3423,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3055,6 +3432,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3063,6 +3441,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3071,6 +3450,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3079,6 +3459,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3087,6 +3468,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3095,6 +3477,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3103,6 +3486,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3111,6 +3495,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3119,6 +3504,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3127,6 +3513,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3135,6 +3522,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3143,6 +3531,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3151,6 +3540,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3159,6 +3549,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3167,6 +3558,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3175,6 +3567,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3183,6 +3576,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3191,6 +3585,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3199,6 +3594,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3207,6 +3603,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3215,6 +3612,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3223,6 +3621,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3231,6 +3630,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -3239,6 +3639,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3247,6 +3648,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -3255,6 +3657,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3263,6 +3666,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3271,6 +3675,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3279,6 +3684,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3287,6 +3693,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3295,6 +3702,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3303,6 +3711,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3311,6 +3720,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3319,6 +3729,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3327,6 +3738,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3335,6 +3747,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3343,6 +3756,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3351,6 +3765,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3359,6 +3774,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3367,6 +3783,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3375,6 +3792,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3383,6 +3801,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3391,6 +3810,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3399,6 +3819,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3407,6 +3828,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3415,6 +3837,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3423,6 +3846,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3431,6 +3855,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3439,6 +3864,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3447,6 +3873,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
       "verified": false
     },
@@ -3455,6 +3882,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3463,6 +3891,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3471,6 +3900,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3479,6 +3909,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3487,6 +3918,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3495,6 +3927,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3503,6 +3936,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3511,6 +3945,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -3519,6 +3954,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3527,6 +3963,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3535,6 +3972,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3543,6 +3981,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3551,6 +3990,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3559,6 +3999,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3567,6 +4008,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3575,6 +4017,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3583,6 +4026,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3591,6 +4035,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3599,6 +4044,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3607,6 +4053,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3615,6 +4062,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -3623,6 +4071,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3631,6 +4080,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3639,6 +4089,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -3647,6 +4098,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -3655,6 +4107,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: quantum circuit cost model)",
       "verified": false
     },
@@ -3663,6 +4116,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3671,6 +4125,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -3679,6 +4134,7 @@
       "formal_status": "informal_only",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3687,6 +4143,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3695,6 +4152,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3703,6 +4161,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3711,6 +4170,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3719,6 +4179,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3727,6 +4188,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3735,6 +4197,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3743,6 +4206,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3751,6 +4215,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3759,6 +4224,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3767,6 +4233,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3775,6 +4242,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3783,6 +4251,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3791,6 +4260,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3799,6 +4269,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.RingTheory.MvPolynomial (partial)",
       "verified": false
     },
@@ -3807,6 +4278,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3815,6 +4287,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3823,6 +4296,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(complexity: needs explicit cost model)",
       "verified": false
     },
@@ -3831,6 +4305,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3839,6 +4314,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3847,6 +4323,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3855,6 +4332,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3863,6 +4341,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3871,6 +4350,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3879,6 +4359,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -3887,6 +4368,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3895,6 +4377,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3903,6 +4386,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3911,6 +4395,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3919,6 +4404,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(unassigned)",
       "verified": false
     },
@@ -3927,6 +4413,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false
     },
@@ -3935,6 +4422,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false
     },
@@ -3943,6 +4431,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     },
@@ -3951,6 +4440,7 @@
       "formal_status": "scope_meta",
       "status": "informal",
       "blocking_foundation": null,
+      "confidence": "corpus",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false
     }
