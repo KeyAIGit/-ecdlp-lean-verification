@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**116 theorems** · **6 barriers** · **94 edges**
+**117 theorems** · **6 barriers** · **99 edges**
 
-By proof method: Mathlib (84), native_decide (18), Mathlib + native_decide (14)
+By proof method: Mathlib (85), native_decide (18), Mathlib + native_decide (14)
 
-By research area: curve-torsion (63), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
+By research area: curve-torsion (64), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (63)
+### curve-torsion (64)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -77,6 +77,7 @@ By research area: curve-torsion (63), protocol-soundness (21), generic-hardness 
 | `glvPoint_add` | GLV map is an additive endomorphism (`glvPoint(P+Q)=glvPoint P+glvPoint Q`, all branches; homomorphism half only — the `glvPoint=[λ]` eigenvalue property is not proved) | Mathlib | `GlvHom.lean` |
 | `glvHom` | GLV endomorphism bundled as `AddMonoidHom` (`glvHom : Point →+ Point`; *supporting* — repackages `glvPoint_add`, no new content) | Mathlib | `GlvMonoidHom.lean` |
 | `secp256k1_glv_cube_relation` | GLV endomorphism is a primitive cube root of unity (`φ+φ+1=0`: `glvPoint(P)+glvPoint(P)+P=0` for all `P`; the CM / `End(E)` structure behind GLV — reached with no `λ`, no point-counting) | Mathlib | `GlvCubeRelation.lean` |
+| `secp256k1_glv_preserves_torsion` | GLV endomorphism preserves `n`-torsion (`glvPoint` maps `E[n]→E[n]`; restricts to an endomorphism of the torsion, still `φ+φ+1=0` there — the scene where `[λ]` lives) | Mathlib | `GlvTorsion.lean` |
 
 ### protocol-soundness (21)
 

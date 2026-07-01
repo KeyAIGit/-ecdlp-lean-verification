@@ -124,9 +124,10 @@ git history and the GitHub Actions tab.
 | **GLV map is an additive endomorphism** (`glvPoint(P+Q)=glvPoint P+glvPoint Q`, all branches; homomorphism half only — the `glvPoint=[λ]` eigenvalue property is **not** proved) | `Ecdlp.Curve.glvPoint_add` | Ecdlp/Proved/GlvHom.lean | Mathlib | proved |
 | GLV endomorphism bundled as `AddMonoidHom` (`glvHom : Point →+ Point`; *supporting* — repackages `glvPoint_add`, no new content) | `Ecdlp.Curve.glvHom` | Ecdlp/Proved/GlvMonoidHom.lean | Mathlib | proved |
 | **GLV endomorphism is a primitive cube root of unity** (`φ²+φ+1=0`: `glvPoint²(P)+glvPoint(P)+P=0` for all `P`; the CM / `End(E)` structure behind GLV — reached with **no `λ`, no point-counting**) | `Ecdlp.Curve.secp256k1_glv_cube_relation` | Ecdlp/Proved/GlvCubeRelation.lean | Mathlib | proved |
+| **GLV endomorphism preserves `n`-torsion** (`glvPoint` maps `E[n]→E[n]`; restricts to an endomorphism of the torsion, still `φ²+φ+1=0` there — the scene where `[λ]` lives) | `Ecdlp.Curve.secp256k1_glv_preserves_torsion` | Ecdlp/Proved/GlvTorsion.lean | Mathlib | proved |
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**116 ledger rows / ~106 distinct kernel-verified results** (10 rows are alternate-form
+**117 ledger rows / ~107 distinct kernel-verified results** (10 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue — see the tagged rows above). **0 `sorry`, 0 `admit`, 0 open obligations.**
 
