@@ -191,7 +191,9 @@ h2{{font-size:15px;margin:26px 0 10px;color:#cbd5e1;border-bottom:1px solid var(
 </div>
 </div></body></html>"""
     OUT.write_text(html, encoding="utf-8")
-    print(f"wrote {OUT.relative_to(ROOT)} ({len(html)} bytes) — {vcount} results, "
+    # also write index.html so GitHub Pages (source: main /root) serves it at the site root.
+    (ROOT / "index.html").write_text(html, encoding="utf-8")
+    print(f"wrote {OUT.relative_to(ROOT)} + index.html ({len(html)} bytes) — {vcount} results, "
           f"frontier {completeness}%")
     return 0
 
