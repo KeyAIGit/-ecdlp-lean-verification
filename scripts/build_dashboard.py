@@ -353,8 +353,9 @@ a{{color:var(--blue);text-decoration:none}}
 .topnav .in{{max-width:1080px;margin:0 auto;padding:0 24px;height:60px;display:flex;
   align-items:center;justify-content:space-between;gap:20px}}
 .brand{{display:flex;align-items:center;gap:9px;flex-shrink:0}}
-.brand img{{height:26px;width:auto;display:block}}
-.brand span{{font-family:"Baloo 2";font-weight:700;color:#fff;font-size:15px;white-space:nowrap}}
+.brand img{{height:22px;width:auto;display:block}}
+.brand span{{font-family:"Baloo 2";font-weight:700;color:rgba(255,255,255,.72);
+  font-size:14px;white-space:nowrap;letter-spacing:.01em}}
 .navlinks{{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}}
 .navlinks::-webkit-scrollbar{{display:none}}
 .navlinks a{{color:#b9cbe8;font-size:13px;font-weight:700;padding:8px 12px;border-radius:7px;
@@ -515,8 +516,8 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 <a class="skip" href="#main">Skip to content</a>
 
 <nav class="topnav"><div class="in">
-  <a class="brand" href="#top"><img src="assets/logo-icon.png" alt="" width="26" height="26">
-    <span>keyAI · ECDLP env</span></a>
+  <a class="brand" href="#top"><img src="assets/logo-wordmark.png" alt="keyAI" height="22">
+    <span>· ECDLP env</span></a>
   <div class="navlinks" id="scrollspy">
     <a href="#metrics">Overview</a>
     <a href="#navigate">Docs</a>
