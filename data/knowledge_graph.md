@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**120 theorems** · **6 barriers** · **107 edges**
+**123 theorems** · **6 barriers** · **110 edges**
 
-By proof method: Mathlib (88), native_decide (18), Mathlib + native_decide (14)
+By proof method: Mathlib (90), native_decide (18), Mathlib + native_decide (15)
 
-By research area: curve-torsion (67), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
+By research area: curve-torsion (70), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (67)
+### curve-torsion (70)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -81,6 +81,9 @@ By research area: curve-torsion (67), protocol-soundness (21), generic-hardness 
 | `glvHom_minpoly` | GLV endomorphism satisfies its minimal polynomial in `End(E)` (operator form: `glvHom∘glvHom+glvHom+id=0` as `AddMonoidHom`s — `φ+φ+1=0` in the endomorphism ring, composable with Mathlib's hom API; *alternate/operator form* of `secp256k1_glv_cube_relation`) | Mathlib | `GlvMinPoly.lean` |
 | `glvPoint_cube_eq_id` | GLV endomorphism has order dividing 3 (`glvPoint³=id`: iterating `(x,y)↦(βx,y)` scales `x` by `β³=1`; the CM automorphism is order-3) | Mathlib | `GlvAutomorphism.lean` |
 | `glvPoint_bijective` | GLV endomorphism is an automorphism (`glvPoint` is bijective — `glvPoint` is its two-sided inverse, from `glvPoint³=id`) | Mathlib | `GlvAutomorphism.lean` |
+| `secp256k1_preΨ₅_natDegree` | secp256k1 5-division polynomial has degree 12 (`deg(ψ₅=preΨ' 5)=(5−1)/2=12`; instantiates Mathlib's general `natDegree_preΨ'` at `n=5`) | Mathlib + native_decide | `FiveTorsion.lean` |
+| `secp256k1_preΨ₅_ne_zero` | 5-division polynomial is nonzero (deg 12 ⇒ `ψ₅≠0`; 5-torsion `x`-coords are a proper finite set) | Mathlib | `FiveTorsion.lean` |
+| `secp256k1_five_torsion_x_card_le` | ≤ 12 five-torsion `x`-coordinates (`#E[5]≤25`; roots of the odd division polynomial `ψ₅` are the order-5 `x`-coords, consistent with `E[5]≅(ℤ/5)`) | Mathlib | `FiveTorsion.lean` |
 
 ### protocol-soundness (21)
 

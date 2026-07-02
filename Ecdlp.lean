@@ -42,3 +42,4 @@ import Ecdlp.Proved.GlvCubeRelation
 import Ecdlp.Proved.GlvTorsion
 import Ecdlp.Proved.GlvMinPoly
 import Ecdlp.Proved.GlvAutomorphism
+import Ecdlp.Proved.FiveTorsion

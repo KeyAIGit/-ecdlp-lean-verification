@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 120,
+    "theorems": 123,
     "barriers": 6,
-    "edges": 107,
+    "edges": 110,
     "by_method": {
-      "Mathlib": 88,
+      "Mathlib": 90,
       "native_decide": 18,
-      "Mathlib + native_decide": 14
+      "Mathlib + native_decide": 15
     },
     "by_area": {
-      "curve-torsion": 67,
+      "curve-torsion": 70,
       "protocol-soundness": 21,
       "generic-hardness": 17,
       "other": 5,
@@ -1583,6 +1583,45 @@
       "area": "curve-torsion",
       "dependency_depth": 3,
       "gated": true
+    },
+    {
+      "id": "thm-120",
+      "name": "Ecdlp.Curve.secp256k1_preΨ₅_natDegree",
+      "short_name": "secp256k1_preΨ₅_natDegree",
+      "module": "Ecdlp.Proved.FiveTorsion",
+      "file": "Ecdlp/Proved/FiveTorsion.lean",
+      "claim": "secp256k1 5-division polynomial has degree 12 (`deg(ψ₅=preΨ' 5)=(5−1)/2=12`; instantiates Mathlib's general `natDegree_preΨ'` at `n=5`)",
+      "method": "Mathlib + native_decide",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-121",
+      "name": "Ecdlp.Curve.secp256k1_preΨ₅_ne_zero",
+      "short_name": "secp256k1_preΨ₅_ne_zero",
+      "module": "Ecdlp.Proved.FiveTorsion",
+      "file": "Ecdlp/Proved/FiveTorsion.lean",
+      "claim": "5-division polynomial is nonzero (deg 12 ⇒ `ψ₅≠0`; 5-torsion `x`-coords are a proper finite set)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-122",
+      "name": "Ecdlp.Curve.secp256k1_five_torsion_x_card_le",
+      "short_name": "secp256k1_five_torsion_x_card_le",
+      "module": "Ecdlp.Proved.FiveTorsion",
+      "file": "Ecdlp/Proved/FiveTorsion.lean",
+      "claim": "≤ 12 five-torsion `x`-coordinates (`#E[5]≤25`; roots of the odd division polynomial `ψ₅` are the order-5 `x`-coords, consistent with `E[5]≅(ℤ/5)`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1728,6 +1767,16 @@
     {
       "from": "Ecdlp.Proved.DivisionPolynomialDegree",
       "to": "Ecdlp.Proved.Secp256k1PrimeP",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
       "type": "imports"
     },
     {
@@ -2133,6 +2182,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.GlvAutomorphism",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FiveTorsion",
       "type": "imports"
     },
     {
