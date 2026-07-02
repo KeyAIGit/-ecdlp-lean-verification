@@ -4,11 +4,11 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 123,
+    "theorems": 125,
     "barriers": 6,
-    "edges": 110,
+    "edges": 113,
     "by_method": {
-      "Mathlib": 90,
+      "Mathlib": 92,
       "native_decide": 18,
       "Mathlib + native_decide": 15
     },
@@ -16,8 +16,8 @@
       "curve-torsion": 70,
       "protocol-soundness": 21,
       "generic-hardness": 17,
+      "primality": 5,
       "other": 5,
-      "primality": 3,
       "reduction": 3,
       "attack-resistance": 3,
       "params": 1
@@ -1622,6 +1622,32 @@
       "area": "curve-torsion",
       "dependency_depth": 4,
       "gated": true
+    },
+    {
+      "id": "thm-123",
+      "name": "Ecdlp.Curve.secp256k1_odd_preΨ_natDegree",
+      "short_name": "secp256k1_odd_preΨ_natDegree",
+      "module": "Ecdlp.Proved.OddTorsionBound",
+      "file": "Ecdlp/Proved/OddTorsionBound.lean",
+      "claim": "deg(ψₙ)=(n−1)/2` for all odd `n` coprime to `p` (uniform division-polynomial degree; generalizes the `Ψ₃`/`ψ₅` per-level facts via Mathlib's `natDegree_preΨ'`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-124",
+      "name": "Ecdlp.Curve.secp256k1_odd_torsion_x_card_le",
+      "short_name": "secp256k1_odd_torsion_x_card_le",
+      "module": "Ecdlp.Proved.OddTorsionBound",
+      "file": "Ecdlp/Proved/OddTorsionBound.lean",
+      "claim": "≤ `(n−1)/2` odd-`n`-torsion `x`-coordinates (uniform `#E[n]≤n` for every odd `n` coprime to `p`; the general statement behind the 3-/5-torsion nodes)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 4,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1925,6 +1951,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.OddTorsionBound",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.OddTorsionBound",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.FourDivisionPolynomial",
       "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
@@ -2187,6 +2223,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.FiveTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.OddTorsionBound",
       "type": "imports"
     },
     {

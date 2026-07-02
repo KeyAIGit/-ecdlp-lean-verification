@@ -131,9 +131,11 @@ git history and the GitHub Actions tab.
 | **secp256k1 5-division polynomial has degree 12** (`deg(ψ₅=preΨ' 5)=(5²−1)/2=12`; instantiates Mathlib's general `natDegree_preΨ'` at `n=5`) | `Ecdlp.Curve.secp256k1_preΨ₅_natDegree` | Ecdlp/Proved/FiveTorsion.lean | Mathlib + native_decide | proved |
 | **5-division polynomial is nonzero** (deg 12 ⇒ `ψ₅≠0`; 5-torsion `x`-coords are a proper finite set) | `Ecdlp.Curve.secp256k1_preΨ₅_ne_zero` | Ecdlp/Proved/FiveTorsion.lean | Mathlib | proved |
 | **≤ 12 five-torsion `x`-coordinates** (`#E[5]≤25`; roots of the odd division polynomial `ψ₅` are the order-5 `x`-coords, consistent with `E[5]≅(ℤ/5)²`) | `Ecdlp.Curve.secp256k1_five_torsion_x_card_le` | Ecdlp/Proved/FiveTorsion.lean | Mathlib | proved |
+| **`deg(ψₙ)=(n²−1)/2` for all odd `n` coprime to `p`** (uniform division-polynomial degree; generalizes the `Ψ₃`/`ψ₅` per-level facts via Mathlib's `natDegree_preΨ'`) | `Ecdlp.Curve.secp256k1_odd_preΨ_natDegree` | Ecdlp/Proved/OddTorsionBound.lean | Mathlib | proved |
+| **≤ `(n²−1)/2` odd-`n`-torsion `x`-coordinates** (uniform `#E[n]≤n²` for every odd `n` coprime to `p`; the general statement behind the 3-/5-torsion nodes) | `Ecdlp.Curve.secp256k1_odd_torsion_x_card_le` | Ecdlp/Proved/OddTorsionBound.lean | Mathlib | proved |
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**123 ledger rows / ~112 distinct kernel-verified results** (11 rows are alternate-form
+**125 ledger rows / ~114 distinct kernel-verified results** (11 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
 **0 `sorry`, 0 `admit`, 0 open obligations.**

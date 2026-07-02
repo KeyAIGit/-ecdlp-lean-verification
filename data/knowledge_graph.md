@@ -2,11 +2,11 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**123 theorems** · **6 barriers** · **110 edges**
+**125 theorems** · **6 barriers** · **113 edges**
 
-By proof method: Mathlib (90), native_decide (18), Mathlib + native_decide (15)
+By proof method: Mathlib (92), native_decide (18), Mathlib + native_decide (15)
 
-By research area: curve-torsion (70), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
+By research area: curve-torsion (70), protocol-soundness (21), generic-hardness (17), primality (5), other (5), reduction (3), attack-resistance (3), params (1)
 
 ## Verified theorems by area
 
@@ -133,6 +133,16 @@ By research area: curve-torsion (70), protocol-soundness (21), generic-hardness 
 | `eval_zero` | model soundness: identity is the zero form | Mathlib | `GenericGroupBound.lean` |
 | `collision_modEq` | collision equation `a+xb ≡ c+xd (mod n)` (rho/BSGS solve step) | Mathlib | `CollisionEquation.lean` |
 
+### primality (5)
+
+| theorem | claim | method | file |
+|---|---|---|---|
+| `orderOf_eq_card_of_prime` | prime-order ⇒ generator (no small subgroup) | Mathlib | `PrimeOrder.lean` |
+| `secp256k1_p_prime` | secp256k1 field prime `p` is prime (full Pratt certificate) | Mathlib + native_decide | `Secp256k1PrimeP.lean` |
+| `secp256k1_n_prime` | secp256k1 group order `n` is prime (full Pratt certificate) | Mathlib + native_decide | `Secp256k1PrimeN.lean` |
+| `secp256k1_odd_preΨ_natDegree` | deg(ψₙ)=(n−1)/2` for all odd `n` coprime to `p` (uniform division-polynomial degree; generalizes the `Ψ₃`/`ψ₅` per-level facts via Mathlib's `natDegree_preΨ'`) | Mathlib | `OddTorsionBound.lean` |
+| `secp256k1_odd_torsion_x_card_le` | ≤ `(n−1)/2` odd-`n`-torsion `x`-coordinates (uniform `#E[n]≤n` for every odd `n` coprime to `p`; the general statement behind the 3-/5-torsion nodes) | Mathlib | `OddTorsionBound.lean` |
+
 ### other (5)
 
 | theorem | claim | method | file |
@@ -142,14 +152,6 @@ By research area: curve-torsion (70), protocol-soundness (21), generic-hardness 
 | `dlog_unique` | discrete log well-defined mod `n` (`g^x=g^y ⇒ x≡y`) | Mathlib | `CollisionEquation.lean` |
 | `taproot_tweak_verify` | Taproot key-tweak verification (BIP-341 key-path spend, `Q=P+t·G`) | Mathlib | `DlogCompleteness.lean` |
 | `secp256k1_c₆_ne_zero` | secp256k1 `c₆ ≠ 0` (`-6048 ≢ 0 mod p`) | native_decide | `Invariants.lean` |
-
-### primality (3)
-
-| theorem | claim | method | file |
-|---|---|---|---|
-| `orderOf_eq_card_of_prime` | prime-order ⇒ generator (no small subgroup) | Mathlib | `PrimeOrder.lean` |
-| `secp256k1_p_prime` | secp256k1 field prime `p` is prime (full Pratt certificate) | Mathlib + native_decide | `Secp256k1PrimeP.lean` |
-| `secp256k1_n_prime` | secp256k1 group order `n` is prime (full Pratt certificate) | Mathlib + native_decide | `Secp256k1PrimeN.lean` |
 
 ### reduction (3)
 
