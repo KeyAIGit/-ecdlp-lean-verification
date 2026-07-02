@@ -4,20 +4,20 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 117,
+    "theorems": 125,
     "barriers": 6,
-    "edges": 99,
+    "edges": 113,
     "by_method": {
-      "Mathlib": 85,
+      "Mathlib": 92,
       "native_decide": 18,
-      "Mathlib + native_decide": 14
+      "Mathlib + native_decide": 15
     },
     "by_area": {
-      "curve-torsion": 64,
+      "curve-torsion": 70,
       "protocol-soundness": 21,
       "generic-hardness": 17,
+      "primality": 5,
       "other": 5,
-      "primality": 3,
       "reduction": 3,
       "attack-resistance": 3,
       "params": 1
@@ -1544,6 +1544,110 @@
       "area": "curve-torsion",
       "dependency_depth": 6,
       "gated": true
+    },
+    {
+      "id": "thm-117",
+      "name": "Ecdlp.Curve.glvHom_minpoly",
+      "short_name": "glvHom_minpoly",
+      "module": "Ecdlp.Proved.GlvMinPoly",
+      "file": "Ecdlp/Proved/GlvMinPoly.lean",
+      "claim": "GLV endomorphism satisfies its minimal polynomial in `End(E)` (operator form: `glvHom∘glvHom+glvHom+id=0` as `AddMonoidHom`s — `φ+φ+1=0` in the endomorphism ring, composable with Mathlib's hom API; *alternate/operator form* of `secp256k1_glv_cube_relation`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 6,
+      "gated": true
+    },
+    {
+      "id": "thm-118",
+      "name": "Ecdlp.Curve.glvPoint_cube_eq_id",
+      "short_name": "glvPoint_cube_eq_id",
+      "module": "Ecdlp.Proved.GlvAutomorphism",
+      "file": "Ecdlp/Proved/GlvAutomorphism.lean",
+      "claim": "GLV endomorphism has order dividing 3 (`glvPoint³=id`: iterating `(x,y)↦(βx,y)` scales `x` by `β³=1`; the CM automorphism is order-3)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 3,
+      "gated": true
+    },
+    {
+      "id": "thm-119",
+      "name": "Ecdlp.Curve.glvPoint_bijective",
+      "short_name": "glvPoint_bijective",
+      "module": "Ecdlp.Proved.GlvAutomorphism",
+      "file": "Ecdlp/Proved/GlvAutomorphism.lean",
+      "claim": "GLV endomorphism is an automorphism (`glvPoint` is bijective — `glvPoint` is its two-sided inverse, from `glvPoint³=id`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 3,
+      "gated": true
+    },
+    {
+      "id": "thm-120",
+      "name": "Ecdlp.Curve.secp256k1_preΨ₅_natDegree",
+      "short_name": "secp256k1_preΨ₅_natDegree",
+      "module": "Ecdlp.Proved.FiveTorsion",
+      "file": "Ecdlp/Proved/FiveTorsion.lean",
+      "claim": "secp256k1 5-division polynomial has degree 12 (`deg(ψ₅=preΨ' 5)=(5−1)/2=12`; instantiates Mathlib's general `natDegree_preΨ'` at `n=5`)",
+      "method": "Mathlib + native_decide",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-121",
+      "name": "Ecdlp.Curve.secp256k1_preΨ₅_ne_zero",
+      "short_name": "secp256k1_preΨ₅_ne_zero",
+      "module": "Ecdlp.Proved.FiveTorsion",
+      "file": "Ecdlp/Proved/FiveTorsion.lean",
+      "claim": "5-division polynomial is nonzero (deg 12 ⇒ `ψ₅≠0`; 5-torsion `x`-coords are a proper finite set)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-122",
+      "name": "Ecdlp.Curve.secp256k1_five_torsion_x_card_le",
+      "short_name": "secp256k1_five_torsion_x_card_le",
+      "module": "Ecdlp.Proved.FiveTorsion",
+      "file": "Ecdlp/Proved/FiveTorsion.lean",
+      "claim": "≤ 12 five-torsion `x`-coordinates (`#E[5]≤25`; roots of the odd division polynomial `ψ₅` are the order-5 `x`-coords, consistent with `E[5]≅(ℤ/5)`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-123",
+      "name": "Ecdlp.Curve.secp256k1_odd_preΨ_natDegree",
+      "short_name": "secp256k1_odd_preΨ_natDegree",
+      "module": "Ecdlp.Proved.OddTorsionBound",
+      "file": "Ecdlp/Proved/OddTorsionBound.lean",
+      "claim": "deg(ψₙ)=(n−1)/2` for all odd `n` coprime to `p` (uniform division-polynomial degree; generalizes the `Ψ₃`/`ψ₅` per-level facts via Mathlib's `natDegree_preΨ'`)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-124",
+      "name": "Ecdlp.Curve.secp256k1_odd_torsion_x_card_le",
+      "short_name": "secp256k1_odd_torsion_x_card_le",
+      "module": "Ecdlp.Proved.OddTorsionBound",
+      "file": "Ecdlp/Proved/OddTorsionBound.lean",
+      "claim": "≤ `(n−1)/2` odd-`n`-torsion `x`-coordinates (uniform `#E[n]≤n` for every odd `n` coprime to `p`; the general statement behind the 3-/5-torsion nodes)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 4,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1637,6 +1741,26 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.GlvMinPoly",
+      "to": "Ecdlp.Proved.GlvEndomorphism",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvMinPoly",
+      "to": "Ecdlp.Proved.GlvHom",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvMinPoly",
+      "to": "Ecdlp.Proved.GlvMonoidHom",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvMinPoly",
+      "to": "Ecdlp.Proved.GlvCubeRelation",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.GlvHom",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
@@ -1669,6 +1793,16 @@
     {
       "from": "Ecdlp.Proved.DivisionPolynomialDegree",
       "to": "Ecdlp.Proved.Secp256k1PrimeP",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
       "type": "imports"
     },
     {
@@ -1817,6 +1951,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.OddTorsionBound",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.OddTorsionBound",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.FourDivisionPolynomial",
       "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
@@ -1824,6 +1968,16 @@
     {
       "from": "Ecdlp.Proved.FourDivisionPolynomial",
       "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvAutomorphism",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvAutomorphism",
+      "to": "Ecdlp.Proved.GlvEndomorphism",
       "type": "imports"
     },
     {
@@ -2054,6 +2208,26 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.GlvTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.GlvMinPoly",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.GlvAutomorphism",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FiveTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.OddTorsionBound",
       "type": "imports"
     },
     {

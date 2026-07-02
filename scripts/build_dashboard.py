@@ -272,7 +272,7 @@ def main() -> int:
     # is a range/estimate — animating it as a precise count-up would misrepresent it
     # as more exact than it is, so it renders as static text instead.
     metric_cards = [
-        ("Verified results", vcount, None, f"~{vcount-10} distinct", "0 sorry · no custom axioms"),
+        ("Verified results", vcount, None, f"~{vcount-11} distinct", "0 sorry · no custom axioms"),
         ("Frontier mapped", completeness, None, "%", f"{total} corpus claims"),
         ("Foundations blocking", blocked_total, None, "claims", "each = a research-grade gap"),
         ("Honest substantive", None, "~10–15%", "", "rest = verified engineering"),
@@ -347,11 +347,15 @@ a{{color:var(--blue);text-decoration:none}}
 .topnav{{position:sticky;top:0;z-index:100;background:rgba(0,26,63,.82);
   backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);
   border-bottom:1px solid rgba(255,255,255,.08)}}
+.scrollprog{{position:absolute;left:0;bottom:-1px;height:2px;width:0;
+  background:linear-gradient(90deg,var(--blue),#7db0ff);transform-origin:left;
+  transition:width .08s linear;box-shadow:0 0 8px rgba(29,133,255,.6)}}
 .topnav .in{{max-width:1080px;margin:0 auto;padding:0 24px;height:60px;display:flex;
   align-items:center;justify-content:space-between;gap:20px}}
 .brand{{display:flex;align-items:center;gap:9px;flex-shrink:0}}
-.brand img{{height:26px;width:auto;display:block}}
-.brand span{{font-family:"Baloo 2";font-weight:700;color:#fff;font-size:15px;white-space:nowrap}}
+.brand img{{height:22px;width:auto;display:block}}
+.brand span{{font-family:"Baloo 2";font-weight:700;color:rgba(255,255,255,.72);
+  font-size:14px;white-space:nowrap;letter-spacing:.01em}}
 .navlinks{{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}}
 .navlinks::-webkit-scrollbar{{display:none}}
 .navlinks a{{color:#b9cbe8;font-size:13px;font-weight:700;padding:8px 12px;border-radius:7px;
@@ -512,8 +516,8 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 <a class="skip" href="#main">Skip to content</a>
 
 <nav class="topnav"><div class="in">
-  <a class="brand" href="#top"><img src="assets/logo-icon.png" alt="" width="26" height="26">
-    <span>keyAI · ECDLP env</span></a>
+  <a class="brand" href="#top"><img src="assets/logo-wordmark.png" alt="keyAI" height="22">
+    <span>· ECDLP env</span></a>
   <div class="navlinks" id="scrollspy">
     <a href="#metrics">Overview</a>
     <a href="#navigate">Docs</a>
@@ -521,6 +525,7 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
     <a href="#tracks">Tracks</a>
     <a href="#commits">Activity</a>
   </div>
+  <div class="scrollprog" id="scrollprog"></div>
 </div></nav>
 
 <div class="hero" id="top"><div class="wrap">
@@ -533,7 +538,7 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 </div></div>
 
 <main id="main">
-<div class="cardband wrap" id="metrics">{cards_html}</div>
+<div class="cardband wrap" id="metrics"><div class="cards">{cards_html}</div></div>
 
 <section class="wrap" id="navigate">
 <h2><span class="secnum">01</span>Navigate the <span class="accent">environment</span></h2>
@@ -600,6 +605,22 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 <script>
 (function(){{
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll-progress bar on the sticky nav — a quiet wayfinding cue on a long page.
+  var prog = document.getElementById('scrollprog');
+  if (prog) {{
+    var ticking = false;
+    function paint() {{
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      ticking = false;
+    }}
+    window.addEventListener('scroll', function(){{
+      if (!ticking) {{ ticking = true; requestAnimationFrame(paint); }}
+    }}, {{passive:true}});
+    paint();
+  }}
 
   // scroll-reveal — generous rootMargin so a fast flick-scroll can't skip an
   // element past the observer's check unseen, PLUS a hard failsafe timeout: this

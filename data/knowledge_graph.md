@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**117 theorems** · **6 barriers** · **99 edges**
+**125 theorems** · **6 barriers** · **113 edges**
 
-By proof method: Mathlib (85), native_decide (18), Mathlib + native_decide (14)
+By proof method: Mathlib (92), native_decide (18), Mathlib + native_decide (15)
 
-By research area: curve-torsion (64), protocol-soundness (21), generic-hardness (17), other (5), primality (3), reduction (3), attack-resistance (3), params (1)
+By research area: curve-torsion (70), protocol-soundness (21), generic-hardness (17), primality (5), other (5), reduction (3), attack-resistance (3), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (64)
+### curve-torsion (70)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -78,6 +78,12 @@ By research area: curve-torsion (64), protocol-soundness (21), generic-hardness 
 | `glvHom` | GLV endomorphism bundled as `AddMonoidHom` (`glvHom : Point →+ Point`; *supporting* — repackages `glvPoint_add`, no new content) | Mathlib | `GlvMonoidHom.lean` |
 | `secp256k1_glv_cube_relation` | GLV endomorphism is a primitive cube root of unity (`φ+φ+1=0`: `glvPoint(P)+glvPoint(P)+P=0` for all `P`; the CM / `End(E)` structure behind GLV — reached with no `λ`, no point-counting) | Mathlib | `GlvCubeRelation.lean` |
 | `secp256k1_glv_preserves_torsion` | GLV endomorphism preserves `n`-torsion (`glvPoint` maps `E[n]→E[n]`; restricts to an endomorphism of the torsion, still `φ+φ+1=0` there — the scene where `[λ]` lives) | Mathlib | `GlvTorsion.lean` |
+| `glvHom_minpoly` | GLV endomorphism satisfies its minimal polynomial in `End(E)` (operator form: `glvHom∘glvHom+glvHom+id=0` as `AddMonoidHom`s — `φ+φ+1=0` in the endomorphism ring, composable with Mathlib's hom API; *alternate/operator form* of `secp256k1_glv_cube_relation`) | Mathlib | `GlvMinPoly.lean` |
+| `glvPoint_cube_eq_id` | GLV endomorphism has order dividing 3 (`glvPoint³=id`: iterating `(x,y)↦(βx,y)` scales `x` by `β³=1`; the CM automorphism is order-3) | Mathlib | `GlvAutomorphism.lean` |
+| `glvPoint_bijective` | GLV endomorphism is an automorphism (`glvPoint` is bijective — `glvPoint` is its two-sided inverse, from `glvPoint³=id`) | Mathlib | `GlvAutomorphism.lean` |
+| `secp256k1_preΨ₅_natDegree` | secp256k1 5-division polynomial has degree 12 (`deg(ψ₅=preΨ' 5)=(5−1)/2=12`; instantiates Mathlib's general `natDegree_preΨ'` at `n=5`) | Mathlib + native_decide | `FiveTorsion.lean` |
+| `secp256k1_preΨ₅_ne_zero` | 5-division polynomial is nonzero (deg 12 ⇒ `ψ₅≠0`; 5-torsion `x`-coords are a proper finite set) | Mathlib | `FiveTorsion.lean` |
+| `secp256k1_five_torsion_x_card_le` | ≤ 12 five-torsion `x`-coordinates (`#E[5]≤25`; roots of the odd division polynomial `ψ₅` are the order-5 `x`-coords, consistent with `E[5]≅(ℤ/5)`) | Mathlib | `FiveTorsion.lean` |
 
 ### protocol-soundness (21)
 
@@ -127,6 +133,16 @@ By research area: curve-torsion (64), protocol-soundness (21), generic-hardness 
 | `eval_zero` | model soundness: identity is the zero form | Mathlib | `GenericGroupBound.lean` |
 | `collision_modEq` | collision equation `a+xb ≡ c+xd (mod n)` (rho/BSGS solve step) | Mathlib | `CollisionEquation.lean` |
 
+### primality (5)
+
+| theorem | claim | method | file |
+|---|---|---|---|
+| `orderOf_eq_card_of_prime` | prime-order ⇒ generator (no small subgroup) | Mathlib | `PrimeOrder.lean` |
+| `secp256k1_p_prime` | secp256k1 field prime `p` is prime (full Pratt certificate) | Mathlib + native_decide | `Secp256k1PrimeP.lean` |
+| `secp256k1_n_prime` | secp256k1 group order `n` is prime (full Pratt certificate) | Mathlib + native_decide | `Secp256k1PrimeN.lean` |
+| `secp256k1_odd_preΨ_natDegree` | deg(ψₙ)=(n−1)/2` for all odd `n` coprime to `p` (uniform division-polynomial degree; generalizes the `Ψ₃`/`ψ₅` per-level facts via Mathlib's `natDegree_preΨ'`) | Mathlib | `OddTorsionBound.lean` |
+| `secp256k1_odd_torsion_x_card_le` | ≤ `(n−1)/2` odd-`n`-torsion `x`-coordinates (uniform `#E[n]≤n` for every odd `n` coprime to `p`; the general statement behind the 3-/5-torsion nodes) | Mathlib | `OddTorsionBound.lean` |
+
 ### other (5)
 
 | theorem | claim | method | file |
@@ -136,14 +152,6 @@ By research area: curve-torsion (64), protocol-soundness (21), generic-hardness 
 | `dlog_unique` | discrete log well-defined mod `n` (`g^x=g^y ⇒ x≡y`) | Mathlib | `CollisionEquation.lean` |
 | `taproot_tweak_verify` | Taproot key-tweak verification (BIP-341 key-path spend, `Q=P+t·G`) | Mathlib | `DlogCompleteness.lean` |
 | `secp256k1_c₆_ne_zero` | secp256k1 `c₆ ≠ 0` (`-6048 ≢ 0 mod p`) | native_decide | `Invariants.lean` |
-
-### primality (3)
-
-| theorem | claim | method | file |
-|---|---|---|---|
-| `orderOf_eq_card_of_prime` | prime-order ⇒ generator (no small subgroup) | Mathlib | `PrimeOrder.lean` |
-| `secp256k1_p_prime` | secp256k1 field prime `p` is prime (full Pratt certificate) | Mathlib + native_decide | `Secp256k1PrimeP.lean` |
-| `secp256k1_n_prime` | secp256k1 group order `n` is prime (full Pratt certificate) | Mathlib + native_decide | `Secp256k1PrimeN.lean` |
 
 ### reduction (3)
 

@@ -125,11 +125,20 @@ git history and the GitHub Actions tab.
 | GLV endomorphism bundled as `AddMonoidHom` (`glvHom : Point →+ Point`; *supporting* — repackages `glvPoint_add`, no new content) | `Ecdlp.Curve.glvHom` | Ecdlp/Proved/GlvMonoidHom.lean | Mathlib | proved |
 | **GLV endomorphism is a primitive cube root of unity** (`φ²+φ+1=0`: `glvPoint²(P)+glvPoint(P)+P=0` for all `P`; the CM / `End(E)` structure behind GLV — reached with **no `λ`, no point-counting**) | `Ecdlp.Curve.secp256k1_glv_cube_relation` | Ecdlp/Proved/GlvCubeRelation.lean | Mathlib | proved |
 | **GLV endomorphism preserves `n`-torsion** (`glvPoint` maps `E[n]→E[n]`; restricts to an endomorphism of the torsion, still `φ²+φ+1=0` there — the scene where `[λ]` lives) | `Ecdlp.Curve.secp256k1_glv_preserves_torsion` | Ecdlp/Proved/GlvTorsion.lean | Mathlib | proved |
+| **GLV endomorphism satisfies its minimal polynomial in `End(E)`** (operator form: `glvHom∘glvHom+glvHom+id=0` as `AddMonoidHom`s — `φ²+φ+1=0` in the endomorphism ring, composable with Mathlib's hom API; *alternate/operator form* of `secp256k1_glv_cube_relation`) | `Ecdlp.Curve.glvHom_minpoly` | Ecdlp/Proved/GlvMinPoly.lean | Mathlib | proved |
+| **GLV endomorphism has order dividing 3** (`glvPoint³=id`: iterating `(x,y)↦(βx,y)` scales `x` by `β³=1`; the CM automorphism is order-3) | `Ecdlp.Curve.glvPoint_cube_eq_id` | Ecdlp/Proved/GlvAutomorphism.lean | Mathlib | proved |
+| **GLV endomorphism is an automorphism** (`glvPoint` is bijective — `glvPoint²` is its two-sided inverse, from `glvPoint³=id`) | `Ecdlp.Curve.glvPoint_bijective` | Ecdlp/Proved/GlvAutomorphism.lean | Mathlib | proved |
+| **secp256k1 5-division polynomial has degree 12** (`deg(ψ₅=preΨ' 5)=(5²−1)/2=12`; instantiates Mathlib's general `natDegree_preΨ'` at `n=5`) | `Ecdlp.Curve.secp256k1_preΨ₅_natDegree` | Ecdlp/Proved/FiveTorsion.lean | Mathlib + native_decide | proved |
+| **5-division polynomial is nonzero** (deg 12 ⇒ `ψ₅≠0`; 5-torsion `x`-coords are a proper finite set) | `Ecdlp.Curve.secp256k1_preΨ₅_ne_zero` | Ecdlp/Proved/FiveTorsion.lean | Mathlib | proved |
+| **≤ 12 five-torsion `x`-coordinates** (`#E[5]≤25`; roots of the odd division polynomial `ψ₅` are the order-5 `x`-coords, consistent with `E[5]≅(ℤ/5)²`) | `Ecdlp.Curve.secp256k1_five_torsion_x_card_le` | Ecdlp/Proved/FiveTorsion.lean | Mathlib | proved |
+| **`deg(ψₙ)=(n²−1)/2` for all odd `n` coprime to `p`** (uniform division-polynomial degree; generalizes the `Ψ₃`/`ψ₅` per-level facts via Mathlib's `natDegree_preΨ'`) | `Ecdlp.Curve.secp256k1_odd_preΨ_natDegree` | Ecdlp/Proved/OddTorsionBound.lean | Mathlib | proved |
+| **≤ `(n²−1)/2` odd-`n`-torsion `x`-coordinates** (uniform `#E[n]≤n²` for every odd `n` coprime to `p`; the general statement behind the 3-/5-torsion nodes) | `Ecdlp.Curve.secp256k1_odd_torsion_x_card_le` | Ecdlp/Proved/OddTorsionBound.lean | Mathlib | proved |
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**117 ledger rows / ~107 distinct kernel-verified results** (10 rows are alternate-form
+**125 ledger rows / ~114 distinct kernel-verified results** (11 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
-eigenvalue — see the tagged rows above). **0 `sorry`, 0 `admit`, 0 open obligations.**
+eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
+**0 `sorry`, 0 `admit`, 0 open obligations.**
 
 *Axiom / trust-base note (precise).* No result depends on any **custom** axiom or on
 `sorryAx`; this is **machine-enforced** by the axiom-audit CI gate (`Ecdlp/AxiomAudit.lean`
