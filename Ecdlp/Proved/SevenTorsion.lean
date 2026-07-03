@@ -15,7 +15,7 @@ Its degree is `(7² − 1)/2 = 24` — obtained by instantiating Mathlib's gener
 at most 24 nontrivial 7-torsion `x`-coordinates, i.e. `#E[7] ≤ 49` — consistent with the
 classical structure `E[7] ≅ (ℤ/7)²` (48 nontrivial points, `±y` per `x` ⇒ 24 `x`-coords).
 A concrete named level of the uniform `secp256k1_odd_torsion_x_card_le` (`#E[n] ≤ n²`), in
-the same spirit as the 3-/5-torsion nodes. All polynomial/degree facts over `𝔽_p`; no axioms.
+the same spirit as the 3- and 5-torsion nodes. All polynomial/degree facts over `𝔽_p`; no axioms.
 -/
 
 namespace Ecdlp.Curve

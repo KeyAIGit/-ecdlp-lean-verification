@@ -46,3 +46,4 @@ import Ecdlp.Proved.FiveTorsion
 import Ecdlp.Proved.OddTorsionBound
 import Ecdlp.Proved.TwoTorsionPoint
 import Ecdlp.Proved.GlvOrderThree
+import Ecdlp.Proved.GlvFixedLocus

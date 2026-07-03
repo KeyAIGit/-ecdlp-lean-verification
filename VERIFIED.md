@@ -136,6 +136,7 @@ git history and the GitHub Actions tab.
 | **point-level 2-torsion criterion `2•P=0 ⟺ y=0`** (both-directions `ψ₂↔E[2]` bridge at the point level — the criterion Mathlib records only as a TODO; upgrades the forward-only `Ψ₂Sq`-root fact) | `Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff` | Ecdlp/Proved/TwoTorsionPoint.lean | Mathlib + native_decide | proved |
 | **GLV endomorphism is *not* the identity** (`glvHom ≠ id`, witnessed by `β·Gx ≠ Gx` on the base point — rules out the degenerate case, so with `glvHom³=id` and `φ²+φ+1=0` the order in `Aut(E)` is *exactly* 3: `glvHom` is a **primitive** cube root of unity ⇒ `ℤ[ω]↪End(E)`, genuine CM) | `Ecdlp.Curve.secp256k1_glvHom_ne_id` | Ecdlp/Proved/GlvOrderThree.lean | Mathlib + native_decide | proved |
 | **point-level trace-zero identity `P+λP+λ²P=0`** (pointwise reading of `glvHom_minpoly`: `X²+X+1` applied to any `P` returns `O`; the three points of a `⟨λ⟩`-orbit sum to zero) | `Ecdlp.Curve.secp256k1_glvPoint_orbit_sum` | Ecdlp/Proved/GlvOrderThree.lean | Mathlib | proved |
+| **fixed locus of the GLV automorphism `φ(P)=P ⟺ x=0`** (`β·x=x ⇒ (β−1)x=0 ⇒ x=0` since `β≠1`; the ramification locus of `E→E/⟨φ⟩`, pins the order-3 automorphism's action together with `glvHom≠id`) | `Ecdlp.Curve.secp256k1_glvPoint_fixed_iff` | Ecdlp/Proved/GlvFixedLocus.lean | Mathlib + native_decide | proved |
 
 ### Canonical count (single source of truth — propagate this exact figure)
 **126 ledger rows / ~115 distinct kernel-verified results** (11 rows are alternate-form
