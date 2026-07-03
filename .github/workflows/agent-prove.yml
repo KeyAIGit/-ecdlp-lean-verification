@@ -1,0 +1,161 @@
+name: Agent prove (Claude proposes → server verifies → draft PR)
+
+# Variant-B autonomous prover harness. A GitHub Actions runner is the ONLY thing
+# with access to all three parties, via repo secrets:
+#
+#   ANTHROPIC_API_KEY             -> the "brain"    (Claude proposes a Lean file)
+#   SSH_PRIVATE_KEY + SERVER_HOST -> the "verifier" (warm Hetzner box, `lake env lean`, ~5s)
+#   the workflow's GITHUB_TOKEN   -> the "hands"    (push a branch, open a DRAFT PR)
+#
+# The Anthropic API is text-only: it has NO Lean, NO filesystem, NO GitHub/server
+# access. All I/O happens here. Safety properties:
+#   * manual only (workflow_dispatch) — never auto-spends a cent;
+#   * a hard per-dispatch USD cap (default $5, overridable, backstopped by the
+#     Console spend limit the human sets);
+#   * a max-iterations cap;
+#   * the script refuses any candidate containing sorry/admit/axiom, and the box's
+#     `lake env lean` is the kernel judge — a clean result is required to proceed;
+#   * on acceptance we branch off main and open a DRAFT PR (main is never touched);
+#     the candidate is imported into Ecdlp.lean so CI's own `lake build` + no-sorry
+#     gate INDEPENDENTLY re-verify it on the PR before any human merges.
+#
+# REQUIRED repo secrets: ANTHROPIC_API_KEY, SSH_PRIVATE_KEY, SERVER_HOST.
+# OPTIONAL: SERVER_USER (defaults to "root").
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Goal to prove (natural language + the exact Lean signature)"
+        required: true
+      budget_usd:
+        description: "Hard USD cap for this dispatch"
+        required: false
+        default: "5"
+      max_iters:
+        description: "Max propose/repair iterations"
+        required: false
+        default: "6"
+      model:
+        description: "Anthropic model id"
+        required: false
+        default: "claude-opus-4-8"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: agent-prove
+  cancel-in-progress: false
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install anthropic SDK
+        run: pip install --quiet 'anthropic>=0.40'
+
+      - name: Install SSH key
+        env:
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Run the prover (Claude proposes, server verifies)
+        id: prove
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SSH_KEY_PATH: /home/runner/.ssh/id_ed25519
+          AGENT_TARGET: ${{ github.event.inputs.target }}
+          AGENT_BUDGET_USD: ${{ github.event.inputs.budget_usd }}
+          AGENT_MAX_ITERS: ${{ github.event.inputs.max_iters }}
+          AGENT_MODEL: ${{ github.event.inputs.model }}
+        run: |
+          if [ -z "${ANTHROPIC_API_KEY:-}" ]; then echo "::error::ANTHROPIC_API_KEY secret not set"; exit 1; fi
+          if [ -z "${SERVER_HOST:-}" ]; then echo "::error::SERVER_HOST secret not set"; exit 1; fi
+          # A "failed" result is a normal, non-error outcome (exit 1) — don't abort the step.
+          python3 scripts/agent_prove.py 2>&1 | tee agent-output.txt || true
+          result="$(grep '^RESULT:' agent-output.txt | tail -1 || true)"
+          echo "Final: ${result:-<no RESULT line — the prover crashed; see log>}"
+          spend="$(grep 'estimated spend this run' agent-output.txt | tail -1 || true)"
+          {
+            echo "result_line=${result}"
+            echo "spend_line=${spend}"
+            case "$result" in
+              "RESULT: accepted"*) echo "accepted=true" ;;
+              *)                    echo "accepted=false" ;;
+            esac
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open a DRAFT PR with the accepted proof
+        if: steps.prove.outputs.accepted == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AGENT_TARGET: ${{ github.event.inputs.target }}
+          AGENT_MODEL: ${{ github.event.inputs.model }}
+          SPEND_LINE: ${{ steps.prove.outputs.spend_line }}
+        run: |
+          set -euo pipefail
+          test -f AGENT_CANDIDATE.lean || { echo "::error::accepted but AGENT_CANDIDATE.lean is missing"; exit 1; }
+          # Belt-and-suspenders: the server already rejected these, but re-check here.
+          if grep -Eq '\b(sorry|admit)\b|axiom' AGENT_CANDIDATE.lean; then
+            echo "::error::candidate contains a forbidden token (sorry/admit/axiom) — refusing to open a PR"; exit 1
+          fi
+          ts="$(date +%Y%m%d-%H%M%S)"
+          name="AgentCandidate_${ts}"
+          branch="agent/candidate-${ts}"
+          git config user.name "keyai-agent-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$branch"
+          mkdir -p Ecdlp/Proved
+          mv AGENT_CANDIDATE.lean "Ecdlp/Proved/${name}.lean"
+          # Import it so CI's own lake build + no-sorry gate INDEPENDENTLY re-verify it.
+          printf 'import Ecdlp.Proved.%s\n' "$name" >> Ecdlp.lean
+          git add "Ecdlp/Proved/${name}.lean" Ecdlp.lean
+          git commit -m "agent: server-verified candidate proof (${ts})"
+          git push -u origin "$branch"
+          {
+            echo "Autonomous prover harness (Variant B) result."
+            echo
+            echo "**Target**"
+            echo
+            echo '```'
+            printf '%s\n' "${AGENT_TARGET}"
+            echo '```'
+            echo
+            echo "- **Model:** \`${AGENT_MODEL}\`"
+            echo "- **Server verify:** kernel-clean via \`lake env lean\` on the warm box."
+            echo "- **${SPEND_LINE:-estimated spend: n/a}**"
+            echo
+            echo "The candidate was accepted only by the server's Lean kernel. This draft PR"
+            echo "imports it into \`Ecdlp.lean\` so **CI re-verifies it independently** (\`lake"
+            echo "build\` + the no-sorry gate). Do not merge until CI is green and a human has"
+            echo "reviewed the statement for meaningfulness (the kernel checks the proof, not"
+            echo "whether the theorem is the one we wanted)."
+            echo
+            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+          } > pr-body.txt
+          title="agent candidate: $(printf '%s' "${AGENT_TARGET}" | head -c 60 | tr '\n' ' ')"
+          gh pr create --draft --base main --head "$branch" \
+            --title "$title" --body-file pr-body.txt
+
+      - name: Upload the prover log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-output
+          path: agent-output.txt
+          if-no-files-found: ignore
