@@ -1,0 +1,17 @@
+{
+  "_comment": "Target queue for scripts/agent_day.py. Each entry: name, target (NL + Lean signature), optional model/max_iters. These seed entries are reachable 'width' nodes (torsion-tower rungs) chosen to validate the autonomous loop cheaply. The generator will later append to this queue.",
+  "targets": [
+    {
+      "name": "ElevenTorsionDegree",
+      "model": "claude-sonnet-5",
+      "max_iters": 4,
+      "target": "In `namespace Ecdlp.Curve` with `open Polynomial`, prove `theorem secp256k1_preΨ₁₁_natDegree : (secp256k1.preΨ' 11).natDegree = 60`. This mirrors `Ecdlp/Proved/SevenTorsion.lean` exactly: the general degree formula is `deg (preΨ' n) = (n^2 - 1)/2` for odd n coprime to p, and (11^2-1)/2 = 60. Imports: `import Mathlib`, `import Ecdlp.Proved.DivisionPolynomial`, `import Ecdlp.Proved.DivisionPolynomialDegree`. Proof pattern: `have h11 : ((11 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide` then `rw [secp256k1.natDegree_preΨ' h11]` then `decide`. Output ONLY the complete Lean file."
+    },
+    {
+      "name": "ThirteenTorsionDegree",
+      "model": "claude-sonnet-5",
+      "max_iters": 4,
+      "target": "In `namespace Ecdlp.Curve` with `open Polynomial`, prove `theorem secp256k1_preΨ₁₃_natDegree : (secp256k1.preΨ' 13).natDegree = 84`. Mirror `Ecdlp/Proved/SevenTorsion.lean`: `deg (preΨ' n) = (n^2 - 1)/2` for odd n coprime to p, and (13^2-1)/2 = 84. Imports: `import Mathlib`, `import Ecdlp.Proved.DivisionPolynomial`, `import Ecdlp.Proved.DivisionPolynomialDegree`. Proof: establish `((13 : ℕ) : ZMod Secp256k1.p) ≠ 0` via `rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide`, then `rw [secp256k1.natDegree_preΨ' h13]; decide`. Output ONLY the complete Lean file."
+    }
+  ]
+}

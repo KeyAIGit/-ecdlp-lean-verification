@@ -1,0 +1,124 @@
+name: Agent day (autonomous prover loop → one draft PR)
+
+# Budget-bounded autonomous run: loops scripts/agent_day.py over targets/queue.json,
+# proposing Lean with the Anthropic API and verifying each candidate on the warm server
+# with `lake env lean`. Stops at the USD or time cap. Collects every accepted node into
+# ONE draft PR (proposals only — the Lean kernel + CI re-verify before any human merge).
+#
+# MANUAL ONLY. Never auto-spends. BEFORE the first run, set a spend limit in the Anthropic
+# Console as an independent backstop on top of `budget_usd`.
+#
+# REQUIRED secrets: ANTHROPIC_API_KEY, SSH_PRIVATE_KEY, SERVER_HOST. OPTIONAL: SERVER_USER.
+
+on:
+  workflow_dispatch:
+    inputs:
+      budget_usd:
+        description: "Hard USD cap for the whole run"
+        required: false
+        default: "20"
+      default_model:
+        description: "Default model for targets that don't override it"
+        required: false
+        default: "claude-sonnet-5"
+      time_budget_min:
+        description: "Wall-clock cap in minutes"
+        required: false
+        default: "300"
+      max_iters:
+        description: "Max propose/repair iterations per target"
+        required: false
+        default: "5"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: agent-day
+  cancel-in-progress: false
+
+jobs:
+  day:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install anthropic SDK
+        run: pip install --quiet 'anthropic>=0.40'
+
+      - name: Install SSH key
+        env:
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Run the autonomous prover day
+        id: day
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SSH_KEY_PATH: /home/runner/.ssh/id_ed25519
+          AGENT_BUDGET_USD: ${{ github.event.inputs.budget_usd }}
+          AGENT_DEFAULT_MODEL: ${{ github.event.inputs.default_model }}
+          AGENT_TIME_BUDGET_MIN: ${{ github.event.inputs.time_budget_min }}
+          AGENT_MAX_ITERS: ${{ github.event.inputs.max_iters }}
+        run: |
+          if [ -z "${ANTHROPIC_API_KEY:-}" ]; then echo "::error::ANTHROPIC_API_KEY not set"; exit 1; fi
+          if [ -z "${SERVER_HOST:-}" ]; then echo "::error::SERVER_HOST not set"; exit 1; fi
+          python3 scripts/agent_day.py 2>&1 | tee day-output.txt || true
+          result="$(grep '^RESULT:' day-output.txt | tail -1 || true)"
+          echo "Final: ${result:-<no RESULT line — crashed; see log>}"
+          n="$(printf '%s' "$result" | sed -n 's/.*accepted=\([0-9]\+\).*/\1/p')"
+          echo "accepted_count=${n:-0}" >> "$GITHUB_OUTPUT"
+
+      - name: Open ONE draft PR with the accepted candidates
+        if: steps.day.outputs.accepted_count != '0' && steps.day.outputs.accepted_count != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          ts="$(date +%Y%m%d-%H%M%S)"
+          branch="agent/day-${ts}"
+          git config user.name "keyai-agent-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add agent_candidates/ AGENT_TRACE.md
+          git commit -m "agent-day: ${{ steps.day.outputs.accepted_count }} server-verified candidate node(s) (${ts})"
+          git push -u origin "$branch"
+          {
+            echo "Autonomous prover-day run (${ts})."
+            echo
+            echo "**${{ steps.day.outputs.accepted_count }} candidate node(s)** accepted by the server's Lean"
+            echo "kernel (\`lake env lean\`), collected in \`agent_candidates/\`. Full attempt-by-attempt"
+            echo "trace in \`AGENT_TRACE.md\`."
+            echo
+            echo "These are **proposals**, not promoted proofs. To promote one: move it into"
+            echo "\`Ecdlp/Proved/\`, add its import to \`Ecdlp.lean\` (so CI re-verifies), review the"
+            echo "statement for meaningfulness, and append a \`VERIFIED.md\` row. Do not merge as-is."
+            echo
+            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+          } > pr-body.txt
+          gh pr create --draft --base main --head "$branch" \
+            --title "agent-day: ${{ steps.day.outputs.accepted_count }} candidate node(s) for review" \
+            --body-file pr-body.txt
+
+      - name: Upload the run trace
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-day-trace
+          path: |
+            day-output.txt
+            AGENT_TRACE.md
+          if-no-files-found: ignore
