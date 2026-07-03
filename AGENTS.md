@@ -20,7 +20,7 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 
 ## Current state
 - **Theorem count: see `VERIFIED.md`** — that ledger table is the canonical, live count
-  (139 rows / ~125 distinct kernel-verified results, 0 `sorry`, no custom axioms — the
+  (140 rows / ~126 distinct kernel-verified results, 0 `sorry`, no custom axioms — the
   axiom-audit gate enforces it; `native_decide` facts trust the compiler, see
   `TRUST_REPORT.md`). Do not hardcode a number here; it drifts. `main` is kept in sync
   with the dev branch `claude/admiring-darwin-uouep1`.
