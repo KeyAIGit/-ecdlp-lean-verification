@@ -133,9 +133,10 @@ git history and the GitHub Actions tab.
 | **≤ 12 five-torsion `x`-coordinates** (`#E[5]≤25`; roots of the odd division polynomial `ψ₅` are the order-5 `x`-coords, consistent with `E[5]≅(ℤ/5)²`) | `Ecdlp.Curve.secp256k1_five_torsion_x_card_le` | Ecdlp/Proved/FiveTorsion.lean | Mathlib | proved |
 | **`deg(ψₙ)=(n²−1)/2` for all odd `n` coprime to `p`** (uniform division-polynomial degree; generalizes the `Ψ₃`/`ψ₅` per-level facts via Mathlib's `natDegree_preΨ'`) | `Ecdlp.Curve.secp256k1_odd_preΨ_natDegree` | Ecdlp/Proved/OddTorsionBound.lean | Mathlib | proved |
 | **≤ `(n²−1)/2` odd-`n`-torsion `x`-coordinates** (uniform `#E[n]≤n²` for every odd `n` coprime to `p`; the general statement behind the 3-/5-torsion nodes) | `Ecdlp.Curve.secp256k1_odd_torsion_x_card_le` | Ecdlp/Proved/OddTorsionBound.lean | Mathlib | proved |
+| **point-level 2-torsion criterion `2•P=0 ⟺ y=0`** (both-directions `ψ₂↔E[2]` bridge at the point level — the criterion Mathlib records only as a TODO; upgrades the forward-only `Ψ₂Sq`-root fact) | `Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff` | Ecdlp/Proved/TwoTorsionPoint.lean | Mathlib + native_decide | proved |
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**125 ledger rows / ~114 distinct kernel-verified results** (11 rows are alternate-form
+**126 ledger rows / ~115 distinct kernel-verified results** (11 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
 **0 `sorry`, 0 `admit`, 0 open obligations.**

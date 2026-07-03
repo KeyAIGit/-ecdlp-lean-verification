@@ -4,16 +4,16 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 125,
+    "theorems": 126,
     "barriers": 6,
-    "edges": 113,
+    "edges": 116,
     "by_method": {
       "Mathlib": 92,
       "native_decide": 18,
-      "Mathlib + native_decide": 15
+      "Mathlib + native_decide": 16
     },
     "by_area": {
-      "curve-torsion": 70,
+      "curve-torsion": 71,
       "protocol-soundness": 21,
       "generic-hardness": 17,
       "primality": 5,
@@ -1648,6 +1648,19 @@
       "area": "primality",
       "dependency_depth": 4,
       "gated": true
+    },
+    {
+      "id": "thm-125",
+      "name": "Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff",
+      "short_name": "secp256k1_two_nsmul_eq_zero_iff",
+      "module": "Ecdlp.Proved.TwoTorsionPoint",
+      "file": "Ecdlp/Proved/TwoTorsionPoint.lean",
+      "claim": "point-level 2-torsion criterion `2•P=0 ⟺ y=0` (both-directions `ψ₂↔E[2]` bridge at the point level — the criterion Mathlib records only as a TODO; upgrades the forward-only `Ψ₂Sq`-root fact)",
+      "method": "Mathlib + native_decide",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 3,
+      "gated": true
     }
   ],
   "barriers": [
@@ -1918,6 +1931,16 @@
     {
       "from": "Ecdlp.Proved.ThreeTorsion",
       "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TwoTorsionPoint",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TwoTorsionPoint",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
     },
     {
@@ -2228,6 +2251,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.OddTorsionBound",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.TwoTorsionPoint",
       "type": "imports"
     },
     {

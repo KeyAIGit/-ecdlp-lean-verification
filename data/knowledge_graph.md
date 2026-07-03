@@ -2,15 +2,15 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**125 theorems** · **6 barriers** · **113 edges**
+**126 theorems** · **6 barriers** · **116 edges**
 
-By proof method: Mathlib (92), native_decide (18), Mathlib + native_decide (15)
+By proof method: Mathlib (92), native_decide (18), Mathlib + native_decide (16)
 
-By research area: curve-torsion (70), protocol-soundness (21), generic-hardness (17), primality (5), other (5), reduction (3), attack-resistance (3), params (1)
+By research area: curve-torsion (71), protocol-soundness (21), generic-hardness (17), primality (5), other (5), reduction (3), attack-resistance (3), params (1)
 
 ## Verified theorems by area
 
-### curve-torsion (70)
+### curve-torsion (71)
 
 | theorem | claim | method | file |
 |---|---|---|---|
@@ -84,6 +84,7 @@ By research area: curve-torsion (70), protocol-soundness (21), generic-hardness 
 | `secp256k1_preΨ₅_natDegree` | secp256k1 5-division polynomial has degree 12 (`deg(ψ₅=preΨ' 5)=(5−1)/2=12`; instantiates Mathlib's general `natDegree_preΨ'` at `n=5`) | Mathlib + native_decide | `FiveTorsion.lean` |
 | `secp256k1_preΨ₅_ne_zero` | 5-division polynomial is nonzero (deg 12 ⇒ `ψ₅≠0`; 5-torsion `x`-coords are a proper finite set) | Mathlib | `FiveTorsion.lean` |
 | `secp256k1_five_torsion_x_card_le` | ≤ 12 five-torsion `x`-coordinates (`#E[5]≤25`; roots of the odd division polynomial `ψ₅` are the order-5 `x`-coords, consistent with `E[5]≅(ℤ/5)`) | Mathlib | `FiveTorsion.lean` |
+| `secp256k1_two_nsmul_eq_zero_iff` | point-level 2-torsion criterion `2•P=0 ⟺ y=0` (both-directions `ψ₂↔E[2]` bridge at the point level — the criterion Mathlib records only as a TODO; upgrades the forward-only `Ψ₂Sq`-root fact) | Mathlib + native_decide | `TwoTorsionPoint.lean` |
 
 ### protocol-soundness (21)
 
