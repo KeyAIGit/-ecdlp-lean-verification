@@ -144,9 +144,10 @@ git history and the GitHub Actions tab.
 | **GLV eigenvalue property `φ=[k]`, conditional on cyclicity** (if `E(𝔽_p)` is cyclic then `glvHom` is multiplication by a fixed `k:ℤ` with `(k²+k+1)•P=0` for all `P` — the geometric `β`-action *is* scalar `[λ]`; a genuine **reduction** isolating the one deep missing input, point-counting `#E=n`, as the explicit `[IsAddCyclic]` hypothesis) | `Ecdlp.Curve.secp256k1_glvHom_eq_zsmul` | Ecdlp/Proved/GlvEigenvalue.lean | Mathlib (`map_cyclic`) | proved |
 | **odd torsion ∩ 2-torsion = {O}** (odd `n`: a point killed by both `n` and `2` is `O`, since `addOrderOf P ∣ gcd(n,2)=1`; node **N12** of the `ψₙ↔E[n]` bridge decomposition — a reachable leaf toward the deep torsion correspondence, see `notes/DIVISION_POLY_TORSION_MAP.md`) | `Ecdlp.Curve.secp256k1_odd_two_torsion_disjoint` | Ecdlp/Proved/TorsionCoprime.lean | Mathlib | proved |
 | **`[n]`-numerator strictly dominates its denominator** (`deg ΨSqₙ = n²−1 < n² = deg Φₙ`; so the rational map `x∘[n]=Φₙ/ψₙ²` attains degree `n²` at the numerator — the differential-free **Route-B** crux for `deg[n]=n²`, modulo coprimality; see `notes/SEPARABILITY_ROUTES.md`) | `Ecdlp.Curve.secp256k1_ΨSq_natDegree_lt_Φ` | Ecdlp/Proved/NumeratorDominates.lean | Mathlib (`natDegree_Φ`,`natDegree_ΨSq`) | proved |
+| **`Ψ₂Sq` and `Ψ₃` are coprime** (`IsCoprime (4X³+28) (3X⁴+84X)` — "no point is both 2- and 3-torsion", where `Δ≠0` enters; node **L5** of the B1 coprimality plan, proved by an explicit CAS-computed Bézout certificate over `𝔽_p`; first hand-built sub-lemma toward `gcd(Φₙ,ψₙ²)=1`) | `Ecdlp.Curve.secp256k1_isCoprime_Ψ₂Sq_Ψ₃` | Ecdlp/Proved/CoprimePsi2Psi3.lean | Bézout certificate + native_decide | proved |
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**136 ledger rows / ~122 distinct kernel-verified results** (14 rows are alternate-form
+**137 ledger rows / ~123 distinct kernel-verified results** (14 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
 **0 `sorry`, 0 `admit`, 0 open obligations.**
