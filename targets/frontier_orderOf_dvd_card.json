@@ -2,7 +2,7 @@
   "id": "frontier_orderOf_dvd_card",
   "name": "frontier_orderOf_dvd_card",
   "claim_id": "frontier-frontier_orderOf_dvd_card",
-  "status": "todo",
+  "status": "verified",
   "difficulty": "medium",
   "template": "frontier_expander",
   "provability_score": "medium",
@@ -18,5 +18,6 @@
   "source": {
     "family": "frontier-expander",
     "from": "verified frontier"
-  }
+  },
+  "verified_in": "Ecdlp/Proved/FrontierGroupFacts.lean"
 }

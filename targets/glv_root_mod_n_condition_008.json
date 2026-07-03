@@ -2,12 +2,24 @@
   "id": "glv_root_mod_n_condition_008",
   "name": "glv_root_mod_n_condition",
   "claim_id": "glv-root-mod-n-condition-008",
-  "status": "todo",
+  "status": "verified",
   "difficulty": "medium",
   "template": "manual_endomorphism_scalar",
   "provability_score": "medium",
   "why_it_matters": "GLV eigenvalue lambda acts as scalar [lambda] on the cyclic subgroup (endomorphism speed-up).",
-  "default_budget": {"tier0_tactics": ["intro", "obtain", "simp"], "escalate_if_failed": true},
+  "default_budget": {
+    "tier0_tactics": [
+      "intro",
+      "obtain",
+      "simp"
+    ],
+    "escalate_if_failed": true
+  },
   "stem_file": "Ecdlp/Targets/glv_root_mod_n_condition_008.lean",
-  "source": {"formal_status": "formalizable", "mathlib_area": "Mathlib.GroupTheory.OrderOfElement", "batch": "manual-slice-1"}
+  "source": {
+    "formal_status": "formalizable",
+    "mathlib_area": "Mathlib.GroupTheory.OrderOfElement",
+    "batch": "manual-slice-1"
+  },
+  "verified_in": "Ecdlp/Proved/GlvScalarAction.lean"
 }
