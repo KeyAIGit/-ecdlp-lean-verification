@@ -48,3 +48,4 @@ import Ecdlp.Proved.TwoTorsionPoint
 import Ecdlp.Proved.GlvOrderThree
 import Ecdlp.Proved.GlvFixedLocus
 import Ecdlp.Proved.SevenTorsion
+import Ecdlp.Proved.GlvEigenvalue

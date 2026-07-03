@@ -141,9 +141,10 @@ git history and the GitHub Actions tab.
 | **secp256k1 7-division polynomial has degree 24** (`deg(ψ₇=preΨ' 7)=(7²−1)/2=24`; instantiates Mathlib's general `natDegree_preΨ'` at `n=7`) | `Ecdlp.Curve.secp256k1_preΨ₇_natDegree` | Ecdlp/Proved/SevenTorsion.lean | Mathlib + native_decide | proved |
 | **7-division polynomial is nonzero** (deg 24 ⇒ `ψ₇≠0`; 7-torsion `x`-coords are a proper finite set) | `Ecdlp.Curve.secp256k1_preΨ₇_ne_zero` | Ecdlp/Proved/SevenTorsion.lean | Mathlib | proved |
 | **≤ 24 seven-torsion `x`-coordinates** (`#E[7]≤49`; roots of the odd division polynomial `ψ₇` are the order-7 `x`-coords, consistent with `E[7]≅(ℤ/7)²`; the concrete `n=7` level of the uniform odd bound) | `Ecdlp.Curve.secp256k1_seven_torsion_x_card_le` | Ecdlp/Proved/SevenTorsion.lean | Mathlib | proved |
+| **GLV eigenvalue property `φ=[k]`, conditional on cyclicity** (if `E(𝔽_p)` is cyclic then `glvHom` is multiplication by a fixed `k:ℤ` with `(k²+k+1)•P=0` for all `P` — the geometric `β`-action *is* scalar `[λ]`; a genuine **reduction** isolating the one deep missing input, point-counting `#E=n`, as the explicit `[IsAddCyclic]` hypothesis) | `Ecdlp.Curve.secp256k1_glvHom_eq_zsmul` | Ecdlp/Proved/GlvEigenvalue.lean | Mathlib (`map_cyclic`) | proved |
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**133 ledger rows / ~119 distinct kernel-verified results** (14 rows are alternate-form
+**134 ledger rows / ~120 distinct kernel-verified results** (14 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
 **0 `sorry`, 0 `admit`, 0 open obligations.**
