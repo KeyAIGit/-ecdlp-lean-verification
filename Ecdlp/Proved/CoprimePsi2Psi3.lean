@@ -37,7 +37,13 @@ theorem secp256k1_isCoprime_Ψ₂Sq_Ψ₃ :
   have e6 : (4 * U₃ + 3 * V₂ : ZMod Secp256k1.p) = 0 := by native_decide
   have e3 : (28 * U₃ + 4 * U₀ + 84 * V₂ : ZMod Secp256k1.p) = 0 := by native_decide
   have e0 : (28 * U₀ : ZMod Secp256k1.p) = 1 := by native_decide
-  linear_combination (X ^ 6 : (ZMod Secp256k1.p)[X]) * congrArg C e6
-    + (X ^ 3 : (ZMod Secp256k1.p)[X]) * congrArg C e3 + congrArg C e0
+  -- collapse the Bézout product to one `C` per power of `X`, then use the residue facts.
+  have key : (C U₃ * X ^ 3 + C U₀) * (C 4 * X ^ 3 + C 28)
+      + C V₂ * X ^ 2 * (3 * X ^ 4 + 3 * C 28 * X)
+      = C (4 * U₃ + 3 * V₂) * X ^ 6 + C (28 * U₃ + 4 * U₀ + 84 * V₂) * X ^ 3
+        + C (28 * U₀) := by
+    simp only [map_add, map_mul, map_ofNat]; ring
+  rw [key, e6, e3, e0]
+  simp
 
 end Ecdlp.Curve
