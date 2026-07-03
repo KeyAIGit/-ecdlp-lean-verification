@@ -1,0 +1,53 @@
+name: Anthropic API smoke test
+
+# Verifies the ANTHROPIC_API_KEY repo secret is present and works, WITHOUT ever
+# printing the key. Runs once when this file is pushed, and can be re-run manually
+# from the Actions tab. Uses the cheapest model (Haiku) with a tiny max_tokens.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/anthropic-smoke.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the secret is present
+        env:
+          KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "${KEY:-}" ]; then
+            echo "::error::ANTHROPIC_API_KEY secret is not set on this repo."
+            echo "Add it: Settings -> Secrets and variables -> Actions -> New repository secret (name: ANTHROPIC_API_KEY)."
+            exit 1
+          fi
+          echo "Secret ANTHROPIC_API_KEY is present (value hidden)."
+
+      - name: One cheap Messages API call
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set -euo pipefail
+          # No `set -x` — never echo the header/key. GitHub also auto-masks secret values.
+          http=$(curl -sS -o resp.json -w "%{http_code}" https://api.anthropic.com/v1/messages \
+            --header "x-api-key: ${ANTHROPIC_API_KEY}" \
+            --header "anthropic-version: 2023-06-01" \
+            --header "content-type: application/json" \
+            --data '{"model":"claude-haiku-4-5","max_tokens":16,"messages":[{"role":"user","content":"Reply with exactly: OK"}]}')
+          echo "HTTP status: ${http}"
+          if [ "${http}" != "200" ]; then
+            echo "::error::API call failed (HTTP ${http})."
+            python3 -c "import json; d=json.load(open('resp.json')); e=d.get('error',{}); print('error type:', e.get('type'), '| message:', e.get('message'))" || true
+            exit 1
+          fi
+          python3 -c "import json; d=json.load(open('resp.json')); t=next((b['text'] for b in d.get('content',[]) if b.get('type')=='text'),''); u=d.get('usage',{}); print('Model replied:', t.strip()); print('Served by:', d.get('model','')); print('Usage in/out:', u.get('input_tokens'), u.get('output_tokens'))"
+          echo "SMOKE TEST PASSED — key valid, auth OK, Messages API reachable."
+
+      - name: Clean up
+        if: always()
+        run: rm -f resp.json
