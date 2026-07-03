@@ -148,9 +148,19 @@ git history and the GitHub Actions tab.
 | **`Ψ₃` and `preΨ₄` are coprime** (`IsCoprime (3X⁴+84X) (2X⁶+280X³−784)` — "no point is both 3- and 4-torsion", the second place `Δ≠0` enters; node **L6** of B1, CAS-computed Bézout certificate over `𝔽_p`) | `Ecdlp.Curve.secp256k1_isCoprime_Ψ₃_preΨ₄` | Ecdlp/Proved/CoprimePsi3PrePsi4.lean | Bézout certificate + native_decide | proved |
 | **`Ψ₂Sq` and `preΨ₄` are coprime** (`IsCoprime (4X³+28) (2X⁶+280X³−784)` — "no point is both 2- and *primitive* 4-torsion"; completes the pairwise low-torsion disjointness with L5/L6, third manifestation of `Δ≠0`; node **L6b** of B1, CAS-computed Bézout certificate over `𝔽_p`) | `Ecdlp.Curve.secp256k1_isCoprime_Ψ₂Sq_preΨ₄` | Ecdlp/Proved/CoprimePsi2PrePsi4.lean | Bézout certificate + native_decide | proved |
 | **`IsCoprime` ↔ no common root** (over a field `k`, non-coprime `f,g ∈ k[X]` ⇒ a genuine common root in any algebraically-closed extension, + easy converse — the field↔`k̄` bridge B1 consumes, **independent of the open L4 TODO**; node **L1** of B1, general/upstreamable) | `Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime` | Ecdlp/Proved/CoprimeCommonRoot.lean | Mathlib (`EuclideanDomain.gcd`, `IsAlgClosed.exists_root`, `degree_map_eq_of_injective`) | proved |
+| **GLV eigenvalue ⇒ scalar action** (an endomorphism `φ` fixing a cyclic group's generator as a `λ`-eigenvector acts as `[λ]` on the whole subgroup: `φ x = λ•x`; the algebraic core of the GLV speed-up used on secp256k1, promoted from stem `glv_root_mod_n_condition_008`) | `Ecdlp.Curve.glv_root_mod_n_condition` | Ecdlp/Proved/GlvScalarAction.lean | Mathlib (`map_zsmul`, `smul_comm`) | proved |
+
+### Coverage restatements (tier-0, tracked separately — NOT in the headline figure)
+Ten elementary finite-group / torsion facts — standard Mathlib lemmas restated in the ECDLP
+ontology and closed by the zero-cost tier-0 layer (`Ecdlp/Proved/FrontierGroupFacts.lean`,
+namespace `Ecdlp.Frontier`): `orderOf g ∣ |G|`, `0 < |G|`, `g^|G| = 1`, `orderOf 1 = 1`,
+`addOrderOf a ∣ n ↔ n•a = 0`, `0 ∈ torsionBy A n`, `x ∈ torsionBy A n ⇒ −x ∈ …`,
+`x ∈ torsionBy A 0`, `torsionBy A 0 = ⊤`, `torsionBy A 1 = ⊥`. These are **restatements**, not
+novel results: kernel-verified and built (so the one-invariant still holds), but deliberately
+**excluded from the headline count** to keep it honest.
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**140 ledger rows / ~126 distinct kernel-verified results** (14 rows are alternate-form
+**141 ledger rows / ~127 distinct kernel-verified results** (14 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
 **0 `sorry`, 0 `admit`, 0 open obligations.**

@@ -2,7 +2,7 @@
   "id": "frontier_card_pos",
   "name": "frontier_card_pos",
   "claim_id": "frontier-frontier_card_pos",
-  "status": "todo",
+  "status": "verified",
   "difficulty": "easy",
   "template": "frontier_expander",
   "provability_score": "high",
@@ -19,5 +19,6 @@
   "source": {
     "family": "frontier-expander",
     "from": "verified frontier"
-  }
+  },
+  "verified_in": "Ecdlp/Proved/FrontierGroupFacts.lean"
 }

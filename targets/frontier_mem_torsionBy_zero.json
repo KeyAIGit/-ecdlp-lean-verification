@@ -2,7 +2,7 @@
   "id": "frontier_mem_torsionBy_zero",
   "name": "frontier_mem_torsionBy_zero",
   "claim_id": "frontier-frontier_mem_torsionBy_zero",
-  "status": "todo",
+  "status": "verified",
   "difficulty": "easy",
   "template": "frontier_expander",
   "provability_score": "high",
@@ -18,5 +18,6 @@
   "source": {
     "family": "frontier-expander",
     "from": "verified frontier"
-  }
+  },
+  "verified_in": "Ecdlp/Proved/FrontierGroupFacts.lean"
 }
