@@ -142,7 +142,7 @@ git history and the GitHub Actions tab.
 | **≤ 24 seven-torsion `x`-coordinates** (`#E[7]≤49`; roots of the odd division polynomial `ψ₇` are the order-7 `x`-coords, consistent with `E[7]≅(ℤ/7)²`; the concrete `n=7` level of the uniform odd bound) | `Ecdlp.Curve.secp256k1_seven_torsion_x_card_le` | Ecdlp/Proved/SevenTorsion.lean | Mathlib | proved |
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**126 ledger rows / ~115 distinct kernel-verified results** (11 rows are alternate-form
+**132 ledger rows / ~118 distinct kernel-verified results** (14 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
 **0 `sorry`, 0 `admit`, 0 open obligations.**
