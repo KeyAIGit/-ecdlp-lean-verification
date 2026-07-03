@@ -134,9 +134,16 @@ git history and the GitHub Actions tab.
 | **`deg(ψₙ)=(n²−1)/2` for all odd `n` coprime to `p`** (uniform division-polynomial degree; generalizes the `Ψ₃`/`ψ₅` per-level facts via Mathlib's `natDegree_preΨ'`) | `Ecdlp.Curve.secp256k1_odd_preΨ_natDegree` | Ecdlp/Proved/OddTorsionBound.lean | Mathlib | proved |
 | **≤ `(n²−1)/2` odd-`n`-torsion `x`-coordinates** (uniform `#E[n]≤n²` for every odd `n` coprime to `p`; the general statement behind the 3-/5-torsion nodes) | `Ecdlp.Curve.secp256k1_odd_torsion_x_card_le` | Ecdlp/Proved/OddTorsionBound.lean | Mathlib | proved |
 | **point-level 2-torsion criterion `2•P=0 ⟺ y=0`** (both-directions `ψ₂↔E[2]` bridge at the point level — the criterion Mathlib records only as a TODO; upgrades the forward-only `Ψ₂Sq`-root fact) | `Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff` | Ecdlp/Proved/TwoTorsionPoint.lean | Mathlib + native_decide | proved |
+| **GLV endomorphism is *not* the identity** (`glvHom ≠ id`, witnessed by `β·Gx ≠ Gx` on the base point — rules out the degenerate case, so with `glvHom³=id` and `φ²+φ+1=0` the order in `Aut(E)` is *exactly* 3: `glvHom` is a **primitive** cube root of unity ⇒ `ℤ[ω]↪End(E)`, genuine CM) | `Ecdlp.Curve.secp256k1_glvHom_ne_id` | Ecdlp/Proved/GlvOrderThree.lean | Mathlib + native_decide | proved |
+| **point-level trace-zero identity `P+λP+λ²P=0`** (pointwise reading of `glvHom_minpoly`: `X²+X+1` applied to any `P` returns `O`; the three points of a `⟨λ⟩`-orbit sum to zero) | `Ecdlp.Curve.secp256k1_glvPoint_orbit_sum` | Ecdlp/Proved/GlvOrderThree.lean | Mathlib | proved |
+| **fixed locus of the GLV automorphism `φ(P)=P ⟺ x=0`** (`β·x=x ⇒ (β−1)x=0 ⇒ x=0` since `β≠1`; the ramification locus of `E→E/⟨φ⟩`, pins the order-3 automorphism's action together with `glvHom≠id`) | `Ecdlp.Curve.secp256k1_glvPoint_fixed_iff` | Ecdlp/Proved/GlvFixedLocus.lean | Mathlib + native_decide | proved |
+| **`φ`-fixed points are 3-torsion `φP=P ⇒ 3•P=0`** (composes the trace-zero identity with the fixed hypothesis: `φP=P` collapses `P+φP+φ²P=O` to `3P=O`; the group-law form of `ker(φ−1)⊆E[3]`, `N(ω−1)=3`) | `Ecdlp.Curve.secp256k1_glvPoint_fixed_three_torsion` | Ecdlp/Proved/GlvFixedLocus.lean | Mathlib | proved |
+| **secp256k1 7-division polynomial has degree 24** (`deg(ψ₇=preΨ' 7)=(7²−1)/2=24`; instantiates Mathlib's general `natDegree_preΨ'` at `n=7`) | `Ecdlp.Curve.secp256k1_preΨ₇_natDegree` | Ecdlp/Proved/SevenTorsion.lean | Mathlib + native_decide | proved |
+| **7-division polynomial is nonzero** (deg 24 ⇒ `ψ₇≠0`; 7-torsion `x`-coords are a proper finite set) | `Ecdlp.Curve.secp256k1_preΨ₇_ne_zero` | Ecdlp/Proved/SevenTorsion.lean | Mathlib | proved |
+| **≤ 24 seven-torsion `x`-coordinates** (`#E[7]≤49`; roots of the odd division polynomial `ψ₇` are the order-7 `x`-coords, consistent with `E[7]≅(ℤ/7)²`; the concrete `n=7` level of the uniform odd bound) | `Ecdlp.Curve.secp256k1_seven_torsion_x_card_le` | Ecdlp/Proved/SevenTorsion.lean | Mathlib | proved |
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**126 ledger rows / ~115 distinct kernel-verified results** (11 rows are alternate-form
+**133 ledger rows / ~119 distinct kernel-verified results** (14 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
 **0 `sorry`, 0 `admit`, 0 open obligations.**
