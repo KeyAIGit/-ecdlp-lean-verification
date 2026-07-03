@@ -28,9 +28,10 @@ theorem secp256k1_odd_two_torsion_disjoint {n : ℕ} (hodd : Odd n)
     P = 0 := by
   have hdn : addOrderOf P ∣ n := addOrderOf_dvd_of_nsmul_eq_zero hn
   have hd2 : addOrderOf P ∣ 2 := addOrderOf_dvd_of_nsmul_eq_zero h2
-  have hcop : Nat.gcd n 2 = 1 := (Nat.coprime_two_right_iff_odd).mpr hodd
-  have h1 : addOrderOf P ∣ 1 := hcop ▸ Nat.dvd_gcd hdn hd2
-  rw [← addOrderOf_eq_one_iff]
-  exact Nat.dvd_one.mp h1
+  have hnd : ¬ (2 ∣ n) := by have := Nat.odd_iff.mp hodd; omega
+  have hcop : Nat.gcd 2 n = 1 := (Nat.prime_two.coprime_iff_not_dvd).mpr hnd
+  have h1 : addOrderOf P ∣ 1 := hcop ▸ Nat.dvd_gcd hd2 hdn
+  have h0 : (1 : ℕ) • P = 0 := addOrderOf_dvd_iff_nsmul_eq_zero.mp h1
+  simpa using h0
 
 end Ecdlp.Curve
