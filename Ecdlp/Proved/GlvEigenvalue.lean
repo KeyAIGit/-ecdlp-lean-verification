@@ -40,13 +40,16 @@ the eigenvalue relation `λ² + λ + 1 ≡ 0 (mod n)`. The scalar `k` is the GLV
 one specific value would need the group order `n`, which is the point-counting barrier. -/
 theorem secp256k1_glvHom_eq_zsmul [IsAddCyclic secp256k1.toAffine.Point] :
     ∃ k : ℤ, (∀ P, glvHom P = k • P) ∧ ∀ P, (k ^ 2 + k + 1) • P = 0 := by
-  obtain ⟨g, hg⟩ := IsAddCyclic.exists_generator (α := secp256k1.toAffine.Point)
-  obtain ⟨k, hk⟩ := hg (glvHom g)   -- hk : k • g = glvHom g
+  obtain ⟨g, hg⟩ :
+      ∃ g : secp256k1.toAffine.Point, ∀ x, x ∈ AddSubgroup.zmultiples g :=
+    IsAddCyclic.exists_generator
+  obtain ⟨k, hk⟩ := AddSubgroup.mem_zmultiples_iff.mp (hg (glvHom g))
+  -- hk : k • g = glvHom g
   -- `glvHom` is multiplication by `k`: check it on the generator, extend `ℤ`-linearly.
   have hscalar : ∀ P, glvHom P = k • P := by
     intro P
-    obtain ⟨a, rfl⟩ := hg P          -- P = a • g
-    rw [map_zsmul, ← hk, smul_smul, smul_smul, mul_comm]
+    obtain ⟨a, ha⟩ := AddSubgroup.mem_zmultiples_iff.mp (hg P)  -- ha : a • g = P
+    rw [← ha, map_zsmul, ← hk, smul_smul, smul_smul, mul_comm]
   refine ⟨k, hscalar, ?_⟩
   intro P
   -- Feed `φ² + φ + 1 = 0` through the scalar: `k²·P + k·P + P = 0`.
