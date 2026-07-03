@@ -1,5 +1,6 @@
 import Mathlib
 import Ecdlp.Proved.GlvEndomorphism
+import Ecdlp.Proved.GlvOrderThree
 
 /-!
 # The fixed locus of the GLV automorphism of secp256k1
@@ -48,5 +49,17 @@ theorem secp256k1_glvPoint_fixed_iff
     · exact hx0
   · rintro rfl
     exact ⟨mul_zero _, rfl⟩
+
+/-- **Every `φ`-fixed point is 3-torsion: `φ(P) = P ⇒ 3·P = O`.** Capstone corollary tying
+the fixed locus to the torsion: if `P` is fixed by the order-3 automorphism, then the
+trace-zero identity `P + φP + φ²P = O` (`secp256k1_glvPoint_orbit_sum`) collapses — `φP = P`
+forces `φ²P = P` too — to `P + P + P = O`, i.e. `3·P = O`. Combined with the fixed-locus
+characterization, the affine points fixed by `φ` (those with `x = 0`, over `y² = 7`) all lie
+in `E[3]`. This is the group-law shadow of `ker(φ − 1) ⊆ E[3]` (`N(ω − 1) = 3`). -/
+theorem secp256k1_glvPoint_fixed_three_torsion (P : secp256k1.toAffine.Point)
+    (hP : glvPoint P = P) : (3 : ℕ) • P = 0 := by
+  have h := secp256k1_glvPoint_orbit_sum P
+  simp only [hP] at h
+  rw [← h]; abel
 
 end Ecdlp.Curve
