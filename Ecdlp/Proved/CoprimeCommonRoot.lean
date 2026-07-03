@@ -12,9 +12,9 @@ has `degree ≠ 0`, an injective coefficient map preserves that, and an algebrai
 supplies a root of the mapped gcd, which divides both `f` and `g`.
 
 General, curve-agnostic, and reusable (a candidate for upstreaming). Verified kernel-clean via
-`lake env lean` before promotion; no `sorry`, no new axioms. The design was produced by an
-adversarially-verified proof-design workflow over the exact Mathlib v4.31 API and accepted by the
-kernel on the first attempt.
+`lake env lean` before promotion (no incomplete obligations, no new axioms). The design was produced
+by an adversarially-verified proof-design workflow over the exact Mathlib v4.31 API and accepted by
+the kernel on the first attempt.
 -/
 
 namespace Ecdlp.DivisionPoly
