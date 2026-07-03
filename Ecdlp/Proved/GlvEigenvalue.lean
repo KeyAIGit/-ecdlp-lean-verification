@@ -39,7 +39,8 @@ cyclic, then the GLV endomorphism `glvHom` is multiplication by a fixed integer 
 the eigenvalue relation `λ² + λ + 1 ≡ 0 (mod n)`. The scalar `k` is the GLV `λ`; proving it is
 one specific value would need the group order `n`, which is the point-counting barrier. -/
 theorem secp256k1_glvHom_eq_zsmul [IsAddCyclic secp256k1.toAffine.Point] :
-    ∃ k : ℤ, (∀ P, glvHom P = k • P) ∧ ∀ P, (k ^ 2 + k + 1) • P = 0 := by
+    ∃ k : ℤ, (∀ P : secp256k1.toAffine.Point, glvHom P = k • P)
+      ∧ ∀ P : secp256k1.toAffine.Point, (k ^ 2 + k + 1) • P = 0 := by
   obtain ⟨g, hg⟩ :
       ∃ g : secp256k1.toAffine.Point, ∀ x, x ∈ AddSubgroup.zmultiples g :=
     IsAddCyclic.exists_generator
