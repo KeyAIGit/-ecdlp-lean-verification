@@ -51,27 +51,19 @@ theorem somos4_dom [IsDomain R] (b c d : R) (hb : b ≠ 0) (n : ℕ) :
       = b^2 * normEDS b c d ((k:ℤ)+1) * normEDS b c d ((k:ℤ)-1) - c * normEDS b c d (k:ℤ) ^ 2)
     ?_ ?_ ?_ ?_ ?_ ?_ ?_ n
   · -- P 0
-    norm_num; rw [normEDS_neg, normEDS_neg]
-    simp only [normEDS_zero, normEDS_one, normEDS_two]; ring
+    norm_num <;> ring
   · -- P 1
-    norm_num; rw [normEDS_neg]
-    simp only [normEDS_zero, normEDS_one, normEDS_two, normEDS_three]; ring
+    norm_num <;> ring
   · -- P 2
-    norm_num
-    simp only [normEDS_zero, normEDS_one, normEDS_two, normEDS_three, normEDS_four]; ring
+    norm_num <;> ring
   · -- P 3
-    norm_num
     have h5 := normEDS_odd b c d 2
-    norm_num at h5
-    rw [normEDS_one, h5]
-    simp only [normEDS_one, normEDS_two, normEDS_three, normEDS_four]; ring
+    norm_num at h5 ⊢
+    linear_combination h5
   · -- P 4
-    norm_num
     have h6 := normEDS_even b c d 3
-    have h5 := normEDS_odd b c d 2
-    norm_num at h6 h5
-    rw [normEDS_two, h6, h5]
-    simp only [normEDS_one, normEDS_two, normEDS_three, normEDS_four]; ring
+    norm_num at h6 ⊢
+    linear_combination h6
   · -- even step:  P (2*(m+3))
     intro m IH
     set M : ℤ := (m:ℤ) + 3 with hMdef
@@ -147,11 +139,11 @@ theorem somos4_dom [IsDomain R] (b c d : R) (hb : b ≠ 0) (n : ℕ) :
 theorem somos4_dom_int [IsDomain R] (b c d : R) (hb : b ≠ 0) (m : ℤ) :
     normEDS b c d (m+2) * normEDS b c d (m-2)
       = b^2 * normEDS b c d (m+1) * normEDS b c d (m-1) - c * normEDS b c d m ^ 2 := by
-  rcases le_or_lt 0 m with h | h
-  · lift m to ℕ using h with k
+  by_cases h : 0 ≤ m
+  · obtain ⟨k, rfl⟩ : ∃ k : ℕ, (k:ℤ) = m := ⟨m.toNat, Int.toNat_of_nonneg h⟩
     exact somos4_dom b c d hb k
   · have hk : (0:ℤ) ≤ -m := by omega
-    lift (-m) to ℕ using hk with k hk2
+    obtain ⟨k, hk2⟩ : ∃ k : ℕ, (k:ℤ) = -m := ⟨(-m).toNat, Int.toNat_of_nonneg hk⟩
     have base := somos4_dom b c d hb k
     have e2 : m + 2 = -((k:ℤ) - 2) := by omega
     have e1 : m + 1 = -((k:ℤ) - 1) := by omega
