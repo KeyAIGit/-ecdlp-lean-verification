@@ -1,0 +1,3 @@
+tail pure A,T: True; terms 76 (0s)
+built 8 nonzero pure-A,T couplings D(u,v) (1s)
+running GB on 20 gens over 21 vars ...

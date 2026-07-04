@@ -52,6 +52,38 @@ recurrence (★₁):
 - `c4_*`, `c5_*`, `c14_*`, `c15_*`, `c16_final.py`, `c17_exchange.py` — outer-step pairing + the negative Groebner results.
 - `tracked_gb*.py`, `solver.py` — the tracked-Groebner / linear-solver harness.
 
+## Four-index relation R — descent result (second design pass, HONEST NEGATIVE)
+
+`R(p,q,r,s) := W(p+q)W(p−q)W(r+s)W(r−s) − W(p+r)W(p−r)W(q+s)W(q−s) + W(p+s)W(p−s)W(q+r)W(q−r)`.
+Files: `rwin.py`, `r0_def.py`, `r1_vlevel.py`, `r3_descent.py`, `r5_full.py`, `r6_nf.py`…`r11_nf.py`.
+
+Verified: `R ≡ 0` numerically; **(★₁) = R(m,n,1,0)** exactly; the V-level `b⁴`-decoration table
+(only one of the three R-terms ever carries a factor, always `B=b⁴`, determined by the parities of
+`p,q,r,s`); the explicit coupling identity `R(s,t,1,0)_V : A0²·T1·Tm1 − A1·Am1·T0² + P0·Q0 = 0`
+and the in-window R-families `R(s+i,t+j,u,v) ≡ 0`, `R(s+t,s−t,u,v) ≡ 0` (all sympy `expand==0`);
+the correct multigrading is the EDS weight as a **quadratic form in the free centers s,t**
+(`V(αs+βt+g) ↦ (s²,st,t²,s,t,K)`, `K=g²−1−3e(g)`), under which the even–even outer defect E is
+homogeneous of weight `(8,0,8,0,0,−8)`.
+
+**Correction to pass 1:** (★₃) is *not* literally a single `R(p,q,r,s)` (its left term `b·W(m+n+1)W(m−n)`
+has too few factors). It is a derived two-term companion; the clean R-shaped statement of the same
+content is `R(s,t,1,0)`.
+
+**Honest negative finding (the real boundary).** The even–even outer step does **NOT** close as a single
+low-cofactor-degree (≤6) `linear_combination` of the full in-window R-instance set + window (EVEN/ODD/
+Somos) rules. Three *exact* linear-algebra membership tests — normal form modulo the four disjoint
+single-window ideals plus a graded ansatz — were run with progressively richer generator sets (up to a
+1122×2318 system, 185 generators) and **all are inconsistent**. So the outer-step assembly is **not one
+`linear_combination`**; it requires a genuine **multi-lemma inductive development** (matching how the
+classical net-relation proof — Junyan Xu's Lean approach, and why Mathlib states `IsEllSequence` 4-index —
+is structured). No fabricated certificate was claimed.
+
+**Consequence for our pipeline.** The "design one certificate per case → single `linear_combination` →
+kernel-verify" pipeline that closed Somos-4 (n=2) and can close the n=2,3 slices does **not** scale to the
+full `normEDS_rec_one` outer step. The full theorem is a real multi-lemma formalization (weeks-scale,
+human-directed), best done referencing the existing net-relation development rather than re-derived as
+single certificates.
+
 ## Next actions when resuming
 1. Transcribe the 14 base-slice certificates as abstract free-`V` `linear_combination` lemmas
    (add `preNormEDS` doubling API + `e`-parity bookkeeping), kernel-verify on the server.
