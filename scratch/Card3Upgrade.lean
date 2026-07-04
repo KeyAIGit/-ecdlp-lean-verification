@@ -87,7 +87,7 @@ theorem secp256k1_threeTorsionX_ncard_le : threeTorsionX.ncard ≤ 4 := by
   calc threeTorsionX.ncard
       ≤ (↑(secp256k1.Ψ₃.roots.toFinset) : Set (ZMod Secp256k1.p)).ncard :=
         Set.ncard_le_ncard hsub (secp256k1.Ψ₃.roots.toFinset.finite_toSet)
-    _ = secp256k1.Ψ₃.roots.toFinset.card := Set.ncard_coe_Finset _
+    _ = secp256k1.Ψ₃.roots.toFinset.card := by simp
     _ ≤ 4 := secp256k1_Ψ₃_roots_toFinset_card_le
 
 end Ecdlp.Curve
