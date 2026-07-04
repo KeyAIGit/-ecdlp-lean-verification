@@ -485,7 +485,7 @@ private theorem rel₄Fin4_perm (σ : Perm (Fin 4)) :
   | mem x hx =>
     obtain ⟨i, rfl⟩ := hx
     intro t; fin_cases i <;>
-      rw [Perm.sign_swap (Fin.castSucc_lt_succ _).ne, Units.neg_smul, one_smul]
+      rw [Perm.sign_swap Fin.castSucc_lt_succ.ne, Units.neg_smul, one_smul]
     exacts [rel₄_swap₀₁ neg, rel₄_swap₁₂ neg, rel₄_swap₂₃ neg]
   | one => simp
   | mul σ τ _ _ ihσ ihτ =>
