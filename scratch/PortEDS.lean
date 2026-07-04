@@ -333,7 +333,10 @@ lemma negOnePow_cMin_eq_dMin (a : ℤ) : (cMin a).negOnePow = (dMin a).negOnePow
   rw [cMin, Int.negOnePow_add]; exact mul_one _
 
 lemma negOnePow_dMin (a : ℤ) : (dMin a).negOnePow = a.negOnePow := by
-  rw [dMin]; split_ifs with h <;> simp [h, Int.negOnePow_even, Int.negOnePow_odd]
+  rw [dMin]
+  split_ifs with h
+  · rw [Int.negOnePow_even _ h, Int.negOnePow_even _ even_zero]
+  · rw [Int.negOnePow_odd _ (Int.not_even_iff_odd.mp h), Int.negOnePow_odd _ odd_one]
 
 lemma negOnePow_cMin (a : ℤ) : (cMin a).negOnePow = a.negOnePow := by
   rw [negOnePow_cMin_eq_dMin, negOnePow_dMin]
