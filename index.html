@@ -52,6 +52,11 @@
     color:var(--blue2);font-weight:800;border:1px solid var(--line);background:rgba(8,41,79,.6);padding:7px 13px;border-radius:999px}
   .kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 10px var(--good);animation:pulse 2.4s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  @keyframes introUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  .hero .wrap>*{animation:introUp .85s cubic-bezier(.2,.7,.2,1) both}
+  .hero .wrap>h1{animation-delay:.14s}.hero .wrap>.lede{animation-delay:.28s}
+  .hero .wrap>.cta{animation-delay:.42s}.hero .wrap>.stats{animation-delay:.56s}
+  @media(prefers-reduced-motion:reduce){.hero .wrap>*{animation:none!important}}
   h1.big{font-size:clamp(33px,6.4vw,64px);line-height:1.03;margin:.42em 0 .3em;font-weight:800;max-width:17ch}
   h1.big .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .lede{font-size:clamp(17px,2.3vw,21px);color:#cdddf3;max-width:60ch;margin:0 0 30px}
@@ -327,16 +332,19 @@
   }
   resize();addEventListener('resize',resize);
 
-  var t=0,raf,chord=null,chordT=90;
+  var t=0,raf,chord=null,chordT=90,introT=reduce?1:0;
   function path(a){ctx.beginPath();for(var i=0;i<a.length;i++){if(i===0)ctx.moveTo(a[i][0],a[i][1]);else ctx.lineTo(a[i][0],a[i][1]);}}
+  function pathN(a,fr){var n=Math.max(2,Math.floor(a.length*fr));ctx.beginPath();for(var i=0;i<n;i++){if(i===0)ctx.moveTo(a[i][0],a[i][1]);else ctx.lineTo(a[i][0],a[i][1]);}}
   function frame(){
     ctx.clearRect(0,0,W,H);
     var g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#001a3f');g.addColorStop(1,'#00122b');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    // living glow behind the curve region
+    if(introT<1)introT=Math.min(1,introT+0.012);
+    var eio=introT<1?1-Math.pow(1-introT,3):1;   // eased intro progress
+    // living glow behind the curve region (fades in with intro)
     var gx=W*0.66+Math.sin(t*0.3)*W*0.02, gy=H*0.44+Math.cos(t*0.24)*H*0.02;
     var rg=ctx.createRadialGradient(gx,gy,0,gx,gy,Math.max(W,H)*0.5);
     rg.addColorStop(0,'rgba(29,133,255,.18)');rg.addColorStop(.5,'rgba(29,133,255,.05)');rg.addColorStop(1,'rgba(29,133,255,0)');
-    ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);
+    ctx.globalAlpha=eio;ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;
     // particles
     for(var i=0;i<parts.length;i++){var p=parts[i];p.x+=p.vx;p.y+=p.vy;
       if(p.x<0)p.x+=W;if(p.x>W)p.x-=W;if(p.y<0)p.y+=H;if(p.y>H)p.y-=H;
@@ -348,13 +356,13 @@
     ctx.lineWidth=1;
     for(var a=0;a<nodes.length;a++)for(var b=a+1;b<nodes.length;b++){
       var dx=nodes[a].x-nodes[b].x,dy=nodes[a].y-nodes[b].y,d2=dx*dx+dy*dy;
-      if(d2<30000){var al=(1-d2/30000)*0.24;ctx.strokeStyle='rgba(125,176,255,'+al+')';
+      if(d2<30000){var al=(1-d2/30000)*0.24*eio;ctx.strokeStyle='rgba(125,176,255,'+al+')';
         ctx.beginPath();ctx.moveTo(nodes[a].x,nodes[a].y);ctx.lineTo(nodes[b].x,nodes[b].y);ctx.stroke();}}
     // curve glow
     ctx.save();ctx.shadowColor='rgba(29,133,255,.95)';ctx.shadowBlur=17;ctx.lineWidth=2.6;ctx.strokeStyle='rgba(140,186,255,.95)';
-    path(upper);ctx.stroke();path(lower);ctx.stroke();ctx.restore();
-    // energy pulses travelling along the curve (with fading trail)
-    for(var q=0;q<pulses.length;q++){var pu=pulses[q];pu.i+=pu.spd;if(pu.i>=1)pu.i-=1;var arr=pu.up?upper:lower;
+    pathN(upper,eio);ctx.stroke();pathN(lower,eio);ctx.stroke();ctx.restore();
+    // energy pulses travelling along the curve (with fading trail) — only after the intro draw-in
+    if(introT>=1)for(var q=0;q<pulses.length;q++){var pu=pulses[q];pu.i+=pu.spd;if(pu.i>=1)pu.i-=1;var arr=pu.up?upper:lower;
       var idx=Math.floor(pu.i*(arr.length-1));
       for(var tr=12;tr>=0;tr--){var ti=idx-tr*2;if(ti<0||ti>=arr.length)continue;var pt=arr[ti];
         ctx.beginPath();ctx.arc(pt[0],pt[1],Math.max(0.6,2.6-tr*0.18),0,6.283);
@@ -362,7 +370,7 @@
       var hd=arr[idx];if(hd){ctx.save();ctx.shadowColor='#3fd08a';ctx.shadowBlur=14;
         ctx.beginPath();ctx.arc(hd[0],hd[1],3.4,0,6.283);ctx.fillStyle='#b7f5d6';ctx.fill();ctx.restore();}}
     // pulsing nodes
-    for(var m=0;m<nodes.length;m++){var q2=nodes[m];var pr=2.5+Math.sin(t*1.3+q2.ph)*0.8;
+    for(var m=0;m<nodes.length;m++){if(m/nodes.length>eio)continue;var q2=nodes[m];var pr=2.5+Math.sin(t*1.3+q2.ph)*0.8;
       ctx.beginPath();ctx.arc(q2.x,q2.y,pr+3.5,0,6.283);ctx.fillStyle='rgba(29,133,255,.13)';ctx.fill();
       ctx.beginPath();ctx.arc(q2.x,q2.y,pr,0,6.283);ctx.fillStyle=q2.onc?'#eaf1fb':'#7db0ff';ctx.fill();}
     // occasional point-addition chord flash between two on-curve nodes
