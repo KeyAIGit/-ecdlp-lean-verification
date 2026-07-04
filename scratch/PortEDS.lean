@@ -40,8 +40,8 @@ namespace EDSPort
 
 /-- The expression `W((m+n)/2) * W((m-n)/2)` is the basic building block of elliptic relations,
 where integers `m` and `n` should have the same parity. -/
-private def addMulSub (m n : ℤ) : R := W ((m + n).div 2) * W ((m - n).div 2)
-/- Implementation note: we use `Int.div _ 2` instead of `_ / 2` so that `(-m).div 2 = -(m.div 2)`
+private def addMulSub (m n : ℤ) : R := W ((m + n).tdiv 2) * W ((m - n).tdiv 2)
+/- Implementation note: we use `Int.tdiv _ 2` instead of `_ / 2` so that `(-m).tdiv 2 = -(m.tdiv 2)`
 and lemmas like `addMulSub_neg_left` hold unconditionally, even though in the case we care about
 (`m` and `n` both even or both odd) both are equal. -/
 
@@ -71,7 +71,7 @@ private lemma net_eq_rel₄ {p q r s : ℤ} :
     net W p q r s = rel₄ W (2 * p + s) (2 * q + s) (2 * r + s) s := by
   simp_rw [net, rel₄, addMulSub, add_add_add_comm _ s, add_sub_add_comm, sub_self, add_zero,
     add_assoc, ← two_mul, add_sub_cancel_right, ← left_distrib, ← mul_sub_left_distrib,
-    Int.mul_div_cancel_left _ two_ne_zero]
+    Int.mul_tdiv_cancel_left _ two_ne_zero]
   ring
 
 /-- The three-index elliptic relation, obtained by
@@ -109,23 +109,21 @@ lemma net_add_sub_iff (m n : ℤ) :
   conv_rhs => rw [← sub_eq_zero]
   ring_nf
 
-private lemma addMulSub_two_zero : addMulSub W 2 0 = W 1 ^ 2 := (sq _).symm
-private lemma addMulSub_three_one : addMulSub W 3 1 = W 2 * W 1 := rfl
 
 private lemma addMulSub_even (m n : ℤ) : addMulSub W (2 * m) (2 * n) = W (m + n) * W (m - n) := by
-  simp_rw [addMulSub, ← left_distrib, ← mul_sub_left_distrib, Int.mul_div_cancel_left _ two_ne_zero]
+  simp_rw [addMulSub, ← left_distrib, ← mul_sub_left_distrib, Int.mul_tdiv_cancel_left _ two_ne_zero]
 
 private lemma addMulSub_odd (m n : ℤ) :
     addMulSub W (2 * m + 1) (2 * n + 1) = W (m + n + 1) * W (m - n) := by
-  have h k := Int.mul_div_cancel_left k two_ne_zero
+  have h k := Int.mul_tdiv_cancel_left k two_ne_zero
   rw [addMulSub, ← h (m + n + 1), ← h (m - n)]; congr <;> ring
 
 private lemma addMulSub_self (zero : W 0 = 0) (m : ℤ) : addMulSub W m m = 0 := by
-  rw [addMulSub, sub_self, Int.zero_div, zero, mul_zero]
+  rw [addMulSub, sub_self, Int.zero_tdiv, zero, mul_zero]
 
 private lemma addMulSub_neg_left (neg : ∀ k, W (-k) = -W k) (m n : ℤ) :
     addMulSub W (-m) n = addMulSub W m n := by
-  simp_rw [addMulSub, ← neg_add', neg_add_eq_sub, ← neg_sub m, Int.neg_div, neg]; ring
+  simp_rw [addMulSub, ← neg_add', neg_add_eq_sub, ← neg_sub m, Int.neg_tdiv, neg]; ring
 
 private lemma addMulSub_neg_right (m n : ℤ) : addMulSub W m (-n) = addMulSub W m n := by
   rw [addMulSub, addMulSub, mul_comm]; abel_nf
@@ -139,7 +137,7 @@ private lemma addMulSub_abs_right (m n : ℤ) : addMulSub W m |n| = addMulSub W 
 
 private lemma addMulSub_swap (neg : ∀ k, W (-k) = -W k) (m n : ℤ) :
     addMulSub W m n = - addMulSub W n m := by
-  rw [addMulSub, addMulSub, ← neg_sub, Int.neg_div, neg]; ring_nf
+  rw [addMulSub, addMulSub, ← neg_sub, Int.neg_tdiv, neg]; ring_nf
 
 private lemma rel₃_iff_rel₄_eq_zero (m n r : ℤ) :
     Rel₃ W m n r ↔ rel₄ W (2 * m) (2 * n) (2 * r) 0 = 0 := by
@@ -212,7 +210,7 @@ lemma six_le_of_strictAnti₄ (anti : StrictAnti₄ a b c d) : 6 ≤ a := by
 
 variable (W) in
 /-- A hybrid product formed by one factor from an `addMulSub` and one from another `addMulSub`. -/
-private def addMulSub₄ (a b c d : ℤ) : R := W ((a + b).div 2) * W ((c - d).div 2)
+private def addMulSub₄ (a b c d : ℤ) : R := W ((a + b).tdiv 2) * W ((c - d).tdiv 2)
 
 private lemma addMulSub₄_mul_addMulSub₄ :
     addMulSub₄ W a b c d * addMulSub₄ W c d a b = addMulSub W a b * addMulSub W c d := by
