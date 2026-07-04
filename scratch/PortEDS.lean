@@ -166,20 +166,25 @@ open Int Equiv
 
 variable {W a b c d} (same : HaveSameParity₄ a b c d)
 
+include same in
 private lemma rel₄_eq_net : rel₄ W a b c d = net W ((a - d) / 2) ((b - d) / 2) ((c - d) / 2) d := by
   have h := @Int.two_mul_ediv_two_of_even
   rw [net_eq_rel₄, h, h, h]; · simp_rw [sub_add_cancel]
   all_goals simp only [← negOnePow_eq_iff, same.1, same.2.1, same.2.2]
 
+include same in
 lemma even_sum : Even (a + b + c + d) := by
   simp_rw [← negOnePow_eq_one_iff, negOnePow_add,
     same.1, same.2.1, same.2.2, units_mul_self, one_mul, units_mul_self]
 
+include same in
 lemma avg₄_add_avg₄ : avg₄ a b c d + avg₄ a b c d = a + b + c + d := by
   rw [← two_mul]; exact Int.mul_ediv_cancel' same.even_sum.two_dvd
 
+include same in
 lemma same₀₃ : a.negOnePow = d.negOnePow := by rw [same.1, same.2.1, same.2.2]
 
+include same in
 protected lemma abs : HaveSameParity₄ |a| |b| |c| |d| := by
   simpa only [HaveSameParity₄, negOnePow_abs] using same
 
@@ -192,6 +197,7 @@ lemma perm (σ : Perm (Fin 4)) :
   rintro _ ⟨i, rfl⟩ t ⟨h₀₁, h₁₂, h₂₃⟩; fin_cases i
   exacts [⟨h₀₁.symm, h₀₁ ▸ h₁₂, h₂₃⟩, ⟨h₀₁ ▸ h₁₂, h₁₂.symm, h₁₂ ▸ h₂₃⟩, ⟨h₀₁, h₁₂ ▸ h₂₃, h₂₃.symm⟩]
 
+include same in
 lemma six_le_of_strictAnti₄ (anti : StrictAnti₄ a b c d) : 6 ≤ a := by
   simp_rw [HaveSameParity₄, negOnePow_eq_iff] at same
   obtain ⟨hd, hdc, hcb, hba⟩ := anti
@@ -210,6 +216,7 @@ private lemma addMulSub₄_mul_addMulSub₄ :
 /-! Preservation of `rel₄`, `HaveSameParity₄`, and `strictAnti₄` under the transformation
   `(a,b,c,d) ↦ (avg₄ a b c d - d, avg₄ a b c d - c, avg₄ a b c d - b, |avg₄ a b c d - a|)`. -/
 
+include same in
 private lemma addMulSub_transf :
     addMulSub W (avg₄ a b c d - d) (avg₄ a b c d - c) = addMulSub₄ W a b c d ∧
       addMulSub W (avg₄ a b c d - d) (avg₄ a b c d - b) = addMulSub₄ W a c b d ∧
@@ -220,16 +227,19 @@ private lemma addMulSub_transf :
   simp_rw [addMulSub_abs_right, addMulSub, addMulSub₄, sub_add_sub_comm, same.avg₄_add_avg₄]
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> ring_nf
 
+include same in
 private theorem rel₄_transf :
     rel₄ W (avg₄ a b c d - d) (avg₄ a b c d - c) (avg₄ a b c d - b) |avg₄ a b c d - a| =
       rel₄ W a b c d := by
   obtain ⟨h₁, h₂, h₃, h₄, h₅, h₆⟩ := same.addMulSub_transf (W := W)
   simp_rw [rel₄, h₁, h₂, h₃, h₄, h₅, h₆, addMulSub₄_mul_addMulSub₄, mul_comm]
 
+include same in
 theorem transf : HaveSameParity₄
     (avg₄ a b c d - d) (avg₄ a b c d - c) (avg₄ a b c d - b) |avg₄ a b c d - a| := by
   simp_rw [HaveSameParity₄, negOnePow_abs, negOnePow_sub, same.1, same.2.1, same.2.2, true_and]
 
+include same in
 theorem strictAnti₄_transf (anti : StrictAnti₄ a b c d) :
     StrictAnti₄ (avg₄ a b c d - d) (avg₄ a b c d - c) (avg₄ a b c d - b) |avg₄ a b c d - a| := by
   obtain ⟨hd, hdc, hcb, hba⟩ := anti
@@ -347,6 +357,7 @@ private def Rel₄OfValid (a b c d : ℤ) : Prop :=
 variable {a c₀ d₀ : ℤ} (par : c₀.negOnePow = d₀.negOnePow) (le : 0 ≤ d₀) (lt : d₀ < c₀)
   (rel : ∀ {a' b}, a' ≤ a → Rel₄OfValid W a' b c₀ d₀) (mem : addMulSub W c₀ d₀ ∈ R⁰)
 
+include par le lt rel mem in
 /-- If `rel₄` holds for all quadruples of the form `(a', b, c₀, d₀)` for arbitrary `b` and
 `a' < a`, then it holds for `(a, b, c, c₀)` and `(a, b, c, d₀)` for arbitrary `b` and `c`
 (subject to some technical conditions). -/
@@ -362,6 +373,7 @@ private lemma rel₄_fix₁_of_fix₂ (b c : ℤ) :
       simp only [HaveSameParity₄, par, same.1, same.2.1, same.2.2, true_and]
       refine ⟨le, lt, ?_, ?_⟩ <;> linarith only [_hc, anti.2.1, anti.2.2.1, anti.2.2.2]
 
+include par le lt rel mem in
 /-- If `rel₄` holds for all quadruples of the form `(a', b, c₀, d₀)` for arbitrary `b` and
 `a' < a`, then it holds for `(a, b, c, d)` for arbitrary `b`, `c` and `d`
 (subject to some technical conditions). -/
@@ -437,15 +449,19 @@ section Perm
 
 variable (neg : ∀ k, W (-k) = -W k)
 
+include neg in
 private lemma rel₄_abs {m n r s : ℤ} : rel₄ W |m| |n| |r| |s| = rel₄ W m n r s := by
   simp_rw [rel₄, addMulSub_abs_left W neg, addMulSub_abs_right]
 
+include neg in
 private lemma rel₄_swap₀₁ {m n r s : ℤ} : rel₄ W m n r s = - rel₄ W n m r s := by
   simp_rw [rel₄, addMulSub_swap W neg n m]; ring
 
+include neg in
 private lemma rel₄_swap₁₂ {m n r s : ℤ} : rel₄ W m n r s = - rel₄ W m r n s := by
   simp_rw [rel₄, addMulSub_swap W neg r n]; ring
 
+include neg in
 private lemma rel₄_swap₂₃ {m n r s : ℤ} : rel₄ W m n r s = - rel₄ W m n s r := by
   simp_rw [rel₄, addMulSub_swap W neg s r]; ring
 
@@ -455,6 +471,7 @@ variable (W) in
 /-- The four-index elliptic relation with a tuple as input. -/
 private def rel₄Fin4 (t : Fin 4 → ℤ) : R := rel₄ W (t 0) (t 1) (t 2) (t 3)
 
+include neg in
 /-- `rel₄` is invariant (up to sign) under permutation of the four indices. -/
 private theorem rel₄Fin4_perm (σ : Perm (Fin 4)) :
     ∀ t, rel₄Fin4 W (t ∘ σ) = Perm.sign σ • rel₄Fin4 W t := by
@@ -463,8 +480,9 @@ private theorem rel₄Fin4_perm (σ : Perm (Fin 4)) :
   · rintro _ ⟨i, rfl⟩ t; fin_cases i <;>
       rw [Perm.sign_swap (Fin.castSucc_lt_succ _).ne, Units.neg_smul, one_smul]
     exacts [rel₄_swap₀₁ neg, rel₄_swap₁₂ neg, rel₄_swap₂₃ neg]
-  rw [Perm.coe_mul, ← Function.comp.assoc, hτ, hσ, map_mul, mul_comm, mul_smul]
+  rw [Perm.coe_mul, ← Function.comp_assoc, hτ, hσ, map_mul, mul_comm, mul_smul]
 
+include neg in
 private lemma rel₄Fin4_perm' (σ : Perm (Fin 4)) (t) :
     Perm.sign σ • rel₄Fin4 W (t ∘ σ) = rel₄Fin4 W t := by
   rw [rel₄Fin4_perm neg, ← mul_smul, Int.units_mul_self, one_smul]
@@ -473,18 +491,22 @@ variable (zero : W 0 = 0)
 
 /-! `rel₄` is trivial when two indices are equal. -/
 
+include zero in
 private lemma rel₄_same₀₁ (m r s : ℤ) : rel₄ W m m r s = 0 := by
   simp_rw [rel₄, addMulSub_self W zero]; ring
 
+include zero in
 private lemma rel₄_same₁₂ (m n s : ℤ) : rel₄ W m n n s = 0 := by
   simp_rw [rel₄, addMulSub_self W zero]; ring
 
+include zero in
 private lemma rel₄_same₂₃ (m n r : ℤ) : rel₄ W m n r r = 0 := by
   simp_rw [rel₄, addMulSub_self W zero]; ring
 
 variable (one : W 1 ∈ R⁰) (two : W 2 ∈ R⁰)
   (oddRec : ∀ m ≥ 2, OddRec W m) (evenRec : ∀ m ≥ 3, EvenRec W m)
 
+include neg zero one two oddRec evenRec in
 /-- The four-index `rel₄` relations follow from
 the single-index `oddRec` and `evenRec` recursive relations. -/
 private theorem rel₄_of_oddRec_evenRec {a b c d : ℤ} (same : HaveSameParity₄ a b c d) :
@@ -493,7 +515,7 @@ private theorem rel₄_of_oddRec_evenRec {a b c d : ℤ} (same : HaveSameParity�
   have nonneg i : 0 ≤ t i := by fin_cases i <;> exact abs_nonneg _
   let σ := Fin.revPerm.trans (Tuple.sort t)
   have anti : Antitone (t ∘ σ) := by
-    simp_rw [σ, coe_trans, ← Function.comp.assoc]
+    simp_rw [σ, coe_trans, ← Function.comp_assoc]
     exact (Tuple.monotone_sort t).comp_antitone fun _ _ ↦ Fin.rev_le_rev.mpr
   clear_value σ -- otherwise, unifying `t (σ i)` with `(t ∘ σ) i` is extremely slow
   rw [← rel₄_abs neg]; change rel₄Fin4 W t = 0
@@ -505,6 +527,7 @@ private theorem rel₄_of_oddRec_evenRec {a b c d : ℤ} (same : HaveSameParity�
   exact ⟨nonneg _, (anti <| by decide).lt_of_ne h₃₂,
     (anti <| by decide).lt_of_ne h₂₁, (anti <| by decide).lt_of_ne h₁₀⟩
 
+include neg zero one two oddRec evenRec in
 /-- An ℕ-indexed sequence defined recursively by the even-odd recurrence, after extension to
 all integers by symmetry (to make an odd function), is an elliptic sequence, provided its
 first two terms are not zero divisors. -/
