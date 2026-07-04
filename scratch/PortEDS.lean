@@ -442,7 +442,7 @@ private theorem rel₄_of_anti_oddRec_evenRec (one : W 1 ∈ R⁰) (two : W 2 �
     · ring
     · linarith only [h6, ha']
   · have nea : ¬ Even a := by
-      rw [← ha', ← Int.odd_iff_not_even]; convert odd_two_mul_add_one (m + 1) using 1; ring
+      rw [← ha', Int.not_even_iff_odd]; convert odd_two_mul_add_one (m + 1) using 1; ring
     simp_rw [cMin, dMin, if_neg nea]
     convert (rel₄_iff_evenRec W (m + 1)).mpr (evenRec _ ?_) using 2
     on_goal 3 => linarith only [h6, ha']
