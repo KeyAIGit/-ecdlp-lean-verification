@@ -572,7 +572,8 @@ theorem normEDS_isEllSequence {R : Type*} [CommRing R] (b c d : R) :
         unfold EDSPort.EvenRec
         rw [normEDS_one, normEDS_two]
         linear_combination
-          normEDS_even (MvPolynomial.X 0) (MvPolynomial.X 1) (MvPolynomial.X 2) m)
+          normEDS_even (MvPolynomial.X 0 : MvPolynomial (Fin 3) ℤ)
+            (MvPolynomial.X 1) (MvPolynomial.X 2) m)
   let f : MvPolynomial (Fin 3) ℤ →+* R :=
     MvPolynomial.eval₂Hom (Int.castRingHom R) ![b, c, d]
   intro m n r
