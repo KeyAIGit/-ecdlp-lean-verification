@@ -65,8 +65,15 @@ likely companion identity for the full `(★₁)`. **Prove this first**, then ge
 
 ## Status
 - `isEllSequence_of_rec_one` (the `r`-general ← `r = 1` reduction): **DONE**, merged.
-- `normEDS_rec_one` (`(★₁)`): **scoped, not yet proved** — the weeks-scale Ward induction; the machinery
-  above is confirmed present. Next concrete step: the Somos-4 slice.
+- `normEDS_rec_one` (`(★₁)`): **in progress** — the weeks-scale Ward induction; machinery confirmed present.
+  Somos-4 slice `(★₁)(·,2)` is the current milestone; its pieces are being kernel-verified one by one:
+  - Base cases `s0,s1,s2,s3,s4` (m = 0..4): **kernel-verified** on the server (`BASE04_OK`, warm Lean).
+  - Odd step `somos4_odd_step`, even step `somos4_even_step_scaled` (abstract, over a free `W : ℤ → R`
+    with the two doubling recurrences as hypotheses): **kernel-verified** first try (`linear_combination`).
+  - Remaining: **assembly** — instantiate the abstract steps with `normEDS` (index-normalise the halved
+    arguments via `normEDS_even`/`normEDS_odd`), wire `normEDSRec'` over `MvPolynomial (Fin 3) ℤ` (domain,
+    `b = X 0 ≠ 0` for the `b²` cancellation), reflect to `ℤ<0` via `normEDS_neg`, transport to any
+    `CommRing` via `map_normEDS`. Until assembled, Somos-4 is NOT a proved theorem.
 - On completion: `IsEllSequence (normEDS)` (the TODO's elliptic half) is a one-liner; then optionally
   `IsDivSequence` (~150–300 further lines) for the full `IsEllDivSequence`.
 
