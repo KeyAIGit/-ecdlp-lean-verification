@@ -84,6 +84,16 @@ full `normEDS_rec_one` outer step. The full theorem is a real multi-lemma formal
 human-directed), best done referencing the existing net-relation development rather than re-derived as
 single certificates.
 
+## n=3 slice step certificates — KERNEL-VERIFIED ✅
+
+`n3_certificates.lean` — four abstract free-`V` `linear_combination` step lemmas
+(`star1_n3_double_even/odd`, `star3_n3_double_even/odd`), the n=3 analogue of the Somos-4
+step lemmas. **Kernel-verified on the warm server (`lake env lean`, EXIT=0, no errors/warnings,
+first try).** Fable delivered them 4-way sympy-checked incl. a reparse-from-Lean-text `ring1==0`
+test. These are the discovered certificates (the hard part); they are NOT yet the assembled n=3
+`normEDS` theorem — that needs the mutual (★₁)+(★₃) induction over `preNormEDS`, base cases, and
+the V→W transport (heavier than Somos-4's single-family induction).
+
 ## Next actions when resuming
 1. Transcribe the 14 base-slice certificates as abstract free-`V` `linear_combination` lemmas
    (add `preNormEDS` doubling API + `e`-parity bookkeeping), kernel-verify on the server.
