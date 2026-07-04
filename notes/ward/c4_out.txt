@@ -1,0 +1,3 @@
+
+=== OUTER-EVEN (I)(2s,2t) s,t even: greedy left 83 terms (1s)
+   P/Q symbols left in tail: []

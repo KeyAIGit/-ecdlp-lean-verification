@@ -1,0 +1,9 @@
+4 window GBs built (0s)
+NF(E) terms 42 (1s)
+57 generators (1s)
+NF(E) weights: {(0, 0, 4, 4, 0, 0, 0, 0, -8), (8, 8, 0, 0, 0, 0, 0, 0, -8)}
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user--ecdlp-lean-verification/a3e81a8a-87b5-5b62-8db4-c6e19b0f93d5/scratchpad/ward/r6_nf.py", line 81, in <module>
+    assert len(WE)==1; WT=next(iter(WE))
+           ^^^^^^^^^^
+AssertionError

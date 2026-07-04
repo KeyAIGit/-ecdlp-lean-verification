@@ -1,0 +1,13 @@
+window GBs built
+  tried 0 (1s)
+  tried 20 (24s)
+  tried 40 (48s)
+  tried 60 (71s)
+  tried 80 (94s)
+  tried 100 (117s)
+  tried 120 (139s)
+  tried 140 (163s)
+  tried 160 (186s)
+  tried 180 (209s)
+  tried 200 (230s)
+no variant found in sample

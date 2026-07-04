@@ -1,0 +1,10 @@
+[even] tail 83 terms, 0 coupling rules
+  iter 0: after couplings+NF -> 164 terms (2s)
+  iter 1: after couplings+NF -> 164 terms (3s)
+  stalled for even
+[odd] tail 55 terms, 0 coupling rules
+  iter 0: after couplings+NF -> 242 terms (3s)
+  iter 1: after couplings+NF -> 244 terms (4s)
+  iter 2: after couplings+NF -> 244 terms (5s)
+  stalled for odd
+RESULT even: False odd: False

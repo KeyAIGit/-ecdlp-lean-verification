@@ -1,0 +1,2 @@
+
+=== slice-3(I) m=2t+1, t%2=0: greedy left 6 terms (0s)

@@ -1,0 +1,7 @@
+GBs built (0s)
+NF(E) terms 42 (1s)
+NF(E) weight(s): {(8, 0, 8, 0, 0, -8)}
+185 generators (1s)
+unknowns 2318 (3s)
+  imaged 100/2318 (12s)
+  imaged 200/2318 (23s)

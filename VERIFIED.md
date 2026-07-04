@@ -161,6 +161,19 @@ namespace `Ecdlp.Frontier`): `orderOf g ∣ |G|`, `0 < |G|`, `g^|G| = 1`, `order
 novel results: kernel-verified and built (so the one-invariant still holds), but deliberately
 **excluded from the headline count** to keep it honest.
 
+### Ported / upstream-derived (attributed — NOT original, NOT in the headline figure)
+The elliptic half of the open Mathlib TODO ("`normEDS` satisfies `IsEllSequence`") is
+**kernel-verified in this repo by porting an existing proof**, not by an original derivation:
+
+| Result | Lean name | File | Provenance |
+|---|---|---|---|
+| **`normEDS` is an elliptic sequence** — `IsEllSequence (normEDS b c d)` for every `b c d` over an arbitrary `CommRing` (Mathlib's own `IsEllSequence`). The flagship L4 target's elliptic half. | `normEDS_isEllSequence` | `Ecdlp/Proved/NormEDSIsElliptic.lean` | **Port of mathlib4 PR #13155** — proof, strategy, and certificates by **Junyan Xu (`alreadydone`) & David Angdinata**. This repo only transcribes their `namespace EllSequence` net-relation block onto pinned Mathlib v4.31 (2024→v4.31 API drift) and instantiates it for `normEDS` over `MvPolynomial (Fin 3) ℤ`, transporting via `map_normEDS`. Kernel-verified, 0 `sorry`; `#print axioms` = `[propext, Classical.choice, Quot.sound]`. |
+
+This is a **verified asset, explicitly not a novel result of this project**: the mathematics
+is Xu & Angdinata's. It is built and gated (the one-invariant holds), but deliberately
+**excluded from the headline count** to keep authorship claims honest. The independent
+`isEllSequence_of_rec_one` (headline row above) remains this repo's own contribution.
+
 ### Canonical count (single source of truth — propagate this exact figure)
 **143 ledger rows / ~129 distinct kernel-verified results** (14 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV

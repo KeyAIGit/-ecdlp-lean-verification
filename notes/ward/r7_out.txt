@@ -1,0 +1,47 @@
+GBs built (0s)
+NF(E) terms 42 (1s)
+NF(E) weight(s): {(8, 0, 8, 0, 0, -8)}
+57 generators (1s)
+unknowns 1838 (2s)
+  imaged 100/1838 (12s)
+  imaged 200/1838 (22s)
+  imaged 300/1838 (33s)
+  imaged 400/1838 (45s)
+  imaged 500/1838 (56s)
+  imaged 600/1838 (71s)
+  imaged 700/1838 (86s)
+  imaged 800/1838 (102s)
+  imaged 900/1838 (116s)
+  imaged 1000/1838 (131s)
+  imaged 1100/1838 (145s)
+  imaged 1200/1838 (159s)
+  imaged 1300/1838 (172s)
+  imaged 1400/1838 (187s)
+  imaged 1500/1838 (202s)
+  imaged 1600/1838 (217s)
+  imaged 1700/1838 (233s)
+  imaged 1800/1838 (248s)
+solving 1120x1838 (257s)
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user--ecdlp-lean-verification/a3e81a8a-87b5-5b62-8db4-c6e19b0f93d5/scratchpad/ward/r7_nf.py", line 112, in <module>
+    sol=sp.linsolve(eqs,*xs)
+        ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sympy/solvers/solveset.py", line 3108, in linsolve
+    sol = _linsolve(eqs, symbols)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sympy/polys/matrices/linsolve.py", line 76, in _linsolve
+    Aaug = sympy_dict_to_dm(eqsdict, const, syms)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sympy/polys/matrices/linsolve.py", line 123, in sympy_dict_to_dm
+    K, elems_K = construct_domain(elems, field=True, extension=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sympy/polys/constructor.py", line 363, in construct_domain
+    result = _construct_simple(coeffs, opt)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sympy/polys/constructor.py", line 37, in _construct_simple
+    is_complex = pure_complex(coeff)
+                 ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sympy/core/evalf.py", line 170, in pure_complex
+    h, t = v.as_coeff_Add()
+           ^^^^^^^^^^^^^^
+AttributeError: 'BooleanFalse' object has no attribute 'as_coeff_Add'

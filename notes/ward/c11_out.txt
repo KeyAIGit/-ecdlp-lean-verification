@@ -1,0 +1,2 @@
+built 7 couplings
+tail terms: 83
