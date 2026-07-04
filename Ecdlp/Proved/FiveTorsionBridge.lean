@@ -2,12 +2,23 @@ import Mathlib
 import Ecdlp.Proved.DivisionPolynomial
 import Ecdlp.Proved.TwoTorsionPoint
 import Ecdlp.Proved.ThreeTorsionBridge
+import Ecdlp.Proved.ThreeTorsionCard
 
 /-!
-# Division-polynomial 5-torsion bridge for secp256k1 (scratch / server verification)
+# Division-polynomial 5-torsion bridge for secp256k1
 
-Stage-1 reduction `secp256k1_psi5_evalEval` and the point-level `n = 5` equivalence
-`5•P = 0 ↔ ψ 5 vanishes at P`.
+The point-level `n = 5` case of the division-polynomial ↔ torsion bridge: for a nonzero affine
+point `P = (x, y)` of secp256k1, the group relation `5 • P = 0` holds iff the 5-division
+polynomial `ψ 5` vanishes at `P`. The `n = 5` analogue of the `n = 2`/`n = 3` bridges
+(`TwoTorsionPoint.lean`, `ThreeTorsionBridge.lean`), an original elementary proof on the Mathlib
+master API.
+
+The route mirrors the odd-`n` pattern: `5 • P = 0 ⟺ 2 • P = -(3 • P) ⟺ x(2P) = x(3P) ⟺ ψ₅(P) = 0`.
+Stage 1 (`secp256k1_psi5_evalEval`) reduces the bivariate `ψ 5` on the curve to the concrete
+degree-12 univariate `5x¹² + 2660x⁹ − 11760x⁶ − 548800x³ − 614656` (a polynomial in `x³`,
+reflecting the `j = 0`/CM structure); the heart is `five_core`, a `linear_combination` certificate
+turning `x(2P) = x(3P)` into `ψ₅(x) = 0` (identity designed via a sympy-verified certificate,
+transcribed here and re-checked by the Lean kernel).
 -/
 
 namespace Ecdlp.Curve
@@ -19,13 +30,6 @@ open Polynomial WeierstrassCurve.Affine
 theorem secp256k1_preΨ₄_eval (x : ZMod Secp256k1.p) :
     secp256k1.preΨ₄.eval x = 2 * x ^ 6 + 280 * x ^ 3 - 784 := by
   rw [WeierstrassCurve.preΨ₄, secp256k1_b₂, secp256k1_b₄, secp256k1_b₆, secp256k1_b₈]
-  simp only [eval_add, eval_mul, eval_pow, eval_X, eval_C, eval_ofNat]
-  ring
-
-/-- Concrete evaluation of `Ψ₃` for secp256k1: `Ψ₃(x) = 3x⁴ + 84x`. -/
-theorem secp256k1_Ψ₃_eval (x : ZMod Secp256k1.p) :
-    secp256k1.Ψ₃.eval x = 3 * x ^ 4 + 84 * x := by
-  rw [secp256k1_Ψ₃]
   simp only [eval_add, eval_mul, eval_pow, eval_X, eval_C, eval_ofNat]
   ring
 
