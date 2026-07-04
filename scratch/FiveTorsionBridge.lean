@@ -205,10 +205,10 @@ theorem secp256k1_five_nsmul_eq_zero_iff
         simp only [WeierstrassCurve.Affine.addY, WeierstrassCurve.Affine.negAddY,
           WeierstrassCurve.Affine.negY, WeierstrassCurve.Affine.addX, secp256k1]
         ring
-      have hns2 : secp256k1.toAffine.Nonsingular X2 Y2 := by
-        rw [hX2def, hY2def, hs2def]; exact nonsingular_add h h (fun hxy => hy0 hxy.2)
+      have hns2 : secp256k1.toAffine.Nonsingular X2 Y2 :=
+        nonsingular_add h h (fun hxy => hy0 hxy.2)
       have hP2 : (2 : ℕ) • (Point.some x y h) = Point.some X2 Y2 hns2 := by
-        rw [two_nsmul, hX2def, hY2def, hs2def]; exact Point.add_self_of_Y_ne hy0
+        rw [two_nsmul]; exact Point.add_self_of_Y_ne hy0
       set s3 := secp256k1.toAffine.slope X2 x Y2 y with hs3def
       set X3 := secp256k1.toAffine.addX X2 x s3 with hX3def
       set Y3 := secp256k1.toAffine.addY X2 x Y2 s3 with hY3def
@@ -216,10 +216,10 @@ theorem secp256k1_five_nsmul_eq_zero_iff
         rw [hX3def]
         simp only [WeierstrassCurve.Affine.addX, secp256k1]
         rw [hx2val]; ring
-      have hns3 : secp256k1.toAffine.Nonsingular X3 Y3 := by
-        rw [hX3def, hY3def, hs3def]; exact nonsingular_add hns2 h (fun hxy => hx2ne hxy.1)
+      have hns3 : secp256k1.toAffine.Nonsingular X3 Y3 :=
+        nonsingular_add hns2 h (fun hxy => hx2ne hxy.1)
       have hP3 : (3 : ℕ) • (Point.some x y h) = Point.some X3 Y3 hns3 := by
-        rw [show (3 : ℕ) = 2 + 1 from rfl, add_nsmul, one_nsmul, hP2, hX3def, hY3def, hs3def]
+        rw [show (3 : ℕ) = 2 + 1 from rfl, add_nsmul, one_nsmul, hP2]
         exact Point.add_some (fun hxy => hx2ne hxy.1)
       have hsl3s : s3 * (X2 - x) = Y2 - y := by
         rw [hs3def, slope_of_X_ne hx2ne]
@@ -239,7 +239,10 @@ theorem secp256k1_five_nsmul_eq_zero_iff
           have e23 : (2 : ℕ) • (Point.some x y h) = (3 : ℕ) • (Point.some x y h) := by
             rw [hP2, hP3, Point.some.injEq]; exact ⟨hx, hyy⟩
           rw [show (3 : ℕ) = 2 + 1 from rfl, add_nsmul, one_nsmul] at e23
-          exact (Point.some_ne_zero h) (self_eq_add_right.mp e23)
+          have hP0 : (0 : secp256k1.toAffine.Point) = Point.some x y h :=
+            add_left_cancel (show (2 : ℕ) • (Point.some x y h) + 0
+              = (2 : ℕ) • (Point.some x y h) + Point.some x y h by rw [add_zero]; exact e23)
+          exact Point.some_ne_zero h hP0.symm
         · exact hyn
       rw [show (5 : ℕ) = 2 + 3 from rfl, add_nsmul, hP2, hP3, add_eq_zero_iff_eq_neg,
         Point.neg_some, Point.some.injEq]
