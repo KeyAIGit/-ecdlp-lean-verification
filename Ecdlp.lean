@@ -60,3 +60,4 @@ import Ecdlp.Proved.FrontierGroupFacts
 import Ecdlp.Proved.EllSequenceRecOne
 import Ecdlp.Proved.NormEDSSomos4
 import Ecdlp.Proved.NormEDSIsElliptic
+import Ecdlp.Proved.DependenceRecoversLog
