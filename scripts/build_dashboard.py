@@ -704,8 +704,9 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 </script>
 </body></html>"""
     OUT.write_text(html, encoding="utf-8")
-    (ROOT / "index.html").write_text(html, encoding="utf-8")
-    print(f"wrote {OUT.relative_to(ROOT)} + index.html ({len(html)} bytes) — {vcount} results, "
+    # NOTE: index.html is the hand-authored KeyAI landing one-pager (site root); the auto-generated
+    # dashboard lives at dashboard.html only. Do NOT overwrite index.html here.
+    print(f"wrote {OUT.relative_to(ROOT)} ({len(html)} bytes) — {vcount} results, "
           f"frontier {completeness}%, nav sections {len(NAV)}, extra files {len(discover_extra_files())}")
     return 0
 
