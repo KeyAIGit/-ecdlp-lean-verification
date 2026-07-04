@@ -93,7 +93,7 @@ theorem five_core (x y ℓ₂ ℓ₃ : ZMod Secp256k1.p)
     have hFz : F = 0 := by rw [← hBF, hB, zero_mul]
     have := hmaster
     rw [hFz, zero_mul] at this
-    linear_combination -this
+    linear_combination this
   · intro hp
     have hFz : F = 0 := by
       have := hmaster
@@ -195,7 +195,7 @@ theorem secp256k1_five_nsmul_eq_zero_iff
         apply hΨ3ne
         have := hId
         rw [hc, zero_mul] at this
-        linear_combination -this
+        linear_combination this
       have hx2val : X2 = s2 ^ 2 - 2 * x := by
         rw [hX2def]; simp only [WeierstrassCurve.Affine.addX, secp256k1]; ring
       have hx2x : X2 - x = s2 ^ 2 - 3 * x := by rw [hx2val]; ring
