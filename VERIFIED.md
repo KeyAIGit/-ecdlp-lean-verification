@@ -150,6 +150,7 @@ git history and the GitHub Actions tab.
 | **`IsCoprime` ↔ no common root** (over a field `k`, non-coprime `f,g ∈ k[X]` ⇒ a genuine common root in any algebraically-closed extension, + easy converse — the field↔`k̄` bridge B1 consumes, **independent of the open L4 TODO**; node **L1** of B1, general/upstreamable) | `Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime` | Ecdlp/Proved/CoprimeCommonRoot.lean | Mathlib (`EuclideanDomain.gcd`, `IsAlgClosed.exists_root`, `degree_map_eq_of_injective`) | proved |
 | **GLV eigenvalue ⇒ scalar action** (an endomorphism `φ` fixing a cyclic group's generator as a `λ`-eigenvector acts as `[λ]` on the whole subgroup: `φ x = λ•x`; the algebraic core of the GLV speed-up used on secp256k1, promoted from stem `glv_root_mod_n_condition_008`) | `Ecdlp.Curve.glv_root_mod_n_condition` | Ecdlp/Proved/GlvScalarAction.lean | Mathlib (`map_zsmul`, `smul_comm`) | proved |
 | **`r`-general elliptic-sequence identity ⇐ its `r=1` case** (`isEllSequence_of_rec_one`: any `W:ℤ→R` over a `CommRing` satisfying the two-index recurrence is an `IsEllSequence`; pure `linear_combination`, **no `W 1=1` needed** — more general than the roadmap expected. Isolates all remaining content of the open Mathlib TODO "`normEDS` is elliptic" into the `r=1` master recurrence; **first upstream-Mathlib stepping stone** toward it, see `notes/B1_TRACTABILITY_MAP.md`) | `Ecdlp.EDS.isEllSequence_of_rec_one` | Ecdlp/Proved/EllSequenceRecOne.lean | Mathlib (`IsEllSequence`) + `linear_combination` | proved |
+| **Somos-4 recurrence for `normEDS`** (`normEDS_somos4`: `normEDS(m+2)·normEDS(m−2) = b²·normEDS(m+1)·normEDS(m−1) − c·normEDS(m)²` for all `m:ℤ` over any `CommRing` — the `n=2` slice of Ward's master recurrence and the companion identity for the open Mathlib TODO "`normEDS` is elliptic"; single-parameter `normEDSRec'` strong induction, `b²`-cancellation over the domain `MvPolynomial (Fin 3) ℤ`, reflected by `normEDS_neg` and transported to any `CommRing` via `map_normEDS`; **second upstream-Mathlib stepping stone** toward L4, see `notes/L4_WARD_INDUCTION.md`) | `Ecdlp.NormEDS.normEDS_somos4` | Ecdlp/Proved/NormEDSSomos4.lean | Mathlib (`normEDSRec'`, `normEDS_even`/`normEDS_odd`, `map_normEDS`) + `linear_combination` | proved |
 
 ### Coverage restatements (tier-0, tracked separately — NOT in the headline figure)
 Ten elementary finite-group / torsion facts — standard Mathlib lemmas restated in the ECDLP
@@ -161,7 +162,7 @@ novel results: kernel-verified and built (so the one-invariant still holds), but
 **excluded from the headline count** to keep it honest.
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**142 ledger rows / ~128 distinct kernel-verified results** (14 rows are alternate-form
+**143 ledger rows / ~129 distinct kernel-verified results** (14 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
 **0 `sorry`, 0 `admit`, 0 open obligations.**
