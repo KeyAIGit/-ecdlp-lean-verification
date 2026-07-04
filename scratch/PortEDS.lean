@@ -317,7 +317,7 @@ private lemma rel₃_iff_evenRec (m : ℤ) : Rel₃ W (m + 1) (m - 1) 1 ↔ Even
 
 private lemma rel₄_iff_evenRec (m : ℤ) : rel₄ W (2 * m + 1) (2 * m - 1) 3 1 = 0 ↔ EvenRec W m := by
   rw [iff_comm, EvenRec, ← sub_eq_zero, show 2 * m - 1 = 2 * (m - 1) + 1 by ring]
-  convert_to _ ↔ rel₄ W _ _ (2 * 1 + 1) (2 * 0 + 1) = 0
+  convert_to _ ↔ rel₄ W (2 * m + 1) (2 * (m - 1) + 1) (2 * 1 + 1) (2 * 0 + 1) = 0
   simp_rw [rel₄, addMulSub_odd]; ring_nf
 
 /-- The minimal possible fourth index in the four-index elliptic relation given the first index. -/
@@ -335,8 +335,8 @@ lemma negOnePow_cMin_eq_dMin (a : ℤ) : (cMin a).negOnePow = (dMin a).negOnePow
 lemma negOnePow_dMin (a : ℤ) : (dMin a).negOnePow = a.negOnePow := by
   rw [dMin]
   split_ifs with h
-  · rw [Int.negOnePow_even _ h, Int.negOnePow_even _ even_zero]
-  · rw [Int.negOnePow_odd _ (Int.not_even_iff_odd.mp h), Int.negOnePow_odd _ odd_one]
+  · rw [Int.negOnePow_even _ h, Int.negOnePow_even (0 : ℤ) ⟨0, by ring⟩]
+  · rw [Int.negOnePow_odd _ (Int.not_even_iff_odd.mp h), Int.negOnePow_odd (1 : ℤ) ⟨0, by ring⟩]
 
 lemma negOnePow_cMin (a : ℤ) : (cMin a).negOnePow = a.negOnePow := by
   rw [negOnePow_cMin_eq_dMin, negOnePow_dMin]
