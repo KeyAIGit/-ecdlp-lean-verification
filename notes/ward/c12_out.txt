@@ -1,0 +1,50 @@
+
+=== slice-3(II) m=2t, t%2=0: greedy left 13 terms
+   J7-GB expressed=True
+   exact recheck: True
+   [VStarOdd(t+0,3)] * (-v1**2*v2*vm1**3)   int=True
+   [VStar1(t+0,3)] * (-v0*(B**2*v0**4*v2 - 2*B*c*v0**3*v1**2 + 2*B*v0*v1**3*vm1 + B*v0*v2**2*vm1**2 - c*v1**4*vm2 - c*v1**2*v2*vm1**2 + d*v0*v1**3*vm1 - v2*v3*vm1**3))   int=True
+   [VStar1(t+1,3)] * (B*v0*v1**2*v2*vm2**2)   int=True
+   [VStarOdd(t-1,2)] * (v0*(B**2*v0**4*v3 + B*c**2*v0**3*v1*v2 + B*d*v0**2*v1**3 + B*v0*v2*v3*vm1**2 + v1**3*v3*vm3))   int=True
+   [VStarOdd(t+0,2)] * (B*v0**2*(B*v0*v1**2*vm1 - v2*v3*vm2**2))   int=True
+   [VStar1(t-1,2)] * (-v0*v2*(B*c**2*v0**3*v2 + B*d*v0**2*v1**2 - B*v0*v1*v3*vm2 + v1**2*v3*vm3))   int=True
+   [VStar1(t+0,2)] * (-B*v0*(B*c*v0**2*v1*v2*vm1 + B*d*v0**3*v1**2 - B*v0**2*v1*v3*vm2 - 2*c**2*v0*v1**3*vm1 - c**2*v0*v1**2*v2*vm2 + c*d*v0**2*v1*v2*vm1 + c*v0*v2*v3*vm1*vm2 - d*v0**2*v1*v3*vm2 + d*v1**4*vm2 + 2*v0*v1**2*v3*vm3))   int=True
+   [VStar1(t+1,2)] * (-v0*(B**2*d*v0**5 - B*c**2*v0**3*v2*vm2 + B*c*v0*v1*v2*vm1*vm2 - B*d*v0**2*v1**2*vm2 + 2*B*d*v0**2*v2*vm1**2 - c**2*v1*v2*vm1**3 + c*d*v0*v1**2*vm1**2))   int=True
+
+=== slice-3(II) m=2t, t%2=1: greedy left 13 terms
+   J7-GB expressed=True
+   exact recheck: True
+   [VStarOdd(t+0,3)] * (-B*v1**2*v2*vm1**3)   int=True
+   [VStar1(t+0,3)] * (-v0*(2*B**2*v0*v1**3*vm1 - 3*B*c*v0**3*v1**2 - B*c*v1**4*vm2 - B*c*v1**2*v2*vm1**2 + B*d*v0*v1**3*vm1 + 2*B*v0**4*v2 - B*v0**3*v3*vm1 + B*v0*v2**2*vm1**2 - B*v2*v3*vm1**3 + 2*d*v0**4*v2 + v0**2*v2*v3*vm3))   int=True
+   [VStar1(t+1,3)] * (v0*v1**2*v2*vm2**2)   int=True
+   [VStarOdd(t-1,2)] * (v0*(B*d*v0**2*v1**3 + B*v0**4*v3 - B*v0**2*v2**2*vm1 + 2*B*v0*v2*v3*vm1**2 + B*v1**3*v3*vm3 + 2*d*v0**4*v3 + v0**2*v3**2*vm3))   int=True
+   [VStarOdd(t+0,2)] * (v0*(B**2*v0**2*v1**2*vm1 + 2*B*d*v0**2*v1**2*vm1 + B*v0**2*v1*v2*vm2 - B*v0*v1**2*v2*vm3 + B*v1**2*v3*vm1*vm3 + c**2*v0**3*v2*vm1 - 2*d*v0**2*v1*v2*vm2 - v0*v2*v3*vm2**2 - v1*v2*v3*vm2*vm3))   int=True
+   [VStar1(t-1,2)] * (B*v0*v1*v2*v3*(2*v0*vm2 - v1*vm3))   int=True
+   [VStar1(t+0,2)] * (v0*(2*B*c**2*v0*v1**3*vm1 - B*c*v0**2*v1*v2*vm1 - B*d*v0**3*v1**2 - B*d*v1**4*vm2 + B*v0**2*v1*v3*vm2 - 2*B*v0*v1**2*v3*vm3 - c**3*v0**3*v1**2 + c**2*v0**4*v2 - c**2*v0**3*v3*vm1 + c**2*v0*v1**2*v2*vm2 - 3*c*d*v0**2*v1*v2*vm1 - c*v0*v2*v3*vm1*vm2 - c*v1*v2*v3*vm1*vm3 + 2*d**2*v0**3*v1**2 + 3*d*v0**2*v1*v3*vm2 + d*v0*v1**2*v3*vm3 + v1*v3**2*vm2*vm3))   int=True
+   [VStar1(t+1,2)] * (v0*(B*c**2*v1*v2*vm1**3 - B*c*d*v0*v1**2*vm1**2 - B*c*v0*v1*v2*vm1*vm2 - 2*B*d*v0**5 + B*d*v0**2*v1**2*vm2 - 3*B*d*v0**2*v2*vm1**2 - B*v0**3*v3*vm3 - B*v0*v2**2*vm1*vm3 + c**3*v0**5 + c**2*v0**3*v2*vm2 - 2*d**2*v0**5 - d*v0**3*v3*vm3))   int=True
+
+=== slice-3(II) m=2t+1, t%2=0: greedy left 16 terms
+   J7-GB expressed=True
+   exact recheck: True
+   [VStarOdd(t+0,3)] * (-B*v0**2*v2**3*vm1)   int=True
+   [VStar1(t+0,3)] * (B*c*v0**3*v2**3 + B*v0**3*v1*v2*v3 + B*v0*v1**4*v2 - B*v0*v1*v2**3*vm1 + c*v1**3*v2**2*vm1 + v0**2*v1*v3**2*vm1)   int=True
+   [VStar1(t+1,3)] * (B*v1*v2**3*vm1*vm2)   int=True
+   [VStarOdd(t-1,2)] * (2*B**2*v0**2*v1*v2**3 - B*c*v0**3*v2**2*v3 - 3*B*c*v0*v1**3*v2**2 + B*d*v0**2*v1*v2**3 - B*v0**3*v1*v3**2 + c**2*v1**5*v2 + 2*d*v0**3*v1*v3**2 + d*v0*v1*v2**2*v3*vm1 + v0**2*v3**3*vm2 - 2*v1*v2*v3**2*vm1**2 + v2**2*v3**2*vm1*vm2)   int=True
+   [VStarOdd(t+0,2)] * (-B**2*v0**2*v1**3*v2 - B*d*v0**4*v2*v3 - B*d*v0**2*v2**3*vm1 - B*v0*v1**3*v3*vm1 - d*v0**3*v3**2*vm1 + d*v0*v1**3*v3*vm1 - d*v0*v1**2*v2*v3*vm2 - d*v0*v2**2*v3*vm1**2 - v0**2*v2*v3**2*vm3 + v1**3*v2*v3*vm3 - v1*v2*v3**2*vm2**2)   int=True
+   [VStar1(t-1,2)] * (-v2*(B*d*v0**2*v2**3 + B*v0*v1**3*v3 + d*v0**3*v3**2 + d*v0*v1**3*v3 + d*v0*v2**2*v3*vm1 + v1**2*v3**2*vm2))   int=True
+   [VStar1(t+0,2)] * (2*B**2*c*v0**2*v1**2*v2**2 - B**2*d*v0**3*v2**3 - B*c**2*v0**3*v1*v2*v3 - 3*B*c**2*v0*v1**4*v2 + B*c**2*v0*v1*v2**3*vm1 - B*d*v1**3*v2**2*vm1 - B*v0*v1**2*v3**2*vm2 + c**3*v1**6 - c*v1**2*v3**2*vm1**2 + d**2*v0**2*v1**3*v3 + 2*d*v0*v1**2*v3**2*vm2 + v1*v3**3*vm2**2 - v2**2*v3**2*vm1*vm3)   int=True
+   [VStar1(t+1,2)] * (-v1*(-2*B*c**2*v0**3*v1*v2 + B*c*v0*v1**2*v2*vm1 - 2*B*d*v0**2*v2**2*vm1 - 2*B*v0*v2**3*vm3 + c**3*v0**2*v1**3 - 2*c**2*v0**2*v1*v3*vm1 - c**2*v1**4*vm1 + c*d*v0*v1**2*v2*vm1 + c*v1**2*v2**2*vm3 + c*v1**2*v3*vm1**2 + d**2*v0**4*v3 - d*v0*v1**2*v3*vm2 - 2*d*v0*v2*v3*vm1**2 - v2**2*v3*vm1*vm3))   int=True
+
+=== slice-3(II) m=2t+1, t%2=1: greedy left 16 terms
+   J7-GB expressed=True
+   exact recheck: True
+   [VStarOdd(t+0,3)] * (-v0**2*v2**3*vm1)   int=True
+   [VStar1(t+0,3)] * (B**2*c*v1**6 - 2*B**2*v0*v1**4*v2 + B*c*v0**2*v1**3*v3 + B*c*v1**3*v2**2*vm1 - B*d*v0*v1**4*v2 - B*v0**3*v1*v2*v3 + B*v0**2*v1*v3**2*vm1 - B*v0*v1*v2**3*vm1 + c*v0**3*v2**3)   int=True
+   [VStar1(t+1,3)] * (v1*v2**3*vm1*vm2)   int=True
+   [VStarOdd(t-1,2)] * (v0*v3*(B*v0**2*v1*v3 + B*v1*v2**2*vm1 - c*v0**2*v2**2))   int=True
+   [VStarOdd(t+0,2)] * (B*(B*v0**2*v1**3*v2 + d*v0**2*v1**3*v2 + v0**4*v2*v3 - v0**3*v3**2*vm1 + v1**3*v2*v3*vm3 - v1**2*v3**2*vm1*vm2))   int=True
+   [VStar1(t-1,2)] * (B**2*v0*v1**3*v2*v3)   int=True
+   [VStar1(t+0,2)] * (-B*c*v1**2*v3**2*vm1**2 - B*d*v1**3*v2**2*vm1 + B*v0**2*v2**2*v3*vm1 - B*v0*v2*v3**2*vm1**2 - B*v1**3*v3**2*vm3 - c**2*v0**3*v1*v2*v3 + c**2*v0*v1*v2**3*vm1 - c*d*v0**2*v1**2*v2**2)   int=True
+   [VStar1(t+1,2)] * (B**2*c**2*v1**5*vm1 - B**2*c*v0*v1**3*v2*vm1 - B**2*c*v1**3*v3*vm1**2 - B**2*d*v0**2*v1**4 - B**2*v0*v1*v2*v3*vm1**2 - B**2*v1**4*v3*vm3 + 2*B*c**2*v0**2*v1**2*v3*vm1 - B*c*d*v0*v1**3*v2*vm1 - B*d*v0**4*v1*v3 - B*d*v0**2*v1*v2**2*vm1 + B*d*v0*v1**3*v3*vm2 + B*v0**3*v3**2*vm2 + B*v0*v2**2*v3*vm1*vm2 + c*d*v0**4*v2**2)   int=True
+
+DONE

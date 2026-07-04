@@ -1,0 +1,16 @@
+[even] tail 83 terms; 100 nonzero exchanges (1s)
+  iter 0: -> 286 terms (7s)
+  iter 1: -> 384 terms (15s)
+  iter 2: -> 364 terms (23s)
+  iter 3: -> 328 terms (29s)
+  iter 4: -> 316 terms (34s)
+  iter 5: -> 316 terms (37s)
+  stalled for even; residue terms 316
+[odd] tail 55 terms; 36 nonzero exchanges (0s)
+  iter 0: -> 198 terms (4s)
+  iter 1: -> 267 terms (6s)
+  iter 2: -> 250 terms (8s)
+  iter 3: -> 248 terms (10s)
+  iter 4: -> 248 terms (11s)
+  stalled for odd; residue terms 248
+RESULT even: False odd: False
