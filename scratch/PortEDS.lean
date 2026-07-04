@@ -368,7 +368,7 @@ include par le lt rel mem in
 (subject to some technical conditions). -/
 private lemma rel₄_fix₁_of_fix₂ (b c : ℤ) :
     Rel₄OfValid W a b c c₀ ∧ (c₀ < c → Rel₄OfValid W a b c d₀) := by
-  refine ⟨fun same anti ↦ mem _ ?_, fun _hc same anti ↦ mem _ ?_⟩ <;> rw [mul_comm, ← rel₆]
+  refine ⟨fun same anti ↦ mem.2 _ ?_, fun _hc same anti ↦ mem.2 _ ?_⟩ <;> rw [mul_comm, ← rel₆]
   on_goal 1 => rw [rel₆_eq₃]; have _hc := trivial
   on_goal 2 => rw [rel₆_eq₃']
   all_goals simp_rw [rel₆]; rw [rel le_rfl, rel le_rfl, rel anti.2.2.2.le]
@@ -383,7 +383,7 @@ include par le lt rel mem in
 `a' < a`, then it holds for `(a, b, c, d)` for arbitrary `b`, `c` and `d`
 (subject to some technical conditions). -/
 private lemma rel₄_of_fix₂ (b c d : ℤ) (hc : c₀ < d) (par' : d.negOnePow = d₀.negOnePow) :
-    Rel₄OfValid W a b c d := fun same ⟨_, hdc, hcb, hba⟩ ↦ mem _ <| by
+    Rel₄OfValid W a b c d := fun same ⟨_, hdc, hcb, hba⟩ ↦ mem.2 _ <| by
   rw [mul_comm, ← rel₆, rel₆_eq₁₀]; simp_rw [rel₆]
   have fix₁ b c := (rel₄_fix₁_of_fix₂ par le lt rel mem b c).1
   have fix₂ {b c} := (rel₄_fix₁_of_fix₂ par le lt rel mem b c).2
@@ -399,7 +399,7 @@ and combine them to remove technical conditions about the relative order of the 
 private theorem rel₄_of_min₂ (one : W 1 ∈ R⁰) (two : W 2 ∈ R⁰)
     (rel : ∀ {a' b}, a' ≤ a → Rel₄OfValid W a' b (cMin a) (dMin a)) (b c d : ℤ) :
     Rel₄OfValid W a b c d := fun same anti ↦ by
-  obtain hc|hc := lt_or_le (cMin a) d
+  obtain hc|hc := lt_or_ge (cMin a) d
   · refine rel₄_of_fix₂ (negOnePow_cMin_eq_dMin a) (dMin_nonneg a) (dMin_lt_cMin a) rel
       (addMulSub_mem_nonZeroDivisors one two a) _ _ _ hc ?_ same anti
     rw [negOnePow_dMin, same.1, same.2.1, same.2.2]
@@ -420,7 +420,7 @@ private theorem rel₄_of_anti_oddRec_evenRec (one : W 1 ∈ R⁰) (two : W 2 �
     ∀ ⦃a b c d : ℤ⦄, Rel₄OfValid W a b c d :=
   -- apply induction on `a`
   Int.strongRec (m := 6) -- if `a < 6` the conclusion holds vacuously
-    (fun a ha b c d same anti ↦ ((same.six_le_of_strictAnti₄ anti).not_lt ha).elim)
+    (fun a ha b c d same anti ↦ absurd (same.six_le_of_strictAnti₄ anti) (by omega))
     -- otherwise, it suffices to deal with the "minimal" case `c = cMin a` and `d = dMin a`
     fun a h6 ih ↦ rel₄_of_min₂ one two fun {a' b} haa same anti ↦ by
   obtain ha'|ha' := haa.lt_or_eq
@@ -436,17 +436,15 @@ private theorem rel₄_of_anti_oddRec_evenRec (one : W 1 ∈ R⁰) (two : W 2 �
   obtain ⟨m, rfl|rfl⟩ := b.even_or_odd'
   -- the `b + 2 = a'` case is handled by oddRec or evenRec depending on the parity of `b`
   · have ea : Even a := by rw [← ha']; exact (even_two_mul _).add even_two
+    have hm2 : m ≥ 2 := by linarith only [h6, ha']
     simp_rw [cMin, dMin, if_pos ea]
     convert (rel₃_iff_rel₄_eq_zero W (m + 1) m 1).mp
-      ((rel₃_iff_oddRec W m).mpr <| oddRec _ ?_) using 2
-    · ring
-    · linarith only [h6, ha']
+      ((rel₃_iff_oddRec W m).mpr <| oddRec _ hm2) using 2 <;> ring
   · have nea : ¬ Even a := by
       rw [← ha', Int.not_even_iff_odd]; convert odd_two_mul_add_one (m + 1) using 1; ring
+    have hm3 : m + 1 ≥ 3 := by linarith only [h6, ha']
     simp_rw [cMin, dMin, if_neg nea]
-    convert (rel₄_iff_evenRec W (m + 1)).mpr (evenRec _ ?_) using 2
-    on_goal 3 => linarith only [h6, ha']
-    all_goals ring
+    convert (rel₄_iff_evenRec W (m + 1)).mpr (evenRec _ hm3) using 2 <;> ring
 
 end Rel₄OfValid
 
