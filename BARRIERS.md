@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~130 distinct results / 144 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~132 distinct results / 146 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -98,3 +98,27 @@ to verify. Correctly excluded.
   Semaev polynomials, Weil pairing) are missing to formalize ECDLP cryptanalysis.
 - **Lottery (level 3):** a genuinely new structural / no-go result would come from
   the *Tractable now* zone, not from forcing a barrier.
+
+## Upstream-existence check (machine-assisted, evidence-backed)
+An automated multi-agent scan of mathlib4 (master + open PRs + Zulip) — see
+`notes/UPSTREAM_SCAN.md` — confirms the barrier map above against the live upstream, and
+sharpens it: the **generic scaffolding is already upstream** (Weierstrass group law in three
+models, division polynomials `ψₙ/φₙ/ωₙ`, rank-1 `normEDS`/`IsEllSequence`, `ZLattice`/Minkowski,
+`MvPolynomial`+resultants — all free by import on the pinned v4.31), while the
+**cryptographically load-bearing superstructure is a green field**, absent from master, every
+surfaced PR, and wider-GitHub Lean search:
+- **Weil pairing** `e_n : E[n]×E[n]→μ_n` and the structure theorem `E[n] ≅ (ℤ/n)²` — nothing.
+- **Division-polynomial torsion bridge** `ψₙ(P)=0 ⟺ P ∈ E[n]` — the keystone; `ψₙ` is free but
+  the link to the point group / mul-by-`n` lives only in stalled PR #13782. **Highest-ROI next port.**
+- **Semaev summation polynomials** `S_n` — zero hits repo- and GitHub-wide.
+- **General multi-index elliptic nets** (rank ≥ 2, subnet functoriality) — only rank-1 exists
+  (master + stalled PR #25989).
+- **EC isogenies / endomorphisms / Frobenius** as point-group homs — no module.
+- **Other standard curves** (P-256, Curve25519/ed25519) + **point counting** — no Montgomery /
+  twisted-Edwards model, no Schoof; group orders only assertable.
+- **Generic-group cost model** and **lattice reduction (LLL/BKZ, SVP/CVP, HNP)** — no Lean
+  formalization anywhere (prior art is Isabelle/HOL only).
+
+The scanner itself is a reusable engine capability (upstream-dedup): before building or
+re-deriving, it detects whether a target is already proved upstream — which is how the L4
+net-relation proof (PR #13155) was found and ported (`Ecdlp/Proved/NormEDSIsElliptic.lean`).
