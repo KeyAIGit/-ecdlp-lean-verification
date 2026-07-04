@@ -191,11 +191,16 @@ protected lemma abs : HaveSameParity₄ |a| |b| |c| |d| := by
 lemma perm (σ : Perm (Fin 4)) :
     ∀ t : Fin 4 → ℤ, HaveSameParity₄ (t 0) (t 1) (t 2) (t 3) →
       HaveSameParity₄ (t (σ 0)) (t (σ 1)) (t (σ 2)) (t (σ 3)) := by
-  have := (Perm.mclosure_swap_castSucc_succ 3).symm ▸ Submonoid.mem_top σ
-  refine Submonoid.closure_induction this ?_ (fun _ ↦ id) fun σ τ hσ hτ t same ↦ ?_
-  on_goal 2 => simp_rw [Perm.mul_apply]; exact hτ (t ∘ σ) (hσ _ same)
-  rintro _ ⟨i, rfl⟩ t ⟨h₀₁, h₁₂, h₂₃⟩; fin_cases i
-  exacts [⟨h₀₁.symm, h₀₁ ▸ h₁₂, h₂₃⟩, ⟨h₀₁ ▸ h₁₂, h₁₂.symm, h₁₂ ▸ h₂₃⟩, ⟨h₀₁, h₁₂ ▸ h₂₃, h₂₃.symm⟩]
+  have h := (Perm.mclosure_swap_castSucc_succ 3).symm ▸ Submonoid.mem_top σ
+  induction h using Submonoid.closure_induction with
+  | mem x hx =>
+    obtain ⟨i, rfl⟩ := hx
+    rintro t ⟨h₀₁, h₁₂, h₂₃⟩; fin_cases i
+    exacts [⟨h₀₁.symm, h₀₁ ▸ h₁₂, h₂₃⟩, ⟨h₀₁ ▸ h₁₂, h₁₂.symm, h₁₂ ▸ h₂₃⟩,
+      ⟨h₀₁, h₁₂ ▸ h₂₃, h₂₃.symm⟩]
+  | one => exact fun _ ↦ id
+  | mul σ τ _ _ ihσ ihτ =>
+    intro t same; simp_rw [Perm.mul_apply]; exact ihτ (t ∘ σ) (ihσ _ same)
 
 include same in
 lemma six_le_of_strictAnti₄ (anti : StrictAnti₄ a b c d) : 6 ≤ a := by
@@ -475,12 +480,17 @@ include neg in
 /-- `rel₄` is invariant (up to sign) under permutation of the four indices. -/
 private theorem rel₄Fin4_perm (σ : Perm (Fin 4)) :
     ∀ t, rel₄Fin4 W (t ∘ σ) = Perm.sign σ • rel₄Fin4 W t := by
-  have := (Perm.mclosure_swap_castSucc_succ 3).symm ▸ Submonoid.mem_top σ
-  refine Submonoid.closure_induction this ?_ (by simp) fun σ τ hσ hτ t ↦ ?_
-  · rintro _ ⟨i, rfl⟩ t; fin_cases i <;>
+  have h := (Perm.mclosure_swap_castSucc_succ 3).symm ▸ Submonoid.mem_top σ
+  induction h using Submonoid.closure_induction with
+  | mem x hx =>
+    obtain ⟨i, rfl⟩ := hx
+    intro t; fin_cases i <;>
       rw [Perm.sign_swap (Fin.castSucc_lt_succ _).ne, Units.neg_smul, one_smul]
     exacts [rel₄_swap₀₁ neg, rel₄_swap₁₂ neg, rel₄_swap₂₃ neg]
-  rw [Perm.coe_mul, ← Function.comp_assoc, hτ, hσ, map_mul, mul_comm, mul_smul]
+  | one => simp
+  | mul σ τ _ _ ihσ ihτ =>
+    intro t
+    rw [Perm.coe_mul, ← Function.comp_assoc, ihτ, ihσ, map_mul, mul_comm, mul_smul]
 
 include neg in
 private lemma rel₄Fin4_perm' (σ : Perm (Fin 4)) (t) :
