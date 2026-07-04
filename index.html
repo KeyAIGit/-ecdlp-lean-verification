@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KeyAI — a formal research OS for arithmetic geometry</title>
-<meta name="description" content="KeyAI is a machine-checked knowledge environment and autonomous proof engine for arithmetic geometry, verified in Lean 4 / Mathlib. The Lean kernel is the only judge.">
-<meta property="og:title" content="KeyAI — a formal research OS for arithmetic geometry">
-<meta property="og:description" content="A machine-checked knowledge environment and autonomous proof engine, verified in Lean 4 / Mathlib. The kernel is the only judge.">
+<meta name="description" content="KeyAI is building the verified substrate for machine-driven mathematical discovery — an autonomous proof engine on a foundation the Lean kernel certifies line by line.">
+<meta property="og:title" content="KeyAI — where machines discover mathematics, and prove every step">
+<meta property="og:description" content="The verified substrate for a new era of mathematical discovery. Autonomous proof engine, Lean-kernel-certified, zero unproven steps.">
 <meta property="og:image" content="assets/logo-wordmark.png">
 <meta name="theme-color" content="#001a3f">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -32,12 +32,9 @@
   a{color:var(--blue2);text-decoration:none}a:hover{text-decoration:underline}
   .wrap{max-width:960px;margin:0 auto;padding:0 24px}
 
-  /* scroll progress */
   #prog{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;background:var(--grad);box-shadow:0 0 12px rgba(29,133,255,.7)}
 
-  /* nav */
-  nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:.35s;padding:16px 0;
-    backdrop-filter:blur(0px);border-bottom:1px solid transparent}
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:.35s;padding:16px 0;border-bottom:1px solid transparent}
   nav.solid{background:rgba(0,18,43,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:11px 0}
   nav .row{display:flex;align-items:center;justify-content:space-between}
   nav img{height:24px;display:block}
@@ -45,40 +42,36 @@
   nav .links a:hover{color:var(--fg);text-decoration:none}
   @media(max-width:560px){nav .links a{margin-left:13px;font-size:13px}}
 
-  /* hero */
-  .hero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden}
+  .hero{position:relative;min-height:94vh;display:flex;align-items:center;overflow:hidden}
   #cv{position:absolute;inset:0;width:100%;height:100%;display:block}
   .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
-    background:radial-gradient(120% 90% at 78% 30%,transparent 40%,rgba(0,18,43,.55) 100%),
-      linear-gradient(180deg,rgba(0,18,43,.25),rgba(0,18,43,.9))}
+    background:linear-gradient(90deg,rgba(0,18,43,.92) 30%,rgba(0,18,43,.35) 60%,transparent 82%),
+      linear-gradient(180deg,rgba(0,18,43,.2),rgba(0,18,43,.85))}
   .hero .wrap{position:relative;z-index:2;padding-top:64px;padding-bottom:40px}
   .kicker{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
     color:var(--blue2);font-weight:800;border:1px solid var(--line);background:rgba(8,41,79,.6);padding:7px 13px;border-radius:999px}
   .kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 10px var(--good);animation:pulse 2.4s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-  h1.big{font-size:clamp(34px,7vw,68px);line-height:1.02;margin:.42em 0 .3em;font-weight:800;max-width:16ch}
+  h1.big{font-size:clamp(33px,6.4vw,64px);line-height:1.03;margin:.42em 0 .3em;font-weight:800;max-width:17ch}
   h1.big .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .lede{font-size:clamp(17px,2.3vw,21px);color:#cdddf3;max-width:56ch;margin:0 0 30px}
+  .lede{font-size:clamp(17px,2.3vw,21px);color:#cdddf3;max-width:60ch;margin:0 0 30px}
   .cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:34px}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:11px;font-weight:800;font-size:15px;
-    border:1px solid var(--line);transition:.2s}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:11px;font-weight:800;font-size:15px;border:1px solid var(--line);transition:.2s}
   .btn.primary{background:var(--grad);color:#00122b;border-color:transparent;box-shadow:0 8px 30px rgba(29,133,255,.35)}
   .btn.primary:hover{transform:translateY(-2px);text-decoration:none}
   .btn.ghost{background:rgba(8,41,79,.5);color:var(--fg)}.btn.ghost:hover{border-color:var(--blue);text-decoration:none}
 
-  /* stat strip */
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:720px}
   @media(max-width:620px){.stats{grid-template-columns:repeat(2,1fr)}}
-  .stat{background:rgba(4,32,63,.6);border:1px solid var(--line);border-radius:14px;padding:16px 16px}
+  .stat{background:rgba(4,32,63,.6);border:1px solid var(--line);border-radius:14px;padding:16px 16px;backdrop-filter:blur(3px)}
   .stat .n{font-family:ui-monospace,Menlo,monospace;font-size:clamp(24px,4vw,34px);font-weight:700;color:#fff;line-height:1}
   .stat .n.good{color:var(--good)}
   .stat .l{font-size:12.5px;color:var(--muted);margin-top:6px}
 
-  /* sections */
   section.blk{padding:72px 0;border-top:1px solid var(--line)}
   .eyebrow{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);font-weight:800;margin-bottom:12px}
   h2{font-size:clamp(24px,3.6vw,34px);margin:0 0 16px;font-weight:800;line-height:1.12}
-  .sub{color:var(--muted);max-width:62ch;margin:0 0 8px;font-size:16.5px}
+  .sub{color:var(--muted);max-width:64ch;margin:0 0 8px;font-size:16.5px}
   p{margin:0 0 14px}
   .grid{display:grid;gap:16px}
   @media(min-width:640px){.grid.c2{grid-template-columns:1fr 1fr}.grid.c4{grid-template-columns:repeat(2,1fr)}}
@@ -89,7 +82,6 @@
   .card p{margin:0;color:var(--muted);font-size:14.5px}
   .card .ic{width:38px;height:38px;border-radius:10px;background:var(--chip);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:12px;color:var(--blue2)}
 
-  /* engine pipeline */
   .pipe{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin-top:8px}
   .pstep{flex:1 1 150px;background:linear-gradient(180deg,var(--card),var(--navy));border:1px solid var(--line);border-radius:14px;padding:16px 16px;position:relative}
   .pstep .k{font-family:ui-monospace,monospace;font-size:12px;color:var(--blue2);font-weight:700}
@@ -99,7 +91,6 @@
   .pstep:last-child::after{display:none}
   @media(max-width:720px){.pstep::after{content:"↓";right:auto;left:50%;top:auto;bottom:-15px;transform:translateX(-50%)}}
 
-  /* coverage viz */
   .viz{display:grid;gap:26px;align-items:center}
   @media(min-width:720px){.viz{grid-template-columns:260px 1fr}}
   .ring{position:relative;width:230px;height:230px;margin:0 auto}
@@ -117,7 +108,6 @@
   .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;font-size:13px;color:var(--muted)}
   .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;vertical-align:middle}
 
-  /* timeline */
   .tl{position:relative;margin-top:10px;padding-left:8px}
   .tl::before{content:"";position:absolute;left:19px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--blue),var(--line))}
   .tl .it{position:relative;padding:0 0 26px 56px}
@@ -131,7 +121,6 @@
   .tag.next{color:var(--blue2);background:rgba(29,133,255,.12)}
   .tag.far{color:var(--muted);background:var(--chip)}
 
-  /* reveal */
   .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
   .rv.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}#prog{display:none}}
@@ -159,13 +148,14 @@
   <canvas id="cv"></canvas>
   <div class="wrap">
     <div class="kicker"><span class="dot"></span> Formal research OS</div>
-    <h1 class="big">Machine-checked mathematics as a <span class="g">substrate</span>.</h1>
-    <p class="lede">A verified knowledge environment and an autonomous proof engine for arithmetic
-      geometry — built on Lean&nbsp;4 and Mathlib. Every result is accepted by the Lean kernel, the
-      only judge of correctness.</p>
+    <h1 class="big">Where machines <span class="g">discover</span> mathematics — and prove every step.</h1>
+    <p class="lede">KeyAI is building the verified substrate for a new era of mathematical discovery:
+      an autonomous engine that proposes and proves, on a foundation the Lean kernel certifies line by
+      line — <b>zero</b> unproven steps. It begins at the frontier of elliptic-curve cryptography and
+      reaches toward the deepest open questions in number theory.</p>
     <div class="cta">
-      <a class="btn primary" href="#asset">Explore the verified base →</a>
-      <a class="btn ghost" href="dashboard.html">Open the dashboard</a>
+      <a class="btn primary" href="#asset">See what's already proven →</a>
+      <a class="btn ghost" href="dashboard.html">Explore the environment</a>
     </div>
     <div class="stats">
       <div class="stat"><div class="n" data-to="141">0</div><div class="l">ledger rows</div></div>
@@ -179,10 +169,10 @@
 <section class="blk" id="what"><div class="wrap rv">
   <div class="eyebrow">What it is</div>
   <h2>A graph of theorems that are proved, not asserted.</h2>
-  <p class="sub">KeyAI turns a body of mathematics into a verified, machine-navigable substrate —
-    re-checkable from source, pinned to an exact toolchain. On top runs an engine that proposes,
-    proves, and promotes new results, with the kernel as the gate. Nothing enters the base unless
-    Lean accepts it with no <code>sorry</code> and no added axioms.</p>
+  <p class="sub">KeyAI turns a body of mathematics into a living, verified substrate — re-checkable
+    from source, pinned to an exact toolchain, navigable by machine. On top of it runs an engine
+    that proposes, proves, and promotes new results, with the kernel as the gate. Nothing enters the
+    base unless Lean accepts it with no <code>sorry</code> and no added axioms.</p>
 </div></section>
 
 <section class="blk" id="engine"><div class="wrap rv">
@@ -260,15 +250,15 @@
         TODO on elliptic divisibility sequences — that benefit the whole library.</p>
       <span class="tag next">In progress</span></div>
     <div class="it"><div class="num">3</div><h3>BSD-adjacent infrastructure</h3>
-      <p>The north star: formalize the components around elliptic curves over ℚ — heights, ranks,
-        L-functions — as a long-horizon program, not a bet on solving the unsolvable.</p>
+      <p>The north star: formalize the machinery around elliptic curves over ℚ — heights, ranks,
+        L-functions — the substrate a future reasoner needs to attack the deepest open problems.</p>
       <span class="tag far">Horizon</span></div>
   </div>
 </div></section>
 
 <section class="blk" id="principles"><div class="wrap rv">
   <div class="eyebrow">Principles</div>
-  <h2>Verifiable, reproducible, honest.</h2>
+  <h2>Bold in ambition, ruthless about proof.</h2>
   <div class="grid c4">
     <div class="card"><div class="ic">✓</div><h3>Kernel is the judge</h3><p>Correctness is decided by Lean, not by a model's confidence.</p></div>
     <div class="card"><div class="ic">◎</div><h3>Honesty over hype</h3><p>What's verified, assumed, and open — counts that don't drift.</p></div>
@@ -291,99 +281,104 @@
 <script>
 (function(){
   var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-
-  // scroll progress + nav
   var prog=document.getElementById('prog'), nav=document.getElementById('nav');
-  function onScroll(){
-    var h=document.documentElement, sc=h.scrollTop, max=h.scrollHeight-h.clientHeight;
-    prog.style.width=(max>0?sc/max*100:0)+'%';
-    nav.classList.toggle('solid', sc>40);
-  }
+  function onScroll(){var h=document.documentElement,sc=h.scrollTop,max=h.scrollHeight-h.clientHeight;
+    prog.style.width=(max>0?sc/max*100:0)+'%'; nav.classList.toggle('solid',sc>40);}
   addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
-  // count-up
-  function animCount(el){
-    var to=parseFloat(el.dataset.to), pre=el.dataset.pre||'', suf=el.dataset.suf||'', t0=null, dur=1400;
+  function animCount(el){var to=parseFloat(el.dataset.to),pre=el.dataset.pre||'',suf=el.dataset.suf||'',t0=null,dur=1500;
     if(reduce){el.textContent=pre+to+suf;return;}
-    function step(ts){t0=t0||ts;var p=Math.min((ts-t0)/dur,1);var e=1-Math.pow(1-p,3);
+    function step(ts){t0=t0||ts;var p=Math.min((ts-t0)/dur,1),e=1-Math.pow(1-p,3);
       el.textContent=pre+Math.round(to*e)+suf; if(p<1)requestAnimationFrame(step);}
-    requestAnimationFrame(step);
-  }
-
-  // reveal + trigger inner animations
-  var io=new IntersectionObserver(function(es){es.forEach(function(en){
-    if(!en.isIntersecting)return; var t=en.target; t.classList.add('in');
+    requestAnimationFrame(step);}
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(!en.isIntersecting)return;var t=en.target;t.classList.add('in');
     t.querySelectorAll('[data-to]').forEach(animCount);
     t.querySelectorAll('.fill[data-w]').forEach(function(f){f.style.width=f.dataset.w+'%';});
-    var arc=t.querySelector('#arc'); if(arc){var pct=127/486; arc.style.transition='stroke-dashoffset 1.6s cubic-bezier(.2,.7,.2,1)'; requestAnimationFrame(function(){arc.style.strokeDashoffset=628*(1-pct);});}
-    io.unobserve(t);
-  });},{threshold:.18});
+    var arc=t.querySelector('#arc');if(arc){var pct=127/486;arc.style.transition='stroke-dashoffset 1.6s cubic-bezier(.2,.7,.2,1)';requestAnimationFrame(function(){arc.style.strokeDashoffset=628*(1-pct);});}
+    io.unobserve(t);});},{threshold:.18});
   document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
-  // hero stats fire immediately
   document.querySelectorAll('.hero [data-to]').forEach(animCount);
 
-  // ---- hero canvas: y^2 = x^3 + 7 + drifting field ----
-  var cv=document.getElementById('cv'), ctx=cv.getContext('2d'), W,H,DPR,particles;
-  function resize(){
-    DPR=Math.min(devicePixelRatio||1,2); W=cv.clientWidth; H=cv.clientHeight;
-    cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
-    var n=Math.round(W*H/16000); particles=[];
-    for(var i=0;i<n;i++)particles.push({x:Math.random()*W,y:Math.random()*H,
-      vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.6+.5,a:Math.random()*.5+.15});
-  }
-  resize(); addEventListener('resize',resize);
-
-  // map math coords -> screen. curve fills right/center.
-  function view(){var cx=W*0.68, cy=H*0.52, s=Math.min(W,H)*0.10; return {cx:cx,cy:cy,s:s};}
+  // ---------------- hero canvas: living elliptic-curve substrate ----------------
+  var cv=document.getElementById('cv'),ctx=cv.getContext('2d'),W,H,DPR;
+  var parts=[],nodes=[],pulses=[],upper=[],lower=[];
+  function view(){return {cx:W*0.60, cy:H*0.50, s:Math.min(W,H)*0.11};}
   function mx(x,v){return v.cx+x*v.s;} function my(y,v){return v.cy-y*v.s;}
-  function curvePath(){
-    var v=view(); ctx.beginPath(); var started=false;
-    for(var x=-1.913; x<=6.2; x+=0.03){var yy=x*x*x+7; if(yy<0)continue; var y=Math.sqrt(yy);
-      var px=mx(x,v),py=my(y,v); if(!started){ctx.moveTo(px,py);started=true;}else ctx.lineTo(px,py);}
-    for(var x2=6.2; x2>=-1.913; x2-=0.03){var yy2=x2*x2*x2+7; if(yy2<0)continue; ctx.lineTo(mx(x2,v),my(-Math.sqrt(yy2),v));}
+  function build(){
+    var v=view(); upper=[]; lower=[];
+    for(var x=-1.913;x<=6.6;x+=0.02){var yy=x*x*x+7;if(yy<0)continue;var y=Math.sqrt(yy);upper.push([mx(x,v),my(y,v)]);}
+    for(var x2=6.6;x2>=-1.913;x2-=0.02){var yy2=x2*x2*x2+7;if(yy2<0)continue;lower.push([mx(x2,v),my(-Math.sqrt(yy2),v)]);}
+    // nodes: fixed on-curve points + drifting graph nodes in the right region
+    nodes=[];
+    var onc=[[-1.913,0],[0,2.646],[1,2.828],[2,3.873],[3,5.831],[4.2,9.1],[3,-5.831],[1.2,-2.99],[-0.5,2.55]];
+    for(var k=0;k<onc.length;k++){var px=mx(onc[k][0],v),py=my(onc[k][1],v);nodes.push({x:px,y:py,ph:Math.random()*6.28,onc:true,vx:0,vy:0});}
+    var fn=Math.max(6,Math.round(W/200));
+    for(var f=0;f<fn;f++){var nx=(0.5+Math.random()*0.46)*W, ny=(0.08+Math.random()*0.82)*H;
+      nodes.push({x:nx,y:ny,ph:Math.random()*6.28,onc:false,vx:(Math.random()-.5)*.16,vy:(Math.random()-.5)*.16});}
   }
-  // fixed glowing points on the curve
-  var pts=[[-1.913,0],[0,2.646],[2,3.873],[4,8.062],[1,2.828]];
-  var t=0, raf;
+  function resize(){DPR=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;
+    cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+    var n=Math.round(W*H/11000);parts=[];
+    for(var i=0;i<n;i++){var right=Math.random()<0.62;
+      parts.push({x:(right?0.46+Math.random()*0.54:Math.random())*W,y:Math.random()*H,
+        vx:(Math.random()-.5)*.26,vy:(Math.random()-.5)*.26,r:Math.random()*1.7+.5,a:Math.random()*.5+.18});}
+    build();
+    pulses=[];for(var q=0;q<5;q++)pulses.push({i:Math.random(),spd:0.0007+Math.random()*0.0008,up:Math.random()<0.5});
+  }
+  resize();addEventListener('resize',resize);
+
+  var t=0,raf,chord=null,chordT=90;
+  function path(a){ctx.beginPath();for(var i=0;i<a.length;i++){if(i===0)ctx.moveTo(a[i][0],a[i][1]);else ctx.lineTo(a[i][0],a[i][1]);}}
   function frame(){
     ctx.clearRect(0,0,W,H);
-    // bg wash
-    var g=ctx.createLinearGradient(0,0,W,H); g.addColorStop(0,'#001a3f'); g.addColorStop(1,'#00122b');
-    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-    // particles + links
-    for(var i=0;i<particles.length;i++){var p=particles[i]; p.x+=p.vx; p.y+=p.vy;
-      if(p.x<0)p.x+=W; if(p.x>W)p.x-=W; if(p.y<0)p.y+=H; if(p.y>H)p.y-=H;
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.283); ctx.fillStyle='rgba(125,176,255,'+p.a+')'; ctx.fill();}
-    // faint links between near particles
-    ctx.strokeStyle='rgba(29,133,255,.06)'; ctx.lineWidth=1;
-    for(var a=0;a<particles.length;a++)for(var b=a+1;b<particles.length;b++){
-      var dx=particles[a].x-particles[b].x, dy=particles[a].y-particles[b].y, d=dx*dx+dy*dy;
-      if(d<9000){ctx.globalAlpha=1-d/9000; ctx.beginPath(); ctx.moveTo(particles[a].x,particles[a].y); ctx.lineTo(particles[b].x,particles[b].y); ctx.stroke();}}
-    ctx.globalAlpha=1;
+    var g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#001a3f');g.addColorStop(1,'#00122b');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    // living glow behind the curve region
+    var gx=W*0.66+Math.sin(t*0.3)*W*0.02, gy=H*0.44+Math.cos(t*0.24)*H*0.02;
+    var rg=ctx.createRadialGradient(gx,gy,0,gx,gy,Math.max(W,H)*0.5);
+    rg.addColorStop(0,'rgba(29,133,255,.18)');rg.addColorStop(.5,'rgba(29,133,255,.05)');rg.addColorStop(1,'rgba(29,133,255,0)');
+    ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);
+    // particles
+    for(var i=0;i<parts.length;i++){var p=parts[i];p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x+=W;if(p.x>W)p.x-=W;if(p.y<0)p.y+=H;if(p.y>H)p.y-=H;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fillStyle='rgba(125,176,255,'+p.a+')';ctx.fill();}
+    // graph node drift
+    for(var n=0;n<nodes.length;n++){var nd=nodes[n];if(!nd.onc){nd.x+=nd.vx;nd.y+=nd.vy;
+      if(nd.x<W*0.48||nd.x>W*0.985)nd.vx*=-1;if(nd.y<H*0.05||nd.y>H*0.92)nd.vy*=-1;}}
+    // edges (living knowledge graph)
+    ctx.lineWidth=1;
+    for(var a=0;a<nodes.length;a++)for(var b=a+1;b<nodes.length;b++){
+      var dx=nodes[a].x-nodes[b].x,dy=nodes[a].y-nodes[b].y,d2=dx*dx+dy*dy;
+      if(d2<30000){var al=(1-d2/30000)*0.24;ctx.strokeStyle='rgba(125,176,255,'+al+')';
+        ctx.beginPath();ctx.moveTo(nodes[a].x,nodes[a].y);ctx.lineTo(nodes[b].x,nodes[b].y);ctx.stroke();}}
     // curve glow
-    var v=view();
-    ctx.save(); ctx.shadowColor='rgba(29,133,255,.9)'; ctx.shadowBlur=18;
-    ctx.lineWidth=2.4; ctx.strokeStyle='rgba(125,176,255,.9)'; curvePath(); ctx.stroke(); ctx.restore();
-    // animated chord sweeping between two points (decorative group-law hint)
-    var k=(Math.sin(t*0.6)*0.5+0.5); var A=pts[1], B=pts[3];
-    var ax=mx(A[0],v),ay=my(A[1],v),bx=mx(B[0],v),by=my(B[1],v);
-    ctx.strokeStyle='rgba(63,208,138,'+(0.25+0.35*k)+')'; ctx.lineWidth=1.4; ctx.setLineDash([5,6]);
-    ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke(); ctx.setLineDash([]);
-    // points pulsing
-    for(var q=0;q<pts.length;q++){var P=pts[q]; var sx=mx(P[0],v), sy=my(P[1],v);
-      var pr=3.2+Math.sin(t*1.4+q)*0.9;
-      ctx.beginPath(); ctx.arc(sx,sy,pr+4,0,6.283); ctx.fillStyle='rgba(29,133,255,.14)'; ctx.fill();
-      ctx.beginPath(); ctx.arc(sx,sy,pr,0,6.283); ctx.fillStyle='#eaf1fb'; ctx.fill();}
-    t+=0.016; raf=requestAnimationFrame(frame);
+    ctx.save();ctx.shadowColor='rgba(29,133,255,.95)';ctx.shadowBlur=17;ctx.lineWidth=2.6;ctx.strokeStyle='rgba(140,186,255,.95)';
+    path(upper);ctx.stroke();path(lower);ctx.stroke();ctx.restore();
+    // energy pulses travelling along the curve (with fading trail)
+    for(var q=0;q<pulses.length;q++){var pu=pulses[q];pu.i+=pu.spd;if(pu.i>=1)pu.i-=1;var arr=pu.up?upper:lower;
+      var idx=Math.floor(pu.i*(arr.length-1));
+      for(var tr=12;tr>=0;tr--){var ti=idx-tr*2;if(ti<0||ti>=arr.length)continue;var pt=arr[ti];
+        ctx.beginPath();ctx.arc(pt[0],pt[1],Math.max(0.6,2.6-tr*0.18),0,6.283);
+        ctx.fillStyle='rgba(63,208,138,'+Math.max(0,0.55-tr*0.045)+')';ctx.fill();}
+      var hd=arr[idx];if(hd){ctx.save();ctx.shadowColor='#3fd08a';ctx.shadowBlur=14;
+        ctx.beginPath();ctx.arc(hd[0],hd[1],3.4,0,6.283);ctx.fillStyle='#b7f5d6';ctx.fill();ctx.restore();}}
+    // pulsing nodes
+    for(var m=0;m<nodes.length;m++){var q2=nodes[m];var pr=2.5+Math.sin(t*1.3+q2.ph)*0.8;
+      ctx.beginPath();ctx.arc(q2.x,q2.y,pr+3.5,0,6.283);ctx.fillStyle='rgba(29,133,255,.13)';ctx.fill();
+      ctx.beginPath();ctx.arc(q2.x,q2.y,pr,0,6.283);ctx.fillStyle=q2.onc?'#eaf1fb':'#7db0ff';ctx.fill();}
+    // occasional point-addition chord flash between two on-curve nodes
+    if(--chordT<=0){var oc=nodes.filter(function(z){return z.onc;});
+      var A=oc[(Math.random()*oc.length)|0],B=oc[(Math.random()*oc.length)|0];
+      if(A&&B&&A!==B)chord={a:A,b:B,life:78,max:78};chordT=150+((Math.random()*160)|0);}
+    if(chord&&chord.life>0){chord.life--;var la=Math.sin((chord.max-chord.life)/chord.max*Math.PI)*0.7;
+      ctx.strokeStyle='rgba(63,208,138,'+la+')';ctx.lineWidth=1.6;ctx.setLineDash([5,7]);
+      ctx.beginPath();ctx.moveTo(chord.a.x,chord.a.y);ctx.lineTo(chord.b.x,chord.b.y);ctx.stroke();ctx.setLineDash([]);}
+    t+=0.016;raf=requestAnimationFrame(frame);
   }
-  if(reduce){ // static single frame
-    ctx.fillStyle='#001a3f'; ctx.fillRect(0,0,W,H);
-    ctx.lineWidth=2.4; ctx.strokeStyle='rgba(125,176,255,.85)'; curvePath(); ctx.stroke();
-  } else { frame(); }
-  // pause when tab hidden
-  document.addEventListener('visibilitychange',function(){
-    if(document.hidden){cancelAnimationFrame(raf);} else if(!reduce){raf=requestAnimationFrame(frame);}
-  });
+  function staticFrame(){ctx.fillStyle='#001a3f';ctx.fillRect(0,0,W,H);
+    ctx.lineWidth=2.6;ctx.strokeStyle='rgba(140,186,255,.92)';path(upper);ctx.stroke();path(lower);ctx.stroke();
+    for(var n=0;n<nodes.length;n++){ctx.beginPath();ctx.arc(nodes[n].x,nodes[n].y,3,0,6.283);ctx.fillStyle=nodes[n].onc?'#eaf1fb':'#7db0ff';ctx.fill();}}
+  if(reduce)staticFrame();else frame();
+  document.addEventListener('visibilitychange',function(){if(document.hidden){cancelAnimationFrame(raf);}else if(!reduce){raf=requestAnimationFrame(frame);}});
 })();
 </script>
 </body>
