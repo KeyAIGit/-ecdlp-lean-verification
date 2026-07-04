@@ -3,11 +3,14 @@ import Ecdlp.Proved.ThreeTorsionBridge
 import Ecdlp.Proved.ThreeTorsion
 
 /-!
-# Consolidating the n = 3 torsion bridge into concrete corollaries
+# Set-level 3-torsion corollaries of the division-polynomial bridge for secp256k1
 
-Building on `secp256k1_three_nsmul_eq_zero_iff` (the `3 • P = 0 ⟺ ψ₃(P) = 0` bridge)
-and `secp256k1_psi3_evalEval` (`ψ₃` evaluates to `3x⁴ + 84x`), plus the existing
-degree-4 root bound `secp256k1_three_torsion_x_card_le`.
+Consolidating the point-level bridge `secp256k1_three_nsmul_eq_zero_iff`
+(`3 • P = 0 ⟺ ψ₃(P) = 0`) and `secp256k1_psi3_evalEval` (`ψ₃` evaluates to `3x⁴ + 84x`),
+together with the existing degree-4 root bound `secp256k1_three_torsion_x_card_le`, into
+concrete corollaries — culminating in `secp256k1_threeTorsionX_ncard_le`, which upgrades the
+forward-only *root* bound to a bound on the actual *set* of 3-torsion `x`-coordinates:
+secp256k1 has at most four nonzero 3-torsion `x`-values.
 -/
 
 namespace Ecdlp.Curve
