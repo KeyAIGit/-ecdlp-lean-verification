@@ -25,7 +25,9 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
   `TRUST_REPORT.md`). Do not hardcode a number here; it drifts. `main` is kept in sync
   with the dev branch `claude/admiring-darwin-uouep1`.
 - Pillars: (1) Shoup/Nechaev generic-group `Ω(√p)` + BSGS/rho `O(√n)` ⇒ `Θ(√n)`,
-  secp256k1 ≥128-bit generic security; the rho/BSGS **solve step** (collision ⇒
+  secp256k1 ≥128-bit **classical, generic** security (black-box model only, classical —
+  not unconditional, and false against quantum/Shor; see `notes/SECURITY_SCOPE.md`); the
+  rho/BSGS **solve step** (collision ⇒
   linear congruence ⇒ discrete-log recovery, `CollisionEquation.lean`). (2) verified
   DL-crypto library (Schnorr, Pedersen, DH, ElGamal, Okamoto, Chaum–Pedersen,
   MuSig2/Taproot, Feldman VSS, adaptor, blind Schnorr, threshold ElGamal). (3)

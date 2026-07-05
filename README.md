@@ -35,7 +35,9 @@ The verified-theorem counts are published as JSON, regenerated automatically fro
       the discrete log (first such in Mathlib); model-soundness lemmas.
     - `BabyStepGiantStep.lean`, `PollardRho.lean` - matching `O(√n)` upper bounds, so
       generic DLP is `Θ(√n)`.
-    - `Secp256k1GenericSecurity.lean` - secp256k1 ≥128-bit generic security (`2^127 < q`).
+    - `Secp256k1GenericSecurity.lean` - secp256k1 ≥128-bit **classical, generic** security
+      (`2^127 < q`; black-box model only — says nothing about non-generic attacks, and is
+      classical: Shor breaks ECDLP quantumly. See `notes/SECURITY_SCOPE.md`).
     - `SchnorrSoundness.lean` - Schnorr proof-of-knowledge extraction; Pedersen binding ⇒ DLP.
     - `DlogCompleteness.lean` - Schnorr/EdDSA verification; Diffie–Hellman agreement.
     - `DlogPrimitives.lean` - ElGamal decryption; Pedersen homomorphism.

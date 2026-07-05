@@ -88,7 +88,7 @@ is deliberately left as a follow-up on top of this controllable base.
 **And never:** breaks secp256k1. That is a lottery ticket against a proven **generic** (and
 **classical**-only) lower bound — a real theorem about black-box algorithms, not an
 unconditional one against all algorithms, and provably false against quantum ones (Shor).
-Breaking the curve is not a goal (see `BARRIERS.md`).
+Breaking the curve is not a goal (see `BARRIERS.md`, `notes/SECURITY_SCOPE.md`).
 
 ## Pieces
 

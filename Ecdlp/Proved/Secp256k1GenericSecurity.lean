@@ -10,6 +10,13 @@ at the secp256k1 group order `n` gives a machine-checked `> 2^127` lower bound o
 number of group operations any generic algorithm needs to solve the discrete log on
 secp256k1: **≥ 128-bit security against generic attacks**.
 
+**Scope — a narrow theorem (see `notes/SECURITY_SCOPE.md`).** It bounds only *classical,
+generic* (black-box) algorithms — those that never inspect the point encoding. It is **not**
+unconditional: a non-generic algorithm exploiting the `(x,y)` encoding is outside its scope
+(for `𝔽_p^×`, index calculus provably beats `Ω(√p)`; for EC over a prime field none is known,
+but that is a conjecture). And it is **classical-only** — Shor solves ECDLP in quantum
+polynomial time.
+
 The magnitude input `2^255 < n` is verified by `native_decide`. The primality of `n`
 (a standard published fact — SEC 2) enters only as a hypothesis `[Fact n.Prime]`; it is
 not an axiom, and a 256-bit primality is not brute-force decidable.
@@ -23,7 +30,9 @@ theorem two_pow_255_lt_secp256k1_n : 2 ^ 255 < Secp256k1.n := by native_decide
 /-- **128-bit generic security of secp256k1.** Assuming the (standard, published)
 primality of the group order `n`, any generic algorithm that solves the discrete
 logarithm on secp256k1 for every challenge forms more than `2^127` group elements —
-secp256k1 has ≥ 128-bit security against generic attacks. -/
+secp256k1 has ≥ 128-bit security against generic attacks. *Classical, black-box model
+only — not unconditional, and false against quantum (Shor); scope in
+`notes/SECURITY_SCOPE.md`.* -/
 theorem secp256k1_generic_security [Fact (Nat.Prime Secp256k1.n)]
     {q : ℕ} (F : Fin q → Aff Secp256k1.n)
     (hF : Function.Injective F)
