@@ -99,6 +99,23 @@ jobs:
       - name: Fetch prebuilt Mathlib cache
         run: lake exe cache get
 
+      # Cache the project's OWN compiled artifacts (.lake/build) across runs so `lake build`
+      # rebuilds only files that actually changed instead of recompiling everything — most
+      # of the wall-clock is the repo's `native_decide` facts on 256-bit numbers (primality
+      # Pratt certificates, GLV), which rarely change. Safe: lake is trace-based, so it
+      # re-verifies every artifact against its inputs (source + dep oleans + toolchain) and
+      # rebuilds anything stale; a stale restore can only slow a run, never admit a wrong
+      # result. Key is per-commit (always saves a fresh cache); restore-keys fall back to
+      # the most recent build for the same toolchain/manifest.
+      - name: Cache project build (.lake/build) for incremental rebuilds
+        uses: actions/cache@v4
+        with:
+          path: .lake/build
+          key: lake-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: |
+            lake-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
+            lake-build-${{ runner.os }}-
+
       - name: Build and verify ALL proofs
         run: lake build
 
