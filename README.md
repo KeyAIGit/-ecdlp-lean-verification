@@ -68,7 +68,7 @@ This is stage 2 (formalization agent output) of the autonomous research mechanis
 Each `formalizable` claim in KG_CLAIM_FORMALIZATION_v1.csv becomes a theorem here;
 `native_decide` handles concrete arithmetic facts, Mathlib handles structural ones.
 
-Current ledger: **180 rows / ~158 distinct kernel-verified results, 0 `sorry`, 0 open
+Current ledger: **182 rows / ~160 distinct kernel-verified results, 0 `sorry`, 0 open
 obligations**, with **no custom axioms** (machine-enforced by the axiom-audit gate;
 `native_decide` facts additionally trust the compiler — see `TRUST_REPORT.md`). See
 `VERIFIED.md` for the canonical, live count (don't trust a hardcoded number here).

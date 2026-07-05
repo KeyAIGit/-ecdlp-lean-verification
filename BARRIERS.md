@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~158 distinct results / 180 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~160 distinct results / 182 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -87,10 +87,11 @@ exact `Θ` statements.
   `secp256k1_semaev_three_iff` prove `S₃(x₁,x₂,x₃) = 0 ⟺ x₃ = x(P₁+P₂) or x(P₁−P₂)` (both
   directions), via a sympy-certified two-root master factorization. And **`S₄` is now started**
   (`Ecdlp/Proved/SemaevFour.lean`): `S₄ = Res_X(S₃(x₁,x₂,X), S₃(x₃,x₄,X))` built on Mathlib's
-  `Polynomial.resultant`, with the forward direction `S₄_eq_zero_of_common_root` (a shared root
-  of the two `S₃` slices ⟹ `S₄ = 0`) and its symmetries — the first `S₄` in Lean, and the
-  recursion index calculus over `𝔽_{p^k}` actually uses. Still open: the `S₄` reverse/meaning
-  iff (via `resultant_eq_prod_roots_sub`) and `Sₙ` for `n ≥ 5`.
+  `Polynomial.resultant`, with **both directions**: the forward `S₄_eq_zero_of_common_root` (a shared root of the two
+  `S₃` slices ⟹ `S₄ = 0`) and the reverse/meaning `S₄_common_root_of_eq_zero` (`S₄ = 0` ⟹ the
+  two slices share a root **in the field**, since `S₃`'s slice splits with the known roots
+  `x(P₁±P₂)` — via `resultant_eq_prod_eval`), plus symmetries — the first `S₄` in Lean, and the
+  recursion index calculus over `𝔽_{p^k}` actually uses. Still open: `Sₙ` for `n ≥ 5`.
 - **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
   *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib.
 - **Point counting** — `#E(𝔽ₚ) = n` for the concrete curve needs a computation
