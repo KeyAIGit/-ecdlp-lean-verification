@@ -132,8 +132,7 @@ theorem S₄_common_root_of_eq_zero (a b x₁ y₁ x₂ y₂ x₃ x₄ : K)
   have hsplit : (S₃poly a b x₁ x₂).Splits := by
     rw [hfac]; exact (((splits_X_sub_C rp).mul (splits_X_sub_C rm)).C_mul _)
   have hdegf : (S₃poly a b x₁ x₂).natDegree = 2 := by
-    rw [hfac]
-    rw [natDegree_C_mul (by rwa [Ne, C_eq_zero] : (C ((x₁ - x₂) ^ 2) : K[X]) ≠ 0)]
+    rw [hfac, natDegree_C_mul hD]
     compute_degree!
   have hmon : ((X - C rp) * (X - C rm) : K[X]).Monic := (monic_X_sub_C rp).mul (monic_X_sub_C rm)
   have hlcf : (S₃poly a b x₁ x₂).leadingCoeff = (x₁ - x₂) ^ 2 := by
