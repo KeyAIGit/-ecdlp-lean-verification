@@ -110,10 +110,12 @@ roots are exactly the `x`-coordinates of `P₁+P₂` and `P₁−P₂`. So if `(
 
 The proof is the certified master factorization `(x₁−x₂)²·S₃ = (D·x₃−R₊)(D·x₃−R₋)` (an exact
 `ring` identity modulo the curve equations, cofactors from a sympy Gröbner + resultant
-certificate); with `S₃ = 0` and `(x₁−x₂)² ≠ 0` in a field, one factor vanishes. -/
+certificate); with `S₃ = 0`, one factor vanishes. (No `x₁ ≠ x₂` hypothesis is needed — at
+`x₁ = x₂` on the curve, `R₊·R₋ = (y₂²−y₁²)² = 0`, so the disjunction still holds; the intended
+use is nonetheless the chord case where `R₊,R₋` are genuine `x`-coordinates.) -/
 theorem S₃_root_of_eq_zero (a b x₁ y₁ x₂ y₂ x₃ : K)
     (h₁ : y₁ ^ 2 = x₁ ^ 3 + a * x₁ + b) (h₂ : y₂ ^ 2 = x₂ ^ 3 + a * x₂ + b)
-    (hx : x₁ ≠ x₂) (hS : S₃ a b x₁ x₂ x₃ = 0) :
+    (hS : S₃ a b x₁ x₂ x₃ = 0) :
     (x₁ - x₂) ^ 2 * x₃ = (y₂ - y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2 ∨
     (x₁ - x₂) ^ 2 * x₃ = (y₂ + y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2 := by
   have hprod :
@@ -149,7 +151,7 @@ theorem S₃_eq_zero_iff (a b x₁ y₁ x₂ y₂ x₃ : K)
       (x₁ - x₂) ^ 2 * (x₁ + x₂ + x₃) = (y₂ + y₁) ^ 2 := by
   constructor
   · intro hS
-    rcases S₃_root_of_eq_zero a b x₁ y₁ x₂ y₂ x₃ h₁ h₂ hx hS with h | h
+    rcases S₃_root_of_eq_zero a b x₁ y₁ x₂ y₂ x₃ h₁ h₂ hS with h | h
     · exact Or.inl (by linear_combination h)
     · exact Or.inr (by linear_combination h)
   · rintro (h | h)
