@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~155 distinct results / 176 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~157 distinct results / 178 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -83,8 +83,10 @@ exact `Θ` statements.
   law** in every nondegenerate case (`secp256k1_semaev_three_point` for the chord case and
   `secp256k1_semaev_three_point_double` for tangent/doubling: the hypothesis is the actual
   group relation `P₁+P₂+P₃ = O` on `secp256k1.toAffine.Point`, not a coordinate equation).
-  Still open: the *iff* (a root of `S₃` yields collinear points) and `Sₙ` for `n ≥ 4` (the
-  recursion / resultant construction that index calculus over `𝔽_{p^k}` actually needs).
+  The **full `S₃` characterization is now closed** — `S₃_eq_zero_iff` /
+  `secp256k1_semaev_three_iff` prove `S₃(x₁,x₂,x₃) = 0 ⟺ x₃ = x(P₁+P₂) or x(P₁−P₂)` (both
+  directions), via a sympy-certified two-root master factorization. Still open: `Sₙ` for
+  `n ≥ 4` (the recursion / resultant construction that index calculus over `𝔽_{p^k}` needs).
 - **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
   *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib.
 - **Point counting** — `#E(𝔽ₚ) = n` for the concrete curve needs a computation
