@@ -27,7 +27,7 @@ git history and the GitHub Actions tab.
 | generic-group lower bound, square-root form `√p ≤ q` | `Ecdlp.GenericGroup.generic_dlog_sqrt_bound` | Ecdlp/Proved/GenericGroupBound.lean | Mathlib | proved |
 | quantitative Shoup bound: success count ≤ q·q−q+1 | `Ecdlp.GenericGroup.generic_success_le` | Ecdlp/Proved/GenericGroupBound.lean | Mathlib | proved |
 | secp256k1 group order `2^255 < n` | `Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n` | Ecdlp/Proved/Secp256k1GenericSecurity.lean | native_decide | proved |
-| **secp256k1 ≥ 128-bit generic security (`2^127 < q`)** | `Ecdlp.GenericGroup.secp256k1_generic_security` | Ecdlp/Proved/Secp256k1GenericSecurity.lean | Mathlib + native_decide | proved¹ |
+| **secp256k1 ≥ 128-bit generic security (`2^127 < q`)** — *classical, generic (black-box) model only; not unconditional and false against quantum/Shor, see `notes/SECURITY_SCOPE.md`* | `Ecdlp.GenericGroup.secp256k1_generic_security` | Ecdlp/Proved/Secp256k1GenericSecurity.lean | Mathlib + native_decide | proved¹ |
 | baby-step giant-step decomposition (`O(√n)` upper bound) | `Ecdlp.GenericGroup.bsgs_decomp` | Ecdlp/Proved/BabyStepGiantStep.lean | Mathlib | proved |
 | baby/giant step count `n ≤ ⌈√n⌉²` (`Θ(√n)` closure) | `Ecdlp.GenericGroup.bsgs_steps_sq_ge` | Ecdlp/Proved/BabyStepGiantStep.lean | Mathlib | proved |
 | Pollard rho: a collision exists within `card` steps (pigeonhole) | `Ecdlp.GenericGroup.pollard_rho_collision` | Ecdlp/Proved/PollardRho.lean | Mathlib | proved |
@@ -218,7 +218,9 @@ these are catalogued in `TRUST_REPORT.md`. The earlier "128 theorems" figure cou
 ~22 internal recursive Pratt-certificate sub-lemmas individually and is **retired**.
 
 What the ~105 results cover: the generic-group `Θ(√n)` combinatorial core and secp256k1
-≥128-bit *generic* security; an **abstract** discrete-log protocol algebra over
+≥128-bit *generic* security (**classical, black-box model only** — not unconditional, and
+false against quantum/Shor; scope in `notes/SECURITY_SCOPE.md`); an **abstract** discrete-log
+protocol algebra over
 `[Module (ZMod n) G]` (Schnorr/EdDSA, DH, ElGamal, Pedersen, Okamoto, Chaum–Pedersen,
 MuSig2/Taproot, Feldman VSS, adaptor/blind Schnorr) — algebraic identities **not yet
 instantiated at the secp256k1 point group, with no adversary/hash/probability model**

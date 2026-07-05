@@ -47,6 +47,14 @@ primality of `n`); matching `O(√n)` upper bounds `bsgs_decomp` / `pollard_rho_
 (so generic DLP is `Θ(√n)`). This is the first Mathlib-checked generic-group lower
 bound for the discrete log.
 
+**Scope of this bound (read `notes/SECURITY_SCOPE.md`).** It is a *real theorem* but a
+narrow one: it bounds only **classical, generic** (black-box) algorithms. It is **not**
+unconditional — it says nothing about non-generic attacks that read the point encoding
+(for `𝔽_p^×`, index calculus provably beats `Ω(√p)`; for EC over a prime field no such
+algorithm is known but its non-existence is unproven), and it is **classical-only** —
+Shor solves ECDLP in quantum polynomial time. secp256k1's resistance to all *known*
+non-generic classical attacks is separately machine-checked (anti-MOV/anti-Smart, below).
+
 ## Barriers (the contribution)
 
 ### B1. No cost model in Lean (~54 claims)
