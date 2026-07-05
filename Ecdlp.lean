@@ -63,3 +63,4 @@ import Ecdlp.Proved.NormEDSIsElliptic
 import Ecdlp.Proved.DependenceRecoversLog
 import Ecdlp.Proved.ThreeTorsionBridge
 import Ecdlp.Proved.ThreeTorsionCard
+import Ecdlp.Proved.FiveTorsionBridge
