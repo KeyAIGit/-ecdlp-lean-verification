@@ -66,3 +66,4 @@ import Ecdlp.Proved.ThreeTorsionCard
 import Ecdlp.Proved.FiveTorsionBridge
 import Ecdlp.Proved.SevenTorsionBridge
 import Ecdlp.Proved.SmallPrimeTorsion
+import Ecdlp.Proved.TorsionPointCount
