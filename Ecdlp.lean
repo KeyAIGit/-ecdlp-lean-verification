@@ -74,3 +74,4 @@ import Ecdlp.Proved.EcdsaKeyRecovery
 import Ecdlp.Proved.ShamirSSS
 import Ecdlp.Proved.MovRandomQ
 import Ecdlp.Proved.SemaevThree
+import Ecdlp.Proved.SemaevFour
