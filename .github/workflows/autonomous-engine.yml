@@ -1,0 +1,158 @@
+name: Autonomous engine (discover → prove → draft PR)
+
+# The full autonomous research loop, on a schedule and with zero human prompting:
+#
+#   1. DISCOVER  scripts/autonomous_discover.py asks the model for the next batch of
+#                genuinely-closeable, non-barrier-blocked targets (the deterministic corpus
+#                generator is exhausted), writing them to targets/queue.json.
+#   2. PROVE     scripts/agent_day.py loops over the queue: the model proposes a Lean file,
+#                the warm server verifies it with `lake env lean` (the kernel is the judge),
+#                budget- and time-bounded. Every kernel-clean node is collected.
+#   3. SURFACE   the accepted nodes are opened as ONE DRAFT PR for review — main is never
+#                touched, and CI's own `lake build` + no-sorry gate re-verify each node
+#                independently before any human merges.
+#
+# SAFETY: draft PRs only; hard USD + wall-clock caps; the script refuses sorry/admit/axiom;
+# a clean no-op (green, zero spend) when ANTHROPIC_API_KEY is absent. BEFORE relying on the
+# schedule, set an Anthropic Console spend limit as an independent backstop on budget_usd.
+#
+# REQUIRED secrets (once): ANTHROPIC_API_KEY, SSH_PRIVATE_KEY, SERVER_HOST.
+# OPTIONAL: SERVER_USER (defaults to "root").
+
+on:
+  workflow_dispatch:
+    inputs:
+      budget_usd:
+        description: "Hard USD cap for the whole run (discover + prove)"
+        required: false
+        default: "15"
+      time_budget_min:
+        description: "Wall-clock cap in minutes"
+        required: false
+        default: "240"
+      default_model:
+        description: "Default prover model for targets that don't override it"
+        required: false
+        default: "claude-sonnet-5"
+      discover_count:
+        description: "How many targets to discover this run"
+        required: false
+        default: "6"
+  schedule:
+    - cron: '0 4 * * 1'   # weekly, Monday 04:00 UTC — conservative + budget-safe
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: autonomous-engine
+  cancel-in-progress: false
+
+jobs:
+  engine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Guard — is the Anthropic key configured?
+        id: guard
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::ANTHROPIC_API_KEY not set — autonomous engine no-ops (no spend). Set the secret + an Anthropic Console spend limit to enable it."
+          fi
+
+      - name: Set up Python
+        if: steps.guard.outputs.enabled == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install anthropic SDK
+        if: steps.guard.outputs.enabled == 'true'
+        run: pip install --quiet 'anthropic>=0.40'
+
+      - name: Install SSH key
+        if: steps.guard.outputs.enabled == 'true'
+        env:
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Discover targets (LLM → queue.json)
+        if: steps.guard.outputs.enabled == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DISCOVER_COUNT: ${{ github.event.inputs.discover_count || '6' }}
+        run: python3 scripts/autonomous_discover.py 2>&1 | tee discover-output.txt || true
+
+      - name: Prove the queue (model proposes → server verifies)
+        id: day
+        if: steps.guard.outputs.enabled == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SSH_KEY_PATH: /home/runner/.ssh/id_ed25519
+          AGENT_BUDGET_USD: ${{ github.event.inputs.budget_usd || '15' }}
+          AGENT_TIME_BUDGET_MIN: ${{ github.event.inputs.time_budget_min || '240' }}
+          AGENT_DEFAULT_MODEL: ${{ github.event.inputs.default_model || 'claude-sonnet-5' }}
+        run: |
+          if [ -z "${SERVER_HOST:-}" ]; then echo "::error::SERVER_HOST not set"; exit 1; fi
+          python3 scripts/agent_day.py 2>&1 | tee day-output.txt || true
+          result="$(grep '^RESULT:' day-output.txt | tail -1 || true)"
+          echo "Final: ${result:-<no RESULT line — see log>}"
+          n="$(printf '%s' "$result" | sed -n 's/.*accepted=\([0-9]\+\).*/\1/p')"
+          echo "accepted_count=${n:-0}" >> "$GITHUB_OUTPUT"
+
+      - name: Open ONE draft PR with the accepted candidates
+        if: steps.guard.outputs.enabled == 'true' && steps.day.outputs.accepted_count != '0' && steps.day.outputs.accepted_count != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          ts="$(date +%Y%m%d-%H%M%S)"
+          branch="engine/run-${ts}"
+          git config user.name "keyai-engine-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add agent_candidates/ AGENT_TRACE.md targets/queue.json
+          git commit -m "autonomous-engine: ${{ steps.day.outputs.accepted_count }} server-verified candidate node(s) (${ts})"
+          git push -u origin "$branch"
+          {
+            echo "Autonomous engine run (${ts}) — discover → prove → verify."
+            echo
+            echo "**${{ steps.day.outputs.accepted_count }} candidate node(s)** accepted by the server's Lean"
+            echo "kernel (\`lake env lean\`), in \`agent_candidates/\`. Discovery + attempt trace in"
+            echo "\`AGENT_TRACE.md\`; the exact target batch is \`targets/queue.json\`."
+            echo
+            echo "These are **proposals**, not promoted proofs. To promote one: move it into"
+            echo "\`Ecdlp/Proved/\`, add its import to \`Ecdlp.lean\` (so CI re-verifies), review the"
+            echo "statement for meaningfulness, and append a \`VERIFIED.md\` row. Do not merge as-is."
+            echo
+            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+          } > pr-body.txt
+          gh pr create --draft --base main --head "$branch" \
+            --title "autonomous-engine: ${{ steps.day.outputs.accepted_count }} candidate node(s) for review" \
+            --body-file pr-body.txt
+
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: autonomous-engine-run
+          path: |
+            discover-output.txt
+            day-output.txt
+            AGENT_TRACE.md
+            agent_candidates/
+          if-no-files-found: ignore

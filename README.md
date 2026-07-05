@@ -54,6 +54,13 @@ Full project incl. Mathlib targets:
     lake exe cache get && lake build
 Toolchain pinned in `lean-toolchain` (Lean v4.31.0); Mathlib rev pinned in `lakefile.toml`.
 
+## Autonomous engine
+The full unattended loop — **discover → prove → draft PR**, weekly, no human prompting —
+is `.github/workflows/autonomous-engine.yml`. See **`notes/ENGINE.md`** for how it works,
+its safety model (draft-only, kernel-judged, budget-capped), the one-time secret setup that
+turns it on, and an honest account of what it does autonomously vs what still needs
+orchestration.
+
 ## Pipeline role
 This is stage 2 (formalization agent output) of the autonomous research mechanism.
 Each `formalizable` claim in KG_CLAIM_FORMALIZATION_v1.csv becomes a theorem here;
