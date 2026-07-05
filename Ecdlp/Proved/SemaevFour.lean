@@ -99,6 +99,60 @@ theorem S₃poly_master_factor (a b x₁ y₁ x₂ y₂ : F)
     + (2 * (C x₁ - C x₂) ^ 2 * X + 2 * (C x₁ + C x₂) * (C x₁ - C x₂) ^ 2
         - ((C y₂) ^ 2 - (C y₁) ^ 2) - ((C x₂) ^ 3 - (C x₁) ^ 3) - C a * (C x₂ - C x₁)) * e2
 
+variable {K : Type*} [Field K]
+
+/-- **Reverse/meaning direction of `S₄` (`S₄ = 0 ⟹ common root`).** Over a field, if
+`(x₁,y₁), (x₂,y₂)` are on `y² = x³ + a·x + b` with `x₁ ≠ x₂` and `S₄(x₁,x₂,x₃,x₄) = 0`, then
+the two `S₃` slices share a root `X₀` (`S₃(x₁,x₂,X₀) = S₃(x₃,x₄,X₀) = 0`). This is the
+converse of `S₄_eq_zero_of_common_root`: since `S₄` is the resultant of the two slices, its
+vanishing forces a shared root — and here that root lies **in `K`** (not just an extension),
+because `S₃(x₁,x₂,·)` splits over `K` with the explicitly known roots `x(P₁±P₂)`
+(`S₃poly_master_factor`). Proof: `resultant_eq_prod_eval` turns `S₄ = 0` into "some root of the
+first slice is a root of the second". The hypotheses on `(x₃,x₄)` are unused — the common root
+falls out purely from the first slice splitting. -/
+theorem S₄_common_root_of_eq_zero (a b x₁ y₁ x₂ y₂ x₃ x₄ : K)
+    (h₁ : y₁ ^ 2 = x₁ ^ 3 + a * x₁ + b) (h₂ : y₂ ^ 2 = x₂ ^ 3 + a * x₂ + b)
+    (hx12 : x₁ ≠ x₂) (hS4 : S₄ a b x₁ x₂ x₃ x₄ = 0) :
+    ∃ X₀, S₃ a b x₁ x₂ X₀ = 0 ∧ S₃ a b x₃ x₄ X₀ = 0 := by
+  have hD : (x₁ - x₂) ^ 2 ≠ 0 := pow_ne_zero 2 (sub_ne_zero.mpr hx12)
+  set r₊ : K := ((y₂ - y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2) / (x₁ - x₂) ^ 2 with hr₊
+  set r₋ : K := ((y₂ + y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2) / (x₁ - x₂) ^ 2 with hr₋
+  -- factor `S₃poly` as `C D · (X − C r₊)(X − C r₋)`, hence it splits with known roots
+  have hfac : S₃poly a b x₁ x₂ = C ((x₁ - x₂) ^ 2) * ((X - C r₊) * (X - C r₋)) := by
+    have hm := S₃poly_master_factor a b x₁ y₁ x₂ y₂ h₁ h₂
+    have hcR₊ : (y₂ - y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2 = (x₁ - x₂) ^ 2 * r₊ := by
+      rw [hr₊, mul_div_cancel₀ _ hD]
+    have hcR₋ : (y₂ + y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2 = (x₁ - x₂) ^ 2 * r₋ := by
+      rw [hr₋, mul_div_cancel₀ _ hD]
+    rw [hcR₊, hcR₋, map_mul, map_mul] at hm
+    have hCD : (C ((x₁ - x₂) ^ 2) : K[X]) ≠ 0 := by
+      rwa [Ne, C_eq_zero]
+    apply mul_left_cancel₀ hCD
+    rw [hm]; ring
+  have hsplit : (S₃poly a b x₁ x₂).Splits := by
+    rw [hfac]; exact (((splits_X_sub_C r₊).mul (splits_X_sub_C r₋)).C_mul _)
+  have hdegf : (S₃poly a b x₁ x₂).natDegree = 2 := by
+    rw [hfac]
+    rw [natDegree_C_mul (by rwa [Ne, C_eq_zero] : (C ((x₁ - x₂) ^ 2) : K[X]) ≠ 0)]
+    compute_degree!
+  have hlcf : (S₃poly a b x₁ x₂).leadingCoeff = (x₁ - x₂) ^ 2 := by
+    rw [hfac, leadingCoeff, natDegree_C_mul (by rwa [Ne, C_eq_zero] : (C ((x₁ - x₂) ^ 2) : K[X]) ≠ 0)]
+    simp [coeff_C_mul, Monic.coeff_natDegree, (monic_X_sub_C r₊).mul (monic_X_sub_C r₋)]
+  have hf0 : S₃poly a b x₁ x₂ ≠ 0 := by
+    intro h; rw [h] at hdegf; simp at hdegf
+  have hpe := resultant_eq_prod_eval (S₃poly a b x₁ x₂) (S₃poly a b x₃ x₄) 2
+    (S₃poly_natDegree_le a b x₃ x₄) hsplit
+  rw [hdegf] at hpe
+  rw [S₄, hpe, hlcf, mul_eq_zero] at hS4
+  have hprod : ((S₃poly a b x₁ x₂).roots.map (S₃poly a b x₃ x₄).eval).prod = 0 :=
+    hS4.resolve_left (pow_ne_zero 2 hD)
+  rw [Multiset.prod_eq_zero_iff, Multiset.mem_map] at hprod
+  obtain ⟨X₀, hmem, hgeval⟩ := hprod
+  refine ⟨X₀, ?_, ?_⟩
+  · have hroot := (mem_roots hf0).mp hmem
+    rwa [IsRoot, S₃poly_eval] at hroot
+  · rwa [S₃poly_eval] at hgeval
+
 open Ecdlp.Curve
 
 variable [Fact (Nat.Prime Secp256k1.p)]
@@ -112,5 +166,16 @@ theorem secp256k1_semaev_four_of_common_root
     (h34 : S₃ (0 : ZMod Secp256k1.p) 7 x₃ x₄ X₀ = 0) :
     S₄ (0 : ZMod Secp256k1.p) 7 x₁ x₂ x₃ x₄ = 0 :=
   S₄_eq_zero_of_common_root 0 7 x₁ x₂ x₃ x₄ X₀ h12 h34
+
+/-- **Semaev's `S₄` for secp256k1, reverse/meaning direction.** If `(x₁,y₁), (x₂,y₂)` are on
+`y² = x³ + 7` with `x₁ ≠ x₂` and the secp256k1 `S₄` vanishes, the two `S₃` slices share a root
+`X₀` in `𝔽_p` — the shared pairwise-sum `x`-coordinate underlying the 4-point Semaev relation. -/
+theorem secp256k1_semaev_four_common_root_of_eq_zero
+    (x₁ y₁ x₂ y₂ x₃ x₄ : ZMod Secp256k1.p)
+    (h₁ : y₁ ^ 2 = x₁ ^ 3 + 7) (h₂ : y₂ ^ 2 = x₂ ^ 3 + 7) (hx12 : x₁ ≠ x₂)
+    (hS4 : S₄ (0 : ZMod Secp256k1.p) 7 x₁ x₂ x₃ x₄ = 0) :
+    ∃ X₀, S₃ (0 : ZMod Secp256k1.p) 7 x₁ x₂ X₀ = 0 ∧ S₃ (0 : ZMod Secp256k1.p) 7 x₃ x₄ X₀ = 0 :=
+  S₄_common_root_of_eq_zero 0 7 x₁ y₁ x₂ y₂ x₃ x₄
+    (by linear_combination h₁) (by linear_combination h₂) hx12 hS4
 
 end Ecdlp.Semaev
