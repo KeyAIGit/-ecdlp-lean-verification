@@ -79,8 +79,8 @@ theorem S₄_symm₁₂ (a b x₁ x₂ x₃ x₄ : F) :
   rw [S₄, S₄, S₃poly_symm a b x₁ x₂]
 
 /-- **Cleared two-root master factorization of `S₃`'s polynomial slice**, as an identity in
-`F[X]`: `(x₁−x₂)²·S₃poly = (D·X − R₊)·(D·X − R₋)` with `D = (x₁−x₂)²`,
-`R₊ = (y₂−y₁)² − (x₁+x₂)D`, `R₋ = (y₂+y₁)² − (x₁+x₂)D`. This is the `F[X]` lift of the scalar
+`F[X]`: `(x₁−x₂)²·S₃poly = (D·X − Rp)·(D·X − Rm)` with `D = (x₁−x₂)²`,
+`Rp = (y₂−y₁)² − (x₁+x₂)D`, `Rm = (y₂+y₁)² − (x₁+x₂)D`. This is the `F[X]` lift of the scalar
 master identity behind `SemaevThree.S₃_root_of_eq_zero`; the roots of the RHS are the cleared
 `x`-coordinates of `P₁±P₂`, exhibiting `S₃poly` as split with known roots. -/
 theorem S₃poly_master_factor (a b x₁ y₁ x₂ y₂ : F)
@@ -115,29 +115,29 @@ theorem S₄_common_root_of_eq_zero (a b x₁ y₁ x₂ y₂ x₃ x₄ : K)
     (hx12 : x₁ ≠ x₂) (hS4 : S₄ a b x₁ x₂ x₃ x₄ = 0) :
     ∃ X₀, S₃ a b x₁ x₂ X₀ = 0 ∧ S₃ a b x₃ x₄ X₀ = 0 := by
   have hD : (x₁ - x₂) ^ 2 ≠ 0 := pow_ne_zero 2 (sub_ne_zero.mpr hx12)
-  set r₊ : K := ((y₂ - y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2) / (x₁ - x₂) ^ 2 with hr₊
-  set r₋ : K := ((y₂ + y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2) / (x₁ - x₂) ^ 2 with hr₋
-  -- factor `S₃poly` as `C D · (X − C r₊)(X − C r₋)`, hence it splits with known roots
-  have hfac : S₃poly a b x₁ x₂ = C ((x₁ - x₂) ^ 2) * ((X - C r₊) * (X - C r₋)) := by
+  set rp : K := ((y₂ - y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2) / (x₁ - x₂) ^ 2 with hrp
+  set rm : K := ((y₂ + y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2) / (x₁ - x₂) ^ 2 with hrm
+  -- factor `S₃poly` as `C D · (X − C rp)(X − C rm)`, hence it splits with known roots
+  have hfac : S₃poly a b x₁ x₂ = C ((x₁ - x₂) ^ 2) * ((X - C rp) * (X - C rm)) := by
     have hm := S₃poly_master_factor a b x₁ y₁ x₂ y₂ h₁ h₂
-    have hcR₊ : (y₂ - y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2 = (x₁ - x₂) ^ 2 * r₊ := by
-      rw [hr₊, mul_div_cancel₀ _ hD]
-    have hcR₋ : (y₂ + y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2 = (x₁ - x₂) ^ 2 * r₋ := by
-      rw [hr₋, mul_div_cancel₀ _ hD]
-    rw [hcR₊, hcR₋, map_mul, map_mul] at hm
+    have hcRp : (y₂ - y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2 = (x₁ - x₂) ^ 2 * rp := by
+      rw [hrp, mul_div_cancel₀ _ hD]
+    have hcRm : (y₂ + y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2 = (x₁ - x₂) ^ 2 * rm := by
+      rw [hrm, mul_div_cancel₀ _ hD]
+    rw [hcRp, hcRm, map_mul, map_mul] at hm
     have hCD : (C ((x₁ - x₂) ^ 2) : K[X]) ≠ 0 := by
       rwa [Ne, C_eq_zero]
     apply mul_left_cancel₀ hCD
     rw [hm]; ring
   have hsplit : (S₃poly a b x₁ x₂).Splits := by
-    rw [hfac]; exact (((splits_X_sub_C r₊).mul (splits_X_sub_C r₋)).C_mul _)
+    rw [hfac]; exact (((splits_X_sub_C rp).mul (splits_X_sub_C rm)).C_mul _)
   have hdegf : (S₃poly a b x₁ x₂).natDegree = 2 := by
     rw [hfac]
     rw [natDegree_C_mul (by rwa [Ne, C_eq_zero] : (C ((x₁ - x₂) ^ 2) : K[X]) ≠ 0)]
     compute_degree!
   have hlcf : (S₃poly a b x₁ x₂).leadingCoeff = (x₁ - x₂) ^ 2 := by
     rw [hfac, leadingCoeff, natDegree_C_mul (by rwa [Ne, C_eq_zero] : (C ((x₁ - x₂) ^ 2) : K[X]) ≠ 0)]
-    simp [coeff_C_mul, Monic.coeff_natDegree, (monic_X_sub_C r₊).mul (monic_X_sub_C r₋)]
+    simp [coeff_C_mul, Monic.coeff_natDegree, (monic_X_sub_C rp).mul (monic_X_sub_C rm)]
   have hf0 : S₃poly a b x₁ x₂ ≠ 0 := by
     intro h; rw [h] at hdegf; simp at hdegf
   have hpe := resultant_eq_prod_eval (S₃poly a b x₁ x₂) (S₃poly a b x₃ x₄) 2
