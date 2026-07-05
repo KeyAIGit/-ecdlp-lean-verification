@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "project": "ecdlp-lean-verification",
+  "curve": "secp256k1",
+  "toolchain": "Lean 4 + Mathlib v4.31.0",
+  "ledger_rows": 171,
+  "distinct_results": 151,
+  "proved_modules": 71,
+  "proved_ledger_cells": 162,
+  "sorry_count": 0,
+  "custom_axioms": 0,
+  "invariant": "green build = every listed theorem fully proved (no sorry, no custom axioms)",
+  "source_of_truth": "VERIFIED.md canonical figure"
+}

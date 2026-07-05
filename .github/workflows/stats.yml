@@ -1,0 +1,41 @@
+name: Update stats
+
+# Keeps the machine-readable verified-theorem counts (data/stats.json,
+# badges/theorems.json) in sync with VERIFIED.md automatically, so an external
+# site can fetch a stable JSON without any manual step. Runs after a merge to
+# main; commits the regenerated files only if they changed, tagging the commit
+# [skip ci] so it does not re-trigger itself.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'VERIFIED.md'
+      - 'scripts/gen_stats.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stats-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Regenerate stats from VERIFIED.md
+        run: python3 scripts/gen_stats.py
+      - name: Commit if changed
+        run: |
+          if ! git diff --quiet -- data/stats.json badges/theorems.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/stats.json badges/theorems.json
+            git commit -m "chore(stats): refresh verified-theorem counts [skip ci]"
+            git push
+          else
+            echo "stats already current"
+          fi
