@@ -6,7 +6,7 @@ across docs for the same body of work). This gate fails the build if any RETIRED
 count string reappears in the narrative docs, and sanity-checks that the canonical figure
 is present in VERIFIED.md.
 
-Canonical figure (single source of truth): "160 ledger rows / ~141 distinct results".
+Canonical figure (single source of truth): "171 ledger rows / ~151 distinct results".
 Update CANONICAL_PRESENT / RETIRED here (and only here) if the real count changes.
 
 Usage:  python3 scripts/check_counts.py
@@ -57,10 +57,21 @@ RETIRED = [
     "~139 distinct", "157 ledger rows", "157 rows",
     "~140 distinct", "158 ledger rows", "158 rows",
     "159 ledger rows", "159 rows",
+    "~141 distinct", "160 ledger rows", "160 rows",
+    "~142 distinct", "161 ledger rows", "161 rows",
+    "~143 distinct", "162 ledger rows", "162 rows",
+    "~144 distinct", "163 ledger rows", "163 rows",
+    "~145 distinct", "164 ledger rows", "164 rows",
+    "~146 distinct", "165 ledger rows", "165 rows",
+    "~147 distinct", "166 ledger rows", "166 rows",
+    "~148 distinct", "167 ledger rows", "167 rows",
+    "~149 distinct", "168 ledger rows", "168 rows",
+    "~150 distinct", "169 ledger rows", "169 rows",
+    "170 ledger rows", "170 rows",
 ]
 
 # Must appear somewhere in VERIFIED.md so the canonical figure stays discoverable.
-CANONICAL_PRESENT = ["~141 distinct", "160 ledger rows"]
+CANONICAL_PRESENT = ["~151 distinct", "171 ledger rows"]
 
 
 def main() -> int:
