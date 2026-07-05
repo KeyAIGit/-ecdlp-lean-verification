@@ -101,6 +101,62 @@ theorem S₃_eq_zero_of_tangent (a b x₁ y₁ x₃ : K)
   simp only [S₃]
   linear_combination (4 * x₃ + 8 * x₁) * h₁ - hdbl
 
+/-- **Reverse direction of Semaev's `S₃` — the two roots.** As a polynomial in its third
+argument `S₃` is quadratic with leading coefficient `(x₁−x₂)²`, and (on the curve) its two
+roots are exactly the `x`-coordinates of `P₁+P₂` and `P₁−P₂`. So if `(x₁,y₁), (x₂,y₂)` lie on
+`y² = x³ + a·x + b` with `x₁ ≠ x₂` and `S₃(x₁,x₂,x₃) = 0`, then `x₃` is one of those two:
+`(x₁−x₂)²·x₃ = (y₂−y₁)² − (x₁+x₂)(x₁−x₂)²` (the cleared form of `x₃ = x(P₁+P₂)`) **or**
+`(x₁−x₂)²·x₃ = (y₂+y₁)² − (x₁+x₂)(x₁−x₂)²` (the cleared `x₃ = x(P₁−P₂)`).
+
+The proof is the certified master factorization `(x₁−x₂)²·S₃ = (D·x₃−R₊)(D·x₃−R₋)` (an exact
+`ring` identity modulo the curve equations, cofactors from a sympy Gröbner + resultant
+certificate); with `S₃ = 0` and `(x₁−x₂)² ≠ 0` in a field, one factor vanishes. -/
+theorem S₃_root_of_eq_zero (a b x₁ y₁ x₂ y₂ x₃ : K)
+    (h₁ : y₁ ^ 2 = x₁ ^ 3 + a * x₁ + b) (h₂ : y₂ ^ 2 = x₂ ^ 3 + a * x₂ + b)
+    (hx : x₁ ≠ x₂) (hS : S₃ a b x₁ x₂ x₃ = 0) :
+    (x₁ - x₂) ^ 2 * x₃ = (y₂ - y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2 ∨
+    (x₁ - x₂) ^ 2 * x₃ = (y₂ + y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2 := by
+  have hprod :
+      ((x₁ - x₂) ^ 2 * x₃ - ((y₂ - y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2))
+    * ((x₁ - x₂) ^ 2 * x₃ - ((y₂ + y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2)) = 0 := by
+    have hid :
+        ((x₁ - x₂) ^ 2 * x₃ - ((y₂ - y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2))
+      * ((x₁ - x₂) ^ 2 * x₃ - ((y₂ + y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2))
+      = (x₁ - x₂) ^ 2 * S₃ a b x₁ x₂ x₃ := by
+      simp only [S₃]
+      linear_combination
+        (-(2 * (x₁ - x₂) ^ 2 * x₃ + 2 * (x₁ + x₂) * (x₁ - x₂) ^ 2
+            + (y₂ ^ 2 - y₁ ^ 2) + (x₂ ^ 3 - x₁ ^ 3) + a * (x₂ - x₁))) * h₁
+        + (-(2 * (x₁ - x₂) ^ 2 * x₃ + 2 * (x₁ + x₂) * (x₁ - x₂) ^ 2
+            - (y₂ ^ 2 - y₁ ^ 2) - (x₂ ^ 3 - x₁ ^ 3) - a * (x₂ - x₁))) * h₂
+    rw [hid, hS, mul_zero]
+  rcases mul_eq_zero.mp hprod with h | h
+  · exact Or.inl (sub_eq_zero.mp h)
+  · exact Or.inr (sub_eq_zero.mp h)
+
+/-- **Semaev's `S₃`, full characterization (iff).** Combining the forward direction
+(`S₃_eq_zero_of_chord`) with the reverse (`S₃_root_of_eq_zero`): for points `(x₁,y₁), (x₂,y₂)`
+on `y² = x³ + a·x + b` with `x₁ ≠ x₂`,
+`S₃(x₁,x₂,x₃) = 0` **iff** `x₃` is the `x`-coordinate of `P₁+P₂` or of `P₁−P₂` (in cleared
+form). The `+` disjunct is literally the chord hypothesis of the forward direction; the `−`
+disjunct is the same with `y₂ ↦ −y₂` (the point `−P₂`). This is the complete statement of
+`S₃` as the elimination of `y₁,y₂` from "three points sum to `O`". -/
+theorem S₃_eq_zero_iff (a b x₁ y₁ x₂ y₂ x₃ : K)
+    (h₁ : y₁ ^ 2 = x₁ ^ 3 + a * x₁ + b) (h₂ : y₂ ^ 2 = x₂ ^ 3 + a * x₂ + b)
+    (hx : x₁ ≠ x₂) :
+    S₃ a b x₁ x₂ x₃ = 0 ↔
+      (x₁ - x₂) ^ 2 * (x₁ + x₂ + x₃) = (y₂ - y₁) ^ 2 ∨
+      (x₁ - x₂) ^ 2 * (x₁ + x₂ + x₃) = (y₂ + y₁) ^ 2 := by
+  constructor
+  · intro hS
+    rcases S₃_root_of_eq_zero a b x₁ y₁ x₂ y₂ x₃ h₁ h₂ hx hS with h | h
+    · exact Or.inl (by linear_combination h)
+    · exact Or.inr (by linear_combination h)
+  · rintro (h | h)
+    · exact S₃_eq_zero_of_chord a b x₁ y₁ x₂ y₂ x₃ h₁ h₂ hx h
+    · exact S₃_eq_zero_of_chord a b x₁ y₁ x₂ (-y₂) x₃ h₁ (by linear_combination h₂) hx
+        (by linear_combination h)
+
 open Ecdlp.Curve
 
 variable [Fact (Nat.Prime Secp256k1.p)]
@@ -206,5 +262,18 @@ theorem secp256k1_semaev_three_point_double
   have hdbl : 4 * y₁ ^ 2 * (x₃ + 2 * x₁) = (3 * x₁ ^ 2) ^ 2 := by
     linear_combination -hX2
   exact secp256k1_semaev_three_tangent x₁ y₁ x₃ hc₁ hdbl
+
+/-- **Semaev's `S₃` for secp256k1 (`y² = x³ + 7`), full characterization (iff).**
+Specialization of `S₃_eq_zero_iff` to secp256k1: for points `(x₁,y₁), (x₂,y₂)` on the curve
+with `x₁ ≠ x₂`, `S₃(x₁,x₂,x₃) = 0` iff `x₃` is the `x`-coordinate of `P₁+P₂` or of `P₁−P₂`
+(cleared form). This is the complete `S₃` characterization for secp256k1 — forward and
+reverse together. -/
+theorem secp256k1_semaev_three_iff
+    (x₁ y₁ x₂ y₂ x₃ : ZMod Secp256k1.p)
+    (h₁ : y₁ ^ 2 = x₁ ^ 3 + 7) (h₂ : y₂ ^ 2 = x₂ ^ 3 + 7) (hx : x₁ ≠ x₂) :
+    S₃ (0 : ZMod Secp256k1.p) 7 x₁ x₂ x₃ = 0 ↔
+      (x₁ - x₂) ^ 2 * (x₁ + x₂ + x₃) = (y₂ - y₁) ^ 2 ∨
+      (x₁ - x₂) ^ 2 * (x₁ + x₂ + x₃) = (y₂ + y₁) ^ 2 :=
+  S₃_eq_zero_iff 0 7 x₁ y₁ x₂ y₂ x₃ (by linear_combination h₁) (by linear_combination h₂) hx
 
 end Ecdlp.Semaev
