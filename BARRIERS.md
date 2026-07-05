@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~152 distinct results / 173 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~153 distinct results / 174 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -76,11 +76,12 @@ exact `Θ` statements.
 - **Summation / Semaev polynomials** (`MvPolynomial`, partial) — Mathlib has
   multivariate polynomials but not the elliptic summation polynomials `Sₙ`. **Base case
   broken open:** the 3rd Semaev polynomial `S₃` and its *forward* direction
-  (`P₁+P₂+P₃ = O ⇒ S₃(x₁,x₂,x₃) = 0`, chord case) are now machine-checked
-  (`Ecdlp/Proved/SemaevThree.lean`, `S₃_eq_zero_of_chord` + secp256k1 corollary) — the
-  first Semaev formalization in Lean. Still open: the *iff* (a root of `S₃` yields collinear
-  points), the tangent case, and `Sₙ` for `n ≥ 4` (the recursion / resultant construction
-  that index calculus over `𝔽_{p^k}` actually needs).
+  (`P₁+P₂+P₃ = O ⇒ S₃(x₁,x₂,x₃) = 0`) are now machine-checked in **both** nondegenerate
+  cases — chord (`S₃_eq_zero_of_chord`) and tangent/doubling (`S₃_eq_zero_of_tangent`), each
+  with a secp256k1 corollary (`Ecdlp/Proved/SemaevThree.lean`) — the first Semaev
+  formalization in Lean. Still open: the *iff* (a root of `S₃` yields collinear points) and
+  `Sₙ` for `n ≥ 4` (the recursion / resultant construction that index calculus over
+  `𝔽_{p^k}` actually needs).
 - **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
   *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib.
 - **Point counting** — `#E(𝔽ₚ) = n` for the concrete curve needs a computation
