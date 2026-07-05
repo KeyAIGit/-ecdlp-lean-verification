@@ -5,11 +5,12 @@ import Ecdlp.Proved.Secp256k1Curve
 # Semaev's third summation polynomial `S₃`
 
 Formalizes Semaev's 3rd summation polynomial for a short Weierstrass curve
-`y² = x³ + a·x + b` and proves its **forward direction**: whenever a field element `x₃`
-is the `x`-coordinate of the chord-sum of two curve points `(x₁,y₁), (x₂,y₂)` (the
-`x₁ ≠ x₂` "chord" case), the triple `(x₁,x₂,x₃)` is a root of `S₃`. Equivalently: if
-three affine points with these `x`-coordinates satisfy `P₁ + P₂ + P₃ = O`, then
-`S₃(x₁,x₂,x₃) = 0`.
+`y² = x³ + a·x + b` and proves its **forward direction** in both nondegenerate cases:
+whenever a field element `x₃` is the `x`-coordinate of the sum of two curve points
+`(x₁,y₁), (x₂,y₂)` — the `x₁ ≠ x₂` "chord" case (`S₃_eq_zero_of_chord`) or the `x₁ = x₂`
+"tangent"/doubling case (`S₃_eq_zero_of_tangent`) — the triple `(x₁,x₂,x₃)` is a root of
+`S₃`. Equivalently: if three affine points with these `x`-coordinates satisfy
+`P₁ + P₂ + P₃ = O`, then `S₃(x₁,x₂,x₃) = 0`.
 
 Summation polynomials (Semaev, 2004) are the algebraic backbone of index-calculus /
 Gröbner-basis attacks on ECDLP over extension fields; `Sₙ = 0` encodes the existence of
@@ -82,6 +83,24 @@ theorem S₃_eq_zero_of_chord (a b x₁ y₁ x₂ y₂ x₃ : K)
       + (4 * (x₂ ^ 3 + a * x₂ + b)) * h₁ + (4 * y₁ ^ 2) * h₂
   exact (mul_eq_zero.mp key).resolve_left hne
 
+/-- **Forward direction of Semaev's `S₃` (tangent / doubling case).** The `x₁ = x₂`
+companion of `S₃_eq_zero_of_chord`: if `(x₁,y₁)` is a curve point and `x₃` is the
+`x`-coordinate of `2·(x₁,y₁)` — stated in the cleared-denominator doubling form
+`4·y₁²·(x₃ + 2·x₁) = (3·x₁² + a)²`, i.e. `x₃ = ((3·x₁²+a)/(2·y₁))² − 2·x₁` — then
+`S₃(x₁,x₁,x₃) = 0` (equivalently `2P + P₃ = O ⇒ S₃(x_P, x_P, x_{P₃}) = 0`).
+
+Unlike the chord case there is no `y₁·y₂` cross term, so no cofactor cancellation is
+needed: `S₃(x₁,x₁,x₃)` collapses (via `S₃_symm₁₂`/algebra) to `−4·f₁·x₃ + (x₁²−a)² − 8b·x₁`,
+and substituting the doubling relation and the curve equation makes it vanish identically —
+a single certified `linear_combination`. Together with `S₃_eq_zero_of_chord` this proves the
+forward direction of `S₃` in every nondegenerate case. -/
+theorem S₃_eq_zero_of_tangent (a b x₁ y₁ x₃ : K)
+    (h₁ : y₁ ^ 2 = x₁ ^ 3 + a * x₁ + b)
+    (hdbl : 4 * y₁ ^ 2 * (x₃ + 2 * x₁) = (3 * x₁ ^ 2 + a) ^ 2) :
+    S₃ a b x₁ x₁ x₃ = 0 := by
+  simp only [S₃]
+  linear_combination (4 * x₃ + 8 * x₁) * h₁ - hdbl
+
 open Ecdlp.Curve
 
 variable [Fact (Nat.Prime Secp256k1.p)]
@@ -98,5 +117,18 @@ theorem secp256k1_semaev_three_chord
     S₃ (0 : ZMod Secp256k1.p) 7 x₁ x₂ x₃ = 0 :=
   S₃_eq_zero_of_chord 0 7 x₁ y₁ x₂ y₂ x₃
     (by linear_combination h₁) (by linear_combination h₂) hx hchord
+
+/-- **Semaev's `S₃` for secp256k1 (`y² = x³ + 7`), tangent/doubling case.** Specialization
+of `S₃_eq_zero_of_tangent` to secp256k1 (`a = 0`, `b = 7`): if `(x₁,y₁)` satisfies
+`y² = x³ + 7` and `x₃` is the `x`-coordinate of `2·(x₁,y₁)` (`4·y₁²·(x₃+2·x₁) = 9·x₁⁴`),
+then `(x₁,x₁,x₃)` is a root of secp256k1's third Semaev summation polynomial. With
+`secp256k1_semaev_three_chord`, secp256k1's `S₃` forward direction is complete. -/
+theorem secp256k1_semaev_three_tangent
+    (x₁ y₁ x₃ : ZMod Secp256k1.p)
+    (h₁ : y₁ ^ 2 = x₁ ^ 3 + 7)
+    (hdbl : 4 * y₁ ^ 2 * (x₃ + 2 * x₁) = (3 * x₁ ^ 2) ^ 2) :
+    S₃ (0 : ZMod Secp256k1.p) 7 x₁ x₁ x₃ = 0 :=
+  S₃_eq_zero_of_tangent 0 7 x₁ y₁ x₃
+    (by linear_combination h₁) (by linear_combination hdbl)
 
 end Ecdlp.Semaev
