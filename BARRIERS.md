@@ -91,7 +91,21 @@ exact `Θ` statements.
   `S₃` slices ⟹ `S₄ = 0`) and the reverse/meaning `S₄_common_root_of_eq_zero` (`S₄ = 0` ⟹ the
   two slices share a root **in the field**, since `S₃`'s slice splits with the known roots
   `x(P₁±P₂)` — via `resultant_eq_prod_eval`), plus symmetries — the first `S₄` in Lean, and the
-  recursion index calculus over `𝔽_{p^k}` actually uses. Still open: `Sₙ` for `n ≥ 5`.
+  recursion index calculus over `𝔽_{p^k}` actually uses.
+
+  **Scope of what this closes — and why it is *not* an attack on secp256k1.** Semaev summation
+  polynomials are the algebraic engine of **index calculus over *extension* fields `𝔽_{p^n}`,
+  `n > 1`** (Gaudry–Diem–Semaev): one solves the `Sₙ = 0` system over a factor base with Gröbner
+  bases, and the complexity depends on `n`. Over a **prime** field — which is exactly
+  secp256k1's `𝔽_p` — summation-polynomial index calculus is **not subexponential** and gives no
+  advantage over the generic `Ω(√n)` bound. So this line is a **formalization / no-go
+  contribution**, not a path toward breaking secp256k1: `S₃`/`S₄` are the standard objects and
+  their defining recursion, now machine-checked, but they compute nothing about any specific
+  discrete log on a prime-field curve. `S₃` (base case, fully characterized) together with `S₄`
+  (first recursion step, both directions) is the **conceptually complete unit**: it establishes
+  the object *and* proves the resultant recursion means what it should. Higher `Sₙ` (`n ≥ 5`) are
+  the *same* recursion at larger degree — deliberately **not** pursued, as they add scale without
+  new content or new reach against the curve.
 - **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
   *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib.
 - **Point counting** — `#E(𝔽ₚ) = n` for the concrete curve needs a computation
