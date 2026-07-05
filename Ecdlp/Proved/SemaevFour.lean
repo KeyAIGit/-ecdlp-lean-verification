@@ -130,7 +130,7 @@ theorem S₄_common_root_of_eq_zero (a b x₁ y₁ x₂ y₂ x₃ x₄ : K)
     apply mul_left_cancel₀ hCD
     rw [hm]; ring
   have hsplit : (S₃poly a b x₁ x₂).Splits := by
-    rw [hfac]; exact (((splits_X_sub_C rp).mul (splits_X_sub_C rm)).C_mul _)
+    rw [hfac]; exact (((Splits.X_sub_C rp).mul (Splits.X_sub_C rm)).C_mul _)
   have hdegf : (S₃poly a b x₁ x₂).natDegree = 2 := by
     rw [hfac, natDegree_C_mul hD]
     compute_degree!
