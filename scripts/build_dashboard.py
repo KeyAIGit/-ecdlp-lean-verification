@@ -36,6 +36,11 @@ ROOT = Path(__file__).resolve().parent.parent
 FM = ROOT / "data" / "frontier_map.json"
 VERIFIED = ROOT / "VERIFIED.md"
 OUT = ROOT / "dashboard.html"
+INDEX = ROOT / "index.html"
+# Ledger rows that are alternate-form/`supporting:` restatements of the same fact.
+# VERIFIED.md's canonical line is the single source of truth ("171 ledger rows /
+# ~151 distinct" → 20 restatement rows); keep this in sync with it.
+DISTINCT_OFFSET = 20
 REPO = "https://github.com/KeyAIGit/-ecdlp-lean-verification"
 BLOB = f"{REPO}/blob/main"
 TREE = f"{REPO}/tree/main"
@@ -257,6 +262,35 @@ def build_foundations_chart(foundations: dict) -> tuple[str, str]:
     return "".join(bars), table
 
 
+def sync_index_html(vcount: int, distinct: int, completeness, total: int) -> None:
+    """Keep the hand-authored landing page (index.html) counters in sync with the
+    canonical ledger. index.html is otherwise hand-maintained — this only rewrites the
+    numeric `data-to`/`data-w` values, anchored on their adjacent human labels so it is
+    robust to layout edits. Warns (never raises) if a counter's structure has drifted,
+    so a stale-count patch can never break the stats workflow."""
+    if not INDEX.exists():
+        return
+    html = INDEX.read_text(encoding="utf-8")
+    comp = int(round(float(completeness)))
+    verified_pct = int(round(vcount / total * 100)) if total else 0
+    # (regex, replacement, human name) — each anchored on its label text.
+    subs = [
+        (r'(data-to=")\d+("[^>]*>0</div><div class="l">ledger rows)', vcount, "ledger rows stat"),
+        (r'(data-to=")\d+("[^>]*data-pre="~">0</div><div class="l">distinct results)', distinct, "distinct-results stat"),
+        (r'(<b class="mono" data-to=")\d+(")', distinct, "distinct-verified callout"),
+        (r'(Kernel-verified results</span><b data-to=")\d+(")', vcount, "kernel-verified bar"),
+        (r'(<div class="fill g" data-w=")\d+(")', verified_pct, "kernel-verified bar width"),
+        (r'(Frontier mapped &amp; classified</span><b data-to=")\d+("[^>]*data-suf="%")', comp, "frontier-mapped bar"),
+        (r'(Frontier mapped &amp; classified</span>.*?<div class="fill" data-w=")\d+(")', comp, "frontier bar width"),
+    ]
+    for pat, val, name in subs:
+        html, n = re.subn(pat, lambda m, v=val: f"{m.group(1)}{v}{m.group(2)}", html, flags=re.S)
+        if n == 0:
+            print(f"  warn: index.html counter '{name}' not found — layout may have drifted")
+    INDEX.write_text(html, encoding="utf-8")
+    print(f"synced index.html counters ({vcount} rows / ~{distinct} distinct / {comp}% frontier)")
+
+
 def main() -> int:
     fm = json.loads(FM.read_text(encoding="utf-8"))
     vcount = len(re.findall(r"^\|.*\| (?:proved|proved[¹²]| ?proved.*)\|?\s*$",
@@ -272,7 +306,7 @@ def main() -> int:
     # is a range/estimate — animating it as a precise count-up would misrepresent it
     # as more exact than it is, so it renders as static text instead.
     metric_cards = [
-        ("Verified results", vcount, None, f"~{vcount-11} distinct", "0 sorry · no custom axioms"),
+        ("Verified results", vcount, None, f"~{vcount-DISTINCT_OFFSET} distinct", "0 sorry · no custom axioms"),
         ("Frontier mapped", completeness, None, "%", f"{total} corpus claims"),
         ("Foundations blocking", blocked_total, None, "claims", "each = a research-grade gap"),
         ("Honest substantive", None, "~10–15%", "", "rest = verified engineering"),
@@ -704,8 +738,9 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 </script>
 </body></html>"""
     OUT.write_text(html, encoding="utf-8")
-    # NOTE: index.html is the hand-authored KeyAI landing one-pager (site root); the auto-generated
-    # dashboard lives at dashboard.html only. Do NOT overwrite index.html here.
+    # index.html is the hand-authored KeyAI landing one-pager (site root); we do NOT
+    # regenerate it, but we DO keep its numeric counters in sync with the canonical ledger.
+    sync_index_html(vcount, vcount - DISTINCT_OFFSET, completeness, total)
     print(f"wrote {OUT.relative_to(ROOT)} ({len(html)} bytes) — {vcount} results, "
           f"frontier {completeness}%, nav sections {len(NAV)}, extra files {len(discover_extra_files())}")
     return 0
