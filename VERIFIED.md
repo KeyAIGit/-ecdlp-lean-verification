@@ -163,6 +163,8 @@ git history and the GitHub Actions tab.
 | **`ψ 7` at a secp256k1 point reduces to a concrete degree-24 univariate** (`secp256k1_psi7_evalEval`: on the curve `y²=x³+7`, `(ψ 7).evalEval x y = 7x²⁴+27608x²¹−2101904x¹⁸−284585728x¹⁵−2228742656x¹²−26142548992x⁹−330576748544x⁶−661153497088x³+377801998336`; via `ψ_odd 3` (`ψ₇ = ψ₅·ψ₃³ − ψ₂·ψ₄³`), the bookkeeping half of the n=7 torsion bridge) | `Ecdlp.Curve.secp256k1_psi7_evalEval` | Ecdlp/Proved/SevenTorsionBridge.lean | Mathlib (`ψ_odd`) + `linear_combination` | proved |
 | **Point-level 7-torsion bridge `7•P = 0 ⟺ ψ₇(P)=0`** (`secp256k1_seven_nsmul_eq_zero_iff`: for a nonzero affine `P=(x,y)` on secp256k1, `7•P=0` holds iff the 7-division polynomial vanishes — the full `ψ₇ ↔ E[7]` equivalence, the n=7 analogue of the n=2/n=3/n=5 bridges; original elementary proof via the route `7•P=0 ⟺ x(3P)=x(4P) ⟺ ψ₇=0`, the core slope-algebra identity designed by a sympy-verified certificate and re-checked by the Lean kernel; reuses the merged n=3 bridge to close the 3-torsion branch) | `Ecdlp.Curve.secp256k1_seven_nsmul_eq_zero_iff` | Ecdlp/Proved/SevenTorsionBridge.lean | Mathlib (`Affine.Point` group law, `add_self_of_Y_ne`/`add_some`/`slope`) + `linear_combination` + n=3 bridge | proved |
 | *(alternate/supporting, n=7 bridge)* the core slope-algebra certificate `seven_master` (`G·(ℓ₂²−3x)⁶·(2y)¹² = −4(x³+7)·ψ₇`) and the `x(3P)=x(4P) ⟺ ψ₇=0` step `seven_core` | `Ecdlp.Curve.*` | Ecdlp/Proved/SevenTorsionBridge.lean | Mathlib + `linear_combination` | proved |
+| **Exact-order small-prime torsion classification** (`secp256k1_smallprime_addOrderOf`: for a nonzero affine `P=(x,y)` and each prime `ℓ ∈ {2,3,5,7}`, `addOrderOf P = ℓ ⟺ (ψ ℓ).evalEval x y = 0` — the capstone tying the full per-`n` bridge ladder to *exact point order*; upgrades each `ℓ•P=0` bridge to an order statement since a `Point.some` is automatically nonzero and `ℓ` prime) | `Ecdlp.Curve.secp256k1_smallprime_addOrderOf` | Ecdlp/Proved/SmallPrimeTorsion.lean | the four bridges + Mathlib (`addOrderOf_dvd_iff_nsmul_eq_zero`, `Nat.dvd_prime`, `AddMonoid.addOrderOf_eq_one_iff`) | proved |
+| *(alternate/supporting, order classification)* the reusable order-upgrade lemma `addOrderOf_eq_of_prime_nsmul` (prime `ℓ`: `addOrderOf P = ℓ ⟺ ℓ•P=0` for nonzero `P`) and concrete-poly corollaries `secp256k1_addOrderOf_three_iff_poly` (`= 3 ⟺ 3x⁴+84x=0`), `secp256k1_addOrderOf_five_iff_poly` (`= 5 ⟺ 5x¹²+…=0`) | `Ecdlp.Curve.*` | Ecdlp/Proved/SmallPrimeTorsion.lean | Mathlib + the bridges | proved |
 
 ### Coverage restatements (tier-0, tracked separately — NOT in the headline figure)
 Ten elementary finite-group / torsion facts — standard Mathlib lemmas restated in the ECDLP
@@ -187,7 +189,7 @@ is Xu & Angdinata's. It is built and gated (the one-invariant holds), but delibe
 `isEllSequence_of_rec_one` (headline row above) remains this repo's own contribution.
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**155 ledger rows / ~138 distinct kernel-verified results** (17 rows are alternate-form
+**157 ledger rows / ~139 distinct kernel-verified results** (18 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
 **0 `sorry`, 0 `admit`, 0 open obligations.**
