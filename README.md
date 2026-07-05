@@ -1,7 +1,19 @@
 # ECDLP Lean formalization (v0)
 
+![Verified theorems](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/KeyAIGit/-ecdlp-lean-verification/main/badges/theorems.json)
+
 Machine-checked layer for the ECDLP knowledge graph (corpus folder 15_Knowledge_Graph,
 formalization table 07_Formalization/KG_CLAIM_FORMALIZATION_v1.csv).
+
+## Live stats (machine-readable)
+The verified-theorem counts are published as JSON, regenerated automatically from
+`VERIFIED.md` on every merge to `main` (`.github/workflows/stats.yml` +
+`scripts/gen_stats.py`). Fetch them from a site or dashboard via the raw URLs:
+- **Full stats:** `https://raw.githubusercontent.com/KeyAIGit/-ecdlp-lean-verification/main/data/stats.json`
+- **Shields badge endpoint:** `https://raw.githubusercontent.com/KeyAIGit/-ecdlp-lean-verification/main/badges/theorems.json`
+
+`data/stats.json` exposes `ledger_rows`, `distinct_results`, `proved_modules`,
+`sorry_count` (0), and `custom_axioms` (0). No scraping of markdown needed.
 
 ## Layout
 - `Ecdlp/Secp256k1Verified.lean` - PROVED on Lean core alone (no Mathlib). 8 theorems
