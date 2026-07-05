@@ -39,6 +39,10 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 -- discrete-log protocol algebra (representative)
 #print axioms Ecdlp.Schnorr.schnorr_extract
 
+-- Semaev's 3rd summation polynomial, forward direction (clean base: pure `linear_combination`)
+#print axioms Ecdlp.Semaev.S₃_eq_zero_of_chord
+#print axioms Ecdlp.Semaev.secp256k1_semaev_three_chord
+
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form
 #print axioms Secp256k1.beta_field_eigenvalue

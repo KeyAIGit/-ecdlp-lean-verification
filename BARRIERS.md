@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~151 distinct results / 171 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~152 distinct results / 173 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -74,7 +74,13 @@ exact `Θ` statements.
 
 ### B3. Partial foundations — curve & polynomial depth (~33 claims)
 - **Summation / Semaev polynomials** (`MvPolynomial`, partial) — Mathlib has
-  multivariate polynomials but not the elliptic summation polynomials `Sₙ`.
+  multivariate polynomials but not the elliptic summation polynomials `Sₙ`. **Base case
+  broken open:** the 3rd Semaev polynomial `S₃` and its *forward* direction
+  (`P₁+P₂+P₃ = O ⇒ S₃(x₁,x₂,x₃) = 0`, chord case) are now machine-checked
+  (`Ecdlp/Proved/SemaevThree.lean`, `S₃_eq_zero_of_chord` + secp256k1 corollary) — the
+  first Semaev formalization in Lean. Still open: the *iff* (a root of `S₃` yields collinear
+  points), the tangent case, and `Sₙ` for `n ≥ 4` (the recursion / resultant construction
+  that index calculus over `𝔽_{p^k}` actually needs).
 - **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
   *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib.
 - **Point counting** — `#E(𝔽ₚ) = n` for the concrete curve needs a computation
@@ -118,7 +124,9 @@ surfaced PR, and wider-GitHub Lean search:
 - **Weil pairing** `e_n : E[n]×E[n]→μ_n` and the structure theorem `E[n] ≅ (ℤ/n)²` — nothing.
 - **Division-polynomial torsion bridge** `ψₙ(P)=0 ⟺ P ∈ E[n]` — the keystone; `ψₙ` is free but
   the link to the point group / mul-by-`n` lives only in stalled PR #13782. **Highest-ROI next port.**
-- **Semaev summation polynomials** `S_n` — zero hits repo- and GitHub-wide.
+- **Semaev summation polynomials** `S_n` — zero hits upstream (master, PRs, GitHub-wide);
+  the `S₃` base case + forward direction is now formalized **in this repo**
+  (`Ecdlp/Proved/SemaevThree.lean`), still the only Lean Semaev formalization anywhere.
 - **General multi-index elliptic nets** (rank ≥ 2, subnet functoriality) — only rank-1 exists
   (master + stalled PR #25989).
 - **EC isogenies / endomorphisms / Frobenius** as point-group homs — no module.

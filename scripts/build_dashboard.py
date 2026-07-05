@@ -38,9 +38,9 @@ VERIFIED = ROOT / "VERIFIED.md"
 OUT = ROOT / "dashboard.html"
 INDEX = ROOT / "index.html"
 # Ledger rows that are alternate-form/`supporting:` restatements of the same fact.
-# VERIFIED.md's canonical line is the single source of truth ("171 ledger rows /
-# ~151 distinct" → 20 restatement rows); keep this in sync with it.
-DISTINCT_OFFSET = 20
+# VERIFIED.md's canonical line is the single source of truth ("173 ledger rows /
+# ~152 distinct" → 21 restatement rows); keep this in sync with it.
+DISTINCT_OFFSET = 21
 REPO = "https://github.com/KeyAIGit/-ecdlp-lean-verification"
 BLOB = f"{REPO}/blob/main"
 TREE = f"{REPO}/tree/main"
