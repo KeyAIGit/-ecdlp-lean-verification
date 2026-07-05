@@ -100,9 +100,14 @@ For EACH target output an object with:
 the EXACT Lean theorem signature, the `import`s it needs (import Mathlib plus any \
 `Ecdlp.Proved.*` modules whose lemmas it reuses — cite them by name), and a concrete \
 proof sketch. End it with: "Output ONLY the complete Lean file in a ```lean block."
+  - OPTIONAL "certify": if the proof rests on a nontrivial ALGEBRAIC identity (a polynomial \
+identity, an exact `linear_combination` cofactor, a resultant, an x-coordinate/division-\
+polynomial relation), include a precise natural-language statement of that identity to be \
+verified by sympy FIRST (exact symbolic computation). Omit for pure group-theory / one-\
+Mathlib-lemma targets. When present, add "certify_model": "claude-opus-4-8".
 
 Output STRICT JSON and nothing else:
-{{"targets": [ {{"name": "...", "model": "...", "max_iters": 5, "target": "..."}} ]}}
+{{"targets": [ {{"name": "...", "model": "...", "max_iters": 5, "target": "...", "certify": "... (optional)"}} ]}}
 Be conservative: a short list of real, closeable targets beats a long list of guesses."""
 
 
@@ -144,12 +149,18 @@ def sanitize(targets: list[dict], done_names: set[str]) -> list[dict]:
         if re.search(r"\b(sorry|admit|axiom)\b", target):
             continue
         seen.add(name)
-        out.append({
+        entry = {
             "name": re.sub(r"[^A-Za-z0-9_]", "", name)[:48] or "Discovered",
             "model": t.get("model", DISCOVER_MODEL),
             "max_iters": int(t.get("max_iters", 5)),
             "target": target,
-        })
+        }
+        cert = str(t.get("certify", "")).strip()
+        if cert and not re.search(r"\b(sorry|admit|axiom)\b", cert):
+            entry["certify"] = cert
+            entry["certify_model"] = t.get("certify_model", "claude-opus-4-8")
+            entry["certify_iters"] = int(t.get("certify_iters", 4))
+        out.append(entry)
     return out
 
 
