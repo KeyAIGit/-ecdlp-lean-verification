@@ -131,4 +131,41 @@ theorem secp256k1_semaev_three_tangent
   S₃_eq_zero_of_tangent 0 7 x₁ y₁ x₃
     (by linear_combination h₁) (by linear_combination hdbl)
 
+open WeierstrassCurve.Affine in
+/-- **Semaev's `S₃` for secp256k1, on actual curve points (chord case).** The point-group
+form of `secp256k1_semaev_three_chord`: for genuine affine points of the Mathlib elliptic
+curve `secp256k1.toAffine.Point`, if `P₁ + P₂ + P₃ = O` (the group identity) with
+`x(P₁) ≠ x(P₂)`, then their `x`-coordinates `(x₁,x₂,x₃)` are a root of secp256k1's third
+Semaev summation polynomial. This is the honest statement — the hypothesis is the actual
+elliptic-curve group relation, not a raw coordinate equation. The proof unfolds Mathlib's
+formalized chord addition (`Point.add_of_X_ne`, `slope_of_X_ne`, `addX`) to recover
+`x₃ = x(P₁+P₂)`, clears the denominator, and applies `secp256k1_semaev_three_chord`. -/
+theorem secp256k1_semaev_three_point
+    {x₁ y₁ x₂ y₂ x₃ y₃ : ZMod Secp256k1.p}
+    (h₁ : secp256k1.toAffine.Nonsingular x₁ y₁)
+    (h₂ : secp256k1.toAffine.Nonsingular x₂ y₂)
+    (h₃ : secp256k1.toAffine.Nonsingular x₃ y₃)
+    (hx : x₁ ≠ x₂)
+    (hsum : Point.some x₁ y₁ h₁ + Point.some x₂ y₂ h₂ + Point.some x₃ y₃ h₃ = 0) :
+    S₃ (0 : ZMod Secp256k1.p) 7 x₁ x₂ x₃ = 0 := by
+  rw [add_eq_zero_iff_eq_neg, Point.add_of_X_ne hx, Point.neg_some, Point.some.injEq] at hsum
+  have hX := hsum.1
+  rw [slope_of_X_ne hx] at hX
+  have hd : x₁ - x₂ ≠ 0 := sub_ne_zero.mpr hx
+  have hc₁ : y₁ ^ 2 = x₁ ^ 3 + 7 := by
+    have he : secp256k1.toAffine.Equation x₁ y₁ := h₁.1
+    rw [WeierstrassCurve.Affine.equation_iff] at he
+    simp only [secp256k1] at he; linear_combination he
+  have hc₂ : y₂ ^ 2 = x₂ ^ 3 + 7 := by
+    have he : secp256k1.toAffine.Equation x₂ y₂ := h₂.1
+    rw [WeierstrassCurve.Affine.equation_iff] at he
+    simp only [secp256k1] at he; linear_combination he
+  have hX2 : (y₁ - y₂) ^ 2 / (x₁ - x₂) ^ 2 = x₁ + x₂ + x₃ := by
+    simp only [WeierstrassCurve.Affine.addX, secp256k1, div_pow] at hX
+    linear_combination hX
+  rw [div_eq_iff (pow_ne_zero 2 hd)] at hX2
+  have hchord : (x₁ - x₂) ^ 2 * (x₁ + x₂ + x₃) = (y₂ - y₁) ^ 2 := by
+    linear_combination -hX2
+  exact secp256k1_semaev_three_chord x₁ y₁ x₂ y₂ x₃ hc₁ hc₂ hx hchord
+
 end Ecdlp.Semaev
