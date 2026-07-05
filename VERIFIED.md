@@ -179,6 +179,8 @@ git history and the GitHub Actions tab.
 | **Shamir secret-sharing reconstruction** (`shamir_reconstruct`: for a degree-`<t` sharing polynomial `f` and `t = #s` distinct nodes, `f.eval 0` (the secret) `= (Lagrange.interpolate s v (f.eval ∘ v)).eval 0` — the information-theoretic recovery direction of Shamir's `(t,n)` SSS; secret = `f(0)`, shares = `(vᵢ, f(vᵢ))`) | `Ecdlp.Schnorr.shamir_reconstruct` | Ecdlp/Proved/ShamirSSS.lean | Mathlib (`Lagrange.eq_interpolate`) | proved |
 | **Number of generators of a cyclic group = `φ(n)`** (`mov_random_q_success_probability`: in a cyclic group of order `n`, `#{g \| orderOf g = n} = φ(n)` — the count of full-order elements; underpins the MOV/Frey–Rück random-`Q` success probability `φ(n)/n`. **Layer-3 generated**, closes the last open `Targets/` stem, corpus claim `mov-random-q-success-probability-006`) | `Ecdlp.MovReduction.mov_random_q_success_probability` | Ecdlp/Proved/MovRandomQ.lean | Mathlib (`IsCyclic.card_orderOf_eq_totient`) | proved |
 | *(alternate/supporting, this batch)* Shamir polynomial-identity form `shamir_reconstruct_poly`; the GLV `E[n]`-self-map `secp256k1_glvPoint_mapsTo_torsion`; and the simple-group packaging `secp256k1_scalar_isSimpleAddGroup` | `Ecdlp.*` | Ecdlp/Proved/{ShamirSSS,GlvTorsionAction,ScalarGroupStructure}.lean | Mathlib | proved |
+| **Semaev's 3rd summation polynomial — forward direction** (`S₃_eq_zero_of_chord`: for `y² = x³ + a·x + b` over a field, if `(x₁,y₁), (x₂,y₂)` are curve points with `x₁ ≠ x₂` and `x₃` is the `x`-coordinate of their chord-sum, then `S₃(x₁,x₂,x₃) = 0` — equivalently `P₁+P₂+P₃ = O ⇒ S₃ = 0`; `secp256k1_semaev_three_chord` specializes it to secp256k1 `y² = x³ + 7`. **First Semaev summation polynomial formalized in Lean/Mathlib** (a green-field `BARRIERS.md` item). Certificate designed + verified by exact symbolic elimination (sympy: Gröbner + iterated resultant), kernel-checked via `linear_combination`. A construction, not an attack — a necessary collinearity condition that by itself computes nothing about any discrete log) | `Ecdlp.Semaev.S₃_eq_zero_of_chord`, `secp256k1_semaev_three_chord` | Ecdlp/Proved/SemaevThree.lean | Mathlib field algebra (`linear_combination`) | proved |
+| *(alternate/supporting)* Semaev `S₃` full symmetry — `S₃_symm₁₂` (swap `x₁,x₂`) and `S₃_symm₂₃` (swap `x₂,x₃`), so `S₃` is symmetric in all three `x`-arguments, as a summation polynomial must be | `Ecdlp.Semaev.S₃_symm₁₂`, `S₃_symm₂₃` | Ecdlp/Proved/SemaevThree.lean | Mathlib (`ring`) | proved |
 
 ### Coverage restatements (tier-0, tracked separately — NOT in the headline figure)
 Ten elementary finite-group / torsion facts — standard Mathlib lemmas restated in the ECDLP
@@ -203,9 +205,10 @@ is Xu & Angdinata's. It is built and gated (the one-invariant holds), but delibe
 `isEllSequence_of_rec_one` (headline row above) remains this repo's own contribution.
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**171 ledger rows / ~151 distinct kernel-verified results** (20 rows are alternate-form
+**173 ledger rows / ~152 distinct kernel-verified results** (21 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
-eigenvalue and the operator form of the GLV cube relation — see the tagged rows above).
+eigenvalue, the operator form of the GLV cube relation, and the Semaev `S₃` symmetry
+lemmas — see the tagged rows above).
 **0 `sorry`, 0 `admit`, 0 open obligations.**
 
 *Axiom / trust-base note (precise).* No result depends on any **custom** axiom or on
