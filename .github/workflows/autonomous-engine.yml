@@ -75,9 +75,13 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install anthropic SDK
+      - name: Install anthropic SDK + sympy (Fable-in-CI certificates)
         if: steps.guard.outputs.enabled == 'true'
-        run: pip install --quiet 'anthropic>=0.40'
+        run: pip install --quiet 'anthropic>=0.40' 'sympy>=1.12'
+
+      - name: Certify harness self-test
+        if: steps.guard.outputs.enabled == 'true'
+        run: python3 scripts/certify.py --self-test
 
       - name: Install SSH key
         if: steps.guard.outputs.enabled == 'true'

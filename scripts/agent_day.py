@@ -153,6 +153,25 @@ def main() -> int:
             continue
         trace.append(f"\n## {i}. {name}  (model `{model}`)")
         print(f"--- [{i}/{len(queue)}] {name} model={model} spent=~${spent:.2f} ---", flush=True)
+        # Fable-in-CI: if the target carries a math claim to certify, design a
+        # sympy-verified certificate first and prepend it, so the prover transcribes a
+        # machine-checked identity instead of guessing one (the step that made the deep
+        # torsion results tractable interactively). Best-effort; budget-bounded.
+        if t.get("certify") and spent < BUDGET_USD:
+            try:
+                from certify import design_certificate
+                cmodel = t.get("certify_model", "claude-opus-4-8")
+                citers = int(t.get("certify_iters", 4))
+                ok_c, cert, cs, ctr = design_certificate(
+                    client, cmodel, str(t["certify"]), citers, BUDGET_USD - spent)
+                spent += cs
+                trace += ctr
+                if ok_c:
+                    target = (cert + "\n\n---\n\nUsing the sympy-verified certificate above, "
+                              "prove the following in a complete Lean file:\n\n" + target)
+                    print(f"  certificate VERIFIED (~${spent:.2f})", flush=True)
+            except Exception as e:  # noqa: BLE001 — certification is optional; never abort the run
+                trace.append(f"  - certify step errored ({e.__class__.__name__}); proceeding without")
         lean, s, tr = prove_one(client, system, target, model, max_iters, BUDGET_USD - spent)
         spent += s
         trace += tr
