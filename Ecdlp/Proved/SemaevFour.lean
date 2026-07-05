@@ -78,6 +78,27 @@ theorem S₄_symm₁₂ (a b x₁ x₂ x₃ x₄ : F) :
     S₄ a b x₁ x₂ x₃ x₄ = S₄ a b x₂ x₁ x₃ x₄ := by
   rw [S₄, S₄, S₃poly_symm a b x₁ x₂]
 
+/-- **Cleared two-root master factorization of `S₃`'s polynomial slice**, as an identity in
+`F[X]`: `(x₁−x₂)²·S₃poly = (D·X − R₊)·(D·X − R₋)` with `D = (x₁−x₂)²`,
+`R₊ = (y₂−y₁)² − (x₁+x₂)D`, `R₋ = (y₂+y₁)² − (x₁+x₂)D`. This is the `F[X]` lift of the scalar
+master identity behind `SemaevThree.S₃_root_of_eq_zero`; the roots of the RHS are the cleared
+`x`-coordinates of `P₁±P₂`, exhibiting `S₃poly` as split with known roots. -/
+theorem S₃poly_master_factor (a b x₁ y₁ x₂ y₂ : F)
+    (h₁ : y₁ ^ 2 = x₁ ^ 3 + a * x₁ + b) (h₂ : y₂ ^ 2 = x₂ ^ 3 + a * x₂ + b) :
+    C ((x₁ - x₂) ^ 2) * S₃poly a b x₁ x₂
+      = (C ((x₁ - x₂) ^ 2) * X - C ((y₂ - y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2))
+        * (C ((x₁ - x₂) ^ 2) * X - C ((y₂ + y₁) ^ 2 - (x₁ + x₂) * (x₁ - x₂) ^ 2)) := by
+  have e1 : (C y₁ : F[X]) ^ 2 = (C x₁) ^ 3 + C a * C x₁ + C b := by
+    have := congrArg (C : F → F[X]) h₁; simpa only [map_add, map_mul, map_pow] using this
+  have e2 : (C y₂ : F[X]) ^ 2 = (C x₂) ^ 3 + C a * C x₂ + C b := by
+    have := congrArg (C : F → F[X]) h₂; simpa only [map_add, map_mul, map_pow] using this
+  simp only [S₃poly, map_add, map_sub, map_mul, map_pow, map_neg, map_ofNat]
+  linear_combination
+    (2 * (C x₁ - C x₂) ^ 2 * X + 2 * (C x₁ + C x₂) * (C x₁ - C x₂) ^ 2
+        + ((C y₂) ^ 2 - (C y₁) ^ 2) + ((C x₂) ^ 3 - (C x₁) ^ 3) + C a * (C x₂ - C x₁)) * e1
+    + (2 * (C x₁ - C x₂) ^ 2 * X + 2 * (C x₁ + C x₂) * (C x₁ - C x₂) ^ 2
+        - ((C y₂) ^ 2 - (C y₁) ^ 2) - ((C x₂) ^ 3 - (C x₁) ^ 3) - C a * (C x₂ - C x₁)) * e2
+
 open Ecdlp.Curve
 
 variable [Fact (Nat.Prime Secp256k1.p)]
