@@ -135,9 +135,9 @@ theorem S₄_common_root_of_eq_zero (a b x₁ y₁ x₂ y₂ x₃ x₄ : K)
     rw [hfac]
     rw [natDegree_C_mul (by rwa [Ne, C_eq_zero] : (C ((x₁ - x₂) ^ 2) : K[X]) ≠ 0)]
     compute_degree!
+  have hmon : ((X - C rp) * (X - C rm) : K[X]).Monic := (monic_X_sub_C rp).mul (monic_X_sub_C rm)
   have hlcf : (S₃poly a b x₁ x₂).leadingCoeff = (x₁ - x₂) ^ 2 := by
-    rw [hfac, leadingCoeff, natDegree_C_mul (by rwa [Ne, C_eq_zero] : (C ((x₁ - x₂) ^ 2) : K[X]) ≠ 0)]
-    simp [coeff_C_mul, Monic.coeff_natDegree, (monic_X_sub_C rp).mul (monic_X_sub_C rm)]
+    rw [hfac, leadingCoeff_mul, leadingCoeff_C, hmon.leadingCoeff, mul_one]
   have hf0 : S₃poly a b x₁ x₂ ≠ 0 := by
     intro h; rw [h] at hdegf; simp at hdegf
   have hpe := resultant_eq_prod_eval (S₃poly a b x₁ x₂) (S₃poly a b x₃ x₄) 2
