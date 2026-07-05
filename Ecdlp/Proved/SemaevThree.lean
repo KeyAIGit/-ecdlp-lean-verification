@@ -168,4 +168,43 @@ theorem secp256k1_semaev_three_point
     linear_combination -hX2
   exact secp256k1_semaev_three_chord x₁ y₁ x₂ y₂ x₃ hc₁ hc₂ hx hchord
 
+open WeierstrassCurve.Affine in
+/-- **Semaev's `S₃` for secp256k1, on actual curve points (tangent/doubling case).** The
+`P₁ = P₂` companion of `secp256k1_semaev_three_point`: if `2•P₁ + P₃ = O` for genuine points
+of `secp256k1.toAffine.Point` with `P₁` not `2`-torsion (`y₁ ≠ negY x₁ y₁`, i.e. `2·y₁ ≠ 0`),
+then `S₃(x₁,x₁,x₃) = 0`. Together with `secp256k1_semaev_three_point`, the `S₃` forward
+direction holds for Mathlib's formalized elliptic-curve group law in every nondegenerate case.
+Unfolds the tangent doubling (`Point.add_of_Y_ne`, `slope_of_Y_ne`) to recover `x₃ = x(2P₁)`,
+clears the denominator, and applies `secp256k1_semaev_three_tangent`. -/
+theorem secp256k1_semaev_three_point_double
+    {x₁ y₁ x₃ y₃ : ZMod Secp256k1.p}
+    (h₁ : secp256k1.toAffine.Nonsingular x₁ y₁)
+    (h₃ : secp256k1.toAffine.Nonsingular x₃ y₃)
+    (hy : y₁ ≠ secp256k1.toAffine.negY x₁ y₁)
+    (hsum : Point.some x₁ y₁ h₁ + Point.some x₁ y₁ h₁ + Point.some x₃ y₃ h₃ = 0) :
+    S₃ (0 : ZMod Secp256k1.p) 7 x₁ x₁ x₃ = 0 := by
+  rw [add_eq_zero_iff_eq_neg, Point.add_of_Y_ne hy, Point.neg_some, Point.some.injEq] at hsum
+  have hX := hsum.1
+  have hnegY : secp256k1.toAffine.negY x₁ y₁ = -y₁ := by
+    simp [WeierstrassCurve.Affine.negY, secp256k1]
+  have h2y : (2 : ZMod Secp256k1.p) * y₁ ≠ 0 := by
+    have hd : y₁ - secp256k1.toAffine.negY x₁ y₁ ≠ 0 := sub_ne_zero.mpr hy
+    rw [hnegY] at hd; intro hc; exact hd (by linear_combination hc)
+  have hslope : secp256k1.toAffine.slope x₁ x₁ y₁ y₁ = 3 * x₁ ^ 2 / (2 * y₁) := by
+    rw [WeierstrassCurve.Affine.slope_of_Y_ne rfl hy, hnegY]
+    simp only [secp256k1, mul_zero, zero_mul, add_zero, sub_zero]
+    rw [show y₁ - -y₁ = 2 * y₁ from by ring]
+  have hc₁ : y₁ ^ 2 = x₁ ^ 3 + 7 := by
+    have he : secp256k1.toAffine.Equation x₁ y₁ := h₁.1
+    rw [WeierstrassCurve.Affine.equation_iff] at he
+    simp only [secp256k1] at he; linear_combination he
+  rw [hslope] at hX
+  have hX2 : (3 * x₁ ^ 2) ^ 2 / (2 * y₁) ^ 2 = x₃ + 2 * x₁ := by
+    simp only [WeierstrassCurve.Affine.addX, secp256k1, div_pow] at hX
+    linear_combination hX
+  rw [div_eq_iff (pow_ne_zero 2 h2y)] at hX2
+  have hdbl : 4 * y₁ ^ 2 * (x₃ + 2 * x₁) = (3 * x₁ ^ 2) ^ 2 := by
+    linear_combination -hX2
+  exact secp256k1_semaev_three_tangent x₁ y₁ x₃ hc₁ hdbl
+
 end Ecdlp.Semaev
