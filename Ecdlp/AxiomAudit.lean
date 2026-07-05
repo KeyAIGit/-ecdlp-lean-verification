@@ -48,6 +48,8 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Semaev.secp256k1_semaev_three_point_double
 #print axioms Ecdlp.Semaev.S₃_root_of_eq_zero
 #print axioms Ecdlp.Semaev.secp256k1_semaev_three_iff
+#print axioms Ecdlp.Semaev.S₄_eq_zero_of_common_root
+#print axioms Ecdlp.Semaev.secp256k1_semaev_four_of_common_root
 
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form
