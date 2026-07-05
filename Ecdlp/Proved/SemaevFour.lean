@@ -47,6 +47,25 @@ theorem S₃poly_natDegree_le (a b x₁ x₂ : F) : (S₃poly a b x₁ x₂).nat
 theorem S₃poly_symm (a b x₁ x₂ : F) : S₃poly a b x₁ x₂ = S₃poly a b x₂ x₁ := by
   simp only [S₃poly]; ring_nf
 
+/-- **The resultant recursion engine, in full generality — the forward direction of the *whole*
+Semaev family in one lemma.** For *any* two univariate polynomials `f, g` over a commutative
+ring sharing an evaluation-root `X₀` (`f(X₀) = g(X₀) = 0`), their resultant vanishes (provided
+the Sylvester sizes are not both zero). Every Semaev step is `Sₙ₊₁ = Res_X(Sₙ(…,X), S₃(…,X))`,
+so "the two slices share a root ⟹ the resultant is `0`" is exactly this statement at level `n` —
+`S₄`'s forward direction below is the case `f = S₃(x₁,x₂,·)`, `g = S₃(x₃,x₄,·)`, and the same
+lemma discharges `S₅`, `S₆`, … verbatim, with `f` the previous polynomial slice. It needs only
+the Bézout identity for the resultant (`exists_mul_add_mul_eq_C_resultant`), valid over any
+commutative ring: no field, no algebraic closure, no degree bookkeeping beyond `natDegree ≤ size`.
+This is the mechanism-level generalization of the Semaev forward direction to all `n`. -/
+theorem resultant_eq_zero_of_common_root {m n : ℕ} (f g : F[X]) (X₀ : F)
+    (hf : f.natDegree ≤ m) (hg : g.natDegree ≤ n) (H : m ≠ 0 ∨ n ≠ 0)
+    (hfr : f.eval X₀ = 0) (hgr : g.eval X₀ = 0) :
+    f.resultant g m n = 0 := by
+  obtain ⟨p, q, _, _, hpq⟩ := exists_mul_add_mul_eq_C_resultant f g hf hg H
+  have hev := congrArg (eval X₀) hpq
+  simp only [eval_add, eval_mul, eval_C, hfr, hgr, zero_mul, add_zero] at hev
+  exact hev.symm
+
 /-- **Semaev's 4th summation polynomial** `S₄(x₁,x₂,x₃,x₄) = Res_X(S₃(x₁,x₂,X), S₃(x₃,x₄,X))`,
 as the resultant (with explicit Sylvester sizes `2, 2`) of the two degree-2 slices of `S₃`. -/
 noncomputable def S₄ (a b x₁ x₂ x₃ x₄ : F) : F :=
@@ -54,18 +73,17 @@ noncomputable def S₄ (a b x₁ x₂ x₃ x₄ : F) : F :=
 
 /-- **Forward direction of `S₄` (common root ⟹ vanishing).** If `S₃(x₁,x₂,·)` and
 `S₃(x₃,x₄,·)` share a root `X₀` — e.g. `X₀ = x(P₁+P₂) = x(P₃+P₄)` — then
-`S₄(x₁,x₂,x₃,x₄) = 0`. Holds over any commutative ring (via the Bézout identity for the
-resultant); no field or algebraic closure is needed. Composed with `S₃_eq_zero_of_chord`, a
-common `x`-coordinate of a sum from each pair forces the 4-argument Semaev relation. -/
+`S₄(x₁,x₂,x₃,x₄) = 0`. An immediate instance of `resultant_eq_zero_of_common_root` (the
+recursion engine that discharges the forward direction at *every* level `n`). Holds over any
+commutative ring (via the Bézout identity for the resultant); no field or algebraic closure is
+needed. Composed with `S₃_eq_zero_of_chord`, a common `x`-coordinate of a sum from each pair
+forces the 4-argument Semaev relation. -/
 theorem S₄_eq_zero_of_common_root (a b x₁ x₂ x₃ x₄ X₀ : F)
     (h12 : S₃ a b x₁ x₂ X₀ = 0) (h34 : S₃ a b x₃ x₄ X₀ = 0) :
-    S₄ a b x₁ x₂ x₃ x₄ = 0 := by
-  obtain ⟨p, q, _, _, hpq⟩ := exists_mul_add_mul_eq_C_resultant
-    (S₃poly a b x₁ x₂) (S₃poly a b x₃ x₄)
+    S₄ a b x₁ x₂ x₃ x₄ = 0 :=
+  resultant_eq_zero_of_common_root (S₃poly a b x₁ x₂) (S₃poly a b x₃ x₄) X₀
     (S₃poly_natDegree_le a b x₁ x₂) (S₃poly_natDegree_le a b x₃ x₄) (Or.inl (by norm_num))
-  have hev := congrArg (eval X₀) hpq
-  simp only [eval_add, eval_mul, eval_C, S₃poly_eval, h12, h34, zero_mul, add_zero] at hev
-  exact hev.symm
+    (by rw [S₃poly_eval]; exact h12) (by rw [S₃poly_eval]; exact h34)
 
 /-- **`S₄` is symmetric under swapping the two pairs** `(x₁,x₂) ↔ (x₃,x₄)` — from
 `resultant_comm` with `(-1)^(2·2) = 1`. -/

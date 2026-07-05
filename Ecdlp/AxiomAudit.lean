@@ -48,11 +48,16 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Semaev.secp256k1_semaev_three_point_double
 #print axioms Ecdlp.Semaev.S₃_root_of_eq_zero
 #print axioms Ecdlp.Semaev.secp256k1_semaev_three_iff
+#print axioms Ecdlp.Semaev.resultant_eq_zero_of_common_root
 #print axioms Ecdlp.Semaev.S₄_eq_zero_of_common_root
 #print axioms Ecdlp.Semaev.secp256k1_semaev_four_of_common_root
 #print axioms Ecdlp.Semaev.S₃poly_master_factor
 #print axioms Ecdlp.Semaev.S₄_common_root_of_eq_zero
 #print axioms Ecdlp.Semaev.secp256k1_semaev_four_common_root_of_eq_zero
+
+-- Division-polynomial multiplication formula, base case n = 2 (torsion-bridge engine)
+#print axioms Ecdlp.Curve.secp256k1_Φ₂
+#print axioms Ecdlp.Curve.secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq
 
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form

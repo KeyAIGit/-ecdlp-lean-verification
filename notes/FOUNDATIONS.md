@@ -54,10 +54,19 @@ transfer constructively, not just about its inapplicability here.
    *(next; a concrete `simp`/`ring` identity on top of the `b`-invariants.)*
 4. **`ψₙ` vanishing ⟺ `n`-torsion** — connect `ψₙ(x_P)=0` to `[n]P = O`. The easy
    forward direction for 2-torsion is ✓ **done** (`Ecdlp/Proved/TwoTorsion.lean`:
-   an order-2 `x`-coordinate is a root of `Ψ₂Sq`). The general statement — all `n`,
-   both directions, tied to actual point order — needs the division-polynomial/
-   point-group bridge; Mathlib has the pieces but not the equivalence as a packaged
-   lemma. *(research-level, but bounded.)*
+   an order-2 `x`-coordinate is a root of `Ψ₂Sq`). Full **both-direction** bridges are
+   ✓ **done for `n = 3, 5, 7`** (`{Three,Five,Seven}TorsionBridge.lean`) by an elementary
+   route that explicitly computes `[n]P` — but that route is `n`-specific and does not
+   generalize. The **engine** that would generalize it is the multiplication formula
+   `x([n]P) = Φₙ(x)/ΨSqₙ(x)` (Mathlib's canonical `Φ`/`ΨSq`); its **base case `n = 2`** is now
+   ✓ **done** (`Ecdlp/Proved/MultiplicationFormula.lean`, `secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq`:
+   `x(2•P) = Φ₂/Ψ₂Sq = (x⁴−56x)/(4y²)`). The **general `n`** formula — by induction on the
+   division-polynomial recurrence — is the genuinely missing rung: it needs the
+   division-polynomial/point-group link that Mathlib v4.31 does **not** package (present only
+   in a stalled upstream PR; see `notes/UPSTREAM_SCAN.md`). This is the *same* class of missing
+   machinery (function field / coordinate ring of the curve) as the Weil pairing itself — so
+   the general bridge is **not** a cheap stepping-stone below the pairing, it is a comparable
+   port. *(research-level; the base case is landed, general `n` is the multi-month gap.)*
 5. **`E[n]` as `(ℤ/n)²`** — the structure theorem. Hard; needs the algebraic
    closure / separability story.
 6. **Weil pairing** — define `eₙ` (e.g. via Miller's algorithm / Weil reciprocity),
