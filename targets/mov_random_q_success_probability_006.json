@@ -2,12 +2,13 @@
   "id": "mov_random_q_success_probability_006",
   "name": "mov_random_q_success_probability",
   "claim_id": "mov-random-q-success-probability-006",
-  "status": "todo",
+  "status": "verified",
   "difficulty": "medium",
   "template": "manual_cyclic_totient",
   "provability_score": "medium",
   "why_it_matters": "MOV success prob = phi(n)/n: count of order-n elements in a cyclic group of order n is phi(n).",
   "default_budget": {"tier0_tactics": ["simp", "exact?"], "escalate_if_failed": true},
   "stem_file": "Ecdlp/Targets/mov_random_q_success_probability_006.lean",
+  "proved_file": "Ecdlp/Proved/MovRandomQ.lean",
   "source": {"formal_status": "formalizable", "mathlib_area": "Mathlib.GroupTheory.OrderOfElement", "batch": "manual-slice-1"}
 }

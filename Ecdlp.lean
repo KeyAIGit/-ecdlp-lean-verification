@@ -67,3 +67,9 @@ import Ecdlp.Proved.FiveTorsionBridge
 import Ecdlp.Proved.SevenTorsionBridge
 import Ecdlp.Proved.SmallPrimeTorsion
 import Ecdlp.Proved.TorsionPointCount
+import Ecdlp.Proved.TwoTorsionCount
+import Ecdlp.Proved.GlvTorsionAction
+import Ecdlp.Proved.ScalarGroupStructure
+import Ecdlp.Proved.EcdsaKeyRecovery
+import Ecdlp.Proved.ShamirSSS
+import Ecdlp.Proved.MovRandomQ
