@@ -15,9 +15,9 @@ on:
   workflow_dispatch:
     inputs:
       breadth:
-        description: "DeepSeek breadth agents (cheap; 20 is fine)"
+        description: "Breadth (idea) agents"
         required: false
-        default: "20"
+        default: "12"
       gate_panel:
         description: "Independent Opus cross-check verifiers per survivor"
         required: false
@@ -25,15 +25,15 @@ on:
       budget_usd:
         description: "Hard USD cap for the Anthropic tiers"
         required: false
-        default: "4"
+        default: "6"
       rigour_provider:
-        description: "Rigour tier provider: featherless | deepseek | anthropic"
+        description: "Rigour tier provider: anthropic | featherless | deepseek"
         required: false
-        default: "featherless"
+        default: "anthropic"
       rigour_model:
-        description: "Rigour model (e.g. Qwen/Qwen2.5-72B-Instruct on Featherless)"
+        description: "Rigour model (default Fable; e.g. Qwen/Qwen3.5-397B-A17B on Featherless)"
         required: false
-        default: "Qwen/Qwen2.5-72B-Instruct"
+        default: "claude-fable-5"
       gate_provider:
         description: "Gate (faithfulness judge) provider: anthropic | featherless | deepseek"
         required: false
@@ -64,10 +64,11 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
         run: |
-          # DeepSeek is always needed (breadth). The script itself no-ops per-tier if a routed
-          # provider's key is missing, so require the common set and let it self-check the rest.
-          if [ -z "${DEEPSEEK_API_KEY:-}" ]; then
-            echo "DEEPSEEK_API_KEY absent — pipeline no-ops (green, zero spend)."
+          # Default config is all-Anthropic (breadth+rigour=Fable, gate=Opus), so ANTHROPIC_API_KEY
+          # is required. The script self-checks any Featherless/DeepSeek keys only if a tier is
+          # routed to them.
+          if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+            echo "ANTHROPIC_API_KEY absent — pipeline no-ops (green, zero spend)."
             echo "enabled=false" >> "$GITHUB_OUTPUT"
           else
             echo "enabled=true" >> "$GITHUB_OUTPUT"
@@ -90,15 +91,15 @@ jobs:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
-          EXPLORE_RIGOUR_PROVIDER: ${{ github.event.inputs.rigour_provider || 'featherless' }}
-          EXPLORE_RIGOUR_MODEL: ${{ github.event.inputs.rigour_model || 'Qwen/Qwen2.5-72B-Instruct' }}
+          EXPLORE_RIGOUR_PROVIDER: ${{ github.event.inputs.rigour_provider || 'anthropic' }}
+          EXPLORE_RIGOUR_MODEL: ${{ github.event.inputs.rigour_model || 'claude-fable-5' }}
           EXPLORE_GATE_PROVIDER: ${{ github.event.inputs.gate_provider || 'anthropic' }}
         run: |
           set -euo pipefail
           python3 scripts/explore_pipeline.py \
-            --breadth "${{ github.event.inputs.breadth || '20' }}" \
+            --breadth "${{ github.event.inputs.breadth || '12' }}" \
             --gate-panel "${{ github.event.inputs.gate_panel || '2' }}" \
-            --budget-usd "${{ github.event.inputs.budget_usd || '4' }}" | tee explore-output.txt
+            --budget-usd "${{ github.event.inputs.budget_usd || '6' }}" | tee explore-output.txt
           git add -A notes/
           if git diff --cached --quiet -- notes/; then
             echo "changed=false" >> "$GITHUB_OUTPUT"

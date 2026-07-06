@@ -42,14 +42,17 @@ LEADS = ROOT / "notes" / "HYPOTHESIS_LEADS.md"
 CERT_MARKER = "CERT_OK"
 SYMPY_TIMEOUT_S = int(os.environ.get("CERTIFY_TIMEOUT_S", "60"))
 OPUS_MODEL = os.environ.get("EXPLORE_OPUS_MODEL", "claude-opus-4-8")
+FABLE_MODEL = os.environ.get("EXPLORE_FABLE_MODEL", "claude-fable-5")
 DEEPSEEK_MODEL = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
 
-# Per-tier model routing — any tier can use a different provider/model to control cost. The rigour
-# tier (write a sympy script) is backstopped by sympy AND the gate, so a cheap model is fine there;
-# the GATE (faithfulness judge) is the quality guarantee, so it defaults to the strongest reasoner.
-# Providers: "deepseek" / "featherless" (both OpenAI-compatible) or "anthropic".
-RIGOUR_PROVIDER = os.environ.get("EXPLORE_RIGOUR_PROVIDER", "featherless")
-RIGOUR_MODEL = os.environ.get("EXPLORE_RIGOUR_MODEL", "Qwen/Qwen3.5-397B-A17B")
+# Per-tier model routing — any tier is (provider, model). Provider ∈ {"anthropic", "deepseek",
+# "featherless"}. Default config is all-Anthropic (Opus + Fable), no DeepSeek: Fable generates the
+# ideas and writes the rigour scripts (strong, cheaper/faster than Opus); Opus is the faithfulness
+# gate. Override any tier via the EXPLORE_*_PROVIDER / EXPLORE_*_MODEL env vars (or workflow inputs).
+BREADTH_PROVIDER = os.environ.get("EXPLORE_BREADTH_PROVIDER", "anthropic")
+BREADTH_MODEL = os.environ.get("EXPLORE_BREADTH_MODEL", FABLE_MODEL)
+RIGOUR_PROVIDER = os.environ.get("EXPLORE_RIGOUR_PROVIDER", "anthropic")
+RIGOUR_MODEL = os.environ.get("EXPLORE_RIGOUR_MODEL", FABLE_MODEL)
 GATE_PROVIDER = os.environ.get("EXPLORE_GATE_PROVIDER", "anthropic")
 GATE_MODEL = os.environ.get("EXPLORE_GATE_MODEL", OPUS_MODEL)
 
@@ -85,7 +88,7 @@ KNOWN_NOGO = """\
   isogeny-to-weak-curve search, generic Groebner on the point equations."""
 
 _spend_lock = threading.Lock()
-_spend = {"deepseek": 0.0, "rigour": 0.0, "gate": 0.0}
+_spend = {"breadth": 0.0, "deepseek": 0.0, "rigour": 0.0, "gate": 0.0}
 
 
 def _add_spend(bucket: str, usd: float) -> None:
@@ -183,8 +186,8 @@ def parse_json(raw: str) -> dict | None:
         return None
 
 
-# ---------------------------------------------------------------- Tier 1: DeepSeek breadth
-def deepseek(prompt: str) -> str | None:
+# ---------------------------------------------------------------- Tier 1: breadth (ideas)
+def deepseek(prompt: str) -> str | None:  # kept for the optional DeepSeek peer-refine tier
     return oai_call("deepseek", DEEPSEEK_MODEL, "", prompt, "deepseek",
                     json_mode=True, max_tokens=1200, temperature=1.1)
 
@@ -203,12 +206,19 @@ resultant/coprimality fact, a torsion/degree count, an explicit map).
 Reply as STRICT JSON: {{"hypothesis": "...", "why_novel": "...", "checkable_direction": "..."}}."""
 
 
-def run_breadth(n_agents: int, workers: int, seen: set[str]) -> list[dict]:
+def run_breadth(n_agents: int, workers: int, seen: set[str], client=None) -> list[dict]:
     n_seen = len(seen)
     assignments = [AXES[i % len(AXES)] for i in range(n_agents)]
     out, local_seen = [], set(seen)
-    with ThreadPoolExecutor(max_workers=workers) as ex:
-        futs = {ex.submit(deepseek, breadth_prompt(ax, n_seen)): ax for ax in assignments}
+    # Anthropic (Fable) has a low concurrency ceiling vs DeepSeek; cap breadth workers when on Anthropic.
+    w = min(workers, 4) if BREADTH_PROVIDER == "anthropic" else workers
+
+    def _one(axis: str) -> str:
+        return llm(BREADTH_PROVIDER, BREADTH_MODEL, "", breadth_prompt(axis, n_seen), "breadth",
+                   client=client, json_mode=True, max_tokens=1400, temperature=1.0)
+
+    with ThreadPoolExecutor(max_workers=max(1, w)) as ex:
+        futs = {ex.submit(_one, ax): ax for ax in assignments}
         for fut in as_completed(futs):
             obj = parse_json(fut.result() or "")
             if not obj or not (obj.get("hypothesis") or "").strip():
@@ -278,16 +288,17 @@ def _anthropic():
     return anthropic.Anthropic()
 
 
-def opus(client, system: str, user: str, bucket: str, max_tokens: int = 8000) -> str:
+def claude(client, model: str, system: str, user: str, bucket: str, max_tokens: int = 8000) -> str:
+    """One Anthropic call (Opus / Fable / etc.), degrading gracefully if newer params aren't accepted."""
     for kwargs in (
-        dict(model=OPUS_MODEL, max_tokens=max_tokens, system=system,
+        dict(model=model, max_tokens=max_tokens, system=system,
              messages=[{"role": "user", "content": user}], thinking={"type": "enabled", "budget_tokens": 6000}),
-        dict(model=OPUS_MODEL, max_tokens=max_tokens, system=system,
+        dict(model=model, max_tokens=max_tokens, system=system,
              messages=[{"role": "user", "content": user}]),
     ):
         try:
             resp = client.messages.create(**kwargs)
-            _add_spend(bucket, _usd(OPUS_MODEL, resp.usage))
+            _add_spend(bucket, _usd(model, resp.usage))
             return "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
         except TypeError:
             continue
@@ -298,20 +309,23 @@ def opus(client, system: str, user: str, bucket: str, max_tokens: int = 8000) ->
     return ""
 
 
+def llm(provider: str, model: str, system: str, user: str, bucket: str, client=None,
+        json_mode: bool = True, max_tokens: int = 6000, temperature: float = 0.5) -> str:
+    """Unified per-tier call. Routes to Anthropic (Opus/Fable) or an OpenAI-compatible provider."""
+    if provider == "anthropic":
+        return claude(client, model, system, user, bucket, max_tokens=max_tokens)
+    return oai_call(provider, model, system, user, bucket,
+                    json_mode=json_mode, max_tokens=max_tokens, temperature=temperature) or ""
+
+
 def rigour_llm(client, system: str, user: str) -> str:
-    """Rigour tier — Featherless/DeepSeek (cheap; sympy + gate backstop it) or Anthropic."""
-    if RIGOUR_PROVIDER == "anthropic":
-        return opus(client, system, user, "rigour", max_tokens=8000)
-    return oai_call(RIGOUR_PROVIDER, RIGOUR_MODEL, system, user, "rigour",
-                    json_mode=True, max_tokens=6000, temperature=0.4) or ""
+    return llm(RIGOUR_PROVIDER, RIGOUR_MODEL, system, user, "rigour", client=client,
+               json_mode=True, max_tokens=8000, temperature=0.4)
 
 
 def gate_llm(client, system: str, user: str) -> str:
-    """Gate tier — the faithfulness judge; defaults to the strongest reasoner (Anthropic/Opus)."""
-    if GATE_PROVIDER == "anthropic":
-        return opus(client, system, user, "gate", max_tokens=1500)
-    return oai_call(GATE_PROVIDER, GATE_MODEL, system, user, "gate",
-                    json_mode=True, max_tokens=1500, temperature=0.2) or ""
+    return llm(GATE_PROVIDER, GATE_MODEL, system, user, "gate", client=client,
+               json_mode=True, max_tokens=1500, temperature=0.2)
 
 
 # ---------------------------------------------------------------- Tier 2: rigour
@@ -411,44 +425,44 @@ def run_gate(client, c: dict, panel: int) -> dict:
 # ---------------------------------------------------------------- orchestration
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--breadth", type=int, default=20, help="DeepSeek breadth agents")
+    ap.add_argument("--breadth", type=int, default=12, help="breadth (idea) agents")
     ap.add_argument("--workers", type=int, default=8, help="max concurrent API calls per tier")
-    ap.add_argument("--gate-panel", type=int, default=2, help="independent Opus verifiers per survivor")
+    ap.add_argument("--gate-panel", type=int, default=2, help="independent gate verifiers per survivor")
     ap.add_argument("--rigour-workers", type=int,
                     default=int(os.environ.get("EXPLORE_RIGOUR_WORKERS", "1")),
                     help="concurrent rigour calls (keep at 1 for heavy Featherless models — a 397B "
                          "model costs 4 of 4 plan concurrency units, so only ONE may run at a time)")
-    ap.add_argument("--no-refine", action="store_true", help="skip the DeepSeek peer-refine tier")
-    ap.add_argument("--budget-usd", type=float, default=float(os.environ.get("EXPLORE_BUDGET_USD", "4")))
+    ap.add_argument("--refine", action="store_true",
+                    help="run the optional DeepSeek peer-refine tier (off by default; needs DeepSeek)")
+    ap.add_argument("--budget-usd", type=float, default=float(os.environ.get("EXPLORE_BUDGET_USD", "6")))
     args = ap.parse_args()
 
-    # Breadth needs DeepSeek; rigour/gate need the key of whichever provider each is routed to.
-    need = {"DEEPSEEK_API_KEY"}
-    for prov in (RIGOUR_PROVIDER, GATE_PROVIDER):
-        need.add("ANTHROPIC_API_KEY" if prov == "anthropic" else PROVIDERS[prov][1])
+    # Each tier needs the key of whichever provider it's routed to.
+    tiers = {BREADTH_PROVIDER, RIGOUR_PROVIDER, GATE_PROVIDER}
+    need = {"ANTHROPIC_API_KEY" if p == "anthropic" else PROVIDERS[p][1] for p in tiers}
+    if args.refine:
+        need.add("DEEPSEEK_API_KEY")
     missing = [k for k in need if not os.environ.get(k)]
     if missing:
         print(f"missing key(s) {missing} — pipeline no-ops (no spend).")
         return 0
-    client = _anthropic() if "anthropic" in (RIGOUR_PROVIDER, GATE_PROVIDER) else None
-    print(f"routing: breadth=deepseek/{DEEPSEEK_MODEL}  rigour={RIGOUR_PROVIDER}/{RIGOUR_MODEL}  "
+    client = _anthropic() if "anthropic" in tiers else None
+    print(f"routing: breadth={BREADTH_PROVIDER}/{BREADTH_MODEL}  rigour={RIGOUR_PROVIDER}/{RIGOUR_MODEL}  "
           f"gate={GATE_PROVIDER}/{GATE_MODEL}")
-    if "featherless" in (RIGOUR_PROVIDER, GATE_PROVIDER):
+    if "featherless" in tiers:
         featherless_models_hint()
 
     seen = load_seen()
-    # Tier 1 — DeepSeek breadth
-    ideas = run_breadth(args.breadth, args.workers, seen)
-    print(f"tier1 breadth: {len(ideas)} novel ideas from {args.breadth} DeepSeek agents "
-          f"(~${_spend['deepseek']:.3f})")
+    # Tier 1 — breadth (ideas)
+    ideas = run_breadth(args.breadth, args.workers, seen, client=client)
+    print(f"tier1 breadth: {len(ideas)} novel ideas from {args.breadth} {BREADTH_PROVIDER} agents "
+          f"(~${_spend['breadth']:.3f})")
     if not ideas:
         print("no novel ideas this run.")
         return 0
 
-    # Tier 1.5 — DeepSeek peer cross-check + refine (cheap 'more reasoning'; improves the idea,
-    # NOT the faithfulness judge). Raises input quality so the expensive Opus tiers run on fewer,
-    # sharper ideas. Disable with --no-refine.
-    if not args.no_refine:
+    # Tier 1.5 — optional DeepSeek peer cross-check + refine (off unless --refine and a DeepSeek key).
+    if args.refine and os.environ.get("DEEPSEEK_API_KEY"):
         refined = run_refine(ideas, args.workers)
         print(f"tier1.5 DeepSeek peer-refine: {len(refined)}/{len(ideas)} kept + sharpened "
               f"(~${_spend['deepseek']:.3f} total DeepSeek)")
@@ -485,7 +499,8 @@ def main() -> int:
     print(f"tier4 gate: {len(leads)} real leads, {len(rejected)} rejected by cross-check "
           f"(~${_spend['gate']:.3f})")
     print(f"TOTAL spend ~${sum(_spend.values()):.3f} "
-          f"(deepseek ${_spend['deepseek']:.3f} / opus ${_spend['rigour']+_spend['gate']:.3f})")
+          f"(breadth ${_spend['breadth']:.3f} / rigour ${_spend['rigour']:.3f} / "
+          f"gate ${_spend['gate']:.3f}" + (f" / deepseek ${_spend['deepseek']:.3f}" if _spend['deepseek'] else "") + ")")
 
     _write_ledger(processed, leads)
     return 0
