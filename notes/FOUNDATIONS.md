@@ -94,16 +94,21 @@ The concrete sub-ladder, from what is now done to the summit:
   from W1's principality, `ClassGroup.mk_eq_one_iff` yields a generator `f_P ∈ F(secp256k1)` of the
   principal ideal `(XYIdeal' h)ⁿ` — the Miller function with `div f_P = n·([P] − [O])`.
 - **W3 — evaluate `f_P` at a divisor** `f_P(D_Q)` and prove independence of the chosen
-  representative (`f_P` unique up to scalar). *Needs function-field evaluation API.*
+  representative. The **representative-independence half** is ✓ **done**
+  (`secp256k1_miller_function_unique`: two Miller functions differ by a unit of `F[E]`, via
+  `Submodule.span_singleton_eq_span_singleton` — **proof designed by the Fable model,
+  kernel-verified**, the first piloted "strong-model + Lean-kernel" rung). The **evaluation half**
+  (`f_P(D_Q)`) still needs a rational-function evaluation API, absent from Mathlib v4.31.
 - **W4 — Weil reciprocity** `f(div g) = g(div f)` — the crux identity. *Likely a genuine Mathlib
   gap.*
 - **W5 — define `eₙ(P,Q)` and prove bilinear / alternating / non-degenerate / Galois-equivariant.*
   The summit.
 
-W1 and W2 are landed. W3 is bounded and reachable on the existing `ClassGroup`/`FunctionField`
-API; W4 (Weil reciprocity) is the likely hard gap. This replaces the earlier "multi-month from
-zero" estimate: the **hardest substrate (Abel–Jacobi) is already Mathlib's**, and the remaining
-work is the function-evaluation + reciprocity layer.
+W1, W2, and W3's representative-independence half are landed (W3 via a Fable-designed,
+kernel-verified proof). The open frontier is the **function-evaluation API** (W3's evaluation half,
+`f_P(D_Q)`) and **Weil reciprocity** (W4) — both genuine Mathlib gaps. This replaces the earlier
+"multi-month from zero" estimate: the **hardest substrate (Abel–Jacobi) is already Mathlib's**, and
+the remaining work is the function-evaluation + reciprocity layer.
 
 ### `E[n]` as a group object — closed via Mathlib (`Ecdlp/Proved/Torsion.lean`)
 

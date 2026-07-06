@@ -78,4 +78,27 @@ theorem secp256k1_miller_function_exists
     rwa [toMul_nsmul, toMul_zero] at h2
   exact hprin.principal
 
+/-- **Rung 3 (representative-independence): the Miller function is unique up to a unit.** If `f`
+and `g` both generate the principal fractional ideal `(XYIdeal' h)ⁿ` (as submodules of the function
+field), they differ by a **unit** of the coordinate ring: `∃ u : F[secp256k1]ˣ, u • f = g`. This is
+the well-definedness input for the Weil pairing `eₙ` — its value must not depend on which Miller
+function is chosen. Mathematically: two generators of the same principal module are associates.
+**Proof designed by the Fable model and kernel-verified** — it reduces the claim to Mathlib's
+`Submodule.span_singleton_eq_span_singleton` (valid since the coordinate ring is a domain and the
+function field is a torsion-free module over it). Rung W3 (representative-independence half); the
+evaluation half needs a rational-function evaluation API absent from Mathlib v4.31. -/
+theorem secp256k1_miller_function_unique
+    {x y : ZMod Secp256k1.p} (h : Ecdlp.Curve.secp256k1.toAffine.Nonsingular x y) (n : ℕ)
+    (f g : Ecdlp.Curve.secp256k1.toAffine.FunctionField)
+    (hf : (↑(CoordinateRing.XYIdeal' h ^ n) :
+        Submodule Ecdlp.Curve.secp256k1.toAffine.CoordinateRing
+          Ecdlp.Curve.secp256k1.toAffine.FunctionField)
+        = Submodule.span Ecdlp.Curve.secp256k1.toAffine.CoordinateRing {f})
+    (hg : (↑(CoordinateRing.XYIdeal' h ^ n) :
+        Submodule Ecdlp.Curve.secp256k1.toAffine.CoordinateRing
+          Ecdlp.Curve.secp256k1.toAffine.FunctionField)
+        = Submodule.span Ecdlp.Curve.secp256k1.toAffine.CoordinateRing {g}) :
+    ∃ u : (Ecdlp.Curve.secp256k1.toAffine.CoordinateRing)ˣ, u • f = g :=
+  Submodule.span_singleton_eq_span_singleton.mp (hf.symm.trans hg)
+
 end Ecdlp.Weil
