@@ -65,9 +65,22 @@ honest search and a publishable contribution. Occasionally: a lead worth deep wo
 never (but not provably never): the break itself. We state these odds plainly and do not inflate
 them.
 
+## Tiering & token economics (why this saves Fable spend)
+DeepSeek is the **cheap wide front-end**; Fable is the **expensive narrow back-end**. The explorer
+makes each DeepSeek agent do the token-heavy work — broad generation **and** writing a
+self-contained sympy script that checks its own sub-claim — and then we RUN that script offline
+(the judge). ~most ideas are refuted for free and become no-go entries; only the sympy-**supported**
+survivors are written to `notes/HYPOTHESIS_LEADS.md` (with the verified certificate) and handed to
+Fable. So Fable is never spent on the wide search or on unverified ideas — only on pre-chewed,
+already-checked narrow targets. DeepSeek is dirt-cheap (~sub-cent per hypothesis), so the fleet can
+run 10–20+ agents per cycle; concurrency is capped by `--workers`, not by cost.
+
 ## Status
-`scripts/hypothesis_explorer.py` implements the loop (DeepSeek via its OpenAI-compatible API,
-axis rotation, ledger dedup, novelty critic, force-checkable-sub-claim, verification hooks). It
-no-ops safely if `DEEPSEEK_API_KEY` is absent. **v0 — written but not yet run end-to-end**
-(pending GitHub Actions runner recovery); the sympy/kernel verification hooks are stubbed to the
-existing `certify.py` / server path.
+`scripts/hypothesis_explorer.py` is **v1 — parallel and self-verifying**: a `ThreadPoolExecutor`
+fleet of axis-pinned DeepSeek agents (`--agents`, `--workers`), each returning a hypothesis +
+sub-claim + a sympy script that is executed offline (`run_sympy` → supported/refuted/parked),
+ledger dedup by canonical signature, and a leads file for the depth tier. Locally verified: the
+module compiles, no-ops with zero spend when `DEEPSEEK_API_KEY` is absent, and the sympy verifier
+correctly returns supported/refuted/parked on known inputs. The DeepSeek calls run only where the
+key lives — GitHub Actions: `.github/workflows/hypothesis-explore.yml` (dispatch + weekly cron,
+draft-PR only, `DEEPSEEK_API_KEY` secret). Not yet exercised against the live DeepSeek API.

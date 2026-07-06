@@ -1,0 +1,126 @@
+name: Hypothesis explorer (DeepSeek breadth → sympy verify → draft PR)
+
+# The cheap breadth / preprocessing tier. A fleet of axis-scoped DeepSeek agents each proposes ONE
+# novel structural hypothesis about secp256k1 / ECDLP, reduces it to a small sub-claim, and writes a
+# self-contained sympy script that we RUN offline (the judge — never the model's word). Outcomes:
+#   refuted  → grows the machine-checked no-go map (notes/HYPOTHESIS_LEDGER.md),
+#   supported → a LEAD for the Fable depth tier (notes/HYPOTHESIS_LEADS.md, with the verified cert).
+# DeepSeek is dirt-cheap, so this fans out wide; sympy filters for free; Fable is spent only on leads.
+#
+# SAFETY: draft PR only (main is never touched); a clean no-op (green, zero spend) when
+# DEEPSEEK_API_KEY is absent. Set a DeepSeek spend cap as an independent backstop.
+# REQUIRED secret (once): DEEPSEEK_API_KEY.
+
+on:
+  workflow_dispatch:
+    inputs:
+      agents:
+        description: "How many hypothesis agents to run (DeepSeek is cheap; 10-20 is fine)"
+        required: false
+        default: "12"
+      workers:
+        description: "Max concurrent DeepSeek API calls"
+        required: false
+        default: "8"
+      model:
+        description: "DeepSeek model (deepseek-reasoner = deeper, deepseek-chat = cheaper/faster)"
+        required: false
+        default: "deepseek-reasoner"
+  schedule:
+    - cron: '0 4 * * 4'   # weekly, Thursday 04:00 UTC — offset from the autonomous engine (Mon)
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: hypothesis-explore
+  cancel-in-progress: false
+
+jobs:
+  explore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Guard — is the DeepSeek key configured?
+        id: guard
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          if [ -z "${DEEPSEEK_API_KEY:-}" ]; then
+            echo "DEEPSEEK_API_KEY absent — explorer no-ops (green, zero spend)."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Python
+        if: steps.guard.outputs.enabled == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        if: steps.guard.outputs.enabled == 'true'
+        run: pip install --quiet openai sympy
+
+      - name: Run the hypothesis explorer
+        id: run
+        if: steps.guard.outputs.enabled == 'true'
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          DEEPSEEK_MODEL: ${{ github.event.inputs.model || 'deepseek-reasoner' }}
+        run: |
+          set -euo pipefail
+          python3 scripts/hypothesis_explorer.py \
+            --agents "${{ github.event.inputs.agents || '12' }}" \
+            --workers "${{ github.event.inputs.workers || '8' }}" | tee explore-output.txt
+          if ! git diff --quiet -- notes/ 2>/dev/null; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open ONE draft PR with the new ledger / leads
+        if: steps.guard.outputs.enabled == 'true' && steps.run.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          ts="$(date +%Y%m%d-%H%M%S)"
+          branch="explore/run-${ts}"
+          git config user.name "keyai-engine-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add notes/HYPOTHESIS_LEDGER.md notes/HYPOTHESIS_LEADS.md
+          git commit -m "hypothesis-explorer: new no-go entries + leads (${ts})"
+          git push -u origin "$branch"
+          {
+            echo "DeepSeek hypothesis-explorer run (${ts}) — breadth → offline sympy verify."
+            echo
+            echo "New rows in \`notes/HYPOTHESIS_LEDGER.md\` (every hypothesis + its sympy outcome:"
+            echo "refuted = a no-go result; supported = a lead). Any **supported** sub-claims are"
+            echo "collected in \`notes/HYPOTHESIS_LEADS.md\` with their verified sympy certificate —"
+            echo "these are pre-chewed narrow targets for the Fable depth tier."
+            echo
+            echo "Proposals only. The Lean kernel remains the sole judge before anything enters the corpus."
+            echo
+            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+          } > pr-body.txt
+          gh pr create --draft --base main --head "$branch" \
+            --title "hypothesis-explorer: new no-go entries + leads (${ts})" \
+            --body-file pr-body.txt
+
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hypothesis-explore-run
+          path: |
+            explore-output.txt
+            notes/HYPOTHESIS_LEDGER.md
+            notes/HYPOTHESIS_LEADS.md
+          if-no-files-found: ignore
