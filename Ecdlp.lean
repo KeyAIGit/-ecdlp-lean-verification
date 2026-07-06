@@ -77,4 +77,7 @@ import Ecdlp.Proved.SemaevThree
 import Ecdlp.Proved.SemaevFour
 import Ecdlp.Proved.MultiplicationFormula
 import Ecdlp.Proved.WeilDivisorClass
-import Ecdlp.Proved.PointEvaluation
+-- Ecdlp.Proved.PointEvaluation — PARKED (not imported), pending kernel confirmation.
+-- Its residue-field/rational-evaluation rung has not yet passed a green `lake build`
+-- (last CI verdict on it was red). Keeping it out of the built corpus preserves the
+-- invariant "green build = all proved". Re-add this import only once CI confirms it.

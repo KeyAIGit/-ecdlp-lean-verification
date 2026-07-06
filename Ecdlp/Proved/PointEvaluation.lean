@@ -2,6 +2,13 @@ import Mathlib
 import Ecdlp.Proved.Secp256k1Curve
 
 /-!
+# ⚠ PENDING KERNEL CONFIRMATION — not imported from `Ecdlp.lean`.
+This rung has not yet passed a green `lake build` (the last CI verdict on it was red, from an
+earlier `IsPrime`-synthesis failure since addressed by adding an explicit instance argument, but
+the fix is unverified). It is deliberately kept OUT of the built corpus so the repository invariant
+"green build = all proved" holds. Re-add `import Ecdlp.Proved.PointEvaluation` to `Ecdlp.lean`
+**only** once CI confirms this file builds with no `sorry`.
+
 # Function evaluation at a rational point (Weil-pairing infrastructure, layer B)
 
 The Weil pairing evaluates a rational function (the Miller function `f_P`) at points of the curve.
