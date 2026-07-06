@@ -93,3 +93,34 @@ The multiplication maps `x([n]P) = N/D` for `n = 3,4,5,6` (all `gcd(N,D)=1`, deg
 recorded in the session and each independently sympy-verified against the group-law composite;
 `n=6` additionally confirms `[2]∘[3] = [3]∘[2]`. Candidates for promotion to kernel-checked Lean
 theorems (the `n=2` case, `secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq`, is already in the ledger).
+
+---
+
+## Batch 2 — no-go certificate: 5-torsion and 7-torsion x-loci are disjoint
+
+**Problem (hard-but-short, extends challenge #8).** Prove the `x`-coordinates of the nonzero
+5-torsion and 7-torsion of `E : y² = x³ + 7` never coincide, and pin down *exactly* which primes
+break this on reduction. Short answer, real reasoning.
+
+**The reasoning.** If a point `P` of order 5 and a point `Q` of order 7 shared an `x`-coordinate
+then `Q = ±P`, forcing `order Q = order P`; but `5 ≠ 7`, contradiction. So `ψ₅` and `ψ₇` share no
+root over `Q̄` ⇒ `gcd(ψ₅, ψ₇) = 1` ⇒ their resultant is a nonzero constant.
+
+**Independent verification** (`scripts/certs/torsion_disjoint_5_7.py`, run offline; prints
+`CERT_OK`):
+
+```
+gcd(ψ₅, ψ₇) = 1
+Res(ψ₅, ψ₇) = 2¹⁹² · 3¹⁴⁴ · 7⁹⁶          (exact; nonzero ⇒ loci disjoint)
+explicit Bézout  u·ψ₅ + v·ψ₇ = Res,  u, v ∈ ℤ[x]   (checked by expansion)
+```
+
+**The result worth having.** The prime support of the resultant is **exactly `{2, 3, 7}`** —
+precisely the bad-reduction primes of `y² = x³ + 7` (`Δ = −2⁴·3³·7²`). So the 5- and 7-torsion
+`x`-coordinates can collide **only** modulo 2, 3, or 7, and stay disjoint on reduction at every
+other prime (including `secp256k1`'s `p`). This is a clean, kernel-promotable barrier fact and a
+direct sibling of the `E[2]⊥E[3]` certificate (challenge #8). Recorded in `BARRIERS.md`.
+
+*Honest note:* independently derived + sympy-verified in-session (not a Fable round); the sympy
+certificate is reproducible and offline. Promotion target: a Lean `Coprime`/resultant theorem
+alongside the existing `CoprimePsi2Psi3` line.
