@@ -37,6 +37,6 @@ theorem secp256k1_miller_function_unique
           Ecdlp.Curve.secp256k1.toAffine.FunctionField)
         = Submodule.span Ecdlp.Curve.secp256k1.toAffine.CoordinateRing {g}) :
     ∃ u : (Ecdlp.Curve.secp256k1.toAffine.CoordinateRing)ˣ, u • f = g := by
-  sorry
+  exact Submodule.span_singleton_eq_span_singleton.mp (hf.symm.trans hg)
 
 end Ecdlp.Weil
