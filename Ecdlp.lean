@@ -76,3 +76,4 @@ import Ecdlp.Proved.MovRandomQ
 import Ecdlp.Proved.SemaevThree
 import Ecdlp.Proved.SemaevFour
 import Ecdlp.Proved.MultiplicationFormula
+import Ecdlp.Proved.WeilDivisorClass

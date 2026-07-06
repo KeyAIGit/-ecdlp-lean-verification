@@ -31,6 +31,9 @@ transfer constructively, not just about its inapplicability here.
 | Weierstrass curves, `a`/`b`/`c`-invariants, `Δ`, `j` | `AlgebraicGeometry.EllipticCurve.Weierstrass` | ✓ used here |
 | Affine/Projective/Jacobian point group law | `…EllipticCurve.Affine` / `Projective` / `Jacobian` | ✓ used here |
 | **Division polynomials** `ψₙ, φₙ, ωₙ, preΨ, ΨSq, Φ` | `…EllipticCurve.DivisionPolynomial.{Basic,Degree}` | ✓ **bridged** (below) |
+| **Abel–Jacobi map / class group** `toClass : E(F) ↪ Pic(F[W])` | `…EllipticCurve.Affine.Point` (`import …RingTheory.ClassGroup.Basic`) | ✓ **present** — the group law *is* built on it |
+| **Coordinate ring `F[W]`, function field `FunctionField`** | `…EllipticCurve.Affine.Point` | ✓ available |
+| **Roots of unity `μₙ`** (Weil-pairing target) | `…RingTheory.RootsOfUnity.*` | ✓ available |
 | `j`-invariant models, isomorphism-of-`j` | `…EllipticCurve.{ModelsWithJ,IsomOfJ}` | ✓ available |
 | Reduction, variable change, normal forms | `…EllipticCurve.{Reduction,VariableChange,NormalForms}` | ✓ available |
 
@@ -39,7 +42,7 @@ transfer constructively, not just about its inapplicability here.
 | Missing rung | Consequence | Difficulty |
 |---|---|---|
 | ~~`n`-torsion subgroup `E[n]` as a group object~~ ✓ **done** (Mathlib `AddSubgroup.torsionBy`, notation `A[n]`; our bridge in `Ecdlp/Proved/Torsion.lean`) | `E[n]` available; `E[n] ≅ (ℤ/n)²` still open | ~~high~~ closed |
-| **Weil pairing** `eₙ : E[n] × E[n] → μₙ` + bilinearity/non-degeneracy | no MOV/FR transfer, no pairing-based crypto | very high |
+| **Weil pairing** `eₙ : E[n] × E[n] → μₙ` + bilinearity/non-degeneracy — *substrate (Abel–Jacobi `toClass`, `FunctionField`, `μₙ`) is present; rung W1 (torsion ⟺ principal) done, see sub-ladder below* | no MOV/FR transfer, no pairing-based crypto | high (was very high) |
 | Tate pairing | alternative transfer | very high |
 | Isogenies as a developed theory | no degree/dual/kernel reasoning | high |
 | Semaev summation polynomials `Sₙ` | no elliptic index calculus | high |
@@ -75,6 +78,32 @@ transfer constructively, not just about its inapplicability here.
 Rungs 1–3 are tractable now (concrete polynomial identities). Rung 4 is the first
 genuinely hard step and the right target for a focused effort. Rungs 5–6 are the
 multi-month core.
+
+### Weil-pairing sub-ladder — reappraised (the substrate is already upstream)
+A closer look at Mathlib **revises the difficulty downward** from "from zero": Mathlib's
+elliptic-curve group law is itself **built on the ideal class group** of the coordinate ring,
+exposing the **Abel–Jacobi map** `toClass : E(F) ↪ Pic(F[W])` as an *injective group
+homomorphism* (`…Affine.Point`, `toClass_injective` / `toClass_eq_zero`), together with the
+coordinate ring `F[W]`, the function field `FunctionField`, and the roots-of-unity target `μₙ`.
+So the Weil pairing does **not** need the divisor↔point substrate built from scratch — it exists.
+The concrete sub-ladder, from what is now done to the summit:
+- **W1 — torsion ⟺ principal divisor** ✓ **done** (`Ecdlp/Proved/WeilDivisorClass.lean`,
+  `secp256k1_torsion_iff_principal`): `n • P = 0 ⟺ n • toClass P = 0`, i.e. `n·([P] − [O])` is
+  principal — the existence precondition for the Miller function `f_P`.
+- **W2 — extract the Miller function** `f_P` with `div f_P = n·([P] − [O])` from that principality
+  (a generator of the trivial ideal class). *Next; needs turning `ClassGroup.mk … = 1` into an
+  explicit function-field element.*
+- **W3 — evaluate `f_P` at a divisor** `f_P(D_Q)` and prove independence of the chosen
+  representative (`f_P` unique up to scalar). *Needs function-field evaluation API.*
+- **W4 — Weil reciprocity** `f(div g) = g(div f)` — the crux identity. *Likely a genuine Mathlib
+  gap.*
+- **W5 — define `eₙ(P,Q)` and prove bilinear / alternating / non-degenerate / Galois-equivariant.*
+  The summit.
+
+W1 is landed. W2–W3 are bounded and reachable on the existing `ClassGroup`/`FunctionField` API;
+W4 (Weil reciprocity) is the likely hard gap. This replaces the earlier "multi-month from zero"
+estimate: the **hardest substrate (Abel–Jacobi) is already Mathlib's**, and the remaining work is
+the function-evaluation + reciprocity layer.
 
 ### `E[n]` as a group object — closed via Mathlib (`Ecdlp/Proved/Torsion.lean`)
 
