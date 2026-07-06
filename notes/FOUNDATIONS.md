@@ -31,6 +31,9 @@ transfer constructively, not just about its inapplicability here.
 | Weierstrass curves, `a`/`b`/`c`-invariants, `Δ`, `j` | `AlgebraicGeometry.EllipticCurve.Weierstrass` | ✓ used here |
 | Affine/Projective/Jacobian point group law | `…EllipticCurve.Affine` / `Projective` / `Jacobian` | ✓ used here |
 | **Division polynomials** `ψₙ, φₙ, ωₙ, preΨ, ΨSq, Φ` | `…EllipticCurve.DivisionPolynomial.{Basic,Degree}` | ✓ **bridged** (below) |
+| **Abel–Jacobi map / class group** `toClass : E(F) ↪ Pic(F[W])` | `…EllipticCurve.Affine.Point` (`import …RingTheory.ClassGroup.Basic`) | ✓ **present** — the group law *is* built on it |
+| **Coordinate ring `F[W]`, function field `FunctionField`** | `…EllipticCurve.Affine.Point` | ✓ available |
+| **Roots of unity `μₙ`** (Weil-pairing target) | `…RingTheory.RootsOfUnity.*` | ✓ available |
 | `j`-invariant models, isomorphism-of-`j` | `…EllipticCurve.{ModelsWithJ,IsomOfJ}` | ✓ available |
 | Reduction, variable change, normal forms | `…EllipticCurve.{Reduction,VariableChange,NormalForms}` | ✓ available |
 
@@ -39,7 +42,7 @@ transfer constructively, not just about its inapplicability here.
 | Missing rung | Consequence | Difficulty |
 |---|---|---|
 | ~~`n`-torsion subgroup `E[n]` as a group object~~ ✓ **done** (Mathlib `AddSubgroup.torsionBy`, notation `A[n]`; our bridge in `Ecdlp/Proved/Torsion.lean`) | `E[n]` available; `E[n] ≅ (ℤ/n)²` still open | ~~high~~ closed |
-| **Weil pairing** `eₙ : E[n] × E[n] → μₙ` + bilinearity/non-degeneracy | no MOV/FR transfer, no pairing-based crypto | very high |
+| **Weil pairing** `eₙ : E[n] × E[n] → μₙ` + bilinearity/non-degeneracy — *substrate (Abel–Jacobi `toClass`, `FunctionField`, `μₙ`) is present; rung W1 (torsion ⟺ principal) done, see sub-ladder below* | no MOV/FR transfer, no pairing-based crypto | high (was very high) |
 | Tate pairing | alternative transfer | very high |
 | Isogenies as a developed theory | no degree/dual/kernel reasoning | high |
 | Semaev summation polynomials `Sₙ` | no elliptic index calculus | high |
@@ -54,10 +57,19 @@ transfer constructively, not just about its inapplicability here.
    *(next; a concrete `simp`/`ring` identity on top of the `b`-invariants.)*
 4. **`ψₙ` vanishing ⟺ `n`-torsion** — connect `ψₙ(x_P)=0` to `[n]P = O`. The easy
    forward direction for 2-torsion is ✓ **done** (`Ecdlp/Proved/TwoTorsion.lean`:
-   an order-2 `x`-coordinate is a root of `Ψ₂Sq`). The general statement — all `n`,
-   both directions, tied to actual point order — needs the division-polynomial/
-   point-group bridge; Mathlib has the pieces but not the equivalence as a packaged
-   lemma. *(research-level, but bounded.)*
+   an order-2 `x`-coordinate is a root of `Ψ₂Sq`). Full **both-direction** bridges are
+   ✓ **done for `n = 3, 5, 7`** (`{Three,Five,Seven}TorsionBridge.lean`) by an elementary
+   route that explicitly computes `[n]P` — but that route is `n`-specific and does not
+   generalize. The **engine** that would generalize it is the multiplication formula
+   `x([n]P) = Φₙ(x)/ΨSqₙ(x)` (Mathlib's canonical `Φ`/`ΨSq`); its **base case `n = 2`** is now
+   ✓ **done** (`Ecdlp/Proved/MultiplicationFormula.lean`, `secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq`:
+   `x(2•P) = Φ₂/Ψ₂Sq = (x⁴−56x)/(4y²)`). The **general `n`** formula — by induction on the
+   division-polynomial recurrence — is the genuinely missing rung: it needs the
+   division-polynomial/point-group link that Mathlib v4.31 does **not** package (present only
+   in a stalled upstream PR; see `notes/UPSTREAM_SCAN.md`). This is the *same* class of missing
+   machinery (function field / coordinate ring of the curve) as the Weil pairing itself — so
+   the general bridge is **not** a cheap stepping-stone below the pairing, it is a comparable
+   port. *(research-level; the base case is landed, general `n` is the multi-month gap.)*
 5. **`E[n]` as `(ℤ/n)²`** — the structure theorem. Hard; needs the algebraic
    closure / separability story.
 6. **Weil pairing** — define `eₙ` (e.g. via Miller's algorithm / Weil reciprocity),
@@ -66,6 +78,43 @@ transfer constructively, not just about its inapplicability here.
 Rungs 1–3 are tractable now (concrete polynomial identities). Rung 4 is the first
 genuinely hard step and the right target for a focused effort. Rungs 5–6 are the
 multi-month core.
+
+### Weil-pairing sub-ladder — reappraised (the substrate is already upstream)
+A closer look at Mathlib **revises the difficulty downward** from "from zero": Mathlib's
+elliptic-curve group law is itself **built on the ideal class group** of the coordinate ring,
+exposing the **Abel–Jacobi map** `toClass : E(F) ↪ Pic(F[W])` as an *injective group
+homomorphism* (`…Affine.Point`, `toClass_injective` / `toClass_eq_zero`), together with the
+coordinate ring `F[W]`, the function field `FunctionField`, and the roots-of-unity target `μₙ`.
+So the Weil pairing does **not** need the divisor↔point substrate built from scratch — it exists.
+The concrete sub-ladder, from what is now done to the summit:
+- **W1 — torsion ⟺ principal divisor** ✓ **done** (`Ecdlp/Proved/WeilDivisorClass.lean`,
+  `secp256k1_torsion_iff_principal`): `n • P = 0 ⟺ n • toClass P = 0`, i.e. `n·([P] − [O])` is
+  principal — the existence precondition for the Miller function `f_P`.
+- **W2 — extract the Miller function** `f_P` ✓ **done** (`secp256k1_miller_function_exists`):
+  from W1's principality, `ClassGroup.mk_eq_one_iff` yields a generator `f_P ∈ F(secp256k1)` of the
+  principal ideal `(XYIdeal' h)ⁿ` — the Miller function with `div f_P = n·([P] − [O])`.
+- **W3 — evaluate `f_P` at a divisor** `f_P(D_Q)` and prove independence of the chosen
+  representative. The **representative-independence half** is ✓ **done**
+  (`secp256k1_miller_function_unique`: two Miller functions differ by a unit of `F[E]`, via
+  `Submodule.span_singleton_eq_span_singleton` — **proof designed by the Fable model,
+  kernel-verified**, the first piloted "strong-model + Lean-kernel" rung). The **evaluation half**
+  (`f_P(D_Q)`) is being built as new infrastructure (Mathlib v4.31 has no rational-function
+  evaluation API and does not know `F[E]` is Dedekind): the **regular-function evaluation
+  homomorphism** `evalAt : F[E] →+* F` (value of a regular function at a rational point, via
+  `quotientXYIdealEquiv`) is ✓ **done** (`Ecdlp/Proved/PointEvaluation.lean`: `evalAt_surjective`,
+  `evalAt_ker` = the maximal ideal at `P`). **Next:** extend `evalAt` to rational functions
+  *regular at `P`* via localization at the maximal ideal, so `f_P` itself can be evaluated where it
+  has no pole.
+- **W4 — Weil reciprocity** `f(div g) = g(div f)` — the crux identity. *Likely a genuine Mathlib
+  gap.*
+- **W5 — define `eₙ(P,Q)` and prove bilinear / alternating / non-degenerate / Galois-equivariant.*
+  The summit.
+
+W1, W2, and W3's representative-independence half are landed (W3 via a Fable-designed,
+kernel-verified proof). The open frontier is the **function-evaluation API** (W3's evaluation half,
+`f_P(D_Q)`) and **Weil reciprocity** (W4) — both genuine Mathlib gaps. This replaces the earlier
+"multi-month from zero" estimate: the **hardest substrate (Abel–Jacobi) is already Mathlib's**, and
+the remaining work is the function-evaluation + reciprocity layer.
 
 ### `E[n]` as a group object — closed via Mathlib (`Ecdlp/Proved/Torsion.lean`)
 

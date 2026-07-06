@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~160 distinct results / 182 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~166 distinct results / 188 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -103,11 +103,26 @@ exact `Θ` statements.
   their defining recursion, now machine-checked, but they compute nothing about any specific
   discrete log on a prime-field curve. `S₃` (base case, fully characterized) together with `S₄`
   (first recursion step, both directions) is the **conceptually complete unit**: it establishes
-  the object *and* proves the resultant recursion means what it should. Higher `Sₙ` (`n ≥ 5`) are
-  the *same* recursion at larger degree — deliberately **not** pursued, as they add scale without
-  new content or new reach against the curve.
+  the object *and* proves the resultant recursion means what it should. And the **forward
+  direction is now generalized to the whole infinite family in a single lemma**
+  (`resultant_eq_zero_of_common_root`, `Ecdlp/Proved/SemaevFour.lean`): for *any* two univariate
+  polynomials sharing an evaluation-root, their resultant vanishes — so since each Semaev step is
+  `Sₙ₊₁ = Res_X(Sₙ(…,X), S₃(…,X))`, "the two slices share a root ⟹ `Sₙ₊₁ = 0`" holds at *every*
+  level `n` by instantiating that one lemma (`S₄`'s forward direction is literally its `n = 3`
+  case). Higher `Sₙ` (`n ≥ 5`) are thus the *same* recursion at larger degree — their forward
+  direction is already covered by the engine lemma, and the concrete plumbing is deliberately
+  **not** pursued, as it adds scale without new content or new reach against the curve.
 - **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
-  *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib.
+  *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib. **This is
+  the one place the Weil pairing touches secp256k1, and its security-relevant consequence is
+  already closed here without the pairing:** MOV/FR would transfer the ECDLP into `𝔽_{p^k}^×`
+  only for small embedding degree `k`, and `secp256k1_embedding_degree_gt_100`
+  (`EmbeddingDegree.lean`) machine-checks `p^k ≢ 1 (mod n)` for all `1 ≤ k ≤ 100`, so no such
+  transfer exists for secp256k1. Building the pairing itself (`e_n : E[n]×E[n] → μ_n` + the
+  structure theorem `E[n] ≅ (ℤ/n)²`) is a multi-month research-grade port absent from all of
+  Mathlib, master, and open PRs (see the upstream scan below) — worth doing as an upstream
+  contribution, but it would add **no** security fact about secp256k1 that the embedding-degree
+  bound does not already give.
 - **Point counting** — `#E(𝔽ₚ) = n` for the concrete curve needs a computation
   Mathlib cannot do; the concrete fact is instead pinned via `native_decide`.
 
