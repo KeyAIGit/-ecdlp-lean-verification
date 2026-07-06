@@ -24,6 +24,7 @@ jobs:
         model:
           - Pythagoras-LM/Pythagoras-Prover-4B
           - Goedel-LM/Goedel-Prover-V2-32B
+          - AI-MO/Kimina-Prover-Distill-8B
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
