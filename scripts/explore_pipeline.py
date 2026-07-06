@@ -119,7 +119,10 @@ def oai_call(provider: str, model: str, system: str, user: str, bucket: str,
         from openai import OpenAI
     except Exception:
         return None
-    client = OpenAI(api_key=key, base_url=base)
+    # Hard per-request timeout (env EXPLORE_LLM_TIMEOUT_S) + a couple retries, so a slow/stuck heavy
+    # model can never hang the whole run (a 397B request must return or fail, not stall indefinitely).
+    to = float(os.environ.get("EXPLORE_LLM_TIMEOUT_S", "120"))
+    client = OpenAI(api_key=key, base_url=base, timeout=to, max_retries=2)
     msgs = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
     kw = dict(model=model, messages=msgs, temperature=temperature, max_tokens=max_tokens)
     for attempt in ((json_mode, kw), (False, kw)):   # some open models reject json_mode; retry without
