@@ -32,6 +32,13 @@ group-theory zone and are the realised part of "Tractable now":
 - `order_dvd_card` (Lagrange), `cofactor_card_mul_index` (`#E = n·h` abstractly),
   `orderOf_eq_card_of_prime` (prime order ⇒ generator, no small subgroup),
   `cube_root_of_eigenvalue` (root of `x²+x+1` ⇒ `x³=1`) — Mathlib.
+- **Distinct-prime torsion x-loci are disjoint** (no-go certificate family). For `y²=x³+7`,
+  the `x`-coordinates of the `ℓ`- and `ℓ'`-torsion (`ℓ≠ℓ'` prime) never coincide, via
+  `gcd(ψ_ℓ, ψ_ℓ') = 1` with an explicit resultant + Bézout certificate. Done for `E[2]⊥E[3]`
+  (`Res = −3⁶·7⁴`) and `E[5]⊥E[7]` (`Res = 2¹⁹²·3¹⁴⁴·7⁹⁶`); in both the resultant's prime
+  support equals the bad-reduction primes `{2,3,7}` of the curve — the only primes where the
+  loci can collide on reduction. Sympy-certified (`scripts/certs/`), kernel-promotion pending
+  (sibling of `Ecdlp/Proved/CoprimePsi2Psi3.lean`).
 
 ### Foundation formalized: the generic-group `Ω(√p)`/`Θ(√n)` results
 Previously listed under B1 as blocked-by-missing-cost-model, the **Shoup/Nechaev
