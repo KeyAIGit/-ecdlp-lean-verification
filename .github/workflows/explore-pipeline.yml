@@ -98,7 +98,7 @@ jobs:
           git config user.name "keyai-engine-bot"
           git config user.email "actions@users.noreply.github.com"
           git checkout -b "$branch"
-          git add notes/HYPOTHESIS_LEDGER.md notes/HYPOTHESIS_LEADS.md
+          git add -A notes/   # LEADS.md may not exist (0 leads); stage whatever changed
           git commit -m "explore-pipeline: cross-checked leads + ledger (${ts})"
           git push -u origin "$branch"
           {

@@ -170,6 +170,49 @@ def run_breadth(n_agents: int, workers: int, seen: set[str]) -> list[dict]:
     return out
 
 
+# ---------------------------------------------------------------- Tier 1.5: DeepSeek peer refine
+def refine_prompt(idea: dict) -> str:
+    return f"""You are a PEER REVIEWER (a second, independent model) on a machine-verified ECDLP research
+system. Here is a colleague's raw research angle (axis: {idea['_axis']}):
+  hypothesis: {idea['hypothesis']}
+  checkable direction: {idea['checkable_direction']}
+
+Do NOT restate any known / machine-checked fact or standard dead end:
+{KNOWN_NOGO}
+
+Your job — add a little reasoning and IMPROVE it, cheaply:
+1. If it is a duplicate, already-known, vacuous, or hopeless, set "keep": false.
+2. Otherwise, REWRITE it sharper: a clearer hypothesis and a MORE PRECISE, genuinely checkable
+   direction (name the exact object to compute — a specific resultant, degree, factorization, map).
+   Do NOT write code. Do NOT claim it is proved — only sharpen the ANGLE so the rigour tier can test it.
+
+Reply as STRICT JSON: {{"keep": true/false, "improved_hypothesis": "...", "improved_direction": "...",
+"why": "one sentence"}}."""
+
+
+def refine_one(idea: dict) -> dict | None:
+    """A second DeepSeek instance cross-checks and sharpens one idea (cheap 'more reasoning').
+    Returns an improved idea, or None if the peer rejects it. Same-model, so this improves the
+    IDEA — it is NOT the faithfulness judge (that stays Opus, a stronger reasoner)."""
+    obj = parse_json(deepseek(refine_prompt(idea)) or "")
+    if not obj or not obj.get("keep", False):
+        return None
+    h = (obj.get("improved_hypothesis") or idea["hypothesis"]).strip()
+    return {**idea, "hypothesis": h, "_sig": sig(h),
+            "checkable_direction": (obj.get("improved_direction") or idea["checkable_direction"]).strip(),
+            "_refined": True}
+
+
+def run_refine(ideas: list[dict], workers: int) -> list[dict]:
+    kept, seen_sigs = [], set()
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        for r in ex.map(refine_one, ideas):
+            if r and r["_sig"] not in seen_sigs:   # peer refinement can collapse near-dupes together
+                seen_sigs.add(r["_sig"])
+                kept.append(r)
+    return kept
+
+
 # ---------------------------------------------------------------- Anthropic / Opus
 def _anthropic():
     try:
@@ -301,6 +344,7 @@ def main() -> int:
     ap.add_argument("--breadth", type=int, default=20, help="DeepSeek breadth agents")
     ap.add_argument("--workers", type=int, default=8, help="max concurrent API calls per tier")
     ap.add_argument("--gate-panel", type=int, default=2, help="independent Opus verifiers per survivor")
+    ap.add_argument("--no-refine", action="store_true", help="skip the DeepSeek peer-refine tier")
     ap.add_argument("--budget-usd", type=float, default=float(os.environ.get("EXPLORE_BUDGET_USD", "4")))
     args = ap.parse_args()
 
@@ -313,13 +357,25 @@ def main() -> int:
         return 0
 
     seen = load_seen()
-    # Tier 1
+    # Tier 1 — DeepSeek breadth
     ideas = run_breadth(args.breadth, args.workers, seen)
     print(f"tier1 breadth: {len(ideas)} novel ideas from {args.breadth} DeepSeek agents "
           f"(~${_spend['deepseek']:.3f})")
     if not ideas:
         print("no novel ideas this run.")
         return 0
+
+    # Tier 1.5 — DeepSeek peer cross-check + refine (cheap 'more reasoning'; improves the idea,
+    # NOT the faithfulness judge). Raises input quality so the expensive Opus tiers run on fewer,
+    # sharper ideas. Disable with --no-refine.
+    if not args.no_refine:
+        refined = run_refine(ideas, args.workers)
+        print(f"tier1.5 DeepSeek peer-refine: {len(refined)}/{len(ideas)} kept + sharpened "
+              f"(~${_spend['deepseek']:.3f} total DeepSeek)")
+        ideas = refined
+        if not ideas:
+            print("peer review rejected all ideas this run.")
+            return 0
 
     # Tier 2 + 3 (rigour then verify), budget-bounded
     processed = []
