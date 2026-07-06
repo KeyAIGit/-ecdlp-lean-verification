@@ -48,4 +48,13 @@ theorem evalAt_ker {x y : F} (h : W.Equation x y) :
     RingHom.ker (evalAt h) = XYIdeal W x (C y) := by
   rw [evalAt, RingHom.ker_equiv_comp, Ideal.mk_ker]
 
+/-- **The ideal of a rational point is maximal** — `P` is a *closed point*. For `(x,y)` on the
+curve, `⟨X−x, Y−y⟩` is a maximal ideal of `F[E]`, immediate from `F[E]/⟨X−x,Y−y⟩ ≃ F`
+(`quotientXYIdealEquiv`) being a field. This is the prerequisite for localizing at `P` (the local
+ring `F[E]_P`), the next rung, to evaluate rational functions regular at `P`. -/
+theorem xyIdeal_isMaximal {x y : F} (h : W.Equation x y) :
+    (XYIdeal W x (C y)).IsMaximal :=
+  Ideal.Quotient.maximal_of_isField _
+    ((quotientXYIdealEquiv (W' := W) (x := x) (y := C y) h).toMulEquiv.isField (Field.toIsField F))
+
 end Ecdlp.Weil

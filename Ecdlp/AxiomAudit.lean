@@ -67,6 +67,7 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 -- Weil-pairing infrastructure (layer B): point-evaluation ring homomorphism F[E] →+* F
 #print axioms Ecdlp.Weil.evalAt_surjective
 #print axioms Ecdlp.Weil.evalAt_ker
+#print axioms Ecdlp.Weil.xyIdeal_isMaximal
 
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form
