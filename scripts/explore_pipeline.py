@@ -44,7 +44,23 @@ SYMPY_TIMEOUT_S = int(os.environ.get("CERTIFY_TIMEOUT_S", "60"))
 OPUS_MODEL = os.environ.get("EXPLORE_OPUS_MODEL", "claude-opus-4-8")
 DEEPSEEK_MODEL = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
 
-# Per-1M-token USD (input, output). Anthropic from agent_day PRICES; DeepSeek chat ~ published rates.
+# Per-tier model routing — any tier can use a different provider/model to control cost. The rigour
+# tier (write a sympy script) is backstopped by sympy AND the gate, so a cheap model is fine there;
+# the GATE (faithfulness judge) is the quality guarantee, so it defaults to the strongest reasoner.
+# Providers: "deepseek" / "featherless" (both OpenAI-compatible) or "anthropic".
+RIGOUR_PROVIDER = os.environ.get("EXPLORE_RIGOUR_PROVIDER", "featherless")
+RIGOUR_MODEL = os.environ.get("EXPLORE_RIGOUR_MODEL", "Qwen/Qwen2.5-72B-Instruct")
+GATE_PROVIDER = os.environ.get("EXPLORE_GATE_PROVIDER", "anthropic")
+GATE_MODEL = os.environ.get("EXPLORE_GATE_MODEL", OPUS_MODEL)
+
+# OpenAI-compatible providers: (base_url, api-key env var).
+PROVIDERS = {
+    "deepseek": ("https://api.deepseek.com", "DEEPSEEK_API_KEY"),
+    "featherless": ("https://api.featherless.ai/v1", "FEATHERLESS_API_KEY"),
+}
+
+# Per-1M-token USD (input, output). Anthropic + DeepSeek published rates; Featherless is a flat-rate
+# subscription, so marginal per-token cost within the plan is ~0 (logged as 0). Unknown models → 0.
 PRICES = {
     "claude-opus-4-8": (5.0, 25.0), "claude-sonnet-5": (3.0, 15.0), "claude-haiku-4-5": (1.0, 5.0),
     "deepseek-chat": (0.28, 0.42), "deepseek-reasoner": (0.55, 2.19),
@@ -69,7 +85,7 @@ KNOWN_NOGO = """\
   isogeny-to-weak-curve search, generic Groebner on the point equations."""
 
 _spend_lock = threading.Lock()
-_spend = {"deepseek": 0.0, "opus_rigour": 0.0, "opus_gate": 0.0}
+_spend = {"deepseek": 0.0, "rigour": 0.0, "gate": 0.0}
 
 
 def _add_spend(bucket: str, usd: float) -> None:
@@ -86,10 +102,37 @@ def _tok(usage, *names) -> int:
 
 
 def _usd(model: str, usage) -> float:
-    pin, pout = PRICES.get(model, PRICES["claude-opus-4-8"])
+    pin, pout = PRICES.get(model, (0.0, 0.0))                     # unknown/Featherless flat-rate → 0
     inp = _tok(usage, "input_tokens", "prompt_tokens")           # anthropic / openai shapes
     out = _tok(usage, "output_tokens", "completion_tokens")
     return (inp * pin + out * pout) / 1_000_000
+
+
+def oai_call(provider: str, model: str, system: str, user: str, bucket: str,
+             json_mode: bool = True, max_tokens: int = 4000, temperature: float = 0.7) -> str | None:
+    """Call any OpenAI-compatible provider (DeepSeek / Featherless). Returns content or None."""
+    base, keyenv = PROVIDERS[provider]
+    key = os.environ.get(keyenv)
+    if not key:
+        return None
+    try:
+        from openai import OpenAI
+    except Exception:
+        return None
+    client = OpenAI(api_key=key, base_url=base)
+    msgs = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
+    kw = dict(model=model, messages=msgs, temperature=temperature, max_tokens=max_tokens)
+    for attempt in ((json_mode, kw), (False, kw)):   # some open models reject json_mode; retry without
+        use_json, base_kw = attempt
+        k = {**base_kw, **({"response_format": {"type": "json_object"}} if use_json else {})}
+        try:
+            resp = client.chat.completions.create(**k)
+            _add_spend(bucket, _usd(model, resp.usage))
+            return resp.choices[0].message.content
+        except Exception as e:  # noqa: BLE001
+            last = e
+    print(f"::warning:: {provider}/{model} failed: {last}", file=sys.stderr)
+    return None
 
 
 def sig(text: str) -> str:
@@ -115,24 +158,8 @@ def parse_json(raw: str) -> dict | None:
 
 # ---------------------------------------------------------------- Tier 1: DeepSeek breadth
 def deepseek(prompt: str) -> str | None:
-    key = os.environ.get("DEEPSEEK_API_KEY")
-    if not key:
-        return None
-    try:
-        from openai import OpenAI
-    except Exception:
-        return None
-    client = OpenAI(api_key=key, base_url="https://api.deepseek.com")
-    try:
-        resp = client.chat.completions.create(
-            model=DEEPSEEK_MODEL, messages=[{"role": "user", "content": prompt}],
-            temperature=1.1, max_tokens=1200, response_format={"type": "json_object"},
-        )
-        _add_spend("deepseek", _usd(DEEPSEEK_MODEL, resp.usage))
-        return resp.choices[0].message.content
-    except Exception as e:  # noqa: BLE001
-        print(f"::warning:: DeepSeek failed: {e}", file=sys.stderr)
-        return None
+    return oai_call("deepseek", DEEPSEEK_MODEL, "", prompt, "deepseek",
+                    json_mode=True, max_tokens=1200, temperature=1.1)
 
 
 def breadth_prompt(axis: str, n_seen: int) -> str:
@@ -244,7 +271,23 @@ def opus(client, system: str, user: str, bucket: str, max_tokens: int = 8000) ->
     return ""
 
 
-# ---------------------------------------------------------------- Tier 2: Opus rigour
+def rigour_llm(client, system: str, user: str) -> str:
+    """Rigour tier — Featherless/DeepSeek (cheap; sympy + gate backstop it) or Anthropic."""
+    if RIGOUR_PROVIDER == "anthropic":
+        return opus(client, system, user, "rigour", max_tokens=8000)
+    return oai_call(RIGOUR_PROVIDER, RIGOUR_MODEL, system, user, "rigour",
+                    json_mode=True, max_tokens=6000, temperature=0.4) or ""
+
+
+def gate_llm(client, system: str, user: str) -> str:
+    """Gate tier — the faithfulness judge; defaults to the strongest reasoner (Anthropic/Opus)."""
+    if GATE_PROVIDER == "anthropic":
+        return opus(client, system, user, "gate", max_tokens=1500)
+    return oai_call(GATE_PROVIDER, GATE_MODEL, system, user, "gate",
+                    json_mode=True, max_tokens=1500, temperature=0.2) or ""
+
+
+# ---------------------------------------------------------------- Tier 2: rigour
 RIGOUR_SYS = ("You are the RIGOUR tier of a machine-verified ECDLP research system. You turn a raw "
               "research angle into a PRECISE, SMALL, exactly-checkable sub-claim and a faithful sympy "
               "script that verifies THAT EXACT sub-claim. secp256k1: y^2 = x^3 + 7 over "
@@ -294,7 +337,7 @@ def run_sympy(script: str) -> tuple[str, str]:
 
 
 def rigour_and_verify(client, idea: dict) -> dict:
-    reply = opus(client, RIGOUR_SYS, rigour_prompt(idea), "opus_rigour")
+    reply = rigour_llm(client, RIGOUR_SYS, rigour_prompt(idea))
     obj = parse_json(reply) or {}
     subclaim = (obj.get("subclaim") or "").strip()
     script = obj.get("sympy_script") or ""
@@ -332,7 +375,7 @@ Judge strictly. Reply STRICT JSON:
 def run_gate(client, c: dict, panel: int) -> dict:
     votes = []
     for _ in range(panel):
-        v = parse_json(opus(client, GATE_SYS, gate_prompt(c), "opus_gate", max_tokens=1500)) or {}
+        v = parse_json(gate_llm(client, GATE_SYS, gate_prompt(c))) or {}
         votes.append(bool(v.get("faithful") and v.get("nontrivial") and v.get("relevant")))
     passed = sum(votes)
     return {**c, "_gate_votes": f"{passed}/{panel}", "_is_lead": passed == panel and panel > 0}
@@ -348,13 +391,17 @@ def main() -> int:
     ap.add_argument("--budget-usd", type=float, default=float(os.environ.get("EXPLORE_BUDGET_USD", "4")))
     args = ap.parse_args()
 
-    if not os.environ.get("DEEPSEEK_API_KEY") or not os.environ.get("ANTHROPIC_API_KEY"):
-        print("DEEPSEEK_API_KEY and/or ANTHROPIC_API_KEY absent — pipeline no-ops (no spend).")
+    # Breadth needs DeepSeek; rigour/gate need the key of whichever provider each is routed to.
+    need = {"DEEPSEEK_API_KEY"}
+    for prov in (RIGOUR_PROVIDER, GATE_PROVIDER):
+        need.add("ANTHROPIC_API_KEY" if prov == "anthropic" else PROVIDERS[prov][1])
+    missing = [k for k in need if not os.environ.get(k)]
+    if missing:
+        print(f"missing key(s) {missing} — pipeline no-ops (no spend).")
         return 0
-    client = _anthropic()
-    if client is None:
-        print("anthropic SDK unavailable — no-op.")
-        return 0
+    client = _anthropic() if "anthropic" in (RIGOUR_PROVIDER, GATE_PROVIDER) else None
+    print(f"routing: breadth=deepseek/{DEEPSEEK_MODEL}  rigour={RIGOUR_PROVIDER}/{RIGOUR_MODEL}  "
+          f"gate={GATE_PROVIDER}/{GATE_MODEL}")
 
     seen = load_seen()
     # Tier 1 — DeepSeek breadth
@@ -383,18 +430,18 @@ def main() -> int:
         futs = [ex.submit(rigour_and_verify, client, idea) for idea in ideas]
         for fut in as_completed(futs):
             processed.append(fut.result())
-            if _spend["opus_rigour"] + _spend["opus_gate"] >= args.budget_usd:
+            if _spend["rigour"] + _spend["gate"] >= args.budget_usd:
                 print(f"::warning:: budget ${args.budget_usd} reached in rigour tier; stopping early")
                 break
     supported = [c for c in processed if c["_outcome"] == "supported"]
     print(f"tier2/3 rigour+verify: {len(supported)} supported, "
           f"{sum(c['_outcome']=='refuted' for c in processed)} refuted, "
-          f"{sum(c['_outcome']=='parked' for c in processed)} parked (~${_spend['opus_rigour']:.3f})")
+          f"{sum(c['_outcome']=='parked' for c in processed)} parked (~${_spend['rigour']:.3f})")
 
     # Tier 4 gate panel on supported
     leads = []
     for c in supported:
-        if _spend["opus_rigour"] + _spend["opus_gate"] >= args.budget_usd:
+        if _spend["rigour"] + _spend["gate"] >= args.budget_usd:
             print(f"::warning:: budget reached before gating all survivors")
             break
         g = run_gate(client, c, args.gate_panel)
@@ -403,9 +450,9 @@ def main() -> int:
             leads.append(c)
     rejected = [c for c in supported if not c.get("_is_lead")]
     print(f"tier4 gate: {len(leads)} real leads, {len(rejected)} rejected by cross-check "
-          f"(~${_spend['opus_gate']:.3f})")
+          f"(~${_spend['gate']:.3f})")
     print(f"TOTAL spend ~${sum(_spend.values()):.3f} "
-          f"(deepseek ${_spend['deepseek']:.3f} / opus ${_spend['opus_rigour']+_spend['opus_gate']:.3f})")
+          f"(deepseek ${_spend['deepseek']:.3f} / opus ${_spend['rigour']+_spend['gate']:.3f})")
 
     _write_ledger(processed, leads)
     return 0
