@@ -90,9 +90,9 @@ The concrete sub-ladder, from what is now done to the summit:
 - **W1 — torsion ⟺ principal divisor** ✓ **done** (`Ecdlp/Proved/WeilDivisorClass.lean`,
   `secp256k1_torsion_iff_principal`): `n • P = 0 ⟺ n • toClass P = 0`, i.e. `n·([P] − [O])` is
   principal — the existence precondition for the Miller function `f_P`.
-- **W2 — extract the Miller function** `f_P` with `div f_P = n·([P] − [O])` from that principality
-  (a generator of the trivial ideal class). *Next; needs turning `ClassGroup.mk … = 1` into an
-  explicit function-field element.*
+- **W2 — extract the Miller function** `f_P` ✓ **done** (`secp256k1_miller_function_exists`):
+  from W1's principality, `ClassGroup.mk_eq_one_iff` yields a generator `f_P ∈ F(secp256k1)` of the
+  principal ideal `(XYIdeal' h)ⁿ` — the Miller function with `div f_P = n·([P] − [O])`.
 - **W3 — evaluate `f_P` at a divisor** `f_P(D_Q)` and prove independence of the chosen
   representative (`f_P` unique up to scalar). *Needs function-field evaluation API.*
 - **W4 — Weil reciprocity** `f(div g) = g(div f)` — the crux identity. *Likely a genuine Mathlib
@@ -100,10 +100,10 @@ The concrete sub-ladder, from what is now done to the summit:
 - **W5 — define `eₙ(P,Q)` and prove bilinear / alternating / non-degenerate / Galois-equivariant.*
   The summit.
 
-W1 is landed. W2–W3 are bounded and reachable on the existing `ClassGroup`/`FunctionField` API;
-W4 (Weil reciprocity) is the likely hard gap. This replaces the earlier "multi-month from zero"
-estimate: the **hardest substrate (Abel–Jacobi) is already Mathlib's**, and the remaining work is
-the function-evaluation + reciprocity layer.
+W1 and W2 are landed. W3 is bounded and reachable on the existing `ClassGroup`/`FunctionField`
+API; W4 (Weil reciprocity) is the likely hard gap. This replaces the earlier "multi-month from
+zero" estimate: the **hardest substrate (Abel–Jacobi) is already Mathlib's**, and the remaining
+work is the function-evaluation + reciprocity layer.
 
 ### `E[n]` as a group object — closed via Mathlib (`Ecdlp/Proved/Torsion.lean`)
 

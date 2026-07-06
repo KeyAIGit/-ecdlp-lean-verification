@@ -52,4 +52,30 @@ theorem secp256k1_torsion_iff_principal (P : Ecdlp.Curve.secp256k1.toAffine.Poin
     n • P = 0 ↔ n • toClass P = 0 := by
   rw [← toClass_eq_zero (n • P), map_nsmul]
 
+/-- **Rung 2 — the Miller function exists.** For a nonzero `n`-torsion point `P = (x,y)` of
+secp256k1, there is a nonzero element `f_P` of the function field `F(secp256k1)` whose associated
+fractional ideal is `(⟨X−x, Y−y⟩)ⁿ` — i.e. a **generator of the principal ideal** `(XYIdeal' h)ⁿ`.
+This `f_P` is the **Miller function** of the Weil pairing: its divisor is `n·([P] − [O])`. It is
+extracted from rung 1 (`secp256k1_torsion_iff_principal`): `n`-torsion makes the class
+`(ClassGroup.mk (XYIdeal' h))ⁿ = ClassGroup.mk ((XYIdeal' h)ⁿ)` trivial, and Mathlib's
+`ClassGroup.mk_eq_one_iff` turns a trivial class into a principal ideal, whose generator is `f_P`.
+Rung W2 of the Weil-pairing sub-ladder (`notes/FOUNDATIONS.md`). -/
+theorem secp256k1_miller_function_exists
+    {x y : ZMod Secp256k1.p} (h : Ecdlp.Curve.secp256k1.toAffine.Nonsingular x y) (n : ℕ)
+    (hn : n • Point.some x y h = 0) :
+    ∃ f : Ecdlp.Curve.secp256k1.toAffine.FunctionField,
+      (↑(CoordinateRing.XYIdeal' h ^ n) :
+          Submodule Ecdlp.Curve.secp256k1.toAffine.CoordinateRing
+            Ecdlp.Curve.secp256k1.toAffine.FunctionField)
+        = Submodule.span Ecdlp.Curve.secp256k1.toAffine.CoordinateRing {f} := by
+  have hprin : (↑(CoordinateRing.XYIdeal' h ^ n) :
+      Submodule Ecdlp.Curve.secp256k1.toAffine.CoordinateRing
+        Ecdlp.Curve.secp256k1.toAffine.FunctionField).IsPrincipal := by
+    rw [← ClassGroup.mk_eq_one_iff, map_pow]
+    have hcls : n • toClass (Point.some x y h) = 0 :=
+      (secp256k1_torsion_iff_principal (Point.some x y h) n).mp hn
+    have h2 := congrArg Additive.toMul hcls
+    rwa [toMul_nsmul, toMul_zero] at h2
+  exact hprin.principal
+
 end Ecdlp.Weil

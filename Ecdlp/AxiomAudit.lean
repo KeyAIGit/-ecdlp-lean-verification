@@ -59,8 +59,9 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_Φ₂
 #print axioms Ecdlp.Curve.secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq
 
--- Weil-pairing foundations, rung 1: torsion ⟺ principal divisor class (Abel–Jacobi)
+-- Weil-pairing foundations, rungs 1–2: torsion ⟺ principal divisor; Miller function exists
 #print axioms Ecdlp.Weil.secp256k1_torsion_iff_principal
+#print axioms Ecdlp.Weil.secp256k1_miller_function_exists
 
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form
