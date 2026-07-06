@@ -32,6 +32,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from prover_target_attempt import (  # noqa: E402
     GOEDEL_32B,
+    KIMINA_PROVER,
     PYTHAGORAS_4B,
     USER_AGENT,
     Target,
@@ -189,16 +190,22 @@ def main() -> int:
         budget = spec.get("default_budget", {})
         fast_n = int(budget.get("pythagoras_4b_attempts", 4))
         heavy_n = int(budget.get("goedel_32b_attempts", 2))
+        kimina_n = int(budget.get("kimina_attempts", 2))
+        kimina_model = str(budget.get("kimina_model", KIMINA_PROVER))
         target = Target(
             name=tid,
             description=str(spec.get("why_it_matters", "")),
             stem=stem,
             hint=str(spec.get("hint", "")),
         )
+        # Escalation ladder, cheap → strong → structurally-different: Pythagoras-4B, then Goedel-32B,
+        # then the Kimina Lean-RL prover as a final different-perspective pass. All free on Featherless.
         sequence = [(PYTHAGORAS_4B, i) for i in range(1, fast_n + 1)]
         sequence += [(GOEDEL_32B, i) for i in range(1, heavy_n + 1)]
+        sequence += [(kimina_model, i) for i in range(1, kimina_n + 1)]
 
-        print(f"[loop] {tid}: tier-0 no luck; trying models ({fast_n}x4B + {heavy_n}x32B)", flush=True)
+        print(f"[loop] {tid}: tier-0 no luck; trying models "
+              f"({fast_n}x4B + {heavy_n}x32B + {kimina_n}xKimina)", flush=True)
         prev_cand: str | None = None
         prev_err: str | None = None
         solved = False
