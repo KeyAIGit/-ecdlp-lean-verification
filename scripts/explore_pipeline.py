@@ -49,7 +49,7 @@ DEEPSEEK_MODEL = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
 # the GATE (faithfulness judge) is the quality guarantee, so it defaults to the strongest reasoner.
 # Providers: "deepseek" / "featherless" (both OpenAI-compatible) or "anthropic".
 RIGOUR_PROVIDER = os.environ.get("EXPLORE_RIGOUR_PROVIDER", "featherless")
-RIGOUR_MODEL = os.environ.get("EXPLORE_RIGOUR_MODEL", "Qwen/Qwen2.5-72B-Instruct")
+RIGOUR_MODEL = os.environ.get("EXPLORE_RIGOUR_MODEL", "deepseek-ai/DeepSeek-R1")
 GATE_PROVIDER = os.environ.get("EXPLORE_GATE_PROVIDER", "anthropic")
 GATE_MODEL = os.environ.get("EXPLORE_GATE_MODEL", OPUS_MODEL)
 
@@ -135,9 +135,22 @@ def oai_call(provider: str, model: str, system: str, user: str, bucket: str,
     return None
 
 
-def sig(text: str) -> str:
-    toks = re.findall(r"[a-z0-9]+", text.lower())
-    return hashlib.sha1((" ".join(sorted(set(toks)))).encode()).hexdigest()[:12]
+def featherless_models_hint() -> None:
+    """Print the strong general models actually available on the Featherless plan, so the exact
+    model ids are visible in the run log (self-documenting; no guessing which id is valid)."""
+    key = os.environ.get("FEATHERLESS_API_KEY")
+    if not key:
+        return
+    try:
+        from openai import OpenAI
+        ids = [m.id for m in OpenAI(api_key=key, base_url=PROVIDERS["featherless"][0]).models.list().data]
+    except Exception as e:  # noqa: BLE001
+        print(f"::warning:: could not list Featherless models: {e}", file=sys.stderr)
+        return
+    pat = re.compile(r"(DeepSeek-R1|DeepSeek-V3|Qwen2\.5-72B|Qwen3|QwQ|Llama-3\.[13]-405B|Kimi|"
+                     r"Goedel|Mixtral-8x22|235B|405B|671B|Coder-32B)", re.I)
+    strong = sorted(i for i in ids if pat.search(i))
+    print(f"Featherless plan: {len(ids)} models; strong candidates ({len(strong)}): {strong[:20]}")
 
 
 def load_seen() -> set[str]:
@@ -402,6 +415,8 @@ def main() -> int:
     client = _anthropic() if "anthropic" in (RIGOUR_PROVIDER, GATE_PROVIDER) else None
     print(f"routing: breadth=deepseek/{DEEPSEEK_MODEL}  rigour={RIGOUR_PROVIDER}/{RIGOUR_MODEL}  "
           f"gate={GATE_PROVIDER}/{GATE_MODEL}")
+    if "featherless" in (RIGOUR_PROVIDER, GATE_PROVIDER):
+        featherless_models_hint()
 
     seen = load_seen()
     # Tier 1 — DeepSeek breadth
