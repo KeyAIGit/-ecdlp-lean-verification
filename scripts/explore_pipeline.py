@@ -411,6 +411,10 @@ def main() -> int:
     ap.add_argument("--breadth", type=int, default=20, help="DeepSeek breadth agents")
     ap.add_argument("--workers", type=int, default=8, help="max concurrent API calls per tier")
     ap.add_argument("--gate-panel", type=int, default=2, help="independent Opus verifiers per survivor")
+    ap.add_argument("--rigour-workers", type=int,
+                    default=int(os.environ.get("EXPLORE_RIGOUR_WORKERS", "1")),
+                    help="concurrent rigour calls (keep at 1 for heavy Featherless models — a 397B "
+                         "model costs 4 of 4 plan concurrency units, so only ONE may run at a time)")
     ap.add_argument("--no-refine", action="store_true", help="skip the DeepSeek peer-refine tier")
     ap.add_argument("--budget-usd", type=float, default=float(os.environ.get("EXPLORE_BUDGET_USD", "4")))
     args = ap.parse_args()
@@ -452,7 +456,7 @@ def main() -> int:
 
     # Tier 2 + 3 (rigour then verify), budget-bounded
     processed = []
-    with ThreadPoolExecutor(max_workers=min(args.workers, 4)) as ex:
+    with ThreadPoolExecutor(max_workers=max(1, args.rigour_workers)) as ex:
         futs = [ex.submit(rigour_and_verify, client, idea) for idea in ideas]
         for fut in as_completed(futs):
             processed.append(fut.result())
