@@ -147,10 +147,19 @@ def featherless_models_hint() -> None:
     except Exception as e:  # noqa: BLE001
         print(f"::warning:: could not list Featherless models: {e}", file=sys.stderr)
         return
-    pat = re.compile(r"(DeepSeek-R1|DeepSeek-V3|Qwen2\.5-72B|Qwen3|QwQ|Llama-3\.[13]-405B|Kimi|"
-                     r"Goedel|Mixtral-8x22|235B|405B|671B|Coder-32B)", re.I)
-    strong = sorted(i for i in ids if pat.search(i))
-    print(f"Featherless plan: {len(ids)} models; strong candidates ({len(strong)}): {strong[:20]}")
+    idset = set(ids)
+    # Curated canonical top ids — report which are actually on the plan (membership, not fuzzy match).
+    canon = ["deepseek-ai/DeepSeek-R1", "deepseek-ai/DeepSeek-V3", "deepseek-ai/DeepSeek-V3-0324",
+             "Qwen/Qwen2.5-72B-Instruct", "Qwen/Qwen2.5-Coder-32B-Instruct", "Qwen/QwQ-32B",
+             "meta-llama/Llama-3.1-405B-Instruct", "moonshotai/Kimi-K2-Instruct",
+             "AI-MO/Kimina-Autoformalizer-7B", "Goedel-LM/Goedel-Prover-V2-32B"]
+    present = [m for m in canon if m in idset]
+    print(f"Featherless plan: {len(ids)} models. Canonical top models present: {present}")
+
+
+def sig(text: str) -> str:
+    toks = re.findall(r"[a-z0-9]+", text.lower())
+    return hashlib.sha1((" ".join(sorted(set(toks)))).encode()).hexdigest()[:12]
 
 
 def load_seen() -> set[str]:
