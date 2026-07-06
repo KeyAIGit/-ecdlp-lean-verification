@@ -15,9 +15,11 @@ Close formal Lean targets without `sorry`, preserve a verified ledger, and never
    - Reads Lean errors and decides repair strategy.
    - May use GPT-5.5 or DeepSeek API for planning and code review.
 
-2. **Prover models**
+2. **Prover models** (all free on the Featherless plan; the kernel is still the sole judge)
    - Pythagoras-Prover-4B: fast, cheap first-pass proof generation.
-   - Goedel-Prover-V2-32B: heavier repair/escalation model.
+   - Goedel-Prover-V2-32B: heavier repair/escalation model (largest Lean prover on the plan).
+   - Kimina-Prover (AI-MO/Kimina-Prover-Distill-8B): a structurally different Lean-RL prover, run as a
+     final escalation tier — it catches goals Goedel misses, and vice-versa (prover diversity).
    - DeepSeek: optional planner/reasoner, useful for lemma decomposition, prompt rewriting, and error analysis.
 
 3. **Verifier**
@@ -43,7 +45,9 @@ Close formal Lean targets without `sorry`, preserve a verified ledger, and never
 2. Pythagoras-Prover-4B: increase to 32 attempts if target is important.
 3. Goedel-Prover-V2-32B: 8 repair attempts with Lean errors.
 4. Goedel-Prover-V2-32B: increase to 32 attempts for high-value targets.
-5. DeepSeek/GPT-5.5 planning: use when theorem statement may be poorly decomposed or model attempts repeat the same failure.
+5. Kimina-Prover: final escalation tier when Goedel stalls — a different prover often clears a goal
+   the previous one couldn't. All three provers are free on the Featherless plan.
+6. DeepSeek/GPT-5.5 planning: use when theorem statement may be poorly decomposed or model attempts repeat the same failure.
 
 ## Promotion process
 

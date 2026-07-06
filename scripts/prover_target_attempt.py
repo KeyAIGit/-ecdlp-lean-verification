@@ -30,6 +30,10 @@ PROMPT_DIR = Path("prompts")
 
 PYTHAGORAS_4B = "Pythagoras-LM/Pythagoras-Prover-4B"
 GOEDEL_32B = "Goedel-LM/Goedel-Prover-V2-32B"
+# A structurally different Lean-RL prover (AIMO). Used as a final escalation tier: it catches goals
+# the Goedel model misses, and vice-versa. Free on the Featherless plan. Override via targets/*.json
+# budget "kimina_model" if a larger Kimina becomes available on the plan.
+KIMINA_PROVER = "AI-MO/Kimina-Prover-Distill-8B"
 
 
 @dataclass(frozen=True)
@@ -242,6 +246,8 @@ def main() -> int:
     parser.add_argument("--heavy-attempts", type=int, default=2)
     parser.add_argument("--fast-model", default=PYTHAGORAS_4B)
     parser.add_argument("--heavy-model", default=GOEDEL_32B)
+    parser.add_argument("--kimina-model", default=KIMINA_PROVER)
+    parser.add_argument("--kimina-attempts", type=int, default=2)
     args = parser.parse_args()
 
     api_key = os.environ.get("FEATHERLESS_API_KEY", "").strip()
@@ -266,6 +272,7 @@ def main() -> int:
     sequence: list[tuple[str, int, str]] = []
     sequence.extend((args.fast_model, i, "fast") for i in range(1, args.fast_attempts + 1))
     sequence.extend((args.heavy_model, i, "heavy") for i in range(1, args.heavy_attempts + 1))
+    sequence.extend((args.kimina_model, i, "kimina") for i in range(1, args.kimina_attempts + 1))
 
     infrastructure_error = False
     solved = False
