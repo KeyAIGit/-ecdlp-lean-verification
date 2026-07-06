@@ -78,10 +78,13 @@ jobs:
           python3 scripts/hypothesis_explorer.py \
             --agents "${{ github.event.inputs.agents || '12' }}" \
             --workers "${{ github.event.inputs.workers || '8' }}" | tee explore-output.txt
-          if ! git diff --quiet -- notes/ 2>/dev/null; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          else
+          # stage notes/ so NEW (untracked) ledger/leads files are detected too — plain
+          # `git diff` ignores untracked files, which silently skipped the PR step before.
+          git add -A notes/
+          if git diff --cached --quiet -- notes/; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Open ONE draft PR with the new ledger / leads
