@@ -64,10 +64,9 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Weil.secp256k1_miller_function_exists
 #print axioms Ecdlp.Weil.secp256k1_miller_function_unique
 
--- Weil-pairing infrastructure (layer B): point-evaluation ring homomorphism F[E] →+* F
-#print axioms Ecdlp.Weil.evalAt_surjective
-#print axioms Ecdlp.Weil.evalAt_ker
-#print axioms Ecdlp.Weil.xyIdeal_isMaximal
+-- Weil-pairing infrastructure (layer B) point-evaluation `F[E] →+* F` — audit lines removed
+-- while `Ecdlp/Proved/PointEvaluation.lean` is PARKED (un-imported, pending kernel confirmation).
+-- Restore these three `#print axioms` lines when that rung is re-imported into `Ecdlp.lean`.
 
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form
