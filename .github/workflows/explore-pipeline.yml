@@ -23,9 +23,21 @@ on:
         required: false
         default: "2"
       budget_usd:
-        description: "Hard USD cap for the Opus tiers"
+        description: "Hard USD cap for the Anthropic tiers"
         required: false
         default: "4"
+      rigour_provider:
+        description: "Rigour tier provider: featherless | deepseek | anthropic"
+        required: false
+        default: "featherless"
+      rigour_model:
+        description: "Rigour model (e.g. Qwen/Qwen2.5-72B-Instruct on Featherless)"
+        required: false
+        default: "Qwen/Qwen2.5-72B-Instruct"
+      gate_provider:
+        description: "Gate (faithfulness judge) provider: anthropic | featherless | deepseek"
+        required: false
+        default: "anthropic"
   schedule:
     - cron: '0 5 * * 4'   # weekly, Thursday 05:00 UTC
 
@@ -45,14 +57,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Guard — are both keys configured?
+      - name: Guard — are the keys configured?
         id: guard
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
         run: |
-          if [ -z "${DEEPSEEK_API_KEY:-}" ] || [ -z "${ANTHROPIC_API_KEY:-}" ]; then
-            echo "A required key is absent — pipeline no-ops (green, zero spend)."
+          # DeepSeek is always needed (breadth). The script itself no-ops per-tier if a routed
+          # provider's key is missing, so require the common set and let it self-check the rest.
+          if [ -z "${DEEPSEEK_API_KEY:-}" ]; then
+            echo "DEEPSEEK_API_KEY absent — pipeline no-ops (green, zero spend)."
             echo "enabled=false" >> "$GITHUB_OUTPUT"
           else
             echo "enabled=true" >> "$GITHUB_OUTPUT"
@@ -74,6 +89,10 @@ jobs:
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+          EXPLORE_RIGOUR_PROVIDER: ${{ github.event.inputs.rigour_provider || 'featherless' }}
+          EXPLORE_RIGOUR_MODEL: ${{ github.event.inputs.rigour_model || 'Qwen/Qwen2.5-72B-Instruct' }}
+          EXPLORE_GATE_PROVIDER: ${{ github.event.inputs.gate_provider || 'anthropic' }}
         run: |
           set -euo pipefail
           python3 scripts/explore_pipeline.py \
