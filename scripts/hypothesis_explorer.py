@@ -98,7 +98,12 @@ Return ONLY the JSON object."""
 
 
 def call_deepseek(prompt: str, temperature: float) -> str | None:
-    """DeepSeek via its OpenAI-compatible endpoint. Returns raw content or None on failure."""
+    """DeepSeek via its OpenAI-compatible endpoint. Returns raw content or None on failure.
+
+    Default model is `deepseek-chat` (V3): it follows strict-JSON formatting far more reliably than
+    `deepseek-reasoner` (R1), is cheaper and faster, and supports JSON mode — the right tool for
+    STRUCTURED generation. JSON mode (`response_format`) is requested for chat models so the returned
+    object is always parseable with the embedded sympy script correctly escaped."""
     key = os.environ.get("DEEPSEEK_API_KEY")
     if not key:
         return None
@@ -107,14 +112,14 @@ def call_deepseek(prompt: str, temperature: float) -> str | None:
     except Exception:
         print("::notice:: openai SDK not installed; run `pip install openai`.", file=sys.stderr)
         return None
+    model = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
     client = OpenAI(api_key=key, base_url="https://api.deepseek.com")
+    kwargs = dict(model=model, messages=[{"role": "user", "content": prompt}],
+                  temperature=temperature, max_tokens=4000)
+    if "reasoner" not in model:  # reasoner (R1) does not support response_format / JSON mode
+        kwargs["response_format"] = {"type": "json_object"}
     try:
-        resp = client.chat.completions.create(
-            model=os.environ.get("DEEPSEEK_MODEL", "deepseek-reasoner"),
-            messages=[{"role": "user", "content": prompt}],
-            temperature=temperature,
-            max_tokens=3000,
-        )
+        resp = client.chat.completions.create(**kwargs)
         return resp.choices[0].message.content
     except Exception as e:  # noqa: BLE001
         print(f"::warning:: DeepSeek call failed: {e}", file=sys.stderr)
@@ -122,8 +127,12 @@ def call_deepseek(prompt: str, temperature: float) -> str | None:
 
 
 def parse_json(raw: str) -> dict | None:
+    if not raw:
+        return None
+    # strip ```json / ``` fences if present, then take the outermost {...}
+    s = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw.strip(), flags=re.MULTILINE)
     try:
-        return json.loads(raw[raw.index("{"):raw.rindex("}") + 1])
+        return json.loads(s[s.index("{"):s.rindex("}") + 1])
     except Exception:
         return None
 
@@ -152,18 +161,23 @@ def run_sympy(script: str) -> tuple[str, str]:
     return "refuted", out
 
 
-def explore_one(axis: str, n_seen: int, temperature: float) -> dict | None:
-    """One DeepSeek agent: propose → self-write sympy check → run it offline. Returns record or None."""
+def explore_one(axis: str, n_seen: int, temperature: float) -> dict:
+    """One DeepSeek agent: propose → self-write sympy check → run it offline.
+    Always returns a dict; on failure it carries `_drop` (a reason) for diagnostics."""
     raw = call_deepseek(build_prompt(axis, n_seen), temperature)
     if not raw:
-        return None
+        return {"_drop": "no API response"}
     obj = parse_json(raw)
     if not obj:
-        return None
+        return {"_drop": "JSON parse failed", "_raw": raw[:200]}
     h = (obj.get("hypothesis") or "").strip()
-    if not h or not obj.get("checkable_subclaim"):
-        return None
-    outcome, tail = run_sympy(obj.get("sympy_script", ""))
+    if not h:
+        return {"_drop": "no hypothesis field"}
+    if not obj.get("checkable_subclaim"):
+        return {"_drop": "no checkable_subclaim"}
+    if not (obj.get("sympy_script") or "").strip():
+        return {"_drop": "no sympy_script"}
+    outcome, tail = run_sympy(obj["sympy_script"])
     return {
         "hypothesis": h,
         "why_novel": obj.get("why_novel", ""),
@@ -196,16 +210,26 @@ def main() -> int:
           f"{1 if args.axis else len(AXES)} axes; {n_seen} hypotheses already explored")
 
     fresh: list[dict] = []
+    drops: dict[str, int] = {}
+    n_dupe = 0
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
         futs = [ex.submit(explore_one, ax, n_seen, args.temperature) for ax in assignments]
         for fut in as_completed(futs):
             o = fut.result()
-            if not o:
+            if "_drop" in o:
+                drops[o["_drop"]] = drops.get(o["_drop"], 0) + 1
+                if o.get("_raw"):
+                    print(f"  drop ({o['_drop']}): raw head = {o['_raw']!r}")
                 continue
             if o["_sig"] in seen:  # dedup across runs AND within this batch
+                n_dupe += 1
                 continue
             seen.add(o["_sig"])
             fresh.append(o)
+
+    # diagnostics — always visible in the run log / artifact
+    print(f"diagnostics: {len(fresh)} usable, {n_dupe} duplicates, "
+          f"drops={drops or '{}'}")
 
     if not fresh:
         print("no novel, checkable hypotheses this run.")
