@@ -86,10 +86,20 @@ HARD CONSTRAINTS:
 3. You MUST reduce it to a concrete, SMALL sub-claim that is a first test of the idea — a polynomial
    identity, a resultant/coprimality fact, a torsion/degree count, an explicit map — verifiable by
    sympy IN ISOLATION. If you cannot, the hypothesis is vacuous; produce a different one.
-4. You MUST write a SELF-CONTAINED python+sympy script that RIGOROUSLY checks that sub-claim by exact
-   symbolic computation (expand/cancel/Poly.rem/resultant — NO floats, NO `simplify`-as-proof) and
-   prints exactly `{CERT_MARKER}` as the LAST line IFF every assertion passes (else it raises).
+4. You MUST write a SELF-CONTAINED python+sympy script that RIGOROUSLY checks THAT EXACT sub-claim by
+   exact symbolic computation (expand/cancel/Poly.rem/resultant — NO floats, NO `simplify`-as-proof)
+   and prints exactly `{CERT_MARKER}` as the LAST line IFF every assertion passes (else it raises).
    Only sympy + stdlib, no files, no network, runs in seconds.
+
+ANTI-GAMING (critical — violating this makes the result worthless):
+- The script must verify the SPECIFIC quantity in YOUR sub-claim (the exact sparsity fraction /
+  factor degree / degree count / map you stated). Do NOT substitute an easier, different, or
+  already-known check. Do NOT fall back to printing `{CERT_MARKER}` for a trivial or unrelated fact.
+- If, while writing it, you find your sub-claim is ill-posed or you cannot actually test it, then it
+  was a bad sub-claim: STOP, pick a DIFFERENT hypothesis whose sub-claim you genuinely can verify,
+  and return that instead. Never emit `{CERT_MARKER}` for anything other than the stated sub-claim.
+- Use `sympy.GF(p)` / `Poly(..., modulus=p)` for F_p; do not pass unsupported kwargs. The script must
+  actually RUN — a crashing script is a failure, not a proof.
 
 Reply as STRICT JSON with keys:
   "hypothesis": "...", "why_novel": "...", "checkable_subclaim": "...",
@@ -158,7 +168,18 @@ def run_sympy(script: str) -> tuple[str, str]:
             return "parked", f"(failed to run: {e})"
     if CERT_MARKER in out and r.returncode == 0:
         return "supported", out
-    return "refuted", out
+    # Distinguish a genuine mathematical refutation (the script RAN and an assertion failed)
+    # from a broken script (any other exception / import / syntax error). Only a clean
+    # AssertionError counts as a no-go result; broken tooling is `parked`, not `refuted`,
+    # so a crash never masquerades as a real "cannot" fact in the no-go map.
+    if "AssertionError" in out and "Traceback" in out:
+        # ensure the traceback's FINAL exception is AssertionError, not something else earlier
+        last_exc = out.rstrip().splitlines()[-1] if out.strip() else ""
+        if last_exc.startswith("AssertionError") or last_exc.strip() == "AssertionError":
+            return "refuted", out
+    if "Traceback" in out or "Error" in out:
+        return "parked", "(script error — broken certificate, not a math refutation)\n" + out[-400:]
+    return "parked", out
 
 
 def explore_one(axis: str, n_seen: int, temperature: float) -> dict:
