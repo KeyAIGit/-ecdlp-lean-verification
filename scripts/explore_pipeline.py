@@ -147,14 +147,16 @@ def featherless_models_hint() -> None:
     except Exception as e:  # noqa: BLE001
         print(f"::warning:: could not list Featherless models: {e}", file=sys.stderr)
         return
-    idset = set(ids)
-    # Curated canonical top ids — report which are actually on the plan (membership, not fuzzy match).
-    canon = ["deepseek-ai/DeepSeek-R1", "deepseek-ai/DeepSeek-V3", "deepseek-ai/DeepSeek-V3-0324",
-             "Qwen/Qwen2.5-72B-Instruct", "Qwen/Qwen2.5-Coder-32B-Instruct", "Qwen/QwQ-32B",
-             "meta-llama/Llama-3.1-405B-Instruct", "moonshotai/Kimi-K2-Instruct",
-             "AI-MO/Kimina-Autoformalizer-7B", "Goedel-LM/Goedel-Prover-V2-32B"]
-    present = [m for m in canon if m in idset]
-    print(f"Featherless plan: {len(ids)} models. Canonical top models present: {present}")
+    # Search the plan for the 2026 frontier families and print the EXACT ids present, so we pick the
+    # strongest available id rather than guessing. Families ranked by current coding/reasoning benches.
+    fam = re.compile(r"(DeepSeek[-_.]?V4|DeepSeek[-_.]?V3\.?2|GLM-?5|Kimi[-_.]?K2|Qwen3\.5|"
+                     r"Qwen3-235B|DeepSeek[-_.]?R1|Kimina|Goedel-?Prover-?V2)", re.I)
+    hits = sorted({i for i in ids if fam.search(i)})
+    # prefer official-org repos (deepseek-ai/, zai-org/, moonshotai/, Qwen/, AI-MO/, Goedel-LM/)
+    official = [i for i in hits if i.split("/")[0] in
+                {"deepseek-ai", "zai-org", "THUDM", "moonshotai", "Qwen", "AI-MO", "Goedel-LM"}]
+    print(f"Featherless plan: {len(ids)} models. Frontier ids present ({len(hits)}); "
+          f"official: {official[:25]}")
 
 
 def sig(text: str) -> str:
