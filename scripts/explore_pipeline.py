@@ -49,7 +49,7 @@ DEEPSEEK_MODEL = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
 # the GATE (faithfulness judge) is the quality guarantee, so it defaults to the strongest reasoner.
 # Providers: "deepseek" / "featherless" (both OpenAI-compatible) or "anthropic".
 RIGOUR_PROVIDER = os.environ.get("EXPLORE_RIGOUR_PROVIDER", "featherless")
-RIGOUR_MODEL = os.environ.get("EXPLORE_RIGOUR_MODEL", "deepseek-ai/DeepSeek-R1")
+RIGOUR_MODEL = os.environ.get("EXPLORE_RIGOUR_MODEL", "Qwen/Qwen3.5-397B-A17B")
 GATE_PROVIDER = os.environ.get("EXPLORE_GATE_PROVIDER", "anthropic")
 GATE_MODEL = os.environ.get("EXPLORE_GATE_MODEL", OPUS_MODEL)
 
