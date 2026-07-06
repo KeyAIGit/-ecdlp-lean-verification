@@ -1,0 +1,129 @@
+name: Explore pipeline (DeepSeek breadth → Opus rigour → sympy → Opus gate)
+
+# The full honest division of labour:
+#   Tier 1 BREADTH  DeepSeek, N axis-scoped agents — cheap, diverse research angles, NO scripts.
+#   Tier 2 RIGOUR   Opus — precise sub-claim + a faithful sympy script that tests exactly it.
+#   Tier 3 VERIFY   sympy offline — supported / refuted / parked (a crash is parked, not a no-go).
+#   Tier 4 GATE     Opus cross-check panel — K independent skeptics; unanimous ⇒ a real lead.
+# Only gated leads reach the Fable depth tier. Per-tier cost is logged so we can judge whether the
+# cheap breadth tier earns its place.
+#
+# SAFETY: draft PR only; a clean no-op (green, zero spend) when either key is absent; hard USD budget.
+# REQUIRED secrets: DEEPSEEK_API_KEY, ANTHROPIC_API_KEY. Set spend caps on both as a backstop.
+
+on:
+  workflow_dispatch:
+    inputs:
+      breadth:
+        description: "DeepSeek breadth agents (cheap; 20 is fine)"
+        required: false
+        default: "20"
+      gate_panel:
+        description: "Independent Opus cross-check verifiers per survivor"
+        required: false
+        default: "2"
+      budget_usd:
+        description: "Hard USD cap for the Opus tiers"
+        required: false
+        default: "4"
+  schedule:
+    - cron: '0 5 * * 4'   # weekly, Thursday 05:00 UTC
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: explore-pipeline
+  cancel-in-progress: false
+
+jobs:
+  explore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Guard — are both keys configured?
+        id: guard
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "${DEEPSEEK_API_KEY:-}" ] || [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+            echo "A required key is absent — pipeline no-ops (green, zero spend)."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Python
+        if: steps.guard.outputs.enabled == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        if: steps.guard.outputs.enabled == 'true'
+        run: pip install --quiet openai sympy anthropic
+
+      - name: Run the explore pipeline
+        id: run
+        if: steps.guard.outputs.enabled == 'true'
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set -euo pipefail
+          python3 scripts/explore_pipeline.py \
+            --breadth "${{ github.event.inputs.breadth || '20' }}" \
+            --gate-panel "${{ github.event.inputs.gate_panel || '2' }}" \
+            --budget-usd "${{ github.event.inputs.budget_usd || '4' }}" | tee explore-output.txt
+          git add -A notes/
+          if git diff --cached --quiet -- notes/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open ONE draft PR with the new ledger / leads
+        if: steps.guard.outputs.enabled == 'true' && steps.run.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          ts="$(date +%Y%m%d-%H%M%S)"
+          branch="explore/pipeline-${ts}"
+          git config user.name "keyai-engine-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add notes/HYPOTHESIS_LEDGER.md notes/HYPOTHESIS_LEADS.md
+          git commit -m "explore-pipeline: cross-checked leads + ledger (${ts})"
+          git push -u origin "$branch"
+          {
+            echo "Explore pipeline run (${ts}): DeepSeek breadth → Opus rigour → sympy → Opus gate panel."
+            echo
+            echo "Ledger rows carry the honest outcome (lead / rejected-by-gate / refuted / parked)."
+            echo "\`notes/HYPOTHESIS_LEADS.md\` holds only leads that passed sympy AND a unanimous Opus"
+            echo "cross-check (faithful + non-trivial + relevant) — pre-verified targets for Fable."
+            echo "See the run log / artifact for the per-tier cost breakdown."
+            echo
+            echo "Proposals only. The Lean kernel remains the sole judge before anything enters the corpus."
+            echo
+            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+          } > pr-body.txt
+          gh pr create --draft --base main --head "$branch" \
+            --title "explore-pipeline: cross-checked leads + ledger (${ts})" \
+            --body-file pr-body.txt
+
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: explore-pipeline-run
+          path: |
+            explore-output.txt
+            notes/HYPOTHESIS_LEDGER.md
+            notes/HYPOTHESIS_LEADS.md
+          if-no-files-found: ignore

@@ -52,12 +52,25 @@ is monotonous and low-value. Below is how we force diversity and discipline.
    - **supported** → promoted to a **lead** for Fable + the Lean corpus to deepen.
    The ledger grows monotonically; no run repeats a prior signature.
 
-## Tiers (who does what)
-- **Breadth (DeepSeek):** wide, diverse hypothesis generation + checkable sub-claim extraction.
-- **Verifier (Lean kernel / sympy):** the only judge — refutes or confirms each sub-claim.
-- **Depth (Fable):** takes a *supported lead* or a hard narrow rung and does the deep reasoning.
-- **Director (charter):** schedules runs, rotates axes, curates the ledger, escalates a genuine
-  breakthrough per charter §4 (freeze + verify + human before any external mention).
+## Tiers (who does what) — v2 architecture (`scripts/explore_pipeline.py`)
+A first live run showed the flaw in "DeepSeek does everything": DeepSeek is weak at rigour, so its
+self-written sympy scripts either crashed or *gamed the gate* (substituted a trivial already-known
+check and printed `CERT_OK`). The honest division of labour puts each model on its strength:
+- **Tier 1 — Breadth (DeepSeek), N axis-scoped agents:** cheap, diverse research *angles* only — the
+  idea and the *kind* of checkable consequence. **No scripts** (rigour is off its critical path).
+- **Tier 2 — Rigour (Opus):** turns each unique angle into a precise small sub-claim **and** a
+  faithful sympy script that tests exactly it. This is the rigour DeepSeek could not do reliably.
+- **Tier 3 — Verify (sympy, offline):** `supported` / `refuted` (clean `AssertionError` only) /
+  `parked` (a crash is a broken tool, never a no-go).
+- **Tier 4 — Gate / cross-check (Opus panel):** `K` independent adversarial verifiers per survivor
+  judge *faithful* (script tests the claim, not a substitute), *non-trivial* (not already-known),
+  *relevant*. **Unanimous** ⇒ a real lead; else `rejected-by-gate`. Prompt rules alone cannot catch
+  semantic gaming — this panel is what does.
+- **Depth (Fable):** spent ONLY on gated leads — pre-verified, narrow, faithful targets.
+- **Verifier of truth (Lean kernel):** the sole judge before anything enters the built corpus.
+
+Per-tier USD is logged each run, so whether the cheap breadth tier earns its place is decided on
+data, not intuition. Old single-model script: `scripts/hypothesis_explorer.py` (kept; superseded).
 
 ## Honest expected output
 Overwhelmingly: a **precise, machine-checked no-go map** — which *is* the deliverable of the
