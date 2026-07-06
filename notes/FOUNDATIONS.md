@@ -98,7 +98,13 @@ The concrete sub-ladder, from what is now done to the summit:
   (`secp256k1_miller_function_unique`: two Miller functions differ by a unit of `F[E]`, via
   `Submodule.span_singleton_eq_span_singleton` — **proof designed by the Fable model,
   kernel-verified**, the first piloted "strong-model + Lean-kernel" rung). The **evaluation half**
-  (`f_P(D_Q)`) still needs a rational-function evaluation API, absent from Mathlib v4.31.
+  (`f_P(D_Q)`) is being built as new infrastructure (Mathlib v4.31 has no rational-function
+  evaluation API and does not know `F[E]` is Dedekind): the **regular-function evaluation
+  homomorphism** `evalAt : F[E] →+* F` (value of a regular function at a rational point, via
+  `quotientXYIdealEquiv`) is ✓ **done** (`Ecdlp/Proved/PointEvaluation.lean`: `evalAt_surjective`,
+  `evalAt_ker` = the maximal ideal at `P`). **Next:** extend `evalAt` to rational functions
+  *regular at `P`* via localization at the maximal ideal, so `f_P` itself can be evaluated where it
+  has no pole.
 - **W4 — Weil reciprocity** `f(div g) = g(div f)` — the crux identity. *Likely a genuine Mathlib
   gap.*
 - **W5 — define `eₙ(P,Q)` and prove bilinear / alternating / non-degenerate / Galois-equivariant.*
