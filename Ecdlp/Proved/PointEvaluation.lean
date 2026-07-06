@@ -57,4 +57,35 @@ theorem xyIdeal_isMaximal {x y : F} (h : W.Equation x y) :
   Ideal.Quotient.maximal_of_isField _
     ((quotientXYIdealEquiv (W' := W) (x := x) (y := C y) h).toMulEquiv.isField (Field.toIsField F))
 
+/-- **The residue field at a rational point `(x,y)` is `F`.** Composing Mathlib's bijection
+`F[E]/⟨X−x,Y−y⟩ ≃ ResidueField ⟨X−x,Y−y⟩` (valid as the ideal is maximal) with `F[E]/⟨X−x,Y−y⟩ ≃ F`
+(`quotientXYIdealEquiv`) identifies the residue field at `P` with the base field. This is the
+**value field** of point-evaluation of rational functions. -/
+noncomputable def residueFieldEquiv {x y : F} (h : W.Equation x y) :
+    (XYIdeal W x (C y)).ResidueField ≃+* F := by
+  haveI := xyIdeal_isMaximal h
+  exact (RingEquiv.ofBijective _
+      (Ideal.bijective_algebraMap_quotient_residueField (XYIdeal W x (C y)))).symm.trans
+    (quotientXYIdealEquiv (W' := W) h).toRingEquiv
+
+/-- **Evaluation of a rational function regular at `P`.** The local ring
+`Localization.AtPrime ⟨X−x,Y−y⟩` is the ring of rational functions **regular at `P`**; this ring
+hom sends such a function to its value at `P` in `F` (the residue map, followed by the residue
+field `≃ F`). Extends `evalAt` from regular functions to rational functions regular at `P` — the
+form the Weil pairing's Miller function `f_P` (which has zeros and poles) needs to be evaluated in.
+-/
+noncomputable def evalRatAt {x y : F} (h : W.Equation x y)
+    [(XYIdeal W x (C y)).IsPrime] :
+    Localization.AtPrime (XYIdeal W x (C y)) →+* F :=
+  (residueFieldEquiv h).toRingHom.comp
+    (IsLocalRing.residue (Localization.AtPrime (XYIdeal W x (C y))))
+
+/-- Evaluation of a rational function regular at `P` is **surjective** (every value in `F` is
+attained: constants are regular everywhere). -/
+theorem evalRatAt_surjective {x y : F} (h : W.Equation x y)
+    [(XYIdeal W x (C y)).IsPrime] :
+    Function.Surjective (evalRatAt h) :=
+  (residueFieldEquiv h).surjective.comp
+    (IsLocalRing.residue_surjective (R := Localization.AtPrime (XYIdeal W x (C y))))
+
 end Ecdlp.Weil
