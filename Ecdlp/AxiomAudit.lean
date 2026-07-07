@@ -93,6 +93,11 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Weil.secp256k1_psi5_root_iff_class_torsion
 #print axioms Ecdlp.Weil.secp256k1_psi7_root_iff_class_torsion
 
+-- NIST P-256 grounding (curve-agnostic; native_decide facts surface `Lean.ofReduceBool`)
+#print axioms Ecdlp.P256.P256_Δ_ne_zero
+#print axioms Ecdlp.P256.P256_c₄_ne_zero
+#print axioms Ecdlp.P256.P256_generator_equation
+
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form
 #print axioms Secp256k1.beta_field_eigenvalue

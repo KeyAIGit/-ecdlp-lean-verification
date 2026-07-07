@@ -78,6 +78,7 @@ import Ecdlp.Proved.SemaevFour
 import Ecdlp.Proved.PointDecomposition
 import Ecdlp.Proved.SemaevDegree
 import Ecdlp.Proved.GlvNoGo
+import Ecdlp.Proved.P256Curve
 import Ecdlp.Proved.MultiplicationFormula
 import Ecdlp.Proved.WeilDivisorClass
 import Ecdlp.Proved.PointEvaluation
