@@ -136,6 +136,15 @@ exact `Θ` statements.
   settle the open hardness conjecture and is **not** claimed. The kernel-checked results map
   *where the search lives and how it branches*; the cost lower bound itself stays in the open
   frontier, recorded here, not dressed as proved.
+
+  **Open next node — `Sₘ` degree tower `2^{m−2}` (recorded, not yet built).** The base case is
+  proved (`secp256k1_S₃poly_natDegree`: `deg S₃ = 2` in each variable) and `S₄`'s full symmetry is
+  proved (`S₄_symm₁₂`/`S₄_symm₃₄`/`S₄_block_swap`). The next quantitative step, `deg S₄ = 4` in each
+  variable, is a legitimate barrier node — it measures the degree blow-up that makes higher-order
+  decompositions intractable — but is **not built**: `S₄` is currently the *scalar* resultant
+  `Res_X(S₃(x₁,x₂,X), S₃(x₃,x₄,X))`, and stating its degree in `x₁` needs `S₄` reconstructed as a
+  *polynomial in `x₁`* (coefficients over `F[x₁]`) plus a resultant-degree-in-a-parameter lemma —
+  a real construction, not a quick corollary. Recorded here as the honest next frontier.
 - **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
   *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib. **This is
   the one place the Weil pairing touches secp256k1, and its security-relevant consequence is
