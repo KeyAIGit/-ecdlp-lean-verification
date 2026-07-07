@@ -27,6 +27,8 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_glv_preserves_equation
 #print axioms Ecdlp.Curve.secp256k1_glv_cube_relation
 #print axioms Ecdlp.Curve.secp256k1_glv_preserves_torsion
+#print axioms Ecdlp.Curve.secp256k1_glv_preserves_dlog
+#print axioms Ecdlp.Curve.secp256k1_glv_single_scalar
 
 -- secp256k1 as a Mathlib elliptic curve
 #print axioms Ecdlp.Curve.secp256k1_j_eq_zero
