@@ -48,6 +48,16 @@ theorem P256_Δ_ne_zero : P256.Δ ≠ 0 := by native_decide
 (`c₄ = 0`, `j = 0`), P-256 has `j ≠ 0` and hence no CM-by-`ℤ[ζ₃]` / GLV endomorphism. -/
 theorem P256_c₄_ne_zero : P256.c₄ ≠ 0 := by native_decide
 
+/-- **The P-256 base point lies on the curve.** The standard generator `G = (Gx, Gy)`, cast into
+`𝔽_p`, satisfies P-256's Weierstrass equation — a genuine rational point of the Mathlib
+`EllipticCurve`. This one `native_decide` also validates the constants `p`, `b`, `Gx`, `Gy`.
+(A pure `ZMod p` computation — needs no primality, hence stated before the `[Fact p.Prime]`.) -/
+theorem P256_generator_equation :
+    P256.toAffine.Equation (Gx : ZMod p) (Gy : ZMod p) := by
+  rw [WeierstrassCurve.Affine.equation_iff]
+  simp only [P256]
+  native_decide
+
 variable [Fact (Nat.Prime p)]
 
 /-- NIST P-256 is a genuine elliptic curve: its discriminant is a unit in `𝔽_p`. This makes
@@ -56,14 +66,5 @@ instance : P256.IsElliptic := by
   refine ⟨?_⟩
   rw [isUnit_iff_ne_zero]
   exact P256_Δ_ne_zero
-
-/-- **The P-256 base point lies on the curve.** The standard generator `G = (Gx, Gy)`, cast into
-`𝔽_p`, satisfies P-256's Weierstrass equation — a genuine rational point of the Mathlib
-`EllipticCurve`. This one `native_decide` also validates the constants `p`, `b`, `Gx`, `Gy`. -/
-theorem P256_generator_equation :
-    P256.toAffine.Equation (Gx : ZMod p) (Gy : ZMod p) := by
-  rw [WeierstrassCurve.Affine.equation_iff]
-  simp only [P256]
-  native_decide
 
 end Ecdlp.P256
