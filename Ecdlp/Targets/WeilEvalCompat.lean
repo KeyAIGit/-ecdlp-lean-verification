@@ -25,7 +25,12 @@ theorem evalRatAt_algebraMap {x y : F} (h : W.Equation x y)
     [(XYIdeal W x (C y)).IsPrime] (r : W.CoordinateRing) :
     evalRatAt h (algebraMap W.CoordinateRing
         (Localization.AtPrime (XYIdeal W x (C y))) r) = evalAt h r := by
-  unfold evalRatAt evalAt residueFieldEquiv
-  simp only [RingHom.comp_apply, RingEquiv.coe_toRingHom, RingEquiv.trans_apply]
+  have key :
+      IsLocalRing.residue (Localization.AtPrime (XYIdeal W x (C y)))
+          (algebraMap W.CoordinateRing (Localization.AtPrime (XYIdeal W x (C y))) r)
+        = algebraMap (W.CoordinateRing ⧸ XYIdeal W x (C y)) (XYIdeal W x (C y)).ResidueField
+            (Ideal.Quotient.mk (XYIdeal W x (C y)) r) := by
+    exact?
+  sorry
 
 end Ecdlp.Weil
