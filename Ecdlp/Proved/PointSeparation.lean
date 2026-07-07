@@ -45,4 +45,37 @@ theorem xyIdeal_ne_of_x_ne {x₁ y₁ x₂ y₂ : F}
     (isUnit_iff_ne_zero.mpr (sub_ne_zero.mpr (Ne.symm hx))).map _
   exact (xyIdeal_isMaximal h₂).ne_top (Ideal.eq_top_of_isUnit_mem _ hmem hunit)
 
+/-- **Distinct y-coordinates ⇒ distinct closed points** — the `YClass` companion of
+`xyIdeal_ne_of_x_ne` (same argument with `Y − ·`). -/
+theorem xyIdeal_ne_of_y_ne {x₁ y₁ x₂ y₂ : F}
+    (h₂ : W.Equation x₂ y₂) (hy : y₁ ≠ y₂) :
+    XYIdeal W x₁ (C y₁) ≠ XYIdeal W x₂ (C y₂) := by
+  intro heq
+  have halg : algebraMap F W.CoordinateRing (y₂ - y₁) = mk W (C (C (y₂ - y₁))) := rfl
+  have hdiff : YClass W (C y₁) - YClass W (C y₂) = algebraMap F W.CoordinateRing (y₂ - y₁) := by
+    rw [halg]
+    simp only [YClass, ← map_sub]
+    congr 1
+    simp only [map_sub]
+    ring
+  have hmem : algebraMap F W.CoordinateRing (y₂ - y₁) ∈ XYIdeal W x₂ (C y₂) := by
+    rw [← hdiff]
+    refine Ideal.sub_mem _ ?_ (Ideal.subset_span (Set.mem_insert_of_mem _ rfl))
+    rw [← heq]
+    exact Ideal.subset_span (Set.mem_insert_of_mem _ rfl)
+  have hunit : IsUnit (algebraMap F W.CoordinateRing (y₂ - y₁)) :=
+    (isUnit_iff_ne_zero.mpr (sub_ne_zero.mpr (Ne.symm hy))).map _
+  exact (xyIdeal_isMaximal h₂).ne_top (Ideal.eq_top_of_isUnit_mem _ hmem hunit)
+
+/-- **Distinct points ⇒ distinct closed points.** For rational points `(x₁,y₁) ≠ (x₂,y₂)` on `W`,
+the maximal ideals `⟨X−x, Y−y⟩` of `F[E]` differ — full divisor-support separation, combining the
+`x`- and `y`-coordinate cases. -/
+theorem xyIdeal_ne_of_ne {x₁ y₁ x₂ y₂ : F}
+    (h₂ : W.Equation x₂ y₂) (hne : (x₁, y₁) ≠ (x₂, y₂)) :
+    XYIdeal W x₁ (C y₁) ≠ XYIdeal W x₂ (C y₂) := by
+  by_cases hx : x₁ = x₂
+  · subst hx
+    exact xyIdeal_ne_of_y_ne h₂ (fun hy => hne (by rw [hy]))
+  · exact xyIdeal_ne_of_x_ne h₂ hx
+
 end Ecdlp.Weil
