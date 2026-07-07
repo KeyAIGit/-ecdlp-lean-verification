@@ -89,11 +89,22 @@ KNOWN_NOGO = """\
 
 _spend_lock = threading.Lock()
 _spend = {"breadth": 0.0, "deepseek": 0.0, "rigour": 0.0, "gate": 0.0}
+# Output-token tally per tier, tracked ALONGSIDE spend so an unpriced model (e.g. a flat-rate
+# Featherless model, or an Anthropic id not in PRICES) still shows visible activity — otherwise a
+# successful-but-unpriced run reads as "$0.000 / did nothing", which is how run #13 hid a real Fable run.
+_toks = {"breadth": 0, "deepseek": 0, "rigour": 0, "gate": 0}
 
 
 def _add_spend(bucket: str, usd: float) -> None:
     with _spend_lock:
         _spend[bucket] += usd
+
+
+def _record(bucket: str, model: str, usage) -> None:
+    """Record both USD spend and output tokens for a completed call (single source of truth)."""
+    with _spend_lock:
+        _spend[bucket] += _usd(model, usage)
+        _toks[bucket] += _tok(usage, "output_tokens", "completion_tokens")
 
 
 def _tok(usage, *names) -> int:
@@ -133,7 +144,7 @@ def oai_call(provider: str, model: str, system: str, user: str, bucket: str,
         k = {**base_kw, **({"response_format": {"type": "json_object"}} if use_json else {})}
         try:
             resp = client.chat.completions.create(**k)
-            _add_spend(bucket, _usd(model, resp.usage))
+            _record(bucket, model, resp.usage)
             return resp.choices[0].message.content
         except Exception as e:  # noqa: BLE001
             last = e
@@ -215,22 +226,35 @@ def run_breadth(n_agents: int, workers: int, seen: set[str], client=None) -> lis
 
     def _one(axis: str) -> str:
         return llm(BREADTH_PROVIDER, BREADTH_MODEL, "", breadth_prompt(axis, n_seen), "breadth",
-                   client=client, json_mode=True, max_tokens=1400, temperature=1.0)
+                   client=client, json_mode=True, max_tokens=2200, temperature=1.0)
 
+    # Funnel counters so a silent 0-idea run tells us WHERE it collapsed (API → parse → dedup), instead
+    # of the opaque "0 novel ideas" that hid run #13. Emitted to stderr, visible in the Actions log.
+    raw_nonempty = parsed_ok = dup = 0
     with ThreadPoolExecutor(max_workers=max(1, w)) as ex:
         futs = {ex.submit(_one, ax): ax for ax in assignments}
         for fut in as_completed(futs):
-            obj = parse_json(fut.result() or "")
+            txt = fut.result() or ""
+            if txt.strip():
+                raw_nonempty += 1
+            obj = parse_json(txt)
             if not obj or not (obj.get("hypothesis") or "").strip():
+                if txt.strip():   # got text but couldn't extract a hypothesis → show why
+                    print(f"::warning:: breadth[{futs[fut][:16]}] unparseable ({len(txt)} chars): "
+                          f"{txt.strip()[:180]!r}", file=sys.stderr)
                 continue
+            parsed_ok += 1
             h = obj["hypothesis"].strip()
             s = sig(h)
             if s in local_seen:
+                dup += 1
                 continue
             local_seen.add(s)
             out.append({"hypothesis": h, "why_novel": obj.get("why_novel", ""),
                         "checkable_direction": obj.get("checkable_direction", ""),
                         "_sig": s, "_axis": futs[fut]})
+    print(f"breadth funnel: {raw_nonempty}/{n_agents} non-empty · {parsed_ok} parsed · "
+          f"{dup} dup · {len(out)} novel", file=sys.stderr)
     return out
 
 
@@ -298,12 +322,15 @@ _resolve_lock = threading.Lock()
 def _anthropic_one(client, model: str, system: str, user: str, max_tokens: int):
     """Try ONE model with graceful param-degradation. Returns resp, or None if the MODEL itself is
     rejected (model-not-found), or re-raises a genuine transport error."""
-    variants = (
-        dict(model=model, max_tokens=max_tokens, system=system,
-             messages=[{"role": "user", "content": user}], thinking={"type": "enabled", "budget_tokens": 6000}),
-        dict(model=model, max_tokens=max_tokens, system=system,
-             messages=[{"role": "user", "content": user}]),
-    )
+    # Anthropic requires max_tokens > thinking.budget_tokens. Size the budget to the request so a short
+    # call (breadth, max_tokens≈2200) simply runs plain instead of eating a guaranteed-rejected round-trip.
+    plain = dict(model=model, max_tokens=max_tokens, system=system,
+                 messages=[{"role": "user", "content": user}])
+    think_budget = max_tokens - 1024
+    variants = []
+    if think_budget >= 1024:
+        variants.append({**plain, "thinking": {"type": "enabled", "budget_tokens": think_budget}})
+    variants.append(plain)
     for i, kwargs in enumerate(variants):
         try:
             return client.messages.create(**kwargs)
@@ -312,7 +339,7 @@ def _anthropic_one(client, model: str, system: str, user: str, max_tokens: int):
         except Exception as e:  # noqa: BLE001
             n = e.__class__.__name__
             if n in ("BadRequestError", "UnprocessableEntityError", "NotFoundError"):
-                if i == 0:
+                if i < len(variants) - 1:
                     continue  # could be the `thinking` param → try the plain variant of THIS model
                 print(f"::warning:: anthropic model '{model}' rejected: {e}", file=sys.stderr)
                 return None   # plain variant also rejected → the model id itself is unavailable
@@ -331,7 +358,7 @@ def claude(client, model: str, system: str, user: str, bucket: str, max_tokens: 
                 print(f"::warning:: using '{cand}' in place of unavailable '{model}'", file=sys.stderr)
             with _resolve_lock:
                 _resolved[model] = cand   # cache the working substitute
-            _add_spend(bucket, _usd(cand, resp.usage))
+            _record(bucket, cand, resp.usage)
             return "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
     print(f"::warning:: no anthropic model available for '{model}' (tried fallbacks)", file=sys.stderr)
     return ""
@@ -484,7 +511,7 @@ def main() -> int:
     # Tier 1 — breadth (ideas)
     ideas = run_breadth(args.breadth, args.workers, seen, client=client)
     print(f"tier1 breadth: {len(ideas)} novel ideas from {args.breadth} {BREADTH_PROVIDER} agents "
-          f"(~${_spend['breadth']:.3f})")
+          f"(~${_spend['breadth']:.3f}, {_toks['breadth']} out-tok)")
     if not ideas:
         print("no novel ideas this run.")
         return 0
@@ -511,7 +538,8 @@ def main() -> int:
     supported = [c for c in processed if c["_outcome"] == "supported"]
     print(f"tier2/3 rigour+verify: {len(supported)} supported, "
           f"{sum(c['_outcome']=='refuted' for c in processed)} refuted, "
-          f"{sum(c['_outcome']=='parked' for c in processed)} parked (~${_spend['rigour']:.3f})")
+          f"{sum(c['_outcome']=='parked' for c in processed)} parked "
+          f"(~${_spend['rigour']:.3f}, {_toks['rigour']} out-tok)")
 
     # Tier 4 gate panel on supported
     leads = []
