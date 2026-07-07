@@ -314,7 +314,11 @@ def _anthropic():
 
 # If a configured model id isn't available on the account (e.g. Fable not enabled for this API key),
 # fall back to a model that is — logged loudly, and cached so we don't re-probe the dead id every call.
-FALLBACK_MODELS = ["claude-sonnet-5", "claude-opus-4-8", "claude-haiku-4-5"]
+# Order matters: each is tried until one returns actual text. On the current ANTHROPIC key (measured in
+# run #16) claude-fable-5 REFUSES (stop=refusal, no content) and claude-sonnet-5 returns thinking-only
+# (stop=max_tokens, no text) — both burning a call for nothing. So try cheap Haiku first (5× cheaper than
+# Opus; never yet reached because the chain stopped at Opus), then Opus (known-good), then Sonnet last.
+FALLBACK_MODELS = ["claude-haiku-4-5", "claude-opus-4-8", "claude-sonnet-5"]
 _resolved: dict[str, str] = {}
 _resolve_lock = threading.Lock()
 
