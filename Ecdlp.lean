@@ -80,6 +80,7 @@ import Ecdlp.Proved.SemaevDegree
 import Ecdlp.Proved.GlvNoGo
 import Ecdlp.Proved.P256Curve
 import Ecdlp.Proved.EvalRatAtNonvanishing
+import Ecdlp.Proved.Curve25519
 import Ecdlp.Proved.MultiplicationFormula
 import Ecdlp.Proved.WeilDivisorClass
 import Ecdlp.Proved.PointEvaluation

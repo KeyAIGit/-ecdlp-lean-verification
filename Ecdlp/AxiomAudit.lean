@@ -100,6 +100,11 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.P256.P256_c₄_ne_zero
 #print axioms Ecdlp.P256.P256_generator_equation
 
+-- Curve25519 grounding (Montgomery model, cofactor 8; native_decide facts surface `Lean.ofReduceBool`)
+#print axioms Ecdlp.Curve25519.Curve25519_Δ_ne_zero
+#print axioms Ecdlp.Curve25519.Curve25519_a₂_ne_zero
+#print axioms Ecdlp.Curve25519.Curve25519_generator_equation
+
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form
 #print axioms Secp256k1.beta_field_eigenvalue
