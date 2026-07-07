@@ -40,5 +40,6 @@ theorem evalRatAt_algebraMap {x y : F} (h : W.Equation x y)
   rw [e1, e2]
   congr 1
   rw [RingEquiv.symm_apply_eq, RingEquiv.ofBijective_apply]
+  rfl
 
 end Ecdlp.Weil
