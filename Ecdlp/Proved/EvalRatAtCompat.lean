@@ -2,17 +2,20 @@ import Mathlib
 import Ecdlp.Proved.PointEvaluation
 
 /-!
-# Weil layer B — evaluation compatibility
+# Weil layer B — `evalRatAt` extends `evalAt`
 
-`evalRatAt` **extends** `evalAt`: for a *regular* function `r ∈ F[E]`, its value as a rational
-function regular at `P` (image under the localization map, then `evalRatAt`) equals its direct value
-`evalAt h r`. The correctness certificate for `evalRatAt` before it is used to evaluate the Miller
-function `f_P`; self-contained (no divisor-support machinery).
+`evalRatAt` (evaluation of a rational function regular at `P`, via the local ring `F[E]_P`) genuinely
+**extends** `evalAt` (evaluation of a regular function): for a regular `r ∈ F[E]`, the value of its
+image in `F[E]_P` equals its direct value at `P`. This is the correctness certificate for `evalRatAt`
+before it is used to evaluate the Weil pairing's Miller function `f_P`, and it is self-contained
+(no divisor-support machinery).
 
-Proof shape: both sides are *definitionally* `(quotientXYIdealEquiv h).toRingEquiv (…)` — unfolding
-the `.comp` / `.toRingHom` / `.trans` structure is cheap. The two `rfl` steps `e1`, `e2` pin that
-form so the outer equiv matches on both sides; `congr 1` then peels it, and the residue-vs-quotient
-crux (`residue` of the localization = quotient by the point's maximal ideal, definitional) closes it.
+Proof: both sides are definitionally `(quotientXYIdealEquiv h).toRingEquiv (…)` — unfolding the
+`.comp` / `.toRingHom` / `.trans` structure is cheap (`e1`, `e2`). After pinning that shared outer
+equiv, `congr 1` peels it and the residue-vs-quotient crux closes it: the residue of the localization
+at `P` coincides *definitionally* with the quotient by `P`'s maximal ideal.
+
+See `notes/FOUNDATIONS.md` (Weil sub-ladder, evaluation layer).
 -/
 
 namespace Ecdlp.Weil
@@ -21,8 +24,8 @@ open Polynomial WeierstrassCurve.Affine WeierstrassCurve.Affine.CoordinateRing
 
 variable {F : Type*} [Field F] {W : WeierstrassCurve.Affine F}
 
-/-- `evalRatAt` extends `evalAt`: evaluating the image of a regular function `r` in the local ring
-`F[E]_P` equals evaluating `r` directly at `P`. -/
+/-- **`evalRatAt` extends `evalAt`.** Evaluating the image of a regular function `r` in the local
+ring `F[E]_P` equals evaluating `r` directly at `P`. -/
 theorem evalRatAt_algebraMap {x y : F} (h : W.Equation x y)
     [(XYIdeal W x (C y)).IsPrime] (r : W.CoordinateRing) :
     evalRatAt h (algebraMap W.CoordinateRing

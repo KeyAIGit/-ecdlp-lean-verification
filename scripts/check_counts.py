@@ -86,10 +86,11 @@ RETIRED = [
     "~164 distinct", "186 ledger rows", "186 rows",
     "~165 distinct", "187 ledger rows", "187 rows",
     "~166 distinct", "188 ledger rows", "188 rows",
+    "~167 distinct", "189 ledger rows", "189 rows",
 ]
 
 # Must appear somewhere in VERIFIED.md so the canonical figure stays discoverable.
-CANONICAL_PRESENT = ["~167 distinct", "189 ledger rows"]
+CANONICAL_PRESENT = ["~168 distinct", "190 ledger rows"]
 
 
 def main() -> int:
