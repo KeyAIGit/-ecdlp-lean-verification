@@ -358,8 +358,14 @@ def render_markdown(graph: dict) -> str:
     )
     lines.append("")
     lines.append(
-        f"**{c['theorems']} theorems** · **{c['barriers']} barriers** · "
+        f"**{c['theorems']} theorem nodes** · **{c['barriers']} barriers** · "
         f"**{c['edges']} edges**"
+    )
+    lines.append("")
+    lines.append(
+        "> *Theorem-node count is the graph's own view (unique parsed ledger entries) and "
+        "may differ by a row or two from the canonical ledger figure — the single source of "
+        "truth for headline counts is `STATUS.md`.*"
     )
     lines.append("")
     lines.append("By proof method: "

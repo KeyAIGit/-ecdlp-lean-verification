@@ -6,8 +6,10 @@ across docs for the same body of work). This gate fails the build if any RETIRED
 count string reappears in the narrative docs, and sanity-checks that the canonical figure
 is present in VERIFIED.md.
 
-Canonical figure (single source of truth): "189 ledger rows / ~167 distinct results".
+Canonical figure (single source of truth): "210 ledger rows / ~177 distinct results".
 Update CANONICAL_PRESENT / RETIRED here (and only here) if the real count changes.
+The one human-facing snapshot is `STATUS.md` (generated); other summary docs must point to
+it rather than re-state counts, and are scanned below so a stale copy fails the build.
 
 Usage:  python3 scripts/check_counts.py
 """
@@ -19,6 +21,9 @@ from pathlib import Path
 DOCS = [
     "README.md", "AGENTS.md", "BARRIERS.md", "VERIFIED.md",
     "data/knowledge_graph.md", "CLAUDE.md",
+    # summary docs that historically drifted — now scanned so they can't silently re-drift
+    "STATUS.md", "TRUST_REPORT.md", "ONE_PAGE_SUMMARY.md", "ABSTRACT_SCOPE.md",
+    "COVERAGE.md",
 ]
 
 # Retired headline strings that must NOT reappear (regex-free substring match). These are
@@ -121,6 +126,10 @@ def main() -> int:
             continue
         text = p.read_text(encoding="utf-8")
         for i, line in enumerate(text.splitlines(), 1):
+            # A line documenting THIS gate legitimately quotes retired strings as examples;
+            # mark it `count-check: ignore` (e.g. an invisible HTML comment) to exempt it.
+            if "count-check: ignore" in line:
+                continue
             for bad in RETIRED:
                 if bad in line:
                     failures.append(f"{doc}:{i}: retired count headline '{bad}': {line.strip()}")
@@ -134,7 +143,7 @@ def main() -> int:
 
     if failures:
         print("COUNT CONSISTENCY FAILED — fix these to the canonical figure "
-              "'142 ledger rows / ~128 distinct results':")
+              "'210 ledger rows / ~177 distinct results' (or point the doc at STATUS.md):")
         print("\n".join("  " + f for f in failures))
         return 1
     print("count consistency OK: no retired headline counts; canonical figure present.")

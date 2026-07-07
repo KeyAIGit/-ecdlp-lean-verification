@@ -1,7 +1,9 @@
 # TRUST_REPORT.md — trust-boundary report for the ECDLP Lean layer
 
-**Scope of the verified body.** `114 ledger rows / ~105 distinct kernel-verified
-results` (9 of the 114 rows are alternate-form or `supporting:` restatements of the
+> Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
+
+**Scope of the verified body.** `210 ledger rows / ~177 distinct kernel-verified
+results` (≈33 of the 210 rows are alternate-form or `supporting:` restatements of the
 same underlying fact — e.g. the `ZMod`/ring forms of the GLV eigenvalue — so they do
 not add new content). **0 `sorry`, 0 `admit`, 0 open obligations, 0 custom axioms.**
 
@@ -48,7 +50,7 @@ these are on the audit's permanent forbidden list.
 
 ---
 
-## 2. Method classification of the ~105 results
+## 2. Method classification of the verified results
 
 Every result falls into exactly one of three buckets. The partition is by whether the
 result's proof term depends on `Lean.ofReduceBool` (i.e. uses `native_decide` anywhere,
@@ -169,9 +171,10 @@ high-stakes fact, and is the reason the trade-off in Section 4 is acceptable.
 (Note: the ~22 internal recursive Pratt sub-lemmas are *not* counted as separate ledger
 results — see the retired "128" figure in `VERIFIED.md`.)
 
-**Count.** Approximately **33 distinct load-bearing results depend on
-`Lean.ofReduceBool`** (buckets (b) + (c) combined, including the two primality
-theorems). The remaining ~72 results are pure-kernel (bucket (a)).
+**Count.** Approximately **33 load-bearing results depend on `Lean.ofReduceBool`**
+(buckets (b) + (c) combined, including the two primality theorems) — the disclosed
+compiler-trusted set. The large majority of the ledger is pure-kernel (bucket (a)); for
+the current ledger total see **`STATUS.md`** / `data/stats.json`.
 
 ---
 
@@ -182,7 +185,7 @@ Distinguishing *machine-enforced* (a red build blocks merge) from *documentation
 
 | Step (ci.yml) | What it does | Enforced? |
 |---|---|---|
-| `Check count consistency (docs)` — `scripts/check_counts.py` | Fails if any **retired** headline count string ("128 theorems verified", "~99 named", …) reappears in the narrative docs, and asserts the canonical strings `"114 ledger rows"` and `"~105 distinct"` are present in `VERIFIED.md`. | **MACHINE-ENFORCED** (substring scan; build-breaking). Note: it pins the *wording*, not the actual theorem count — it cannot detect a genuinely miscounted ledger, only drift back to a retired phrasing. |
+| `Check count consistency (docs)` — `scripts/check_counts.py` | Fails if any **retired** headline count string ("128 theorems verified", "~99 named", …) reappears in the narrative docs, and asserts the canonical strings `"210 ledger rows"` and `"~177 distinct"` are present in `VERIFIED.md`. | **MACHINE-ENFORCED** (substring scan; build-breaking). Note: it pins the *wording*, not the actual theorem count — it cannot detect a genuinely miscounted ledger, only drift back to a retired phrasing. |<!-- count-check: ignore (this row documents the gate and quotes retired strings as examples) -->
 | `Ensure no incomplete proofs remain` | `grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/` — fails if `sorry`/`admit` text appears in any **built** `.lean` file. `Ecdlp/Targets/` (open stems) is excluded by design. | **MACHINE-ENFORCED**, with the documented scope limit that it is a *text* grep over built files and deliberately skips `Targets/`. |
 | `Ensure no built file imports an open target stem` | `grep` for `import Ecdlp.Targets` outside `Targets/`. Closes the hole where a built file could pull a `sorry`-bearing stem into the build graph (since `sorry` is only a warning). | **MACHINE-ENFORCED.** This is the guard that makes the previous grep sound. |
 | `Fetch prebuilt Mathlib cache` + `Build and verify ALL proofs` — `lake build` | The **kernel** re-checks every built proof term. A `sorry` that reached the build graph, or any type error, fails here. | **MACHINE-ENFORCED.** This is the core verification: a green `lake build` means the kernel accepted every built theorem. |

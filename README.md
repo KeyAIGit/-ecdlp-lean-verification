@@ -28,9 +28,13 @@ The verified-theorem counts are published as JSON, regenerated automatically fro
 - `Ecdlp/Statements.lean` - Mathlib-dependent formalization targets. The current ZMod target is closed with no `sorry`.
 - `Ecdlp/Proved/` - promoted, machine-checked theorems (built and gated). **See the
   directory itself for the full, current module list** (torsion `E[n]`, division
-  polynomials Ψ₂–Ψ₄, the GLV endomorphism object, curve invariants, anomalous-scope,
-  collision/solve-step, …); the items below are illustrative, not exhaustive. Includes a
-  **verified discrete-log cryptography library**:
+  polynomials Ψ₂–Ψ₄, the GLV endomorphism object — proved an *additive* endomorphism
+  (`glvHom`); the cryptographically load-bearing `[λ]` eigenvalue identity
+  `glvPoint = [λ]` is **not** proved (open, see `TRUST_REPORT.md`/`ABSTRACT_SCOPE.md`) —
+  curve invariants, anomalous-scope, collision/solve-step, …); the items below are
+  illustrative, not exhaustive. Includes a **verified discrete-log protocol algebra**
+  (abstract completeness/soundness *identities* over `[Module (ZMod n) G]` / `[Field F]` —
+  not proven security of deployed protocols; see `ABSTRACT_SCOPE.md`):
     - `GenericGroupBound.lean` - Shoup/Nechaev generic-group `Ω(√p)` lower bound for
       the discrete log (first such in Mathlib); model-soundness lemmas.
     - `BabyStepGiantStep.lean`, `PollardRho.lean` - matching `O(√n)` upper bounds, so
@@ -38,7 +42,10 @@ The verified-theorem counts are published as JSON, regenerated automatically fro
     - `Secp256k1GenericSecurity.lean` - secp256k1 ≥128-bit **classical, generic** security
       (`2^127 < q`; black-box model only — says nothing about non-generic attacks, and is
       classical: Shor breaks ECDLP quantumly. See `notes/SECURITY_SCOPE.md`).
-    - `SchnorrSoundness.lean` - Schnorr proof-of-knowledge extraction; Pedersen binding ⇒ DLP.
+    - `SchnorrSoundness.lean` - Schnorr 2-transcript extractor (a linear-algebra identity in
+      the scalar field — no adversary/probability); the "Pedersen binding ⇒ DLP" implication
+      is *narrated*, not formalized (the trapdoor is an uninterpreted field element — see
+      `ABSTRACT_SCOPE.md`).
     - `DlogCompleteness.lean` - Schnorr/EdDSA verification; Diffie–Hellman agreement.
     - `DlogPrimitives.lean` - ElGamal decryption; Pedersen homomorphism.
     - `DlogAdvanced.lean` - Okamoto 2-witness extraction; Chaum–Pedersen DLEQ.
@@ -57,8 +64,11 @@ Full project incl. Mathlib targets:
 Toolchain pinned in `lean-toolchain` (Lean v4.31.0); Mathlib rev pinned in `lakefile.toml`.
 
 ## Autonomous engine
-The full unattended loop — **discover → prove → draft PR**, weekly, no human prompting —
-is `.github/workflows/autonomous-engine.yml`. See **`notes/ENGINE.md`** for how it works,
+The scaffolded loop — **discover → attempt → draft PR** — is
+`.github/workflows/autonomous-engine.yml`. In practice the proofs that land come from the
+zero-cost **tactic ladder** plus **human-in-loop** promotion; external model-provers
+(Pythagoras-4B → Goedel-V2-32B) have been *attempted with 0 accepted*. See
+**`notes/ENGINE.md`** for how it works,
 its safety model (draft-only, kernel-judged, budget-capped), the one-time secret setup that
 turns it on, and an honest account of what it does autonomously vs what still needs
 orchestration.
@@ -68,14 +78,15 @@ This is stage 2 (formalization agent output) of the autonomous research mechanis
 Each `formalizable` claim in KG_CLAIM_FORMALIZATION_v1.csv becomes a theorem here;
 `native_decide` handles concrete arithmetic facts, Mathlib handles structural ones.
 
-Current ledger: **210 rows / ~177 distinct kernel-verified results, 0 `sorry`, 0 open
-obligations**, with **no custom axioms** (machine-enforced by the axiom-audit gate;
-`native_decide` facts additionally trust the compiler — see `TRUST_REPORT.md`). See
-`VERIFIED.md` for the canonical, live count (don't trust a hardcoded number here).
+Current ledger: **0 `sorry`, 0 open obligations, no custom axioms** (machine-enforced by
+the axiom-audit gate; `native_decide` facts additionally trust the compiler — see
+`TRUST_REPORT.md`). For the live row & distinct-result count see **`STATUS.md`** /
+`data/stats.json` — not duplicated here to avoid drift.
 Beyond the corpus, the project hosts:
-- a verified discrete-log cryptography library (generic hardness + protocol
-  soundness/completeness), including the rho/BSGS **solve step** (collision ⇒
-  discrete-log recovery);
+- a verified discrete-log **protocol algebra** (generic hardness + protocol
+  completeness/soundness *identities* over an abstract module/field — not a security model
+  for deployed protocols, see `ABSTRACT_SCOPE.md`), including the rho/BSGS **solve step**
+  (collision ⇒ discrete-log recovery);
 - the **saturated classical attack landscape**: Pohlig–Hellman, anti-MOV/FR
   (embedding degree > 100), anti-Smart/SSSA + supersingular (trace of Frobenius);
 - secp256k1 grounded as a Mathlib `EllipticCurve` with **machine-checked primality**

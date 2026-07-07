@@ -1,0 +1,122 @@
+name: Docs sync
+
+# Makes doc-drift structurally impossible. Every derived artifact in the repo is a
+# pure function of a small set of sources (VERIFIED.md, the claim corpus, and the
+# generator scripts). This workflow regenerates ALL of them with the repo's own
+# scripts, runs the count-consistency gate, and then:
+#
+# SUPERSEDES stats.yml: this is a strict superset (it regenerates stats.json +
+# badge + dashboard as well), so stats.yml was retired to avoid two workflows
+# racing to push the same derived files to main.
+#   - on push to main / manual dispatch: auto-commits any regenerated file with
+#     [skip ci] (same committer + permissions as stats.yml, so the two never fight);
+#   - on a pull request: FAILS the build if regeneration changed anything, so drift
+#     is caught in review instead of being silently committed.
+# Derived files (never hand-edit — regenerate via the scripts below):
+#   data/stats.json, badges/theorems.json   (gen_stats.py)
+#   data/frontier_map.json                   (build_frontier_map.py)
+#   data/knowledge_graph.json, .md           (build_knowledge_graph.py)
+#   dashboard.html, index.html               (build_dashboard.py)
+#   COVERAGE.md                              (coverage_report.py)
+#   STATUS.md                                (gen_status.py)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'VERIFIED.md'
+      - 'data/KG_CLAIM_FORMALIZATION_v1.csv'
+      - 'scripts/**'
+      - 'notes/FOUNDATIONS.md'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'VERIFIED.md'
+      - 'data/KG_CLAIM_FORMALIZATION_v1.csv'
+      - 'scripts/**'
+      - 'notes/FOUNDATIONS.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: docs-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # The complete set of derived files this workflow owns. Order in the regen steps
+  # below respects the data-flow: stats.json + frontier_map.json feed both the
+  # dashboard and STATUS.md, so they are generated first.
+  DERIVED: >-
+    data/stats.json
+    badges/theorems.json
+    data/frontier_map.json
+    data/knowledge_graph.json
+    data/knowledge_graph.md
+    dashboard.html
+    index.html
+    COVERAGE.md
+    STATUS.md
+
+jobs:
+  docs-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # ---- regenerate every derived artifact from its real source, in dependency order ----
+      - name: Stats + badge (data/stats.json, badges/theorems.json)
+        run: python3 scripts/gen_stats.py
+      - name: Frontier map (data/frontier_map.json)
+        run: python3 scripts/build_frontier_map.py
+      - name: Knowledge graph (data/knowledge_graph.json + .md)
+        run: python3 scripts/build_knowledge_graph.py
+      - name: Dashboard + landing page (dashboard.html, index.html)
+        run: python3 scripts/build_dashboard.py
+      - name: Coverage report (COVERAGE.md)
+        run: python3 scripts/coverage_report.py
+      - name: Canonical snapshot (STATUS.md)
+        run: python3 scripts/gen_status.py
+
+      # ---- consistency gate: no retired headline counts, canonical figure present ----
+      - name: Count-consistency gate
+        run: python3 scripts/check_counts.py
+
+      # ---- did regeneration change anything? ----
+      - name: Detect derived-artifact drift
+        id: drift
+        run: |
+          if git diff --quiet -- $DERIVED; then
+            echo "dirty=false" >> "$GITHUB_OUTPUT"
+            echo "derived artifacts already in sync with sources"
+          else
+            echo "dirty=true" >> "$GITHUB_OUTPUT"
+            echo "::group::derived-artifact drift"
+            git --no-pager diff --stat -- $DERIVED
+            echo "::endgroup::"
+          fi
+
+      # ---- on a PR: fail so drift is fixed in review (never auto-commit onto someone's PR) ----
+      - name: Fail on drift (pull request)
+        if: github.event_name == 'pull_request' && steps.drift.outputs.dirty == 'true'
+        run: |
+          echo "::error::Derived artifacts are stale. Run the generators locally and commit the result:"
+          echo "  python3 scripts/gen_stats.py"
+          echo "  python3 scripts/build_frontier_map.py"
+          echo "  python3 scripts/build_knowledge_graph.py"
+          echo "  python3 scripts/build_dashboard.py"
+          echo "  python3 scripts/coverage_report.py"
+          echo "  python3 scripts/gen_status.py"
+          git --no-pager diff -- $DERIVED
+          exit 1
+
+      # ---- on main / manual run: auto-commit the refreshed artifacts (mirrors stats.yml) ----
+      - name: Commit refreshed artifacts
+        if: github.event_name != 'pull_request' && steps.drift.outputs.dirty == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $DERIVED
+          git commit -m "chore(docs): resync derived artifacts from sources [skip ci]"
+          git push

@@ -19,20 +19,23 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 (a hypothesis, NOT an axiom).
 
 ## Current state
-- **Theorem count: see `VERIFIED.md`** — that ledger table is the canonical, live count
-  (210 rows / ~177 distinct kernel-verified results, 0 `sorry`, no custom axioms — the
-  axiom-audit gate enforces it; `native_decide` facts trust the compiler, see
-  `TRUST_REPORT.md`). Do not hardcode a number here; it drifts. `main` is kept in sync
-  with the dev branch `claude/admiring-darwin-uouep1`.
+- **Theorem count: see `STATUS.md` / `data/stats.json`** (canonical, live row & distinct
+  count) — `0 `sorry`, no custom axioms (the axiom-audit gate enforces it; `native_decide`
+  facts trust the compiler, see `TRUST_REPORT.md`). Do not hardcode a number here; it
+  drifts. `main` is kept in sync with the dev branch `claude/admiring-darwin-uouep1`.
 - Pillars: (1) Shoup/Nechaev generic-group `Ω(√p)` + BSGS/rho `O(√n)` ⇒ `Θ(√n)`,
   secp256k1 ≥128-bit **classical, generic** security (black-box model only, classical —
   not unconditional, and false against quantum/Shor; see `notes/SECURITY_SCOPE.md`); the
   rho/BSGS **solve step** (collision ⇒
-  linear congruence ⇒ discrete-log recovery, `CollisionEquation.lean`). (2) verified
-  DL-crypto library (Schnorr, Pedersen, DH, ElGamal, Okamoto, Chaum–Pedersen,
-  MuSig2/Taproot, Feldman VSS, adaptor, blind Schnorr, threshold ElGamal). (3)
+  linear congruence ⇒ discrete-log recovery, `CollisionEquation.lean`). (2) a verified
+  DL **protocol algebra** — abstract completeness/soundness identities over
+  `[Module (ZMod n) G]` / `[Field F]`, not proven security of deployed protocols (Schnorr,
+  Pedersen, DH, ElGamal, Okamoto, Chaum–Pedersen, MuSig2/Taproot, Feldman VSS, adaptor,
+  blind Schnorr, threshold ElGamal; see `ABSTRACT_SCOPE.md`). (3)
   secp256k1 grounded in Mathlib EC (`EllipticCurve`, `j=0`, β/λ order 3, generator
-  on curve & nonsingular). (4) **machine-checked primality** of `p` and `n` (full
+  on curve & nonsingular); the GLV map is proved an *additive* endomorphism (`glvHom`),
+  while the `[λ]` eigenvalue action `glvPoint = [λ]` remains **open** (gated on point
+  counting). (4) **machine-checked primality** of `p` and `n` (full
   Pratt certificates, `scripts/pratt_certificate.py`) — the `[Fact …]` hypotheses
   are now discharged by real instances, so those theorems are effectively
   unconditional. (5) **attack-landscape saturation**: Pohlig–Hellman, anti-MOV
