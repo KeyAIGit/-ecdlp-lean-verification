@@ -74,6 +74,7 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Weil.evalRatAt
 #print axioms Ecdlp.Weil.evalRatAt_surjective
 #print axioms Ecdlp.Weil.evalRatAt_algebraMap
+#print axioms Ecdlp.Weil.xyIdeal_ne_of_x_ne
 
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form

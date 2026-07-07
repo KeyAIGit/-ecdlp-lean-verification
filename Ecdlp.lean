@@ -79,3 +79,4 @@ import Ecdlp.Proved.MultiplicationFormula
 import Ecdlp.Proved.WeilDivisorClass
 import Ecdlp.Proved.PointEvaluation
 import Ecdlp.Proved.EvalRatAtCompat
+import Ecdlp.Proved.PointSeparation
