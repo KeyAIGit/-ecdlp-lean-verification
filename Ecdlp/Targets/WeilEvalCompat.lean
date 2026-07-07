@@ -32,7 +32,9 @@ theorem evalRatAt_algebraMap {x y : F} (h : W.Equation x y)
             (Ideal.Quotient.mk (XYIdeal W x (C y)) r) := rfl
   unfold evalRatAt evalAt residueFieldEquiv
   simp only [RingHom.comp_apply, RingEquiv.coe_toRingHom, RingEquiv.trans_apply]
-  rw [key]
-  exact congrArg _ (RingEquiv.symm_apply_apply _ _)
+  congr 1
+  rw [RingEquiv.symm_apply_eq]
+  conv_rhs => rw [RingEquiv.ofBijective_apply]
+  exact key
 
 end Ecdlp.Weil
