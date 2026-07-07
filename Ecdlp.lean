@@ -76,6 +76,7 @@ import Ecdlp.Proved.MovRandomQ
 import Ecdlp.Proved.SemaevThree
 import Ecdlp.Proved.SemaevFour
 import Ecdlp.Proved.PointDecomposition
+import Ecdlp.Proved.SemaevDegree
 import Ecdlp.Proved.MultiplicationFormula
 import Ecdlp.Proved.WeilDivisorClass
 import Ecdlp.Proved.PointEvaluation

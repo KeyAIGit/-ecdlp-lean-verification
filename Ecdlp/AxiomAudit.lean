@@ -59,6 +59,10 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Semaev.secp256k1_point_decomposition_semaev
 #print axioms Ecdlp.Semaev.secp256k1_point_decomposition_semaev_double
 
+-- Semaev degree ⇒ bounded decomposition fan-out (prime-field barrier ingredient)
+#print axioms Ecdlp.Semaev.secp256k1_S₃poly_natDegree
+#print axioms Ecdlp.Semaev.secp256k1_decomposition_completions_le_two
+
 -- Division-polynomial multiplication formula, base case n = 2 (torsion-bridge engine)
 #print axioms Ecdlp.Curve.secp256k1_Φ₂
 #print axioms Ecdlp.Curve.secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq

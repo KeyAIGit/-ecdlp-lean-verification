@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~172 distinct results / 198 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~173 distinct results / 200 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -119,6 +119,23 @@ exact `Θ` statements.
   case). Higher `Sₙ` (`n ≥ 5`) are thus the *same* recursion at larger degree — their forward
   direction is already covered by the engine lemma, and the concrete plumbing is deliberately
   **not** pursued, as it adds scale without new content or new reach against the curve.
+
+  **Decomposition layer + the prime-field cost frontier (partial, honestly bounded).** On top of
+  the polynomials, the *point-decomposition* meaning is now machine-checked
+  (`Ecdlp/Proved/PointDecomposition.lean`): a target `R = P₁ + P₂` forces
+  `S₃(x(P₁),x(P₂),x(R)) = 0`, so every 2-term decomposition lies on the Semaev variety — the
+  structural reduction index calculus rests on. And one exact quantitative ingredient of the cost
+  is proved (`Ecdlp/Proved/SemaevDegree.lean`): `S₃` has degree **exactly 2** in each variable
+  (base of the `deg Sₘ = 2^{m−2}` tower), so each factor-base coordinate has **≤ 2 completions** —
+  bounded relation fan-out. **What remains genuinely open (NOT a theorem here):** that this
+  bounded-fan-out plus factor-base balance yields *no* subexponential algorithm over `𝔽_p`. The
+  obstruction is that a prime field affords **no Weil restriction** to split the single Semaev
+  equation into a solvable Gröbner system (the extension-field trick of Gaudry–Diem), so the
+  decomposition collapses to one equation of degree `~2^{m−2}` that is as hard as the original.
+  This is the studied heuristic behind prime-field ECDLP staying `Θ(√n)` — but a *proof* would
+  settle the open hardness conjecture and is **not** claimed. The kernel-checked results map
+  *where the search lives and how it branches*; the cost lower bound itself stays in the open
+  frontier, recorded here, not dressed as proved.
 - **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
   *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib. **This is
   the one place the Weil pairing touches secp256k1, and its security-relevant consequence is
