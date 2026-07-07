@@ -26,6 +26,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CORPUS = ROOT / "data" / "KG_CLAIM_FORMALIZATION_v1.csv"
 VERIFIED = ROOT / "VERIFIED.md"
+# Adversarially-verified coverage overrides (see the file's _meta for provenance): each maps a
+# corpus claim to verified/partial via a named kernel-verified theorem, confirmed by a skeptic pass.
+OVERRIDES = ROOT / "data" / "corpus_coverage_overrides.json"
 OUT = ROOT / "data" / "frontier_map.json"
 
 # The missing-foundation registry: what Mathlib lacks, and what it would unlock. `key` is
@@ -146,6 +149,9 @@ def classify(formal_status: str, area: str, statement: str = "") -> tuple[str, s
 def main(argv: list[str]) -> int:
     rows = list(csv.DictReader(CORPUS.open(encoding="utf-8")))
     vtext = VERIFIED.read_text(encoding="utf-8")
+    overrides = {}
+    if OVERRIDES.exists():
+        overrides = (json.loads(OVERRIDES.read_text(encoding="utf-8")) or {}).get("overrides", {})
     verified_rows = len(re.findall(r"^\|.*\| (?:proved|proved[¹²]| ?proved.*)\|?\s*$", vtext, re.M))
 
     claims = []
@@ -161,6 +167,14 @@ def main(argv: list[str]) -> int:
         verified = bool(cid and cid in vtext)
         if verified:
             status, confidence = "verified", "corpus"
+        # adversarially-verified coverage overrides win (verified/partial via a named theorem)
+        discharged_by = None
+        ov = overrides.get(cid)
+        if ov:
+            status = ov.get("status", status)
+            discharged_by = ov.get("theorem") or None
+            confidence = "verified-remap"
+            verified = (status == "verified")
         status_ct[status] += 1
         conf_ct[confidence] += 1
         if foundation:
@@ -169,6 +183,7 @@ def main(argv: list[str]) -> int:
             "id": cid, "formal_status": fs, "status": status,
             "blocking_foundation": foundation, "confidence": confidence,
             "mathlib_area": area, "verified": verified,
+            "discharged_by": discharged_by,
         })
 
     # attach unlock counts to the foundation registry

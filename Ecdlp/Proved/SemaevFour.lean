@@ -96,6 +96,15 @@ theorem S₄_symm₁₂ (a b x₁ x₂ x₃ x₄ : F) :
     S₄ a b x₁ x₂ x₃ x₄ = S₄ a b x₂ x₁ x₃ x₄ := by
   rw [S₄, S₄, S₃poly_symm a b x₁ x₂]
 
+/-- **`S₄` is symmetric in `x₃, x₄`** (within the second pair) — from the block swap and the
+first-pair symmetry. With `S₄_symm₁₂` and `S₄_block_swap`, `S₄` is symmetric within *each* pair
+*and* under exchanging the pairs, so it is fully symmetric on `{x₁,x₂,x₃,x₄}` — the symmetry a
+summation polynomial must have (a sum of four points vanishing to `O` is order-independent). -/
+theorem S₄_symm₃₄ (a b x₁ x₂ x₃ x₄ : F) :
+    S₄ a b x₁ x₂ x₃ x₄ = S₄ a b x₁ x₂ x₄ x₃ := by
+  rw [S₄_block_swap a b x₁ x₂ x₃ x₄, S₄_symm₁₂ a b x₃ x₄ x₁ x₂,
+    S₄_block_swap a b x₄ x₃ x₁ x₂]
+
 /-- **Cleared two-root master factorization of `S₃`'s polynomial slice**, as an identity in
 `F[X]`: `(x₁−x₂)²·S₃poly = (D·X − Rp)·(D·X − Rm)` with `D = (x₁−x₂)²`,
 `Rp = (y₂−y₁)² − (x₁+x₂)D`, `Rm = (y₂+y₁)² − (x₁+x₂)D`. This is the `F[X]` lift of the scalar

@@ -293,8 +293,12 @@ def sync_index_html(vcount: int, distinct: int, completeness, total: int) -> Non
 
 def main() -> int:
     fm = json.loads(FM.read_text(encoding="utf-8"))
-    vcount = len(re.findall(r"^\|.*\| (?:proved|proved[¹²]| ?proved.*)\|?\s*$",
-                            VERIFIED.read_text(encoding="utf-8"), re.M))
+    # Single source of truth for headline counts: data/stats.json (regenerated from VERIFIED.md by
+    # gen_stats.py). Never recompute distinct via a hardcoded offset — that is how counts drift.
+    stats = json.loads((ROOT / "data" / "stats.json").read_text(encoding="utf-8"))
+    vcount = int(stats.get("ledger_rows") or len(re.findall(
+        r"^\|.*\| (?:proved|proved[¹²]| ?proved.*)\|?\s*$", VERIFIED.read_text(encoding="utf-8"), re.M)))
+    distinct = int(stats.get("distinct_results") or (vcount - DISTINCT_OFFSET))
     status = fm["status_summary"]
     foundations = fm["foundations"]
     completeness = fm["meta"]["frontier_completeness_pct"]
@@ -306,7 +310,7 @@ def main() -> int:
     # is a range/estimate — animating it as a precise count-up would misrepresent it
     # as more exact than it is, so it renders as static text instead.
     metric_cards = [
-        ("Verified results", vcount, None, f"~{vcount-DISTINCT_OFFSET} distinct", "0 sorry · no custom axioms"),
+        ("Verified results", vcount, None, f"~{distinct} distinct", "0 sorry · no custom axioms"),
         ("Frontier mapped", completeness, None, "%", f"{total} corpus claims"),
         ("Foundations blocking", blocked_total, None, "claims", "each = a research-grade gap"),
         ("Honest substantive", None, "~10–15%", "", "rest = verified engineering"),
@@ -740,7 +744,7 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
     OUT.write_text(html, encoding="utf-8")
     # index.html is the hand-authored KeyAI landing one-pager (site root); we do NOT
     # regenerate it, but we DO keep its numeric counters in sync with the canonical ledger.
-    sync_index_html(vcount, vcount - DISTINCT_OFFSET, completeness, total)
+    sync_index_html(vcount, distinct, completeness, total)
     print(f"wrote {OUT.relative_to(ROOT)} ({len(html)} bytes) — {vcount} results, "
           f"frontier {completeness}%, nav sections {len(NAV)}, extra files {len(discover_extra_files())}")
     return 0

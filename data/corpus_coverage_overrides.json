@@ -1,0 +1,89 @@
+{
+  "_meta": {
+    "purpose": "Adversarially-verified corpus-coverage overrides applied by build_frontier_map.py. Each entry: a corpus claim discharged (verified) or partially addressed (partial) by a named kernel-verified theorem, confirmed by an independent skeptic pass.",
+    "provenance": "workflow run wf_0230ddd8-5a5 (corpus-coverage-remap): 486 claims mapped vs VERIFIED.md, every verified/partial upgrade re-checked by an adversarial verifier; 18 confirmed, 2 downgraded verified->partial, 0 rejected.",
+    "note": "Overrides win over the heuristic/VERIFIED-membership classification. Only verified/partial upgrades are recorded here; lateral reclassifications and demotions of existing verified claims are intentionally NOT auto-applied."
+  },
+  "overrides": {
+    "shoup-generic-model-001": {
+      "status": "partial",
+      "theorem": "Ecdlp.GenericGroup.generic_dlog_sqrt_bound"
+    },
+    "shoup-theorem1-probability-002": {
+      "status": "partial",
+      "theorem": "Ecdlp.GenericGroup.generic_success_le"
+    },
+    "bh-biased-005": {
+      "status": "verified",
+      "theorem": "Ecdlp.Schnorr.ecdsa_nonce_reuse_recovers"
+    },
+    "bh-biased-006": {
+      "status": "verified",
+      "theorem": "Ecdlp.Schnorr.ecdsa_known_nonce_recovers_key"
+    },
+    "hgs-lattice-011": {
+      "status": "verified",
+      "theorem": "Ecdlp.Schnorr.ecdsa_known_nonce_recovers_key"
+    },
+    "pollard-rho-collision-equation-002": {
+      "status": "partial",
+      "theorem": "Ecdlp.GenericGroup.collision_recovers_log"
+    },
+    "pollard-rho-complexity-001": {
+      "status": "partial",
+      "theorem": "Ecdlp.GenericGroup.pollard_rho_collision"
+    },
+    "pollard-rho-memory-003": {
+      "status": "partial",
+      "theorem": "Ecdlp.GenericGroup.bsgs_decomp"
+    },
+    "shoup-generic-lower-bound-003": {
+      "status": "partial",
+      "theorem": "Ecdlp.GenericGroup.generic_dlog_query_bound"
+    },
+    "semaev-definition-001": {
+      "status": "partial",
+      "theorem": "Ecdlp.Semaev.S₃_eq_zero_iff"
+    },
+    "mov-random-q-success-probability-006": {
+      "status": "partial",
+      "theorem": "Ecdlp.MovReduction.mov_random_q_success_probability"
+    },
+    "satoh-anomalous-definition-and-goal-001": {
+      "status": "partial",
+      "theorem": "Ecdlp.Curve.anomalous_iff_trace_one"
+    },
+    "smart-trace-one-scope-001": {
+      "status": "verified",
+      "theorem": "Ecdlp.Curve.anomalous_iff_trace_one"
+    },
+    "jacobson-xedni-dependence-recovers-log-003": {
+      "status": "verified",
+      "theorem": "Ecdlp.jacobson_xedni_dependence_recovers_log"
+    },
+    "glv-root-mod-n-condition-008": {
+      "status": "partial",
+      "theorem": "Ecdlp.Curve.glv_root_mod_n_condition"
+    },
+    "semaev-recursion-degree-002": {
+      "status": "partial",
+      "theorem": "Ecdlp.Semaev.secp256k1_S₃poly_natDegree"
+    },
+    "glv-jzero-orderthree-map-005": {
+      "status": "partial",
+      "theorem": "Ecdlp.Curve.secp256k1_glv_preserves_equation"
+    },
+    "shoup-pollard-generic-004": {
+      "status": "partial",
+      "theorem": "Ecdlp.GenericGroup.generic_dlog_sqrt_bound"
+    },
+    "shoup-ec-representation-gap-006": {
+      "status": "partial",
+      "theorem": "Ecdlp.GenericGroup.generic_dlog_sqrt_bound"
+    },
+    "smart-secp256k1-boundary-006": {
+      "status": "partial",
+      "theorem": "Ecdlp.Primality.secp256k1_n_prime"
+    }
+  }
+}

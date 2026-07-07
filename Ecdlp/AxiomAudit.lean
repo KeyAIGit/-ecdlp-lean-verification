@@ -27,6 +27,8 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_glv_preserves_equation
 #print axioms Ecdlp.Curve.secp256k1_glv_cube_relation
 #print axioms Ecdlp.Curve.secp256k1_glv_preserves_torsion
+#print axioms Ecdlp.Curve.secp256k1_glv_preserves_dlog
+#print axioms Ecdlp.Curve.secp256k1_glv_single_scalar
 
 -- secp256k1 as a Mathlib elliptic curve
 #print axioms Ecdlp.Curve.secp256k1_j_eq_zero
@@ -54,6 +56,15 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Semaev.S₃poly_master_factor
 #print axioms Ecdlp.Semaev.S₄_common_root_of_eq_zero
 #print axioms Ecdlp.Semaev.secp256k1_semaev_four_common_root_of_eq_zero
+#print axioms Ecdlp.Semaev.S₄_symm₃₄
+
+-- Point decomposition ⇒ Semaev relation (index-calculus entry point): R = P₁+P₂ ⇒ S₃ root
+#print axioms Ecdlp.Semaev.secp256k1_point_decomposition_semaev
+#print axioms Ecdlp.Semaev.secp256k1_point_decomposition_semaev_double
+
+-- Semaev degree ⇒ bounded decomposition fan-out (prime-field barrier ingredient)
+#print axioms Ecdlp.Semaev.secp256k1_S₃poly_natDegree
+#print axioms Ecdlp.Semaev.secp256k1_decomposition_completions_le_two
 
 -- Division-polynomial multiplication formula, base case n = 2 (torsion-bridge engine)
 #print axioms Ecdlp.Curve.secp256k1_Φ₂
@@ -64,9 +75,36 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Weil.secp256k1_miller_function_exists
 #print axioms Ecdlp.Weil.secp256k1_miller_function_unique
 
--- Weil-pairing infrastructure (layer B) point-evaluation `F[E] →+* F` — audit lines removed
--- while `Ecdlp/Proved/PointEvaluation.lean` is PARKED (un-imported, pending kernel confirmation).
--- Restore these three `#print axioms` lines when that rung is re-imported into `Ecdlp.lean`.
+-- Weil-pairing infrastructure (layer B): point-evaluation `F[E] →+* F` and its residue-field /
+-- rational-function extension (re-imported & kernel-confirmed green — no longer parked).
+#print axioms Ecdlp.Weil.evalAt
+#print axioms Ecdlp.Weil.evalAt_surjective
+#print axioms Ecdlp.Weil.evalAt_ker
+#print axioms Ecdlp.Weil.xyIdeal_isMaximal
+#print axioms Ecdlp.Weil.residueFieldEquiv
+#print axioms Ecdlp.Weil.evalRatAt
+#print axioms Ecdlp.Weil.evalRatAt_surjective
+#print axioms Ecdlp.Weil.evalRatAt_algebraMap
+#print axioms Ecdlp.Weil.evalRatAt_eq_zero_iff
+#print axioms Ecdlp.Weil.evalRatAt_ne_zero_iff_isUnit
+#print axioms Ecdlp.Weil.xyIdeal_ne_of_x_ne
+#print axioms Ecdlp.Weil.xyIdeal_ne_of_y_ne
+#print axioms Ecdlp.Weil.xyIdeal_ne_of_ne
+
+-- Weil H4 bridge: division-polynomial tower ⟺ Miller/divisor tower (ψ n root ⟺ n·([P]−[O]) principal)
+#print axioms Ecdlp.Weil.secp256k1_psi3_root_iff_class_torsion
+#print axioms Ecdlp.Weil.secp256k1_psi5_root_iff_class_torsion
+#print axioms Ecdlp.Weil.secp256k1_psi7_root_iff_class_torsion
+
+-- NIST P-256 grounding (curve-agnostic; native_decide facts surface `Lean.ofReduceBool`)
+#print axioms Ecdlp.P256.P256_Δ_ne_zero
+#print axioms Ecdlp.P256.P256_c₄_ne_zero
+#print axioms Ecdlp.P256.P256_generator_equation
+
+-- Curve25519 grounding (Montgomery model, cofactor 8; native_decide facts surface `Lean.ofReduceBool`)
+#print axioms Ecdlp.Curve25519.Curve25519_Δ_ne_zero
+#print axioms Ecdlp.Curve25519.Curve25519_a₂_ne_zero
+#print axioms Ecdlp.Curve25519.Curve25519_generator_equation
 
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form
