@@ -288,24 +288,52 @@ def _anthropic():
     return anthropic.Anthropic()
 
 
-def claude(client, model: str, system: str, user: str, bucket: str, max_tokens: int = 8000) -> str:
-    """One Anthropic call (Opus / Fable / etc.), degrading gracefully if newer params aren't accepted."""
-    for kwargs in (
+# If a configured model id isn't available on the account (e.g. Fable not enabled for this API key),
+# fall back to a model that is — logged loudly, and cached so we don't re-probe the dead id every call.
+FALLBACK_MODELS = ["claude-sonnet-5", "claude-opus-4-8", "claude-haiku-4-5"]
+_resolved: dict[str, str] = {}
+_resolve_lock = threading.Lock()
+
+
+def _anthropic_one(client, model: str, system: str, user: str, max_tokens: int):
+    """Try ONE model with graceful param-degradation. Returns resp, or None if the MODEL itself is
+    rejected (model-not-found), or re-raises a genuine transport error."""
+    variants = (
         dict(model=model, max_tokens=max_tokens, system=system,
              messages=[{"role": "user", "content": user}], thinking={"type": "enabled", "budget_tokens": 6000}),
         dict(model=model, max_tokens=max_tokens, system=system,
              messages=[{"role": "user", "content": user}]),
-    ):
+    )
+    for i, kwargs in enumerate(variants):
         try:
-            resp = client.messages.create(**kwargs)
-            _add_spend(bucket, _usd(model, resp.usage))
-            return "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
+            return client.messages.create(**kwargs)
         except TypeError:
-            continue
+            continue  # SDK doesn't accept a newer param → try the plainer variant
         except Exception as e:  # noqa: BLE001
-            if e.__class__.__name__ in ("BadRequestError", "UnprocessableEntityError"):
-                continue
+            n = e.__class__.__name__
+            if n in ("BadRequestError", "UnprocessableEntityError", "NotFoundError"):
+                if i == 0:
+                    continue  # could be the `thinking` param → try the plain variant of THIS model
+                print(f"::warning:: anthropic model '{model}' rejected: {e}", file=sys.stderr)
+                return None   # plain variant also rejected → the model id itself is unavailable
             raise
+    return None
+
+
+def claude(client, model: str, system: str, user: str, bucket: str, max_tokens: int = 8000) -> str:
+    """One Anthropic call with model fallback (Fable→Sonnet→Opus→Haiku) if the id is unavailable."""
+    with _resolve_lock:
+        eff = _resolved.get(model, model)
+    for cand in [eff] + [m for m in FALLBACK_MODELS if m != eff]:
+        resp = _anthropic_one(client, cand, system, user, max_tokens)
+        if resp is not None:
+            if cand != model:
+                print(f"::warning:: using '{cand}' in place of unavailable '{model}'", file=sys.stderr)
+            with _resolve_lock:
+                _resolved[model] = cand   # cache the working substitute
+            _add_spend(bucket, _usd(cand, resp.usage))
+            return "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
+    print(f"::warning:: no anthropic model available for '{model}' (tried fallbacks)", file=sys.stderr)
     return ""
 
 
