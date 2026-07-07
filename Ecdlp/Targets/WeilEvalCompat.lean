@@ -31,7 +31,7 @@ theorem evalRatAt_algebraMap {x y : F} (h : W.Equation x y)
         = algebraMap (W.CoordinateRing ⧸ XYIdeal W x (C y)) (XYIdeal W x (C y)).ResidueField
             (Ideal.Quotient.mk (XYIdeal W x (C y)) r) := rfl
   unfold evalRatAt evalAt residueFieldEquiv
-  simp only [RingHom.comp_apply, RingEquiv.coe_toRingHom, RingEquiv.trans_apply]
+  simp only [RingHom.comp_apply]
   congr 1
   rw [RingEquiv.symm_apply_eq]
   conv_rhs => rw [RingEquiv.ofBijective_apply]
