@@ -55,6 +55,10 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Semaev.S₄_common_root_of_eq_zero
 #print axioms Ecdlp.Semaev.secp256k1_semaev_four_common_root_of_eq_zero
 
+-- Point decomposition ⇒ Semaev relation (index-calculus entry point): R = P₁+P₂ ⇒ S₃ root
+#print axioms Ecdlp.Semaev.secp256k1_point_decomposition_semaev
+#print axioms Ecdlp.Semaev.secp256k1_point_decomposition_semaev_double
+
 -- Division-polynomial multiplication formula, base case n = 2 (torsion-bridge engine)
 #print axioms Ecdlp.Curve.secp256k1_Φ₂
 #print axioms Ecdlp.Curve.secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq
