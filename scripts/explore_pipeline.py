@@ -348,19 +348,30 @@ def _anthropic_one(client, model: str, system: str, user: str, max_tokens: int):
 
 
 def claude(client, model: str, system: str, user: str, bucket: str, max_tokens: int = 8000) -> str:
-    """One Anthropic call with model fallback (Fable→Sonnet→Opus→Haiku) if the id is unavailable."""
+    """One Anthropic call with model fallback (Fable→Sonnet→Opus→Haiku). Falls through not only on an
+    unavailable id but also on a successful-but-EMPTY completion — run #14 showed `claude-fable-5`
+    returning a valid response with no text block (~3 tokens), which the old code accepted as "", so the
+    fallback never fired and every idea was silently lost."""
     with _resolve_lock:
         eff = _resolved.get(model, model)
     for cand in [eff] + [m for m in FALLBACK_MODELS if m != eff]:
         resp = _anthropic_one(client, cand, system, user, max_tokens)
-        if resp is not None:
-            if cand != model:
-                print(f"::warning:: using '{cand}' in place of unavailable '{model}'", file=sys.stderr)
-            with _resolve_lock:
-                _resolved[model] = cand   # cache the working substitute
-            _record(bucket, cand, resp.usage)
-            return "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
-    print(f"::warning:: no anthropic model available for '{model}' (tried fallbacks)", file=sys.stderr)
+        if resp is None:
+            continue
+        _record(bucket, cand, resp.usage)
+        txt = "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
+        if not txt.strip():
+            types = [getattr(b, "type", "?") for b in resp.content]
+            print(f"::warning:: '{cand}' returned no text (stop={getattr(resp, 'stop_reason', '?')}, "
+                  f"blocks={types}, out_tok={_tok(resp.usage, 'output_tokens')}); trying next model",
+                  file=sys.stderr)
+            continue   # empty completion → treat like unavailable and fall through
+        if cand != model:
+            print(f"::warning:: using '{cand}' in place of '{model}'", file=sys.stderr)
+        with _resolve_lock:
+            _resolved[model] = cand   # cache the working substitute
+        return txt
+    print(f"::warning:: no anthropic model produced text for '{model}' (tried fallbacks)", file=sys.stderr)
     return ""
 
 
