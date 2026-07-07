@@ -35,19 +35,15 @@ open Polynomial Ecdlp.Curve
 
 variable [Fact (Nat.Prime Secp256k1.p)]
 
-/-- The degree-`2` coefficient of `S₃poly a b x₁ x₂` is its leading term `(x₁ − x₂)²`. -/
-theorem S₃poly_coeff_two {F : Type*} [CommRing F] (a b x₁ x₂ : F) :
-    (S₃poly a b x₁ x₂).coeff 2 = (x₁ - x₂) ^ 2 := by
-  simp [S₃poly, coeff_add, coeff_C_mul, coeff_X_pow, coeff_X, coeff_C]
-
 /-- **The Semaev polynomial has degree exactly `2` in each variable (secp256k1).** For `x₁ ≠ x₂`,
-`S₃(x₁, x₂, ·)` — as a univariate polynomial over the field `𝔽_p` — has `natDegree = 2`, with leading
-coefficient `(x₁ − x₂)² ≠ 0`. Base case of the `deg Sₘ = 2^{m−2}` degree tower. -/
+`S₃(x₁, x₂, ·)` — as a univariate polynomial over the field `𝔽_p` — has `natDegree = 2`, its leading
+coefficient being `(x₁ − x₂)² ≠ 0`. Base case of the `deg Sₘ = 2^{m−2}` degree tower. `S₃poly` is
+literally `C ((x₁−x₂)²)·X² + C(·)·X + C(·)`, so `natDegree_quadratic` applies once the leading
+coefficient is shown nonzero. -/
 theorem secp256k1_S₃poly_natDegree (x₁ x₂ : ZMod Secp256k1.p) (hx : x₁ ≠ x₂) :
     (S₃poly (0 : ZMod Secp256k1.p) 7 x₁ x₂).natDegree = 2 := by
-  refine le_antisymm (S₃poly_natDegree_le _ _ _ _) (le_natDegree_of_ne_zero ?_)
-  rw [S₃poly_coeff_two]
-  exact pow_ne_zero 2 (sub_ne_zero.mpr hx)
+  rw [S₃poly]
+  exact natDegree_quadratic (pow_ne_zero 2 (sub_ne_zero.mpr hx))
 
 /-- **Bounded decomposition fan-out for secp256k1 (index-calculus cost ingredient).** Fix a base
 coordinate `x₁` and the target's coordinate `x_R`, with `x₁ ≠ x_R`. Then **at most `2` field
