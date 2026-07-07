@@ -28,8 +28,8 @@ theorem xyIdeal_ne_of_x_ne {x₁ y₁ x₂ y₂ : F}
     rw [halg]
     simp only [XClass, ← map_sub]
     congr 1
-    C_simp
-    ring1
+    simp only [map_sub]
+    ring
   have hmem : algebraMap F W.CoordinateRing (x₂ - x₁) ∈ XYIdeal W x₂ (C y₂) := by
     rw [← hdiff]
     refine Ideal.sub_mem _ ?_ (Ideal.subset_span (Set.mem_insert _ _))
