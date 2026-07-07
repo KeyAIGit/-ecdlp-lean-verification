@@ -25,6 +25,9 @@ theorem evalRatAt_algebraMap {x y : F} (h : W.Equation x y)
     [(XYIdeal W x (C y)).IsPrime] (r : W.CoordinateRing) :
     evalRatAt h (algebraMap W.CoordinateRing
         (Localization.AtPrime (XYIdeal W x (C y))) r) = evalAt h r := by
-  sorry
+  unfold evalRatAt evalAt residueFieldEquiv
+  simp only [RingHom.comp_apply, RingEquiv.coe_toRingHom, RingEquiv.trans_apply,
+    RingEquiv.ofBijective_apply, RingEquiv.symm_apply_apply]
+  done
 
 end Ecdlp.Weil
