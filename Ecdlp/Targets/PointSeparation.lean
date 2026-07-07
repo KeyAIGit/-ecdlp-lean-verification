@@ -23,7 +23,9 @@ theorem xyIdeal_ne_of_x_ne {x₁ y₁ x₂ y₂ : F}
     (h₂ : W.Equation x₂ y₂) (hx : x₁ ≠ x₂) :
     XYIdeal W x₁ (C y₁) ≠ XYIdeal W x₂ (C y₂) := by
   intro heq
+  have halg : algebraMap F W.CoordinateRing (x₂ - x₁) = mk W (C (C (x₂ - x₁))) := rfl
   have hdiff : XClass W x₁ - XClass W x₂ = algebraMap F W.CoordinateRing (x₂ - x₁) := by
+    rw [halg]
     simp only [XClass, ← map_sub]
     congr 1
     C_simp
