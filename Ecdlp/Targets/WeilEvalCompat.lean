@@ -22,11 +22,11 @@ variable {F : Type*} [Field F] {W : WeierstrassCurve.Affine F}
 /-- `evalRatAt` extends `evalAt`: evaluating the image of a regular function `r` in the local ring
 `F[E]_P` equals evaluating `r` directly at `P`.
 
-The two `RingEquiv` simp lemmas normalise the coercions so the later `rw`s see the right `⇑e`
-form; the `unusedSimpArgs` linter mis-flags them (dropping either breaks the proof), so it is
-locally disabled. The crux `key` is definitional: the residue of the localization at the point
-coincides with the quotient by the point's maximal ideal. -/
-set_option linter.unusedSimpArgs false in
+The crux `key` is definitional: the residue of the localization at the point coincides with the
+quotient by the point's maximal ideal. After rewriting with it, both sides are defeq to
+`quotientXYIdealEquiv h (mk r)`; the final `congrArg … symm_apply_apply` closes it, but the defeq
+through the tactic-defined `residueFieldEquiv` is heavy, hence the raised heartbeat limit. -/
+set_option maxHeartbeats 1000000 in
 theorem evalRatAt_algebraMap {x y : F} (h : W.Equation x y)
     [(XYIdeal W x (C y)).IsPrime] (r : W.CoordinateRing) :
     evalRatAt h (algebraMap W.CoordinateRing
@@ -38,9 +38,7 @@ theorem evalRatAt_algebraMap {x y : F} (h : W.Equation x y)
             (Ideal.Quotient.mk (XYIdeal W x (C y)) r) := rfl
   unfold evalRatAt evalAt residueFieldEquiv
   simp only [RingHom.comp_apply, RingEquiv.coe_toRingHom, RingEquiv.trans_apply]
-  congr 1
-  rw [RingEquiv.symm_apply_eq]
-  conv_rhs => rw [RingEquiv.ofBijective_apply]
-  exact key
+  rw [key]
+  exact congrArg _ (RingEquiv.symm_apply_apply _ _)
 
 end Ecdlp.Weil
