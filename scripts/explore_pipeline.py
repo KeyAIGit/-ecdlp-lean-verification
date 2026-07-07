@@ -322,14 +322,15 @@ _resolve_lock = threading.Lock()
 def _anthropic_one(client, model: str, system: str, user: str, max_tokens: int):
     """Try ONE model with graceful param-degradation. Returns resp, or None if the MODEL itself is
     rejected (model-not-found), or re-raises a genuine transport error."""
-    # Anthropic requires max_tokens > thinking.budget_tokens. Size the budget to the request so a short
-    # call (breadth, max_tokens≈2200) simply runs plain instead of eating a guaranteed-rejected round-trip.
+    # Extended thinking is OFF by default (EXPLORE_THINKING=1 to re-enable). Run #15 showed Sonnet-5 and
+    # Fable-5 spending the ENTIRE token budget on the thinking block and returning stop=max_tokens with
+    # NO text block — an empty completion that forced a wasteful Fable→Sonnet→Opus cascade (3× cost) and
+    # truncated the richest ideas. The models produce clean JSON without thinking, so plain is the default.
     plain = dict(model=model, max_tokens=max_tokens, system=system,
                  messages=[{"role": "user", "content": user}])
-    think_budget = max_tokens - 1024
     variants = []
-    if think_budget >= 1024:
-        variants.append({**plain, "thinking": {"type": "enabled", "budget_tokens": think_budget}})
+    if os.environ.get("EXPLORE_THINKING", "0") == "1" and max_tokens - 1024 >= 1024:
+        variants.append({**plain, "thinking": {"type": "enabled", "budget_tokens": max_tokens - 1024}})
     variants.append(plain)
     for i, kwargs in enumerate(variants):
         try:
