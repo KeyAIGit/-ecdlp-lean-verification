@@ -56,7 +56,6 @@ theorem evalRatAt_ne_zero_iff_isUnit {x y : F} (h : W.Equation x y)
     [(XYIdeal W x (C y)).IsPrime]
     (r : Localization.AtPrime (XYIdeal W x (C y))) :
     evalRatAt h r ≠ 0 ↔ IsUnit r := by
-  rw [ne_eq, evalRatAt_eq_zero_iff]
-  exact IsLocalRing.not_mem_maximalIdeal
+  rw [ne_eq, evalRatAt_eq_zero_iff, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, not_not]
 
 end Ecdlp.Weil
