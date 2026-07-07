@@ -78,6 +78,11 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Weil.xyIdeal_ne_of_y_ne
 #print axioms Ecdlp.Weil.xyIdeal_ne_of_ne
 
+-- Weil H4 bridge: division-polynomial tower ⟺ Miller/divisor tower (ψ n root ⟺ n·([P]−[O]) principal)
+#print axioms Ecdlp.Weil.secp256k1_psi3_root_iff_class_torsion
+#print axioms Ecdlp.Weil.secp256k1_psi5_root_iff_class_torsion
+#print axioms Ecdlp.Weil.secp256k1_psi7_root_iff_class_torsion
+
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form
 #print axioms Secp256k1.beta_field_eigenvalue
