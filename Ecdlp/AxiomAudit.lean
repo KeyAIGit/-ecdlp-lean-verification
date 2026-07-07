@@ -84,6 +84,8 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Weil.evalRatAt
 #print axioms Ecdlp.Weil.evalRatAt_surjective
 #print axioms Ecdlp.Weil.evalRatAt_algebraMap
+#print axioms Ecdlp.Weil.evalRatAt_eq_zero_iff
+#print axioms Ecdlp.Weil.evalRatAt_ne_zero_iff_isUnit
 #print axioms Ecdlp.Weil.xyIdeal_ne_of_x_ne
 #print axioms Ecdlp.Weil.xyIdeal_ne_of_y_ne
 #print axioms Ecdlp.Weil.xyIdeal_ne_of_ne
