@@ -66,6 +66,10 @@ git history and the GitHub Actions tab.
 | **secp256k1 base point `G` is on the curve** (`Gy² ≡ Gx³+7 mod p`) | `Secp256k1.generator_on_curve` | Ecdlp/Secp256k1Verified.lean | native_decide | proved |
 | **secp256k1 generator is a point of the Mathlib `EllipticCurve`** | `Ecdlp.Curve.secp256k1_generator_equation` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib + native_decide | proved² |
 | **secp256k1 generator is nonsingular** (a group element) | `Ecdlp.Curve.secp256k1_generator_nonsingular` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib + native_decide | proved² |
+| **secp256k1 base point has exact order `n`** (weak point-counting keystone: `⟨G⟩` cyclic of order `n`, no Hasse/`#E`) | `Ecdlp.Curve.secp256k1_generator_addOrderOf` | Ecdlp/Proved/GeneratorOrder.lean | Mathlib + native_decide | proved² |
+| **secp256k1 GLV endomorphism acts as `[λ]` at the generator** (`glvPoint G = λ·G`, unconditional) | `Ecdlp.Curve.secp256k1_glvPoint_generator` | Ecdlp/Proved/GeneratorOrder.lean | Mathlib + native_decide | proved² |
+| secp256k1 base point annihilated by `n` (`n·G = 0`, supporting `addOrderOf`) | `Ecdlp.Curve.secp256k1_generator_nsmul_n_eq_zero` | Ecdlp/Proved/GeneratorOrder.lean | native_decide | proved² |
+| secp256k1 base point is non-identity (`G ≠ 0`, supporting `addOrderOf`) | `Ecdlp.Curve.secp256k1_generator_ne_zero` | Ecdlp/Proved/GeneratorOrder.lean | Mathlib | proved |
 | **secp256k1 field prime `p` is prime** (full Pratt certificate) | `Ecdlp.Primality.secp256k1_p_prime` | Ecdlp/Proved/Secp256k1PrimeP.lean | Mathlib + native_decide | proved |
 | **secp256k1 group order `n` is prime** (full Pratt certificate) | `Ecdlp.Primality.secp256k1_n_prime` | Ecdlp/Proved/Secp256k1PrimeN.lean | Mathlib + native_decide | proved |
 | **Pohlig–Hellman: projection to order-`d` subgroup** | `Ecdlp.PohligHellman.projection` | Ecdlp/Proved/PohligHellman.lean | Mathlib | proved |
@@ -241,7 +245,7 @@ is Xu & Angdinata's. It is built and gated (the one-invariant holds), but delibe
 `isEllSequence_of_rec_one` (headline row above) remains this repo's own contribution.
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**210 ledger rows / ~177 distinct kernel-verified results** (32 rows are alternate-form
+**214 ledger rows / ~179 distinct kernel-verified results** (34 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue, the operator form of the GLV cube relation, and the Semaev `S₃` symmetry
 lemmas — see the tagged rows above).
