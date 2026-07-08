@@ -38,6 +38,7 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 -- (these surface `Lean.ofReduceBool`: `native_decide` over the Mathlib group law)
 #print axioms Ecdlp.Curve.secp256k1_generator_addOrderOf
 #print axioms Ecdlp.Curve.secp256k1_glvPoint_generator
+#print axioms Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples
 
 -- generic-group lower-bound combinatorial core + secp256k1 generic security
 #print axioms Ecdlp.GenericGroup.generic_dlog_query_bound
