@@ -1,24 +1,31 @@
 name: Docs sync
 
-# Makes doc-drift structurally impossible. Every derived artifact in the repo is a
-# pure function of a small set of sources (VERIFIED.md, the claim corpus, and the
-# generator scripts). This workflow regenerates ALL of them with the repo's own
-# scripts, runs the count-consistency gate, and then:
+# Makes doc-drift structurally impossible. Almost every derived artifact in the repo is a
+# pure function of a small set of committed sources (VERIFIED.md, the claim corpus, and the
+# generator scripts). This workflow regenerates ALL of them with the repo's own scripts,
+# runs the count-consistency gate, and then:
+#   - on push to main / manual dispatch: auto-commits any regenerated file with [skip ci];
+#   - on a pull request: FAILS if regeneration changed a PURE artifact, so drift is caught
+#     in review instead of being silently committed.
 #
-# SUPERSEDES stats.yml: this is a strict superset (it regenerates stats.json +
-# badge + dashboard as well), so stats.yml was retired to avoid two workflows
-# racing to push the same derived files to main.
-#   - on push to main / manual dispatch: auto-commits any regenerated file with
-#     [skip ci] (same committer + permissions as stats.yml, so the two never fight);
-#   - on a pull request: FAILS the build if regeneration changed anything, so drift
-#     is caught in review instead of being silently committed.
+# SUPERSEDES stats.yml: this is a strict superset (it regenerates stats.json + badge +
+# dashboard as well), so stats.yml was retired to avoid two workflows racing to push.
+#
+# PURE vs SITE.  build_dashboard.py is the ONE generator that reads *git history* (the
+# "Recent build milestones" list), so dashboard.html / index.html are NOT a pure function
+# of the committed sources — they can never satisfy a strict PR drift check (a page cannot
+# contain the very commit that adds it). They are therefore regenerated + committed on main
+# but EXCLUDED from the PR drift gate. Everything else is drift-gated.
+#
 # Derived files (never hand-edit — regenerate via the scripts below):
-#   data/stats.json, badges/theorems.json   (gen_stats.py)
-#   data/frontier_map.json                   (build_frontier_map.py)
-#   data/knowledge_graph.json, .md           (build_knowledge_graph.py)
-#   dashboard.html, index.html               (build_dashboard.py)
-#   COVERAGE.md                              (coverage_report.py)
-#   STATUS.md                                (gen_status.py)
+#   PURE  (drift-gated on PRs):
+#     data/stats.json, badges/theorems.json   (gen_stats.py)
+#     data/frontier_map.json                   (build_frontier_map.py)
+#     data/knowledge_graph.json, .md           (build_knowledge_graph.py)
+#     COVERAGE.md                              (coverage_report.py)
+#     STATUS.md                                (gen_status.py)
+#   SITE  (git-log-derived; committed on main, not PR-gated):
+#     dashboard.html, index.html               (build_dashboard.py)
 
 on:
   push:
@@ -45,25 +52,31 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # The complete set of derived files this workflow owns. Order in the regen steps
-  # below respects the data-flow: stats.json + frontier_map.json feed both the
-  # dashboard and STATUS.md, so they are generated first.
-  DERIVED: >-
+  # PURE artifacts — pure functions of committed sources, so regeneration must be a no-op.
+  # These are the ones the PR drift gate enforces. Order respects the data-flow:
+  # stats.json + frontier_map.json feed STATUS.md, so they are generated first.
+  DERIVED_PURE: >-
     data/stats.json
     badges/theorems.json
     data/frontier_map.json
     data/knowledge_graph.json
     data/knowledge_graph.md
-    dashboard.html
-    index.html
     COVERAGE.md
     STATUS.md
+  # SITE pages — derived partly from git history (build milestones). Committed on main,
+  # never PR-drift-gated (they cannot be reproduced from committed sources alone).
+  DERIVED_SITE: >-
+    dashboard.html
+    index.html
 
 jobs:
   docs-sync:
     runs-on: ubuntu-latest
     steps:
+      # full history so build_dashboard.py's git-log "build milestones" populate on main
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # ---- regenerate every derived artifact from its real source, in dependency order ----
       - name: Stats + badge (data/stats.json, badges/theorems.json)
@@ -83,17 +96,17 @@ jobs:
       - name: Count-consistency gate
         run: python3 scripts/check_counts.py
 
-      # ---- did regeneration change anything? ----
+      # ---- did regeneration change a PURE artifact? (SITE pages are git-derived, not gated) ----
       - name: Detect derived-artifact drift
         id: drift
         run: |
-          if git diff --quiet -- $DERIVED; then
+          if git diff --quiet -- $DERIVED_PURE; then
             echo "dirty=false" >> "$GITHUB_OUTPUT"
-            echo "derived artifacts already in sync with sources"
+            echo "pure derived artifacts already in sync with sources"
           else
             echo "dirty=true" >> "$GITHUB_OUTPUT"
             echo "::group::derived-artifact drift"
-            git --no-pager diff --stat -- $DERIVED
+            git --no-pager diff --stat -- $DERIVED_PURE
             echo "::endgroup::"
           fi
 
@@ -102,21 +115,22 @@ jobs:
         if: github.event_name == 'pull_request' && steps.drift.outputs.dirty == 'true'
         run: |
           echo "::error::Derived artifacts are stale. Run the generators locally and commit the result:"
-          echo "  python3 scripts/gen_stats.py"
-          echo "  python3 scripts/build_frontier_map.py"
-          echo "  python3 scripts/build_knowledge_graph.py"
-          echo "  python3 scripts/build_dashboard.py"
-          echo "  python3 scripts/coverage_report.py"
+          echo "  python3 scripts/gen_stats.py && python3 scripts/build_frontier_map.py"
+          echo "  python3 scripts/build_knowledge_graph.py && python3 scripts/coverage_report.py"
           echo "  python3 scripts/gen_status.py"
-          git --no-pager diff -- $DERIVED
+          git --no-pager diff -- $DERIVED_PURE
           exit 1
 
-      # ---- on main / manual run: auto-commit the refreshed artifacts (mirrors stats.yml) ----
+      # ---- on main / manual run: auto-commit the refreshed artifacts (PURE + SITE) ----
       - name: Commit refreshed artifacts
-        if: github.event_name != 'pull_request' && steps.drift.outputs.dirty == 'true'
+        if: github.event_name != 'pull_request'
         run: |
+          if git diff --quiet -- $DERIVED_PURE $DERIVED_SITE; then
+            echo "nothing to commit"
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add $DERIVED
+          git add $DERIVED_PURE $DERIVED_SITE
           git commit -m "chore(docs): resync derived artifacts from sources [skip ci]"
           git push
