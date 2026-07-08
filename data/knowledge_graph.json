@@ -2892,38 +2892,168 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.CoprimePsi2PrePsi4",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CoprimePsi2PrePsi4",
+      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CoprimePsi2Psi3",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CoprimePsi3PrePsi4",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CoprimePsi3PrePsi4",
+      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CurveTorsion",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CurveTorsion",
+      "to": "Ecdlp.Proved.Torsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomial",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "to": "Ecdlp.Proved.Secp256k1PrimeP",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DlogAdvanced",
+      "to": "Ecdlp.Proved.SchnorrSoundness",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.EmbeddingDegree",
+      "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.EvalRatAtCompat",
+      "to": "Ecdlp.Proved.PointEvaluation",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.EvalRatAtNonvanishing",
       "to": "Ecdlp.Proved.PointEvaluation",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvMinPoly",
-      "to": "Ecdlp.Proved.GlvEndomorphism",
+      "from": "Ecdlp.Proved.FiveTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvMinPoly",
-      "to": "Ecdlp.Proved.GlvHom",
+      "from": "Ecdlp.Proved.FiveTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvMinPoly",
-      "to": "Ecdlp.Proved.GlvMonoidHom",
+      "from": "Ecdlp.Proved.FiveTorsionBridge",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvMinPoly",
-      "to": "Ecdlp.Proved.GlvCubeRelation",
+      "from": "Ecdlp.Proved.FiveTorsionBridge",
+      "to": "Ecdlp.Proved.TwoTorsionPoint",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.ThreeTorsionCard",
+      "from": "Ecdlp.Proved.FiveTorsionBridge",
       "to": "Ecdlp.Proved.ThreeTorsionBridge",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.ThreeTorsionCard",
-      "to": "Ecdlp.Proved.ThreeTorsion",
+      "from": "Ecdlp.Proved.FiveTorsionBridge",
+      "to": "Ecdlp.Proved.ThreeTorsionCard",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourDivisionPolynomial",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourDivisionPolynomial",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvAddFormula",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvAutomorphism",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvAutomorphism",
+      "to": "Ecdlp.Proved.GlvEndomorphism",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvCubeRelation",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvCubeRelation",
+      "to": "Ecdlp.Proved.GlvEndomorphism",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvCubeRelation",
+      "to": "Ecdlp.Proved.GlvHom",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvEigenvalue",
+      "to": "Ecdlp.Proved.GlvMonoidHom",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvEigenvalue",
+      "to": "Ecdlp.Proved.GlvMinPoly",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvEndomorphism",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvFixedLocus",
+      "to": "Ecdlp.Proved.GlvEndomorphism",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvFixedLocus",
+      "to": "Ecdlp.Proved.GlvOrderThree",
       "type": "imports"
     },
     {
@@ -2947,123 +3077,33 @@
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.SchnorrSoundness",
-      "to": "Ecdlp.Secp256k1Verified",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.TorsionCoprime",
-      "to": "Ecdlp.Proved.Secp256k1Curve",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.DivisionPolynomialDegree",
-      "to": "Ecdlp.Proved.DivisionPolynomial",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.DivisionPolynomialDegree",
-      "to": "Ecdlp.Proved.Secp256k1PrimeP",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.GlvEigenvalue",
-      "to": "Ecdlp.Proved.GlvMonoidHom",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.GlvEigenvalue",
-      "to": "Ecdlp.Proved.GlvMinPoly",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.SemaevDegree",
-      "to": "Ecdlp.Proved.SemaevThree",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.SemaevDegree",
-      "to": "Ecdlp.Proved.SemaevFour",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.FiveTorsion",
-      "to": "Ecdlp.Proved.DivisionPolynomial",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.FiveTorsion",
-      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.Secp256k1PrimeP",
-      "to": "Ecdlp.Secp256k1Verified",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.TwoTorsion",
-      "to": "Ecdlp.Proved.DivisionPolynomial",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.GlvEndomorphism",
-      "to": "Ecdlp.Proved.Secp256k1Curve",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.GlvFixedLocus",
+      "from": "Ecdlp.Proved.GlvMinPoly",
       "to": "Ecdlp.Proved.GlvEndomorphism",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvFixedLocus",
-      "to": "Ecdlp.Proved.GlvOrderThree",
+      "from": "Ecdlp.Proved.GlvMinPoly",
+      "to": "Ecdlp.Proved.GlvHom",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvSlopeTangent",
-      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "from": "Ecdlp.Proved.GlvMinPoly",
+      "to": "Ecdlp.Proved.GlvMonoidHom",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.PointEvaluation",
-      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "from": "Ecdlp.Proved.GlvMinPoly",
+      "to": "Ecdlp.Proved.GlvCubeRelation",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.Secp256k1PrimeN",
-      "to": "Ecdlp.Secp256k1Verified",
+      "from": "Ecdlp.Proved.GlvMonoidHom",
+      "to": "Ecdlp.Proved.GlvEndomorphism",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.SevenTorsionBridge",
-      "to": "Ecdlp.Proved.FiveTorsionBridge",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.GlvSlopeAll",
-      "to": "Ecdlp.Proved.GlvSlope",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.GlvSlopeAll",
-      "to": "Ecdlp.Proved.GlvSlopeTangent",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.Secp256k1Curve",
-      "to": "Ecdlp.Secp256k1Verified",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.CoprimePsi3PrePsi4",
-      "to": "Ecdlp.Proved.DivisionPolynomial",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.CoprimePsi3PrePsi4",
-      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "from": "Ecdlp.Proved.GlvMonoidHom",
+      "to": "Ecdlp.Proved.GlvHom",
       "type": "imports"
     },
     {
@@ -3077,78 +3117,43 @@
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvMonoidHom",
-      "to": "Ecdlp.Proved.GlvEndomorphism",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.GlvMonoidHom",
-      "to": "Ecdlp.Proved.GlvHom",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.EvalRatAtCompat",
-      "to": "Ecdlp.Proved.PointEvaluation",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
-      "to": "Ecdlp.Proved.WeilDivisorClass",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
-      "to": "Ecdlp.Proved.ThreeTorsionBridge",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
-      "to": "Ecdlp.Proved.FiveTorsionBridge",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
-      "to": "Ecdlp.Proved.SevenTorsionBridge",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.GlvCubeRelation",
+      "from": "Ecdlp.Proved.GlvOrderThree",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvCubeRelation",
+      "from": "Ecdlp.Proved.GlvOrderThree",
       "to": "Ecdlp.Proved.GlvEndomorphism",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvCubeRelation",
-      "to": "Ecdlp.Proved.GlvHom",
+      "from": "Ecdlp.Proved.GlvOrderThree",
+      "to": "Ecdlp.Proved.GlvMonoidHom",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.ScalarGroupStructure",
-      "to": "Ecdlp.Proved.Secp256k1PrimeN",
+      "from": "Ecdlp.Proved.GlvOrderThree",
+      "to": "Ecdlp.Proved.GlvMinPoly",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.SemaevFour",
-      "to": "Ecdlp.Proved.SemaevThree",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.CurveTorsion",
+      "from": "Ecdlp.Proved.GlvSlope",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.CurveTorsion",
-      "to": "Ecdlp.Proved.Torsion",
+      "from": "Ecdlp.Proved.GlvSlopeAll",
+      "to": "Ecdlp.Proved.GlvSlope",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.DlogAdvanced",
-      "to": "Ecdlp.Proved.SchnorrSoundness",
+      "from": "Ecdlp.Proved.GlvSlopeAll",
+      "to": "Ecdlp.Proved.GlvSlopeTangent",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.GlvSlopeTangent",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
@@ -3192,33 +3197,28 @@
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.DivisionPolynomial",
+      "from": "Ecdlp.Proved.Invariants",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.SemaevThree",
-      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "from": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
+      "to": "Ecdlp.Proved.WeilDivisorClass",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.TorsionPointCount",
+      "from": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
+      "to": "Ecdlp.Proved.ThreeTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
+      "to": "Ecdlp.Proved.FiveTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
       "to": "Ecdlp.Proved.SevenTorsionBridge",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.TorsionPointCount",
-      "to": "Ecdlp.Proved.ThreeTorsionCard",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.ThreeTorsion",
-      "to": "Ecdlp.Proved.DivisionPolynomial",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.ThreeTorsion",
-      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
       "type": "imports"
     },
     {
@@ -3227,33 +3227,28 @@
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvOrderThree",
+      "from": "Ecdlp.Proved.NumeratorDominates",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvOrderThree",
-      "to": "Ecdlp.Proved.GlvEndomorphism",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.GlvOrderThree",
-      "to": "Ecdlp.Proved.GlvMonoidHom",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.GlvOrderThree",
-      "to": "Ecdlp.Proved.GlvMinPoly",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.TwoTorsionPoint",
-      "to": "Ecdlp.Proved.Secp256k1Curve",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.TwoTorsionPoint",
+      "from": "Ecdlp.Proved.OddTorsionBound",
       "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.OddTorsionBound",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.PointDecomposition",
+      "to": "Ecdlp.Proved.SemaevThree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.PointEvaluation",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
@@ -3262,13 +3257,18 @@
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.EmbeddingDegree",
+      "from": "Ecdlp.Proved.ScalarGroupStructure",
+      "to": "Ecdlp.Proved.Secp256k1PrimeN",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SchnorrSoundness",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvAddFormula",
-      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "from": "Ecdlp.Proved.Secp256k1Curve",
+      "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
     },
     {
@@ -3282,88 +3282,78 @@
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvSlope",
-      "to": "Ecdlp.Proved.Secp256k1Curve",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.FiveTorsionBridge",
-      "to": "Ecdlp.Proved.DivisionPolynomial",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.FiveTorsionBridge",
-      "to": "Ecdlp.Proved.TwoTorsionPoint",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.FiveTorsionBridge",
-      "to": "Ecdlp.Proved.ThreeTorsionBridge",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.FiveTorsionBridge",
-      "to": "Ecdlp.Proved.ThreeTorsionCard",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.SevenTorsion",
-      "to": "Ecdlp.Proved.DivisionPolynomial",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.SevenTorsion",
-      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.CoprimePsi2Psi3",
-      "to": "Ecdlp.Proved.DivisionPolynomial",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.NumeratorDominates",
-      "to": "Ecdlp.Proved.Secp256k1Curve",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.WeilDivisorClass",
-      "to": "Ecdlp.Proved.Secp256k1Curve",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.TraceOfFrobenius",
+      "from": "Ecdlp.Proved.Secp256k1Order",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.OddTorsionBound",
-      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "from": "Ecdlp.Proved.Secp256k1Order",
+      "to": "Ecdlp.Proved.CubeRoot",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.OddTorsionBound",
-      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "from": "Ecdlp.Proved.Secp256k1Params",
+      "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.FourDivisionPolynomial",
-      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "from": "Ecdlp.Proved.Secp256k1PrimeN",
+      "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.FourDivisionPolynomial",
-      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "from": "Ecdlp.Proved.Secp256k1PrimeP",
+      "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvAutomorphism",
+      "from": "Ecdlp.Proved.SemaevDegree",
+      "to": "Ecdlp.Proved.SemaevThree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SemaevDegree",
+      "to": "Ecdlp.Proved.SemaevFour",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SemaevFour",
+      "to": "Ecdlp.Proved.SemaevThree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SemaevThree",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.GlvAutomorphism",
-      "to": "Ecdlp.Proved.GlvEndomorphism",
+      "from": "Ecdlp.Proved.SevenTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionBridge",
+      "to": "Ecdlp.Proved.FiveTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SmallPrimeTorsion",
+      "to": "Ecdlp.Proved.SevenTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
       "type": "imports"
     },
     {
@@ -3372,23 +3362,38 @@
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.CoprimePsi2PrePsi4",
-      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "from": "Ecdlp.Proved.ThreeTorsionCard",
+      "to": "Ecdlp.Proved.ThreeTorsionBridge",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.CoprimePsi2PrePsi4",
-      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "from": "Ecdlp.Proved.ThreeTorsionCard",
+      "to": "Ecdlp.Proved.ThreeTorsion",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.Invariants",
+      "from": "Ecdlp.Proved.TorsionCoprime",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.SmallPrimeTorsion",
+      "from": "Ecdlp.Proved.TorsionPointCount",
       "to": "Ecdlp.Proved.SevenTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TorsionPointCount",
+      "to": "Ecdlp.Proved.ThreeTorsionCard",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TraceOfFrobenius",
+      "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TwoTorsion",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
     },
     {
@@ -3407,23 +3412,18 @@
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.PointDecomposition",
-      "to": "Ecdlp.Proved.SemaevThree",
+      "from": "Ecdlp.Proved.TwoTorsionPoint",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.Secp256k1Order",
-      "to": "Ecdlp.Secp256k1Verified",
+      "from": "Ecdlp.Proved.TwoTorsionPoint",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Proved.Secp256k1Order",
-      "to": "Ecdlp.Proved.CubeRoot",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.Secp256k1Params",
-      "to": "Ecdlp.Secp256k1Verified",
+      "from": "Ecdlp.Proved.WeilDivisorClass",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
     },
     {

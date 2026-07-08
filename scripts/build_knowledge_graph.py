@@ -92,7 +92,10 @@ def lean_path(module: str) -> Path | None:
 def parse_imports() -> dict[str, list[str]]:
     """module -> list of Ecdlp.* modules it imports (intra-project edges only)."""
     edges: dict[str, list[str]] = {}
-    lean_files = list(ROOT.glob("Ecdlp/**/*.lean")) + [ROOT / "Ecdlp.lean"]
+    # sorted() makes the module order (hence the emitted edge order) deterministic:
+    # bare glob() yields filesystem order, which differs between machines/CI and made
+    # data/knowledge_graph.json non-reproducible (docs-sync drift).
+    lean_files = sorted(ROOT.glob("Ecdlp/**/*.lean")) + [ROOT / "Ecdlp.lean"]
     for f in lean_files:
         if not f.exists():
             continue
