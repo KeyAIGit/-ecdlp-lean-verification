@@ -152,7 +152,13 @@ def main(argv: list[str]) -> int:
     overrides = {}
     if OVERRIDES.exists():
         overrides = (json.loads(OVERRIDES.read_text(encoding="utf-8")) or {}).get("overrides", {})
-    verified_rows = len(re.findall(r"^\|.*\| (?:proved|proved[¹²]| ?proved.*)\|?\s*$", vtext, re.M))
+    # Headline ledger-row count comes from the ONE canonical source (stats.json → VERIFIED.md's
+    # canonical figure), never re-tallied here, so this map can't disagree with STATUS.md.
+    # Fall back to the regex tally only if stats.json is absent (first-run bootstrap).
+    stats_path = ROOT / "data" / "stats.json"
+    stats = json.loads(stats_path.read_text(encoding="utf-8")) if stats_path.exists() else {}
+    verified_rows = int(stats.get("ledger_rows") or
+                        len(re.findall(r"^\|.*\| (?:proved|proved[¹²]| ?proved.*)\|?\s*$", vtext, re.M)))
 
     claims = []
     status_ct: Counter = Counter()

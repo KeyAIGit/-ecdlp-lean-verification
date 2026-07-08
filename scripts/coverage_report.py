@@ -18,6 +18,7 @@ Run: python3 scripts/coverage_report.py   (writes COVERAGE.md; prints the summar
 from __future__ import annotations
 
 import csv
+import json
 import re
 from collections import Counter
 from pathlib import Path
@@ -25,6 +26,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CORPUS = ROOT / "data" / "KG_CLAIM_FORMALIZATION_v1.csv"
 VERIFIED = ROOT / "VERIFIED.md"
+STATS = ROOT / "data" / "stats.json"
 
 # formal_status buckets grouped by what they mean for the formal effort.
 FORMALIZABLE_NOW = {"formalizable"}          # direct
@@ -55,7 +57,13 @@ def main() -> int:
     n_formalizable = n_tractable + n_hard  # formalizable in principle
 
     vtext = VERIFIED.read_text(encoding="utf-8")
-    n_verified_rows = ledger_rows(vtext)
+    # Headline row/distinct counts come from the ONE canonical source (stats.json, itself
+    # derived from VERIFIED.md's canonical figure) — never recomputed here, so this doc
+    # cannot disagree with STATUS.md / the badge. Fall back to the regex tally only if
+    # stats.json is absent (first-run bootstrap).
+    stats = json.loads(STATS.read_text(encoding="utf-8")) if STATS.exists() else {}
+    n_verified_rows = int(stats.get("ledger_rows") or ledger_rows(vtext))
+    n_distinct = int(stats.get("distinct_results") or (n_verified_rows - 11))
     corpus_ids = {(r.get("claim_id", "") or "").strip() for r in rows if r.get("claim_id")}
     directly_cited = sorted(cid for cid in corpus_ids if cid and cid in vtext)
 
@@ -70,7 +78,7 @@ misleading, because this project is a verified **foundation adjacent to** the EC
 knowledge corpus, not a claim-by-claim formalization of it.*
 
 ## (1) Verified asset (the thing that exists)
-- **{n_verified_rows} kernel-verified ledger rows** (~{n_verified_rows-11} distinct
+- **{n_verified_rows} kernel-verified ledger rows** (~{n_distinct} distinct
   results after merging alternate-form/supporting rows), **0 `sorry`, no custom axioms**
   (machine-enforced; `native_decide` facts trust the compiler — see `TRUST_REPORT.md`).
 - Substantive fraction (honest, per `REVIEW_DOSSIER.md`): **~10–15%** genuinely novel

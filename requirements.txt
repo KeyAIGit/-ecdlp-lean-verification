@@ -1,0 +1,24 @@
+# Optional Python dependencies for the auxiliary scripts.
+#
+# IMPORTANT: the correctness pipeline needs NONE of these. Lean + Mathlib is the
+# verifier; the doc/stats/graph generators (gen_stats, build_frontier_map,
+# build_knowledge_graph, build_dashboard, coverage_report, gen_status, check_counts)
+# use the Python 3 standard library only. Install these only to run the *optional*
+# CAS-certificate and model-prover/explorer scripts below.
+#
+#   sympy      — offline CAS certificates (scripts/certify.py, pratt_certificate.py,
+#                scripts/certs/*): independent-verification of division-polynomial /
+#                torsion / Pratt-factor identities before a Lean transcription.
+#   anthropic  — strong-model proposer (scripts/agent_prove.py, agent_day.py,
+#                certify.py, explore_pipeline.py); reads ANTHROPIC_API_KEY from env.
+#   openai     — OpenAI-compatible clients for Featherless / DeepSeek tiers
+#                (scripts/explore_pipeline.py, hypothesis_explorer.py). The Featherless
+#                tier is currently idle (HTTP 403); see SETUP.md "Operational reality".
+#
+# Floors, not exact pins: these scripts are auxiliary and API-surface-stable across
+# these ranges. The reproducible artifact is the Lean toolchain (lean-toolchain,
+# lakefile.toml, lake-manifest.json), not this file.
+
+sympy>=1.13,<2
+anthropic>=0.40,<1
+openai>=1.50,<2

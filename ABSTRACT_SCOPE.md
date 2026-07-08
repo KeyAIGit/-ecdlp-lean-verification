@@ -1,11 +1,13 @@
 # ABSTRACT_SCOPE.md — Honest scope map of the "discrete-log cryptography library"
 
+> Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
+
 > Answers REVIEW_DOSSIER.md **Finding 1** ("The 'discrete-log cryptography
 > library' is abstract algebra mislabeled as cryptography").
 
 ## Canonical accounting
 
-- **114 ledger rows / ~105 distinct kernel-verified results** (9 rows are
+- **210 ledger rows / ~177 distinct kernel-verified results** (33 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard

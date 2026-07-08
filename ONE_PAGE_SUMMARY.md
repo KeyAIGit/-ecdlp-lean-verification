@@ -1,8 +1,10 @@
 # ECDLP Lean verification — one-page external summary
 
+> Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
+
 A hand-built, AI-assisted, kernel-verified Lean 4 + Mathlib library about the
 secp256k1 elliptic curve and the boundary of the classical attacks on its discrete-log
-problem. **114 ledger rows / ~105 distinct kernel-verified results** (9 rows are
+problem. **210 ledger rows / ~177 distinct kernel-verified results** (33 rows are
 alternate-form or supporting restatements of the same fact). **0 `sorry`, 0 `admit`,
 0 open obligations.**
 

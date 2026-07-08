@@ -6,7 +6,7 @@ misleading, because this project is a verified **foundation adjacent to** the EC
 knowledge corpus, not a claim-by-claim formalization of it.*
 
 ## (1) Verified asset (the thing that exists)
-- **126 kernel-verified ledger rows** (~115 distinct
+- **210 kernel-verified ledger rows** (~177 distinct
   results after merging alternate-form/supporting rows), **0 `sorry`, no custom axioms**
   (machine-enforced; `native_decide` facts trust the compiler — see `TRUST_REPORT.md`).
 - Substantive fraction (honest, per `REVIEW_DOSSIER.md`): **~10–15%** genuinely novel
@@ -31,8 +31,8 @@ endomorphism. What remains is the **formalizable-hard** bucket (212,
 *missing Mathlib foundations*. Each is a research project in itself (see §4).
 
 ## (3) Direct corpus coverage
-Only **5** corpus `claim_id`s are explicitly cited in the ledger
-(glv-subgroup-eigenvalue-006, pollard-multistage-004, sec2-domain-parameters-001, sec2-secp256k1-field-005, sec2-secp256k1-group-006). This is expected and honest:
+Only **7** corpus `claim_id`s are explicitly cited in the ledger
+(glv-subgroup-eigenvalue-006, jacobson-xedni-dependence-recovers-log-003, mov-random-q-success-probability-006, pollard-multistage-004, sec2-domain-parameters-001, sec2-secp256k1-field-005, sec2-secp256k1-group-006). This is expected and honest:
 the corpus is atomic-claim-level and served as a **triage source**, while the verified
 asset is foundation-level. The corpus's real contribution here is the *barriers map*, not
 a checklist being ticked off.

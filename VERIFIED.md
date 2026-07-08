@@ -256,7 +256,7 @@ Lean compiler** via the `Lean.ofReduceBool` axiom, a real extension of the trust
 these are catalogued in `TRUST_REPORT.md`. The earlier "128 theorems" figure counted the
 ~22 internal recursive Pratt-certificate sub-lemmas individually and is **retired**.
 
-What the ~105 results cover: the generic-group `Θ(√n)` combinatorial core and secp256k1
+What the ~177 results cover: the generic-group `Θ(√n)` combinatorial core and secp256k1
 ≥128-bit *generic* security (**classical, black-box model only** — not unconditional, and
 false against quantum/Shor; scope in `notes/SECURITY_SCOPE.md`); an **abstract** discrete-log
 protocol algebra over

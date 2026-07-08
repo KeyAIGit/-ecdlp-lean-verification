@@ -1,5 +1,11 @@
 # REVIEW DOSSIER — ECDLP Lean verification (independent-review packet)
 
+> **Historical snapshot.** This dossier reflects the ledger as it stood at review time
+> (**~105 distinct / ~114 rows**); those figures are frozen here on purpose as the record the
+> reviewers acted on. They are **not** current. The single canonical, live figure is **`STATUS.md`**
+> (generated from `data/stats.json`); today's ledger is larger. Read the analysis below for the
+> *reasoning*, not the counts. This file is intentionally excluded from the count-drift gate.
+
 This is an honest, de-inflated synthesis of five adversarial reviews (Correctness & Soundness, Novelty & Significance, Claims & Count Integrity, GLV Endomorphism deep-audit, Strategy & Trajectory) prepared for an independent GPT reviewer to act on. **State of project, plainly:** the kernel-checked core is genuinely sound — there are **0 `sorry`, 0 `admit`, 0 axioms** in any built file (`Ecdlp/Proved/*` and the base layer; the only `sorry` strings live in `Ecdlp/Targets/*` stems and in prose/README, and `Ecdlp/Targets/*` is verifiably never imported from `Ecdlp.lean`, confirmed lines 1–39). CI-green therefore means every built theorem is fully proved with no axioms. The honest headline ledger size is **~105 distinct named results** (≈114 literal table rows before merging alternate-form restatements; the previously-circulated **128 is a retracted over-count** — see final section). The freshly-completed GLV endomorphism object (`glvPoint_add`, `Ecdlp/Proved/GlvHom.lean:41`, finished Jun 30) is real, non-trivial mathematics with full branch analysis and no `sorry` — but it proves only the *homomorphism half* (additivity), not the cryptographically load-bearing `glvPoint = [λ]` eigenvalue property, which remains an open stem. The substantive-vs-scaffolding ratio is roughly **10–15% substantive, ~85% routine** verified engineering; the autonomy/server/Featherless apparatus has produced essentially **zero** novel mathematics and is the project's largest credibility liability.
 
 ## What is actually verified

@@ -29,7 +29,6 @@ from __future__ import annotations
 import json
 import re
 import subprocess
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -304,7 +303,10 @@ def main() -> int:
     completeness = fm["meta"]["frontier_completeness_pct"]
     total = fm["meta"]["corpus_claims"]
     blocked_total = sum(f["blocks_corpus_claims"] for f in foundations.values())
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    # Deterministic snapshot marker derived from ledger content, NOT wall-clock: docs-sync
+    # requires regeneration to be a pure function of sources, so a clock stamp would make the
+    # dashboard drift on every run. Freshness is conveyed by the counts themselves.
+    stamp = f"{vcount} ledger rows / ~{distinct} distinct"
 
     # (label, count-up target|None, unit, sub-caption). A None target means the value
     # is a range/estimate — animating it as a precise count-up would misrepresent it
@@ -344,7 +346,8 @@ def main() -> int:
         for h, s in git_log())
 
     nav_html = build_nav_html()
-    year = datetime.now(timezone.utc).year
+    # Static (not wall-clock) so regeneration stays a pure function of sources (docs-sync).
+    year = 2026
 
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">

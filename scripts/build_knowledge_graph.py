@@ -92,7 +92,10 @@ def lean_path(module: str) -> Path | None:
 def parse_imports() -> dict[str, list[str]]:
     """module -> list of Ecdlp.* modules it imports (intra-project edges only)."""
     edges: dict[str, list[str]] = {}
-    lean_files = list(ROOT.glob("Ecdlp/**/*.lean")) + [ROOT / "Ecdlp.lean"]
+    # sorted() makes the module order (hence the emitted edge order) deterministic:
+    # bare glob() yields filesystem order, which differs between machines/CI and made
+    # data/knowledge_graph.json non-reproducible (docs-sync drift).
+    lean_files = sorted(ROOT.glob("Ecdlp/**/*.lean")) + [ROOT / "Ecdlp.lean"]
     for f in lean_files:
         if not f.exists():
             continue
@@ -358,8 +361,14 @@ def render_markdown(graph: dict) -> str:
     )
     lines.append("")
     lines.append(
-        f"**{c['theorems']} theorems** · **{c['barriers']} barriers** · "
+        f"**{c['theorems']} theorem nodes** · **{c['barriers']} barriers** · "
         f"**{c['edges']} edges**"
+    )
+    lines.append("")
+    lines.append(
+        "> *Theorem-node count is the graph's own view (unique parsed ledger entries) and "
+        "may differ by a row or two from the canonical ledger figure — the single source of "
+        "truth for headline counts is `STATUS.md`.*"
     )
     lines.append("")
     lines.append("By proof method: "
