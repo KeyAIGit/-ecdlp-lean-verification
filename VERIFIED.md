@@ -68,6 +68,7 @@ git history and the GitHub Actions tab.
 | **secp256k1 generator is nonsingular** (a group element) | `Ecdlp.Curve.secp256k1_generator_nonsingular` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib + native_decide | proved² |
 | **secp256k1 base point has exact order `n`** (weak point-counting keystone: `⟨G⟩` cyclic of order `n`, no Hasse/`#E`) | `Ecdlp.Curve.secp256k1_generator_addOrderOf` | Ecdlp/Proved/GeneratorOrder.lean | Mathlib + native_decide | proved² |
 | **secp256k1 GLV endomorphism acts as `[λ]` at the generator** (`glvPoint G = λ·G`, unconditional) | `Ecdlp.Curve.secp256k1_glvPoint_generator` | Ecdlp/Proved/GeneratorOrder.lean | Mathlib + native_decide | proved² |
+| **secp256k1 GLV endomorphism acts as `[λ]` on all of `⟨G⟩`** (`glvPoint P = λ·P` ∀ P ∈ zmultiples G — unconditional, no point-counting) | `Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples` | Ecdlp/Proved/GlvSubgroupEigenvalue.lean | Mathlib | proved² |
 | secp256k1 base point annihilated by `n` (`n·G = 0`, supporting `addOrderOf`) | `Ecdlp.Curve.secp256k1_generator_nsmul_n_eq_zero` | Ecdlp/Proved/GeneratorOrder.lean | native_decide | proved² |
 | secp256k1 base point is non-identity (`G ≠ 0`, supporting `addOrderOf`) | `Ecdlp.Curve.secp256k1_generator_ne_zero` | Ecdlp/Proved/GeneratorOrder.lean | Mathlib | proved |
 | **secp256k1 field prime `p` is prime** (full Pratt certificate) | `Ecdlp.Primality.secp256k1_p_prime` | Ecdlp/Proved/Secp256k1PrimeP.lean | Mathlib + native_decide | proved |
@@ -245,7 +246,7 @@ is Xu & Angdinata's. It is built and gated (the one-invariant holds), but delibe
 `isEllSequence_of_rec_one` (headline row above) remains this repo's own contribution.
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**214 ledger rows / ~179 distinct kernel-verified results** (34 rows are alternate-form
+**215 ledger rows / ~180 distinct kernel-verified results** (34 rows are alternate-form
 or `supporting:` restatements of the same fact, e.g. the `ZMod`/ring forms of the GLV
 eigenvalue, the operator form of the GLV cube relation, and the Semaev `S₃` symmetry
 lemmas — see the tagged rows above).

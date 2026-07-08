@@ -6,7 +6,7 @@ across docs for the same body of work). This gate fails the build if any RETIRED
 count string reappears in the narrative docs, and sanity-checks that the canonical figure
 is present in VERIFIED.md.
 
-Canonical figure (single source of truth): "214 ledger rows / ~179 distinct results".
+Canonical figure (single source of truth): "215 ledger rows / ~180 distinct results".
 Update CANONICAL_PRESENT / RETIRED here (and only here) if the real count changes.
 The one human-facing snapshot is `STATUS.md` (generated); other summary docs must point to
 it rather than re-state counts, and are scanned below so a stale copy fails the build.
@@ -113,10 +113,11 @@ RETIRED = [
     "~177 distinct", "210 ledger rows", "210 rows",
     "~178 distinct", "211 ledger rows", "211 rows",
     "212 ledger rows", "212 rows", "213 ledger rows", "213 rows",
+    "~179 distinct", "214 ledger rows", "214 rows",
 ]
 
 # Must appear somewhere in VERIFIED.md so the canonical figure stays discoverable.
-CANONICAL_PRESENT = ["~179 distinct", "214 ledger rows"]
+CANONICAL_PRESENT = ["~180 distinct", "215 ledger rows"]
 
 
 def main() -> int:
@@ -146,7 +147,7 @@ def main() -> int:
 
     if failures:
         print("COUNT CONSISTENCY FAILED — fix these to the canonical figure "
-              "'214 ledger rows / ~179 distinct results' (or point the doc at STATUS.md):")
+              "'215 ledger rows / ~180 distinct results' (or point the doc at STATUS.md):")
         print("\n".join("  " + f for f in failures))
         return 1
     print("count consistency OK: no retired headline counts; canonical figure present.")
