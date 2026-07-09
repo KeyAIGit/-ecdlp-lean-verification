@@ -89,3 +89,4 @@ import Ecdlp.Proved.PointSeparation
 import Ecdlp.Proved.MillerDivisionPolynomialBridge
 import Ecdlp.Proved.GeneratorOrder
 import Ecdlp.Proved.GlvSubgroupEigenvalue
+import Ecdlp.Proved.ProtocolInstantiation

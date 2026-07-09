@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 214,
+    "theorems": 217,
     "barriers": 6,
-    "edges": 218,
+    "edges": 222,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 27,
@@ -17,6 +17,7 @@
       "Mathlib + the bridges": 2,
       "Mathlib (`Point.neg_some`, `add_neg_cancel`)": 2,
       "Mathlib (`Iff.trans`)": 2,
+      "instantiation of `Ecdlp.Schnorr.*` on `↥⟨G⟩": 2,
       "Mathlib (`map_zsmul`)": 1,
       "Mathlib (`natDegree_Φ`,`natDegree_ΨSq`)": 1,
       "Mathlib (`EuclideanDomain.gcd`, `IsAlgClosed.exists_root`, `degree_map_eq_of_injective`)": 1,
@@ -69,13 +70,14 @@
       "Mathlib (`Ideal.eq_top_of_isUnit_mem`, `Ideal.subset_span`)": 1,
       "Mathlib (`map_eq_zero_iff`, `Ideal.Quotient.eq_zero_iff_mem`)": 1,
       "Mathlib (`IsLocalRing.mem_maximalIdeal`, `mem_nonunits_iff`)": 1,
-      "Mathlib (`Iff.trans`; composes `secp256k1_three_nsmul_eq_zero_iff` + `secp256k1_torsion_iff_principal`)": 1
+      "Mathlib (`Iff.trans`; composes `secp256k1_three_nsmul_eq_zero_iff` + `secp256k1_torsion_iff_principal`)": 1,
+      "secp256k1_generator_addOrderOf` + Mathlib (`AddCommGroup.zmodModule`, `zmultiples_le_torsionBy`)": 1
     },
     "by_area": {
-      "curve-torsion": 119,
+      "curve-torsion": 120,
+      "protocol-soundness": 23,
       "generic-hardness": 22,
       "primality": 21,
-      "protocol-soundness": 21,
       "other": 21,
       "reduction": 5,
       "attack-resistance": 4,
@@ -2864,6 +2866,45 @@
       "area": "curve-torsion",
       "dependency_depth": 8,
       "gated": true
+    },
+    {
+      "id": "thm-214",
+      "name": "Ecdlp.Curve.secp256k1_grp_nsmul_eq_zero` (+ the `Module (ZMod n) ↥⟨G⟩` instance, `secp256k1Gₙ`)",
+      "short_name": "secp256k1_grp_nsmul_eq_zero`",
+      "module": "Ecdlp.Proved.ProtocolInstantiation",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "claim": "The concrete secp256k1 subgroup `⟨G⟩` is a `ZMod n`-module (`secp256k1_grp_nsmul_eq_zero`: every point of `⟨G⟩ = zmultiples secp256k1G` is annihilated by `n`, so `⟨G⟩` carries a `Module (ZMod n)` structure built via `AddCommGroup.zmodModule`. This realises the abstract discrete-log model on a genuine elliptic-curve group — Mathlib provides no automatic `ZMod n`-module on a cyclic subgroup; it must be constructed from the exponent bound, which the weak keystone `addOrderOf secp256k1G = n` supplies. The bridge that lets every abstract protocol theorem instantiate on real `WeierstrassCurve.Affine.Point` values)",
+      "method": "secp256k1_generator_addOrderOf` + Mathlib (`AddCommGroup.zmodModule`, `zmultiples_le_torsionBy`)",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-215",
+      "name": "Ecdlp.Curve.secp256k1_dh_agree`, `secp256k1_schnorr_verify`, `secp256k1_taproot_tweak_verify`, `secp256k1_adaptor_complete",
+      "short_name": "secp256k1_dh_agree`,",
+      "module": "Ecdlp.Proved.ProtocolInstantiation",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "claim": "Deployed signature/agreement protocols are correct on the concrete secp256k1 group (the abstract `Ecdlp.Schnorr` correctness theorems instantiated at the concrete carrier `↥⟨G⟩` with base point `secp256k1Gₙ`, about genuine curve points: Diffie–Hellman agreement `secp256k1_dh_agree`, Schnorr/EdDSA verification `secp256k1_schnorr_verify`, Bitcoin Taproot key-tweak `secp256k1_taproot_tweak_verify` (BIP-341), adaptor-signature completeness `secp256k1_adaptor_complete` (atomic swaps / Lightning PTLCs). Contingent only on `ord(G) = n` + the abstract algebra — the honest content: the real secp256k1 protocols verify on the actual curve subgroup, not only an abstract module)",
+      "method": "instantiation of `Ecdlp.Schnorr.*` on `↥⟨G⟩",
+      "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-216",
+      "name": "Ecdlp.Curve.secp256k1_threshold_schnorr_aggregate`, `secp256k1_musig_key_aggregate`, `secp256k1_feldman_vss_verify`, `secp256k1_threshold_elgamal_combine`, `secp256k1_schnorr_batch_verify",
+      "short_name": "secp256k1_threshold_schnorr_aggregate`,",
+      "module": "Ecdlp.Proved.ProtocolInstantiation",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "claim": "*(instantiation, multiparty protocols)* the same concrete-`⟨G⟩` realization for the multi-signer / threshold protocols — aggregate Schnorr / Taproot multisig `secp256k1_threshold_schnorr_aggregate` (MuSig/FROST), MuSig2 key aggregation `secp256k1_musig_key_aggregate`, Feldman VSS share verification `secp256k1_feldman_vss_verify` (DKG), threshold ElGamal partial-decryption combination `secp256k1_threshold_elgamal_combine`, batch Schnorr verification `secp256k1_schnorr_batch_verify",
+      "method": "instantiation of `Ecdlp.Schnorr.*` on `↥⟨G⟩",
+      "status": "proved",
+      "area": "protocol-soundness",
+      "dependency_depth": 4,
+      "gated": true
     }
   ],
   "barriers": [
@@ -3344,6 +3385,21 @@
     {
       "from": "Ecdlp.Proved.PointSeparation",
       "to": "Ecdlp.Proved.PointEvaluation",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ProtocolInstantiation",
+      "to": "Ecdlp.Proved.GeneratorOrder",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ProtocolInstantiation",
+      "to": "Ecdlp.Proved.Torsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ProtocolInstantiation",
+      "to": "Ecdlp.Proved.DlogCompleteness",
       "type": "imports"
     },
     {
@@ -3969,6 +4025,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.GlvSubgroupEigenvalue",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.ProtocolInstantiation",
       "type": "imports"
     },
     {

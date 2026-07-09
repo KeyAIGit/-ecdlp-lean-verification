@@ -2,9 +2,10 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `215 ledger rows / ~180 distinct kernel-verified
-results` (≈34 of the 215 rows are alternate-form or `supporting:` restatements of the
-same underlying fact — e.g. the `ZMod`/ring forms of the GLV eigenvalue — so they do
+**Scope of the verified body.** `218 ledger rows / ~182 distinct kernel-verified
+results` (≈36 of the 218 rows are alternate-form or `supporting:` restatements of the
+same underlying fact — e.g. the `ZMod`/ring forms of the GLV eigenvalue, or the
+concrete-`⟨G⟩` instantiations of the abstract protocol suite — so they do
 not add new content). **0 `sorry`, 0 `admit`, 0 open obligations, 0 custom axioms.**
 
 This document states *precisely* what "verified" rests on, which results extend the

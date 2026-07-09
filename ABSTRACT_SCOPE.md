@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **215 ledger rows / ~180 distinct kernel-verified results** (34 rows are
+- **218 ledger rows / ~182 distinct kernel-verified results** (36 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
