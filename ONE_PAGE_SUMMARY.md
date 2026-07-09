@@ -4,7 +4,7 @@
 
 A hand-built, AI-assisted, kernel-verified Lean 4 + Mathlib library about the
 secp256k1 elliptic curve and the boundary of the classical attacks on its discrete-log
-problem. **215 ledger rows / ~180 distinct kernel-verified results** (34 rows are
+problem. **218 ledger rows / ~182 distinct kernel-verified results** (36 rows are
 alternate-form or supporting restatements of the same fact). **0 `sorry`, 0 `admit`,
 0 open obligations.**
 

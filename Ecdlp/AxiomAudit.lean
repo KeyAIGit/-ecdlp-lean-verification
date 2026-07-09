@@ -40,6 +40,13 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_glvPoint_generator
 #print axioms Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples
 
+-- protocol algebra instantiated on the concrete secp256k1 subgroup ⟨G⟩
+-- (bridge lemma inherits `Lean.ofReduceBool` from the order keystone)
+#print axioms Ecdlp.Curve.secp256k1_grp_nsmul_eq_zero
+#print axioms Ecdlp.Curve.secp256k1_dh_agree
+#print axioms Ecdlp.Curve.secp256k1_schnorr_verify
+#print axioms Ecdlp.Curve.secp256k1_taproot_tweak_verify
+
 -- generic-group lower-bound combinatorial core + secp256k1 generic security
 #print axioms Ecdlp.GenericGroup.generic_dlog_query_bound
 #print axioms Ecdlp.GenericGroup.secp256k1_generic_security
