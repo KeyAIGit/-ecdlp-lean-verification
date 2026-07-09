@@ -78,6 +78,10 @@ def main() -> int:
           "index.html distinct-results counter does not match data/stats.json")
     check(f"snapshot {ledger_rows} ledger rows / ~{distinct} distinct" in dashboard,
           "dashboard.html snapshot stamp does not match data/stats.json")
+    check("Sync Health" in dashboard,
+          "dashboard.html must expose a Sync Health section")
+    check("repo/ARTIFACTS.yaml" in dashboard and "scripts/check_repo_artifacts.py" in dashboard,
+          "dashboard.html Sync Health must link the artifact manifest to its gate")
 
     graph_counts = graph.get("counts", {})
     check(isinstance(graph_counts.get("theorems"), int) and graph_counts["theorems"] > 0,

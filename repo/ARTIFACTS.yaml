@@ -107,6 +107,7 @@ classes:
     gates:
       - scripts/check_status_consistency.py
       - scripts/check_counts.py
+      - scripts/check_repo_artifacts.py
     risks:
       - Hand edits create invisible drift unless encoded in generators.
 
@@ -145,6 +146,7 @@ classes:
     generated: false
     gates:
       - scripts/check_status_consistency.py
+      - scripts/check_repo_artifacts.py
       - adversarial Claude review
     risks:
       - Too much prose can become another stale source of truth.
@@ -239,8 +241,8 @@ cleanup_candidates:
     delete_now: false
 
 follow_up_prs:
-  - id: repo-manifest-gate
-    goal: Add a lightweight script that validates paths in repo/ARTIFACTS.yaml.
+  - id: repo-manifest-schema-hardening
+    goal: Expand scripts/check_repo_artifacts.py beyond path existence into a stricter schema gate.
   - id: dashboard-sync-health
     goal: Add public sync health and robust generation across Windows/Linux.
   - id: archive-experimental-trace

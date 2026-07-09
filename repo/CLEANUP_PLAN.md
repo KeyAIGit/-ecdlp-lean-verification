@@ -39,19 +39,20 @@ Exit criteria:
 
 ## Phase 1: Validate The Manifest
 
-Proposed follow-up PR.
+Status: partly included in this staging branch.
 
 Actions:
 
-1. Add a small path-existence validator for `repo/ARTIFACTS.yaml`.
-2. Teach CI to run it.
+1. Add a small path-existence validator for `repo/ARTIFACTS.yaml`. Done:
+   `scripts/check_repo_artifacts.py`.
+2. Teach CI to run it. Done in `ci.yml`; docs-sync also runs it.
 3. Mark generated artifacts in one place rather than relying on scattered prose.
 4. Check that public docs link to `STATUS.md` instead of duplicating counts.
 
 Risks:
 
-- YAML parsing adds a dependency if done carelessly. Prefer a tiny stdlib parser
-  or a simple schema format already supported by the repo.
+- YAML parsing adds a dependency if done carelessly. The current validator uses
+  a tiny stdlib parser for the subset of YAML shape used by the manifest.
 
 ## Phase 2: Dashboard And Site Sync Health
 

@@ -6,7 +6,8 @@ generated views, operational controls, public surfaces, and cleanup candidates
 so future agents can improve the repository without drifting the facts.
 
 For the machine-readable companion, see `repo/ARTIFACTS.yaml`. For proposed
-cleanup sequencing, see `repo/CLEANUP_PLAN.md`.
+cleanup sequencing, see `repo/CLEANUP_PLAN.md`. The manifest is checked by
+`scripts/check_repo_artifacts.py`.
 
 ## Operating Principle
 
@@ -33,7 +34,7 @@ publication reviewers. Each audience needs a stable route through the repo.
 | Verified ledger and trust boundary | Human-auditable theorem ledger and scope statements | `VERIFIED.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `BARRIERS.md`, `COVERAGE.md` | Keep counts delegated to `STATUS.md`/`data/stats.json`; keep scope wording adversarially honest. |
 | Generated machine views | Derived stats, graphs, frontier maps, badges, and snapshots | `data/stats.json`, `data/frontier_map.json`, `data/knowledge_graph.json`, `data/knowledge_graph.md`, `badges/theorems.json`, `STATUS.md` | Do not hand-edit generated numbers. Change generators and regenerate. |
 | Public surfaces | Static site and dashboard | `index.html`, `dashboard.html`, `assets/`, `fonts/`, `CNAME` | Site may be hand-maintained, but canonical counters should come from generated data or checked sync paths. |
-| Research OS control plane | Active tasks, hypotheses, and agent orientation | `AGENTS.md`, `AGENT.md`, `CLAUDE.md`, `tasks/NEXT.md`, `experiments/HYPOTHESES.yaml` | Keep short, current, and executable by low-context agents. |
+| Research OS control plane | Active tasks, hypotheses, architecture map, and agent orientation | `AGENTS.md`, `AGENT.md`, `CLAUDE.md`, `tasks/NEXT.md`, `experiments/HYPOTHESES.yaml`, `REPOSITORY_ARCHITECTURE.md`, `repo/`, `CLAUDE_REVIEW_PACKET.md` | Keep short, current, and executable by low-context agents. |
 | Automation and scripts | CI, generators, checks, autonomous loops, server helpers | `.github/workflows/`, `scripts/`, `requirements.txt`, `prompts/` | Prefer explicit gates over narrative promises. Scripts that generate committed artifacts must document outputs. |
 | Research notes | Durable mathematical strategy, maps, and reviewed reasoning | `notes/*.md`, `docs/`, `PUBLISHABLE_UNITS.md`, `WORK_SCOPE.md`, `DIRECTOR_CHARTER.md` | Keep as curated research memory. Link to canonical counts instead of copying them. |
 | Experimental trace | Useful but noisy exploratory artifacts | `notes/ward/`, `scratch/`, some generated reports | Do not delete in this PR. Classify, preserve provenance, and ask Claude/human review before archive/delete. |
@@ -64,6 +65,7 @@ possible:
 | `COVERAGE.md` | `scripts/coverage_report.py` |
 | `dashboard.html` | `scripts/build_dashboard.py` |
 | obvious cross-surface drift | `scripts/check_status_consistency.py`, `scripts/check_counts.py` |
+| repository artifact classification | `scripts/check_repo_artifacts.py` |
 
 If a generated artifact must be hand-edited in an emergency, the follow-up PR
 should either encode the change in the generator or mark the artifact as
