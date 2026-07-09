@@ -1,0 +1,116 @@
+version: 1
+canonical_source: STATUS.md
+task_queue: tasks/NEXT.md
+purpose: >
+  Machine-readable hypothesis registry for the Research OS layer. These are not
+  claims of success; they are testable directions with exit criteria so agents
+  can decide whether to prove, experiment, document, or freeze a route.
+
+hypotheses:
+  - id: H1_RESEARCH_OS_TRUTH_LAYER
+    title: "The highest-ROI next step is hardening the Research OS truth layer"
+    direction: "platform"
+    status: "active"
+    owner: "ops"
+    why_it_matters: >
+      The verified substrate is already valuable, but agents and public readers
+      need one reliable route from canonical counts to active work.
+    evidence_for:
+      - "STATUS.md, data/stats.json, data/frontier_map.json, and dashboard artifacts already exist."
+      - "The audit identifies truth drift and small-context orientation as the main operational risk."
+    evidence_against:
+      - "Some drift has already been reduced by docs-sync and generated STATUS.md."
+    tests:
+      - "Add a consistency gate over stats, frontier, graph, status, site counters, tasks, and hypotheses."
+      - "Keep tasks/NEXT.md to 3-7 active tasks."
+    exit_criteria:
+      - "scripts/check_status_consistency.py passes locally and in CI."
+      - "Small-context agents can start from STATUS.md and tasks/NEXT.md."
+
+  - id: H2_GLV_SUBGROUP_VS_WHOLE_GROUP
+    title: "The GLV result must be stated at the exact proved scope"
+    direction: "formalization"
+    status: "active"
+    owner: "proof-docs"
+    why_it_matters: >
+      The crypto-subgroup statement and the whole-point-group statement carry
+      different trust and foundation requirements.
+    evidence_for:
+      - "GlvSubgroupEigenvalue provides a subgroup-level result."
+      - "Point-counting remains a hard foundation for whole-group statements."
+    evidence_against:
+      - "Some prose may still use older wording that treats the eigenvalue action as open without scope."
+    tests:
+      - "Audit README, STATUS, ABSTRACT_SCOPE, TRUST_REPORT, VERIFIED, and graph entries for GLV wording."
+    exit_criteria:
+      - "Docs distinguish proved subgroup action, open whole-group action, and point-counting blockers."
+
+  - id: H3_GENERIC_SECURITY_SCOPE
+    title: "The generic hardness story is strongest when its scope stays narrow"
+    direction: "formalization"
+    status: "active"
+    owner: "security-scope"
+    why_it_matters: >
+      The generic lower bound is a real formal contribution, but it must not be
+      marketed as unconditional secp256k1 hardness.
+    evidence_for:
+      - "GenericGroupBound, BSGS, PollardRho, and Security Scope docs separate black-box from non-generic attacks."
+    evidence_against:
+      - "Public summaries can easily overcompress the distinction."
+    tests:
+      - "Use the consistency gate and publication templates to require trust-boundary language."
+    exit_criteria:
+      - "Publication outlines quote the model boundary before stating security implications."
+
+  - id: H4_FRONTIER_TRACEABILITY
+    title: "Corpus coverage and theorem coverage should remain visibly separate"
+    direction: "data"
+    status: "active"
+    owner: "frontier"
+    why_it_matters: >
+      The 486-claim corpus is a frontier map; the theorem ledger is a verified
+      asset. Confusing the denominators weakens both.
+    evidence_for:
+      - "STATUS.md already separates ledger rows from corpus coverage."
+      - "frontier_map.json has corpus status summaries."
+    evidence_against:
+      - "Older summaries and raw HTML counters can be read as theorem coverage."
+    tests:
+      - "Check STATUS, dashboard, and index wording for distinct denominators."
+    exit_criteria:
+      - "Site and docs show ledger metrics separately from corpus status metrics."
+
+  - id: H5_SEMAEV_WINDOW
+    title: "Any plausible subgeneric route should leave experimental evidence in algebraic relation generation"
+    direction: "experiment"
+    status: "proposed"
+    owner: "experiments"
+    why_it_matters: >
+      Semaev/Groebner work can produce useful negative evidence even if no attack
+      route appears.
+    evidence_for:
+      - "The frontier map identifies Semaev polynomials and cost models as major blockers."
+    evidence_against:
+      - "Prime-field curves are expected to hit degree, memory, and relation-yield limits."
+    tests:
+      - "Create toy-curve benchmark manifests."
+      - "Record degree growth, memory peaks, wall time, and relation yield."
+    exit_criteria:
+      - "A reproducible benchmark note either finds a promising route or closes a tested window."
+
+  - id: H6_PUBLICATION_BOUNDARY_TRACK
+    title: "The verified boundary map is publishable even without a subgeneric attack"
+    direction: "publication"
+    status: "active"
+    owner: "publication"
+    why_it_matters: >
+      The strongest near-term output is a precise map of what is proved, blocked,
+      or out of scope.
+    evidence_for:
+      - "PUBLISHABLE_UNITS.md, VERIFIED.md, knowledge_graph.json, and TRUST_REPORT.md already exist."
+    evidence_against:
+      - "Publication drafts need tighter links from claims to theorem names and trust boundaries."
+    tests:
+      - "Upgrade one publishable unit into a claim/theorem/figure outline."
+    exit_criteria:
+      - "A reviewer can audit the outline without reading the whole repo."

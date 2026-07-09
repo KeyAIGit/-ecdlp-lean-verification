@@ -79,10 +79,21 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 Point counting `#E(𝔽_p) = n` — the keystone that gates the GLV eigenvalue `glvPoint G = λ·G`, the
 `Module (ℤ/n)` structure on the real point group, and honest instantiation of the protocol algebra.
 
+## Active work protocol
+The active queue is `tasks/NEXT.md`. Keep it short (3-7 task contracts) so a
+small-context agent can start work without rereading the whole repository.
+
+The hypothesis registry is `experiments/HYPOTHESES.yaml`. It records testable
+directions, evidence, and exit criteria; it is not a theorem ledger.
+
+The drift gate is `scripts/check_status_consistency.py`. Run it whenever stats,
+frontier, graph, dashboard/site counters, tasks, or hypotheses change.
+
 ## Where to go deeper
-`READ_FIRST.md` (orientation for low-context readers) · `PUBLISHABLE_UNITS.md` (the 3 standalone
-results) · `WORK_SCOPE.md` (the improvement program) · `VERIFIED.md` (ledger) · `BARRIERS.md`
-(no-go map) · `notes/FOUNDATIONS.md` (Weil/Semaev ladder) ·
+`READ_FIRST.md` (orientation for low-context readers) · `tasks/NEXT.md` (active queue) ·
+`experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
+standalone results) · `WORK_SCOPE.md` (the improvement program) · `VERIFIED.md` (ledger) ·
+`BARRIERS.md` (no-go map) · `notes/FOUNDATIONS.md` (Weil/Semaev ladder) ·
 `notes/POINT_COUNTING_KEYSTONE.md` (the `#E=n` keystone) · `TRUST_REPORT.md` (trust boundary) ·
 `data/frontier_map.json` (queryable per-claim status).
 """

@@ -3,6 +3,9 @@
 Single source of truth for "what this is, what's done, what to run next". Read this
 together with `VERIFIED.md` (the proved-theorem ledger) and `BARRIERS.md` (what's
 blocked and why). Authoritative protocol: `AGENT.md`; conventions: `CLAUDE.md`.
+For a small-context start, read `STATUS.md` first, then `tasks/NEXT.md`; load
+`experiments/HYPOTHESES.yaml` when the task touches hypotheses, experiments,
+frontier interpretation, or publication planning.
 
 ## What this project actually is (read this first)
 A **machine-checked formalization** of the mathematics of ECDLP / elliptic-curve

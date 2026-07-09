@@ -62,6 +62,11 @@ jobs:
       - name: Check count consistency (docs)
         run: python3 scripts/check_counts.py
 
+      # Research OS gate: fail when generated machine views, canonical status,
+      # public counters, active tasks, or hypotheses drift apart.
+      - name: Check Research OS consistency
+        run: python3 scripts/check_status_consistency.py
+
       # Fast, cheap gate: fail before building if any BUILT proof is left incomplete.
       # Scope: only *.lean files in the built proof base. Ecdlp/Targets/ holds open
       # conjecture stems (with `sorry`) that are intentionally NOT imported/built, so
