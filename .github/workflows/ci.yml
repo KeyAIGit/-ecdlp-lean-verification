@@ -56,7 +56,7 @@ jobs:
         run: |
           echo "## Prover target attempt" >> "$GITHUB_STEP_SUMMARY"
           echo "Skipped on pull_request run. GitHub does not reliably expose repository secrets to PR-triggered runs." >> "$GITHUB_STEP_SUMMARY"
-          echo "Use the blue 'Run Workflow' button or wait for the scheduled run to run the prover with FEATHERLESS_API_KEY." >> "$GITHUB_STEP_SUMMARY"
+          echo "Use the blue 'Run Workflow' button on a trusted branch to run the prover with FEATHERLESS_API_KEY." >> "$GITHUB_STEP_SUMMARY"
 
       # Cheap doc gate: fail on count drift (the headline count regressed 3x).
       - name: Check count consistency (docs)
