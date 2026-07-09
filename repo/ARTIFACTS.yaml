@@ -1,0 +1,256 @@
+version: 1
+status: proposed_for_claude_review
+scope: whole_repository
+base_branch: codex/research-os-truth-layer
+purpose: >
+  Classify repository artifacts by ownership and edit policy. This manifest is
+  a review aid, not yet an enforced schema.
+
+principles:
+  - lean_kernel_is_the_proof_authority
+  - status_and_stats_are_canonical_for_live_counts
+  - generated_artifacts_should_be_changed_through_generators
+  - cleanup_is_classify_then_review_then_move_or_delete
+  - public_claims_must_preserve_trust_boundaries
+
+classes:
+  kernel_verified_surface:
+    description: Machine-checked Lean source and project build pins.
+    paths:
+      - Ecdlp.lean
+      - Ecdlp/*.lean
+      - Ecdlp/Proved/
+      - lakefile.toml
+      - lake-manifest.json
+      - lean-toolchain
+    owner: proof
+    hand_edit: true
+    generated: false
+    gates:
+      - lake build
+      - no-sorry gate
+      - axiom audit
+    risks:
+      - Moving files changes imports and review trails.
+      - Adding axioms or sorry/admit destroys the central invariant.
+
+  open_targets:
+    description: Open conjecture stems and their target metadata.
+    paths:
+      - Ecdlp/Targets/
+      - targets/
+    owner: proof_generation
+    hand_edit: true
+    generated: mixed
+    gates:
+      - target stem review
+      - generator consistency
+    risks:
+      - Open statements must not be imported into the proved surface.
+
+  canonical_corpus:
+    description: Vendored corpus plus curated traceability overlays.
+    paths:
+      - data/KG_CLAIM_FORMALIZATION_v1.csv
+      - data/corpus_coverage_overrides.json
+      - data/claim_traceability.jsonl
+      - data/README.md
+    owner: frontier
+    hand_edit: mixed
+    generated: mixed
+    gates:
+      - checksum/provenance review for the CSV
+      - frontier-map regeneration for overlays
+    risks:
+      - Reformatting the vendored CSV breaks provenance and checksums.
+
+  verified_ledger_and_scope:
+    description: Human-auditable theorem ledger and public trust boundaries.
+    paths:
+      - VERIFIED.md
+      - TRUST_REPORT.md
+      - ABSTRACT_SCOPE.md
+      - BARRIERS.md
+      - notes/SECURITY_SCOPE.md
+    owner: publication_truth
+    hand_edit: true
+    generated: false
+    gates:
+      - scripts/gen_stats.py --check
+      - scripts/check_counts.py
+      - scripts/check_status_consistency.py
+    risks:
+      - Duplicate counts drift quickly.
+      - Security wording can overclaim beyond the formal model.
+
+  generated_views:
+    description: Derived machine-readable and rendered views.
+    paths:
+      - data/stats.json
+      - badges/theorems.json
+      - STATUS.md
+      - data/frontier_map.json
+      - data/knowledge_graph.json
+      - data/knowledge_graph.md
+      - COVERAGE.md
+      - dashboard.html
+    owner: generators
+    hand_edit: false
+    generated: true
+    generators:
+      - scripts/gen_stats.py
+      - scripts/gen_status.py
+      - scripts/build_frontier_map.py
+      - scripts/build_knowledge_graph.py
+      - scripts/coverage_report.py
+      - scripts/build_dashboard.py
+    gates:
+      - scripts/check_status_consistency.py
+      - scripts/check_counts.py
+    risks:
+      - Hand edits create invisible drift unless encoded in generators.
+
+  public_site:
+    description: Public-facing static site surface and assets.
+    paths:
+      - index.html
+      - dashboard.html
+      - assets/
+      - fonts/
+      - CNAME
+    owner: site
+    hand_edit: mixed
+    generated: mixed
+    gates:
+      - dashboard regeneration
+      - status consistency check
+      - link/counter review
+    risks:
+      - Site counters can become stale while proofs remain correct.
+
+  research_os_control_plane:
+    description: Files that orient low-context agents and hold active work.
+    paths:
+      - AGENTS.md
+      - AGENT.md
+      - CLAUDE.md
+      - tasks/NEXT.md
+      - experiments/HYPOTHESES.yaml
+      - REPOSITORY_ARCHITECTURE.md
+      - repo/ARTIFACTS.yaml
+      - repo/CLEANUP_PLAN.md
+      - CLAUDE_REVIEW_PACKET.md
+    owner: operations
+    hand_edit: true
+    generated: false
+    gates:
+      - scripts/check_status_consistency.py
+      - adversarial Claude review
+    risks:
+      - Too much prose can become another stale source of truth.
+
+  automation_and_scripts:
+    description: CI, generators, autonomous loops, server helpers, and prompts.
+    paths:
+      - .github/workflows/
+      - scripts/
+      - prompts/
+      - requirements.txt
+    owner: automation
+    hand_edit: true
+    generated: false
+    gates:
+      - relevant script checks
+      - GitHub Actions
+      - py_compile for changed Python scripts
+    risks:
+      - Workflow names in docs can drift from actual workflow files.
+      - Autonomous loops must remain draft/review gated.
+
+  curated_research_notes:
+    description: Durable research memory, strategy, and publication planning.
+    paths:
+      - notes/*.md
+      - docs/
+      - PUBLISHABLE_UNITS.md
+      - WORK_SCOPE.md
+      - DIRECTOR_CHARTER.md
+      - ENVIRONMENT_PLAN.md
+      - REVIEW_DOSSIER.md
+      - ONE_PAGE_SUMMARY.md
+      - READ_FIRST.md
+      - SETUP.md
+    owner: research_memory
+    hand_edit: true
+    generated: false
+    gates:
+      - link review
+      - count-drift checks where applicable
+    risks:
+      - Notes can preserve old claims after the formal state changes.
+
+  experimental_trace:
+    description: Exploratory code/output kept for provenance, not active product surface.
+    paths:
+      - notes/ward/
+      - scratch/
+      - generator-report.md
+    owner: experiments
+    hand_edit: true
+    generated: mixed
+    gates:
+      - provenance review before archive/delete
+    risks:
+      - Some files contain absolute temporary paths and old run output.
+      - Noise can confuse new agents unless clearly marked.
+
+cleanup_candidates:
+  - path: notes/ward/
+    proposed_action: classify_then_archive
+    priority: high
+    reason: >
+      Large exploratory trace with many scripts and outputs, including absolute
+      temporary paths. It may still carry Ward/EDS provenance, so deletion is
+      unsafe before review.
+    delete_now: false
+
+  - path: scratch/
+    proposed_action: review_then_archive_or_ignore
+    priority: medium
+    reason: >
+      Contains unpromoted Lean experiments. These should either become tracked
+      targets/notes or move to an archive path.
+    delete_now: false
+
+  - path: generator-report.md
+    proposed_action: mark_generated_or_archive
+    priority: medium
+    reason: >
+      Looks report-like and may be generated. It needs an owner and generator
+      policy before future agents rely on it.
+    delete_now: false
+
+  - path: dashboard.html
+    proposed_action: make_generator_and_encoding_path_robust
+    priority: medium
+    reason: >
+      Public surface is important, but generated dashboard updates can create
+      drift if local generator behavior differs by environment.
+    delete_now: false
+
+follow_up_prs:
+  - id: repo-manifest-gate
+    goal: Add a lightweight script that validates paths in repo/ARTIFACTS.yaml.
+  - id: dashboard-sync-health
+    goal: Add public sync health and robust generation across Windows/Linux.
+  - id: archive-experimental-trace
+    goal: Move reviewed scratch/ward artifacts into an archive namespace.
+  - id: generated-artifact-policy
+    goal: Encode generated/hand-maintained ownership in docs and checks.
+
+review_questions:
+  - Which paths are misclassified?
+  - Which cleanup candidates are actually still active?
+  - Which generated artifacts lack a reliable generator or check?
+  - Which public docs still duplicate canonical counts or stale workflow names?
+  - Which single follow-up PR would reduce the most future drift?

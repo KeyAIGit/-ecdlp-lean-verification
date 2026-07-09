@@ -174,6 +174,33 @@ Files allowed to edit:
 - `docs/`
 - `notes/`
 
+### TASK-007 - Normalize repository architecture
+
+Kind: ops | agent | docs
+Hypothesis: `H1_RESEARCH_OS_TRUTH_LAYER`
+Why it matters: Future Claude/Codex runs need a whole-repository map before
+they safely remove noise, move files, or change generated artifacts.
+Inputs:
+- `REPOSITORY_ARCHITECTURE.md`
+- `repo/ARTIFACTS.yaml`
+- `repo/CLEANUP_PLAN.md`
+- `CLAUDE_REVIEW_PACKET.md`
+- `AGENTS.md`
+- `README.md`
+Expected output:
+- A reviewed architecture foundation that classifies canonical, generated,
+  curated, scratch, and archive-candidate files.
+Exit criteria:
+- Claude adversarial review identifies no blocking misclassification.
+- Any archive/delete work is split into a later PR.
+Files allowed to edit:
+- `REPOSITORY_ARCHITECTURE.md`
+- `repo/`
+- `CLAUDE_REVIEW_PACKET.md`
+- `AGENTS.md`
+- `README.md`
+- `tasks/NEXT.md`
+
 ## Task Contract Template
 
 ```md

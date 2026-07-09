@@ -7,7 +7,7 @@ formalization table 07_Formalization/KG_CLAIM_FORMALIZATION_v1.csv).
 
 ## Live stats (machine-readable)
 The verified-theorem counts are published as JSON, regenerated automatically from
-`VERIFIED.md` on every merge to `main` (`.github/workflows/stats.yml` +
+`VERIFIED.md` on every merge to `main` (`.github/workflows/docs-sync.yml` +
 `scripts/gen_stats.py`). Fetch them from a site or dashboard via the raw URLs:
 - **Full stats:** `https://raw.githubusercontent.com/KeyAIGit/-ecdlp-lean-verification/main/data/stats.json`
 - **Shields badge endpoint:** `https://raw.githubusercontent.com/KeyAIGit/-ecdlp-lean-verification/main/badges/theorems.json`
@@ -16,6 +16,9 @@ The verified-theorem counts are published as JSON, regenerated automatically fro
 `sorry_count` (0), and `custom_axioms` (0). No scraping of markdown needed.
 
 ## Layout
+- `REPOSITORY_ARCHITECTURE.md` - repository-level map: canonical sources,
+  generated artifacts, public surfaces, Research OS controls, and cleanup
+  candidates. Machine-readable companion: `repo/ARTIFACTS.yaml`.
 - `Ecdlp/Secp256k1Verified.lean` - PROVED on Lean core alone (no Mathlib). 8 theorems
   verified with `native_decide`:
     - `p_special_form`        : p = 2^256 - 2^32 - 977            [sec2-secp256k1-field-005]
