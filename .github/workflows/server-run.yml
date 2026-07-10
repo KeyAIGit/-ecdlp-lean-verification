@@ -10,6 +10,10 @@ name: Run on server (warm Lean + CAS)
 #   SERVER_HOST      — the server IP / hostname (e.g. <SERVER_HOST>)
 # OPTIONAL:
 #   SERVER_USER      — login user (defaults to "root")
+#   FEATHERLESS_API_KEY — model-prover key, provisioned to ~/.featherless_key
+#   GH_TOKEN         — fine-grained PAT (Contents: write) for THIS repo; when set,
+#                      provisioned to ~/.git-credentials so server-side commands can
+#                      push to / delete branches on GitHub. Never printed.
 #
 # Server prerequisite (one-time): the box has the matching public key in
 # ~/.ssh/authorized_keys and Lean+Mathlib set up via scripts/server-setup.sh
@@ -50,6 +54,23 @@ jobs:
               "$U@$HOST" "umask 077; cat > ~/.featherless_key && echo featherless-key-provisioned" <<< "$FK"
           else
             echo "No FEATHERLESS_API_KEY secret (or HOST); skipping Featherless provisioning."
+          fi
+
+      - name: Provision GitHub push token to server (if set)
+        env:
+          HOST: ${{ secrets.SERVER_HOST }}
+          SUSER: ${{ secrets.SERVER_USER }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          U="${SUSER:-root}"
+          if [ -n "$GH_TOKEN" ] && [ -n "$HOST" ]; then
+            # Write an authenticated git credential to a 0600 file on the server via
+            # stdin (the token is read by the remote shell, never placed in argv/ps or
+            # echoed to logs). Enables `git push` / branch deletion from server commands.
+            ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20 \
+              "$U@$HOST" 'umask 077; git config --global credential.helper store; read -r T; printf "https://x-access-token:%s@github.com\n" "$T" > ~/.git-credentials; echo github-push-token-provisioned' <<< "$GH_TOKEN"
+          else
+            echo "No GH_TOKEN secret (or HOST); skipping GitHub push-token provisioning."
           fi
 
       - name: Run command on server and capture output
