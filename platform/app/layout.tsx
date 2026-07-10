@@ -48,6 +48,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 Overview
               </a>
               <a
+                href="/submit"
+                style={{ color: "#b9cbe8", textDecoration: "none" }}
+              >
+                Submit
+              </a>
+              <a
                 href="/research"
                 style={{ color: "#b9cbe8", textDecoration: "none" }}
               >
