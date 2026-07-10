@@ -16,7 +16,7 @@ secp256k1 (`scripts/pratt_certificate.py`, `Ecdlp/Proved/Secp256k1*.lean`).
 | p256-elliptic-curve | `y² = x³ − 3x + b` is a nonsingular `EllipticCurve` over `𝔽_p` (unconditional, given the primality above) | **verified** | `Ecdlp/Proved/P256Curve.lean` (`P256_Δ_ne_zero` + `IsElliptic`) |
 | p256-base-point | the SEC 2 generator `G = (Gx, Gy)` is a rational point of the curve | **verified** | `Ecdlp/Proved/P256Curve.lean` (`P256_generator_equation`) |
 | p256-no-glv | `c₄ ≠ 0`, hence `j ≠ 0`: P-256 has no CM / GLV endomorphism (structural contrast with secp256k1) | **verified** | `Ecdlp/Proved/P256Curve.lean` (`P256_c₄_ne_zero`) |
-| p256-generator-order | the base point `G` has order exactly `n` (prime-order group) | planned | mirror of secp256k1 `GeneratorOrder.lean` |
+| p256-generator-order | the base point `G` has order exactly `n` (prime-order group; weak keystone, no `#E`) | **verified** | `Ecdlp/Proved/P256GeneratorOrder.lean` (`p256_generator_addOrderOf`) |
 | p256-embedding-degree | large embedding degree (`> 100`) — MOV/Frey–Rück resistance | **verified** | `Ecdlp/Proved/P256EmbeddingDegree.lean` (`p256_embedding_degree_gt_100`) |
 | p256-non-anomalous | ordinary, non-anomalous (`t≠1`), Hasse-consistent — Smart/SSSA resistance (given `#E=n`) | **verified** | `Ecdlp/Proved/P256TraceOfFrobenius.lean` (`p256_trace_ordinary_nonanomalous`) |
 | p256-generic-bound | generic-group `Ω(√n)` hardness core applies | **verified** | curve-agnostic: `Ecdlp/Proved/GenericGroupBound.lean` (`generic_dlog_query_bound`, stated for any prime — applies to P-256's `n` with no new proof) |
