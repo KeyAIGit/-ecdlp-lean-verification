@@ -37,7 +37,7 @@
       "metrics_source": null,
       "frontier_source": null,
       "site": null,
-      "notes": "Highest-confidence second instance: Pratt primality, EllipticCurve instance, torsion, and the attack-boundary all transfer directly. Reserved, not started."
+      "notes": "STARTED (see the P-256 rows in VERIFIED.md): the EllipticCurve instance, Δ≠0, base point, and the j≠0/no-GLV contrast are kernel-verified, and the field prime p is now proved prime by the SAME Pratt generator (Ecdlp/Proved/P256PrimeP.lean) — so P-256 is an *unconditional* elliptic curve, exactly as secp256k1. Group-order primality, torsion, and the attack-boundary are the remaining rungs; no dedicated corpus/frontier yet, hence still 'planned'."
     },
     {
       "id": "curve25519",
