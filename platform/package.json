@@ -1,0 +1,23 @@
+{
+  "name": "keyai-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Phase-2 authenticated platform for the machine-verifiable Research OS (Step 1: auth + gated read-only surface).",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^5.7.5",
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.11",
+    "@types/react": "^18.3.11",
+    "typescript": "^5.6.3"
+  }
+}

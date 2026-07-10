@@ -211,6 +211,21 @@ classes:
       - provenance review before archive/delete
     risks:
       - Some files contain absolute temporary paths and old run output.
+
+  platform_staging:
+    description: >
+      Phase-2 authenticated web app (Step 1 scaffold). Not Lean, not built or gated by CI;
+      reads the published truth layer behind auth. To move to its own repo when it stabilizes.
+    paths:
+      - platform/
+    owner: platform
+    hand_edit: true
+    generated: false
+    gates:
+      - not part of the Lean build; verified by its own tooling (npm/Vercel)
+    risks:
+      - Must not hold private content while it lives in this public repo.
+      - Node deps / build output are git-ignored (platform/.gitignore).
       - Noise can confuse new agents unless clearly marked.
 
 cleanup_candidates:
