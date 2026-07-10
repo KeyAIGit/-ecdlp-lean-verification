@@ -13,3 +13,10 @@ featherless_models.json
 # Python
 __pycache__/
 *.pyc
+
+# Agent context packs — generated on demand by scripts/export_agent_bundle.py.
+# Only bundles/MANIFEST.json is committed; the inlined packs would duplicate repo
+# content and drift, so they are regenerated fresh whenever needed.
+bundles/small.md
+bundles/medium.md
+bundles/large.md

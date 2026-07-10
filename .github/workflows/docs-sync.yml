@@ -92,6 +92,7 @@ env:
     data/knowledge_graph.md
     COVERAGE.md
     STATUS.md
+    bundles/MANIFEST.json
   # SITE pages — derived partly from git history (build milestones). Committed on main,
   # never PR-drift-gated (they cannot be reproduced from committed sources alone).
   DERIVED_SITE: >-
@@ -120,6 +121,10 @@ jobs:
         run: python3 scripts/coverage_report.py
       - name: Canonical snapshot (STATUS.md)
         run: python3 scripts/gen_status.py
+      # Regenerated LAST: the manifest records byte sizes of the tier files above
+      # (STATUS.md, COVERAGE.md, knowledge_graph.json, …), so its inputs must be fresh first.
+      - name: Agent-bundle manifest (bundles/MANIFEST.json)
+        run: python3 scripts/export_agent_bundle.py --manifest
 
       # ---- consistency gate: no retired headline counts, canonical figure present ----
       - name: Count-consistency gate

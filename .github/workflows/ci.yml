@@ -72,6 +72,12 @@ jobs:
       - name: Check repository artifact manifest
         run: python3 scripts/check_repo_artifacts.py
 
+      # Agent-bundle gate: the committed context-tier routing table
+      # (bundles/MANIFEST.json) must reference only files that exist and stay in
+      # sync with the tier definitions in scripts/export_agent_bundle.py.
+      - name: Check agent-bundle manifest
+        run: python3 scripts/export_agent_bundle.py --check
+
       # Fast, cheap gate: fail before building if any BUILT proof is left incomplete.
       # Scope: only *.lean files in the built proof base. Ecdlp/Targets/ holds open
       # conjecture stems (with `sorry`) that are intentionally NOT imported/built, so
