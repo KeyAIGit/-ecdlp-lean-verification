@@ -78,6 +78,12 @@ jobs:
       - name: Check agent-bundle manifest
         run: python3 scripts/export_agent_bundle.py --check
 
+      # Domain-registry honesty gate (Phase-1 platform layer): a 'live' domain must
+      # have its slot files present; 'planned'/'exploratory' placeholders must claim
+      # no metrics. Keeps the multi-domain site surface provably honest.
+      - name: Check domain registry
+        run: python3 scripts/check_domains.py
+
       # Fast, cheap gate: fail before building if any BUILT proof is left incomplete.
       # Scope: only *.lean files in the built proof base. Ecdlp/Targets/ holds open
       # conjecture stems (with `sorry`) that are intentionally NOT imported/built, so

@@ -39,12 +39,15 @@ ARTIFACTS = ROOT / "repo" / "ARTIFACTS.yaml"
 TASKS = ROOT / "tasks" / "NEXT.md"
 HYPOTHESES = ROOT / "experiments" / "HYPOTHESES.yaml"
 VERIFIED = ROOT / "VERIFIED.md"
+CORPUS_CSV = ROOT / "data" / "KG_CLAIM_FORMALIZATION_v1.csv"
+PUB_UNITS = ROOT / "PUBLISHABLE_UNITS.md"
+DOMAINS_REG = ROOT / "domains" / "registry.json"
 OUT = ROOT / "dashboard.html"
 INDEX = ROOT / "index.html"
 # Ledger rows that are alternate-form/`supporting:` restatements of the same fact.
-# VERIFIED.md's canonical line is the single source of truth ("180 ledger rows /
-# ~158 distinct" → 22 restatement rows); keep this in sync with it.
-DISTINCT_OFFSET = 22
+# Only a FALLBACK: distinct is read from data/stats.json (source of truth). VERIFIED.md's
+# canonical line currently reads "220 ledger rows / ~184 distinct" → 36 restatement rows.
+DISTINCT_OFFSET = 36
 REPO = "https://github.com/KeyAIGit/-ecdlp-lean-verification"
 BLOB = f"{REPO}/blob/main"
 TREE = f"{REPO}/tree/main"
@@ -101,6 +104,7 @@ NAV = [
     ]),
     ("Research OS & architecture", [
         ("STATUS.md", "Canonical generated snapshot: live counts, corpus status, and bottleneck"),
+        ("PLATFORM_STRATEGY.md", "Direction: from one verified case to a verified-research platform (honest phased roadmap)"),
         ("tasks/NEXT.md", "Small-context active task queue"),
         ("experiments/HYPOTHESES.yaml", "Hypothesis registry with evidence and exit criteria"),
         ("REPOSITORY_ARCHITECTURE.md", "Whole-repo map: canonical, generated, public, scratch, archive"),
@@ -130,6 +134,7 @@ NAV = [
         ("data/README.md", "Corpus provenance"),
     ]),
     ("Deep-dive notes (foundations & strategy)", [
+        ("notes/PRIVATE_AREA_DESIGN.md", "Public/private split design: a login-gated research area (Cloudflare Access), what goes private"),
         ("notes/FOUNDATIONS.md", "The deep-foundations roadmap toward the Weil pairing"),
         ("notes/GLV_LAMBDA.md", "GLV [λ]-eigenvalue bottleneck + the reachable cube-relation substitute"),
         ("notes/GLV_HOMOMORPHISM.md", "How the GLV homomorphism reduces to one slope identity"),
@@ -187,6 +192,81 @@ def git_log(n: int = 14) -> list[tuple[str, str]]:
             h, s = line.split("\t", 1)
             rows.append((h, s))
     return rows
+
+
+def count_lines_matching(path: Path, pattern: str) -> int:
+    """Count lines matching a regex in a file (0 if absent). Used for the pipeline
+    stage counters so the site's layer chain is driven by the real artifacts, never
+    hand-typed numbers that would drift."""
+    try:
+        return len(re.findall(pattern, path.read_text(encoding="utf-8"), re.M))
+    except Exception:
+        return 0
+
+
+DOMAIN_STATUS = {
+    "live":        {"hex": "#0ca30c", "label": "live"},
+    "planned":     {"hex": "#1d85ff", "label": "planned"},
+    "exploratory": {"hex": "#94a3b8", "label": "exploratory"},
+}
+
+
+def build_domains(reg: dict, live_metrics: dict) -> str:
+    """Render the domain portfolio: the Research OS is instance-agnostic, and this is the
+    visible proof. The live domain (ECDLP) shows real numbers; placeholders show a status
+    badge and reserved slots but claim NO metrics (enforced by scripts/check_domains.py).
+    This is the Phase-1 platform surface: one real case, honest room for the rest."""
+    cards = []
+    for d in reg.get("domains", []):
+        st = DOMAIN_STATUS.get(d.get("status"), {"hex": "#64748b", "label": d.get("status", "?")})
+        did = d.get("id", "")
+        badge = (f'<span class="dbadge" style="--c:{st["hex"]}">'
+                 f'<i class="ddot" style="background:{st["hex"]}"></i>{esc(st["label"])}</span>')
+        if d.get("status") == "live" and did in live_metrics:
+            m = live_metrics[did]
+            metric = (f'<div class="dmetric">{m["rows"]}<span> verified rows</span>'
+                      f' · {m["frontier"]}<span>% frontier</span></div>')
+        else:
+            slots = d.get("slots", {})
+            reserved = " · ".join(k for k, v in slots.items() if not v) or "slots open"
+            metric = f'<div class="dmetric dmetric--empty">no results yet — reserved ({esc(reserved)})</div>'
+        site = d.get("site")
+        href = site if site else "#domains"
+        cta = ("open the pipeline →" if site else "reserved")
+        cards.append(
+            f'<div class="dcard dcard--{esc(d.get("status","?"))} reveal">'
+            f'<div class="dhead">{badge}<span class="did">{esc(did)}</span></div>'
+            f'<div class="dtitle">{esc(d.get("title",""))}</div>'
+            f'<div class="dline">{esc(d.get("one_liner",""))}</div>'
+            f'{metric}'
+            f'<div class="dnote">{esc(d.get("notes",""))}</div>'
+            f'<a class="dcta" href="{esc(href)}">{esc(cta)}</a></div>')
+    return f'<div class="domaingrid">{"".join(cards)}</div>'
+
+
+def build_pipeline(stages: list[dict]) -> str:
+    """Render the Research OS layer chain: Corpus → Frontier → Hypotheses → Tasks →
+    Proofs → Truth graph → Site → Papers. Each stage shows a live count pulled from
+    its own source artifact and links straight to it, so the public site *is* the
+    pipeline, walked end to end. This is the spine the whole environment hangs on."""
+    cells = []
+    n = len(stages)
+    for i, s in enumerate(stages):
+        val = esc(str(s["value"]))
+        unit = f'<span class="pgunit">{esc(s["unit"])}</span>' if s.get("unit") else ""
+        here = ' pgcard--here' if s.get("here") else ""
+        href = esc(s["href"])
+        # internal anchors don't open a new tab; external repo links do
+        ext = "" if href.startswith("#") else ' target="_blank" rel="noopener"'
+        arrow = '' if i == n - 1 else '<div class="pgarrow" aria-hidden="true">→</div>'
+        cells.append(
+            f'<a class="pgcard{here}" href="{href}"{ext}>'
+            f'<div class="pgeyebrow"><span class="pgstep">{i+1:02d}</span>{esc(s["layer"])}</div>'
+            f'<div class="pgval">{val}{unit}</div>'
+            f'<div class="pgrole">{esc(s["role"])}</div>'
+            f'<div class="pgsrc">{esc(s["src"])}</div></a>'
+            f'{arrow}')
+    return f'<div class="pipeline reveal">{"".join(cells)}</div>'
 
 
 def nav_url(path: str, override: str | None) -> str:
@@ -429,6 +509,49 @@ def main() -> int:
         for h, s in git_log())
 
     nav_html = build_nav_html()
+
+    # ---- Research OS pipeline: every counter pulled live from its source artifact ----
+    n_hyp = count_lines_matching(HYPOTHESES, r"^  - id:")
+    n_tasks = count_lines_matching(TASKS, r"^### TASK-")
+    n_units = count_lines_matching(PUB_UNITS, r"^## Unit ")
+    n_theorems = int(graph.get("counts", {}).get("theorems") or len(graph.get("theorems", [])))
+    n_blocked = status.get("blocked", 0)
+    pipeline_stages = [
+        {"layer": "Corpus", "value": total, "unit": "claims",
+         "role": "atomic ECDLP claims, the raw material to triage",
+         "src": "data/KG_CLAIM_FORMALIZATION_v1.csv", "href": f"{BLOB}/data/KG_CLAIM_FORMALIZATION_v1.csv"},
+        {"layer": "Frontier", "value": completeness, "unit": "%",
+         "role": f"each claim given a status — {status.get('verified',0)} verified, "
+                 f"{status.get('tractable',0)} tractable, {n_blocked} blocked",
+         "src": "data/frontier_map.json", "href": "#frontier"},
+        {"layer": "Hypotheses", "value": n_hyp, "unit": "open",
+         "role": "testable directions with evidence and exit criteria",
+         "src": "experiments/HYPOTHESES.yaml", "href": f"{BLOB}/experiments/HYPOTHESES.yaml"},
+        {"layer": "Tasks", "value": n_tasks, "unit": "active",
+         "role": "the small-context work queue, 3–7 contracts at a time",
+         "src": "tasks/NEXT.md", "href": f"{BLOB}/tasks/NEXT.md"},
+        {"layer": "Proofs", "value": vcount, "unit": "rows",
+         "role": f"kernel-verified ledger rows (~{distinct} distinct), 0 sorry",
+         "src": "VERIFIED.md", "href": f"{BLOB}/VERIFIED.md"},
+        {"layer": "Truth graph", "value": n_theorems, "unit": "nodes",
+         "role": "queryable theorem / dependency / barrier graph",
+         "src": "data/knowledge_graph.json", "href": f"{BLOB}/data/knowledge_graph.json"},
+        {"layer": "Site", "value": "live", "unit": "",
+         "role": "this dashboard — the public, walkable surface (you are here)",
+         "src": "dashboard.html", "href": "#top", "here": True},
+        {"layer": "Papers", "value": n_units, "unit": "units",
+         "role": "standalone publishable narratives with honest scope",
+         "src": "PUBLISHABLE_UNITS.md", "href": f"{BLOB}/PUBLISHABLE_UNITS.md"},
+    ]
+    pipeline_html = build_pipeline(pipeline_stages)
+
+    # ---- domain portfolio (Phase-1 platform surface) ----
+    domains_html = ""
+    if DOMAINS_REG.exists():
+        reg = json.loads(DOMAINS_REG.read_text(encoding="utf-8"))
+        live_metrics = {"ecdlp-secp256k1": {"rows": vcount, "frontier": completeness}}
+        domains_html = build_domains(reg, live_metrics)
+
     # Static (not wall-clock) so regeneration stays a pure function of sources (docs-sync).
     year = 2026
 
@@ -637,6 +760,54 @@ h2 .secnum{{font-family:"Baloo 2";font-size:12px;color:var(--blue);background:va
 .commits li{{padding:7px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--gray)}}
 .commits code{{background:var(--tint);padding:1px 6px;border-radius:4px;color:var(--blue-dark);font-weight:700}}
 
+/* ---- domain portfolio (Phase-1 platform surface) ---- */
+.domaingrid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}}
+.dcard{{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:16px 17px;box-shadow:0 1px 2px rgba(15,40,80,.04)}}
+.dcard--live{{border-top:3px solid var(--good)}}
+.dcard--planned{{border-top:3px solid var(--blue)}}
+.dcard--exploratory{{border-top:3px solid var(--mut)}}
+.dhead{{display:flex;align-items:center;justify-content:space-between;gap:8px}}
+.dbadge{{display:inline-flex;align-items:center;gap:5px;font-family:"Baloo 2";font-weight:800;
+  font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:var(--c);
+  background:color-mix(in srgb,var(--c) 12%,#fff);padding:3px 9px;border-radius:999px}}
+.ddot{{width:7px;height:7px;border-radius:50%}}
+.did{{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--mut)}}
+.dtitle{{font-family:"Baloo 2";font-weight:800;font-size:17px;color:var(--navy);margin-top:10px}}
+.dline{{color:var(--gray);font-size:12.5px;margin-top:4px;line-height:1.45}}
+.dmetric{{font-family:"Baloo 2";font-weight:800;color:var(--navy);font-size:15px;margin-top:11px;
+  font-variant-numeric:tabular-nums}}
+.dmetric span{{font-weight:700;font-size:11px;color:var(--blue)}}
+.dmetric--empty{{color:var(--mut);font-family:Nunito;font-weight:700;font-size:12px}}
+.dnote{{color:var(--mut);font-size:11.5px;margin-top:10px;line-height:1.5;flex:1}}
+.dcta{{margin-top:12px;font-family:"Baloo 2";font-weight:800;font-size:12.5px;color:var(--blue)}}
+.dcard--planned .dcta,.dcard--exploratory .dcta{{color:var(--mut);pointer-events:none}}
+
+/* ---- Research OS pipeline (the layer chain / spine) ---- */
+.pipeline{{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px}}
+.pgcard{{flex:1 1 150px;min-width:150px;display:flex;flex-direction:column;
+  background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 14px;
+  color:var(--ink);box-shadow:0 1px 2px rgba(15,40,80,.04);
+  transition:transform .15s,box-shadow .15s,border-color .15s}}
+.pgcard:hover,.pgcard:focus-visible{{transform:translateY(-3px);border-color:var(--blue);
+  box-shadow:0 8px 20px rgba(15,40,80,.10)}}
+.pgcard--here{{background:linear-gradient(180deg,#f4f8fc,#fff);border-color:var(--blue);
+  border-top:3px solid var(--blue)}}
+.pgeyebrow{{display:flex;align-items:center;gap:6px;font-family:"Baloo 2";font-weight:800;
+  font-size:12px;color:var(--navy);letter-spacing:.02em;text-transform:uppercase}}
+.pgstep{{display:inline-grid;place-items:center;width:19px;height:19px;border-radius:6px;
+  background:var(--tint);color:var(--blue-dark);font-size:10px;font-weight:800}}
+.pgcard--here .pgstep{{background:var(--blue);color:#fff}}
+.pgval{{font-family:"Baloo 2";font-weight:800;font-size:23px;color:var(--navy);
+  margin-top:8px;line-height:1;font-variant-numeric:tabular-nums}}
+.pgunit{{font-size:12px;font-weight:700;color:var(--blue);margin-left:3px}}
+.pgrole{{color:var(--gray);font-size:12px;margin-top:6px;line-height:1.4;flex:1}}
+.pgsrc{{color:var(--mut);font-size:10px;margin-top:8px;font-family:ui-monospace,Menlo,monospace;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.pgarrow{{align-self:center;color:var(--blue);font-weight:800;font-size:17px;
+  flex:0 0 auto;opacity:.55}}
+@media (max-width:720px){{.pgarrow{{transform:rotate(90deg);width:100%;text-align:center}}}}
+
 /* ---- footer ---- */
 footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 .footwrap{{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}}
@@ -655,6 +826,8 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
     <span>· ECDLP env</span></a>
   <div class="navlinks" id="scrollspy">
     <a href="#metrics">Overview</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#domains">Domains</a>
     <a href="#sync">Sync</a>
     <a href="#navigate">Docs</a>
     <a href="#frontier">Frontier</a>
@@ -668,7 +841,7 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
   <div class="orb orb1"></div><div class="orb orb2"></div>
   <div class="herotop"><img src="assets/logo-wordmark.png" alt="keyAI"></div>
   <h1>Verified environment for<br>a strong AI</h1>
-  <p class="sub">L1 verified core · L2 frontier map · L3 navigable structure · L4 objects · L5 engine</p>
+  <p class="sub">corpus → frontier → hypotheses → tasks → proofs → truth graph → site → papers</p>
   <p class="stamp">snapshot {stamp} · regenerate: <code>python3 scripts/build_dashboard.py</code></p>
   <div class="honest">Honest boundary: this maximizes a future reasoner's leverage and rigorously maps the frontier — it does <b>not</b> solve ECDLP, and the barriers below may be permanent.</div>
 </div></div>
@@ -676,20 +849,32 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 <main id="main">
 <div class="cardband wrap" id="metrics"><div class="cards">{cards_html}</div></div>
 
+<section class="wrap" id="pipeline">
+<h2><span class="secnum">01</span>The Research OS <span class="accent">pipeline</span></h2>
+<p class="lede">One route, walked end to end: the 486-claim corpus is triaged into a frontier, open directions become hypotheses, hypotheses become active tasks, tasks become kernel-verified proofs, proofs become a queryable truth graph, and the whole thing surfaces here and (where the scope is honest) as papers. Every count below is pulled live from its own source artifact — click any stage to open it.</p>
+{pipeline_html}
+</section>
+
+<section class="wrap" id="domains">
+<h2><span class="secnum">02</span>Domain <span class="accent">portfolio</span></h2>
+<p class="lede">The pipeline is instance-agnostic. secp256k1/ECDLP is case #1 — live and kernel-verified; the rest reserve space honestly (no borrowed numbers, enforced by <code>scripts/check_domains.py</code>). Adding a domain means editing only its slot files + one registry entry — see <code>domains/README.md</code>.</p>
+{domains_html}
+</section>
+
 <section class="tint" id="sync"><div class="wrap">
-<h2><span class="secnum">01</span>Sync Health</h2>
+<h2><span class="secnum">03</span>Sync Health</h2>
 <p class="lede">The public surface is tied back to canonical machine sources and checked by CI gates.</p>
 <div class="healthgrid">{sync_health_html}</div>
 </div></section>
 
 <section class="wrap" id="navigate">
-<h2><span class="secnum">02</span>Navigate the <span class="accent">environment</span></h2>
+<h2><span class="secnum">04</span>Navigate the <span class="accent">environment</span></h2>
 <p class="lede">Every doc, dataset, and script in the repo, auto-discovered and grouped by purpose.</p>
 {nav_html}
 </section>
 
 <section class="tint" id="frontier"><div class="wrap">
-<h2><span class="secnum">03</span>Frontier map — {total} corpus claims</h2>
+<h2><span class="secnum">05</span>Frontier map — {total} corpus claims</h2>
 <p class="lede">Every claim's status is fixed, reserved, and never guessed — see the table view for the exact rule behind each color.</p>
 <div class="grid2">
 <div class="reveal">
@@ -714,23 +899,23 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 <section><div class="wrap">
 <div class="grid2">
 <div class="reveal">
-  <h2><span class="secnum">04</span>Blocked by missing foundation</h2>
+  <h2><span class="secnum">06</span>Blocked by missing foundation</h2>
   {found_bars}
   {found_table}
 </div>
 <div class="reveal">
-  <h2><span class="secnum">05</span>Environment layers</h2>
+  <h2><span class="secnum">07</span>Environment layers</h2>
   {layers_html}
 </div>
 </div>
 </div></section>
 
 <section class="tint" id="tracks"><div class="wrap">
-<h2><span class="secnum">06</span>Tracks &amp; checkpoints</h2>{tracks_html}
+<h2><span class="secnum">08</span>Tracks &amp; checkpoints</h2>{tracks_html}
 </div></section>
 
 <section id="commits"><div class="wrap">
-<h2><span class="secnum">07</span>Recent build milestones</h2><ul class="commits">{commits_html}</ul>
+<h2><span class="secnum">09</span>Recent build milestones</h2><ul class="commits">{commits_html}</ul>
 </div></section>
 </main>
 
