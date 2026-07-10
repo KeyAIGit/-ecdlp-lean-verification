@@ -10,9 +10,10 @@ Writes two files (kept in the repo so they are fetchable via raw.githubuserconte
   - ``data/stats.json``            — full stats object
   - ``badges/theorems.json``       — shields.io endpoint-badge format
 
-Run locally (``python3 scripts/gen_stats.py``) or in CI (``stats.yml``). With
-``--check`` it verifies the on-disk files are in sync and exits non-zero if not
-(so the figures cannot silently drift).
+Run locally (``python3 scripts/gen_stats.py``) or through the docs-sync workflow
+(``.github/workflows/docs-sync.yml``). With ``--check`` it verifies the on-disk
+files are in sync and exits non-zero if not (so the figures cannot silently
+drift).
 
 Raw URLs for a site to consume (main branch):
   https://raw.githubusercontent.com/KeyAIGit/-ecdlp-lean-verification/main/data/stats.json

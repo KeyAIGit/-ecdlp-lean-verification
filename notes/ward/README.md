@@ -1,5 +1,10 @@
 # Ward's theorem (★₁) for `normEDS` — design + sympy-verified certificates
 
+Repository classification: experimental trace / archive candidate. Keep this
+directory for provenance until a dedicated archive PR reviews it. It is not a
+canonical source of truth for current theorem counts, public claims, or active
+tasks.
+
 Provenance: symbolic-algebra design pass (sympy). **Nothing here is kernel-verified**;
 these are the design certificates to be transcribed into Lean and checked on the server,
 the same pipeline that produced `Ecdlp/Proved/NormEDSSomos4.lean` (the `n=2` slice, which

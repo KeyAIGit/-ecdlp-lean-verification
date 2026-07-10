@@ -23,7 +23,8 @@ DOCS = [
     "data/knowledge_graph.md", "CLAUDE.md",
     # summary docs that historically drifted — now scanned so they can't silently re-drift
     "STATUS.md", "TRUST_REPORT.md", "ONE_PAGE_SUMMARY.md", "ABSTRACT_SCOPE.md",
-    "COVERAGE.md",
+    "COVERAGE.md", "READ_FIRST.md", "REPOSITORY_ARCHITECTURE.md",
+    "CLAUDE_REVIEW_PACKET.md", "repo/CLEANUP_PLAN.md",
 ]
 
 # Retired headline strings that must NOT reappear (regex-free substring match). These are
