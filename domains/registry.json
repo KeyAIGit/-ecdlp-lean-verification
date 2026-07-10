@@ -27,17 +27,17 @@
     {
       "id": "p256-nist",
       "title": "NIST P-256 / secp256r1",
-      "status": "planned",
-      "one_liner": "The other dominant prime-field curve (TLS, passports). Same EC machinery, different parameters.",
+      "status": "live",
+      "one_liner": "The other dominant prime-field curve (TLS, passports). Same EC machinery, no CM/GLV.",
       "slots": {
-        "corpus": null,
-        "ontology": null,
+        "corpus": "domains/p256/corpus.md",
+        "ontology": "Ecdlp/Proved/P256Curve.lean",
         "verifier": "lean-kernel"
       },
-      "metrics_source": null,
+      "metrics_source": "VERIFIED.md",
       "frontier_source": null,
-      "site": null,
-      "notes": "STARTED (see the P-256 rows in VERIFIED.md): the EllipticCurve instance, Δ≠0, base point, and the j≠0/no-GLV contrast are kernel-verified, and the field prime p is now proved prime by the SAME Pratt generator (Ecdlp/Proved/P256PrimeP.lean) — so P-256 is an *unconditional* elliptic curve, exactly as secp256k1. Group-order primality, torsion, and the attack-boundary are the remaining rungs; no dedicated corpus/frontier yet, hence still 'planned'."
+      "site": "dashboard.html#domains",
+      "notes": "LIVE (second real instance). Kernel-verified: both primes p and n (Pratt certificates, same generator as secp256k1), the unconditional EllipticCurve instance, the base point, and the j≠0/no-GLV structural contrast. Remaining rungs (planned, see domains/p256/corpus.md): generator order = n, embedding degree (MOV), non-anomalous (SSSA), generic-group bound. Proves the pipeline is curve-agnostic — Phase-1 exit criterion met on verified facts."
     },
     {
       "id": "curve25519",
