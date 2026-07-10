@@ -33,6 +33,10 @@ def Gx : ℕ := 4843956129390645175905258525279791420276294952604174799584408071
 /-- The `y`-coordinate of the standard P-256 generator `G`. -/
 def Gy : ℕ := 36134250956749795798585127919587881956611106672985015071877198253568414405109
 
+/-- The P-256 group order `n` (the prime order of the base point `G`; FIPS 186-4). Prime-ness
+is proved separately in `P256PrimeN.lean` via the same Pratt generator as secp256k1. -/
+def n : ℕ := 115792089210356248762697446949407573529996955224135760342422259061068512044369
+
 /-- NIST P-256 as a short Weierstrass curve `y² = x³ − 3x + b` over `𝔽_p`. -/
 def P256 : WeierstrassCurve (ZMod p) where
   a₁ := 0
