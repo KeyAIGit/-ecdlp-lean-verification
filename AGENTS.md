@@ -58,6 +58,20 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 - **Local (server)**: run `scripts/server-setup.sh` → `lake build` / `lake env lean`
   in seconds. 10–50× faster. Use this on the rented server.
 
+## Context bundles (what to load if your window is small)
+`bundles/MANIFEST.json` is the routing table for three cumulative tiers (source of truth:
+`TIERS` in `scripts/export_agent_bundle.py`):
+- **small** — the live snapshot: `STATUS.md`, `tasks/NEXT.md`, `data/stats.json`,
+  `data/frontier_map.json`.
+- **medium** — adds `READ_FIRST.md`, this file, `VERIFIED.md`, `BARRIERS.md`,
+  `notes/SECURITY_SCOPE.md`, `notes/FOUNDATIONS.md`, `experiments/HYPOTHESES.yaml`.
+- **large** — adds `data/knowledge_graph.json`, `REPOSITORY_ARCHITECTURE.md`,
+  `PUBLISHABLE_UNITS.md`, `TRUST_REPORT.md`.
+
+Print a self-contained pack on demand with
+`python3 scripts/export_agent_bundle.py --tier <small|medium|large>` (packs are NOT
+committed — see `bundles/README.md`).
+
 ## Workflow
 1. Branch from `main` (`claude/admiring-darwin-uouep1`). 2. Add theorem(s), grep the
 local Mathlib source for exact API. 3. Push → CI (or local build). 4. On green: add a
