@@ -46,7 +46,24 @@ deploy — see `PHASE2_PLAN.md`.
 | `app/layout.tsx` | shell + header with Sign in / UserButton (Clerk) |
 | `app/page.tsx` | public overview (server component, reads the truth layer) |
 | `app/research/page.tsx` | gated private area (placeholder) |
-| `lib/data.ts` | the ONLY data source in Step 1; Step 2 swaps it for the DB |
+| `lib/data.ts` | `DataSource` interface + `getDataSource()` env-based factory |
+| `lib/data.static.ts` | Step-1 backend: reads the published truth layer (no DB) |
+| `lib/data.db.ts` · `lib/db/*` | Step-2 backend: Drizzle over Postgres (used when `DATABASE_URL` is set) |
+| `db/schema.sql` · `scripts/seed.ts` | SQL schema + seeder (`npm run db:push` / `db:seed`) |
+| `app/api/*` | typed JSON API: `/api/stats`, `/api/domains`, `/api/domains?id=` |
+
+## Turning on the database (Step 2)
+
+Optional — the app runs without it (Step 1). To back it with Postgres:
+
+```bash
+# provision Neon/Supabase, then in .env.local:  DATABASE_URL=postgres://...
+npm run db:push      # apply lib/db/schema.ts   (or: psql "$DATABASE_URL" -f db/schema.sql)
+npm run db:seed      # copy domains + claims from the repo truth layer into the DB
+```
+
+With `DATABASE_URL` set, `getDataSource()` serves domains/claims from Postgres; unset, it
+reads the static site. The Lean counts stay authoritative from the repo either way.
 
 ## Honest scope
 
