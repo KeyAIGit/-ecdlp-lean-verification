@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 217,
+    "theorems": 219,
     "barriers": 6,
-    "edges": 222,
+    "edges": 224,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 27,
@@ -71,14 +71,16 @@
       "Mathlib (`map_eq_zero_iff`, `Ideal.Quotient.eq_zero_iff_mem`)": 1,
       "Mathlib (`IsLocalRing.mem_maximalIdeal`, `mem_nonunits_iff`)": 1,
       "Mathlib (`Iff.trans`; composes `secp256k1_three_nsmul_eq_zero_iff` + `secp256k1_torsion_iff_principal`)": 1,
-      "secp256k1_generator_addOrderOf` + Mathlib (`AddCommGroup.zmodModule`, `zmultiples_le_torsionBy`)": 1
+      "secp256k1_generator_addOrderOf` + Mathlib (`AddCommGroup.zmodModule`, `zmultiples_le_torsionBy`)": 1,
+      "secp256k1_generator_addOrderOf` + Mathlib (`Nat.card_zmultiples`)": 1,
+      "Mathlib (`AddEquiv.ofBijective`, `Nat.cast_smul_eq_nsmul`, `Int.cast_smul_eq_zsmul`, `ZMod.val_lt`)": 1
     },
     "by_area": {
       "curve-torsion": 120,
       "protocol-soundness": 23,
+      "other": 23,
       "generic-hardness": 22,
       "primality": 21,
-      "other": 21,
       "reduction": 5,
       "attack-resistance": 4,
       "params": 1
@@ -2905,6 +2907,32 @@
       "area": "protocol-soundness",
       "dependency_depth": 4,
       "gated": true
+    },
+    {
+      "id": "thm-217",
+      "name": "Ecdlp.Curve.secp256k1_grp_card`, `secp256k1_grp_isAddCyclic",
+      "short_name": "secp256k1_grp_card`,",
+      "module": "Ecdlp.Proved.SubgroupOrder",
+      "file": "Ecdlp/Proved/SubgroupOrder.lean",
+      "claim": "The secp256k1 crypto subgroup `⟨G⟩` is cyclic of order exactly `n` (`secp256k1_grp_card`: `Nat.card ⟨G⟩ = n`, from `Nat.card (zmultiples g) = addOrderOf g` + the weak keystone; `secp256k1_grp_isAddCyclic`: `IsAddCyclic ⟨G⟩`. The group-object-level statement of \"⟨G⟩ is a concrete cyclic group of order `n`\" — no Hasse/`#E`, only `addOrderOf G = n`)",
+      "method": "secp256k1_generator_addOrderOf` + Mathlib (`Nat.card_zmultiples`)",
+      "status": "proved",
+      "area": "other",
+      "dependency_depth": 5,
+      "gated": true
+    },
+    {
+      "id": "thm-218",
+      "name": "Ecdlp.Curve.secp256k1_dlogEquiv` (+ `secp256k1_dlogHom`, `_injective`, `_surjective`, `secp256k1_gen_addOrderOf`)",
+      "short_name": "secp256k1_dlogEquiv`",
+      "module": "Ecdlp.Proved.SubgroupOrder",
+      "file": "Ecdlp/Proved/SubgroupOrder.lean",
+      "claim": "The discrete-log map is a group isomorphism `ZMod n ≃+ ⟨G⟩` (`secp256k1_dlogEquiv`: base-point multiplication `c ↦ c·G` is an additive-group isomorphism between the scalar ring `ZMod n` and the concrete secp256k1 subgroup `⟨G⟩` — the exact group-theoretic content of the ECDLP setting: the discrete log `dlog = (c ↦ c·G)⁻` is a well-defined bijection. Its *computational* inversion is the open ECDLP hardness conjecture; this asserts only the unconditional bijection, via injective (`c.val < n = addOrderOf G`) + surjective (`zmultiples`) on the `ZMod n`-module `⟨G⟩`. Built with `AddEquiv.ofBijective`)",
+      "method": "Mathlib (`AddEquiv.ofBijective`, `Nat.cast_smul_eq_nsmul`, `Int.cast_smul_eq_zsmul`, `ZMod.val_lt`)",
+      "status": "proved",
+      "area": "other",
+      "dependency_depth": 5,
+      "gated": true
     }
   ],
   "barriers": [
@@ -3493,6 +3521,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.SubgroupOrder",
+      "to": "Ecdlp.Proved.ProtocolInstantiation",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.ThreeTorsion",
       "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
@@ -4030,6 +4063,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.ProtocolInstantiation",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.SubgroupOrder",
       "type": "imports"
     },
     {

@@ -47,6 +47,12 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_schnorr_verify
 #print axioms Ecdlp.Curve.secp256k1_taproot_tweak_verify
 
+-- ⟨G⟩ group structure: exactly n elements, cyclic, and the discrete-log isomorphism
+-- ZMod n ≃+ ⟨G⟩ (inherits `Lean.ofReduceBool` from the order keystone)
+#print axioms Ecdlp.Curve.secp256k1_grp_card
+#print axioms Ecdlp.Curve.secp256k1_grp_isAddCyclic
+#print axioms Ecdlp.Curve.secp256k1_dlogEquiv
+
 -- generic-group lower-bound combinatorial core + secp256k1 generic security
 #print axioms Ecdlp.GenericGroup.generic_dlog_query_bound
 #print axioms Ecdlp.GenericGroup.secp256k1_generic_security
