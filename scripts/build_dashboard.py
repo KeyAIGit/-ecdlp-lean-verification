@@ -225,7 +225,7 @@ def build_domains(reg: dict, live_metrics: dict) -> str:
         if d.get("status") == "live" and did in live_metrics:
             m = live_metrics[did]
             metric = (f'<div class="dmetric">{m["rows"]}<span> verified rows</span>'
-                      f' · {m["frontier"]}<span>% frontier</span></div>')
+                      f' · <span>{esc(m["tail"])}</span></div>')
         else:
             slots = d.get("slots", {})
             reserved = " · ".join(k for k, v in slots.items() if not v) or "slots open"
@@ -549,7 +549,12 @@ def main() -> int:
     domains_html = ""
     if DOMAINS_REG.exists():
         reg = json.loads(DOMAINS_REG.read_text(encoding="utf-8"))
-        live_metrics = {"ecdlp-secp256k1": {"rows": vcount, "frontier": completeness}}
+        # P-256 verified-row count: ledger rows whose file cell cites an Ecdlp/Proved/P256 file.
+        p256_rows = len(re.findall(r"Ecdlp/Proved/P256\w*\.lean", VERIFIED.read_text(encoding="utf-8")))
+        live_metrics = {
+            "ecdlp-secp256k1": {"rows": vcount, "tail": f"{completeness}% frontier"},
+            "p256-nist": {"rows": p256_rows, "tail": "curve + p & n prime"},
+        }
         domains_html = build_domains(reg, live_metrics)
 
     # Static (not wall-clock) so regeneration stays a pure function of sources (docs-sync).
