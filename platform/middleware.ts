@@ -1,7 +1,8 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-// The private area. Everything else is public (the verified asset is meant to be seen).
-const isProtectedRoute = createRouteMatcher(["/research(.*)"]);
+// Gated areas: the private research zone and the verification submit flow. Everything else is
+// public (the verified asset is meant to be seen).
+const isProtectedRoute = createRouteMatcher(["/research(.*)", "/submit(.*)", "/api/submissions(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {

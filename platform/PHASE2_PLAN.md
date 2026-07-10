@@ -51,12 +51,28 @@ it does not grow into per-user features, so it is a dead end for the full platfo
 To turn it on: provision Postgres (Neon/Supabase), set `DATABASE_URL`, `npm run db:push`
 (or `psql -f db/schema.sql`), `npm run db:seed`. The app then serves domains/claims from the DB.
 
-### Step 3 — Hosted verification (the moat)  *(1–3 months)*
-- A sandboxed worker that runs `lake build` on a submitted target, resource-capped and queued,
+### Step 3 — Hosted verification (the moat)  *(1–3 months; submit flow + worker scaffolded)*
+- A sandboxed worker that runs `lake` on a submitted target, resource-capped and queued,
   with the warm-server pattern (`../.github/workflows/server-run.yml`) as the seed.
 - A logged-in user submits a statement and gets a kernel-checked verdict written to their
   account. This is the expensive core and the real product differentiator.
 - **Exit:** submit-and-verify works end to end for an outside user.
+
+**Already scaffolded:**
+- `app/submit/page.tsx` (gated) + `POST/GET /api/submissions` — a user enqueues a Lean source;
+  the client can only ever create a `queued` row (verdict is worker-written).
+- `lib/db/submissions.ts` — queue helpers (`ensureUser`, `createSubmission`, `claimNextQueued`,
+  `writeVerdict`).
+- `worker/verify.ts` + `worker/verifier.ts` — the worker loop and the `Verifier` abstraction
+  (`stub` = safe default that never returns `verified`; `local` = runs `lake env lean`).
+- `worker/README.md` — the **security model**, which is the real content of Step 3: elaborating
+  untrusted Lean is arbitrary code execution (`native_decide` runs code), so verification MUST
+  run in an ephemeral, network-off, secret-free, resource-capped jail. The scaffold is explicit
+  that the warm server is **not** yet safe for untrusted input; hardening it (or per-job
+  microVMs) is the actual Step-3 work.
+
+To turn on: run the worker on a jailed host with the Lean toolchain
+(`VERIFIER=local REPO_DIR=… DATABASE_URL=… npx tsx worker/verify.ts`).
 
 ### Step 4 — Community / commercialization  *(ongoing)*
 - Collaboration, other verifiers (Coq/Isabelle/experiments), publication export, API, licensing.
