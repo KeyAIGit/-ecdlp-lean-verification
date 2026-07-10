@@ -4,7 +4,7 @@
 
 A hand-built, AI-assisted, kernel-verified Lean 4 + Mathlib library about the
 secp256k1 elliptic curve and the boundary of the classical attacks on its discrete-log
-problem. **218 ledger rows / ~182 distinct kernel-verified results** (36 rows are
+problem. **220 ledger rows / ~184 distinct kernel-verified results** (36 rows are
 alternate-form or supporting restatements of the same fact). **0 `sorry`, 0 `admit`,
 0 open obligations.**
 
@@ -36,16 +36,19 @@ whitelist.
 - **`glvPoint_add`**: the GLV map `(x,y) ↦ (βx, y)` is proved an **additive
   endomorphism** of the secp256k1 point group, with full affine-slope branch analysis
   (infinity, vertical `P = −Q`, secant, tangent), bundled as `glvHom : Point →+ Point`.
-  **Caveat:** this is the homomorphism half only; the cryptographically load-bearing
-  `glvPoint = [λ]` eigenvalue property is **NOT** proved (it remains an open stem).
+  The cryptographically load-bearing `glvPoint = [λ]` eigenvalue property is now **proved
+  on all of ⟨G⟩** (`secp256k1_glvPoint_eq_lam_on_zmultiples`), via the weak keystone
+  `addOrderOf G = n`; extending it to the **full** group `E(𝔽_p)` still needs `#E = n`.
 
 **Routine Mathlib re-export / wrappers:** `E[n] = ker[n]`, Lagrange (`order_dvd_card`),
 cofactor, division-polynomial invariants `b₂..b₈` and `Ψ₂/Ψ₃/preΨ₄` degrees, torsion
 filtration lemmas. Verified engineering, not new mathematics. The ~25–30 discrete-log
 "protocol" theorems (Schnorr, DH, ElGamal, Pedersen, Okamoto, Chaum–Pedersen, MuSig2,
 Taproot, Feldman VSS) are one-line algebraic identities over an abstract
-`[Module (ZMod n) G]` / `[Field F]`, **never instantiated at the secp256k1 point group**
-and encoding no security model — abstract algebra, not cryptography.
+`[Module (ZMod n) G]` / `[Field F]`, encoding no security model — abstract algebra, not
+cryptography. (They are now **also instantiated on the concrete curve subgroup ⟨G⟩**, and
+`ZMod n ≃+ ⟨G⟩` is proved a group isomorphism — but that is the *bijection* underlying
+ECDLP, still not a hardness/security theorem.)
 
 **Honest substantive-vs-scaffolding ratio: ~10–15% substantive, ~85% routine.**
 
@@ -67,9 +70,11 @@ definitional, since Schoof point-counting is absent from Mathlib).
 
 ---
 
-**Single next high-value move:** finish the GLV object honestly — prove the curve-specific
-eigenvalue identity `glvPoint G = λ • G` on `⟨G⟩` (the actual cryptographic content of
-GLV), turning the proved additive endomorphism into the `[λ]`-action.
+**Single next high-value move:** the GLV eigenvalue `glvPoint = [λ]` on `⟨G⟩`, the
+`Module (ℤ/n)` structure, the protocol instantiation, and the `ZMod n ≃+ ⟨G⟩` discrete-log
+isomorphism are now all proved on the crypto subgroup. The next honest rung is the **strong
+keystone `#E(𝔽_p) = n`** (needs Hasse, absent from Mathlib), which would extend every one of
+those from `⟨G⟩` to the whole point group `E(𝔽_p)`.
 
 **Honest limitation:** the Weil pairing — highest-leverage missing foundation (it gates
 MOV/Frey–Rück) — is out of scope. It is a multi-month, research-grade Mathlib
