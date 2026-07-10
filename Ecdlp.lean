@@ -82,6 +82,7 @@ import Ecdlp.Proved.P256Curve
 import Ecdlp.Proved.P256PrimeP
 import Ecdlp.Proved.P256PrimeN
 import Ecdlp.Proved.P256EmbeddingDegree
+import Ecdlp.Proved.P256TraceOfFrobenius
 import Ecdlp.Proved.EvalRatAtNonvanishing
 import Ecdlp.Proved.Curve25519
 import Ecdlp.Proved.MultiplicationFormula
