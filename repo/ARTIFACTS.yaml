@@ -144,12 +144,16 @@ classes:
       - repo/ARTIFACTS.yaml
       - repo/CLEANUP_PLAN.md
       - CLAUDE_REVIEW_PACKET.md
+      - PLATFORM_STRATEGY.md
+      - domains/registry.json
+      - domains/README.md
     owner: operations
     hand_edit: true
     generated: false
     gates:
       - scripts/check_status_consistency.py
       - scripts/check_repo_artifacts.py
+      - scripts/check_domains.py
       - adversarial Claude review
     risks:
       - Too much prose can become another stale source of truth.

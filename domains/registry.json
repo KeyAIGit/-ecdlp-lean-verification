@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "purpose": "Domain registry for the machine-verifiable Research OS. Each domain plugs into the SAME pipeline (corpus -> frontier -> hypotheses -> tasks -> proofs -> truth graph -> site -> papers) by filling three replaceable slots: a claim corpus, an ontology/generator, and a verifier. secp256k1/ECDLP is instance #1 (live); the others are honest placeholders that reserve space without claiming results.",
+  "contract": "domains/README.md",
+  "rule": "A 'live' domain MUST have every slot file present and may reference live metric sources. A 'planned'/'exploratory' domain MUST NOT claim any metrics; its counts are null until it becomes live. Honesty is machine-checked by scripts/check_domains.py.",
+  "status_legend": {
+    "live": "real, kernel-verified content flowing through the whole pipeline",
+    "planned": "the same machinery clearly applies; corpus/proofs not started yet",
+    "exploratory": "plausible future direction that needs a different verifier or missing foundations"
+  },
+  "domains": [
+    {
+      "id": "ecdlp-secp256k1",
+      "title": "ECDLP / secp256k1",
+      "status": "live",
+      "one_liner": "Discrete-log hardness boundary for the Bitcoin/Ethereum curve, kernel-verified.",
+      "slots": {
+        "corpus": "data/KG_CLAIM_FORMALIZATION_v1.csv",
+        "ontology": "Ecdlp/Ontology.lean",
+        "verifier": "lean-kernel"
+      },
+      "metrics_source": "data/stats.json",
+      "frontier_source": "data/frontier_map.json",
+      "site": "dashboard.html",
+      "notes": "The reference instance. Everything the pipeline does, it does here first."
+    },
+    {
+      "id": "p256-nist",
+      "title": "NIST P-256 / secp256r1",
+      "status": "planned",
+      "one_liner": "The other dominant prime-field curve (TLS, passports). Same EC machinery, different parameters.",
+      "slots": {
+        "corpus": null,
+        "ontology": null,
+        "verifier": "lean-kernel"
+      },
+      "metrics_source": null,
+      "frontier_source": null,
+      "site": null,
+      "notes": "Highest-confidence second instance: Pratt primality, EllipticCurve instance, torsion, and the attack-boundary all transfer directly. Reserved, not started."
+    },
+    {
+      "id": "curve25519",
+      "title": "Curve25519 / Ed25519",
+      "status": "planned",
+      "one_liner": "The widely deployed twisted-Edwards curve (SSH, Signal, TLS 1.3).",
+      "slots": {
+        "corpus": null,
+        "ontology": null,
+        "verifier": "lean-kernel"
+      },
+      "metrics_source": null,
+      "frontier_source": null,
+      "site": null,
+      "notes": "Twisted Edwards form needs its own ontology, but the corpus/frontier/proof/site pipeline is unchanged. Reserved."
+    },
+    {
+      "id": "lattice-lwe",
+      "title": "Lattice / LWE post-quantum hardness",
+      "status": "exploratory",
+      "one_liner": "The post-quantum successor problem — a stress-test that the OS is not ECC-only.",
+      "slots": {
+        "corpus": null,
+        "ontology": null,
+        "verifier": "unassigned"
+      },
+      "metrics_source": null,
+      "frontier_source": null,
+      "site": null,
+      "notes": "Deliberately different: needs lattice-reduction / worst-case-to-average-case foundations largely absent from Mathlib, so the verifier slot is open. Listed to reserve the direction honestly, not to imply progress."
+    }
+  ]
+}
