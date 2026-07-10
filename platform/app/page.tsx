@@ -1,4 +1,4 @@
-import { getStats, getDomains } from "../lib/data";
+import { getDataSource } from "../lib/data";
 
 // Public overview: the verified asset, re-presented behind the platform (no login needed).
 export const revalidate = 3600;
@@ -10,7 +10,8 @@ const BADGE: Record<string, { bg: string; fg: string }> = {
 };
 
 export default async function Home() {
-  const [stats, domains] = await Promise.all([getStats(), getDomains()]);
+  const ds = await getDataSource();
+  const [stats, domains] = await Promise.all([ds.getStats(), ds.getDomains()]);
   const live = domains.filter((d) => d.status === "live").length;
 
   return (

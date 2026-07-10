@@ -32,10 +32,24 @@ it does not grow into per-user features, so it is a dead end for the full platfo
   the strategy calls for, now behind real auth (unlike Pages, which cannot gate).
 - **Exit:** an external user signs in and sees a gated page the public cannot.
 
-### Step 2 — Persistence + accounts  *(weeks)*
-- Add Postgres (projects, users, domains, claims, submissions). Keep git as the export mirror.
+### Step 2 — Persistence + accounts  *(weeks; data layer now scaffolded)*
+- Add Postgres (users, domains, claims, submissions). Keep git as the export mirror.
 - Move the private research content into the DB / private repo (also closes SECURITY task #36).
 - **Exit:** per-user state persists; the truth layer is queryable, not just static JSON.
+
+**Already scaffolded (no DB required to read the code):**
+- `lib/db/schema.ts` (Drizzle) + `db/schema.sql` (plain-SQL equivalent) — the data model above.
+- `lib/data.ts` is now a `DataSource` **interface** with two backends chosen by env:
+  `lib/data.static.ts` (Step 1, reads the site) and `lib/data.db.ts` (Step 2, reads Postgres).
+  Connecting a DB is a **config change** (`DATABASE_URL`), not a rewrite — pages/API call
+  `getDataSource()` and never know which backend answered. The Lean counts stay authoritative
+  from the repo in both backends.
+- `scripts/seed.ts` (`npm run db:seed`) seeds domains from `domains/registry.json` and claims
+  from the per-domain corpus, so the DB starts as a faithful copy of the git truth layer.
+- Typed API routes `GET /api/stats`, `GET /api/domains`, `GET /api/domains?id=<domain>`.
+
+To turn it on: provision Postgres (Neon/Supabase), set `DATABASE_URL`, `npm run db:push`
+(or `psql -f db/schema.sql`), `npm run db:seed`. The app then serves domains/claims from the DB.
 
 ### Step 3 — Hosted verification (the moat)  *(1–3 months)*
 - A sandboxed worker that runs `lake build` on a submitted target, resource-capped and queued,
