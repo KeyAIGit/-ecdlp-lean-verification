@@ -103,6 +103,7 @@ NAV = [
     ]),
     ("Research OS & architecture", [
         ("STATUS.md", "Canonical generated snapshot: live counts, corpus status, and bottleneck"),
+        ("PLATFORM_STRATEGY.md", "Direction: from one verified case to a verified-research platform (honest phased roadmap)"),
         ("tasks/NEXT.md", "Small-context active task queue"),
         ("experiments/HYPOTHESES.yaml", "Hypothesis registry with evidence and exit criteria"),
         ("REPOSITORY_ARCHITECTURE.md", "Whole-repo map: canonical, generated, public, scratch, archive"),
