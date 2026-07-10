@@ -17,6 +17,6 @@ secp256k1 (`scripts/pratt_certificate.py`, `Ecdlp/Proved/Secp256k1*.lean`).
 | p256-base-point | the SEC 2 generator `G = (Gx, Gy)` is a rational point of the curve | **verified** | `Ecdlp/Proved/P256Curve.lean` (`P256_generator_equation`) |
 | p256-no-glv | `c₄ ≠ 0`, hence `j ≠ 0`: P-256 has no CM / GLV endomorphism (structural contrast with secp256k1) | **verified** | `Ecdlp/Proved/P256Curve.lean` (`P256_c₄_ne_zero`) |
 | p256-generator-order | the base point `G` has order exactly `n` (prime-order group) | planned | mirror of secp256k1 `GeneratorOrder.lean` |
-| p256-embedding-degree | large embedding degree — MOV/Frey–Rück resistance | planned | mirror of secp256k1 `EmbeddingDegree.lean` |
+| p256-embedding-degree | large embedding degree (`> 100`) — MOV/Frey–Rück resistance | **verified** | `Ecdlp/Proved/P256EmbeddingDegree.lean` (`p256_embedding_degree_gt_100`) |
 | p256-non-anomalous | `#E ≠ p` (non-anomalous) — Smart/SSSA resistance | planned | mirror of secp256k1 `AnomalousScope.lean` |
 | p256-generic-bound | generic-group `Ω(√n)` hardness core applies (curve-agnostic) | planned | reuse of `GenericGroupBound.lean` |
