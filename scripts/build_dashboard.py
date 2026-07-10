@@ -134,6 +134,7 @@ NAV = [
         ("data/README.md", "Corpus provenance"),
     ]),
     ("Deep-dive notes (foundations & strategy)", [
+        ("notes/PRIVATE_AREA_DESIGN.md", "Public/private split design: a login-gated research area (Cloudflare Access), what goes private"),
         ("notes/FOUNDATIONS.md", "The deep-foundations roadmap toward the Weil pairing"),
         ("notes/GLV_LAMBDA.md", "GLV [λ]-eigenvalue bottleneck + the reachable cube-relation substitute"),
         ("notes/GLV_HOMOMORPHISM.md", "How the GLV homomorphism reduces to one slope identity"),

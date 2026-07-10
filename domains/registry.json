@@ -68,6 +68,21 @@
       "frontier_source": null,
       "site": null,
       "notes": "Deliberately different: needs lattice-reduction / worst-case-to-average-case foundations largely absent from Mathlib, so the verifier slot is open. Listed to reserve the direction honestly, not to imply progress."
+    },
+    {
+      "id": "bsd-elliptic-curves",
+      "title": "Birch–Swinnerton-Dyer (elliptic-curve ranks / L-functions)",
+      "status": "exploratory",
+      "one_liner": "A Millennium-Prize conjecture on the SAME objects (elliptic curves) — a problem of a different order, not a parameter swap.",
+      "slots": {
+        "corpus": null,
+        "ontology": null,
+        "verifier": "lean-kernel"
+      },
+      "metrics_source": null,
+      "frontier_source": null,
+      "site": null,
+      "notes": "Shows the OS targets deep research, not only curve variants. Almost entirely blocked by missing Mathlib foundations (L-functions of elliptic curves, Tate–Shafarevich group, modularity), so its real near-term contribution would be an honest barrier map, not proofs. Reserved as a first-class exploratory direction."
     }
   ]
 }
