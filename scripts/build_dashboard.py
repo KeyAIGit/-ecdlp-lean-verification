@@ -33,6 +33,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 FM = ROOT / "data" / "frontier_map.json"
+KG = ROOT / "data" / "knowledge_graph.json"
+STATUS_MD = ROOT / "STATUS.md"
+ARTIFACTS = ROOT / "repo" / "ARTIFACTS.yaml"
+TASKS = ROOT / "tasks" / "NEXT.md"
+HYPOTHESES = ROOT / "experiments" / "HYPOTHESES.yaml"
 VERIFIED = ROOT / "VERIFIED.md"
 OUT = ROOT / "dashboard.html"
 INDEX = ROOT / "index.html"
@@ -87,11 +92,21 @@ LAYERS = [
 NAV = [
     ("Start here", [
         ("README.md", "Project overview, layout, build instructions"),
+        ("READ_FIRST.md", "Low-context orientation: what this is, what not to claim"),
         ("AGENTS.md", "Orientation for any Claude instance — read this first"),
         ("ENVIRONMENT_PLAN.md", "The strategic plan: L1-L5 layers, 3 tracks, checkpoints"),
         ("CLAUDE.md", "Working conventions for automated/assisted runs"),
         ("AGENT.md", "The authoritative protocol"),
         ("SETUP.md", "Minimal build command"),
+    ]),
+    ("Research OS & architecture", [
+        ("STATUS.md", "Canonical generated snapshot: live counts, corpus status, and bottleneck"),
+        ("tasks/NEXT.md", "Small-context active task queue"),
+        ("experiments/HYPOTHESES.yaml", "Hypothesis registry with evidence and exit criteria"),
+        ("REPOSITORY_ARCHITECTURE.md", "Whole-repo map: canonical, generated, public, scratch, archive"),
+        ("repo/ARTIFACTS.yaml", "Machine-readable artifact classification manifest"),
+        ("repo/CLEANUP_PLAN.md", "Conservative cleanup plan: classify, review, then move/delete"),
+        ("CLAUDE_REVIEW_PACKET.md", "Final adversarial review packet template"),
     ]),
     ("The ledger & proofs", [
         ("VERIFIED.md", "The canonical ledger — every kernel-verified theorem, one row each"),
@@ -148,10 +163,22 @@ def esc(s: str) -> str:
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
+def write_text_lf(path: Path, text: str) -> None:
+    with path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
+
+
 def git_log(n: int = 14) -> list[tuple[str, str]]:
     try:
-        out = subprocess.run(["git", "log", "--format=%h\t%s", f"-{n}", "origin/main"],
-                             cwd=ROOT, text=True, capture_output=True, timeout=20).stdout
+        out = subprocess.run(
+            ["git", "log", "--format=%h\t%s", f"-{n}", "origin/main"],
+            cwd=ROOT,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            capture_output=True,
+            timeout=20,
+        ).stdout
     except Exception:
         out = ""
     rows = []
@@ -177,7 +204,7 @@ def discover_extra_files() -> list[str]:
                            ("data/*.json", ROOT), ("data/*.md", ROOT),
                            ("scripts/*.py", ROOT)]:
         for p in sorted(base.glob(pattern)):
-            rel = str(p.relative_to(ROOT))
+            rel = p.relative_to(ROOT).as_posix()
             if rel not in known and "__pycache__" not in rel:
                 found.append(rel)
     return found
@@ -208,6 +235,60 @@ def build_nav_html() -> str:
         sections.append(f'<div class="navsection reveal"><h3>Other (auto-discovered)</h3>'
                         f'<div class="navgrid">{cards}</div></div>')
     return "".join(sections)
+
+
+def build_sync_health(stats: dict, frontier: dict, graph: dict) -> str:
+    """Render a compact, source-backed sync-health panel."""
+    ledger_rows = int(stats.get("ledger_rows", 0))
+    distinct = int(stats.get("distinct_results", 0))
+    corpus_claims = int(frontier.get("meta", {}).get("corpus_claims", 0))
+    frontier_rows = int(frontier.get("meta", {}).get("verified_ledger_rows", -1))
+    frontier_total = sum(int(v) for v in frontier.get("status_summary", {}).values())
+    graph_theorems = int(graph.get("counts", {}).get("theorems", 0))
+
+    checks = [
+        (
+            "Canonical counts",
+            frontier_rows == ledger_rows and ledger_rows > 0 and distinct > 0,
+            f"{ledger_rows} ledger rows / ~{distinct} distinct",
+            "data/stats.json + STATUS.md",
+        ),
+        (
+            "Frontier map",
+            frontier_total == corpus_claims and corpus_claims > 0,
+            f"{corpus_claims} corpus claims classified",
+            "data/frontier_map.json",
+        ),
+        (
+            "Knowledge graph",
+            graph_theorems > 0,
+            f"{graph_theorems} graph theorem nodes",
+            "data/knowledge_graph.json",
+        ),
+        (
+            "Artifact manifest",
+            ARTIFACTS.exists(),
+            "canonical/generated/scratch/archive classes present",
+            "repo/ARTIFACTS.yaml + scripts/check_repo_artifacts.py",
+        ),
+        (
+            "Active work",
+            TASKS.exists() and HYPOTHESES.exists(),
+            "task queue and hypothesis registry present",
+            "tasks/NEXT.md + experiments/HYPOTHESES.yaml",
+        ),
+    ]
+
+    cards = []
+    for label, ok, value, source in checks:
+        cls = "ok" if ok else "bad"
+        state = "OK" if ok else "DRIFT"
+        cards.append(
+            f'<div class="health {cls} reveal"><div class="hstate">{state}</div>'
+            f'<div class="hname">{esc(label)}</div><div class="hval">{esc(value)}</div>'
+            f'<div class="hsrc">{esc(source)}</div></div>'
+        )
+    return "".join(cards)
 
 
 def build_frontier_bar(status: dict, total: int) -> tuple[str, str, str]:
@@ -286,12 +367,13 @@ def sync_index_html(vcount: int, distinct: int, completeness, total: int) -> Non
         html, n = re.subn(pat, lambda m, v=val: f"{m.group(1)}{v}{m.group(2)}", html, flags=re.S)
         if n == 0:
             print(f"  warn: index.html counter '{name}' not found — layout may have drifted")
-    INDEX.write_text(html, encoding="utf-8")
+    write_text_lf(INDEX, html)
     print(f"synced index.html counters ({vcount} rows / ~{distinct} distinct / {comp}% frontier)")
 
 
 def main() -> int:
     fm = json.loads(FM.read_text(encoding="utf-8"))
+    graph = json.loads(KG.read_text(encoding="utf-8"))
     # Single source of truth for headline counts: data/stats.json (regenerated from VERIFIED.md by
     # gen_stats.py). Never recompute distinct via a hardcoded offset — that is how counts drift.
     stats = json.loads((ROOT / "data" / "stats.json").read_text(encoding="utf-8"))
@@ -328,6 +410,7 @@ def main() -> int:
 
     frontier_segs, frontier_legend, frontier_table = build_frontier_bar(status, total)
     found_bars, found_table = build_foundations_chart(foundations)
+    sync_health_html = build_sync_health(stats, fm, graph)
 
     tracks_html = ""
     for name, items in TRACKS:
@@ -435,6 +518,17 @@ a{{color:var(--blue);text-decoration:none}}
 .cunit{{font-family:"Baloo 2";font-weight:700;font-size:15px;color:var(--blue);margin-left:2px}}
 .clab{{color:var(--gray);font-size:12px;margin-top:4px;font-weight:700}}
 .csub{{color:var(--mut);font-size:11px;margin-top:4px}}
+
+/* ---- sync health ---- */
+.healthgrid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}}
+.health{{background:#fff;border:1px solid var(--line);border-left:4px solid var(--good);
+  border-radius:8px;padding:12px 13px;box-shadow:0 1px 2px rgba(15,40,80,.04)}}
+.health.bad{{border-left-color:var(--critical)}}
+.hstate{{font-family:"Baloo 2";font-weight:800;font-size:12px;color:var(--good)}}
+.health.bad .hstate{{color:var(--critical)}}
+.hname{{font-weight:800;color:var(--navy);font-size:13px;margin-top:2px}}
+.hval{{color:var(--gray);font-size:12px;margin-top:4px}}
+.hsrc{{color:var(--mut);font-size:10.5px;margin-top:6px;font-family:ui-monospace,Menlo,monospace}}
 
 /* ---- section rhythm ---- */
 section{{padding:36px 0;scroll-margin-top:70px}}
@@ -561,6 +655,7 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
     <span>· ECDLP env</span></a>
   <div class="navlinks" id="scrollspy">
     <a href="#metrics">Overview</a>
+    <a href="#sync">Sync</a>
     <a href="#navigate">Docs</a>
     <a href="#frontier">Frontier</a>
     <a href="#tracks">Tracks</a>
@@ -581,14 +676,20 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 <main id="main">
 <div class="cardband wrap" id="metrics"><div class="cards">{cards_html}</div></div>
 
+<section class="tint" id="sync"><div class="wrap">
+<h2><span class="secnum">01</span>Sync Health</h2>
+<p class="lede">The public surface is tied back to canonical machine sources and checked by CI gates.</p>
+<div class="healthgrid">{sync_health_html}</div>
+</div></section>
+
 <section class="wrap" id="navigate">
-<h2><span class="secnum">01</span>Navigate the <span class="accent">environment</span></h2>
+<h2><span class="secnum">02</span>Navigate the <span class="accent">environment</span></h2>
 <p class="lede">Every doc, dataset, and script in the repo, auto-discovered and grouped by purpose.</p>
 {nav_html}
 </section>
 
 <section class="tint" id="frontier"><div class="wrap">
-<h2><span class="secnum">02</span>Frontier map — {total} corpus claims</h2>
+<h2><span class="secnum">03</span>Frontier map — {total} corpus claims</h2>
 <p class="lede">Every claim's status is fixed, reserved, and never guessed — see the table view for the exact rule behind each color.</p>
 <div class="grid2">
 <div class="reveal">
@@ -613,23 +714,23 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 <section><div class="wrap">
 <div class="grid2">
 <div class="reveal">
-  <h2><span class="secnum">03</span>Blocked by missing foundation</h2>
+  <h2><span class="secnum">04</span>Blocked by missing foundation</h2>
   {found_bars}
   {found_table}
 </div>
 <div class="reveal">
-  <h2><span class="secnum">04</span>Environment layers</h2>
+  <h2><span class="secnum">05</span>Environment layers</h2>
   {layers_html}
 </div>
 </div>
 </div></section>
 
 <section class="tint" id="tracks"><div class="wrap">
-<h2><span class="secnum">05</span>Tracks &amp; checkpoints</h2>{tracks_html}
+<h2><span class="secnum">06</span>Tracks &amp; checkpoints</h2>{tracks_html}
 </div></section>
 
 <section id="commits"><div class="wrap">
-<h2><span class="secnum">06</span>Recent build milestones</h2><ul class="commits">{commits_html}</ul>
+<h2><span class="secnum">07</span>Recent build milestones</h2><ul class="commits">{commits_html}</ul>
 </div></section>
 </main>
 
@@ -744,7 +845,7 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
 }})();
 </script>
 </body></html>"""
-    OUT.write_text(html, encoding="utf-8")
+    write_text_lf(OUT, html)
     # index.html is the hand-authored KeyAI landing one-pager (site root); we do NOT
     # regenerate it, but we DO keep its numeric counters in sync with the canonical ledger.
     sync_index_html(vcount, distinct, completeness, total)

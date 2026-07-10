@@ -38,6 +38,9 @@ count from any other doc** — prose files may be stale. If in doubt, cite STATU
 - Never claim more than the kernel verifies. When unsure, state the limit plainly.
 
 ## Where to go next
+For repository ownership and cleanup boundaries, read
+`REPOSITORY_ARCHITECTURE.md` before moving or deleting files.
+
 `STATUS.md` (canonical snapshot) · `PUBLISHABLE_UNITS.md` (the 3 standalone results) ·
 `VERIFIED.md` (the ledger) · `BARRIERS.md` (the no-go map) · `TRUST_REPORT.md` (what
 "verified" rests on) · `SETUP.md` (build + CI + regen) · `WORK_SCOPE.md` (the

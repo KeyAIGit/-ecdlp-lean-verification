@@ -52,7 +52,7 @@ def _strip_md(s: str) -> str:
 def parse_ledger() -> list[dict]:
     rows: list[dict] = []
     seen_header = False
-    for line in (ROOT / "VERIFIED.md").read_text().splitlines():
+    for line in (ROOT / "VERIFIED.md").read_text(encoding="utf-8").splitlines():
         m = _ROW.match(line)
         if not m:
             continue
@@ -103,7 +103,7 @@ def parse_imports() -> dict[str, list[str]]:
             f.relative_to(ROOT).with_suffix("").as_posix().replace("/", ".")
         )
         deps = []
-        for line in f.read_text().splitlines():
+        for line in f.read_text(encoding="utf-8").splitlines():
             m = _IMPORT.match(line)
             if m and m.group(1) != module:
                 deps.append(m.group(1))
@@ -428,9 +428,9 @@ def main() -> int:
     md = render_markdown(graph)
     if "--check" in sys.argv:
         stale = []
-        if not OUT.exists() or OUT.read_text() != text:
+        if not OUT.exists() or OUT.read_text(encoding="utf-8") != text:
             stale.append(str(OUT))
-        if not OUT_MD.exists() or OUT_MD.read_text() != md:
+        if not OUT_MD.exists() or OUT_MD.read_text(encoding="utf-8") != md:
             stale.append(str(OUT_MD))
         if stale:
             print(
@@ -441,8 +441,8 @@ def main() -> int:
             return 1
         print(f"up to date ({graph['counts']['theorems']} theorems).")
         return 0
-    OUT.write_text(text)
-    OUT_MD.write_text(md)
+    OUT.write_text(text, encoding="utf-8")
+    OUT_MD.write_text(md, encoding="utf-8")
     print(
         f"wrote {OUT} and {OUT_MD}: {graph['counts']['theorems']} theorems, "
         f"{graph['counts']['barriers']} barriers, {graph['counts']['edges']} edges."

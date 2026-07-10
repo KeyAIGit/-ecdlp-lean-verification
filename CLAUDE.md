@@ -2,6 +2,8 @@
 
 Machine-checked layer for the ECDLP knowledge graph (Lean 4 + Mathlib). This file
 is guidance for automated/assisted runs. The authoritative protocol is `AGENT.md`.
+For whole-repository ownership, generated artifacts, and cleanup boundaries, read
+`REPOSITORY_ARCHITECTURE.md` and `repo/ARTIFACTS.yaml` before moving or deleting files.
 
 ## The one invariant
 **A green build means every built theorem is fully proved.** The Lean kernel is the

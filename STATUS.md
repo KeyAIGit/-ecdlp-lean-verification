@@ -37,19 +37,36 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
   conjecture**, not a theorem.
 - Strongest layers: verified secp256k1 arithmetic + machine-checked primality (Pratt); the
   generic-DLP `Θ(√n)` combinatorial core; attack-boundary facts (anti-MOV / anti-Smart); torsion /
-  division-polynomial work; Semaev `S₃`/`S₄`; the early Weil ladder (W1–W3).
-- Honest labels: the protocol library is **verified protocol algebra** (abstract identities), not
-  proven security of deployed protocols; the GLV object has its **homomorphism half** proved, the
-  `[λ]` eigenvalue still open; the real prover path is the **tactic ladder + human-in-loop**
-  (external model-provers attempted, 0 accepted).
+  division-polynomial work; Semaev `S₃`/`S₄`; the early Weil ladder (W1–W3); the **weak
+  point-counting keystone** `addOrderOf G = n` (⟨G⟩ cyclic of order `n`, no Hasse/`#E`).
+- Honest labels: the protocol library is **verified protocol algebra** (identities that hold in any
+  `ℤ/n`-module), now also **instantiated on the concrete curve subgroup ⟨G⟩** — not a proof of
+  deployed-protocol security against a real adversary. The GLV endomorphism acts as the eigenvalue
+  `[λ]` **on all of ⟨G⟩** (`glvPoint P = λ·P` for `P ∈ ⟨G⟩`, proved), via the weak keystone;
+  extending it to the **full** group `E(𝔽_p)` is still open. The real prover path is the **tactic
+  ladder + human-in-loop** (external model-provers attempted, 0 accepted).
 
 ## Main current bottleneck
-Point counting `#E(𝔽_p) = n` — the keystone that gates the GLV eigenvalue `glvPoint G = λ·G`, the
-`Module (ℤ/n)` structure on the real point group, and honest instantiation of the protocol algebra.
+Point counting `#E(𝔽_p) = n` (the **strong** keystone, needs Hasse — absent from Mathlib v4.31).
+On the crypto subgroup ⟨G⟩ the GLV eigenvalue `glvPoint = [λ]`, the `Module (ℤ/n)` structure, and
+the instantiated protocol algebra are **already proved** via the weak keystone `addOrderOf G = n`.
+What `#E = n` still gates is **extending those ⟨G⟩ results to the whole point group** `E(𝔽_p)`
+(cofactor 1 ⇒ `E(𝔽_p) = ⟨G⟩`) and the full `E[n] ≅ (ℤ/n)²` torsion structure.
+
+## Active work protocol
+The active queue is `tasks/NEXT.md`. Keep it short (3-7 task contracts) so a
+small-context agent can start work without rereading the whole repository.
+
+The hypothesis registry is `experiments/HYPOTHESES.yaml`. It records testable
+directions, evidence, and exit criteria; it is not a theorem ledger.
+
+The drift gate is `scripts/check_status_consistency.py`. Run it whenever stats,
+frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 
 ## Where to go deeper
-`READ_FIRST.md` (orientation for low-context readers) · `PUBLISHABLE_UNITS.md` (the 3 standalone
-results) · `WORK_SCOPE.md` (the improvement program) · `VERIFIED.md` (ledger) · `BARRIERS.md`
-(no-go map) · `notes/FOUNDATIONS.md` (Weil/Semaev ladder) ·
+`READ_FIRST.md` (orientation for low-context readers) · `tasks/NEXT.md` (active queue) ·
+`experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
+standalone results) · `WORK_SCOPE.md` (the improvement program) · `VERIFIED.md` (ledger) ·
+`BARRIERS.md` (no-go map) · `notes/FOUNDATIONS.md` (Weil/Semaev ladder) ·
 `notes/POINT_COUNTING_KEYSTONE.md` (the `#E=n` keystone) · `TRUST_REPORT.md` (trust boundary) ·
 `data/frontier_map.json` (queryable per-claim status).

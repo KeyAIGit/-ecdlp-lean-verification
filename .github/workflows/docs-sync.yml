@@ -31,17 +31,46 @@ on:
   push:
     branches: [main]
     paths:
+      - 'README.md'
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'READ_FIRST.md'
       - 'VERIFIED.md'
       - 'data/KG_CLAIM_FORMALIZATION_v1.csv'
+      - 'data/corpus_coverage_overrides.json'
+      - 'STATUS.md'
+      - 'tasks/**'
+      - 'experiments/**'
+      - 'REPOSITORY_ARCHITECTURE.md'
+      - 'CLAUDE_REVIEW_PACKET.md'
+      - 'repo/**'
+      - 'scratch/README.md'
       - 'scripts/**'
       - 'notes/FOUNDATIONS.md'
+      - 'notes/ward/README.md'
+      - 'dashboard.html'
+      - 'index.html'
   pull_request:
-    branches: [main]
     paths:
+      - 'README.md'
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'READ_FIRST.md'
       - 'VERIFIED.md'
       - 'data/KG_CLAIM_FORMALIZATION_v1.csv'
+      - 'data/corpus_coverage_overrides.json'
+      - 'STATUS.md'
+      - 'tasks/**'
+      - 'experiments/**'
+      - 'REPOSITORY_ARCHITECTURE.md'
+      - 'CLAUDE_REVIEW_PACKET.md'
+      - 'repo/**'
+      - 'scratch/README.md'
       - 'scripts/**'
       - 'notes/FOUNDATIONS.md'
+      - 'notes/ward/README.md'
+      - 'dashboard.html'
+      - 'index.html'
   workflow_dispatch:
 
 permissions:
@@ -95,6 +124,10 @@ jobs:
       # ---- consistency gate: no retired headline counts, canonical figure present ----
       - name: Count-consistency gate
         run: python3 scripts/check_counts.py
+      - name: Research OS consistency gate
+        run: python3 scripts/check_status_consistency.py
+      - name: Repository artifact manifest gate
+        run: python3 scripts/check_repo_artifacts.py
 
       # ---- did regeneration change a PURE artifact? (SITE pages are git-derived, not gated) ----
       - name: Detect derived-artifact drift
