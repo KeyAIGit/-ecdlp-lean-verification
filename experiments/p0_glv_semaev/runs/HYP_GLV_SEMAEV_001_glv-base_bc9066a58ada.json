@@ -1,0 +1,790 @@
+{
+  "hypothesis": "HYP_GLV_SEMAEV_001",
+  "variant": "glv-base",
+  "params": {
+    "seed": 1,
+    "settings": [
+      [
+        20,
+        256
+      ],
+      [
+        20,
+        512
+      ],
+      [
+        20,
+        1024
+      ],
+      [
+        20,
+        2048
+      ],
+      [
+        16,
+        256
+      ],
+      [
+        24,
+        2000
+      ],
+      [
+        16,
+        64
+      ],
+      [
+        24,
+        1024
+      ]
+    ],
+    "note": "store_B is physical storage; B_eff ~ 3*store_B is the orbit-reduced base"
+  },
+  "code_hashes": {
+    "variant_glv-base.py": "a774b0f4dd3d787284c54737748f51ee123f0dc1aa3865b406b17006bf57b5f1",
+    "semaev_core.py": "8e17a5bc6168a46b18d88f0511d770b956bfbf0c22421285c8ba4ede9c76ca1b",
+    "toy_curves.py": "e8d46d14f3ac533def69836e161a8f174fc1cedc66fe74932ba691b11d6d4906",
+    "manifest.py": "7d2349bb23b6c38328ccf528c978ab7b3f8b51997c68da206b643d4630e95e4d"
+  },
+  "tools": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.5-x86_64-with-glibc2.39",
+    "sympy": "1.14.0",
+    "flint": "0.9.0",
+    "galois": "0.4.11",
+    "numpy": "2.4.6"
+  },
+  "results": {
+    "glv_measurements": [
+      {
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "ell": 1047379,
+        "cofactor": 1,
+        "sqrt_p": 1024,
+        "store_B": 256,
+        "base_size_eff": 768,
+        "orbit_x_count": 768,
+        "eff_per_storage": 3.0,
+        "n_pairs": 32640,
+        "n_keys": 163911,
+        "trials": 4000,
+        "verified_relations": 1270,
+        "hits": 1270,
+        "yield": 0.3175,
+        "yield_over_Beff2_over_p": 0.5644622082180447,
+        "base_time_s": 0.0191,
+        "dict_time_s": 0.1293,
+        "trials_time_s": 0.1241,
+        "example_relation": {
+          "k": 215561,
+          "i": 72,
+          "j": 242,
+          "sign": -1,
+          "phi_power_s": 2,
+          "e_i": 1,
+          "e_j": -1,
+          "P_i": [
+            148,
+            315555
+          ],
+          "P_j": [
+            515,
+            340607
+          ],
+          "phi_s_P_i": [
+            844265,
+            315555
+          ],
+          "phi_s_P_j": [
+            876022,
+            340607
+          ],
+          "R": [
+            386276,
+            771641
+          ]
+        }
+      },
+      {
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "ell": 1047379,
+        "cofactor": 1,
+        "sqrt_p": 1024,
+        "store_B": 512,
+        "base_size_eff": 1536,
+        "orbit_x_count": 1536,
+        "eff_per_storage": 3.0,
+        "n_pairs": 130816,
+        "n_keys": 406494,
+        "trials": 4000,
+        "verified_relations": 3102,
+        "hits": 3102,
+        "yield": 0.7755,
+        "yield_over_Beff2_over_p": 0.34467751375834144,
+        "base_time_s": 0.0363,
+        "dict_time_s": 0.5941,
+        "trials_time_s": 0.1291,
+        "example_relation": {
+          "k": 598078,
+          "i": 173,
+          "j": 260,
+          "sign": 1,
+          "phi_power_s": 2,
+          "e_i": -1,
+          "e_j": -1,
+          "P_i": [
+            352,
+            313370
+          ],
+          "P_j": [
+            548,
+            39712
+          ],
+          "phi_s_P_i": [
+            647624,
+            313370
+          ],
+          "phi_s_P_j": [
+            150280,
+            39712
+          ],
+          "R": [
+            316546,
+            1038990
+          ]
+        }
+      },
+      {
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "ell": 1047379,
+        "cofactor": 1,
+        "sqrt_p": 1024,
+        "store_B": 1024,
+        "base_size_eff": 3066,
+        "orbit_x_count": 3072,
+        "eff_per_storage": 2.994140625,
+        "n_pairs": 523776,
+        "n_keys": 522468,
+        "trials": 4000,
+        "verified_relations": 3989,
+        "hits": 3989,
+        "yield": 0.99725,
+        "yield_over_Beff2_over_p": 0.11124316198769493,
+        "base_time_s": 0.0729,
+        "dict_time_s": 2.6223,
+        "trials_time_s": 0.132,
+        "example_relation": {
+          "k": 311844,
+          "i": 24,
+          "j": 37,
+          "sign": 1,
+          "phi_power_s": 2,
+          "e_i": -1,
+          "e_j": -1,
+          "P_i": [
+            45,
+            76754
+          ],
+          "P_j": [
+            79,
+            172441
+          ],
+          "phi_s_P_i": [
+            249617,
+            76754
+          ],
+          "phi_s_P_j": [
+            741148,
+            172441
+          ],
+          "R": [
+            459657,
+            172391
+          ]
+        }
+      },
+      {
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "ell": 1047379,
+        "cofactor": 1,
+        "sqrt_p": 1024,
+        "store_B": 2048,
+        "base_size_eff": 6126,
+        "orbit_x_count": 6144,
+        "eff_per_storage": 2.9912109375,
+        "n_pairs": 2096128,
+        "n_keys": 523689,
+        "trials": 4000,
+        "verified_relations": 4000,
+        "hits": 4000,
+        "yield": 1.0,
+        "yield_over_Beff2_over_p": 0.027942135600746494,
+        "base_time_s": 0.1453,
+        "dict_time_s": 10.9176,
+        "trials_time_s": 0.1402,
+        "example_relation": {
+          "k": 883368,
+          "i": 30,
+          "j": 647,
+          "sign": 1,
+          "phi_power_s": 2,
+          "e_i": -1,
+          "e_j": -1,
+          "P_i": [
+            64,
+            149728
+          ],
+          "P_j": [
+            1278,
+            214317
+          ],
+          "phi_s_P_i": [
+            308406,
+            149728
+          ],
+          "phi_s_P_j": [
+            587747,
+            214317
+          ],
+          "R": [
+            1004982,
+            492323
+          ]
+        }
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "ell": 65287,
+        "cofactor": 1,
+        "sqrt_p": 256,
+        "store_B": 256,
+        "base_size_eff": 759,
+        "orbit_x_count": 768,
+        "eff_per_storage": 2.96484375,
+        "n_pairs": 32640,
+        "n_keys": 32562,
+        "trials": 4000,
+        "verified_relations": 3985,
+        "hits": 3985,
+        "yield": 0.99625,
+        "yield_over_Beff2_over_p": 0.11334036142486906,
+        "base_time_s": 0.0057,
+        "dict_time_s": 0.1166,
+        "trials_time_s": 0.0968,
+        "example_relation": {
+          "k": 14272,
+          "i": 25,
+          "j": 244,
+          "sign": 1,
+          "phi_power_s": 1,
+          "e_i": 1,
+          "e_j": 1,
+          "P_i": [
+            66,
+            13465
+          ],
+          "P_j": [
+            494,
+            1412
+          ],
+          "phi_s_P_i": [
+            8415,
+            13465
+          ],
+          "phi_s_P_j": [
+            62985,
+            1412
+          ],
+          "R": [
+            40640,
+            14376
+          ]
+        }
+      },
+      {
+        "bits": 24,
+        "p": 16777291,
+        "b": 4,
+        "ell": 5593801,
+        "cofactor": 3,
+        "sqrt_p": 4096,
+        "store_B": 2000,
+        "base_size_eff": 5998,
+        "orbit_x_count": 6000,
+        "eff_per_storage": 2.999,
+        "n_pairs": 1999000,
+        "n_keys": 6384375,
+        "trials": 4000,
+        "verified_relations": 3018,
+        "hits": 3018,
+        "yield": 0.7545,
+        "yield_over_Beff2_over_p": 0.35185859050660545,
+        "base_time_s": 0.2183,
+        "dict_time_s": 16.3439,
+        "trials_time_s": 0.1717,
+        "example_relation": {
+          "k": 3345128,
+          "i": 209,
+          "j": 1381,
+          "sign": 1,
+          "phi_power_s": 2,
+          "e_i": 1,
+          "e_j": 1,
+          "P_i": [
+            399,
+            6881595
+          ],
+          "P_j": [
+            2709,
+            8304034
+          ],
+          "phi_s_P_i": [
+            1840960,
+            6881595
+          ],
+          "phi_s_P_j": [
+            2785981,
+            8304034
+          ],
+          "R": [
+            4098277,
+            9323178
+          ]
+        }
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "ell": 65287,
+        "cofactor": 1,
+        "sqrt_p": 256,
+        "store_B": 64,
+        "base_size_eff": 192,
+        "orbit_x_count": 192,
+        "eff_per_storage": 3.0,
+        "n_pairs": 2016,
+        "n_keys": 10254,
+        "trials": 4000,
+        "verified_relations": 1282,
+        "hits": 1282,
+        "yield": 0.3205,
+        "yield_over_Beff2_over_p": 0.5698038601345486,
+        "base_time_s": 0.0017,
+        "dict_time_s": 0.0059,
+        "trials_time_s": 0.0902,
+        "example_relation": {
+          "k": 5573,
+          "i": 10,
+          "j": 11,
+          "sign": -1,
+          "phi_power_s": 0,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            28,
+            10516
+          ],
+          "P_j": [
+            29,
+            24259
+          ],
+          "phi_s_P_i": [
+            28,
+            10516
+          ],
+          "phi_s_P_j": [
+            29,
+            24259
+          ],
+          "R": [
+            40479,
+            56087
+          ]
+        }
+      },
+      {
+        "bits": 24,
+        "p": 16777291,
+        "b": 4,
+        "ell": 5593801,
+        "cofactor": 3,
+        "sqrt_p": 4096,
+        "store_B": 1024,
+        "base_size_eff": 3070,
+        "orbit_x_count": 3072,
+        "eff_per_storage": 2.998046875,
+        "n_pairs": 523776,
+        "n_keys": 2620584,
+        "trials": 4000,
+        "verified_relations": 1280,
+        "hits": 1280,
+        "yield": 0.32,
+        "yield_over_Beff2_over_p": 0.5696329000838205,
+        "base_time_s": 0.1103,
+        "dict_time_s": 2.6092,
+        "trials_time_s": 0.1577,
+        "example_relation": {
+          "k": 173691,
+          "i": 294,
+          "j": 653,
+          "sign": -1,
+          "phi_power_s": 0,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            563,
+            2926184
+          ],
+          "P_j": [
+            1282,
+            225600
+          ],
+          "phi_s_P_i": [
+            563,
+            2926184
+          ],
+          "phi_s_P_j": [
+            1282,
+            225600
+          ],
+          "R": [
+            12847691,
+            7754406
+          ]
+        }
+      }
+    ],
+    "plain_measurements": [
+      {
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "ell": 1047379,
+        "cofactor": 1,
+        "sqrt_p": 1024,
+        "base_size": 256,
+        "n_pairs": 32640,
+        "n_keys": 61425,
+        "trials": 4000,
+        "verified_relations": 463,
+        "hits": 463,
+        "yield": 0.11575,
+        "yield_over_B2_over_p": 1.8520582847595215,
+        "base_time_s": 0.0191,
+        "dict_time_s": 0.0689,
+        "trials_time_s": 0.1244,
+        "example_relation": {
+          "k": 462515,
+          "i": 101,
+          "j": 196,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            216,
+            422690
+          ],
+          "P_j": [
+            408,
+            132932
+          ],
+          "R": [
+            828645,
+            83214
+          ]
+        }
+      },
+      {
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "ell": 1047379,
+        "cofactor": 1,
+        "sqrt_p": 1024,
+        "base_size": 512,
+        "n_pairs": 130816,
+        "n_keys": 205836,
+        "trials": 4000,
+        "verified_relations": 1537,
+        "hits": 1537,
+        "yield": 0.38425,
+        "yield_over_B2_over_p": 1.5370483713150023,
+        "base_time_s": 0.037,
+        "dict_time_s": 0.3287,
+        "trials_time_s": 0.1288,
+        "example_relation": {
+          "k": 719011,
+          "i": 408,
+          "j": 511,
+          "e_i": -1,
+          "e_j": -1,
+          "P_i": [
+            855,
+            305605
+          ],
+          "P_j": [
+            1041,
+            206866
+          ],
+          "R": [
+            796850,
+            455626
+          ]
+        }
+      },
+      {
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "ell": 1047379,
+        "cofactor": 1,
+        "sqrt_p": 1024,
+        "base_size": 1024,
+        "n_pairs": 523776,
+        "n_keys": 453412,
+        "trials": 4000,
+        "verified_relations": 3510,
+        "hits": 3510,
+        "yield": 0.8775,
+        "yield_over_B2_over_p": 0.8775276160240173,
+        "base_time_s": 0.0802,
+        "dict_time_s": 1.4357,
+        "trials_time_s": 0.1297,
+        "example_relation": {
+          "k": 311844,
+          "i": 213,
+          "j": 733,
+          "e_i": 1,
+          "e_j": 1,
+          "P_i": [
+            452,
+            417958
+          ],
+          "P_j": [
+            1447,
+            285901
+          ],
+          "R": [
+            459657,
+            172391
+          ]
+        }
+      },
+      {
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "ell": 1047379,
+        "cofactor": 1,
+        "sqrt_p": 1024,
+        "base_size": 2048,
+        "n_pairs": 2096128,
+        "n_keys": 523511,
+        "trials": 4000,
+        "verified_relations": 3999,
+        "hits": 3999,
+        "yield": 0.99975,
+        "yield_over_B2_over_p": 0.2499453658461571,
+        "base_time_s": 0.145,
+        "dict_time_s": 6.2166,
+        "trials_time_s": 0.1399,
+        "example_relation": {
+          "k": 883368,
+          "i": 277,
+          "j": 446,
+          "e_i": -1,
+          "e_j": -1,
+          "P_i": [
+            580,
+            1058
+          ],
+          "P_j": [
+            926,
+            262692
+          ],
+          "R": [
+            1004982,
+            492323
+          ]
+        }
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "ell": 65287,
+        "cofactor": 1,
+        "sqrt_p": 256,
+        "base_size": 256,
+        "n_pairs": 32640,
+        "n_keys": 28362,
+        "trials": 4000,
+        "verified_relations": 3478,
+        "hits": 3478,
+        "yield": 0.8695,
+        "yield_over_B2_over_p": 0.8695398025512696,
+        "base_time_s": 0.0061,
+        "dict_time_s": 0.0733,
+        "trials_time_s": 0.0954,
+        "example_relation": {
+          "k": 14272,
+          "i": 28,
+          "j": 137,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            72,
+            12499
+          ],
+          "P_j": [
+            280,
+            18277
+          ],
+          "R": [
+            40640,
+            14376
+          ]
+        }
+      },
+      {
+        "bits": 24,
+        "p": 16777291,
+        "b": 4,
+        "ell": 5593801,
+        "cofactor": 3,
+        "sqrt_p": 4096,
+        "base_size": 2000,
+        "n_pairs": 1999000,
+        "n_keys": 3183136,
+        "trials": 4000,
+        "verified_relations": 1545,
+        "hits": 1545,
+        "yield": 0.38625,
+        "yield_over_B2_over_p": 1.6200571621875,
+        "base_time_s": 0.2276,
+        "dict_time_s": 5.9389,
+        "trials_time_s": 0.1568,
+        "example_relation": {
+          "k": 4381947,
+          "i": 1156,
+          "j": 1813,
+          "e_i": 1,
+          "e_j": -1,
+          "P_i": [
+            2251,
+            5523653
+          ],
+          "P_j": [
+            3573,
+            7427762
+          ],
+          "R": [
+            6556404,
+            717230
+          ]
+        }
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "ell": 65287,
+        "cofactor": 1,
+        "sqrt_p": 256,
+        "base_size": 64,
+        "n_pairs": 2016,
+        "n_keys": 3825,
+        "trials": 4000,
+        "verified_relations": 478,
+        "hits": 478,
+        "yield": 0.1195,
+        "yield_over_B2_over_p": 1.9120875244140625,
+        "base_time_s": 0.0016,
+        "dict_time_s": 0.0039,
+        "trials_time_s": 0.0878,
+        "example_relation": {
+          "k": 5573,
+          "i": 10,
+          "j": 11,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            28,
+            10516
+          ],
+          "P_j": [
+            29,
+            24259
+          ],
+          "R": [
+            40479,
+            56087
+          ]
+        }
+      },
+      {
+        "bits": 24,
+        "p": 16777291,
+        "b": 4,
+        "ell": 5593801,
+        "cofactor": 3,
+        "sqrt_p": 4096,
+        "base_size": 1024,
+        "n_pairs": 523776,
+        "n_keys": 984432,
+        "trials": 4000,
+        "verified_relations": 499,
+        "hits": 499,
+        "yield": 0.12475,
+        "yield_over_B2_over_p": 1.9960089228153228,
+        "base_time_s": 0.111,
+        "dict_time_s": 1.3805,
+        "trials_time_s": 0.1579,
+        "example_relation": {
+          "k": 173691,
+          "i": 294,
+          "j": 653,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            563,
+            2926184
+          ],
+          "P_j": [
+            1282,
+            225600
+          ],
+          "R": [
+            12847691,
+            7754406
+          ]
+        }
+      }
+    ],
+    "glv_law_fit": {
+      "c": 0.567966322812138,
+      "n_unsaturated": 3,
+      "Beff_exponents_by_bits": {}
+    },
+    "plain_law_fit": {
+      "c": 1.7834520530982818,
+      "n_unsaturated": 5,
+      "B_exponents_by_bits": {
+        "20": 1.7310330664305345,
+        "24": 1.6882601460272895
+      }
+    },
+    "per_storage_yield_ratio_glv_over_plain": 2.3923469109941005
+  },
+  "timestamp": "2026-07-11T00:00:00Z",
+  "results_hash": "846d1d74b6f622e0d23dbc58a1d54bcff890fbb382fa557db2f22d1cd92db486"
+}

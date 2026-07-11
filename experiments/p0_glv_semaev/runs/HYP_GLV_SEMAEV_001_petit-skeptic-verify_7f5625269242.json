@@ -1,0 +1,36 @@
+{
+  "hypothesis": "HYP_GLV_SEMAEV_001",
+  "variant": "petit-skeptic-verify",
+  "params": {
+    "seed": 1,
+    "coord": "u=x^3",
+    "petit_bits": 1,
+    "checks": "reconstruct-example, reproduce-grid, law-fit, c-ratio"
+  },
+  "code_hashes": {
+    "skeptic_verify_petit.py": "fc233c207c02d7e8cc528b1a9bd79084becea04aa46971fcfea9a2f41fceb82e",
+    "semaev_core.py": "8e17a5bc6168a46b18d88f0511d770b956bfbf0c22421285c8ba4ede9c76ca1b",
+    "toy_curves.py": "e8d46d14f3ac533def69836e161a8f174fc1cedc66fe74932ba691b11d6d4906",
+    "manifest.py": "7d2349bb23b6c38328ccf528c978ab7b3f8b51997c68da206b643d4630e95e4d"
+  },
+  "tools": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.5-x86_64-with-glibc2.39",
+    "sympy": "1.14.0",
+    "flint": "0.9.0",
+    "galois": "0.4.11",
+    "numpy": "2.4.6"
+  },
+  "results": {
+    "example_reconstructed_EC_verified": true,
+    "petit_slope_log_yield_vs_log_B2_over_p": 0.9093,
+    "plain_slope": 0.9369,
+    "mean_c_petit": 5.5105,
+    "mean_c_plain": 1.8719,
+    "ratio_c_petit_over_plain": 2.9438,
+    "false_positives_total": 0,
+    "verdict": "constant-factor (automorphism order 3); exponent unchanged"
+  },
+  "timestamp": "2026-07-11T00:00:00Z",
+  "results_hash": "db0284ddd2c8787f418a5fe57881988d8bc63cfce1a05639fe3882c272b788aa"
+}
