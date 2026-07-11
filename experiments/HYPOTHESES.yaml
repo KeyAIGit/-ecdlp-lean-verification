@@ -119,7 +119,18 @@ hypotheses:
   - id: HYP_GLV_SEMAEV_001
     title: "GLV-symmetrized Semaev index calculus over prime-field j=0 curves"
     direction: "experiment"
-    status: "proposed"
+    status: "closed"
+    resolution: "no-go (constant-factor only)"
+    result: >
+      MEASURED (experiments/p0_glv_semaev/RESULTS.md): the m=2 Semaev relation yield obeys the
+      SAME law yield ~ c * B_eff^2 / p (exponent 2 in B, -1 in p) for plain, GLV-orbit base, and
+      the phi-invariant coordinate u=x^3, across 16/20/24-bit j=0 toy curves. GLV symmetry / the
+      invariant coordinate move ONLY the constant c (a ~3x-6x storage/precompute reduction; the
+      order-3 orbit folds a constant factor), NEVER the exponent. B_eff = Theta(sqrt(p)) is still
+      required for Theta(sqrt(p)) work; no stable T(p)=p^{1/2-eps} and no mechanism for one.
+      Every counted relation EC-verified by actual ec_add (hits==verified, zero false positives);
+      independently re-verified (6925/6925 EC-verified, yield reproduced). No break of secp256k1.
+      The generic sqrt(n) barrier is not beaten. A publishable measured no-go.
     owner: "experiments"
     supersedes: "H5_SEMAEV_WINDOW"
     prior_art: "experiments/p0_glv_semaev/README.md"
