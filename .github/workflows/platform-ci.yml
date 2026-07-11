@@ -1,0 +1,38 @@
+name: Platform CI (typecheck)
+
+# Compiles the Phase-2 platform scaffold (platform/) so a green CI actually covers its
+# TypeScript — the Lean `ci.yml` build does not touch it. Path-filtered: runs only when
+# platform/ or this workflow changes, so Lean-only PRs are unaffected.
+#
+# Scope: `npm ci` + `tsc --noEmit` (typecheck). `next build` is intentionally NOT run here:
+# the Step-1 data source (`platform/lib/data.static.ts`) fetches stats.json / registry.json
+# over HTTP at build time, which needs a reachable deployed data URL — not available on a
+# clean CI runner (it 403/404s). Making `next build` CI-able needs that data source to read
+# the repo's JSON from disk instead; tracked as a follow-up. Typecheck already catches the
+# class of error this job was added for (uncompiled TS in platform PRs).
+
+on:
+  push:
+    paths:
+      - "platform/**"
+      - ".github/workflows/platform-ci.yml"
+  pull_request:
+    paths:
+      - "platform/**"
+      - ".github/workflows/platform-ci.yml"
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: platform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: platform/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit

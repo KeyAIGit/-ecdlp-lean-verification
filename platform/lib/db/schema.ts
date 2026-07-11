@@ -8,6 +8,7 @@ import {
   pgEnum,
   uuid,
   text,
+  integer,
   timestamp,
 } from "drizzle-orm/pg-core";
 
@@ -18,6 +19,17 @@ export const domainStatus = pgEnum("domain_status", [
 ]);
 
 export const claimStatus = pgEnum("claim_status", ["verified", "planned"]);
+
+// Submission lifecycle: `queued` (client-created) → `running` (a worker atomically claimed it)
+// → `done` (verdict written) | `failed` (retries exhausted). `running` makes the claim atomic
+// (no two workers pick the same row); a crashed worker's `running` row is re-claimable once its
+// lease (claimed_at) goes stale, up to `attempt_count` = maxAttempts, after which it is `failed`.
+export const submissionStatus = pgEnum("submission_status", [
+  "queued",
+  "running",
+  "done",
+  "failed",
+]);
 
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -56,6 +68,13 @@ export const submissions = pgTable("submissions", {
   domainId: text("domain_id").references(() => domains.id),
   statement: text("statement").notNull(),
   leanSource: text("lean_source"),
+  // lifecycle state; the worker claim flips `queued` → `running` atomically (see submissions.ts).
+  status: submissionStatus("status").notNull().default("queued"),
+  // `workerId` is the claim token (only the claiming worker may finalize); `claimedAt` is the
+  // lease start (a stale lease is re-claimable); `attemptCount` bounds retries.
+  workerId: text("worker_id"),
+  claimedAt: timestamp("claimed_at"),
+  attemptCount: integer("attempt_count").notNull().default(0),
   // verdict is written by the Step-3 verification worker; null while queued/unrun.
   verdict: text("verdict"),
   log: text("log"),

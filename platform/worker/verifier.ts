@@ -11,9 +11,27 @@
 //   "error"    — infrastructure failure (couldn't run); NOT a statement about the math.
 
 import { spawn } from "node:child_process";
-import { mkdtemp, writeFile, rm } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { writeFile, rm } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
 import { join } from "node:path";
+
+// Remove DIRECT secret inheritance: the child that elaborates untrusted Lean gets an
+// allowlisted env (toolchain vars only), not `process.env`, so DATABASE_URL / Clerk keys are
+// not handed to it. This is NOT the security boundary — it does not provide PID/mount/network
+// namespace isolation, seccomp, cgroups, or a scrubbed HOME (which may still hold credentials),
+// and the repo checkout stays writable. Real isolation is a DEPLOYMENT requirement (README.md):
+// run this inside an ephemeral, network-off, secret-free jail. This only closes the cheapest leak.
+const ALLOWED_ENV = [
+  "PATH", "HOME", "LANG", "LC_ALL", "TERM", "SHELL", "NODE_ENV",
+  "ELAN_HOME", "ELAN_TOOLCHAIN", "LAKE_HOME", "LEAN_PATH", "LEAN_SYSROOT",
+  "XDG_CACHE_HOME", "TMPDIR",
+];
+
+function scrubbedEnv(base: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
+  const out: Record<string, string | undefined> = {};
+  for (const k of ALLOWED_ENV) if (base[k] !== undefined) out[k] = base[k];
+  return out as NodeJS.ProcessEnv;
+}
 
 export type Verdict = "verified" | "rejected" | "error";
 export type Result = { verdict: Verdict; log: string };
@@ -67,20 +85,22 @@ export function localVerifier(opts: {
       const bad = precheck(src);
       if (bad) return { verdict: "rejected", log: `precheck: ${bad}` };
 
-      const dir = await mkdtemp(join(tmpdir(), "verify-"));
-      // Under Ecdlp/Targets/ — excluded from the repo's no-sorry gate and not part of the build
-      // graph, so a lingering sandbox file can never affect the Lean CI. Removed in `finally`.
-      const file = join(opts.repoDir, "Ecdlp", "Targets", "Sandbox_submission.lean");
+      // UNIQUE per submission — under Ecdlp/Targets/ (excluded from the repo's no-sorry gate and
+      // not in the build graph, so it can never affect the Lean CI). A per-call UUID module name
+      // means concurrent workers never share or overwrite each other's file. Removed in `finally`.
+      const mod = `Sandbox_${randomUUID().replace(/-/g, "")}`;
+      const file = join(opts.repoDir, "Ecdlp", "Targets", `${mod}.lean`);
       try {
         await writeFile(file, src, "utf-8");
-        const { code, out } = await run("lake", ["env", "lean", file], opts.repoDir, timeoutMs);
+        const { code, out } = await run(
+          "lake", ["env", "lean", file], opts.repoDir, timeoutMs, scrubbedEnv(process.env),
+        );
         if (code === 0) return { verdict: "verified", log: out.slice(-4000) || "lake: ok" };
         return { verdict: "rejected", log: out.slice(-4000) };
       } catch (e) {
         return { verdict: "error", log: String(e) };
       } finally {
         await rm(file, { force: true });
-        await rm(dir, { recursive: true, force: true });
       }
     },
   };
@@ -91,9 +111,10 @@ function run(
   args: string[],
   cwd: string,
   timeoutMs: number,
+  env: NodeJS.ProcessEnv,
 ): Promise<{ code: number; out: string }> {
   return new Promise((resolve) => {
-    const p = spawn(cmd, args, { cwd, env: process.env });
+    const p = spawn(cmd, args, { cwd, env });
     let out = "";
     const cap = (b: Buffer) => {
       out += b.toString();
