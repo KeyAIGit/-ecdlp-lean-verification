@@ -78,6 +78,12 @@ jobs:
       - name: Check repository artifact manifest
         run: python3 scripts/check_repo_artifacts.py
 
+      # Provenance gate: every theorem name cited in VERIFIED.md must resolve to an actual
+      # declaration in the built Lean source (Ecdlp/ minus Targets/) — catches ledger drift
+      # from a renamed/removed theorem, deriving the registry from source not a hand number.
+      - name: Check result registry (VERIFIED.md ↔ Lean source)
+        run: python3 scripts/gen_result_registry.py --check
+
       # Agent-bundle gate: the committed context-tier routing table
       # (bundles/MANIFEST.json) must reference only files that exist and stay in
       # sync with the tier definitions in scripts/export_agent_bundle.py.
