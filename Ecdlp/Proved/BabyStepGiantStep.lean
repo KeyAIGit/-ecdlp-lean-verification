@@ -10,8 +10,12 @@ exponent `x < n` can be written `x = i·m + j` with `i, j < m`. The algorithm
 precomputes the `m` baby steps `g^j` and walks the `m` giant steps `(g^m)^i`,
 matching a collision in `O(√n)` work.
 
-Together with `Ecdlp.GenericGroup.generic_dlog_query_bound` (the `Ω(√p)` lower
-bound), this pins the generic discrete-log complexity at `Θ(√n)`.
+Together with `Ecdlp.GenericGroup.generic_dlog_query_bound` these give the two `√n`
+**arithmetic relations** — the lower relation `p ≤ q·q` and the upper `n ≤ ⌈√n⌉²` — that
+*motivate* the `Θ(√n)` generic complexity. This is **not** a formal proof of `Θ(√n)` running
+time: there is no executable algorithm, lookup table, cost/step semantics, or (for Pollard-rho)
+birthday-time analysis here. The claim "generic DLP is `Θ(√n)`" is the standard result these
+relations point to, not something this file establishes as a complexity theorem.
 -/
 
 namespace Ecdlp.GenericGroup
