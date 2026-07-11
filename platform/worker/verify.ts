@@ -6,7 +6,8 @@
 //
 // Default VERIFIER=stub is safe (never claims "verified"); switch to local only in a jail.
 
-import { claimNextQueued, writeVerdict } from "../lib/db/submissions";
+import { randomUUID } from "node:crypto";
+import { claimNextQueued, writeVerdict, failExhausted } from "../lib/db/submissions";
 import { stubVerifier, localVerifier, Verifier } from "./verifier";
 
 function chooseVerifier(): Verifier {
@@ -22,17 +23,26 @@ async function main() {
   if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is required");
   const verifier = chooseVerifier();
   const once = process.argv.includes("--once");
+  // Stable per-process claim token, so a worker can only finalize jobs it still holds.
+  const workerId = randomUUID();
+  const claimOpts = {
+    leaseMs: Number(process.env.LEASE_MS ?? 600_000),
+    maxAttempts: Number(process.env.MAX_ATTEMPTS ?? 3),
+  };
 
   for (;;) {
-    const job = await claimNextQueued();
+    const job = (await claimNextQueued(workerId, claimOpts)) as
+      | { id: string; statement: string; lean_source?: string }
+      | null;
     if (!job) {
+      await failExhausted(claimOpts); // move retry-exhausted stuck jobs to `failed`
       if (once) break;
       await sleep(5000);
       continue;
     }
     console.log(`verifying ${job.id}: ${job.statement}`);
-    const { verdict, log } = await verifier.verify(job.leanSource ?? "");
-    await writeVerdict(job.id, verdict, log);
+    const { verdict, log } = await verifier.verify(job.lean_source ?? "");
+    await writeVerdict(job.id, workerId, verdict, log);
     console.log(`  -> ${verdict}`);
     if (once) break;
   }

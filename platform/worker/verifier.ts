@@ -15,19 +15,22 @@ import { writeFile, rm } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { join } from "node:path";
 
-// The jailed runner must NOT inherit orchestrator secrets (DATABASE_URL, Clerk keys, etc.) —
-// elaborating untrusted Lean is arbitrary code execution, so it gets an allowlisted env only.
-// Keeps just what the Lean/lake toolchain needs; everything else (secrets included) is dropped.
+// Remove DIRECT secret inheritance: the child that elaborates untrusted Lean gets an
+// allowlisted env (toolchain vars only), not `process.env`, so DATABASE_URL / Clerk keys are
+// not handed to it. This is NOT the security boundary — it does not provide PID/mount/network
+// namespace isolation, seccomp, cgroups, or a scrubbed HOME (which may still hold credentials),
+// and the repo checkout stays writable. Real isolation is a DEPLOYMENT requirement (README.md):
+// run this inside an ephemeral, network-off, secret-free jail. This only closes the cheapest leak.
 const ALLOWED_ENV = [
-  "PATH", "HOME", "LANG", "LC_ALL", "TERM", "SHELL",
+  "PATH", "HOME", "LANG", "LC_ALL", "TERM", "SHELL", "NODE_ENV",
   "ELAN_HOME", "ELAN_TOOLCHAIN", "LAKE_HOME", "LEAN_PATH", "LEAN_SYSROOT",
   "XDG_CACHE_HOME", "TMPDIR",
 ];
 
 function scrubbedEnv(base: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
-  const out: NodeJS.ProcessEnv = {};
+  const out: Record<string, string | undefined> = {};
   for (const k of ALLOWED_ENV) if (base[k] !== undefined) out[k] = base[k];
-  return out;
+  return out as NodeJS.ProcessEnv;
 }
 
 export type Verdict = "verified" | "rejected" | "error";
