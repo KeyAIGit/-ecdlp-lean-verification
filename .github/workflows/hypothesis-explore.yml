@@ -26,8 +26,9 @@ on:
         description: "DeepSeek model (deepseek-reasoner = deeper, deepseek-chat = cheaper/faster)"
         required: false
         default: "deepseek-chat"
-  schedule:
-    - cron: '0 4 * * 4'   # weekly, Thursday 04:00 UTC — offset from the autonomous engine (Mon)
+  # SECURITY (2026-07 audit): scheduled cron removed. Runs model-generated hypothesis code with
+  # DEEPSEEK_API_KEY + GITHUB_TOKEN in scope — unattended untrusted-code execution with live
+  # secrets. Manual dispatch only until sandboxed. See notes/EXECUTION_SECURITY.md.
 
 permissions:
   contents: write

@@ -38,8 +38,10 @@ on:
         description: "Gate (faithfulness judge) provider: anthropic | featherless | deepseek"
         required: false
         default: "anthropic"
-  schedule:
-    - cron: '0 5 * * 4'   # weekly, Thursday 05:00 UTC
+  # SECURITY (2026-07 audit): scheduled cron removed. Runs model-generated exploration with
+  # DEEPSEEK/ANTHROPIC/FEATHERLESS keys + GITHUB_TOKEN in scope — unattended untrusted-code
+  # execution with live secrets. Manual dispatch only until sandboxed. See
+  # notes/EXECUTION_SECURITY.md.
 
 permissions:
   contents: write
