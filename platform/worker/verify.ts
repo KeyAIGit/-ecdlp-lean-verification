@@ -29,8 +29,24 @@ async function main() {
     leaseMs: Number(process.env.LEASE_MS ?? 600_000),
     maxAttempts: Number(process.env.MAX_ATTEMPTS ?? 3),
   };
+  // A claim's lease MUST outlast a single verification, else a still-running job is re-claimed
+  // and verified twice (no corruption — the worker_id guard blocks the stale write — but wasted
+  // work). Warn loudly instead of silently mis-configuring.
+  const verifyTimeoutMs = Number(process.env.VERIFY_TIMEOUT_MS ?? 120_000);
+  if (claimOpts.leaseMs <= verifyTimeoutMs) {
+    console.warn(
+      `WARNING: LEASE_MS (${claimOpts.leaseMs}) <= VERIFY_TIMEOUT_MS (${verifyTimeoutMs}); ` +
+        "a long verification can be re-claimed and run twice. Set LEASE_MS > VERIFY_TIMEOUT_MS.",
+    );
+  }
+
+  // Sweep exhausted stale claims periodically, not only when the queue drains — otherwise a
+  // permanently-busy queue would leave dead rows in `running` indefinitely.
+  let iters = 0;
+  const SWEEP_EVERY = 25;
 
   for (;;) {
+    if (++iters % SWEEP_EVERY === 0) await failExhausted(claimOpts);
     const job = (await claimNextQueued(workerId, claimOpts)) as
       | { id: string; statement: string; lean_source?: string }
       | null;
