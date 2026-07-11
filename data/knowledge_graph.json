@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 224,
+    "theorems": 226,
     "barriers": 6,
-    "edges": 236,
+    "edges": 238,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -75,14 +75,16 @@
       "Mathlib (`Iff.trans`; composes `secp256k1_three_nsmul_eq_zero_iff` + `secp256k1_torsion_iff_principal`)": 1,
       "secp256k1_generator_addOrderOf` + Mathlib (`AddCommGroup.zmodModule`, `zmultiples_le_torsionBy`)": 1,
       "secp256k1_generator_addOrderOf` + Mathlib (`Nat.card_zmultiples`)": 1,
-      "Mathlib (`AddEquiv.ofBijective`, `Nat.cast_smul_eq_nsmul`, `Int.cast_smul_eq_zsmul`, `ZMod.val_lt`)": 1
+      "Mathlib (`AddEquiv.ofBijective`, `Nat.cast_smul_eq_nsmul`, `Int.cast_smul_eq_zsmul`, `ZMod.val_lt`)": 1,
+      "Mathlib (`Finite.of_injective`)": 1,
+      "Mathlib (`AddSubgroup.card_mul_index`) + `secp256k1_grp_card": 1
     },
     "by_area": {
-      "curve-torsion": 120,
+      "curve-torsion": 121,
       "primality": 25,
+      "generic-hardness": 23,
       "protocol-soundness": 23,
       "other": 23,
-      "generic-hardness": 22,
       "reduction": 5,
       "attack-resistance": 5,
       "params": 1
@@ -3000,6 +3002,32 @@
       "area": "other",
       "dependency_depth": 5,
       "gated": true
+    },
+    {
+      "id": "thm-224",
+      "name": "Ecdlp.Curve.instFiniteSecp256k1Point",
+      "short_name": "instFiniteSecp256k1Point",
+      "module": "Ecdlp.Proved.CurveCardinality",
+      "file": "Ecdlp/Proved/CurveCardinality.lean",
+      "claim": "secp256k1 rational-point group is finite (`instFiniteSecp256k1Point`: `Finite secp256k1.toAffine.Point`, via the injection `Point ↪ Option (𝔽_p × 𝔽_p)` — finite since `𝔽_p` is. Without it, Mathlib's `Nat.card E.toAffine.Point` (as used in the new `EllipticCurve/LFunction.lean`) is junk `0`; this makes `#E` a real quantity for the curve. Pure-kernel, no native_decide)",
+      "method": "Mathlib (`Finite.of_injective`)",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 6,
+      "gated": true
+    },
+    {
+      "id": "thm-225",
+      "name": "Ecdlp.Curve.secp256k1_n_dvd_card_point",
+      "short_name": "secp256k1_n_dvd_card_point",
+      "module": "Ecdlp.Proved.CurveCardinality",
+      "file": "Ecdlp/Proved/CurveCardinality.lean",
+      "claim": "n ∣ #E(𝔽_p)` — base-point order divides the curve cardinality (`secp256k1_n_dvd_card_point`: `Secp256k1.n ∣ Nat.card secp256k1.toAffine.Point`, by Lagrange on `⟨G⟩` (order the proved `n`) + finiteness. The first verified fact about `#E` itself — all prior point-counting stayed inside `⟨G⟩`. Pins `#E ∈ {n, 2n, 3n, …}`, reducing the strong keystone `#E = n` to exactly the Hasse bound `2n > p+1+2√p` — absent from Mathlib v4.31, see `notes/HASSE_RECON.md`. Pure-kernel)",
+      "method": "Mathlib (`AddSubgroup.card_mul_index`) + `secp256k1_grp_card",
+      "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 6,
+      "gated": true
     }
   ],
   "barriers": [
@@ -3115,6 +3143,11 @@
     {
       "from": "Ecdlp.Proved.CoprimePsi3PrePsi4",
       "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CurveCardinality",
+      "to": "Ecdlp.Proved.SubgroupOrder",
       "type": "imports"
     },
     {
@@ -4195,6 +4228,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.SubgroupOrder",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.CurveCardinality",
       "type": "imports"
     },
     {
