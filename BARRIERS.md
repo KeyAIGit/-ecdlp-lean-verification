@@ -141,6 +141,23 @@ exact `Θ` statements.
   *where the search lives and how it branches*; the cost lower bound itself stays in the open
   frontier, recorded here, not dressed as proved.
 
+  **Measured no-go: GLV symmetrization / invariant coordinates do not beat the `√p` barrier**
+  (`HYP_GLV_SEMAEV_001`, `experiments/p0_glv_semaev/RESULTS.md`). A reproducible benchmark tested
+  whether secp256k1's own extra structure helps: for the `j=0` family `E_b : y²=x³+b` over
+  `p ≡ 1 (mod 3)` (CM by `ℤ[ζ₃]`, order-3 automorphism `φ(x,y)=(βx,y)`, `φ`-invariants `y` and
+  `u=x³`), the `m=2` Semaev relation yield was measured as a function of factor-base size `B` and
+  field size `p`. In **every** configuration (16/20/24-bit toy curves, every counted relation
+  re-verified by an actual `ec_add` group computation) the yield obeys `yield ≈ c·B_eff²/p` with
+  **`B`-exponent 2 and `p`-exponent −1**. Closing the base under the GLV orbit reproduces the law
+  with `B_eff = 3·B` exactly (a constant `3–6×` storage/precompute reduction); rewriting the system
+  in the invariant `u=x³` collapses each 3-orbit to one value and raises the constant to
+  `c ≈ 5.45` (`≈2.8×` vs plain). **Neither changes the exponent:** one still needs
+  `B_eff = Θ(√p)` for `Θ(√p)` work — a finite-order symmetry folds only a constant orbit, moving
+  the constant `c` but not the asymptotic. This is an experimental **constant-factor** result,
+  consistent with FGHR symmetry gains being extension-field phenomena; **no break of secp256k1**.
+  The route is closed as a measured no-go (a positive result would have been carried into Lean;
+  this negative one is recorded, with per-run manifests in `experiments/p0_glv_semaev/runs/`).
+
   **Open next node — `Sₘ` degree tower `2^{m−2}` (recorded, not yet built).** The base case is
   proved (`secp256k1_S₃poly_natDegree`: `deg S₃ = 2` in each variable) and `S₄`'s full symmetry is
   proved (`S₄_symm₁₂`/`S₄_symm₃₄`/`S₄_block_swap`). The next quantitative step, `deg S₄ = 4` in each
