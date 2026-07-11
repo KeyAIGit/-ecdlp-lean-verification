@@ -6,6 +6,10 @@ experiment through the truth substrate — to test the best available math lead 
 experiment-ledger machinery — **not** as an expected break of secp256k1. Breaking the curve is a
 low-odds lottery ticket, not the goal; a rigorous negative result is a real, publishable output.
 
+**Current status:** `RESULTS.md` contains a partial negative result for direct `m=2`
+pair enumeration and GLV-orbit dictionary keys. It does not yet test the central
+degree-of-regularity / Gröbner-solving claim below. The main hypothesis remains active.
+
 ## The idea (one paragraph)
 
 secp256k1 has `j = 0`, CM by the Eisenstein order `ℤ[ζ₃]`, and the order-3 automorphism
@@ -49,7 +53,9 @@ Four variants, each measured across several sizes of `p`:
 1. **plain** — standard Semaev `Sₘ` factor base in `x`.
 2. **glv-base** — factor base reduced by GLV orbits (`x`, `βx`, `β²x`) and `±`.
 3. **invariant** — `Sₘ` systems rewritten in `u = x³` (and/or `y`).
-4. **petit** — variant 3 plus Petit-style composed low-degree rational maps.
+4. **petit** — planned: variant 3 plus a faithful Petit composed low-degree rational map.
+   The existing `variant_petit.py` is only an integer-bit-filter control and is explicitly
+   not evidence for or against Petit's algebraic construction.
 
 Metrics per run: relation probability, factor-base size, `#relations` needed, **degree of
 regularity**, max Gröbner matrix size, wall time, peak memory, and the empirical growth exponent

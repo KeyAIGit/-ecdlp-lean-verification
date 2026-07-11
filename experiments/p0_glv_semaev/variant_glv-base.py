@@ -37,6 +37,7 @@ from __future__ import annotations
 import math
 import random
 import time
+from datetime import datetime, timezone
 from math import isqrt
 
 from toy_curves import ToyCurve, ec_add, ec_mul, find_toy_curve
@@ -169,7 +170,7 @@ def run_trials_glv(curve: ToyCurve, base: list, D: dict, T: int, seed: int) -> d
 def run_setting(bits: int, store_B: int, T: int, seed: int = 1) -> dict:
     """One (bits, store_B) GLV measurement.  store_B = physically stored points; the effective
     (orbit-reduced) base B_eff ~ 3*store_B is what the yield law is measured against."""
-    C = find_toy_curve(bits, seed=seed)
+    C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
     t0 = time.time()
     base = build_base(C, store_B)
     t1 = time.time()
@@ -179,7 +180,9 @@ def run_setting(bits: int, store_B: int, T: int, seed: int = 1) -> dict:
     trial_seed = 1000 + bits * 7 + store_B  # same formula the core uses, for comparability
     res = run_trials_glv(C, base, D, T, seed=trial_seed)
     return {
-        "bits": bits, "p": C.p, "b": C.b, "ell": C.ell, "cofactor": C.cofactor,
+        "bits": bits, "p": C.p, "b": C.b, "order": C.order,
+        "ell": C.ell, "cofactor": C.cofactor,
+        "generator": list(C.gen), "beta": C.beta, "lambda": C.lam,
         "sqrt_p": isqrt(C.p),
         "store_B": store_B,
         "base_size_eff": B_eff,
@@ -224,11 +227,11 @@ def fit_law(measurements: list) -> dict:
 
 
 def main():
-    TS = "2026-07-11T00:00:00Z"
+    timestamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     seed = 1
 
     # SAME (bits, B, T) grid as semaev_core.main so results are directly comparable.
-    C20 = find_toy_curve(20, seed=seed)
+    C20 = find_toy_curve(20, seed=seed, require_cofactor_one=True)
     s20 = isqrt(C20.p)
     settings = []
     for B in (s20 // 4, s20 // 2, s20, 2 * s20):
@@ -236,11 +239,11 @@ def main():
             continue
         settings.append((20, B))
     for bits in (16, 24):
-        C = find_toy_curve(bits, seed=seed)
+        C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
         sp = isqrt(C.p)
         settings.append((bits, min(sp, 2000)))
     for bits in (16, 24):
-        C = find_toy_curve(bits, seed=seed)
+        C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
         sp = isqrt(C.p)
         settings.append((bits, max(sp // 4, 8)))
 
@@ -272,7 +275,7 @@ def main():
         "plain_law_fit": plain_law,
         "per_storage_yield_ratio_glv_over_plain": mean_ratio,
     })
-    path = m.write(TS)
+    path = m.write(timestamp)
 
     print(f"manifest: {path}")
     print(f"{'bits':>4} {'p':>10} {'sB':>5} {'Beff':>5} {'e/s':>4} {'pairs':>9} {'keys':>9} "

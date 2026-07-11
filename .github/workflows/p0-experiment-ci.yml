@@ -1,0 +1,40 @@
+name: P0 experiment correctness
+
+on:
+  pull_request:
+    paths:
+      - "experiments/HYPOTHESES.yaml"
+      - "experiments/p0_glv_semaev/**"
+      - ".github/workflows/p0-experiment-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install deterministic audit dependencies
+        run: python -m pip install "sympy==1.14.0" "PyYAML==6.0.3"
+      - name: Compile experiment scripts
+        run: python -m py_compile experiments/p0_glv_semaev/*.py
+      - name: Check hypothesis registry syntax
+        run: |
+          python - <<'PY'
+          import yaml
+          with open("experiments/HYPOTHESES.yaml", encoding="utf-8") as f:
+              doc = yaml.safe_load(f)
+          assert any(h.get("id") == "HYP_GLV_SEMAEV_001" for h in doc["hypotheses"])
+          print("hypothesis registry OK")
+          PY
+      - name: Audit CM order and GLV eigenvalue
+        run: python experiments/p0_glv_semaev/validate_run.py --self-test
+      - name: Replay committed run manifests
+        run: python experiments/p0_glv_semaev/validate_run.py experiments/p0_glv_semaev/runs/*.json

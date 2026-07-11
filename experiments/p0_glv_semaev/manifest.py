@@ -22,12 +22,14 @@ from __future__ import annotations
 import hashlib
 import json
 import platform
+import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 RUNS = HERE / "runs"
+SCHEMA_VERSION = 1
 
 
 def _sha256_file(path: Path) -> str:
@@ -51,6 +53,20 @@ def _tool_versions() -> dict:
     return out
 
 
+def _git_commit() -> str:
+    """Return the exact source revision, failing closed outside a git checkout."""
+    proc = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=HERE,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if proc.returncode != 0 or not proc.stdout.strip():
+        raise RuntimeError(f"cannot resolve git commit: {proc.stderr.strip()}")
+    return proc.stdout.strip()
+
+
 @dataclass
 class Manifest:
     hypothesis: str
@@ -60,24 +76,38 @@ class Manifest:
     results: dict = field(default_factory=dict)
     code_hashes: dict = field(default_factory=dict)
     tools: dict = field(default_factory=dict)
+    git_commit: str = ""
+    command: list[str] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         self.tools = _tool_versions()
+        self.git_commit = _git_commit()
+        self.command = list(sys.argv)
         for f in self.code_files:
             p = Path(f)
             if not p.is_absolute():
                 p = HERE / p
-            if p.exists():
-                self.code_hashes[p.name] = _sha256_file(p)
+            if not p.is_file():
+                raise FileNotFoundError(f"manifest code input does not exist: {p}")
+            try:
+                key = str(p.resolve().relative_to(HERE.parent.parent))
+            except ValueError:
+                key = str(p.resolve())
+            if key in self.code_hashes:
+                raise ValueError(f"duplicate manifest code path: {key}")
+            self.code_hashes[key] = _sha256_file(p)
 
     def record(self, results: dict) -> None:
         self.results = results
 
     def to_dict(self, timestamp_iso: str) -> dict:
         body = {
+            "schema_version": SCHEMA_VERSION,
             "hypothesis": self.hypothesis,
             "variant": self.variant,
             "params": self.params,
+            "git_commit": self.git_commit,
+            "command": self.command,
             "code_hashes": self.code_hashes,
             "tools": self.tools,
             "results": self.results,
@@ -88,7 +118,13 @@ class Manifest:
 
     def run_id(self, timestamp_iso: str) -> str:
         tag = _sha256_obj(
-            {"h": self.hypothesis, "v": self.variant, "p": self.params, "t": timestamp_iso}
+            {
+                "h": self.hypothesis,
+                "v": self.variant,
+                "p": self.params,
+                "git": self.git_commit,
+                "t": timestamp_iso,
+            }
         )[:12]
         return f"{self.hypothesis}_{self.variant}_{tag}"
 
