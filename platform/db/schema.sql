@@ -10,6 +10,10 @@ DO $$ BEGIN
   CREATE TYPE claim_status AS ENUM ('verified', 'planned');
 EXCEPTION WHEN duplicate_object THEN null; END $$;
 
+DO $$ BEGIN
+  CREATE TYPE submission_status AS ENUM ('queued', 'running', 'done');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+
 CREATE TABLE IF NOT EXISTS users (
   id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   clerk_id    text NOT NULL UNIQUE,
@@ -43,6 +47,8 @@ CREATE TABLE IF NOT EXISTS submissions (
   domain_id   text REFERENCES domains(id),
   statement   text NOT NULL,
   lean_source text,
+  status      submission_status NOT NULL DEFAULT 'queued',  -- queued → running (claimed) → done
+  claimed_at  timestamptz,
   verdict     text,          -- written by the Step-3 verification worker; null while unrun
   log         text,
   created_at  timestamptz NOT NULL DEFAULT now()
@@ -50,3 +56,5 @@ CREATE TABLE IF NOT EXISTS submissions (
 
 CREATE INDEX IF NOT EXISTS claims_domain_id_idx ON claims(domain_id);
 CREATE INDEX IF NOT EXISTS submissions_user_id_idx ON submissions(user_id);
+-- Supports the atomic `FOR UPDATE SKIP LOCKED` queue claim (oldest queued first).
+CREATE INDEX IF NOT EXISTS submissions_queue_idx ON submissions(status, created_at);

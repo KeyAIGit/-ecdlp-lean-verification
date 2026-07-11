@@ -33,7 +33,8 @@ the method plus the engine that runs it.
   rented server) for fast verification.
 - A public static site on `keyai.org` (landing + generated dashboard).
 
-**What does NOT exist yet, stated plainly:**
+**What did NOT exist at the time this baseline was written** (Phase-0 snapshot — several of
+these are now **superseded**; see the STATUS UPDATE box below):
 
 - No accounts, no login, no multi-user anything. The site is read-only and static.
 - No database. The "truth layer" is **git files** (JSON / MD / CSV), not a queryable store.
@@ -43,6 +44,18 @@ the method plus the engine that runs it.
   generator template, and corpus schema is still ECDLP-specific.
 - The AI prover is **weak**: the tactic ladder + small models close only near-trivial
   targets. Non-trivial proofs are still human/Claude-driven.
+
+> **STATUS UPDATE (supersedes the bullets above).** Since this baseline:
+> - **Second domain is DONE** — NIST P-256 is a second *live, kernel-verified* domain
+>   (`domains/registry.json`), so "the pipeline is curve-agnostic" is now demonstrated (though
+>   still within elliptic curves — a *non-ECC* domain is the next generalization proof).
+> - **Auth + database + hosted-verification are SCAFFOLDED** (not deployed) under `platform/`:
+>   a Next.js + Clerk app, a Drizzle/Postgres data layer, and a sandboxed verification worker —
+>   see `platform/PHASE2_PLAN.md`. This is a staging scaffold, **not** a running service; the
+>   worker's security boundary and the DB are only stood up when *you* provision them.
+> - The AI prover characterization above still holds.
+> The "does NOT exist" framing is retained as the honest Phase-0 starting point, not the
+> current state.
 
 So: we have **instance #1 + the engine + a conceptual architecture that is meant to
 generalize** — and a static shop window. We are *not* close to a multi-tenant SaaS. We

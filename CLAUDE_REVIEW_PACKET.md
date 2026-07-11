@@ -4,9 +4,12 @@ Review mode: adversarial.
 
 Scope: the whole repository, not only the changed files.
 
-Do not merge this branch during review. The goal is to test whether the repo
-architecture, artifact ownership, and cleanup plan are correct enough to become
-the foundation for future work.
+**Status: Accepted review record.** This packet's foundation (repository
+architecture, artifact ownership, cleanup plan) was adversarially reviewed and
+**merged to `main`** — it is now the active foundation, not a branch under review.
+Retained as the historical review record; the original goal was to test whether
+the repo architecture, artifact ownership, and cleanup plan were correct enough
+to become the foundation for future work. (They were.)
 
 ## Context
 

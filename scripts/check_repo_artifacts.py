@@ -212,7 +212,7 @@ def main() -> int:
     )
     require_contains(
         "CLAUDE_REVIEW_PACKET.md",
-        ["Review mode: adversarial", "Do not merge this branch during review"],
+        ["Review mode: adversarial", "Accepted review record"],
         errors,
     )
 

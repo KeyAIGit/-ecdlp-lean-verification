@@ -19,6 +19,15 @@ export const domainStatus = pgEnum("domain_status", [
 
 export const claimStatus = pgEnum("claim_status", ["verified", "planned"]);
 
+// Submission lifecycle: `queued` (client-created) → `running` (a worker atomically claimed it)
+// → `done` (verdict written). The `running` state is what makes the queue claim atomic and
+// prevents two workers from picking the same submission.
+export const submissionStatus = pgEnum("submission_status", [
+  "queued",
+  "running",
+  "done",
+]);
+
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   clerkId: text("clerk_id").notNull().unique(),
@@ -56,6 +65,9 @@ export const submissions = pgTable("submissions", {
   domainId: text("domain_id").references(() => domains.id),
   statement: text("statement").notNull(),
   leanSource: text("lean_source"),
+  // lifecycle state; the worker claim flips `queued` → `running` atomically (see submissions.ts).
+  status: submissionStatus("status").notNull().default("queued"),
+  claimedAt: timestamp("claimed_at"),
   // verdict is written by the Step-3 verification worker; null while queued/unrun.
   verdict: text("verdict"),
   log: text("log"),

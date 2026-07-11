@@ -1,10 +1,11 @@
 version: 1
-status: proposed_for_claude_review
+status: accepted
 scope: whole_repository
-base_branch: codex/research-os-truth-layer
+origin_branch: codex/research-os-truth-layer   # reviewed and merged to main; historical reference
 purpose: >
-  Classify repository artifacts by ownership and edit policy. This manifest is
-  a review aid, not yet an enforced schema.
+  Classify repository artifacts by ownership and edit policy. Accepted and now
+  partially enforced: `scripts/check_repo_artifacts.py` (a CI gate) checks the
+  path classes and referenced files below stay consistent.
 
 principles:
   - lean_kernel_is_the_proof_authority
