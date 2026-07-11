@@ -115,3 +115,47 @@ hypotheses:
       - "Upgrade one publishable unit into a claim/theorem/figure outline."
     exit_criteria:
       - "A reviewer can audit the outline without reading the whole repo."
+
+  - id: HYP_GLV_SEMAEV_001
+    title: "GLV-symmetrized Semaev index calculus over prime-field j=0 curves"
+    direction: "experiment"
+    status: "proposed"
+    owner: "experiments"
+    supersedes: "H5_SEMAEV_WINDOW"
+    prior_art: "experiments/p0_glv_semaev/README.md"
+    honest_prior: >
+      LOW probability of a genuine speedup. This is the project's best *coherent*
+      cryptanalytic bet (it unites secp256k1's real structure — j=0, the order-3
+      automorphism phi(x,y)=(beta*x,y), the proved eigenvalue lambda on <G>, and
+      the formalized S3/S4 — with a genuinely open area), but the expected outcome
+      is a NEGATIVE / no-go result. Symmetry-adapted / quasi-homogeneous index
+      calculus is known to help over EXTENSION fields (Faugere-Gaudry-Huot-Renault)
+      and does NOT transfer to prime fields; a 3x-6x factor-base reduction is only a
+      constant factor. Run as an experiment through the substrate, not as an
+      expected break.
+    claim: >
+      Closing a Semaev factor base under the GLV automorphism orbit and rewriting
+      the S_m relation systems in automorphism invariants (u = x^3, or y) reduces
+      not just linear-algebra size but relation-generation cost / degree of
+      regularity for prime-field j=0 curves E_b: y^2 = x^3 + b over p = 1 mod 3.
+    why_it_matters: >
+      If (and only if) invariant coordinates change the ASYMPTOTIC relation-generation
+      behaviour, prime-field ECDLP could drop below generic sqrt(n). Even a rigorous
+      negative result is a publishable no-go and exercises the experiment substrate.
+    evidence_for:
+      - "secp256k1 has j=0, CM by Z[zeta_3], and a proved order-3 GLV eigenvalue on <G>."
+      - "S3 (full characterization) and S4 (both directions) are formalized; (beta*x)^3 = x^3 so x^3 and y are phi-invariant."
+      - "Symmetry-adapted index calculus gave real gains over extension fields (FGHR)."
+    evidence_against:
+      - "The prime-field obstruction is RELATION GENERATION, not factor-base size; symmetry does not obviously touch it."
+      - "GLV orbit size 3 -> at most ~6x base reduction = constant factor, not an exponent change."
+      - "Smooth part of p-1 for secp256k1 is tiny (2*3*7*13441), so p-1-smoothness routes look weak (see P1)."
+    tests:
+      - "Build a family of toy j=0 curves E_b/F_p (p = 1 mod 3, large prime subgroup); experiments/p0_glv_semaev/toy_curves.py."
+      - "Run 4 variants: (1) plain x-Semaev, (2) GLV-orbit-reduced base, (3) u=x^3 / y invariant systems, (4) +Petit composed low-degree maps."
+      - "Measure per size p: relation probability, factor-base size, #relations needed, degree of regularity, max Groebner matrix, time, memory."
+      - "Fit an empirical growth exponent in p and build a cost model; every run recorded via experiments/p0_glv_semaev/manifest.py (code+seed+params+versions+hashes+output)."
+    exit_criteria:
+      - "BREAKTHROUGH (continue + move identities to Lean) only if a stable T(p) = p^(1/2 - eps), eps>0, with a theoretical explanation of the scaling."
+      - "CLOSE as no-go if: speedup vanishes after precomputation; only a constant factor; observed scaling exponent does not improve; or gains appear only on singular hand-picked curves."
+      - "Either way: a reproducible benchmark note + a BARRIERS.md / no-go registry entry; Lean only on a positive, explained result."
