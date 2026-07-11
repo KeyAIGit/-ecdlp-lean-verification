@@ -6,8 +6,12 @@ name: Autonomous prover (Layer 2)
 # kernel verifies each candidate, and a human reviews and merges the PR.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 3 * * *'   # daily
+  # SECURITY (2026-07 audit): the scheduled cron was removed. This workflow executes
+  # model-generated candidates (`lake` elaborates untrusted Lean, which can run code via
+  # native_decide) with FEATHERLESS_API_KEY / GITHUB_TOKEN in the runner env. Unattended
+  # execution of untrusted code with live secrets is unsafe — run manually only, and only
+  # once the runner is a secret-free, network-off, ephemeral sandbox. See
+  # notes/EXECUTION_SECURITY.md.
 
 permissions:
   contents: write

@@ -38,8 +38,11 @@ on:
         description: "How many targets to discover this run"
         required: false
         default: "6"
-  schedule:
-    - cron: '0 4 * * 1'   # weekly, Monday 04:00 UTC — conservative + budget-safe
+  # SECURITY (2026-07 audit): scheduled cron removed. This engine SSHes to the server and runs
+  # model-generated proof attempts with ANTHROPIC_API_KEY / SSH_PRIVATE_KEY / GITHUB_TOKEN in
+  # scope — unattended untrusted-code execution with live secrets. Manual dispatch only until
+  # the execution host is a secret-free, network-off, ephemeral sandbox. See
+  # notes/EXECUTION_SECURITY.md.
 
 permissions:
   contents: write
