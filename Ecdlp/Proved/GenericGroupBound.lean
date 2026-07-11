@@ -1,12 +1,18 @@
 import Mathlib
 
 /-!
-# A generic-group lower bound for the discrete logarithm (`Ω(√p)`)
+# A generic-group query relation for the discrete logarithm (`Ω(√p)` core)
 
-The combinatorial core of the Shoup / Nechaev lower bound for the discrete
-logarithm problem in the **generic group model** — the foundation of ECDLP
-hardness, and a result not present in Mathlib (`weilPairing`, `semaev`,
-`generic group` / `discreteLog` lower bounds are all absent from Mathlib v4.31).
+The **fixed-transcript affine collision core** of the Shoup / Nechaev generic-group lower
+bound for the discrete logarithm — a result whose surrounding theory is absent from Mathlib
+(`weilPairing`, `semaev`, `generic group` / `discreteLog` lower bounds all absent in v4.31).
+
+**Not the full Shoup theorem.** This is a counting fact about a *fixed* set of affine forms
+`a + b·X` and their collisions; it has **no** adaptive probabilistic model — no random encoding
+of group elements, no oracle/simulator building encodings on demand, no adversary, and no
+probability over a random logarithm. Translating this collision count into an oracle-query lower
+bound against every generic algorithm is exactly the part not formalized here. The right name for
+what is proved is *"fixed-transcript affine collision core,"* not *"the Shoup lower bound."*
 
 ## Model
 

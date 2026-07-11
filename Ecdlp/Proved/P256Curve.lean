@@ -12,8 +12,13 @@ point (the standard generator `G`). All coordinate facts are machine-checked by 
 The generator-on-curve check simultaneously **validates every constant** (`p`, `b`, `Gx`, `Gy`): if
 any were mistyped, `Gy² = Gx³ − 3Gx + b` would fail in `𝔽_p`.
 
-**Structural contrast with secp256k1.** P-256 has `c₄ ≠ 0` (here `c₄ = 144`), hence `j ≠ 0`: it has
-**no** complex multiplication by `ℤ[ζ₃]` and **no** GLV endomorphism. secp256k1's `j = 0` / CM
+**Structural contrast with secp256k1.** P-256 has `c₄ ≠ 0` (here `c₄ = 144`), hence `j ≠ 0`. This
+**rules out the specific `j = 0` structure** secp256k1 has — CM by the Eisenstein order `ℤ[ζ₃]`
+and the resulting order-3 GLV endomorphism `(x,y) ↦ (βx, y)`. It does **not** by itself prove
+P-256 has *no* CM at all or *no* efficient endomorphism: `j ≠ 0` only excludes `j`-invariant-`0`
+(discriminant `−3`) CM, not other CM discriminants or other maps. (In fact P-256, like any ordinary
+curve over `𝔽_p`, has CM by an order in an imaginary quadratic field — just not the `j = 0` one
+that gives a small, cryptographically exploitable GLV split.) secp256k1's `j = 0` / `ℤ[ζ₃]`
 structure (the source of its `λ` endomorphism, `GlvNoGo.lean`) is therefore a *special* feature of
 that curve, not a generic one — P-256 is grounded here precisely to make that distinction concrete.
 No new axioms; fully kernel-checked (`native_decide` additionally trusts the compiler).

@@ -104,9 +104,13 @@ exact `Θ` statements.
   polynomials are the algebraic engine of **index calculus over *extension* fields `𝔽_{p^n}`,
   `n > 1`** (Gaudry–Diem–Semaev): one solves the `Sₙ = 0` system over a factor base with Gröbner
   bases, and the complexity depends on `n`. Over a **prime** field — which is exactly
-  secp256k1's `𝔽_p` — summation-polynomial index calculus is **not subexponential** and gives no
-  advantage over the generic `Ω(√n)` bound. So this line is a **formalization / no-go
-  contribution**, not a path toward breaking secp256k1: `S₃`/`S₄` are the standard objects and
+  secp256k1's `𝔽_p` — there is **no known** summation-polynomial index-calculus algorithm that
+  beats the generic `Ω(√n)` bound, and known variants (including Petit's composed low-degree
+  rational maps, *Faster Algorithms for the ECDLP in the Large Characteristic Case*) lose to
+  generic methods at cryptographic parameters — but the **asymptotic picture and the role of any
+  special structure remain open**; this is *not* a proven no-go. So this line is a
+  **formalization contribution** (and an open research direction), not a path toward breaking
+  secp256k1: `S₃`/`S₄` are the standard objects and
   their defining recursion, now machine-checked, but they compute nothing about any specific
   discrete log on a prime-field curve. `S₃` (base case, fully characterized) together with `S₄`
   (first recursion step, both directions) is the **conceptually complete unit**: it establishes

@@ -62,6 +62,12 @@ jobs:
       - name: Check count consistency (docs)
         run: python3 scripts/check_counts.py
 
+      # Semantic-drift gate: fail if a retired unconditional overclaim (full Shoup, proved
+      # Θ(√n), universal GLV no-go, Semaev prime-field no-advantage, unconditional trace)
+      # reappears in the docs / Lean docstrings / publication surfaces.
+      - name: Check semantic drift (overclaims)
+        run: python3 scripts/check_semantic_drift.py
+
       # Research OS gate: fail when generated machine views, canonical status,
       # public counters, active tasks, or hypotheses drift apart.
       - name: Check Research OS consistency

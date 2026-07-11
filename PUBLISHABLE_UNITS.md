@@ -14,12 +14,16 @@ units. Section 6 collects the non-claims that must travel with any of these.
 
 ---
 
-## Unit 1 — The generic-group Θ(√n) combinatorial core
+## Unit 1 — The generic-group `Ω(√p)` fixed-transcript collision core
 
-**Thesis.** The Shoup/Nechaev generic-group lower bound for the discrete log, and its matching
-O(√n) upper bounds, are now machine-checked in Lean 4 / Mathlib — the first generic-DLP lower
-bound formalized in Mathlib — by isolating the one information-theoretic core that needs no
-general oracle cost model.
+**Thesis.** The **fixed-transcript affine collision core** of the Shoup/Nechaev generic-group
+lower bound for the discrete log — plus the two matching `√n` arithmetic relations on the
+upper side — are now machine-checked in Lean 4 / Mathlib, by isolating the one
+information-theoretic counting fact that needs no general oracle cost model. **Honest scope:**
+this is *not* the full Shoup theorem (no adaptive adversary, no random encoding/oracle-simulator,
+no probability over a random log) and *not* a formal `Θ(√n)` complexity theorem (no executable
+algorithm / cost semantics / birthday analysis). It is the reusable combinatorial kernel and the
+arithmetic relations those complexity statements rest on.
 
 **What is actually proved** (`Ecdlp/Proved/`, namespace `Ecdlp.GenericGroup`):
 - Lower bound: `generic_dlog_query_bound` (`p ≤ q·q`), `generic_dlog_sqrt_bound` (`√p ≤ q`),
@@ -29,7 +33,7 @@ general oracle cost model.
   `eval_zero` (a generic algorithm's state is exactly the set of affine forms `a + b·X` it has
   formed over `ZMod p`; group operations correspond to form operations), plus the collision
   counting `collisionSet_card_le_one` and `badSet_card_le` — `GenericGroupBound.lean`.
-- Matching upper bounds closing Θ(√n): `bsgs_decomp` and `bsgs_steps_sq_ge` (`n ≤ ⌈√n⌉²`)
+- Matching upper-side `√n` arithmetic relations (not a formal running-time bound): `bsgs_decomp` and `bsgs_steps_sq_ge` (`n ≤ ⌈√n⌉²`)
   — `BabyStepGiantStep.lean`; `pollard_rho_collision`, `pollard_rho_periodic`
   — `PollardRho.lean`; the collision-solve algebra `collision_modEq`, `collision_zmod`,
   `collision_recovers_log`, `dlog_unique` — `CollisionEquation.lean`.
@@ -57,10 +61,12 @@ general oracle cost model.
 **Target venue.** CPP or ITP (formal-methods primary). The abstract generic bound is a plausible
 **Mathlib upstream** contribution on its own.
 
-**Opening sentence.** "We give the first machine-checked proof, in Lean 4 and Mathlib, of the
-Shoup–Nechaev generic-group lower bound `Ω(√n)` for the discrete logarithm, together with matching
-`O(√n)` baby-step/giant-step and Pollard-rho upper bounds, establishing the `Θ(√n)` generic
-complexity of ECDLP inside a formal proof assistant."
+**Opening sentence.** "We give a machine-checked Lean 4 / Mathlib formalization of the
+fixed-transcript affine-collision core of the Shoup–Nechaev generic-group lower bound for the
+discrete logarithm, together with the matching `√n` arithmetic relations underlying the
+baby-step/giant-step and Pollard-rho upper bounds — the reusable information-theoretic kernel of
+the `Θ(√n)` generic complexity, short of the full adaptive-adversary model and a formal cost
+semantics."
 
 ---
 
@@ -142,9 +148,12 @@ paper could carry both, or they could split).
 **Honest scope / caveats.**
 - **First Semaev summation polynomial formalized in Lean/Mathlib anywhere** (green-field per the
   upstream scan; zero hits on master, PRs, GitHub-wide).
-- This is a **formalization / no-go contribution, not an attack**. Semaev index calculus is
-  subexponential only over *extension* fields `𝔽_{p^n}, n > 1` (Gaudry–Diem–Semaev, via Weil
-  restriction). secp256k1's field is *prime* `𝔽_p`, which affords no Weil restriction; the
+- This is a **formalization contribution (and an open research direction), not an attack**. Semaev
+  index calculus is subexponential over *extension* fields `𝔽_{p^n}, n > 1` (Gaudry–Diem–Semaev, via
+  Weil restriction). secp256k1's field is *prime* `𝔽_p`, which affords no Weil restriction, and
+  **no known** summation-polynomial method beats generic `Ω(√n)` there — but whether special
+  structure could help asymptotically is **open** (cf. Petit, prime-field ECDLP); this is not a
+  proven no-go. The
   decomposition collapses to a single high-degree equation as hard as the original. `S₃`/`S₄`
   compute nothing about any specific discrete log on a prime-field curve.
 - The prime-field hardness itself is **not** a theorem here — that would settle an open conjecture.

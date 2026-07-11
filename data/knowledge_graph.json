@@ -1904,7 +1904,7 @@
       "short_name": "secp256k1_glv_preserves_dlog",
       "module": "Ecdlp.Proved.GlvNoGo",
       "file": "Ecdlp/Proved/GlvNoGo.lean",
-      "claim": "GLV/CM endomorphism preserves the discrete log (no-go) (`secp256k1_glv_preserves_dlog`: for every scalar `m:ℤ` and points with `Q = m•P`, `glvHom Q = m•glvHom P` — mapping a DLP instance `(P,Q)` through the GLV endomorphism gives another instance with the same secret `m`. The endomorphism is a DLP self-reduction that is the identity on the exponent, so it cannot shrink it: the formal core of \"CM-by-`ℤ[ζ₃]` gives no *asymptotic* advantage against ECDLP\". Only the order-3 automorphism buys a constant factor (~√3 rho, ~2× scalar-mult), never the `Θ(√n)` exponent. Unconditional)",
+      "claim": "GLV/CM endomorphism preserves the discrete log (no-go) (`secp256k1_glv_preserves_dlog`: for every scalar `m:ℤ` and points with `Q = m•P`, `glvHom Q = m•glvHom P` — mapping a DLP instance `(P,Q)` through the GLV endomorphism gives another instance with the same secret `m`. The endomorphism is a DLP self-reduction that is the identity on the exponent, so *this reduction* cannot shrink it: the formal core of the believed \"CM-by-`ℤ[ζ₃]` gives no asymptotic advantage against ECDLP\" — a scoped, not universal, no-go (it does not rule out some unknown faster algorithm using `ℤ[ζ₃]`; it proves *this* map is exponent-preserving). The order-3 automorphism buys only a constant factor (~√3 rho, ~2× scalar-mult). Unconditional as an identity on the exponent)",
       "method": "Mathlib (`map_zsmul`)",
       "status": "proved",
       "area": "generic-hardness",

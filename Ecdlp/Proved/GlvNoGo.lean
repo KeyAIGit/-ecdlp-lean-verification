@@ -18,13 +18,19 @@ it does **not** reduce the discrete-log exponent; the only leverage is a constan
   scalar `k` with `k² + k + 1 ≡ 0` acting *identically on base and target* (`glvHom P = k • P`,
   `glvHom Q = k • Q`); it introduces no new unknown and no new equation on `m`.
 
-**Why this is a no-go, not a speedup.** The endomorphism is an automorphism of order dividing `3`
-(`glvPoint_cube_eq_id`), so it only permutes the group in orbits of size `≤ 3`. Against ECDLP that
+**What this proves — and its scope.** The endomorphism is an automorphism of order dividing `3`
+(`glvPoint_cube_eq_id`), so it only permutes the group in orbits of size `≤ 3`. In practice that
 buys a constant factor — `~√3` in Pollard-rho (extra collisions from the automorphism), `~2×` in
-scalar multiplication (the practical GLV `k = k₁ + k₂λ` split with `kᵢ ~ √n`) — never a reduction
-of the `Θ(√n)` exponent that the generic bound (`GenericGroupBound.lean`) pins down. So CM-by-`ℤ[ζ₃]`
-is a genuine structural feature of secp256k1 that is, provably here, **not** a path to breaking it.
-No new axioms; fully kernel-checked.
+scalar multiplication (the practical GLV `k = k₁ + k₂λ` split with `kᵢ ~ √n`). What is *proved
+here* is narrow and exact: applying the GLV endomorphism to a DLP instance `(P, Q = m·P)` yields
+`(glvHom P, glvHom Q = m·glvHom P)` — the **same** secret `m` (`map_zsmul`), and under cyclicity
+`glvHom` multiplies base and target by one common eigenvalue `k`. So **this particular reduction
+preserves the exponent** and cannot shrink it.
+
+This is a **scoped no-go, not a universal one.** It does *not* prove that the endomorphism ring
+`ℤ[ζ₃]` can play no role in some unknown, asymptotically faster algorithm — only that *this* map,
+used *this* way, is exponent-preserving. "CM-by-`ℤ[ζ₃]` gives no asymptotic advantage" is the
+believed situation, not a theorem this file establishes. No new axioms; fully kernel-checked.
 -/
 
 namespace Ecdlp.Curve
