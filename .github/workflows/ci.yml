@@ -114,11 +114,11 @@ jobs:
           # legitimately mention `sorryAx`); it contains no proofs and is not imported,
           # so exclude it to avoid a prose false-positive. Its `sorryAx` check is the
           # real, robust no-sorry gate for the audited theorems (scripts/check_axioms.py).
-          if grep -rniI --include='*.lean' --exclude-dir=Targets --exclude='AxiomAudit.lean' 'sorry' Ecdlp/; then
-            echo "::error::Found 'sorry' in a built Ecdlp/ Lean file - a proof is incomplete"
+          if grep -rniI --include='*.lean' --exclude-dir=Targets --exclude='AxiomAudit.lean' 'sorry' Ecdlp/ ResearchOS/ ResearchOS.lean; then
+            echo "::error::Found 'sorry' in a built Lean file - a proof is incomplete"
             exit 1
           fi
-          echo "All built proofs complete: no 'sorry' outside Ecdlp/Targets/"
+          echo "All built proofs complete: no 'sorry' outside Ecdlp/Targets/ (Ecdlp/ + ResearchOS/ scanned)"
 
       # Close the latent hole: `sorry` is a warning, and the grep above skips Targets/.
       # If any BUILT file ever imported a Targets stem, a `sorry` could reach the build

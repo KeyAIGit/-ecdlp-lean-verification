@@ -1,5 +1,5 @@
 name = "ecdlp"
-defaultTargets = ["Ecdlp"]
+defaultTargets = ["Ecdlp", "ResearchOS"]
 
 [[require]]
 name = "mathlib"

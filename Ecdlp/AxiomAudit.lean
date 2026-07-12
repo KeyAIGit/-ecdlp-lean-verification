@@ -1,4 +1,5 @@
 import Ecdlp
+import ResearchOS.NumberTheory.Elementary
 
 /-!
 # Axiom audit (CI trust gate)
@@ -128,3 +129,10 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 -- native_decide samples (these SHOULD surface `Lean.ofReduceBool`)
 #print axioms Secp256k1.p_special_form
 #print axioms Secp256k1.beta_field_eigenvalue
+
+-- NON-ECC domain (elementary number theory): the second-subject portability instance.
+-- Pure `norm_num`, so these should depend ONLY on the standard base (no `Lean.ofReduceBool`).
+#print axioms ResearchOS.NumberTheory.prime_2017
+#print axioms ResearchOS.NumberTheory.mersenne_M13_prime
+#print axioms ResearchOS.NumberTheory.carmichael_561_not_prime
+#print axioms ResearchOS.NumberTheory.carmichael_561_factorization
