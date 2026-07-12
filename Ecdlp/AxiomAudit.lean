@@ -1,5 +1,6 @@
 import Ecdlp
 import ResearchOS.NumberTheory.Elementary
+import ResearchOS.NumberTheory.MoreFacts
 
 /-!
 # Axiom audit (CI trust gate)
