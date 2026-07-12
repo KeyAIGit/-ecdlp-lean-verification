@@ -176,3 +176,51 @@ hypotheses:
       - "BREAKTHROUGH (continue + move identities to Lean) only if a stable T(p) = p^(1/2 - eps), eps>0, with a theoretical explanation of the scaling."
       - "CLOSE as no-go if: speedup vanishes after precomputation; only a constant factor; observed scaling exponent does not improve; or gains appear only on singular hand-picked curves."
       - "Either way: a reproducible benchmark note + a BARRIERS.md / no-go registry entry; Lean only on a positive, explained result."
+
+  - id: HYP_WARD_EDS_001
+    title: "Ward elliptic divisibility sequences as a structural probe of torsion/apparition on prime-field toy curves"
+    direction: "experiment"
+    status: "proposed"
+    owner: "experiments"
+    prior_art: "experiments/p2_ward_eds/README.md"
+    result: >
+      MEASUREMENT ONLY (experiments/p2_ward_eds/RESULTS.md): on cofactor-1 j=0 toy curves
+      E_b: y^2 = x^3 + b over p = 1 mod 3 (16/20/24-bit, seed=1), the normalized Ward EDS
+      W_n = psi_n(P) mod p was computed via closed forms W_0..W_4 plus the doubling recurrence
+      and cross-checked against Ward's full master recurrence and the n=2 Somos-4 slice proved
+      in Ecdlp/Proved/NormEDSSomos4.lean. The rank of apparition rho(P) = least n>0 with
+      W_n ≡ 0 mod p was measured to equal ord(P) = ell, and the zero set {n : W_n ≡ 0} to
+      equal the multiples of ord(P), with EVERY torsion fact independently re-verified by actual
+      ec_mul (rho(G)=ord(G)=ell and 0 mismatches across ~2100 (P,n) torsion checks;
+      validate.py prints VALIDATION: PASS). This CONFIRMS the classical psi_n-torsion
+      equivalence numerically and nothing more.
+    honest_prior: >
+      NO speedup expected, and none is claimed. This rung is DESCRIPTIVE: it confirms an
+      already-known theorem (W_n ≡ 0 ⟺ [n]P = O) on toy curves. EDS re-encode point
+      arithmetic — the coordinate identity x([n]P) = x_P - W_{n-1}W_{n+1}/W_n^2 makes this
+      explicit — and give no known prime-field ECDLP advantage. Computing rho(P) is Theta(ord(P))
+      work, the SAME order as the DLP it would need to solve; the O(log n) single-term evaluator
+      computes W_n at a GIVEN n and does not find the first zero cheaply. Run as reconnaissance
+      through the substrate, not as a cryptanalytic bet.
+    claim: >
+      The Ward/EDS apparition structure (rho(P) = ord(P); zero set = multiples of ord(P)) holds
+      exactly on prime-field cofactor-1 toy curves and can be measured and independently
+      re-verified by ec_mul as a reusable structural probe of point order/torsion.
+    why_it_matters: >
+      A measured, ec_mul-verified handle on EDS apparition gives the substrate a reproducible
+      torsion/order probe and an empirical companion to the formalized normEDS Somos-4 / Ward
+      facts, WITHOUT asserting any DLP consequence. It also stress-tests the honesty protocol:
+      the deliverable is a confirmation of known structure with explicit non-advantage scope.
+    evidence_for:
+      - "Torsion/apparition property W_n ≡ 0 mod p ⟺ [n]P = O is a classical theorem; Somos-4/Ward recurrences for normEDS are formalized in Ecdlp/Proved/NormEDSSomos4.lean and companions."
+      - "Measured: rho(G)=ord(G)=ell and zero set = multiples of ord on 16/20/24-bit curves, all ec_mul-confirmed (VALIDATION: PASS)."
+    evidence_against:
+      - "EDS re-encode point arithmetic; the coordinate identity ties W_n directly to ec_mul, so there is no independent information and no known prime-field DLP advantage."
+      - "Finding rho(P) is Theta(ord(P)) — no cheaper than the DLP — so apparition is not an attack primitive."
+    tests:
+      - "COMPLETED (experiments/p2_ward_eds/): compute W_n mod p via closed forms + doubling recurrence; measure rho(P) and the zero set; independently re-verify W_n ≡ 0 ⟺ [n]P = O and rho(G)=ord(G)=ell by ec_mul; validate.py prints VALIDATION: PASS/FAIL."
+      - "Triangulate EDS correctness against Ward's master recurrence, the n=2 Somos-4 slice, the multiplication coordinate identity, and (over Z, tiny cases) integer EDS growth/torsion apparition."
+    exit_criteria:
+      - "CONFIRM-AND-CLOSE (default expected): apparition/torsion equivalence reproduced and ec_mul-verified across sizes with 0 mismatches, documented with explicit non-advantage scope. (met numerically; keep as a descriptive probe.)"
+      - "ESCALATE only if a measurement ever shows W_n ≡ 0 predicting [n]P = O CHEAPER than computing the order (i.e. sub-Theta(ord) apparition) with a theoretical explanation — not observed and not expected."
+      - "Any Lean work only on a genuinely new, explained positive result; a numerical confirmation of known torsion structure triggers no formalization."
