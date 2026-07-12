@@ -87,6 +87,11 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Semaev.secp256k1_S₃poly_natDegree
 #print axioms Ecdlp.Semaev.secp256k1_decomposition_completions_le_two
 
+-- Distinct-prime torsion x-locus disjointness (no-go certificate): E[3] ⊥ E[5]
+-- (missing from Mathlib; explicit 𝔽_p Bézout certificate, native_decide residues)
+#print axioms Ecdlp.Curve.secp256k1_preΨ₅
+#print axioms Ecdlp.Curve.secp256k1_isCoprime_Ψ₃_preΨ₅
+
 -- Division-polynomial multiplication formula, base case n = 2 (torsion-bridge engine)
 #print axioms Ecdlp.Curve.secp256k1_Φ₂
 #print axioms Ecdlp.Curve.secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq
