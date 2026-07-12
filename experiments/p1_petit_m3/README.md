@@ -20,7 +20,7 @@ This is a **measurement**, not an attack and not an index-calculus algorithm. Se
 
 ## Method (honest cost)
 
-For a target `R = k*G` and each unordered factor-base pair `(x_i, x_j)`:
+For a target `R = k*G` and each unordered **distinct-index** factor-base pair `(x_i, x_j)`:
 
 1. Build `S4(x_i, x_j, X, x_R)` as a polynomial of degree `<= 4` in the unknown `X = x_k`.
    `S3(x_i, x_j, Y)` is a quadratic in `Y` with constant coefficients; `S3(X, x_R, Y)` is a
@@ -37,8 +37,8 @@ For a target `R = k*G` and each unordered factor-base pair `(x_i, x_j)`:
 
 Cost is **`O(|F|^2` pair-solves `.` one degree-4 solve`)`** per target, reported as measured
 wall time and `solves_per_confirmed_relation`. This is **not** subexponential and **not** a
-Gröbner relation step; it is a controlled reconnaissance whose relation set is proven, by an
-independent brute force, to equal the true 3-term relation set.
+Gröbner relation step; it is a controlled reconnaissance whose relation set is measured, by a
+brute-force path independent of `S4`, to equal the distinct-index 3-term relation set on the tested toy instances. Relations with repeated indices are outside both searches.
 
 ## Factor bases compared (matched effective size)
 
@@ -55,7 +55,7 @@ Both builders are reused verbatim from `experiments/p1_petit/semaev_solve.py`.
 |---|---|
 | `semaev4_solve.py` | `S4` resultant (closed form + Sylvester) with its unit test, degree-`<=4` `F_p` root finder, 8-sign EC confirmation, per-target `search_relations3`. Reuses `s3_coeffs`, `solve_quadratic`, `tonelli_shanks`, `build_plain_base`, `build_glv_base` from P1 and `ec_add`, `ec_mul`, `find_toy_curve` from P0. |
 | `run.py` | Driver; writes `runs/*.json` with P0 `manifest.py` provenance. |
-| `validate.py` | **Mandatory** independent validator: replays the manifest and runs an `O(|F|^3)` brute-force triple-EC-addition cross-check asserting the S4-solver's relation set is **identical** (prints PASS/FAIL). |
+| `validate.py` | **Mandatory** validator: replays the manifest and runs an `O(|F|^3)` brute-force triple-EC-addition cross-check independent of `S4`, asserting identical distinct-index relation sets on the tested instances (prints PASS/FAIL). It reuses `confirm_relation3`, so it is not a separately implemented EC oracle. |
 | `RESULTS.md` | Measured table + explicit "NOT tested" / "does NOT establish" section. |
 
 ## Reproduce
