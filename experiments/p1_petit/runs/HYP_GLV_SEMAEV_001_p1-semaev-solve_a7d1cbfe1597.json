@@ -1,0 +1,695 @@
+{
+  "schema_version": 1,
+  "hypothesis": "HYP_GLV_SEMAEV_001",
+  "variant": "p1-semaev-solve",
+  "params": {
+    "seed": 1,
+    "trials": 2000,
+    "grid": [
+      [
+        16,
+        48
+      ],
+      [
+        16,
+        96
+      ],
+      [
+        20,
+        192
+      ],
+      [
+        20,
+        384
+      ],
+      [
+        24,
+        384
+      ],
+      [
+        24,
+        768
+      ]
+    ],
+    "method": "S3 quadratic solve (Tonelli-Shanks), EC-confirmed"
+  },
+  "git_commit": "afd0086ca7f2f06875c56534670d51fdfb972b2e",
+  "command": [
+    "run.py"
+  ],
+  "code_hashes": {
+    "experiments/p1_petit/semaev_solve.py": "96603f9f4b6aab9bd0b63fca83d494b1486da7b9fff90b236b1f4869f100ebaa",
+    "experiments/p1_petit/run.py": "7d3973de1e1cefa9c40d439f2ed1e0a56513cb2d27597491935924fe1f1f496e",
+    "experiments/p0_glv_semaev/toy_curves.py": "1b22b808a94b1c0945c9dd126c0cec5d6c08997ff73e575c4d3ee8bcf5b3dc9a"
+  },
+  "tools": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.5-x86_64-with-glibc2.39",
+    "sympy": "1.14.0",
+    "flint": "0.9.0",
+    "galois": "0.4.11",
+    "numpy": "2.4.6"
+  },
+  "results": {
+    "measurements": [
+      {
+        "variant": "plain",
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 48,
+        "base_size": 48,
+        "n_distinct_x": 48,
+        "n_orbits": 48,
+        "storage_units": 48,
+        "trials": 2000,
+        "total_field_solves": 96000,
+        "roots_total": 191998,
+        "roots_in_base": 272,
+        "confirmed_relations": 136,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 129,
+        "yield_relations_per_target": 0.068,
+        "hit_rate": 0.0645,
+        "solves_per_confirmed_relation": 705.8823529411765,
+        "spurious_rate": 0.0,
+        "wall_time_s": 0.379,
+        "example_relation": {
+          "i": 11,
+          "j": 29,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            29,
+            24259
+          ],
+          "P_j": [
+            73,
+            39718
+          ],
+          "R": [
+            17543,
+            56155
+          ],
+          "k": 51822
+        }
+      },
+      {
+        "variant": "glv-orbit",
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 48,
+        "base_size": 48,
+        "n_distinct_x": 48,
+        "n_orbits": 16,
+        "storage_units": 16,
+        "trials": 2000,
+        "total_field_solves": 96000,
+        "roots_total": 191996,
+        "roots_in_base": 300,
+        "confirmed_relations": 150,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 146,
+        "yield_relations_per_target": 0.075,
+        "hit_rate": 0.073,
+        "solves_per_confirmed_relation": 640.0,
+        "spurious_rate": 0.0,
+        "wall_time_s": 0.375,
+        "example_relation": {
+          "i": 14,
+          "j": 20,
+          "e_i": 1,
+          "e_j": 1,
+          "P_i": [
+            31356,
+            16268
+          ],
+          "P_j": [
+            30842,
+            12826
+          ],
+          "R": [
+            41404,
+            21512
+          ],
+          "k": 30291
+        }
+      },
+      {
+        "variant": "plain",
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 96,
+        "base_size": 96,
+        "n_distinct_x": 96,
+        "n_orbits": 96,
+        "storage_units": 96,
+        "trials": 2000,
+        "total_field_solves": 192000,
+        "roots_total": 383994,
+        "roots_in_base": 1112,
+        "confirmed_relations": 556,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 479,
+        "yield_relations_per_target": 0.278,
+        "hit_rate": 0.2395,
+        "solves_per_confirmed_relation": 345.32374100719426,
+        "spurious_rate": 0.0,
+        "wall_time_s": 0.708,
+        "example_relation": {
+          "i": 58,
+          "j": 63,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            139,
+            34646
+          ],
+          "P_j": [
+            151,
+            8755
+          ],
+          "R": [
+            26041,
+            41588
+          ],
+          "k": 1859
+        }
+      },
+      {
+        "variant": "glv-orbit",
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 96,
+        "base_size": 96,
+        "n_distinct_x": 96,
+        "n_orbits": 32,
+        "storage_units": 32,
+        "trials": 2000,
+        "total_field_solves": 192000,
+        "roots_total": 383996,
+        "roots_in_base": 1234,
+        "confirmed_relations": 617,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 540,
+        "yield_relations_per_target": 0.3085,
+        "hit_rate": 0.27,
+        "solves_per_confirmed_relation": 311.1831442463533,
+        "spurious_rate": 0.0,
+        "wall_time_s": 0.713,
+        "example_relation": {
+          "i": 4,
+          "j": 64,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            765,
+            7710
+          ],
+          "P_j": [
+            7395,
+            17070
+          ],
+          "R": [
+            16024,
+            28673
+          ],
+          "k": 54273
+        }
+      },
+      {
+        "variant": "plain",
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "order": 1047379,
+        "ell": 1047379,
+        "cofactor": 1,
+        "generator": [
+          578869,
+          477440
+        ],
+        "beta": 879944,
+        "lambda": 833470,
+        "sqrt_p": 1024,
+        "N_requested": 192,
+        "base_size": 192,
+        "n_distinct_x": 192,
+        "n_orbits": 192,
+        "storage_units": 192,
+        "trials": 2000,
+        "total_field_solves": 384000,
+        "roots_total": 768000,
+        "roots_in_base": 268,
+        "confirmed_relations": 134,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 129,
+        "yield_relations_per_target": 0.067,
+        "hit_rate": 0.0645,
+        "solves_per_confirmed_relation": 2865.6716417910447,
+        "spurious_rate": 0.0,
+        "wall_time_s": 6.221,
+        "example_relation": {
+          "i": 65,
+          "j": 170,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            132,
+            319298
+          ],
+          "P_j": [
+            348,
+            450622
+          ],
+          "R": [
+            380392,
+            172530
+          ],
+          "k": 880122
+        }
+      },
+      {
+        "variant": "glv-orbit",
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "order": 1047379,
+        "ell": 1047379,
+        "cofactor": 1,
+        "generator": [
+          578869,
+          477440
+        ],
+        "beta": 879944,
+        "lambda": 833470,
+        "sqrt_p": 1024,
+        "N_requested": 192,
+        "base_size": 192,
+        "n_distinct_x": 192,
+        "n_orbits": 64,
+        "storage_units": 64,
+        "trials": 2000,
+        "total_field_solves": 384000,
+        "roots_total": 768000,
+        "roots_in_base": 264,
+        "confirmed_relations": 132,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 130,
+        "yield_relations_per_target": 0.066,
+        "hit_rate": 0.065,
+        "solves_per_confirmed_relation": 2909.090909090909,
+        "spurious_rate": 0.0,
+        "wall_time_s": 6.289,
+        "example_relation": {
+          "i": 35,
+          "j": 64,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            227453,
+            666570
+          ],
+          "P_j": [
+            424998,
+            428482
+          ],
+          "R": [
+            353473,
+            234395
+          ],
+          "k": 509574
+        }
+      },
+      {
+        "variant": "plain",
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "order": 1047379,
+        "ell": 1047379,
+        "cofactor": 1,
+        "generator": [
+          578869,
+          477440
+        ],
+        "beta": 879944,
+        "lambda": 833470,
+        "sqrt_p": 1024,
+        "N_requested": 384,
+        "base_size": 384,
+        "n_distinct_x": 384,
+        "n_orbits": 384,
+        "storage_units": 384,
+        "trials": 2000,
+        "total_field_solves": 768000,
+        "roots_total": 1536000,
+        "roots_in_base": 1188,
+        "confirmed_relations": 594,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 521,
+        "yield_relations_per_target": 0.297,
+        "hit_rate": 0.2605,
+        "solves_per_confirmed_relation": 1292.9292929292928,
+        "spurious_rate": 0.0,
+        "wall_time_s": 12.874,
+        "example_relation": {
+          "i": 118,
+          "j": 320,
+          "e_i": 1,
+          "e_j": -1,
+          "P_i": [
+            251,
+            214846
+          ],
+          "P_j": [
+            669,
+            934890
+          ],
+          "R": [
+            772145,
+            354188
+          ],
+          "k": 55663
+        }
+      },
+      {
+        "variant": "glv-orbit",
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "order": 1047379,
+        "ell": 1047379,
+        "cofactor": 1,
+        "generator": [
+          578869,
+          477440
+        ],
+        "beta": 879944,
+        "lambda": 833470,
+        "sqrt_p": 1024,
+        "N_requested": 384,
+        "base_size": 384,
+        "n_distinct_x": 384,
+        "n_orbits": 128,
+        "storage_units": 128,
+        "trials": 2000,
+        "total_field_solves": 768000,
+        "roots_total": 1535997,
+        "roots_in_base": 1134,
+        "confirmed_relations": 567,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 478,
+        "yield_relations_per_target": 0.2835,
+        "hit_rate": 0.239,
+        "solves_per_confirmed_relation": 1354.4973544973545,
+        "spurious_rate": 0.0,
+        "wall_time_s": 12.297,
+        "example_relation": {
+          "i": 237,
+          "j": 350,
+          "e_i": 1,
+          "e_j": -1,
+          "P_i": [
+            159,
+            180668
+          ],
+          "P_j": [
+            764257,
+            915951
+          ],
+          "R": [
+            795307,
+            146200
+          ],
+          "k": 924902
+        }
+      },
+      {
+        "variant": "plain",
+        "bits": 24,
+        "p": 16777333,
+        "b": 2,
+        "order": 16785211,
+        "ell": 16785211,
+        "cofactor": 1,
+        "generator": [
+          9133898,
+          5260799
+        ],
+        "beta": 8085153,
+        "lambda": 15402598,
+        "sqrt_p": 4096,
+        "N_requested": 384,
+        "base_size": 384,
+        "n_distinct_x": 384,
+        "n_orbits": 384,
+        "storage_units": 384,
+        "trials": 2000,
+        "total_field_solves": 768000,
+        "roots_total": 1536000,
+        "roots_in_base": 70,
+        "confirmed_relations": 35,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 35,
+        "yield_relations_per_target": 0.0175,
+        "hit_rate": 0.0175,
+        "solves_per_confirmed_relation": 21942.85714285714,
+        "spurious_rate": 0.0,
+        "wall_time_s": 4.988,
+        "example_relation": {
+          "i": 237,
+          "j": 375,
+          "e_i": -1,
+          "e_j": -1,
+          "P_i": [
+            490,
+            15295385
+          ],
+          "P_j": [
+            764,
+            5416140
+          ],
+          "R": [
+            16137146,
+            6252076
+          ],
+          "k": 2172562
+        }
+      },
+      {
+        "variant": "glv-orbit",
+        "bits": 24,
+        "p": 16777333,
+        "b": 2,
+        "order": 16785211,
+        "ell": 16785211,
+        "cofactor": 1,
+        "generator": [
+          9133898,
+          5260799
+        ],
+        "beta": 8085153,
+        "lambda": 15402598,
+        "sqrt_p": 4096,
+        "N_requested": 384,
+        "base_size": 384,
+        "n_distinct_x": 384,
+        "n_orbits": 128,
+        "storage_units": 128,
+        "trials": 2000,
+        "total_field_solves": 768000,
+        "roots_total": 1536000,
+        "roots_in_base": 60,
+        "confirmed_relations": 30,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 30,
+        "yield_relations_per_target": 0.015,
+        "hit_rate": 0.015,
+        "solves_per_confirmed_relation": 25600.0,
+        "spurious_rate": 0.0,
+        "wall_time_s": 5.201,
+        "example_relation": {
+          "i": 138,
+          "j": 293,
+          "e_i": 1,
+          "e_j": -1,
+          "P_i": [
+            98,
+            415681
+          ],
+          "P_j": [
+            10977526,
+            9330605
+          ],
+          "R": [
+            3112095,
+            3421743
+          ],
+          "k": 11648632
+        }
+      },
+      {
+        "variant": "plain",
+        "bits": 24,
+        "p": 16777333,
+        "b": 2,
+        "order": 16785211,
+        "ell": 16785211,
+        "cofactor": 1,
+        "generator": [
+          9133898,
+          5260799
+        ],
+        "beta": 8085153,
+        "lambda": 15402598,
+        "sqrt_p": 4096,
+        "N_requested": 768,
+        "base_size": 768,
+        "n_distinct_x": 768,
+        "n_orbits": 768,
+        "storage_units": 768,
+        "trials": 2000,
+        "total_field_solves": 1536000,
+        "roots_total": 3072000,
+        "roots_in_base": 290,
+        "confirmed_relations": 145,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 143,
+        "yield_relations_per_target": 0.0725,
+        "hit_rate": 0.0715,
+        "solves_per_confirmed_relation": 10593.103448275862,
+        "spurious_rate": 0.0,
+        "wall_time_s": 10.603,
+        "example_relation": {
+          "i": 31,
+          "j": 616,
+          "e_i": -1,
+          "e_j": -1,
+          "P_i": [
+            60,
+            2219643
+          ],
+          "P_j": [
+            1268,
+            12036242
+          ],
+          "R": [
+            1297493,
+            13595469
+          ],
+          "k": 2484480
+        }
+      },
+      {
+        "variant": "glv-orbit",
+        "bits": 24,
+        "p": 16777333,
+        "b": 2,
+        "order": 16785211,
+        "ell": 16785211,
+        "cofactor": 1,
+        "generator": [
+          9133898,
+          5260799
+        ],
+        "beta": 8085153,
+        "lambda": 15402598,
+        "sqrt_p": 4096,
+        "N_requested": 768,
+        "base_size": 768,
+        "n_distinct_x": 768,
+        "n_orbits": 256,
+        "storage_units": 256,
+        "trials": 2000,
+        "total_field_solves": 1536000,
+        "roots_total": 3072000,
+        "roots_in_base": 264,
+        "confirmed_relations": 132,
+        "spurious_roots": 0,
+        "s3_nonzero_roots": 0,
+        "targets_with_relation": 129,
+        "yield_relations_per_target": 0.066,
+        "hit_rate": 0.0645,
+        "solves_per_confirmed_relation": 11636.363636363636,
+        "spurious_rate": 0.0,
+        "wall_time_s": 10.041,
+        "example_relation": {
+          "i": 62,
+          "j": 525,
+          "e_i": -1,
+          "e_j": 1,
+          "P_i": [
+            11533475,
+            4049123
+          ],
+          "P_j": [
+            358,
+            14969706
+          ],
+          "R": [
+            9536340,
+            3016363
+          ],
+          "k": 4729662
+        }
+      }
+    ]
+  },
+  "timestamp": "2026-07-12T05:18:45.707861Z",
+  "results_hash": "19692a9eb1252152fd83b9533994a8ffc1c89c0f720f37e07c49835e6492f1e4"
+}

@@ -181,7 +181,9 @@
         "BARRIERS.md",
         "PUBLISHABLE_UNITS.md",
         "experiments/p0_glv_semaev/README.md",
-        "experiments/p0_glv_semaev/RESULTS.md"
+        "experiments/p0_glv_semaev/RESULTS.md",
+        "experiments/p1_petit/README.md",
+        "experiments/p1_petit/RESULTS.md"
       ]
     },
     {
@@ -292,6 +294,8 @@
         "WORK_SCOPE.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
+        "experiments/p1_petit/README.md",
+        "experiments/p1_petit/RESULTS.md",
         "notes/ENGINE.md",
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
