@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 226,
     "barriers": 6,
-    "edges": 238,
+    "edges": 241,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -3146,6 +3146,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.CoprimePsi3Psi5",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CoprimePsi3Psi5",
+      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.CurveCardinality",
       "to": "Ecdlp.Proved.SubgroupOrder",
       "type": "imports"
@@ -4013,6 +4023,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.CoprimePsi3PrePsi4",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi5",
       "type": "imports"
     },
     {

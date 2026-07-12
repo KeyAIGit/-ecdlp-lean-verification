@@ -53,6 +53,7 @@ import Ecdlp.Proved.TorsionCoprime
 import Ecdlp.Proved.NumeratorDominates
 import Ecdlp.Proved.CoprimePsi2Psi3
 import Ecdlp.Proved.CoprimePsi3PrePsi4
+import Ecdlp.Proved.CoprimePsi3Psi5
 import Ecdlp.Proved.CoprimePsi2PrePsi4
 import Ecdlp.Proved.CoprimeCommonRoot
 import Ecdlp.Proved.GlvScalarAction
