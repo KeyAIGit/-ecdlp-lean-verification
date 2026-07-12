@@ -17,6 +17,13 @@ base {propext, Classical.choice, Quot.sound} — no `native_decide` (see `Ecdlp/
 | nt-mersenne-m13 | the Mersenne number `M₁₃ = 2¹³ − 1 = 8191` is prime (the 5th Mersenne prime) | **verified** | `ResearchOS/NumberTheory/Elementary.lean` (`mersenne_M13_prime`) |
 | nt-carmichael-561-composite | 561, the smallest Carmichael number, is **not** prime | **verified** | `ResearchOS/NumberTheory/Elementary.lean` (`carmichael_561_not_prime`) |
 | nt-carmichael-561-korselt | `561 = 3 · 11 · 17` — squarefree, three distinct prime factors (Korselt structure) | **verified** | `ResearchOS/NumberTheory/Elementary.lean` (`carmichael_561_factorization`) |
+| nt-mersenne-m17 | the Mersenne number `M₁₇ = 2¹⁷ − 1 = 131071` is prime | **verified** | `ResearchOS/NumberTheory/MoreFacts.lean` (`mersenne_M17_prime`) |
+| nt-mersenne-m19 | the Mersenne number `M₁₉ = 2¹⁹ − 1 = 524287` is prime | **verified** | `ResearchOS/NumberTheory/MoreFacts.lean` (`mersenne_M19_prime`) |
+| nt-carmichael-1105-composite | 1105 (2nd Carmichael number) is **not** prime | **verified** | `ResearchOS/NumberTheory/MoreFacts.lean` (`carmichael_1105_not_prime`) |
+| nt-carmichael-1105-korselt | `1105 = 5 · 13 · 17` — squarefree, three distinct prime factors | **verified** | `ResearchOS/NumberTheory/MoreFacts.lean` (`carmichael_1105_factorization`) |
+| nt-carmichael-1729-composite | 1729 (3rd Carmichael number; Hardy–Ramanujan taxicab number) is **not** prime | **verified** | `ResearchOS/NumberTheory/MoreFacts.lean` (`carmichael_1729_not_prime`) |
+| nt-carmichael-1729-korselt | `1729 = 7 · 13 · 19` — squarefree, three distinct prime factors | **verified** | `ResearchOS/NumberTheory/MoreFacts.lean` (`carmichael_1729_factorization`) |
+| nt-twin-10007-10009 | `(10007, 10009)` is a twin-prime pair (both prime) | **verified** | `ResearchOS/NumberTheory/MoreFacts.lean` (`prime_10007`, `prime_10009`) |
 
 **Why this domain exists.** It reserves nothing and proves the reusable-engine claim on a second,
 unrelated subject: the same corpus → verifier → truth-graph slots that carry secp256k1 facts also
