@@ -97,7 +97,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 10509
+        "bytes": 11529
       }
     ],
     "large": [
@@ -165,7 +165,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 10509
+        "bytes": 11529
       },
       {
         "path": "data/knowledge_graph.json",
