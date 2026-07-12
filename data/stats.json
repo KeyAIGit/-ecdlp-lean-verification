@@ -5,7 +5,7 @@
   "toolchain": "Lean 4 + Mathlib v4.31.0",
   "ledger_rows": 227,
   "distinct_results": 191,
-  "proved_modules": 95,
+  "proved_modules": 96,
   "proved_ledger_cells": 208,
   "sorry_count": 0,
   "custom_axioms": 0,

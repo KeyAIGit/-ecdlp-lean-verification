@@ -3,7 +3,7 @@ import Ecdlp.Proved.DivisionPolynomial
 import Ecdlp.Proved.FourDivisionPolynomial
 
 /-!
-# `Ψ₃` and `preΨ' 5` are coprime for secp256k1 — the 3-/5-torsion loci are disjoint (`E[3] ⊥ E[5]`)
+# `Ψ₃` and `preΨ' 5` are coprime for secp256k1 — the 3- and 5-torsion loci are disjoint (`E[3] ⊥ E[5]`)
 
 The 3- and 5-division polynomials of `E : Y² = X³ + 7` share no root: **no point is simultaneously
 3-torsion and 5-torsion.** If a point `P` of order 3 and a point `Q` of order 5 shared an
