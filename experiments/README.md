@@ -40,7 +40,13 @@ subexponential index-calculus algorithms. So the real question — whether invar
 - Reproduce any rung: `python3 run.py` then `python3 validate.py` (must print `VALIDATION: PASS`); the `*solve*.py` modules run their own unit self-tests as `__main__`.
 - Citations to prior art (Semaev, Gaudry, Diem, Faugère–Gaudry–Huot–Renault, Petit) are catalogued in `data/source_registry.json`.
 
+## Other directions
+
+| exp | hypothesis | what it measures | verified by | verdict |
+|---|---|---|---|---|
+| **P2** `p2_ward_eds/` | `HYP_WARD_EDS_001` (proposed) | Ward EDS rank-of-apparition `ρ(P)` + zero set | `validate.py`: 900 `(P,n)` samples cross-checked by `ec_mul`, PASS | `ρ(P)=ord(P)`, zero set = multiples of `ord(P)`; **confirms** the classical `Wₙ≡0 ⟺ [n]P=O` torsion equivalence and nothing more. DESCRIPTIVE — `ρ(P)` is Θ(ord(P)) work, **no** DLP advantage. |
+
 ## Next
-See `HYPOTHESES.yaml` for the open `tests:` (the `REMAINING:` items) and other registered
-directions (e.g. Ward/EDS). New experiments follow the same measure-and-independently-verify
+See `HYPOTHESES.yaml` for the open `tests:` (the `REMAINING:` items under
+`HYP_GLV_SEMAEV_001`). New experiments follow the same measure-and-independently-verify
 discipline.

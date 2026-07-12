@@ -1,0 +1,778 @@
+{
+  "schema_version": 1,
+  "hypothesis": "HYP_WARD_EDS_001",
+  "variant": "p2-ward-eds",
+  "params": {
+    "seed": 1,
+    "bits": [
+      16,
+      20,
+      24
+    ],
+    "budget": {
+      "16": {
+        "zs_mult": 3,
+        "n_full_scan_pts": 5,
+        "n_div_pts": 20
+      },
+      "20": {
+        "zs_mult": 3,
+        "n_full_scan_pts": 3,
+        "n_div_pts": 20
+      },
+      "24": {
+        "zs_mult": 2,
+        "n_full_scan_pts": 1,
+        "n_div_pts": 20
+      }
+    },
+    "method": "Ward normalized EDS via closed forms W0..W4 + doubling recurrence, mod p; torsion re-verified by independent ec_mul"
+  },
+  "git_commit": "1cd457b9a8221de568064f4e16ebf37418ab7cba",
+  "command": [
+    "run.py"
+  ],
+  "code_hashes": {
+    "experiments/p2_ward_eds/eds.py": "06aabe3b9f0e75f14e799d594240b2d9d1ef25c835beb9599ec002134228fba2",
+    "experiments/p2_ward_eds/run.py": "70e79ef43f1c304df2838285da70fcca522be07bec0c46e620124e58d5fbbc6e",
+    "experiments/p0_glv_semaev/toy_curves.py": "1b22b808a94b1c0945c9dd126c0cec5d6c08997ff73e575c4d3ee8bcf5b3dc9a"
+  },
+  "tools": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.5-x86_64-with-glibc2.39",
+    "sympy": "1.14.0",
+    "flint": "0.9.0",
+    "galois": "0.4.11",
+    "numpy": "2.4.6"
+  },
+  "results": {
+    "measurements": [
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "base_size": 0,
+        "N_zeroset": 195861,
+        "rho_G_eds": 65287,
+        "ord_G_ec": 65287,
+        "apparition_match": true,
+        "zero_set": [
+          65287,
+          130574,
+          195861
+        ],
+        "multiples_of_ord": [
+          65287,
+          130574,
+          195861
+        ],
+        "zeroset_eq_multiples": true,
+        "zeros_ec_confirmed": true,
+        "nonzero_sample_size": 200,
+        "nonzeros_ec_confirmed": true,
+        "full_scan_points": [
+          {
+            "s": 11634,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true,
+            "zeros_in_1_ell": [
+              65287
+            ]
+          },
+          {
+            "s": 54460,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true,
+            "zeros_in_1_ell": [
+              65287
+            ]
+          },
+          {
+            "s": 28714,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true,
+            "zeros_in_1_ell": [
+              65287
+            ]
+          },
+          {
+            "s": 53880,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true,
+            "zeros_in_1_ell": [
+              65287
+            ]
+          },
+          {
+            "s": 33865,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true,
+            "zeros_in_1_ell": [
+              65287
+            ]
+          }
+        ],
+        "full_scan_all_match": true,
+        "divisor_points": [
+          {
+            "s": 36364,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 51707,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 769,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 45249,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 62483,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 33769,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 45936,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 11485,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 50053,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 46544,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 10230,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 19968,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 32623,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 59663,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 10797,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 27472,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 27879,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 7445,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 21601,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          },
+          {
+            "s": 56440,
+            "w_ell_is_zero": true,
+            "rho_P": 65287,
+            "ord_P_ec": 65287,
+            "match": true
+          }
+        ],
+        "divisor_all_match": true,
+        "pn_samples": 400,
+        "pn_zero_cases": 145,
+        "pn_mismatch": 0,
+        "pn_example_zero": {
+          "s": 13270,
+          "P": [
+            24268,
+            20780
+          ],
+          "n": 65287
+        },
+        "ward_master_checks": 999,
+        "somos4_slice_checks": 1000,
+        "zero_pattern_period": 65287,
+        "value_period_scan_bound": 1958610,
+        "value_period_found": null,
+        "wall_time_s": 1.101
+      },
+      {
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "order": 1047379,
+        "ell": 1047379,
+        "cofactor": 1,
+        "generator": [
+          578869,
+          477440
+        ],
+        "beta": 879944,
+        "lambda": 833470,
+        "base_size": 0,
+        "N_zeroset": 3142137,
+        "rho_G_eds": 1047379,
+        "ord_G_ec": 1047379,
+        "apparition_match": true,
+        "zero_set": [
+          1047379,
+          2094758,
+          3142137
+        ],
+        "multiples_of_ord": [
+          1047379,
+          2094758,
+          3142137
+        ],
+        "zeroset_eq_multiples": true,
+        "zeros_ec_confirmed": true,
+        "nonzero_sample_size": 200,
+        "nonzeros_ec_confirmed": true,
+        "full_scan_points": [
+          {
+            "s": 531772,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true,
+            "zeros_in_1_ell": [
+              1047379
+            ]
+          },
+          {
+            "s": 1021496,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true,
+            "zeros_in_1_ell": [
+              1047379
+            ]
+          },
+          {
+            "s": 244041,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true,
+            "zeros_in_1_ell": [
+              1047379
+            ]
+          }
+        ],
+        "full_scan_all_match": true,
+        "divisor_points": [
+          {
+            "s": 705123,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 425085,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 685794,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 339803,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 689887,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 578056,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 449816,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 1044272,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 109864,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 877067,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 345177,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 393150,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 150326,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 632684,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 695510,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 370569,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 385384,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 244188,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 780250,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          },
+          {
+            "s": 649002,
+            "w_ell_is_zero": true,
+            "rho_P": 1047379,
+            "ord_P_ec": 1047379,
+            "match": true
+          }
+        ],
+        "divisor_all_match": true,
+        "pn_samples": 400,
+        "pn_zero_cases": 132,
+        "pn_mismatch": 0,
+        "pn_example_zero": {
+          "s": 153843,
+          "P": [
+            584255,
+            918582
+          ],
+          "n": 3142137
+        },
+        "ward_master_checks": 998,
+        "somos4_slice_checks": 1000,
+        "zero_pattern_period": 1047379,
+        "value_period_scan_bound": null,
+        "value_period_found": null,
+        "wall_time_s": 3.151
+      },
+      {
+        "bits": 24,
+        "p": 16777333,
+        "b": 2,
+        "order": 16785211,
+        "ell": 16785211,
+        "cofactor": 1,
+        "generator": [
+          9133898,
+          5260799
+        ],
+        "beta": 8085153,
+        "lambda": 15402598,
+        "base_size": 0,
+        "N_zeroset": 33570422,
+        "rho_G_eds": 16785211,
+        "ord_G_ec": 16785211,
+        "apparition_match": true,
+        "zero_set": [
+          16785211,
+          33570422
+        ],
+        "multiples_of_ord": [
+          16785211,
+          33570422
+        ],
+        "zeroset_eq_multiples": true,
+        "zeros_ec_confirmed": true,
+        "nonzero_sample_size": 200,
+        "nonzeros_ec_confirmed": true,
+        "full_scan_points": [
+          {
+            "s": 9046060,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true,
+            "zeros_in_1_ell": [
+              16785211
+            ]
+          }
+        ],
+        "full_scan_all_match": true,
+        "divisor_points": [
+          {
+            "s": 2733568,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 12001042,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 4776482,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 15496666,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 14565673,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 8327629,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 16352883,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 14437398,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 2973851,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 317149,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 1418072,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 7596727,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 3370049,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 7100642,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 6399249,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 12564573,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 5682631,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 960265,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 14748169,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          },
+          {
+            "s": 2079561,
+            "w_ell_is_zero": true,
+            "rho_P": 16785211,
+            "ord_P_ec": 16785211,
+            "match": true
+          }
+        ],
+        "divisor_all_match": true,
+        "pn_samples": 400,
+        "pn_zero_cases": 127,
+        "pn_mismatch": 0,
+        "pn_example_zero": {
+          "s": 6256022,
+          "P": [
+            3007813,
+            2901989
+          ],
+          "n": 33570422
+        },
+        "ward_master_checks": 998,
+        "somos4_slice_checks": 1000,
+        "zero_pattern_period": 16785211,
+        "value_period_scan_bound": null,
+        "value_period_found": null,
+        "wall_time_s": 25.65
+      }
+    ],
+    "growth_demo": {
+      "infinite_order": {
+        "curve": "y^2 = x^3 - 2",
+        "point": [
+          3,
+          5
+        ],
+        "W_1_to_10": [
+          1,
+          10,
+          171,
+          -7660,
+          -12660211,
+          -22652313570,
+          -58809175344521,
+          1735132266687114280,
+          357172782187144055262201,
+          115455343251682907198856192050
+        ],
+        "digit_lengths": [
+          1,
+          2,
+          3,
+          4,
+          8,
+          11,
+          14,
+          19,
+          24,
+          30
+        ],
+        "any_zero_in_1_10": false
+      },
+      "torsion_order6": {
+        "curve": "y^2 = x^3 + 1",
+        "point": [
+          2,
+          3
+        ],
+        "W_0_to_12": [
+          0,
+          1,
+          6,
+          72,
+          2592,
+          186624,
+          0,
+          -34828517376,
+          -90275517038592,
+          -467988280328060928,
+          -7278153735662003552256,
+          -226379693794030958489370624,
+          0
+        ],
+        "apparition_Z": 6
+      }
+    }
+  },
+  "timestamp": "2026-07-12T14:59:41.528494Z",
+  "results_hash": "db9c4bfbbf84e987a3f3d0e9b93af2b1935941e3a9acc144bf5ead5a93adf469"
+}
