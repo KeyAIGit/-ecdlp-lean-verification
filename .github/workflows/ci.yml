@@ -84,6 +84,13 @@ jobs:
       - name: Check result registry (VERIFIED.md ↔ Lean source)
         run: python3 scripts/gen_result_registry.py --check
 
+      # Provenance gate (literature side): every external work the docs cite (Shoup, Nechaev,
+      # Semaev, Gaudry, Diem, FGHR, Petit, Pollard, Pohlig–Hellman, Schoof, Frey–Rück, MOV,
+      # Smart) must have a registry entry, and its recorded where_used must match the current
+      # docs — catches a citation added/moved without updating the bibliography provenance.
+      - name: Check source registry (docs ↔ bibliography provenance)
+        run: python3 scripts/gen_source_registry.py --check
+
       # Agent-bundle gate: the committed context-tier routing table
       # (bundles/MANIFEST.json) must reference only files that exist and stay in
       # sync with the tier definitions in scripts/export_agent_bundle.py.
