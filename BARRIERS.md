@@ -141,6 +141,28 @@ exact `Θ` statements.
   *where the search lives and how it branches*; the cost lower bound itself stays in the open
   frontier, recorded here, not dressed as proved.
 
+  **Partial negative (narrow), not a no-go: GLV orbit-keying in `m=2` pair enumeration is
+  constant-factor only** (`HYP_GLV_SEMAEV_001`, `experiments/p0_glv_semaev/RESULTS.md`). A
+  reproducible benchmark measured a **lookup model**: for the `j=0` family `E_b : y²=x³+b` over
+  `p ≡ 1 (mod 3)`, enumerate the `m=2` pair sums `P_i ± P_j` and count how often a random target's
+  `x`-coordinate hits the precomputed set, as a function of base size `B`. In every configuration
+  (16/20/24-bit toy curves; every counted equality re-verified by an actual `ec_add`) the hit rate
+  obeys `≈ c·B_eff²/p`. Closing the base under the GLV orbit gives `B_eff = 3·B` exactly, and the
+  `u=x³` invariant coordinate raises the constant to `c ≈ 5.45` (`≈2.8×` vs plain) — a **constant**
+  `~3×` change, **no exponent change**. **What this does and does not establish (read the scope
+  carefully):** it closes only the narrow claim that a *finite GLV orbit changes the combinatorial
+  `B²/p` pair-count exponent in this direct-enumeration lookup model* — it does **not**. It does
+  **not** test the registered hypothesis at all: it builds and solves **no** `Sₘ` polynomial system,
+  measures **no** degree of regularity / Gröbner-matrix cost, tests **no** `m ≥ 3`, and the `petit`
+  variant is an integer-bit filter, **not** a faithful Petit composed-rational-map construction.
+  Direct EC-pair enumeration is itself `Θ(B²)` work, so it is *not* an index-calculus algorithm.
+  Two legacy 24-bit rows also used cofactor-3 curves with an ambient-`E(𝔽_p)` base (geometry/yield
+  sanity data, not valid subgroup-log relations; the corrected generator uses cofactor-1). So
+  **`HYP_GLV_SEMAEV_001` stays open**: the real question — whether invariant-coordinate *relation
+  generation* (`Sₘ`/Gröbner, `m ≥ 3`, genuine Petit maps) changes the prime-field asymptotics —
+  is untouched. No break of secp256k1; equality-replay alone cannot establish a complexity no-go.
+  Per-run manifests + an independent `validate_run.py` are in `experiments/p0_glv_semaev/`.
+
   **Open next node — `Sₘ` degree tower `2^{m−2}` (recorded, not yet built).** The base case is
   proved (`secp256k1_S₃poly_natDegree`: `deg S₃ = 2` in each variable) and `S₄`'s full symmetry is
   proved (`S₄_symm₁₂`/`S₄_symm₃₄`/`S₄_block_swap`). The next quantitative step, `deg S₄ = 4` in each
