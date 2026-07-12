@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 486,
+  "declaration_count": 504,
   "distinct_qualified_names": 401,
   "verified_md_citations": 185,
   "unresolved_citations": [],
@@ -333,7 +333,7 @@
       "kind": "def",
       "file": "Ecdlp/Proved/CoprimePsi2Psi3.lean",
       "line": 23,
-      "occurrences": 8
+      "occurrences": 20
     },
     "Ecdlp.Curve.V": {
       "name": "V",
@@ -341,7 +341,7 @@
       "kind": "def",
       "file": "Ecdlp/Proved/CoprimePsi2Psi3.lean",
       "line": 27,
-      "occurrences": 5
+      "occurrences": 8
     },
     "Ecdlp.Curve.a": {
       "name": "a",
@@ -1045,7 +1045,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi2PrePsi4.lean",
       "line": 35,
-      "occurrences": 4
+      "occurrences": 6
     },
     "Ecdlp.Curve.secp256k1_j_eq_zero": {
       "name": "secp256k1_j_eq_zero",
@@ -1117,7 +1117,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi3Psi5.lean",
       "line": 40,
-      "occurrences": 9
+      "occurrences": 10
     },
     "Ecdlp.Curve.secp256k1_psi2_evalEval": {
       "name": "secp256k1_psi2_evalEval",
