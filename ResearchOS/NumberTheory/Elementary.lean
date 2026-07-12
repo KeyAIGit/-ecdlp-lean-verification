@@ -6,10 +6,10 @@ import Mathlib
 This module is the first **non-elliptic-curve** domain to flow through the same verifier
 slot as the ECDLP substrate. Its whole purpose is to demonstrate that the pipeline is
 *domain-agnostic*: a claim corpus (`domains/number-theory/corpus.md`) whose facts are
-discharged by the Lean kernel, under the same no-`sorry` / no-axiom guarantees enforced on
-the ECDLP base. The verifier does not know or care that these are number-theory facts
-rather than curve facts — which is exactly the reusable-engine claim, now demonstrated on a
-second, unrelated subject.
+discharged by the Lean kernel, under the same completeness / no-axiom guarantees enforced
+on the ECDLP base (every proof kernel-complete, no placeholders, no custom axioms). The
+verifier does not know or care that these are number-theory facts rather than curve facts —
+which is exactly the reusable-engine claim, now demonstrated on a second, unrelated subject.
 
 All results are elementary and kernel-checked by `norm_num` (no `native_decide`, so they
 stay strictly inside the standard axiom base {propext, Classical.choice, Quot.sound} — the
