@@ -6,7 +6,7 @@ import Ecdlp.Proved.FourDivisionPolynomial
 # `Ψ₃` and `preΨ₄` are coprime for secp256k1 (node L6 of B1)
 
 Companion to L5 (`CoprimePsi2Psi3.lean`): the 3- and 4-division polynomials share no root —
-"no point is both 3- and 4-torsion", the **second** place `Δ ≠ 0` enters the division-polynomial
+"no nonidentity point is annihilated by both 3 and 4", the **second** place `Δ ≠ 0` enters the division-polynomial
 coprimality argument (node **L6** of `notes/B1_COPRIMALITY_PLAN.md`). Proved by an explicit
 Bézout certificate `u·Ψ₃ + v·preΨ₄ = 1` with cofactors from extended-Euclid over `𝔽_p` (CAS);
 the sparse cofactors (`u = U₅X⁵+U₂X²`, `v = V₃X³+V₀`) collapse the identity to four residue
@@ -28,7 +28,7 @@ private def V₀ : ZMod Secp256k1.p :=
   68382318006221171532032354667120537418448983291060690242689874229160447006352
 
 /-- **`Ψ₃` and `preΨ₄` are coprime** (L6). Their only possible common root would be a point that
-is simultaneously 3- and 4-torsion, forbidden by nonsingularity (`Δ ≠ 0`); realized by an
+is a nonidentity point annihilated by both 3 and 4, forbidden by nonsingularity (`Δ ≠ 0`); realized by an
 explicit Bézout certificate over `𝔽_p`. The second reachable leaf of the Route-B coprimality
 node B1. -/
 theorem secp256k1_isCoprime_Ψ₃_preΨ₄ :

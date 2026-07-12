@@ -5,7 +5,7 @@ import Ecdlp.Proved.CoprimePsi3Psi5
 /-!
 # `Ψ₂Sq` and `preΨ' 5` are coprime for secp256k1 — the 2- and 5-torsion loci are disjoint (`E[2] ⊥ E[5]`)
 
-The 2- and 5-division polynomials of `E : Y² = X³ + 7` share no root: **no point is simultaneously
+The 2- and 5-division polynomials of `E : Y² = X³ + 7` share no root: **no nonidentity point is simultaneously
 2-torsion and 5-torsion.** A common root would be the `x`-coordinate of a nonzero point whose order
 divides `gcd(2, 5) = 1` — impossible. Equivalently `gcd(ψ₂², ψ₅) = 1`, a coprimality that is
 **not** in Mathlib. We certify it constructively with an explicit **Bézout certificate**

@@ -6,7 +6,7 @@ import Ecdlp.Proved.FourDivisionPolynomial
 # `Ψ₂Sq` and `preΨ₄` are coprime for secp256k1 (node L6b of B1)
 
 Completes the pairwise-disjointness triangle among the low division polynomials: with L5
-(`Ψ₂Sq ⊥ Ψ₃`) and L6 (`Ψ₃ ⊥ preΨ₄`), this adds `Ψ₂Sq ⊥ preΨ₄` — "no point is simultaneously
+(`Ψ₂Sq ⊥ Ψ₃`) and L6 (`Ψ₃ ⊥ preΨ₄`), this adds `Ψ₂Sq ⊥ preΨ₄` — "no nonidentity point is simultaneously
 2-torsion and *primitive* 4-torsion" (order-2 points have order dividing 2, not exactly 4). A third
 manifestation of nonsingularity (`Δ ≠ 0`) in the division-polynomial coprimality picture
 (`notes/B1_COPRIMALITY_PLAN.md`). Proved by an explicit Bézout certificate `u·Ψ₂Sq + v·preΨ₄ = 1`
@@ -30,7 +30,7 @@ private def c₀ : ZMod Secp256k1.p :=
   58858790636504264113644359348709461852852656604416688825801379626091225485029
 
 /-- **`Ψ₂Sq` and `preΨ₄` are coprime** (L6b). Their only possible common root would be a point that
-is both 2-torsion and primitive-4-torsion, which nonsingularity (`Δ ≠ 0`) forbids; realized by an
+is a nonidentity point that is both 2-torsion and primitive-4-torsion, which nonsingularity (`Δ ≠ 0`) forbids; realized by an
 explicit Bézout certificate over `𝔽_p`. Completes the pairwise low-torsion disjointness of B1. -/
 theorem secp256k1_isCoprime_Ψ₂Sq_preΨ₄ :
     IsCoprime secp256k1.Ψ₂Sq secp256k1.preΨ₄ := by
