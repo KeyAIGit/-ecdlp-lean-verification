@@ -96,6 +96,7 @@ classes:
       - COVERAGE.md
       - dashboard.html
       - bundles/MANIFEST.json
+      - data/result_registry.json
     owner: generators
     hand_edit: false
     generated: true
@@ -107,11 +108,13 @@ classes:
       - scripts/coverage_report.py
       - scripts/build_dashboard.py
       - scripts/export_agent_bundle.py
+      - scripts/gen_result_registry.py
     gates:
       - scripts/check_status_consistency.py
       - scripts/check_counts.py
       - scripts/check_repo_artifacts.py
       - scripts/export_agent_bundle.py --check
+      - scripts/gen_result_registry.py --check
     risks:
       - Hand edits create invisible drift unless encoded in generators.
 

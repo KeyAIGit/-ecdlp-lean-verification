@@ -1,0 +1,3219 @@
+{
+  "schemaVersion": 1,
+  "source": "Ecdlp/**/*.lean minus Targets/",
+  "declaration_count": 478,
+  "distinct_qualified_names": 401,
+  "verified_md_citations": 185,
+  "unresolved_citations": [],
+  "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
+  "declarations": {
+    "EDSPort.HaveSameParity": {
+      "name": "HaveSameParity",
+      "namespace": "EDSPort",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 156,
+      "occurrences": 1
+    },
+    "EDSPort.HaveSameParity.abs": {
+      "name": "abs",
+      "namespace": "EDSPort.HaveSameParity",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 186,
+      "occurrences": 1
+    },
+    "EDSPort.HaveSameParity.addMulSub": {
+      "name": "addMulSub",
+      "namespace": "EDSPort.HaveSameParity",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 213,
+      "occurrences": 2
+    },
+    "EDSPort.HaveSameParity.addMulSub_transf": {
+      "name": "addMulSub_transf",
+      "namespace": "EDSPort.HaveSameParity",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 223,
+      "occurrences": 1
+    },
+    "EDSPort.HaveSameParity.avg": {
+      "name": "avg",
+      "namespace": "EDSPort.HaveSameParity",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 179,
+      "occurrences": 1
+    },
+    "EDSPort.HaveSameParity.even_sum": {
+      "name": "even_sum",
+      "namespace": "EDSPort.HaveSameParity",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 174,
+      "occurrences": 1
+    },
+    "EDSPort.HaveSameParity.perm": {
+      "name": "perm",
+      "namespace": "EDSPort.HaveSameParity",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 189,
+      "occurrences": 1
+    },
+    "EDSPort.HaveSameParity.rel": {
+      "name": "rel",
+      "namespace": "EDSPort.HaveSameParity",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 168,
+      "occurrences": 2
+    },
+    "EDSPort.HaveSameParity.same": {
+      "name": "same",
+      "namespace": "EDSPort.HaveSameParity",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 183,
+      "occurrences": 1
+    },
+    "EDSPort.HaveSameParity.six_le_of_strictAnti": {
+      "name": "six_le_of_strictAnti",
+      "namespace": "EDSPort.HaveSameParity",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 204,
+      "occurrences": 1
+    },
+    "EDSPort.HaveSameParity.strictAnti": {
+      "name": "strictAnti",
+      "namespace": "EDSPort.HaveSameParity",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 246,
+      "occurrences": 1
+    },
+    "EDSPort.HaveSameParity.transf": {
+      "name": "transf",
+      "namespace": "EDSPort.HaveSameParity",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 241,
+      "occurrences": 1
+    },
+    "EDSPort.IsEllSequence": {
+      "name": "IsEllSequence",
+      "namespace": "EDSPort",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 84,
+      "occurrences": 1
+    },
+    "EDSPort.Rel": {
+      "name": "Rel",
+      "namespace": "EDSPort",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 79,
+      "occurrences": 1
+    },
+    "EDSPort.StrictAnti": {
+      "name": "StrictAnti",
+      "namespace": "EDSPort",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 153,
+      "occurrences": 1
+    },
+    "EDSPort.addMulSub": {
+      "name": "addMulSub",
+      "namespace": "EDSPort",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 43,
+      "occurrences": 1
+    },
+    "EDSPort.addMulSub_abs_left": {
+      "name": "addMulSub_abs_left",
+      "namespace": "EDSPort",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 131,
+      "occurrences": 1
+    },
+    "EDSPort.addMulSub_abs_right": {
+      "name": "addMulSub_abs_right",
+      "namespace": "EDSPort",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 135,
+      "occurrences": 1
+    },
+    "EDSPort.addMulSub_even": {
+      "name": "addMulSub_even",
+      "namespace": "EDSPort",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 113,
+      "occurrences": 1
+    },
+    "EDSPort.addMulSub_neg_left": {
+      "name": "addMulSub_neg_left",
+      "namespace": "EDSPort",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 124,
+      "occurrences": 1
+    },
+    "EDSPort.addMulSub_neg_right": {
+      "name": "addMulSub_neg_right",
+      "namespace": "EDSPort",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 128,
+      "occurrences": 1
+    },
+    "EDSPort.addMulSub_odd": {
+      "name": "addMulSub_odd",
+      "namespace": "EDSPort",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 116,
+      "occurrences": 1
+    },
+    "EDSPort.addMulSub_self": {
+      "name": "addMulSub_self",
+      "namespace": "EDSPort",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 121,
+      "occurrences": 1
+    },
+    "EDSPort.addMulSub_swap": {
+      "name": "addMulSub_swap",
+      "namespace": "EDSPort",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 138,
+      "occurrences": 1
+    },
+    "EDSPort.avg": {
+      "name": "avg",
+      "namespace": "EDSPort",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 160,
+      "occurrences": 1
+    },
+    "EDSPort.invarDenom": {
+      "name": "invarDenom",
+      "namespace": "EDSPort",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 94,
+      "occurrences": 1
+    },
+    "EDSPort.invarNum": {
+      "name": "invarNum",
+      "namespace": "EDSPort",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 89,
+      "occurrences": 1
+    },
+    "EDSPort.invarNum_mul_invarDenom_of_net": {
+      "name": "invarNum_mul_invarDenom_of_net",
+      "namespace": "EDSPort",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 96,
+      "occurrences": 1
+    },
+    "EDSPort.net": {
+      "name": "net",
+      "namespace": "EDSPort",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 64,
+      "occurrences": 1
+    },
+    "EDSPort.net_add_sub_iff": {
+      "name": "net_add_sub_iff",
+      "namespace": "EDSPort",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 104,
+      "occurrences": 1
+    },
+    "EDSPort.net_eq_rel": {
+      "name": "net_eq_rel",
+      "namespace": "EDSPort",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 70,
+      "occurrences": 1
+    },
+    "EDSPort.rel": {
+      "name": "rel",
+      "namespace": "EDSPort",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 51,
+      "occurrences": 2
+    },
+    "Ecdlp.Curve.Q5": {
+      "name": "Q5",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 39,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.Q5_eval": {
+      "name": "Q5_eval",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 42,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.Q5_natDegree_le": {
+      "name": "Q5_natDegree_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 46,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.Q5_ne_zero": {
+      "name": "Q5_ne_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 49,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.Q7": {
+      "name": "Q7",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 59,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.Q7_eval": {
+      "name": "Q7_eval",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 64,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.Q7_natDegree_le": {
+      "name": "Q7_natDegree_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 70,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.Q7_ne_zero": {
+      "name": "Q7_ne_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 73,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.U": {
+      "name": "U",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi2Psi3.lean",
+      "line": 23,
+      "occurrences": 4
+    },
+    "Ecdlp.Curve.V": {
+      "name": "V",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi2Psi3.lean",
+      "line": 27,
+      "occurrences": 3
+    },
+    "Ecdlp.Curve.a": {
+      "name": "a",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi2PrePsi4.lean",
+      "line": 25,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.addOrderOf_eq_of_prime_nsmul": {
+      "name": "addOrderOf_eq_of_prime_nsmul",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SmallPrimeTorsion.lean",
+      "line": 22,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.anomalous_iff_trace_one": {
+      "name": "anomalous_iff_trace_one",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/AnomalousScope.lean",
+      "line": 23,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.b": {
+      "name": "b",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi2PrePsi4.lean",
+      "line": 27,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.beta_cubed_eq_one": {
+      "name": "beta_cubed_eq_one",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvAddFormula.lean",
+      "line": 28,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.c": {
+      "name": "c",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi2PrePsi4.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.const_ne": {
+      "name": "const_ne",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FiveTorsionBridge.lean",
+      "line": 111,
+      "occurrences": 2
+    },
+    "Ecdlp.Curve.five_core": {
+      "name": "five_core",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FiveTorsionBridge.lean",
+      "line": 62,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glvHom": {
+      "name": "glvHom",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/GlvMonoidHom.lean",
+      "line": 30,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glvHom_add": {
+      "name": "glvHom_add",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvMonoidHom.lean",
+      "line": 39,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glvHom_apply": {
+      "name": "glvHom_apply",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvMonoidHom.lean",
+      "line": 33,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glvHom_minpoly": {
+      "name": "glvHom_minpoly",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvMinPoly.lean",
+      "line": 42,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glvHom_zero": {
+      "name": "glvHom_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvMonoidHom.lean",
+      "line": 36,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glvPoint": {
+      "name": "glvPoint",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/GlvEndomorphism.lean",
+      "line": 101,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glvPoint_add": {
+      "name": "glvPoint_add",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvHom.lean",
+      "line": 41,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glvPoint_bijective": {
+      "name": "glvPoint_bijective",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvAutomorphism.lean",
+      "line": 57,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glvPoint_cube_eq_id": {
+      "name": "glvPoint_cube_eq_id",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvAutomorphism.lean",
+      "line": 31,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glvPoint_some": {
+      "name": "glvPoint_some",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvEndomorphism.lean",
+      "line": 112,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glvPoint_zero": {
+      "name": "glvPoint_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvEndomorphism.lean",
+      "line": 107,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.glv_root_mod_n_condition": {
+      "name": "glv_root_mod_n_condition",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvScalarAction.lean",
+      "line": 19,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.instFiniteSecp256k1Point": {
+      "name": "instFiniteSecp256k1Point",
+      "namespace": "Ecdlp.Curve",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/CurveCardinality.lean",
+      "line": 28,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.of": {
+      "name": "of",
+      "namespace": "Ecdlp.Curve",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "line": 54,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.p_mod_four": {
+      "name": "p_mod_four",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1Params.lean",
+      "line": 8,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.px": {
+      "name": "px",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 19,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.py": {
+      "name": "py",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 24,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1": {
+      "name": "secp256k1",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/Secp256k1Curve.lean",
+      "line": 19,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1G": {
+      "name": "secp256k1G",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/GeneratorOrder.lean",
+      "line": 34,
+      "occurrences": 2
+    },
+    "Ecdlp.Curve.secp256k1Grp": {
+      "name": "secp256k1Grp",
+      "namespace": "Ecdlp.Curve",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "line": 44,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_": {
+      "name": "secp256k1_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomial.lean",
+      "line": 50,
+      "occurrences": 16
+    },
+    "Ecdlp.Curve.secp256k1_G": {
+      "name": "secp256k1_G",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "line": 44,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_G_ne_zero": {
+      "name": "secp256k1_G_ne_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "line": 50,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_adaptor_complete": {
+      "name": "secp256k1_adaptor_complete",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "line": 104,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_addOrderOf_five_iff_poly": {
+      "name": "secp256k1_addOrderOf_five_iff_poly",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SmallPrimeTorsion.lean",
+      "line": 71,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_addOrderOf_three_iff_poly": {
+      "name": "secp256k1_addOrderOf_three_iff_poly",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SmallPrimeTorsion.lean",
+      "line": 64,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_b": {
+      "name": "secp256k1_b",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomial.lean",
+      "line": 30,
+      "occurrences": 4
+    },
+    "Ecdlp.Curve.secp256k1_beta_mul_Gx_ne_Gx": {
+      "name": "secp256k1_beta_mul_Gx_ne_Gx",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvOrderThree.lean",
+      "line": 38,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_beta_ne_one": {
+      "name": "secp256k1_beta_ne_one",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvFixedLocus.lean",
+      "line": 28,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_beta_orderOf": {
+      "name": "secp256k1_beta_orderOf",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1Order.lean",
+      "line": 18,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_c": {
+      "name": "secp256k1_c",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Invariants.lean",
+      "line": 21,
+      "occurrences": 3
+    },
+    "Ecdlp.Curve.secp256k1_c_relation": {
+      "name": "secp256k1_c_relation",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Invariants.lean",
+      "line": 33,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_curve_of_nonsingular": {
+      "name": "secp256k1_curve_of_nonsingular",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_dh_agree": {
+      "name": "secp256k1_dh_agree",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "line": 78,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_dlogEquiv": {
+      "name": "secp256k1_dlogEquiv",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SubgroupOrder.lean",
+      "line": 72,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_dlogEquiv_apply": {
+      "name": "secp256k1_dlogEquiv_apply",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SubgroupOrder.lean",
+      "line": 76,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_dlogHom": {
+      "name": "secp256k1_dlogHom",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SubgroupOrder.lean",
+      "line": 37,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_dlogHom_apply": {
+      "name": "secp256k1_dlogHom_apply",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SubgroupOrder.lean",
+      "line": 40,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_dlogHom_injective": {
+      "name": "secp256k1_dlogHom_injective",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SubgroupOrder.lean",
+      "line": 45,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_dlogHom_surjective": {
+      "name": "secp256k1_dlogHom_surjective",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SubgroupOrder.lean",
+      "line": 57,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_double_x_eq_": {
+      "name": "secp256k1_double_x_eq_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/MultiplicationFormula.lean",
+      "line": 59,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_embedding_degree_gt_100": {
+      "name": "secp256k1_embedding_degree_gt_100",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EmbeddingDegree.lean",
+      "line": 32,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_eval_threeTorsionPoly": {
+      "name": "secp256k1_eval_threeTorsionPoly",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionCard.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_feldman_vss_verify": {
+      "name": "secp256k1_feldman_vss_verify",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "line": 131,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_five_nsmul_eq_zero_iff": {
+      "name": "secp256k1_five_nsmul_eq_zero_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FiveTorsionBridge.lean",
+      "line": 115,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_five_torsion_card_le": {
+      "name": "secp256k1_five_torsion_card_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 242,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_five_torsion_ncard_le": {
+      "name": "secp256k1_five_torsion_ncard_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 219,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_five_torsion_x_card_le": {
+      "name": "secp256k1_five_torsion_x_card_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FiveTorsion.lean",
+      "line": 49,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_five_torsion_x_mem": {
+      "name": "secp256k1_five_torsion_x_mem",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 86,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_gen_addOrderOf": {
+      "name": "secp256k1_gen_addOrderOf",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SubgroupOrder.lean",
+      "line": 31,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_generator_addOrderOf": {
+      "name": "secp256k1_generator_addOrderOf",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GeneratorOrder.lean",
+      "line": 48,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_generator_equation": {
+      "name": "secp256k1_generator_equation",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1Curve.lean",
+      "line": 54,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_generator_ne_zero": {
+      "name": "secp256k1_generator_ne_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GeneratorOrder.lean",
+      "line": 43,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_generator_nonsingular": {
+      "name": "secp256k1_generator_nonsingular",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1Curve.lean",
+      "line": 70,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_generator_nsmul_n_eq_zero": {
+      "name": "secp256k1_generator_nsmul_n_eq_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GeneratorOrder.lean",
+      "line": 39,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glvHom_eq_zsmul": {
+      "name": "secp256k1_glvHom_eq_zsmul",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvEigenvalue.lean",
+      "line": 41,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glvHom_ne_id": {
+      "name": "secp256k1_glvHom_ne_id",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvOrderThree.lean",
+      "line": 53,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glvPoint_bijOn_torsion": {
+      "name": "secp256k1_glvPoint_bijOn_torsion",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvTorsionAction.lean",
+      "line": 66,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples": {
+      "name": "secp256k1_glvPoint_eq_lam_on_zmultiples",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSubgroupEigenvalue.lean",
+      "line": 27,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glvPoint_fixed_coprime_three": {
+      "name": "secp256k1_glvPoint_fixed_coprime_three",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvTorsionAction.lean",
+      "line": 84,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glvPoint_fixed_iff": {
+      "name": "secp256k1_glvPoint_fixed_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvFixedLocus.lean",
+      "line": 39,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glvPoint_fixed_three_torsion": {
+      "name": "secp256k1_glvPoint_fixed_three_torsion",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvFixedLocus.lean",
+      "line": 59,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glvPoint_generator": {
+      "name": "secp256k1_glvPoint_generator",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GeneratorOrder.lean",
+      "line": 56,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glvPoint_mapsTo_torsion": {
+      "name": "secp256k1_glvPoint_mapsTo_torsion",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvTorsionAction.lean",
+      "line": 51,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glvPoint_orbit_sum": {
+      "name": "secp256k1_glvPoint_orbit_sum",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvOrderThree.lean",
+      "line": 68,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glv_addX": {
+      "name": "secp256k1_glv_addX",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvAddFormula.lean",
+      "line": 41,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glv_addY": {
+      "name": "secp256k1_glv_addY",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvAddFormula.lean",
+      "line": 53,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glv_cube_relation": {
+      "name": "secp256k1_glv_cube_relation",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvCubeRelation.lean",
+      "line": 34,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glv_preserves_dlog": {
+      "name": "secp256k1_glv_preserves_dlog",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvNoGo.lean",
+      "line": 49,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glv_preserves_equation": {
+      "name": "secp256k1_glv_preserves_equation",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvEndomorphism.lean",
+      "line": 28,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glv_preserves_nonsingular": {
+      "name": "secp256k1_glv_preserves_nonsingular",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvEndomorphism.lean",
+      "line": 57,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glv_preserves_torsion": {
+      "name": "secp256k1_glv_preserves_torsion",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvTorsion.lean",
+      "line": 33,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glv_single_scalar": {
+      "name": "secp256k1_glv_single_scalar",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvNoGo.lean",
+      "line": 59,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glv_slope": {
+      "name": "secp256k1_glv_slope",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSlopeAll.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glv_slope_of_X_ne": {
+      "name": "secp256k1_glv_slope_of_X_ne",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSlope.lean",
+      "line": 30,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glv_slope_of_Y_ne": {
+      "name": "secp256k1_glv_slope_of_Y_ne",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSlopeTangent.lean",
+      "line": 27,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_grp_card": {
+      "name": "secp256k1_grp_card",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SubgroupOrder.lean",
+      "line": 24,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_grp_isAddCyclic": {
+      "name": "secp256k1_grp_isAddCyclic",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SubgroupOrder.lean",
+      "line": 28,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_grp_nsmul_eq_zero": {
+      "name": "secp256k1_grp_nsmul_eq_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "line": 49,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_isCoprime_": {
+      "name": "secp256k1_isCoprime_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CoprimePsi2PrePsi4.lean",
+      "line": 35,
+      "occurrences": 3
+    },
+    "Ecdlp.Curve.secp256k1_j_eq_zero": {
+      "name": "secp256k1_j_eq_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1Curve.lean",
+      "line": 47,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_lambda_orderOf": {
+      "name": "secp256k1_lambda_orderOf",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1Order.lean",
+      "line": 32,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_mem_torsionBy_iff_addOrderOf_dvd": {
+      "name": "secp256k1_mem_torsionBy_iff_addOrderOf_dvd",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_musig_key_aggregate": {
+      "name": "secp256k1_musig_key_aggregate",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "line": 122,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_n_dvd_card_point": {
+      "name": "secp256k1_n_dvd_card_point",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveCardinality.lean",
+      "line": 40,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_odd_pre": {
+      "name": "secp256k1_odd_pre",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/OddTorsionBound.lean",
+      "line": 27,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_odd_torsion_x_card_le": {
+      "name": "secp256k1_odd_torsion_x_card_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/OddTorsionBound.lean",
+      "line": 37,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_odd_two_torsion_disjoint": {
+      "name": "secp256k1_odd_two_torsion_disjoint",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionCoprime.lean",
+      "line": 26,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_pre": {
+      "name": "secp256k1_pre",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FiveTorsion.lean",
+      "line": 30,
+      "occurrences": 8
+    },
+    "Ecdlp.Curve.secp256k1_psi2_evalEval": {
+      "name": "secp256k1_psi2_evalEval",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FiveTorsionBridge.lean",
+      "line": 37,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_psi3_evalEval": {
+      "name": "secp256k1_psi3_evalEval",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionBridge.lean",
+      "line": 25,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_psi5_evalEval": {
+      "name": "secp256k1_psi5_evalEval",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FiveTorsionBridge.lean",
+      "line": 44,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_psi7_evalEval": {
+      "name": "secp256k1_psi7_evalEval",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SevenTorsionBridge.lean",
+      "line": 22,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_scalar_no_proper_subgroup": {
+      "name": "secp256k1_scalar_no_proper_subgroup",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ScalarGroupStructure.lean",
+      "line": 20,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_scalar_num_generators": {
+      "name": "secp256k1_scalar_num_generators",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ScalarGroupStructure.lean",
+      "line": 30,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_schnorr_batch_verify": {
+      "name": "secp256k1_schnorr_batch_verify",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "line": 147,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_schnorr_verify": {
+      "name": "secp256k1_schnorr_verify",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "line": 85,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_seven_nsmul_eq_zero_iff": {
+      "name": "secp256k1_seven_nsmul_eq_zero_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SevenTorsionBridge.lean",
+      "line": 91,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_seven_torsion_card_le": {
+      "name": "secp256k1_seven_torsion_card_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 247,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_seven_torsion_ncard_le": {
+      "name": "secp256k1_seven_torsion_ncard_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 228,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_seven_torsion_x_card_le": {
+      "name": "secp256k1_seven_torsion_x_card_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SevenTorsion.lean",
+      "line": 47,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_seven_torsion_x_mem": {
+      "name": "secp256k1_seven_torsion_x_mem",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 97,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_smallprime_addOrderOf": {
+      "name": "secp256k1_smallprime_addOrderOf",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SmallPrimeTorsion.lean",
+      "line": 36,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_taproot_tweak_verify": {
+      "name": "secp256k1_taproot_tweak_verify",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "line": 94,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_threeTorsionX_finite": {
+      "name": "secp256k1_threeTorsionX_finite",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionCard.lean",
+      "line": 76,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_threeTorsionX_ncard_le": {
+      "name": "secp256k1_threeTorsionX_ncard_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionCard.lean",
+      "line": 85,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_threeTorsionX_subset_": {
+      "name": "secp256k1_threeTorsionX_subset_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionCard.lean",
+      "line": 65,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_three_cube_roots_of_unity": {
+      "name": "secp256k1_three_cube_roots_of_unity",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1Order.lean",
+      "line": 48,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_three_nsmul_eq_zero_iff": {
+      "name": "secp256k1_three_nsmul_eq_zero_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionBridge.lean",
+      "line": 38,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_three_nsmul_eq_zero_iff_eval": {
+      "name": "secp256k1_three_nsmul_eq_zero_iff_eval",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionCard.lean",
+      "line": 35,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_three_nsmul_eq_zero_iff_poly": {
+      "name": "secp256k1_three_nsmul_eq_zero_iff_poly",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionCard.lean",
+      "line": 23,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_three_torsion_card_le": {
+      "name": "secp256k1_three_torsion_card_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 237,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_three_torsion_ncard_le": {
+      "name": "secp256k1_three_torsion_ncard_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 210,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_three_torsion_x_card_le": {
+      "name": "secp256k1_three_torsion_x_card_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsion.lean",
+      "line": 33,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_three_torsion_x_mem_": {
+      "name": "secp256k1_three_torsion_x_mem_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionCard.lean",
+      "line": 50,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_threshold_elgamal_combine": {
+      "name": "secp256k1_threshold_elgamal_combine",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "line": 139,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_threshold_schnorr_aggregate": {
+      "name": "secp256k1_threshold_schnorr_aggregate",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
+      "line": 113,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_torsionBy_dvd_le": {
+      "name": "secp256k1_torsionBy_dvd_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "line": 55,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_torsionBy_eq_ker_nsmul": {
+      "name": "secp256k1_torsionBy_eq_ker_nsmul",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "line": 36,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_torsionBy_inf_eq_gcd": {
+      "name": "secp256k1_torsionBy_inf_eq_gcd",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwoTorsionCount.lean",
+      "line": 113,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_torsion_ncard_le": {
+      "name": "secp256k1_torsion_ncard_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionPointCount.lean",
+      "line": 113,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous": {
+      "name": "secp256k1_trace_ordinary_nonanomalous",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TraceOfFrobenius.lean",
+      "line": 42,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff": {
+      "name": "secp256k1_two_nsmul_eq_zero_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwoTorsionPoint.lean",
+      "line": 35,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_two_torsion_ncard_le": {
+      "name": "secp256k1_two_torsion_ncard_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwoTorsionCount.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_two_torsion_x_card_le": {
+      "name": "secp256k1_two_torsion_x_card_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialDegree.lean",
+      "line": 34,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_zmultiples_le_torsionBy": {
+      "name": "secp256k1_zmultiples_le_torsionBy",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveTorsion.lean",
+      "line": 63,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.seven_core": {
+      "name": "seven_core",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SevenTorsionBridge.lean",
+      "line": 51,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.seven_master": {
+      "name": "seven_master",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SevenTorsionBridge.lean",
+      "line": 37,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.threeTorsionX": {
+      "name": "threeTorsionX",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/ThreeTorsionCard.lean",
+      "line": 59,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.three_dvd_n_sub_one": {
+      "name": "three_dvd_n_sub_one",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1Params.lean",
+      "line": 15,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.three_dvd_p_sub_one": {
+      "name": "three_dvd_p_sub_one",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1Params.lean",
+      "line": 11,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve25519.A": {
+      "name": "A",
+      "namespace": "Ecdlp.Curve25519",
+      "kind": "def",
+      "file": "Ecdlp/Proved/Curve25519.lean",
+      "line": 28,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve25519.Curve25519": {
+      "name": "Curve25519",
+      "namespace": "Ecdlp.Curve25519",
+      "kind": "def",
+      "file": "Ecdlp/Proved/Curve25519.lean",
+      "line": 38,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve25519.Curve25519_": {
+      "name": "Curve25519_",
+      "namespace": "Ecdlp.Curve25519",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Curve25519.lean",
+      "line": 46,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve25519.Curve25519_a": {
+      "name": "Curve25519_a",
+      "namespace": "Ecdlp.Curve25519",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Curve25519.lean",
+      "line": 50,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve25519.Curve25519_generator_equation": {
+      "name": "Curve25519_generator_equation",
+      "namespace": "Ecdlp.Curve25519",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Curve25519.lean",
+      "line": 55,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve25519.Gu": {
+      "name": "Gu",
+      "namespace": "Ecdlp.Curve25519",
+      "kind": "def",
+      "file": "Ecdlp/Proved/Curve25519.lean",
+      "line": 31,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve25519.Gv": {
+      "name": "Gv",
+      "namespace": "Ecdlp.Curve25519",
+      "kind": "def",
+      "file": "Ecdlp/Proved/Curve25519.lean",
+      "line": 34,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve25519.p": {
+      "name": "p",
+      "namespace": "Ecdlp.Curve25519",
+      "kind": "def",
+      "file": "Ecdlp/Proved/Curve25519.lean",
+      "line": 25,
+      "occurrences": 1
+    },
+    "Ecdlp.DLEQ.chaum_pedersen_verify": {
+      "name": "chaum_pedersen_verify",
+      "namespace": "Ecdlp.DLEQ",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogAdvanced.lean",
+      "line": 36,
+      "occurrences": 1
+    },
+    "Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime": {
+      "name": "exists_common_root_of_not_isCoprime",
+      "namespace": "Ecdlp.DivisionPoly",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CoprimeCommonRoot.lean",
+      "line": 28,
+      "occurrences": 1
+    },
+    "Ecdlp.DivisionPoly.no_common_root_of_isCoprime": {
+      "name": "no_common_root_of_isCoprime",
+      "namespace": "Ecdlp.DivisionPoly",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CoprimeCommonRoot.lean",
+      "line": 56,
+      "occurrences": 1
+    },
+    "Ecdlp.EDS.isEllSequence_of_rec_one": {
+      "name": "isEllSequence_of_rec_one",
+      "namespace": "Ecdlp.EDS",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EllSequenceRecOne.lean",
+      "line": 23,
+      "occurrences": 1
+    },
+    "Ecdlp.Frontier.addOrderOf_dvd_iff'": {
+      "name": "addOrderOf_dvd_iff'",
+      "namespace": "Ecdlp.Frontier",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
+      "line": 32,
+      "occurrences": 1
+    },
+    "Ecdlp.Frontier.card_pos'": {
+      "name": "card_pos'",
+      "namespace": "Ecdlp.Frontier",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
+      "line": 21,
+      "occurrences": 1
+    },
+    "Ecdlp.Frontier.mem_torsionBy_zero": {
+      "name": "mem_torsionBy_zero",
+      "namespace": "Ecdlp.Frontier",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
+      "line": 44,
+      "occurrences": 1
+    },
+    "Ecdlp.Frontier.neg_mem_torsionBy": {
+      "name": "neg_mem_torsionBy",
+      "namespace": "Ecdlp.Frontier",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
+      "line": 40,
+      "occurrences": 1
+    },
+    "Ecdlp.Frontier.orderOf_dvd_card'": {
+      "name": "orderOf_dvd_card'",
+      "namespace": "Ecdlp.Frontier",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
+      "line": 17,
+      "occurrences": 1
+    },
+    "Ecdlp.Frontier.orderOf_one'": {
+      "name": "orderOf_one'",
+      "namespace": "Ecdlp.Frontier",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Frontier.pow_card_eq_one'": {
+      "name": "pow_card_eq_one'",
+      "namespace": "Ecdlp.Frontier",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
+      "line": 25,
+      "occurrences": 1
+    },
+    "Ecdlp.Frontier.torsionBy_one_bot": {
+      "name": "torsionBy_one_bot",
+      "namespace": "Ecdlp.Frontier",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
+      "line": 52,
+      "occurrences": 1
+    },
+    "Ecdlp.Frontier.torsionBy_zero_top": {
+      "name": "torsionBy_zero_top",
+      "namespace": "Ecdlp.Frontier",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
+      "line": 48,
+      "occurrences": 1
+    },
+    "Ecdlp.Frontier.zero_mem_torsionBy": {
+      "name": "zero_mem_torsionBy",
+      "namespace": "Ecdlp.Frontier",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
+      "line": 36,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.Aff": {
+      "name": "Aff",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "def",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 61,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.badSet": {
+      "name": "badSet",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "def",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 93,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.badSet_card_le": {
+      "name": "badSet_card_le",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 109,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.bsgs_decomp": {
+      "name": "bsgs_decomp",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/BabyStepGiantStep.lean",
+      "line": 26,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.bsgs_steps_sq_ge": {
+      "name": "bsgs_steps_sq_ge",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/BabyStepGiantStep.lean",
+      "line": 38,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.collisionSet": {
+      "name": "collisionSet",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "def",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 69,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.collisionSet_card_le_one": {
+      "name": "collisionSet_card_le_one",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 75,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.collision_modEq": {
+      "name": "collision_modEq",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CollisionEquation.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.collision_recovers_log": {
+      "name": "collision_recovers_log",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CollisionEquation.lean",
+      "line": 52,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.collision_zmod": {
+      "name": "collision_zmod",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CollisionEquation.lean",
+      "line": 39,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.dlog_unique": {
+      "name": "dlog_unique",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CollisionEquation.lean",
+      "line": 62,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.eval_add": {
+      "name": "eval_add",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 196,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.eval_neg": {
+      "name": "eval_neg",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 201,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.eval_zero": {
+      "name": "eval_zero",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 206,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.generic_dlog_query_bound": {
+      "name": "generic_dlog_query_bound",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 124,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.generic_dlog_sqrt_bound": {
+      "name": "generic_dlog_sqrt_bound",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 141,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.generic_success_le": {
+      "name": "generic_success_le",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 158,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.mem_badSet": {
+      "name": "mem_badSet",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GenericGroupBound.lean",
+      "line": 96,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.pollard_rho_collision": {
+      "name": "pollard_rho_collision",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PollardRho.lean",
+      "line": 25,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.pollard_rho_periodic": {
+      "name": "pollard_rho_periodic",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PollardRho.lean",
+      "line": 43,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.secp256k1_bsgs_steps_le": {
+      "name": "secp256k1_bsgs_steps_le",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1GenericSecurity.lean",
+      "line": 56,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.secp256k1_generic_security": {
+      "name": "secp256k1_generic_security",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1GenericSecurity.lean",
+      "line": 36,
+      "occurrences": 1
+    },
+    "Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n": {
+      "name": "two_pow_255_lt_secp256k1_n",
+      "namespace": "Ecdlp.GenericGroup",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1GenericSecurity.lean",
+      "line": 28,
+      "occurrences": 1
+    },
+    "Ecdlp.MovReduction.mov_random_q_success_probability": {
+      "name": "mov_random_q_success_probability",
+      "namespace": "Ecdlp.MovReduction",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/MovRandomQ.lean",
+      "line": 13,
+      "occurrences": 1
+    },
+    "Ecdlp.NormEDS.normEDS_somos4": {
+      "name": "normEDS_somos4",
+      "namespace": "Ecdlp.NormEDS",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSSomos4.lean",
+      "line": 183,
+      "occurrences": 1
+    },
+    "Ecdlp.NormEDS.somos4_dom": {
+      "name": "somos4_dom",
+      "namespace": "Ecdlp.NormEDS",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSSomos4.lean",
+      "line": 74,
+      "occurrences": 1
+    },
+    "Ecdlp.NormEDS.somos4_dom_int": {
+      "name": "somos4_dom_int",
+      "namespace": "Ecdlp.NormEDS",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSSomos4.lean",
+      "line": 162,
+      "occurrences": 1
+    },
+    "Ecdlp.NormEDS.somos4_even_step_scaled": {
+      "name": "somos4_even_step_scaled",
+      "namespace": "Ecdlp.NormEDS",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSSomos4.lean",
+      "line": 53,
+      "occurrences": 1
+    },
+    "Ecdlp.NormEDS.somos4_odd_step": {
+      "name": "somos4_odd_step",
+      "namespace": "Ecdlp.NormEDS",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSSomos4.lean",
+      "line": 35,
+      "occurrences": 1
+    },
+    "Ecdlp.Ontology.FieldElt": {
+      "name": "FieldElt",
+      "namespace": "Ecdlp.Ontology",
+      "kind": "abbrev",
+      "file": "Ecdlp/Ontology.lean",
+      "line": 20,
+      "occurrences": 1
+    },
+    "Ecdlp.Ontology.Scalar": {
+      "name": "Scalar",
+      "namespace": "Ecdlp.Ontology",
+      "kind": "abbrev",
+      "file": "Ecdlp/Ontology.lean",
+      "line": 17,
+      "occurrences": 1
+    },
+    "Ecdlp.Ontology.secpN": {
+      "name": "secpN",
+      "namespace": "Ecdlp.Ontology",
+      "kind": "abbrev",
+      "file": "Ecdlp/Ontology.lean",
+      "line": 26,
+      "occurrences": 1
+    },
+    "Ecdlp.Ontology.secpP": {
+      "name": "secpP",
+      "namespace": "Ecdlp.Ontology",
+      "kind": "abbrev",
+      "file": "Ecdlp/Ontology.lean",
+      "line": 23,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Gx": {
+      "name": "Gx",
+      "namespace": "Ecdlp.P256",
+      "kind": "def",
+      "file": "Ecdlp/Proved/P256Curve.lean",
+      "line": 36,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Gy": {
+      "name": "Gy",
+      "namespace": "Ecdlp.P256",
+      "kind": "def",
+      "file": "Ecdlp/Proved/P256Curve.lean",
+      "line": 39,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.P256": {
+      "name": "P256",
+      "namespace": "Ecdlp.P256",
+      "kind": "def",
+      "file": "Ecdlp/Proved/P256Curve.lean",
+      "line": 46,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.P256_": {
+      "name": "P256_",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256Curve.lean",
+      "line": 54,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.P256_c": {
+      "name": "P256_c",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256Curve.lean",
+      "line": 58,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.P256_generator_equation": {
+      "name": "P256_generator_equation",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256Curve.lean",
+      "line": 64,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.p256_n_prime": {
+      "name": "p256_n_prime",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeN.lean",
+      "line": 190,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.p256_p_prime": {
+      "name": "p256_p_prime",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeP.lean",
+      "line": 181,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_1002328039319": {
+      "name": "pr_1002328039319",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeN.lean",
+      "line": 21,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_11290956913871": {
+      "name": "pr_11290956913871",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeP.lean",
+      "line": 42,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_115792089210356248762697446949407573529996955224135760342422259061068512044369": {
+      "name": "pr_115792089210356248762697446949407573529996955224135760342422259061068512044369",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeN.lean",
+      "line": 150,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_115792089210356248762697446949407573530086143415290314195533631308867097853951": {
+      "name": "pr_115792089210356248762697446949407573530086143415290314195533631308867097853951",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeP.lean",
+      "line": 144,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_187019741": {
+      "name": "pr_187019741",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeN.lean",
+      "line": 48,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_191039911": {
+      "name": "pr_191039911",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeN.lean",
+      "line": 90,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_204061199": {
+      "name": "pr_204061199",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeP.lean",
+      "line": 57,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_208150935158385979": {
+      "name": "pr_208150935158385979",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeN.lean",
+      "line": 108,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_2624747550333869278416773953": {
+      "name": "pr_2624747550333869278416773953",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeN.lean",
+      "line": 132,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_311245691": {
+      "name": "pr_311245691",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeN.lean",
+      "line": 60,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_34282281433": {
+      "name": "pr_34282281433",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeP.lean",
+      "line": 75,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_3969899": {
+      "name": "pr_3969899",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeN.lean",
+      "line": 9,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_46076956964474543": {
+      "name": "pr_46076956964474543",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeP.lean",
+      "line": 90,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_622491383": {
+      "name": "pr_622491383",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeN.lean",
+      "line": 81,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_66417393611": {
+      "name": "pr_66417393611",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeP.lean",
+      "line": 21,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_6700417": {
+      "name": "pr_6700417",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeP.lean",
+      "line": 9,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_774023187263532362759620327192479577272145303": {
+      "name": "pr_774023187263532362759620327192479577272145303",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeP.lean",
+      "line": 108,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_835945042244614951780389953367877943453916927241": {
+      "name": "pr_835945042244614951780389953367877943453916927241",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeP.lean",
+      "line": 129,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.Primality.pr_9350987": {
+      "name": "pr_9350987",
+      "namespace": "Ecdlp.P256.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256PrimeN.lean",
+      "line": 33,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.b": {
+      "name": "b",
+      "namespace": "Ecdlp.P256",
+      "kind": "def",
+      "file": "Ecdlp/Proved/P256Curve.lean",
+      "line": 33,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.n": {
+      "name": "n",
+      "namespace": "Ecdlp.P256",
+      "kind": "def",
+      "file": "Ecdlp/Proved/P256Curve.lean",
+      "line": 43,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p": {
+      "name": "p",
+      "namespace": "Ecdlp.P256",
+      "kind": "def",
+      "file": "Ecdlp/Proved/P256Curve.lean",
+      "line": 30,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256G": {
+      "name": "p256G",
+      "namespace": "Ecdlp.P256",
+      "kind": "def",
+      "file": "Ecdlp/Proved/P256GeneratorOrder.lean",
+      "line": 32,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256_embedding_degree_gt_100": {
+      "name": "p256_embedding_degree_gt_100",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256EmbeddingDegree.lean",
+      "line": 27,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256_generator_addOrderOf": {
+      "name": "p256_generator_addOrderOf",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256GeneratorOrder.lean",
+      "line": 44,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256_generator_ne_zero": {
+      "name": "p256_generator_ne_zero",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256GeneratorOrder.lean",
+      "line": 39,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256_generator_nonsingular": {
+      "name": "p256_generator_nonsingular",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256GeneratorOrder.lean",
+      "line": 26,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256_generator_nsmul_n_eq_zero": {
+      "name": "p256_generator_nsmul_n_eq_zero",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256GeneratorOrder.lean",
+      "line": 36,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256_trace_ordinary_nonanomalous": {
+      "name": "p256_trace_ordinary_nonanomalous",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TraceOfFrobenius.lean",
+      "line": 33,
+      "occurrences": 1
+    },
+    "Ecdlp.PohligHellman.component": {
+      "name": "component",
+      "namespace": "Ecdlp.PohligHellman",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PohligHellman.lean",
+      "line": 36,
+      "occurrences": 1
+    },
+    "Ecdlp.PohligHellman.projection": {
+      "name": "projection",
+      "namespace": "Ecdlp.PohligHellman",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PohligHellman.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.PohligHellman.reconstruct": {
+      "name": "reconstruct",
+      "namespace": "Ecdlp.PohligHellman",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PohligHellman.lean",
+      "line": 43,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_107361793816595537": {
+      "name": "pr_107361793816595537",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeN.lean",
+      "line": 24,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_107590001": {
+      "name": "pr_107590001",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "line": 69,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_115792089237316195423570985008687907852837564279074904382605163141518161494337": {
+      "name": "pr_115792089237316195423570985008687907852837564279074904382605163141518161494337",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeN.lean",
+      "line": 159,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_115792089237316195423570985008687907853269984665640564039457584007908834671663": {
+      "name": "pr_115792089237316195423570985008687907853269984665640564039457584007908834671663",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "line": 174,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_1206781": {
+      "name": "pr_1206781",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "line": 87,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_132896956044521568488119": {
+      "name": "pr_132896956044521568488119",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "line": 57,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_13331831": {
+      "name": "pr_13331831",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "line": 9,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_1627771": {
+      "name": "pr_1627771",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeN.lean",
+      "line": 90,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_173378833005251801": {
+      "name": "pr_173378833005251801",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "line": 24,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_174723607534414371449": {
+      "name": "pr_174723607534414371449",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeN.lean",
+      "line": 54,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_205115282021455665897114700593932402728804164701536103180137503955397371": {
+      "name": "pr_205115282021455665897114700593932402728804164701536103180137503955397371",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "line": 147,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_22149492674086928081353": {
+      "name": "pr_22149492674086928081353",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "line": 42,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_255515944373312847190720520512484175977": {
+      "name": "pr_255515944373312847190720520512484175977",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "line": 114,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_29047611873442575647497758179": {
+      "name": "pr_29047611873442575647497758179",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeN.lean",
+      "line": 126,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_297159362677": {
+      "name": "pr_297159362677",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeN.lean",
+      "line": 108,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_341948486974166000522343609283189": {
+      "name": "pr_341948486974166000522343609283189",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeN.lean",
+      "line": 144,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_44706919": {
+      "name": "pr_44706919",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeN.lean",
+      "line": 39,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_4681609": {
+      "name": "pr_4681609",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeN.lean",
+      "line": 9,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_545358713": {
+      "name": "pr_545358713",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeN.lean",
+      "line": 75,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.pr_7240687": {
+      "name": "pr_7240687",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "line": 102,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.secp256k1_n_prime": {
+      "name": "secp256k1_n_prime",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeN.lean",
+      "line": 184,
+      "occurrences": 1
+    },
+    "Ecdlp.Primality.secp256k1_p_prime": {
+      "name": "secp256k1_p_prime",
+      "namespace": "Ecdlp.Primality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "line": 193,
+      "occurrences": 1
+    },
+    "Ecdlp.Proved.cofactor_card_mul_index": {
+      "name": "cofactor_card_mul_index",
+      "namespace": "Ecdlp.Proved",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Cofactor.lean",
+      "line": 18,
+      "occurrences": 1
+    },
+    "Ecdlp.Proved.cube_root_of_eigenvalue": {
+      "name": "cube_root_of_eigenvalue",
+      "namespace": "Ecdlp.Proved",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CubeRoot.lean",
+      "line": 15,
+      "occurrences": 1
+    },
+    "Ecdlp.Proved.orderOf_eigenvalue_eq_three": {
+      "name": "orderOf_eigenvalue_eq_three",
+      "namespace": "Ecdlp.Proved",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CubeRoot.lean",
+      "line": 25,
+      "occurrences": 1
+    },
+    "Ecdlp.Proved.orderOf_eq_card_of_prime": {
+      "name": "orderOf_eq_card_of_prime",
+      "namespace": "Ecdlp.Proved",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PrimeOrder.lean",
+      "line": 19,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.adaptor_complete": {
+      "name": "adaptor_complete",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogCompleteness.lean",
+      "line": 93,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.adaptor_extract": {
+      "name": "adaptor_extract",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SchnorrSoundness.lean",
+      "line": 63,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.blind_unblind": {
+      "name": "blind_unblind",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SchnorrSoundness.lean",
+      "line": 70,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.dh_agree": {
+      "name": "dh_agree",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogCompleteness.lean",
+      "line": 31,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.ecdsa_known_nonce_recovers_key": {
+      "name": "ecdsa_known_nonce_recovers_key",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaKeyRecovery.lean",
+      "line": 58,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.ecdsa_nonce_reuse_recovers": {
+      "name": "ecdsa_nonce_reuse_recovers",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaKeyRecovery.lean",
+      "line": 40,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.elgamal_additively_homomorphic": {
+      "name": "elgamal_additively_homomorphic",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogPrimitives.lean",
+      "line": 43,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.elgamal_decrypt": {
+      "name": "elgamal_decrypt",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogPrimitives.lean",
+      "line": 19,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.elgamal_rerandomize_decrypt": {
+      "name": "elgamal_rerandomize_decrypt",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogPrimitives.lean",
+      "line": 34,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.feldman_vss_verify": {
+      "name": "feldman_vss_verify",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogCompleteness.lean",
+      "line": 53,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.musig_key_aggregate": {
+      "name": "musig_key_aggregate",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogCompleteness.lean",
+      "line": 64,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.okamoto_extract": {
+      "name": "okamoto_extract",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogAdvanced.lean",
+      "line": 19,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.pedersen_binding_extract": {
+      "name": "pedersen_binding_extract",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SchnorrSoundness.lean",
+      "line": 50,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.pedersen_homomorphic": {
+      "name": "pedersen_homomorphic",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogPrimitives.lean",
+      "line": 26,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.pedersen_vector_homomorphic": {
+      "name": "pedersen_vector_homomorphic",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogPrimitives.lean",
+      "line": 55,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.schnorr_batch_verify": {
+      "name": "schnorr_batch_verify",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogCompleteness.lean",
+      "line": 83,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.schnorr_extract": {
+      "name": "schnorr_extract",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SchnorrSoundness.lean",
+      "line": 27,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.schnorr_verify": {
+      "name": "schnorr_verify",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogCompleteness.lean",
+      "line": 22,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.schnorr_witness_unique": {
+      "name": "schnorr_witness_unique",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SchnorrSoundness.lean",
+      "line": 38,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.shamir_reconstruct": {
+      "name": "shamir_reconstruct",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ShamirSSS.lean",
+      "line": 62,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.shamir_reconstruct_poly": {
+      "name": "shamir_reconstruct_poly",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ShamirSSS.lean",
+      "line": 51,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.taproot_tweak_verify": {
+      "name": "taproot_tweak_verify",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogCompleteness.lean",
+      "line": 104,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.threshold_elgamal_combine": {
+      "name": "threshold_elgamal_combine",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogCompleteness.lean",
+      "line": 72,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.threshold_schnorr_aggregate": {
+      "name": "threshold_schnorr_aggregate",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DlogCompleteness.lean",
+      "line": 40,
+      "occurrences": 1
+    },
+    "Ecdlp.Secp256k1Schnorr.secp256k1_schnorr_extract": {
+      "name": "secp256k1_schnorr_extract",
+      "namespace": "Ecdlp.Secp256k1Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SchnorrSoundness.lean",
+      "line": 83,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.S": {
+      "name": "S",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SemaevFour.lean",
+      "line": 32,
+      "occurrences": 18
+    },
+    "Ecdlp.Semaev.discharges": {
+      "name": "discharges",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/SemaevFour.lean",
+      "line": 56,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.resultant_eq_zero_of_common_root": {
+      "name": "resultant_eq_zero_of_common_root",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevFour.lean",
+      "line": 60,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.secp256k1_S": {
+      "name": "secp256k1_S",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevDegree.lean",
+      "line": 43,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.secp256k1_decomposition_completions_le_two": {
+      "name": "secp256k1_decomposition_completions_le_two",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevDegree.lean",
+      "line": 54,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.secp256k1_point_decomposition_semaev": {
+      "name": "secp256k1_point_decomposition_semaev",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointDecomposition.lean",
+      "line": 47,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.secp256k1_point_decomposition_semaev_double": {
+      "name": "secp256k1_point_decomposition_semaev_double",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointDecomposition.lean",
+      "line": 66,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.secp256k1_semaev_four_common_root_of_eq_zero": {
+      "name": "secp256k1_semaev_four_common_root_of_eq_zero",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevFour.lean",
+      "line": 199,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.secp256k1_semaev_four_of_common_root": {
+      "name": "secp256k1_semaev_four_of_common_root",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevFour.lean",
+      "line": 189,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.secp256k1_semaev_three_chord": {
+      "name": "secp256k1_semaev_three_chord",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevThree.lean",
+      "line": 170,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.secp256k1_semaev_three_iff": {
+      "name": "secp256k1_semaev_three_iff",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevThree.lean",
+      "line": 273,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.secp256k1_semaev_three_point": {
+      "name": "secp256k1_semaev_three_point",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevThree.lean",
+      "line": 201,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.secp256k1_semaev_three_point_double": {
+      "name": "secp256k1_semaev_three_point_double",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevThree.lean",
+      "line": 237,
+      "occurrences": 1
+    },
+    "Ecdlp.Semaev.secp256k1_semaev_three_tangent": {
+      "name": "secp256k1_semaev_three_tangent",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevThree.lean",
+      "line": 184,
+      "occurrences": 1
+    },
+    "Ecdlp.Targets.glv_eigenvalue_zmod": {
+      "name": "glv_eigenvalue_zmod",
+      "namespace": "Ecdlp.Targets",
+      "kind": "theorem",
+      "file": "Ecdlp/Statements.lean",
+      "line": 15,
+      "occurrences": 1
+    },
+    "Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd": {
+      "name": "mem_torsionBy_iff_addOrderOf_dvd",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "line": 39,
+      "occurrences": 1
+    },
+    "Ecdlp.Torsion.torsionBy_dvd_le": {
+      "name": "torsionBy_dvd_le",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "line": 68,
+      "occurrences": 1
+    },
+    "Ecdlp.Torsion.torsionBy_eq_ker_nsmul": {
+      "name": "torsionBy_eq_ker_nsmul",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "line": 49,
+      "occurrences": 1
+    },
+    "Ecdlp.Torsion.torsionBy_eq_top": {
+      "name": "torsionBy_eq_top",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "line": 86,
+      "occurrences": 1
+    },
+    "Ecdlp.Torsion.zmod_module_nsmul_eq_zero": {
+      "name": "zmod_module_nsmul_eq_zero",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "line": 79,
+      "occurrences": 1
+    },
+    "Ecdlp.Torsion.zmultiples_le_torsionBy": {
+      "name": "zmultiples_le_torsionBy",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Torsion.lean",
+      "line": 59,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalAt": {
+      "name": "evalAt",
+      "namespace": "Ecdlp.Weil",
+      "kind": "def",
+      "file": "Ecdlp/Proved/PointEvaluation.lean",
+      "line": 35,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalAt_ker": {
+      "name": "evalAt_ker",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointEvaluation.lean",
+      "line": 48,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalAt_surjective": {
+      "name": "evalAt_surjective",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointEvaluation.lean",
+      "line": 41,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalRatAt": {
+      "name": "evalRatAt",
+      "namespace": "Ecdlp.Weil",
+      "kind": "def",
+      "file": "Ecdlp/Proved/PointEvaluation.lean",
+      "line": 79,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalRatAt_algebraMap": {
+      "name": "evalRatAt_algebraMap",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EvalRatAtCompat.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalRatAt_eq_zero_iff": {
+      "name": "evalRatAt_eq_zero_iff",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EvalRatAtNonvanishing.lean",
+      "line": 40,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalRatAt_ne_zero_iff_isUnit": {
+      "name": "evalRatAt_ne_zero_iff_isUnit",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EvalRatAtNonvanishing.lean",
+      "line": 55,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalRatAt_surjective": {
+      "name": "evalRatAt_surjective",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointEvaluation.lean",
+      "line": 87,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.residueFieldEquiv": {
+      "name": "residueFieldEquiv",
+      "namespace": "Ecdlp.Weil",
+      "kind": "def",
+      "file": "Ecdlp/Proved/PointEvaluation.lean",
+      "line": 65,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.secp256k1_miller_function_exists": {
+      "name": "secp256k1_miller_function_exists",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilDivisorClass.lean",
+      "line": 63,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.secp256k1_miller_function_unique": {
+      "name": "secp256k1_miller_function_unique",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilDivisorClass.lean",
+      "line": 90,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.secp256k1_psi3_root_iff_class_torsion": {
+      "name": "secp256k1_psi3_root_iff_class_torsion",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/MillerDivisionPolynomialBridge.lean",
+      "line": 47,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.secp256k1_psi5_root_iff_class_torsion": {
+      "name": "secp256k1_psi5_root_iff_class_torsion",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/MillerDivisionPolynomialBridge.lean",
+      "line": 55,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.secp256k1_psi7_root_iff_class_torsion": {
+      "name": "secp256k1_psi7_root_iff_class_torsion",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/MillerDivisionPolynomialBridge.lean",
+      "line": 63,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.secp256k1_torsion_iff_principal": {
+      "name": "secp256k1_torsion_iff_principal",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilDivisorClass.lean",
+      "line": 51,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.xyIdeal_isMaximal": {
+      "name": "xyIdeal_isMaximal",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointEvaluation.lean",
+      "line": 56,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.xyIdeal_ne_of_ne": {
+      "name": "xyIdeal_ne_of_ne",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointSeparation.lean",
+      "line": 73,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.xyIdeal_ne_of_x_ne": {
+      "name": "xyIdeal_ne_of_x_ne",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointSeparation.lean",
+      "line": 28,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.xyIdeal_ne_of_y_ne": {
+      "name": "xyIdeal_ne_of_y_ne",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointSeparation.lean",
+      "line": 50,
+      "occurrences": 1
+    },
+    "Ecdlp.jacobson_xedni_dependence_recovers_log": {
+      "name": "jacobson_xedni_dependence_recovers_log",
+      "namespace": "Ecdlp",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DependenceRecoversLog.lean",
+      "line": 21,
+      "occurrences": 1
+    },
+    "EvenRec": {
+      "name": "EvenRec",
+      "namespace": "",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 309,
+      "occurrences": 1
+    },
+    "OddRec": {
+      "name": "OddRec",
+      "namespace": "",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 304,
+      "occurrences": 1
+    },
+    "Rel": {
+      "name": "Rel",
+      "namespace": "",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 360,
+      "occurrences": 1
+    },
+    "Secp256k1.Gx": {
+      "name": "Gx",
+      "namespace": "Secp256k1",
+      "kind": "def",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 24,
+      "occurrences": 1
+    },
+    "Secp256k1.Gy": {
+      "name": "Gy",
+      "namespace": "Secp256k1",
+      "kind": "def",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 25,
+      "occurrences": 1
+    },
+    "Secp256k1.beta": {
+      "name": "beta",
+      "namespace": "Secp256k1",
+      "kind": "def",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 6,
+      "occurrences": 1
+    },
+    "Secp256k1.beta_field_eigenvalue": {
+      "name": "beta_field_eigenvalue",
+      "namespace": "Secp256k1",
+      "kind": "theorem",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 16,
+      "occurrences": 1
+    },
+    "Secp256k1.beta_is_cube_root": {
+      "name": "beta_is_cube_root",
+      "namespace": "Secp256k1",
+      "kind": "theorem",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 18,
+      "occurrences": 1
+    },
+    "Secp256k1.beta_lt_p": {
+      "name": "beta_lt_p",
+      "namespace": "Secp256k1",
+      "kind": "theorem",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 21,
+      "occurrences": 1
+    },
+    "Secp256k1.generator_on_curve": {
+      "name": "generator_on_curve",
+      "namespace": "Secp256k1",
+      "kind": "theorem",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Secp256k1.glv_lambda_eigenvalue": {
+      "name": "glv_lambda_eigenvalue",
+      "namespace": "Secp256k1",
+      "kind": "theorem",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 10,
+      "occurrences": 1
+    },
+    "Secp256k1.lam": {
+      "name": "lam",
+      "namespace": "Secp256k1",
+      "kind": "def",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 5,
+      "occurrences": 1
+    },
+    "Secp256k1.lam_lt_n": {
+      "name": "lam_lt_n",
+      "namespace": "Secp256k1",
+      "kind": "theorem",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 20,
+      "occurrences": 1
+    },
+    "Secp256k1.lambda_is_cube_root": {
+      "name": "lambda_is_cube_root",
+      "namespace": "Secp256k1",
+      "kind": "theorem",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 12,
+      "occurrences": 1
+    },
+    "Secp256k1.lambda_ne_one": {
+      "name": "lambda_ne_one",
+      "namespace": "Secp256k1",
+      "kind": "theorem",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 14,
+      "occurrences": 1
+    },
+    "Secp256k1.n": {
+      "name": "n",
+      "namespace": "Secp256k1",
+      "kind": "def",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 4,
+      "occurrences": 1
+    },
+    "Secp256k1.p": {
+      "name": "p",
+      "namespace": "Secp256k1",
+      "kind": "def",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 3,
+      "occurrences": 1
+    },
+    "Secp256k1.p_special_form": {
+      "name": "p_special_form",
+      "namespace": "Secp256k1",
+      "kind": "theorem",
+      "file": "Ecdlp/Secp256k1Verified.lean",
+      "line": 8,
+      "occurrences": 1
+    },
+    "addMulSub_mem_nonZeroDivisors": {
+      "name": "addMulSub_mem_nonZeroDivisors",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 345,
+      "occurrences": 1
+    },
+    "addMulSub_sq_mul_rel": {
+      "name": "addMulSub_sq_mul_rel",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 293,
+      "occurrences": 1
+    },
+    "cMin": {
+      "name": "cMin",
+      "namespace": "",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 326,
+      "occurrences": 1
+    },
+    "dMin": {
+      "name": "dMin",
+      "namespace": "",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 324,
+      "occurrences": 1
+    },
+    "dMin_le": {
+      "name": "dMin_le",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 349,
+      "occurrences": 1
+    },
+    "dMin_lt_cMin": {
+      "name": "dMin_lt_cMin",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 330,
+      "occurrences": 1
+    },
+    "dMin_nonneg": {
+      "name": "dMin_nonneg",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 328,
+      "occurrences": 1
+    },
+    "negOnePow_cMin": {
+      "name": "negOnePow_cMin",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 341,
+      "occurrences": 1
+    },
+    "negOnePow_cMin_eq_dMin": {
+      "name": "negOnePow_cMin_eq_dMin",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 332,
+      "occurrences": 1
+    },
+    "negOnePow_dMin": {
+      "name": "negOnePow_dMin",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 335,
+      "occurrences": 1
+    },
+    "normEDS_isEllSequence": {
+      "name": "normEDS_isEllSequence",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 555,
+      "occurrences": 1
+    },
+    "of_oddRec_evenRec": {
+      "name": "of_oddRec_evenRec",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 543,
+      "occurrences": 1
+    },
+    "order_dvd_card": {
+      "name": "order_dvd_card",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Lagrange.lean",
+      "line": 3,
+      "occurrences": 1
+    },
+    "rel": {
+      "name": "rel",
+      "namespace": "",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 258,
+      "occurrences": 22
+    },
+    "tying": {
+      "name": "tying",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwoTorsionPoint.lean",
+      "line": 16,
+      "occurrences": 1
+    }
+  }
+}
