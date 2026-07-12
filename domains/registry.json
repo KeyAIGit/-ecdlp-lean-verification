@@ -40,6 +40,21 @@
       "notes": "LIVE (second real instance). Kernel-verified: both primes p and n (Pratt certificates, same generator as secp256k1), the unconditional EllipticCurve instance, the base point, and the j≠0/no-GLV structural contrast. Also kernel-verified since: generator order = n (weak keystone), embedding degree (MOV-resistance), non-anomalous trace (SSSA-resistance), and the generic-group Ω(√n) bound (curve-agnostic — the same `generic_dlog_query_bound`, stated for any prime, applies to P-256's n with no new proof). All nine starter-corpus rungs are now verified (domains/p256/corpus.md); the remaining gap is the shared strong keystone #E=n (Hasse), same as secp256k1. Proves the pipeline is curve-agnostic — Phase-1 exit criterion met on verified facts."
     },
     {
+      "id": "number-theory-elementary",
+      "title": "Elementary number theory (non-ECC portability instance)",
+      "status": "live",
+      "one_liner": "First NON-elliptic-curve domain: primality / Mersenne / Carmichael facts, same kernel verifier — proof the engine is not ECC-only.",
+      "slots": {
+        "corpus": "domains/number-theory/corpus.md",
+        "ontology": "ResearchOS/NumberTheory/Elementary.lean",
+        "verifier": "lean-kernel"
+      },
+      "metrics_source": null,
+      "frontier_source": null,
+      "site": null,
+      "notes": "LIVE (first non-ECC instance). Kernel-verified in the separate `ResearchOS` lake library (a second build target alongside `Ecdlp`): 2017 prime, the Mersenne prime M₁₃=8191, and 561 (smallest Carmichael number) composite with its Korselt factorization 3·11·17. All `norm_num`, so they stay inside the standard axiom base (no `native_decide`); audited by `Ecdlp/AxiomAudit.lean`. Deliberately minimal — a proof of pipeline portability to an unrelated subject, not a number-theory research program. metrics_source is null (this domain does not feed the ECDLP headline count, which stays frozen)."
+    },
+    {
       "id": "curve25519",
       "title": "Curve25519 / Ed25519",
       "status": "planned",

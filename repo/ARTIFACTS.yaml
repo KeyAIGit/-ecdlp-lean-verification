@@ -21,6 +21,8 @@ classes:
       - Ecdlp.lean
       - Ecdlp/*.lean
       - Ecdlp/Proved/
+      - ResearchOS.lean
+      - ResearchOS/
       - lakefile.toml
       - lake-manifest.json
       - lean-toolchain
