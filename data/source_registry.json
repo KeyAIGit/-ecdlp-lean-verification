@@ -22,6 +22,7 @@
       "where_used": [
         "BARRIERS.md",
         "PUBLISHABLE_UNITS.md",
+        "experiments/README.md",
         "experiments/p0_glv_semaev/README.md"
       ]
     },
@@ -47,6 +48,7 @@
       "role": "Symmetry-adapted / quasi-homogeneous index calculus — the extension-field precedent for GLV-symmetrized relation systems in HYP_GLV_SEMAEV_001.",
       "note": null,
       "where_used": [
+        "experiments/README.md",
         "experiments/p0_glv_semaev/README.md"
       ]
     },
@@ -97,6 +99,7 @@
       "where_used": [
         "BARRIERS.md",
         "PUBLISHABLE_UNITS.md",
+        "experiments/README.md",
         "experiments/p0_glv_semaev/README.md"
       ]
     },
@@ -180,6 +183,7 @@
       "where_used": [
         "BARRIERS.md",
         "PUBLISHABLE_UNITS.md",
+        "experiments/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
         "experiments/p1_petit/README.md",
@@ -293,6 +297,7 @@
         "STATUS.md",
         "VERIFIED.md",
         "WORK_SCOPE.md",
+        "experiments/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
         "experiments/p1_petit/README.md",
