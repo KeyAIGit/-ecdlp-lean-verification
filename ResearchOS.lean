@@ -3,3 +3,4 @@
 -- kernel-verified facts for domains OTHER than elliptic curves. Its existence is the
 -- machine-checked evidence that the Research OS pipeline is not ECC-only.
 import ResearchOS.NumberTheory.Elementary
+import ResearchOS.NumberTheory.MoreFacts

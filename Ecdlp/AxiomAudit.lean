@@ -1,5 +1,6 @@
 import Ecdlp
 import ResearchOS.NumberTheory.Elementary
+import ResearchOS.NumberTheory.MoreFacts
 
 /-!
 # Axiom audit (CI trust gate)
@@ -136,3 +137,11 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms ResearchOS.NumberTheory.mersenne_M13_prime
 #print axioms ResearchOS.NumberTheory.carmichael_561_not_prime
 #print axioms ResearchOS.NumberTheory.carmichael_561_factorization
+#print axioms ResearchOS.NumberTheory.mersenne_M17_prime
+#print axioms ResearchOS.NumberTheory.mersenne_M19_prime
+#print axioms ResearchOS.NumberTheory.carmichael_1105_not_prime
+#print axioms ResearchOS.NumberTheory.carmichael_1105_factorization
+#print axioms ResearchOS.NumberTheory.carmichael_1729_not_prime
+#print axioms ResearchOS.NumberTheory.carmichael_1729_factorization
+#print axioms ResearchOS.NumberTheory.prime_10007
+#print axioms ResearchOS.NumberTheory.prime_10009
