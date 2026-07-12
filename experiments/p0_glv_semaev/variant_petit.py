@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Petit-style low-degree-base m=2 Semaev harness for HYP_GLV_SEMAEV_001 (variant: petit).
+"""Integer-bit-filter control for HYP_GLV_SEMAEV_001 (historical variant name: petit).
+
+IMPORTANT: this is **not** an implementation of Petit's composed rational maps and
+must not be cited as evidence for or against their algebraic solving complexity.
 
 A MODIFICATION of the plain baseline (``semaev_core.py``) that layers TWO ideas on top of the
 standard m=2 relation search, to probe whether they change the EXPONENT of the yield law or only
@@ -11,27 +14,24 @@ its CONSTANT:
       invariant. A single u-key therefore covers R in { +-S, +-phi(S), +-phi^2(S) } for a stored
       combination S = P_i +- P_j -- the order-3 GLV symmetry the raw x-coordinate cannot see.
 
-  (2) a PETIT-STYLE composed low-degree rational map on the FACTOR-BASE DEFINITION.  In Petit-
+  (2) an integer-encoding subset filter on the FACTOR-BASE DEFINITION.  In Petit-
       Kosters summation-polynomial index calculus over F_{q^n}, the factor base is not "all small
       points" but the points whose x-coordinate lies in a chosen LINEAR SUBSPACE (a low-degree /
       low-dimension condition) so the Semaev system solves at lower degree.  Over a prime field
-      there is no subfield, so we emulate the linear-subspace condition on the INVARIANT
-      coordinate: compose the invariant map g(x) = x^3 with the reduction onto the low
-      ``petit_bits`` binary coordinates and require the result to land in a fixed subspace,
+      there is no subfield. This script merely filters the canonical integer representative
+      of u=x^3 by its low ``petit_bits``. The predicate
 
           petit_cond(x)  <=>  ( u(x)  &  (2^petit_bits - 1) )  ==  petit_pattern .
 
-      This is a codimension-``petit_bits`` affine subspace of F_p in the standard binary basis --
-      a genuine low-degree condition of density 2^{-petit_bits}, "composed" after the degree-3
-      invariant map.  The factor base is the B smallest-x on-curve points that SATISFY it.
+      has density near 2^{-petit_bits}, but it is not an F_p-linear subspace (F_p has dimension
+      one over itself), is not a low-degree rational map over F_p, and does not reproduce the
+      polynomial systems or cost model in Petit. The factor base is the B smallest-x on-curve
+      points that satisfy this encoding predicate.
 
 The hypothesis under test
 -------------------------
-Petit's improvement to summation-polynomial index calculus lowers the algebraic COST of solving
-each decomposition, and the symmetric/invariant coordinates cut the base by the automorphism
-order. The open question this experiment measures empirically: does restricting the factor base to
-a low-degree subspace (plus the invariant coordinate) change the EXPONENT of the relation-yield
-law  yield ~ c * B_eff^2 / p , or does it only move the CONSTANT c?
+This control measures whether selecting a same-sized base by a simple integer-bit predicate changes
+the pair-enumeration occupancy law. It does not measure the algebraic cost of solving a Petit system.
 
 Honest a-priori expectation: only the constant.  Targets R = k*G are ~uniform points; no choice of
 WHICH B base points (a subspace vs the smallest-x ones) changes the ~B^2 count of pair-combinations
@@ -53,6 +53,7 @@ from __future__ import annotations
 import math
 import random
 import time
+from datetime import datetime, timezone
 from math import isqrt
 
 import sympy
@@ -80,12 +81,12 @@ def distinct_u(base: list, p: int) -> int:
 # ------------------------------------------------------------------ Petit low-degree base condition
 
 def petit_cond(x: int, p: int, petit_bits: int, petit_pattern: int) -> bool:
-    """Composed low-degree rational map + linear-subspace test on the invariant coordinate.
+    """Integer-bit predicate on the invariant coordinate, not a field-linear subspace.
 
     Compose g(x) = x^3 (the degree-3 phi-invariant) with reduction onto the low ``petit_bits``
-    binary coordinates, and require the image to equal the fixed ``petit_pattern`` -- i.e. u = x^3
-    lies in a codimension-``petit_bits`` affine subspace in the standard binary basis. Density of
-    accepted x is ~2^{-petit_bits}. petit_bits = 0 recovers the plain "no condition" base.
+    binary digits, and require the image to equal the fixed ``petit_pattern``. Density of accepted
+    x is approximately 2^{-petit_bits}. This is a control on the integer encoding only;
+    ``petit_bits = 0`` recovers the plain base.
     """
     if petit_bits <= 0:
         return True
@@ -229,7 +230,7 @@ def run_trials_u(curve: ToyCurve, base: list, D: dict, T: int, seed: int = 12345
 
 def run_setting(bits: int, B: int, T: int, petit_bits: int, seed: int = 1) -> dict:
     """One (bits, B) measurement of the Petit variant: Petit low-degree base, u-keyed dict+trials."""
-    C = find_toy_curve(bits, seed=seed)
+    C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
     t0 = time.time()
     base, scanned = build_base_petit(C, B, petit_bits)
     t1 = time.time()
@@ -244,8 +245,12 @@ def run_setting(bits: int, B: int, T: int, petit_bits: int, seed: int = 1) -> di
         "bits": bits,
         "p": C.p,
         "b": C.b,
+        "order": C.order,
         "ell": C.ell,
         "cofactor": C.cofactor,
+        "generator": list(C.gen),
+        "beta": C.beta,
+        "lambda": C.lam,
         "sqrt_p": sqrt_p,
         "petit_bits": petit_bits,
         "petit_density": round(petit_density, 5),
@@ -292,25 +297,25 @@ def fit_law(measurements: list) -> dict:
 
 
 def main():
-    TS = "2026-07-11T00:00:00Z"
+    timestamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     seed = 1
     PETIT_BITS = 1   # codimension-1 subspace on u=x^3 (density ~1/2); real low-degree condition
     measurements = []
     settings = []
 
     # SAME (bits, B, T) grid as semaev_core.main() for a like-for-like comparison.
-    C20 = find_toy_curve(20, seed=seed)
+    C20 = find_toy_curve(20, seed=seed, require_cofactor_one=True)
     s = isqrt(C20.p)
     for B in (s // 4, s // 2, s, 2 * s):
         if B * B // 2 > 20_000_000:
             continue
         settings.append((20, B))
     for bits in (16, 24):
-        C = find_toy_curve(bits, seed=seed)
+        C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
         sp = isqrt(C.p)
         settings.append((bits, min(sp, 2000)))
     for bits in (16, 24):
-        C = find_toy_curve(bits, seed=seed)
+        C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
         sp = isqrt(C.p)
         settings.append((bits, max(sp // 4, 8)))
 
@@ -348,7 +353,7 @@ def main():
         "plain_law_fit": plain_law,
         "per_setting_yield_ratio_petit_over_plain": mean_ratio,
     })
-    path = m.write(TS)
+    path = m.write(timestamp)
 
     print(f"manifest: {path}")
     print(f"{'bits':>4} {'p':>10} {'B':>6} {'Beff':>6} {'dens':>5} {'pairs':>9} {'keys':>9} "

@@ -119,18 +119,20 @@ hypotheses:
   - id: HYP_GLV_SEMAEV_001
     title: "GLV-symmetrized Semaev index calculus over prime-field j=0 curves"
     direction: "experiment"
-    status: "closed"
-    resolution: "no-go (constant-factor only)"
+    status: "active"
+    resolution: "partial negative: m=2 orbit-enumeration baseline is constant-factor only"
     result: >
-      MEASURED (experiments/p0_glv_semaev/RESULTS.md): the m=2 Semaev relation yield obeys the
-      SAME law yield ~ c * B_eff^2 / p (exponent 2 in B, -1 in p) for plain, GLV-orbit base, and
-      the phi-invariant coordinate u=x^3, across 16/20/24-bit j=0 toy curves. GLV symmetry / the
-      invariant coordinate move ONLY the constant c (a ~3x-6x storage/precompute reduction; the
-      order-3 orbit folds a constant factor), NEVER the exponent. B_eff = Theta(sqrt(p)) is still
-      required for Theta(sqrt(p)) work; no stable T(p)=p^{1/2-eps} and no mechanism for one.
-      Every counted relation EC-verified by actual ec_add (hits==verified, zero false positives);
-      independently re-verified (6925/6925 EC-verified, yield reproduced). No break of secp256k1.
-      The generic sqrt(n) barrier is not beaten. A publishable measured no-go.
+      PARTIAL MEASUREMENT (experiments/p0_glv_semaev/RESULTS.md): direct enumeration of m=2
+      pair sums obeys yield ~ c * B_eff^2 / p for the plain, GLV-orbit-keyed, and u=x^3-keyed
+      lookup variants. This closes only the narrow claim that a finite GLV orbit changes the
+      combinatorial pair-count exponent in this lookup model; it gives constant-factor changes.
+      It does NOT test the registered hypothesis about invariant S_m polynomial systems,
+      relation-generation cost, degree of regularity, Groebner matrices, higher m, or a genuine
+      Petit composed-rational-map construction. Two legacy 24-bit rows also used cofactor 3 with
+      an ambient E(F_p) factor base, so they are geometry/yield sanity data rather than valid
+      subgroup-logarithm relations. Every reported equality is a real EC equality, but equality
+      replay alone cannot establish an ECDLP complexity no-go. No break of secp256k1; the main
+      hypothesis remains open pending the polynomial-system experiment originally specified.
     owner: "experiments"
     supersedes: "H5_SEMAEV_WINDOW"
     prior_art: "experiments/p0_glv_semaev/README.md"
@@ -140,8 +142,8 @@ hypotheses:
       automorphism phi(x,y)=(beta*x,y), the proved eigenvalue lambda on <G>, and
       the formalized S3/S4 — with a genuinely open area), but the expected outcome
       is a NEGATIVE / no-go result. Symmetry-adapted / quasi-homogeneous index
-      calculus is known to help over EXTENSION fields (Faugere-Gaudry-Huot-Renault)
-      and does NOT transfer to prime fields; a 3x-6x factor-base reduction is only a
+      calculus is known to help over EXTENSION fields (Faugere-Gaudry-Huot-Renault),
+      with no known prime-field transfer that changes the exponent; a 3x-6x factor-base reduction is only a
       constant factor. Run as an experiment through the substrate, not as an
       expected break.
     claim: >
@@ -163,7 +165,9 @@ hypotheses:
       - "Smooth part of p-1 for secp256k1 is tiny (2*3*7*13441), so p-1-smoothness routes look weak (see P1)."
     tests:
       - "Build a family of toy j=0 curves E_b/F_p (p = 1 mod 3, large prime subgroup); experiments/p0_glv_semaev/toy_curves.py."
-      - "Run 4 variants: (1) plain x-Semaev, (2) GLV-orbit-reduced base, (3) u=x^3 / y invariant systems, (4) +Petit composed low-degree maps."
+      - "COMPLETED PARTIAL: enumerate m=2 pair sums for (1) plain x keys, (2) GLV-orbit keys, and (3) u=x^3 keys; result is constant-factor only in this lookup model."
+      - "REMAINING: construct and solve the actual S_m polynomial systems (m>=3) in plain and invariant coordinates without enumerating all EC pair sums."
+      - "REMAINING: implement a faithful Petit composed low-degree rational-map construction; integer low-bit filtering is not an F_p-linear subspace or a substitute for that construction."
       - "Measure per size p: relation probability, factor-base size, #relations needed, degree of regularity, max Groebner matrix, time, memory."
       - "Fit an empirical growth exponent in p and build a cost model; every run recorded via experiments/p0_glv_semaev/manifest.py (code+seed+params+versions+hashes+output)."
     exit_criteria:

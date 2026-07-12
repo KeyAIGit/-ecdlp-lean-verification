@@ -1,6 +1,6 @@
-# RESULTS — `HYP_GLV_SEMAEV_001`: GLV / invariant-coordinate Semaev relation yield
+# PARTIAL RESULTS — `HYP_GLV_SEMAEV_001`: m=2 orbit-keyed pair enumeration
 
-**Reproducible benchmark note.** Measured, not asserted. Every counted relation is
+**Reproducible baseline note.** Measured, not asserted. Every counted relation is
 re-verified by an actual `ec_add` group computation (`ec_verify_relation` recomputes
 `e_i·P_i + e_j·P_j` and checks it equals `±R`); a claim is counted **only** if it
 EC-verifies. In every setting reported here `hits == verified_relations` (zero spurious
@@ -17,7 +17,19 @@ dict lookups), because a point is determined by its `x`-coordinate up to sign.
   timestamp `2026-07-11T00:00:00Z`, code hashes, and an output hash. Manifests in
   `runs/`.
 
-## Bottom line
+> **Scope boundary:** these programs enumerate `P_i ± P_j` with the EC group law and
+> store the results in a dictionary. They do **not** construct or solve an `S_m`
+> polynomial system, measure degree of regularity or Gröbner matrices, test `m ≥ 3`,
+> or implement Petit's composed rational maps. The data therefore tests a narrow
+> pair-count/orbit-keying baseline, not the full registered GLV-Semaev hypothesis and
+> not the complexity of prime-field index-calculus relation generation.
+>
+> The 24-bit legacy rows use a curve with cofactor 3 while the factor base was sampled
+> from all of `E(F_p)`. Their EC equalities are valid, but individual factor-base
+> logarithms relative to `G` need not exist. Those rows are ambient-group yield sanity
+> data, not valid subgroup index-calculus evidence.
+
+## Bottom line for the measured lookup model
 
 All three configurations obey the **same law**
 
@@ -25,21 +37,22 @@ All three configurations obey the **same law**
 yield  ≈  c · B_eff² / p        (exponent 2 in B, exponent −1 in p)
 ```
 
-The GLV automorphism `φ(x,y) = (βx, y)` (order 3) and the `φ`-invariant coordinate
-`u = x³` move **only the constant `c`** (equivalently, shrink the storage/precompute
-needed to reach a fixed `B_eff` by a constant `3×–6×`). **Neither changes the
-exponent.** You still need `B_eff = Θ(√p)` relations for `Θ(√p)` work — the generic
-no-go barrier is **not** beaten.
+Within direct `m=2` pair enumeration, the GLV automorphism `φ(x,y) = (βx, y)` and
+the orbit key `u = x³` move only the constant `c`. They do not change the measured
+`B²/p` occupancy law. This is the expected combinatorics of hashing `Θ(B²)` pair
+sums into `Θ(p)` possible targets.
 
-There is **no** stable `T(p) = p^{1/2−ε}` with `ε>0`, and no theoretical mechanism for
-one. **Verdict: CLOSE as no-go.**
+This does not establish a time bound `T(p)`: constructing the dictionary itself costs
+`Θ(B²)`, which is `Θ(p)` at `B = Θ(√p)`, and no polynomial-system solver was measured.
+**Verdict: PARTIAL NEGATIVE.** Close the finite-orbit pair-lookup sub-hypothesis;
+keep the invariant-polynomial relation-generation hypothesis open.
 
 ---
 
 ## 1. Plain baseline (`semaev_core.py`) — the reference law
 
-Standard Semaev factor base in `x`. This is the negative baseline every variant is
-measured against.
+Direct pair enumeration over an `x` factor base. This is a sanity baseline every
+variant is measured against, not an implementation of Semaev polynomial solving.
 
 Fitted constant `c = yield·p/B²`:
 
@@ -127,9 +140,10 @@ independently).
 
 ---
 
-## 3. `invariant-u` — relations rewritten in the `φ`-invariant `u = x³`
+## 3. `invariant-u` — pair-sum dictionary keyed by the invariant `u = x³`
 
-Here the factor-base element is the GLV *orbit*, indexed by the invariant `u = x³`.
+Here the pair-sum dictionary is keyed by the GLV-orbit invariant `u = x³`.
+The Semaev relation polynomial itself is not rewritten or solved in this experiment.
 `B_eff = number of distinct orbits = number of distinct u`. Direct demonstration of the
 orbit collapse: a GLV-closed base of `3N` points has **exactly `N` distinct `u`-values**
 (measured ratio `= 3.0` for `N = 8, 32` at 16 and 20 bits).
@@ -172,9 +186,9 @@ Fitted constant `c = y·p/B_eff²`:
 | glv-base | `y ≈ c·B_eff²/p`, `B_eff=3·store_B` | **1.93 ≈ 2** | −1 | `c_eff ≈ 0.57` | storage/precompute `÷3–6` |
 | invariant-u | `y ≈ c·B_eff²/p`, `B_eff=distinct u` | **1.90 ≈ 2** | −1 | `c ≈ 5.45` | `c` up `≈2.77×` |
 
-Every row is the **same asymptotic law**. The exponent of `B` is 2 and of `p` is −1 in
-all three; only the constant and the storage↔`B_eff` accounting move. Both symmetry
-mechanisms are pure constant-factor reshufflings of the generic `B ~ √p` requirement.
+Every row has the same measured occupancy law in this finite lookup experiment. Only
+the constant and storage↔`B_eff` accounting move. This statement does not extrapolate
+to the cost of solving higher-arity summation-polynomial systems.
 
 ---
 
@@ -182,27 +196,26 @@ mechanisms are pure constant-factor reshufflings of the generic `B ~ √p` requi
 
 From the hypothesis registry / README §"Decision criteria":
 
-- **BREAKTHROUGH** requires a *stable* `T(p) = p^{1/2−ε}`, `ε>0`, **with a theoretical
-  explanation.** — **Not observed.** Every configuration measures a `B`-exponent of 2
-  and a `p`-exponent of −1 (yield `∝ B²/p`), i.e. `B_eff = Θ(√p)` relations for
-  `Θ(√p)` work. There is no `ε>0` and no mechanism producing one: `φ` and `u=x³` are a
-  finite (order-3) symmetry, so they can only fold a constant-size orbit.
-- **CLOSE as no-go** if the gain is only a constant factor / the scaling exponent does
-  not improve. — **This is exactly what is measured.** ✔
+- **BREAKTHROUGH** requires a time/cost result for relation generation, including the
+  polynomial-solving step. This experiment measures only lookup occupancy after
+  `Θ(B²)` EC pair enumeration, so it cannot satisfy or refute that criterion.
+- **NARROW CLOSE:** finite GLV-orbit keying changes only constants in this `m=2`
+  dictionary model. This sub-hypothesis is resolved negatively.
+- **REMAINING:** build actual plain and invariant `S_m` systems for `m ≥ 3`; measure
+  degree of regularity, Gröbner matrices, time, memory and complete precomputation;
+  implement a faithful Petit construction rather than an integer-bit filter.
 
-### **RECOMMENDED STATUS: CLOSE (no-go).**
+### **RECOMMENDED STATUS: ACTIVE, WITH A PARTIAL NEGATIVE RESULT.**
 
-Relations are real and EC-verified; the harness and experiment-ledger machinery are
-validated and reproducible; the honest negative result stands as a publishable
-benchmark. No Lean formalization is triggered (that happens only on a positive,
-explained result).
+The reported equalities are real and EC-verified. That validates the equality replay
+harness, not a prime-field ECDLP complexity conclusion. No Lean formalization is
+triggered. The next experiment must address the original polynomial-system claim.
 
 ---
 
-## 6. Draft entry for `BARRIERS.md`
+## 6. Properly scoped draft entry for `BARRIERS.md`
 
-> **GLV symmetrization / invariant coordinates do not beat the generic `√p` barrier for
-> prime-field Semaev relation generation (`j=0` / secp256k1 family).**
+> **Finite GLV-orbit keying does not change the `m=2` pair-enumeration occupancy exponent.**
 > For `E_b : y² = x³ + b` over `p ≡ 1 (mod 3)` (CM by `ℤ[ζ₃]`, order-3 automorphism
 > `φ(x,y)=(βx,y)`, `φ`-invariants `y` and `u=x³`), the `m=2` Semaev relation yield obeys
 > `yield ≈ c·B_eff²/p` with **`B`-exponent 2 and `p`-exponent −1** in every measured
@@ -210,16 +223,14 @@ explained result).
 > Closing the factor base under the GLV orbit (`glv-base`) reproduces the law with
 > `B_eff = 3·store_B` exactly and `c_eff ≈ 0.57`, giving a **constant** `3–6×` reduction
 > in storage/precompute to reach a fixed `B_eff` (≈2.4–2.7× more relations per unit
-> storage, approaching the theoretical 3×). Rewriting the relation system in the
+> storage, approaching the theoretical 3×). Keying the pair-sum dictionary by the
 > invariant `u = x³` (`invariant-u`) collapses each 3-point orbit to one `u`-value
 > (measured ratio exactly 3.0) and raises the constant to `c ≈ 5.45`
-> (`c/c_plain ≈ 2.77`). In **neither** case does the exponent of `B` or `p` change:
-> one still needs `B_eff = Θ(√p)` relations for `Θ(√p)` work. A finite-order symmetry
-> folds only a constant-size orbit, so it can move the constant `c` but not the
-> asymptotic exponent. Prime-field relation generation — not factor-base size — remains
-> the barrier, consistent with Gaudry/Diem/Semaev (subexponential only over `𝔽_{pⁿ}`,
-> `n>1`) and with Faugère–Gaudry–Huot–Renault symmetry gains being extension-field
-> results. **No break of secp256k1; constant-factor improvement only.**
+> (`c/c_plain ≈ 2.77`). In neither case does the measured occupancy exponent change.
+> This result is limited to a dictionary built by explicitly enumerating
+> `P_i ± P_j`; it is not a lower bound for Semaev polynomial solving, higher-arity
+> decompositions, invariant-theory Gröbner systems, or prime-field ECDLP. No break of
+> secp256k1 is observed.
 > Measured constants: plain `c ≈ 1.9` (analytic 2); glv-base `c_eff ≈ 0.57`
 > (`≈2.9×` per storage); invariant-u `c ≈ 5.45` (`≈2.77×`). Ref:
 > `experiments/p0_glv_semaev/RESULTS.md` and manifests in `runs/`.
@@ -235,8 +246,9 @@ python3 variant_glv-base.py   # GLV-orbit-closed base
 python3 variant_invariant.py  # u = x^3 invariant coordinate
 ```
 
-Same grid `settings=[(20,256),(20,512),(20,1024),(20,2048),(16,256),(24,2000),(16,64),
-(24,1024)]`, `T=4000`, `seed=1`. Each writes a manifest to `runs/` with a fixed
-timestamp `2026-07-11T00:00:00Z`, code hashes, and an output hash. Ground truth: every
+Same legacy grid `settings=[(20,256),(20,512),(20,1024),(20,2048),(16,256),(24,2000),(16,64),
+(24,1024)]`, `T=4000`, `seed=1`. The committed legacy manifests use a fixed timestamp;
+new schema-v1 runs record the actual UTC time, git revision, command, code hashes and
+an output hash. Ground truth: every
 counted relation re-verified by `ec_add`; `hits == verified_relations` in all rows
 (zero false positives).

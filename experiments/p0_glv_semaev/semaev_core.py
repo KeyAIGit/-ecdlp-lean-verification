@@ -39,6 +39,7 @@ from __future__ import annotations
 
 import random
 import time
+from datetime import datetime, timezone
 from math import isqrt
 
 import sympy
@@ -66,6 +67,12 @@ def build_base(curve: ToyCurve, B: int) -> list:
     point (x, y) with the canonical root y = sqrt_mod(...) (its negative -P is implied and
     never a separate base element — a Semaev x-base already identifies P and -P).
     """
+    if curve.cofactor != 1:
+        raise ValueError(
+            "the x-coordinate factor base is sampled from all E(F_p), but the DLP "
+            f"target lives in <G>; cofactor={curve.cofactor} would include points "
+            "whose logarithms to G are undefined. Use a cofactor-one toy curve."
+        )
     p, b = curve.p, curve.b
     base = []
     x = 0
@@ -95,13 +102,12 @@ def build_dict(base: list, curve: ToyCurve, include_doubling: bool = False):
     B = len(base)
     for i in range(B):
         Pi = base[i]
-        nPi = neg(Pi, p)
         for j in range(i + 1, B):
             Pj = base[j]
             Splus = ec_add(Pi, Pj, a, p)
             if Splus is not None:
                 D.setdefault(Splus[0], (i, j, +1))
-            Sminus = ec_add(Pi, nPi_add := neg(Pj, p), a, p)
+            Sminus = ec_add(Pi, neg(Pj, p), a, p)
             if Sminus is not None:
                 D.setdefault(Sminus[0], (i, j, -1))
             n_pairs += 1
@@ -203,7 +209,7 @@ def run_trials(curve: ToyCurve, base: list, D: dict, T: int, seed: int = 12345) 
 
 def run_setting(bits: int, B: int, T: int, seed: int = 1) -> dict:
     """One (bits, B) measurement: build curve, base, dict, run T trials, collect metrics."""
-    C = find_toy_curve(bits, seed=seed)
+    C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
     t0 = time.time()
     base = build_base(C, B)
     t1 = time.time()
@@ -215,8 +221,12 @@ def run_setting(bits: int, B: int, T: int, seed: int = 1) -> dict:
         "bits": bits,
         "p": C.p,
         "b": C.b,
+        "order": C.order,
         "ell": C.ell,
         "cofactor": C.cofactor,
+        "generator": list(C.gen),
+        "beta": C.beta,
+        "lambda": C.lam,
         "sqrt_p": sqrt_p,
         "base_size": B,
         "n_pairs": n_pairs,
@@ -266,13 +276,13 @@ def fit_law(measurements: list) -> dict:
 
 
 def main():
-    TS = "2026-07-11T00:00:00Z"
+    timestamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     seed = 1
     measurements = []
 
     # (1) Fixed-bits B-sweep at 20 bits (cofactor 1, p ~ 1.05e6, sqrt_p ~ 1024):
     #     B in {sqrt/4, sqrt/2, sqrt, 2*sqrt} to expose the B^2 growth into saturation.
-    C20 = find_toy_curve(20, seed=seed)
+    C20 = find_toy_curve(20, seed=seed, require_cofactor_one=True)
     s = isqrt(C20.p)
     for B in (s // 4, s // 2, s, 2 * s):
         # cap so precompute stays well under ~2e7 pairs
@@ -282,14 +292,14 @@ def main():
 
     # (2) Cross-bits at B ~ sqrt_p (capped) to see the 1/p field-size dependence.
     for bits in (16, 24):
-        C = find_toy_curve(bits, seed=seed)
+        C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
         sp = isqrt(C.p)
         B = min(sp, 2000)  # cap heavy 24-bit precompute
         measurements.append(run_setting(bits, B, T=4000, seed=seed))
 
     # Also a small-B (unsaturated) point at 16 and 24 bits for the exponent fit.
     for bits in (16, 24):
-        C = find_toy_curve(bits, seed=seed)
+        C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
         sp = isqrt(C.p)
         measurements.append(run_setting(bits, max(sp // 4, 8), T=4000, seed=seed))
 
@@ -303,7 +313,7 @@ def main():
         code_files=[__file__, "toy_curves.py", "manifest.py"],
     )
     m.record({"measurements": measurements, "law_fit": law})
-    path = m.write(TS)
+    path = m.write(timestamp)
 
     # human-readable summary
     print(f"manifest: {path}")

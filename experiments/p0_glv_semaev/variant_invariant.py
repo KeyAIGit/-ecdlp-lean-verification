@@ -50,6 +50,7 @@ from __future__ import annotations
 
 import random
 import time
+from datetime import datetime, timezone
 from math import isqrt
 
 import sympy
@@ -201,7 +202,7 @@ def run_trials_u(curve: ToyCurve, base: list, D: dict, T: int, seed: int = 12345
 
 def run_setting(bits: int, B: int, T: int, seed: int = 1) -> dict:
     """One (bits, B) measurement in u-coordinates: same base as core, dict+trials keyed on u."""
-    C = find_toy_curve(bits, seed=seed)
+    C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
     t0 = time.time()
     base = build_base(C, B)
     t1 = time.time()
@@ -214,8 +215,12 @@ def run_setting(bits: int, B: int, T: int, seed: int = 1) -> dict:
         "bits": bits,
         "p": C.p,
         "b": C.b,
+        "order": C.order,
         "ell": C.ell,
         "cofactor": C.cofactor,
+        "generator": list(C.gen),
+        "beta": C.beta,
+        "lambda": C.lam,
         "sqrt_p": sqrt_p,
         "base_size": B,
         "B_eff_distinct_u": B_eff,
@@ -261,12 +266,12 @@ def fit_law_u(measurements: list) -> dict:
 
 
 def main():
-    TS = "2026-07-11T00:00:00Z"
+    timestamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     seed = 1
     measurements = []
 
     # SAME (bits, B, T) grid as semaev_core.main() for a like-for-like comparison.
-    C20 = find_toy_curve(20, seed=seed)
+    C20 = find_toy_curve(20, seed=seed, require_cofactor_one=True)
     s = isqrt(C20.p)
     for B in (s // 4, s // 2, s, 2 * s):
         if B * B // 2 > 20_000_000:
@@ -274,13 +279,13 @@ def main():
         measurements.append(run_setting(20, B, T=4000, seed=seed))
 
     for bits in (16, 24):
-        C = find_toy_curve(bits, seed=seed)
+        C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
         sp = isqrt(C.p)
         B = min(sp, 2000)
         measurements.append(run_setting(bits, B, T=4000, seed=seed))
 
     for bits in (16, 24):
-        C = find_toy_curve(bits, seed=seed)
+        C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
         sp = isqrt(C.p)
         measurements.append(run_setting(bits, max(sp // 4, 8), T=4000, seed=seed))
 
@@ -294,7 +299,7 @@ def main():
     # Demonstrate the 3:1 base collapse in u on a GLV-closed base (the "B/3 automatically" claim).
     collapse_demo = []
     for bits in (16, 20):
-        C = find_toy_curve(bits, seed=seed)
+        C = find_toy_curve(bits, seed=seed, require_cofactor_one=True)
         for n_orbits in (8, 32):
             gb = glv_closed_base(C, n_orbits)
             collapse_demo.append({
@@ -312,7 +317,7 @@ def main():
         code_files=[__file__, "semaev_core.py", "toy_curves.py", "manifest.py"],
     )
     m.record({"measurements": measurements, "law_fit": law, "base_collapse_demo": collapse_demo})
-    path = m.write(TS)
+    path = m.write(timestamp)
 
     print(f"manifest: {path}")
     print(f"{'bits':>4} {'p':>10} {'cof':>3} {'B':>6} {'Beff':>6} {'pairs':>9} {'keys':>9} "
