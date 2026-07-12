@@ -97,6 +97,7 @@ classes:
       - dashboard.html
       - bundles/MANIFEST.json
       - data/result_registry.json
+      - data/source_registry.json
     owner: generators
     hand_edit: false
     generated: true
@@ -109,6 +110,7 @@ classes:
       - scripts/build_dashboard.py
       - scripts/export_agent_bundle.py
       - scripts/gen_result_registry.py
+      - scripts/gen_source_registry.py
     gates:
       - scripts/check_status_consistency.py
       - scripts/check_counts.py
