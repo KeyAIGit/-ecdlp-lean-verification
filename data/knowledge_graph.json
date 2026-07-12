@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 226,
     "barriers": 6,
-    "edges": 241,
+    "edges": 248,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -3136,6 +3136,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.CoprimePsi2Psi5",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CoprimePsi2Psi5",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi5",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.CoprimePsi3PrePsi4",
       "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
@@ -3153,6 +3163,21 @@
     {
       "from": "Ecdlp.Proved.CoprimePsi3Psi5",
       "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CoprimePsi3Psi7",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CoprimePsi3Psi7",
+      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CoprimePsi3Psi7",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi5",
       "type": "imports"
     },
     {
@@ -4028,6 +4053,16 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.CoprimePsi3Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.CoprimePsi2Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi7",
       "type": "imports"
     },
     {
