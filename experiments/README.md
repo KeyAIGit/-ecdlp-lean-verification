@@ -19,12 +19,13 @@ strictly sharper test of the *same* question:
 |---|---|---|---|---|---|
 | **P0** `p0_glv_semaev/` | m=2 | relation **yield law** | ENUMERATE all pair sums `P_i±P_j`, hash x-coords — Θ(\|F\|²) | every hit re-checked by `ec_add`; `validate_run.py` | yield `≈ c·B²/p`; GLV = constant ~3× factor, **no exponent change**. Lookup model only. |
 | **P1** `p1_petit/` | m=2 | relation **solving** | SOLVE `S₃(x_i,X,x_R)=0` per base x-coord (Tonelli–Shanks) — O(\|F\|)/target | `validate.py`: independent O(\|F\|²) brute-force EC enum → identical set, spurious=0, PASS | same relation set as P0 obtained by *solving* not enumerating; GLV = constant ~3× storage. |
-| **m=3** `p1_petit_m3/` | m=3 | 3-term relation **solving** | SOLVE `S₄=Res_X(S₃,S₃)=0` (deg ≤4 in `x_k`) per base pair — O(\|F\|²·deg4)/target | `validate.py`: independent O(\|F\|³) brute-force triple EC enum → identical set, spurious=0, PASS | S₄-solve complete & sound; GLV = constant ~3× storage. |
+| **m=3** `p1_petit_m3/` | m=3 | distinct-index 3-term relation **solving** | SOLVE `S₄=Res_Y(S₃,S₃)=0` (deg ≤4 in `x_k`) per unordered distinct base pair — O(\|F\|²·deg4)/target | `validate.py`: O(\|F\|³) brute-force triple EC enum independent of `S₄` → identical distinct-index set, spurious=0, PASS | Agreement on tested instances; repeated indices excluded; GLV = constant ~3× storage. |
 
 **What the line establishes (measured):** the GLV/`u=x³` orbit closure gives a **constant**
 (~3×) reduction in stored factor-base seeds at every rung, and the summation-polynomial
-*solve* reproduces exactly the brute-force relation set with **zero spurious roots** — the
-direct empirical signature of Semaev's `S_m` iff-theorems.
+*solve* reproduces the same distinct-index relation set as the brute-force path on the tested
+instances with **zero spurious roots**. The m=3 paths exclude repeated indices and reuse the same
+`confirm_relation3` helper, so this is not a separately implemented EC oracle.
 
 **What the line does NOT establish (open):** none of these rungs builds or reduces an actual
 `S_m` polynomial *system*; none measures a **degree of regularity**, a **Gröbner-basis**
