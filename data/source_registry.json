@@ -188,7 +188,9 @@
         "experiments/p0_glv_semaev/RESULTS.md",
         "experiments/p1_petit/README.md",
         "experiments/p1_petit/RESULTS.md",
-        "experiments/p1_petit_m3/RESULTS.md"
+        "experiments/p1_petit_m3/RESULTS.md",
+        "experiments/p3_sm_system/README.md",
+        "experiments/p3_sm_system/RESULTS.md"
       ]
     },
     {
@@ -304,6 +306,8 @@
         "experiments/p1_petit/RESULTS.md",
         "experiments/p1_petit_m3/README.md",
         "experiments/p1_petit_m3/RESULTS.md",
+        "experiments/p3_sm_system/README.md",
+        "experiments/p3_sm_system/RESULTS.md",
         "notes/ENGINE.md",
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",

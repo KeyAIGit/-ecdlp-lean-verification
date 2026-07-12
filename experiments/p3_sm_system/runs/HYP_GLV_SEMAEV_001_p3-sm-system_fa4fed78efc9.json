@@ -1,0 +1,2294 @@
+{
+  "schema_version": 1,
+  "hypothesis": "HYP_GLV_SEMAEV_001",
+  "variant": "p3-sm-system",
+  "params": {
+    "seed": 1,
+    "dreg_grid": [
+      [
+        16,
+        4,
+        2,
+        "plain",
+        34
+      ],
+      [
+        16,
+        6,
+        2,
+        "plain",
+        34
+      ],
+      [
+        16,
+        8,
+        2,
+        "plain",
+        34
+      ],
+      [
+        16,
+        10,
+        2,
+        "plain",
+        34
+      ],
+      [
+        16,
+        12,
+        2,
+        "plain",
+        34
+      ],
+      [
+        20,
+        6,
+        2,
+        "plain",
+        34
+      ],
+      [
+        20,
+        10,
+        2,
+        "plain",
+        34
+      ],
+      [
+        16,
+        3,
+        2,
+        "invariant",
+        22
+      ],
+      [
+        16,
+        6,
+        2,
+        "invariant",
+        22
+      ],
+      [
+        16,
+        5,
+        3,
+        "plain",
+        15
+      ],
+      [
+        16,
+        6,
+        3,
+        "plain",
+        15
+      ]
+    ],
+    "prob_grid": [
+      [
+        16,
+        8,
+        2,
+        "plain",
+        120
+      ],
+      [
+        16,
+        12,
+        2,
+        "plain",
+        120
+      ],
+      [
+        16,
+        12,
+        2,
+        "invariant",
+        60
+      ],
+      [
+        16,
+        12,
+        3,
+        "plain",
+        40
+      ]
+    ],
+    "method": "actual S_{m+1} relation SYSTEM {S_{m+1}=0, f_F(X_i)=0}; lex-Groebner variety + graded Macaulay degree-of-regularity; every relation EC-re-verified"
+  },
+  "git_commit": "7be7a35170c84c4cbd6e277145427fcd3711be59",
+  "command": [
+    "run.py"
+  ],
+  "code_hashes": {
+    "experiments/p3_sm_system/semaev_system.py": "b3d692d11310a2ec49e6edce7244439ddb997efb0bac4e62d53e91202a9056ce",
+    "experiments/p3_sm_system/run.py": "b5234b742d91f032088755e44bbabf36ddafcebf664de18c0cbe70aaae3e3dc5",
+    "experiments/p1_petit/semaev_solve.py": "96603f9f4b6aab9bd0b63fca83d494b1486da7b9fff90b236b1f4869f100ebaa",
+    "experiments/p0_glv_semaev/toy_curves.py": "1b22b808a94b1c0945c9dd126c0cec5d6c08997ff73e575c4d3ee8bcf5b3dc9a"
+  },
+  "tools": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.5-x86_64-with-glibc2.39",
+    "sympy": "1.14.0",
+    "flint": "0.9.0",
+    "galois": "0.4.11",
+    "numpy": "2.4.6"
+  },
+  "results": {
+    "measurements": [
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 4,
+        "base_size": 4,
+        "n_distinct_x": 4,
+        "n_orbits": 4,
+        "storage_units": 4,
+        "block": "degree_of_regularity",
+        "m": 2,
+        "coord": "plain",
+        "target_kind": "consistent",
+        "fb_poly_degree": 4,
+        "n_fb_elements": 4,
+        "system_nvars": 2,
+        "solving_degree": 9,
+        "solving_degree_capped": false,
+        "macaulay_bound": 11,
+        "gb_output_degree": 2,
+        "gb_basis_size": 2,
+        "gb_time_s": 0.005,
+        "macaulay_max_rows": 108,
+        "macaulay_max_cols": 78,
+        "quotient_dim": 2,
+        "min_gen_degree": 4,
+        "gen_degrees": [
+          4,
+          4,
+          4
+        ],
+        "n_lead_gens": 13,
+        "n_confirmed_relations": 1,
+        "spurious": 0,
+        "t_relations_s": 0.0336,
+        "t_solve_s": 2.2834,
+        "t_linear_algebra_s": 0.3033,
+        "t_ecverify_s": 0.0001,
+        "example_relation": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              6,
+              7710
+            ],
+            [
+              2,
+              35708
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            51744,
+            29446
+          ]
+        },
+        "per_degree": [
+          {
+            "D": 4,
+            "rows": 3,
+            "cols": 15,
+            "n_lead_gens": 3,
+            "quotient_dim": 12
+          },
+          {
+            "D": 5,
+            "rows": 9,
+            "cols": 21,
+            "n_lead_gens": 3,
+            "quotient_dim": 12
+          },
+          {
+            "D": 6,
+            "rows": 18,
+            "cols": 28,
+            "n_lead_gens": 5,
+            "quotient_dim": 10
+          },
+          {
+            "D": 7,
+            "rows": 30,
+            "cols": 36,
+            "n_lead_gens": 9,
+            "quotient_dim": 6
+          },
+          {
+            "D": 8,
+            "rows": 45,
+            "cols": 45,
+            "n_lead_gens": 12,
+            "quotient_dim": 3
+          },
+          {
+            "D": 9,
+            "rows": 63,
+            "cols": 55,
+            "n_lead_gens": 13,
+            "quotient_dim": 2
+          },
+          {
+            "D": 10,
+            "rows": 84,
+            "cols": 66,
+            "n_lead_gens": 13,
+            "quotient_dim": 2
+          },
+          {
+            "D": 11,
+            "rows": 108,
+            "cols": 78,
+            "n_lead_gens": 13,
+            "quotient_dim": 2
+          }
+        ]
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 6,
+        "base_size": 6,
+        "n_distinct_x": 6,
+        "n_orbits": 6,
+        "storage_units": 6,
+        "block": "degree_of_regularity",
+        "m": 2,
+        "coord": "plain",
+        "target_kind": "consistent",
+        "fb_poly_degree": 6,
+        "n_fb_elements": 6,
+        "system_nvars": 2,
+        "solving_degree": 13,
+        "solving_degree_capped": false,
+        "macaulay_bound": 15,
+        "gb_output_degree": 2,
+        "gb_basis_size": 2,
+        "gb_time_s": 0.013,
+        "macaulay_max_rows": 188,
+        "macaulay_max_cols": 136,
+        "quotient_dim": 2,
+        "min_gen_degree": 4,
+        "gen_degrees": [
+          4,
+          6,
+          6
+        ],
+        "n_lead_gens": 21,
+        "n_confirmed_relations": 1,
+        "spurious": 0,
+        "t_relations_s": 0.0099,
+        "t_solve_s": 0.0067,
+        "t_linear_algebra_s": 0.3767,
+        "t_ecverify_s": 0.0001,
+        "example_relation": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              6,
+              7710
+            ],
+            [
+              2,
+              35708
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            51744,
+            29446
+          ]
+        },
+        "per_degree": [
+          {
+            "D": 4,
+            "rows": 1,
+            "cols": 15,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 5,
+            "rows": 3,
+            "cols": 21,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 6,
+            "rows": 8,
+            "cols": 28,
+            "n_lead_gens": 3,
+            "quotient_dim": 20
+          },
+          {
+            "D": 7,
+            "rows": 16,
+            "cols": 36,
+            "n_lead_gens": 3,
+            "quotient_dim": 20
+          },
+          {
+            "D": 8,
+            "rows": 27,
+            "cols": 45,
+            "n_lead_gens": 5,
+            "quotient_dim": 18
+          },
+          {
+            "D": 9,
+            "rows": 41,
+            "cols": 55,
+            "n_lead_gens": 9,
+            "quotient_dim": 14
+          },
+          {
+            "D": 10,
+            "rows": 58,
+            "cols": 66,
+            "n_lead_gens": 13,
+            "quotient_dim": 10
+          },
+          {
+            "D": 11,
+            "rows": 78,
+            "cols": 78,
+            "n_lead_gens": 17,
+            "quotient_dim": 6
+          },
+          {
+            "D": 12,
+            "rows": 101,
+            "cols": 91,
+            "n_lead_gens": 20,
+            "quotient_dim": 3
+          },
+          {
+            "D": 13,
+            "rows": 127,
+            "cols": 105,
+            "n_lead_gens": 21,
+            "quotient_dim": 2
+          },
+          {
+            "D": 14,
+            "rows": 156,
+            "cols": 120,
+            "n_lead_gens": 21,
+            "quotient_dim": 2
+          },
+          {
+            "D": 15,
+            "rows": 188,
+            "cols": 136,
+            "n_lead_gens": 21,
+            "quotient_dim": 2
+          }
+        ]
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 8,
+        "base_size": 8,
+        "n_distinct_x": 8,
+        "n_orbits": 8,
+        "storage_units": 8,
+        "block": "degree_of_regularity",
+        "m": 2,
+        "coord": "plain",
+        "target_kind": "consistent",
+        "fb_poly_degree": 8,
+        "n_fb_elements": 8,
+        "system_nvars": 2,
+        "solving_degree": 17,
+        "solving_degree_capped": false,
+        "macaulay_bound": 19,
+        "gb_output_degree": 2,
+        "gb_basis_size": 2,
+        "gb_time_s": 0.025,
+        "macaulay_max_rows": 292,
+        "macaulay_max_cols": 210,
+        "quotient_dim": 2,
+        "min_gen_degree": 4,
+        "gen_degrees": [
+          4,
+          8,
+          8
+        ],
+        "n_lead_gens": 29,
+        "n_confirmed_relations": 1,
+        "spurious": 0,
+        "t_relations_s": 0.0144,
+        "t_solve_s": 0.0089,
+        "t_linear_algebra_s": 1.0107,
+        "t_ecverify_s": 0.0001,
+        "example_relation": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              6,
+              7710
+            ],
+            [
+              2,
+              35708
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            51744,
+            29446
+          ]
+        },
+        "per_degree": [
+          {
+            "D": 4,
+            "rows": 1,
+            "cols": 15,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 5,
+            "rows": 3,
+            "cols": 21,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 6,
+            "rows": 6,
+            "cols": 28,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 7,
+            "rows": 10,
+            "cols": 36,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 8,
+            "rows": 17,
+            "cols": 45,
+            "n_lead_gens": 3,
+            "quotient_dim": 28
+          },
+          {
+            "D": 9,
+            "rows": 27,
+            "cols": 55,
+            "n_lead_gens": 3,
+            "quotient_dim": 28
+          },
+          {
+            "D": 10,
+            "rows": 40,
+            "cols": 66,
+            "n_lead_gens": 5,
+            "quotient_dim": 26
+          },
+          {
+            "D": 11,
+            "rows": 56,
+            "cols": 78,
+            "n_lead_gens": 9,
+            "quotient_dim": 22
+          },
+          {
+            "D": 12,
+            "rows": 75,
+            "cols": 91,
+            "n_lead_gens": 13,
+            "quotient_dim": 18
+          },
+          {
+            "D": 13,
+            "rows": 97,
+            "cols": 105,
+            "n_lead_gens": 17,
+            "quotient_dim": 14
+          },
+          {
+            "D": 14,
+            "rows": 122,
+            "cols": 120,
+            "n_lead_gens": 21,
+            "quotient_dim": 10
+          },
+          {
+            "D": 15,
+            "rows": 150,
+            "cols": 136,
+            "n_lead_gens": 25,
+            "quotient_dim": 6
+          },
+          {
+            "D": 16,
+            "rows": 181,
+            "cols": 153,
+            "n_lead_gens": 28,
+            "quotient_dim": 3
+          },
+          {
+            "D": 17,
+            "rows": 215,
+            "cols": 171,
+            "n_lead_gens": 29,
+            "quotient_dim": 2
+          },
+          {
+            "D": 18,
+            "rows": 252,
+            "cols": 190,
+            "n_lead_gens": 29,
+            "quotient_dim": 2
+          },
+          {
+            "D": 19,
+            "rows": 292,
+            "cols": 210,
+            "n_lead_gens": 29,
+            "quotient_dim": 2
+          }
+        ]
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 10,
+        "base_size": 10,
+        "n_distinct_x": 10,
+        "n_orbits": 10,
+        "storage_units": 10,
+        "block": "degree_of_regularity",
+        "m": 2,
+        "coord": "plain",
+        "target_kind": "consistent",
+        "fb_poly_degree": 10,
+        "n_fb_elements": 10,
+        "system_nvars": 2,
+        "solving_degree": 21,
+        "solving_degree_capped": false,
+        "macaulay_bound": 23,
+        "gb_output_degree": 2,
+        "gb_basis_size": 2,
+        "gb_time_s": 0.041,
+        "macaulay_max_rows": 420,
+        "macaulay_max_cols": 300,
+        "quotient_dim": 2,
+        "min_gen_degree": 4,
+        "gen_degrees": [
+          4,
+          10,
+          10
+        ],
+        "n_lead_gens": 37,
+        "n_confirmed_relations": 1,
+        "spurious": 0,
+        "t_relations_s": 0.0185,
+        "t_solve_s": 0.009,
+        "t_linear_algebra_s": 2.5716,
+        "t_ecverify_s": 0.0001,
+        "example_relation": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              6,
+              7710
+            ],
+            [
+              2,
+              35708
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            51744,
+            29446
+          ]
+        },
+        "per_degree": [
+          {
+            "D": 4,
+            "rows": 1,
+            "cols": 15,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 5,
+            "rows": 3,
+            "cols": 21,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 6,
+            "rows": 6,
+            "cols": 28,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 7,
+            "rows": 10,
+            "cols": 36,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 8,
+            "rows": 15,
+            "cols": 45,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 9,
+            "rows": 21,
+            "cols": 55,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 10,
+            "rows": 30,
+            "cols": 66,
+            "n_lead_gens": 3,
+            "quotient_dim": 36
+          },
+          {
+            "D": 11,
+            "rows": 42,
+            "cols": 78,
+            "n_lead_gens": 3,
+            "quotient_dim": 36
+          },
+          {
+            "D": 12,
+            "rows": 57,
+            "cols": 91,
+            "n_lead_gens": 5,
+            "quotient_dim": 34
+          },
+          {
+            "D": 13,
+            "rows": 75,
+            "cols": 105,
+            "n_lead_gens": 9,
+            "quotient_dim": 30
+          },
+          {
+            "D": 14,
+            "rows": 96,
+            "cols": 120,
+            "n_lead_gens": 13,
+            "quotient_dim": 26
+          },
+          {
+            "D": 15,
+            "rows": 120,
+            "cols": 136,
+            "n_lead_gens": 17,
+            "quotient_dim": 22
+          },
+          {
+            "D": 16,
+            "rows": 147,
+            "cols": 153,
+            "n_lead_gens": 21,
+            "quotient_dim": 18
+          },
+          {
+            "D": 17,
+            "rows": 177,
+            "cols": 171,
+            "n_lead_gens": 25,
+            "quotient_dim": 14
+          },
+          {
+            "D": 18,
+            "rows": 210,
+            "cols": 190,
+            "n_lead_gens": 29,
+            "quotient_dim": 10
+          },
+          {
+            "D": 19,
+            "rows": 246,
+            "cols": 210,
+            "n_lead_gens": 33,
+            "quotient_dim": 6
+          },
+          {
+            "D": 20,
+            "rows": 285,
+            "cols": 231,
+            "n_lead_gens": 36,
+            "quotient_dim": 3
+          },
+          {
+            "D": 21,
+            "rows": 327,
+            "cols": 253,
+            "n_lead_gens": 37,
+            "quotient_dim": 2
+          },
+          {
+            "D": 22,
+            "rows": 372,
+            "cols": 276,
+            "n_lead_gens": 37,
+            "quotient_dim": 2
+          },
+          {
+            "D": 23,
+            "rows": 420,
+            "cols": 300,
+            "n_lead_gens": 37,
+            "quotient_dim": 2
+          }
+        ]
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 12,
+        "base_size": 12,
+        "n_distinct_x": 12,
+        "n_orbits": 12,
+        "storage_units": 12,
+        "block": "degree_of_regularity",
+        "m": 2,
+        "coord": "plain",
+        "target_kind": "consistent",
+        "fb_poly_degree": 12,
+        "n_fb_elements": 12,
+        "system_nvars": 2,
+        "solving_degree": 25,
+        "solving_degree_capped": false,
+        "macaulay_bound": 27,
+        "gb_output_degree": 2,
+        "gb_basis_size": 2,
+        "gb_time_s": 0.068,
+        "macaulay_max_rows": 572,
+        "macaulay_max_cols": 406,
+        "quotient_dim": 2,
+        "min_gen_degree": 4,
+        "gen_degrees": [
+          4,
+          12,
+          12
+        ],
+        "n_lead_gens": 45,
+        "n_confirmed_relations": 1,
+        "spurious": 0,
+        "t_relations_s": 0.0223,
+        "t_solve_s": 0.0112,
+        "t_linear_algebra_s": 5.362,
+        "t_ecverify_s": 0.0001,
+        "example_relation": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              6,
+              7710
+            ],
+            [
+              2,
+              35708
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            51744,
+            29446
+          ]
+        },
+        "per_degree": [
+          {
+            "D": 4,
+            "rows": 1,
+            "cols": 15,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 5,
+            "rows": 3,
+            "cols": 21,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 6,
+            "rows": 6,
+            "cols": 28,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 7,
+            "rows": 10,
+            "cols": 36,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 8,
+            "rows": 15,
+            "cols": 45,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 9,
+            "rows": 21,
+            "cols": 55,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 10,
+            "rows": 28,
+            "cols": 66,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 11,
+            "rows": 36,
+            "cols": 78,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 12,
+            "rows": 47,
+            "cols": 91,
+            "n_lead_gens": 3,
+            "quotient_dim": 44
+          },
+          {
+            "D": 13,
+            "rows": 61,
+            "cols": 105,
+            "n_lead_gens": 3,
+            "quotient_dim": 44
+          },
+          {
+            "D": 14,
+            "rows": 78,
+            "cols": 120,
+            "n_lead_gens": 5,
+            "quotient_dim": 42
+          },
+          {
+            "D": 15,
+            "rows": 98,
+            "cols": 136,
+            "n_lead_gens": 9,
+            "quotient_dim": 38
+          },
+          {
+            "D": 16,
+            "rows": 121,
+            "cols": 153,
+            "n_lead_gens": 13,
+            "quotient_dim": 34
+          },
+          {
+            "D": 17,
+            "rows": 147,
+            "cols": 171,
+            "n_lead_gens": 17,
+            "quotient_dim": 30
+          },
+          {
+            "D": 18,
+            "rows": 176,
+            "cols": 190,
+            "n_lead_gens": 21,
+            "quotient_dim": 26
+          },
+          {
+            "D": 19,
+            "rows": 208,
+            "cols": 210,
+            "n_lead_gens": 25,
+            "quotient_dim": 22
+          },
+          {
+            "D": 20,
+            "rows": 243,
+            "cols": 231,
+            "n_lead_gens": 29,
+            "quotient_dim": 18
+          },
+          {
+            "D": 21,
+            "rows": 281,
+            "cols": 253,
+            "n_lead_gens": 33,
+            "quotient_dim": 14
+          },
+          {
+            "D": 22,
+            "rows": 322,
+            "cols": 276,
+            "n_lead_gens": 37,
+            "quotient_dim": 10
+          },
+          {
+            "D": 23,
+            "rows": 366,
+            "cols": 300,
+            "n_lead_gens": 41,
+            "quotient_dim": 6
+          },
+          {
+            "D": 24,
+            "rows": 413,
+            "cols": 325,
+            "n_lead_gens": 44,
+            "quotient_dim": 3
+          },
+          {
+            "D": 25,
+            "rows": 463,
+            "cols": 351,
+            "n_lead_gens": 45,
+            "quotient_dim": 2
+          },
+          {
+            "D": 26,
+            "rows": 516,
+            "cols": 378,
+            "n_lead_gens": 45,
+            "quotient_dim": 2
+          },
+          {
+            "D": 27,
+            "rows": 572,
+            "cols": 406,
+            "n_lead_gens": 45,
+            "quotient_dim": 2
+          }
+        ]
+      },
+      {
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "order": 1047379,
+        "ell": 1047379,
+        "cofactor": 1,
+        "generator": [
+          578869,
+          477440
+        ],
+        "beta": 879944,
+        "lambda": 833470,
+        "sqrt_p": 1024,
+        "N_requested": 6,
+        "base_size": 6,
+        "n_distinct_x": 6,
+        "n_orbits": 6,
+        "storage_units": 6,
+        "block": "degree_of_regularity",
+        "m": 2,
+        "coord": "plain",
+        "target_kind": "consistent",
+        "fb_poly_degree": 6,
+        "n_fb_elements": 6,
+        "system_nvars": 2,
+        "solving_degree": 13,
+        "solving_degree_capped": false,
+        "macaulay_bound": 15,
+        "gb_output_degree": 2,
+        "gb_basis_size": 2,
+        "gb_time_s": 0.015,
+        "macaulay_max_rows": 188,
+        "macaulay_max_cols": 136,
+        "quotient_dim": 2,
+        "min_gen_degree": 4,
+        "gen_degrees": [
+          4,
+          6,
+          6
+        ],
+        "n_lead_gens": 21,
+        "n_confirmed_relations": 1,
+        "spurious": 0,
+        "t_relations_s": 0.0121,
+        "t_solve_s": 1.7052,
+        "t_linear_algebra_s": 0.4744,
+        "t_ecverify_s": 0.0,
+        "example_relation": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              3,
+              174939
+            ],
+            [
+              1,
+              803285
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            157364,
+            682600
+          ]
+        },
+        "per_degree": [
+          {
+            "D": 4,
+            "rows": 1,
+            "cols": 15,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 5,
+            "rows": 3,
+            "cols": 21,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 6,
+            "rows": 8,
+            "cols": 28,
+            "n_lead_gens": 3,
+            "quotient_dim": 20
+          },
+          {
+            "D": 7,
+            "rows": 16,
+            "cols": 36,
+            "n_lead_gens": 3,
+            "quotient_dim": 20
+          },
+          {
+            "D": 8,
+            "rows": 27,
+            "cols": 45,
+            "n_lead_gens": 5,
+            "quotient_dim": 18
+          },
+          {
+            "D": 9,
+            "rows": 41,
+            "cols": 55,
+            "n_lead_gens": 9,
+            "quotient_dim": 14
+          },
+          {
+            "D": 10,
+            "rows": 58,
+            "cols": 66,
+            "n_lead_gens": 13,
+            "quotient_dim": 10
+          },
+          {
+            "D": 11,
+            "rows": 78,
+            "cols": 78,
+            "n_lead_gens": 17,
+            "quotient_dim": 6
+          },
+          {
+            "D": 12,
+            "rows": 101,
+            "cols": 91,
+            "n_lead_gens": 20,
+            "quotient_dim": 3
+          },
+          {
+            "D": 13,
+            "rows": 127,
+            "cols": 105,
+            "n_lead_gens": 21,
+            "quotient_dim": 2
+          },
+          {
+            "D": 14,
+            "rows": 156,
+            "cols": 120,
+            "n_lead_gens": 21,
+            "quotient_dim": 2
+          },
+          {
+            "D": 15,
+            "rows": 188,
+            "cols": 136,
+            "n_lead_gens": 21,
+            "quotient_dim": 2
+          }
+        ]
+      },
+      {
+        "bits": 20,
+        "p": 1048609,
+        "b": 29,
+        "order": 1047379,
+        "ell": 1047379,
+        "cofactor": 1,
+        "generator": [
+          578869,
+          477440
+        ],
+        "beta": 879944,
+        "lambda": 833470,
+        "sqrt_p": 1024,
+        "N_requested": 10,
+        "base_size": 10,
+        "n_distinct_x": 10,
+        "n_orbits": 10,
+        "storage_units": 10,
+        "block": "degree_of_regularity",
+        "m": 2,
+        "coord": "plain",
+        "target_kind": "consistent",
+        "fb_poly_degree": 10,
+        "n_fb_elements": 10,
+        "system_nvars": 2,
+        "solving_degree": 21,
+        "solving_degree_capped": false,
+        "macaulay_bound": 23,
+        "gb_output_degree": 2,
+        "gb_basis_size": 2,
+        "gb_time_s": 0.045,
+        "macaulay_max_rows": 420,
+        "macaulay_max_cols": 300,
+        "quotient_dim": 2,
+        "min_gen_degree": 4,
+        "gen_degrees": [
+          4,
+          10,
+          10
+        ],
+        "n_lead_gens": 37,
+        "n_confirmed_relations": 1,
+        "spurious": 0,
+        "t_relations_s": 0.0209,
+        "t_solve_s": 0.0247,
+        "t_linear_algebra_s": 2.5013,
+        "t_ecverify_s": 0.0001,
+        "example_relation": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              3,
+              174939
+            ],
+            [
+              1,
+              803285
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            157364,
+            682600
+          ]
+        },
+        "per_degree": [
+          {
+            "D": 4,
+            "rows": 1,
+            "cols": 15,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 5,
+            "rows": 3,
+            "cols": 21,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 6,
+            "rows": 6,
+            "cols": 28,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 7,
+            "rows": 10,
+            "cols": 36,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 8,
+            "rows": 15,
+            "cols": 45,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 9,
+            "rows": 21,
+            "cols": 55,
+            "n_lead_gens": 1,
+            "quotient_dim": null
+          },
+          {
+            "D": 10,
+            "rows": 30,
+            "cols": 66,
+            "n_lead_gens": 3,
+            "quotient_dim": 36
+          },
+          {
+            "D": 11,
+            "rows": 42,
+            "cols": 78,
+            "n_lead_gens": 3,
+            "quotient_dim": 36
+          },
+          {
+            "D": 12,
+            "rows": 57,
+            "cols": 91,
+            "n_lead_gens": 5,
+            "quotient_dim": 34
+          },
+          {
+            "D": 13,
+            "rows": 75,
+            "cols": 105,
+            "n_lead_gens": 9,
+            "quotient_dim": 30
+          },
+          {
+            "D": 14,
+            "rows": 96,
+            "cols": 120,
+            "n_lead_gens": 13,
+            "quotient_dim": 26
+          },
+          {
+            "D": 15,
+            "rows": 120,
+            "cols": 136,
+            "n_lead_gens": 17,
+            "quotient_dim": 22
+          },
+          {
+            "D": 16,
+            "rows": 147,
+            "cols": 153,
+            "n_lead_gens": 21,
+            "quotient_dim": 18
+          },
+          {
+            "D": 17,
+            "rows": 177,
+            "cols": 171,
+            "n_lead_gens": 25,
+            "quotient_dim": 14
+          },
+          {
+            "D": 18,
+            "rows": 210,
+            "cols": 190,
+            "n_lead_gens": 29,
+            "quotient_dim": 10
+          },
+          {
+            "D": 19,
+            "rows": 246,
+            "cols": 210,
+            "n_lead_gens": 33,
+            "quotient_dim": 6
+          },
+          {
+            "D": 20,
+            "rows": 285,
+            "cols": 231,
+            "n_lead_gens": 36,
+            "quotient_dim": 3
+          },
+          {
+            "D": 21,
+            "rows": 327,
+            "cols": 253,
+            "n_lead_gens": 37,
+            "quotient_dim": 2
+          },
+          {
+            "D": 22,
+            "rows": 372,
+            "cols": 276,
+            "n_lead_gens": 37,
+            "quotient_dim": 2
+          },
+          {
+            "D": 23,
+            "rows": 420,
+            "cols": 300,
+            "n_lead_gens": 37,
+            "quotient_dim": 2
+          }
+        ]
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 3,
+        "base_size": 3,
+        "n_distinct_x": 3,
+        "n_orbits": 1,
+        "storage_units": 1,
+        "block": "degree_of_regularity",
+        "m": 2,
+        "coord": "invariant",
+        "target_kind": "consistent",
+        "fb_poly_degree": 1,
+        "n_fb_elements": 1,
+        "system_nvars": 4,
+        "solving_degree": 7,
+        "solving_degree_capped": false,
+        "macaulay_bound": 9,
+        "gb_output_degree": 2,
+        "gb_basis_size": 4,
+        "gb_time_s": 0.004,
+        "macaulay_max_rows": 1536,
+        "macaulay_max_cols": 715,
+        "quotient_dim": 2,
+        "min_gen_degree": 1,
+        "gen_degrees": [
+          4,
+          3,
+          1,
+          3,
+          1
+        ],
+        "n_lead_gens": 11,
+        "n_confirmed_relations": 1,
+        "spurious": 0,
+        "t_relations_s": 0.0068,
+        "t_solve_s": 0.0132,
+        "t_linear_algebra_s": 8.587,
+        "t_ecverify_s": 0.0001,
+        "example_relation": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              255,
+              35708
+            ],
+            [
+              2,
+              35708
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            65282,
+            29831
+          ]
+        },
+        "per_degree": [
+          {
+            "D": 1,
+            "rows": 2,
+            "cols": 5,
+            "n_lead_gens": 2,
+            "quotient_dim": null
+          },
+          {
+            "D": 2,
+            "rows": 10,
+            "cols": 15,
+            "n_lead_gens": 2,
+            "quotient_dim": null
+          },
+          {
+            "D": 3,
+            "rows": 32,
+            "cols": 35,
+            "n_lead_gens": 4,
+            "quotient_dim": 9
+          },
+          {
+            "D": 4,
+            "rows": 81,
+            "cols": 70,
+            "n_lead_gens": 5,
+            "quotient_dim": 8
+          },
+          {
+            "D": 5,
+            "rows": 175,
+            "cols": 126,
+            "n_lead_gens": 7,
+            "quotient_dim": 6
+          },
+          {
+            "D": 6,
+            "rows": 337,
+            "cols": 210,
+            "n_lead_gens": 10,
+            "quotient_dim": 3
+          },
+          {
+            "D": 7,
+            "rows": 595,
+            "cols": 330,
+            "n_lead_gens": 11,
+            "quotient_dim": 2
+          },
+          {
+            "D": 8,
+            "rows": 982,
+            "cols": 495,
+            "n_lead_gens": 11,
+            "quotient_dim": 2
+          },
+          {
+            "D": 9,
+            "rows": 1536,
+            "cols": 715,
+            "n_lead_gens": 11,
+            "quotient_dim": 2
+          }
+        ]
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 6,
+        "base_size": 6,
+        "n_distinct_x": 6,
+        "n_orbits": 2,
+        "storage_units": 2,
+        "block": "degree_of_regularity",
+        "m": 2,
+        "coord": "invariant",
+        "target_kind": "consistent",
+        "fb_poly_degree": 2,
+        "n_fb_elements": 2,
+        "system_nvars": 4,
+        "solving_degree": 9,
+        "solving_degree_capped": false,
+        "macaulay_bound": 11,
+        "gb_output_degree": 2,
+        "gb_basis_size": 4,
+        "gb_time_s": 0.062,
+        "macaulay_max_rows": 2750,
+        "macaulay_max_cols": 1365,
+        "quotient_dim": 2,
+        "min_gen_degree": 2,
+        "gen_degrees": [
+          4,
+          3,
+          2,
+          3,
+          2
+        ],
+        "n_lead_gens": 30,
+        "n_confirmed_relations": 1,
+        "spurious": 0,
+        "t_relations_s": 0.0038,
+        "t_solve_s": 0.0113,
+        "t_linear_algebra_s": 34.1792,
+        "t_ecverify_s": 0.0001,
+        "example_relation": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              255,
+              35708
+            ],
+            [
+              2,
+              35708
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            65282,
+            29831
+          ]
+        },
+        "per_degree": [
+          {
+            "D": 2,
+            "rows": 2,
+            "cols": 15,
+            "n_lead_gens": 2,
+            "quotient_dim": null
+          },
+          {
+            "D": 3,
+            "rows": 12,
+            "cols": 35,
+            "n_lead_gens": 4,
+            "quotient_dim": 36
+          },
+          {
+            "D": 4,
+            "rows": 41,
+            "cols": 70,
+            "n_lead_gens": 5,
+            "quotient_dim": 32
+          },
+          {
+            "D": 5,
+            "rows": 105,
+            "cols": 126,
+            "n_lead_gens": 7,
+            "quotient_dim": 26
+          },
+          {
+            "D": 6,
+            "rows": 225,
+            "cols": 210,
+            "n_lead_gens": 11,
+            "quotient_dim": 21
+          },
+          {
+            "D": 7,
+            "rows": 427,
+            "cols": 330,
+            "n_lead_gens": 19,
+            "quotient_dim": 13
+          },
+          {
+            "D": 8,
+            "rows": 742,
+            "cols": 495,
+            "n_lead_gens": 27,
+            "quotient_dim": 5
+          },
+          {
+            "D": 9,
+            "rows": 1206,
+            "cols": 715,
+            "n_lead_gens": 30,
+            "quotient_dim": 2
+          },
+          {
+            "D": 10,
+            "rows": 1860,
+            "cols": 1001,
+            "n_lead_gens": 30,
+            "quotient_dim": 2
+          },
+          {
+            "D": 11,
+            "rows": 2750,
+            "cols": 1365,
+            "n_lead_gens": 30,
+            "quotient_dim": 2
+          }
+        ]
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 5,
+        "base_size": 5,
+        "n_distinct_x": 5,
+        "n_orbits": 5,
+        "storage_units": 5,
+        "block": "degree_of_regularity",
+        "m": 3,
+        "coord": "plain",
+        "target_kind": "consistent",
+        "fb_poly_degree": 5,
+        "n_fb_elements": 5,
+        "system_nvars": 3,
+        "solving_degree": 15,
+        "solving_degree_capped": true,
+        "macaulay_bound": 25,
+        "gb_output_degree": 3,
+        "gb_basis_size": 3,
+        "gb_time_s": 3.759,
+        "macaulay_max_rows": 878,
+        "macaulay_max_cols": 816,
+        "quotient_dim": 105,
+        "min_gen_degree": 5,
+        "gen_degrees": [
+          12,
+          5,
+          5,
+          5
+        ],
+        "n_lead_gens": 23,
+        "n_confirmed_relations": 1,
+        "spurious": 0,
+        "t_relations_s": 0.1186,
+        "t_solve_s": 0.195,
+        "t_linear_algebra_s": 6.055,
+        "t_ecverify_s": 0.0001,
+        "example_relation": {
+          "idxs": [
+            2,
+            1,
+            0
+          ],
+          "P": [
+            [
+              9,
+              37920
+            ],
+            [
+              6,
+              7710
+            ],
+            [
+              2,
+              35708
+            ]
+          ],
+          "signs": [
+            1,
+            1,
+            1
+          ],
+          "R": [
+            60257,
+            62630
+          ]
+        },
+        "per_degree": [
+          {
+            "D": 5,
+            "rows": 3,
+            "cols": 56,
+            "n_lead_gens": 3,
+            "quotient_dim": 125
+          },
+          {
+            "D": 6,
+            "rows": 12,
+            "cols": 84,
+            "n_lead_gens": 3,
+            "quotient_dim": 125
+          },
+          {
+            "D": 7,
+            "rows": 30,
+            "cols": 120,
+            "n_lead_gens": 3,
+            "quotient_dim": 125
+          },
+          {
+            "D": 8,
+            "rows": 60,
+            "cols": 165,
+            "n_lead_gens": 3,
+            "quotient_dim": 125
+          },
+          {
+            "D": 9,
+            "rows": 105,
+            "cols": 220,
+            "n_lead_gens": 3,
+            "quotient_dim": 125
+          },
+          {
+            "D": 10,
+            "rows": 168,
+            "cols": 286,
+            "n_lead_gens": 3,
+            "quotient_dim": 125
+          },
+          {
+            "D": 11,
+            "rows": 252,
+            "cols": 364,
+            "n_lead_gens": 3,
+            "quotient_dim": 125
+          },
+          {
+            "D": 12,
+            "rows": 361,
+            "cols": 455,
+            "n_lead_gens": 4,
+            "quotient_dim": 124
+          },
+          {
+            "D": 13,
+            "rows": 499,
+            "cols": 560,
+            "n_lead_gens": 7,
+            "quotient_dim": 121
+          },
+          {
+            "D": 14,
+            "rows": 670,
+            "cols": 680,
+            "n_lead_gens": 13,
+            "quotient_dim": 115
+          },
+          {
+            "D": 15,
+            "rows": 878,
+            "cols": 816,
+            "n_lead_gens": 23,
+            "quotient_dim": 105
+          }
+        ]
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 6,
+        "base_size": 6,
+        "n_distinct_x": 6,
+        "n_orbits": 6,
+        "storage_units": 6,
+        "block": "degree_of_regularity",
+        "m": 3,
+        "coord": "plain",
+        "target_kind": "consistent",
+        "fb_poly_degree": 6,
+        "n_fb_elements": 6,
+        "system_nvars": 3,
+        "solving_degree": 15,
+        "solving_degree_capped": true,
+        "macaulay_bound": 28,
+        "gb_output_degree": 3,
+        "gb_basis_size": 3,
+        "gb_time_s": 34.464,
+        "macaulay_max_rows": 680,
+        "macaulay_max_cols": 816,
+        "quotient_dim": 195,
+        "min_gen_degree": 6,
+        "gen_degrees": [
+          12,
+          6,
+          6,
+          6
+        ],
+        "n_lead_gens": 14,
+        "n_confirmed_relations": 1,
+        "spurious": 0,
+        "t_relations_s": 0.067,
+        "t_solve_s": 0.3353,
+        "t_linear_algebra_s": 3.5376,
+        "t_ecverify_s": 0.0001,
+        "example_relation": {
+          "idxs": [
+            2,
+            1,
+            0
+          ],
+          "P": [
+            [
+              9,
+              37920
+            ],
+            [
+              6,
+              7710
+            ],
+            [
+              2,
+              35708
+            ]
+          ],
+          "signs": [
+            1,
+            1,
+            1
+          ],
+          "R": [
+            60257,
+            62630
+          ]
+        },
+        "per_degree": [
+          {
+            "D": 6,
+            "rows": 3,
+            "cols": 84,
+            "n_lead_gens": 3,
+            "quotient_dim": 216
+          },
+          {
+            "D": 7,
+            "rows": 12,
+            "cols": 120,
+            "n_lead_gens": 3,
+            "quotient_dim": 216
+          },
+          {
+            "D": 8,
+            "rows": 30,
+            "cols": 165,
+            "n_lead_gens": 3,
+            "quotient_dim": 216
+          },
+          {
+            "D": 9,
+            "rows": 60,
+            "cols": 220,
+            "n_lead_gens": 3,
+            "quotient_dim": 216
+          },
+          {
+            "D": 10,
+            "rows": 105,
+            "cols": 286,
+            "n_lead_gens": 3,
+            "quotient_dim": 216
+          },
+          {
+            "D": 11,
+            "rows": 168,
+            "cols": 364,
+            "n_lead_gens": 3,
+            "quotient_dim": 216
+          },
+          {
+            "D": 12,
+            "rows": 253,
+            "cols": 455,
+            "n_lead_gens": 4,
+            "quotient_dim": 208
+          },
+          {
+            "D": 13,
+            "rows": 364,
+            "cols": 560,
+            "n_lead_gens": 4,
+            "quotient_dim": 208
+          },
+          {
+            "D": 14,
+            "rows": 505,
+            "cols": 680,
+            "n_lead_gens": 7,
+            "quotient_dim": 203
+          },
+          {
+            "D": 15,
+            "rows": 680,
+            "cols": 816,
+            "n_lead_gens": 14,
+            "quotient_dim": 195
+          }
+        ]
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 8,
+        "base_size": 8,
+        "n_distinct_x": 8,
+        "n_orbits": 8,
+        "storage_units": 8,
+        "block": "relation_probability",
+        "m": 2,
+        "coord": "plain",
+        "trials": 120,
+        "confirmed_relations": 1,
+        "spurious_solver_outputs": 0,
+        "targets_with_relation": 1,
+        "relation_probability": 0.008333333333333333,
+        "relations_per_target": 0.008333333333333333,
+        "constructed_targets": 8,
+        "constructed_recovered": 8,
+        "constructed_spurious": 0,
+        "t_relations_s": 0.426,
+        "t_solve_s": 0.617,
+        "t_ecverify_s": 0.0,
+        "example_relation": {
+          "idxs": [
+            5,
+            0
+          ],
+          "P": [
+            [
+              14,
+              40311
+            ],
+            [
+              2,
+              35708
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            29241,
+            59638
+          ],
+          "k": 48091
+        }
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 12,
+        "base_size": 12,
+        "n_distinct_x": 12,
+        "n_orbits": 12,
+        "storage_units": 12,
+        "block": "relation_probability",
+        "m": 2,
+        "coord": "plain",
+        "trials": 120,
+        "confirmed_relations": 1,
+        "spurious_solver_outputs": 0,
+        "targets_with_relation": 1,
+        "relation_probability": 0.008333333333333333,
+        "relations_per_target": 0.008333333333333333,
+        "constructed_targets": 12,
+        "constructed_recovered": 12,
+        "constructed_spurious": 0,
+        "t_relations_s": 0.495,
+        "t_solve_s": 1.201,
+        "t_ecverify_s": 0.0,
+        "example_relation": {
+          "idxs": [
+            8,
+            3
+          ],
+          "P": [
+            [
+              19,
+              59667
+            ],
+            [
+              10,
+              5133
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            50062,
+            27607
+          ],
+          "k": 24324
+        }
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 12,
+        "base_size": 12,
+        "n_distinct_x": 12,
+        "n_orbits": 4,
+        "storage_units": 4,
+        "block": "relation_probability",
+        "m": 2,
+        "coord": "invariant",
+        "trials": 60,
+        "confirmed_relations": 0,
+        "spurious_solver_outputs": 0,
+        "targets_with_relation": 0,
+        "relation_probability": 0.0,
+        "relations_per_target": 0.0,
+        "constructed_targets": 12,
+        "constructed_recovered": 12,
+        "constructed_spurious": 0,
+        "t_relations_s": 0.321,
+        "t_solve_s": 0.485,
+        "t_ecverify_s": 0.0,
+        "example_relation": {
+          "idxs": [
+            7,
+            6
+          ],
+          "P": [
+            [
+              33917,
+              37920
+            ],
+            [
+              9,
+              37920
+            ]
+          ],
+          "signs": [
+            1,
+            -1
+          ],
+          "R": [
+            20502,
+            49119
+          ]
+        }
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "N_requested": 12,
+        "base_size": 12,
+        "n_distinct_x": 12,
+        "n_orbits": 12,
+        "storage_units": 12,
+        "block": "relation_probability",
+        "m": 3,
+        "coord": "plain",
+        "trials": 40,
+        "confirmed_relations": 3,
+        "spurious_solver_outputs": 0,
+        "targets_with_relation": 2,
+        "relation_probability": 0.05,
+        "relations_per_target": 0.075,
+        "constructed_targets": 12,
+        "constructed_recovered": 12,
+        "constructed_spurious": 0,
+        "t_relations_s": 4.534,
+        "t_solve_s": 368.478,
+        "t_ecverify_s": 0.0,
+        "example_relation": {
+          "idxs": [
+            10,
+            5,
+            2
+          ],
+          "P": [
+            [
+              28,
+              55023
+            ],
+            [
+              14,
+              40311
+            ],
+            [
+              9,
+              37920
+            ]
+          ],
+          "signs": [
+            1,
+            -1,
+            1
+          ],
+          "R": [
+            40267,
+            33193
+          ],
+          "k": 27760
+        }
+      }
+    ]
+  },
+  "timestamp": "2026-07-12T23:21:56.235596Z",
+  "results_hash": "ba585bc78b0278f9119e59bc2cde941d71a3e02353545aa40a37dab5d7dff96c"
+}
