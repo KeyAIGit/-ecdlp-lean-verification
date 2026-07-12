@@ -5,7 +5,7 @@ import Ecdlp.Proved.DivisionPolynomial
 # `Ψ₂Sq` and `Ψ₃` are coprime for secp256k1 (node L5 of B1)
 
 First hand-built sub-lemma of **B1** (`gcd(Φₙ,ψₙ²)=1`, see `notes/B1_COPRIMALITY_PLAN.md`):
-the 2- and 3-division polynomials share no root — "no point is both 2- and 3-torsion". This is
+the 2- and 3-division polynomials share no root — "no nonidentity point is annihilated by both 2 and 3" (equivalently: the affine x-loci are disjoint — the identity O is a root of no division polynomial). This is
 one of the two places `Δ ≠ 0` (nonsingularity) enters the division-polynomial coprimality
 argument. We prove it constructively with an explicit **Bézout certificate**
 `u·Ψ₂Sq + v·Ψ₃ = 1` whose cofactors were computed by extended-Euclid over `𝔽_p` (CAS); the
@@ -28,7 +28,7 @@ private def V₂ : ZMod Secp256k1.p :=
   5776476107076998411153201066193047557305985629578440836435525732820848895185
 
 /-- **`Ψ₂Sq` and `Ψ₃` are coprime** (L5). Their only possible common root would be a point that
-is simultaneously 2- and 3-torsion, which nonsingularity (`Δ ≠ 0`) forbids; here realized by an
+is a nonidentity point annihilated by both 2 and 3, which nonsingularity (`Δ ≠ 0`) forbids; here realized by an
 explicit Bézout certificate over `𝔽_p`. A reachable leaf of the Route-B coprimality node B1. -/
 theorem secp256k1_isCoprime_Ψ₂Sq_Ψ₃ :
     IsCoprime secp256k1.Ψ₂Sq secp256k1.Ψ₃ := by

@@ -6,7 +6,7 @@ import Ecdlp.Proved.CoprimePsi3Psi5
 /-!
 # `Ψ₃` and `preΨ' 7` are coprime for secp256k1 — the 3- and 7-torsion loci are disjoint (`E[3] ⊥ E[7]`)
 
-The 3- and 7-division polynomials of `E : Y² = X³ + 7` share no root: **no point is simultaneously
+The 3- and 7-division polynomials of `E : Y² = X³ + 7` share no root: **no nonidentity point is simultaneously
 3-torsion and 7-torsion.** If a point `P` of order 3 and a point `Q` of order 7 shared an
 `x`-coordinate they would satisfy `Q = ±P`, forcing `ord Q = ord P`, i.e. `3 = 7` — impossible.
 Equivalently `gcd(ψ₃, ψ₇) = 1`, a coprimality that is **not** in Mathlib. We certify it
@@ -84,7 +84,7 @@ private def V₀ : ZMod Secp256k1.p :=
   104312091503547336002174865974034599278343573453365127323364127481039549803657
 
 /-- **`Ψ₃` and `preΨ' 7` are coprime — the 3-torsion and 7-torsion `x`-loci are disjoint**
-(`E[3] ⊥ E[7]`). Their only possible common root would be a point simultaneously 3- and
+(`E[3] ⊥ E[7]`). Their only possible common root would be a nonidentity point annihilated by both 3 and
 7-torsion, forcing `ord = 3` and `ord = 7` on one point (impossible); realized here by an
 explicit Bézout certificate over `𝔽_p`. This coprimality is missing from Mathlib. Mirrors
 `CoprimePsi3Psi5` one rung up (ten collapsed powers instead of six). -/

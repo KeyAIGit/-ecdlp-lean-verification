@@ -5,7 +5,7 @@ import Ecdlp.Proved.FourDivisionPolynomial
 /-!
 # `Ψ₃` and `preΨ' 5` are coprime for secp256k1 — the 3- and 5-torsion loci are disjoint (`E[3] ⊥ E[5]`)
 
-The 3- and 5-division polynomials of `E : Y² = X³ + 7` share no root: **no point is simultaneously
+The 3- and 5-division polynomials of `E : Y² = X³ + 7` share no root: **no nonidentity point is simultaneously
 3-torsion and 5-torsion.** If a point `P` of order 3 and a point `Q` of order 5 shared an
 `x`-coordinate they would satisfy `Q = ±P`, forcing `ord Q = ord P`, i.e. `3 = 5` — impossible.
 Equivalently `gcd(ψ₃, ψ₅) = 1`, a coprimality that is **not** in Mathlib. We certify it
@@ -64,7 +64,7 @@ private def V₀ : ZMod Secp256k1.p :=
   111153103857739796084256904440306667401884537566138730673360705418592607296042
 
 /-- **`Ψ₃` and `preΨ' 5` are coprime — the 3-torsion and 5-torsion `x`-loci are disjoint** (`E[3] ⊥ E[5]`).
-Their only possible common root would be a point simultaneously 3- and 5-torsion, forcing `ord = 3`
+Their only possible common root would be a nonidentity point annihilated by both 3 and 5, forcing `ord = 3`
 and `ord = 5` on one point (impossible); realized here by an explicit Bézout certificate over `𝔽_p`.
 This coprimality is missing from Mathlib. Mirrors `CoprimePsi2Psi3` / `CoprimePsi3PrePsi4` one rung
 up (six collapsed powers instead of three/four). -/
