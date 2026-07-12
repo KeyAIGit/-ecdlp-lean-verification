@@ -8,3 +8,7 @@ rev = "v4.31.0"
 
 [[lean_lib]]
 name = "Ecdlp"
+
+# Non-ECDLP domains verified by the same kernel (root: ResearchOS.lean).
+[[lean_lib]]
+name = "ResearchOS"
