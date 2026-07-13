@@ -21,17 +21,19 @@ strictly sharper test of the *same* question:
 | **P1** `p1_petit/` | m=2 | relation **solving** | SOLVE `S₃(x_i,X,x_R)=0` per base x-coord (Tonelli–Shanks) — O(\|F\|)/target | `validate.py`: independent O(\|F\|²) brute-force EC enum → identical set, spurious=0, PASS | same relation set as P0 obtained by *solving* not enumerating; GLV = constant ~3× storage. |
 | **m=3** `p1_petit_m3/` | m=3 | 3-term relation **solving** | SOLVE `S₄=Res_X(S₃,S₃)=0` (deg ≤4 in `x_k`) per base pair — O(\|F\|²·deg4)/target | `validate.py`: independent O(\|F\|³) brute-force triple EC enum → identical set, spurious=0, PASS | S₄-solve complete & sound; GLV = constant ~3× storage. |
 | **P3** `p3_sm_system/` | m=2,3 | the actual **relation SYSTEM** `{Sₘ₊₁=0, f_F(Xᵢ)=0}` + its **degree of regularity** (Gröbner over GF(p)) | BUILD + GRÖBNER-SOLVE the system; independent Macaulay-matrix d_reg engine; plain vs `u=x³` | `validate.py`: independent brute-force EC (no solver imports) → identical set, spurious=0, PASS | **negative at the level the hypothesis asked about**: solving degree `= 2\|F\|+1` (m=2), **linear in \|F\|**, p-independent; `u=x³` lowers the degree *number* but enlarges Macaulay matrix ~15–20× / time ~80× on the same variety — **no advantage**. m≥3 d_reg only a capped lower bound; no Petit. |
+| **P4** `p4_petit/` | m=2 | does a **composed low-degree map** factor base lower the d_reg below P3's raw `2\|F\|+1`? | build factor base = on-curve image of a composed map (√\|F\| defining degree); measure d_reg vs P3 | `validate.py`: independent factor-base rebuild + brute-force EC (no solver imports) → identical set, spurious=0, PASS | **honest approximation** (real Petit/Weil-descent doesn't exist over `𝔽_p`): the degree-reducing map lowers d_reg *number* (7 vs 9) but in a 6-var ring, ~100× larger matrix / ~4300× slower — **no net advantage**, same pattern as `u=x³`. |
 
 **What the line establishes (measured):** the GLV/`u=x³` orbit closure gives a **constant**
 (~3×) reduction in stored factor-base seeds at every rung, and the summation-polynomial
 *solve* reproduces exactly the brute-force relation set with **zero spurious roots** — the
 direct empirical signature of Semaev's `S_m` iff-theorems.
 
-**What the line does NOT establish (open):** P3 now DOES build/Gröbner-solve the actual `S_m`
-*system* and measure its **degree of regularity** — with a measured **negative** (d_reg linear
-in `\|F\|`, `u=x³` gives no advantage). Still open: `m ≥ 3` full solving degree (intractable in
-the pure-Python engine — needs msolve/Sage/F4), `m ≥ 4` systems, non-toy primes, and a faithful
-**Petit** composed-rational-map construction; and none draws an
+**What the line does NOT establish (open):** P3 builds/Gröbner-solves the actual `S_m` *system*
+and measures its **degree of regularity** (measured **negative**: d_reg linear in `\|F\|`, `u=x³`
+no advantage); P4 tries a composed low-degree-map factor base and finds **no net advantage** (an
+honest approximation — a genuinely faithful Petit/Weil-descent base does not exist over a prime
+field). Still open: `m ≥ 3` full solving degree (intractable in the pure-Python engine — needs
+msolve/Sage/F4), `m ≥ 4` systems, non-toy primes; and none draws an
 asymptotic or advantage/no-advantage conclusion. The `O(\|F\|^{m-1}·solve)` loops are **not**
 subexponential index-calculus algorithms. So the real question — whether invariant-coordinate
 *relation generation* changes the prime-field asymptotics — remains **open**, and
