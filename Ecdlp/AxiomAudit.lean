@@ -61,6 +61,10 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_no_nonzero_two_torsion
 #print axioms Ecdlp.Curve.secp256k1_card_point_le
 
+-- full-group corollaries of #E=n: ⟨G⟩ = ⊤ (cofactor 1), E(𝔽_p) cyclic, glvPoint=[λ] unconditional
+#print axioms Ecdlp.Curve.secp256k1_grp_eq_top
+#print axioms Ecdlp.Curve.secp256k1_glvHom_eq_zsmul_unconditional
+
 -- generic-group lower-bound combinatorial core + secp256k1 generic security
 #print axioms Ecdlp.GenericGroup.generic_dlog_query_bound
 #print axioms Ecdlp.GenericGroup.secp256k1_generic_security

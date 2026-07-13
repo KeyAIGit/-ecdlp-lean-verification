@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 227,
+    "theorems": 228,
     "barriers": 6,
-    "edges": 253,
+    "edges": 257,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -78,10 +78,11 @@
       "Mathlib (`AddEquiv.ofBijective`, `Nat.cast_smul_eq_nsmul`, `Int.cast_smul_eq_zsmul`, `ZMod.val_lt`)": 1,
       "Mathlib (`Finite.of_injective`)": 1,
       "Mathlib (`AddSubgroup.card_mul_index`) + `secp256k1_grp_card": 1,
-      "native_decide + Mathlib (`exists_prime_addOrderOf_dvd_card`, `ZMod.pow_card_sub_one_eq_one`, `Finset.card_le_mul_card_image`) + repo bricks": 1
+      "native_decide + Mathlib (`exists_prime_addOrderOf_dvd_card`, `ZMod.pow_card_sub_one_eq_one`, `Finset.card_le_mul_card_image`) + repo bricks": 1,
+      "Mathlib (`AddSubgroup.eq_top_of_card_eq`, `AddSubgroup.topEquiv`) + `secp256k1_card_point_eq_n": 1
     },
     "by_area": {
-      "curve-torsion": 121,
+      "curve-torsion": 122,
       "primality": 25,
       "generic-hardness": 23,
       "protocol-soundness": 23,
@@ -3042,6 +3043,19 @@
       "area": "attack-resistance",
       "dependency_depth": 9,
       "gated": true
+    },
+    {
+      "id": "thm-227",
+      "name": "Ecdlp.Curve.secp256k1_grp_eq_top`, `secp256k1_point_isAddCyclic`, `secp256k1_mem_zmultiples`, `secp256k1_glvHom_eq_zsmul_unconditional",
+      "short_name": "secp256k1_grp_eq_top`,",
+      "module": "Ecdlp.Proved.CurveFullGroup",
+      "file": "Ecdlp/Proved/CurveFullGroup.lean",
+      "claim": "The whole point group equals `⟨G⟩` — `E(𝔽_p)` is cyclic, `glvPoint = [λ]` unconditional (`secp256k1_grp_eq_top`: `secp256k1Grp = ⊤`, from `#⟨G⟩ = n = #E` via `AddSubgroup.eq_top_of_card_eq`). Upgrades every `⟨G⟩`-only result to the full rational-point group now that `#E = n` is proved: `secp256k1_point_isAddCyclic` (`IsAddCyclic E(𝔽_p)`, an instance), `secp256k1_mem_zmultiples` (every point is a multiple of `G`), and `secp256k1_glvHom_eq_zsmul_unconditional` (the GLV eigenvalue property with the `[IsAddCyclic]` hypothesis now discharged — `glvHom = [k]` with `k+k+1` annihilating every point, no remaining hypotheses). Resolves the `⟨G⟩`-vs-`E(𝔽_p)` scope ambiguity. Pure-kernel on top of the keystone",
+      "method": "Mathlib (`AddSubgroup.eq_top_of_card_eq`, `AddSubgroup.topEquiv`) + `secp256k1_card_point_eq_n",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 10,
+      "gated": true
     }
   ],
   "barriers": [
@@ -3217,6 +3231,21 @@
     {
       "from": "Ecdlp.Proved.CurveCardinalityExact",
       "to": "Ecdlp.Proved.Secp256k1PrimeP",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CurveFullGroup",
+      "to": "Ecdlp.Proved.CurveCardinalityExact",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CurveFullGroup",
+      "to": "Ecdlp.Proved.SubgroupOrder",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CurveFullGroup",
+      "to": "Ecdlp.Proved.GlvEigenvalue",
       "type": "imports"
     },
     {
@@ -4322,6 +4351,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.CurveCardinalityExact",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.CurveFullGroup",
       "type": "imports"
     },
     {
