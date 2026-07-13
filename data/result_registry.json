@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 507,
-  "distinct_qualified_names": 404,
+  "declaration_count": 508,
+  "distinct_qualified_names": 405,
   "verified_md_citations": 186,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -668,7 +668,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/CurveCardinalityExact.lean",
-      "line": 166,
+      "line": 172,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_card_point_le": {
@@ -676,7 +676,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/CurveCardinalityExact.lean",
-      "line": 52,
+      "line": 59,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_curve_of_nonsingular": {
@@ -1103,12 +1103,20 @@
       "line": 40,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_neg7_pow_ne_one": {
+      "name": "secp256k1_neg7_pow_ne_one",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveCardinalityExact.lean",
+      "line": 49,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_no_nonzero_two_torsion": {
       "name": "secp256k1_no_nonzero_two_torsion",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/CurveCardinalityExact.lean",
-      "line": 129,
+      "line": 136,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_odd_pre": {
