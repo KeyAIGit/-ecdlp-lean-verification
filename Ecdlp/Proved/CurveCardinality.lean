@@ -15,9 +15,9 @@ work stayed inside the base-point subgroup `⟨G⟩`). Two facts:
   base-point order divides `#E` (Lagrange on `⟨G⟩`, whose order is the proved `n`).
 
 This is the **reachable half of the strong-keystone certificate route** (`notes/HASSE_RECON.md`):
-it pins `#E ∈ {n, 2n, 3n, …}`, reducing the strong keystone `#E = n` (cofactor 1) to exactly one
-missing theorem — the **Hasse bound** `#E ≤ p+1+2√p` — which would rule out every multiple `> n`
-via `2n > p+1+2√p`. Hasse is absent from Mathlib v4.31 (a multi-month port); this rung is not.
+it pins `#E ∈ {n, 2n, 3n, …}`; the strong keystone `#E = n` (cofactor 1) is **now proved** on top
+of this — *curve-specifically* in `CurveCardinalityExact.lean` (`#E ≤ 2p+1 < 3n` plus `E[2] = {O}`),
+without the general Hasse bound or Schoof (both still absent from Mathlib v4.31).
 -/
 
 open WeierstrassCurve.Affine
@@ -36,7 +36,8 @@ instance instFiniteSecp256k1Point : Finite secp256k1.toAffine.Point := by
 
 /-- **`n ∣ #E(𝔽_p)`.** The prime base-point order divides the secp256k1 curve cardinality —
 Lagrange applied to the subgroup `⟨G⟩` of proved order `n`. The first verified fact about `#E`
-itself; the strong keystone `#E = n` needs only the Hasse bound on top (`notes/HASSE_RECON.md`). -/
+itself; the strong keystone `#E = n` is **now proved** on top (`CurveCardinalityExact.lean`,
+curve-specifically, no Hasse/Schoof; see `notes/HASSE_RECON.md`). -/
 theorem secp256k1_n_dvd_card_point :
     Secp256k1.n ∣ Nat.card secp256k1.toAffine.Point := by
   rw [← secp256k1_grp_card]

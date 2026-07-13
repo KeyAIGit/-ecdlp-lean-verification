@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 517,
-  "distinct_qualified_names": 410,
-  "verified_md_citations": 187,
+  "declaration_count": 522,
+  "distinct_qualified_names": 415,
+  "verified_md_citations": 188,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -405,6 +405,22 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FiveTorsionBridge.lean",
       "line": 62,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.frobA": {
+      "name": "frobA",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrobeniusCM.lean",
+      "line": 50,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.frobB": {
+      "name": "frobB",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrobeniusCM.lean",
+      "line": 53,
       "occurrences": 1
     },
     "Ecdlp.Curve.glvHom": {
@@ -823,6 +839,30 @@
       "line": 86,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_four_p_eq_trace_sq": {
+      "name": "secp256k1_four_p_eq_trace_sq",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrobeniusCM.lean",
+      "line": 70,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_frobenius_norm": {
+      "name": "secp256k1_frobenius_norm",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrobeniusCM.lean",
+      "line": 57,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_frobenius_trace": {
+      "name": "secp256k1_frobenius_trace",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrobeniusCM.lean",
+      "line": 63,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_gen_addOrderOf": {
       "name": "secp256k1_gen_addOrderOf",
       "namespace": "Ecdlp.Curve",
@@ -1132,7 +1172,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/CurveCardinality.lean",
-      "line": 40,
+      "line": 41,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_neg7_pow_ne_one": {
