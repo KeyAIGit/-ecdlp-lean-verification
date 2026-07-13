@@ -283,8 +283,9 @@ be conflated with Units 1–3:
 - **~33 load-bearing 256-bit facts use `native_decide`** and therefore trust the Lean compiler via
   `Lean.ofReduceBool` (TCB beyond the kernel). This includes the two primality theorems, where the
   trust is minimized to bounded leaves (Unit 2). `TRUST_REPORT.md` is the disclosure.
-- **`#E(𝔽_p) = n` is not proved** (no Schoof / point counting in Lean); the group order is the
-  published constant, its primality proved (Unit 2), the order equality assumed.
+- **`#E(𝔽_p) = n` is proved** (curve-specifically, no Schoof — `CurveCardinalityExact.lean`: `#E≤2p+1<3n`
+  plus `E[2]={O}`), so secp256k1 cofactor 1 is unconditional. Still open: the **geometric** torsion
+  structure `E[n](F̄_p) ≅ (ℤ/n)²` (a distinct object from the rational `#E=n`), and general Hasse/Schoof.
 - **`glvPoint = [λ]` is not proved** (only the additive-homomorphism half, and the eigenvalue
   identity only conditionally on cyclicity).
 - **The discrete-log protocol algebra** (Schnorr/EdDSA, DH, ElGamal, Pedersen, Okamoto,

@@ -1,5 +1,10 @@
 # HASSE_RECON.md — Mathlib v4.31 reconnaissance toward `#E(𝔽_p) = n`
 
+> **STATUS UPDATE (keystone landed).** `#E(𝔽_p) = n` is now **proved** — not via the general
+> Hasse bound scouted below, but *curve-specifically* in `Ecdlp/Proved/CurveCardinalityExact.lean`
+> (`#E ≤ 2p+1 < 3n` forces `#E ∈ {n,2n}`; `E[2] = {O}` excludes `2n`). The general Hasse/Schoof port
+> this file scouts remains a separate, still-open long-term target.
+
 Live scouting of the pinned toolchain (Lean v4.31.0 + its Mathlib) for the **strong keystone**
 `#E(𝔽_p) = n` (cofactor 1). Findings verified by grepping the actual Mathlib source on the warm
 server (not from memory), 2026-07. Supersedes the Mathlib-inventory parts of
