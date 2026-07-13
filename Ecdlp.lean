@@ -102,3 +102,4 @@ import Ecdlp.Proved.SubgroupOrder
 import Ecdlp.Proved.CurveCardinality
 import Ecdlp.Proved.CurveCardinalityExact
 import Ecdlp.Proved.CurveFullGroup
+import Ecdlp.Proved.GlvDivPoly
