@@ -9,16 +9,14 @@ Curves: `E_b : y² = x³ + b`, `p ≡ 1 (mod 3)`, `j = 0`, **cofactor 1**, from
 
 This experiment builds a factor base that is the **image of a COMPOSED low-degree
 polynomial map** and solves/measures the Semaev relation system in those coordinates
-with the **same P3-validated Gröbner + graded-Macaulay engine**, then compares the
-degree of regularity directly against P3's **raw baseline `2|F|+1`** at matched `|F|`.
+with the **same P3 Gröbner + custom graded-Macaulay proxy**, then compares the
+reported proxy against P3's raw result at matched `|F|`.
 
 ## 1. Faithfulness to real Petit — read this first (honesty rule 1)
 
-**This is NOT literally Petit's prime-field algorithm; it is an HONEST APPROXIMATION.**
+**This is NOT Petit's prime-field algorithm; it is a toy composed-polynomial-map analogue.**
 Petit / Weil-descent obtain a low-degree factor-base description from genuine field
-structure (a subfield, or an `F_2`-linear subspace under Weil restriction). **Over a
-prime field there is no Weil descent**, so no `F_p`-linear-subspace factor base exists to
-imitate. P4 therefore builds the closest honest thing the task asks for: a factor base
+structure (a subfield, or an `F_2`-linear subspace under Weil restriction). P4 instead builds a factor base
 that really is the image of a **composed low-degree polynomial map** from auxiliary
 variables, whose defining **system** has lower per-equation degree than the raw
 degree-`|F|` polynomial `f_F(X) = ∏_{a∈F}(X−a)`.
@@ -37,19 +35,19 @@ Two composed maps are measured (definitions in `semaev_petit.py`):
   high degree is **RELOCATED to `g`, not removed.** This is the honest contrast showing
   that composition *alone* (without the product structure) does not lower the degree.
 
-**What is explicitly NOT done:** no Weil restriction / subfield factor base (impossible
-over a prime field); no true rational map with denominators; no `m ≥ 3` degree of
+**What is explicitly NOT done:** no faithful Petit/Weil-descent construction; no true
+rational map with denominators; no `m ≥ 3` degree of
 regularity (already intractable in P3); no non-toy primes; the `product_2aux` composition
 is degree 2, not a monomial substitution `u=x³` (that P3 already did) — but it is **not**
 the structural object real Petit uses.
 
-## 2. Degree of regularity: composed map vs P3 raw baseline (m=2)
+## 2. Reported Macaulay proxy: composed map vs P3 raw presentation (m=2)
 
 Representative **consistent** target `R = P₀ + P₁` (a relation is present). Both systems
 built on the **same on-curve factor base**; the raw baseline is P3's
 `{S₃=0, f_F(X_i)=0}` built via `p3_sm_system.build_plain_system` (verbatim). Solving
-degree = degree of regularity in the Lazard graded-Macaulay sense (largest degree at
-which a new leading term appears before the quotient dimension stabilises). `quot` =
+The reported degree is P3's custom Macaulay proxy (largest degree at which its routine
+observes a new leading term before its heuristic stop). It is not externally certified. `quot` =
 quotient dimension (# solutions with multiplicity).
 
 | variant | map | `|F|` | composed nvars | **composed d_reg** | composed max Macaulay (r×c) | composed quot | **raw d_reg = 2\|F\|+1** | raw nvars | raw max Macaulay | raw quot | composed Tlin | raw Tlin |
@@ -72,9 +70,9 @@ quotient dimension (# solutions with multiplicity).
   where it appears at all, comes from the multi-variable product structure of
   `product_2aux`, not from composition per se.
 
-**Net:** neither composed map lowers the actual relation-generation cost below the raw
-baseline; the degree-reducing one lowers only the d_reg *number*, at a large matrix/time
-penalty. **No net advantage** over the P3 raw factor base.
+**Net for these runs:** neither tested presentation lowers the measured cost below the raw
+presentation; the degree-reducing one lowers only the proxy number, at a large matrix/time
+penalty. This single `m=2`, `|F|=4` comparison is not a general advantage/no-advantage result.
 
 The pattern is the **same as P3's `u=x³` invariant coordinate**: any drop in the
 degree-of-regularity *number* is bought by moving to a larger polynomial ring (here `3m`
@@ -146,17 +144,16 @@ reconstructed `y` is on the curve.)
 
 ## 6. Bottom line (measured)
 
-For prime-field `j=0` toy curves, replacing the raw x-coordinate factor base by the image
+In one `m=2`, `|F|=4` prime-field toy run, replacing the raw x-coordinate factor base by the image
 of a **composed low-degree map** **can** lower the degree-of-regularity *number* below the
 raw `2|F|+1` (measured: `product_2aux` gives `d_reg = 7` vs `9` at `|F|=4`), but **does
-not** lower the actual relation-generation cost: the composed system lives in a
+did **not** lower the measured relation-generation cost: the composed system lives in a
 `3m`-variable ring, so its Macaulay matrices are ~100× larger and its linear algebra
 ~4300× slower, at the **same quotient dimension** and the **same (EC-validated) relation
-set**. Composition *without* the product structure (`single_aux_composed`) does not lower
-the number at all (`d_reg = 9`, not below 9). This is a **negative / no-go signal**,
-consistent with P3's `u=x³` result and the honest prior. It **does NOT establish** any asymptotic advantage or barrier, and
-it is **not** a faithful reproduction of Petit's prime-field method — only the closest
-honest approximation buildable in pure Python over a prime field. Hypothesis
+set**. In this run, composition *without* the product structure (`single_aux_composed`) did not lower
+the proxy number (`9`, not below 9). This is a partial negative for the tested presentation.
+It **does NOT establish** any asymptotic advantage or barrier, and
+it is **not** a faithful reproduction of Petit's method. Hypothesis
 `HYP_GLV_SEMAEV_001` stays **ACTIVE**.
 
 ## Reproduce
