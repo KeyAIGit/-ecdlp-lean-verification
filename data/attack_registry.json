@@ -1,0 +1,1084 @@
+{
+  "schema_version": 1,
+  "name": "ECDLP attack-applicability registry — secp256k1",
+  "purpose": "A machine-readable map of known ECDLP attack families and exactly where each known no-go ends and an unexplored zone begins. Consolidates the verified Lean substrate + honest experiments; invents no new attack. secp256k1 is NOT broken; prime-field ECDLP hardness is an open conjecture.",
+  "disclosure": "Public — every entry is a defense/resistance/no-go or a documented open zone; no new attack technique. Any concrete practical speedup would move to a closed responsible-disclosure contour.",
+  "generated_by": "scout->build->reconcile ultracode workflow; theorem identifiers grep-verified against Ecdlp/Proved/*.lean",
+  "layers_model": {
+    "keystone-foundations": {
+      "description": "The machine-checked anchor facts every downstream no-go and open-zone builds on.",
+      "members": [
+        "secp256k1_card_point_eq_n (Ecdlp/Proved/CurveCardinalityExact.lean:172 - #E(F_p)=n, cofactor 1, no Hasse/Schoof; LANDED, imported in Ecdlp.lean, VERIFIED.md row 237)",
+        "secp256k1_n_prime (Ecdlp/Proved/Secp256k1PrimeN.lean:184 - Pratt certificate, prime group order)",
+        "secp256k1_p_prime (Ecdlp/Proved/Secp256k1PrimeP.lean - Pratt certificate, prime base field)"
+      ]
+    },
+    "attack-models": {
+      "description": "Generic/black-box and abstract cost-model attack families - bounded from below by the generic wall, or blocked on a missing cost/lattice/quantum foundation.",
+      "members": [
+        "GEN-GENERIC-001",
+        "GEN-BSGS-RHO-002",
+        "multi-target-precomputation",
+        "lattice-hnp-biased-nonce-ecdsa",
+        "quantum-shor-ecdlp"
+      ]
+    },
+    "secp256k1-structural": {
+      "description": "Attacks neutralized or scoped by secp256k1's specific algebraic structure (CM/GLV endomorphism, prime order).",
+      "members": [
+        "GEN-GLV-003",
+        "GEN-PH-004"
+      ]
+    },
+    "no-go-barriers": {
+      "description": "Transfer attacks blocked by machine-checked no-gos (embedding degree, Frobenius trace) or by prime-field structure; mechanisms are blocked-foundation in Mathlib.",
+      "members": [
+        "PAIRING-TRANSFER-MOV-FR-TATE",
+        "TRANSFER-WEIL-DESCENT",
+        "PADIC-LIFTING-SSSA"
+      ]
+    },
+    "experiments-scaling": {
+      "description": "The reproducible prime-field index-calculus experiment families (P0-P4) - partial negatives, constant-factor only, HYP_GLV_SEMAEV_001 ACTIVE. This is the live open zone.",
+      "members": [
+        "IC-1-index-calculus-prime-field",
+        "IC-2-semaev-summation-systems",
+        "IC-3-glv-symmetry-factor-base",
+        "IC-4-petit-composed-map"
+      ]
+    }
+  },
+  "attacks": [
+    {
+      "id": "GEN-GENERIC-001",
+      "family": "Generic-group model (Shoup / Nechaev black-box Omega(sqrt n) lower bound)",
+      "layer": "attack-models",
+      "verdict_class": "resistant",
+      "one_line": "Machine-checked LOWER BOUND / no-go: any classical black-box DLP algorithm on a prime-order group of order n must form >= sqrt(n) group elements. For n ~ 2^256 the bound exceeds 2^127. It is a defense, not an attack; classical-generic only (false against Shor).",
+      "required_properties": [
+        "Group order n is a large prime (ZMod n a field; affine-form difference has <=1 root)",
+        "n large: 2^255 < n so bound exceeds 2^127",
+        "MODEL ASSUMPTION (scope, not a curve property): algorithm is generic/black-box, never inspects (x,y) encoding"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "n prime",
+          "status": "satisfied",
+          "evidence": "Ecdlp.Primality.secp256k1_n_prime (Ecdlp/Proved/Secp256k1PrimeN.lean, Pratt certificate)"
+        },
+        {
+          "property": "n > 2^255",
+          "status": "satisfied",
+          "evidence": "Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n (Ecdlp/Proved/Secp256k1GenericSecurity.lean, native_decide)"
+        },
+        {
+          "property": "generic Omega(sqrt n) instantiated: solver forms > 2^127 elements",
+          "status": "satisfied (no-go proved)",
+          "evidence": "Ecdlp.GenericGroup.secp256k1_generic_security (Ecdlp/Proved/Secp256k1GenericSecurity.lean:36, needs [Fact n.Prime] from secp256k1_n_prime)"
+        },
+        {
+          "property": "model soundness: reachable data = affine forms a+bX",
+          "status": "satisfied",
+          "evidence": "Ecdlp.GenericGroup.eval_add / eval_neg / eval_zero (Ecdlp/Proved/GenericGroupBound.lean:196,201,206)"
+        }
+      ],
+      "asymptotic_complexity": "Lower bound Omega(sqrt n) group operations for any generic classical solver; matched from above by BSGS/rho (GEN-BSGS-RHO-002) => classical generic ECDLP on secp256k1 is Theta(sqrt n) ~ 2^128. Only the arithmetic relation p <= q*q is formalized; no cost/step semantics.",
+      "memory": "Not modeled; the formalized core is a memoryless information-theoretic collision count.",
+      "secp256k1_constants": "n ~ 2^256; sqrt(n) ~ 2^128; machine-checked 2^127 < q. p = 2^256-2^32-977.",
+      "lean_evidence": [
+        "Ecdlp.GenericGroup.collisionSet_card_le_one (Ecdlp/Proved/GenericGroupBound.lean:75)",
+        "Ecdlp.GenericGroup.badSet_card_le (Ecdlp/Proved/GenericGroupBound.lean:109)",
+        "Ecdlp.GenericGroup.generic_dlog_query_bound (Ecdlp/Proved/GenericGroupBound.lean:124)",
+        "Ecdlp.GenericGroup.generic_dlog_sqrt_bound (Ecdlp/Proved/GenericGroupBound.lean:141)",
+        "Ecdlp.GenericGroup.generic_success_le (Ecdlp/Proved/GenericGroupBound.lean:158)",
+        "Ecdlp.GenericGroup.secp256k1_generic_security (Ecdlp/Proved/Secp256k1GenericSecurity.lean:36)",
+        "Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n (Ecdlp/Proved/Secp256k1GenericSecurity.lean:28)"
+      ],
+      "experimental_evidence": [
+        "None. Machine-checked lower bound, no experiment; no experiment claims to beat sqrt(n) generically."
+      ],
+      "kill_criterion": "Any black-box algorithm seeking sub-sqrt(n) work is PROVEN impossible against a prime-order group: generic_dlog_query_bound gives p <= q*q; secp256k1_generic_security instantiates 2^127 < q. Unconditional within the generic model.",
+      "open_escape_routes": [
+        "CLASSICAL-GENERIC ONLY: a NON-generic algorithm reading the (x,y) encoding is outside the model. Non-existence of a fast prime-field ECDLP algorithm is UNPROVEN = the open hardness conjecture (BARRIERS.md, notes/SECURITY_SCOPE.md).",
+        "QUANTUM: false against Shor.",
+        "FORMALIZATION SCOPE: only the fixed-transcript affine-collision core is proved; the full adaptive Shoup/Nechaev oracle-query theorem is NOT formalized (GenericGroupBound.lean docstring)."
+      ],
+      "verdict": "No-go PROVED but SCOPE-LIMITED: best any classical generic algorithm does on secp256k1 is Theta(sqrt n) ~ 2^128 (machine-checked). Genuine formalization contribution, NOT unconditional hardness, false against quantum. Does not break secp256k1.",
+      "blocked_on": "cost_model (BARRIERS.md B1: no group-operation/oracle-query framework in Mathlib) for the full adaptive theorem; beyond that, the open prime-field ECDLP hardness conjecture.",
+      "disclosure": "LOWER bound (defense), not an attack. Classical-generic (black-box) only; prime-field ECDLP hardness remains an OPEN CONJECTURE."
+    },
+    {
+      "id": "GEN-BSGS-RHO-002",
+      "family": "Baby-step giant-step + Pollard rho / kangaroo (generic square-root collision search)",
+      "layer": "attack-models",
+      "verdict_class": "resistant",
+      "one_line": "The concrete O(sqrt n) generic square-root algorithms. They DO solve secp256k1 ECDLP, but only in ~2^128 operations, matching the generic lower bound (GEN-GENERIC-001) — no shortcut. secp256k1's ~256-bit n is the entire defense.",
+      "required_properties": [
+        "A finite cyclic group of known order n (always true for <G>); universal, needs no special structure",
+        "n large enough that sqrt(n) work is infeasible: for secp256k1 sqrt(n) ~ 2^128",
+        "collision-solve recovers x uniquely when (d-b) is a unit mod n (guaranteed n prime, d != b)"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "BSGS covering: every x<n = i*ceil(sqrt n)+j",
+          "status": "applicable (algorithm works)",
+          "evidence": "Ecdlp.GenericGroup.bsgs_decomp (Ecdlp/Proved/BabyStepGiantStep.lean:26); closure via bsgs_steps_sq_ge (BabyStepGiantStep.lean:38)"
+        },
+        {
+          "property": "BSGS step count ceil(sqrt n) <= 2^128+1 (infeasible)",
+          "status": "applicable but computationally infeasible",
+          "evidence": "Ecdlp.GenericGroup.secp256k1_bsgs_steps_le (Ecdlp/Proved/Secp256k1GenericSecurity.lean:56, native_decide)"
+        },
+        {
+          "property": "Pollard rho collision exists within card steps; rho-shape periodicity",
+          "status": "applicable (algorithm works)",
+          "evidence": "Ecdlp.GenericGroup.pollard_rho_collision (Ecdlp/Proved/PollardRho.lean:25), pollard_rho_periodic (PollardRho.lean:43)"
+        },
+        {
+          "property": "collision-solve: g^a h^b = g^c h^d yields x=(a-c)(d-b)^{-1}, d-b a unit",
+          "status": "applicable (recovers the log)",
+          "evidence": "Ecdlp.GenericGroup.collision_modEq / collision_zmod / collision_recovers_log / dlog_unique (Ecdlp/Proved/CollisionEquation.lean:29,39,52,62); unit condition from secp256k1_n_prime"
+        }
+      ],
+      "asymptotic_complexity": "O(sqrt n) group ops: BSGS deterministic; rho ~sqrt(pi n/2). For secp256k1 ~2^128, matching Omega(sqrt n) => Theta(sqrt n), tight. No secp256k1-specific structure reduces this. bsgs_decomp / pollard_rho_collision are arithmetic covering+pigeonhole cores, not a formal running-time theorem.",
+      "memory": "BSGS O(sqrt n) ~2^128 (infeasible). Pollard rho O(1) with distinguished points, fully parallelizable (time-area product stays sqrt n). rho, not BSGS, is the real generic threat — still Theta(sqrt n) time.",
+      "secp256k1_constants": "sqrt(n) ~ 2^128; ceil(sqrt n) <= 2^128+1 (machine-checked). Both infeasible; no constant lowers the exponent.",
+      "lean_evidence": [
+        "Ecdlp.GenericGroup.bsgs_decomp (Ecdlp/Proved/BabyStepGiantStep.lean:26)",
+        "Ecdlp.GenericGroup.bsgs_steps_sq_ge (Ecdlp/Proved/BabyStepGiantStep.lean:38)",
+        "Ecdlp.GenericGroup.secp256k1_bsgs_steps_le (Ecdlp/Proved/Secp256k1GenericSecurity.lean:56)",
+        "Ecdlp.GenericGroup.pollard_rho_collision (Ecdlp/Proved/PollardRho.lean:25)",
+        "Ecdlp.GenericGroup.pollard_rho_periodic (Ecdlp/Proved/PollardRho.lean:43)",
+        "Ecdlp.GenericGroup.collision_modEq (Ecdlp/Proved/CollisionEquation.lean:29)",
+        "Ecdlp.GenericGroup.collision_recovers_log (Ecdlp/Proved/CollisionEquation.lean:52)",
+        "Ecdlp.GenericGroup.dlog_unique (Ecdlp/Proved/CollisionEquation.lean:62)"
+      ],
+      "experimental_evidence": [
+        "experiments/p0_glv_semaev/RESULTS.md: EC pair-sum collision yield obeys yield ~ c*B^2/p (birthday / sqrt-law), B-exponent 2, p-exponent -1, on 16/20/24-bit toy curves (seed=1), each equality re-verified by ec_add. Consistent with Theta(sqrt n); no sub-sqrt behavior. Measures birthday occupancy, not a formal rho running time."
+      ],
+      "kill_criterion": "NOT killed by secp256k1 structure — always applies. Neutralized purely by MAGNITUDE: Theta(sqrt n) ~ 2^128 (secp256k1_bsgs_steps_le pins ceil(sqrt n) <= 2^128+1). No verified fact reduces the exponent; the matching lower bound (GEN-GENERIC-001) shows none can generically.",
+      "open_escape_routes": [
+        "Distinguished-point parallel rho (van Oorschot-Wiener): linear speedup, time-area product stays Theta(sqrt n). Not formalized (cost_model).",
+        "GLV/CM endomorphism constant ~sqrt(3) speedup — separate object GEN-GLV-003.",
+        "FORMALIZATION SCOPE: no cost/step model; running time and parallel speedups not stated as theorems, only arithmetic cores."
+      ],
+      "verdict": "APPLICABLE but computationally INFEASIBLE. Best known classical attacks on prime-field ECDLP; solve secp256k1 in Theta(sqrt n) ~ 2^128, the generic optimum, no secp256k1-specific weakness. Secure by size of n, not by resistance. Does not break secp256k1.",
+      "blocked_on": "cost_model (frontier_map.json / BARRIERS.md B1): blocks faithful sqrt(n) running-time statement and the parallel speedups.",
+      "disclosure": "Succeed on any curve; secp256k1's defense is the 128-bit security level, not immunity. No shortcut is known or formalized."
+    },
+    {
+      "id": "GEN-GLV-003",
+      "family": "GLV / CM endomorphism speedup (Pollard-rho automorphism ~sqrt(3); GLV scalar decomposition)",
+      "layer": "secp256k1-structural",
+      "verdict_class": "resistant",
+      "one_line": "secp256k1 has j=0 and CM by Z[zeta_3]: the order-3 GLV endomorphism [lambda] permutes the group in orbits of size <=3, giving a CONSTANT ~sqrt(3) rho speedup (and ~2x scalar mult). Machine-checked SCOPED no-go: exponent-preserving, constant factor only.",
+      "required_properties": [
+        "A nontrivial low-order efficiently computable endomorphism (CM). secp256k1 HAS it (j=0, CM by Z[zeta_3], order-3 phi(x,y)=(beta x,y))",
+        "rho speedup: automorphism induces orbits, shrinking search by orbit size",
+        "honest no-go: endomorphism applied to a DLP instance acts with the SAME scalar on base and target"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "GLV endomorphism order 3 (phi^3=id, phi!=id, phi^2+phi+1=0)",
+          "status": "present (structure exists)",
+          "evidence": "Ecdlp.Curve.glvPoint_cube_eq_id (Ecdlp/Proved/GlvAutomorphism.lean:31), secp256k1_glvHom_ne_id (GlvOrderThree.lean:53), secp256k1_glv_cube_relation (GlvCubeRelation.lean), glvHom_minpoly (GlvMinPoly.lean)"
+        },
+        {
+          "property": "acts as scalar [lambda] on all of <G>, order exactly 3 in ZMod n",
+          "status": "present",
+          "evidence": "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples (Ecdlp/Proved/GlvSubgroupEigenvalue.lean:27), secp256k1_lambda_orderOf (Secp256k1Order.lean:32)"
+        },
+        {
+          "property": "PRESERVES the DLP exponent (self-reduction on the secret m)",
+          "status": "no-go PROVED",
+          "evidence": "Ecdlp.Curve.secp256k1_glv_preserves_dlog (Ecdlp/Proved/GlvNoGo.lean:49): Q=m.P => glvHom Q = m.glvHom P; secp256k1_glv_single_scalar (GlvNoGo.lean:59): one scalar k, k^2+k+1=0, acts identically on base and target"
+        }
+      ],
+      "asymptotic_complexity": "Theta(sqrt n) STILL. Automorphism gives ~sqrt(3) fewer rho steps; with negation ~sqrt(6). GLV split k = k1 + k2*lambda gives ~2x scalar-mult (speedup for HONEST users). No exponent change.",
+      "memory": "Same as Pollard rho (O(1) with distinguished points); care with fruitless cycles in the orbit quotient, no memory-order change.",
+      "secp256k1_constants": "Orbit size 3; lambda order 3; beta order 3; rho ~sqrt(3)~1.73x, with negation ~sqrt(6)~2.45x; GLV half-length scalars ~2^128. Constants NOT machine-checked (no cost model).",
+      "lean_evidence": [
+        "Ecdlp.Curve.glvPoint_cube_eq_id (Ecdlp/Proved/GlvAutomorphism.lean:31)",
+        "Ecdlp.Curve.secp256k1_glvHom_ne_id (Ecdlp/Proved/GlvOrderThree.lean:53)",
+        "Ecdlp.Curve.secp256k1_glv_cube_relation (Ecdlp/Proved/GlvCubeRelation.lean)",
+        "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples (Ecdlp/Proved/GlvSubgroupEigenvalue.lean:27)",
+        "Ecdlp.Curve.secp256k1_lambda_orderOf (Ecdlp/Proved/Secp256k1Order.lean:32)",
+        "Ecdlp.Curve.secp256k1_glv_preserves_dlog (Ecdlp/Proved/GlvNoGo.lean:49)",
+        "Ecdlp.Curve.secp256k1_glv_single_scalar (Ecdlp/Proved/GlvNoGo.lean:59)"
+      ],
+      "experimental_evidence": [
+        "experiments/p0_glv_semaev/RESULTS.md: GLV-orbit factor-base closure gives B_eff=3*store_B and only CONSTANT ~3x storage (c~5.45 for u=x^3, ~2.77x); B-exponent 2, p-exponent -1 — NO exponent change.",
+        "experiments/p1_petit + p1_petit_m3: solving S3=0 / S4=0 reproduces brute-force EC relation set EXACTLY (spurious=0); GLV closure constant ~3x only.",
+        "experiments/p3_sm_system: u=x^3 lowers d_reg NUMBER but enlarges Macaulay matrices ~15-20x, time ~80x on SAME variety — no advantage (capped pure-Python proxy).",
+        "experiments/p4_petit: composed map lowers d_reg number (7<9) but ~100x larger matrix, ~4300x slower — no net advantage; NOT faithful Petit."
+      ],
+      "kill_criterion": "Endomorphism has order dividing 3 (glvPoint_cube_eq_id); only permutes in orbits <=3. Mapping (P, Q=m.P) yields (phi P, m.phi P) with SAME m (secp256k1_glv_preserves_dlog); one scalar k on base and target (secp256k1_glv_single_scalar). No new unknown, no new equation on m => exponent-preserving, buys at most the orbit constant.",
+      "open_escape_routes": [
+        "SCOPED no-go, NOT universal: GlvNoGo proves only THIS map used THIS way preserves the exponent. 'CM-by-Z[zeta_3] gives no asymptotic advantage' is BELIEVED, not a theorem (GlvNoGo.lean docstring).",
+        "~sqrt(3)/2 rho and ~2x scalar-mult constants NOT formalized (no cost model).",
+        "HYP_GLV_SEMAEV_001 ACTIVE (experiments/HYPOTHESES.yaml): whether GLV-invariant RELATION GENERATION changes prime-field index-calculus asymptotics is OPEN. Honest prior: LOW; expected negative. See IC-3."
+      ],
+      "verdict": "CONSTANT-FACTOR speedup ONLY, exponent-preserving (machine-checked scoped no-go). Helpful for implementations, negligible for cryptanalysis. Asymptotic no-advantage of CM is believed but NOT proved. Does not break secp256k1.",
+      "blocked_on": "cost_model (for the sqrt(3) constant) + the OPEN conjecture that CM gives no asymptotic advantage. HYP_GLV_SEMAEV_001 active.",
+      "disclosure": "Real CM structure; no-go is only SCOPED. Project's best coherent cryptanalytic bet, honest expected outcome NEGATIVE. Equality-replay alone cannot establish a complexity no-go."
+    },
+    {
+      "id": "GEN-PH-004",
+      "family": "Pohlig-Hellman (prime-factor decomposition of the group order)",
+      "layer": "secp256k1-structural",
+      "verdict_class": "not-applicable",
+      "one_line": "PH reduces a DLP of order n to DLPs in prime-power subgroups; it NEEDS n composite/smooth. secp256k1's n is prime AND #E=n (cofactor 1), so the whole group has prime order — no proper subgroup to project into. DEFINITIVELY KILLED, unconditionally.",
+      "required_properties": [
+        "n COMPOSITE/smooth: a proper nontrivial divisor d (1<d<n) so g^(n/d) generates an order-d subgroup",
+        "ideally n smooth so each per-subgroup DLP is easy",
+        "secp256k1 must FAIL these — and it does"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "n has a nontrivial proper divisor d (for projection g^(n/d))",
+          "status": "NOT satisfied (n prime) => INAPPLICABLE",
+          "evidence": "Ecdlp.Primality.secp256k1_n_prime (Ecdlp/Proved/Secp256k1PrimeN.lean, Pratt): only divisors 1,n; PohligHellman.projection (needs 1<d<n) has no valid target"
+        },
+        {
+          "property": "prime order => no proper nontrivial subgroup",
+          "status": "confirmed (no target exists)",
+          "evidence": "Ecdlp.Proved.orderOf_eq_card_of_prime (Ecdlp/Proved/PrimeOrder.lean:19); Ecdlp.Curve.secp256k1_scalar_no_proper_subgroup (Ecdlp/Proved/ScalarGroupStructure.lean:20)"
+        },
+        {
+          "property": "cofactor 1: #E(F_p)=n prime => whole curve group prime order",
+          "status": "confirmed",
+          "evidence": "Ecdlp.Curve.secp256k1_card_point_eq_n (Ecdlp/Proved/CurveCardinalityExact.lean:172, no Hasse/Schoof, imported in Ecdlp.lean); secp256k1_grp_card (SubgroupOrder.lean:24)"
+        },
+        {
+          "property": "PH machinery correct in general but collapses at n prime",
+          "status": "proved-but-degenerate",
+          "evidence": "Ecdlp.PohligHellman.projection / component / reconstruct (Ecdlp/Proved/PohligHellman.lean:29,36,43)"
+        }
+      ],
+      "asymptotic_complexity": "PH = O(sum e_i(log n + sqrt p_i)). For n PRIME the only factor is n, so PH = Theta(sqrt n) = plain BSGS/rho — ZERO gain.",
+      "memory": "Degenerates to a single order-n DLP = GEN-BSGS-RHO-002 profiles.",
+      "secp256k1_constants": "n prime; largest (only) prime factor = n ~ 2^256, sqrt ~ 2^128. #E=n. (Aside: smooth part of n-1 is tiny, relevant to Cheon/p-1 on a DIFFERENT modulus, not PH on n.)",
+      "lean_evidence": [
+        "Ecdlp.Primality.secp256k1_n_prime (Ecdlp/Proved/Secp256k1PrimeN.lean)",
+        "Ecdlp.Curve.secp256k1_card_point_eq_n (Ecdlp/Proved/CurveCardinalityExact.lean:172)",
+        "Ecdlp.Proved.orderOf_eq_card_of_prime (Ecdlp/Proved/PrimeOrder.lean:19)",
+        "Ecdlp.Curve.secp256k1_scalar_no_proper_subgroup (Ecdlp/Proved/ScalarGroupStructure.lean:20)",
+        "Ecdlp.PohligHellman.projection / component / reconstruct (Ecdlp/Proved/PohligHellman.lean:29,36,43)"
+      ],
+      "experimental_evidence": [
+        "None needed — n prime and #E=n are machine-checked (Pratt + curve-cardinality certificate). Numeric leaves re-checked in scripts/certs/cardinality_secp256k1.py (prints CERT_OK)."
+      ],
+      "kill_criterion": "n is PRIME and #E=n (cofactor 1): no proper nontrivial factor d. Projection has no valid target; prime order => no proper subgroup. PH degenerates to a single order-n DLP = plain Theta(sqrt n). KILLED unconditionally.",
+      "open_escape_routes": [
+        "NONE for classical PH while n stays prime — unconditional arithmetic fact. The historical loophole 'is published n the true group order?' is closed by secp256k1_card_point_eq_n.",
+        "ADJACENT (separate objects, NOT PH): Cheon p-1/p+1 target a different modulus; secp256k1's n-1 smooth part is tiny. See multi-target-precomputation."
+      ],
+      "verdict": "DEFINITIVELY KILLED, UNCONDITIONALLY. Cleanest no-go in the map: an arithmetic fact, not a conjecture. Structurally cannot help against secp256k1.",
+      "blocked_on": "Nothing. Fully resolved (n prime + #E=n both proved in the built tree).",
+      "disclosure": "Inapplicable by design (prime n, cofactor 1). A resistance fact; asserts no attack."
+    },
+    {
+      "id": "PAIRING-TRANSFER-MOV-FR-TATE",
+      "family": "Pairing transfer: MOV / Frey-Ruck (Weil) + Tate-Lichtenbaum (DEDUP of TRANSFER-MOV-FR and TRANSFER-TATE)",
+      "layer": "no-go-barriers",
+      "verdict_class": "resistant",
+      "one_line": "Weil (MOV/Frey-Ruck) and Tate pairings both embed the order-n subgroup into F_{p^k}^x (k = embedding degree, least k with n | p^k-1); if k is small, subexponential index calculus in F_{p^k} solves ECDLP. Both are governed by the SAME single embedding-degree obstruction, machine-checked absent for k<=100.",
+      "required_properties": [
+        "small embedding degree k with n | p^k - 1 (pairing-agnostic: identical for Weil/MOV and Tate)",
+        "not supersingular is not a standalone defense; supersingular (k<=6) is one way to get small k",
+        "a computable Weil OR Tate pairing E[n]xE[n]->mu_n (the MECHANISM)",
+        "an n-torsion Q with pairing value of full order n (linear independence in E[n])"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "small embedding degree k",
+          "status": "RESISTED (no-go machine-checked for 1<=k<=100)",
+          "evidence": "Ecdlp.Curve.secp256k1_embedding_degree_gt_100 (Ecdlp/Proved/EmbeddingDegree.lean, native_decide): p^k !== 1 (mod n) for 1<=k<=100, so F_{p^k} needs k>100 (>~25600-bit). Mirror: Ecdlp.P256.p256_embedding_degree_gt_100 (P256EmbeddingDegree.lean). Defeats Weil and Tate identically (same target field)."
+        },
+        {
+          "property": "not supersingular (t!=0)",
+          "status": "RESISTED (machine-checked)",
+          "evidence": "Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous (Ecdlp/Proved/TraceOfFrobenius.lean, native_decide): t=p+1-n != 0. Now a genuine Frobenius trace since #E=n is proved (secp256k1_card_point_eq_n)."
+        },
+        {
+          "property": "computable Weil/Tate pairing (mechanism)",
+          "status": "NOT FORMALIZED / blocked-foundation (no pairing in Mathlib)",
+          "evidence": "Foundation rungs only (W1-W3), NOT the pairing: Ecdlp.Weil.secp256k1_torsion_iff_principal, secp256k1_miller_function_exists, secp256k1_miller_function_unique (WeilDivisorClass.lean / MillerDivisionPolynomialBridge.lean); secp256k1_psi{3,5,7}_root_iff_class_torsion (MillerDivisionPolynomialBridge.lean); evalAt_surjective/evalAt_ker (PointEvaluation.lean); evalRatAt_eq_zero_iff / evalRatAt_ne_zero_iff_isUnit (EvalRatAtNonvanishing.lean). Bilinear non-degenerate e_n and Weil reciprocity (rung W4) + Tate final exponentiation NOT built."
+        },
+        {
+          "property": "random-Q success probability phi(n)/n",
+          "status": "FORMALIZED (supporting, curve-agnostic)",
+          "evidence": "Ecdlp.MovReduction.mov_random_q_success_probability (Ecdlp/Proved/MovRandomQ.lean) = IsCyclic.card_orderOf_eq_totient"
+        }
+      ],
+      "asymptotic_complexity": "Transfer target is a DLP in F_{p^k}^x: L_{p^k}[1/3,~1.9] subexponential (NFS) WHEN k small. For secp256k1 k>100 => p^k > 2^25600, astronomically HARDER than direct generic Theta(sqrt n) ~ 2^128. Transfer is strictly counterproductive. Tate is cheaper to COMPUTE (one Miller loop + final exp) but shares the k-obstruction.",
+      "memory": "Subexponential (NFS factor base) where applicable; N/A for secp256k1. Pairing evaluation itself O(log n) group ops (+ final exponentiation for Tate).",
+      "secp256k1_constants": "p = 2^256-2^32-977 (secp256k1_p_prime); n prime, cofactor 1 (#E=n). Embedding degree machine-checked > 100; actual k externally known ~n, but only k>100 is kernel-certified.",
+      "lean_evidence": [
+        "Ecdlp.Curve.secp256k1_embedding_degree_gt_100 (Ecdlp/Proved/EmbeddingDegree.lean) — shared k-obstruction",
+        "Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous (Ecdlp/Proved/TraceOfFrobenius.lean)",
+        "Ecdlp.MovReduction.mov_random_q_success_probability (Ecdlp/Proved/MovRandomQ.lean)",
+        "Ecdlp.Weil.secp256k1_torsion_iff_principal / secp256k1_miller_function_exists / secp256k1_miller_function_unique (Ecdlp/Proved/WeilDivisorClass.lean, MillerDivisionPolynomialBridge.lean)",
+        "Ecdlp.Weil.secp256k1_psi3_root_iff_class_torsion / psi5 / psi7 (Ecdlp/Proved/MillerDivisionPolynomialBridge.lean)",
+        "evalRatAt_eq_zero_iff / evalRatAt_ne_zero_iff_isUnit (Ecdlp/Proved/EvalRatAtNonvanishing.lean); evalAt_surjective / evalAt_ker (Ecdlp/Proved/PointEvaluation.lean)",
+        "Ecdlp.P256.p256_embedding_degree_gt_100 (Ecdlp/Proved/P256EmbeddingDegree.lean)"
+      ],
+      "experimental_evidence": [
+        "None. Fully native_decide-verified embedding-degree fact; no experiment involved."
+      ],
+      "kill_criterion": "Viable iff small k with p^k == 1 (mod n) (supersingular k<=6, MNT small-k). Machine-checked RULED OUT for 1<=k<=100. Verified frontier ENDS at k=100; k>100 not kernel-certified (only externally known large). Neither Weil nor Tate offers a smaller effective k for prime-field ordinary curves.",
+      "open_escape_routes": [
+        "k in (100, infinity): only k<=100 machine-checked. A general lower bound (k ~ n) or extended native_decide range is an open formalization step (changes no security conclusion).",
+        "MECHANISM: Weil/Tate pairing e_n, Miller evaluation at a divisor, final exponentiation, and Weil reciprocity (W4) absent from Mathlib; would add NO new secp256k1 security fact beyond the embedding-degree bound."
+      ],
+      "verdict": "RESISTED. Precondition (small k) machine-checked absent for k<=100; secp256k1 ordinary (t!=0). The pairing MECHANISM cannot even be stated (blocked-foundation). Resistance/formalization map, NOT a break.",
+      "blocked_on": "MECHANISM: Weil/Tate pairing + Weil reciprocity (W4) absent from Mathlib (rungs W1-W3 + partial eval API built). BOUNDARY: native_decide certifies only k<=100.",
+      "disclosure": "No security impact. Records secp256k1's (and P-256's) verified resistance to MOV/Frey-Ruck/Tate and the exact point (k>100, missing pairing) where formalization ends."
+    },
+    {
+      "id": "TRANSFER-WEIL-DESCENT",
+      "family": "Weil descent / cover attack (GHS, Gaudry-Hess-Smart)",
+      "layer": "no-go-barriers",
+      "verdict_class": "not-applicable",
+      "one_line": "Over a non-prime extension F_{q^n} (n>1), Weil restriction builds a higher-genus cover over F_q whose Jacobian admits index calculus. secp256k1 is over a PRIME field F_p with no proper subfield, so there is nothing to descend to — resisted by construction, but with the WEAKEST kernel backing of the transfer families.",
+      "required_properties": [
+        "base field a proper extension F_{q^n}, n>1, so a subfield F_q exists (Weil restriction nontrivial only for a proper extension)",
+        "a suitable GHS cover / hyperelliptic curve over F_q with the ECDLP faithfully embedded",
+        "genus/factor base keeping index calculus subexponential"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "base field is an extension F_{q^n}, n>1",
+          "status": "RESISTED-BY-CONSTRUCTION (structural; weakest formal backing)",
+          "evidence": "secp256k1 is over the PRIME field F_p (Ecdlp.Primality.secp256k1_p_prime, Ecdlp/Proved/Secp256k1PrimeP.lean, Pratt). A prime field has no proper subfield => Weil restriction trivial. HONESTY: there is NO dedicated Lean no-go 'F_p prime => no Weil descent'; the inference is documented (BARRIERS.md B3, PUBLISHABLE_UNITS.md) but NOT machine-checked. The only in-source mentions are docstrings in SemaevDegree.lean and PointDecomposition.lean, not theorems."
+        },
+        {
+          "property": "GHS cover / Weil-restriction machinery (mechanism)",
+          "status": "NOT IN MATHLIB / blocked-foundation",
+          "evidence": "No Weil restriction, cover/GHS construction, or genus-g Jacobian index calculus in Mathlib or the repo (notes/UPSTREAM_SCAN.md, notes/FOUNDATIONS.md)"
+        }
+      ],
+      "asymptotic_complexity": "Where applicable (e.g. F_{2^n}, smooth composite n) GHS/Gaudry-Diem yields subexponential-to-polynomial DLP on the cover Jacobian. N/A for prime-field secp256k1: [F_p:F_p]=1, no descent target.",
+      "memory": "Subexponential (genus-g cover factor base) where applicable; N/A for secp256k1.",
+      "secp256k1_constants": "p prime (256-bit); F_p = ZMod p; [F_p:F_p]=1; only subfield is F_p. No composite extension degree.",
+      "lean_evidence": [
+        "Ecdlp.Primality.secp256k1_p_prime (Ecdlp/Proved/Secp256k1PrimeP.lean) — establishes the PRIME base field; does NOT explicitly state 'no Weil descent'.",
+        "(No dedicated Weil-descent/GHS no-go theorem exists in the repo — confirmed by grep; resistance rests on prime-field structure + a documented, non-machine-checked argument.)"
+      ],
+      "experimental_evidence": [
+        "experiments/p4_petit/ (RESULTS.md, HYP_GLV_SEMAEV_001): over a prime field there is 'no Weil descent / F_p-linear-subspace factor base to imitate', so P4 is a COMPOSED-map APPROXIMATION, not faithful GHS/Petit; measured no net advantage (d_reg number 7<9 but ~100x larger matrix, ~4300x slower). Honestly NOT a faithful Weil-descent attack."
+      ],
+      "kill_criterion": "Targets composite-degree extension fields (F_{2^n} smooth n; F_{q^n}, n>1). secp256k1 over prime F_p is structurally immune, but the immunity is asserted from secp256k1_p_prime + a structural argument, NOT a dedicated Lean no-go. It would 'fail' only if the base field were non-prime, which secp256k1_p_prime forecloses.",
+      "open_escape_routes": [
+        "FORMAL GAP: 'F_p prime => no proper subfield => Weil restriction trivial => GHS inapplicable' is NOT machine-checked; a formal no-go is an unbuilt, tractable-ish target — the honest place where this resistance rests on docs, not the kernel.",
+        "MECHANISM GAP: Weil restriction / cover theory entirely absent from Mathlib.",
+        "GENUINELY OPEN ADJACENT ZONE: whether some prime-field structure could substitute for the missing Weil restriction in a Semaev/Petit index calculus is UNRESOLVED (HYP_GLV_SEMAEV_001 ACTIVE; P0-P4 partial NEGATIVES, ~3x constant only). This is where the descent no-go ends and the unexplored prime-field index-calculus zone begins (IC-1..IC-4)."
+      ],
+      "verdict": "RESISTED-BY-CONSTRUCTION (prime field), WEAKEST kernel backing of the transfer families: resistance = secp256k1_p_prime + a documented structural argument, not a dedicated no-go. Mechanism blocked-foundation. Not a break; the live open question is the adjacent prime-field index-calculus zone.",
+      "blocked_on": "No Weil restriction / GHS theory in Mathlib (mechanism). No formal 'prime field => no descent' theorem (boundary rests on documentation). Adjacent prime-field index-calculus hardness is OPEN.",
+      "disclosure": "No security impact. Records that the prime base field structurally excludes Weil descent, flagging honestly that this is the least formalized resistance and that the neighboring summation-polynomial question remains open (partial-negative experiments only)."
+    },
+    {
+      "id": "PADIC-LIFTING-SSSA",
+      "family": "p-adic / lifting: anomalous Smart-SSSA (Semaev-Satoh-Araki) + xedni calculus (DEDUP of TRANSFER-ANOMALOUS-SSSA and IC-5-padic-lifting)",
+      "layer": "no-go-barriers",
+      "verdict_class": "not-applicable",
+      "one_line": "Lift E(F_p) points toward characteristic 0. The anomalous route (Smart/SSSA): if #E=p (trace t=1) the formal-group logarithm gives a computable iso E(F_p)->F_p^+ solving ECDLP in polynomial time. secp256k1 is provably non-anomalous (t!=1, #E=n!=p); xedni/general lifting is empirically worse than generic.",
+      "required_properties": [
+        "anomalous route: #E=p, i.e. trace a_p=t=1, plus the p-adic formal-group logarithm (Smart 1999 / Satoh-Araki / Semaev)",
+        "xedni: a lift where a linear dependence among lifted points recovers the log, and lifting succeeds with useful probability",
+        "generally: an efficient global lift to char 0 preserving enough structure"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "anomalous (#E=p, t=1)",
+          "status": "RESISTED (machine-checked, now UNCONDITIONAL) — fails",
+          "evidence": "Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous (Ecdlp/Proved/TraceOfFrobenius.lean, native_decide): t=p+1-n != 1. Scope: Ecdlp.Curve.anomalous_iff_trace_one (Ecdlp/Proved/AnomalousScope.lean, omega): #E=p <=> t=1. #E proved = n != p: Ecdlp.Curve.secp256k1_card_point_eq_n (CurveCardinalityExact.lean, no Hasse/Schoof) — non-anomalousness no longer conditional on a pinned order."
+        },
+        {
+          "property": "ordinary (not supersingular), t != 0",
+          "status": "satisfied (proved)",
+          "evidence": "Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous (t!=0, t^2<=4p Hasse). Mirror: Ecdlp.P256.p256_trace_ordinary_nonanomalous (P256TraceOfFrobenius.lean)."
+        },
+        {
+          "property": "xedni-style lifted linear dependence recovers the log (structural half)",
+          "status": "structural step proved but attack ineffective",
+          "evidence": "Ecdlp.jacobson_xedni_dependence_recovers_log (Ecdlp/Proved/DependenceRecoversLog.lean) proves the group-theoretic recovery step; but xedni is empirically worse than generic Theta(sqrt n) and the lifting-probability barrier is unformalized (no cost model)."
+        },
+        {
+          "property": "p-adic elliptic-log mechanism / efficient global lift for an ordinary curve",
+          "status": "NOT FORMALIZED / none known",
+          "evidence": "No formal group / canonical-lift / p-adic-log machinery in the repo; frontier_map.json satoh-* / smart-* blocked on cost_model/curve_depth; smart-padic-lift-reduction-002 unassigned. Only the scope (anomalous<=>t=1) is formalized."
+        }
+      ],
+      "asymptotic_complexity": "Anomalous Smart/SSSA: polynomial (~O(log p), essentially linear) — but ONLY when #E=p; wholly inapplicable to secp256k1. Xedni calculus is empirically worse than generic Theta(sqrt n). No efficient p-adic lift for ordinary non-anomalous prime-field curves is known.",
+      "memory": "Anomalous: negligible/polynomial. Xedni structural step O(1) linear algebra, but no efficient lifting instantiation.",
+      "secp256k1_constants": "#E=n != p; t=p+1-n a ~128-bit nonzero integer, t!=1; |#E-p|=|1-t| enormous, so secp256k1 is far from anomalous; t^2<=4p (Hasse).",
+      "lean_evidence": [
+        "Ecdlp.Curve.anomalous_iff_trace_one (Ecdlp/Proved/AnomalousScope.lean) — attack scope #E=p<=>a_p=1",
+        "Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous (Ecdlp/Proved/TraceOfFrobenius.lean) — t!=1 and t!=0",
+        "Ecdlp.Curve.secp256k1_card_point_eq_n (Ecdlp/Proved/CurveCardinalityExact.lean) — #E=n!=p; supporting secp256k1_card_point_le, secp256k1_no_nonzero_two_torsion, secp256k1_neg7_pow_ne_one",
+        "Ecdlp.jacobson_xedni_dependence_recovers_log (Ecdlp/Proved/DependenceRecoversLog.lean) — structural recovery step (attack still ineffective)",
+        "Ecdlp.P256.p256_trace_ordinary_nonanomalous (Ecdlp/Proved/P256TraceOfFrobenius.lean)"
+      ],
+      "experimental_evidence": [
+        "No p-adic/xedni lifting experiment in the repo (lifting-probability barrier needs a cost model).",
+        "P2 Ward/EDS (experiments/p2_ward_eds, HYP_WARD_EDS_001) is a lifting-adjacent structural probe: confirmed rho(P)=ord(P) and W_n=0 <=> [n]P=O (~2100 checks, VALIDATION PASS) with EXPLICIT non-advantage — finding rho(P) is Theta(ord P), no cheaper than the DLP."
+      ],
+      "kill_criterion": "Anomalous route viable iff #E=p exactly (t=1); secp256k1 provably NOT such a curve (#E=n and n!=p, and independently t!=1). Xedni is empirically worse than sqrt(n). No efficient ordinary-curve global lift is known. No residual frontier against secp256k1 for the anomalous route — a definitive numeric inequality.",
+      "open_escape_routes": [
+        "NONE for the anomalous route: CLOSED by proved t!=1 (and #E=n!=p).",
+        "OPEN (but empirically negative): a novel efficient global lift for ordinary curves; the xedni/lifting-probability barrier is unformalized (no cost model) but observed worse than generic. The Smart/Satoh p-adic MECHANISM (formal group, canonical lift) is unformalized but can never apply since #E=p fails."
+      ],
+      "verdict": "NOT-APPLICABLE / no advantage. Anomalous (Smart/SSSA) attack CLOSED by a proved non-anomalous trace (now unconditional via #E=n); xedni/lifting empirically worse than generic and no efficient ordinary-curve lift is known. Not a break.",
+      "blocked_on": "cost_model (xedni lifting-probability) + curve_depth (p-adic elliptic-log mechanism); but the security-relevant boundary (non-anomalous) is already proved.",
+      "disclosure": "No security impact. secp256k1 provably non-anomalous => Smart/SSSA cannot apply; lifting gives no known advantage on ordinary prime-field curves. The strengthening (proved #E=n, unconditional non-anomalousness) is a formalization result, not a change in status."
+    },
+    {
+      "id": "IC-1-index-calculus-prime-field",
+      "family": "index-calculus (prime field)",
+      "layer": "experiments-scaling",
+      "verdict_class": "open-zone",
+      "one_line": "Generic elliptic index calculus over F_p: factor base, decomposition relations, sparse linear algebra over Z/n. No subexponential instantiation is known for a prime-field elliptic curve — only for extension fields via Weil restriction, which F_p does not admit. This IS the open ECDLP hardness zone.",
+      "required_properties": [
+        "a factor base with a low-degree algebraic description (cheap relations)",
+        "relation generation producing decomposable relations at amortized o(sqrt n)",
+        "enough independent relations for a full-rank system over Z/n",
+        "some field structure (subfield / Weil restriction) to split the decomposition"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "generic Theta(sqrt n) is the wall any index calculus must beat",
+          "status": "satisfied (proved)",
+          "evidence": "Ecdlp.GenericGroup.generic_dlog_sqrt_bound + Ecdlp.GenericGroup.secp256k1_generic_security (GenericGroupBound.lean, Secp256k1GenericSecurity.lean)"
+        },
+        {
+          "property": "cofactor 1, so full-group E(F_p) decomposition = <G> decomposition",
+          "status": "satisfied (proved)",
+          "evidence": "Ecdlp.Curve.secp256k1_card_point_eq_n (Ecdlp/Proved/CurveCardinalityExact.lean, imported in Ecdlp.lean)"
+        },
+        {
+          "property": "prime-field factor base has a low-degree algebraic description",
+          "status": "fails (measured)",
+          "evidence": "P3 experiments/p3_sm_system/RESULTS.md: the defining polynomial f_F has degree |F|, driving d_reg = 2|F|+1 (linear in |F|, p-independent)"
+        },
+        {
+          "property": "relation generation beats Theta(sqrt n) over F_p",
+          "status": "unknown (OPEN conjecture)",
+          "evidence": "BARRIERS.md B1/B3, notes/FOUNDATIONS.md: no subexponential prime-field index calculus is known and its non-existence is unproven — this IS the open hardness conjecture"
+        },
+        {
+          "property": "Weil restriction available to split the single Semaev equation",
+          "status": "fails (structural, documented)",
+          "evidence": "BARRIERS.md B3: a prime field affords no Weil restriction, so the decomposition collapses to one equation of degree ~2^{m-2} as hard as the original"
+        }
+      ],
+      "asymptotic_complexity": "No subexponential algorithm known over F_p; best proven is generic Theta(sqrt n) ~ 2^128. Extension-field index calculus (Gaudry-Diem-Semaev) is subexponential but needs Weil restriction, absent over a prime field.",
+      "memory": "BSGS Theta(sqrt n) ~2^128; rho O(1) with distinguished points. A working index calculus would need factor-base storage + sparse linear algebra, but no F_p instantiation exists (hypothetical).",
+      "secp256k1_constants": "p = 2^256-2^32-977; n prime, cofactor 1 (#E=n); extension degree 1, no proper subfield, no Weil restriction target.",
+      "lean_evidence": [
+        "Ecdlp.GenericGroup.generic_dlog_query_bound (Ecdlp/Proved/GenericGroupBound.lean)",
+        "Ecdlp.GenericGroup.generic_dlog_sqrt_bound (Ecdlp/Proved/GenericGroupBound.lean)",
+        "Ecdlp.GenericGroup.secp256k1_generic_security (Ecdlp/Proved/Secp256k1GenericSecurity.lean)",
+        "Ecdlp.Curve.secp256k1_card_point_eq_n (Ecdlp/Proved/CurveCardinalityExact.lean)",
+        "Ecdlp.Semaev.secp256k1_decomposition_completions_le_two (Ecdlp/Proved/SemaevDegree.lean)"
+      ],
+      "experimental_evidence": [
+        "P0-P4 (experiments/p0_glv_semaev..p4_petit) are reproducible PARTIAL NEGATIVES; every counted relation re-verified by real ec_add, validators print VALIDATION: PASS",
+        "P3: measured d_reg = 2|F|+1 for m=2, linear in factor-base size, independent of p"
+      ],
+      "kill_criterion": "A relation-generation subroutine yielding decomposable F_p relations at amortized o(sqrt n) with a full-rank Z/n system; producing one would settle the open prime-field ECDLP hardness conjecture. Not observed.",
+      "open_escape_routes": [
+        "OPEN: m>=3 solving degree with an external Groebner engine (msolve/Sage/F4) at non-toy primes — pure-Python reached only a capped lower bound (>15) for m=3",
+        "OPEN: a genuinely faithful Weil-descent/Petit factor base over a prime field (believed impossible, unproven)",
+        "OPEN: all measurements are 16/20/24-bit toy curves; behaviour at cryptographic p untested"
+      ],
+      "verdict": "NO known advantage over generic Theta(sqrt n); whether any subexponential prime-field index calculus exists is an OPEN CONJECTURE. Does not break secp256k1.",
+      "blocked_on": "cost_model (BARRIERS.md B1) and semaev_polynomials depth; fundamentally the open hardness conjecture itself.",
+      "disclosure": "Does NOT break secp256k1. Prime-field ECDLP hardness is OPEN. The verified nodes map where the search lives and prove the generic wall; they assert no attack."
+    },
+    {
+      "id": "IC-2-semaev-summation-systems",
+      "family": "index-calculus / semaev-polynomials",
+      "layer": "experiments-scaling",
+      "verdict_class": "open-zone",
+      "one_line": "Semaev summation polynomials S_m confine point decomposition R = P_1+...+P_{m-1} to S_m(...)=0; solving the system over a factor base is the algebraic engine of elliptic index calculus. S3 and S4 (both directions) are machine-checked here; solving them faster than Theta(sqrt n) over F_p is OPEN.",
+      "required_properties": [
+        "formalized S_m relation objects (S3 base, S4 = Res_X(S3,S3) recursion)",
+        "structural reduction: point decomposition => Semaev relation on the actual group law",
+        "a method to SOLVE the S_m system over F_p beating Theta(sqrt n)",
+        "field/descent structure to split the single high-degree equation"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "S3 fully characterized (forward + reverse)",
+          "status": "satisfied (proved)",
+          "evidence": "Ecdlp.Semaev.S₃_eq_zero_iff and Ecdlp.Curve.secp256k1_semaev_three_iff (Ecdlp/Proved/SemaevThree.lean:146,273) — chord + tangent branches on Mathlib group law. NOTE: source uses Unicode subscript S₃ (clusters cited ASCII S3)."
+        },
+        {
+          "property": "S4 recursion via resultant, both directions",
+          "status": "satisfied (proved)",
+          "evidence": "Ecdlp.Semaev.S₄ (def SemaevFour.lean:71), S₄_eq_zero_of_common_root (forward, :81), S₄_common_root_of_eq_zero (reverse, :140), resultant_eq_zero_of_common_root (engine, :60). Source uses Unicode subscript S₄."
+        },
+        {
+          "property": "point decomposition => Semaev relation on Mathlib Point group law",
+          "status": "satisfied (proved)",
+          "evidence": "Ecdlp.Semaev.secp256k1_point_decomposition_semaev and _double (Ecdlp/Proved/PointDecomposition.lean:47,66)"
+        },
+        {
+          "property": "bounded fan-out: deg S3 = 2, so <=2 completions per factor-base coord",
+          "status": "satisfied (proved)",
+          "evidence": "Ecdlp.Semaev.secp256k1_S₃poly_natDegree (=2, SemaevDegree.lean:43) and secp256k1_decomposition_completions_le_two (SemaevDegree.lean:54)"
+        },
+        {
+          "property": "S_m solve over F_p beats Theta(sqrt n)",
+          "status": "unknown (OPEN); measured no advantage at toy scale",
+          "evidence": "P1/P1-m3/P3: solving S3/S4 reproduces brute-force EC relation set EXACTLY (spurious=0) but at no subexponential cost; P3 d_reg linear in |F|"
+        },
+        {
+          "property": "Weil restriction to split the single Semaev equation",
+          "status": "fails (structural)",
+          "evidence": "BARRIERS.md B3 + PointDecomposition.lean header: no Weil restriction on a prime field; the single Semaev equation of degree ~2^{m-2} is as hard as the original DLP"
+        }
+      ],
+      "asymptotic_complexity": "deg_{x_i} S_m = 2^{m-2} (proved deg S3 = 2 exactly, leading coeff (x1-x2)^2). P3 measured m=2 d_reg = 2|F|+1 (linear, p-independent). m=3 (S4, total degree 12): d_reg only a capped lower bound >15 in pure Python.",
+      "memory": "P3 Macaulay matrices grow ~Theta(|F|^2) columns for m=2; m=3 graded reduction intractable in pure Python at |F|=5-6.",
+      "secp256k1_constants": "a=0, b=7 (y^2=x^3+7); deg_{x_i} S3 = 2 exactly; S4 = Res_X(S₃poly(0,7,x1,x2), S₃poly(0,7,x3,x4)), Sylvester sizes 2,2.",
+      "lean_evidence": [
+        "Ecdlp.Semaev.S₃_eq_zero_iff, secp256k1_semaev_three_iff (Ecdlp/Proved/SemaevThree.lean:146,273)",
+        "Ecdlp.Semaev.S₄, S₄_eq_zero_of_common_root, S₄_common_root_of_eq_zero, resultant_eq_zero_of_common_root (Ecdlp/Proved/SemaevFour.lean:71,81,140,60)",
+        "Ecdlp.Semaev.secp256k1_point_decomposition_semaev, secp256k1_point_decomposition_semaev_double (Ecdlp/Proved/PointDecomposition.lean:47,66)",
+        "Ecdlp.Semaev.secp256k1_S₃poly_natDegree, secp256k1_decomposition_completions_le_two (Ecdlp/Proved/SemaevDegree.lean:43,54)"
+      ],
+      "experimental_evidence": [
+        "P1 (experiments/p1_petit): S3 solve, spurious=0 across 12 settings, brute-force EC cross-check identical, VALIDATION PASS",
+        "P1-m3 (experiments/p1_petit_m3): S4 solve, 600 targets / 105 relations, S4-solve == brute-force triple EC, spurious=0, VALIDATION PASS",
+        "P3 (experiments/p3_sm_system): {S_{m+1}=0, f_F(X_i)=0} built and Groebner-solved; d_reg = 2|F|+1 (m=2), VALIDATION PASS"
+      ],
+      "kill_criterion": "An F_p S_m solve producing relations at o(sqrt n) with a full-rank system — not observed; the missing ingredient (a Weil-restriction split of the single high-degree equation) is structurally absent on a prime field.",
+      "open_escape_routes": [
+        "OPEN: m>=3 solving degree with an external GB engine — pure-Python capped at >15",
+        "OPEN: m>=4 (S5) systems never built; deg S4 = 4 tower node recorded but not yet a Lean theorem",
+        "OPEN: non-toy primes"
+      ],
+      "verdict": "Formalization contribution (first Lean Semaev S3/S4, both directions, on the real group law) plus a measured PARTIAL NEGATIVE; the machine-checked reduction computes nothing about any specific prime-field discrete log.",
+      "blocked_on": "semaev_polynomials depth beyond S4; an external Groebner engine for m>=3; cost_model for a faithful complexity statement.",
+      "disclosure": "S3/S4 are standard objects, now machine-checked, but this is NOT a path toward breaking secp256k1: the reduction records where the search lives, it is not a solving algorithm and asserts no complexity no-go."
+    },
+    {
+      "id": "IC-3-glv-symmetry-factor-base",
+      "family": "index-calculus / glv-symmetry",
+      "layer": "experiments-scaling",
+      "verdict_class": "open-zone",
+      "one_line": "Close the Semaev factor base under the order-3 GLV automorphism phi(x,y)=(beta*x,y) (invariant u=x^3), or rewrite the S_m system in invariant coordinates, hoping to cut relation-generation cost / degree of regularity below a constant factor for the j=0 prime-field curve. Measured: constant ~3x only, no exponent change; HYP_GLV_SEMAEV_001 stays ACTIVE.",
+      "required_properties": [
+        "a genuine order-3 curve automorphism (CM, j=0)",
+        "a phi-invariant coordinate u=x^3 collapsing each 3-element orbit",
+        "invariant-coordinate rewriting must change the ASYMPTOTIC relation-generation cost, not merely factor-base storage"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "order-3 GLV automorphism exists (j=0, CM by Z[zeta_3])",
+          "status": "satisfied (proved)",
+          "evidence": "Ecdlp.Curve.secp256k1_glv_cube_relation (GlvCubeRelation.lean), glvPoint_cube_eq_id (GlvAutomorphism.lean:31), secp256k1_glvHom_ne_id (GlvOrderThree.lean:53)"
+        },
+        {
+          "property": "lambda eigenvalue acts as [lambda] on all of <G>",
+          "status": "satisfied (proved)",
+          "evidence": "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples (GlvSubgroupEigenvalue.lean:27); Secp256k1.glv_lambda_eigenvalue (Secp256k1Verified.lean:10); secp256k1_lambda_orderOf (Secp256k1Order.lean:32, order 3 in Z/n)"
+        },
+        {
+          "property": "u=x^3 is phi-invariant since (beta*x)^3 = x^3",
+          "status": "satisfied (proved)",
+          "evidence": "Secp256k1.beta_is_cube_root (beta^3=1, Secp256k1Verified.lean:18) and secp256k1_beta_orderOf (order 3 in F_p, Secp256k1Order.lean)"
+        },
+        {
+          "property": "invariant coordinates change the ASYMPTOTIC relation-generation cost",
+          "status": "fails (measured, no advantage)",
+          "evidence": "P3 experiments/p3_sm_system/RESULTS.md: u=x^3 lowers the d_reg NUMBER (~2|F|/3+5) but lives in a 2m-variable ring, Macaulay matrices ~15-20x LARGER, ~80x SLOWER at matched |F|, defines the SAME variety f_F(X)=f_{F,u}(X^3)"
+        },
+        {
+          "property": "factor-base size reduction beyond a constant factor",
+          "status": "fails (measured)",
+          "evidence": "P0/P1/P1-m3: orbit closure (orbit size 3) gives constant ~3x storage only, no exponent change; P0 yield law c*B_eff^2/p unchanged (~2.8x)"
+        }
+      ],
+      "asymptotic_complexity": "Orbit size 3 => at most ~3x factor-base storage = CONSTANT factor, no exponent change. Symmetry-adapted index calculus gives real gains over EXTENSION fields (Faugere-Gaudry-Huot-Renault) with no known prime-field transfer that changes the exponent.",
+      "memory": "Constant ~3x storage reduction (store N/3 orbit seeds); invariant-coordinate Groebner systems live in a 2m-variable ring, Macaulay matrices ~15-20x LARGER — net memory worse.",
+      "secp256k1_constants": "beta order 3 in F_p, lambda order 3 in Z/n; orbit {x, beta*x, beta^2*x}, invariant u=x^3; p ≡ 1 (mod 3); smooth part of p-1 = 2*3*7*13441 (tiny).",
+      "lean_evidence": [
+        "Ecdlp.Curve.secp256k1_glv_cube_relation (Ecdlp/Proved/GlvCubeRelation.lean)",
+        "Ecdlp.Curve.glvPoint_cube_eq_id, secp256k1_glvHom_ne_id (Ecdlp/Proved/GlvAutomorphism.lean:31, GlvOrderThree.lean:53)",
+        "Ecdlp.Curve.secp256k1_lambda_orderOf, secp256k1_beta_orderOf (Ecdlp/Proved/Secp256k1Order.lean)",
+        "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples (Ecdlp/Proved/GlvSubgroupEigenvalue.lean:27)",
+        "Secp256k1.glv_lambda_eigenvalue, Secp256k1.beta_is_cube_root (Ecdlp/Secp256k1Verified.lean:10,18)"
+      ],
+      "experimental_evidence": [
+        "P0 (experiments/p0_glv_semaev): constant ~3x only, yield law c*B_eff^2/p, every equality re-verified by ec_add",
+        "P1 / P1-m3: GLV/u=x^3 orbit closure = constant ~3x storage at matched effective size, spurious=0",
+        "P3: u=x^3 lowers d_reg number but larger matrices / ~80x slower, SAME variety and EC-confirmed relation set — constant-factor re-description"
+      ],
+      "kill_criterion": "HYP_GLV_SEMAEV_001 exit: a stable T(p) = p^{1/2 - eps}, eps>0, with a theoretical scaling explanation. Observed: constant factor only, larger rings at lower d_reg number. Kept ACTIVE pending m>=3 with an external engine.",
+      "open_escape_routes": [
+        "OPEN: m>=3 solving degree in invariant coordinates with an external Groebner/F4 engine (pure-Python intractable)",
+        "OPEN: whether invariant-coordinate RELATION GENERATION (not factor-base size) changes prime-field asymptotics — HYP_GLV_SEMAEV_001 ACTIVE",
+        "OPEN: non-toy primes; the deg S4 = 4 tower node not yet built"
+      ],
+      "verdict": "PARTIAL NEGATIVE (constant ~3x only, no exponent change); HYP_GLV_SEMAEV_001 remains ACTIVE — no advantage measured, the asymptotic question is open. Not a break.",
+      "blocked_on": "external Groebner engine for m>=3 invariant systems; non-toy primes; cost_model.",
+      "disclosure": "The GLV/CM structure is real and machine-checked, but orbit closure buys only a constant factor. NOT a step toward breaking secp256k1; equality-replay alone cannot establish a complexity no-go. The proved eigenvalue facts describe structure, not an attack."
+    },
+    {
+      "id": "IC-4-petit-composed-map",
+      "family": "index-calculus / petit-large-characteristic",
+      "layer": "experiments-scaling",
+      "verdict_class": "open-zone",
+      "one_line": "Petit's large-characteristic approach uses a factor base defined by a composed low-degree (rational) map so the relation system has low per-equation degree; over a prime field there is no Weil restriction, so no faithful F_p-linear-subspace base exists — only an explicitly-labelled approximation can be measured. No Lean evidence (honestly empty).",
+      "required_properties": [
+        "a factor base with a composed low-degree defining system (lower than raw f_F of degree |F|)",
+        "the lowered per-equation degree must translate to lower ACTUAL relation-generation cost, not just a lower d_reg number",
+        "ideally a faithful Weil-descent / F_p-linear-subspace base (Petit's real object)"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "composed low-degree map factor base over F_p",
+          "status": "partial (approximation only)",
+          "evidence": "P4 experiments/p4_petit/RESULTS.md: product_2aux X=(t1+kappa*t2)^2+c, defining degree ~sqrt(|F|) — explicitly-labelled APPROXIMATION, not faithful Petit"
+        },
+        {
+          "property": "faithful Weil-descent / F_p-linear-subspace factor base",
+          "status": "fails (structural)",
+          "evidence": "P4 section 1 + BARRIERS.md B3: over a prime field there is NO Weil descent, so no F_p-linear-subspace factor base exists to imitate; P4 is honestly not the real construction"
+        },
+        {
+          "property": "low per-equation degree lowers actual cost",
+          "status": "fails (measured)",
+          "evidence": "P4: product_2aux d_reg=7 < raw 2|F|+1=9 at |F|=4, BUT in a 6-variable ring, Macaulay 10758x5005 vs raw 108x78 (~100x rows), 619s vs 0.14s (~4300x slower), same variety/quotient dim/EC-relation set"
+        },
+        {
+          "property": "composition alone (no product structure) lowers degree",
+          "status": "fails (measured)",
+          "evidence": "P4 single_aux_composed X=r2(r1(t)): d_reg=9 (capped), NOT below raw 9 — degree only RELOCATED to g(t) of degree ~|F|"
+        }
+      ],
+      "asymptotic_complexity": "P4 d_reg measured only at |F|=4, m=2 (toy). Composed map lowers the d_reg NUMBER but not cost: larger ring, larger matrices, larger time, same variety — same negative pattern as P3's u=x^3. No asymptotic claim drawn.",
+      "memory": "P4 composed-map Macaulay matrices ~100x larger than raw (10758x5005 vs 108x78) at the same quotient dimension.",
+      "secp256k1_constants": "No Weil restriction on F_p (p = 2^256-2^32-977); extension degree 1, no proper subfield — Petit's genuine construction has no target here.",
+      "lean_evidence": [],
+      "experimental_evidence": [
+        "P4 (experiments/p4_petit): product_2aux d_reg 7 vs raw 9 but ~4300x slower; single_aux_composed d_reg 9 (no drop); 80 targets / 32 relations, composed-map == raw baseline == brute-force EC, spurious=0, VALIDATION PASS",
+        "P4 honestly labelled NOT faithful Petit (RESULTS.md section 1); d_reg only at |F|=4, toy sizes only"
+      ],
+      "kill_criterion": "A prime-field composed/rational-map factor base whose lower defining degree yields lower ACTUAL relation-generation cost (smaller matrices AND wall time) at growing |F| and p — not observed; P4 shows the opposite (larger ring, ~4300x slower).",
+      "open_escape_routes": [
+        "OPEN: a genuinely faithful Petit composed low-degree rational-map construction (with denominators) — P4 is an approximation only",
+        "OPEN: whether ANY prime-field factor-base construction can beat the raw degree-|F| f_F in actual cost (believed no, unproven)",
+        "OPEN: d_reg at |F|>4 with an external engine; non-toy primes"
+      ],
+      "verdict": "PARTIAL NEGATIVE at toy scale and NOT faithful Petit (no prime-field Weil descent exists to imitate); no net advantage over the raw factor base. Not a break.",
+      "blocked_on": "semaev_polynomials depth; a faithful Petit/Weil-descent construction (believed impossible over F_p, unproven); external GB engine; cost_model. No Lean formalization of Petit/Weil-descent exists.",
+      "disclosure": "P4 is an explicitly-labelled APPROXIMATION to Petit, NOT the real construction; d_reg measured only at |F|=4, m=2, toy primes. No break; no Lean evidence exists for this family (honestly empty)."
+    },
+    {
+      "id": "multi-target-precomputation",
+      "family": "generic time/memory/data trade-off (batch DLP, DLP-with-preprocessing, Cheon auxiliary-input)",
+      "layer": "attack-models",
+      "verdict_class": "not-applicable",
+      "one_line": "Amortize DL work across many same-group targets and/or a group-specific offline table; Cheon instead exploits published auxiliary powers g^(alpha^d) for a divisor d | (n±1). None reduces a single 256-bit secp256k1 target below Theta(sqrt n); Cheon needs non-standard input.",
+      "required_properties": [
+        "multiple DL targets in one group OR an offline group-specific precomputation phase",
+        "for Cheon: an oracle/protocol emitting auxiliary powers g^(alpha^i) — strictly more input than a standard single-target instance",
+        "for Cheon: a usable divisor d | (n-1) or d | (n+1) of favorable size/smoothness",
+        "a group-operation/oracle cost model to state the trade-off exponent (absent, B1)"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "prime group order n => no Pohlig-Hellman subgroup split",
+          "status": "satisfied-defends",
+          "evidence": "Ecdlp.Primality.secp256k1_n_prime (Secp256k1PrimeN.lean, Pratt); Ecdlp.PohligHellman.{projection,component,reconstruct} (PohligHellman.lean)"
+        },
+        {
+          "property": "generic single-target cost Theta(sqrt n) = baseline to beat",
+          "status": "satisfied-defends",
+          "evidence": "Ecdlp.GenericGroup.generic_dlog_query_bound + bsgs_decomp + pollard_rho_collision"
+        },
+        {
+          "property": "cofactor 1, #E = n => no ambient-group amortization target",
+          "status": "satisfied-defends",
+          "evidence": "Ecdlp.Curve.secp256k1_card_point_eq_n (CurveCardinalityExact.lean:172, imported in Ecdlp.lean; landed)"
+        },
+        {
+          "property": "Cheon auxiliary powers g^(alpha^d) available in the standard model",
+          "status": "not-satisfied-attack-inapplicable",
+          "evidence": "corpus cheon-single-target-secp-boundary-011 (data/KG_CLAIM_FORMALIZATION_v1.csv): standard single-target secp256k1 does not expose g^(alpha^d); Cheon does not beat Pollard rho for a random single-target secp256k1 ECDLP under the ordinary input model"
+        },
+        {
+          "property": "n-1 / n+1 carry a large usable divisor d (Cheon exponent)",
+          "status": "unknown",
+          "evidence": "not measured in this substrate; only the smooth part of p-1 = 2*3*7*13441 is documented (notes/PRIMALITY.md), which concerns F_p^x / p-1 routes, not the order-n curve subgroup"
+        },
+        {
+          "property": "exact multi-target / preprocessing trade-off exponent stated in Lean",
+          "status": "blocked",
+          "evidence": "no cost model in Mathlib (BARRIERS.md B1; frontier_map.json foundations.cost_model = missing_from_mathlib)"
+        }
+      ],
+      "asymptotic_complexity": "Batch of L targets: ~sqrt(n*L) total (never sub-sqrt(n) per target for L<<n). Preprocessing (Corrigan-Gibbs/Kogan, Mihalcik, Bernstein-Lange): S*T^2 ~ n, e.g. online T ~ n^(1/3). Cheon p-1: ~ n^(1/4) at d ~ sqrt(n) IF auxiliary input and such d exist; Cheon p+1: ~ n^(1/3). NONE stated in Lean (no cost model).",
+      "memory": "Preprocessing / distinguished-point table up to ~n^(1/3); Cheon can swap tables for Pollard-lambda walks. Not formalized.",
+      "secp256k1_constants": "n = 256-bit prime (secp256k1_n_prime). Cofactor h = 1, #E = n. Documented smoothness is for p-1; the n±1 divisor structure a Cheon exponent needs is NOT measured here (unknown).",
+      "lean_evidence": [
+        "Ecdlp.Primality.secp256k1_n_prime",
+        "Ecdlp.PohligHellman.projection",
+        "Ecdlp.PohligHellman.component",
+        "Ecdlp.PohligHellman.reconstruct",
+        "Ecdlp.GenericGroup.generic_dlog_query_bound",
+        "Ecdlp.GenericGroup.bsgs_decomp",
+        "Ecdlp.GenericGroup.pollard_rho_collision",
+        "Ecdlp.Curve.secp256k1_card_point_eq_n"
+      ],
+      "experimental_evidence": [],
+      "kill_criterion": "Prime n with no large usable divisor of n±1 kills the Cheon exponent gain; a single-target standard-input query model kills the auxiliary-input premise; batch/preprocessing never drops a single 256-bit target below Theta(sqrt n). Revived only by (a) a genuine batch of many same-group targets AND a Lean cost model, or (b) an oracle leaking g^(alpha^i).",
+      "open_escape_routes": [
+        "formalize a group-operation/oracle cost model in Mathlib (B1) so the batch/preprocessing exponent (S*T^2 ~ n) and Cheon bounds can be stated faithfully",
+        "the generic preprocessing lower bound (Corrigan-Gibbs-Kogan S*T^2 >~ n) is a candidate for the same information-theoretic cost-model sidestep that yielded the generic Omega(sqrt n) bound",
+        "measure the actual divisor structure of secp256k1 n±1 to close the Cheon-divisor 'unknown' row"
+      ],
+      "verdict": "NOT-APPLICABLE to single-target secp256k1 AND blocked-in-Lean: Cheon needs non-standard auxiliary input; batch/preprocessing never break a single 256-bit target; the exact trade-off cannot be stated without a cost model. Not a threat, not a break.",
+      "blocked_on": "B1 cost_model (missing_from_mathlib) for the exact trade-off; plus the attack's own premise (auxiliary input / many same-group targets) is absent from the standard secp256k1 threat model.",
+      "disclosure": "No security-relevant finding. Nothing here reduces single-target secp256k1 ECDLP below Theta(sqrt n)."
+    },
+    {
+      "id": "lattice-hnp-biased-nonce-ecdsa",
+      "family": "side-channel / implementation: Hidden Number Problem -> lattice reduction (LLL/BKZ, CVP) / Bleichenbacher FFT",
+      "layer": "attack-models",
+      "verdict_class": "not-applicable",
+      "one_line": "Partial leakage of ECDSA nonces k across many signatures forms a Hidden-Number-Problem lattice instance whose short/close vector reveals the private key. Orthogonal to ECDLP: it targets NONCE GENERATION, not the group; defeated by RFC 6979. secp256k1 hardness is untouched.",
+      "required_properties": [
+        "many ECDSA signatures under one key with biased or partially-known nonces",
+        "a lattice-reduction oracle (LLL/BKZ) or CVP solver (or a Bleichenbacher FFT for sub-bit bias)",
+        "the ECDSA signing identity s*k = z + r*x, linear in x once k is known"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "last mile: known/reconstructed nonce => private key (field algebra)",
+          "status": "verified-downstream",
+          "evidence": "Ecdlp.Schnorr.ecdsa_known_nonce_recovers_key (Ecdlp/Proved/EcdsaKeyRecovery.lean:58); Ecdlp.Schnorr.ecdsa_nonce_reuse_recovers (line 40) — pure identities over [Field F], no adversary/probability"
+        },
+        {
+          "property": "first mile: bias -> HNP lattice -> nonce reconstruction",
+          "status": "blocked",
+          "evidence": "no lattice reduction (LLL/BKZ/CVP) in Mathlib (BARRIERS.md B2, ~24 claims); frontier bh-biased/bv-hnp/ns-ecdsa/minerva/ladderleak all blocked_on lattice_reduction"
+        },
+        {
+          "property": "attack is an ECDLP / curve weakness",
+          "status": "not-satisfied-orthogonal",
+          "evidence": "targets NONCE GENERATION, not the group; curve hardness Theta(sqrt n) is untouched; correct unbiased/deterministic nonce (RFC 6979) defeats it — implementation property, not curve property"
+        }
+      ],
+      "asymptotic_complexity": "Polynomial in the number of signatures once enough bias is collected: ~2 known bits/signature => O(100s-1000s) signatures + one poly-time lattice reduction; <1 bit => Bleichenbacher/FFT over more samples. NOT expressible in Lean (no lattice or cost model).",
+      "memory": "Lattice of dimension ~ number of HNP samples; BKZ block memory. Bleichenbacher FFT: large table over the sample range. Not formalized.",
+      "secp256k1_constants": "Lives entirely in the scalar field ZMod n (256-bit prime order). Curve constants (a=0, b=7, beta, lambda) irrelevant — the attack never touches the group law.",
+      "lean_evidence": [
+        "Ecdlp.Schnorr.ecdsa_known_nonce_recovers_key (Ecdlp/Proved/EcdsaKeyRecovery.lean:58)",
+        "Ecdlp.Schnorr.ecdsa_nonce_reuse_recovers (Ecdlp/Proved/EcdsaKeyRecovery.lean:40)"
+      ],
+      "experimental_evidence": [],
+      "kill_criterion": "Deterministic, constant-time, unbiased nonce generation (RFC 6979) removes the HNP samples => the attack has no input. Implementation property; secp256k1 the curve neither causes nor prevents it, so no curve-level fact registers as defense or weakness.",
+      "open_escape_routes": [
+        "port lattice reduction (LLL/BKZ) + CVP to Mathlib (B2) to formalize the HNP reduction — months-scale; prior art is Isabelle/HOL only (notes/UPSTREAM_SCAN.md)",
+        "formalize the Boneh-Venkatesan HNP-to-lattice reduction abstractly (statement/correctness)",
+        "formalize the Bleichenbacher FFT bias-exploitation bound (also blocked: needs a cost model)"
+      ],
+      "verdict": "Real-world attack but NOT a curve break: verified last-mile algebra, blocked first-mile (B2, no lattice reduction). Defeated by correct nonces; does NOT reduce secp256k1 ECDLP.",
+      "blocked_on": "B2 lattice_reduction (missing_from_mathlib, ~24 corpus claims).",
+      "disclosure": "Well-known implementation attack class (Sony PS3 2010, 2013 Android SecureRandom Bitcoin thefts, Minerva, LadderLeak). The repo formalizes only the public final algebra. Not a secp256k1 ECDLP weakness."
+    },
+    {
+      "id": "quantum-shor-ecdlp",
+      "family": "quantum period-finding (Shor's algorithm for ECDLP)",
+      "layer": "attack-models",
+      "verdict_class": "blocked-foundation",
+      "one_line": "A fault-tolerant quantum computer solves ECDLP in polynomial time via Shor period-finding, breaking secp256k1 outright; the classical generic Theta(sqrt n) bound explicitly does not apply. A documented EXTERNAL fact, out of scope for this substrate (no quantum cost model in Mathlib).",
+      "required_properties": [
+        "a cryptographically-relevant / fault-tolerant quantum computer of sufficient logical-qubit count and gate depth",
+        "reversible quantum circuits for elliptic-curve point addition over F_p",
+        "quantum Fourier transform / period finding"
+      ],
+      "secp256k1_status": [
+        {
+          "property": "classical generic hardness Theta(sqrt n)",
+          "status": "satisfied-but-classical-only",
+          "evidence": "Ecdlp.GenericGroup.secp256k1_generic_security (Secp256k1GenericSecurity.lean) — VERIFIED.md and notes/SECURITY_SCOPE.md state it is CLASSICAL, black-box, and FALSE against Shor"
+        },
+        {
+          "property": "quantum resource/cost model to state Shor's complexity",
+          "status": "blocked-out-of-scope",
+          "evidence": "no quantum circuit cost model in Mathlib (BARRIERS.md B2, ~38 claims; frontier_map.json foundations.quantum_cost = out_of_scope)"
+        },
+        {
+          "property": "resistance to Shor",
+          "status": "not-satisfied-no-curve-resists",
+          "evidence": "documented EXTERNAL estimates only (Proos-Zalka 2003; Roetteler-Naehrig-Svore-Lauter 2017: ~2330 logical qubits, ~1.26e11 Toffoli gates for 256-bit ECDLP) — external literature, NOT a repo result"
+        }
+      ],
+      "asymptotic_complexity": "Quantum polynomial time: ~O((log n)^3) qubit-operations / poly(log n) depth. Not expressible in Lean (no quantum cost model).",
+      "memory": "~2330 logical qubits (Roetteler et al. 2017) for 256-bit ECDLP; physical-qubit count depends on error-correction overhead. External estimate, not a repo measurement.",
+      "secp256k1_constants": "256-bit order n; Shor cost scales with bit-length, not curve structure — GLV / j=0 / beta confer no quantum defense and no extra quantum weakness.",
+      "lean_evidence": [],
+      "experimental_evidence": [],
+      "kill_criterion": "N/A as a mathematical no-go — Shor is a proven poly-time quantum algorithm; no curve property defeats it. The only 'escape' is engineering: CRQCs at the needed scale do not yet exist. Migration to post-quantum cryptography is the mitigation.",
+      "open_escape_routes": [
+        "out of scope for Mathlib — no planned path; would require a full quantum circuit cost model",
+        "the honest boundary is the scope note on the classical generic bound (notes/SECURITY_SCOPE.md); no formal quantum statement is attempted"
+      ],
+      "verdict": "OUT-OF-SCOPE / blocked-foundation (B2): Shor breaks secp256k1 in principle on a CRQC — a documented external fact, NOT a repo claim; the substrate's classical bound is explicitly scoped to exclude it. Not formalizable here.",
+      "blocked_on": "B2 quantum_cost (out_of_scope for Mathlib).",
+      "disclosure": "Publicly known since Shor 1994. No new finding. Recorded only as the standing classical-vs-quantum scope boundary of the generic bound. The substrate does NOT claim to break secp256k1; this object records an external limitation of classical security, not a repo result."
+    }
+  ],
+  "edges": [
+    {
+      "type": "resolution",
+      "from": "secp256k1_card_point_eq_n",
+      "to": [
+        "GEN-PH-004",
+        "GEN-GLV-003",
+        "PAIRING-TRANSFER-MOV-FR-TATE",
+        "PADIC-LIFTING-SSSA",
+        "IC-1-index-calculus-prime-field",
+        "multi-target-precomputation"
+      ],
+      "relation": "H2_GLV_SUBGROUP_VS_WHOLE_GROUP RESOLVED",
+      "statement": "The contradiction between results stated on the base-point subgroup <G> versus the full curve group E(F_p) is resolved by the keystone #E(F_p)=n (cofactor 1, no Hasse/Schoof). Every <G>-scoped resistance fact now holds on all of E(F_p): PH kill extends to E(F_p); GLV eigenvalue scope is pinned; the Frobenius trace t=p+1-n is genuine so MOV/anomalous no-gos become unconditional (non-anomalousness follows from #E=n!=p, not a pinned order).",
+      "status": "landed (imported in Ecdlp.lean:103, VERIFIED.md row 237, PR #149)"
+    },
+    {
+      "type": "dedup-merge",
+      "from": [
+        "TRANSFER-MOV-FR",
+        "TRANSFER-TATE"
+      ],
+      "to": "PAIRING-TRANSFER-MOV-FR-TATE",
+      "relation": "MERGED",
+      "statement": "Cluster 1's TRANSFER-MOV-FR (Weil/Frey-Ruck) and TRANSFER-TATE (Tate-Lichtenbaum) are deduplicated into one pairing-transfer object: both embed into the same F_{p^k}^x and are governed by the SAME single embedding-degree obstruction (secp256k1_embedding_degree_gt_100), and both share the identical foundation-rung gap (Weil reciprocity W4 / pairing value absent from Mathlib). Cluster 1 itself flagged Tate as foldable into MOV."
+    },
+    {
+      "type": "dedup-merge",
+      "from": [
+        "TRANSFER-ANOMALOUS-SSSA",
+        "IC-5-padic-lifting"
+      ],
+      "to": "PADIC-LIFTING-SSSA",
+      "relation": "MERGED",
+      "statement": "Cluster 1's TRANSFER-ANOMALOUS-SSSA and Cluster 2's IC-5-padic-lifting are deduplicated into one p-adic/lifting object: IC-5 already subsumes the anomalous Smart/SSSA route (same anchors secp256k1_trace_ordinary_nonanomalous + anomalous_iff_trace_one) and adds xedni calculus + general lifting. The merged object keeps the sharp anomalous no-go and the empirically-negative xedni/lifting routes, plus jacobson_xedni_dependence_recovers_log."
+    },
+    {
+      "type": "matching-bound",
+      "from": "GEN-GENERIC-001",
+      "to": "GEN-BSGS-RHO-002",
+      "relation": "LOWER-MEETS-UPPER",
+      "statement": "The generic Omega(sqrt n) lower bound (GEN-GENERIC-001) and the concrete O(sqrt n) BSGS/Pollard-rho upper bound (GEN-BSGS-RHO-002) are complementary, not contradictory: together they pin classical generic ECDLP on secp256k1 at Theta(sqrt n) ~ 2^128, tight. secp256k1's defense is the size of n, not a structural gap."
+    },
+    {
+      "type": "shared-structure",
+      "from": "GEN-GLV-003",
+      "to": "IC-3-glv-symmetry-factor-base",
+      "relation": "SAME-CM-FACTS-DIFFERENT-SURFACE",
+      "statement": "GEN-GLV-003 (rho automorphism + GLV scalar-mult speedup, generic model) and IC-3 (GLV-symmetrized Semaev factor base, index-calculus model) are kept distinct but share the same machine-checked CM facts (glvPoint_cube_eq_id, secp256k1_lambda_orderOf, secp256k1_glvPoint_eq_lam_on_zmultiples, secp256k1_beta_orderOf). Both conclude CONSTANT ~3x / ~sqrt(3) only, no exponent change; neither is a break. Not merged because they act on different attack surfaces (rho search vs relation generation)."
+    },
+    {
+      "type": "dependency",
+      "from": "IC-1-index-calculus-prime-field",
+      "to": [
+        "IC-2-semaev-summation-systems",
+        "IC-3-glv-symmetry-factor-base",
+        "IC-4-petit-composed-map"
+      ],
+      "relation": "FRAMEWORK-TO-ENGINE",
+      "statement": "IC-1 is the general prime-field index-calculus framework; IC-2 (Semaev summation engine) is its algebraic core, refined by IC-3 (GLV invariant coordinates) and IC-4 (Petit composed map). All four share the SAME structural barrier: no Weil restriction over a prime field (BARRIERS.md B3), so the single high-degree Semaev equation cannot be split. This shared barrier is where the descent no-go (TRANSFER-WEIL-DESCENT) ends and the open zone begins."
+    },
+    {
+      "type": "open-boundary",
+      "from": "TRANSFER-WEIL-DESCENT",
+      "to": [
+        "IC-1-index-calculus-prime-field",
+        "IC-2-semaev-summation-systems"
+      ],
+      "relation": "NO-GO-EDGE-MEETS-OPEN-ZONE",
+      "statement": "TRANSFER-WEIL-DESCENT's adjacent open zone IS the prime-field index-calculus question (IC-1/IC-2): whether some prime-field structure can substitute for the missing Weil restriction in a Semaev/Petit index calculus. HYP_GLV_SEMAEV_001 ACTIVE; P0-P4 are partial negatives (constant ~3x only). This edge marks precisely where a machine-checked-by-construction no-go ends and unexplored territory begins."
+    },
+    {
+      "type": "weak-backing-flag",
+      "from": "TRANSFER-WEIL-DESCENT",
+      "to": "secp256k1_p_prime",
+      "relation": "RESISTANCE-NOT-KERNEL-CERTIFIED",
+      "statement": "TRANSFER-WEIL-DESCENT's resistance rests on secp256k1_p_prime PLUS a documented structural argument (prime field has no proper subfield => Weil restriction trivial), NOT on a dedicated Lean no-go theorem. This is the WEAKEST kernel backing among the transfer families and is recorded in flags."
+    },
+    {
+      "type": "shared-blocker",
+      "from": [
+        "multi-target-precomputation",
+        "lattice-hnp-biased-nonce-ecdsa",
+        "quantum-shor-ecdlp",
+        "GEN-GENERIC-001",
+        "GEN-BSGS-RHO-002"
+      ],
+      "to": "cost_model / lattice_reduction / quantum_cost (BARRIERS.md B1/B2)",
+      "relation": "BLOCKED-ON-MISSING-FOUNDATION",
+      "statement": "The exact running-time / trade-off exponents for these families cannot be stated in Lean because Mathlib lacks a group-operation/oracle cost model (B1), lattice reduction (B2, ~24 claims), and a quantum circuit cost model (B2, ~38 claims). The generic Omega(sqrt n) and MOV/Smart resistance facts were reached by sidestepping the cost model with an information-theoretic core; the trade-off/lattice/quantum families have no such sidestep and remain blocked-foundation."
+    },
+    {
+      "type": "keystone-dependency",
+      "from": [
+        "GEN-GENERIC-001",
+        "GEN-BSGS-RHO-002",
+        "GEN-PH-004",
+        "multi-target-precomputation",
+        "IC-1-index-calculus-prime-field"
+      ],
+      "to": "secp256k1_n_prime",
+      "relation": "BUILDS-ON",
+      "statement": "The prime-order keystone secp256k1_n_prime (Pratt certificate) underwrites: the field structure for the generic collision bound, the unit condition for collision-recovery, the no-subgroup Pohlig-Hellman kill, and the cofactor-1 cardinality argument."
+    },
+    {
+      "type": "keystone-dependency",
+      "from": [
+        "TRANSFER-WEIL-DESCENT",
+        "PAIRING-TRANSFER-MOV-FR-TATE",
+        "IC-1-index-calculus-prime-field"
+      ],
+      "to": "secp256k1_p_prime",
+      "relation": "BUILDS-ON",
+      "statement": "The prime-FIELD keystone secp256k1_p_prime (Pratt certificate) underwrites the prime-field structure: no proper subfield (no Weil restriction target), F_p base field for the embedding-degree computation, and the extension-degree-1 fact behind the index-calculus barrier."
+    }
+  ],
+  "cost_schema": {
+    "purpose": "The fields every ECDLP relation-generation hypothesis/experiment must carry so runs are comparable and no-go claims are auditable. Values are filled for the reproducible experiments P0-P4 where measured, and 'unmeasured' otherwise. HONESTY FLAGS: P3's degree_of_regularity for m>=3 is an UNVALIDATED pure-Python Macaulay-matrix proxy (capped lower bound only); P4 is NOT faithful Petit (a prime field affords no Weil restriction, so no F_p-linear-subspace base to imitate) - it is an explicitly-labelled composed-low-degree-map approximation.",
+    "fields": {
+      "nvars": "number of unknowns in the relation system solved per relation (1 = univariate solve; m = plain S_{m+1} system; 2m or 3m = invariant/composed-map coupled system).",
+      "equation_degree": "degree of the governing summation polynomial / defining equation (S3 = 2 per var; S4 <= 4; S_m = 2^(m-2); factor-base polynomial f_F = |F|).",
+      "degree_of_regularity": "solving degree of the Groebner/Macaulay computation - the cost-driving quantity the hypothesis targets; distinct from and larger than the reduced-GB output degree.",
+      "factor_base_size": "|F|, number of factor-base x-coordinates (B_eff = 3B under GLV orbit closure).",
+      "relation_probability": "probability a random attempt yields a valid relation (or yield law c*B_eff^2/p in the lookup model); spurious-root rate is the empirical signature of Semaev iff-theorems.",
+      "linear_algebra_cost": "size/cost of the Macaulay matrix or linear-algebra step (rows x cols, wall time).",
+      "memory": "peak storage: hash table (lookup model), factor-base storage, or Macaulay matrix footprint.",
+      "parallelization": "available parallel speedup (van Oorschot-Wiener distinguished points: Theta(m) shared, Theta(sqrt m) naive) - measured or unmeasured.",
+      "quantum_or_classical": "cost model regime; all P0-P4 are classical.",
+      "toy_scaling": "toy-curve bit sizes and |F| range actually run.",
+      "projection_128bit": "extrapolation to cryptographic (128-bit security / 256-bit n) parameters, if any - deliberately 'unmeasured / not projected' where only constant factors or descriptive fits exist."
+    },
+    "experiment_values": {
+      "P0_glv_semaev_m2_lookup": {
+        "nvars": 1,
+        "equation_degree": "S3 = 2 per variable (secp256k1_S₃poly_natDegree)",
+        "degree_of_regularity": "unmeasured (lookup/enumeration model measures no degree of regularity)",
+        "factor_base_size": "B toy; B_eff = 3B under GLV orbit closure",
+        "relation_probability": "yield ~ c*B_eff^2/p; c ~ 5.45 for u=x^3 key vs plain (~2.8x), i.e. constant ~3x, NO exponent change",
+        "linear_algebra_cost": "N/A - direct EC-pair enumeration is Theta(B^2), not index calculus",
+        "memory": "hash table of x-coordinates",
+        "parallelization": "unmeasured",
+        "quantum_or_classical": "classical",
+        "toy_scaling": "16/20/24-bit toy curves, seed=1; every equality re-verified by real ec_add",
+        "projection_128bit": "not projected (constant factor only)"
+      },
+      "P1_petit_m2_S3_solve": {
+        "nvars": 1,
+        "equation_degree": "S3 = 2 (Tonelli-Shanks root-solve per base coord)",
+        "degree_of_regularity": "N/A (single univariate solve, not a system)",
+        "factor_base_size": "|F|, matched effective size across variants",
+        "relation_probability": "spurious-root rate = 0 across 16/20/24-bit; relation set identical to brute-force EC (complete + sound)",
+        "linear_algebra_cost": "N/A - O(|F|) field solves per target replacing O(|F|^2) pair enumeration",
+        "memory": "GLV/u=x^3 gives constant ~3x storage reduction only",
+        "parallelization": "unmeasured",
+        "quantum_or_classical": "classical",
+        "toy_scaling": "16/20/24-bit, seed=1",
+        "projection_128bit": "unmeasured (explicitly no asymptotic/advantage claim)"
+      },
+      "P1_petit_m3_S4_solve": {
+        "nvars": 1,
+        "equation_degree": "S4 = Res_X(S3,S3) <= 4 in the unknown (unit-tested 4 ways)",
+        "degree_of_regularity": "N/A (per-pair univariate degree-4 solve, not a reduced system)",
+        "factor_base_size": "|F|, matched effective size",
+        "relation_probability": "spurious = 0 in all 12 settings; S4-solver relation set IDENTICAL to O(|F|^3) brute-force (600 targets, 105 relations, VALIDATION PASS)",
+        "linear_algebra_cost": "N/A - O(|F|^2 * deg4-solve); NOT a subexponential index-calculus algorithm",
+        "memory": "GLV/u=x^3 constant ~3x storage",
+        "parallelization": "unmeasured",
+        "quantum_or_classical": "classical",
+        "toy_scaling": "16/20/24-bit, seed=1",
+        "projection_128bit": "unmeasured (no asymptotic claim)"
+      },
+      "P3_sm_system_groebner": {
+        "nvars": "m (plain S_{m+1} system); 2m for the coupled u=x^3 invariant system {S_{m+1}=0, U_i-X_i^3=0, f_{F,u}(U_i)=0}",
+        "equation_degree": "S_{m+1} + factor-base poly f_F degree |F|; invariant f_{F,u} degree |F|/3",
+        "degree_of_regularity": "m=2 plain solving degree = 2|F|+1 EXACTLY (|F|=4,6,8,10,12), LINEAR in |F| and p-INDEPENDENT; u=x^3 ~2|F|/3+5 (lower NUMBER); m=3 (S4) only a CAPPED LOWER BOUND >15 - UNVALIDATED pure-Python Macaulay proxy, full solving degree needs msolve/Sage/F4",
+        "factor_base_size": "|F| <= 12",
+        "relation_probability": "spurious = 0; independent brute-force EC cross-check IDENTICAL (100 targets, 40 relations, VALIDATION PASS)",
+        "linear_algebra_cost": "Macaulay matrices grow ~|F|^2; u=x^3 system ~15-20x LARGER, ~80x SLOWER at matched |F| (same variety f_F(X)=f_{F,u}(X^3))",
+        "memory": "Macaulay matrix dimensions measured; m=3 graded reduction intractable in pure Python",
+        "parallelization": "unmeasured",
+        "quantum_or_classical": "classical",
+        "toy_scaling": "16/20-bit cofactor-1, |F| <= 12, seed=1",
+        "projection_128bit": "descriptive-only fits, NO asymptotic/advantage claim, not projected"
+      },
+      "P4_petit_composed_map_m2": {
+        "nvars": "3m = 6 (product_2aux: X=(t1+kappa*t2)^2+c); single_aux_composed X=r2(r1(t)) chained",
+        "equation_degree": "product_2aux per-equation degree <= max(2,b0) ~ sqrt(|F|); single_aux g(t) degree ~|F| (degree only relocated)",
+        "degree_of_regularity": "product_2aux solving degree = 7 (BELOW raw 2|F|+1=9); single_aux = 9 capped (NOT below raw) - measured only at |F|=4, m=2; NOT faithful Petit (approximation, no Weil restriction over prime field)",
+        "factor_base_size": "|F|=4 for d_reg; |F|=9,6 for relation-yield block",
+        "relation_probability": "0.000 random (birthday regime); all constructed targets recovered, spurious=0; independent gate 80 targets/32 relations, composed==raw==brute-force EC, VALIDATION PASS",
+        "linear_algebra_cost": "Macaulay 10758x5005 vs raw 108x78 (~100x rows, ~64x cols); 619s vs 0.14s (~4300x slower), SAME quotient dimension (2), SAME variety",
+        "memory": "larger ring => larger matrices (recorded)",
+        "parallelization": "unmeasured",
+        "quantum_or_classical": "classical",
+        "toy_scaling": "16-bit cofactor-1, m=2, |F|=4, seed=1",
+        "projection_128bit": "descriptive-only, no asymptotic/advantage/no-go-proof claim, not projected"
+      }
+    },
+    "cross_cutting_conclusion": "At every rung the GLV / u=x^3 / composed-map orbit closure buys only a CONSTANT (~3x) storage reduction; the summation-polynomial solve reproduces the brute-force relation set with ZERO spurious roots (empirical signature of the Semaev iff-theorems S₃_eq_zero_iff / S₄_common_root_of_eq_zero); where reachable, degree_of_regularity is set by the factor-base DEFINING degree - neither invariant nor composed coordinates buy a net advantage (lower degree NUMBER is always paid back as a larger ring / larger Macaulay matrix / slower time on the SAME variety). No rung is a step toward breaking secp256k1; HYP_GLV_SEMAEV_001 stays ACTIVE (open, not a proven no-go)."
+  },
+  "priority_function": {
+    "formula": "Priority(H) = P(H) * Impact(H) * InfoGain(H) / (ProofCost + ExperimentCost + SecurityRisk)",
+    "terms": {
+      "P(H)": "Calibrated prior that H yields a genuine, explained result - either a real speedup OR a rigorous no-go; deliberately LOW for prime-field subgeneric routes (~0.05 for HYP_GLV_SEMAEV_001, per its honest_prior).",
+      "Impact(H)": "Magnitude if resolved: a prime-field ECDLP exponent change = paradigm-shifting; a machine-checked barrier/no-go or scope boundary = publishable unit; a constant-factor speedup = negligible.",
+      "InfoGain(H)": "Reduction in frontier uncertainty per run, INCLUDING negative results that CLOSE a tested window - a no-go scores high on InfoGain even when P(speedup) ~ 0.",
+      "ProofCost": "Lean/Mathlib effort to state and kernel-verify (weeks per rung; MONTHS for a missing foundation such as the Weil pairing, lattice reduction, or a cost model).",
+      "ExperimentCost": "Compute + engineering to run a reproducible benchmark with an INDEPENDENT validator (toy primes cheap; msolve/Sage/F4-scale or m>=4 systems expensive).",
+      "SecurityRisk": "Penalty for routes that could actually threaten secp256k1 before responsible disclosure; near-zero here by design (honest-scope, no-break), but any nonzero-break route trips a DISCLOSURE GATE (private handling) instead of a public race - it raises the denominator, it does not raise Priority."
+    },
+    "conventions": "Higher Priority => work it sooner. Formalize in Lean ONLY on a positive, explained result or a clean barrier statement; a numerical confirmation of known structure triggers NO formalization (see HYP_WARD_EDS_001 exit_criteria). Prefer routes that sidestep a missing foundation via an information-theoretic core (how the generic Omega(sqrt n) bound and the MOV/Smart resistance facts were reached) over routes that require building the full missing foundation.",
+    "worked_examples": [
+      {
+        "hypothesis": "Formalize the boundary/no-go map (H6_PUBLICATION_BOUNDARY_TRACK)",
+        "assessment": "P high, Impact medium-high (publishable), InfoGain high, ProofCost low (docs+existing theorems), ExperimentCost ~0, SecurityRisk 0 => HIGH Priority - the strongest near-term output."
+      },
+      {
+        "hypothesis": "HYP_GLV_SEMAEV_001 (GLV-symmetrized Semaev, prime field)",
+        "assessment": "P ~0.05, Impact very high IF positive, InfoGain high (each rung closes a window), ExperimentCost rising steeply (m>=4 needs msolve/Sage), SecurityRisk low but nonzero-if-positive (disclosure gate) => MODERATE Priority as an experiment, LOW as an expected break; run through the substrate, not as a race."
+      },
+      {
+        "hypothesis": "multi-target / precomputation (this registry)",
+        "assessment": "P low for single-target secp256k1 (needs auxiliary input / many targets), Impact medium, InfoGain medium, ProofCost blocked on cost model (high) => LOW Priority until a cost model exists; the generic-preprocessing lower bound is the higher-ROI sub-target."
+      },
+      {
+        "hypothesis": "lattice/HNP biased-nonce ECDSA (this registry)",
+        "assessment": "P n/a as a curve break (orthogonal), Impact medium (implementation), InfoGain medium, ProofCost blocked on lattice reduction (months, B2), SecurityRisk low (public class) => LOW Priority in Lean; last-mile algebra already verified."
+      },
+      {
+        "hypothesis": "quantum/Shor (this registry)",
+        "assessment": "Impact maximal but P(formalizable-here) = 0 (out of scope, no quantum cost model), InfoGain ~0 beyond the existing scope note => OUT OF SCOPE / lowest Priority; record only as the classical-vs-quantum boundary."
+      }
+    ]
+  },
+  "flags": [
+    "NAMING (resolved, not a fabrication): the source clusters cite Semaev theorems in ASCII - `S3_eq_zero_iff`, `S4`, `S4_eq_zero_of_common_root`, `S4_common_root_of_eq_zero`, `secp256k1_S3poly_natDegree` - which do NOT literally appear. The real Lean theorems use Unicode subscripts and are verified: `S₃_eq_zero_iff` (Ecdlp/Proved/SemaevThree.lean:146), `S₄` (SemaevFour.lean:71), `S₄_eq_zero_of_common_root` (SemaevFour.lean:81), `S₄_common_root_of_eq_zero` (SemaevFour.lean:140), `secp256k1_S₃poly_natDegree` (SemaevDegree.lean:43). Normalized to Unicode in this bundle.",
+    "WEAKEST BACKING (self-flagged, carried): TRANSFER-WEIL-DESCENT has NO dedicated Lean no-go theorem. 'Prime field => no Weil descent' rests on secp256k1_p_prime (Ecdlp/Proved/Secp256k1PrimeP.lean) PLUS a documented structural argument (BARRIERS.md B3, PUBLISHABLE_UNITS.md); the only in-source mentions of Weil restriction are docstrings in SemaevDegree.lean and PointDecomposition.lean, not theorems. Confirmed by grep: no Weil-descent/GHS no-go theorem exists in the repo.",
+    "HONESTLY EMPTY: IC-4-petit-composed-map has an intentionally empty lean_evidence array - no Lean formalization of Petit or Weil descent exists in the repo (green-field upstream). This is honest, not a gap masked as a citation.",
+    "EXPERIMENTAL CAVEAT (not Lean): P3's degree_of_regularity for m>=3 is an UNVALIDATED pure-Python Macaulay-matrix proxy (a capped lower bound >15); the full solving degree needs an external engine (msolve/Sage/F4). No asymptotic conclusion is drawn from it.",
+    "EXPERIMENTAL CAVEAT (not Lean): P4 is NOT faithful Petit - a prime field affords no Weil restriction, so there is no F_p-linear-subspace factor base to imitate; P4 is an explicitly-labelled composed-low-degree-map approximation, measured only at |F|=4, m=2, toy primes.",
+    "SCOPE (not a fabrication): Ecdlp.GenericGroup.secp256k1_generic_security takes a [Fact (Nat.Prime Secp256k1.n)] instance (supplied by secp256k1_n_prime); the formalized core is the fixed-transcript affine-collision count, NOT the full adaptive Shoup/Nechaev oracle-query theorem (GenericGroupBound.lean docstring). Primality is a proved hypothesis, not an axiom.",
+    "LINE-NUMBER PRECISION: every cited theorem identifier was grep-confirmed to resolve to its named file; individual line numbers were spot-checked (e.g. SemaevFour.lean:71/81/140, GlvAutomorphism.lean:31, CurveCardinalityExact.lean:172) but not exhaustively re-verified for every citation. Identifiers are real; a few cited line numbers may drift by a small amount.",
+    "EXTERNAL (not a repo result): quantum-shor-ecdlp resource estimates (Proos-Zalka 2003; Roetteler-Naehrig-Svore-Lauter 2017: ~2330 logical qubits, ~1.26e11 Toffoli gates) are documented EXTERNAL literature, tagged out-of-scope in BARRIERS.md B2 / frontier_map.json; they are NOT machine-checked repo facts and the substrate makes no quantum claim.",
+    "UNKNOWN (honest): the n±1 divisor structure a Cheon exponent would need is NOT measured in this substrate; only the tiny smooth part of p-1 = 2*3*7*13441 is documented (notes/PRIMALITY.md), which concerns F_p^x / p-1 routes, not the order-n curve subgroup. Marked unknown, not guessed."
+  ]
+}

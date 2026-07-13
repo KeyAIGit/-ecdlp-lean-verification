@@ -74,6 +74,7 @@
       "where_used": [
         "COVERAGE.md",
         "ONE_PAGE_SUMMARY.md",
+        "RESEARCH_MAP.md",
         "VERIFIED.md",
         "domains/p256/corpus.md",
         "notes/FOUNDATIONS.md",
@@ -128,6 +129,7 @@
         "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
+        "RESEARCH_MAP.md",
         "STATUS.md",
         "TRUST_REPORT.md",
         "VERIFIED.md",
@@ -183,6 +185,7 @@
       "where_used": [
         "BARRIERS.md",
         "PUBLISHABLE_UNITS.md",
+        "RESEARCH_MAP.md",
         "experiments/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
@@ -219,6 +222,7 @@
         "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
+        "RESEARCH_MAP.md",
         "VERIFIED.md",
         "notes/SECURITY_SCOPE.md"
       ]
@@ -240,6 +244,7 @@
       "note": null,
       "where_used": [
         "PUBLISHABLE_UNITS.md",
+        "RESEARCH_MAP.md",
         "VERIFIED.md",
         "notes/SECURITY_SCOPE.md"
       ]
@@ -265,6 +270,7 @@
         "COVERAGE.md",
         "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
+        "RESEARCH_MAP.md",
         "REVIEW_DOSSIER.md",
         "VERIFIED.md",
         "notes/FOUNDATION_ROADMAP.md",
@@ -298,6 +304,7 @@
         "DIRECTOR_CHARTER.md",
         "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
+        "RESEARCH_MAP.md",
         "STATUS.md",
         "VERIFIED.md",
         "WORK_SCOPE.md",
@@ -369,6 +376,7 @@
         "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
+        "RESEARCH_MAP.md",
         "REVIEW_DOSSIER.md",
         "STATUS.md",
         "TRUST_REPORT.md",
