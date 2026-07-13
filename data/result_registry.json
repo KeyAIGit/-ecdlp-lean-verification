@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 508,
-  "distinct_qualified_names": 405,
-  "verified_md_citations": 186,
+  "declaration_count": 512,
+  "distinct_qualified_names": 409,
+  "verified_md_citations": 187,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -871,6 +871,14 @@
       "line": 41,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_glvHom_eq_zsmul_unconditional": {
+      "name": "secp256k1_glvHom_eq_zsmul_unconditional",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveFullGroup.lean",
+      "line": 61,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_glvHom_ne_id": {
       "name": "secp256k1_glvHom_ne_id",
       "namespace": "Ecdlp.Curve",
@@ -1039,6 +1047,14 @@
       "line": 24,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_grp_eq_top": {
+      "name": "secp256k1_grp_eq_top",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveFullGroup.lean",
+      "line": 38,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_grp_isAddCyclic": {
       "name": "secp256k1_grp_isAddCyclic",
       "namespace": "Ecdlp.Curve",
@@ -1085,6 +1101,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CurveTorsion.lean",
       "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_mem_zmultiples": {
+      "name": "secp256k1_mem_zmultiples",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveFullGroup.lean",
+      "line": 53,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_musig_key_aggregate": {
@@ -1141,6 +1165,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/TorsionCoprime.lean",
       "line": 26,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_point_isAddCyclic": {
+      "name": "secp256k1_point_isAddCyclic",
+      "namespace": "Ecdlp.Curve",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/CurveFullGroup.lean",
+      "line": 46,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_pre": {
