@@ -1,0 +1,467 @@
+<title>secp256k1 · Verified Substrate — 3D Map</title>
+<style>
+  :root{
+    --ground:#080c11; --ground2:#0c1219; --ink:#e2ebea; --dim:#93a7ad; --faint:#63757e;
+    --jade:#38cf98; --amber:#e8ad4f; --slate:#7f97a8; --rose:#e77e93; --violet:#9b8cf2;
+    --line:rgba(120,170,155,.16); --line2:rgba(120,170,155,.30);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  }
+  :root[data-theme="light"]{
+    --ground:#eef1ec; --ground2:#f6f8f3; --ink:#16221f; --dim:#4a5d58; --faint:#6c7d76;
+    --jade:#0f8f63; --amber:#a9701a; --slate:#4a6072; --rose:#b04663; --violet:#5b4bc4;
+    --line:rgba(30,70,55,.16); --line2:rgba(30,70,55,.30);
+  }
+  @media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+    --ground:#eef1ec; --ground2:#f6f8f3; --ink:#16221f; --dim:#4a5d58; --faint:#6c7d76;
+    --jade:#0f8f63; --amber:#a9701a; --slate:#4a6072; --rose:#b04663; --violet:#5b4bc4;
+    --line:rgba(30,70,55,.16); --line2:rgba(30,70,55,.30);
+  }}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:radial-gradient(1200px 800px at 62% 26%,var(--ground2),var(--ground) 78%);color:var(--ink);
+    font-family:var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased}
+  #stage{position:fixed;inset:0}
+  canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+  canvas:active{cursor:grabbing}
+
+  /* header */
+  .hd{position:fixed;top:0;left:0;right:0;padding:20px clamp(16px,3vw,34px);pointer-events:none;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:16px;z-index:6}
+  .hd .brand{pointer-events:auto}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--jade);
+    display:flex;gap:9px;align-items:center}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--jade);box-shadow:0 0 0 4px rgba(56,207,152,.16)}
+  .hd h1{font-family:var(--serif);font-size:clamp(19px,2.6vw,27px);font-weight:600;letter-spacing:-.01em;margin-top:7px;
+    line-height:1.05;text-wrap:balance}
+  .hd h1 .c{font-family:var(--mono);font-size:.72em;color:var(--jade)}
+  .hd .sub{color:var(--dim);font-size:13px;margin-top:5px;max-width:42ch}
+  .kpis{pointer-events:auto;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .kpi{background:rgba(12,20,27,.55);border:1px solid var(--line);border-radius:10px;padding:8px 12px;
+    backdrop-filter:blur(8px)}
+  :root[data-theme="light"] .kpi{background:rgba(255,255,255,.6)}
+  .kpi .n{font-family:var(--mono);font-size:19px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+  .kpi .n.g{color:var(--jade)}
+  .kpi .l{font-size:10px;color:var(--dim);margin-top:4px;letter-spacing:.02em}
+
+  .honest{position:fixed;top:calc(clamp(16px,3vw,34px) + 74px);left:clamp(16px,3vw,34px);z-index:6;pointer-events:none;
+    font-size:11.5px;color:var(--dim);background:rgba(231,126,147,.1);border:1px solid var(--line2);
+    padding:6px 11px;border-radius:999px}
+  .honest b{color:var(--rose)}
+
+  /* legend / layer filter (bottom-left) */
+  .legend{position:fixed;left:clamp(16px,3vw,34px);bottom:clamp(16px,3vw,26px);z-index:6;
+    background:rgba(12,20,27,.6);border:1px solid var(--line);border-radius:13px;padding:14px 16px;
+    backdrop-filter:blur(10px);max-width:290px}
+  :root[data-theme="light"] .legend{background:rgba(255,255,255,.66)}
+  .legend .lt{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+    margin-bottom:10px}
+  .lrow{display:flex;align-items:center;gap:10px;padding:5px 6px;border-radius:8px;cursor:pointer;
+    font-size:12.5px;color:var(--dim);user-select:none;transition:background .15s,color .15s}
+  .lrow:hover{background:rgba(120,170,155,.08)}
+  .lrow.off{opacity:.4}
+  .lrow .sw{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 8px currentColor}
+  .lrow .lc{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
+  .legend .hint{margin-top:11px;font-size:10.5px;color:var(--faint);line-height:1.5;border-top:1px solid var(--line);
+    padding-top:9px}
+
+  /* trust key (bottom-right) */
+  .tkey{position:fixed;right:clamp(16px,3vw,34px);bottom:clamp(16px,3vw,26px);z-index:6;pointer-events:none;
+    display:flex;gap:14px;background:rgba(12,20,27,.5);border:1px solid var(--line);border-radius:10px;
+    padding:8px 13px;backdrop-filter:blur(8px);font-size:11px;color:var(--dim)}
+  :root[data-theme="light"] .tkey{background:rgba(255,255,255,.6)}
+  .tkey span{display:flex;align-items:center;gap:6px}
+  .tkey i{width:9px;height:9px;border-radius:2px;display:inline-block}
+
+  /* detail panel (right) */
+  .panel{position:fixed;top:0;right:0;bottom:0;width:min(400px,86vw);z-index:8;
+    background:linear-gradient(180deg,var(--ground2),var(--ground));border-left:1px solid var(--line2);
+    transform:translateX(101%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+    padding:26px clamp(18px,2.4vw,28px);overflow-y:auto;box-shadow:-30px 0 60px -40px rgba(0,0,0,.8)}
+  .panel.open{transform:translateX(0)}
+  .panel .x{position:absolute;top:16px;right:18px;width:30px;height:30px;border-radius:8px;border:1px solid var(--line);
+    background:transparent;color:var(--dim);font-size:17px;cursor:pointer;line-height:1}
+  .panel .x:hover{color:var(--ink);border-color:var(--line2)}
+  .panel .plabel{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .panel h2{font-family:var(--serif);font-size:24px;font-weight:600;margin:12px 0 6px;line-height:1.15;text-wrap:balance}
+  .panel .pmeta{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+  .pill{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:999px;border:1px solid var(--line2)}
+  .panel .pdesc{color:var(--dim);font-size:14px;line-height:1.6;margin-bottom:18px}
+  .panel .ph{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+    margin:20px 0 10px}
+  .thm{font-family:var(--mono);font-size:12px;color:var(--ink);background:var(--ground2);border:1px solid var(--line);
+    border-radius:7px;padding:8px 10px;margin-bottom:6px;word-break:break-all}
+  :root[data-theme="light"] .thm{background:#fff}
+  .panel .caveat{font-size:12.5px;color:var(--faint);line-height:1.55;border-top:1px dashed var(--line);
+    padding-top:13px;margin-top:16px}
+  .panel .caveat b{color:var(--dim)}
+
+  /* tooltip */
+  .tip{position:fixed;z-index:9;pointer-events:none;background:rgba(8,12,17,.92);border:1px solid var(--line2);
+    border-radius:9px;padding:9px 12px;font-size:12px;color:var(--ink);max-width:250px;opacity:0;
+    transition:opacity .12s;backdrop-filter:blur(6px);transform:translate(-50%,-120%)}
+  :root[data-theme="light"] .tip{background:rgba(255,255,255,.95)}
+  .tip.show{opacity:1}
+  .tip .tn{font-family:var(--mono);font-size:10px;color:var(--jade);letter-spacing:.04em}
+  .tip .tt{margin-top:3px;font-weight:600}
+  .tip .td{margin-top:3px;color:var(--dim);font-size:11px}
+
+  /* controls hint */
+  .ctrls{position:fixed;top:clamp(16px,3vw,34px);right:calc(clamp(16px,3vw,34px));z-index:5;pointer-events:none;
+    opacity:0;animation:fade 1s ease .8s forwards}
+  @keyframes fade{to{opacity:1}}
+  .btnrow{position:fixed;bottom:clamp(16px,3vw,26px);left:50%;transform:translateX(-50%);z-index:6;
+    display:flex;gap:8px}
+  .btn{pointer-events:auto;font-family:var(--mono);font-size:11px;color:var(--dim);background:rgba(12,20,27,.6);
+    border:1px solid var(--line);border-radius:9px;padding:8px 13px;cursor:pointer;backdrop-filter:blur(8px)}
+  :root[data-theme="light"] .btn{background:rgba(255,255,255,.66)}
+  .btn:hover{color:var(--ink);border-color:var(--line2)}
+  .btn.on{color:var(--jade);border-color:var(--jade)}
+  @media (max-width:640px){ .hd{flex-direction:column} .kpis{justify-content:flex-start} .legend{display:none}
+    .honest{top:auto;bottom:74px} }
+  @media (prefers-reduced-motion: reduce){ .ctrls{animation:none;opacity:1} }
+</style>
+
+<div id="stage"><canvas id="c"></canvas></div>
+
+<div class="hd">
+  <div class="brand">
+    <div class="eyebrow"><span class="dot"></span>KeyAI · Lean 4 + Mathlib · kernel-verified</div>
+    <h1>The <span class="c">secp256k1</span> ECDLP substrate</h1>
+    <div class="sub">A navigable map of every machine-checked result — orbit to explore, click a cluster to inspect.</div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="n">228</div><div class="l">ledger rows</div></div>
+    <div class="kpi"><div class="n">100</div><div class="l">proved modules</div></div>
+    <div class="kpi"><div class="n g">0</div><div class="l">sorry</div></div>
+    <div class="kpi"><div class="n g">0</div><div class="l">axioms</div></div>
+  </div>
+</div>
+<div class="honest">This substrate does <b>NOT</b> break secp256k1 — prime-field ECDLP hardness stays an open conjecture.</div>
+
+<div class="legend">
+  <div class="lt">Research layers · click to toggle</div>
+  <div id="layers"></div>
+  <div class="hint">Drag to orbit · scroll to zoom · hover a node · click a cluster for detail.</div>
+</div>
+
+<div class="tkey">
+  <span><i style="background:var(--jade)"></i>pure-kernel</span>
+  <span><i style="background:var(--amber)"></i>native_decide</span>
+  <span><i style="background:var(--slate)"></i>mixed</span>
+</div>
+
+<div class="btnrow">
+  <button class="btn on" id="spin">◐ auto-rotate</button>
+  <button class="btn" id="reset">⟲ reset view</button>
+  <button class="btn" id="theme">◑ theme</button>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<aside class="panel" id="panel">
+  <button class="x" id="px">✕</button>
+  <div id="pbody"></div>
+</aside>
+
+<script>
+(function(){
+  "use strict";
+  var css=function(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();};
+
+  // ---------- DATA: the substrate ----------
+  // layers: keystone(0) structural(1) attack(2) experiments(3) barriers(4)
+  var LAYERS=[
+    {id:0,name:"Keystone foundations",color:"--jade",r:0},
+    {id:1,name:"secp256k1 structural",color:"--jade",r:1},
+    {id:2,name:"Attack models",color:"--amber",r:1},
+    {id:3,name:"Experiments · scaling",color:"--amber",r:2},
+    {id:4,name:"No-go · barriers",color:"--slate",r:3}
+  ];
+  var FAM=[
+    {n:"#E(𝔽ₚ)=n keystone",layer:0,trust:"native_decide",count:14,kind:"keystone",
+     desc:"The strong keystone: E(𝔽ₚ) has exactly n points — cofactor 1 — proved curve-specifically without Hasse or Schoof. n∣#E and #E≤2p+1<3n force #E∈{n,2n}; 2n is excluded because E[2]={O} (−7 is not a cube in 𝔽ₚ).",
+     thms:["secp256k1_card_point_eq_n","secp256k1_no_nonzero_two_torsion","secp256k1_card_point_le","secp256k1_n_dvd_card_point"],
+     cav:"Gives the rational group structure (cofactor 1) — distinct from the geometric E[n]≅(ℤ/n)², which stays open. native_decide non-cube leaf."},
+    {n:"Pratt primality of p & n",layer:0,trust:"native_decide",count:4,
+     desc:"Full recursive Lucas/Pocklington certificates that the field prime p and group order n are prime (and for NIST P-256) — discharging the [Fact Nat.Prime] instances the whole structure rests on.",
+     thms:["secp256k1_p_prime","secp256k1_n_prime","p256_p_prime","p256_n_prime"],
+     cav:"256-bit modexp leaves trust the Lean compiler (ofReduceBool), minimised to bounded leaves; re-checked by pratt_certificate.py."},
+    {n:"ℤ/n ≅ ⟨G⟩ + weak keystone",layer:0,trust:"mixed",count:15,
+     desc:"addOrderOf G = n (⟨G⟩ cyclic of order exactly n, without Hasse/Schoof), giving #⟨G⟩=n, the iso ℤ/n ≃⁺ ⟨G⟩, and no proper subgroup.",
+     thms:["secp256k1_generator_addOrderOf","secp256k1_dlogEquiv","secp256k1_grp_card","secp256k1_scalar_no_proper_subgroup"],
+     cav:"The iso is an unconditional bijection — its inversion (the discrete log) is the open ECDLP conjecture, not proved hard."},
+    {n:"Multi-curve grounding",layer:0,trust:"mixed",count:18,
+     desc:"secp256k1 (j=0, CM/GLV), NIST P-256, and Curve25519 (Montgomery, cofactor 8) instantiated as genuine Mathlib EllipticCurves with base points verified on-curve.",
+     thms:["secp256k1_j_eq_zero","P256_Δ_ne_zero","Curve25519_Δ_ne_zero","secp256k1_generator_equation"],
+     cav:"The substrate only — well-formed curves with rational base points; no security or hardness claim."},
+    {n:"Torsion ladder + ψₙ coprimality",layer:1,trust:"mixed",count:55,
+     desc:"ψ₂..ψ₇ with degrees, point-level bridges n·P=0⇔ψₙ(P)=0 for n∈{2,3,5,7}, small-prime order classification, #E[n]≤n² ceilings, and the {2,3,5,7} pairwise-coprimality matrix via Bézout certificates.",
+     thms:["secp256k1_smallprime_addOrderOf","secp256k1_three_torsion_card_le","secp256k1_isCoprime_Ψ₂Sq_Ψ₃","secp256k1_odd_torsion_x_card_le"],
+     cav:"Upper bounds & a finite matrix only — E[n]≅(ℤ/n)² and general gcd(Φₙ,ψₙ²)=1 not proved; ψₙ↔E[n] only for {2,3,5,7}."},
+    {n:"GLV / CM endomorphism",layer:1,trust:"mixed",count:30,
+     desc:"(x,y)↦(βx,y) preserves the curve, is an order-3 automorphism with φ²+φ+1=0, acts as scalar [λ] on ⟨G⟩, and as a scoped no-go is exponent-preserving on any DLP instance.",
+     thms:["secp256k1_glv_cube_relation","glvPoint_add","secp256k1_glvPoint_eq_lam_on_zmultiples","secp256k1_glvHom_eq_zsmul"],
+     cav:"glvPoint=[λ] on ⟨G⟩ & conditional on cyclicity; full-group eigenvalue gated on #E=n. As a no-go: only a ~√3 constant."},
+    {n:"Semaev S₃ / S₄",layer:1,trust:"pure-kernel",count:14,
+     desc:"First Lean formalization of Semaev's 3rd & 4th summation polynomials: the full iff for S₃ tied to Mathlib's group law, S₄ via resultant, and the point-decomposition reduction index calculus rests on.",
+     thms:["S₃_eq_zero_iff","secp256k1_semaev_three_point","S₄_common_root_of_eq_zero","secp256k1_point_decomposition_semaev"],
+     cav:"A construction, not an attack: records where 2-term decompositions live, not the cost of finding them."},
+    {n:"Weil divisor foundations W1–W3",layer:1,trust:"pure-kernel",count:13,
+     desc:"The early Weil ladder on Mathlib's Abel–Jacobi map: torsion⇔principal divisor (W1), Miller-function existence & uniqueness (W2/W3), and a point-evaluation layer Mathlib lacked.",
+     thms:["secp256k1_torsion_iff_principal","secp256k1_miller_function_exists","evalRatAt_ne_zero_iff_isUnit","xyIdeal_isMaximal"],
+     cav:"Foundations only — no pairing is computed; Weil reciprocity (W4) and eₙ→μₙ (W5) remain open."},
+    {n:"Discrete-log protocol algebra",layer:1,trust:"pure-kernel",count:40,
+     desc:"Schnorr/EdDSA, DH, ElGamal, Pedersen, MuSig2/FROST, Feldman VSS, adaptor/blind Schnorr, ECDSA nonce-reuse recovery, Shamir SSS — over any ℤ/n-module, instantiated on the real ⟨G⟩.",
+     thms:["schnorr_extract","ecdsa_nonce_reuse_recovers","secp256k1_schnorr_verify","secp256k1_dh_agree"],
+     cav:"Protocol algebra, not security — no adversary, hash, random-oracle, or probability model."},
+    {n:"Generic-group Ω(√n) bound",layer:2,trust:"mixed",count:20,
+     desc:"Any generic (black-box) DL solver needs Ω(√n) queries — matched above by baby-step/giant-step and Pollard-rho; instantiated as ≥128-bit generic security (2¹²⁷<q).",
+     thms:["generic_dlog_query_bound","secp256k1_generic_security","bsgs_decomp","pollard_rho_collision"],
+     cav:"Generic/black-box only — silent on non-generic attacks; classical, false against Shor. Only the collision core, not the full adaptive Shoup theorem."},
+    {n:"Transfer-resistance (anti-MOV / anti-Smart)",layer:2,trust:"native_decide",count:7,
+     desc:"No small embedding degree (pᵏ≢1 mod n, k≤100 — blocks MOV/Frey–Rück) and trace t≠0 (ordinary), t≠1 (non-anomalous, Smart/SSSA inapplicable), t²≤4p (Hasse).",
+     thms:["secp256k1_embedding_degree_gt_100","secp256k1_trace_ordinary_nonanomalous","anomalous_iff_trace_one"],
+     cav:"Rules out known transfer attacks (k≤100; conditional on #E=n). Attack mechanisms stay blocked — no pairing in Mathlib."}
+  ];
+  var EXP=[
+    {n:"P0 · pair-sum lookup",trust:"exp",count:6,verdict:"partial negative",
+     desc:"m=2 Semaev pair-sum enumeration; yield ≈ c·B²/p, GLV moves only the constant (~3× storage), no exponent change.",
+     cav:"Not an index-calculus algorithm; no degree of regularity, no m≥3."},
+    {n:"P1 · S₃ solving",trust:"exp",count:6,verdict:"partial negative",
+     desc:"Solve S₃=0 per factor-base coord; spurious-root rate 0 in all 12 settings — the empirical signature of Semaev's iff-theorem.",
+     cav:"No m≥3, no Gröbner cost, no faithful Petit, no asymptotics."},
+    {n:"P1-m3 · S₄ solving",trust:"exp",count:6,verdict:"partial negative",
+     desc:"Solve S₄=Res(S₃,S₃)=0 over base pairs; spurious 0 across 10 settings vs an independent triple brute force.",
+     cav:"No polynomial system, no degree of regularity, not subexponential."},
+    {n:"P3 · the S_m SYSTEM",trust:"exp",count:6,verdict:"partial negative",
+     desc:"Build & Gröbner-solve {Sₘ₊₁=0, f_F=0}; m=2 solving degree 2|F|+1, u=x³ no advantage (same variety, larger/slower).",
+     cav:"The degree is an UNVALIDATED pure-Python Macaulay proxy — needs external Singular/Sage/msolve."},
+    {n:"P4 · composed-map base",trust:"exp",count:6,verdict:"partial negative",
+     desc:"Composed low-degree-map factor base; at |F|=4 d_reg 7<9 but ~100× larger matrix / ~4300× slower — no net advantage.",
+     cav:"NOT faithful Petit — a prime field affords no Weil descent; a single point, not a growth law."},
+    {n:"P2 · Ward / EDS",trust:"exp",count:5,verdict:"confirmatory",
+     desc:"Rank of apparition ρ(P)=ord(P); confirms the classical Wₙ=0⟺[n]P=O and nothing more.",
+     cav:"Not an attack: computing ρ(P) is Θ(ord P) — the same cost as the DLP."}
+  ];
+  var BAR=[
+    {n:"B1 · no cost model in Lean",trust:"bar",count:9,desc:"No group-operation / oracle-query cost framework in Mathlib — complexity claims can only be stated as structural corollaries.",cav:"~54 corpus claims blocked."},
+    {n:"B2 · no lattice / no quantum model",trust:"bar",count:9,desc:"No lattice reduction (LLL/BKZ, HNP biased-nonce ECDSA) and no quantum circuit cost model (Shor resource estimates) in Mathlib.",cav:"~62 corpus claims blocked."},
+    {n:"B3 · curve & polynomial depth",trust:"bar",count:8,desc:"Mathlib has the base objects but not the ECDLP superstructure: the general Semaev tower, the Weil pairing, E[n]≅(ℤ/n)², general point counting.",cav:"~33 corpus claims; resistances closed without it."},
+    {n:"General ψₙ↔E[n] bridge",trust:"bar",count:5,desc:"The general-n division-polynomial ↔ torsion correspondence — needs machinery absent from Mathlib v4.31 (stalled upstream PR #13782).",cav:"Proved only for n=2,3,5,7."},
+    {n:"The Weil pairing itself (W4/W5)",trust:"bar",count:5,desc:"Weil reciprocity and the pairing map eₙ:E[n]×E[n]→μₙ — genuine multi-month Mathlib gaps.",cav:"Only W1–W3 landed."},
+    {n:"General Hasse / Schoof",trust:"bar",count:5,desc:"Point counting for arbitrary curves — no Frobenius-trace char. polynomial, no Schoof. The #E=n proof is curve-specific, not this.",cav:"A multi-month research-grade port."}
+  ];
+
+  var TRUST={"pure-kernel":"--jade","native_decide":"--amber","mixed":"--slate","exp":"--amber","bar":"--slate","keystone":"--jade"};
+
+  // ---------- seeded PRNG ----------
+  var seed=20260713; function rnd(){seed=(seed*1664525+1013904223)&0x7fffffff;return seed/0x7fffffff;}
+
+  // ---------- build node cloud ----------
+  var nodes=[]; // {x,y,z, r, color, layer, famRef, big}
+  function addCluster(items, layerObj, radial, isRing){
+    var N=items.length;
+    items.forEach(function(f,i){
+      var ang = (i/N)*Math.PI*2 + layerObj.id*0.6;
+      var cx, cy, cz;
+      if(isRing){ // experiments: a tilted orbiting ring
+        cx=Math.cos(ang)*radial; cz=Math.sin(ang)*radial; cy=Math.sin(ang*2)*22 + 46;
+      } else if(radial===0){ // foundation core: keystone dead-center, others on a tight shell
+        if(f.kind==="keystone"){ cx=0; cy=0; cz=0; }
+        else { var e2=(rnd()-.5)*1.2;
+          cx=Math.cos(ang)*66*Math.cos(e2); cz=Math.sin(ang)*66*Math.cos(e2); cy=Math.sin(e2)*46; }
+      } else {
+        var el=(rnd()-.5)*1.1;
+        cx=Math.cos(ang)*radial*Math.cos(el);
+        cz=Math.sin(ang)*radial*Math.cos(el);
+        cy=Math.sin(el)*radial*0.66;
+      }
+      f._c=[cx,cy,cz]; f._layer=layerObj;
+      var m=Math.max(3,Math.min(14,Math.round(f.count/4)));
+      // the family's own anchor node (bigger)
+      nodes.push({x:cx,y:cy,z:cz,r:isRing?4.2:(radial===0?7:5.2),color:TRUST[f.trust],fam:f,big:true,layer:layerObj});
+      for(var k=0;k<m;k++){
+        var spread = radial===0?26:(isRing?9:15);
+        nodes.push({x:cx+(rnd()-.5)*spread,y:cy+(rnd()-.5)*spread,z:cz+(rnd()-.5)*spread,
+          r:1.1+rnd()*1.7,color:TRUST[f.trust],fam:f,big:false,layer:layerObj});
+      }
+    });
+  }
+  addCluster(FAM.filter(function(f){return f.layer===0;}),LAYERS[0],0,false);
+  addCluster(FAM.filter(function(f){return f.layer===1;}),LAYERS[1],150,false);
+  addCluster(FAM.filter(function(f){return f.layer===2;}),LAYERS[2],196,false);
+  addCluster(EXP,LAYERS[3],248,true);
+  addCluster(BAR,LAYERS[4],300,false);
+
+  // edges: keystone core -> each family anchor; intra-cluster faint
+  var anchors=nodes.filter(function(n){return n.big;});
+  var core=anchors.find(function(a){return a.fam.kind==="keystone";});
+  var edges=[];
+  anchors.forEach(function(a){ if(a!==core && a.layer.id<3) edges.push([core,a]); });
+  // structural bridges
+  function bridge(nameA,nameB){var A=anchors.find(function(a){return a.fam.n===nameA;});var B=anchors.find(function(a){return a.fam.n===nameB;});if(A&&B)edges.push([A,B]);}
+  bridge("Torsion ladder + ψₙ coprimality","GLV / CM endomorphism");
+  bridge("Semaev S₃ / S₄","Weil divisor foundations W1–W3");
+  bridge("ℤ/n ≅ ⟨G⟩ + weak keystone","Discrete-log protocol algebra");
+  bridge("Generic-group Ω(√n) bound","Transfer-resistance (anti-MOV / anti-Smart)");
+
+  // ---------- 3D engine (canvas 2D projection) ----------
+  var cv=document.getElementById("c"), ctx=cv.getContext("2d"), W=0,H=0,DPR=1;
+  var yaw=0.6, pitch=-0.32, dist=430, targetDist=430;
+  var dragging=false, lastX=0,lastY=0, autoSpin=true, vyaw=0;
+  var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hidden={0:false,1:false,2:false,3:false,4:false};
+
+  function resize(){ DPR=Math.min(2,window.devicePixelRatio||1); W=cv.clientWidth; H=cv.clientHeight;
+    cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0); }
+  window.addEventListener("resize",resize); resize();
+
+  function project(p){
+    var cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+    var x=p.x*cy - p.z*sy;
+    var z=p.x*sy + p.z*cy;
+    var y=p.y*cp - z*sp;
+    z=p.y*sp + z*cp;
+    var f=520/(dist+z);
+    return {sx:W/2 + x*f, sy:H/2 + y*f, depth:z, scale:f};
+  }
+  function hex(varname){ // resolve css var to rgba with alpha helper
+    var v=css(varname)||"#38cf98"; return v;
+  }
+
+  var mouse={x:-999,y:-999}, hoverNode=null;
+  function frame(){
+    if(autoSpin && !dragging && !reduce){ yaw+=0.0016; }
+    if(!dragging){ yaw+=vyaw; vyaw*=0.92; if(Math.abs(vyaw)<0.0001)vyaw=0; }
+    dist += (targetDist-dist)*0.12;
+
+    ctx.clearRect(0,0,W,H);
+    // projected
+    var pr=[]; for(var i=0;i<nodes.length;i++){var n=nodes[i]; if(hidden[n.layer.id])continue; var q=project(n); q.n=n; pr.push(q);}
+    pr.sort(function(a,b){return b.depth-a.depth;});
+
+    // edges (behind)
+    ctx.lineWidth=1;
+    for(var e=0;e<edges.length;e++){
+      var A=edges[e][0],B=edges[e][1]; if(hidden[A.layer.id]||hidden[B.layer.id])continue;
+      var pa=project(A),pb=project(B);
+      var g=ctx.createLinearGradient(pa.sx,pa.sy,pb.sx,pb.sy);
+      var ca=css(A.color),cb=css(B.color);
+      g.addColorStop(0,alpha(ca,.05)); g.addColorStop(.5,alpha(ca,.20)); g.addColorStop(1,alpha(cb,.05));
+      ctx.strokeStyle=g; ctx.beginPath(); ctx.moveTo(pa.sx,pa.sy); ctx.lineTo(pb.sx,pb.sy); ctx.stroke();
+    }
+
+    // nodes
+    hoverNode=null; var best=1e9; var labelCands=[];
+    for(var j=0;j<pr.length;j++){
+      var q=pr[j], n=q.n; if(q.scale<=0)continue;
+      var rad=n.r*q.scale*1.05;
+      var fog=Math.max(.12,Math.min(1,(320-q.depth)/460));
+      var col=css(n.color);
+      // glow for big/keystone
+      if(n.big){
+        var gl=ctx.createRadialGradient(q.sx,q.sy,0,q.sx,q.sy,rad*(n.fam&&n.fam.kind==="keystone"?7:4.5));
+        gl.addColorStop(0,alpha(col,(n.fam&&n.fam.kind==="keystone"?.5:.28)*fog));
+        gl.addColorStop(1,alpha(col,0));
+        ctx.fillStyle=gl; ctx.beginPath(); ctx.arc(q.sx,q.sy,rad*(n.fam&&n.fam.kind==="keystone"?7:4.5),0,7); ctx.fill();
+      }
+      ctx.beginPath(); ctx.arc(q.sx,q.sy,rad,0,7);
+      ctx.fillStyle=alpha(col, n.big?fog:fog*0.7); ctx.fill();
+      if(n.big){ ctx.lineWidth=1.2; ctx.strokeStyle=alpha(col,fog); ctx.stroke(); }
+      // hover pick (anchors only)
+      if(n.big){ var dx=q.sx-mouse.x, dy=q.sy-mouse.y, d=dx*dx+dy*dy; if(d<Math.max(320,rad*rad*9) && d<best){best=d;hoverNode={n:n,sx:q.sx,sy:q.sy};} }
+      // collect label candidates (rendered after, near-first, with collision avoidance)
+      if(n.big){ var isKey=n.fam.kind==="keystone";
+        if(isKey || fog>0.5){ var lbl=n.fam.n.length>28?n.fam.n.slice(0,27)+"…":n.fam.n;
+          labelCands.push({x:q.sx,y:q.sy-rad-8,text:lbl,fog:isKey?9:fog,key:isKey}); } }
+    }
+    // labels: near-first, skip screen-space overlaps
+    ctx.textAlign="center";
+    ctx.font="600 11px "+(css("--mono").split(",")[0]||"monospace")+", monospace";
+    labelCands.sort(function(a,b){return b.fog-a.fog;});
+    var placed=[];
+    for(var L=0;L<labelCands.length;L++){
+      var c=labelCands[L], w=ctx.measureText(c.text).width, bx=c.x-w/2-4, by=c.y-11, bw=w+8, bh=16, ok=true;
+      for(var pI=0;pI<placed.length;pI++){var pb=placed[pI];
+        if(bx<pb.x+pb.w && bx+bw>pb.x && by<pb.y+pb.h && by+bh>pb.y){ok=false;break;}}
+      if(!ok) continue;
+      placed.push({x:bx,y:by,w:bw,h:bh});
+      var la=c.key?1:Math.min(1,(c.fog-0.5)*2.6);
+      if(c.key){ ctx.fillStyle=alpha(css("--jade"),1); ctx.font="700 12px "+(css("--mono").split(",")[0]||"monospace")+", monospace"; }
+      else { ctx.fillStyle=alpha(css("--ink"),la); ctx.font="600 11px "+(css("--mono").split(",")[0]||"monospace")+", monospace"; }
+      ctx.fillText(c.text, c.x, c.y);
+    }
+    updateTip();
+    requestAnimationFrame(frame);
+  }
+  function alpha(c,a){ // c is #rrggbb or rgb()
+    if(c.charAt(0)==="#"){var r=parseInt(c.substr(1,2),16),g=parseInt(c.substr(3,2),16),b=parseInt(c.substr(5,2),16);return "rgba("+r+","+g+","+b+","+a+")";}
+    return c;
+  }
+
+  // ---------- interaction ----------
+  var tip=document.getElementById("tip");
+  function updateTip(){
+    if(hoverNode){ tip.classList.add("show"); tip.style.left=hoverNode.sx+"px"; tip.style.top=hoverNode.sy+"px";
+      var f=hoverNode.n.fam;
+      tip.innerHTML='<div class="tn">'+(f.verdict?("experiment · "+f.verdict):(f.trust==="bar"?"barrier":f.trust))+'</div><div class="tt">'+f.n+'</div><div class="td">'+(f.count||"")+(f.count?" · ":"")+'click to inspect</div>';
+      cv.style.cursor="pointer";
+    } else { tip.classList.remove("show"); cv.style.cursor=dragging?"grabbing":"grab"; }
+  }
+  cv.addEventListener("pointermove",function(ev){
+    var rect=cv.getBoundingClientRect(); mouse.x=ev.clientX-rect.left; mouse.y=ev.clientY-rect.top;
+    if(dragging){ var dx=ev.clientX-lastX, dy=ev.clientY-lastY; yaw+=dx*0.006; pitch+=dy*0.006;
+      pitch=Math.max(-1.4,Math.min(1.4,pitch)); vyaw=dx*0.006*0.4; lastX=ev.clientX; lastY=ev.clientY; }
+  });
+  cv.addEventListener("pointerdown",function(ev){ dragging=true; lastX=ev.clientX; lastY=ev.clientY; cv.setPointerCapture(ev.pointerId); });
+  cv.addEventListener("pointerup",function(ev){ dragging=false;
+    // click = pick (if small movement)
+    if(hoverNode){ openPanel(hoverNode.n.fam); }
+  });
+  cv.addEventListener("pointerleave",function(){ mouse.x=-999;mouse.y=-999; });
+  cv.addEventListener("wheel",function(ev){ ev.preventDefault(); targetDist=Math.max(180,Math.min(720,targetDist+ev.deltaY*0.4)); },{passive:false});
+
+  // ---------- panel ----------
+  var panel=document.getElementById("panel"), pbody=document.getElementById("pbody");
+  function openPanel(f){
+    var isExp=!!f.verdict, isBar=f.trust==="bar";
+    var col=css(TRUST[f.trust]||"--jade");
+    var badge=isExp?("experiment · "+f.verdict):(isBar?"barrier":f.trust);
+    var thms=(f.thms||[]).map(function(t){return '<div class="thm">'+t+'</div>';}).join("");
+    pbody.innerHTML=
+      '<div class="plabel" style="color:'+col+'">'+ (f._layer?f._layer.name:(isExp?"Experiments · scaling":"No-go · barriers")) +'</div>'+
+      '<h2>'+f.n+'</h2>'+
+      '<div class="pmeta"><span class="pill" style="color:'+col+'">'+badge+'</span>'+
+        (f.count?'<span class="pill" style="color:var(--faint)">'+f.count+(isBar?" claims":" rows")+'</span>':'')+'</div>'+
+      '<div class="pdesc">'+f.desc+'</div>'+
+      (thms?('<div class="ph">key theorems</div>'+thms):'')+
+      '<div class="caveat"><b>'+(isExp?"NOT established":(isBar?"blocked on":"honest scope"))+'.</b> '+f.cav+'</div>';
+    panel.classList.add("open");
+  }
+  document.getElementById("px").onclick=function(){ panel.classList.remove("open"); };
+
+  // ---------- layer legend ----------
+  var layersEl=document.getElementById("layers");
+  LAYERS.forEach(function(L){
+    var cnt=nodes.filter(function(n){return n.big && n.layer.id===L.id;}).length;
+    var row=document.createElement("div"); row.className="lrow"; row.dataset.id=L.id;
+    row.innerHTML='<span class="sw" style="color:'+css(L.color)+';background:'+css(L.color)+'"></span>'+L.name+'<span class="lc">'+cnt+'</span>';
+    row.onclick=function(){ hidden[L.id]=!hidden[L.id]; row.classList.toggle("off",hidden[L.id]); };
+    layersEl.appendChild(row);
+  });
+
+  // ---------- buttons ----------
+  var spinBtn=document.getElementById("spin");
+  spinBtn.onclick=function(){ autoSpin=!autoSpin; spinBtn.classList.toggle("on",autoSpin); };
+  document.getElementById("reset").onclick=function(){ yaw=0.6;pitch=-0.32;targetDist=430;vyaw=0; panel.classList.remove("open"); };
+  document.getElementById("theme").onclick=function(){
+    var r=document.documentElement, cur=r.getAttribute("data-theme");
+    var next = cur==="light" ? "dark" : (cur==="dark" ? "light" : (matchMedia("(prefers-color-scheme: dark)").matches?"light":"dark"));
+    r.setAttribute("data-theme",next);
+  };
+
+  requestAnimationFrame(frame);
+})();
+</script>
