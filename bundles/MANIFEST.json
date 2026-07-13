@@ -73,7 +73,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 85886
+        "bytes": 86815
       },
       {
         "path": "BARRIERS.md",
@@ -141,7 +141,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 85886
+        "bytes": 86815
       },
       {
         "path": "BARRIERS.md",
@@ -171,7 +171,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 184030
+        "bytes": 186253
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
