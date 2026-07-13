@@ -219,6 +219,21 @@ These are coherent enough to publish but are secondary to Units 1–3.
   (`secp256k1_{three,five,seven}_torsion_card_le`, tight `secp256k1_two_torsion_ncard_le ≤ 4`) via a
   ≤2-to-1 fiber argument that dodges point counting. Caveat: `n`-specific (no general-`n` bridge —
   that is the open rung-4 gap, `notes/FOUNDATIONS.md`). Venue: ITP.
+- **Division-polynomial coprimality family (one family unit — NOT one result per pair).**
+  Explicit 𝔽_p Bézout certificates `IsCoprime ψ_m ψ_n` for the low prime/prime-power pairs
+  `{2⊥3, 3⊥4, 2⊥4, 3⊥5, 2⊥5, 3⊥7}` (`Ecdlp/Proved/CoprimePsi*.lean`), each certifying that the
+  affine `m`- and `n`-division-polynomial `x`-loci are disjoint — i.e. **no nonidentity point is
+  annihilated by both `m` and `n`**. *Honest classification (per external review):* these are
+  **computed certificates**, not novel mathematics — each is a cheap `native_decide`/CAS instance of
+  the one-line group fact (`gcd(m,n)=1`, Bézout `am+bn=1` ⇒ `[m]P=[n]P=O ⟹ P=O`); the *general*
+  statement `IsCoprime ψ_m ψ_n` for all coprime `m,n` is the right unit but needs the
+  `ψ_n(x)=0 ⟺ x∈E[n]` torsion↔root bridge (a missing Mathlib keystone) plus separability. The
+  genuinely reusable output is not the matrix but **(i)** the first explicit-form theorems for the
+  5- and 7-division polynomials `secp256k1_preΨ₅`/`preΨ₇` (via Mathlib `preΨ'_odd`), and **(ii)** the
+  observation that each resultant's prime support equals the curve's bad-reduction primes `{2,3,7}`.
+  **Do not headline-count each pair.** Value: substrate/regression fixtures + a division-polynomial
+  library contribution; novelty low, ECDLP impact none. Venue: at most an artifact/Mathlib PR, not a
+  standalone paper.
 - **The GLV/CM endomorphism, homomorphism half + no-go.** `glvPoint_add`/`glvHom` (additive
   endomorphism), `secp256k1_glv_cube_relation`/`glvHom_minpoly` (`φ²+φ+1=0`),
   `secp256k1_glvHom_ne_id` (primitive cube root ⇒ genuine CM by `ℤ[ζ₃]`), and the no-go
