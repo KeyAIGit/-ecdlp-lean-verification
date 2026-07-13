@@ -102,4 +102,8 @@ import Ecdlp.Proved.SubgroupOrder
 import Ecdlp.Proved.CurveCardinality
 import Ecdlp.Proved.CurveCardinalityExact
 import Ecdlp.Proved.CurveFullGroup
+<<<<<<< HEAD
 import Ecdlp.Proved.FrobeniusCM
+=======
+import Ecdlp.Proved.GlvDivPoly
+>>>>>>> origin/main

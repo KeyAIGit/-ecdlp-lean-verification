@@ -32,6 +32,11 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_glv_preserves_dlog
 #print axioms Ecdlp.Curve.secp256k1_glv_single_scalar
 
+-- GLV covariance law for the division polynomials: ψ_m(βx)=β^((m²-1)/2)ψ_m(x)
+#print axioms Ecdlp.Curve.secp256k1_Ψ₃_eval_glv
+#print axioms Ecdlp.Curve.secp256k1_preΨ₅_eval_glv_invariant
+#print axioms Ecdlp.Curve.secp256k1_preΨ₇_eval_glv_invariant
+
 -- secp256k1 as a Mathlib elliptic curve
 #print axioms Ecdlp.Curve.secp256k1_j_eq_zero
 #print axioms Ecdlp.Curve.secp256k1_generator_nonsingular

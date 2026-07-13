@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 517,
-  "distinct_qualified_names": 414,
+  "declaration_count": 522,
+  "distinct_qualified_names": 415,
   "verified_md_citations": 188,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -589,7 +589,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomial.lean",
       "line": 50,
-      "occurrences": 16
+      "occurrences": 18
     },
     "Ecdlp.Curve.secp256k1_G": {
       "name": "secp256k1_G",
@@ -638,6 +638,14 @@
       "file": "Ecdlp/Proved/DivisionPolynomial.lean",
       "line": 30,
       "occurrences": 4
+    },
+    "Ecdlp.Curve.secp256k1_beta_cube": {
+      "name": "secp256k1_beta_cube",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvDivPoly.lean",
+      "line": 58,
+      "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_beta_mul_Gx_ne_Gx": {
       "name": "secp256k1_beta_mul_Gx_ne_Gx",
@@ -1221,7 +1229,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi3Psi5.lean",
       "line": 40,
-      "occurrences": 10
+      "occurrences": 12
     },
     "Ecdlp.Curve.secp256k1_psi2_evalEval": {
       "name": "secp256k1_psi2_evalEval",
