@@ -100,3 +100,4 @@ import Ecdlp.Proved.GlvSubgroupEigenvalue
 import Ecdlp.Proved.ProtocolInstantiation
 import Ecdlp.Proved.SubgroupOrder
 import Ecdlp.Proved.CurveCardinality
+import Ecdlp.Proved.CurveCardinalityExact
