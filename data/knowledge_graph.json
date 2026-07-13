@@ -4427,12 +4427,12 @@
     },
     {
       "from": "Ecdlp",
-      "to": "Ecdlp.Proved.FrobeniusCM",
+      "to": "Ecdlp.Proved.GlvDivPoly",
       "type": "imports"
     },
     {
       "from": "Ecdlp",
-      "to": "Ecdlp.Proved.GlvDivPoly",
+      "to": "Ecdlp.Proved.FrobeniusCM",
       "type": "imports"
     },
     {
