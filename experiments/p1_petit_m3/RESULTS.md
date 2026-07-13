@@ -6,8 +6,8 @@ relation step, done by SOLVING the 4th summation polynomial rather than enumerat
 ## Method (measured, honestly bounded)
 - Toy curves `E_b: y²=x³+b` over `p≡1 (mod 3)`, cofactor 1 (prime subgroup), from the corrected
   P0 generator.
-- For a target `R` and each **ordered pair** `(x_i, x_j)` of factor-base x-coordinates, form
-  `S₄(x_i, x_j, X, x_R) = Res_X( S₃(x_i,x_j,X), S₃(X,x_R,·) )` — a polynomial of degree ≤4 in the
+- For a target `R` and each **unordered distinct-index pair** `(x_i, x_j)` of factor-base x-coordinates, form
+  `S₄(x_i, x_j, X, x_R) = Res_Y( S₃(x_i,x_j,Y), S₃(X,x_R,Y) )` — a polynomial of degree ≤4 in the
   unknown `x_k` — and find its `F_p` roots. Each root `x_k` in the base is CONFIRMED by actual
   `ec_add` over the 8 sign patterns `±P_i ± P_j ± P_k = R`. Cost is **O(|F|²·deg-4-solve)** per
   target — reported as measured; this is **not** a subexponential index-calculus algorithm.
@@ -37,13 +37,15 @@ observed. `spurious_roots = 0` and `s4_nonzero_roots = 0` in every setting — t
 signature that a factor-base `S₄` root always lifts to a real EC 3-term relation.
 
 ## Independent cross-check (the anti-overclaim gate)
-`validate.py` re-derives 3-term relations by an INDEPENDENT **O(|F|³) brute-force** triple
-`ec_add` enumeration (no `S₄` involved) and asserts the `S₄`-solve set is identical: **600 targets
+`validate.py` re-derives distinct-index 3-term relations by an **O(|F|³) brute-force** triple
+`ec_add` enumeration independent of `S₄` and asserts the `S₄`-solve set is identical: **600 targets
 across 5 configs, 105 relations, S4-solve == brute-force, spurious=0, s4_nonzero=0 → VALIDATION:
-PASS.** The solver is thus certified complete (finds every real relation) and sound (invents none)
-on the tested instances.
+PASS.** Thus the two paths agree on the tested toy instances for relations using three distinct
+factor-base indices. Repeated-index decompositions were excluded from both paths. The brute-force
+path reuses `confirm_relation3`, so this is not a separately implemented EC oracle.
 
 ## What this does NOT establish
+- It does **not** establish completeness for decompositions with repeated factor-base indices.
 - It does **not** test m ≥ 4 systems, the **degree of regularity**, or any **Gröbner-basis**
   relation-collection cost — no polynomial system is built or reduced; roots are found directly.
 - It does **not** implement a faithful **Petit composed low-degree rational-map** construction.
