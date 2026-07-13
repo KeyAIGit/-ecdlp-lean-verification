@@ -1,0 +1,494 @@
+{
+  "schema_version": 1,
+  "hypothesis": "HYP_GLV_SEMAEV_001",
+  "variant": "p4-petit-factorbase",
+  "params": {
+    "seed": 1,
+    "dreg_grid": [
+      [
+        16,
+        "product_2aux",
+        2,
+        2,
+        9,
+        20
+      ],
+      [
+        16,
+        "single_aux_composed",
+        4,
+        2,
+        9,
+        20
+      ]
+    ],
+    "rel_grid": [
+      [
+        16,
+        "product_2aux",
+        3,
+        2,
+        40
+      ],
+      [
+        16,
+        "single_aux_composed",
+        6,
+        2,
+        40
+      ]
+    ],
+    "method": "composed low-degree map factor base {S_{m+1}=0, X_i=phi(aux), g(aux)=0} vs raw P3 baseline {S_{m+1}=0, f_F(X_i)=0}; lex-Groebner variety + graded Macaulay degree-of-regularity; every relation EC-re-verified. HONEST APPROXIMATION to Petit (prime field, no Weil descent)."
+  },
+  "git_commit": "453cba34824b2877725c7d43a79d40aa4f6bc0f3",
+  "command": [
+    "run.py"
+  ],
+  "code_hashes": {
+    "experiments/p4_petit/semaev_petit.py": "4c7c6e91f2d0f90c91f3fe3ead2f2025226716516e365f9a2c5c175551717fe1",
+    "experiments/p4_petit/run.py": "4b3c49fbfff4cf1be1159da6d61ae5605567173375b1dd9b121fb54c2ac87262",
+    "experiments/p3_sm_system/semaev_system.py": "b3d692d11310a2ec49e6edce7244439ddb997efb0bac4e62d53e91202a9056ce",
+    "experiments/p1_petit/semaev_solve.py": "96603f9f4b6aab9bd0b63fca83d494b1486da7b9fff90b236b1f4869f100ebaa",
+    "experiments/p0_glv_semaev/toy_curves.py": "1b22b808a94b1c0945c9dd126c0cec5d6c08997ff73e575c4d3ee8bcf5b3dc9a"
+  },
+  "tools": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.5-x86_64-with-glibc2.39",
+    "sympy": "1.14.0",
+    "flint": "0.9.0",
+    "galois": "0.4.11",
+    "numpy": "2.4.6"
+  },
+  "results": {
+    "measurements": [
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "n_distinct_x": 4,
+        "n_image_total": 4,
+        "aux_domain_size": 2,
+        "block": "degree_of_regularity",
+        "m": 2,
+        "variant": "product_2aux",
+        "map": {
+          "kind": "product_2aux",
+          "describe": "product_2aux X=(t1+2*t2)^2+10, B={0..1} (composed deg-1 then deg-2)",
+          "b0": 2,
+          "kappa": 2,
+          "c": 10
+        },
+        "n_fb_elements": 4,
+        "raw_baseline_2F_plus_1": 9,
+        "composed_nvars": 6,
+        "composed_fb_poly_degree": 2,
+        "composed_solving_degree": 7,
+        "composed_solving_degree_capped": false,
+        "composed_macaulay_bound": 11,
+        "composed_macaulay_max_rows": 10758,
+        "composed_macaulay_max_cols": 5005,
+        "composed_quotient_dim": 2,
+        "composed_gen_degrees": [
+          4,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "gb_output_degree": 2,
+        "gb_basis_size": 6,
+        "gb_time_s": 0.061,
+        "raw_nvars": 2,
+        "raw_fb_poly_degree": 4,
+        "raw_solving_degree": 9,
+        "raw_solving_degree_capped": false,
+        "raw_macaulay_max_rows": 108,
+        "raw_macaulay_max_cols": 78,
+        "composed_confirmed_relations": 1,
+        "composed_spurious": 0,
+        "raw_confirmed_relations": 1,
+        "raw_spurious": 0,
+        "composed_t_build_s": 0.0438,
+        "composed_t_solve_s": 2.8081,
+        "composed_t_linalg_s": 619.0683,
+        "raw_t_linalg_s": 0.1448,
+        "composed_example": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              11,
+              16268
+            ],
+            [
+              10,
+              5133
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            53955,
+            47766
+          ]
+        },
+        "raw_example": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              11,
+              16268
+            ],
+            [
+              10,
+              5133
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            53955,
+            47766
+          ]
+        },
+        "composed_per_degree": [
+          {
+            "D": 2,
+            "rows": 6,
+            "cols": 28,
+            "n_lead_gens": 6,
+            "quotient_dim": null
+          },
+          {
+            "D": 3,
+            "rows": 42,
+            "cols": 84,
+            "n_lead_gens": 10,
+            "quotient_dim": null
+          },
+          {
+            "D": 4,
+            "rows": 169,
+            "cols": 210,
+            "n_lead_gens": 13,
+            "quotient_dim": 16
+          },
+          {
+            "D": 5,
+            "rows": 511,
+            "cols": 462,
+            "n_lead_gens": 13,
+            "quotient_dim": 16
+          },
+          {
+            "D": 6,
+            "rows": 1288,
+            "cols": 924,
+            "n_lead_gens": 18,
+            "quotient_dim": 11
+          },
+          {
+            "D": 7,
+            "rows": 2856,
+            "cols": 1716,
+            "n_lead_gens": 27,
+            "quotient_dim": 2
+          },
+          {
+            "D": 8,
+            "rows": 5754,
+            "cols": 3003,
+            "n_lead_gens": 27,
+            "quotient_dim": 2
+          },
+          {
+            "D": 9,
+            "rows": 10758,
+            "cols": 5005,
+            "n_lead_gens": 27,
+            "quotient_dim": 2
+          }
+        ]
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "n_distinct_x": 4,
+        "n_image_total": 4,
+        "aux_domain_size": 4,
+        "block": "degree_of_regularity",
+        "m": 2,
+        "variant": "single_aux_composed",
+        "map": {
+          "kind": "single_aux_composed",
+          "describe": "single_aux_composed X=r2(r1(t)), r1=t^2+0, r2=w^2+2*w+6, T={0..3} (composed deg-4)",
+          "nt": 4,
+          "a1": 0,
+          "a2": 2,
+          "a3": 6
+        },
+        "n_fb_elements": 4,
+        "raw_baseline_2F_plus_1": 9,
+        "composed_nvars": 6,
+        "composed_fb_poly_degree": 4,
+        "composed_solving_degree": 9,
+        "composed_solving_degree_capped": true,
+        "composed_macaulay_bound": 15,
+        "composed_macaulay_max_rows": 8250,
+        "composed_macaulay_max_cols": 5005,
+        "composed_quotient_dim": 2,
+        "composed_gen_degrees": [
+          4,
+          2,
+          2,
+          4,
+          2,
+          2,
+          4
+        ],
+        "gb_output_degree": 2,
+        "gb_basis_size": 6,
+        "gb_time_s": 0.063,
+        "raw_nvars": 2,
+        "raw_fb_poly_degree": 4,
+        "raw_solving_degree": 9,
+        "raw_solving_degree_capped": false,
+        "raw_macaulay_max_rows": 108,
+        "raw_macaulay_max_cols": 78,
+        "composed_confirmed_relations": 1,
+        "composed_spurious": 0,
+        "raw_confirmed_relations": 1,
+        "raw_spurious": 0,
+        "composed_t_build_s": 0.0124,
+        "composed_t_solve_s": 0.0402,
+        "composed_t_linalg_s": 375.7029,
+        "raw_t_linalg_s": 0.139,
+        "composed_example": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              9,
+              37920
+            ],
+            [
+              6,
+              7710
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            16052,
+            28244
+          ]
+        },
+        "raw_example": {
+          "idxs": [
+            1,
+            0
+          ],
+          "P": [
+            [
+              9,
+              37920
+            ],
+            [
+              6,
+              7710
+            ]
+          ],
+          "signs": [
+            1,
+            1
+          ],
+          "R": [
+            16052,
+            28244
+          ]
+        },
+        "composed_per_degree": [
+          {
+            "D": 2,
+            "rows": 4,
+            "cols": 28,
+            "n_lead_gens": 4,
+            "quotient_dim": null
+          },
+          {
+            "D": 3,
+            "rows": 28,
+            "cols": 84,
+            "n_lead_gens": 4,
+            "quotient_dim": null
+          },
+          {
+            "D": 4,
+            "rows": 115,
+            "cols": 210,
+            "n_lead_gens": 7,
+            "quotient_dim": null
+          },
+          {
+            "D": 5,
+            "rows": 357,
+            "cols": 462,
+            "n_lead_gens": 11,
+            "quotient_dim": null
+          },
+          {
+            "D": 6,
+            "rows": 924,
+            "cols": 924,
+            "n_lead_gens": 13,
+            "quotient_dim": 16
+          },
+          {
+            "D": 7,
+            "rows": 2100,
+            "cols": 1716,
+            "n_lead_gens": 13,
+            "quotient_dim": 16
+          },
+          {
+            "D": 8,
+            "rows": 4326,
+            "cols": 3003,
+            "n_lead_gens": 18,
+            "quotient_dim": 11
+          },
+          {
+            "D": 9,
+            "rows": 8250,
+            "cols": 5005,
+            "n_lead_gens": 27,
+            "quotient_dim": 2
+          }
+        ]
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "n_distinct_x": 9,
+        "n_image_total": 9,
+        "aux_domain_size": 3,
+        "block": "relations",
+        "m": 2,
+        "variant": "product_2aux",
+        "map": {
+          "kind": "product_2aux",
+          "describe": "product_2aux X=(t1+47*t2)^2+10, B={0..2} (composed deg-1 then deg-2)",
+          "b0": 3,
+          "kappa": 47,
+          "c": 10
+        },
+        "n_fb_elements": 9,
+        "random_trials": 40,
+        "composed_random_confirmed": 0,
+        "composed_random_spurious": 0,
+        "composed_random_targets_with_rel": 0,
+        "raw_random_confirmed": 0,
+        "raw_random_spurious": 0,
+        "raw_random_targets_with_rel": 0,
+        "relation_probability": 0.0,
+        "constructed_targets": 20,
+        "constructed_recovered": 20,
+        "constructed_spurious": 0,
+        "composed_example": null,
+        "raw_example": null
+      },
+      {
+        "bits": 16,
+        "p": 65539,
+        "b": 11,
+        "order": 65287,
+        "ell": 65287,
+        "cofactor": 1,
+        "generator": [
+          7825,
+          6727
+        ],
+        "beta": 32897,
+        "lambda": 21847,
+        "sqrt_p": 256,
+        "n_distinct_x": 6,
+        "n_image_total": 6,
+        "aux_domain_size": 6,
+        "block": "relations",
+        "m": 2,
+        "variant": "single_aux_composed",
+        "map": {
+          "kind": "single_aux_composed",
+          "describe": "single_aux_composed X=r2(r1(t)), r1=t^2+0, r2=w^2+6*w+2, T={0..5} (composed deg-4)",
+          "nt": 6,
+          "a1": 0,
+          "a2": 6,
+          "a3": 2
+        },
+        "n_fb_elements": 6,
+        "random_trials": 40,
+        "composed_random_confirmed": 0,
+        "composed_random_spurious": 0,
+        "composed_random_targets_with_rel": 0,
+        "raw_random_confirmed": 0,
+        "raw_random_spurious": 0,
+        "raw_random_targets_with_rel": 0,
+        "relation_probability": 0.0,
+        "constructed_targets": 15,
+        "constructed_recovered": 15,
+        "constructed_spurious": 0,
+        "composed_example": null,
+        "raw_example": null
+      }
+    ]
+  },
+  "timestamp": "2026-07-13T00:45:17.576260Z",
+  "results_hash": "7076339588ae3ac2337248d97dce190b922f8d8dc939e8b8cdf85d13ae28963e"
+}
