@@ -1,4 +1,4 @@
-# RESULTS — P3: degree of regularity of the ACTUAL Semaev relation SYSTEM
+# RESULTS — P3: custom Macaulay proxy for an explicit finite-set Semaev system
 
 **Measured, not asserted.** Every relation counted below is re-verified by real
 elliptic-curve addition (`P₁ + … + P_m = R`) inside the solver, and independently
@@ -6,20 +6,20 @@ re-derived by a brute-force EC enumeration in `validate.py` (which imports nothi
 solver). `seed = 1`. Curves: `E_b : y² = x³ + b`, `p ≡ 1 (mod 3)`, `j = 0`, **cofactor 1**,
 from `toy_curves.find_toy_curve(bits, seed=1, require_cofactor_one=True)`.
 
-This experiment builds the real relation system
+This experiment builds the explicit finite-set relation presentation
 `{ S_{m+1}(X₁,…,X_m,x_R)=0, f_F(X_i)=0 }` and **solves it with a Gröbner engine**, then
-measures the **degree of regularity** with an independent graded **Macaulay-matrix** engine.
+measures a custom graded **Macaulay-matrix proxy** for solving degree.
 It is *not* pair enumeration (P0) and *not* a single univariate solve (P1 `S₃`, P1-m3 `S₄`).
 
 ## Definitions used (so the numbers are unambiguous)
 
-- **Solving degree (a.k.a. degree of regularity here)** = the highest degree the graded
-  Macaulay/Gröbner computation must reach before its row-reduced matrix yields a Gröbner
-  basis — operationally, the largest degree at which a new leading term appears and the
-  quotient dimension stabilises (Lazard). This is "the max degree reached in the Gröbner
-  computation". **This is the cost-relevant quantity.**
-- **Macaulay degree bound** = `Σ deg(gᵢ) − n + 1` (a classical upper bound on the solving
-  degree for a 0-dimensional system), shown for reference.
+- **Reported solving-degree proxy** = the largest degree at which this custom graded routine
+  observes a new minimal leading-term generator before its two-consecutive-empty-degree stop.
+  That stopping rule is a heuristic: it has not been checked with an external F4/GB engine or
+  justified by a Hilbert-series theorem, so the reported value is not a certified d_reg.
+- **Degree expression** = `Σ deg(gᵢ) − n + 1`, shown only as a reference expression. Calling it
+  a Macaulay upper bound requires hypotheses (for example, appropriate homogenization and
+  regularity assumptions) that this experiment does not establish.
 - **gb output degree** = max total degree of the *reduced* grevlex Gröbner basis. This is
   the degree of the *final* basis, which is SMALL (2–3) and is **NOT** the solving degree;
   it is shown only to make the distinction explicit and to avoid confusing the two.
@@ -43,17 +43,16 @@ Representative **consistent** target `R = P₀ + P₁` (a relation is present). 
 | 20 | 1 048 609 | 6  | **13** | 15 | 188×136 | 2 | 1 | 0 | 0.46 |
 | 20 | 1 048 609 | 10 | **21** | 23 | 420×300 | 2 | 1 | 0 | 2.47 |
 
-**Observed (DESCRIPTIVE-ONLY):** the solving degree is exactly `2·|F| + 1` on every measured
-point, and it is **independent of the prime `p`** (the 20-bit rows equal the 16-bit rows at
+**Observed (DESCRIPTIVE-ONLY):** the proxy returns `2·|F| + 1` on every measured
+point, and the two tested prime sizes agree at matched `|F|` (the 20-bit rows equal the 16-bit rows at
 the same `|F|`). The Macaulay matrices grow as `Θ(|F|²)` (columns
 `= C(solving_degree+2, 2) ≈ 2|F|²`). The reduced-basis *output* degree stays 2 throughout —
 which is exactly why one must NOT read relation-generation cost off the output basis.
 
-Interpretation (measured, no asymptotic claim): the prime-field factor base `F` has **no
-low-degree algebraic description** — its only defining polynomial `f_F` has degree `|F|` —
-so the degree of regularity of the relation system is driven up **linearly in the
-factor-base size**. This is the concrete, quantitative form of the well-known prime-field
-relation-generation barrier, now visible as `d_reg = Θ(|F|)`.
+Interpretation (measured, no asymptotic claim): this encoding represents the enumerated set `F`
+by `f_F=∏_{a∈F}(X-a)`, whose degree is `|F|` by construction. The observed linear proxy pattern
+therefore applies to this presentation; it does not rule out other algebraic factor-base
+descriptions or establish `d_reg = Θ(|F|)`.
 
 ## 2. m = 2, invariant `u = x³` coordinates (coupled system, `nvars = 2m = 4`)
 
@@ -79,8 +78,8 @@ the ring dimension. Representative consistent target.
 - Because `f_F(X) = f_{F,u}(X³)` for an orbit-closed base, the plain and invariant systems
   define the **same relation variety** (validated: identical EC-confirmed relation sets,
   spurious = 0). The `u`-coordinate is a re-description of the same problem, matching the
-  P0/P1 finding that GLV symmetry is a **constant-factor** effect — now confirmed at the
-  level of the degree of regularity and Gröbner matrix sizes.
+  P0/P1 finding that GLV symmetry was a constant-factor effect in those tested models. This
+  comparison concerns this redundant auxiliary-variable presentation only.
 
 ## 3. m = 3 (system `{S₄(X₁,X₂,X₃,x_R)=0, f_F(X_i)=0}`), plain, `nvars = 3`
 
@@ -95,10 +94,9 @@ lower bound**.
 | 16 | 6 | 6 | 28 | **> 15 (capped)** | 195 (not stabilised) | 1 | 0 |
 
 At the cap `D = 15` the quotient dimension has **not** stabilised to the true (small) value,
-i.e. the Gröbner basis is not yet complete — the solving degree is materially higher (near
-the bound ~25–28). **Measured barrier:** even at `|F| = 5`, `m = 3`, the degree of regularity
-of the real relation system is too high to reach with this engine; relation generation is
-*more* expensive at `m = 3`, not less. The system is nonetheless **built and Gröbner-solved
+i.e. the Gröbner basis is not yet complete. The proxy did not stabilize by the cap.
+This demonstrates a limitation of this pure-Python engine, not a lower bound on the true
+relation-generation cost. The system is nonetheless **built and Gröbner-solved
 for relations** (lex elimination + `GF(p)` roots): every constructed target's relation is
 recovered and EC-verified (§4), independently cross-checked by brute force (§5).
 
@@ -146,10 +144,9 @@ VALIDATION: PASS
    `|F|` actually run (4–12), not proven growth laws. No claim is made that any measured cost
    beats generic `√n`; the data does **not** show a stable sub-generic exponent, and none is
    expected.
-2. **The invariant `u=x³` coordinate is not a speedup.** It lowers the degree-of-regularity
-   *number* but enlarges the polynomial ring (`2m` variables), and the measured Macaulay
-   matrices and wall time are *larger*. It re-describes the same variety (constant-factor
-   effect), consistent with P0/P1.
+2. **The tested coupled `u=x³` presentation is not a speedup on these instances.** Its proxy
+   number is lower but its measured matrices and wall time are larger. This does not rule out
+   nonredundant quotient or elimination formulations.
 3. **m = 3 degree of regularity is only a capped lower bound**; the full graded reduction to
    the solving degree (~Macaulay bound 25–28) is intractable in this pure-Python engine.
    `m ≥ 4` (the `S₅` system) is **not** measured for degree of regularity at all.
@@ -168,15 +165,11 @@ VALIDATION: PASS
 
 ## Bottom line (measured)
 
-For prime-field `j=0` toy curves, the degree of regularity of the real Semaev relation
-system grows **linearly with the factor-base size** (`d_reg = 2|F|+1` for `m=2`,
-`p`-independent) and the Gröbner/Macaulay matrices grow polynomially in `|F|`. Rewriting the
-system in the GLV-invariant coordinate `u=x³` changes the degree-of-regularity *number* by a
-constant-related amount but **increases** the actual linear-algebra size and time, and
-defines the same variety. This is a **negative / no-go** signal at the level the hypothesis
-asked about (relation-generation cost / degree of regularity, not just factor-base size),
-consistent with the honest prior. Hypothesis stays **ACTIVE** (m≥3 degree of regularity and a
-faithful Petit construction remain unmeasured barriers).
+For this explicit finite-set presentation on the tested toy instances, the custom proxy returned
+`2|F|+1`; the tested coupled `u=x³` presentation used larger matrices and more time. These are
+reproducible partial-negative measurements, not an exact degree-of-regularity law or a general
+GLV/Semaev complexity no-go. Hypothesis stays **ACTIVE**; external GB validation, nonredundant
+invariant formulations, m≥3 full solving degree, and faithful Petit remain open.
 
 ## Reproduce
 
