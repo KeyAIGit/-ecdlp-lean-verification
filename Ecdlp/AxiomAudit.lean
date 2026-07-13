@@ -74,6 +74,11 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_grp_eq_top
 #print axioms Ecdlp.Curve.secp256k1_glvHom_eq_zsmul_unconditional
 
+-- CM-by-ℤ[ω] Frobenius arithmetic certificate: N(π)=p, Tr(π)=p+1−n, 4p=t²+3b² (End⊗ℚ=ℚ(√−3))
+#print axioms Ecdlp.Curve.secp256k1_frobenius_norm
+#print axioms Ecdlp.Curve.secp256k1_frobenius_trace
+#print axioms Ecdlp.Curve.secp256k1_four_p_eq_trace_sq
+
 -- generic-group lower-bound combinatorial core + secp256k1 generic security
 #print axioms Ecdlp.GenericGroup.generic_dlog_query_bound
 #print axioms Ecdlp.GenericGroup.secp256k1_generic_security
