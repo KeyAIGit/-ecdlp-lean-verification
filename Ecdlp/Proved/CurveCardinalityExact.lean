@@ -42,6 +42,13 @@ namespace Ecdlp.Curve
 
 open Polynomial WeierstrassCurve.Affine
 
+/-- **`−7` is not a cube in `𝔽_p`** (the Euler cubic-residue witness `(−7)^((p−1)/3) ≠ 1`,
+`p ≡ 1 mod 3`). Stated *outside* the `[Fact (Nat.Prime Secp256k1.p)]` section so the goal is a
+closed term over the global instance — `native_decide` then discharges the 256-bit modular
+exponentiation exactly as the primality witnesses in `Secp256k1PrimeP.lean` do. -/
+theorem secp256k1_neg7_pow_ne_one :
+    (-7 : ZMod Secp256k1.p) ^ ((Secp256k1.p - 1) / 3) ≠ 1 := by native_decide
+
 variable [Fact (Nat.Prime Secp256k1.p)]
 
 /-! ### Step 2: the affine point-count bound `#E ≤ 2p + 1` -/
@@ -152,9 +159,8 @@ theorem secp256k1_no_nonzero_two_torsion (P : secp256k1.toAffine.Point)
     have key : ((-7 : ZMod Secp256k1.p)) ^ ((Secp256k1.p - 1) / 3) = 1 := by
       rw [← hx3, ← pow_mul, hexp]
       exact ZMod.pow_card_sub_one_eq_one hxne
-    -- But `-7` is a non-cube: `(-7)^((p-1)/3) ≠ 1` (256-bit modexp by `native_decide`).
-    have hcube : ((-7 : ZMod Secp256k1.p)) ^ ((Secp256k1.p - 1) / 3) ≠ 1 := by native_decide
-    exact hcube key
+    -- But `-7` is a non-cube: `(-7)^((p-1)/3) ≠ 1` (proved above, closed-term native_decide).
+    exact secp256k1_neg7_pow_ne_one key
 
 /-! ### Steps 1 + 3 + 5: assemble `#E = n` -/
 
