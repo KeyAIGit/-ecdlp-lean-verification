@@ -1,17 +1,17 @@
-# P3 — the ACTUAL Semaev relation SYSTEM, Gröbner-solved (`HYP_GLV_SEMAEV_001`)
+# P3 — explicit finite-set Semaev system, Gröbner-solved (`HYP_GLV_SEMAEV_001`)
 
 This package closes the central "REMAINING" gap that P0/P1/P1-m3 explicitly left open:
-it **builds and solves the real index-calculus relation SYSTEM** for point decomposition
-and **measures its degree of regularity / Gröbner behaviour**, in two coordinate systems
+it **builds and solves an explicit finite-set relation presentation** for point decomposition
+and records a custom Macaulay proxy / Gröbner behaviour, in two coordinate systems
 (plain `x` vs the GLV-invariant `u = x³`). It does *not* enumerate pairs (P0), and it does
 *not* solve a single low-degree univariate per factor-base element (P1 `S₃`, P1-m3 `S₄`).
 
-**Read the honest prior first.** The expected outcome is a **negative / no-go** signal, and
-this package draws **no** asymptotic or "advantage" conclusion. It reports only measured
+This package draws **no** asymptotic, exact-d_reg, or general advantage/no-advantage conclusion.
+It reports only measured
 numbers for the (small) sizes actually run, and every relation is re-verified by real
 elliptic-curve addition.
 
-## What "the real thing" means here
+## Exact presentation tested here
 
 For a factor base `F` (a set of x-coordinates) and a target `R`, an `m`-term decomposition
 `R = P₁ + … + P_m` corresponds to a common solution of the polynomial **system**
@@ -22,11 +22,10 @@ For a factor base `F` (a set of x-coordinates) and a target `R`, an `m`-term dec
 
 where `S_{m+1}` is the (m+1)-th summation (Semaev) polynomial and
 `f_F(X) = ∏_{a∈F}(X − a)` is the factor-base polynomial encoding `X_i ∈ F`. **Finding
-relations = solving this system.** We solve it with a real Gröbner engine (sympy over
-`GF(p)`, lex elimination + `galois` `GF(p)` root finding) and we measure the **degree of
-regularity / solving degree** with an independent, degree-graded **Macaulay-matrix** engine
-(grevlex, `GF(p)` row reduction via `galois`; Lazard's degree-graded view of a Gröbner
-computation).
+relations in this presentation = solving this system.** We solve it with SymPy over
+`GF(p)` (lex elimination + `galois` root finding) and record a custom degree-graded
+**Macaulay-matrix proxy**. Its stopping rule is heuristic and is not an externally certified
+degree of regularity.
 
 - `S₃` for `E : y² = x³ + b` (a = 0) is reused/cross-checked against P1.
 - `S₄ = Res_Y(S₃(X₁,X₂,Y), S₃(X₃,x_R,Y))`, `S₅` analogously (Semaev's resultant recursion).
