@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 522,
-  "distinct_qualified_names": 415,
-  "verified_md_citations": 188,
+  "declaration_count": 526,
+  "distinct_qualified_names": 419,
+  "verified_md_citations": 190,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -2231,6 +2231,14 @@
       "line": 33,
       "occurrences": 1
     },
+    "Ecdlp.P256.instFiniteP256Point": {
+      "name": "instFiniteP256Point",
+      "namespace": "Ecdlp.P256",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/P256Cardinality.lean",
+      "line": 30,
+      "occurrences": 1
+    },
     "Ecdlp.P256.n": {
       "name": "n",
       "namespace": "Ecdlp.P256",
@@ -2253,6 +2261,14 @@
       "kind": "def",
       "file": "Ecdlp/Proved/P256GeneratorOrder.lean",
       "line": 32,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256Grp": {
+      "name": "p256Grp",
+      "namespace": "Ecdlp.P256",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/P256Cardinality.lean",
+      "line": 40,
       "occurrences": 1
     },
     "Ecdlp.P256.p256_embedding_degree_gt_100": {
@@ -2293,6 +2309,22 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/P256GeneratorOrder.lean",
       "line": 36,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256_grp_card": {
+      "name": "p256_grp_card",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256Cardinality.lean",
+      "line": 44,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256_n_dvd_card_point": {
+      "name": "p256_n_dvd_card_point",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256Cardinality.lean",
+      "line": 51,
       "occurrences": 1
     },
     "Ecdlp.P256.p256_trace_ordinary_nonanomalous": {
