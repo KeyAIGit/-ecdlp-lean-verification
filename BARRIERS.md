@@ -141,27 +141,53 @@ exact `Θ` statements.
   *where the search lives and how it branches*; the cost lower bound itself stays in the open
   frontier, recorded here, not dressed as proved.
 
-  **Partial negative (narrow), not a no-go: GLV orbit-keying in `m=2` pair enumeration is
-  constant-factor only** (`HYP_GLV_SEMAEV_001`, `experiments/p0_glv_semaev/RESULTS.md`). A
-  reproducible benchmark measured a **lookup model**: for the `j=0` family `E_b : y²=x³+b` over
-  `p ≡ 1 (mod 3)`, enumerate the `m=2` pair sums `P_i ± P_j` and count how often a random target's
-  `x`-coordinate hits the precomputed set, as a function of base size `B`. In every configuration
-  (16/20/24-bit toy curves; every counted equality re-verified by an actual `ec_add`) the hit rate
-  obeys `≈ c·B_eff²/p`. Closing the base under the GLV orbit gives `B_eff = 3·B` exactly, and the
-  `u=x³` invariant coordinate raises the constant to `c ≈ 5.45` (`≈2.8×` vs plain) — a **constant**
-  `~3×` change, **no exponent change**. **What this does and does not establish (read the scope
-  carefully):** it closes only the narrow claim that a *finite GLV orbit changes the combinatorial
-  `B²/p` pair-count exponent in this direct-enumeration lookup model* — it does **not**. It does
-  **not** test the registered hypothesis at all: it builds and solves **no** `Sₘ` polynomial system,
-  measures **no** degree of regularity / Gröbner-matrix cost, tests **no** `m ≥ 3`, and the `petit`
-  variant is an integer-bit filter, **not** a faithful Petit composed-rational-map construction.
-  Direct EC-pair enumeration is itself `Θ(B²)` work, so it is *not* an index-calculus algorithm.
-  Two legacy 24-bit rows also used cofactor-3 curves with an ambient-`E(𝔽_p)` base (geometry/yield
-  sanity data, not valid subgroup-log relations; the corrected generator uses cofactor-1). So
-  **`HYP_GLV_SEMAEV_001` stays open**: the real question — whether invariant-coordinate *relation
-  generation* (`Sₘ`/Gröbner, `m ≥ 3`, genuine Petit maps) changes the prime-field asymptotics —
-  is untouched. No break of secp256k1; equality-replay alone cannot establish a complexity no-go.
-  Per-run manifests + an independent `validate_run.py` are in `experiments/p0_glv_semaev/`.
+  **The GLV–Semaev relation-generation barrier (empirical, `HYP_GLV_SEMAEV_001`; P0→P4).**
+  A five-rung reproducible benchmark line asks one question about the `j=0` family
+  `E_b : y²=x³+b` over `p ≡ 1 (mod 3)`: does closing a Semaev factor base under the order-3 GLV
+  automorphism orbit (`x ↦ βx`, invariant `u=x³`), or under a composed low-degree map, change
+  the *relation-generation* cost beyond a constant factor? Every rung is an **empirical
+  measurement, not a Lean theorem**, each ships an independent brute-force / replay validator
+  (imports nothing from the solver's derivation path), and each was re-run before integration.
+
+  - **P0** (`experiments/p0_glv_semaev/`, m=2, lookup model): enumerate pair sums `P_i±P_j`,
+    hash x-coords; the hit rate `≈ c·B_eff²/p` (16/20/24-bit toy curves; every counted equality
+    re-verified by an actual `ec_add`). GLV closure gives `B_eff=3·B`, `u=x³` raises the constant
+    to `c≈5.45` (`≈2.8×` vs plain) — a **constant ~3×**, **no exponent change**. Direct EC-pair
+    enumeration is itself `Θ(B²)`, so it is *not* an index-calculus algorithm. (Two legacy 24-bit
+    rows used cofactor-3 curves with an ambient-`E(𝔽_p)` base — geometry/yield sanity data, not
+    valid subgroup-log relations; the corrected generator uses cofactor-1.)
+  - **P1 / m=3** (`experiments/p1_petit/`, `p1_petit_m3/`): *solve* `S₃=0` (Tonelli–Shanks)
+    resp. `S₄=Res_X(S₃,S₃)=0` per base coord instead of enumerating; the solved relation set
+    equals the brute-force EC set exactly, spurious=0. GLV = constant ~3× storage only.
+  - **P3** (`experiments/p3_sm_system/`, m=2,3): builds and **Gröbner-solves the actual `Sₘ`
+    system** `{Sₘ₊₁=0, f_F(Xᵢ)=0}` over GF(p) and measures its **degree of regularity** with an
+    independent Macaulay-matrix engine — closing P0's "measures no degree of regularity" gap.
+    Measured negative: solving degree `= 2|F|+1` (m=2), **linear in `|F|`, p-independent**; the
+    `u=x³` invariant lowers the degree *number* but enlarges the Macaulay matrix ~15–20× /
+    time ~80× on the same variety — **no advantage**. `m≥3` d_reg is only a capped lower bound
+    (pure-Python engine; full solving degree needs msolve/Sage/F4).
+  - **P4** (`experiments/p4_petit/`, m=2): a **composed low-degree-map** factor base (defining
+    degree ~√|F|) — the closest *honest* thing to Petit over a prime field, since a prime field
+    affords **no Weil restriction** and hence **no faithful `𝔽_p`-linear-subspace Petit base
+    exists to imitate**. It lowers the d_reg *number* (7 < 9) but in a 6-variable ring, ~100×
+    larger Macaulay matrix / ~4300× slower — **no net advantage**, the same pattern as `u=x³`.
+    This closes P0's "petit variant is not a faithful composed-map construction" gap with the
+    honest caveat above.
+
+  **What the line establishes (measured):** at every rung the GLV/`u=x³`/composed-map orbit
+  closure gives only a **constant** (~3×) storage reduction, the summation-polynomial *solve*
+  reproduces the brute-force relation set with **zero spurious roots** (the direct empirical
+  signature of Semaev's `Sₘ` iff-theorems), and where the degree of regularity is reachable it
+  is set by the factor-base *defining degree* — neither invariant-coordinate nor composed-map
+  coordinates buy a net advantage. **What it does not establish (open):** no asymptotic /
+  advantage claim; only `m=2` (and a capped `m≥3` lower bound) at toy primes is in pure-Python
+  reach; `m≥4` systems, non-toy primes, and a genuinely faithful Petit/Weil-descent base over a
+  prime field remain out of reach. The `O(|F|^{m-1}·solve)` loops are **not** subexponential
+  index-calculus algorithms. So the real question — whether invariant-coordinate *relation
+  generation* changes the prime-field asymptotics — stays **open** and `HYP_GLV_SEMAEV_001`
+  stays **ACTIVE**. No result here is a step toward breaking secp256k1; equality-replay alone
+  cannot establish a complexity no-go. Per-run manifests + independent validators live under
+  each `experiments/*/` directory.
 
   **Open next node — `Sₘ` degree tower `2^{m−2}` (recorded, not yet built).** The base case is
   proved (`secp256k1_S₃poly_natDegree`: `deg S₃ = 2` in each variable) and `S₄`'s full symmetry is
