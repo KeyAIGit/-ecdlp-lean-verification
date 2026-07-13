@@ -79,7 +79,7 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 20520
+        "bytes": 20366
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -97,7 +97,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 21744
+        "bytes": 17775
       }
     ],
     "large": [
@@ -147,7 +147,7 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 20520
+        "bytes": 20366
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -165,7 +165,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 21744
+        "bytes": 17775
       },
       {
         "path": "data/knowledge_graph.json",

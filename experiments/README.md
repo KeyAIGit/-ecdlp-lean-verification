@@ -11,29 +11,24 @@ validator, and no experiment here touches the Lean ledger or the headline theore
 
 The hypothesis: for `j=0` curves `E_b: y²=x³+b` over `p≡1 (mod 3)`, does closing a Semaev
 factor base under the order-3 GLV automorphism orbit (`x ↦ βx`, invariant `u=x³`) change
-the *relation-generation* behaviour beyond a constant factor? Expected honest outcome is a
-**negative / no-go**; the value is a reproducible barrier map. Three rungs so far, each a
+the *relation-generation* behaviour beyond a constant factor? The experiments seek reproducible
+partial evidence; a general no-go is not assumed. Five rungs so far, each a
 strictly sharper test of the *same* question:
 
 | rung | dir | what it measures | method | verified by | measured verdict |
 |---|---|---|---|---|---|
 | **P0** `p0_glv_semaev/` | m=2 | relation **yield law** | ENUMERATE all pair sums `P_i±P_j`, hash x-coords — Θ(\|F\|²) | every hit re-checked by `ec_add`; `validate_run.py` | yield `≈ c·B²/p`; GLV = constant ~3× factor, **no exponent change**. Lookup model only. |
 | **P1** `p1_petit/` | m=2 | relation **solving** | SOLVE `S₃(x_i,X,x_R)=0` per base x-coord (Tonelli–Shanks) — O(\|F\|)/target | `validate.py`: independent O(\|F\|²) brute-force EC enum → identical set, spurious=0, PASS | same relation set as P0 obtained by *solving* not enumerating; GLV = constant ~3× storage. |
-| **m=3** `p1_petit_m3/` | m=3 | 3-term relation **solving** | SOLVE `S₄=Res_X(S₃,S₃)=0` (deg ≤4 in `x_k`) per base pair — O(\|F\|²·deg4)/target | `validate.py`: independent O(\|F\|³) brute-force triple EC enum → identical set, spurious=0, PASS | S₄-solve complete & sound; GLV = constant ~3× storage. |
-| **P3** `p3_sm_system/` | m=2,3 | the actual **relation SYSTEM** `{Sₘ₊₁=0, f_F(Xᵢ)=0}` + its **degree of regularity** (Gröbner over GF(p)) | BUILD + GRÖBNER-SOLVE the system; independent Macaulay-matrix d_reg engine; plain vs `u=x³` | `validate.py`: independent brute-force EC (no solver imports) → identical set, spurious=0, PASS | **negative at the level the hypothesis asked about**: solving degree `= 2\|F\|+1` (m=2), **linear in \|F\|**, p-independent; `u=x³` lowers the degree *number* but enlarges Macaulay matrix ~15–20× / time ~80× on the same variety — **no advantage**. m≥3 d_reg only a capped lower bound; no Petit. |
-| **P4** `p4_petit/` | m=2 | does a **composed low-degree map** factor base lower the d_reg below P3's raw `2\|F\|+1`? | build factor base = on-curve image of a composed map (√\|F\| defining degree); measure d_reg vs P3 | `validate.py`: independent factor-base rebuild + brute-force EC (no solver imports) → identical set, spurious=0, PASS | **honest approximation** (real Petit/Weil-descent doesn't exist over `𝔽_p`): the degree-reducing map lowers d_reg *number* (7 vs 9) but in a 6-var ring, ~100× larger matrix / ~4300× slower — **no net advantage**, same pattern as `u=x³`. |
+| **m=3** `p1_petit_m3/` | m=3 | distinct-index 3-term relation **solving** | SOLVE `S₄=Res_Y(S₃(x_i,x_j,Y),S₃(X,x_R,Y))=0` (deg ≤4 in `X`) per unordered distinct base pair — O(\|F\|²·deg4)/target | `validate.py`: O(\|F\|³) brute-force enumeration independent of `S₄`, but sharing `confirm_relation3` → identical distinct-index set, spurious=0, PASS | Agreement on tested instances; repeated indices excluded; not a separate EC oracle. |
+| **P3** `p3_sm_system/` | m=2,3 | explicit finite-set system `{Sₘ₊₁=0, f_F(Xᵢ)=0}`, `f_F=∏(X-a)` | SymPy lex Gröbner solve plus a custom graded Macaulay proxy; plain vs coupled `U=X³` | independent brute-force EC replay → identical tested relation set, spurious=0, PASS | proxy returned `2\|F\|+1` for tested m=2 sizes; stopping rule lacks external GB/theorem validation. The tested auxiliary-variable GLV presentation was slower; no general no-go. |
+| **P4** `p4_petit/` | m=2, \|F\|=4 | one composed-polynomial-map presentation | six-variable toy system measured with P3's proxy | independent factor-base rebuild + brute-force EC replay → identical tested relation set, spurious=0, PASS | proxy 7 vs 9, but much larger/slower matrices for this presentation. Not faithful Petit and not a general composed-map result. |
 
-**What the line establishes (measured):** the GLV/`u=x³` orbit closure gives a **constant**
-(~3×) reduction in stored factor-base seeds at every rung, and the summation-polynomial
-*solve* reproduces exactly the brute-force relation set with **zero spurious roots** — the
-direct empirical signature of Semaev's `S_m` iff-theorems.
+**What the line establishes (measured):** the tested toy formulations give reproducible partial
+negatives, and their relation sets replay against EC arithmetic in the stated scopes.
 
-**What the line does NOT establish (open):** P3 builds/Gröbner-solves the actual `S_m` *system*
-and measures its **degree of regularity** (measured **negative**: d_reg linear in `\|F\|`, `u=x³`
-no advantage); P4 tries a composed low-degree-map factor base and finds **no net advantage** (an
-honest approximation — a genuinely faithful Petit/Weil-descent base does not exist over a prime
-field). Still open: `m ≥ 3` full solving degree (intractable in the pure-Python engine — needs
-msolve/Sage/F4), `m ≥ 4` systems, non-toy primes; and none draws an
+**What the line does NOT establish (open):** an exact/general degree-of-regularity law, an optimal
+prime-field factor-base encoding, a nonredundant invariant-coordinate formulation, faithful Petit,
+`m ≥ 3` full solving degree, `m ≥ 4` systems, or non-toy primes. None draws an
 asymptotic or advantage/no-advantage conclusion. The `O(\|F\|^{m-1}·solve)` loops are **not**
 subexponential index-calculus algorithms. So the real question — whether invariant-coordinate
 *relation generation* changes the prime-field asymptotics — remains **open**, and
