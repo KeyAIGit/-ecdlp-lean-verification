@@ -55,6 +55,12 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_grp_isAddCyclic
 #print axioms Ecdlp.Curve.secp256k1_dlogEquiv
 
+-- strong keystone: the exact curve cardinality #E(𝔽_p) = n, curve-specifically
+-- (no Hasse/Schoof); inherits `Lean.ofReduceBool` from the native_decide non-cube leaf
+#print axioms Ecdlp.Curve.secp256k1_card_point_eq_n
+#print axioms Ecdlp.Curve.secp256k1_no_nonzero_two_torsion
+#print axioms Ecdlp.Curve.secp256k1_card_point_le
+
 -- generic-group lower-bound combinatorial core + secp256k1 generic security
 #print axioms Ecdlp.GenericGroup.generic_dlog_query_bound
 #print axioms Ecdlp.GenericGroup.secp256k1_generic_security
