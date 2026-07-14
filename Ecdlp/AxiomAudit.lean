@@ -37,6 +37,10 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_preΨ₅_eval_glv_invariant
 #print axioms Ecdlp.Curve.secp256k1_preΨ₇_eval_glv_invariant
 
+-- GLV orbit structure: orbits size ≤3 (group root of the measured ~3× constant)
+#print axioms Ecdlp.Curve.secp256k1_glvPoint_orbit_closed
+#print axioms Ecdlp.Curve.secp256k1_glvPoint_orbit_three_distinct
+
 -- secp256k1 as a Mathlib elliptic curve
 #print axioms Ecdlp.Curve.secp256k1_j_eq_zero
 #print axioms Ecdlp.Curve.secp256k1_generator_nonsingular

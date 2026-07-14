@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 522,
-  "distinct_qualified_names": 415,
-  "verified_md_citations": 188,
+  "declaration_count": 524,
+  "distinct_qualified_names": 417,
+  "verified_md_citations": 189,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -991,11 +991,27 @@
       "line": 51,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_glvPoint_orbit_closed": {
+      "name": "secp256k1_glvPoint_orbit_closed",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvOrbit.lean",
+      "line": 54,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_glvPoint_orbit_sum": {
       "name": "secp256k1_glvPoint_orbit_sum",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GlvOrderThree.lean",
+      "line": 68,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_glvPoint_orbit_three_distinct": {
+      "name": "secp256k1_glvPoint_orbit_three_distinct",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvOrbit.lean",
       "line": 68,
       "occurrences": 1
     },
