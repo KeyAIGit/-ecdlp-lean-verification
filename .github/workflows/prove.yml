@@ -50,6 +50,16 @@ jobs:
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
         run: python3 scripts/prover_loop.py
 
+      # Mechanically promote each Lean-accepted candidate into the verified base:
+      # candidates/<id>.lean -> Ecdlp/Proved/<Module>.lean, add the import, set the target
+      # status=verified, append a coverage row to VERIFIED.md. Anonymous `example`s and any
+      # candidate carrying sorry/admit are skipped. This only MOVES kernel-accepted proofs;
+      # `main` is untouched — the promoted change is committed onto the PR branch below and a
+      # human merges. Idempotent, so a re-run over the same candidates is a no-op.
+      - name: Promote accepted candidates
+        if: always()
+        run: python3 scripts/promote_candidate.py
+
       - name: Add loop report to job summary
         if: always()
         run: |
@@ -69,25 +79,36 @@ jobs:
             candidates/
           if-no-files-found: ignore
 
-      # Open (or update) a PR carrying any Lean-accepted candidate proofs for human
-      # promotion into Ecdlp/Proved/. No-op when there are no new candidates.
-      - name: Open PR with verified candidates
+      # Open (or update) a PR carrying the auto-promoted proofs (Ecdlp/Proved/ + import +
+      # VERIFIED.md row + target status) plus any non-promotable leftover candidates. No-op
+      # when the run produced nothing. `main` is NEVER edited automatically — the change lands
+      # on the prover/candidates branch and a human reviews and merges.
+      - name: Open PR with promoted proofs
         if: always()
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: main
           branch: prover/candidates
-          add-paths: candidates/
-          title: "Prover loop: verified candidate proofs for review"
-          commit-message: "prover loop: add Lean-accepted candidate proofs (for human promotion)"
+          add-paths: |
+            Ecdlp/Proved/
+            Ecdlp.lean
+            VERIFIED.md
+            targets/
+            candidates/
+          title: "Prover loop: auto-promoted proofs for review"
+          commit-message: "prover loop: promote Lean-accepted proofs (Targets/ -> Proved/, for human merge)"
           body: |
-            The autonomous prover loop found Lean-accepted candidate proofs. Each
-            file under `candidates/` was verified by `lake env lean` in this run.
+            The autonomous prover loop closed one or more open targets. Each proof was
+            verified by `lake env lean` in this run, then **mechanically promoted** by
+            `scripts/promote_candidate.py`: moved into `Ecdlp/Proved/`, imported from
+            `Ecdlp.lean`, its target set `status=verified`, and a coverage row appended to
+            `VERIFIED.md`. Anonymous `example`s and any candidate with `sorry`/`admit` are
+            left under `candidates/` unpromoted.
 
-            To promote: move the proof into `Ecdlp/Proved/`, add its import to
-            `Ecdlp.lean`, and append a row to `VERIFIED.md`. `main` is never edited
-            automatically; the Lean kernel is the judge and a human merges.
+            `main` is never edited automatically. The Lean kernel is the judge; a human
+            reviews this PR (confirm the ledger row and headline-count classification) and
+            merges. CI re-verifies the full build and the no-`sorry` gate.
 
       # Echo the loop report to stdout as the final step so the per-target outcome
       # (and any Featherless model attempts) is readable directly in the run log.
