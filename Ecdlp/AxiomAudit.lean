@@ -37,6 +37,10 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_preΨ₅_eval_glv_invariant
 #print axioms Ecdlp.Curve.secp256k1_preΨ₇_eval_glv_invariant
 
+-- GLV orbit structure: orbits size ≤3 (group root of the measured ~3× constant)
+#print axioms Ecdlp.Curve.secp256k1_glvPoint_orbit_closed
+#print axioms Ecdlp.Curve.secp256k1_glvPoint_orbit_three_distinct
+
 -- secp256k1 as a Mathlib elliptic curve
 #print axioms Ecdlp.Curve.secp256k1_j_eq_zero
 #print axioms Ecdlp.Curve.secp256k1_generator_nonsingular
@@ -160,6 +164,12 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.P256.P256_Δ_ne_zero
 #print axioms Ecdlp.P256.P256_c₄_ne_zero
 #print axioms Ecdlp.P256.P256_generator_equation
+
+-- P-256 weak cardinality rung: E(𝔽_p) finite + n ∣ #E (mirrors the secp256k1 template;
+-- inherits `Lean.ofReduceBool` via the native_decide generator-order anchor `addOrderOf G = n`)
+#print axioms Ecdlp.P256.instFiniteP256Point
+#print axioms Ecdlp.P256.p256_grp_card
+#print axioms Ecdlp.P256.p256_n_dvd_card_point
 
 -- Curve25519 grounding (Montgomery model, cofactor 8; native_decide facts surface `Lean.ofReduceBool`)
 #print axioms Ecdlp.Curve25519.Curve25519_Δ_ne_zero
