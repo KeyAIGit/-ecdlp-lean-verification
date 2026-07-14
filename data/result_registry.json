@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 553,
-  "distinct_qualified_names": 442,
+  "declaration_count": 555,
+  "distinct_qualified_names": 444,
   "verified_md_citations": 192,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -588,7 +588,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "instance",
       "file": "Ecdlp/Proved/CurveCardinality.lean",
-      "line": 28,
+      "line": 31,
       "occurrences": 1
     },
     "Ecdlp.Curve.isCoprime_of_isUnit_resultant": {
@@ -1340,7 +1340,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/CurveCardinality.lean",
-      "line": 41,
+      "line": 37,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_neg7_pow_ne_one": {
@@ -2412,7 +2412,7 @@
       "namespace": "Ecdlp.P256",
       "kind": "instance",
       "file": "Ecdlp/Proved/P256Cardinality.lean",
-      "line": 30,
+      "line": 33,
       "occurrences": 1
     },
     "Ecdlp.P256.n": {
@@ -2444,7 +2444,7 @@
       "namespace": "Ecdlp.P256",
       "kind": "abbrev",
       "file": "Ecdlp/Proved/P256Cardinality.lean",
-      "line": 40,
+      "line": 36,
       "occurrences": 1
     },
     "Ecdlp.P256.p256_embedding_degree_gt_100": {
@@ -2492,7 +2492,7 @@
       "namespace": "Ecdlp.P256",
       "kind": "theorem",
       "file": "Ecdlp/Proved/P256Cardinality.lean",
-      "line": 44,
+      "line": 40,
       "occurrences": 1
     },
     "Ecdlp.P256.p256_n_dvd_card_point": {
@@ -2500,7 +2500,7 @@
       "namespace": "Ecdlp.P256",
       "kind": "theorem",
       "file": "Ecdlp/Proved/P256Cardinality.lean",
-      "line": 51,
+      "line": 47,
       "occurrences": 1
     },
     "Ecdlp.P256.p256_trace_ordinary_nonanomalous": {
@@ -3415,6 +3415,14 @@
       "line": 8,
       "occurrences": 1
     },
+    "WeierstrassCurve.Affine.instFinitePoint": {
+      "name": "instFinitePoint",
+      "namespace": "WeierstrassCurve.Affine",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/AffinePointFinite.lean",
+      "line": 37,
+      "occurrences": 1
+    },
     "addMulSub_mem_nonZeroDivisors": {
       "name": "addMulSub_mem_nonZeroDivisors",
       "namespace": "",
@@ -3469,6 +3477,14 @@
       "kind": "lemma",
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
       "line": 328,
+      "occurrences": 1
+    },
+    "fires": {
+      "name": "fires",
+      "namespace": "",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/AffinePointFinite.lean",
+      "line": 20,
       "occurrences": 1
     },
     "for": {

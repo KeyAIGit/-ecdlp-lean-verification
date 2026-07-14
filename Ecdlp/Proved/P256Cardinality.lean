@@ -1,5 +1,6 @@
 import Mathlib
 import Ecdlp.Proved.P256GeneratorOrder
+import Ecdlp.Proved.AffinePointFinite
 
 /-!
 # NIST P-256: the rational-point group is finite, and `n ∣ #E(𝔽_p)`
@@ -26,15 +27,10 @@ open WeierstrassCurve.Affine
 
 namespace Ecdlp.P256
 
-/-- The P-256 `𝔽_p`-rational point group is **finite**: `Point ↪ Option (𝔽_p × 𝔽_p)`. -/
-instance instFiniteP256Point : Finite P256.toAffine.Point := by
-  apply Finite.of_injective
-    (fun P : P256.toAffine.Point =>
-      match P with
-      | .zero => (none : Option (ZMod p × ZMod p))
-      | .some (x := x) (y := y) _ => some (x, y))
-  intro P Q h
-  cases P <;> cases Q <;> simp_all
+/-- The P-256 `𝔽_p`-rational point group is **finite** — a specialisation of the general
+`WeierstrassCurve.Affine.instFinitePoint` (`Point ↪ Option (R × R)`, needing only `[CommRing R]`
+`[Finite R]`), since `ZMod p` is a finite commutative ring. -/
+instance instFiniteP256Point : Finite P256.toAffine.Point := inferInstance
 
 /-- The concrete P-256 crypto subgroup `⟨G⟩ = zmultiples G`. -/
 abbrev p256Grp : AddSubgroup P256.toAffine.Point := AddSubgroup.zmultiples p256G

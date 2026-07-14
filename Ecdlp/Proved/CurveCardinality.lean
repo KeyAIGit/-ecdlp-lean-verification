@@ -1,5 +1,6 @@
 import Mathlib
 import Ecdlp.Proved.SubgroupOrder
+import Ecdlp.Proved.AffinePointFinite
 
 /-!
 # secp256k1: the rational-point group is finite, and `n ∣ #E(𝔽_p)`
@@ -24,15 +25,10 @@ open WeierstrassCurve.Affine
 
 namespace Ecdlp.Curve
 
-/-- The secp256k1 `𝔽_p`-rational point group is **finite**: `Point ↪ Option (𝔽_p × 𝔽_p)`. -/
-instance instFiniteSecp256k1Point : Finite secp256k1.toAffine.Point := by
-  apply Finite.of_injective
-    (fun P : secp256k1.toAffine.Point =>
-      match P with
-      | .zero => (none : Option (ZMod Secp256k1.p × ZMod Secp256k1.p))
-      | .some (x := x) (y := y) _ => some (x, y))
-  intro P Q h
-  cases P <;> cases Q <;> simp_all
+/-- The secp256k1 `𝔽_p`-rational point group is **finite** — a specialisation of the general
+`WeierstrassCurve.Affine.instFinitePoint` (`Point ↪ Option (R × R)`, needing only `[CommRing R]`
+`[Finite R]`), since `ZMod Secp256k1.p` is a finite commutative ring. -/
+instance instFiniteSecp256k1Point : Finite secp256k1.toAffine.Point := inferInstance
 
 /-- **`n ∣ #E(𝔽_p)`.** The prime base-point order divides the secp256k1 curve cardinality —
 Lagrange applied to the subgroup `⟨G⟩` of proved order `n`. The first verified fact about `#E`
