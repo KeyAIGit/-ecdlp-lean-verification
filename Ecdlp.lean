@@ -99,6 +99,7 @@ import Ecdlp.Proved.GeneratorOrder
 import Ecdlp.Proved.GlvSubgroupEigenvalue
 import Ecdlp.Proved.ProtocolInstantiation
 import Ecdlp.Proved.SubgroupOrder
+import Ecdlp.Proved.AffinePointFinite
 import Ecdlp.Proved.CurveCardinality
 import Ecdlp.Proved.CurveCardinalityExact
 import Ecdlp.Proved.CurveFullGroup

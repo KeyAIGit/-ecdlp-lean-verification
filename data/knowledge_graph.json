@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 233,
+    "theorems": 234,
     "barriers": 6,
-    "edges": 275,
+    "edges": 278,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -14,7 +14,7 @@
       "Bézout certificate + native_decide": 3,
       "Mathlib (`map_cyclic`)": 2,
       "Mathlib (`lucas_primality`) + native_decide": 2,
-      "Mathlib (`Finite.of_injective`)": 2,
+      "Mathlib (`Finite.of_injective`) via `instFinitePoint": 2,
       "Mathlib + `linear_combination": 2,
       "Mathlib + the bridges": 2,
       "Mathlib (`Point.neg_some`, `add_neg_cancel`)": 2,
@@ -80,16 +80,17 @@
       "secp256k1_generator_addOrderOf` + Mathlib (`AddCommGroup.zmodModule`, `zmultiples_le_torsionBy`)": 1,
       "secp256k1_generator_addOrderOf` + Mathlib (`Nat.card_zmultiples`)": 1,
       "Mathlib (`AddEquiv.ofBijective`, `Nat.cast_smul_eq_nsmul`, `Int.cast_smul_eq_zsmul`, `ZMod.val_lt`)": 1,
+      "Mathlib (`Finite.of_injective`)": 1,
       "Mathlib (`AddSubgroup.card_mul_index`) + `secp256k1_grp_card": 1,
       "native_decide + Mathlib (`exists_prime_addOrderOf_dvd_card`, `ZMod.pow_card_sub_one_eq_one`, `Finset.card_le_mul_card_image`) + repo bricks": 1,
       "Mathlib (`AddSubgroup.eq_top_of_card_eq`, `AddSubgroup.topEquiv`) + `secp256k1_card_point_eq_n": 1
     },
     "by_area": {
-      "curve-torsion": 126,
+      "curve-torsion": 128,
       "primality": 25,
-      "other": 24,
       "generic-hardness": 23,
       "protocol-soundness": 23,
+      "other": 23,
       "attack-resistance": 6,
       "reduction": 5,
       "params": 1
@@ -2078,10 +2079,10 @@
       "short_name": "instFiniteP256Point",
       "module": "Ecdlp.Proved.P256Cardinality",
       "file": "Ecdlp/Proved/P256Cardinality.lean",
-      "claim": "P-256 rational-point group is finite (`instFiniteP256Point`: `Finite P256.toAffine.Point`, via the injection `Point ↪ Option (𝔽_p × 𝔽_p)` — finite since `𝔽_p` is. Makes Mathlib's `Nat.card E.toAffine.Point` a real quantity for P-256 rather than junk `0`. Mirrors secp256k1's `instFiniteSecp256k1Point`; pure-kernel, no native_decide)",
-      "method": "Mathlib (`Finite.of_injective`)",
+      "claim": "P-256 rational-point group is finite (`instFiniteP256Point`: `Finite P256.toAffine.Point`, now a one-line `inferInstance` corollary of the general `WeierstrassCurve.Affine.instFinitePoint` since `ZMod p` is a finite commutative ring. Makes Mathlib's `Nat.card E.toAffine.Point` a real quantity for P-256 rather than junk `0`. Pure-kernel, no native_decide)",
+      "method": "Mathlib (`Finite.of_injective`) via `instFinitePoint",
       "status": "proved",
-      "area": "other",
+      "area": "curve-torsion",
       "dependency_depth": 3,
       "gated": true
     },
@@ -3075,19 +3076,32 @@
     },
     {
       "id": "thm-229",
+      "name": "WeierstrassCurve.Affine.instFinitePoint",
+      "short_name": "instFinitePoint",
+      "module": "Ecdlp.Proved.AffinePointFinite",
+      "file": "Ecdlp/Proved/AffinePointFinite.lean",
+      "claim": "Affine Weierstrass points are finite over any finite ring — general lemma (Mathlib-gap upstream candidate) (`instFinitePoint`: `Finite W.Point` for every `W : WeierstrassCurve.Affine R` with `[CommRing R] [Finite R]`, via `Point ↪ Option (R × R)`. Weakest hypotheses — no `Field`/`Nontrivial`. Mathlib v4.31.0 has no `Finite`/`Fintype` instance on any `Point` variant (gap confirmed against pinned source); natural upstream home `Mathlib/AlgebraicGeometry/EllipticCurve/Affine/Point.lean`. Subsumes the two per-curve instances below, now one-line `inferInstance` corollaries. Pure-kernel)",
+      "method": "Mathlib (`Finite.of_injective`)",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-230",
       "name": "Ecdlp.Curve.instFiniteSecp256k1Point",
       "short_name": "instFiniteSecp256k1Point",
       "module": "Ecdlp.Proved.CurveCardinality",
       "file": "Ecdlp/Proved/CurveCardinality.lean",
-      "claim": "secp256k1 rational-point group is finite (`instFiniteSecp256k1Point`: `Finite secp256k1.toAffine.Point`, via the injection `Point ↪ Option (𝔽_p × 𝔽_p)` — finite since `𝔽_p` is. Without it, Mathlib's `Nat.card E.toAffine.Point` (as used in the new `EllipticCurve/LFunction.lean`) is junk `0`; this makes `#E` a real quantity for the curve. Pure-kernel, no native_decide)",
-      "method": "Mathlib (`Finite.of_injective`)",
+      "claim": "secp256k1 rational-point group is finite (`instFiniteSecp256k1Point`: `Finite secp256k1.toAffine.Point`, now a one-line `inferInstance` corollary of the general `WeierstrassCurve.Affine.instFinitePoint` since `ZMod Secp256k1.p` is a finite commutative ring. Makes Mathlib's `Nat.card E.toAffine.Point` (as used in `EllipticCurve/LFunction.lean`) a real quantity rather than junk `0`. Pure-kernel, no native_decide)",
+      "method": "Mathlib (`Finite.of_injective`) via `instFinitePoint",
       "status": "proved",
       "area": "curve-torsion",
       "dependency_depth": 6,
       "gated": true
     },
     {
-      "id": "thm-230",
+      "id": "thm-231",
       "name": "Ecdlp.Curve.secp256k1_n_dvd_card_point",
       "short_name": "secp256k1_n_dvd_card_point",
       "module": "Ecdlp.Proved.CurveCardinality",
@@ -3100,7 +3114,7 @@
       "gated": true
     },
     {
-      "id": "thm-231",
+      "id": "thm-232",
       "name": "Ecdlp.Curve.secp256k1_card_point_eq_n`, `secp256k1_no_nonzero_two_torsion`, `secp256k1_card_point_le",
       "short_name": "secp256k1_card_point_eq_n`,",
       "module": "Ecdlp.Proved.CurveCardinalityExact",
@@ -3113,7 +3127,7 @@
       "gated": true
     },
     {
-      "id": "thm-232",
+      "id": "thm-233",
       "name": "Ecdlp.Curve.secp256k1_grp_eq_top`, `secp256k1_point_isAddCyclic`, `secp256k1_mem_zmultiples`, `secp256k1_glvHom_eq_zsmul_unconditional",
       "short_name": "secp256k1_grp_eq_top`,",
       "module": "Ecdlp.Proved.CurveFullGroup",
@@ -3279,6 +3293,11 @@
     {
       "from": "Ecdlp.Proved.CurveCardinality",
       "to": "Ecdlp.Proved.SubgroupOrder",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CurveCardinality",
+      "to": "Ecdlp.Proved.AffinePointFinite",
       "type": "imports"
     },
     {
@@ -3734,6 +3753,11 @@
     {
       "from": "Ecdlp.Proved.P256Cardinality",
       "to": "Ecdlp.Proved.P256GeneratorOrder",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.P256Cardinality",
+      "to": "Ecdlp.Proved.AffinePointFinite",
       "type": "imports"
     },
     {
@@ -4479,6 +4503,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.SubgroupOrder",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.AffinePointFinite",
       "type": "imports"
     },
     {

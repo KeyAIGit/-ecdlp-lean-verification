@@ -160,6 +160,10 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.P256.p256_grp_card
 #print axioms Ecdlp.P256.p256_n_dvd_card_point
 
+-- General finiteness of affine Weierstrass points over any finite ring (Mathlib-gap upstream
+-- candidate; pure-kernel — should depend ONLY on the standard base, no `Lean.ofReduceBool`)
+#print axioms WeierstrassCurve.Affine.instFinitePoint
+
 -- Curve25519 grounding (Montgomery model, cofactor 8; native_decide facts surface `Lean.ofReduceBool`)
 #print axioms Ecdlp.Curve25519.Curve25519_Δ_ne_zero
 #print axioms Ecdlp.Curve25519.Curve25519_a₂_ne_zero
