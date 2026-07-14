@@ -1,7 +1,7 @@
 {
   "id": "000_smoke_nat_add_comm",
   "name": "smoke_nat_add_comm",
-  "status": "demo",
+  "status": "todo",
   "difficulty": "trivial",
   "why_it_matters": "Smoke target that exercises the Layer 2 loop end-to-end. The zero-cost tactic ladder (Tier 0) should close it with no API call, demonstrating the cheap-first path. Not an ECDLP result.",
   "default_budget": {

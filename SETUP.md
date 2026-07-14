@@ -73,7 +73,7 @@ the build gate). Keep the default Lean + sympy smoke test or type a command, e.g
 
 **Tactic ladder on the box (optional, no API key):**
 ```sh
-python3 scripts/prover_loop.py --once   # Tier-0: rfl/decide/native_decide/simp/omega/ring/aesop
+python3 scripts/prover_loop.py --tier0-only   # Tier-0: rfl/decide/native_decide/simp/omega/ring/aesop
 ```
 The model tiers (Featherless) are currently idle — see the INFRA note below.
 

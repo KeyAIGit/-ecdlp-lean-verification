@@ -68,6 +68,19 @@ STEMS: list[tuple[str, str, list[str], str, str]] = [
 
 def emit(stem):
     sid, diff, tacs, doc, decl = stem
+    # Regression guard: never clobber a target that has already progressed past the
+    # open queue (e.g. `verified`). Re-emitting must not reset its status/provenance,
+    # nor overwrite a stem that promotion may have moved to `Ecdlp/Proved/`. Only
+    # `todo`/`searching` (or a brand-new id) may be (re)written. Mirrors the
+    # VERIFIED-preservation intent in `generator.py`.
+    spec_path = REGISTRY / f"{sid}.json"
+    if spec_path.exists():
+        try:
+            existing = json.loads(spec_path.read_text(encoding="utf-8"))
+        except (ValueError, OSError):
+            existing = {}
+        if existing.get("status") not in (None, "todo", "searching"):
+            return None
     module = "Ecdlp.Targets." + "".join(p.capitalize() for p in sid.split("_"))
     lean = (
         "import Mathlib\n\n"
@@ -97,8 +110,10 @@ def main() -> int:
     if args.emit:
         TARGETS.mkdir(parents=True, exist_ok=True)
         REGISTRY.mkdir(parents=True, exist_ok=True)
-        ids = [emit(s) for s in STEMS]
-        print(f"Emitted {len(ids)} frontier stems: {', '.join(ids)}")
+        written = [sid for sid in (emit(s) for s in STEMS) if sid]
+        preserved = len(STEMS) - len(written)
+        print(f"Emitted {len(written)} frontier stems "
+              f"({preserved} preserved as already-progressed): {', '.join(written)}")
     else:
         print(f"{len(STEMS)} frontier stems available (use --emit to write).")
     return 0
