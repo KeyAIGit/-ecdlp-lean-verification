@@ -50,7 +50,7 @@ recompiles. After this, `lake env lean <file>` verifies a single file in seconds
 ## 2. Run the prover loop once (Tier 0, no API key needed)
 
 ```sh
-python3 scripts/prover_loop.py --once     # see --help for flags
+python3 scripts/prover_loop.py --tier0-only     # see --help for flags
 ```
 
 Tier 0 is the zero-cost tactic ladder (`rfl/decide/native_decide/simp/omega/ring/
