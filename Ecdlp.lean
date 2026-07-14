@@ -104,4 +104,5 @@ import Ecdlp.Proved.CurveCardinalityExact
 import Ecdlp.Proved.CurveFullGroup
 import Ecdlp.Proved.GlvDivPoly
 import Ecdlp.Proved.FrobeniusCM
+import Ecdlp.Proved.GlvOrbit
 import Ecdlp.Proved.P256Cardinality
