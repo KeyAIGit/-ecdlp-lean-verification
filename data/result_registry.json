@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 530,
-  "distinct_qualified_names": 423,
-  "verified_md_citations": 191,
+  "declaration_count": 555,
+  "distinct_qualified_names": 444,
+  "verified_md_citations": 192,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -263,6 +263,22 @@
       "line": 51,
       "occurrences": 2
     },
+    "Ecdlp.Curve.HasOnlySecp256k1BadPrimeDivisors": {
+      "name": "HasOnlySecp256k1BadPrimeDivisors",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 153,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.OddDivisionPolynomialTorsionBridge": {
+      "name": "OddDivisionPolynomialTorsionBridge",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 62,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.Q5": {
       "name": "Q5",
       "namespace": "Ecdlp.Curve",
@@ -325,6 +341,30 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/TorsionPointCount.lean",
       "line": 73,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.Secp256k1IntegralResultantBadPrimeSupport": {
+      "name": "Secp256k1IntegralResultantBadPrimeSupport",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 243,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.Secp256k1IntegralResultantFormula": {
+      "name": "Secp256k1IntegralResultantFormula",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 234,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.Secp256k1OddDivisionPolynomialTorsionBridge": {
+      "name": "Secp256k1OddDivisionPolynomialTorsionBridge",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 116,
       "occurrences": 1
     },
     "Ecdlp.Curve.U": {
@@ -399,12 +439,36 @@
       "line": 111,
       "occurrences": 2
     },
+    "Ecdlp.Curve.divisionResultantExponent": {
+      "name": "divisionResultantExponent",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 183,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.exists_nonsingular_y": {
+      "name": "exists_nonsingular_y",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 34,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.five_core": {
       "name": "five_core",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FiveTorsionBridge.lean",
       "line": 62,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.for": {
+      "name": "for",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 281,
       "occurrences": 1
     },
     "Ecdlp.Curve.frobA": {
@@ -527,6 +591,46 @@
       "line": 31,
       "occurrences": 1
     },
+    "Ecdlp.Curve.isCoprime_of_isUnit_resultant": {
+      "name": "isCoprime_of_isUnit_resultant",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 205,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.isCoprime_pre": {
+      "name": "isCoprime_pre",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 71,
+      "occurrences": 2
+    },
+    "Ecdlp.Curve.natDegree_pre": {
+      "name": "natDegree_pre",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 188,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.oddDivisionDegree": {
+      "name": "oddDivisionDegree",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 180,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.oddDivisionDegree_ne_zero_of_prime": {
+      "name": "oddDivisionDegree_ne_zero_of_prime",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 195,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.of": {
       "name": "of",
       "namespace": "Ecdlp.Curve",
@@ -581,6 +685,38 @@
       "kind": "abbrev",
       "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
       "line": 44,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Z": {
+      "name": "secp256k1Z",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 139,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Z_discriminant": {
+      "name": "secp256k1Z_discriminant",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 147,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Z_discriminant_pow_bad_prime_support": {
+      "name": "secp256k1Z_discriminant_pow_bad_prime_support",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 157,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Z_map": {
+      "name": "secp256k1Z_map",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 175,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_": {
@@ -1135,6 +1271,14 @@
       "line": 49,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_integral_resultant_bad_prime_support_of_formula": {
+      "name": "secp256k1_integral_resultant_bad_prime_support_of_formula",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 251,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_isCoprime_": {
       "name": "secp256k1_isCoprime_",
       "namespace": "Ecdlp.Curve",
@@ -1142,6 +1286,14 @@
       "file": "Ecdlp/Proved/CoprimePsi2PrePsi4.lean",
       "line": 35,
       "occurrences": 6
+    },
+    "Ecdlp.Curve.secp256k1_isCoprime_pre": {
+      "name": "secp256k1_isCoprime_pre",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 124,
+      "occurrences": 4
     },
     "Ecdlp.Curve.secp256k1_j_eq_zero": {
       "name": "secp256k1_j_eq_zero",
@@ -1277,6 +1429,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/SevenTorsionBridge.lean",
       "line": 22,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_resultant_eq_intCast": {
+      "name": "secp256k1_resultant_eq_intCast",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 218,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_scalar_no_proper_subgroup": {
@@ -3325,6 +3485,14 @@
       "kind": "instance",
       "file": "Ecdlp/Proved/AffinePointFinite.lean",
       "line": 20,
+      "occurrences": 1
+    },
+    "for": {
+      "name": "for",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
+      "line": 21,
       "occurrences": 1
     },
     "negOnePow_cMin": {

@@ -119,6 +119,17 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_preΨ₇
 #print axioms Ecdlp.Curve.secp256k1_isCoprime_Ψ₃_preΨ₇
 
+-- General division-resultant reduction and root-to-torsion frontier. The final theorems
+-- are conditional on explicitly named propositions; no axiom or global instance supplies them.
+#print axioms Ecdlp.Curve.exists_nonsingular_y
+#print axioms Ecdlp.Curve.isCoprime_preΨ'_odd_primes_of_torsion_bridge
+#print axioms Ecdlp.Curve.secp256k1_isCoprime_preΨ'_odd_primes_of_torsion_bridge
+#print axioms Ecdlp.Curve.secp256k1Z_discriminant_pow_bad_prime_support
+#print axioms Ecdlp.Curve.secp256k1_resultant_eq_intCast
+#print axioms Ecdlp.Curve.secp256k1_isCoprime_preΨ'_of_integral_resultant_bad_prime_support
+#print axioms Ecdlp.Curve.secp256k1_isCoprime_preΨ'_odd_primes_of_integral_resultant_bad_prime_support
+#print axioms Ecdlp.Curve.secp256k1_isCoprime_preΨ'_odd_primes_of_integral_resultant_formula
+
 -- Division-polynomial multiplication formula, base case n = 2 (torsion-bridge engine)
 #print axioms Ecdlp.Curve.secp256k1_Φ₂
 #print axioms Ecdlp.Curve.secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq

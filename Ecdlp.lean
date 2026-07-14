@@ -44,6 +44,7 @@ import Ecdlp.Proved.GlvMinPoly
 import Ecdlp.Proved.GlvAutomorphism
 import Ecdlp.Proved.FiveTorsion
 import Ecdlp.Proved.OddTorsionBound
+import Ecdlp.Proved.DivisionResultantTransport
 import Ecdlp.Proved.TwoTorsionPoint
 import Ecdlp.Proved.GlvOrderThree
 import Ecdlp.Proved.GlvFixedLocus
