@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 560,
-  "distinct_qualified_names": 449,
-  "verified_md_citations": 194,
+  "declaration_count": 561,
+  "distinct_qualified_names": 450,
+  "verified_md_citations": 195,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -837,6 +837,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CurveCardinalityExact.lean",
       "line": 59,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_classical_security_profile": {
+      "name": "secp256k1_classical_security_profile",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ClassicalSecurityProfile.lean",
+      "line": 53,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_curve_of_nonsingular": {
