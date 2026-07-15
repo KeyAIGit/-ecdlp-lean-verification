@@ -38,8 +38,9 @@ The verified-theorem counts are published as JSON, regenerated automatically fro
   illustrative, not exhaustive. Includes a **verified discrete-log protocol algebra**
   (abstract completeness/soundness *identities* over `[Module (ZMod n) G]` / `[Field F]` —
   not proven security of deployed protocols; see `ABSTRACT_SCOPE.md`):
-    - `GenericGroupBound.lean` - Shoup/Nechaev generic-group `Ω(√p)` lower bound for
-      the discrete log (first such in Mathlib); model-soundness lemmas.
+    - `GenericGroupBound.lean` - the fixed-transcript affine collision core of the Shoup/Nechaev
+      generic-group `Ω(√p)` lower bound for the discrete log (the reusable counting fact, not the
+      full adaptive-adversary theorem — see the file docstring); model-soundness lemmas.
     - `BabyStepGiantStep.lean`, `PollardRho.lean` - matching `O(√n)` upper bounds, so
       generic DLP is `Θ(√n)`.
     - `Secp256k1GenericSecurity.lean` - secp256k1 ≥128-bit **classical, generic** security

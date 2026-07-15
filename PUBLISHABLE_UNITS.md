@@ -51,9 +51,9 @@ arithmetic relations those complexity statements rest on.
   of affine forms) is the paper's modeling choice and a reviewer's first question — it must be
   presented as the Shoup/Nechaev information-theoretic core, not as a general cost model (Lean still
   has none; see `BARRIERS.md` B1).
-- The secp256k1 instantiation assumes the base-point subgroup has the published order `n` (a
-  point-counting fact — `#E(𝔽_p) = n` — **not** proved in Lean, no Schoof). Its primality *is*
-  now proved (Unit 2), which discharges what used to be the conditional part.
+- The secp256k1 instantiation uses the base-point subgroup order `n`. That order is now proved:
+  `#E(𝔽_p) = n` is machine-checked curve-specifically (`CurveCardinalityExact.lean`, no Schoof) and
+  `n` is proved prime (Unit 2), so the once-conditional point-counting part is fully discharged.
 - `secp256k1_generic_security` and `secp256k1_bsgs_steps_le` use `native_decide` for the 256-bit
   numeric leaf, so they carry `Lean.ofReduceBool` (compiler in the TCB); the abstract bounds
   (`generic_dlog_query_bound`, `bsgs_decomp`, …) are pure-kernel.
