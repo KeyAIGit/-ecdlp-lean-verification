@@ -128,10 +128,11 @@ RETIRED = [
     "~188 distinct", "224 ledger rows", "224 rows",
     "~189 distinct", "225 ledger rows", "225 rows",
     "~190 distinct", "226 ledger rows", "226 rows",
+    "~191 distinct", "227 ledger rows", "227 rows",
 ]
 
 # Must appear somewhere in VERIFIED.md so the canonical figure stays discoverable.
-CANONICAL_PRESENT = ["~191 distinct", "227 ledger rows"]
+CANONICAL_PRESENT = ["~192 distinct", "228 ledger rows"]
 
 
 def main() -> int:
@@ -161,7 +162,7 @@ def main() -> int:
 
     if failures:
         print("COUNT CONSISTENCY FAILED — fix these to the canonical figure "
-              "'227 ledger rows / ~191 distinct results' (or point the doc at STATUS.md):")
+              "'228 ledger rows / ~192 distinct results' (or point the doc at STATUS.md):")
         print("\n".join("  " + f for f in failures))
         return 1
     print("count consistency OK: no retired headline counts; canonical figure present.")

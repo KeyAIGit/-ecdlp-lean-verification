@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 561,
-  "distinct_qualified_names": 450,
-  "verified_md_citations": 195,
+  "declaration_count": 574,
+  "distinct_qualified_names": 463,
+  "verified_md_citations": 196,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -365,6 +365,86 @@
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
       "line": 116,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.TwistPrimality.pr_1013176677300131846900870239606035638738100997248092069256697437031": {
+      "name": "pr_1013176677300131846900870239606035638738100997248092069256697437031",
+      "namespace": "Ecdlp.Curve.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 190,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.TwistPrimality.pr_132401351950596217829363773663": {
+      "name": "pr_132401351950596217829363773663",
+      "namespace": "Ecdlp.Curve.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 142,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.TwistPrimality.pr_1489008455352563922568011402972792902916827": {
+      "name": "pr_1489008455352563922568011402972792902916827",
+      "namespace": "Ecdlp.Curve.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 178,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.TwistPrimality.pr_2346158371": {
+      "name": "pr_2346158371",
+      "namespace": "Ecdlp.Curve.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 79,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.TwistPrimality.pr_25465723": {
+      "name": "pr_25465723",
+      "namespace": "Ecdlp.Curve.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 64,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.TwistPrimality.pr_25910585072550149": {
+      "name": "pr_25910585072550149",
+      "namespace": "Ecdlp.Curve.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 130,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.TwistPrimality.pr_26886215762884663": {
+      "name": "pr_26886215762884663",
+      "namespace": "Ecdlp.Curve.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 46,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.TwistPrimality.pr_29235542524211150858901814862527031": {
+      "name": "pr_29235542524211150858901814862527031",
+      "namespace": "Ecdlp.Curve.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 160,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.TwistPrimality.pr_453934566793": {
+      "name": "pr_453934566793",
+      "namespace": "Ecdlp.Curve.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 100,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.TwistPrimality.pr_4539345667931": {
+      "name": "pr_4539345667931",
+      "namespace": "Ecdlp.Curve.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 118,
       "occurrences": 1
     },
     "Ecdlp.Curve.U": {
@@ -1717,6 +1797,30 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/TraceOfFrobenius.lean",
       "line": 42,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_twist_maxprime_prime": {
+      "name": "secp256k1_twist_maxprime_prime",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 222,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_twist_order_factorization": {
+      "name": "secp256k1_twist_order_factorization",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 229,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_twist_security_profile": {
+      "name": "secp256k1_twist_security_profile",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TwistSecurity.lean",
+      "line": 244,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff": {

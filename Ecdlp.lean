@@ -107,6 +107,7 @@ import Ecdlp.Proved.CurveFullGroup
 import Ecdlp.Proved.PointGroupEquiv
 import Ecdlp.Proved.PointGroupSimple
 import Ecdlp.Proved.ClassicalSecurityProfile
+import Ecdlp.Proved.TwistSecurity
 import Ecdlp.Proved.GlvDivPoly
 import Ecdlp.Proved.FrobeniusCM
 import Ecdlp.Proved.GlvOrbit

@@ -73,7 +73,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 95176
+        "bytes": 96250
       },
       {
         "path": "BARRIERS.md",
@@ -85,7 +85,7 @@
         "path": "notes/SECURITY_SCOPE.md",
         "reason": "precise scope of the generic-hardness claim (not unconditional)",
         "exists": true,
-        "bytes": 4767
+        "bytes": 6124
       },
       {
         "path": "notes/FOUNDATIONS.md",
@@ -141,7 +141,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 95176
+        "bytes": 96250
       },
       {
         "path": "BARRIERS.md",
@@ -153,7 +153,7 @@
         "path": "notes/SECURITY_SCOPE.md",
         "reason": "precise scope of the generic-hardness claim (not unconditional)",
         "exists": true,
-        "bytes": 4767
+        "bytes": 6124
       },
       {
         "path": "notes/FOUNDATIONS.md",
@@ -171,7 +171,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 201203
+        "bytes": 202801
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
