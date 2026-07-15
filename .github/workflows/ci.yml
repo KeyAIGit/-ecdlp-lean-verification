@@ -103,6 +103,11 @@ jobs:
       - name: Check domain registry
         run: python3 scripts/check_domains.py
 
+      # Prover-loop registry hygiene: every OPEN target must have a stem on disk, else the
+      # loop silently no-ops it. Foreign files (queue.json) are ignored.
+      - name: Check prover target registry
+        run: python3 scripts/check_targets.py
+
       # Fast, cheap gate: fail before building if any BUILT proof is left incomplete.
       # Scope: only *.lean files in the built proof base. Ecdlp/Targets/ holds open
       # conjecture stems (with `sorry`) that are intentionally NOT imported/built, so
