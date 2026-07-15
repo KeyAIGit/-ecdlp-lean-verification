@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 555,
-  "distinct_qualified_names": 444,
-  "verified_md_citations": 192,
+  "declaration_count": 558,
+  "distinct_qualified_names": 447,
+  "verified_md_citations": 193,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -1381,6 +1381,30 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/TorsionCoprime.lean",
       "line": 26,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_pointGroupEquiv": {
+      "name": "secp256k1_pointGroupEquiv",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/PointGroupEquiv.lean",
+      "line": 53,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_pointGroupEquiv_apply": {
+      "name": "secp256k1_pointGroupEquiv_apply",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointGroupEquiv.lean",
+      "line": 60,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_point_group_equiv_exists": {
+      "name": "secp256k1_point_group_equiv_exists",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointGroupEquiv.lean",
+      "line": 68,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_point_isAddCyclic": {

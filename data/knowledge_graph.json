@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 235,
+    "theorems": 236,
     "barriers": 6,
-    "edges": 282,
+    "edges": 285,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -84,10 +84,11 @@
       "Mathlib (`Finite.of_injective`)": 1,
       "Mathlib (`AddSubgroup.card_mul_index`) + `secp256k1_grp_card": 1,
       "native_decide + Mathlib (`exists_prime_addOrderOf_dvd_card`, `ZMod.pow_card_sub_one_eq_one`, `Finset.card_le_mul_card_image`) + repo bricks": 1,
-      "Mathlib (`AddSubgroup.eq_top_of_card_eq`, `AddSubgroup.topEquiv`) + `secp256k1_card_point_eq_n": 1
+      "Mathlib (`AddSubgroup.eq_top_of_card_eq`, `AddSubgroup.topEquiv`) + `secp256k1_card_point_eq_n": 1,
+      "Mathlib (`AddEquiv.addSubgroupCongr`, `AddSubgroup.topEquiv`, `AddEquiv.trans`) + `secp256k1_dlogEquiv` + `secp256k1_grp_eq_top": 1
     },
     "by_area": {
-      "curve-torsion": 128,
+      "curve-torsion": 129,
       "primality": 26,
       "generic-hardness": 23,
       "protocol-soundness": 23,
@@ -3152,6 +3153,19 @@
       "area": "curve-torsion",
       "dependency_depth": 10,
       "gated": true
+    },
+    {
+      "id": "thm-235",
+      "name": "Ecdlp.Curve.secp256k1_pointGroupEquiv` (+ `secp256k1_point_group_equiv_exists`)",
+      "short_name": "secp256k1_pointGroupEquiv`",
+      "module": "Ecdlp.Proved.PointGroupEquiv",
+      "file": "Ecdlp/Proved/PointGroupEquiv.lean",
+      "claim": "The full point-group structure theorem: `E(𝔽_p) ≃+ ℤ/n` (`secp256k1_pointGroupEquiv`: base-point multiplication `c ↦ c·G` is an additive-group isomorphism from the scalar ring `ZMod n` onto the entire rational-point group `E(𝔽_p)`, not merely `⟨G⟩`. Lifts the subgroup discrete-log iso `secp256k1_dlogEquiv` off `⟨G⟩` by transporting across cofactor 1 `⟨G⟩ = ⊤` (`AddEquiv.addSubgroupCongr secp256k1_grp_eq_top`) then stripping the `⊤` subtype (`AddSubgroup.topEquiv`). The complete group-theoretic classification of secp256k1's points: cyclic of order `n`, i.e. `≅ ℤ/n`. Unconditional given `#E = n`; computational inversion is the open ECDLP conjecture, the bijection is a theorem. Inherits `Lean.ofReduceBool` through the order keystone)",
+      "method": "Mathlib (`AddEquiv.addSubgroupCongr`, `AddSubgroup.topEquiv`, `AddEquiv.trans`) + `secp256k1_dlogEquiv` + `secp256k1_grp_eq_top",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 11,
+      "gated": true
     }
   ],
   "barriers": [
@@ -3832,6 +3846,16 @@
     {
       "from": "Ecdlp.Proved.PointEvaluation",
       "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.PointGroupEquiv",
+      "to": "Ecdlp.Proved.SubgroupOrder",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.PointGroupEquiv",
+      "to": "Ecdlp.Proved.CurveFullGroup",
       "type": "imports"
     },
     {
@@ -4557,6 +4581,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.CurveFullGroup",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.PointGroupEquiv",
       "type": "imports"
     },
     {

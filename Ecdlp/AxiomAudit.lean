@@ -74,6 +74,10 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_grp_eq_top
 #print axioms Ecdlp.Curve.secp256k1_glvHom_eq_zsmul_unconditional
 
+-- full point-group structure theorem: E(𝔽_p) ≃+ ℤ/n (dlogEquiv lifted off ⟨G⟩ via grp_eq_top)
+#print axioms Ecdlp.Curve.secp256k1_pointGroupEquiv
+#print axioms Ecdlp.Curve.secp256k1_point_group_equiv_exists
+
 -- CM-by-ℤ[ω] Frobenius arithmetic certificate: N(π)=p, Tr(π)=p+1−n, 4p=t²+3b² (End⊗ℚ=ℚ(√−3))
 #print axioms Ecdlp.Curve.secp256k1_frobenius_norm
 #print axioms Ecdlp.Curve.secp256k1_frobenius_trace
