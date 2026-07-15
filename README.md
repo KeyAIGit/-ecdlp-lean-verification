@@ -32,8 +32,8 @@ The verified-theorem counts are published as JSON, regenerated automatically fro
 - `Ecdlp/Proved/` - promoted, machine-checked theorems (built and gated). **See the
   directory itself for the full, current module list** (torsion `E[n]`, division
   polynomials Ψ₂–Ψ₄, the GLV endomorphism object — proved an *additive* endomorphism
-  (`glvHom`); the cryptographically load-bearing `[λ]` eigenvalue identity
-  `glvPoint = [λ]` is **not** proved (open, see `TRUST_REPORT.md`/`ABSTRACT_SCOPE.md`) —
+  (`glvHom`); the `[λ]` eigenvalue identity `glvPoint = [λ]` is proved on the rational points
+  `⟨G⟩ = E(𝔽_p)` (concrete λ; only the full geometric `E[n]` version stays open, see `ABSTRACT_SCOPE.md`) —
   curve invariants, anomalous-scope, collision/solve-step, …); the items below are
   illustrative, not exhaustive. Includes a **verified discrete-log protocol algebra**
   (abstract completeness/soundness *identities* over `[Module (ZMod n) G]` / `[Field F]` —
