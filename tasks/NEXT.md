@@ -175,29 +175,27 @@ Files allowed to edit:
 - `docs/`
 - `notes/`
 
-### TASK-007 - Consolidation tranche 2 (ROADMAP.md §4)
+### TASK-007 - Declare v0.1 on main
 
-Kind: ops | agent | docs
+Kind: ops | docs
 Hypothesis: `H1_RESEARCH_OS_TRUTH_LAYER`
-Why it matters: Tranche 1 (archive of ward/scratch/platform/superseded strategy
-docs, ROADMAP.md as the one strategy file) is executed. Fewer prose surfaces =
-structurally less drift; tranche 2 finishes the root-doc consolidation and
-declares v0.1.
+Why it matters: Consolidation tranches 1 and 2 are executed (ROADMAP.md §4:
+archive/, ROADMAP as the one strategy doc, README as the one front door,
+AGENTS.md as the one agent doc, notes/INDEX.md). What remains is the release
+act itself, which only makes sense on `main`.
 Inputs:
-- `ROADMAP.md` (§4, tranche-2 table)
-- `REPOSITORY_ARCHITECTURE.md` + `repo/CLEANUP_PLAN.md` (map + tranche-1 record)
-- `README.md`, `READ_FIRST.md`, `ONE_PAGE_SUMMARY.md`, `RESEARCH_MAP.md`
-- `AGENT.md`, `AGENTS.md`
+- `ROADMAP.md` (§4 structure tables, §5 near-term program)
+- `REPOSITORY_ARCHITECTURE.md` + `repo/CLEANUP_PLAN.md` (map + tranche records)
+- `README.md` (already states v0.1)
 Expected output:
-- ONE_PAGE_SUMMARY + READ_FIRST merged into README (the v0.1 front door);
-  RESEARCH_MAP folded into ROADMAP/notes; AGENT.md folded into AGENTS.md;
-  a truth pass over AGENTS.md/README.md; `notes/INDEX.md`.
+- The consolidation PR merged by the maintainer; the full gate battery green on
+  `main`; an annotated git tag `v0.1` on the merge commit.
 Exit criteria:
-- Root prose ≈ 12 files per ROADMAP §4; all gates green; README states v0.1.
+- `git tag v0.1` exists on main; STATUS.md and the site reflect the merged
+  state; no known-false statement in canonical docs.
 Files allowed to edit:
-- `README.md`, `READ_FIRST.md`, `ONE_PAGE_SUMMARY.md`, `RESEARCH_MAP.md`
-- `AGENT.md`, `AGENTS.md`, `ROADMAP.md`, `notes/`, `archive/docs/`
-- `repo/`, `scripts/` (reference updates + gates), `tasks/NEXT.md`
+- none (tagging + a follow-up docs-sync run on main; open a new task for any
+  fallout)
 
 ## Task Contract Template
 

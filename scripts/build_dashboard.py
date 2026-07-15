@@ -95,11 +95,9 @@ LAYERS = [
 NAV = [
     ("Start here", [
         ("README.md", "Project overview, layout, build instructions"),
-        ("READ_FIRST.md", "Low-context orientation: what this is, what not to claim"),
         ("AGENTS.md", "Orientation for any Claude instance — read this first"),
         ("ROADMAP.md", "The one strategy document: position, north star, structure, program"),
         ("CLAUDE.md", "Working conventions for automated/assisted runs"),
-        ("AGENT.md", "The authoritative protocol"),
         ("SETUP.md", "Minimal build command"),
     ]),
     ("Research OS & architecture", [
@@ -121,7 +119,6 @@ NAV = [
         ("COVERAGE.md", "Honest 3-denominator coverage benchmark (regenerate: coverage_report.py)"),
         ("BARRIERS.md", "The no-go map — what's blocked, and by which missing foundation"),
         ("ABSTRACT_SCOPE.md", "Honest scope of the DL-crypto library (abstract algebra + concrete instantiation)"),
-        ("ONE_PAGE_SUMMARY.md", "One-page external summary (Lean-expert + generalist audiences)"),
     ]),
     ("Frontier & data (machine-readable)", [
         ("data/frontier_map.json", "The queryable frontier map — status + blocking foundation per claim"),

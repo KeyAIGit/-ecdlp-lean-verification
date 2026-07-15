@@ -34,8 +34,8 @@ DOCS = [
     "README.md", "AGENTS.md", "BARRIERS.md", "VERIFIED.md",
     "data/knowledge_graph.md", "CLAUDE.md",
     # summary docs that historically drifted — now scanned so they can't silently re-drift
-    "STATUS.md", "TRUST_REPORT.md", "ONE_PAGE_SUMMARY.md", "ABSTRACT_SCOPE.md",
-    "COVERAGE.md", "READ_FIRST.md", "REPOSITORY_ARCHITECTURE.md",
+    "STATUS.md", "TRUST_REPORT.md", "ABSTRACT_SCOPE.md",
+    "COVERAGE.md", "REPOSITORY_ARCHITECTURE.md",
     "ROADMAP.md", "repo/CLEANUP_PLAN.md",
 ]
 

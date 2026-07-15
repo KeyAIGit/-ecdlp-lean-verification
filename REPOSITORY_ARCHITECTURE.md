@@ -47,7 +47,7 @@ publication reviewers. Each audience needs a stable route through the repo.
 | What is actually proved? | `Ecdlp/Proved/*.lean` plus `VERIFIED.md` | `data/knowledge_graph.json`, `data/knowledge_graph.md` |
 | What corpus claims exist? | `data/KG_CLAIM_FORMALIZATION_v1.csv` | `data/frontier_map.json`, `targets/*.json` |
 | Which corpus claims are verified/partial/blocked/etc.? | `data/frontier_map.json` plus `data/corpus_coverage_overrides.json` | `STATUS.md`, `COVERAGE.md`, dashboard |
-| What is safe to claim publicly? | `STATUS.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `notes/SECURITY_SCOPE.md` | `README.md`, `ONE_PAGE_SUMMARY.md`, `PUBLISHABLE_UNITS.md` |
+| What is safe to claim publicly? | `STATUS.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `notes/SECURITY_SCOPE.md` | `README.md`, `PUBLISHABLE_UNITS.md` |
 | What should an agent work on next? | `tasks/NEXT.md` | `experiments/HYPOTHESES.yaml`, `AGENTS.md`, `ROADMAP.md` |
 | What should be archived or deleted? | `repo/CLEANUP_PLAN.md` after review | `repo/ARTIFACTS.yaml`, Claude review comments |
 

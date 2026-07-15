@@ -71,7 +71,7 @@ The drift gate is `scripts/check_status_consistency.py`. Run it whenever stats,
 frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 
 ## Where to go deeper
-`READ_FIRST.md` (orientation for low-context readers) · `tasks/NEXT.md` (active queue) ·
+`README.md` (the front door) · `tasks/NEXT.md` (active queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
 standalone results) · `ROADMAP.md` (strategy & program) · `VERIFIED.md` (ledger) ·
 `BARRIERS.md` (no-go map) · `notes/FOUNDATIONS.md` (Weil/Semaev ladder) ·

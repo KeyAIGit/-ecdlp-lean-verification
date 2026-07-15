@@ -83,15 +83,15 @@ Executed in this PR (tranche 1):
 | **Archive** | `notes/ward/` → `archive/ward/`, `scratch/` → `archive/scratch/`, `generator-report.md` → `archive/` | the manifest's own long-frozen cleanup candidates, executed |
 | **Archive** | `platform/` → `archive/platform/` (+ retire `platform-ci.yml`) | undeployed Phase-2 scaffold in a Lean repo; its own README says it belongs in a separate repo; revive from archive or a new repo when Phase-2 becomes an evidence-based decision |
 
-Tranche 2 (next, tracked in `tasks/NEXT.md`):
+Tranche 2 (**executed** in the same PR):
 
 | Action | Paths | Why |
 |---|---|---|
-| Merge | `ONE_PAGE_SUMMARY.md`, `READ_FIRST.md` → `README.md` | three overlapping entry points → one; README becomes the v0.1 front door (agents keep `AGENTS.md`) |
-| Merge | `RESEARCH_MAP.md` → this file + `notes/FOUNDATIONS.md` | route map belongs with strategy/math notes |
-| Fold | `AGENT.md` → `AGENTS.md` §protocol | two agent docs → one (keep the prover-tier protocol as a section) |
-| Truth pass | `AGENTS.md`, `README.md` | stale dev-branch name, pre-keystone GLV wording, engine described optimistically |
-| Curate | `notes/` (30 top-level) | add `notes/INDEX.md`; statuses on route memos |
+| Merged ✅ | `ONE_PAGE_SUMMARY.md`, `READ_FIRST.md` → `README.md` | three overlapping entry points → one; README is the v0.1 front door (agents keep `AGENTS.md`); originals in `archive/docs/` |
+| Moved ✅ | `RESEARCH_MAP.md` → `notes/RESEARCH_MAP.md` | the attack-registry intro is research memory, not a root entry point |
+| Folded ✅ | `AGENT.md` → `AGENTS.md` §Prover-loop protocol | two agent docs → one; original in `archive/docs/` |
+| Done ✅ | `AGENTS.md`, `README.md` truth pass | stale dev-branch name, pre-keystone GLV wording, engine wording — fixed |
+| Indexed ✅ | `notes/` | `notes/INDEX.md` added; per-memo status curation continues incrementally |
 
 Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` ·
 `BARRIERS` · `TRUST_REPORT` · `ABSTRACT_SCOPE` · `COVERAGE`* · `ROADMAP` ·
@@ -148,7 +148,7 @@ Fixed in this PR: truth-layer drift (stale keystone bottleneck, 228-vs-239 count
 three unledgered modules, stale TASK-005/P-256 note/ENGINE schedule wording) and the
 structural cleanup of tranche 1. Remaining, in order:
 
-1. Tranche-2 merges + README v0.1 rewrite (§4).
+1. ~~Tranche-2 merges + README v0.1 rewrite~~ (done; remaining: tag v0.1 on main after merge).
 2. `ci.yml`: root-file no-sorry coverage; drop the per-push prover step;
    `docs-sync.yml` remediation message lists all 8 generators. *(done in this PR if
    present in the diff; else next)*

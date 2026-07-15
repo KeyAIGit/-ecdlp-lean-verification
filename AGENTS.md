@@ -2,7 +2,8 @@
 
 Single source of truth for "what this is, what's done, what to run next". Read this
 together with `VERIFIED.md` (the proved-theorem ledger) and `BARRIERS.md` (what's
-blocked and why). Authoritative protocol: `AGENT.md`; conventions: `CLAUDE.md`.
+blocked and why). The prover-loop protocol is §"Prover-loop protocol" below;
+conventions: `CLAUDE.md`.
 For a small-context start, read `STATUS.md` first, then `tasks/NEXT.md`; load
 `experiments/HYPOTHESES.yaml` when the task touches hypotheses, experiments,
 frontier interpretation, or publication planning. Before moving, deleting, or
@@ -63,7 +64,7 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 `TIERS` in `scripts/export_agent_bundle.py`):
 - **small** — the live snapshot: `STATUS.md`, `tasks/NEXT.md`, `data/stats.json`,
   `data/frontier_map.json`.
-- **medium** — adds `READ_FIRST.md`, this file, `VERIFIED.md`, `BARRIERS.md`,
+- **medium** — adds `README.md`, this file, `VERIFIED.md`, `BARRIERS.md`,
   `notes/SECURITY_SCOPE.md`, `notes/FOUNDATIONS.md`, `experiments/HYPOTHESES.yaml`.
 - **large** — adds `data/knowledge_graph.json`, `REPOSITORY_ARCHITECTURE.md`,
   `PUBLISHABLE_UNITS.md`, `TRUST_REPORT.md`.
@@ -88,3 +89,32 @@ local Mathlib source for exact API. 3. Push → CI (or local build). 4. On green
 - Connect the rented server as an autonomous prover node (`notes/SERVER_RUNBOOK.md`)
   — warm `lake env lean` ⇒ 10–50× faster than CI. *(Done: primality certificates
   for `p`/`n` — no longer a target.)*
+
+## Prover-loop protocol (formerly AGENT.md)
+
+The layered proof-search system. The agent is never the final authority — **Lean is**.
+
+**Layers.** (1) *Planner* — picks targets, splits hard goals into lemmas, sets attempt
+budgets, reads Lean errors and chooses repair strategy. (2) *Prover models* — the
+Featherless tier (Pythagoras-4B → Goedel-32B → Kimina-8B escalation) is **dead from CI**
+(Cloudflare bot-block of GitHub runners, verified 2026-07-15; 0 proofs ever accepted) and
+may only work from the warm server; in practice proofs come from the zero-cost tactic
+ladder + human/Claude formalization. (3) *Verifier* — `lake build` / `lake env lean`;
+a theorem is accepted only if Lean verifies it with no `sorry`. (4) *Ledger* —
+`VERIFIED.md` records accepted claims; failed model attempts are failed searches, not
+failures of the theorem.
+
+**Hard rules.** Never commit model-generated proof code unless Lean accepts it. Never
+`sorry`/`admit`/placeholder axioms. Never print API keys. Prefer artifact/report output
+before touching `Ecdlp/*.lean`. Pass the exact Lean error into each repair attempt; if
+attempts keep failing, split the theorem instead of brute-forcing.
+
+**Promotion.** Candidate accepted by the kernel → human/assistant review (clean, not
+overfitted) → move into `Ecdlp/Proved/`, add the import to `Ecdlp.lean`, append a
+`VERIFIED.md` row, set the `targets/*.json` status to `verified` — via a **draft PR**;
+a human merges.
+
+**Layout invariant.** `Ecdlp/Proved/*` + top-level `Ecdlp/*.lean` are the built, gated
+proof base. `Ecdlp/Targets/*` are open stems (one `sorry` each) — never imported, never
+built, excluded from the no-`sorry` gate; CI typechecks them in a non-blocking step.
+`targets/*.json` is the loop registry; `data/` holds the read-only corpus.

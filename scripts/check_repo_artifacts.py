@@ -191,11 +191,6 @@ def main() -> int:
         errors,
     )
     require_contains(
-        "READ_FIRST.md",
-        ["REPOSITORY_ARCHITECTURE.md"],
-        errors,
-    )
-    require_contains(
         "CLAUDE.md",
         ["REPOSITORY_ARCHITECTURE.md", "repo/ARTIFACTS.yaml"],
         errors,

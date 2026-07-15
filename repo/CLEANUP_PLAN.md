@@ -101,7 +101,7 @@ Proposed follow-up PR.
 
 Actions:
 
-1. Decide whether `READ_FIRST.md`, `AGENTS.md`, `AGENT.md`, and `CLAUDE.md`
+1. ~~Decide whether the entry docs overlap~~ Done: READ_FIRST/ONE_PAGE_SUMMARY merged into README, AGENT.md into AGENTS.md (ROADMAP.md §4 tranche 2); whether `AGENTS.md` and `CLAUDE.md`
    each have distinct jobs.
 2. Remove duplicate explanations of counts and current status.
 3. Keep `STATUS.md` as the live snapshot and `REPOSITORY_ARCHITECTURE.md` as

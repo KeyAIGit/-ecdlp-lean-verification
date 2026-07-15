@@ -1,7 +1,7 @@
 # CLAUDE.md — working conventions for this repository
 
 Machine-checked layer for the ECDLP knowledge graph (Lean 4 + Mathlib). This file
-is guidance for automated/assisted runs. The authoritative protocol is `AGENT.md`.
+is guidance for automated/assisted runs. The authoritative protocol lives in `AGENTS.md` (§Prover-loop protocol).
 For whole-repository ownership, generated artifacts, and cleanup boundaries, read
 `REPOSITORY_ARCHITECTURE.md` and `repo/ARTIFACTS.yaml` before moving or deleting files.
 

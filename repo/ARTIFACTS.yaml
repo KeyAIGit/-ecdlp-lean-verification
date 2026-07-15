@@ -144,7 +144,6 @@ classes:
     description: Files that orient low-context agents and hold active work.
     paths:
       - AGENTS.md
-      - AGENT.md
       - CLAUDE.md
       - ROADMAP.md
       - tasks/NEXT.md
@@ -189,8 +188,6 @@ classes:
       - notes/*.md
       - docs/
       - PUBLISHABLE_UNITS.md
-      - ONE_PAGE_SUMMARY.md
-      - READ_FIRST.md
       - SETUP.md
     owner: research_memory
     hand_edit: true
@@ -238,8 +235,8 @@ cleanup_candidates:
 follow_up_prs:
   - id: repo-manifest-schema-hardening
     goal: Expand scripts/check_repo_artifacts.py beyond path existence into a stricter schema gate.
-  - id: root-doc-consolidation-tranche-2
-    goal: Merge ONE_PAGE_SUMMARY/READ_FIRST into README, RESEARCH_MAP into ROADMAP/notes, AGENT.md into AGENTS.md (ROADMAP.md §4).
+  - id: v01-tag
+    goal: Tag v0.1 on main once the consolidation PR merges and the gate battery is green there (tranche 2 executed in that PR).
 
 review_questions:
   - Which paths are misclassified?

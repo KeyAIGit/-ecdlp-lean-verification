@@ -73,12 +73,12 @@
       "note": null,
       "where_used": [
         "COVERAGE.md",
-        "ONE_PAGE_SUMMARY.md",
-        "RESEARCH_MAP.md",
+        "README.md",
         "VERIFIED.md",
         "domains/p256/corpus.md",
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
+        "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]
     },
@@ -126,10 +126,8 @@
         "AGENTS.md",
         "BARRIERS.md",
         "COVERAGE.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
-        "RESEARCH_MAP.md",
         "STATUS.md",
         "TRUST_REPORT.md",
         "VERIFIED.md",
@@ -137,6 +135,7 @@
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
         "notes/HYPOTHESIS_EXPLORER.md",
+        "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]
     },
@@ -158,7 +157,6 @@
       "where_used": [
         "AGENTS.md",
         "BARRIERS.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
         "VERIFIED.md",
@@ -184,7 +182,6 @@
       "where_used": [
         "BARRIERS.md",
         "PUBLISHABLE_UNITS.md",
-        "RESEARCH_MAP.md",
         "experiments/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
@@ -194,7 +191,8 @@
         "experiments/p3_sm_system/README.md",
         "experiments/p3_sm_system/RESULTS.md",
         "experiments/p4_petit/README.md",
-        "experiments/p4_petit/RESULTS.md"
+        "experiments/p4_petit/RESULTS.md",
+        "notes/RESEARCH_MAP.md"
       ]
     },
     {
@@ -218,11 +216,10 @@
       "where_used": [
         "AGENTS.md",
         "BARRIERS.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
-        "RESEARCH_MAP.md",
         "VERIFIED.md",
+        "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]
     },
@@ -243,8 +240,9 @@
       "note": null,
       "where_used": [
         "PUBLISHABLE_UNITS.md",
-        "RESEARCH_MAP.md",
+        "README.md",
         "VERIFIED.md",
+        "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]
     },
@@ -267,9 +265,8 @@
         "ABSTRACT_SCOPE.md",
         "BARRIERS.md",
         "COVERAGE.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
-        "RESEARCH_MAP.md",
+        "README.md",
         "ROADMAP.md",
         "STATUS.md",
         "VERIFIED.md",
@@ -279,6 +276,7 @@
         "notes/GLV_LAMBDA.md",
         "notes/HASSE_RECON.md",
         "notes/POINT_COUNTING_KEYSTONE.md",
+        "notes/RESEARCH_MAP.md",
         "notes/UPSTREAM_SCAN.md",
         "tasks/NEXT.md"
       ]
@@ -302,9 +300,8 @@
         "AGENTS.md",
         "BARRIERS.md",
         "COVERAGE.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
-        "RESEARCH_MAP.md",
+        "README.md",
         "ROADMAP.md",
         "STATUS.md",
         "VERIFIED.md",
@@ -323,6 +320,7 @@
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
         "notes/HYPOTHESIS_EXPLORER.md",
+        "notes/RESEARCH_MAP.md",
         "notes/UPSTREAM_SCAN.md",
         "tasks/NEXT.md"
       ]
@@ -345,7 +343,6 @@
       "where_used": [
         "AGENTS.md",
         "BARRIERS.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
         "VERIFIED.md",
@@ -372,10 +369,8 @@
         "AGENTS.md",
         "BARRIERS.md",
         "COVERAGE.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
-        "RESEARCH_MAP.md",
         "STATUS.md",
         "TRUST_REPORT.md",
         "VERIFIED.md",
@@ -384,6 +379,7 @@
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
         "notes/HYPOTHESIS_EXPLORER.md",
+        "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]
     }
