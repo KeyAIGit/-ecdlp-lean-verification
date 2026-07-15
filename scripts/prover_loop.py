@@ -134,6 +134,10 @@ def load_specs() -> list[dict]:
     specs = []
     for p in sorted(REGISTRY_DIR.glob("*.json")):
         spec = json.loads(p.read_text(encoding="utf-8"))
+        # Skip foreign registry files that share targets/ but are not loop targets
+        # (e.g. queue.json, agent_day's `{_comment, targets}` schema — no top-level `id`).
+        if not isinstance(spec, dict) or "id" not in spec:
+            continue
         spec["_path"] = str(p)
         specs.append(spec)
     return specs
