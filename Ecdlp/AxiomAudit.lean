@@ -74,6 +74,15 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_grp_eq_top
 #print axioms Ecdlp.Curve.secp256k1_glvHom_eq_zsmul_unconditional
 
+-- full point-group structure theorem: E(𝔽_p) ≃+ ℤ/n (dlogEquiv lifted off ⟨G⟩ via grp_eq_top)
+#print axioms Ecdlp.Curve.secp256k1_pointGroupEquiv
+#print axioms Ecdlp.Curve.secp256k1_point_group_equiv_exists
+
+-- point-group cofactor-1 security structure from #E=n prime: no proper nontrivial subgroup,
+-- every nonzero point generates (group-level small-subgroup-attack resistance)
+#print axioms Ecdlp.Curve.secp256k1_point_group_no_proper_subgroup
+#print axioms Ecdlp.Curve.secp256k1_nonzero_point_generates
+
 -- thesis capstone: the classical attack-resistance profile (cofactor 1 + prime order + not
 -- supersingular + not anomalous + Hasse + embedding degree >100), one unconditional theorem
 #print axioms Ecdlp.Curve.secp256k1_classical_security_profile

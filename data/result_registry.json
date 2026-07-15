@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 556,
-  "distinct_qualified_names": 445,
-  "verified_md_citations": 193,
+  "declaration_count": 561,
+  "distinct_qualified_names": 450,
+  "verified_md_citations": 195,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -1367,6 +1367,14 @@
       "line": 136,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_nonzero_point_generates": {
+      "name": "secp256k1_nonzero_point_generates",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointGroupSimple.lean",
+      "line": 42,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_odd_pre": {
       "name": "secp256k1_odd_pre",
       "namespace": "Ecdlp.Curve",
@@ -1389,6 +1397,38 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/TorsionCoprime.lean",
       "line": 26,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_pointGroupEquiv": {
+      "name": "secp256k1_pointGroupEquiv",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/PointGroupEquiv.lean",
+      "line": 53,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_pointGroupEquiv_apply": {
+      "name": "secp256k1_pointGroupEquiv_apply",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointGroupEquiv.lean",
+      "line": 60,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_point_group_equiv_exists": {
+      "name": "secp256k1_point_group_equiv_exists",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointGroupEquiv.lean",
+      "line": 68,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_point_group_no_proper_subgroup": {
+      "name": "secp256k1_point_group_no_proper_subgroup",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointGroupSimple.lean",
+      "line": 32,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_point_isAddCyclic": {
