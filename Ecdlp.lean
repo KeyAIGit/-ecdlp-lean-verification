@@ -105,6 +105,7 @@ import Ecdlp.Proved.CurveCardinality
 import Ecdlp.Proved.CurveCardinalityExact
 import Ecdlp.Proved.CurveFullGroup
 import Ecdlp.Proved.PointGroupEquiv
+import Ecdlp.Proved.PointGroupSimple
 import Ecdlp.Proved.GlvDivPoly
 import Ecdlp.Proved.FrobeniusCM
 import Ecdlp.Proved.GlvOrbit

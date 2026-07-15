@@ -78,6 +78,11 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_pointGroupEquiv
 #print axioms Ecdlp.Curve.secp256k1_point_group_equiv_exists
 
+-- point-group cofactor-1 security structure from #E=n prime: no proper nontrivial subgroup,
+-- every nonzero point generates (group-level small-subgroup-attack resistance)
+#print axioms Ecdlp.Curve.secp256k1_point_group_no_proper_subgroup
+#print axioms Ecdlp.Curve.secp256k1_nonzero_point_generates
+
 -- CM-by-ℤ[ω] Frobenius arithmetic certificate: N(π)=p, Tr(π)=p+1−n, 4p=t²+3b² (End⊗ℚ=ℚ(√−3))
 #print axioms Ecdlp.Curve.secp256k1_frobenius_norm
 #print axioms Ecdlp.Curve.secp256k1_frobenius_trace

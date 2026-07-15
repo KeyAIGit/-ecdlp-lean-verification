@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 558,
-  "distinct_qualified_names": 447,
-  "verified_md_citations": 193,
+  "declaration_count": 560,
+  "distinct_qualified_names": 449,
+  "verified_md_citations": 194,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -1359,6 +1359,14 @@
       "line": 136,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_nonzero_point_generates": {
+      "name": "secp256k1_nonzero_point_generates",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointGroupSimple.lean",
+      "line": 42,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_odd_pre": {
       "name": "secp256k1_odd_pre",
       "namespace": "Ecdlp.Curve",
@@ -1405,6 +1413,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/PointGroupEquiv.lean",
       "line": 68,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_point_group_no_proper_subgroup": {
+      "name": "secp256k1_point_group_no_proper_subgroup",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PointGroupSimple.lean",
+      "line": 32,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_point_isAddCyclic": {

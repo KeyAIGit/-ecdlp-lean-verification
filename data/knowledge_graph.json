@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 236,
+    "theorems": 237,
     "barriers": 6,
-    "edges": 285,
+    "edges": 288,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -85,11 +85,12 @@
       "Mathlib (`AddSubgroup.card_mul_index`) + `secp256k1_grp_card": 1,
       "native_decide + Mathlib (`exists_prime_addOrderOf_dvd_card`, `ZMod.pow_card_sub_one_eq_one`, `Finset.card_le_mul_card_image`) + repo bricks": 1,
       "Mathlib (`AddSubgroup.eq_top_of_card_eq`, `AddSubgroup.topEquiv`) + `secp256k1_card_point_eq_n": 1,
-      "Mathlib (`AddEquiv.addSubgroupCongr`, `AddSubgroup.topEquiv`, `AddEquiv.trans`) + `secp256k1_dlogEquiv` + `secp256k1_grp_eq_top": 1
+      "Mathlib (`AddEquiv.addSubgroupCongr`, `AddSubgroup.topEquiv`, `AddEquiv.trans`) + `secp256k1_dlogEquiv` + `secp256k1_grp_eq_top": 1,
+      "Mathlib (`AddSubgroup.eq_bot_or_eq_top_of_prime_card`, `isSimpleAddGroup_of_prime_card`) + `secp256k1_card_point_eq_n": 1
     },
     "by_area": {
       "curve-torsion": 129,
-      "primality": 26,
+      "primality": 27,
       "generic-hardness": 23,
       "protocol-soundness": 23,
       "other": 23,
@@ -3166,6 +3167,19 @@
       "area": "curve-torsion",
       "dependency_depth": 11,
       "gated": true
+    },
+    {
+      "id": "thm-236",
+      "name": "Ecdlp.Curve.secp256k1_point_group_no_proper_subgroup`, `secp256k1_nonzero_point_generates",
+      "short_name": "secp256k1_point_group_no_proper_subgroup`,",
+      "module": "Ecdlp.Proved.PointGroupSimple",
+      "file": "Ecdlp/Proved/PointGroupSimple.lean",
+      "claim": "secp256k1's point group has no proper nontrivial subgroup — group-level cofactor-1 security (`secp256k1_point_group_no_proper_subgroup`: every `AddSubgroup` of `E(𝔽_p)` is `⊥` or `⊤`, since `#E = n` is prime; plus `secp256k1_nonzero_point_generates`: every `P ≠ 0` has `zmultiples P = ⊤`, and an `IsSimpleAddGroup` instance). The point-group (curve) statement of small-subgroup / invalid-subgroup attack resistance — there is no small-order subgroup a point could be confined to. The geometric counterpart of the scalar-ring `secp256k1_scalar_no_proper_subgroup`, proved the same way with `secp256k1_card_point_eq_n` as the cardinality bridge. Pure-kernel on top of the keystone",
+      "method": "Mathlib (`AddSubgroup.eq_bot_or_eq_top_of_prime_card`, `isSimpleAddGroup_of_prime_card`) + `secp256k1_card_point_eq_n",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 10,
+      "gated": true
     }
   ],
   "barriers": [
@@ -3856,6 +3870,16 @@
     {
       "from": "Ecdlp.Proved.PointGroupEquiv",
       "to": "Ecdlp.Proved.CurveFullGroup",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.PointGroupSimple",
+      "to": "Ecdlp.Proved.Secp256k1PrimeN",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.PointGroupSimple",
+      "to": "Ecdlp.Proved.CurveCardinalityExact",
       "type": "imports"
     },
     {
@@ -4586,6 +4610,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.PointGroupEquiv",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.PointGroupSimple",
       "type": "imports"
     },
     {
