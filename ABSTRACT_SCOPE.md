@@ -137,6 +137,13 @@ are:
 
 **Is it worth doing?** Two honest answers:
 
+> **Resolved since this analysis was written.** `#E(𝔽_p) = n` is now proved
+> curve-specifically (`CurveCardinalityExact.lean`, no Schoof), the protocol suite is
+> instantiated at the concrete `⟨G⟩` (`ProtocolInstantiation.lean`), and `glvPoint = [λ]`
+> on `⟨G⟩` is proved (`GlvSubgroupEigenvalue.lean`). The reasoning below is the original
+> assessment that (correctly) named the curve-order lemma as the keystone; the "next target"
+> it identifies has since been achieved.
+
 - **For the protocol theorems specifically: no, low value.** Instantiating, say,
   `schnorr_verify` at `E(𝔽_p)` would not produce a security theorem — it would
   still be the completeness identity `s•g = R + c•p`, now with `•` being curve
@@ -165,7 +172,8 @@ The GLV endomorphism is genuinely proved to be an **additive** endomorphism:
 `secp256k1.toAffine.Point`, and it is bundled as
 `glvHom : Point →+ Point` (an `AddMonoidHom`). This is a real, delicate
 full-branch affine-slope proof and the most substantive new result in the tree.
-However, `glvPoint = [λ]` — that `glvPoint G = λ • G`, the eigenvalue identity
-that is the *cryptographic point* of GLV — is **not proved anywhere**. It depends
-on exactly the same missing scalar-multiplication / curve-order machinery
-described above. Additivity ≠ the `[λ]` eigenvalue fact; the latter remains open.
+The eigenvalue identity `glvPoint = [λ]` — that `glvPoint P = λ • P` — is **now proved on all of
+`⟨G⟩ = E(𝔽_p)`** (`secp256k1_glvPoint_eq_lam_on_zmultiples`: `glvPoint G = λ • G` at the generator,
+propagated by additivity; extended to the whole point group via `grp_eq_top`, since `#E = n` makes
+`⟨G⟩ = E(𝔽_p)`). Only the identity on the full *geometric* `n`-torsion `E[n](F̄_p)` remains open
+(it needs `E[n] ≅ (ℤ/n)²`, a distinct object from the rational `#E = n`).

@@ -32,14 +32,15 @@ The verified-theorem counts are published as JSON, regenerated automatically fro
 - `Ecdlp/Proved/` - promoted, machine-checked theorems (built and gated). **See the
   directory itself for the full, current module list** (torsion `E[n]`, division
   polynomials Ψ₂–Ψ₄, the GLV endomorphism object — proved an *additive* endomorphism
-  (`glvHom`); the cryptographically load-bearing `[λ]` eigenvalue identity
-  `glvPoint = [λ]` is **not** proved (open, see `TRUST_REPORT.md`/`ABSTRACT_SCOPE.md`) —
+  (`glvHom`); the `[λ]` eigenvalue identity `glvPoint = [λ]` is proved on the rational points
+  `⟨G⟩ = E(𝔽_p)` (concrete λ; only the full geometric `E[n]` version stays open, see `ABSTRACT_SCOPE.md`) —
   curve invariants, anomalous-scope, collision/solve-step, …); the items below are
   illustrative, not exhaustive. Includes a **verified discrete-log protocol algebra**
   (abstract completeness/soundness *identities* over `[Module (ZMod n) G]` / `[Field F]` —
   not proven security of deployed protocols; see `ABSTRACT_SCOPE.md`):
-    - `GenericGroupBound.lean` - Shoup/Nechaev generic-group `Ω(√p)` lower bound for
-      the discrete log (first such in Mathlib); model-soundness lemmas.
+    - `GenericGroupBound.lean` - the fixed-transcript affine collision core of the Shoup/Nechaev
+      generic-group `Ω(√p)` lower bound for the discrete log (the reusable counting fact, not the
+      full adaptive-adversary theorem — see the file docstring); model-soundness lemmas.
     - `BabyStepGiantStep.lean`, `PollardRho.lean` - matching `O(√n)` upper bounds, so
       generic DLP is `Θ(√n)`.
     - `Secp256k1GenericSecurity.lean` - secp256k1 ≥128-bit **classical, generic** security
