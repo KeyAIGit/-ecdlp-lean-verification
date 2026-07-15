@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~192 distinct results / 228 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~204 distinct results / 242 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -207,8 +207,11 @@ exact `Θ` statements.
   Mathlib, master, and open PRs (see the upstream scan below) — worth doing as an upstream
   contribution, but it would add **no** security fact about secp256k1 that the embedding-degree
   bound does not already give.
-- **Point counting** — `#E(𝔽ₚ) = n` for the concrete curve needs a computation
-  Mathlib cannot do; the concrete fact is instead pinned via `native_decide`.
+- **Point counting** — **closed for secp256k1**: `#E(𝔽_p) = n` is now a kernel
+  theorem (`CurveCardinalityExact.lean` — a curve-specific certificate, `n ∣ #E`
+  plus `#E ≤ 2p+1 < 3n` plus `E[2] = {O}`, no Hasse/Schoof needed). The general
+  Schoof/Hasse machinery is still absent from Mathlib, so other curves (e.g.
+  P-256, whose `j ≠ 0` blocks this certificate route) remain open.
 
 **Realized despite the barrier — the transfer *resistance* of secp256k1.** Although
 the transfer attacks themselves cannot yet be formalized (no pairing), the

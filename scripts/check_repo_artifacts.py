@@ -133,7 +133,7 @@ def main() -> int:
         "kernel_verified_surface",
         "generated_views",
         "research_os_control_plane",
-        "experimental_trace",
+        "archive",
     ]:
         if required not in classes:
             errors.append(f"repo/ARTIFACTS.yaml: missing class {required!r}")
@@ -161,8 +161,11 @@ def main() -> int:
             if not found:
                 errors.append(f"{class_name}: generator does not exist: {generator}")
 
-    if len(cleanup_paths) < 3:
-        errors.append("repo/ARTIFACTS.yaml: expected at least three cleanup candidates")
+    # Tranche-1 cleanup was executed (ROADMAP.md §4): candidates moved to archive/,
+    # so the manifest may legitimately hold few (or eventually zero) candidates.
+    if not cleanup_paths:
+        errors.append("repo/ARTIFACTS.yaml: cleanup_candidates section missing or empty "
+                      "(keep at least the section with remaining candidates, or an explicit record)")
 
     for pattern in cleanup_paths:
         checked_paths += 1
@@ -188,31 +191,21 @@ def main() -> int:
         errors,
     )
     require_contains(
-        "READ_FIRST.md",
-        ["REPOSITORY_ARCHITECTURE.md"],
-        errors,
-    )
-    require_contains(
         "CLAUDE.md",
         ["REPOSITORY_ARCHITECTURE.md", "repo/ARTIFACTS.yaml"],
         errors,
     )
     require_contains(
-        "notes/ward/README.md",
+        "archive/ward/README.md",
         ["Repository classification: experimental trace / archive candidate"],
         errors,
     )
     require_contains(
-        "scratch/README.md",
+        "archive/scratch/README.md",
         [
             "Repository classification: experimental trace / archive candidate",
             "repo/CLEANUP_PLAN.md",
         ],
-        errors,
-    )
-    require_contains(
-        "CLAUDE_REVIEW_PACKET.md",
-        ["Review mode: adversarial", "Accepted review record"],
         errors,
     )
 

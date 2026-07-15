@@ -6,10 +6,10 @@ misleading, because this project is a verified **foundation adjacent to** the EC
 knowledge corpus, not a claim-by-claim formalization of it.*
 
 ## (1) Verified asset (the thing that exists)
-- **228 kernel-verified ledger rows** (~192 distinct
+- **242 kernel-verified ledger rows** (~204 distinct
   results after merging alternate-form/supporting rows), **0 `sorry`, no custom axioms**
   (machine-enforced; `native_decide` facts trust the compiler — see `TRUST_REPORT.md`).
-- Substantive fraction (honest, per `REVIEW_DOSSIER.md`): **~10–15%** genuinely novel
+- Substantive fraction (honest, per `archive/docs/REVIEW_DOSSIER.md`): **~10–15%** genuinely novel
   (Pratt certs for `p`/`n`, generic-group `Ω(√p)` core, secp256k1 `EllipticCurve`
   instance, `glvPoint_add`, and the GLV cube relation `φ²+φ+1=0`); the rest is valuable
   but routine verified engineering + an abstract protocol algebra (`ABSTRACT_SCOPE.md`).

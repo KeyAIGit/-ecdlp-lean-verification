@@ -2,12 +2,12 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-> Answers REVIEW_DOSSIER.md **Finding 1** ("The 'discrete-log cryptography
+> Answers `archive/docs/REVIEW_DOSSIER.md` **Finding 1** ("The 'discrete-log cryptography
 > library' is abstract algebra mislabeled as cryptography").
 
 ## Canonical accounting
 
-- **228 ledger rows / ~192 distinct kernel-verified results** (36 rows are
+- **242 ledger rows / ~204 distinct kernel-verified results** (38 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard

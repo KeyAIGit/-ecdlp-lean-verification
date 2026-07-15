@@ -1,109 +1,130 @@
-# ECDLP Lean formalization (v0)
+# ECDLP Lean formalization (v0.1)
 
 ![Verified theorems](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/KeyAIGit/-ecdlp-lean-verification/main/badges/theorems.json)
 
-Machine-checked layer for the ECDLP knowledge graph (corpus folder 15_Knowledge_Graph,
-formalization table 07_Formalization/KG_CLAIM_FORMALIZATION_v1.csv).
+A **kernel-verified Lean 4 + Mathlib library** about the secp256k1 elliptic curve and
+the boundary of the classical attacks on its discrete-log problem (ECDLP), grown by a
+propose-and-judge engine (models propose, the Lean kernel judges, only truth survives).
+It is a *verified research substrate* plus an honest no-go map of what is provable now
+vs blocked — **not** a solution to any hard problem.
 
-## Live stats (machine-readable)
-The verified-theorem counts are published as JSON, regenerated automatically from
-`VERIFIED.md` on every merge to `main` (`.github/workflows/docs-sync.yml` +
-`scripts/gen_stats.py`). Fetch them from a site or dashboard via the raw URLs:
-- **Full stats:** `https://raw.githubusercontent.com/KeyAIGit/-ecdlp-lean-verification/main/data/stats.json`
-- **Shields badge endpoint:** `https://raw.githubusercontent.com/KeyAIGit/-ecdlp-lean-verification/main/badges/theorems.json`
+This file is the front door for humans and low-context agents alike. Strategy lives in
+`ROADMAP.md`; live numbers live in `STATUS.md`; agents start at `AGENTS.md`.
 
-`data/stats.json` exposes `ledger_rows`, `distinct_results`, `proved_modules`,
-`sorry_count` (0), and `custom_axioms` (0). No scraping of markdown needed.
+## The one invariant (never violate)
+
+**A green build means every built theorem is fully proved.** The Lean kernel is the only
+judge of correctness. Never `sorry`/`admit`, weaken/delete a proof to pass CI, or add an
+axiom. Open conjecture stems live in `Ecdlp/Targets/` (one `sorry` each) and are
+intentionally never built or imported, so the invariant holds.
+
+## Where the canonical numbers are
+
+**`STATUS.md`** — the single generated snapshot (ledger rows, distinct results, proved
+modules, `sorry` = 0, custom axioms = 0, corpus coverage). It is produced by
+`scripts/gen_status.py` from `data/stats.json` (which **recounts the `VERIFIED.md`
+ledger table mechanically**) and `data/frontier_map.json`. Do not quote a count from any
+other doc — prose may be stale; if in doubt, cite STATUS.md. Machine-readable:
+`data/stats.json` · badge endpoint `badges/theorems.json`.
+
+## What NOT to claim
+
+- It does **not** solve ECDLP on secp256k1 and offers **no shortcut**. secp256k1's
+  concrete hardness is an **open conjecture**, not a theorem here.
+- The generic-group `Ω(√n)` lower bound constrains **black-box** algorithms only; it says
+  nothing about non-generic attacks. It is **classical** — Shor breaks ECDLP quantumly.
+- The protocol library is **verified protocol algebra** (algebraic identities, now also
+  instantiated on the concrete curve group) — **not** proven security of any deployed
+  protocol: no adversary, no hash/random oracle, no probability model.
+- The autonomous engine is dispatch-only (crons removed in a security audit); external
+  model-provers were attempted with **0 accepted** — real progress is the tactic ladder
+  + human/assistant formalization. Never present the engine as having produced the proofs.
+- Never claim more than the kernel verifies. When unsure, state the limit plainly.
+
+## Highlights (for a Lean / formal-methods reader)
+
+The genuinely substantive results — each kernel-checked, each disclosed at its exact scope:
+
+- **The exact curve cardinality `#E(𝔽_p) = n` — proved without Hasse or Schoof**
+  (`CurveCardinalityExact.lean`): a curve-specific certificate (`n ∣ #E`,
+  `#E ≤ 2p+1 < 3n`, and `E[2] = {O}` excludes `2n`). With it the whole point group is
+  `E(𝔽_p) = ⟨G⟩ ≃+ ℤ/n` (`CurveFullGroup.lean`, `PointGroupEquiv.lean`) — cofactor 1 as
+  a theorem, not an assumption.
+- **Pratt primality certificates for `p = 2²⁵⁶ − 2³² − 977` and the group order `n`** —
+  full recursive certificates discharging `Fact p.Prime` / `Fact n.Prime`; the most
+  reusable artifacts in the repo (Mathlib lacks them).
+- **Generic-group DLP lower bound — the combinatorial core** (`generic_dlog_query_bound`):
+  the information-theoretic heart of Shoup/Nechaev `Ω(√p)` via affine collision counting,
+  with BSGS/Pollard-rho upper bounds giving generic DLP `Θ(√n)`. Not the full adaptive
+  Shoup theorem (no adversary/probability model — disclosed in-file).
+- **The GLV/CM endomorphism, complete**: `(x,y) ↦ (βx, y)` proved an additive
+  endomorphism (`glvHom`) with full slope/branch analysis, and the eigenvalue
+  `glvHom = [λ]` **unconditional on the whole point group**
+  (`secp256k1_glvHom_eq_zsmul_unconditional`) via the cardinality keystone.
+- **Semaev summation polynomials `S₃`/`S₄` — first formalized in Lean/Mathlib**, plus a
+  division-polynomial / torsion-disjointness ladder (`Ψ₂…Ψ₇` coprimality via explicit
+  Bézout certificates) and the early Weil ladder (W1–W3).
+- **Attack-boundary saturation**: Pohlig–Hellman, anti-MOV/Frey–Rück (embedding degree
+  > 100), anti-Smart/SSSA (non-anomalous, ordinary trace), quadratic-twist security —
+  every classical attack statable without a missing Mathlib foundation has a verified
+  node; the rest are named barriers in `BARRIERS.md`.
+
+The rest of the ledger is verified engineering (Mathlib wrappers, protocol-algebra
+identities, instantiations) — honestly ~10–15% substantive, ~85% routine; the split is
+audited in `COVERAGE.md`.
+
+**Trust base (precise).** No result depends on any *custom* axiom or `sorryAx` —
+machine-enforced by the axiom-audit gate (`Ecdlp/AxiomAudit.lean` +
+`scripts/check_axioms.py`). "0 axioms" means none beyond Lean/Mathlib's standard
+`{propext, Classical.choice, Quot.sound}`. Results proved by `native_decide` (the
+concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofReduceBool`
+— a real extension of the trusted base, catalogued per-theorem in `TRUST_REPORT.md`.
 
 ## Layout
-- `REPOSITORY_ARCHITECTURE.md` - repository-level map: canonical sources,
-  generated artifacts, public surfaces, Research OS controls, and cleanup
-  candidates. Machine-readable companion: `repo/ARTIFACTS.yaml`.
-- `Ecdlp/Secp256k1Verified.lean` - PROVED on Lean core alone (no Mathlib). 8 theorems
-  verified with `native_decide`:
-    - `p_special_form`        : p = 2^256 - 2^32 - 977            [sec2-secp256k1-field-005]
-    - `glv_lambda_eigenvalue` : lam^2 + lam + 1 ≡ 0 (mod n)        [glv-subgroup-eigenvalue-006]
-    - `lambda_is_cube_root`   : lam^3 ≡ 1 (mod n)
-    - `beta_field_eigenvalue` : beta^2 + beta + 1 ≡ 0 (mod p)
-    - `beta_is_cube_root`     : beta^3 ≡ 1 (mod p)
-    - plus `lambda_ne_one`, `lam_lt_n`, `beta_lt_p`
-- `Ecdlp/Lagrange.lean` - Mathlib proof that element order divides finite group order.
-- `Ecdlp/Statements.lean` - Mathlib-dependent formalization targets. The current ZMod target is closed with no `sorry`.
-- `Ecdlp/Proved/` - promoted, machine-checked theorems (built and gated). **See the
-  directory itself for the full, current module list** (torsion `E[n]`, division
-  polynomials Ψ₂–Ψ₄, the GLV endomorphism object — proved an *additive* endomorphism
-  (`glvHom`); the `[λ]` eigenvalue identity `glvPoint = [λ]` is proved on the rational points
-  `⟨G⟩ = E(𝔽_p)` (concrete λ; only the full geometric `E[n]` version stays open, see `ABSTRACT_SCOPE.md`) —
-  curve invariants, anomalous-scope, collision/solve-step, …); the items below are
-  illustrative, not exhaustive. Includes a **verified discrete-log protocol algebra**
-  (abstract completeness/soundness *identities* over `[Module (ZMod n) G]` / `[Field F]` —
-  not proven security of deployed protocols; see `ABSTRACT_SCOPE.md`):
-    - `GenericGroupBound.lean` - the fixed-transcript affine collision core of the Shoup/Nechaev
-      generic-group `Ω(√p)` lower bound for the discrete log (the reusable counting fact, not the
-      full adaptive-adversary theorem — see the file docstring); model-soundness lemmas.
-    - `BabyStepGiantStep.lean`, `PollardRho.lean` - matching `O(√n)` upper bounds, so
-      generic DLP is `Θ(√n)`.
-    - `Secp256k1GenericSecurity.lean` - secp256k1 ≥128-bit **classical, generic** security
-      (`2^127 < q`; black-box model only — says nothing about non-generic attacks, and is
-      classical: Shor breaks ECDLP quantumly. See `notes/SECURITY_SCOPE.md`).
-    - `SchnorrSoundness.lean` - Schnorr 2-transcript extractor (a linear-algebra identity in
-      the scalar field — no adversary/probability); the "Pedersen binding ⇒ DLP" implication
-      is *narrated*, not formalized (the trapdoor is an uninterpreted field element — see
-      `ABSTRACT_SCOPE.md`).
-    - `DlogCompleteness.lean` - Schnorr/EdDSA verification; Diffie–Hellman agreement.
-    - `DlogPrimitives.lean` - ElGamal decryption; Pedersen homomorphism.
-    - `DlogAdvanced.lean` - Okamoto 2-witness extraction; Chaum–Pedersen DLEQ.
-- `Ecdlp/Targets/` - open conjecture stems (one `sorry` each); **not** built and **not**
-  gated, so the "green build = all proved" invariant holds. See each folder's README.
-- `data/` - read-only knowledge-graph corpus consumed by the Layer 3 generator.
-- `VERIFIED.md` - ledger mapping claim IDs to verified Lean theorem names and files.
-- `BARRIERS.md` - formalization-status registry: what of the corpus is provable
-  now vs blocked, and which Mathlib foundations are missing (the no-go map).
+
+| Where | What |
+|---|---|
+| `Ecdlp/Proved/*.lean`, `Ecdlp/Secp256k1Verified.lean`, … | the built, gated proof base (see `VERIFIED.md` for the row-per-theorem ledger) |
+| `Ecdlp/Targets/` + `targets/*.json` | open conjecture stems + the prover-loop registry (never imported/built) |
+| `ResearchOS/` | second lake target: the non-ECC portability instance (elementary number theory) |
+| `STATUS.md` · `data/` | generated truth layer: stats, frontier map, knowledge graph, registries |
+| `BARRIERS.md` · `TRUST_REPORT.md` · `ABSTRACT_SCOPE.md` | the no-go map and the exact trust/scope boundaries |
+| `ROADMAP.md` | the one strategy document (position, north star, program) |
+| `AGENTS.md` · `CLAUDE.md` · `tasks/NEXT.md` | agent orientation, conventions, active queue |
+| `REPOSITORY_ARCHITECTURE.md` + `repo/ARTIFACTS.yaml` | whole-repo ownership map (read before moving/deleting files) |
+| `experiments/` · `domains/` · `notes/` (`notes/INDEX.md`) | validated experiments, domain registry, curated research memory |
+| `archive/` | frozen history: superseded docs, raw traces, the undeployed platform scaffold |
 
 ## Build
-Core verified file (no Mathlib):
-    lean Ecdlp/Secp256k1Verified.lean
-Full project incl. Mathlib targets:
-    lake exe cache get && lake build
+
+Core verified file (no Mathlib): `lean Ecdlp/Secp256k1Verified.lean`.
+Full project: `lake exe cache get && lake build`.
 Toolchain pinned in `lean-toolchain` (Lean v4.31.0); Mathlib rev pinned in `lakefile.toml`.
+CI is the verifier of record: build + no-sorry gate + axiom audit + ten consistency gates
+(counts are recounted from the ledger table, so prose cannot silently drift). See `SETUP.md`.
 
-## Autonomous engine
-The scaffolded loop — **discover → attempt → draft PR** — is
-`.github/workflows/autonomous-engine.yml`. In practice the proofs that land come from the
-zero-cost **tactic ladder** plus **human-in-loop** promotion; external model-provers
-(Pythagoras-4B → Goedel-V2-32B) have been *attempted with 0 accepted*. See
-**`notes/ENGINE.md`** for how it works,
-its safety model (draft-only, kernel-judged, budget-capped), the one-time secret setup that
-turns it on, and an honest account of what it does autonomously vs what still needs
-orchestration.
+## The engine (honest)
 
-## Pipeline role
-This is stage 2 (formalization agent output) of the autonomous research mechanism.
-Each `formalizable` claim in KG_CLAIM_FORMALIZATION_v1.csv becomes a theorem here;
-`native_decide` handles concrete arithmetic facts, Mathlib handles structural ones.
-
-Current ledger: **0 `sorry`, 0 open obligations, no custom axioms** (machine-enforced by
-the axiom-audit gate; `native_decide` facts additionally trust the compiler — see
-`TRUST_REPORT.md`). For the live row & distinct-result count see **`STATUS.md`** /
-`data/stats.json` — not duplicated here to avoid drift.
-Beyond the corpus, the project hosts:
-- a verified discrete-log **protocol algebra** (generic hardness + protocol
-  completeness/soundness *identities* over an abstract module/field — not a security model
-  for deployed protocols, see `ABSTRACT_SCOPE.md`), including the rho/BSGS **solve step**
-  (collision ⇒ discrete-log recovery);
-- the **saturated classical attack landscape**: Pohlig–Hellman, anti-MOV/FR
-  (embedding degree > 100), anti-Smart/SSSA + supersingular (trace of Frobenius);
-- secp256k1 grounded as a Mathlib `EllipticCurve` with **machine-checked primality**
-  of `p` and `n` (full Pratt certificates), and a **division-polynomial / torsion**
-  foundation (`Ψ₂Sq`, `Ψ₃`, 2-torsion bridge, `#E[2] ≤ 4`) — see
-  `notes/FOUNDATIONS.md` for the roadmap toward the Weil pairing;
-- a machine-readable **knowledge graph** (`data/knowledge_graph.json` + rendered
-  `.md`) indexing every theorem, its dependencies, and the formalization barriers.
+The scaffolded loop — discover → attempt → draft PR — is
+`.github/workflows/autonomous-engine.yml`, **dispatch-only**. The zero-cost tactic ladder
+plus human-in-loop promotion is what has landed every proof; the free Featherless prover
+tier is dead from CI (Cloudflare bot-block of GitHub runners, verified 2026-07-15) and
+external model-provers stand at 0 accepted. `notes/ENGINE.md` documents how the loop
+works, its safety model (draft-only, kernel-judged twice, budget-capped), and exactly
+what it does vs does not do autonomously. The prover-tier protocol and promotion rules
+live in `AGENTS.md`.
 
 ## Authorship & AI disclosure
-The human maintainer is the author and bears intellectual responsibility for every
-claim of novelty and significance; correctness of each listed theorem is guaranteed
-by the Lean kernel. AI tooling (assistant models for formalization, code, and
-proof search) was used as an aid — it is disclosed here and is not an author. CI-bot
-commits are git metadata, not authorship. License and the final author list are set
-by the maintainer.
+
+The human maintainer is the author and bears intellectual responsibility for every claim
+of novelty and significance; correctness of each listed theorem is guaranteed by the Lean
+kernel. AI tooling (assistant models for formalization, code, and proof search) was used
+as an aid — it is disclosed here and is not an author. CI-bot commits are git metadata,
+not authorship. License and the final author list are set by the maintainer.
+
+## Where to go deeper
+
+`STATUS.md` (canonical snapshot) · `ROADMAP.md` (strategy & program) · `VERIFIED.md`
+(the ledger) · `BARRIERS.md` (the no-go map) · `TRUST_REPORT.md` (what "verified" rests
+on) · `PUBLISHABLE_UNITS.md` (the 3 standalone results) · `notes/INDEX.md` (research
+memory) · `SETUP.md` (build + CI + regen) · `tasks/NEXT.md` (active queue).

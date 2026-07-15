@@ -17,7 +17,7 @@ tiers.
 
 - **small** — the live snapshot only: `STATUS.md`, `tasks/NEXT.md`, `data/stats.json`,
   `data/frontier_map.json`. Enough to know the counts, the active goal, and where to start.
-- **medium** — adds orientation and the ledger: `READ_FIRST.md`, `AGENTS.md`, `VERIFIED.md`,
+- **medium** — adds orientation and the ledger: `README.md`, `AGENTS.md`, `VERIFIED.md`,
   `BARRIERS.md`, the security-scope and foundations notes, and `experiments/HYPOTHESES.yaml`.
 - **large** — adds the full machine views: `data/knowledge_graph.json`,
   `REPOSITORY_ARCHITECTURE.md`, `PUBLISHABLE_UNITS.md`, `TRUST_REPORT.md`.

@@ -1,6 +1,6 @@
 # domains/ — the plug-in contract for the Research OS
 
-This is the Phase-1 generalization layer (see `PLATFORM_STRATEGY.md`). It turns the
+This is the Phase-1 generalization layer (see `ROADMAP.md`). It turns the
 ECDLP-specific repository into **instance #1 of a general machine-verifiable Research OS**:
 any research domain whose claims have a machine-checkable core can flow through the *same*
 pipeline —

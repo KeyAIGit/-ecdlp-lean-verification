@@ -125,29 +125,29 @@ Files allowed to edit:
 - `scripts/`
 - `notes/`
 
-### TASK-005 - Scope the strong keystone `#E(𝔽_p) = n` (⟨G⟩ → full group)
+### TASK-005 - Extend the closed keystone: geometric `E[n]` + P-256 cardinality
 
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
-Why it matters: On ⟨G⟩ the GLV eigenvalue, the `Module (ℤ/n)` structure, and the
-instantiated protocol algebra are already proved via the *weak* keystone
-`addOrderOf G = n`. Extending every one of those from ⟨G⟩ to the whole point
-group `E(𝔽_p)` needs the *strong* keystone `#E(𝔽_p) = n` (cofactor 1 ⇒
-`E(𝔽_p) = ⟨G⟩`), which rests on Hasse — absent from Mathlib v4.31. This task
-scopes that gap honestly rather than leaving it implicit.
-(The GLV-wording audit that TASK-005 originally held was completed in the
-Research OS truth-layer PR: `gen_status.py`/STATUS now split ⟨G⟩-proved from
-full-group-open.)
+Why it matters: The strong keystone `#E(𝔽_p) = n` is **proved** for secp256k1
+(no Hasse/Schoof — curve-specific certificate, `CurveCardinalityExact.lean`,
+2026-07-13), and with it `E(𝔽_p) = ⟨G⟩`, cyclicity, and the unconditional GLV
+eigenvalue all landed (`CurveFullGroup.lean`, `PointGroupEquiv.lean`). The
+original TASK-005 scoping goal is therefore complete. What the closure exposes
+next: (a) the **geometric torsion structure** `E[n] ≅ (ℤ/n)²` needs points over
+field extensions — still a genuine Mathlib gap; (b) the certificate exploits
+`j = 0`, so **P-256's `#E = n` stays open** (Hasse or a new certificate route).
 Inputs:
-- `notes/POINT_COUNTING_KEYSTONE.md`
-- `Ecdlp/Proved/GeneratorOrder.lean` (weak keystone)
+- `notes/POINT_COUNTING_KEYSTONE.md` (status banner marks the closure)
+- `Ecdlp/Proved/CurveCardinalityExact.lean`, `CurveFullGroup.lean`
 - `BARRIERS.md`
 Expected output:
-- A decomposition memo: what a Mathlib Hasse bound would need, and which
-  ⟨G⟩ results it would upgrade to `E(𝔽_p)`. No weakening, no `sorry`.
+- A decomposition memo for the *next* smallest missing foundation: either the
+  extension-field point machinery behind `E[n] ≅ (ℤ/n)²`, or a P-256
+  cardinality route. No weakening, no `sorry`.
 Exit criteria:
-- Either a proved rung toward `#E = n`, or a frozen blocker memo naming the
-  smallest missing Mathlib foundation with an honest effort estimate.
+- Either a proved rung, or a frozen blocker memo naming the smallest missing
+  Mathlib foundation with an honest effort estimate.
 Files allowed to edit:
 - `notes/POINT_COUNTING_KEYSTONE.md`
 - `BARRIERS.md`
@@ -175,32 +175,27 @@ Files allowed to edit:
 - `docs/`
 - `notes/`
 
-### TASK-007 - Normalize repository architecture
+### TASK-007 - Declare v0.1 on main
 
-Kind: ops | agent | docs
+Kind: ops | docs
 Hypothesis: `H1_RESEARCH_OS_TRUTH_LAYER`
-Why it matters: Future Claude/Codex runs need a whole-repository map before
-they safely remove noise, move files, or change generated artifacts.
+Why it matters: Consolidation tranches 1 and 2 are executed (ROADMAP.md §4:
+archive/, ROADMAP as the one strategy doc, README as the one front door,
+AGENTS.md as the one agent doc, notes/INDEX.md). What remains is the release
+act itself, which only makes sense on `main`.
 Inputs:
-- `REPOSITORY_ARCHITECTURE.md`
-- `repo/ARTIFACTS.yaml`
-- `repo/CLEANUP_PLAN.md`
-- `CLAUDE_REVIEW_PACKET.md`
-- `AGENTS.md`
-- `README.md`
+- `ROADMAP.md` (§4 structure tables, §5 near-term program)
+- `REPOSITORY_ARCHITECTURE.md` + `repo/CLEANUP_PLAN.md` (map + tranche records)
+- `README.md` (already states v0.1)
 Expected output:
-- A reviewed architecture foundation that classifies canonical, generated,
-  curated, scratch, and archive-candidate files.
+- The consolidation PR merged by the maintainer; the full gate battery green on
+  `main`; an annotated git tag `v0.1` on the merge commit.
 Exit criteria:
-- Claude adversarial review identifies no blocking misclassification.
-- Any archive/delete work is split into a later PR.
+- `git tag v0.1` exists on main; STATUS.md and the site reflect the merged
+  state; no known-false statement in canonical docs.
 Files allowed to edit:
-- `REPOSITORY_ARCHITECTURE.md`
-- `repo/`
-- `CLAUDE_REVIEW_PACKET.md`
-- `AGENTS.md`
-- `README.md`
-- `tasks/NEXT.md`
+- none (tagging + a follow-up docs-sync run on main; open a new task for any
+  fallout)
 
 ## Task Contract Template
 

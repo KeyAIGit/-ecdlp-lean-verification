@@ -2,8 +2,8 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `228 ledger rows / ~192 distinct kernel-verified
-results` (≈36 of the 228 rows are alternate-form or `supporting:` restatements of the
+**Scope of the verified body.** `242 ledger rows / ~204 distinct kernel-verified
+results` (≈38 of the 242 rows are alternate-form or `supporting:` restatements of the
 same underlying fact — e.g. the `ZMod`/ring forms of the GLV eigenvalue, or the
 concrete-`⟨G⟩` instantiations of the abstract protocol suite — so they do
 not add new content). **0 `sorry`, 0 `admit`, 0 open obligations, 0 custom axioms.**
@@ -213,7 +213,7 @@ count-consistency and stem-typecheck steps are doc-hygiene, not correctness guar
   These extend the TCB beyond the kernel to include the Lean compiler/runtime, via
   `Lean.ofReduceBool`. This means CLAUDE.md's invariant "the Lean kernel is the only
   judge of correctness" is, strictly, **not true for these ~33 rows** — the compiler is
-  also a judge. This is **REVIEW_DOSSIER.md finding 9** ("`native_decide` enlarges the
+  also a judge. This is **`archive/docs/REVIEW_DOSSIER.md` finding 9** ("`native_decide` enlarges the
   TCB beyond the kernel"; severity LOW), whose verdict is *ACCEPTABLE trade-off,
   honestly fixable*: the mitigation is correct where it matters most — the primality of
   `p` and `n` structures `native_decide` to discharge only small checks inside a

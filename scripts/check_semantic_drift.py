@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # Files to scan: human-facing docs, Lean docstrings, publication + prompt surfaces.
 SCAN: list[str] = [
     "README.md", "VERIFIED.md", "BARRIERS.md", "TRUST_REPORT.md", "ABSTRACT_SCOPE.md",
-    "ONE_PAGE_SUMMARY.md", "PUBLISHABLE_UNITS.md", "WORK_SCOPE.md",
+    "PUBLISHABLE_UNITS.md", "ROADMAP.md",
     "data/knowledge_graph.md", "COVERAGE.md",
 ]
 SCAN_GLOBS: list[str] = ["Ecdlp/Proved/*.lean", "prompts/*.md", "notes/*.md"]

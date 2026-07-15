@@ -50,14 +50,16 @@ the wrong snapshot.
 
 The audit and the repo's own notes converge on one node that unlocks several doors.
 
-- 🔄 **B1 · Point counting `#E(𝔽_p) = n`.** The keystone: it gates (a) instantiating the abstract
-  protocol algebra on the *real* secp256k1 group, (b) the `Module (ℤ/n)` structure, and (c) the GLV
-  eigenvalue `glvPoint G = λ·G`. **Scoped** in `notes/POINT_COUNTING_KEYSTONE.md`: separates the
-  strong `#E=n` (gated on Hasse — a multi-month Mathlib port) from a **weak, certificate-shaped**
-  base-point-subgroup fact that unlocks most downstream results and is bounded engineering gated on
-  one empirical unknown (whether Mathlib `Point` arithmetic reduces under `native_decide`), not on
-  point-counting. Next: probe that reduction.
-- ⬜ **B2 · GLV eigenvalue `glvPoint G = λ·G`** — completes the CM/GLV object once B1 lands.
+- ✅ **B1 · Point counting `#E(𝔽_p) = n`.** **PROVED** (2026-07-13, without Hasse/Schoof): the
+  weak keystone `addOrderOf G = n` landed first (`GeneratorOrder.lean`), then the strong form via a
+  curve-specific certificate (`CurveCardinalityExact.lean`: `n ∣ #E`, `#E ≤ 2p+1 < 3n`,
+  `E[2] = {O}`), giving `E(𝔽_p) = ⟨G⟩ ≃+ ℤ/n` (`CurveFullGroup.lean`, `PointGroupEquiv.lean`).
+  Everything it gated — the concrete protocol instantiation, the `Module (ℤ/n)` structure — is in.
+  Still open behind it: the geometric `E[n] ≅ (ℤ/n)²` and P-256's own `#E = n` (no `j = 0`
+  shortcut there; needs Hasse or a new certificate).
+- ✅ **B2 · GLV eigenvalue `glvPoint G = λ·G`** — landed with B1
+  (`secp256k1_glvHom_eq_zsmul_unconditional`: the eigenvalue on the whole point group, no
+  remaining hypotheses).
 - ⬜ **B3 · Weil ladder W4/W5** — reciprocity `f(div g)=g(div f)` then bilinear/non-degenerate `eₙ`;
   a genuine Mathlib gap (W1–W3 already landed). Semaev `S₄`-degree `2^{m−2}` tower (recorded open).
 

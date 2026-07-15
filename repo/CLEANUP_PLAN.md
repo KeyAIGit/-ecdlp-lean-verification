@@ -1,5 +1,10 @@
 # Cleanup Plan
 
+> **EXECUTED (tranche 1, 2026-07 — see `ROADMAP.md` §4):** `notes/ward/` → `archive/ward/`,
+> `scratch/` → `archive/scratch/`, `generator-report.md` → `archive/`, `platform/` →
+> `archive/platform/` (platform-ci retired), superseded strategy/review docs → `archive/docs/`.
+> This plan is kept as the decision record; remaining candidates live in `repo/ARTIFACTS.yaml`.
+
 This plan is deliberately conservative. The current branch classifies the repo;
 it does not delete, rename, or move risky files. The next cleanup PR should only
 act after Claude or human review confirms the classification.
@@ -96,7 +101,7 @@ Proposed follow-up PR.
 
 Actions:
 
-1. Decide whether `READ_FIRST.md`, `AGENTS.md`, `AGENT.md`, and `CLAUDE.md`
+1. ~~Decide whether the entry docs overlap~~ Done: READ_FIRST/ONE_PAGE_SUMMARY merged into README, AGENT.md into AGENTS.md (ROADMAP.md §4 tranche 2); whether `AGENTS.md` and `CLAUDE.md`
    each have distinct jobs.
 2. Remove duplicate explanations of counts and current status.
 3. Keep `STATUS.md` as the live snapshot and `REPOSITORY_ARCHITECTURE.md` as

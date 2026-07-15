@@ -1,171 +1,139 @@
 #!/usr/bin/env python3
 """Count-consistency gate (CI).
 
-The repo's headline theorem count drifted three times (96/98/85/99/108/128 all appeared
-across docs for the same body of work). This gate fails the build if any RETIRED headline
-count string reappears in the narrative docs, and sanity-checks that the canonical figure
-is present in VERIFIED.md.
+The repo's headline theorem count drifted repeatedly (96/98/85/99/108/128 all appeared
+across docs for the same body of work; later the prose figure lagged the ledger table
+itself: 226→227, 235→227, 239→228). This gate now does three things:
 
-Canonical figure (single source of truth): "220 ledger rows / ~184 distinct results".
-Update CANONICAL_PRESENT / RETIRED here (and only here) if the real count changes.
-The one human-facing snapshot is `STATUS.md` (generated); other summary docs must point to
-it rather than re-state counts, and are scanned below so a stale copy fails the build.
+1. **Recounts the ledger table** in ``VERIFIED.md`` (same logic as
+   ``scripts/gen_stats.py``) and fails if the canonical prose line
+   (``**N ledger rows / ~M distinct kernel-verified results**``) does not match the
+   recount, or if ``rows − alternate-form ≠ distinct``.
+2. Fails if any RETIRED headline-count string reappears in the narrative docs. The
+   retired set is **generated** from the current figures (every older
+   ``N ledger rows`` / ``N rows`` / ``~M distinct``), so bumping the count never
+   requires editing a hand-grown list again.
+3. Sanity-checks that the current canonical figure is present in ``VERIFIED.md``.
+
+The one human-facing snapshot is ``STATUS.md`` (generated); other summary docs must
+point to it rather than re-state counts, and are scanned below so a stale copy fails
+the build. A line documenting this gate may quote retired strings — mark it
+``count-check: ignore`` to exempt it.
 
 Usage:  python3 scripts/check_counts.py
 """
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
 
 DOCS = [
     "README.md", "AGENTS.md", "BARRIERS.md", "VERIFIED.md",
     "data/knowledge_graph.md", "CLAUDE.md",
     # summary docs that historically drifted — now scanned so they can't silently re-drift
-    "STATUS.md", "TRUST_REPORT.md", "ONE_PAGE_SUMMARY.md", "ABSTRACT_SCOPE.md",
-    "COVERAGE.md", "READ_FIRST.md", "REPOSITORY_ARCHITECTURE.md",
-    "CLAUDE_REVIEW_PACKET.md", "repo/CLEANUP_PLAN.md",
+    "STATUS.md", "TRUST_REPORT.md", "ABSTRACT_SCOPE.md",
+    "COVERAGE.md", "REPOSITORY_ARCHITECTURE.md",
+    "ROADMAP.md", "repo/CLEANUP_PLAN.md",
 ]
 
-# Retired headline strings that must NOT reappear (regex-free substring match). These are
+# Retired headline strings that must NOT reappear (regex-free substring match) and are
+# not of the generated "N ledger rows / N rows / ~M distinct" shape. These are
 # specifically count-headline phrasings, not bare numbers, to avoid false positives on
 # unrelated uses of the digits (and the legitimate "128 ... retired" disclaimer).
-RETIRED = [
+RETIRED_STATIC = [
     "~99 named", "~96 named", "~98 named", "85 named results",
     "~99 named-result", "108 theorems", "96 named", "98 named",
     "128 theorems verified", "128 named",
-    "~115 distinct", "126 ledger rows", "126 rows",
-    "~118 distinct", "132 ledger rows", "132 rows",
-    "~119 distinct", "133 ledger rows", "133 rows",
-    "~120 distinct", "134 ledger rows", "134 rows",
-    "~121 distinct", "135 ledger rows", "135 rows",
-    "~122 distinct", "136 ledger rows", "136 rows",
-    "~123 distinct", "137 ledger rows", "137 rows",
-    "~124 distinct", "138 ledger rows", "138 rows",
-    "~125 distinct", "139 ledger rows", "139 rows",
-    "~126 distinct", "140 ledger rows", "140 rows",
-    "~127 distinct", "141 ledger rows", "141 rows",
-    "~128 distinct", "142 ledger rows", "142 rows",
-    "~129 distinct", "143 ledger rows", "143 rows",
-    "~130 distinct", "144 ledger rows", "144 rows",
-    "~131 distinct", "145 ledger rows", "145 rows",
-    "~132 distinct", "146 ledger rows", "146 rows",
-    "~133 distinct", "147 ledger rows", "147 rows",
-    "148 ledger rows", "148 rows",
-    "~134 distinct", "149 ledger rows", "149 rows",
-    "~135 distinct", "150 ledger rows", "150 rows",
-    "151 ledger rows", "151 rows",
-    "~136 distinct", "152 ledger rows", "152 rows",
-    "~137 distinct", "153 ledger rows", "153 rows",
-    "154 ledger rows", "154 rows",
-    "~138 distinct", "155 ledger rows", "155 rows",
-    "156 ledger rows", "156 rows",
-    "~139 distinct", "157 ledger rows", "157 rows",
-    "~140 distinct", "158 ledger rows", "158 rows",
-    "159 ledger rows", "159 rows",
-    "~141 distinct", "160 ledger rows", "160 rows",
-    "~142 distinct", "161 ledger rows", "161 rows",
-    "~143 distinct", "162 ledger rows", "162 rows",
-    "~144 distinct", "163 ledger rows", "163 rows",
-    "~145 distinct", "164 ledger rows", "164 rows",
-    "~146 distinct", "165 ledger rows", "165 rows",
-    "~147 distinct", "166 ledger rows", "166 rows",
-    "~148 distinct", "167 ledger rows", "167 rows",
-    "~149 distinct", "168 ledger rows", "168 rows",
-    "~150 distinct", "169 ledger rows", "169 rows",
-    "170 ledger rows", "170 rows",
-    "~151 distinct", "171 ledger rows", "171 rows",
-    "172 ledger rows", "172 rows",
-    "~152 distinct", "173 ledger rows", "173 rows",
-    "~153 distinct", "174 ledger rows", "174 rows",
-    "~154 distinct", "175 ledger rows", "175 rows",
-    "~155 distinct", "176 ledger rows", "176 rows",
-    "~156 distinct", "177 ledger rows", "177 rows",
-    "~157 distinct", "178 ledger rows", "178 rows",
-    "179 ledger rows", "179 rows",
-    "~158 distinct", "180 ledger rows", "180 rows",
-    "~159 distinct", "181 ledger rows", "181 rows",
-    "~160 distinct", "182 ledger rows", "182 rows",
-    "~161 distinct", "183 ledger rows", "183 rows",
-    "~162 distinct", "184 ledger rows", "184 rows",
-    "~163 distinct", "185 ledger rows", "185 rows",
-    "~164 distinct", "186 ledger rows", "186 rows",
-    "~165 distinct", "187 ledger rows", "187 rows",
-    "~166 distinct", "188 ledger rows", "188 rows",
-    "~167 distinct", "189 ledger rows", "189 rows",
-    "~168 distinct", "190 ledger rows", "190 rows",
-    "~169 distinct", "191 ledger rows", "191 rows",
-    "~170 distinct", "193 ledger rows", "193 rows",
-    "192 ledger rows", "192 rows",
-    "194 ledger rows", "194 rows",
-    "195 ledger rows", "195 rows",
-    "~171 distinct", "196 ledger rows", "196 rows",
-    "197 ledger rows", "197 rows",
-    "~172 distinct", "198 ledger rows", "198 rows",
-    "199 ledger rows", "199 rows",
-    "~173 distinct", "200 ledger rows", "200 rows",
-    "201 ledger rows", "201 rows",
-    "~174 distinct", "202 ledger rows", "202 rows",
-    "203 ledger rows", "203 rows", "204 ledger rows", "204 rows",
-    "~175 distinct", "205 ledger rows", "205 rows",
-    "206 ledger rows", "206 rows",
-    "~176 distinct", "207 ledger rows", "207 rows",
-    "208 ledger rows", "208 rows", "209 ledger rows", "209 rows",
-    "~177 distinct", "210 ledger rows", "210 rows",
-    "~178 distinct", "211 ledger rows", "211 rows",
-    "212 ledger rows", "212 rows", "213 ledger rows", "213 rows",
-    "~179 distinct", "214 ledger rows", "214 rows",
-    "~180 distinct", "215 ledger rows", "215 rows",
-    "216 ledger rows", "216 rows", "217 ledger rows", "217 rows",
-    "~181 distinct",
-    "~182 distinct", "218 ledger rows", "218 rows",
-    "219 ledger rows", "219 rows",
-    "~183 distinct",
-    "~184 distinct", "220 ledger rows", "220 rows",
-    "~185 distinct", "221 ledger rows", "221 rows",
-    "~186 distinct", "222 ledger rows", "222 rows",
-    "~187 distinct", "223 ledger rows", "223 rows",
-    "~188 distinct", "224 ledger rows", "224 rows",
-    "~189 distinct", "225 ledger rows", "225 rows",
-    "~190 distinct", "226 ledger rows", "226 rows",
-    "~191 distinct", "227 ledger rows", "227 rows",
 ]
 
-# Must appear somewhere in VERIFIED.md so the canonical figure stays discoverable.
-CANONICAL_PRESENT = ["~192 distinct", "228 ledger rows"]
+# Floors for the generated retired ranges — the smallest figures that ever appeared as
+# a "ledger rows / distinct" headline (older headlines used the phrasings above).
+ROWS_FLOOR = 126
+DISTINCT_FLOOR = 115
+
+CANON_RE = re.compile(
+    r"\*\*(\d+)\s+ledger rows\s*/\s*~(\d+)\s+distinct kernel-verified results\*\*"
+)
+ALT_RE = re.compile(r"\((\d+)\s+rows are alternate-form")
+HEADLINE_END = "### Coverage restatements"
+
+
+def count_ledger_rows(text: str) -> int:
+    """Recount the main ledger table (rows with a `proved…` status cell, above the
+    tracked-separately sections). Mirrors scripts/gen_stats.py."""
+    total = 0
+    for line in text.splitlines():
+        if line.startswith(HEADLINE_END):
+            break
+        if not line.startswith("| "):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) >= 2 and cells[-1].startswith("proved"):
+            total += 1
+    return total
 
 
 def main() -> int:
-    root = Path(__file__).resolve().parent.parent
     failures: list[str] = []
 
+    vpath = ROOT / "VERIFIED.md"
+    vtext = vpath.read_text(encoding="utf-8") if vpath.exists() else ""
+    rows = count_ledger_rows(vtext)
+    m_alt = ALT_RE.search(vtext)
+    m_canon = CANON_RE.search(vtext)
+
+    if rows <= 0:
+        failures.append("VERIFIED.md: no ledger rows found in the main table")
+    if not m_alt:
+        failures.append("VERIFIED.md: alternate-form figure '(N rows are alternate-form' missing")
+    if not m_canon:
+        failures.append("VERIFIED.md: canonical figure "
+                        "'**N ledger rows / ~M distinct kernel-verified results**' missing")
+
+    distinct = rows - int(m_alt.group(1)) if m_alt else 0
+    if m_alt and m_canon:
+        prose_rows, prose_distinct = int(m_canon.group(1)), int(m_canon.group(2))
+        if prose_rows != rows:
+            failures.append(
+                f"VERIFIED.md: canonical line says {prose_rows} ledger rows but the table "
+                f"recount gives {rows} — update the canonical line")
+        if prose_distinct != distinct:
+            failures.append(
+                f"VERIFIED.md: canonical line says ~{prose_distinct} distinct but "
+                f"rows({rows}) − alternate-form({int(m_alt.group(1))}) = {distinct} — "
+                "update the canonical line (or the alternate-form figure)")
+
+    # Generated retired set: every older headline figure below the current ones.
+    retired = list(RETIRED_STATIC)
+    for r in range(ROWS_FLOOR, max(rows, ROWS_FLOOR)):
+        retired.append(f"{r} ledger rows")
+        retired.append(f"{r} rows")
+    for d in range(DISTINCT_FLOOR, max(distinct, DISTINCT_FLOOR)):
+        retired.append(f"~{d} distinct")
+
     for doc in DOCS:
-        p = root / doc
+        p = ROOT / doc
         if not p.exists():
             continue
         text = p.read_text(encoding="utf-8")
         for i, line in enumerate(text.splitlines(), 1):
-            # A line documenting THIS gate legitimately quotes retired strings as examples;
-            # mark it `count-check: ignore` (e.g. an invisible HTML comment) to exempt it.
             if "count-check: ignore" in line:
                 continue
-            for bad in RETIRED:
+            for bad in retired:
                 if bad in line:
                     failures.append(f"{doc}:{i}: retired count headline '{bad}': {line.strip()}")
 
-    verified = (root / "VERIFIED.md")
-    if verified.exists():
-        vtext = verified.read_text(encoding="utf-8")
-        for need in CANONICAL_PRESENT:
-            if need not in vtext:
-                failures.append(f"VERIFIED.md: canonical figure '{need}' is missing")
-
     if failures:
         print("COUNT CONSISTENCY FAILED — fix these to the canonical figure "
-              "'228 ledger rows / ~192 distinct results' (or point the doc at STATUS.md):")
+              f"'{rows} ledger rows / ~{distinct} distinct results' "
+              "(or point the doc at STATUS.md):")
         print("\n".join("  " + f for f in failures))
         return 1
-    print("count consistency OK: no retired headline counts; canonical figure present.")
+    print(f"count consistency OK: table recount {rows} rows / ~{distinct} distinct matches "
+          "the canonical figure; no retired headline counts.")
     return 0
 
 

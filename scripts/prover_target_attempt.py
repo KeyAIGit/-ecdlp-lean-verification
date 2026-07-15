@@ -4,7 +4,7 @@
 Artifact-only workflow: it writes reports and candidate Lean files, but it does
 not modify the verified proof base or commit model output to main.
 
-The agent protocol lives in AGENT.md. Prompts live in prompts/.
+The agent protocol lives in AGENTS.md (§Prover-loop protocol). Prompts live in prompts/.
 """
 
 from __future__ import annotations

@@ -3,7 +3,7 @@
 > Direction doc, not private content. It describes *how* to stand up a login-gated private
 > area and *what* belongs behind it. It contains no secrets. Decision on file: the private
 > area is for **private research / drafts** (your + collaborators' speculative work), not an
-> interactive verification platform (that is Phase 2 in `PLATFORM_STRATEGY.md`).
+> interactive verification platform (that was Phase 2 of the archived `archive/docs/PLATFORM_STRATEGY.md`; the scaffold lives in `archive/platform/`).
 
 ## The constraint that shapes everything
 

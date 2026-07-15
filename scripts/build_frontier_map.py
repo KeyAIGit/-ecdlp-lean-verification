@@ -6,7 +6,7 @@ Turns the corpus + barriers prose into structured, queryable data: for every one
 foundation* that blocks it; plus a foundation registry saying what each missing foundation
 would unlock. A future reasoning agent ingests this to see the whole problem and where the
 frontier is — which is the single most valuable layer of the environment (see
-ENVIRONMENT_PLAN.md, L2 / Track A).
+ROADMAP.md; the frontier map is the L2 layer).
 
 This asserts NO solution to ECDLP; it is a rigorous map of known-vs-blocked, honest about
 the barriers being possibly permanent.

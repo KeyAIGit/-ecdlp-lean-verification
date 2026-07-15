@@ -41,7 +41,7 @@ _SMALL = [
     ("data/frontier_map.json", "per-claim frontier status: verified / tractable / blocked / informal"),
 ]
 _MEDIUM_EXTRA = [
-    ("READ_FIRST.md", "low-context orientation: what this is, what it does NOT claim"),
+    ("README.md", "the front door: what this is, what it does NOT claim"),
     ("AGENTS.md", "agent operating rules, invariants, and forbidden moves"),
     ("VERIFIED.md", "the canonical ledger — every kernel-verified theorem, one row each"),
     ("BARRIERS.md", "the no-go / blocked map — what needs missing Mathlib foundations"),

@@ -144,15 +144,13 @@ classes:
     description: Files that orient low-context agents and hold active work.
     paths:
       - AGENTS.md
-      - AGENT.md
       - CLAUDE.md
+      - ROADMAP.md
       - tasks/NEXT.md
       - experiments/HYPOTHESES.yaml
       - REPOSITORY_ARCHITECTURE.md
       - repo/ARTIFACTS.yaml
       - repo/CLEANUP_PLAN.md
-      - CLAUDE_REVIEW_PACKET.md
-      - PLATFORM_STRATEGY.md
       - domains/registry.json
       - domains/README.md
     owner: operations
@@ -185,17 +183,11 @@ classes:
       - Autonomous loops must remain draft/review gated.
 
   curated_research_notes:
-    description: Durable research memory, strategy, and publication planning.
+    description: Durable research memory and publication planning.
     paths:
       - notes/*.md
       - docs/
       - PUBLISHABLE_UNITS.md
-      - WORK_SCOPE.md
-      - DIRECTOR_CHARTER.md
-      - ENVIRONMENT_PLAN.md
-      - REVIEW_DOSSIER.md
-      - ONE_PAGE_SUMMARY.md
-      - READ_FIRST.md
       - SETUP.md
     owner: research_memory
     hand_edit: true
@@ -206,62 +198,27 @@ classes:
     risks:
       - Notes can preserve old claims after the formal state changes.
 
-  experimental_trace:
-    description: Exploratory code/output kept for provenance, not active product surface.
-    paths:
-      - notes/ward/
-      - scratch/
-      - generator-report.md
-    owner: experiments
-    hand_edit: true
-    generated: mixed
-    gates:
-      - provenance review before archive/delete
-    risks:
-      - Some files contain absolute temporary paths and old run output.
-
-  platform_staging:
+  archive:
     description: >
-      Phase-2 authenticated web app (Step 1 scaffold). Not Lean, not built or gated by CI;
-      reads the published truth layer behind auth. To move to its own repo when it stabilizes.
+      Frozen history: superseded strategy docs (collapsed into ROADMAP.md), raw
+      exploratory traces (ward, scratch), and the undeployed Phase-2 platform
+      scaffold. Nothing here is a live surface; revive via git mv or a new repo.
     paths:
-      - platform/
-    owner: platform
-    hand_edit: true
+      - archive/docs/
+      - archive/ward/
+      - archive/scratch/
+      - archive/platform/
+      - archive/generator-report.md
+    owner: history
+    hand_edit: false
     generated: false
     gates:
-      - not part of the Lean build; verified by its own tooling (npm/Vercel)
+      - content is frozen; changes belong in live surfaces, not here
     risks:
-      - Must not hold private content while it lives in this public repo.
-      - Node deps / build output are git-ignored (platform/.gitignore).
-      - Noise can confuse new agents unless clearly marked.
+      - Archived prose can contain stale claims; nothing may cite it as current
+        except with an explicit archive/ path.
 
 cleanup_candidates:
-  - path: notes/ward/
-    proposed_action: classify_then_archive
-    priority: high
-    reason: >
-      Large exploratory trace with many scripts and outputs, including absolute
-      temporary paths. It may still carry Ward/EDS provenance, so deletion is
-      unsafe before review.
-    delete_now: false
-
-  - path: scratch/
-    proposed_action: review_then_archive_or_ignore
-    priority: medium
-    reason: >
-      Contains unpromoted Lean experiments. These should either become tracked
-      targets/notes or move to an archive path.
-    delete_now: false
-
-  - path: generator-report.md
-    proposed_action: mark_generated_or_archive
-    priority: medium
-    reason: >
-      Looks report-like and may be generated. It needs an owner and generator
-      policy before future agents rely on it.
-    delete_now: false
-
   - path: dashboard.html
     proposed_action: make_generator_and_encoding_path_robust
     priority: medium
@@ -270,15 +227,16 @@ cleanup_candidates:
       drift if local generator behavior differs by environment.
     delete_now: false
 
+# Executed 2026-07 (ROADMAP.md §4, tranche 1): notes/ward/ -> archive/ward/,
+# scratch/ -> archive/scratch/, generator-report.md -> archive/,
+# platform/ -> archive/platform/ (platform-ci.yml retired), and the superseded
+# strategy/review docs -> archive/docs/.
+
 follow_up_prs:
   - id: repo-manifest-schema-hardening
     goal: Expand scripts/check_repo_artifacts.py beyond path existence into a stricter schema gate.
-  - id: dashboard-sync-health
-    goal: Add public sync health and robust generation across Windows/Linux.
-  - id: archive-experimental-trace
-    goal: Move reviewed scratch/ward artifacts into an archive namespace.
-  - id: generated-artifact-policy
-    goal: Encode generated/hand-maintained ownership in docs and checks.
+  - id: v01-tag
+    goal: Tag v0.1 on main once the consolidation PR merges and the gate battery is green there (tranche 2 executed in that PR).
 
 review_questions:
   - Which paths are misclassified?

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "purpose": "External works cited across the substrate, with provenance (where_used) computed from the hand-authored docs. Companion to result_registry.json (theorem-name provenance).",
-  "scan_scope": "**/*.md excluding .git, .lake, data, node_modules, platform",
+  "scan_scope": "**/*.md excluding .git, .lake, archive, data, node_modules, platform",
   "source_count": 13,
   "sources": [
     {
@@ -73,12 +73,12 @@
       "note": null,
       "where_used": [
         "COVERAGE.md",
-        "ONE_PAGE_SUMMARY.md",
-        "RESEARCH_MAP.md",
+        "README.md",
         "VERIFIED.md",
         "domains/p256/corpus.md",
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
+        "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]
     },
@@ -126,10 +126,8 @@
         "AGENTS.md",
         "BARRIERS.md",
         "COVERAGE.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
-        "RESEARCH_MAP.md",
         "STATUS.md",
         "TRUST_REPORT.md",
         "VERIFIED.md",
@@ -137,6 +135,7 @@
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
         "notes/HYPOTHESIS_EXPLORER.md",
+        "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]
     },
@@ -158,10 +157,8 @@
       "where_used": [
         "AGENTS.md",
         "BARRIERS.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
-        "REVIEW_DOSSIER.md",
         "VERIFIED.md",
         "notes/SECURITY_SCOPE.md"
       ]
@@ -185,7 +182,6 @@
       "where_used": [
         "BARRIERS.md",
         "PUBLISHABLE_UNITS.md",
-        "RESEARCH_MAP.md",
         "experiments/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
@@ -195,7 +191,8 @@
         "experiments/p3_sm_system/README.md",
         "experiments/p3_sm_system/RESULTS.md",
         "experiments/p4_petit/README.md",
-        "experiments/p4_petit/RESULTS.md"
+        "experiments/p4_petit/RESULTS.md",
+        "notes/RESEARCH_MAP.md"
       ]
     },
     {
@@ -219,11 +216,10 @@
       "where_used": [
         "AGENTS.md",
         "BARRIERS.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
-        "RESEARCH_MAP.md",
         "VERIFIED.md",
+        "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]
     },
@@ -244,8 +240,9 @@
       "note": null,
       "where_used": [
         "PUBLISHABLE_UNITS.md",
-        "RESEARCH_MAP.md",
+        "README.md",
         "VERIFIED.md",
+        "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]
     },
@@ -268,10 +265,10 @@
         "ABSTRACT_SCOPE.md",
         "BARRIERS.md",
         "COVERAGE.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
-        "RESEARCH_MAP.md",
-        "REVIEW_DOSSIER.md",
+        "README.md",
+        "ROADMAP.md",
+        "STATUS.md",
         "VERIFIED.md",
         "notes/FOUNDATION_ROADMAP.md",
         "notes/GLV_EIGENVALUE.md",
@@ -279,7 +276,9 @@
         "notes/GLV_LAMBDA.md",
         "notes/HASSE_RECON.md",
         "notes/POINT_COUNTING_KEYSTONE.md",
-        "notes/UPSTREAM_SCAN.md"
+        "notes/RESEARCH_MAP.md",
+        "notes/UPSTREAM_SCAN.md",
+        "tasks/NEXT.md"
       ]
     },
     {
@@ -301,13 +300,11 @@
         "AGENTS.md",
         "BARRIERS.md",
         "COVERAGE.md",
-        "DIRECTOR_CHARTER.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
-        "RESEARCH_MAP.md",
+        "README.md",
+        "ROADMAP.md",
         "STATUS.md",
         "VERIFIED.md",
-        "WORK_SCOPE.md",
         "experiments/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
@@ -323,6 +320,7 @@
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
         "notes/HYPOTHESIS_EXPLORER.md",
+        "notes/RESEARCH_MAP.md",
         "notes/UPSTREAM_SCAN.md",
         "tasks/NEXT.md"
       ]
@@ -345,10 +343,8 @@
       "where_used": [
         "AGENTS.md",
         "BARRIERS.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
-        "REVIEW_DOSSIER.md",
         "VERIFIED.md",
         "notes/SECURITY_SCOPE.md"
       ]
@@ -373,11 +369,8 @@
         "AGENTS.md",
         "BARRIERS.md",
         "COVERAGE.md",
-        "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
-        "RESEARCH_MAP.md",
-        "REVIEW_DOSSIER.md",
         "STATUS.md",
         "TRUST_REPORT.md",
         "VERIFIED.md",
@@ -386,6 +379,7 @@
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
         "notes/HYPOTHESIS_EXPLORER.md",
+        "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]
     }
