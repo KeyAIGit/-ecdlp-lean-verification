@@ -51,9 +51,9 @@ arithmetic relations those complexity statements rest on.
   of affine forms) is the paper's modeling choice and a reviewer's first question — it must be
   presented as the Shoup/Nechaev information-theoretic core, not as a general cost model (Lean still
   has none; see `BARRIERS.md` B1).
-- The secp256k1 instantiation assumes the base-point subgroup has the published order `n` (a
-  point-counting fact — `#E(𝔽_p) = n` — **not** proved in Lean, no Schoof). Its primality *is*
-  now proved (Unit 2), which discharges what used to be the conditional part.
+- The secp256k1 instantiation uses the base-point subgroup order `n`. That order is now proved:
+  `#E(𝔽_p) = n` is machine-checked curve-specifically (`CurveCardinalityExact.lean`, no Schoof) and
+  `n` is proved prime (Unit 2), so the once-conditional point-counting part is fully discharged.
 - `secp256k1_generic_security` and `secp256k1_bsgs_steps_le` use `native_decide` for the 256-bit
   numeric leaf, so they carry `Lean.ofReduceBool` (compiler in the TCB); the abstract bounds
   (`generic_dlog_query_bound`, `bsgs_decomp`, …) are pure-kernel.
@@ -238,9 +238,10 @@ These are coherent enough to publish but are secondary to Units 1–3.
   endomorphism), `secp256k1_glv_cube_relation`/`glvHom_minpoly` (`φ²+φ+1=0`),
   `secp256k1_glvHom_ne_id` (primitive cube root ⇒ genuine CM by `ℤ[ζ₃]`), and the no-go
   `secp256k1_glv_preserves_dlog`/`secp256k1_glv_single_scalar` (CM gives no asymptotic ECDLP
-  advantage). **Hard caveat:** `glvPoint = [λ]` (the eigenvalue identity) is **not** proved — only
-  the additive-homomorphism half; the `[λ]` identity is proved only *conditionally* on cyclicity
-  (`secp256k1_glvHom_eq_zsmul`). Venue: ITP.
+  advantage). **Now proved on the rational points:** `glvPoint = [λ]` with the concrete λ holds on all
+  of `⟨G⟩ = E(𝔽_p)` unconditionally (`secp256k1_glvPoint_eq_lam_on_zmultiples` + `grp_eq_top`), plus
+  `glvHom = [k]` on the whole group (`secp256k1_glvHom_eq_zsmul`); only the *geometric* `E[n](F̄_p)`
+  eigenvalue identity stays open. Venue: ITP.
 - **Transfer-resistance saturation.** `secp256k1_embedding_degree_gt_100` (anti-MOV/FR),
   `secp256k1_trace_ordinary_nonanomalous` (anti-Smart/SSSA, non-supersingular, Hasse),
   `anomalous_iff_trace_one`, Pohlig–Hellman (`projection`/`component`/`reconstruct`). Thesis: every
@@ -286,12 +287,13 @@ be conflated with Units 1–3:
 - **`#E(𝔽_p) = n` is proved** (curve-specifically, no Schoof — `CurveCardinalityExact.lean`: `#E≤2p+1<3n`
   plus `E[2]={O}`), so secp256k1 cofactor 1 is unconditional. Still open: the **geometric** torsion
   structure `E[n](F̄_p) ≅ (ℤ/n)²` (a distinct object from the rational `#E=n`), and general Hasse/Schoof.
-- **`glvPoint = [λ]` is not proved** (only the additive-homomorphism half, and the eigenvalue
-  identity only conditionally on cyclicity).
+- **`glvPoint = [λ]` is proved on the rational points `⟨G⟩ = E(𝔽_p)`** (concrete λ, unconditional);
+  only the full *geometric* `E[n](F̄_p)` eigenvalue identity remains conditional on `E[n] ≅ (ℤ/n)²`.
 - **The discrete-log protocol algebra** (Schnorr/EdDSA, DH, ElGamal, Pedersen, Okamoto,
   Chaum–Pedersen, MuSig2/Taproot, Feldman VSS, adaptor/blind Schnorr, ECDSA nonce-reuse) is proved
-  over an **abstract `[Module (ZMod n) G]`**, **not instantiated at the secp256k1 point group**, with
-  **no adversary/hash/probability model** (`ABSTRACT_SCOPE.md`). These are sound Lean theorems but
+  over an **abstract `[Module (ZMod n) G]`** and now **also instantiated at the concrete secp256k1
+  point group `⟨G⟩`** (`ProtocolInstantiation.lean`), still with **no adversary/hash/probability model**
+  (`ABSTRACT_SCOPE.md`). These are sound Lean theorems but
   narrower than their cryptographic prose — they are not part of Units 1–3 and should not be marketed
   as "verified protocol security."
 - **The Weil pairing and Semaev index calculus are foundations/no-go, not attacks.** No result here
