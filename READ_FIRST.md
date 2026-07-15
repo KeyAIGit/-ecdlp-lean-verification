@@ -43,5 +43,5 @@ For repository ownership and cleanup boundaries, read
 
 `STATUS.md` (canonical snapshot) · `PUBLISHABLE_UNITS.md` (the 3 standalone results) ·
 `VERIFIED.md` (the ledger) · `BARRIERS.md` (the no-go map) · `TRUST_REPORT.md` (what
-"verified" rests on) · `SETUP.md` (build + CI + regen) · `WORK_SCOPE.md` (the
-improvement program).
+"verified" rests on) · `SETUP.md` (build + CI + regen) · `ROADMAP.md` (the
+strategy & program).

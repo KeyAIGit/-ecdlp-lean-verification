@@ -2,7 +2,7 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-> Answers REVIEW_DOSSIER.md **Finding 1** ("The 'discrete-log cryptography
+> Answers `archive/docs/REVIEW_DOSSIER.md` **Finding 1** ("The 'discrete-log cryptography
 > library' is abstract algebra mislabeled as cryptography").
 
 ## Canonical accounting

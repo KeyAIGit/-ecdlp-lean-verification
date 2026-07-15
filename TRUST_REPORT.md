@@ -213,7 +213,7 @@ count-consistency and stem-typecheck steps are doc-hygiene, not correctness guar
   These extend the TCB beyond the kernel to include the Lean compiler/runtime, via
   `Lean.ofReduceBool`. This means CLAUDE.md's invariant "the Lean kernel is the only
   judge of correctness" is, strictly, **not true for these ~33 rows** — the compiler is
-  also a judge. This is **REVIEW_DOSSIER.md finding 9** ("`native_decide` enlarges the
+  also a judge. This is **`archive/docs/REVIEW_DOSSIER.md` finding 9** ("`native_decide` enlarges the
   TCB beyond the kernel"; severity LOW), whose verdict is *ACCEPTABLE trade-off,
   honestly fixable*: the mitigation is correct where it matters most — the primality of
   `p` and `n` structures `native_decide` to discharge only small checks inside a

@@ -93,7 +93,7 @@ Pratt (Lucas/Pocklington) certificates whose compiler-trusted footprint is delib
   a single witness exponentiation `a^((p−1)/q) ≠ 1 mod p`, or a factorization identity
   `p − 1 = 2^a·(q₁·…)`. So the Lean **compiler** (via `Lean.ofReduceBool`) is trusted for bounded
   arithmetic *inside* a kernel-checked argument, never for the primality conclusion itself. This is
-  the correct minimization, but it must be disclosed — it is `REVIEW_DOSSIER.md` finding 9, verdict
+  the correct minimization, but it must be disclosed — it is `archive/docs/REVIEW_DOSSIER.md` finding 9, verdict
   "acceptable trade-off," and the whole point of `TRUST_REPORT.md` §2(c).
 - Scope is exactly these two specific constants. The *method* (Pratt in Lean) is general; the
   *deliverable* is a fully machine-auditable certificate for secp256k1's `p` and `n`.

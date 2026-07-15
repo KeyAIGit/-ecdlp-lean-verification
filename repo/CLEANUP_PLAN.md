@@ -1,5 +1,10 @@
 # Cleanup Plan
 
+> **EXECUTED (tranche 1, 2026-07 — see `ROADMAP.md` §4):** `notes/ward/` → `archive/ward/`,
+> `scratch/` → `archive/scratch/`, `generator-report.md` → `archive/`, `platform/` →
+> `archive/platform/` (platform-ci retired), superseded strategy/review docs → `archive/docs/`.
+> This plan is kept as the decision record; remaining candidates live in `repo/ARTIFACTS.yaml`.
+
 This plan is deliberately conservative. The current branch classifies the repo;
 it does not delete, rename, or move risky files. The next cleanup PR should only
 act after Claude or human review confirms the classification.

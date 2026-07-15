@@ -11,13 +11,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4861
+        "bytes": 4853
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 7136
+        "bytes": 7462
       },
       {
         "path": "data/stats.json",
@@ -37,13 +37,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4861
+        "bytes": 4853
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 7136
+        "bytes": 7462
       },
       {
         "path": "data/stats.json",
@@ -61,13 +61,13 @@
         "path": "READ_FIRST.md",
         "reason": "low-context orientation: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 2567
+        "bytes": 2563
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 5823
+        "bytes": 5900
       },
       {
         "path": "VERIFIED.md",
@@ -105,13 +105,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4861
+        "bytes": 4853
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 7136
+        "bytes": 7462
       },
       {
         "path": "data/stats.json",
@@ -129,13 +129,13 @@
         "path": "READ_FIRST.md",
         "reason": "low-context orientation: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 2567
+        "bytes": 2563
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 5823
+        "bytes": 5900
       },
       {
         "path": "VERIFIED.md",
@@ -177,19 +177,19 @@
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 8083
+        "bytes": 8081
       },
       {
         "path": "PUBLISHABLE_UNITS.md",
         "reason": "the standalone publishable narratives with honest scope",
         "exists": true,
-        "bytes": 21709
+        "bytes": 21722
       },
       {
         "path": "TRUST_REPORT.md",
         "reason": "the trust boundary: what native_decide adds to the TCB",
         "exists": true,
-        "bytes": 17549
+        "bytes": 17564
       }
     ]
   }

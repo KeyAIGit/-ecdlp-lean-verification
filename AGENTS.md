@@ -26,7 +26,7 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 - **Theorem count: see `STATUS.md` / `data/stats.json`** (canonical, live row & distinct
   count) — `0 `sorry`, no custom axioms (the axiom-audit gate enforces it; `native_decide`
   facts trust the compiler, see `TRUST_REPORT.md`). Do not hardcode a number here; it
-  drifts. `main` is kept in sync with the dev branch `claude/admiring-darwin-uouep1`.
+  drifts. Work happens on per-session dev branches; a human merges draft PRs to `main`.
 - Pillars: (1) Shoup/Nechaev generic-group `Ω(√p)` + BSGS/rho `O(√n)` ⇒ `Θ(√n)`,
   secp256k1 ≥128-bit **classical, generic** security (black-box model only, classical —
   not unconditional, and false against quantum/Shor; see `notes/SECURITY_SCOPE.md`); the
@@ -37,9 +37,9 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
   Pedersen, DH, ElGamal, Okamoto, Chaum–Pedersen, MuSig2/Taproot, Feldman VSS, adaptor,
   blind Schnorr, threshold ElGamal; see `ABSTRACT_SCOPE.md`). (3)
   secp256k1 grounded in Mathlib EC (`EllipticCurve`, `j=0`, β/λ order 3, generator
-  on curve & nonsingular); the GLV map is proved an *additive* endomorphism (`glvHom`),
-  while the `[λ]` eigenvalue action `glvPoint = [λ]` remains **open** (gated on point
-  counting). (4) **machine-checked primality** of `p` and `n` (full
+  on curve & nonsingular); the GLV map is a proved *additive* endomorphism (`glvHom`)
+  with the `[λ]` eigenvalue now **unconditional on the whole point group** — the strong
+  keystone `#E(𝔽_p) = n` is proved (`CurveCardinalityExact.lean`), so `E(𝔽_p) = ⟨G⟩`. (4) **machine-checked primality** of `p` and `n` (full
   Pratt certificates, `scripts/pratt_certificate.py`) — the `[Fact …]` hypotheses
   are now discharged by real instances, so those theorems are effectively
   unconditional. (5) **attack-landscape saturation**: Pohlig–Hellman, anti-MOV
@@ -73,7 +73,7 @@ Print a self-contained pack on demand with
 committed — see `bundles/README.md`).
 
 ## Workflow
-1. Branch from `main` (`claude/admiring-darwin-uouep1`). 2. Add theorem(s), grep the
+1. Branch from `main` (a fresh session branch). 2. Add theorem(s), grep the
 local Mathlib source for exact API. 3. Push → CI (or local build). 4. On green: add a
 `VERIFIED.md` row, open a PR, squash-merge to `main`. 5. Reset branch to `main`, repeat.
 

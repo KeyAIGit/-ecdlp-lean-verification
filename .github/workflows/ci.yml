@@ -119,11 +119,11 @@ jobs:
           # legitimately mention `sorryAx`); it contains no proofs and is not imported,
           # so exclude it to avoid a prose false-positive. Its `sorryAx` check is the
           # real, robust no-sorry gate for the audited theorems (scripts/check_axioms.py).
-          if grep -rniI --include='*.lean' --exclude-dir=Targets --exclude='AxiomAudit.lean' 'sorry' Ecdlp/ ResearchOS/ ResearchOS.lean; then
+          if grep -rniI --include='*.lean' --exclude-dir=Targets --exclude='AxiomAudit.lean' 'sorry' Ecdlp.lean Ecdlp/ ResearchOS/ ResearchOS.lean; then
             echo "::error::Found 'sorry' in a built Lean file - a proof is incomplete"
             exit 1
           fi
-          echo "All built proofs complete: no 'sorry' outside Ecdlp/Targets/ (Ecdlp/ + ResearchOS/ scanned)"
+          echo "All built proofs complete: no 'sorry' outside Ecdlp/Targets/ (Ecdlp.lean + Ecdlp/ + ResearchOS/ scanned)"
 
       # Close the latent hole: `sorry` is a warning, and the grep above skips Targets/.
       # If any BUILT file ever imported a Targets stem, a `sorry` could reach the build
@@ -194,34 +194,7 @@ jobs:
             lake env lean "$f" || echo "::warning::stem failed to typecheck: $f"
           done
 
-      - name: Prover target attempt (artifact-only, non-blocking)
-        if: github.event_name != 'pull_request'
-        continue-on-error: true
-        env:
-          FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
-        run: |
-          python3 scripts/prover_target_attempt.py \
-            --target zmod_from_mod_zero \
-            --fast-attempts 16 \
-            --heavy-attempts 8
-
-      - name: Add prover target report to summary
-        if: always() && github.event_name != 'pull_request'
-        run: |
-          echo "## Prover target attempt" >> "$GITHUB_STEP_SUMMARY"
-          if [ -f prover-target-report.md ]; then
-            cat prover-target-report.md >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo "No prover target report was produced." >> "$GITHUB_STEP_SUMMARY"
-          fi
-
-      - name: Upload prover target report
-        if: always() && github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v4
-        with:
-          name: prover-target-attempt-report
-          path: |
-            prover-target-report.md
-            prover-target-success.lean
-            ProverTargetAttempt.lean
-          if-no-files-found: ignore
+      # The per-push prover attempt was removed: it re-proved the already-verified
+      # smoke target (targets/001, status=verified) on every push, spending model
+      # attempts for no new information. The standalone dispatch workflow
+      # (.github/workflows/prover-target-attempt.yml) remains for on-demand runs.

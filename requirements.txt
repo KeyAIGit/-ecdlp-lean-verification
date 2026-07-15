@@ -13,7 +13,8 @@
 #                certify.py, explore_pipeline.py); reads ANTHROPIC_API_KEY from env.
 #   openai     — OpenAI-compatible clients for Featherless / DeepSeek tiers
 #                (scripts/explore_pipeline.py, hypothesis_explorer.py). The Featherless
-#                tier is currently idle (HTTP 403); see SETUP.md "Operational reality".
+#                tier is dead from CI (verified 2026-07-15: HTTP 403 / Cloudflare 1010 bot-block
+#                of GitHub runners, key valid); may still work from the warm server. See SETUP.md.
 #
 # Floors, not exact pins: these scripts are auxiliary and API-surface-stable across
 # these ranges. The reproducible artifact is the Lean toolchain (lean-toolchain,

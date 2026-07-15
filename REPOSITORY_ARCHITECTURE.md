@@ -34,10 +34,10 @@ publication reviewers. Each audience needs a stable route through the repo.
 | Verified ledger and trust boundary | Human-auditable theorem ledger and scope statements | `VERIFIED.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `BARRIERS.md`, `COVERAGE.md` | Keep counts delegated to `STATUS.md`/`data/stats.json`; keep scope wording adversarially honest. |
 | Generated machine views | Derived stats, graphs, frontier maps, badges, and snapshots | `data/stats.json`, `data/frontier_map.json`, `data/knowledge_graph.json`, `data/knowledge_graph.md`, `badges/theorems.json`, `STATUS.md` | Do not hand-edit generated numbers. Change generators and regenerate. |
 | Public surfaces | Static site and dashboard | `index.html`, `dashboard.html`, `assets/`, `fonts/`, `CNAME` | Site may be hand-maintained, but canonical counters should come from generated data or checked sync paths. |
-| Research OS control plane | Active tasks, hypotheses, architecture map, and agent orientation | `AGENTS.md`, `AGENT.md`, `CLAUDE.md`, `tasks/NEXT.md`, `experiments/HYPOTHESES.yaml`, `REPOSITORY_ARCHITECTURE.md`, `repo/`, `CLAUDE_REVIEW_PACKET.md` | Keep short, current, and executable by low-context agents. |
+| Research OS control plane | Active tasks, hypotheses, strategy, architecture map, and agent orientation | `AGENTS.md`, `AGENT.md`, `CLAUDE.md`, `ROADMAP.md`, `tasks/NEXT.md`, `experiments/HYPOTHESES.yaml`, `REPOSITORY_ARCHITECTURE.md`, `repo/` | Keep short, current, and executable by low-context agents. |
 | Automation and scripts | CI, generators, checks, autonomous loops, server helpers | `.github/workflows/`, `scripts/`, `requirements.txt`, `prompts/` | Prefer explicit gates over narrative promises. Scripts that generate committed artifacts must document outputs. |
-| Research notes | Durable mathematical strategy, maps, and reviewed reasoning | `notes/*.md`, `docs/`, `PUBLISHABLE_UNITS.md`, `WORK_SCOPE.md`, `DIRECTOR_CHARTER.md` | Keep as curated research memory. Link to canonical counts instead of copying them. |
-| Experimental trace | Useful but noisy exploratory artifacts | `notes/ward/`, `scratch/`, some generated reports | Do not delete in this PR. Classify, preserve provenance, and ask Claude/human review before archive/delete. |
+| Research notes | Durable mathematical strategy, maps, and reviewed reasoning | `notes/*.md`, `docs/`, `PUBLISHABLE_UNITS.md` | Keep as curated research memory. Link to canonical counts instead of copying them. |
+| Archive (frozen) | Superseded docs and exploratory traces, preserved for provenance | `archive/` (docs, ward, scratch, platform, generator-report) | Do not delete in this PR. Classify, preserve provenance, and ask Claude/human review before archive/delete. |
 
 ## Source Of Truth Matrix
 
@@ -48,7 +48,7 @@ publication reviewers. Each audience needs a stable route through the repo.
 | What corpus claims exist? | `data/KG_CLAIM_FORMALIZATION_v1.csv` | `data/frontier_map.json`, `targets/*.json` |
 | Which corpus claims are verified/partial/blocked/etc.? | `data/frontier_map.json` plus `data/corpus_coverage_overrides.json` | `STATUS.md`, `COVERAGE.md`, dashboard |
 | What is safe to claim publicly? | `STATUS.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `notes/SECURITY_SCOPE.md` | `README.md`, `ONE_PAGE_SUMMARY.md`, `PUBLISHABLE_UNITS.md` |
-| What should an agent work on next? | `tasks/NEXT.md` | `experiments/HYPOTHESES.yaml`, `AGENTS.md`, `WORK_SCOPE.md` |
+| What should an agent work on next? | `tasks/NEXT.md` | `experiments/HYPOTHESES.yaml`, `AGENTS.md`, `ROADMAP.md` |
 | What should be archived or deleted? | `repo/CLEANUP_PLAN.md` after review | `repo/ARTIFACTS.yaml`, Claude review comments |
 
 ## Generated Artifact Rules
@@ -90,8 +90,8 @@ High-risk areas:
 - `Ecdlp/Proved/`: moving files changes import topology and proof review paths.
 - `VERIFIED.md`: changing rows changes stats and public claims.
 - `data/KG_CLAIM_FORMALIZATION_v1.csv`: vendored corpus; do not reformat.
-- `notes/ward/`: noisy, but may contain provenance for Ward/EDS work.
-- `scratch/`: may contain unpromoted Lean experiments; classify before removal.
+- `archive/ward/`: noisy, but may contain provenance for Ward/EDS work (frozen).
+- `archive/scratch/`: unpromoted Lean experiments, frozen; revive via git mv.
 
 ## PR Discipline
 

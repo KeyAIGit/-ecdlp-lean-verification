@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "purpose": "External works cited across the substrate, with provenance (where_used) computed from the hand-authored docs. Companion to result_registry.json (theorem-name provenance).",
-  "scan_scope": "**/*.md excluding .git, .lake, data, node_modules, platform",
+  "scan_scope": "**/*.md excluding .git, .lake, archive, data, node_modules, platform",
   "source_count": 13,
   "sources": [
     {
@@ -161,7 +161,6 @@
         "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
-        "REVIEW_DOSSIER.md",
         "VERIFIED.md",
         "notes/SECURITY_SCOPE.md"
       ]
@@ -271,10 +270,9 @@
         "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "RESEARCH_MAP.md",
-        "REVIEW_DOSSIER.md",
+        "ROADMAP.md",
         "STATUS.md",
         "VERIFIED.md",
-        "WORK_SCOPE.md",
         "notes/FOUNDATION_ROADMAP.md",
         "notes/GLV_EIGENVALUE.md",
         "notes/GLV_FORMALIZATION.md",
@@ -304,13 +302,12 @@
         "AGENTS.md",
         "BARRIERS.md",
         "COVERAGE.md",
-        "DIRECTOR_CHARTER.md",
         "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "RESEARCH_MAP.md",
+        "ROADMAP.md",
         "STATUS.md",
         "VERIFIED.md",
-        "WORK_SCOPE.md",
         "experiments/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
@@ -351,7 +348,6 @@
         "ONE_PAGE_SUMMARY.md",
         "PUBLISHABLE_UNITS.md",
         "README.md",
-        "REVIEW_DOSSIER.md",
         "VERIFIED.md",
         "notes/SECURITY_SCOPE.md"
       ]
@@ -380,7 +376,6 @@
         "PUBLISHABLE_UNITS.md",
         "README.md",
         "RESEARCH_MAP.md",
-        "REVIEW_DOSSIER.md",
         "STATUS.md",
         "TRUST_REPORT.md",
         "VERIFIED.md",

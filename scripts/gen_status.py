@@ -105,7 +105,7 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 ## Where to go deeper
 `READ_FIRST.md` (orientation for low-context readers) · `tasks/NEXT.md` (active queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
-standalone results) · `WORK_SCOPE.md` (the improvement program) · `VERIFIED.md` (ledger) ·
+standalone results) · `ROADMAP.md` (strategy & program) · `VERIFIED.md` (ledger) ·
 `BARRIERS.md` (no-go map) · `notes/FOUNDATIONS.md` (Weil/Semaev ladder) ·
 `notes/POINT_COUNTING_KEYSTONE.md` (the `#E=n` keystone) · `TRUST_REPORT.md` (trust boundary) ·
 `data/frontier_map.json` (queryable per-claim status).

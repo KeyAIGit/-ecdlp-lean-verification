@@ -97,20 +97,18 @@ NAV = [
         ("README.md", "Project overview, layout, build instructions"),
         ("READ_FIRST.md", "Low-context orientation: what this is, what not to claim"),
         ("AGENTS.md", "Orientation for any Claude instance — read this first"),
-        ("ENVIRONMENT_PLAN.md", "The strategic plan: L1-L5 layers, 3 tracks, checkpoints"),
+        ("ROADMAP.md", "The one strategy document: position, north star, structure, program"),
         ("CLAUDE.md", "Working conventions for automated/assisted runs"),
         ("AGENT.md", "The authoritative protocol"),
         ("SETUP.md", "Minimal build command"),
     ]),
     ("Research OS & architecture", [
         ("STATUS.md", "Canonical generated snapshot: live counts, corpus status, and bottleneck"),
-        ("PLATFORM_STRATEGY.md", "Direction: from one verified case to a verified-research platform (honest phased roadmap)"),
         ("tasks/NEXT.md", "Small-context active task queue"),
         ("experiments/HYPOTHESES.yaml", "Hypothesis registry with evidence and exit criteria"),
         ("REPOSITORY_ARCHITECTURE.md", "Whole-repo map: canonical, generated, public, scratch, archive"),
         ("repo/ARTIFACTS.yaml", "Machine-readable artifact classification manifest"),
-        ("repo/CLEANUP_PLAN.md", "Conservative cleanup plan: classify, review, then move/delete"),
-        ("CLAUDE_REVIEW_PACKET.md", "Final adversarial review packet template"),
+        ("repo/CLEANUP_PLAN.md", "Cleanup plan: classify, review, then move/delete (tranche 1 executed)"),
     ]),
     ("The ledger & proofs", [
         ("VERIFIED.md", "The canonical ledger — every kernel-verified theorem, one row each"),
@@ -122,8 +120,7 @@ NAV = [
     ("Honesty & independent review", [
         ("COVERAGE.md", "Honest 3-denominator coverage benchmark (regenerate: coverage_report.py)"),
         ("BARRIERS.md", "The no-go map — what's blocked, and by which missing foundation"),
-        ("ABSTRACT_SCOPE.md", "Honest scope of the DL-crypto library (abstract algebra, not yet instantiated)"),
-        ("REVIEW_DOSSIER.md", "Adversarial 5-lens independent-review packet"),
+        ("ABSTRACT_SCOPE.md", "Honest scope of the DL-crypto library (abstract algebra + concrete instantiation)"),
         ("ONE_PAGE_SUMMARY.md", "One-page external summary (Lean-expert + generalist audiences)"),
     ]),
     ("Frontier & data (machine-readable)", [

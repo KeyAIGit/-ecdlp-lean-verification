@@ -36,7 +36,7 @@ DOCS = [
     # summary docs that historically drifted — now scanned so they can't silently re-drift
     "STATUS.md", "TRUST_REPORT.md", "ONE_PAGE_SUMMARY.md", "ABSTRACT_SCOPE.md",
     "COVERAGE.md", "READ_FIRST.md", "REPOSITORY_ARCHITECTURE.md",
-    "CLAUDE_REVIEW_PACKET.md", "repo/CLEANUP_PLAN.md",
+    "ROADMAP.md", "repo/CLEANUP_PLAN.md",
 ]
 
 # Retired headline strings that must NOT reappear (regex-free substring match) and are

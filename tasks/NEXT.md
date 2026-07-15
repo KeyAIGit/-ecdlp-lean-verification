@@ -175,32 +175,29 @@ Files allowed to edit:
 - `docs/`
 - `notes/`
 
-### TASK-007 - Normalize repository architecture
+### TASK-007 - Consolidation tranche 2 (ROADMAP.md §4)
 
 Kind: ops | agent | docs
 Hypothesis: `H1_RESEARCH_OS_TRUTH_LAYER`
-Why it matters: Future Claude/Codex runs need a whole-repository map before
-they safely remove noise, move files, or change generated artifacts.
+Why it matters: Tranche 1 (archive of ward/scratch/platform/superseded strategy
+docs, ROADMAP.md as the one strategy file) is executed. Fewer prose surfaces =
+structurally less drift; tranche 2 finishes the root-doc consolidation and
+declares v0.1.
 Inputs:
-- `REPOSITORY_ARCHITECTURE.md`
-- `repo/ARTIFACTS.yaml`
-- `repo/CLEANUP_PLAN.md`
-- `CLAUDE_REVIEW_PACKET.md`
-- `AGENTS.md`
-- `README.md`
+- `ROADMAP.md` (§4, tranche-2 table)
+- `REPOSITORY_ARCHITECTURE.md` + `repo/CLEANUP_PLAN.md` (map + tranche-1 record)
+- `README.md`, `READ_FIRST.md`, `ONE_PAGE_SUMMARY.md`, `RESEARCH_MAP.md`
+- `AGENT.md`, `AGENTS.md`
 Expected output:
-- A reviewed architecture foundation that classifies canonical, generated,
-  curated, scratch, and archive-candidate files.
+- ONE_PAGE_SUMMARY + READ_FIRST merged into README (the v0.1 front door);
+  RESEARCH_MAP folded into ROADMAP/notes; AGENT.md folded into AGENTS.md;
+  a truth pass over AGENTS.md/README.md; `notes/INDEX.md`.
 Exit criteria:
-- Claude adversarial review identifies no blocking misclassification.
-- Any archive/delete work is split into a later PR.
+- Root prose ≈ 12 files per ROADMAP §4; all gates green; README states v0.1.
 Files allowed to edit:
-- `REPOSITORY_ARCHITECTURE.md`
-- `repo/`
-- `CLAUDE_REVIEW_PACKET.md`
-- `AGENTS.md`
-- `README.md`
-- `tasks/NEXT.md`
+- `README.md`, `READ_FIRST.md`, `ONE_PAGE_SUMMARY.md`, `RESEARCH_MAP.md`
+- `AGENT.md`, `AGENTS.md`, `ROADMAP.md`, `notes/`, `archive/docs/`
+- `repo/`, `scripts/` (reference updates + gates), `tasks/NEXT.md`
 
 ## Task Contract Template
 

@@ -42,9 +42,8 @@ on:
       - 'tasks/**'
       - 'experiments/**'
       - 'REPOSITORY_ARCHITECTURE.md'
-      - 'CLAUDE_REVIEW_PACKET.md'
+      - 'ROADMAP.md'
       - 'repo/**'
-      - 'scratch/README.md'
       - 'scripts/**'
       - 'notes/**'
       - 'domains/**'
@@ -53,11 +52,7 @@ on:
       - 'TRUST_REPORT.md'
       - 'ONE_PAGE_SUMMARY.md'
       - 'ABSTRACT_SCOPE.md'
-      - 'REVIEW_DOSSIER.md'
-      - 'WORK_SCOPE.md'
-      - 'DIRECTOR_CHARTER.md'
       - 'notes/FOUNDATIONS.md'
-      - 'notes/ward/README.md'
       - 'dashboard.html'
       - 'index.html'
   pull_request:
@@ -73,9 +68,8 @@ on:
       - 'tasks/**'
       - 'experiments/**'
       - 'REPOSITORY_ARCHITECTURE.md'
-      - 'CLAUDE_REVIEW_PACKET.md'
+      - 'ROADMAP.md'
       - 'repo/**'
-      - 'scratch/README.md'
       - 'scripts/**'
       - 'notes/**'
       - 'domains/**'
@@ -84,11 +78,7 @@ on:
       - 'TRUST_REPORT.md'
       - 'ONE_PAGE_SUMMARY.md'
       - 'ABSTRACT_SCOPE.md'
-      - 'REVIEW_DOSSIER.md'
-      - 'WORK_SCOPE.md'
-      - 'DIRECTOR_CHARTER.md'
       - 'notes/FOUNDATIONS.md'
-      - 'notes/ward/README.md'
       - 'dashboard.html'
       - 'index.html'
   workflow_dispatch:
@@ -182,10 +172,11 @@ jobs:
       - name: Fail on drift (pull request)
         if: github.event_name == 'pull_request' && steps.drift.outputs.dirty == 'true'
         run: |
-          echo "::error::Derived artifacts are stale. Run the generators locally and commit the result:"
+          echo "::error::Derived artifacts are stale. Run ALL the generators locally (in this order) and commit the result:"
           echo "  python3 scripts/gen_stats.py && python3 scripts/build_frontier_map.py"
           echo "  python3 scripts/build_knowledge_graph.py && python3 scripts/coverage_report.py"
-          echo "  python3 scripts/gen_status.py"
+          echo "  python3 scripts/gen_status.py && python3 scripts/gen_result_registry.py"
+          echo "  python3 scripts/gen_source_registry.py && python3 scripts/export_agent_bundle.py --manifest"
           git --no-pager diff -- $DERIVED_PURE
           exit 1
 
