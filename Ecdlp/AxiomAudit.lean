@@ -87,6 +87,13 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 -- supersingular + not anomalous + Hasse + embedding degree >100), one unconditional theorem
 #print axioms Ecdlp.Curve.secp256k1_classical_security_profile
 
+-- quadratic-twist security certificate: #Ẽ = 2p+2−n = 3²·13²·3319·22639·Q (Q a 220-bit prime),
+-- nontrivial cofactor ⇒ twist has small subgroups; twist DLP ≈√Q<2¹¹⁰ < curve 2¹²⁸ (why x-only
+-- secp256k1 code must validate points)
+#print axioms Ecdlp.Curve.secp256k1_twist_order_factorization
+#print axioms Ecdlp.Curve.secp256k1_twist_maxprime_prime
+#print axioms Ecdlp.Curve.secp256k1_twist_security_profile
+
 -- CM-by-ℤ[ω] Frobenius arithmetic certificate: N(π)=p, Tr(π)=p+1−n, 4p=t²+3b² (End⊗ℚ=ℚ(√−3))
 #print axioms Ecdlp.Curve.secp256k1_frobenius_norm
 #print axioms Ecdlp.Curve.secp256k1_frobenius_trace
