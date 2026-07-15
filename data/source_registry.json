@@ -272,14 +272,17 @@
         "PUBLISHABLE_UNITS.md",
         "RESEARCH_MAP.md",
         "REVIEW_DOSSIER.md",
+        "STATUS.md",
         "VERIFIED.md",
+        "WORK_SCOPE.md",
         "notes/FOUNDATION_ROADMAP.md",
         "notes/GLV_EIGENVALUE.md",
         "notes/GLV_FORMALIZATION.md",
         "notes/GLV_LAMBDA.md",
         "notes/HASSE_RECON.md",
         "notes/POINT_COUNTING_KEYSTONE.md",
-        "notes/UPSTREAM_SCAN.md"
+        "notes/UPSTREAM_SCAN.md",
+        "tasks/NEXT.md"
       ]
     },
     {

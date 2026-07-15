@@ -5,8 +5,9 @@ that stops and human/orchestrated work is still needed.
 
 ## The loop
 
-`​.github/workflows/autonomous-engine.yml` runs on a weekly schedule (and on manual
-dispatch). One run is three stages:
+`​.github/workflows/autonomous-engine.yml` runs on manual dispatch (`workflow_dispatch`;
+the weekly cron was removed in the 2026-07 security audit, so the whole autonomous layer
+is dispatch-only). One run is three stages:
 
 ```
 DISCOVER ──▶ PROVE ──▶ SURFACE
@@ -61,7 +62,8 @@ Set three repository secrets (Settings → Secrets and variables → Actions), o
 | `SERVER_HOST` | the server host (`SERVER_USER` optional, defaults to `root`) |
 
 Then, as an independent backstop, set a **spend limit in the Anthropic Console**. After that
-the weekly schedule runs on its own: you only ever see draft PRs to review — no prompting.
+each dispatched run works on its own: you only ever see draft PRs to review — no prompting.
+(Re-enabling a cron is a one-line change, deliberately not made after the security audit.)
 
 ## Honest scope — what it does and does not do
 
@@ -94,7 +96,7 @@ Breaking the curve is not a goal (see `BARRIERS.md`, `notes/SECURITY_SCOPE.md`).
 
 | File | Role |
 |---|---|
-| `.github/workflows/autonomous-engine.yml` | the scheduled orchestrator (discover → prove → draft PR) |
+| `.github/workflows/autonomous-engine.yml` | the orchestrator, dispatch-only (discover → prove → draft PR) |
 | `scripts/autonomous_discover.py` | LLM discovery → `targets/queue.json` (has `--dry-run`) |
 | `scripts/certify.py` | Fable-in-CI: model designs a sympy certificate, we run it (has `--self-test`) |
 | `scripts/agent_day.py` | budget-bounded prove loop over the queue (runs the certify step) |

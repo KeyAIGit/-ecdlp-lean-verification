@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
 """Generate machine-readable stats for the verified ECDLP layer.
 
-Single source of truth is the canonical figure in ``VERIFIED.md``
-(`**N ledger rows / ~M distinct kernel-verified results**`, guaranteed present
-by ``scripts/check_counts.py``). This derives the public numbers from it so any
-external site can fetch a stable JSON instead of scraping markdown.
+Single source of truth is the **ledger table itself** in ``VERIFIED.md``: the row
+count is recounted mechanically from the main table (every ``| … | proved… |`` data
+row above the "Coverage restatements" section), and the distinct-results figure is
+``rows − alternate-form`` where the alternate-form figure is the curatorial number
+stated in the canonical-count note (``(N rows are alternate-form``).
+
+The canonical prose line (``**N ledger rows / ~M distinct kernel-verified
+results**``) must MATCH the recount — this script (and ``scripts/check_counts.py``)
+fails with the expected line if it drifts, so the prose can no longer silently lag
+the table (which happened at 226→227, 235→227, and 239→228).
 
 Writes two files (kept in the repo so they are fetchable via raw.githubusercontent):
   - ``data/stats.json``            — full stats object
@@ -36,24 +42,68 @@ BADGE_JSON = ROOT / "badges" / "theorems.json"
 CANON_RE = re.compile(
     r"\*\*(\d+)\s+ledger rows\s*/\s*~(\d+)\s+distinct kernel-verified results\*\*"
 )
+ALT_RE = re.compile(r"\((\d+)\s+rows are alternate-form")
+# Everything below this heading (coverage restatements, the attributed/ported table)
+# is deliberately excluded from the headline figure.
+HEADLINE_END = "### Coverage restatements"
+
+
+def count_ledger_rows(text: str) -> tuple[int, int]:
+    """Recount the main ledger table: rows whose status cell is `proved`/`proved¹`/`proved²`.
+
+    Returns (total_rows, bare_proved_rows). Only the region above HEADLINE_END counts,
+    so the tracked-separately sections cannot inflate the headline.
+    """
+    total = 0
+    bare = 0
+    for line in text.splitlines():
+        if line.startswith(HEADLINE_END):
+            break
+        if not line.startswith("| "):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) >= 2 and cells[-1].startswith("proved"):
+            total += 1
+            if cells[-1] == "proved":
+                bare += 1
+    return total, bare
 
 
 def compute_stats() -> dict:
     text = VERIFIED.read_text(encoding="utf-8")
+
+    ledger_rows, bare_proved = count_ledger_rows(text)
+    if ledger_rows <= 0:
+        raise SystemExit("gen_stats: no ledger rows found in VERIFIED.md main table")
+
+    m_alt = ALT_RE.search(text)
+    if not m_alt:
+        raise SystemExit(
+            "gen_stats: alternate-form figure not found in VERIFIED.md "
+            "(expected '(N rows are alternate-form' in the canonical-count note)"
+        )
+    alt_form = int(m_alt.group(1))
+    distinct = ledger_rows - alt_form
+
     m = CANON_RE.search(text)
     if not m:
         raise SystemExit(
             "gen_stats: canonical figure not found in VERIFIED.md "
             "(expected '**N ledger rows / ~M distinct kernel-verified results**')"
         )
-    ledger_rows = int(m.group(1))
-    distinct = int(m.group(2))
+    prose_rows, prose_distinct = int(m.group(1)), int(m.group(2))
+    if (prose_rows, prose_distinct) != (ledger_rows, distinct):
+        raise SystemExit(
+            "gen_stats: VERIFIED.md canonical line is stale — the table recount gives "
+            f"{ledger_rows} rows / ~{distinct} distinct (alternate-form {alt_form}), but the "
+            f"prose says {prose_rows} / ~{prose_distinct}. Update the canonical line to:\n"
+            f"  **{ledger_rows} ledger rows / ~{distinct} distinct kernel-verified results** "
+            f"({alt_form} rows are alternate-form, …"
+        )
 
     # Cross-checks derived from the tree (not authoritative, but surfaced).
     proved_dir = ROOT / "Ecdlp" / "Proved"
     proved_modules = len(list(proved_dir.glob("*.lean"))) if proved_dir.is_dir() else 0
-    # Count actual '| proved |' rows in the ledger table as an independent tally.
-    proved_row_cells = len(re.findall(r"\|\s*proved\s*\|", text))
 
     return {
         "schemaVersion": 1,
@@ -62,12 +112,14 @@ def compute_stats() -> dict:
         "toolchain": "Lean 4 + Mathlib v4.31.0",
         "ledger_rows": ledger_rows,
         "distinct_results": distinct,
+        "alt_form_rows": alt_form,
         "proved_modules": proved_modules,
-        "proved_ledger_cells": proved_row_cells,
+        "proved_ledger_cells": bare_proved,
         "sorry_count": 0,
         "custom_axioms": 0,
         "invariant": "green build = every listed theorem fully proved (no sorry, no custom axioms)",
-        "source_of_truth": "VERIFIED.md canonical figure",
+        "source_of_truth": "VERIFIED.md ledger table (rows recounted mechanically; "
+                           "distinct = rows − curatorial alternate-form figure)",
     }
 
 

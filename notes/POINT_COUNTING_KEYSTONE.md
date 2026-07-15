@@ -1,5 +1,15 @@
 # POINT_COUNTING_KEYSTONE.md — scoping `#E(𝔽_p) = n`
 
+> **STATUS UPDATE (2026-07-13): CLOSED for secp256k1.** The strong keystone
+> `#E(𝔽_p) = n` is **proved** — without Hasse or Schoof — by a curve-specific
+> certificate (`Ecdlp/Proved/CurveCardinalityExact.lean`: `n ∣ #E` and
+> `#E ≤ 2p+1 < 3n` pin `#E ∈ {n, 2n}`, and `E[2] = {O}` excludes `2n`), and
+> the full-group upgrade landed
+> (`CurveFullGroup.lean`: `E(𝔽_p) = ⟨G⟩`, cyclic; unconditional GLV `[λ]`).
+> This note is kept as the honest scoping/history of the gap. Still open:
+> the geometric `E[n] ≅ (ℤ/n)²` (extension-field points) and the **P-256**
+> cardinality (the certificate exploits `j = 0`, which P-256 lacks).
+
 The single arithmetic-geometry fact that the whole "instantiate the crypto at the
 *real* secp256k1 group" story hangs on is the curve cardinality
 

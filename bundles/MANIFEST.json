@@ -11,19 +11,19 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4258
+        "bytes": 4861
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 7052
+        "bytes": 7136
       },
       {
         "path": "data/stats.json",
         "reason": "machine-readable headline counts (ledger rows / distinct / modules)",
         "exists": true,
-        "bytes": 426
+        "bytes": 529
       },
       {
         "path": "data/frontier_map.json",
@@ -37,19 +37,19 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4258
+        "bytes": 4861
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 7052
+        "bytes": 7136
       },
       {
         "path": "data/stats.json",
         "reason": "machine-readable headline counts (ledger rows / distinct / modules)",
         "exists": true,
-        "bytes": 426
+        "bytes": 529
       },
       {
         "path": "data/frontier_map.json",
@@ -73,13 +73,13 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 96250
+        "bytes": 98537
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 20366
+        "bytes": 20599
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -105,19 +105,19 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4258
+        "bytes": 4861
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 7052
+        "bytes": 7136
       },
       {
         "path": "data/stats.json",
         "reason": "machine-readable headline counts (ledger rows / distinct / modules)",
         "exists": true,
-        "bytes": 426
+        "bytes": 529
       },
       {
         "path": "data/frontier_map.json",
@@ -141,13 +141,13 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 96250
+        "bytes": 98537
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 20366
+        "bytes": 20599
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -171,7 +171,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 202801
+        "bytes": 205623
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
