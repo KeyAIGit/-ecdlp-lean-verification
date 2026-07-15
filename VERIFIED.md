@@ -271,7 +271,7 @@ is Xu & Angdinata's. It is built and gated (the one-invariant holds), but delibe
 `isEllSequence_of_rec_one` (headline row above) remains this repo's own contribution.
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**227 ledger rows / ~191 distinct kernel-verified results** (36 rows are alternate-form,
+**228 ledger rows / ~192 distinct kernel-verified results** (36 rows are alternate-form,
 `supporting:`, or instantiation restatements of the same fact, e.g. the `ZMod`/ring forms
 of the GLV eigenvalue, the operator form of the GLV cube relation, the Semaev `S₃` symmetry
 lemmas, and the concrete-`⟨G⟩` instantiations of the abstract protocol suite — see the

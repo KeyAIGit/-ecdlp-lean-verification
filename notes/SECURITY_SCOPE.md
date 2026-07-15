@@ -44,6 +44,23 @@ checked: embedding degree > 100 (anti-MOV/Frey–Rück, `EmbeddingDegree.lean`),
 `TraceOfFrobenius.lean`), prime field (no Weil descent). So every classical attack expressible
 without a missing Mathlib foundation resists — the tractable attack landscape is saturated.
 
+## The one place the numbers are *worse*: the quadratic twist
+
+All of the above is about the curve `E`. The **quadratic twist `Ẽ / 𝔽_p`** is weaker, and the
+repo now certifies it (`TwistSecurity.lean`). An `x`-only (Montgomery-ladder) scalar multiply
+cannot tell an input on `E` from one on `Ẽ` — they share the `x`-line — so unvalidated input
+runs in `Ẽ(𝔽_p)`, with the twist's security, not the curve's. Machine-checked:
+`#Ẽ = 2p+2−n = 3²·13²·3319·22639·Q` with `Q` a **220-bit prime**. Two honest downgrades:
+
+* the twist is **not** prime-order — cofactor `3²·13²·3319·22639 ≈ 2³⁷` gives real small
+  subgroups a point can be confined to (the curve's point group, by contrast, is simple);
+* the big subgroup is only `≈220` bits, so generic twist-DLP is `≈ √Q < 2¹¹⁰` — **below** the
+  curve's `2¹²⁸`.
+
+So the `128`-bit figure is contingent on **point validation**: `x`-only secp256k1 code that
+skips it inherits `~110`-bit twist security and small-subgroup confinement. This is a
+limitation certificate, and the reason ECDH/ladder implementations must check the point is on `E`.
+
 ## Honest ledger
 
 | Claim | Status |
@@ -51,6 +68,7 @@ without a missing Mathlib foundation resists — the tractable attack landscape 
 | Any **classical generic** algorithm needs > `2^127` group ops | **THEOREM** (kernel-verified core + corollary) |
 | Matching `O(√n)` upper bound (rho, BSGS) ⇒ `Θ(√n)` | **THEOREM** |
 | `n` prime, huge embedding degree, ordinary, prime field | **THEOREM** (parameter checks) |
+| Twist order `= 3²·13²·3319·22639·Q`, `Q` a 220-bit prime; twist security `≈2¹¹⁰ < 2¹²⁸`, nontrivial cofactor | **THEOREM** (`secp256k1_twist_security_profile`; ⇒ `x`-only code must validate points) |
 | No **non-generic** classical algorithm beats `√n` on the concrete curve | **ASSUMPTION** — open; best known attack is generic rho at ≈ `2^128.3` |
 | Security against **quantum** adversaries | **FALSE** (Shor) |
 
