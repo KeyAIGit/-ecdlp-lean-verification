@@ -223,16 +223,19 @@ count-consistency and stem-typecheck steps are doc-hygiene, not correctness guar
 - **The GLV map is proved an ADDITIVE endomorphism, but the eigenvalue identity is
   NOT proved.** `Ecdlp.Curve.glvPoint_add` (bundled as `glvHom : Point →+ Point` in
   `Ecdlp/Proved/GlvHom.lean`) establishes `glvPoint(P+Q) = glvPoint P + glvPoint Q` for
-  all branches — the homomorphism *half* only. The cryptographically operative claim
+  all branches — the homomorphism *half*. The cryptographically operative claim
   **`glvPoint = [λ]`** (that the endomorphism acts as scalar multiplication by the GLV
-  eigenvalue λ on ⟨G⟩) is **not** proved. The eigenvalue facts that *are* proved
-  (`glv_lambda_eigenvalue`, `lambda_is_cube_root`, etc.) are statements about the scalar
-  λ in `ℤ/n` / β in `𝔽_p`, not about the action of `glvPoint` on the point group.
+  eigenvalue λ on ⟨G⟩) is **now also proved** (`secp256k1_glvPoint_eq_lam_on_zmultiples`,
+  `GlvSubgroupEigenvalue.lean`); with `#E = n` giving `⟨G⟩ = ⊤` (`grp_eq_top`) it extends to the
+  full point group (`secp256k1_glvHom_eq_zsmul_unconditional`). The scalar eigenvalue facts
+  (`glv_lambda_eigenvalue`, `lambda_is_cube_root`, etc.) about λ in `ℤ/n` / β in `𝔽_p` are the
+  arithmetic inputs to that action statement.
 
 - **Scope reminder (not a TCB issue, but bears on "what verified means").** The
   discrete-log protocol algebra (Schnorr/EdDSA, DH, ElGamal, Pedersen, Okamoto,
   Chaum–Pedersen, MuSig2/Taproot, Feldman VSS, adaptor/blind Schnorr) is proved over an
-  **abstract** `[Module (ZMod n) G]`, **not instantiated at the secp256k1 point group**,
-  and encodes **no adversary / hash / probability model** (see `ABSTRACT_SCOPE.md`).
+  **abstract** `[Module (ZMod n) G]` **and** now also instantiated at the concrete secp256k1
+  point group `⟨G⟩` (`ProtocolInstantiation.lean`); it still encodes **no adversary / hash /
+  probability model** (see `ABSTRACT_SCOPE.md`).
   Several "soundness/extraction" rows are scalar-field ring identities. These are sound
   Lean theorems; they are simply narrower than their cryptographic prose suggests.

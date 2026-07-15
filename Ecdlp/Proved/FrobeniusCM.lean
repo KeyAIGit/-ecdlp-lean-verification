@@ -32,8 +32,8 @@ Frobenius conjugacy data purely as integer identities. Concretely they show that
 the imaginary quadratic order attached to secp256k1 is `ℤ[ω]` of discriminant
 `−3` — the maximal order of `ℚ(√−3)` — and NOT some larger conductor or a spurious
 composite such as `−163` that earlier heuristics might suggest. Together with
-`t² < 4p` (proved in `TraceOfFrobenius.lean`) the relation `4p = t² + 3b²`
-identifies `End(E) ⊗ ℚ = ℚ(√−3)` for the curve.
+the Hasse bound `t² ≤ 4p` (`TraceOfFrobenius.lean`) and `b ≠ 0` in `4p = t² + 3b²` — which
+forces the strict `t² < 4p` here — the relation identifies `End(E) ⊗ ℚ = ℚ(√−3)` for the curve.
 
 They are **not** a proof that the geometric Frobenius is an endomorphism of `E`,
 nor that `a + b·ω` literally equals `π` as an element of `End(E)`: the elliptic
