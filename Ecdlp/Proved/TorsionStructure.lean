@@ -35,7 +35,7 @@ theorem nonempty_addEquiv_zmod_prod_of_card_eq_sq
   have hn2 : 2 ≤ n := hp.out.two_le
   haveI : NeZero n := ⟨hp.out.pos.ne'⟩
   -- `A` is finite and nonempty: its `Nat.card` is the positive number `n²`.
-  have hpos : 0 < Nat.card A := hcard ▸ Nat.pos_pow_of_pos 2 hp.out.pos
+  have hpos : 0 < Nat.card A := hcard ▸ pow_pos hp.out.pos 2
   haveI hfin : Finite A := (Nat.card_pos_iff.mp hpos).2
   -- Killed by `n` ⇒ `𝔽_n`-vector-space structure (the standard `zmodModule` bridge).
   letI : Module (ZMod n) A := AddCommGroup.zmodModule hkill
