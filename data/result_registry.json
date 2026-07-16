@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 575,
-  "distinct_qualified_names": 464,
+  "declaration_count": 577,
+  "distinct_qualified_names": 466,
   "verified_md_citations": 197,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -3215,6 +3215,22 @@
       "line": 15,
       "occurrences": 1
     },
+    "Ecdlp.Torsion.addEquiv_of_finrank_eq_two": {
+      "name": "addEquiv_of_finrank_eq_two",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionStructure.lean",
+      "line": 30,
+      "occurrences": 1
+    },
+    "Ecdlp.Torsion.arguments": {
+      "name": "arguments",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/TorsionStructure.lean",
+      "line": 28,
+      "occurrences": 1
+    },
     "Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd": {
       "name": "mem_torsionBy_iff_addOrderOf_dvd",
       "namespace": "Ecdlp.Torsion",
@@ -3228,7 +3244,7 @@
       "namespace": "Ecdlp.Torsion",
       "kind": "theorem",
       "file": "Ecdlp/Proved/TorsionStructure.lean",
-      "line": 31,
+      "line": 42,
       "occurrences": 1
     },
     "Ecdlp.Torsion.torsionBy_dvd_le": {
