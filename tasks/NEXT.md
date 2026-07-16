@@ -17,90 +17,9 @@ checks.
 
 ## Active Tasks
 
-### TASK-001 - Harden the Research OS truth layer
-
-Kind: ops | data | site
-Hypothesis: `H1_RESEARCH_OS_TRUTH_LAYER`
-Why it matters: Low-context agents and public readers need one reliable route
-from machine facts to next work.
-Inputs:
-- `STATUS.md`
-- `data/stats.json`
-- `data/frontier_map.json`
-- `data/knowledge_graph.json`
-- `index.html`
-- `dashboard.html`
-Expected output:
-- A drift gate that verifies stats, frontier, graph, status, site counters,
-  task queue, and hypothesis registry agree at the obvious machine-readable
-  seams.
-Exit criteria:
-- `python3 scripts/check_counts.py` passes.
-- `python3 scripts/gen_stats.py --check` passes.
-- `python3 scripts/check_status_consistency.py` passes.
-Files allowed to edit:
-- `scripts/check_status_consistency.py`
-- `scripts/gen_status.py`
-- `.github/workflows/ci.yml`
-- `.github/workflows/docs-sync.yml`
-- `STATUS.md`
-- `tasks/NEXT.md`
-- `experiments/HYPOTHESES.yaml`
-
-### TASK-002 - Export small/medium/large agent bundles
-
-Kind: ops | agent
-Hypothesis: `H1_RESEARCH_OS_TRUTH_LAYER`
-Why it matters: Small-context agents should not waste turns reconstructing the
-same orientation from scattered prose.
-Inputs:
-- `STATUS.md`
-- `tasks/NEXT.md`
-- `data/stats.json`
-- `data/frontier_map.json`
-- `VERIFIED.md`
-- `BARRIERS.md`
-- `notes/FOUNDATIONS.md`
-- `notes/SECURITY_SCOPE.md`
-Expected output:
-- `scripts/export_agent_bundle.py`
-- Generated bundle files under a documented output path or ignored cache path.
-Exit criteria:
-- Small bundle contains only the current status, active queue, and core machine
-  counts.
-- Medium bundle adds ledger/barrier/security/foundation context.
-- Large bundle can include graph excerpts and task-relevant Lean files.
-Files allowed to edit:
-- `scripts/export_agent_bundle.py`
-- `AGENTS.md`
-- `README.md`
-- `.gitignore`
-
-### TASK-003 - Add dashboard Sync Health
-
-Kind: site | data
-Hypothesis: `H1_RESEARCH_OS_TRUTH_LAYER`
-Why it matters: The public surface should show whether the Research OS state is
-fresh and internally consistent.
-Inputs:
-- `scripts/check_status_consistency.py`
-- `data/stats.json`
-- `data/frontier_map.json`
-- `data/knowledge_graph.json`
-- `STATUS.md`
-- `scripts/build_dashboard.py`
-Expected output:
-- A dashboard section or tab that reports sync health, canonical counts, and
-  regeneration commands.
-Exit criteria:
-- Dashboard displays current ledger rows, distinct results, frontier
-  completeness, graph theorem count, and last regeneration source.
-- Consistency check covers the machine-readable values used by the dashboard.
-Files allowed to edit:
-- `scripts/build_dashboard.py`
-- `dashboard.html`
-- `index.html`
-- `scripts/check_status_consistency.py`
+> TASK-001/002/003 (truth-layer gate, agent bundles, dashboard sync health)
+> completed and removed 2026-07-16 — their exit criteria are the live green gates
+> (`check_status_consistency.py`, `export_agent_bundle.py --check`, dashboard Sync Health).
 
 ### TASK-004 - Formalize experiment manifests
 
@@ -196,6 +115,30 @@ Exit criteria:
 Files allowed to edit:
 - none (tagging + a follow-up docs-sync run on main; open a new task for any
   fallout)
+
+### TASK-008 - The ψₙ↔E[n] velocity queue (24/7 cycle targets)
+
+Kind: theorem | research
+Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
+Why it matters: Rolling, pre-decomposed target list so each continuation cycle
+starts immediately (AGENTS.md §High-velocity prover protocol).
+Current queue (in order; each = one design→verify→integrate→push cycle):
+1. **E[3] structure** (in flight): closure bridge `ThreeTorsionBridgeBar.lean` +
+   `ThreeTorsionStructure.lean` — `#E[3](𝔽̄_p) = 9`, `E[3] ≅ (ℤ/3)²` (first N13 instance).
+2. **E[5], E[7] replication**: port the 5-/7-bridges to `𝔽̄_p` (templates:
+   `FiveTorsionBridge`/`SevenTorsionBridge` + the E[3] pattern), then counting
+   (12·2+1 = 25, 24·2+1 = 49) + N10(iii) ⟹ `E[5] ≅ (ℤ/5)²`, `E[7] ≅ (ℤ/7)²`.
+3. **N7@4**: `x(4P) = Φ₄/ΨSq₄` via tangent-doubling at 2P (even-n rung; template:
+   `QuintupleMultiplicationFormula` chain with one doubling instead of a chord).
+4. **N8/N9 conditional forms**: state the general `ψₙ(P) ≠ 0 ⟹ x([n]P) = Φₙ/ΨSqₙ`
+   reductions with N7-general as an explicit hypothesis (map rows N8/N9).
+5. **Upstream extraction**: split the curve-free pieces (Ward rigidity, EDS lemmas,
+   kernel-structure lemma) into a Mathlib-PR-shaped bundle memo (`notes/`).
+Exit criteria:
+- Each item lands as a CI-green module + ledger row(s), or a frozen honest blocker
+  memo naming the missing foundation.
+Files allowed to edit:
+- new `Ecdlp/Proved/*.lean`, `scripts/certs/*`, ledger/docs per the protocol.
 
 ## Task Contract Template
 

@@ -118,3 +118,57 @@ a human merges.
 proof base. `Ecdlp/Targets/*` are open stems (one `sorry` each) — never imported, never
 built, excluded from the no-`sorry` gate; CI typechecks them in a non-blocking step.
 `targets/*.json` is the loop registry; `data/` holds the read-only corpus.
+
+## High-velocity prover protocol (v0.2 — the 10× playbook)
+
+Distilled from the cycles that landed N5, N7@{2,3,5}, B4@{3,5,7}, Separable, and the
+E[3] program (2026-07-16): one session = **one integrator**; agents fan out only on
+**disjoint files**; the kernel (CI) stays the only judge. This section is the operating
+manual for autonomous/continuous runs and for any Claude (or other) agent joining.
+
+### The cycle (target: several modules per hour, wall-clock-bound by CI ≈ 3 min)
+1. **Recon before drafting** (cheap, parallel): grep the repo for *compiled* API
+   precedents; a Mathlib name is trusted only if a CI-green file already uses it —
+   flag everything novel in the report. Never browse-guess names.
+2. **Certificate-first design**: every algebraic identity is designed OUTSIDE Lean
+   (sympy / pure-python mod p), with **cofactors extracted constructively**
+   (rewriting-with-cofactor-tracking, extended Euclid, pdiv cascades). The script
+   *emits ready-to-paste Lean text* — hand transcription of constants is forbidden.
+   Script lands in `scripts/certs/`, prints `CERT_OK`, and is committed with the module.
+3. **Draft by template-mirroring**: new files copy the proof *shape* of the nearest
+   CI-green file (same simp sets, same rw idioms, same numeral patterns). Localize
+   every risky step in its own small `private` lemma so a red CI pinpoints one line.
+4. **Adversarial verify before integrating**: an independent agent re-derives every
+   certificate **by parsing the `.lean` file text** (not the design script), re-runs
+   numeric checks on a *different* prime, and greps every identifier. Verdict
+   CONFIRMED/PARTIAL/BROKEN; only CONFIRMED integrates.
+5. **Batch-integrate serially** (the integrator, never an agent): imports in
+   `Ecdlp.lean`, ledger rows, canonical-count bumps, map/notes updates, full generator
+   chain, full gate battery, one commit, push. While CI runs, start the next design.
+6. **CI red → read the log, fix, push**: failures after this pipeline are
+   tactic-syntax-level (renamed lemma, numeral defeq), never mathematical. Never
+   weaken a statement to pass; prefer an honest smaller theorem over a broken big one.
+
+### Parallelism without desync
+- Fan-out is for **independent modules only** (disjoint new files, no shared imports
+  being edited). Shared surfaces (`Ecdlp.lean`, `VERIFIED.md`, generated artifacts)
+  are touched **only by the integrator, serially**.
+- A long-running independent *track* (e.g. P-256 mirror, upstream extraction) gets its
+  **own branch + own PR**; cross-track sync happens only through `main` merges.
+  Sibling sessions must state their track in the PR body (see #171/#172/#173 pattern).
+- Agents never `git commit/push`; they write files and report. The integrator reviews
+  the diff (constants against script output) before committing.
+
+### Continuous (24/7) operation
+- A cron Routine fires a **continuation cycle** into the owning session every ~2 h:
+  (a) if the previous cycle is in flight or CI is red — service that and exit;
+  (b) otherwise pull the next target off the queue (`tasks/NEXT.md` TASK-008) and run
+  one full cycle. Quota exhaustion is handled by simply exiting — the next firing
+  retries (quota windows refresh; do not busy-wait).
+- Keep the queue 3–7 targets deep with each target pre-decomposed (statement sketch +
+  template file + certificate plan), so a cycle starts in minutes, not turns.
+
+### Honesty invariants (unchanged, absolute)
+No `sorry`/`admit`/axioms; failed searches are reported as failures; partial results
+are labelled partial; scope statements (classical/generic/black-box; small-`n` vs
+general) accompany every headline row. The generator proposes; the kernel disposes.
