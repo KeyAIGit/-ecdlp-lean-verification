@@ -181,7 +181,7 @@ private theorem no_consec_aux [CommRing R] [IsDomain R] (b c d : R)
       push_cast
       exact h1
     have hone : ρ ∣ 1 := by
-      have h' := Nat.dvd_sub' hdvd1 hdvd0
+      have h' := Nat.dvd_sub hdvd1 hdvd0
       rwa [show N + 1 - N = 1 by omega] at h'
     have : ρ = 1 := Nat.dvd_one.mp hone
     omega
@@ -195,7 +195,7 @@ theorem normEDS_not_consecutive_zeros [CommRing R] [IsDomain R] (b c d : R)
     (h23 : ¬(b = 0 ∧ c = 0)) (h34 : ¬(c = 0 ∧ d = 0)) (n : ℤ) :
     ¬(normEDS b c d n = 0 ∧ normEDS b c d (n + 1) = 0) := by
   rintro ⟨h0, h1⟩
-  rcases le_or_lt 0 n with hn | hn
+  by_cases hn : 0 ≤ n
   · refine no_consec_aux b c d h23 h34 n.toNat ?_ ?_
     · rwa [Int.toNat_of_nonneg hn]
     · rw [Int.toNat_of_nonneg hn]
