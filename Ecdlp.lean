@@ -115,3 +115,4 @@ import Ecdlp.Proved.FrobeniusCM
 import Ecdlp.Proved.GlvOrbit
 import Ecdlp.Proved.P256Cardinality
 import Ecdlp.Proved.P256TwistSecurity
+import Ecdlp.Proved.EcdsaMalleability

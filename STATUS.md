@@ -6,9 +6,9 @@
 ## Verified asset (the ledger)
 | metric | value | source |
 |---|---|---|
-| ledger rows | **249** | `VERIFIED.md` → `data/stats.json` |
-| distinct results | **~210** | `data/stats.json` |
-| proved modules | **113** | `data/stats.json` |
+| ledger rows | **250** | `VERIFIED.md` → `data/stats.json` |
+| distinct results | **~211** | `data/stats.json` |
+| proved modules | **114** | `data/stats.json` |
 | `sorry` | **0** | axiom-audit + no-sorry gate |
 | custom axioms | **0** | axiom-audit gate |
 

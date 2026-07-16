@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 598,
-  "distinct_qualified_names": 486,
-  "verified_md_citations": 202,
+  "declaration_count": 605,
+  "distinct_qualified_names": 493,
+  "verified_md_citations": 204,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -741,6 +741,30 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/Secp256k1Params.lean",
       "line": 8,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.pointX": {
+      "name": "pointX",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 50,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.pointX_some": {
+      "name": "pointX_some",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 56,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.pointX_zero": {
+      "name": "pointX_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 54,
       "occurrences": 1
     },
     "Ecdlp.Curve.px": {
@@ -1509,6 +1533,22 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/PointGroupEquiv.lean",
       "line": 60,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_pointX_neg": {
+      "name": "secp256k1_pointX_neg",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 63,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_pointX_neg_zsmul_add": {
+      "name": "secp256k1_pointX_neg_zsmul_add",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 73,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_point_group_equiv_exists": {
@@ -3061,6 +3101,22 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/EcdsaKeyRecovery.lean",
       "line": 40,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.ecdsa_sibling_scalars": {
+      "name": "ecdsa_sibling_scalars",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 96,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.ecdsa_sibling_signing_equation": {
+      "name": "ecdsa_sibling_signing_equation",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 88,
       "occurrences": 1
     },
     "Ecdlp.Schnorr.elgamal_additively_homomorphic": {
