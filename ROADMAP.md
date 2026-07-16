@@ -160,9 +160,16 @@ structural cleanup of tranche 1. Remaining, in order:
    stem and nulls `stem_file`; `check_targets.py` fails on unregistered/solved
    queue entries and on dead `stem_file` pointers — the 16 legacy dead pointers
    are nulled.)
-4. `hypothesis-explore.yml` PR step `git add` fix (backport from explore-pipeline).
-5. `foundation_map.py` docstring vs behavior; `prover_daemon.sh` parameterized
-   branch; server workflows' clone assumptions reconciled.
+4. ~~`hypothesis-explore.yml` PR step `git add` fix (backport from explore-pipeline).~~
+   (done: PR step stages `notes/` wholesale, so a 0-lead run without
+   `HYPOTHESIS_LEADS.md` no longer breaks `git add`.)
+5. ~~`foundation_map.py` docstring vs behavior; `prover_daemon.sh` parameterized
+   branch; server workflows' clone assumptions reconciled.~~ (done: docstring now
+   states the script prints to stdout and `notes/FOUNDATION_ROADMAP.md` is the
+   hand-maintained memo; daemon takes `DEV_BRANCH`/`RESULTS_BRANCH`/`REPO_URL`
+   from env (default `main`) instead of a stale hardcoded session branch;
+   bootstrap-rsync vs server-clone comments now state the real credential
+   precondition instead of contradicting each other.)
 6. Frontier triage of the 95 unassigned corpus claims (valuable for the map, not
    blocking v0.1).
 7. `explore.html`: fold its hardcoded data into the dashboard generator or retire
