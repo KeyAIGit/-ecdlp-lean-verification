@@ -35,7 +35,7 @@ decidable identities.
 | N4 | `φₙ := x·ψₙ² − ψₙ₊₁ψₙ₋₁` is monic of degree `n²` | LEAF | reachable (needs Mathlib `φ`/`Ψ` API) |
 | N5 | `gcd(φₙ, ψₙ²) = 1` in `k̄[x]` (ends in a resultant-vs-`Δ` computation) | MID | reachable; **highest-value unblocked** (feeds N10 degree + N11) |
 | N7@small `n` | `x∘[n] = φₙ/ψₙ²` for fixed `n = 2,3,4,5` | closed `ring` identities | reachable — ideal harness/prover-loop targets |
-| N10(iii) | finite-abelian group of order `n²`, exponent `∣ n`, with `≤ d²` `d`-torsion is `(ℤ/n)²` | MID | reachable (standalone group lemma) |
+| N10(iii) | finite-abelian group of order `n²`, exponent `∣ n`, with `≤ d²` `d`-torsion is `(ℤ/n)²` | MID | ✅ **proved for prime `n`** (the secp256k1 case) — `nonempty_addEquiv_zmod_prod_of_card_eq_sq` (`Ecdlp/Proved/TorsionStructure.lean`); general composite `n` open |
 | N8, N9 | conditional on N7 (state with N7 as hypothesis, discharge later) | MID | reachable as reductions |
 
 **Blocked (with the single unblocking theorem):**

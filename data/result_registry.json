@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 574,
-  "distinct_qualified_names": 463,
-  "verified_md_citations": 196,
+  "declaration_count": 576,
+  "distinct_qualified_names": 465,
+  "verified_md_citations": 197,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -3221,6 +3221,22 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/Torsion.lean",
       "line": 39,
+      "occurrences": 1
+    },
+    "Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq": {
+      "name": "nonempty_addEquiv_zmod_prod_of_card_eq_sq",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionStructure.lean",
+      "line": 61,
+      "occurrences": 1
+    },
+    "Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq_of_module": {
+      "name": "nonempty_addEquiv_zmod_prod_of_card_eq_sq_of_module",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionStructure.lean",
+      "line": 35,
       "occurrences": 1
     },
     "Ecdlp.Torsion.torsionBy_dvd_le": {
