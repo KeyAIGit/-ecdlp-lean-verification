@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 251,
+    "theorems": 252,
     "barriers": 6,
-    "edges": 310,
+    "edges": 313,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -77,6 +77,7 @@
       "Mathlib (`ring`)": 1,
       "Mathlib (`Φ`, `ΨSq`, `slope_of_Y_ne`, `linear_combination`)": 1,
       "Mathlib (`Φ_three`, `ΨSq_three`) + repo eval bricks": 1,
+      "Mathlib field algebra (`linear_combination`, `eq_div_iff`, `mul_right_cancel₀`)": 1,
       "Mathlib (`Point.toClass`, `toClass_eq_zero`, `map_nsmul`, `ClassGroup`)": 1,
       "Mathlib (`ClassGroup.mk_eq_one_iff`, `Submodule.IsPrincipal`, `Additive.toMul_nsmul`)": 1,
       "Mathlib (`Submodule.span_singleton_eq_span_singleton`) — proof by Fable": 1,
@@ -99,7 +100,7 @@
       "Mathlib (`AddSubgroup.eq_bot_or_eq_top_of_prime_card`, `isSimpleAddGroup_of_prime_card`) + `secp256k1_card_point_eq_n": 1
     },
     "by_area": {
-      "curve-torsion": 131,
+      "curve-torsion": 132,
       "primality": 37,
       "generic-hardness": 24,
       "other": 24,
@@ -3050,6 +3051,19 @@
     },
     {
       "id": "thm-226",
+      "name": "Ecdlp.Curve.secp256k1_triple_x_eq_Φ₃_div_ΨSq₃",
+      "short_name": "secp256k1_triple_x_eq_Φ₃_div_ΨSq₃",
+      "module": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "file": "Ecdlp/Proved/TripleMultiplicationFormula.lean",
+      "claim": "Multiplication-by-3 `x`-coordinate formula for secp256k1 — `x(3•P) = Φ₃/ΨSq₃` (`secp256k1_triple_x_eq_Φ₃_div_ΨSq₃`: for `P=(x,y)` on `y=x³+7` with `y≠0`, `Ψ₃(x)≠0`, and the chord-tangent slopes `s₂` (`2y·s₂=3x`) / `s₃` (secant `2P→P`, the `FiveTorsionBridge` parametrisation), the tripled `x`-coordinate `s₃−(s₂−2x)−x = (Φ 3)(x)/(ΨSq 3)(x)` in Mathlib's canonical division polynomials. Node N7@3 — extends the `n=2` case `secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq`, connecting the concrete `Φ₃`/`ΨSq₃` forms to the actual elliptic-curve group law. Proof mirrors `five_core`: square the secant relation to clear `s₃`, then a CAS-derived `linear_combination` of the slope + curve equations after clearing `(2y)⁴`; certificate `scripts/certs/triple_mult_formula_check.py` (`CERT_OK`). No `native_decide`)",
+      "method": "Mathlib field algebra (`linear_combination`, `eq_div_iff`, `mul_right_cancel₀`)",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 8,
+      "gated": true
+    },
+    {
+      "id": "thm-227",
       "name": "Ecdlp.Weil.secp256k1_torsion_iff_principal",
       "short_name": "secp256k1_torsion_iff_principal",
       "module": "Ecdlp.Proved.WeilDivisorClass",
@@ -3062,7 +3076,7 @@
       "gated": true
     },
     {
-      "id": "thm-227",
+      "id": "thm-228",
       "name": "Ecdlp.Weil.secp256k1_miller_function_exists",
       "short_name": "secp256k1_miller_function_exists",
       "module": "Ecdlp.Proved.WeilDivisorClass",
@@ -3075,7 +3089,7 @@
       "gated": true
     },
     {
-      "id": "thm-228",
+      "id": "thm-229",
       "name": "Ecdlp.Weil.secp256k1_miller_function_unique",
       "short_name": "secp256k1_miller_function_unique",
       "module": "Ecdlp.Proved.WeilDivisorClass",
@@ -3088,7 +3102,7 @@
       "gated": true
     },
     {
-      "id": "thm-229",
+      "id": "thm-230",
       "name": "Ecdlp.Weil.evalAt`, `evalAt_surjective`, `evalAt_ker",
       "short_name": "evalAt`,",
       "module": "Ecdlp.Proved.PointEvaluation",
@@ -3101,7 +3115,7 @@
       "gated": true
     },
     {
-      "id": "thm-230",
+      "id": "thm-231",
       "name": "Ecdlp.Weil.xyIdeal_isMaximal",
       "short_name": "xyIdeal_isMaximal",
       "module": "Ecdlp.Proved.PointEvaluation",
@@ -3114,7 +3128,7 @@
       "gated": true
     },
     {
-      "id": "thm-231",
+      "id": "thm-232",
       "name": "Ecdlp.Weil.evalRatAt_algebraMap",
       "short_name": "evalRatAt_algebraMap",
       "module": "Ecdlp.Proved.EvalRatAtCompat",
@@ -3127,7 +3141,7 @@
       "gated": true
     },
     {
-      "id": "thm-232",
+      "id": "thm-233",
       "name": "Ecdlp.Weil.xyIdeal_ne_of_x_ne",
       "short_name": "xyIdeal_ne_of_x_ne",
       "module": "Ecdlp.Proved.PointSeparation",
@@ -3140,7 +3154,7 @@
       "gated": true
     },
     {
-      "id": "thm-233",
+      "id": "thm-234",
       "name": "Ecdlp.Weil.xyIdeal_ne_of_ne` (+ `xyIdeal_ne_of_y_ne`)",
       "short_name": "xyIdeal_ne_of_ne`",
       "module": "Ecdlp.Proved.PointSeparation",
@@ -3153,7 +3167,7 @@
       "gated": true
     },
     {
-      "id": "thm-234",
+      "id": "thm-235",
       "name": "Ecdlp.Weil.evalRatAt_eq_zero_iff",
       "short_name": "evalRatAt_eq_zero_iff",
       "module": "Ecdlp.Proved.EvalRatAtNonvanishing",
@@ -3166,7 +3180,7 @@
       "gated": true
     },
     {
-      "id": "thm-235",
+      "id": "thm-236",
       "name": "Ecdlp.Weil.evalRatAt_ne_zero_iff_isUnit",
       "short_name": "evalRatAt_ne_zero_iff_isUnit",
       "module": "Ecdlp.Proved.EvalRatAtNonvanishing",
@@ -3179,7 +3193,7 @@
       "gated": true
     },
     {
-      "id": "thm-236",
+      "id": "thm-237",
       "name": "Ecdlp.Weil.secp256k1_psi3_root_iff_class_torsion",
       "short_name": "secp256k1_psi3_root_iff_class_torsion",
       "module": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
@@ -3192,7 +3206,7 @@
       "gated": true
     },
     {
-      "id": "thm-237",
+      "id": "thm-238",
       "name": "Ecdlp.Weil.secp256k1_psi5_root_iff_class_torsion",
       "short_name": "secp256k1_psi5_root_iff_class_torsion",
       "module": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
@@ -3205,7 +3219,7 @@
       "gated": true
     },
     {
-      "id": "thm-238",
+      "id": "thm-239",
       "name": "Ecdlp.Weil.secp256k1_psi7_root_iff_class_torsion",
       "short_name": "secp256k1_psi7_root_iff_class_torsion",
       "module": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
@@ -3218,7 +3232,7 @@
       "gated": true
     },
     {
-      "id": "thm-239",
+      "id": "thm-240",
       "name": "Ecdlp.Curve.secp256k1_grp_nsmul_eq_zero` (+ the `Module (ZMod n) ↥⟨G⟩` instance, `secp256k1Gₙ`)",
       "short_name": "secp256k1_grp_nsmul_eq_zero`",
       "module": "Ecdlp.Proved.ProtocolInstantiation",
@@ -3231,7 +3245,7 @@
       "gated": true
     },
     {
-      "id": "thm-240",
+      "id": "thm-241",
       "name": "Ecdlp.Curve.secp256k1_dh_agree`, `secp256k1_schnorr_verify`, `secp256k1_taproot_tweak_verify`, `secp256k1_adaptor_complete",
       "short_name": "secp256k1_dh_agree`,",
       "module": "Ecdlp.Proved.ProtocolInstantiation",
@@ -3244,7 +3258,7 @@
       "gated": true
     },
     {
-      "id": "thm-241",
+      "id": "thm-242",
       "name": "Ecdlp.Curve.secp256k1_threshold_schnorr_aggregate`, `secp256k1_musig_key_aggregate`, `secp256k1_feldman_vss_verify`, `secp256k1_threshold_elgamal_combine`, `secp256k1_schnorr_batch_verify",
       "short_name": "secp256k1_threshold_schnorr_aggregate`,",
       "module": "Ecdlp.Proved.ProtocolInstantiation",
@@ -3257,7 +3271,7 @@
       "gated": true
     },
     {
-      "id": "thm-242",
+      "id": "thm-243",
       "name": "Ecdlp.Curve.secp256k1_grp_card`, `secp256k1_grp_isAddCyclic",
       "short_name": "secp256k1_grp_card`,",
       "module": "Ecdlp.Proved.SubgroupOrder",
@@ -3270,7 +3284,7 @@
       "gated": true
     },
     {
-      "id": "thm-243",
+      "id": "thm-244",
       "name": "Ecdlp.Curve.secp256k1_dlogEquiv` (+ `secp256k1_dlogHom`, `_injective`, `_surjective`, `secp256k1_gen_addOrderOf`)",
       "short_name": "secp256k1_dlogEquiv`",
       "module": "Ecdlp.Proved.SubgroupOrder",
@@ -3283,7 +3297,7 @@
       "gated": true
     },
     {
-      "id": "thm-244",
+      "id": "thm-245",
       "name": "WeierstrassCurve.Affine.instFinitePoint",
       "short_name": "instFinitePoint",
       "module": "Ecdlp.Proved.AffinePointFinite",
@@ -3296,7 +3310,7 @@
       "gated": true
     },
     {
-      "id": "thm-245",
+      "id": "thm-246",
       "name": "Ecdlp.Curve.instFiniteSecp256k1Point",
       "short_name": "instFiniteSecp256k1Point",
       "module": "Ecdlp.Proved.CurveCardinality",
@@ -3309,7 +3323,7 @@
       "gated": true
     },
     {
-      "id": "thm-246",
+      "id": "thm-247",
       "name": "Ecdlp.Curve.secp256k1_n_dvd_card_point",
       "short_name": "secp256k1_n_dvd_card_point",
       "module": "Ecdlp.Proved.CurveCardinality",
@@ -3322,7 +3336,7 @@
       "gated": true
     },
     {
-      "id": "thm-247",
+      "id": "thm-248",
       "name": "Ecdlp.Curve.secp256k1_card_point_eq_n`, `secp256k1_no_nonzero_two_torsion`, `secp256k1_card_point_le",
       "short_name": "secp256k1_card_point_eq_n`,",
       "module": "Ecdlp.Proved.CurveCardinalityExact",
@@ -3335,7 +3349,7 @@
       "gated": true
     },
     {
-      "id": "thm-248",
+      "id": "thm-249",
       "name": "Ecdlp.Curve.secp256k1_grp_eq_top`, `secp256k1_point_isAddCyclic`, `secp256k1_mem_zmultiples`, `secp256k1_glvHom_eq_zsmul_unconditional",
       "short_name": "secp256k1_grp_eq_top`,",
       "module": "Ecdlp.Proved.CurveFullGroup",
@@ -3348,7 +3362,7 @@
       "gated": true
     },
     {
-      "id": "thm-249",
+      "id": "thm-250",
       "name": "Ecdlp.Curve.secp256k1_pointGroupEquiv` (+ `secp256k1_point_group_equiv_exists`)",
       "short_name": "secp256k1_pointGroupEquiv`",
       "module": "Ecdlp.Proved.PointGroupEquiv",
@@ -3361,7 +3375,7 @@
       "gated": true
     },
     {
-      "id": "thm-250",
+      "id": "thm-251",
       "name": "Ecdlp.Curve.secp256k1_point_group_no_proper_subgroup`, `secp256k1_nonzero_point_generates",
       "short_name": "secp256k1_point_group_no_proper_subgroup`,",
       "module": "Ecdlp.Proved.PointGroupSimple",
@@ -4305,6 +4319,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "to": "Ecdlp.Proved.TripleDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "to": "Ecdlp.Proved.MultiplicationFormula",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.TwistSecurity",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -4822,6 +4846,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.TripleDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.TripleMultiplicationFormula",
       "type": "imports"
     },
     {
