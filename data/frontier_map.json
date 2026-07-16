@@ -2,7 +2,7 @@
   "meta": {
     "purpose": "Machine-actionable frontier map of ECDLP formalization. Verified facts + precisely-mapped barriers. Asserts NO solution to ECDLP.",
     "corpus_claims": 486,
-    "verified_ledger_rows": 248,
+    "verified_ledger_rows": 249,
     "frontier_completeness_pct": 80.5,
     "regenerate": "python3 scripts/build_frontier_map.py"
   },
