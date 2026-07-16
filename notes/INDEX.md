@@ -40,5 +40,5 @@ traces live in `archive/` (ward, scratch), not here.
 | `AGENT_ORCHESTRATION.md` | multi-agent orchestration patterns |
 | `EXECUTION_SECURITY.md` | execution-security posture |
 | `HYPOTHESIS_EXPLORER.md` | the hypothesis-exploration pipeline |
-| `UPSTREAM_13155.md` · `UPSTREAM_SCAN.md` | Mathlib upstream tracking |
+| `UPSTREAM_13155.md` · `UPSTREAM_SCAN.md` · `UPSTREAM_BUNDLE.md` | Mathlib upstream tracking (inbound scan + outbound PR-candidate bundle) |
 | `FABLE_DELEGATION_REPORT.md` · `MANUS_TASK.md` | delegation session records |
