@@ -1,5 +1,5 @@
 {
-  "_comment": "Target queue for scripts/agent_day.py. Each entry: name, target (NL + Lean signature), optional model/max_iters. These seed entries are reachable 'width' nodes (torsion-tower rungs) chosen to validate the autonomous loop cheaply. The generator will later append to this queue.",
+  "_comment": "Target queue for scripts/agent_day.py. Each entry: name, target (NL + Lean signature), optional model/max_iters. These seed entries are reachable 'width' nodes (torsion-tower rungs) chosen to validate the autonomous loop cheaply. The generator will later append to this queue. Lifecycle contract (gated by scripts/check_targets.py): every entry must have a registry JSON in targets/ whose name or id matches the entry's name, and entries whose registry target is verified must be removed from this queue.",
   "targets": [
     {
       "name": "ElevenTorsionDegree",

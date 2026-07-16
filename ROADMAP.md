@@ -149,11 +149,17 @@ three unledgered modules, stale TASK-005/P-256 note/ENGINE schedule wording) and
 structural cleanup of tranche 1. Remaining, in order:
 
 1. ~~Tranche-2 merges + README v0.1 rewrite~~ (done; remaining: tag v0.1 on main after merge).
-2. `ci.yml`: root-file no-sorry coverage; drop the per-push prover step;
-   `docs-sync.yml` remediation message lists all 8 generators. *(done in this PR if
-   present in the diff; else next)*
-3. Target lifecycle: registry JSONs for `queue.json` entries; `promote_candidate.py`
-   nulls `stem_file` on promotion; `check_targets.py` validates queue entries.
+2. ~~`ci.yml`: root-file no-sorry coverage; drop the per-push prover step;
+   `docs-sync.yml` remediation message lists all 8 generators.~~ (done on `main`:
+   the no-sorry gate scans `Ecdlp.lean` + `Ecdlp/` + `ResearchOS/`, the per-push
+   prover step is removed, the remediation message lists all 8 generators.)
+3. ~~Target lifecycle: registry JSONs for `queue.json` entries; `promote_candidate.py`
+   nulls `stem_file` on promotion; `check_targets.py` validates queue entries.~~
+   (done: `queue.json` seeds have registry JSONs + open stems
+   (`eleven_torsion_degree`, `thirteen_torsion_degree`); promotion consumes the
+   stem and nulls `stem_file`; `check_targets.py` fails on unregistered/solved
+   queue entries and on dead `stem_file` pointers — the 16 legacy dead pointers
+   are nulled.)
 4. `hypothesis-explore.yml` PR step `git add` fix (backport from explore-pipeline).
 5. `foundation_map.py` docstring vs behavior; `prover_daemon.sh` parameterized
    branch; server workflows' clone assumptions reconciled.

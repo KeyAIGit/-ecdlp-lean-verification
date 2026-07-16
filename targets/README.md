@@ -21,10 +21,25 @@ A target is not a vague idea. A target is an atomic theorem/lemma candidate with
 
 ## Stem files
 
-Each registry entry points at an open stem in `Ecdlp/Targets/<id>.lean` (the Lean
-statement ending in `:= by sorry`). The prover loop reads the stem from that file
-and the attempt budget from the JSON. Stems are not built and not gated (see
-`Ecdlp/Targets/README.md`); on success the proof is promoted to `Ecdlp/Proved/`.
+Each **open** registry entry points at an open stem in `Ecdlp/Targets/<id>.lean`
+(the Lean statement ending in `:= by sorry`). The prover loop reads the stem from
+that file and the attempt budget from the JSON. Stems are not built and not gated
+(see `Ecdlp/Targets/README.md`); on success the proof is promoted to
+`Ecdlp/Proved/`. Promotion **consumes** the stem: `scripts/promote_candidate.py`
+removes the file and sets `stem_file` to `null`, so `Ecdlp/Targets/` holds only
+open stems and no registry row ever points at a deleted file
+(`scripts/check_targets.py` gates both directions).
+
+## Queue (`queue.json`)
+
+`queue.json` is `scripts/agent_day.py`'s dispatch queue (`{_comment, targets}`
+schema, no top-level `id`). It is not itself a loop target, but
+`scripts/check_targets.py` validates it against this registry:
+
+- every queue entry's `name` must match the `name` or `id` of a registry JSON in
+  this directory — the queue must never hold work the registry does not track;
+- a queue entry whose registry target is already `verified` fails the gate —
+  remove solved entries from the queue, or a paid dispatch re-proves them.
 
 ## Promotion rule
 
@@ -35,6 +50,8 @@ A target becomes `verified` only after:
 3. proof is moved into the verified proof base
 4. `lake build` is green
 5. `VERIFIED.md` is updated
+6. the open stem is consumed (`stem_file: null`, file removed) and any
+   `queue.json` entry for the target is dropped
 
 ## Model roles
 
