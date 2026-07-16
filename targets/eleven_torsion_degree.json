@@ -1,7 +1,7 @@
 {
   "id": "eleven_torsion_degree",
   "name": "ElevenTorsionDegree",
-  "status": "todo",
+  "status": "verified",
   "difficulty": "easy",
   "template": "torsion_tower_rung",
   "why_it_matters": "Next odd rung of the torsion tower above psi_7 (deg 24): deg(psi_11) = (11^2 - 1)/2 = 60 bounds the 11-torsion x-coordinates (#E[11] <= 121). A direct instance of the proved uniform bound secp256k1_odd_preΨ_natDegree (Ecdlp/Proved/OddTorsionBound.lean), stated as a concrete named level in the style of FiveTorsion/SevenTorsion; as a targets/queue.json seed it also validates the queue -> registry -> stem lifecycle end to end.",
@@ -13,12 +13,13 @@
     ],
     "escalate_if_failed": true
   },
-  "stem_file": "Ecdlp/Targets/eleven_torsion_degree.lean",
+  "stem_file": null,
   "lean_stem": "import Mathlib\nimport Ecdlp.Proved.DivisionPolynomial\nimport Ecdlp.Proved.DivisionPolynomialDegree\n\nnamespace Ecdlp.Curve\n\nopen Polynomial\n\ntheorem secp256k1_preΨ₁₁_natDegree : (secp256k1.preΨ' 11).natDegree = 60 := by\n",
   "hint": "Mirror Ecdlp/Proved/SevenTorsion.lean at n = 11: `have h11 : ((11 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide` then `rw [secp256k1.natDegree_preΨ' h11]; decide`. Equivalently instantiate `secp256k1_odd_preΨ_natDegree` (Ecdlp/Proved/OddTorsionBound.lean) at n = 11.",
-  "promotion_target_file": "Ecdlp/Proved/ElevenTorsionDegree.lean",
+  "promotion_target_file": "Ecdlp/Proved/ElevenTorsion.lean",
   "source": {
     "family": "torsion-tower",
     "from": "targets/queue.json seed"
-  }
+  },
+  "verified_in": "Ecdlp/Proved/ElevenTorsion.lean"
 }
