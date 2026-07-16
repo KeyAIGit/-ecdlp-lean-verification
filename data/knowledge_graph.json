@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 250,
+    "theorems": 251,
     "barriers": 6,
-    "edges": 302,
+    "edges": 307,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -96,11 +96,12 @@
       "Mathlib (`AddEquiv.addSubgroupCongr`, `AddSubgroup.topEquiv`, `AddEquiv.trans`) + `secp256k1_dlogEquiv` + `secp256k1_grp_eq_top": 1,
       "Mathlib (`AddSubgroup.eq_bot_or_eq_top_of_prime_card`, `isSimpleAddGroup_of_prime_card`) + `secp256k1_card_point_eq_n": 1,
       "Mathlib (`normEDS_one`, `normEDS_neg`) + `normEDS_isEllSequence` + `linear_combination": 1,
-      "Mathlib (`normEDS_two/three/four`, `normEDS_odd`, `Nat.sInf_mem`) + `linear_combination": 1
+      "Mathlib (`normEDS_two/three/four`, `normEDS_odd`, `Nat.sInf_mem`) + `linear_combination": 1,
+      "exists_normEDS_consecutive_eq_zero_of_not_isCoprime` + `normEDS_not_consecutive_zeros` + Bézout certificates (`IsCoprime.map`)": 1
     },
     "by_area": {
       "curve-torsion": 130,
-      "primality": 36,
+      "primality": 37,
       "other": 25,
       "generic-hardness": 24,
       "protocol-soundness": 23,
@@ -3359,6 +3360,19 @@
       "area": "primality",
       "dependency_depth": 1,
       "gated": true
+    },
+    {
+      "id": "thm-250",
+      "name": "Ecdlp.Curve.secp256k1_isCoprime_Φ_ΨSq`, `secp256k1Bar_isCoprime_Φ_ΨSq`, `secp256k1Bar_isCoprime_Ψ₂Sq_Ψ₃`, `secp256k1Bar_isCoprime_Ψ₃_preΨ₄",
+      "short_name": "secp256k1_isCoprime_Φ_ΨSq`,",
+      "module": "Ecdlp.Proved.DivisionPolynomialCoprime",
+      "file": "Ecdlp/Proved/DivisionPolynomialCoprime.lean",
+      "claim": "Node N5 closed — `Φ n ⊥ ΨSq n` for secp256k1, every `n : ℤ` (`secp256k1_isCoprime_Φ_ΨSq` (+ `secp256k1Bar_isCoprime_Φ_ΨSq` over `𝔽̄_p`, and the transported certificates `secp256k1Bar_isCoprime_Ψ₂Sq_Ψ₃`/`secp256k1Bar_isCoprime_Ψ₃_preΨ₄`): the multiplication-by-`n` numerator and denominator share no factor. Composition of three landed pieces: the evaluation bridge descent (`¬IsCoprime ⟹` consecutive scalar-`normEDS` zeros over `𝔽̄_p`), Ward apparition rigidity (no consecutive `normEDS` zeros), and the `Ψ₂Sq⊥Ψ₃`/`Ψ₃⊥preΨ₄` Bézout certificates discharging its two degeneracy escapes (`β = 0 ⟹ Ψ₂Sq(x₀) = 0`). Holds with no `char ∤ n` hypothesis — the certificates are `n`-independent. The coprimality half of node N10(i) (`deg [n] = n` in lowest terms); critical path `N5 → N7 → N10 → N13`, see `notes/DIVISION_POLY_TORSION_MAP.md`)",
+      "method": "exists_normEDS_consecutive_eq_zero_of_not_isCoprime` + `normEDS_not_consecutive_zeros` + Bézout certificates (`IsCoprime.map`)",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 6,
+      "gated": true
     }
   ],
   "barriers": [
@@ -3589,6 +3603,26 @@
     {
       "from": "Ecdlp.Proved.DivisionPolynomial",
       "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialCoprime",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialCoprime",
+      "to": "Ecdlp.Proved.NormEDSConsecutiveZeros",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialCoprime",
+      "to": "Ecdlp.Proved.CoprimePsi2Psi3",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialCoprime",
+      "to": "Ecdlp.Proved.CoprimePsi3PrePsi4",
       "type": "imports"
     },
     {
@@ -4884,6 +4918,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.P256Cardinality",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.DivisionPolynomialCoprime",
       "type": "imports"
     },
     {

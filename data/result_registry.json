@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 590,
-  "distinct_qualified_names": 478,
+  "declaration_count": 595,
+  "distinct_qualified_names": 480,
   "verified_md_citations": 203,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -711,6 +711,14 @@
       "line": 188,
       "occurrences": 1
     },
+    "Ecdlp.Curve.no_common_root": {
+      "name": "no_common_root",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialCoprime.lean",
+      "line": 46,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.oddDivisionDegree": {
       "name": "oddDivisionDegree",
       "namespace": "Ecdlp.Curve",
@@ -766,6 +774,14 @@
       "file": "Ecdlp/Proved/Secp256k1Curve.lean",
       "line": 19,
       "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Bar_isCoprime_": {
+      "name": "secp256k1Bar_isCoprime_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialCoprime.lean",
+      "line": 53,
+      "occurrences": 3
     },
     "Ecdlp.Curve.secp256k1G": {
       "name": "secp256k1G",
@@ -1389,7 +1405,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi2PrePsi4.lean",
       "line": 35,
-      "occurrences": 6
+      "occurrences": 7
     },
     "Ecdlp.Curve.secp256k1_isCoprime_pre": {
       "name": "secp256k1_isCoprime_pre",
