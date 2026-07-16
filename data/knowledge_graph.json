@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 260,
+    "theorems": 261,
     "barriers": 6,
-    "edges": 378,
+    "edges": 383,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -20,6 +20,7 @@
       "Mathlib (`Point.neg_some`, `add_neg_cancel`)": 2,
       "Mathlib (`Iff.trans`)": 2,
       "instantiation of `Ecdlp.Schnorr.*` on `↥⟨G⟩": 2,
+      "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates": 2,
       "Mathlib + `secp256k1_card_point_eq_n` + `secp256k1_n_prime` + `secp256k1_trace_ordinary_nonanomalous` + `secp256k1_embedding_degree_gt_100": 1,
       "native_decide + Pratt (`lucas_primality`)": 1,
       "Mathlib + `cube_root_of_eigenvalue` + explicit ψ forms": 1,
@@ -100,7 +101,6 @@
       "exists_normEDS_consecutive_eq_zero_of_not_isCoprime` + `normEDS_not_consecutive_zeros` + Bézout certificates (`IsCoprime.map`)": 1,
       "Mathlib (`Φ_three`, `ΨSq_three`, `slope_of_X_ne`, `nonsingular_add`) + `linear_combination` certificates": 1,
       "Bézout certificate + native_decide (`Polynomial.derivative` simp)": 1,
-      "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates": 1,
       "Mathlib (`Separable.map`, `IsAlgClosed.splits`, `splits_iff_card_roots`, `nodup_roots`) + B4 certificates": 1,
       "Mathlib (closure group law, `map_aᵢ`) + template certificates": 1,
       "Mathlib (finset card algebra, `torsionBy`) + closure bridge + separability + coprimality + N10(iii)": 1,
@@ -109,7 +109,7 @@
     },
     "by_area": {
       "curve-torsion": 131,
-      "primality": 44,
+      "primality": 45,
       "generic-hardness": 25,
       "other": 25,
       "protocol-soundness": 23,
@@ -3498,6 +3498,19 @@
       "area": "primality",
       "dependency_depth": 0,
       "gated": false
+    },
+    {
+      "id": "thm-260",
+      "name": "Ecdlp.Curve.secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`, `quad_x_core",
+      "short_name": "secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`,",
+      "module": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "file": "Ecdlp/Proved/QuadrupleMultiplicationFormula.lean",
+      "claim": "N7@4 — multiplication-by-4 `x`-coordinate formula: `x(4•P) = Φ₄(x)/ΨSq₄(x)` (`secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`: whenever `4•P` is an affine point `(X,Y)`, `X = (Φ 4)(x)/(ΨSq 4)(x)` with the degree-16 monic numerator `Φ₄(x) = x⁶ − 3808x³ + 144256x⁰ + 2985472x⁷ + 38108672x⁴ + 68841472x` and degree-15 denominator `ΨSq₄ = preΨ₄·Ψ₂Sq` — the first even rung of the N7 ladder (completing `n = 2, 3, 4, 5`). The generic branch runs doubling-of-doubling (`4P = 2·(2P)`, two tangents — vs. the odd chords), and its crux is that the outer doubling is the `n = 2` formula applied at `X2 = x(2P)`: `quad_x_core` chains `hInner` (the `n=2` identity `(s₄−2X2)(4X2³+28) = X2⁴−56X2` at `X2`), `hBridge`, `hkey`; both 2-torsion escapes (`2P = O` or `2P` 2-torsion ⟹ `4P = O`) contradict an affine `4P`. Eval forms via Mathlib `Φ_ofNat`/`ΨSq_ofNat`/`preΨ'_even`; `Φ₄`/`ΨSq₄` independently verified against from-scratch division polynomials + 2-prime numeric `x(4P)` check (`scripts/certs/quad_mult_formula_check.py`, `CERT_OK`))",
+      "method": "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 6,
+      "gated": true
     }
   ],
   "barriers": [
@@ -4393,6 +4406,26 @@
     {
       "from": "Ecdlp.Proved.ProtocolInstantiation",
       "to": "Ecdlp.Proved.DlogCompleteness",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.MultiplicationFormula",
       "type": "imports"
     },
     {
@@ -5403,6 +5436,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.SevenTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
       "type": "imports"
     },
     {

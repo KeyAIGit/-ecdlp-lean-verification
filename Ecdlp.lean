@@ -127,3 +127,4 @@ import Ecdlp.Proved.FiveTorsionBridgeBar
 import Ecdlp.Proved.FiveTorsionStructure
 import Ecdlp.Proved.SevenTorsionBridgeBar
 import Ecdlp.Proved.SevenTorsionStructure
+import Ecdlp.Proved.QuadrupleMultiplicationFormula

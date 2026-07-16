@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 765,
-  "distinct_qualified_names": 581,
-  "verified_md_citations": 209,
+  "declaration_count": 767,
+  "distinct_qualified_names": 583,
+  "verified_md_citations": 210,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -989,6 +989,14 @@
       "kind": "def",
       "file": "Ecdlp/Proved/TorsionPointCount.lean",
       "line": 24,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.quad_x_core": {
+      "name": "quad_x_core",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/QuadrupleMultiplicationFormula.lean",
+      "line": 92,
       "occurrences": 1
     },
     "Ecdlp.Curve.quint_x_core": {
@@ -2069,6 +2077,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/SevenTorsionBridge.lean",
       "line": 22,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_quadruple_x_eq_": {
+      "name": "secp256k1_quadruple_x_eq_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/QuadrupleMultiplicationFormula.lean",
+      "line": 238,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_quintuple_x_eq_": {
