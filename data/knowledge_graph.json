@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 254,
+    "theorems": 255,
     "barriers": 6,
-    "edges": 328,
+    "edges": 334,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -100,11 +100,12 @@
       "exists_normEDS_consecutive_eq_zero_of_not_isCoprime` + `normEDS_not_consecutive_zeros` + Bézout certificates (`IsCoprime.map`)": 1,
       "Mathlib (`Φ_three`, `ΨSq_three`, `slope_of_X_ne`, `nonsingular_add`) + `linear_combination` certificates": 1,
       "Bézout certificate + native_decide (`Polynomial.derivative` simp)": 1,
-      "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates": 1
+      "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates": 1,
+      "Mathlib (`Separable.map`, `IsAlgClosed.splits`, `splits_iff_card_roots`, `nodup_roots`) + B4 certificates": 1
     },
     "by_area": {
       "curve-torsion": 130,
-      "primality": 39,
+      "primality": 40,
       "generic-hardness": 25,
       "other": 25,
       "protocol-soundness": 23,
@@ -3415,6 +3416,19 @@
       "area": "primality",
       "dependency_depth": 7,
       "gated": true
+    },
+    {
+      "id": "thm-254",
+      "name": "Ecdlp.Curve.secp256k1_Ψ₃_separable`, `secp256k1_preΨ₅_separable`, `secp256k1_preΨ₇_separable`, `secp256k1_Ψ₃_roots_card_bar`, `secp256k1_preΨ₅_roots_card_bar`, `secp256k1_preΨ₇_roots_card_bar",
+      "short_name": "secp256k1_Ψ₃_separable`,",
+      "module": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "file": "Ecdlp/Proved/DivisionPolynomialSeparable.lean",
+      "claim": "Division polynomials are `Separable` + exact torsion `x`-locus sizes over `𝔽̄_p` (`secp256k1_Ψ₃_separable`/`secp256k1_preΨ₅_separable`/`secp256k1_preΨ₇_separable`: the B4 Bézout certificates re-labelled in Mathlib's vocabulary — `Polynomial.Separable` is by definition `IsCoprime f (derivative f)`, so the certificates are separability proofs verbatim. First payoff, via `Separable.map` + `IsAlgClosed.splits` + `nodup_roots`: `ψₙ` has exactly `(n−1)/2` distinct roots in `𝔽̄_p` — `4`/`12`/`24` for `n = 3/5/7` (`secp256k1_Ψ₃_roots_card_bar` + `…_nodup_bar` etc.) — the `n`-torsion `x`-locus at full size, the counting input of node N11 at small `n`; with the `±y`-pairing (N12) this pins `#E[n](𝔽̄_p) = n` once the point-level bridge transports to the closure)",
+      "method": "Mathlib (`Separable.map`, `IsAlgClosed.splits`, `splits_iff_card_roots`, `nodup_roots`) + B4 certificates",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 8,
+      "gated": true
     }
   ],
   "barriers": [
@@ -3689,6 +3703,31 @@
     },
     {
       "from": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "to": "Ecdlp.Proved.Secp256k1PrimeP",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "to": "Ecdlp.Proved.DivisionPolynomialSquarefree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "to": "Ecdlp.Proved.FiveTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "to": "Ecdlp.Proved.SevenTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialSeparable",
       "to": "Ecdlp.Proved.Secp256k1PrimeP",
       "type": "imports"
     },
@@ -5070,6 +5109,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.DivisionPolynomialSeparable",
       "type": "imports"
     },
     {

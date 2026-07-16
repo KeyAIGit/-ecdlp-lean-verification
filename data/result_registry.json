@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 634,
-  "distinct_qualified_names": 512,
+  "declaration_count": 645,
+  "distinct_qualified_names": 514,
   "verified_md_citations": 205,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -783,6 +783,22 @@
       "line": 116,
       "occurrences": 1
     },
+    "Ecdlp.Curve.roots_card_map_of_separable": {
+      "name": "roots_card_map_of_separable",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialSeparable.lean",
+      "line": 59,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.roots_nodup_map_of_separable": {
+      "name": "roots_nodup_map_of_separable",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialSeparable.lean",
+      "line": 67,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1": {
       "name": "secp256k1",
       "namespace": "Ecdlp.Curve",
@@ -853,7 +869,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomial.lean",
       "line": 50,
-      "occurrences": 19
+      "occurrences": 22
     },
     "Ecdlp.Curve.secp256k1_G": {
       "name": "secp256k1_G",
@@ -1573,7 +1589,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi3Psi5.lean",
       "line": 40,
-      "occurrences": 15
+      "occurrences": 21
     },
     "Ecdlp.Curve.secp256k1_psi2_evalEval": {
       "name": "secp256k1_psi2_evalEval",

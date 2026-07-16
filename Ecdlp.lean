@@ -119,3 +119,4 @@ import Ecdlp.Proved.DivisionPolynomialCoprime
 import Ecdlp.Proved.TripleMultiplicationFormula
 import Ecdlp.Proved.DivisionPolynomialSquarefree
 import Ecdlp.Proved.QuintupleMultiplicationFormula
+import Ecdlp.Proved.DivisionPolynomialSeparable
