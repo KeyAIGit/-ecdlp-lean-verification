@@ -50,8 +50,6 @@ theorem nonempty_addEquiv_zmod_prod_of_card_eq_sq
   -- Dimension 2 classifies: `A ≃ₗ[𝔽_n] 𝔽_n × 𝔽_n`, hence `≃+`.
   have hfr' : Module.finrank (ZMod n) (ZMod n × ZMod n) = 2 := by
     simp [Module.finrank_prod]
-  obtain ⟨e⟩ :=
-    FiniteDimensional.nonempty_linearEquiv_of_finrank_eq (hfr.trans hfr'.symm)
-  exact ⟨e.toAddEquiv⟩
+  exact ⟨(LinearEquiv.ofFinrankEq A (ZMod n × ZMod n) (hfr.trans hfr'.symm)).toAddEquiv⟩
 
 end Ecdlp.Torsion
