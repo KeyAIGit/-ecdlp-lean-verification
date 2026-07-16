@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 581,
-  "distinct_qualified_names": 470,
-  "verified_md_citations": 199,
+  "declaration_count": 590,
+  "distinct_qualified_names": 478,
+  "verified_md_citations": 203,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -525,6 +525,22 @@
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
       "line": 183,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.eval_": {
+      "name": "eval_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
+      "line": 66,
+      "occurrences": 2
+    },
+    "Ecdlp.Curve.eval_pre": {
+      "name": "eval_pre",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
+      "line": 56,
       "occurrences": 1
     },
     "Ecdlp.Curve.exists_nonsingular_y": {
@@ -3687,6 +3703,22 @@
       "line": 328,
       "occurrences": 1
     },
+    "exists_normEDS_consecutive_eq_zero_of_not_isCoprime": {
+      "name": "exists_normEDS_consecutive_eq_zero_of_not_isCoprime",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
+      "line": 143,
+      "occurrences": 1
+    },
+    "exists_sq_eq_eval_": {
+      "name": "exists_sq_eq_eval_",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
+      "line": 134,
+      "occurrences": 1
+    },
     "fires": {
       "name": "fires",
       "namespace": "",
@@ -3727,6 +3759,14 @@
       "line": 335,
       "occurrences": 1
     },
+    "normEDS_consecutive_eq_zero_of_eval_eq_zero": {
+      "name": "normEDS_consecutive_eq_zero_of_eval_eq_zero",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
+      "line": 110,
+      "occurrences": 1
+    },
     "normEDS_isEllSequence": {
       "name": "normEDS_isEllSequence",
       "namespace": "",
@@ -3758,6 +3798,30 @@
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
       "line": 258,
       "occurrences": 22
+    },
+    "secp256k1Bar": {
+      "name": "secp256k1Bar",
+      "namespace": "",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
+      "line": 163,
+      "occurrences": 1
+    },
+    "secp256k1_": {
+      "name": "secp256k1_",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
+      "line": 181,
+      "occurrences": 1
+    },
+    "secp256k1_exists_normEDS_consecutive_eq_zero_of_not_isCoprime": {
+      "name": "secp256k1_exists_normEDS_consecutive_eq_zero_of_not_isCoprime",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
+      "line": 169,
+      "occurrences": 1
     },
     "tying": {
       "name": "tying",
