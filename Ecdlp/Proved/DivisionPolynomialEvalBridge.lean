@@ -65,8 +65,7 @@ theorem eval_preΨ_eq_preNormEDS (hβ : β ^ 2 = W.Ψ₂Sq.eval x₀) (n : ℤ) 
 theorem eval_ΨSq_eq_normEDS_sq (hβ : β ^ 2 = W.Ψ₂Sq.eval x₀) (n : ℤ) :
     (W.ΨSq n).eval x₀ = normEDS β (W.Ψ₃.eval x₀) (W.preΨ₄.eval x₀) n ^ 2 := by
   rcases Int.even_or_odd n with hn | hn
-  · have hodd : ¬ Even n → False := fun h => h hn
-    simp only [WeierstrassCurve.ΨSq, normEDS, if_pos hn, eval_mul, eval_pow, mul_one,
+  · simp only [WeierstrassCurve.ΨSq, normEDS, if_pos hn, eval_mul, eval_pow, mul_one,
       eval_preΨ_eq_preNormEDS W hβ n]
     rw [← hβ]; ring
   · have hne : ¬ Even n := by simpa [Int.not_even_iff_odd] using hn
@@ -115,13 +114,13 @@ theorem normEDS_consecutive_eq_zero_of_eval_eq_zero (hβ : β ^ 2 = W.Ψ₂Sq.ev
   have hwn : normEDS β (W.Ψ₃.eval x₀) (W.preΨ₄.eval x₀) n = 0 := by
     have h := eval_ΨSq_eq_normEDS_sq W hβ n
     rw [hΨ] at h
-    exact pow_eq_zero_iff (two_ne_zero).mp h.symm
+    exact (pow_eq_zero_iff (by norm_num)).mp h.symm
   refine ⟨hwn, ?_⟩
   have hΦ' := eval_Φ_eq_normEDS W hβ n
   rw [hΦ, hwn] at hΦ'
   have hprod : normEDS β (W.Ψ₃.eval x₀) (W.preΨ₄.eval x₀) (n + 1)
       * normEDS β (W.Ψ₃.eval x₀) (W.preΨ₄.eval x₀) (n - 1) = 0 := by
-    linear_combination -hΦ'
+    linear_combination hΦ'
   rcases mul_eq_zero.mp hprod with h | h
   · exact Or.inr h
   · exact Or.inl h
