@@ -45,11 +45,10 @@ theorem secp256k1_triple_x_eq_Φ₃_div_ΨSq₃
     s3 ^ 2 - (s2 ^ 2 - 2 * x) - x
       = (secp256k1.Φ 3).eval x / (secp256k1.ΨSq 3).eval x := by
   rw [secp256k1_Φ₃_eval, secp256k1_ΨSq₃_eval]
-  haveI : NeZero Secp256k1.p := ⟨(Fact.out : Nat.Prime Secp256k1.p).pos.ne'⟩
   have h2 : (2 : ZMod Secp256k1.p) ≠ 0 := by
     have hnd : ¬ Secp256k1.p ∣ 2 := by decide
     have h2n : ((2 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by
-      rw [Ne, ZMod.natCast_zmod_eq_zero_iff_dvd]; exact hnd
+      rw [Ne, ZMod.natCast_eq_zero_iff]; exact hnd
     simpa using h2n
   have hden_ne : (9 * x ^ 8 + 504 * x ^ 5 + 7056 * x ^ 2 : ZMod Secp256k1.p) ≠ 0 := by
     have heq : (9 * x ^ 8 + 504 * x ^ 5 + 7056 * x ^ 2 : ZMod Secp256k1.p)
