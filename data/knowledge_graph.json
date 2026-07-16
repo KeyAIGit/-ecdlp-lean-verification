@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 255,
+    "theorems": 257,
     "barriers": 6,
-    "edges": 336,
+    "edges": 345,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -101,11 +101,13 @@
       "Mathlib (`Φ_three`, `ΨSq_three`, `slope_of_X_ne`, `nonsingular_add`) + `linear_combination` certificates": 1,
       "Bézout certificate + native_decide (`Polynomial.derivative` simp)": 1,
       "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates": 1,
-      "Mathlib (`Separable.map`, `IsAlgClosed.splits`, `splits_iff_card_roots`, `nodup_roots`) + B4 certificates": 1
+      "Mathlib (`Separable.map`, `IsAlgClosed.splits`, `splits_iff_card_roots`, `nodup_roots`) + B4 certificates": 1,
+      "Mathlib (closure group law, `map_aᵢ`) + template certificates": 1,
+      "Mathlib (finset card algebra, `torsionBy`) + closure bridge + separability + coprimality + N10(iii)": 1
     },
     "by_area": {
       "curve-torsion": 130,
-      "primality": 40,
+      "primality": 42,
       "generic-hardness": 25,
       "other": 25,
       "protocol-soundness": 23,
@@ -3429,6 +3431,32 @@
       "area": "primality",
       "dependency_depth": 8,
       "gated": true
+    },
+    {
+      "id": "thm-255",
+      "name": "Ecdlp.Curve.secp256k1Bar_three_nsmul_eq_zero_iff`, `secp256k1Bar_psi3_evalEval`, `secp256k1Bar_three_torsion_iff_root",
+      "short_name": "secp256k1Bar_three_nsmul_eq_zero_iff`,",
+      "module": "Ecdlp.Proved.ThreeTorsionBridgeBar",
+      "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
+      "claim": "3-torsion bridge over the algebraic closure (`secp256k1Bar_three_nsmul_eq_zero_iff`: for a point `P = (x,y)` of secp256k1 over `𝔽̄_p`, `3•P = O ⟺ ψ₃(x,y) = 0 ⟺ 3x⁴+84x = 0` (+ `secp256k1Bar_psi3_evalEval`, `secp256k1Bar_three_torsion_iff_root` reconciling with the `(Ψ₃).map` root vocabulary). The port of `ThreeTorsionBridge` to `secp256k1Bar` — the missing link for closure torsion counting: over `𝔽_p` the group has prime order `n ≠ 3` so `E[3](𝔽_p) = {O}` and the bridge is vacuous there; the content lives over the closure. Group law over `𝔽̄_p` via `open scoped Classical` (Mathlib's affine addition needs `[DecidableEq]`); mapped-curve coefficients via `WeierstrassCurve.map` + `map_aᵢ` projections; all `linear_combination` certificates token-identical to the `𝔽_p` template, independently re-verified)",
+      "method": "Mathlib (closure group law, `map_aᵢ`) + template certificates",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 3,
+      "gated": true
+    },
+    {
+      "id": "thm-256",
+      "name": "Ecdlp.Curve.secp256k1Bar_three_torsion_structure`, `secp256k1Bar_three_torsion_ncard`, `secp256k1Bar_torsionBy_three_card",
+      "short_name": "secp256k1Bar_three_torsion_structure`,",
+      "module": "Ecdlp.Proved.ThreeTorsionStructure",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "claim": "#E[3](𝔽̄_p) = 9` and `E[3] ≅ (ℤ/3)` — the first full N13 instance (`secp256k1Bar_three_torsion_structure`: the 3-torsion subgroup of secp256k1 over the algebraic closure is additively `ZMod 3 × ZMod 3` — the full 2-dimensional `𝔽₃`-plane. Route: the torsion set is proved EQUAL to the explicit 9-element finset `{O} ∪ {(x, ±y) : Ψ₃(x) = 0}` — membership by the closure bridge, `y ≠ 0` at every `Ψ₃`-root by `Ψ₂Sq ⊥ Ψ₃`, the two `y`-values distinct since `char ≠ 2`, exactly `4` distinct roots by the separability certificates; count `1 + 4·2 = 9` by finset card algebra (`secp256k1Bar_three_torsion_ncard`/`_card`/`secp256k1Bar_torsionBy_three_card`); then the kernel-structure lemma N10(iii) classifies. Composes six previously landed rungs (closure bridge, exact root counts, coprimality certificate, `±y`-pairing, N10(iii), torsionBy vocabulary) — the endpoint `N13@3` of the `ψₙ↔E[n]` critical path at `n = 3`, first-in-Lean torsion structure theorem for a cryptographic curve)",
+      "method": "Mathlib (finset card algebra, `torsionBy`) + closure bridge + separability + coprimality + N10(iii)",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 9,
+      "gated": true
     }
   ],
   "barriers": [
@@ -4422,6 +4450,41 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialCoprime",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionResultantTransport",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.ThreeTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.TorsionStructure",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.TorsionCoprime",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
@@ -5124,6 +5187,16 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.ThreeTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.ThreeTorsionStructure",
       "type": "imports"
     },
     {

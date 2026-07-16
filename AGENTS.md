@@ -145,6 +145,8 @@ manual for autonomous/continuous runs and for any Claude (or other) agent joinin
 5. **Batch-integrate serially** (the integrator, never an agent): imports in
    `Ecdlp.lean`, ledger rows, canonical-count bumps, map/notes updates, full generator
    chain, full gate battery, one commit, push. While CI runs, start the next design.
+   **Staged (not-yet-imported) drafts also require the FULL generator chain** —
+   `result_registry`/`stats` scan `Ecdlp/` by directory, so a partial resync reds docs-sync.
 6. **CI red → read the log, fix, push**: failures after this pipeline are
    tactic-syntax-level (renamed lemma, numeral defeq), never mathematical. Never
    weaken a statement to pass; prefer an honest smaller theorem over a broken big one.

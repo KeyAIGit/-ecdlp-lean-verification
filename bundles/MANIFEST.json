@@ -67,13 +67,13 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 11447
+        "bytes": 11622
       },
       {
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 110690
+        "bytes": 113115
       },
       {
         "path": "BARRIERS.md",
@@ -135,13 +135,13 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 11447
+        "bytes": 11622
       },
       {
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 110690
+        "bytes": 113115
       },
       {
         "path": "BARRIERS.md",
@@ -171,7 +171,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 228430
+        "bytes": 232839
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

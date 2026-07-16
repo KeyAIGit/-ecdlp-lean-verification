@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 651,
-  "distinct_qualified_names": 520,
-  "verified_md_citations": 205,
+  "declaration_count": 677,
+  "distinct_qualified_names": 542,
+  "verified_md_citations": 207,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -535,6 +535,14 @@
       "line": 66,
       "occurrences": 2
     },
+    "Ecdlp.Curve.eval_of_mem_": {
+      "name": "eval_of_mem_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 164,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.eval_pre": {
       "name": "eval_pre",
       "namespace": "Ecdlp.Curve",
@@ -703,6 +711,78 @@
       "line": 71,
       "occurrences": 2
     },
+    "Ecdlp.Curve.liftP": {
+      "name": "liftP",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 104,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.liftP_def": {
+      "name": "liftP_def",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 108,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.liftP_three_nsmul": {
+      "name": "liftP_three_nsmul",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 238,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.liftY": {
+      "name": "liftY",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 95,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.liftY_ne_neg": {
+      "name": "liftY_ne_neg",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 226,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.liftY_ne_zero": {
+      "name": "liftY_ne_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 218,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.liftY_nonsingular": {
+      "name": "liftY_nonsingular",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 99,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.liftY_sq": {
+      "name": "liftY_sq",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 213,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.mem_": {
+      "name": "mem_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 169,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.natDegree_pre": {
       "name": "natDegree_pre",
       "namespace": "Ecdlp.Curve",
@@ -717,7 +797,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomialCoprime.lean",
       "line": 46,
-      "occurrences": 1
+      "occurrences": 2
     },
     "Ecdlp.Curve.oddDivisionDegree": {
       "name": "oddDivisionDegree",
@@ -812,7 +892,15 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
-      "line": 51,
+      "line": 52,
+      "occurrences": 3
+    },
+    "Ecdlp.Curve.secp256k1Bar_curve_of_nonsingular": {
+      "name": "secp256k1Bar_curve_of_nonsingular",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 119,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1Bar_equation_iff": {
@@ -820,7 +908,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
-      "line": 63,
+      "line": 64,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1Bar_isCoprime_": {
@@ -831,20 +919,28 @@
       "line": 53,
       "occurrences": 3
     },
+    "Ecdlp.Curve.secp256k1Bar_isElliptic": {
+      "name": "secp256k1Bar_isElliptic",
+      "namespace": "Ecdlp.Curve",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 85,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1Bar_negY": {
       "name": "secp256k1Bar_negY",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
-      "line": 71,
-      "occurrences": 1
+      "line": 72,
+      "occurrences": 2
     },
     "Ecdlp.Curve.secp256k1Bar_psi3_evalEval": {
       "name": "secp256k1Bar_psi3_evalEval",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
-      "line": 78,
+      "line": 79,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1Bar_three_nsmul_eq_zero_iff": {
@@ -852,7 +948,15 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
-      "line": 91,
+      "line": 92,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Bar_three_torsion_card": {
+      "name": "secp256k1Bar_three_torsion_card",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 365,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1Bar_three_torsion_iff_root": {
@@ -860,7 +964,31 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
-      "line": 193,
+      "line": 194,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Bar_three_torsion_ncard": {
+      "name": "secp256k1Bar_three_torsion_ncard",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 357,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Bar_three_torsion_structure": {
+      "name": "secp256k1Bar_three_torsion_structure",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 390,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Bar_torsionBy_three_card": {
+      "name": "secp256k1Bar_torsionBy_three_card",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 373,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1G": {
@@ -2023,12 +2151,44 @@
       "line": 11,
       "occurrences": 1
     },
+    "Ecdlp.Curve.three_nsmul_neg": {
+      "name": "three_nsmul_neg",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 243,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.three_torsion_finset_card": {
+      "name": "three_torsion_finset_card",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 253,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.three_torsion_set_eq": {
+      "name": "three_torsion_set_eq",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 308,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.triple_x_core": {
       "name": "triple_x_core",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/TripleMultiplicationFormula.lean",
       "line": 67,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.two_ne_zero_bar": {
+      "name": "two_ne_zero_bar",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 73,
       "occurrences": 1
     },
     "Ecdlp.Curve.u3_2": {
@@ -2245,6 +2405,14 @@
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
       "line": 215,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.x_cube_add_seven_ne_zero_of_root": {
+      "name": "x_cube_add_seven_ne_zero_of_root",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 200,
       "occurrences": 1
     },
     "Ecdlp.Curve25519.A": {
@@ -4117,6 +4285,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
       "line": 543,
+      "occurrences": 1
+    },
+    "on": {
+      "name": "on",
+      "namespace": "",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "line": 46,
       "occurrences": 1
     },
     "order_dvd_card": {

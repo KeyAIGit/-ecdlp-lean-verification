@@ -34,6 +34,7 @@ the only `decide`s are the template's own `p ∤ 2, 7, 63` facts over `ℕ`.
 namespace Ecdlp.Curve
 
 open Polynomial WeierstrassCurve.Affine
+open scoped Classical
 
 /-- The base-change hom `𝔽_p →+* 𝔽̄_p` (same map as `secp256k1Bar` is built from). -/
 private noncomputable abbrev φK :
@@ -64,13 +65,13 @@ private theorem secp256k1Bar_equation_iff
     (x y : AlgebraicClosure (ZMod Secp256k1.p)) :
     secp256k1Bar.toAffine.Equation x y ↔ y ^ 2 = x ^ 3 + 7 := by
   rw [WeierstrassCurve.Affine.equation_iff]
-  simp only [secp256k1Bar, WeierstrassCurve.map, secp256k1, map_zero, map_ofNat]
+  simp only [secp256k1Bar, WeierstrassCurve.map, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆, secp256k1, map_zero, map_ofNat]
   constructor <;> intro he <;> linear_combination he
 
 /-- Negation on `secp256k1Bar` is `y ↦ -y` (`a₁ = a₃ = 0` survive the base change). -/
 private theorem secp256k1Bar_negY (x y : AlgebraicClosure (ZMod Secp256k1.p)) :
     secp256k1Bar.toAffine.negY x y = -y := by
-  simp [WeierstrassCurve.Affine.negY, secp256k1Bar, WeierstrassCurve.map, secp256k1]
+  simp [WeierstrassCurve.Affine.negY, secp256k1Bar, WeierstrassCurve.map, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆, secp256k1]
 
 /-- **The bivariate 3-division polynomial `ψ 3` of `secp256k1Bar` evaluated at any point
 `(x,y)` equals the concrete univariate `3x⁴ + 84x`.** (`ψ 3` is odd, hence univariate
@@ -151,13 +152,13 @@ theorem secp256k1Bar_three_nsmul_eq_zero_iff
     have hsl' : ℓ * (2 * y) = 3 * x ^ 2 := by
       rw [hℓ, WeierstrassCurve.Affine.slope_of_Y_ne rfl hy0,
         div_mul_eq_mul_div, div_eq_iff hd]
-      simp only [secp256k1Bar, WeierstrassCurve.map, secp256k1, map_zero,
+      simp only [secp256k1Bar, WeierstrassCurve.map, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆, secp256k1, map_zero,
         WeierstrassCurve.Affine.negY]
       ring
     have hAid : secp256k1Bar.toAffine.addX x x ℓ - x
         = (-(3 * x ^ 4 + 84 * x)) / (4 * y ^ 2) := by
       rw [eq_div_iff h4]
-      simp only [WeierstrassCurve.Affine.addX, secp256k1Bar, WeierstrassCurve.map,
+      simp only [WeierstrassCurve.Affine.addX, secp256k1Bar, WeierstrassCurve.map, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆,
         secp256k1, map_zero]
       linear_combination (2 * y * ℓ + 3 * x ^ 2) * hsl' - 12 * x * hcurve
     have hA : secp256k1Bar.toAffine.addX x x ℓ = x ↔ 3 * x ^ 4 + 84 * x = 0 := by
@@ -177,7 +178,7 @@ theorem secp256k1Bar_three_nsmul_eq_zero_iff
       intro hx
       simp only [WeierstrassCurve.Affine.addY, WeierstrassCurve.Affine.negAddY,
         WeierstrassCurve.Affine.negY, WeierstrassCurve.Affine.addX, secp256k1Bar,
-        WeierstrassCurve.map, secp256k1, map_zero] at hx ⊢
+        WeierstrassCurve.map, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆, secp256k1, map_zero] at hx ⊢
       linear_combination (-ℓ) * hx
     constructor
     · rintro ⟨ha, _⟩; exact hA.mp ha
