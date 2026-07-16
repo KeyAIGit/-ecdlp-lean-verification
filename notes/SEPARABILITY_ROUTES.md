@@ -34,7 +34,7 @@ magnitude cheaper."
 | **B2** | `[k(x) : k(Φₙ/ψₙ²)] = max(deg num, deg den) = n²` when coprime | LEAF-ish, needs one named Gauss-lemma-style result | after B1 |
 | **L2** | realize `[n]` as a `k`-algebra endomorphism of `k(E)` (the field dictionary) | MID, shared with Route A | parallel |
 | **B3** | `deg[n] = n²` | from B1+B2+L2 | after above |
-| **B4** | `ψₙ` squarefree for `p∤n` (= separability, in polynomial clothing) | MID (file of `gcd(ψₙ,ψₙ')` identities), **no geometry** | the core, but elementary |
+| **B4** | `ψₙ` squarefree for `p∤n` (= separability, in polynomial clothing) | MID (file of `gcd(ψₙ,ψₙ')` identities), **no geometry** | the core, but elementary — **small-`n` certificates landed**: `gcd(ψₙ, ψₙ′) = 1` proved for `n = 3, 5, 7` by explicit Bézout certificates (`Ecdlp/Proved/DivisionPolynomialSquarefree.lean`); general `n` open |
 | ⇒ | `#E[n] = n²`, then `E[n]≅(ℤ/n)²` (pure group theory) | assembly | payoff |
 
 Reaching `#E[n]=n²` this way also **discharges the `[IsAddCyclic]` hypothesis** behind the GLV

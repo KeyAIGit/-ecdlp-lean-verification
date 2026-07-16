@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 630,
-  "distinct_qualified_names": 509,
-  "verified_md_citations": 204,
+  "declaration_count": 634,
+  "distinct_qualified_names": 512,
+  "verified_md_citations": 205,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -751,6 +751,14 @@
       "line": 8,
       "occurrences": 1
     },
+    "Ecdlp.Curve.pre": {
+      "name": "pre",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/QuintupleMultiplicationFormula.lean",
+      "line": 72,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.px": {
       "name": "px",
       "namespace": "Ecdlp.Curve",
@@ -765,6 +773,14 @@
       "kind": "def",
       "file": "Ecdlp/Proved/TorsionPointCount.lean",
       "line": 24,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.quint_x_core": {
+      "name": "quint_x_core",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/QuintupleMultiplicationFormula.lean",
+      "line": 116,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1": {
@@ -1557,7 +1573,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi3Psi5.lean",
       "line": 40,
-      "occurrences": 14
+      "occurrences": 15
     },
     "Ecdlp.Curve.secp256k1_psi2_evalEval": {
       "name": "secp256k1_psi2_evalEval",
@@ -1589,6 +1605,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/SevenTorsionBridge.lean",
       "line": 22,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_quintuple_x_eq_": {
+      "name": "secp256k1_quintuple_x_eq_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/QuintupleMultiplicationFormula.lean",
+      "line": 347,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_resultant_eq_intCast": {

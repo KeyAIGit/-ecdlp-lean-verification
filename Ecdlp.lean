@@ -117,3 +117,5 @@ import Ecdlp.Proved.GlvOrbit
 import Ecdlp.Proved.P256Cardinality
 import Ecdlp.Proved.DivisionPolynomialCoprime
 import Ecdlp.Proved.TripleMultiplicationFormula
+import Ecdlp.Proved.DivisionPolynomialSquarefree
+import Ecdlp.Proved.QuintupleMultiplicationFormula

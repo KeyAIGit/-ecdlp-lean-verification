@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 252,
+    "theorems": 254,
     "barriers": 6,
-    "edges": 318,
+    "edges": 328,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -98,11 +98,13 @@
       "Mathlib (`normEDS_one`, `normEDS_neg`) + `normEDS_isEllSequence` + `linear_combination": 1,
       "Mathlib (`normEDS_two/three/four`, `normEDS_odd`, `Nat.sInf_mem`) + `linear_combination": 1,
       "exists_normEDS_consecutive_eq_zero_of_not_isCoprime` + `normEDS_not_consecutive_zeros` + Bézout certificates (`IsCoprime.map`)": 1,
-      "Mathlib (`Φ_three`, `ΨSq_three`, `slope_of_X_ne`, `nonsingular_add`) + `linear_combination` certificates": 1
+      "Mathlib (`Φ_three`, `ΨSq_three`, `slope_of_X_ne`, `nonsingular_add`) + `linear_combination` certificates": 1,
+      "Bézout certificate + native_decide (`Polynomial.derivative` simp)": 1,
+      "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates": 1
     },
     "by_area": {
       "curve-torsion": 130,
-      "primality": 37,
+      "primality": 39,
       "generic-hardness": 25,
       "other": 25,
       "protocol-soundness": 23,
@@ -3387,6 +3389,32 @@
       "area": "generic-hardness",
       "dependency_depth": 7,
       "gated": true
+    },
+    {
+      "id": "thm-252",
+      "name": "Ecdlp.Curve.secp256k1_isCoprime_Ψ₃_derivative`, `secp256k1_isCoprime_preΨ₅_derivative`, `secp256k1_isCoprime_preΨ₇_derivative",
+      "short_name": "secp256k1_isCoprime_Ψ₃_derivative`,",
+      "module": "Ecdlp.Proved.DivisionPolynomialSquarefree",
+      "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
+      "claim": "B4 @ `n = 3, 5, 7` — division polynomials coprime to their derivatives (squarefreeness certificates) (`secp256k1_isCoprime_Ψ₃_derivative`, `secp256k1_isCoprime_preΨ₅_derivative`, `secp256k1_isCoprime_preΨ₇_derivative`: explicit Bézout certificates `u·ψₙ + v·ψₙ′ = 1` over `𝔽_p` — separability of `[n]` in polynomial clothing, the last missing input of `#E[n] = n` along route B (`notes/SEPARABILITY_ROUTES.md`, node B4). A squarefree `ψₙ` of degree `(n−1)/2` has exactly `(n−1)/2` distinct roots over `𝔽̄_p` — the `n`-torsion `x`-locus at full size. `x³`-sparse cofactors give 3/8/16 `native_decide` residue equations; general-`n` B4 stays open, honestly scoped. Constants produced and doubly cross-checked by `scripts/certs/psi_squarefree_certs.py` (`CERT_OK`), incl. an independent numeric root↔torsion validation over 10 small fields)",
+      "method": "Bézout certificate + native_decide (`Polynomial.derivative` simp)",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 7,
+      "gated": true
+    },
+    {
+      "id": "thm-253",
+      "name": "Ecdlp.Curve.secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅`, `quint_x_core",
+      "short_name": "secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅`,",
+      "module": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "file": "Ecdlp/Proved/QuintupleMultiplicationFormula.lean",
+      "claim": "N7@5 — multiplication-by-5 `x`-coordinate formula: `x(5•P) = Φ₅(x)/ΨSq₅(x)` (`secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅`: whenever `5•P` is an affine point `(X,Y)`, then `X = (Φ 5)(x)/(ΨSq 5)(x)` — the degree-25 numerator over `preΨ₅`, again with no side conditions: the generic branch adds `3P + 2P` — the first chord between two nontrivial multiples, prototyping the addition step of the general N7 engine — through `quint_x_core` (12 `linear_combination` certificates incl. a 94+55-monomial master, designed by cofactor-tracked elimination of the three slopes `s₅, s₃, s₂`, kernel-re-verified); the 2-torsion branch (`5P = P`) and 3-torsion branch (`5P = 2P`, reduced to the `n = 2` formula) hold via `Ψ₂Sq ⊥ preΨ₅` / `Ψ₃ ⊥ preΨ₅` certificates. `Φ 5`/`ΨSq 5` eval forms derived through Mathlib's `Φ_ofNat`/`ΨSq_ofNat`/`preΨ'_even` recurrences (`preΨ₆ = Ψ₃(preΨ₅ − preΨ₄)`). All certificates + 25-point (and independent 40-point, different prime) numeric checks: `scripts/certs/quint_mult_formula_check.py` (`CERT_OK`). N7 ladder now `n = 2, 3, 5`)",
+      "method": "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 7,
+      "gated": true
     }
   ],
   "barriers": [
@@ -4182,6 +4210,46 @@
     {
       "from": "Ecdlp.Proved.ProtocolInstantiation",
       "to": "Ecdlp.Proved.DlogCompleteness",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.ThreeTorsionCard",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.ThreeTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.FiveTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.MultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.CoprimePsi2Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi5",
       "type": "imports"
     },
     {
@@ -4992,6 +5060,16 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.DivisionPolynomialSquarefree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.QuintupleMultiplicationFormula",
       "type": "imports"
     },
     {
