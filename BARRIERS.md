@@ -206,7 +206,13 @@ exact `Θ` statements.
   structure theorem `E[n] ≅ (ℤ/n)²`) is a multi-month research-grade port absent from all of
   Mathlib, master, and open PRs (see the upstream scan below) — worth doing as an upstream
   contribution, but it would add **no** security fact about secp256k1 that the embedding-degree
-  bound does not already give.
+  bound does not already give. **In-repo frontier (2026-07):** the ladder toward
+  `E[n] ≅ (ℤ/n)²` has moved — the L4 engine is ported (`normEDS_isEllSequence`,
+  `NormEDSIsElliptic.lean`), the eval-bridge descent reduced node N5 to a scalar
+  no-consecutive-zeros lemma, now **unblocked** and stated as the open stem
+  `Ecdlp/Targets/normeds_no_consecutive_zero.lean`; the remaining CORE-by-effort item on
+  that path is N7 (general multiplication formula). See the TASK-005 memo in
+  `notes/POINT_COUNTING_KEYSTONE.md` and `notes/DIVISION_POLY_TORSION_MAP.md`.
 - **Point counting** — **closed for secp256k1**: `#E(𝔽_p) = n` is now a kernel
   theorem (`CurveCardinalityExact.lean` — a curve-specific certificate, `n ∣ #E`
   plus `#E ≤ 2p+1 < 3n` plus `E[2] = {O}`, no Hasse/Schoof needed). The general

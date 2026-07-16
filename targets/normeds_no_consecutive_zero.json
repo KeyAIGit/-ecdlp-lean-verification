@@ -1,0 +1,22 @@
+{
+  "id": "normeds_no_consecutive_zero",
+  "name": "NormEDSNoConsecutiveZero",
+  "status": "todo",
+  "difficulty": "hard",
+  "template": "torsion_structure_n5",
+  "why_it_matters": "The N5 scalar obligation (notes/DIVISION_POLY_TORSION_MAP.md): no two consecutive zeros in the curve-specialized scalar EDS w = normEDS beta Psi3(x0) prePsi4(x0) over the algebraic closure. Via the landed descent (secp256k1_exists_normEDS_consecutive_eq_zero_of_not_isCoprime) it closes IsCoprime(Phi n, PsiSq n) for secp256k1 — the coprimality input on the critical path N5 -> N7 -> N10 -> N11 -> N13 toward #E[n] = n^2 and E[n] = (Z/n)^2, which feeds Weil-pairing non-degeneracy (W5). Unblocked by the in-repo L4 port: normEDS_isEllSequence + normEDS_somos4 supply the index-propagation engine; the pairwise coprimality certificates (L5/L6/L6b) close the degenerate low-index cases.",
+  "default_budget": {
+    "tier0_tactics": [
+      "simp [normEDS]",
+      "exact?"
+    ],
+    "escalate_if_failed": true
+  },
+  "stem_file": "Ecdlp/Targets/normeds_no_consecutive_zero.lean",
+  "hint": "Anchor: normEDS_one (w 1 = 1). Degenerate triangle: beta = 0 iff Psi2Sq(x0) = 0 (field, hβ); then CoprimePsi2Psi3 (L5) gives Psi3(x0) ≠ 0 and CoprimePsi2PrePsi4 (L6b) gives prePsi4(x0) ≠ 0; CoprimePsi3PrePsi4 (L6) excludes c = d = 0. Propagation: from w n = w (n+1) = 0 use normEDS_somos4 and instances of normEDS_isEllSequence (IsEllSequence three-term identity) to force zeros at lower indices, descending to a contradiction with w 1 = 1 (strong induction on n). Expect case splits on parity and on which of b, c, d vanishes. This is a MID-size single-file effort (~150-400 lines), not a tier-0 target.",
+  "promotion_target_file": "Ecdlp/Proved/NormEDSNoConsecutiveZero.lean",
+  "source": {
+    "family": "torsion-structure",
+    "from": "TASK-005 decomposition memo (notes/POINT_COUNTING_KEYSTONE.md)"
+  }
+}

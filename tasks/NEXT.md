@@ -125,33 +125,38 @@ Files allowed to edit:
 - `scripts/`
 - `notes/`
 
-### TASK-005 - Extend the closed keystone: geometric `E[n]` + P-256 cardinality
+### TASK-005 - Geometric `E[n] ≅ (ℤ/n)²`: prove the N5 scalar rung
 
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
-Why it matters: The strong keystone `#E(𝔽_p) = n` is **proved** for secp256k1
-(no Hasse/Schoof — curve-specific certificate, `CurveCardinalityExact.lean`,
-2026-07-13), and with it `E(𝔽_p) = ⟨G⟩`, cyclicity, and the unconditional GLV
-eigenvalue all landed (`CurveFullGroup.lean`, `PointGroupEquiv.lean`). The
-original TASK-005 scoping goal is therefore complete. What the closure exposes
-next: (a) the **geometric torsion structure** `E[n] ≅ (ℤ/n)²` needs points over
-field extensions — still a genuine Mathlib gap; (b) the certificate exploits
-`j = 0`, so **P-256's `#E = n` stays open** (Hasse or a new certificate route).
+Why it matters: The scoping half of this task is **delivered** (2026-07-16): the
+decomposition memo in `notes/POINT_COUNTING_KEYSTONE.md` §"The successor gap"
+chose the geometric-torsion branch (P-256 cardinality stays parked on Hasse) and
+named the smallest missing piece — the **N5 scalar obligation**, no two
+consecutive zeros in the curve-specialized scalar EDS over `𝔽̄_p`. It is
+**unblocked**: the L4 engine (`normEDS_isEllSequence`, `normEDS_somos4`) and the
+L5/L6/L6b degenerate-case certificates are kernel-verified; the eval-bridge
+descent (`DivisionPolynomialEvalBridge.lean`) turns the scalar lemma into node
+N5 (`IsCoprime (Φ n) (ΨSq n)`), feeding the counting route toward `#E[n] = n²`
+and (via the proved prime-case N10(iii)) `E[n] ≅ (ℤ/n)²` — the Weil-pairing
+non-degeneracy substrate.
 Inputs:
-- `notes/POINT_COUNTING_KEYSTONE.md` (status banner marks the closure)
-- `Ecdlp/Proved/CurveCardinalityExact.lean`, `CurveFullGroup.lean`
-- `BARRIERS.md`
+- `Ecdlp/Targets/normeds_no_consecutive_zero.lean` (the open stem — the target)
+- `targets/normeds_no_consecutive_zero.json` (budget + hint with proof shape)
+- `notes/POINT_COUNTING_KEYSTONE.md` §successor gap (the memo)
+- `notes/DIVISION_POLY_TORSION_MAP.md` (N5 row, critical path)
 Expected output:
-- A decomposition memo for the *next* smallest missing foundation: either the
-  extension-field point machinery behind `E[n] ≅ (ℤ/n)²`, or a P-256
-  cardinality route. No weakening, no `sorry`.
+- A kernel-accepted proof of `secp256k1_normEDS_no_consecutive_zero`, promoted
+  per the standard lifecycle (stem consumed, registry verified, ledger row). No
+  weakening, no `sorry`. If attempts stall, a frozen memo recording the exact
+  failing induction step instead.
 Exit criteria:
-- Either a proved rung, or a frozen blocker memo naming the smallest missing
-  Mathlib foundation with an honest effort estimate.
+- Either the rung proved and promoted, or the blocker memo naming the precise
+  identity that resists (with the attempted decomposition).
 Files allowed to edit:
-- `notes/POINT_COUNTING_KEYSTONE.md`
-- `BARRIERS.md`
-- new `Ecdlp/Targets/` stem (open, not built) if a partial rung is stated
+- `Ecdlp/Proved/` (new module on success) + `Ecdlp.lean` + `VERIFIED.md`
+- `targets/normeds_no_consecutive_zero.json`, `Ecdlp/Targets/`
+- `notes/POINT_COUNTING_KEYSTONE.md`, `notes/DIVISION_POLY_TORSION_MAP.md`
 
 ### TASK-006 - Prepare publication boundary track
 
