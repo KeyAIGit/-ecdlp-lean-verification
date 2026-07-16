@@ -189,8 +189,8 @@ private theorem secp256k1Bar_Ψ₂Sq_eval (a : AlgebraicClosure (ZMod Secp256k1.
     simp only [secp256k1Bar, WeierstrassCurve.map_Ψ₂Sq]
   rw [hmap, secp256k1_Ψ₂Sq]
   simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_pow,
-    Polynomial.map_C, Polynomial.map_X, map_ofNat, eval_add, eval_mul, eval_pow,
-    eval_C, eval_X]
+    Polynomial.map_C, Polynomial.map_X, Polynomial.map_ofNat, map_ofNat, eval_add,
+    eval_mul, eval_pow, eval_C, eval_X, Polynomial.eval_ofNat]
   ring
 
 /-- **At a root of the mapped `Ψ₃`, `x³ + 7 ≠ 0`**: otherwise `Ψ₂Sq = 4(X³+7)` and `Ψ₃`
