@@ -149,8 +149,8 @@ private theorem liftY_eq_zero_of_root {a : AlgebraicClosure (ZMod Secp256k1.p)}
 /-- The mapped cubic evaluated: `(X³ + 7).map φ` at `a` is `a³ + 7`. -/
 private theorem cubicbar_eval (a : AlgebraicClosure (ZMod Secp256k1.p)) :
     ((X ^ 3 + C 7 : (ZMod Secp256k1.p)[X]).map φcl).eval a = a ^ 3 + 7 := by
-  simp only [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_C,
-    Polynomial.map_ofNat, map_ofNat, eval_add, eval_pow, eval_X, eval_C]
+  simp only [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X,
+    Polynomial.map_ofNat, map_ofNat, eval_add, eval_pow, eval_X, Polynomial.eval_ofNat]
 
 /-- Exactly `3` roots over `𝔽̄_p`, restated in this file's vocabulary. -/
 private theorem cubicbar_roots_card :
