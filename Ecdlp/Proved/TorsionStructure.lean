@@ -24,6 +24,17 @@ alongside the eventual counting half.
 
 namespace Ecdlp.Torsion
 
+/-- Auxiliary classification step, stated with the vector-space structure as honest
+instance arguments (avoids elaborating against `letI`-local instances): a
+2-dimensional `𝔽_n`-vector space is additively `ZMod n × ZMod n`. -/
+private theorem addEquiv_of_finrank_eq_two {n : ℕ} [Fact n.Prime]
+    {A : Type*} [AddCommGroup A] [Module (ZMod n) A] [Module.Finite (ZMod n) A]
+    (hfr : Module.finrank (ZMod n) A = 2) :
+    Nonempty (A ≃+ ZMod n × ZMod n) := by
+  have hfr' : Module.finrank (ZMod n) (ZMod n × ZMod n) = 2 := by
+    simp [Module.finrank_prod]
+  exact ⟨(LinearEquiv.ofFinrankEq A (ZMod n × ZMod n) (hfr.trans hfr'.symm)).toAddEquiv⟩
+
 /-- **A finite abelian group of order `n²` killed by a prime `n` is `(ℤ/n)²`** — the
 kernel-structure input (iii) of node N10: once the counting half `#E[n] = n²` is proved,
 this upgrades the *count* to the *structure* `E[n] ≅ (ℤ/n)²`. Killed-by-`n` makes the
@@ -48,8 +59,6 @@ theorem nonempty_addEquiv_zmod_prod_of_card_eq_sq
     rw [← Nat.card_eq_fintype_card, hcard, ZMod.card] at hcards
     exact (Nat.pow_right_injective hn2 hcards).symm
   -- Dimension 2 classifies: `A ≃ₗ[𝔽_n] 𝔽_n × 𝔽_n`, hence `≃+`.
-  have hfr' : Module.finrank (ZMod n) (ZMod n × ZMod n) = 2 := by
-    simp [Module.finrank_prod]
-  exact ⟨(LinearEquiv.ofFinrankEq A (ZMod n × ZMod n) (hfr.trans hfr'.symm)).toAddEquiv⟩
+  exact addEquiv_of_finrank_eq_two hfr
 
 end Ecdlp.Torsion
