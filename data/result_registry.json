@@ -532,7 +532,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
-      "line": 65,
+      "line": 66,
       "occurrences": 2
     },
     "Ecdlp.Curve.eval_pre": {

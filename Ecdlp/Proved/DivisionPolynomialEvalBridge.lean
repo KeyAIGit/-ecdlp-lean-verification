@@ -55,11 +55,12 @@ value pulled back through `β² = Ψ₂Sq(x₀)`. Naturality of `preNormEDS` und
 ring hom, with Mathlib's `preΨ = preNormEDS (Ψ₂Sq²) Ψ₃ preΨ₄`. -/
 theorem eval_preΨ_eq_preNormEDS (hβ : β ^ 2 = W.Ψ₂Sq.eval x₀) (n : ℤ) :
     (W.preΨ n).eval x₀ = preNormEDS (β ^ 4) (W.Ψ₃.eval x₀) (W.preΨ₄.eval x₀) n := by
-  have h := map_preNormEDS (Polynomial.evalRingHom x₀) (W.Ψ₂Sq ^ 2) W.Ψ₃ W.preΨ₄ n
-  simp only [coe_evalRingHom, map_pow] at h
   have hb : (W.Ψ₂Sq.eval x₀) ^ 2 = β ^ 4 := by rw [← hβ]; ring
-  simp only [WeierstrassCurve.preΨ, coe_evalRingHom] at *
-  rw [h, hb]
+  have h := map_preNormEDS (b := W.Ψ₂Sq ^ 2) (c := W.Ψ₃) (d := W.preΨ₄)
+    (Polynomial.evalRingHom x₀) n
+  simp only [coe_evalRingHom, eval_pow] at h
+  rw [hb] at h
+  simpa only [WeierstrassCurve.preΨ] using h
 
 /-- **L2a.** `ΨSq` evaluated at `x₀` is the square of the scalar `normEDS`. -/
 theorem eval_ΨSq_eq_normEDS_sq (hβ : β ^ 2 = W.Ψ₂Sq.eval x₀) (n : ℤ) :
@@ -90,8 +91,8 @@ theorem eval_Φ_eq_normEDS (hβ : β ^ 2 = W.Ψ₂Sq.eval x₀) (n : ℤ) :
       hΨ, normEDS, if_neg h1, if_neg h2, mul_one, hp1, hm1]
   · -- n odd ⇒ n±1 even, so `normEDS (n±1) = preNormEDS (n±1) * β`
     have hne : ¬ Even n := by simpa [Int.not_even_iff_odd] using hn
-    have h1 : Even (n + 1) := by simp [Int.even_add_one, hne]
-    have h2 : Even (n - 1) := by simp [Int.even_sub_one, hne]
+    have h1 : Even (n + 1) := Int.even_add_one.mpr hne
+    have h2 : Even (n - 1) := Int.even_sub_one.mpr hne
     simp only [WeierstrassCurve.Φ, if_neg hne, eval_sub, eval_mul, eval_X,
       hΨ, normEDS, if_pos h1, if_pos h2, hp1, hm1]
     rw [← hβ]; ring
