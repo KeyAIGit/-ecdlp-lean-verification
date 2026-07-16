@@ -122,20 +122,29 @@ Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
 Why it matters: Rolling, pre-decomposed target list so each continuation cycle
 starts immediately (AGENTS.md §High-velocity prover protocol).
-Current queue (in order; each = one design→verify→integrate→push cycle):
-1. **N7@4**: `x(4P) = Φ₄/ΨSq₄` via tangent-doubling at 2P (even-n rung; template:
-   `QuintupleMultiplicationFormula` chain with one doubling instead of a chord).
-2. **E[2] completeness**: `#E[2](𝔽̄_p) = 4 = 2²`, `E[2] ≅ (ℤ/2)²` — the even
-   companion of the N13 family (3 roots of `X³+7` over `𝔽̄_p`, each with `y = 0`,
-   plus `O`; needs a small `X³+7` separability/roots-count brick).
-3. **N8/N9 conditional forms**: state the general `ψₙ(P) ≠ 0 ⟹ x([n]P) = Φₙ/ΨSqₙ`
-   reductions with N7-general as an explicit hypothesis (map rows N8/N9).
-4. **Upstream extraction**: split the curve-free pieces (Ward rigidity, EDS lemmas,
-   kernel-structure lemma, the N13 pattern) into a Mathlib-PR-shaped bundle memo.
-5. **Weil W3 evaluation half**: extend `evalAt` to rational functions regular at `P`
-   via localization (`notes/FOUNDATIONS.md` W3) — reopens the pairing ladder.
-Landed from this queue: E[3] (first N13 instance), E[5]+E[7], N7@4 (N7 small-n
-ladder complete), E[2] (N13 family now `n ∈ {2, 3, 5, 7}` — all primes with a bridge) — all 2026-07-16.
+**The easy ladder is exhausted (2026-07-16).** Everything decomposable into a single
+template-mirroring cycle has landed; what remains is either research-grade (needs a
+multi-cycle human-directed commit) or already subsumed. **The 24/7 loop has reached a
+direction decision point — surfaced to the user.**
+
+Landed this session (all CI-green): N5 closed (`DivisionPolynomialCoprime`); Ward
+apparition rigidity (`NormEDSConsecutiveZeros`); N7@{2,3,4,5} — the multiplication
+ladder complete (`{Multiplication,Triple,Quadruple,Quintuple}…Formula`); B4@{3,5,7} +
+Separable (`DivisionPolynomialSquarefree`/`Separable`); **the full N13 torsion-structure
+family `E[n](𝔽̄_p) ≅ (ℤ/n)²` for `n ∈ {2,3,5,7}`** (`{Two,Three,Five,Seven}TorsionStructure`
++ closure bridges); the Mathlib upstream-candidate bundle (`notes/UPSTREAM_BUNDLE.md`).
+
+Remaining frontier (needs a user steer — not one-cycle autonomous work):
+- ~~**N8/N9 conditional forms**~~ — **SUBSUMED**: the torsion bridges
+  `secp256k1_{three,five,seven}_nsmul_eq_zero_iff` already prove both directions
+  `[n]P = O ⟺ ψₙ(P) = 0`, so the concrete N8/N9 corollaries are one-line `mt`s of
+  landed theorems — not worth a module. The *general-n* form is scaffolding on the open
+  N7-uniform hypothesis, of little value until that engine exists.
+- **Separability core (the one CORE-hard item)** — general `[n]` separable ⟹ the
+  headline `E[n] ≅ (ℤ/n)²` for all `n`; `notes/SEPARABILITY_ROUTES.md` route B. Multi-month.
+- **Weil W3 evaluation half** — extend `evalAt` to rational functions regular at `P`
+  via localization (`notes/FOUNDATIONS.md` W3); reopens the pairing ladder. Research-grade.
+- **P-256 `#E = n`** — needs Hasse or a new certificate route (`j ≠ 0`, no secp256k1 trick).
 Exit criteria:
 - Each item lands as a CI-green module + ledger row(s), or a frozen honest blocker
   memo naming the missing foundation.
