@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 577,
-  "distinct_qualified_names": 466,
+  "declaration_count": 576,
+  "distinct_qualified_names": 465,
   "verified_md_citations": 197,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -3215,22 +3215,6 @@
       "line": 15,
       "occurrences": 1
     },
-    "Ecdlp.Torsion.addEquiv_of_finrank_eq_two": {
-      "name": "addEquiv_of_finrank_eq_two",
-      "namespace": "Ecdlp.Torsion",
-      "kind": "theorem",
-      "file": "Ecdlp/Proved/TorsionStructure.lean",
-      "line": 30,
-      "occurrences": 1
-    },
-    "Ecdlp.Torsion.arguments": {
-      "name": "arguments",
-      "namespace": "Ecdlp.Torsion",
-      "kind": "instance",
-      "file": "Ecdlp/Proved/TorsionStructure.lean",
-      "line": 28,
-      "occurrences": 1
-    },
     "Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd": {
       "name": "mem_torsionBy_iff_addOrderOf_dvd",
       "namespace": "Ecdlp.Torsion",
@@ -3244,7 +3228,15 @@
       "namespace": "Ecdlp.Torsion",
       "kind": "theorem",
       "file": "Ecdlp/Proved/TorsionStructure.lean",
-      "line": 42,
+      "line": 61,
+      "occurrences": 1
+    },
+    "Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq_of_module": {
+      "name": "nonempty_addEquiv_zmod_prod_of_card_eq_sq_of_module",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TorsionStructure.lean",
+      "line": 35,
       "occurrences": 1
     },
     "Ecdlp.Torsion.torsionBy_dvd_le": {
