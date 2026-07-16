@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 255,
     "barriers": 6,
-    "edges": 334,
+    "edges": 336,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -4399,6 +4399,16 @@
     {
       "from": "Ecdlp.Proved.ThreeTorsionBridge",
       "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionBridgeBar",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionBridgeBar",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
       "type": "imports"
     },
     {

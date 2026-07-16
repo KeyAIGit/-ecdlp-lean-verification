@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 645,
-  "distinct_qualified_names": 514,
+  "declaration_count": 651,
+  "distinct_qualified_names": 520,
   "verified_md_citations": 205,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -807,6 +807,22 @@
       "line": 19,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1Bar_": {
+      "name": "secp256k1Bar_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
+      "line": 51,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Bar_equation_iff": {
+      "name": "secp256k1Bar_equation_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
+      "line": 63,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1Bar_isCoprime_": {
       "name": "secp256k1Bar_isCoprime_",
       "namespace": "Ecdlp.Curve",
@@ -814,6 +830,38 @@
       "file": "Ecdlp/Proved/DivisionPolynomialCoprime.lean",
       "line": 53,
       "occurrences": 3
+    },
+    "Ecdlp.Curve.secp256k1Bar_negY": {
+      "name": "secp256k1Bar_negY",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
+      "line": 71,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Bar_psi3_evalEval": {
+      "name": "secp256k1Bar_psi3_evalEval",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
+      "line": 78,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Bar_three_nsmul_eq_zero_iff": {
+      "name": "secp256k1Bar_three_nsmul_eq_zero_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
+      "line": 91,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1Bar_three_torsion_iff_root": {
+      "name": "secp256k1Bar_three_torsion_iff_root",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ThreeTorsionBridgeBar.lean",
+      "line": 193,
+      "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1G": {
       "name": "secp256k1G",
