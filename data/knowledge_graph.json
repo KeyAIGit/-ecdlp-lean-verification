@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 254,
     "barriers": 6,
-    "edges": 306,
+    "edges": 309,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -4364,6 +4364,21 @@
     {
       "from": "Ecdlp.Proved.WeilDivisorClass",
       "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Targets.normeds_no_consecutive_zero",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Targets.normeds_no_consecutive_zero",
+      "to": "Ecdlp.Proved.NormEDSIsElliptic",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Targets.normeds_no_consecutive_zero",
+      "to": "Ecdlp.Proved.NormEDSSomos4",
       "type": "imports"
     },
     {
