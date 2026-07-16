@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 609,
-  "distinct_qualified_names": 493,
-  "verified_md_citations": 204,
+  "declaration_count": 610,
+  "distinct_qualified_names": 494,
+  "verified_md_citations": 205,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -1853,6 +1853,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/TraceOfFrobenius.lean",
       "line": 42,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_triple_x_eq_": {
+      "name": "secp256k1_triple_x_eq_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TripleMultiplicationFormula.lean",
+      "line": 37,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_twist_maxprime_prime": {
