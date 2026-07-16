@@ -38,7 +38,7 @@ decidable identities.
 | N7@small `n` | `x∘[n] = φₙ/ψₙ²` for fixed `n = 2,3,4,5` | closed `ring` identities | ✅ **`n = 2, 3, 5` proved** — `secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq` (`MultiplicationFormula.lean`), `secp256k1_triple_x_eq_Φ₃_div_ΨSq₃` (`TripleMultiplicationFormula.lean`), `secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅` (`QuintupleMultiplicationFormula.lean` — `5P = 3P + 2P`, the first chord between two nontrivial multiples: the prototype of the general-N7 addition step); all side-condition-free; `n = 4` open |
 | N10(iii) | finite-abelian group of order `n²`, exponent `∣ n`, with `≤ d²` `d`-torsion is `(ℤ/n)²` | MID | ✅ **proved for prime `n`** (the secp256k1 case) — `nonempty_addEquiv_zmod_prod_of_card_eq_sq` (`Ecdlp/Proved/TorsionStructure.lean`); general composite `n` open |
 | N8, N9 | conditional on N7 (state with N7 as hypothesis, discharge later) | MID | reachable as reductions |
-| **N11+N13 @ `n = 3`** | `#E[3](𝔽̄_p) = 9` and `E[3] ≅ (ℤ/3)²` | assembly | ✅ **proved** — `secp256k1Bar_three_torsion_structure` (`ThreeTorsionStructure.lean`, on the closure bridge `ThreeTorsionBridgeBar.lean`): the first full N13 instance; replicate for `n = 5, 7` next |
+| **N11+N13 @ `n = 3, 5, 7`** | `#E[n](𝔽̄_p) = n²` and `E[n] ≅ (ℤ/n)²` | assembly | ✅ **proved** — `secp256k1Bar_{three,five,seven}_torsion_structure` (`{Three,Five,Seven}TorsionStructure.lean`, on the closure bridges `*TorsionBridgeBar.lean`): the full N13 instance family at every odd prime with a landed bridge; general `n` = the open separability/N10 core |
 
 **Blocked (with the single unblocking theorem):**
 - **N7 uniform** ← the addition-formula rational identity packaged for substitution in `k(E)` (effort, not theory).

@@ -122,3 +122,8 @@ import Ecdlp.Proved.QuintupleMultiplicationFormula
 import Ecdlp.Proved.DivisionPolynomialSeparable
 import Ecdlp.Proved.ThreeTorsionBridgeBar
 import Ecdlp.Proved.ThreeTorsionStructure
+import Ecdlp.Proved.CoprimePsi2Psi7
+import Ecdlp.Proved.FiveTorsionBridgeBar
+import Ecdlp.Proved.FiveTorsionStructure
+import Ecdlp.Proved.SevenTorsionBridgeBar
+import Ecdlp.Proved.SevenTorsionStructure

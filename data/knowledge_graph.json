@@ -4,14 +4,14 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 257,
+    "theorems": 260,
     "barriers": 6,
-    "edges": 345,
+    "edges": 378,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
       "native_decide": 20,
-      "Bézout certificate + native_decide": 6,
+      "Bézout certificate + native_decide": 7,
       "Mathlib (`map_cyclic`)": 2,
       "Mathlib (`lucas_primality`) + native_decide": 2,
       "Mathlib (`Finite.of_injective`) via `instFinitePoint": 2,
@@ -103,11 +103,13 @@
       "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates": 1,
       "Mathlib (`Separable.map`, `IsAlgClosed.splits`, `splits_iff_card_roots`, `nodup_roots`) + B4 certificates": 1,
       "Mathlib (closure group law, `map_aᵢ`) + template certificates": 1,
-      "Mathlib (finset card algebra, `torsionBy`) + closure bridge + separability + coprimality + N10(iii)": 1
+      "Mathlib (finset card algebra, `torsionBy`) + closure bridge + separability + coprimality + N10(iii)": 1,
+      "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₅` + N10(iii)": 1,
+      "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₇` + N10(iii)": 1
     },
     "by_area": {
-      "curve-torsion": 130,
-      "primality": 42,
+      "curve-torsion": 131,
+      "primality": 44,
       "generic-hardness": 25,
       "other": 25,
       "protocol-soundness": 23,
@@ -3457,6 +3459,45 @@
       "area": "primality",
       "dependency_depth": 9,
       "gated": true
+    },
+    {
+      "id": "thm-257",
+      "name": "Ecdlp.Curve.secp256k1_isCoprime_Ψ₂Sq_preΨ₇",
+      "short_name": "secp256k1_isCoprime_Ψ₂Sq_preΨ₇",
+      "module": "Ecdlp.Proved.CoprimePsi2Psi7",
+      "file": "Ecdlp/Proved/CoprimePsi2Psi7.lean",
+      "claim": "Ψ₂Sq` and `preΨ₇` are coprime (`secp256k1_isCoprime_Ψ₂Sq_preΨ₇`: no common root of the 2- and 7-division polynomials — \"no nonidentity point is annihilated by both 2 and 7\". Explicit Bézout certificate `u·Ψ₂Sq + v·preΨ₇ = 1` (extended-Euclid over `𝔽_p`, `x³`-sparse cofactors, 9 `native_decide` residue equations), completing the `Ψ₂Sq⊥ψₙ` family at `n = 7` — the \"`y ≠ 0` on nonzero 7-torsion\" input of the E[7] count. Constants script-emitted and independently re-verified (`scripts/certs/psi2_psi7_coprime_cert.py`, `CERT_OK`, byte-identical regeneration))",
+      "method": "Bézout certificate + native_decide",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 7,
+      "gated": true
+    },
+    {
+      "id": "thm-258",
+      "name": "Ecdlp.Curve.secp256k1Bar_five_torsion_structure`, `secp256k1Bar_five_nsmul_eq_zero_iff`, `secp256k1Bar_five_torsion_ncard",
+      "short_name": "secp256k1Bar_five_torsion_structure`,",
+      "module": "Ecdlp.Proved.FiveTorsionStructure.lean (+ FiveTorsionBridgeBar.lean)",
+      "file": "Ecdlp/Proved/FiveTorsionStructure.lean (+ FiveTorsionBridgeBar.lean)",
+      "claim": "#E[5](𝔽̄_p) = 25` and `E[5] ≅ (ℤ/5)` — N13 at `n = 5` (`secp256k1Bar_five_torsion_structure` + the closure bridge `secp256k1Bar_five_nsmul_eq_zero_iff` (`FiveTorsionBridgeBar.lean`, token-identical port of the `𝔽_p` five-bridge incl. `five_core`): the 5-torsion set equals `{O} ∪ {(x, ±y) : preΨ₅(x) = 0}` — 12 distinct roots (separability certificates) × 2 + O = 25 = 5; `y ≠ 0` via `Ψ₂Sq ⊥ preΨ₅`; N10(iii) classifies. Replication of the E[3] pattern)",
+      "method": "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₅` + N10(iii)",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
+      "gated": false
+    },
+    {
+      "id": "thm-259",
+      "name": "Ecdlp.Curve.secp256k1Bar_seven_torsion_structure`, `secp256k1Bar_seven_nsmul_eq_zero_iff`, `secp256k1Bar_seven_torsion_ncard",
+      "short_name": "secp256k1Bar_seven_torsion_structure`,",
+      "module": "Ecdlp.Proved.SevenTorsionStructure.lean (+ SevenTorsionBridgeBar.lean)",
+      "file": "Ecdlp/Proved/SevenTorsionStructure.lean (+ SevenTorsionBridgeBar.lean)",
+      "claim": "#E[7](𝔽̄_p) = 49` and `E[7] ≅ (ℤ/7)` — N13 at `n = 7` (`secp256k1Bar_seven_torsion_structure` + the closure bridge `secp256k1Bar_seven_nsmul_eq_zero_iff` (`SevenTorsionBridgeBar.lean`, token-identical port of `seven_master`/`seven_core`): 24 distinct `preΨ₇` roots × 2 + O = 49 = 7; `y ≠ 0` via the new `Ψ₂Sq ⊥ preΨ₇` certificate; N10(iii) classifies. The N13 instance family is now `n ∈ {3, 5, 7}` — every odd prime with a landed torsion bridge; the general-`n` theorem remains the open program (separability/N10 general core))",
+      "method": "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₇` + N10(iii)",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 0,
+      "gated": false
     }
   ],
   "barriers": [
@@ -3592,6 +3633,16 @@
     {
       "from": "Ecdlp.Proved.CoprimePsi2Psi5",
       "to": "Ecdlp.Proved.CoprimePsi3Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CoprimePsi2Psi7",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CoprimePsi2Psi7",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi7",
       "type": "imports"
     },
     {
@@ -3837,6 +3888,71 @@
     {
       "from": "Ecdlp.Proved.FiveTorsionBridge",
       "to": "Ecdlp.Proved.ThreeTorsionCard",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionBridgeBar",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionBridgeBar",
+      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionBridgeBar",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionBridgeBar",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionBridgeBar",
+      "to": "Ecdlp.Proved.ThreeTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.CoprimePsi2Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionResultantTransport",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.FiveTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.ThreeTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.TorsionStructure",
       "type": "imports"
     },
     {
@@ -4402,6 +4518,71 @@
     {
       "from": "Ecdlp.Proved.SevenTorsionBridge",
       "to": "Ecdlp.Proved.FiveTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionBridgeBar",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionBridgeBar",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionBridgeBar",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi7",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionBridgeBar",
+      "to": "Ecdlp.Proved.ThreeTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionBridgeBar",
+      "to": "Ecdlp.Proved.FiveTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.CoprimePsi2Psi7",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionResultantTransport",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.SevenTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.ThreeTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.TorsionStructure",
       "type": "imports"
     },
     {
@@ -5197,6 +5378,31 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.ThreeTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.CoprimePsi2Psi7",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FiveTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FiveTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.SevenTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.SevenTorsionStructure",
       "type": "imports"
     },
     {
