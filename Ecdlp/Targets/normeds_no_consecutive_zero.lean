@@ -22,6 +22,10 @@ consecutive-zero pair down the index range; the pairwise coprimality certificate
 kill the low-index/degenerate cases (`β = 0` forces `Ψ₃(x₀) ≠ 0` and
 `preΨ₄(x₀) ≠ 0`, etc.); `w 1 = 1` anchors the descent. Registry:
 `targets/normeds_no_consecutive_zero.json`.
+
+Coordination: a candidate proof of this statement exists in open draft PR #172
+(`NormEDSConsecutiveZeros.lean`) — unmerged; this stem stays the on-`main` target
+until that PR is reviewed and merged (see the registry `supersession_note`).
 -/
 
 namespace Ecdlp.Curve

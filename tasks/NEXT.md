@@ -150,9 +150,16 @@ Expected output:
   per the standard lifecycle (stem consumed, registry verified, ledger row). No
   weakening, no `sorry`. If attempts stall, a frozen memo recording the exact
   failing induction step instead.
+- **Coordination (2026-07-16):** open draft PR #172 already carries a
+  candidate proof (`NormEDSConsecutiveZeros.lean`) plus the wider per-ℓ
+  structure family — unmerged/unreviewed. The adversarial audit is
+  `notes/reviews/GEOMETRIC_TORSION_AUDIT.md`; on #172's merge this task
+  becomes a reconciliation (verify statement identity, consume the stem),
+  not a re-proof.
 Exit criteria:
-- Either the rung proved and promoted, or the blocker memo naming the precise
-  identity that resists (with the attempted decomposition).
+- Either the rung proved and promoted (possibly via a reviewed #172 merge with
+  statement-identity check), or the blocker memo naming the precise identity
+  that resists (with the attempted decomposition).
 Files allowed to edit:
 - `Ecdlp/Proved/` (new module on success) + `Ecdlp.lean` + `VERIFIED.md`
 - `targets/normeds_no_consecutive_zero.json`, `Ecdlp/Targets/`

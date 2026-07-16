@@ -18,5 +18,6 @@
   "source": {
     "family": "torsion-structure",
     "from": "TASK-005 decomposition memo (notes/POINT_COUNTING_KEYSTONE.md)"
-  }
+  },
+  "supersession_note": "A candidate proof of this exact statement exists in open draft PR #172 (Ecdlp/Proved/NormEDSConsecutiveZeros.lean, head 5f61fa5), CI-green on its branch but unmerged/unreviewed. This target stays open on main; when #172 merges, reconcile per the lifecycle (status -> verified, stem consumed, this note removed). See notes/reviews/GEOMETRIC_TORSION_AUDIT.md."
 }

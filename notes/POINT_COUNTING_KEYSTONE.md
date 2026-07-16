@@ -71,6 +71,17 @@ N7 (multiplication formula) remains the big effort item between N5 and the count
 route. The claim is precise: N5-scalar is the *smallest missing piece*, it is
 *unblocked now*, and everything before it on the critical path is kernel-verified.
 
+> **UPDATE (2026-07-16, same day):** the sibling draft **PR #172** (head `5f61fa5`,
+> unmerged) contains a candidate proof of exactly this scalar statement
+> (`NormEDSConsecutiveZeros.lean`), a general-`n` N5 (`DivisionPolynomialCoprime.lean`),
+> N7@{2,3,5}, B4@{3,5,7}, closure bridges, and per-ℓ structure theorems
+> `E[ℓ](𝔽̄_p) ≅ (ℤ/ℓ)²` for `ℓ ∈ {3,5,7}` — CI-green on its branch but **not yet
+> merged, reviewed, or counted**. Until a human merges it, the open stem
+> `Ecdlp/Targets/normeds_no_consecutive_zero.lean` remains the on-`main` registry
+> target; at merge time the target must be reconciled per the standard lifecycle
+> (status → verified, stem consumed). The adversarial audit of #172 lives in
+> `notes/reviews/GEOMETRIC_TORSION_AUDIT.md`.
+
 The single arithmetic-geometry fact that the whole "instantiate the crypto at the
 *real* secp256k1 group" story hangs on is the curve cardinality
 

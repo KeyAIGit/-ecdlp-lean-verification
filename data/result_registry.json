@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
   "declaration_count": 591,
-  "distinct_qualified_names": 475,
-  "verified_md_citations": 203,
+  "distinct_qualified_names": 473,
+  "verified_md_citations": 201,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -1015,14 +1015,6 @@
       "line": 59,
       "occurrences": 1
     },
-    "Ecdlp.Curve.secp256k1_eleven_torsion_x_card_le": {
-      "name": "secp256k1_eleven_torsion_x_card_le",
-      "namespace": "Ecdlp.Curve",
-      "kind": "theorem",
-      "file": "Ecdlp/Proved/ElevenTorsion.lean",
-      "line": 50,
-      "occurrences": 1
-    },
     "Ecdlp.Curve.secp256k1_embedding_degree_gt_100": {
       "name": "secp256k1_embedding_degree_gt_100",
       "namespace": "Ecdlp.Curve",
@@ -1549,7 +1541,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi3Psi5.lean",
       "line": 40,
-      "occurrences": 16
+      "occurrences": 18
     },
     "Ecdlp.Curve.secp256k1_psi2_evalEval": {
       "name": "secp256k1_psi2_evalEval",
@@ -1677,14 +1669,6 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
       "line": 94,
-      "occurrences": 1
-    },
-    "Ecdlp.Curve.secp256k1_thirteen_torsion_x_card_le": {
-      "name": "secp256k1_thirteen_torsion_x_card_le",
-      "namespace": "Ecdlp.Curve",
-      "kind": "theorem",
-      "file": "Ecdlp/Proved/ThirteenTorsion.lean",
-      "line": 50,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_threeTorsionX_finite": {
