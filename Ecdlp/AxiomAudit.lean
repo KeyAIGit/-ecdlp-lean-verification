@@ -112,6 +112,13 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 -- discrete-log protocol algebra (representative)
 #print axioms Ecdlp.Schnorr.schnorr_extract
 
+-- ECDSA malleability core (BIP-62 r.5/BIP-146 low-s): sibling (r,−s) via point negation
+-- preserving x; field-side lemmas pure-kernel, curve-side conditional on [Fact p.Prime]
+#print axioms Ecdlp.Curve.secp256k1_pointX_neg
+#print axioms Ecdlp.Curve.secp256k1_pointX_neg_zsmul_add
+#print axioms Ecdlp.Schnorr.ecdsa_sibling_signing_equation
+#print axioms Ecdlp.Schnorr.ecdsa_sibling_scalars
+
 -- Semaev's 3rd summation polynomial, forward direction (clean base: pure `linear_combination`)
 #print axioms Ecdlp.Semaev.S₃_eq_zero_of_chord
 #print axioms Ecdlp.Semaev.secp256k1_semaev_three_chord
