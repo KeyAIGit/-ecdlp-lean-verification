@@ -6,7 +6,7 @@ misleading, because this project is a verified **foundation adjacent to** the EC
 knowledge corpus, not a claim-by-claim formalization of it.*
 
 ## (1) Verified asset (the thing that exists)
-- **261 kernel-verified ledger rows** (~222 distinct
+- **263 kernel-verified ledger rows** (~224 distinct
   results after merging alternate-form/supporting rows), **0 `sorry`, no custom axioms**
   (machine-enforced; `native_decide` facts trust the compiler — see `TRUST_REPORT.md`).
 - Substantive fraction (honest, per `archive/docs/REVIEW_DOSSIER.md`): **~10–15%** genuinely novel

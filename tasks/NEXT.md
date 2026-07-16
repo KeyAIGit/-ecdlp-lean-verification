@@ -134,8 +134,8 @@ Current queue (in order; each = one design→verify→integrate→push cycle):
    kernel-structure lemma, the N13 pattern) into a Mathlib-PR-shaped bundle memo.
 5. **Weil W3 evaluation half**: extend `evalAt` to rational functions regular at `P`
    via localization (`notes/FOUNDATIONS.md` W3) — reopens the pairing ladder.
-Landed from this queue: E[3] (2026-07-16, first N13 instance), E[5]+E[7]
-(same day — N13 family now `n ∈ {3, 5, 7}`).
+Landed from this queue: E[3] (first N13 instance), E[5]+E[7], N7@4 (N7 small-n
+ladder complete), E[2] (N13 family now `n ∈ {2, 3, 5, 7}` — all primes with a bridge) — all 2026-07-16.
 Exit criteria:
 - Each item lands as a CI-green module + ledger row(s), or a frozen honest blocker
   memo naming the missing foundation.

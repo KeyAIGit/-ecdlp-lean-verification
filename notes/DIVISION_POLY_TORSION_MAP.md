@@ -38,7 +38,7 @@ decidable identities.
 | N7@small `n` | `x∘[n] = φₙ/ψₙ²` for fixed `n = 2,3,4,5` | closed `ring` identities | ✅ **`n = 2, 3, 4, 5` all proved** — `secp256k1_{double,triple,quadruple,quintuple}_x_eq_Φₙ_div_ΨSqₙ` (`{Multiplication,Triple,Quadruple,Quintuple}…Formula.lean`); `n = 4` is the first **even** rung (`4P = 2·(2P)`, doubling-of-doubling); all side-condition-free. The small-`n` ladder is complete; general `n` = the uniform N7 engine (open) |
 | N10(iii) | finite-abelian group of order `n²`, exponent `∣ n`, with `≤ d²` `d`-torsion is `(ℤ/n)²` | MID | ✅ **proved for prime `n`** (the secp256k1 case) — `nonempty_addEquiv_zmod_prod_of_card_eq_sq` (`Ecdlp/Proved/TorsionStructure.lean`); general composite `n` open |
 | N8, N9 | conditional on N7 (state with N7 as hypothesis, discharge later) | MID | reachable as reductions |
-| **N11+N13 @ `n = 3, 5, 7`** | `#E[n](𝔽̄_p) = n²` and `E[n] ≅ (ℤ/n)²` | assembly | ✅ **proved** — `secp256k1Bar_{three,five,seven}_torsion_structure` (`{Three,Five,Seven}TorsionStructure.lean`, on the closure bridges `*TorsionBridgeBar.lean`): the full N13 instance family at every odd prime with a landed bridge; general `n` = the open separability/N10 core |
+| **N11+N13 @ `n = 2, 3, 5, 7`** | `#E[n](𝔽̄_p) = n²` and `E[n] ≅ (ℤ/n)²` | assembly | ✅ **proved** — `secp256k1Bar_{two,three,five,seven}_torsion_structure` (`{Two,Three,Five,Seven}TorsionStructure.lean`): the full N13 instance family at every prime with a landed bridge (`n=2` via `y=0`, the odd `n` via the closure division-poly bridges); general `n` = the open separability/N10 core |
 
 **Blocked (with the single unblocking theorem):**
 - **N7 uniform** ← the addition-formula rational identity packaged for substitution in `k(E)` (effort, not theory).
