@@ -93,6 +93,7 @@ import Ecdlp.Proved.P256GeneratorOrder
 import Ecdlp.Proved.EvalRatAtNonvanishing
 import Ecdlp.Proved.Curve25519
 import Ecdlp.Proved.MultiplicationFormula
+import Ecdlp.Proved.TripleDivisionPolynomial
 import Ecdlp.Proved.WeilDivisorClass
 import Ecdlp.Proved.PointEvaluation
 import Ecdlp.Proved.EvalRatAtCompat
