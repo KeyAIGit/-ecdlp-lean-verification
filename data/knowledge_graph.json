@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 251,
+    "theorems": 252,
     "barriers": 6,
-    "edges": 307,
+    "edges": 315,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -97,13 +97,14 @@
       "Mathlib (`AddSubgroup.eq_bot_or_eq_top_of_prime_card`, `isSimpleAddGroup_of_prime_card`) + `secp256k1_card_point_eq_n": 1,
       "Mathlib (`normEDS_one`, `normEDS_neg`) + `normEDS_isEllSequence` + `linear_combination": 1,
       "Mathlib (`normEDS_two/three/four`, `normEDS_odd`, `Nat.sInf_mem`) + `linear_combination": 1,
-      "exists_normEDS_consecutive_eq_zero_of_not_isCoprime` + `normEDS_not_consecutive_zeros` + Bézout certificates (`IsCoprime.map`)": 1
+      "exists_normEDS_consecutive_eq_zero_of_not_isCoprime` + `normEDS_not_consecutive_zeros` + Bézout certificates (`IsCoprime.map`)": 1,
+      "Mathlib (`Φ_three`, `ΨSq_three`, `slope_of_X_ne`, `nonsingular_add`) + `linear_combination` certificates": 1
     },
     "by_area": {
       "curve-torsion": 130,
       "primality": 37,
+      "generic-hardness": 25,
       "other": 25,
-      "generic-hardness": 24,
       "protocol-soundness": 23,
       "attack-resistance": 6,
       "reduction": 5,
@@ -3373,6 +3374,19 @@
       "area": "primality",
       "dependency_depth": 6,
       "gated": true
+    },
+    {
+      "id": "thm-251",
+      "name": "Ecdlp.Curve.secp256k1_triple_x_eq_Φ₃_div_ΨSq₃`, `triple_x_core",
+      "short_name": "secp256k1_triple_x_eq_Φ₃_div_ΨSq₃`,",
+      "module": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "file": "Ecdlp/Proved/TripleMultiplicationFormula.lean",
+      "claim": "N7@3 — multiplication-by-3 `x`-coordinate formula: `x(3•P) = Φ₃(x)/ΨSq₃(x)` (`secp256k1_triple_x_eq_Φ₃_div_ΨSq₃`: whenever `3•P` is an affine point `(X,Y)`, then `X = (Φ 3)(x)/(ΨSq 3)(x) = (x⁹−672x⁶+2352x³+21952)/(9x⁸+504x⁵+7056x)` — with no side conditions: the generic branch runs the tangent-then-chord construction (the `FiveTorsionBridge` point algebra) into the core certificate `triple_x_core` (sympy-designed `linear_combination` cofactors, kernel-re-verified, `scripts/certs/triple_mult_formula_check.py`); the 2-torsion branch (`3P = P`) holds because `Ψ₂Sq(x) = 4y = 0` collapses `Φ₃ = X·Ψ₃ − preΨ₄·Ψ₂Sq` to `x·ΨSq₃`, with `ΨSq₃(x) ≠ 0` from the `Ψ₂Sq ⊥ Ψ₃` Bézout certificate. Node N7@3 of the `ψₙ↔E[n]` bridge — one rung past the `n = 2` base case (`MultiplicationFormula.lean`) toward the general `x([n]P) = Φₙ/ΨSqₙ`, the missing Mathlib rung; with N5 (`Φₙ ⊥ ΨSqₙ`) this instantiates the N10(i) lowest-terms picture at `n = 3`)",
+      "method": "Mathlib (`Φ_three`, `ΨSq_three`, `slope_of_X_ne`, `nonsingular_add`) + `linear_combination` certificates",
+      "status": "proved",
+      "area": "generic-hardness",
+      "dependency_depth": 7,
+      "gated": true
     }
   ],
   "barriers": [
@@ -4296,6 +4310,41 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "to": "Ecdlp.Proved.ThreeTorsionCard",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "to": "Ecdlp.Proved.ThreeTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "to": "Ecdlp.Proved.FiveTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "to": "Ecdlp.Proved.MultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TripleMultiplicationFormula",
+      "to": "Ecdlp.Proved.CoprimePsi2Psi3",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.TwistSecurity",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -4923,6 +4972,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.DivisionPolynomialCoprime",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.TripleMultiplicationFormula",
       "type": "imports"
     },
     {

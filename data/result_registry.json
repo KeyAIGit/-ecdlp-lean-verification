@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 595,
-  "distinct_qualified_names": 480,
-  "verified_md_citations": 203,
+  "declaration_count": 597,
+  "distinct_qualified_names": 482,
+  "verified_md_citations": 204,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -1831,6 +1831,14 @@
       "line": 42,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_triple_x_eq_": {
+      "name": "secp256k1_triple_x_eq_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TripleMultiplicationFormula.lean",
+      "line": 129,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_twist_maxprime_prime": {
       "name": "secp256k1_twist_maxprime_prime",
       "namespace": "Ecdlp.Curve",
@@ -1925,6 +1933,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/Secp256k1Params.lean",
       "line": 11,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.triple_x_core": {
+      "name": "triple_x_core",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TripleMultiplicationFormula.lean",
+      "line": 67,
       "occurrences": 1
     },
     "Ecdlp.Curve25519.A": {
