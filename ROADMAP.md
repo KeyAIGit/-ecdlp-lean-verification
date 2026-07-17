@@ -172,5 +172,8 @@ structural cleanup of tranche 1. Remaining, in order:
    precondition instead of contradicting each other.)
 6. Frontier triage of the 95 unassigned corpus claims (valuable for the map, not
    blocking v0.1).
-7. `explore.html`: fold its hardcoded data into the dashboard generator or retire
-   it — it must not remain an ungated public surface.
+7. ~~`explore.html`: fold its hardcoded data into the dashboard generator or retire
+   it — it must not remain an ungated public surface.~~ (done: folded — its two KPI
+   counters are stamped from `data/stats.json` by `build_dashboard.py`
+   (`sync_explore_html`) and gated by `check_status_consistency.py`; the stale
+   `228 ledger rows` that escaped every gate is now regenerated + drift-checked.)
