@@ -93,6 +93,8 @@ import Ecdlp.Proved.P256GeneratorOrder
 import Ecdlp.Proved.EvalRatAtNonvanishing
 import Ecdlp.Proved.Curve25519
 import Ecdlp.Proved.MultiplicationFormula
+import Ecdlp.Proved.TripleDivisionPolynomial
+import Ecdlp.Proved.TripleMultiplicationFormula
 import Ecdlp.Proved.WeilDivisorClass
 import Ecdlp.Proved.PointEvaluation
 import Ecdlp.Proved.EvalRatAtCompat
@@ -116,3 +118,5 @@ import Ecdlp.Proved.GlvOrbit
 import Ecdlp.Proved.P256Cardinality
 import Ecdlp.Proved.ElevenTorsion
 import Ecdlp.Proved.ThirteenTorsion
+import Ecdlp.Proved.P256TwistSecurity
+import Ecdlp.Proved.EcdsaMalleability
