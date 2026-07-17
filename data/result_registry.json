@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 714,
-  "distinct_qualified_names": 561,
-  "verified_md_citations": 209,
+  "declaration_count": 722,
+  "distinct_qualified_names": 568,
+  "verified_md_citations": 210,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -591,6 +591,30 @@
       "line": 70,
       "occurrences": 1
     },
+    "Ecdlp.Curve.curveB": {
+      "name": "curveB",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CurveSmoothness.lean",
+      "line": 42,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.curveB_": {
+      "name": "curveB_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveSmoothness.lean",
+      "line": 54,
+      "occurrences": 2
+    },
+    "Ecdlp.Curve.curveB_toProjective_nonsingular": {
+      "name": "curveB_toProjective_nonsingular",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveSmoothness.lean",
+      "line": 121,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.divisionResultantExponent": {
       "name": "divisionResultantExponent",
       "namespace": "Ecdlp.Curve",
@@ -782,6 +806,14 @@
       "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
       "line": 71,
       "occurrences": 2
+    },
+    "Ecdlp.Curve.jacobian_core": {
+      "name": "jacobian_core",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveSmoothness.lean",
+      "line": 77,
+      "occurrences": 1
     },
     "Ecdlp.Curve.natDegree_pre": {
       "name": "natDegree_pre",
@@ -1639,6 +1671,14 @@
       "line": 49,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_infinity_nonsingular": {
+      "name": "secp256k1_infinity_nonsingular",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveSmoothness.lean",
+      "line": 178,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_integral_resultant_bad_prime_support_of_formula": {
       "name": "secp256k1_integral_resultant_bad_prime_support_of_formula",
       "namespace": "Ecdlp.Curve",
@@ -1830,6 +1870,14 @@
       "file": "Ecdlp/Proved/CoprimePsi3Psi5.lean",
       "line": 40,
       "occurrences": 26
+    },
+    "Ecdlp.Curve.secp256k1_projective_nonsingular": {
+      "name": "secp256k1_projective_nonsingular",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveSmoothness.lean",
+      "line": 156,
+      "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_psi2_evalEval": {
       "name": "secp256k1_psi2_evalEval",
@@ -2061,6 +2109,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
       "line": 113,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_toProjective_eq": {
+      "name": "secp256k1_toProjective_eq",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CurveSmoothness.lean",
+      "line": 148,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_torsionBy_dvd_le": {

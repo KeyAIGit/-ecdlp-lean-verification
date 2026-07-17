@@ -49,6 +49,7 @@ git history and the GitHub Actions tab.
 | **Aggregate Schnorr verification (MuSig/FROST/Taproot multisig)** | `Ecdlp.Schnorr.threshold_schnorr_aggregate` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 | **Feldman VSS share verification (DKG)** | `Ecdlp.Schnorr.feldman_vss_verify` | Ecdlp/Proved/DlogCompleteness.lean | Mathlib | proved |
 | secp256k1 discriminant nonzero `Δ ≠ 0` in `𝔽_p` | `Ecdlp.Curve.secp256k1_Δ_ne_zero` | Ecdlp/Proved/Secp256k1Curve.lean | native_decide | proved |
+| **Projective smoothness of `Y²Z=X³+bZ³` — Jacobian criterion, Mathlib `Nonsingular`** (`curveB_toProjective_nonsingular`: over any field with `2,3,b≠0`, every projective point `P≠0` on `Y²Z=X³+bZ³` is `WeierstrassCurve.Projective.Nonsingular` — obtained by rewriting `Nonsingular` to Mathlib's three `pderiv`-defined partials `−3X²`, `2YZ`, `Y²−3bZ²` via `nonsingular_iff`, then discharging the disjunction with the self-contained two-chart core `jacobian_core` (affine chart `Z≠0` + point at infinity `[0:1:0]`). Specialized to `b=7,𝔽_p` as `secp256k1_projective_nonsingular` and `secp256k1_infinity_nonsingular`; companion discriminant `curveB_Δ = −432b²`. FBL-PURE-001; no `native_decide`, no new axioms) | `Ecdlp.Curve.curveB_toProjective_nonsingular` | Ecdlp/Proved/CurveSmoothness.lean | Mathlib (`Projective.nonsingular_iff`/`equation_iff`, `mul_eq_zero`, `pow_ne_zero`) + `linear_combination` | proved |
 | **secp256k1 is a Mathlib `EllipticCurve`** (grounds the group law) | `Ecdlp.Curve.secp256k1.IsElliptic` (instance) | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib + native_decide | proved² |
 | secp256k1 invariant `c₄ = 0` | `Ecdlp.Curve.secp256k1_c₄_eq_zero` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib | proved |
 | **secp256k1 j-invariant `j = 0`** (CM by `ℤ[ζ₃]` ⇒ GLV `λ`) | `Ecdlp.Curve.secp256k1_j_eq_zero` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib | proved² |
@@ -298,7 +299,7 @@ is Xu & Angdinata's. It is built and gated (the one-invariant holds), but delibe
 `isEllSequence_of_rec_one` (headline row above) remains this repo's own contribution.
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**266 ledger rows / ~227 distinct kernel-verified results** (39 rows are alternate-form,
+**267 ledger rows / ~228 distinct kernel-verified results** (39 rows are alternate-form,
 `supporting:`, or instantiation restatements of the same fact, e.g. the `ZMod`/ring forms
 of the GLV eigenvalue, the operator form of the GLV cube relation, the Semaev `S₃` symmetry
 lemmas, and the concrete-`⟨G⟩` instantiations of the abstract protocol suite — the two

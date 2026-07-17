@@ -14,6 +14,7 @@ import Ecdlp.Proved.DlogCompleteness
 import Ecdlp.Proved.DlogPrimitives
 import Ecdlp.Proved.DlogAdvanced
 import Ecdlp.Proved.Secp256k1Curve
+import Ecdlp.Proved.CurveSmoothness
 import Ecdlp.Proved.Secp256k1Params
 import Ecdlp.Proved.Secp256k1Order
 import Ecdlp.Proved.Secp256k1PrimeN
