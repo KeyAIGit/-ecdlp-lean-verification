@@ -19,9 +19,12 @@
 #   tmux new -d -s prover 'bash scripts/prover_daemon.sh >> ~/prover-daemon.log 2>&1'
 set -uo pipefail   # deliberately NOT -e: one bad iteration must not kill the daemon
 
-REPO_URL="https://github.com/KeyAIGit/-ecdlp-lean-verification.git"
-DEV_BRANCH="claude/admiring-darwin-uouep1"
-RESULTS_BRANCH="server/candidates"
+# All parameterized via env; defaults track main (per-session dev branches go
+# stale — override DEV_BRANCH when the loop should chase a specific branch):
+#   DEV_BRANCH=claude/my-session RESULTS_BRANCH=server/candidates bash scripts/prover_daemon.sh
+REPO_URL="${REPO_URL:-https://github.com/KeyAIGit/-ecdlp-lean-verification.git}"
+DEV_BRANCH="${DEV_BRANCH:-main}"
+RESULTS_BRANCH="${RESULTS_BRANCH:-server/candidates}"
 SLEEP_SECS="${SLEEP_SECS:-300}"
 
 export PATH="$HOME/.elan/bin:$PATH"

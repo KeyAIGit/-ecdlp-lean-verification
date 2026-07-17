@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 610,
+  "declaration_count": 616,
   "distinct_qualified_names": 494,
   "verified_md_citations": 205,
   "unresolved_citations": [],
@@ -1581,7 +1581,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi3Psi5.lean",
       "line": 40,
-      "occurrences": 12
+      "occurrences": 18
     },
     "Ecdlp.Curve.secp256k1_psi2_evalEval": {
       "name": "secp256k1_psi2_evalEval",

@@ -29,6 +29,9 @@ VERIFIED = ROOT / "VERIFIED.md"
 # Adversarially-verified coverage overrides (see the file's _meta for provenance): each maps a
 # corpus claim to verified/partial via a named kernel-verified theorem, confirmed by a skeptic pass.
 OVERRIDES = ROOT / "data" / "corpus_coverage_overrides.json"
+# Conservative triage of the claims the overrides+heuristics leave 'unassigned' (ROADMAP §7.6).
+# Fills ONLY the unassigned gap — never overrides a corpus/heuristic/verified classification.
+TRIAGE = ROOT / "data" / "corpus_triage.json"
 OUT = ROOT / "data" / "frontier_map.json"
 
 # The missing-foundation registry: what Mathlib lacks, and what it would unlock. `key` is
@@ -84,6 +87,23 @@ FOUNDATIONS = {
                        "E[n]≅(ℤ/n)², isogeny depth). Partly tractable — the active Track-B DAG.",
         "leverage": "medium",
         "effort": "weeks each rung",
+    },
+    "elliptic_nets": {
+        "status": "partial_in_mathlib",
+        "mathlib_gap": "Only rank-1 normEDS / IsEllSequence exists (+ a stalled net-relation PR). "
+                       "General multi-index (rank≥2) elliptic nets, net polynomials over arbitrary "
+                       "fields, and Stange's reconstruction / Laurent-property theory are absent — "
+                       "gating elliptic-net index calculus and net-based point relations.",
+        "leverage": "low",
+        "effort": "months (research-grade)",
+    },
+    "heights": {
+        "status": "missing_from_mathlib",
+        "mathlib_gap": "No canonical (Néron–Tate) height, Mordell–Weil lattice, or point-lifting "
+                       "to characteristic 0. Blocks the xedni-calculus / height-bound relation "
+                       "claims (all negative-result / heuristic in nature).",
+        "leverage": "low",
+        "effort": "months",
     },
 }
 
@@ -152,6 +172,9 @@ def main(argv: list[str]) -> int:
     overrides = {}
     if OVERRIDES.exists():
         overrides = (json.loads(OVERRIDES.read_text(encoding="utf-8")) or {}).get("overrides", {})
+    triage = {}
+    if TRIAGE.exists():
+        triage = (json.loads(TRIAGE.read_text(encoding="utf-8")) or {}).get("triage", {})
     # Headline ledger-row count comes from the ONE canonical source (stats.json → VERIFIED.md's
     # canonical figure), never re-tallied here, so this map can't disagree with STATUS.md.
     # Fall back to the regex tally only if stats.json is absent (first-run bootstrap).
@@ -170,6 +193,14 @@ def main(argv: list[str]) -> int:
         area = (r.get("mathlib_area", "") or "").strip()
         stmt = (r.get("formal_statement", "") or r.get("label", "") or "").strip()
         status, foundation, confidence = classify(fs, area, stmt)
+        # Triage fills ONLY the unassigned fall-through (adversarially-conservative: blocked or
+        # informal, never optimistic). verified/overrides below still win over it.
+        if status == "unassigned":
+            t = triage.get(cid)
+            if t:
+                status = t.get("status", "unassigned")
+                foundation = t.get("foundation") or None
+                confidence = "triage"
         verified = bool(cid and cid in vtext)
         if verified:
             status, confidence = "verified", "corpus"

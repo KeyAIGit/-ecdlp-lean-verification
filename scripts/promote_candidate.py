@@ -8,7 +8,10 @@ instead of a raw candidate for a human to wire by hand:
 
   * move `candidates/<id>.lean` -> `Ecdlp/Proved/<Module>.lean`;
   * add `import Ecdlp.Proved.<Module>` to `Ecdlp.lean` (idempotent);
-  * set `targets/<id>.json` `status` -> `verified` and record `verified_in`;
+  * set `targets/<id>.json` `status` -> `verified`, record `verified_in`, and consume the
+    open stem: remove it from `Ecdlp/Targets/` and null the `stem_file` pointer, so
+    `Ecdlp/Targets/` holds only open stems and the registry never carries dead pointers
+    (`scripts/check_targets.py` gates this);
   * append a row to a dedicated, script-managed table in `VERIFIED.md` (created on first use)
     so the coverage entry exists without touching the hand-written prose sections.
 
@@ -138,18 +141,28 @@ def promote_one(cand: Path, dry: bool) -> tuple[str, str]:
         return "skipped", f"{tid}: Ecdlp/Proved/{module}.lean already exists — refusing to overwrite"
     qname = qualified_name(text, name)
     method = "native_decide" if "native_decide" in text else "Mathlib / tier-0 tactic"
+    stem_rel = spec.get("stem_file")
+    stem_path = (ROOT / stem_rel) if stem_rel else None
 
     if dry:
         actions = [f"write {proved_path.relative_to(ROOT)}",
                    f"import Ecdlp.Proved.{module}",
                    f"targets/{tid}.json status -> verified",
                    f"VERIFIED.md ledger row for `{qname}`"]
+        if stem_rel:
+            actions.append(f"consume stem: null stem_file"
+                           + (f" and remove {stem_rel}" if stem_path.exists() else ""))
         return "promoted", f"{tid}: [dry-run] " + "; ".join(actions)
 
     proved_path.write_text(text, encoding="utf-8")
     add_import(module, dry=False)
     spec["status"] = "verified"
     spec["verified_in"] = f"Ecdlp/Proved/{module}.lean"
+    # The stem is consumed by promotion: Ecdlp/Targets/ holds only OPEN stems, and a
+    # verified target must not keep a pointer at a deleted file (check_targets.py gates it).
+    if stem_path is not None and stem_path.exists():
+        stem_path.unlink()
+    spec["stem_file"] = None
     spec_path.write_text(json.dumps(spec, indent=2) + "\n", encoding="utf-8")
     append_ledger_row(qname, module, method, dry=False)
     cand.unlink()  # consumed

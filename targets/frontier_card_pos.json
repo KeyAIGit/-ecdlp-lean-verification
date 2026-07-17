@@ -15,7 +15,7 @@
     ],
     "escalate_if_failed": true
   },
-  "stem_file": "Ecdlp/Targets/frontier_card_pos.lean",
+  "stem_file": null,
   "source": {
     "family": "frontier-expander",
     "from": "verified frontier"

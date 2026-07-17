@@ -36,6 +36,7 @@ def main() -> int:
     status = read_text("STATUS.md")
     index = read_text("index.html")
     dashboard = read_text("dashboard.html")
+    explore = read_text("explore.html")
     tasks = read_text("tasks/NEXT.md")
     hypotheses = read_text("experiments/HYPOTHESES.yaml")
 
@@ -78,6 +79,14 @@ def main() -> int:
           "index.html distinct-results counter does not match data/stats.json")
     check(f"snapshot {ledger_rows} ledger rows / ~{distinct} distinct" in dashboard,
           "dashboard.html snapshot stamp does not match data/stats.json")
+    # explore.html (3D map) KPI counters — generated + gated (ROADMAP §7.7; formerly an
+    # ungated public surface with a stale '228 ledger rows' that escaped every check).
+    check(f'<div class="n">{ledger_rows}</div><div class="l">ledger rows</div>' in explore,
+          "explore.html ledger-rows KPI does not match data/stats.json "
+          "(regenerate: python3 scripts/build_dashboard.py)")
+    check(f'<div class="n">{proved_modules}</div><div class="l">proved modules</div>' in explore,
+          "explore.html proved-modules KPI does not match data/stats.json "
+          "(regenerate: python3 scripts/build_dashboard.py)")
     check("Sync Health" in dashboard,
           "dashboard.html must expose a Sync Health section")
     check("repo/ARTIFACTS.yaml" in dashboard and "scripts/check_repo_artifacts.py" in dashboard,

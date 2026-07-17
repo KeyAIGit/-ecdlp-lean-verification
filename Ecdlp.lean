@@ -116,5 +116,7 @@ import Ecdlp.Proved.GlvDivPoly
 import Ecdlp.Proved.FrobeniusCM
 import Ecdlp.Proved.GlvOrbit
 import Ecdlp.Proved.P256Cardinality
+import Ecdlp.Proved.ElevenTorsion
+import Ecdlp.Proved.ThirteenTorsion
 import Ecdlp.Proved.P256TwistSecurity
 import Ecdlp.Proved.EcdsaMalleability
