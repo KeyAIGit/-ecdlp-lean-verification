@@ -176,4 +176,4 @@ structural cleanup of tranche 1. Remaining, in order:
    it — it must not remain an ungated public surface.~~ (done: folded — its two KPI
    counters are stamped from `data/stats.json` by `build_dashboard.py`
    (`sync_explore_html`) and gated by `check_status_consistency.py`; the stale
-   `228 ledger rows` that escaped every gate is now regenerated + drift-checked.)
+   hardcoded KPI that escaped every gate is now regenerated + drift-checked.)
