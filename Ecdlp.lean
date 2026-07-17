@@ -123,3 +123,8 @@ import Ecdlp.Proved.EcdsaMalleability
 import Ecdlp.Proved.TorsionCounting
 import Ecdlp.Proved.NormEDSConsecutiveZeros
 import Ecdlp.Proved.DivisionPolynomialCoprime
+import Ecdlp.Proved.DivisionPolynomialSquarefree
+import Ecdlp.Proved.DivisionPolynomialSeparable
+import Ecdlp.Proved.ThreeTorsionBridgeBar
+import Ecdlp.Proved.FiveTorsionBridgeBar
+import Ecdlp.Proved.SevenTorsionBridgeBar
