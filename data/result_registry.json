@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 618,
-  "distinct_qualified_names": 496,
-  "verified_md_citations": 205,
+  "declaration_count": 623,
+  "distinct_qualified_names": 501,
+  "verified_md_citations": 206,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -2327,12 +2327,52 @@
       "line": 13,
       "occurrences": 1
     },
+    "Ecdlp.NormEDS.no_consec_aux": {
+      "name": "no_consec_aux",
+      "namespace": "Ecdlp.NormEDS",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSConsecutiveZeros.lean",
+      "line": 80,
+      "occurrences": 1
+    },
+    "Ecdlp.NormEDS.normEDS_not_consecutive_zeros": {
+      "name": "normEDS_not_consecutive_zeros",
+      "namespace": "Ecdlp.NormEDS",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSConsecutiveZeros.lean",
+      "line": 194,
+      "occurrences": 1
+    },
+    "Ecdlp.NormEDS.normEDS_not_consecutive_zeros'": {
+      "name": "normEDS_not_consecutive_zeros'",
+      "namespace": "Ecdlp.NormEDS",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSConsecutiveZeros.lean",
+      "line": 215,
+      "occurrences": 1
+    },
+    "Ecdlp.NormEDS.normEDS_shift_mul_shift_of_eq_zero": {
+      "name": "normEDS_shift_mul_shift_of_eq_zero",
+      "namespace": "Ecdlp.NormEDS",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSConsecutiveZeros.lean",
+      "line": 53,
+      "occurrences": 1
+    },
     "Ecdlp.NormEDS.normEDS_somos4": {
       "name": "normEDS_somos4",
       "namespace": "Ecdlp.NormEDS",
       "kind": "theorem",
       "file": "Ecdlp/Proved/NormEDSSomos4.lean",
       "line": 183,
+      "occurrences": 1
+    },
+    "Ecdlp.NormEDS.normEDS_sub_eq_zero_of_eq_zero": {
+      "name": "normEDS_sub_eq_zero_of_eq_zero",
+      "namespace": "Ecdlp.NormEDS",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSConsecutiveZeros.lean",
+      "line": 64,
       "occurrences": 1
     },
     "Ecdlp.NormEDS.somos4_dom": {
