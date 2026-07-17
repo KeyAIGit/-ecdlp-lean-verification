@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 818,
-  "distinct_qualified_names": 624,
+  "declaration_count": 836,
+  "distinct_qualified_names": 639,
   "verified_md_citations": 214,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -4359,6 +4359,14 @@
       "line": 59,
       "occurrences": 1
     },
+    "Ecdlp.Weil.RegularAt": {
+      "name": "RegularAt",
+      "namespace": "Ecdlp.Weil",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 90,
+      "occurrences": 4
+    },
     "Ecdlp.Weil.algebraMap_functionField_ne_zero": {
       "name": "algebraMap_functionField_ne_zero",
       "namespace": "Ecdlp.Weil",
@@ -4375,12 +4383,28 @@
       "line": 35,
       "occurrences": 1
     },
+    "Ecdlp.Weil.evalAt_eq_zero_iff_mem": {
+      "name": "evalAt_eq_zero_iff_mem",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 65,
+      "occurrences": 1
+    },
     "Ecdlp.Weil.evalAt_ker": {
       "name": "evalAt_ker",
       "namespace": "Ecdlp.Weil",
       "kind": "theorem",
       "file": "Ecdlp/Proved/PointEvaluation.lean",
       "line": 48,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalAt_ne_zero_iff_notMem": {
+      "name": "evalAt_ne_zero_iff_notMem",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 73,
       "occurrences": 1
     },
     "Ecdlp.Weil.evalAt_surjective": {
@@ -4471,12 +4495,36 @@
       "line": 29,
       "occurrences": 1
     },
+    "Ecdlp.Weil.evalRatAt_congr": {
+      "name": "evalRatAt_congr",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 246,
+      "occurrences": 1
+    },
     "Ecdlp.Weil.evalRatAt_eq_evalFracAt": {
       "name": "evalRatAt_eq_evalFracAt",
       "namespace": "Ecdlp.Weil",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FunctionFieldEval.lean",
       "line": 114,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalRatAt_eq_evalFracAt_of_toFunctionField": {
+      "name": "evalRatAt_eq_evalFracAt_of_toFunctionField",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 222,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalRatAt_eq_evalReg": {
+      "name": "evalRatAt_eq_evalReg",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 258,
       "occurrences": 1
     },
     "Ecdlp.Weil.evalRatAt_eq_zero_iff": {
@@ -4501,6 +4549,22 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/PointEvaluation.lean",
       "line": 87,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalReg": {
+      "name": "evalReg",
+      "namespace": "Ecdlp.Weil",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 135,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalReg_eq": {
+      "name": "evalReg_eq",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 142,
       "occurrences": 1
     },
     "Ecdlp.Weil.functionField_exists_mul_num_den": {
@@ -4543,6 +4607,38 @@
       "line": 112,
       "occurrences": 1
     },
+    "Ecdlp.Weil.ne_zero_of_evalAt_ne_zero": {
+      "name": "ne_zero_of_evalAt_ne_zero",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 80,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.regularAt_eval_unique": {
+      "name": "regularAt_eval_unique",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 120,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.regularAt_of_toFunctionField_eq": {
+      "name": "regularAt_of_toFunctionField_eq",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 190,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.regularAt_toFunctionField": {
+      "name": "regularAt_toFunctionField",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 177,
+      "occurrences": 1
+    },
     "Ecdlp.Weil.residueFieldEquiv": {
       "name": "residueFieldEquiv",
       "namespace": "Ecdlp.Weil",
@@ -4573,6 +4669,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FunctionFieldRepr.lean",
       "line": 151,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.secp256k1_miller_function_regularAt": {
+      "name": "secp256k1_miller_function_regularAt",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 278,
       "occurrences": 1
     },
     "Ecdlp.Weil.secp256k1_miller_function_unique": {
@@ -4613,6 +4717,22 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/WeilDivisorClass.lean",
       "line": 51,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.toFunctionField": {
+      "name": "toFunctionField",
+      "namespace": "Ecdlp.Weil",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 156,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.toFunctionField_algebraMap": {
+      "name": "toFunctionField_algebraMap",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "line": 167,
       "occurrences": 1
     },
     "Ecdlp.Weil.xyIdeal_isMaximal": {

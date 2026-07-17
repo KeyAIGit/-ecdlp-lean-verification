@@ -8,7 +8,7 @@
 |---|---|---|
 | ledger rows | **265** | `VERIFIED.md` → `data/stats.json` |
 | distinct results | **~226** | `data/stats.json` |
-| proved modules | **130** | `data/stats.json` |
+| proved modules | **131** | `data/stats.json` |
 | `sorry` | **0** | axiom-audit + no-sorry gate |
 | custom axioms | **0** | axiom-audit gate |
 

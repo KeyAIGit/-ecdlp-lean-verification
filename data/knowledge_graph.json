@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 265,
     "barriers": 6,
-    "edges": 397,
+    "edges": 398,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -4062,6 +4062,11 @@
     {
       "from": "Ecdlp.Proved.FunctionFieldEval",
       "to": "Ecdlp.Proved.WeilDivisorClass",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FunctionFieldRegular",
+      "to": "Ecdlp.Proved.FunctionFieldRepr",
       "type": "imports"
     },
     {
