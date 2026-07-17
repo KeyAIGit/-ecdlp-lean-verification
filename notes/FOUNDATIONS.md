@@ -102,9 +102,13 @@ The concrete sub-ladder, from what is now done to the summit:
   evaluation API and does not know `F[E]` is Dedekind): the **regular-function evaluation
   homomorphism** `evalAt : F[E] →+* F` (value of a regular function at a rational point, via
   `quotientXYIdealEquiv`) is ✓ **done** (`Ecdlp/Proved/PointEvaluation.lean`: `evalAt_surjective`,
-  `evalAt_ker` = the maximal ideal at `P`). **Next:** extend `evalAt` to rational functions
-  *regular at `P`* via localization at the maximal ideal, so `f_P` itself can be evaluated where it
-  has no pole.
+  `evalAt_ker` = the maximal ideal at `P`). **Done further** (2026-07-16): the localization form
+  `evalRatAt : Localization.AtPrime ⟨X−x,Y−y⟩ →+* F` and now the **fraction-level layer**
+  (`Ecdlp/Proved/FunctionFieldEval.lean`): `evalFracAt` with representation-independence,
+  Miller-loop multiplicativity, unit-nonvanishing, the `evalRatAt` bridge, and
+  `secp256k1_miller_eval_scaling` (the W2 representative ambiguity is a globally
+  nonvanishing unit at every rational point). **Next:** the `a/b`-presentation extraction
+  for abstract `FunctionField` elements, then evaluation at divisors `f_P(D_Q)`.
 - **W4 — Weil reciprocity** `f(div g) = g(div f)` — the crux identity. *Likely a genuine Mathlib
   gap.*
 - **W5 — define `eₙ(P,Q)` and prove bilinear / alternating / non-degenerate / Galois-equivariant.*

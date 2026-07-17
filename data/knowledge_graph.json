@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 263,
+    "theorems": 264,
     "barriers": 6,
-    "edges": 391,
+    "edges": 395,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -107,10 +107,11 @@
       "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₅` + N10(iii)": 1,
       "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₇` + N10(iii)": 1,
       "Mathlib (`Separable`, `Separable.map`, `IsAlgClosed.splits`, `nodup_roots`) + Bézout native_decide": 1,
-      "closure 2-torsion (`y=0`) + `CubicSeparable` roots + N10(iii)": 1
+      "closure 2-torsion (`y=0`) + `CubicSeparable` roots + N10(iii)": 1,
+      "evalAt`/`evalRatAt` layer + `secp256k1_miller_function_unique` (W2)": 1
     },
     "by_area": {
-      "curve-torsion": 131,
+      "curve-torsion": 132,
       "primality": 47,
       "generic-hardness": 25,
       "other": 25,
@@ -3539,6 +3540,19 @@
       "area": "primality",
       "dependency_depth": 4,
       "gated": true
+    },
+    {
+      "id": "thm-263",
+      "name": "Ecdlp.Weil.evalFracAt_well_defined`, `evalFracAt_mul`, `evalAt_unit_ne_zero`, `evalRatAt_eq_evalFracAt`, `secp256k1_miller_eval_scaling",
+      "short_name": "evalFracAt_well_defined`,",
+      "module": "Ecdlp.Proved.FunctionFieldEval",
+      "file": "Ecdlp/Proved/FunctionFieldEval.lean",
+      "claim": "W3 evaluation layer completed at the fraction level — `evalFracAt` + the Miller-representative nonvanishing (`evalFracAt h a b := evalAt h a / evalAt h b` with the representation-independence core `evalFracAt_well_defined` (cross-multiplication `a₁b₂ = a₂b₁` + nonvanishing denominators ⟹ equal values — transported through the ring hom `evalAt`, no domain instance needed), Miller-loop multiplicativity `evalFracAt_mul`, unit facts (`evalAt_unit_ne_zero`: coordinate-ring units never vanish at rational points; `evalFracAt_unit_mul`), and the bridge to the localization layer `evalRatAt_eq_evalFracAt` (an `a/b` presentation of a rational function regular at `P` evaluates identically under the residue map). Plus the secp256k1 Miller-layer theorem `secp256k1_miller_eval_scaling`: the W2 Miller-function representative ambiguity is a globally nonvanishing unit factor at every rational point — the well-definedness seed for the eventual `eₙ`. Honest scope: extracting an `a/b` presentation from an abstract `FunctionField` element is the documented next rung; curve-agnostic sections PR-able)",
+      "method": "evalAt`/`evalRatAt` layer + `secp256k1_miller_function_unique` (W2)",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
     }
   ],
   "barriers": [
@@ -4019,6 +4033,21 @@
     {
       "from": "Ecdlp.Proved.FrobeniusCM",
       "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FunctionFieldEval",
+      "to": "Ecdlp.Proved.PointEvaluation",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FunctionFieldEval",
+      "to": "Ecdlp.Proved.EvalRatAtCompat",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FunctionFieldEval",
+      "to": "Ecdlp.Proved.WeilDivisorClass",
       "type": "imports"
     },
     {
@@ -5509,6 +5538,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.TwoTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FunctionFieldEval",
       "type": "imports"
     },
     {

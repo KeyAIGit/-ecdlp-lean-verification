@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 801,
-  "distinct_qualified_names": 607,
-  "verified_md_citations": 212,
+  "declaration_count": 810,
+  "distinct_qualified_names": 616,
+  "verified_md_citations": 213,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -4383,6 +4383,62 @@
       "line": 41,
       "occurrences": 1
     },
+    "Ecdlp.Weil.evalAt_unit_ne_zero": {
+      "name": "evalAt_unit_ne_zero",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldEval.lean",
+      "line": 95,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalFracAt": {
+      "name": "evalFracAt",
+      "namespace": "Ecdlp.Weil",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FunctionFieldEval.lean",
+      "line": 57,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalFracAt_def": {
+      "name": "evalFracAt_def",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldEval.lean",
+      "line": 61,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalFracAt_mul": {
+      "name": "evalFracAt_mul",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldEval.lean",
+      "line": 87,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalFracAt_one": {
+      "name": "evalFracAt_one",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldEval.lean",
+      "line": 67,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalFracAt_unit_mul": {
+      "name": "evalFracAt_unit_mul",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldEval.lean",
+      "line": 101,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalFracAt_well_defined": {
+      "name": "evalFracAt_well_defined",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldEval.lean",
+      "line": 77,
+      "occurrences": 1
+    },
     "Ecdlp.Weil.evalRatAt": {
       "name": "evalRatAt",
       "namespace": "Ecdlp.Weil",
@@ -4397,6 +4453,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/EvalRatAtCompat.lean",
       "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalRatAt_eq_evalFracAt": {
+      "name": "evalRatAt_eq_evalFracAt",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldEval.lean",
+      "line": 114,
       "occurrences": 1
     },
     "Ecdlp.Weil.evalRatAt_eq_zero_iff": {
@@ -4429,6 +4493,14 @@
       "kind": "def",
       "file": "Ecdlp/Proved/PointEvaluation.lean",
       "line": 65,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.secp256k1_miller_eval_scaling": {
+      "name": "secp256k1_miller_eval_scaling",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FunctionFieldEval.lean",
+      "line": 137,
       "occurrences": 1
     },
     "Ecdlp.Weil.secp256k1_miller_function_exists": {
