@@ -131,3 +131,4 @@ import Ecdlp.Proved.QuadrupleMultiplicationFormula
 import Ecdlp.Proved.CubicSeparable
 import Ecdlp.Proved.TwoTorsionStructure
 import Ecdlp.Proved.FunctionFieldEval
+import Ecdlp.Proved.FunctionFieldRepr
