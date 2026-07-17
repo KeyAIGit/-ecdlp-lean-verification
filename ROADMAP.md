@@ -170,8 +170,11 @@ structural cleanup of tranche 1. Remaining, in order:
    from env (default `main`) instead of a stale hardcoded session branch;
    bootstrap-rsync vs server-clone comments now state the real credential
    precondition instead of contradicting each other.)
-6. Frontier triage of the 95 unassigned corpus claims (valuable for the map, not
-   blocking v0.1).
+6. ~~Frontier triage of the 95 unassigned corpus claims (valuable for the map, not
+   blocking v0.1).~~ (done: conservative adversarial triage — all 95 resolved to
+   `blocked` (25, a genuine math statement needing a missing foundation) or
+   `informal` (70, prose/heuristic/attack-assessment); `data/corpus_triage.json`,
+   applied only to the unassigned gap; frontier completeness now 100%.)
 7. ~~`explore.html`: fold its hardcoded data into the dashboard generator or retire
    it — it must not remain an ungated public surface.~~ (done: folded — its two KPI
    counters are stamped from `data/stats.json` by `build_dashboard.py`
