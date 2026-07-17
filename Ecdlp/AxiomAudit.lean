@@ -94,6 +94,12 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_twist_maxprime_prime
 #print axioms Ecdlp.Curve.secp256k1_twist_security_profile
 
+-- P-256 twist companion: 2p+2−n = 3·5·13·179·Q (Q a 241-bit prime), cofactor 34905 ≈ 2¹⁵,
+-- twist DLP ≈√Q ≈ 2¹²⁰ < 2¹²⁸; interpretation as #Ẽ conditional on #E=n (in-repo: n∣#E only)
+#print axioms Ecdlp.P256.p256_twist_order_factorization
+#print axioms Ecdlp.P256.p256_twist_maxprime_prime
+#print axioms Ecdlp.P256.p256_twist_security_profile
+
 -- CM-by-ℤ[ω] Frobenius arithmetic certificate: N(π)=p, Tr(π)=p+1−n, 4p=t²+3b² (End⊗ℚ=ℚ(√−3))
 #print axioms Ecdlp.Curve.secp256k1_frobenius_norm
 #print axioms Ecdlp.Curve.secp256k1_frobenius_trace
@@ -105,6 +111,13 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 
 -- discrete-log protocol algebra (representative)
 #print axioms Ecdlp.Schnorr.schnorr_extract
+
+-- ECDSA malleability core (BIP-62 r.5/BIP-146 low-s): sibling (r,−s) via point negation
+-- preserving x; field-side lemmas pure-kernel, curve-side conditional on [Fact p.Prime]
+#print axioms Ecdlp.Curve.secp256k1_pointX_neg
+#print axioms Ecdlp.Curve.secp256k1_pointX_neg_zsmul_add
+#print axioms Ecdlp.Schnorr.ecdsa_sibling_signing_equation
+#print axioms Ecdlp.Schnorr.ecdsa_sibling_scalars
 
 -- Semaev's 3rd summation polynomial, forward direction (clean base: pure `linear_combination`)
 #print axioms Ecdlp.Semaev.S₃_eq_zero_of_chord

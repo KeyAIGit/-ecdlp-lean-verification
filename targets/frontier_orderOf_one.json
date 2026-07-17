@@ -15,7 +15,7 @@
     ],
     "escalate_if_failed": true
   },
-  "stem_file": "Ecdlp/Targets/frontier_orderOf_one.lean",
+  "stem_file": null,
   "source": {
     "family": "frontier-expander",
     "from": "verified frontier"

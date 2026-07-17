@@ -15,7 +15,7 @@
     ],
     "escalate_if_failed": true
   },
-  "stem_file": "Ecdlp/Targets/smart_trace_one_scope_001.lean",
+  "stem_file": null,
   "source": {
     "formal_status": "formalizable",
     "mathlib_area": "(arithmetic)",

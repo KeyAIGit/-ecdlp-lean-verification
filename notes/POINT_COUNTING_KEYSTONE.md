@@ -10,6 +10,78 @@
 > the geometric `E[n] ≅ (ℤ/n)²` (extension-field points) and the **P-256**
 > cardinality (the certificate exploits `j = 0`, which P-256 lacks).
 
+## The successor gap (TASK-005 memo, 2026-07-16): geometric `E[n] ≅ (ℤ/n)²`
+
+**Decision.** Of TASK-005's two branches, this memo takes the **geometric torsion
+structure** (the Weil-pairing feeder). The **P-256 cardinality stays parked** — its
+blocker is unchanged (Hasse, or a P-256-specific certificate that cannot reuse the
+`j = 0` trick; see §5 below and `BARRIERS.md`).
+
+**Where the full decomposition lives** (one place per fact — this section only records
+the current frontier and the decision): the lemma DAG is
+`notes/DIVISION_POLY_TORSION_MAP.md` (nodes N1–N13, critical path
+`N5 → N7 → N10 → N11 → N13`), the route comparison is `notes/SEPARABILITY_ROUTES.md`
+(Route B, via division polynomials — recommended), and the N5/B1 sub-plan is
+`notes/B1_COPRIMALITY_PLAN.md` + `notes/B1_TRACTABILITY_MAP.md`.
+
+**Frontier moved — what is now kernel-verified** (beyond what those maps recorded when
+drafted): L1 (`CoprimeCommonRoot.lean`), the L2/L3 eval bridge + descent
+(`DivisionPolynomialEvalBridge.lean`, PR #171: `¬IsCoprime(Φₙ,ΨSqₙ)` over `𝔽_p` ⟹ two
+*consecutive* scalar-`normEDS` zeros over `𝔽̄_p`), the pairwise degenerate-case
+certificates L5/L6/L6b (`CoprimePsi2Psi3/CoprimePsi3PrePsi4/CoprimePsi2PrePsi4.lean`),
+N12 (`TorsionCoprime.lean`), the N10(iii) kernel-structure lemma for **prime** `n`
+(`TorsionStructure.lean`, PR #170 — exactly the case secp256k1 needs), the N4 monic
+half (`secp256k1_Φ_monic`), **and the L4 layer itself**: `normEDS_isEllSequence`
+(`NormEDSIsElliptic.lean` — the open Mathlib TODO, ported net-relation proof,
+unconditional over any `CommRing`), `normEDS_somos4` (`NormEDSSomos4.lean`), and the
+`isEllSequence_of_rec_one` bridge (`EllSequenceRecOne.lean`).
+
+**The smallest missing piece, named.** With L4 landed, the next gap on the critical
+path is **no longer missing Mathlib theory** — it is one concrete lemma, the **N5
+scalar obligation**:
+
+> for `x₀, β ∈ 𝔽̄_p` with `β² = Ψ₂Sq(x₀)` and `w := normEDS β (Ψ₃(x₀)) (preΨ₄(x₀))`:
+> `w(n)` and `w(n+1)` never vanish simultaneously for `n ≥ 1`.
+
+Machine-readable statement: open stem `Ecdlp/Targets/normeds_no_consecutive_zero.lean`
+(registry `targets/normeds_no_consecutive_zero.json`). Via the landed descent
+(contrapositive of `secp256k1_exists_normEDS_consecutive_eq_zero_of_not_isCoprime`)
+it closes **N5** `IsCoprime (Φ n) (ΨSq n)` for secp256k1; N5 feeds the N10 degree
+input and N11's counting route, and — with the prime-case N10(iii) already proved —
+the assembly N13 gives `#E[n] = n²` and `E[n] ≅ (ℤ/n)²` over `𝔽̄_p`, the
+non-degeneracy substrate for the Weil pairing (W5 in `notes/FOUNDATIONS.md`).
+
+**Proof shape (why it is reachable):** anchor `w(1) = 1`; the pairwise certificates
+kill the degenerate corner (`β = 0 ⟺ Ψ₂Sq(x₀) = 0` forces `Ψ₃(x₀) ≠ 0` by L5 and
+`preΨ₄(x₀) ≠ 0` by L6b; L6 excludes `Ψ₃(x₀) = preΨ₄(x₀) = 0`); a consecutive-zero
+pair then propagates to lower indices through `normEDS_somos4` / instances of the
+`IsEllSequence` three-term identity, descending to a contradiction with `w(1) = 1`
+(strong induction, parity case splits). Pure algebra over an integral domain — no new
+geometry, no scheme theory.
+
+**Honest effort estimate.** MID-node, single-file scale (~150–400 lines with case
+splits) — days of focused kernel-checked work, not the multi-month grade of N7
+(the general multiplication formula, still CORE-by-effort, upstream only as stalled
+PR #13782) or Route A separability. Risk: the induction bookkeeping over ℤ-indices
+and the parity splits may be tedious; the statement itself is classical EDS
+rank-of-apparition rigidity specialized by the coprimality triangle.
+
+**What this does *not* claim:** closing N5 does not by itself give `E[n] ≅ (ℤ/n)²` —
+N7 (multiplication formula) remains the big effort item between N5 and the counting
+route. The claim is precise: N5-scalar is the *smallest missing piece*, it is
+*unblocked now*, and everything before it on the critical path is kernel-verified.
+
+> **UPDATE (2026-07-16, same day):** the sibling draft **PR #172** (head `5f61fa5`,
+> unmerged) contains a candidate proof of exactly this scalar statement
+> (`NormEDSConsecutiveZeros.lean`), a general-`n` N5 (`DivisionPolynomialCoprime.lean`),
+> N7@{2,3,5}, B4@{3,5,7}, closure bridges, and per-ℓ structure theorems
+> `E[ℓ](𝔽̄_p) ≅ (ℤ/ℓ)²` for `ℓ ∈ {3,5,7}` — CI-green on its branch but **not yet
+> merged, reviewed, or counted**. Until a human merges it, the open stem
+> `Ecdlp/Targets/normeds_no_consecutive_zero.lean` remains the on-`main` registry
+> target; at merge time the target must be reconciled per the standard lifecycle
+> (status → verified, stem consumed). The adversarial audit of #172 lives in
+> `notes/reviews/GEOMETRIC_TORSION_AUDIT.md`.
+
 The single arithmetic-geometry fact that the whole "instantiate the crypto at the
 *real* secp256k1 group" story hangs on is the curve cardinality
 

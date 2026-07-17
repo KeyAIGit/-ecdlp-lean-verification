@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 587,
-  "distinct_qualified_names": 475,
-  "verified_md_citations": 201,
+  "declaration_count": 618,
+  "distinct_qualified_names": 496,
+  "verified_md_citations": 205,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -743,6 +743,30 @@
       "line": 8,
       "occurrences": 1
     },
+    "Ecdlp.Curve.pointX": {
+      "name": "pointX",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 50,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.pointX_some": {
+      "name": "pointX_some",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 56,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.pointX_zero": {
+      "name": "pointX_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 54,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.px": {
       "name": "px",
       "namespace": "Ecdlp.Curve",
@@ -821,7 +845,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomial.lean",
       "line": 50,
-      "occurrences": 18
+      "occurrences": 22
     },
     "Ecdlp.Curve.secp256k1_G": {
       "name": "secp256k1_G",
@@ -1511,6 +1535,22 @@
       "line": 60,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_pointX_neg": {
+      "name": "secp256k1_pointX_neg",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 63,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_pointX_neg_zsmul_add": {
+      "name": "secp256k1_pointX_neg_zsmul_add",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 73,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_point_group_equiv_exists": {
       "name": "secp256k1_point_group_equiv_exists",
       "namespace": "Ecdlp.Curve",
@@ -1541,7 +1581,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi3Psi5.lean",
       "line": 40,
-      "occurrences": 12
+      "occurrences": 18
     },
     "Ecdlp.Curve.secp256k1_psi2_evalEval": {
       "name": "secp256k1_psi2_evalEval",
@@ -1813,6 +1853,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/TraceOfFrobenius.lean",
       "line": 42,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_triple_x_eq_": {
+      "name": "secp256k1_triple_x_eq_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TripleMultiplicationFormula.lean",
+      "line": 37,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_twist_maxprime_prime": {
@@ -2567,6 +2615,86 @@
       "line": 33,
       "occurrences": 1
     },
+    "Ecdlp.P256.TwistPrimality.pr_110244005101": {
+      "name": "pr_110244005101",
+      "namespace": "Ecdlp.P256.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 100,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.TwistPrimality.pr_112600039977335252189018616651067202354555503111433": {
+      "name": "pr_112600039977335252189018616651067202354555503111433",
+      "namespace": "Ecdlp.P256.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 169,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.TwistPrimality.pr_124778574733515931": {
+      "name": "pr_124778574733515931",
+      "namespace": "Ecdlp.P256.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 130,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.TwistPrimality.pr_13610371": {
+      "name": "pr_13610371",
+      "namespace": "Ecdlp.P256.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 82,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.TwistPrimality.pr_1386428608150177": {
+      "name": "pr_1386428608150177",
+      "namespace": "Ecdlp.P256.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 115,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.TwistPrimality.pr_1387801": {
+      "name": "pr_1387801",
+      "namespace": "Ecdlp.P256.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 67,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.TwistPrimality.pr_203333173": {
+      "name": "pr_203333173",
+      "namespace": "Ecdlp.P256.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 52,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.TwistPrimality.pr_2420633": {
+      "name": "pr_2420633",
+      "namespace": "Ecdlp.P256.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 43,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.TwistPrimality.pr_3317349640749355357762425066592395746459685764401801118712075735758936647": {
+      "name": "pr_3317349640749355357762425066592395746459685764401801118712075735758936647",
+      "namespace": "Ecdlp.P256.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 190,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.TwistPrimality.pr_718995365596683143": {
+      "name": "pr_718995365596683143",
+      "namespace": "Ecdlp.P256.TwistPrimality",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 145,
+      "occurrences": 1
+    },
     "Ecdlp.P256.b": {
       "name": "b",
       "namespace": "Ecdlp.P256",
@@ -2677,6 +2805,30 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/P256TraceOfFrobenius.lean",
       "line": 33,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256_twist_maxprime_prime": {
+      "name": "p256_twist_maxprime_prime",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 222,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256_twist_order_factorization": {
+      "name": "p256_twist_order_factorization",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 229,
+      "occurrences": 1
+    },
+    "Ecdlp.P256.p256_twist_security_profile": {
+      "name": "p256_twist_security_profile",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256TwistSecurity.lean",
+      "line": 245,
       "occurrences": 1
     },
     "Ecdlp.PohligHellman.component": {
@@ -2957,6 +3109,22 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/EcdsaKeyRecovery.lean",
       "line": 40,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.ecdsa_sibling_scalars": {
+      "name": "ecdsa_sibling_scalars",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 96,
+      "occurrences": 1
+    },
+    "Ecdlp.Schnorr.ecdsa_sibling_signing_equation": {
+      "name": "ecdsa_sibling_signing_equation",
+      "namespace": "Ecdlp.Schnorr",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EcdsaMalleability.lean",
+      "line": 88,
       "occurrences": 1
     },
     "Ecdlp.Schnorr.elgamal_additively_homomorphic": {

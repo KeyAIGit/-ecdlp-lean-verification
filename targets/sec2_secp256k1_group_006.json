@@ -12,7 +12,7 @@
     "goedel_32b_attempts": 4,
     "escalate_if_failed": true
   },
-  "stem_file": "Ecdlp/Targets/sec2_secp256k1_group_006.lean",
+  "stem_file": null,
   "source": {
     "formal_status": "formalizable",
     "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
