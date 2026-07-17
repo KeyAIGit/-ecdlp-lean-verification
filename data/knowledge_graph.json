@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 248,
     "barriers": 6,
-    "edges": 300,
+    "edges": 302,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -4214,6 +4214,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.TorsionCounting",
+      "to": "Ecdlp.Proved.TorsionStructure",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.TorsionPointCount",
       "to": "Ecdlp.Proved.SevenTorsionBridge",
       "type": "imports"
@@ -4846,6 +4851,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.P256Cardinality",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.TorsionCounting",
       "type": "imports"
     },
     {
