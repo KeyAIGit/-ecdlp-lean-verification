@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 265,
+    "theorems": 266,
     "barriers": 6,
-    "edges": 398,
+    "edges": 399,
     "by_method": {
       "Mathlib": 102,
       "Mathlib + native_decide": 29,
@@ -109,11 +109,12 @@
       "Mathlib (`Separable`, `Separable.map`, `IsAlgClosed.splits`, `nodup_roots`) + Bézout native_decide": 1,
       "closure 2-torsion (`y=0`) + `CubicSeparable` roots + N10(iii)": 1,
       "evalAt`/`evalRatAt` layer + `secp256k1_miller_function_unique` (W2)": 1,
-      "IsLocalization.surj`/`IsFractionRing.injective` (source-verified) + `evalFracAt` layer + W2": 1
+      "IsLocalization.surj`/`IsFractionRing.injective` (source-verified) + `evalFracAt` layer + W2": 1,
+      "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer": 1
     },
     "by_area": {
       "curve-torsion": 133,
-      "primality": 47,
+      "primality": 48,
       "generic-hardness": 25,
       "other": 25,
       "protocol-soundness": 23,
@@ -3567,6 +3568,19 @@
       "area": "curve-torsion",
       "dependency_depth": 5,
       "gated": true
+    },
+    {
+      "id": "thm-265",
+      "name": "Ecdlp.Weil.RegularAt`, `evalReg`, `evalRatAt_eq_evalReg` (+ 14 supporting)",
+      "short_name": "RegularAt`,",
+      "module": "Ecdlp.Proved.FunctionFieldRegular",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "claim": "W3 closed at the function-field level — `RegularAt` and evaluation of abstract elements (`FunctionFieldRegular.lean`: the `RegularAt` predicate (`∃ a b, evalAt b ≠ 0 ∧ f = a/b`), the unique value `evalReg` with its defining lemmas, and the two-way bridge to the localization: an element of `Localization.AtPrime (XYIdeal P)` maps to a `RegularAt` function (via `IsLocalization.surj` + `evalAt_ker` rewriting `b ∉ XYIdeal ⟺ evalAt b ≠ 0`), and conversely a regular presentation determines a localization element (`IsLocalization.mk'`), with the payoff weld `evalRatAt = evalReg` on the overlap. With this, every abstract function-field element regular at `P` has a well-defined value at `P` — the W3 evaluation half is closed end-to-end (`evalAt → evalRatAt → evalFracAt → a/b extraction → RegularAt`); next: `f_P(D_Q)` divisor evaluation and W4 reciprocity)",
+      "method": "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 6,
+      "gated": true
     }
   ],
   "barriers": [
@@ -5572,6 +5586,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.FunctionFieldRepr",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FunctionFieldRegular",
       "type": "imports"
     },
     {
