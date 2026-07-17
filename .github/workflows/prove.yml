@@ -56,8 +56,15 @@ jobs:
       # candidate carrying sorry/admit are skipped. This only MOVES kernel-accepted proofs;
       # `main` is untouched — the promoted change is committed onto the PR branch below and a
       # human merges. Idempotent, so a re-run over the same candidates is a no-op.
+      #
+      # Fail-closed (promotion-gate M0, notes/reviews/PROMOTION_GATE_DESIGN.md §4): promote
+      # ONLY when the prover-loop step above succeeded. `if: always()` would run the promoter
+      # even after the loop crashed or `lake build` failed, promoting whatever `candidates/`
+      # happened to contain — including stale files from an earlier run — with zero
+      # verification in this run. `success()` makes "the loop accepted it in this run" a
+      # precondition for promotion.
       - name: Promote accepted candidates
-        if: always()
+        if: success()
         run: python3 scripts/promote_candidate.py
 
       - name: Add loop report to job summary
@@ -84,18 +91,21 @@ jobs:
       # when the run produced nothing. `main` is NEVER edited automatically — the change lands
       # on the prover/candidates branch and a human reviews and merges.
       - name: Open PR with promoted proofs
-        if: always()
+        if: success()
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: main
           branch: prover/candidates
+          # candidates/ is NOT committed to the PR branch (promotion-gate M0): leftover
+          # non-promotable candidates are surfaced as workflow artifacts only (see the
+          # "Upload loop artifacts" step above), never as repo content — this removes the
+          # replay reservoir where a stale candidate could later be re-globbed and promoted.
           add-paths: |
             Ecdlp/Proved/
             Ecdlp.lean
             VERIFIED.md
             targets/
-            candidates/
           title: "Prover loop: auto-promoted proofs for review"
           commit-message: "prover loop: promote Lean-accepted proofs (Targets/ -> Proved/, for human merge)"
           body: |
