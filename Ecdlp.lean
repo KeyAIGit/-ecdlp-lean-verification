@@ -121,3 +121,5 @@ import Ecdlp.Proved.ThirteenTorsion
 import Ecdlp.Proved.P256TwistSecurity
 import Ecdlp.Proved.EcdsaMalleability
 import Ecdlp.Proved.TorsionCounting
+import Ecdlp.Proved.NormEDSConsecutiveZeros
+import Ecdlp.Proved.DivisionPolynomialCoprime
