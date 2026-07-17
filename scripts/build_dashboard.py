@@ -44,6 +44,7 @@ PUB_UNITS = ROOT / "PUBLISHABLE_UNITS.md"
 DOMAINS_REG = ROOT / "domains" / "registry.json"
 OUT = ROOT / "dashboard.html"
 INDEX = ROOT / "index.html"
+EXPLORE = ROOT / "explore.html"
 # Ledger rows that are alternate-form/`supporting:` restatements of the same fact.
 # Only a FALLBACK: distinct is read from data/stats.json (source of truth). VERIFIED.md's
 # canonical line currently reads "220 ledger rows / ~184 distinct" → 36 restatement rows.
@@ -443,6 +444,31 @@ def sync_index_html(vcount: int, distinct: int, completeness, total: int) -> Non
             print(f"  warn: index.html counter '{name}' not found — layout may have drifted")
     write_text_lf(INDEX, html)
     print(f"synced index.html counters ({vcount} rows / ~{distinct} distinct / {comp}% frontier)")
+
+
+def sync_explore_html(vcount: int, proved_modules: int) -> None:
+    """Keep the hand-authored 3D-map page (explore.html) KPI counters in sync with the
+    canonical ledger. Mirrors sync_index_html: explore.html is otherwise hand-maintained,
+    but its two drift-prone KPI numerals (ledger rows, proved modules) are rewritten here,
+    anchored on their adjacent `<div class="l">` labels so this survives layout edits. The
+    `sorry` KPI is the invariant 0 and is left alone; the per-node `count:` map annotations
+    are bespoke visualization data, not canonical counts, and are not touched. Warns (never
+    raises) if the layout drifted, so a stale-count patch cannot break the stats workflow.
+    Formerly an ungated public surface (ROADMAP.md §7.7): now generated + gated by
+    scripts/check_status_consistency.py."""
+    if not EXPLORE.exists():
+        return
+    html = EXPLORE.read_text(encoding="utf-8")
+    subs = [
+        (r'(<div class="n">)\d+(</div><div class="l">ledger rows</div>)', vcount, "ledger rows KPI"),
+        (r'(<div class="n">)\d+(</div><div class="l">proved modules</div>)', proved_modules, "proved modules KPI"),
+    ]
+    for pat, val, name in subs:
+        html, n = re.subn(pat, lambda m, v=val: f"{m.group(1)}{v}{m.group(2)}", html)
+        if n == 0:
+            print(f"  warn: explore.html counter '{name}' not found — layout may have drifted")
+    write_text_lf(EXPLORE, html)
+    print(f"synced explore.html counters ({vcount} rows / {proved_modules} proved modules)")
 
 
 def main() -> int:
@@ -1033,6 +1059,9 @@ footer{{background:var(--navy);color:#93a8c9;padding:32px 0}}
     # index.html is the hand-authored KeyAI landing one-pager (site root); we do NOT
     # regenerate it, but we DO keep its numeric counters in sync with the canonical ledger.
     sync_index_html(vcount, distinct, completeness, total)
+    # explore.html (3D map) is likewise hand-authored but its KPI counters are kept in sync
+    # here and gated by check_status_consistency.py (was an ungated public surface, §7.7).
+    sync_explore_html(vcount, int(stats.get("proved_modules") or 0))
     print(f"wrote {OUT.relative_to(ROOT)} ({len(html)} bytes) — {vcount} results, "
           f"frontier {completeness}%, nav sections {len(NAV)}, extra files {len(discover_extra_files())}")
     return 0
