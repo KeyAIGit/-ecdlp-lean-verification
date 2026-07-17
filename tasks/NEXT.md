@@ -122,10 +122,17 @@ Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
 Why it matters: Rolling, pre-decomposed target list so each continuation cycle
 starts immediately (AGENTS.md §High-velocity prover protocol).
-**The easy ladder is exhausted (2026-07-16).** Everything decomposable into a single
-template-mirroring cycle has landed; what remains is either research-grade (needs a
-multi-cycle human-directed commit) or already subsumed. **The 24/7 loop has reached a
-direction decision point — surfaced to the user.**
+**Course set by the user (2026-07-16, "ультракод дальше"): the Weil ladder.** The easy
+ladder is exhausted (everything one-cycle-decomposable landed); the loop now works the
+research-grade Weil-W3/W4 front in decomposed multi-cycle steps:
+1. **W3 completion** (in flight): `FunctionFieldEval.lean` — evaluation of
+   function-field elements regular at a point (a/b well-definedness over the domain
+   + evaluation def + Miller-layer connection), bridging `evalRatAt` to the W2
+   Miller function.
+2. **W4 decomposition**: Weil reciprocity `f(div g) = g(div f)` — decompose into
+   reachable leaves (line-function evaluations, divisor bookkeeping on the landed
+   `toClass` layer) with an honest blocker memo for the core.
+3. Then: P-256 `#E = n` route memo / separability core decomposition.
 
 Landed this session (all CI-green): N5 closed (`DivisionPolynomialCoprime`); Ward
 apparition rigidity (`NormEDSConsecutiveZeros`); N7@{2,3,4,5} — the multiplication
