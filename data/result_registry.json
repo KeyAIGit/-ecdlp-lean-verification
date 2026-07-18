@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 879,
-  "distinct_qualified_names": 672,
-  "verified_md_citations": 221,
+  "declaration_count": 882,
+  "distinct_qualified_names": 675,
+  "verified_md_citations": 222,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -4639,6 +4639,22 @@
       "line": 52,
       "occurrences": 1
     },
+    "Ecdlp.Weil.divEval": {
+      "name": "divEval",
+      "namespace": "Ecdlp.Weil",
+      "kind": "def",
+      "file": "Ecdlp/Proved/WeilDivisorEval.lean",
+      "line": 50,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.divEval_mul": {
+      "name": "divEval_mul",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilDivisorEval.lean",
+      "line": 57,
+      "occurrences": 1
+    },
     "Ecdlp.Weil.evalAt": {
       "name": "evalAt",
       "namespace": "Ecdlp.Weil",
@@ -4829,6 +4845,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
       "line": 142,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.evalReg_mul": {
+      "name": "evalReg_mul",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilDivisorEval.lean",
+      "line": 33,
       "occurrences": 1
     },
     "Ecdlp.Weil.functionField_exists_mul_num_den": {

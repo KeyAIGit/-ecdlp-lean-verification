@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 278,
+    "theorems": 279,
     "barriers": 6,
-    "edges": 419,
+    "edges": 420,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -115,13 +115,14 @@
       "closure 2-torsion (`y=0`) + `CubicSeparable` roots + N10(iii)": 1,
       "evalAt`/`evalRatAt` layer + `secp256k1_miller_function_unique` (W2)": 1,
       "IsLocalization.surj`/`IsFractionRing.injective` (source-verified) + `evalFracAt` layer + W2": 1,
-      "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer": 1
+      "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer": 1,
+      "evalReg`/`evalFracAt` layer (`FunctionFieldRegular.lean`) + field algebra": 1
     },
     "by_area": {
       "curve-torsion": 146,
       "primality": 49,
+      "other": 25,
       "generic-hardness": 24,
-      "other": 24,
       "protocol-soundness": 23,
       "attack-resistance": 6,
       "reduction": 5,
@@ -3742,6 +3743,19 @@
       "area": "primality",
       "dependency_depth": 6,
       "gated": true
+    },
+    {
+      "id": "thm-278",
+      "name": "Ecdlp.Weil.divEval_mul`, `evalReg_mul",
+      "short_name": "divEval_mul`,",
+      "module": "Ecdlp.Proved.WeilDivisorEval",
+      "file": "Ecdlp/Proved/WeilDivisorEval.lean",
+      "claim": "Weil ladder W3e-1 — divisor evaluation `f((Q)−(O))` is multiplicative in the function (`divEval_mul`: for `f, g` regular at both `Q` and `O`, `divEval (f·g) = divEval f · divEval g`, where `divEval f := evalReg f Q / evalReg f O` is the value of `f` at the degree-0 divisor `(Q)−(O)`; via the pointwise multiplicativity `evalReg_mul` — `evalReg (f·g) = evalReg f · evalReg g` at a point, from `evalReg_eq` + `evalFracAt_mul`. The homomorphism property that makes `f_P(D_Q)` a map `E → μₙ` in the Weil pairing; first evaluation-half rung of `notes/WEIL_LADDER.md`)",
+      "method": "evalReg`/`evalFracAt` layer (`FunctionFieldRegular.lean`) + field algebra",
+      "status": "proved",
+      "area": "other",
+      "dependency_depth": 7,
+      "gated": true
     }
   ],
   "barriers": [
@@ -5135,7 +5149,7 @@
       "type": "imports"
     },
     {
-      "from": "Ecdlp.Targets.weil_w3eval_diveval",
+      "from": "Ecdlp.Proved.WeilDivisorEval",
       "to": "Ecdlp.Proved.FunctionFieldRegular",
       "type": "imports"
     },
@@ -5852,6 +5866,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.SevenTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.WeilDivisorEval",
       "type": "imports"
     },
     {
