@@ -145,11 +145,23 @@ regularity + `divEval` unit law, `WeilMillerEval.lean`) **are landed**; **W4-1**
 reciprocity) **is a frozen no-go** (`BARRIERS.md` §B3). **The reachable Weil-evaluation
 scaffolding is now complete** — W3e-4 (`millerEval^n = 1`), W4-2, and all of W5 (`eₙ`,
 bilinear/alternating/non-degenerate) each depend on the blocked W4, so the Weil track is
-parked at the Mathlib pin. **The loop therefore redirects to the *other* priority-3 track:
-general-`n` separability of `[n]` toward `#E[n]=n²` for all `n` prime to `p`** (the one CORE
-open item; the N5 scalar no-consecutive-zeros lemma landed, N7 general multiplication formula
-is the next reachable piece — see below and `notes/POINT_COUNTING_KEYSTONE.md`). Reopen the
-Weil track only if the Mathlib pin gains residue/tame-symbol/divisor-degree machinery.
+parked at the Mathlib pin.
+
+**REACHABLE SINGLE-CYCLE FRONTIER IS SATURATED (empirically confirmed 2026-07-18).** A
+cycle-by-cycle audit found every remaining critical-path *leaf* already landed, general `n`:
+**N4** degree/monic (`secp256k1_Φ_natDegree`/`_monic`, `NumeratorDominates.lean`), **N5**
+coprimality (`secp256k1_isCoprime_Φ_ΨSq (n:ℤ)`, `DivisionPolynomialCoprime.lean`), the scalar
+no-consecutive-zeros engine (`normEDS_not_consecutive_zeros`, unconditional), small-`n` N7
+(`n=2,3,4,5`), the `E[n]≅(ℤ/n)²` structure for `n∈{2,3,5,7}`, and the whole Weil W3-eval layer.
+**The only remaining items are the two genuinely hard gates:** (a) **N7 uniform**
+(`x∘[n]=Φₙ/ΨSqₙ` in `k(E)` for all `n` — a large induction, "effort not theory") and
+(b) **N10 separability** (`[n]*ω=nω`, the one CORE-by-theory item). Neither is a single blind-CI
+rung; both need a **multi-cycle focused grind with fast feedback** — i.e. the `server-run.yml`
+bridge (maintainer secrets `SERVER_HOST`+`SSH_PRIVATE_KEY`), or new upstream Mathlib theory.
+**Loop directive: do NOT hunt for more single-cycle math rungs (they are done — hunting only
+re-discovers duplicates); hold the base healthy and reconcile PRs until the fast-feedback lever
+is enabled, then grind N7-uniform.** Reopen the Weil track only if the pin gains
+residue/tame-symbol/divisor-degree machinery.
 
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
