@@ -231,3 +231,22 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms ResearchOS.NumberTheory.carmichael_1729_factorization
 #print axioms ResearchOS.NumberTheory.prime_10007
 #print axioms ResearchOS.NumberTheory.prime_10009
+
+-- geometric torsion structure family: E[n](𝔽̄_p) ≅ (ℤ/n)² for n ∈ {2,3,5,7} (closure), via
+-- closure bridge + exact root count + ±y pairing + N10(iii); the ψₙ↔E[n] critical path N13@n
+#print axioms Ecdlp.Curve.secp256k1Bar_two_torsion_structure
+#print axioms Ecdlp.Curve.secp256k1Bar_three_torsion_structure
+#print axioms Ecdlp.Curve.secp256k1Bar_five_torsion_structure
+#print axioms Ecdlp.Curve.secp256k1Bar_seven_torsion_structure
+
+-- 2-torsion cubic separability (X³+7 has 3 distinct roots over 𝔽̄_p) — counting brick of E[2]
+#print axioms Ecdlp.Curve.secp256k1_cubic_separable
+
+-- N7 multiplication-by-n x-coordinate formulas x(nP)=Φₙ/ΨSqₙ, n = 4 (doubling²) and n = 5 (chord)
+#print axioms Ecdlp.Curve.secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄
+#print axioms Ecdlp.Curve.secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅
+
+-- Weil W3 function-field evaluation layer: fraction eval well-definedness + a/b extraction + RegularAt
+#print axioms Ecdlp.Weil.evalFracAt_well_defined
+#print axioms Ecdlp.Weil.functionField_exists_num_den
+#print axioms Ecdlp.Weil.evalRatAt_eq_evalReg

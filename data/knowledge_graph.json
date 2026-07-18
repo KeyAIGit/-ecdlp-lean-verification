@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 268,
+    "theorems": 278,
     "barriers": 6,
-    "edges": 361,
+    "edges": 418,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -21,6 +21,7 @@
       "Mathlib (`Point.neg_some`, `add_neg_cancel`)": 2,
       "Mathlib (`Iff.trans`)": 2,
       "instantiation of `Ecdlp.Schnorr.*` on `↥⟨G⟩": 2,
+      "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates": 2,
       "Mathlib (`Projective.nonsingular_iff`/`equation_iff`, `mul_eq_zero`, `pow_ne_zero`) + `linear_combination": 1,
       "Mathlib (`ZMod.pow_card`, `pow_two`/`pow_mul`/`pow_succ`) + `omega": 1,
       "Mathlib + `secp256k1_card_point_eq_n` + `secp256k1_n_prime` + `secp256k1_trace_ordinary_nonanomalous` + `secp256k1_embedding_degree_gt_100": 1,
@@ -106,11 +107,19 @@
       "native_decide + Mathlib (`exists_prime_addOrderOf_dvd_card`, `ZMod.pow_card_sub_one_eq_one`, `Finset.card_le_mul_card_image`) + repo bricks": 1,
       "Mathlib (`AddSubgroup.eq_top_of_card_eq`, `AddSubgroup.topEquiv`) + `secp256k1_card_point_eq_n": 1,
       "Mathlib (`AddEquiv.addSubgroupCongr`, `AddSubgroup.topEquiv`, `AddEquiv.trans`) + `secp256k1_dlogEquiv` + `secp256k1_grp_eq_top": 1,
-      "Mathlib (`AddSubgroup.eq_bot_or_eq_top_of_prime_card`, `isSimpleAddGroup_of_prime_card`) + `secp256k1_card_point_eq_n": 1
+      "Mathlib (`AddSubgroup.eq_bot_or_eq_top_of_prime_card`, `isSimpleAddGroup_of_prime_card`) + `secp256k1_card_point_eq_n": 1,
+      "Mathlib (finset card algebra, `torsionBy`) + closure bridge + separability + coprimality + N10(iii)": 1,
+      "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₅` + N10(iii)": 1,
+      "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₇` + N10(iii)": 1,
+      "Mathlib (`Separable`, `Separable.map`, `IsAlgClosed.splits`, `nodup_roots`) + Bézout native_decide": 1,
+      "closure 2-torsion (`y=0`) + `CubicSeparable` roots + N10(iii)": 1,
+      "evalAt`/`evalRatAt` layer + `secp256k1_miller_function_unique` (W2)": 1,
+      "IsLocalization.surj`/`IsFractionRing.injective` (source-verified) + `evalFracAt` layer + W2": 1,
+      "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer": 1
     },
     "by_area": {
-      "curve-torsion": 143,
-      "primality": 42,
+      "curve-torsion": 146,
+      "primality": 49,
       "generic-hardness": 24,
       "other": 24,
       "protocol-soundness": 23,
@@ -3603,6 +3612,136 @@
       "area": "primality",
       "dependency_depth": 10,
       "gated": true
+    },
+    {
+      "id": "thm-268",
+      "name": "Ecdlp.Curve.secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅`, `quint_x_core",
+      "short_name": "secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅`,",
+      "module": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "file": "Ecdlp/Proved/QuintupleMultiplicationFormula.lean",
+      "claim": "N7@5 — multiplication-by-5 `x`-coordinate formula: `x(5•P) = Φ₅(x)/ΨSq₅(x)` (`secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅`: whenever `5•P` is an affine point `(X,Y)`, then `X = (Φ 5)(x)/(ΨSq 5)(x)` — the degree-25 numerator over `preΨ₅`, again with no side conditions: the generic branch adds `3P + 2P` — a chord between two nontrivial multiples, prototyping the addition step of the general N7 engine — through `quint_x_core` (12 `linear_combination` certificates incl. a 94+55-monomial master, designed by cofactor-tracked elimination of the three slopes `s₅, s₃, s₂`, kernel-re-verified); the 2-torsion branch (`5P = P`) and 3-torsion branch (`5P = 2P`, reduced to the `n = 2` formula) hold via `Ψ₂Sq ⊥ preΨ₅` / `Ψ₃ ⊥ preΨ₅` certificates. `Φ 5`/`ΨSq 5` eval forms derived through Mathlib's `Φ_ofNat`/`ΨSq_ofNat`/`preΨ'_even` recurrences (`preΨ₆ = Ψ₃(preΨ₅ − preΨ₄)`). All certificates + 25-point (and independent 40-point, different prime) numeric checks: `scripts/certs/quint_mult_formula_check.py` (`CERT_OK`). N7 ladder now `n = 2, 3, 5`)",
+      "method": "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 7,
+      "gated": true
+    },
+    {
+      "id": "thm-269",
+      "name": "Ecdlp.Curve.secp256k1Bar_three_torsion_structure`, `secp256k1Bar_three_torsion_ncard`, `secp256k1Bar_torsionBy_three_card",
+      "short_name": "secp256k1Bar_three_torsion_structure`,",
+      "module": "Ecdlp.Proved.ThreeTorsionStructure",
+      "file": "Ecdlp/Proved/ThreeTorsionStructure.lean",
+      "claim": "#E[3](𝔽̄_p) = 9` and `E[3] ≅ (ℤ/3)` — node N13 at `n = 3` (`secp256k1Bar_three_torsion_structure`: the 3-torsion subgroup of secp256k1 over the algebraic closure is additively `ZMod 3 × ZMod 3` — the full 2-dimensional `𝔽₃`-plane. Route: the torsion set is proved EQUAL to the explicit 9-element finset `{O} ∪ {(x, ±y) : Ψ₃(x) = 0}` — membership by the closure bridge, `y ≠ 0` at every `Ψ₃`-root by `Ψ₂Sq ⊥ Ψ₃`, the two `y`-values distinct since `char ≠ 2`, exactly `4` distinct roots by the separability certificates; count `1 + 4·2 = 9` by finset card algebra (`secp256k1Bar_three_torsion_ncard`/`_card`/`secp256k1Bar_torsionBy_three_card`); then the kernel-structure lemma N10(iii) classifies. Composes six previously landed rungs (closure bridge, exact root counts, coprimality certificate, `±y`-pairing, N10(iii), torsionBy vocabulary) — the endpoint `N13@3` of the `ψₙ↔E[n]` critical path at `n = 3`)",
+      "method": "Mathlib (finset card algebra, `torsionBy`) + closure bridge + separability + coprimality + N10(iii)",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 9,
+      "gated": true
+    },
+    {
+      "id": "thm-270",
+      "name": "Ecdlp.Curve.secp256k1Bar_five_torsion_structure`, `secp256k1Bar_five_nsmul_eq_zero_iff`, `secp256k1Bar_five_torsion_ncard",
+      "short_name": "secp256k1Bar_five_torsion_structure`,",
+      "module": "Ecdlp.Proved.FiveTorsionStructure.lean (+ FiveTorsionBridgeBar.lean)",
+      "file": "Ecdlp/Proved/FiveTorsionStructure.lean (+ FiveTorsionBridgeBar.lean)",
+      "claim": "#E[5](𝔽̄_p) = 25` and `E[5] ≅ (ℤ/5)` — N13 at `n = 5` (`secp256k1Bar_five_torsion_structure` + the closure bridge `secp256k1Bar_five_nsmul_eq_zero_iff` (`FiveTorsionBridgeBar.lean`, token-identical port of the `𝔽_p` five-bridge incl. `five_core`): the 5-torsion set equals `{O} ∪ {(x, ±y) : preΨ₅(x) = 0}` — 12 distinct roots (separability certificates) × 2 + O = 25 = 5; `y ≠ 0` via `Ψ₂Sq ⊥ preΨ₅`; N10(iii) classifies. Replication of the E[3] pattern)",
+      "method": "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₅` + N10(iii)",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 0,
+      "gated": false
+    },
+    {
+      "id": "thm-271",
+      "name": "Ecdlp.Curve.secp256k1Bar_seven_torsion_structure`, `secp256k1Bar_seven_nsmul_eq_zero_iff`, `secp256k1Bar_seven_torsion_ncard",
+      "short_name": "secp256k1Bar_seven_torsion_structure`,",
+      "module": "Ecdlp.Proved.SevenTorsionStructure.lean (+ SevenTorsionBridgeBar.lean)",
+      "file": "Ecdlp/Proved/SevenTorsionStructure.lean (+ SevenTorsionBridgeBar.lean)",
+      "claim": "#E[7](𝔽̄_p) = 49` and `E[7] ≅ (ℤ/7)` — N13 at `n = 7` (`secp256k1Bar_seven_torsion_structure` + the closure bridge `secp256k1Bar_seven_nsmul_eq_zero_iff` (`SevenTorsionBridgeBar.lean`, token-identical port of `seven_master`/`seven_core`): 24 distinct `preΨ₇` roots × 2 + O = 49 = 7; `y ≠ 0` via the new `Ψ₂Sq ⊥ preΨ₇` certificate; N10(iii) classifies. The N13 instance family is now `n ∈ {3, 5, 7}` — every odd prime with a landed torsion bridge; the general-`n` theorem remains the open program (separability/N10 general core))",
+      "method": "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₇` + N10(iii)",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 0,
+      "gated": false
+    },
+    {
+      "id": "thm-272",
+      "name": "Ecdlp.Curve.secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`, `quad_x_core",
+      "short_name": "secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`,",
+      "module": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "file": "Ecdlp/Proved/QuadrupleMultiplicationFormula.lean",
+      "claim": "N7@4 — multiplication-by-4 `x`-coordinate formula: `x(4•P) = Φ₄(x)/ΨSq₄(x)` (`secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`: whenever `4•P` is an affine point `(X,Y)`, `X = (Φ 4)(x)/(ΨSq 4)(x)` with the degree-16 monic numerator `Φ₄(x) = x⁶ − 3808x³ + 144256x⁰ + 2985472x⁷ + 38108672x⁴ + 68841472x` and degree-15 denominator `ΨSq₄ = preΨ₄·Ψ₂Sq` — the even rung `n = 4` of the N7 ladder (`n = 2, 3, 4, 5`). The generic branch runs doubling-of-doubling (`4P = 2·(2P)`, two tangents — vs. the odd chords), and its crux is that the outer doubling is the `n = 2` formula applied at `X2 = x(2P)`: `quad_x_core` chains `hInner` (the `n=2` identity `(s₄−2X2)(4X2³+28) = X2⁴−56X2` at `X2`), `hBridge`, `hkey`; both 2-torsion escapes (`2P = O` or `2P` 2-torsion ⟹ `4P = O`) contradict an affine `4P`. Eval forms via Mathlib `Φ_ofNat`/`ΨSq_ofNat`/`preΨ'_even`; `Φ₄`/`ΨSq₄` independently verified against from-scratch division polynomials + 2-prime numeric `x(4P)` check (`scripts/certs/quad_mult_formula_check.py`, `CERT_OK`))",
+      "method": "Mathlib (`Φ_ofNat`, `ΨSq_ofNat`, `preΨ'_even`) + `linear_combination` certificates",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 6,
+      "gated": true
+    },
+    {
+      "id": "thm-273",
+      "name": "Ecdlp.Curve.secp256k1_cubic_separable`, `secp256k1_cubic_isCoprime_derivative`, `secp256k1_cubic_roots_card_bar`, `secp256k1_cubic_roots_nodup_bar",
+      "short_name": "secp256k1_cubic_separable`,",
+      "module": "Ecdlp.Proved.CubicSeparable",
+      "file": "Ecdlp/Proved/CubicSeparable.lean",
+      "claim": "X³ + 7` is separable — exactly 3 distinct roots over `𝔽̄_p` (`secp256k1_cubic_separable` + `secp256k1_cubic_roots_card_bar` = 3 / `_nodup_bar`: the 2-torsion cubic `X³+7` (whose roots are the `x`-coordinates of the 2-torsion, `Ψ₂Sq = 4(X³+7)`) is coprime to its derivative `3X` by a trivial Bézout certificate `u₀·(X³+7) + (v₀X)·(3X) = 1` (`u₀ = 7⁻`, `v₀ = −21⁻`; `p ∤ 21`), so it is separable and splits with `natDegree = 3` distinct roots over the closure — the `n = 2` analogue of the `secp256k1_Ψ₃_separable` family, the counting brick of E[2]. Constants cert-verified `scripts/certs/cubic_separable_cert.py` (`CERT_OK`))",
+      "method": "Mathlib (`Separable`, `Separable.map`, `IsAlgClosed.splits`, `nodup_roots`) + Bézout native_decide",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 3,
+      "gated": true
+    },
+    {
+      "id": "thm-274",
+      "name": "Ecdlp.Curve.secp256k1Bar_two_torsion_structure`, `secp256k1Bar_two_nsmul_eq_zero_iff`, `secp256k1Bar_two_torsion_ncard",
+      "short_name": "secp256k1Bar_two_torsion_structure`,",
+      "module": "Ecdlp.Proved.TwoTorsionStructure",
+      "file": "Ecdlp/Proved/TwoTorsionStructure.lean",
+      "claim": "#E[2](𝔽̄_p) = 4` and `E[2] ≅ (ℤ/2)` — N13 at `n = 2`, completing the family to `n ∈ {2,3,5,7}` (`secp256k1Bar_two_torsion_structure` + the closure characterization `secp256k1Bar_two_nsmul_eq_zero_iff`: `2•P = O ⟺ y = 0`. Structurally the `n = 2` N13 instance — no multiplication formula: `2•P = O ⟺ P = −P ⟺ y = negY = −y ⟺ y = 0` (`char ≠ 2`), and `y = 0` on the curve forces `x³+7 = 0`. So `E[2] = {O} ∪ {(x,0) : X³+7-root}`, an explicit 4-element finset (no `±y` split — `y = 0` is forced), `1 + 3 = 4 = 2`; N10(iii) at prime 2 classifies. The even companion of the odd family)",
+      "method": "closure 2-torsion (`y=0`) + `CubicSeparable` roots + N10(iii)",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 7,
+      "gated": true
+    },
+    {
+      "id": "thm-275",
+      "name": "Ecdlp.Weil.evalFracAt_well_defined`, `evalFracAt_mul`, `evalAt_unit_ne_zero`, `evalRatAt_eq_evalFracAt`, `secp256k1_miller_eval_scaling",
+      "short_name": "evalFracAt_well_defined`,",
+      "module": "Ecdlp.Proved.FunctionFieldEval",
+      "file": "Ecdlp/Proved/FunctionFieldEval.lean",
+      "claim": "W3 evaluation layer completed at the fraction level — `evalFracAt` + the Miller-representative nonvanishing (`evalFracAt h a b := evalAt h a / evalAt h b` with the representation-independence core `evalFracAt_well_defined` (cross-multiplication `a₁b₂ = a₂b₁` + nonvanishing denominators ⟹ equal values — transported through the ring hom `evalAt`, no domain instance needed), Miller-loop multiplicativity `evalFracAt_mul`, unit facts (`evalAt_unit_ne_zero`: coordinate-ring units never vanish at rational points; `evalFracAt_unit_mul`), and the bridge to the localization layer `evalRatAt_eq_evalFracAt` (an `a/b` presentation of a rational function regular at `P` evaluates identically under the residue map). Plus the secp256k1 Miller-layer theorem `secp256k1_miller_eval_scaling`: the W2 Miller-function representative ambiguity is a globally nonvanishing unit factor at every rational point — the well-definedness seed for the eventual `eₙ`. Honest scope: extracting an `a/b` presentation from an abstract `FunctionField` element is the documented next rung; curve-agnostic sections PR-able)",
+      "method": "evalAt`/`evalRatAt` layer + `secp256k1_miller_function_unique` (W2)",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-276",
+      "name": "Ecdlp.Weil.functionField_exists_num_den`, `functionField_num_den_cross`, `evalFracAt_num_den_well_defined`, `secp256k1_miller_function_num_den",
+      "short_name": "functionField_exists_num_den`,",
+      "module": "Ecdlp.Proved.FunctionFieldRepr",
+      "file": "Ecdlp/Proved/FunctionFieldRepr.lean",
+      "claim": "Function-field `a/b` extraction — every rational function is a quotient of regular functions (`functionField_exists_num_den`: every `f` in the curve's function field (`FractionRing F[E]`, definitionally) equals `algebraMap a / algebraMap b` with `b ≠ 0` — via `IsLocalization.surj` on the nonZeroDivisors localization; with the division-free form (`functionField_exists_mul_num_den`), cross-multiplication faithfulness of two presentations (`functionField_num_den_cross`), nonzero-numerator (`functionField_num_ne_zero`), the weld to `evalFracAt` (`evalFracAt_num_den_well_defined`: presentations regular at `P` evaluate equally), and the Miller instantiation `secp256k1_miller_function_num_den` (the W2 generator `f_P` = an explicit quotient `↑a/↑b`, and the fractional ideal is generated by that quotient). Honest scope: the extraction controls `b ≠ 0` but not *where* `b` vanishes — choosing a presentation with `b(P) ≠ 0` for `f` regular at `P` is the documented next rung, then `f_P(D_Q)` and W4)",
+      "method": "IsLocalization.surj`/`IsFractionRing.injective` (source-verified) + `evalFracAt` layer + W2",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 5,
+      "gated": true
+    },
+    {
+      "id": "thm-277",
+      "name": "Ecdlp.Weil.RegularAt`, `evalReg`, `evalRatAt_eq_evalReg` (+ 14 supporting)",
+      "short_name": "RegularAt`,",
+      "module": "Ecdlp.Proved.FunctionFieldRegular",
+      "file": "Ecdlp/Proved/FunctionFieldRegular.lean",
+      "claim": "W3 closed at the function-field level — `RegularAt` and evaluation of abstract elements (`FunctionFieldRegular.lean`: the `RegularAt` predicate (`∃ a b, evalAt b ≠ 0 ∧ f = a/b`), the unique value `evalReg` with its defining lemmas, and the two-way bridge to the localization: an element of `Localization.AtPrime (XYIdeal P)` maps to a `RegularAt` function (via `IsLocalization.surj` + `evalAt_ker` rewriting `b ∉ XYIdeal ⟺ evalAt b ≠ 0`), and conversely a regular presentation determines a localization element (`IsLocalization.mk'`), with the payoff weld `evalRatAt = evalReg` on the overlap. With this, every abstract function-field element regular at `P` has a well-defined value at `P` — the W3 evaluation half is closed end-to-end (`evalAt → evalRatAt → evalFracAt → a/b extraction → RegularAt`); next: `f_P(D_Q)` divisor evaluation and W4 reciprocity)",
+      "method": "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 6,
+      "gated": true
     }
   ],
   "barriers": [
@@ -3783,6 +3922,16 @@
     {
       "from": "Ecdlp.Proved.CoprimePsi3Psi7",
       "to": "Ecdlp.Proved.CoprimePsi3Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CubicSeparable",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CubicSeparable",
+      "to": "Ecdlp.Proved.Secp256k1PrimeP",
       "type": "imports"
     },
     {
@@ -4041,6 +4190,46 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.CoprimePsi2Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionResultantTransport",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.FiveTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.ThreeTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FiveTorsionStructure",
+      "to": "Ecdlp.Proved.TorsionStructure",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.FourDivisionPolynomial",
       "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
@@ -4053,6 +4242,31 @@
     {
       "from": "Ecdlp.Proved.FrobeniusCM",
       "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FunctionFieldEval",
+      "to": "Ecdlp.Proved.PointEvaluation",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FunctionFieldEval",
+      "to": "Ecdlp.Proved.EvalRatAtCompat",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FunctionFieldEval",
+      "to": "Ecdlp.Proved.WeilDivisorClass",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FunctionFieldRegular",
+      "to": "Ecdlp.Proved.FunctionFieldRepr",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FunctionFieldRepr",
+      "to": "Ecdlp.Proved.FunctionFieldEval",
       "type": "imports"
     },
     {
@@ -4486,6 +4700,66 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.MultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.ThreeTorsionCard",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.ThreeTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.FiveTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.MultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.CoprimePsi2Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi5",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.ScalarGroupStructure",
       "to": "Ecdlp.Proved.Secp256k1PrimeN",
       "type": "imports"
@@ -4596,6 +4870,46 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.CoprimePsi2Psi7",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionResultantTransport",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.SevenTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.ThreeTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenTorsionStructure",
+      "to": "Ecdlp.Proved.TorsionStructure",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.SmallPrimeTorsion",
       "to": "Ecdlp.Proved.SevenTorsionBridge",
       "type": "imports"
@@ -4658,6 +4972,41 @@
     {
       "from": "Ecdlp.Proved.ThreeTorsionCard",
       "to": "Ecdlp.Proved.ThreeTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialCoprime",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionResultantTransport",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.ThreeTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.ThreeTorsionStructure",
+      "to": "Ecdlp.Proved.TorsionStructure",
       "type": "imports"
     },
     {
@@ -4753,6 +5102,31 @@
     {
       "from": "Ecdlp.Proved.TwoTorsionPoint",
       "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TwoTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TwoTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionResultantTransport",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TwoTorsionStructure",
+      "to": "Ecdlp.Proved.CubicSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TwoTorsionStructure",
+      "to": "Ecdlp.Proved.TorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.TwoTorsionStructure",
+      "to": "Ecdlp.Proved.FiveTorsionBridgeBar",
       "type": "imports"
     },
     {
@@ -5423,6 +5797,56 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.SevenTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FunctionFieldEval",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FunctionFieldRepr",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FunctionFieldRegular",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.CubicSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.QuintupleMultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.TwoTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.ThreeTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FiveTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.SevenTorsionStructure",
       "type": "imports"
     },
     {
