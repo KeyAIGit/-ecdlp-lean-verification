@@ -22,35 +22,6 @@ checks.
 
 ## Active Tasks
 
-### TASK-008 - Reconcile & land the E[n] structure family (PR #172) onto current main
-
-Kind: theorem | reconciliation
-Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
-Why it matters: The crown-jewel of the geometric-torsion path — `E[n](𝔽̄_p) ≅
-(ℤ/n)²` for `n ∈ {3,5,7}` (`{Two,Three,Five,Seven}TorsionStructure.lean` +
-`FunctionField{Eval,Repr,Regular}.lean` + `Quadruple/QuintupleMultiplicationFormula.lean`)
-— is complete and CI-green on the orphaned branch `claude/repo-analysis-next-steps-btomml`
-(PR #172), but the branch was cut from an old `main` that has since absorbed its
-infrastructure (Bar bridges, divpoly Coprime/Squarefree/Separable). The math is
-sound and honestly scoped in the file docstrings.
-Inputs:
-- PR #172 branch `origin/claude/repo-analysis-next-steps-btomml`
-- The adversarial integration audit (Workflow `pr172-integration-audit`)
-- Current `main` (already holds the shared infrastructure)
-Expected output:
-- The still-missing files landed on current main, kernel-verified by CI, with
-  the VERIFIED.md ledger rows **stripped of any novelty/priority claim**
-  ("first-in-Lean", "first full N13 instance" → pure mathematical statement of
-  what is proved), per `AUTONOMY.md` anti-inflation rail.
-Exit criteria:
-- CI (build + docs-sync) green on the reconciled state; full gate battery green;
-  conflict-marker scan clean; ledger carries no priority/superlative claims; the
-  `n ∈ {3,5,7}` structure theorems build against current main.
-Files allowed to edit:
-- `Ecdlp/Proved/` (the new structure/function-field/formula modules) + `Ecdlp.lean`
-  + `Ecdlp/AxiomAudit.lean` + `VERIFIED.md` + regenerated derived artifacts
-- `tasks/NEXT.md` (this task; TASK-005 coordination note on completion)
-
 ### TASK-001 - Harden the Research OS truth layer
 
 Kind: ops | data | site
@@ -184,12 +155,20 @@ Expected output:
   per the standard lifecycle (stem consumed, registry verified, ledger row). No
   weakening, no `sorry`. If attempts stall, a frozen memo recording the exact
   failing induction step instead.
-- **Coordination (2026-07-16):** open draft PR #172 already carries a
-  candidate proof (`NormEDSConsecutiveZeros.lean`) plus the wider per-ℓ
-  structure family — unmerged/unreviewed. The adversarial audit is
-  `notes/reviews/GEOMETRIC_TORSION_AUDIT.md`; on #172's merge this task
-  becomes a reconciliation (verify statement identity, consume the stem),
-  not a re-proof.
+- **Immediate action (2026-07-18) — reconcile & land PR #172's crown:** the N5
+  scalar rung (`NormEDSConsecutiveZeros.lean`) and the whole divpoly
+  infrastructure (Bar bridges, `DivisionPolynomial{Coprime,Squarefree,Separable}`)
+  **already landed on `main`** via the sibling sessions. The only unmerged part of
+  #172 (orphaned branch `origin/claude/repo-analysis-next-steps-btomml`) is the
+  **structure family** `E[n](𝔽̄_p) ≅ (ℤ/n)²` for `n ∈ {3,5,7}`:
+  `{Two,Three,Five,Seven}TorsionStructure.lean` + `FunctionField{Eval,Repr,Regular}.lean`
+  + `{Quadruple,Quintuple}MultiplicationFormula.lean` + `CubicSeparable.lean`. The math
+  is sound and honestly scoped in the docstrings. Reconcile these onto current `main`,
+  let CI (the kernel) judge, and merge only on green — **but first strip the
+  novelty/priority claims from the VERIFIED.md ledger rows** ("first-in-Lean", "first
+  full N13 instance" → the pure mathematical statement of what is proved), per the
+  `AUTONOMY.md` anti-inflation rail. Adversarial integration audit: Workflow
+  `pr172-integration-audit` (this session). This is a reconciliation, not a re-proof.
 Exit criteria:
 - Either the rung proved and promoted (possibly via a reviewed #172 merge with
   statement-identity check), or the blocker memo naming the precise identity
