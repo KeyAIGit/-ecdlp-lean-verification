@@ -250,3 +250,8 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Weil.evalFracAt_well_defined
 #print axioms Ecdlp.Weil.functionField_exists_num_den
 #print axioms Ecdlp.Weil.evalRatAt_eq_evalReg
+
+-- Weil ladder W3e-1: divisor evaluation f((Q)−(O)) as a ratio of evalReg point values,
+-- multiplicative in f (evalReg_mul: value of a product = product of values at a point)
+#print axioms Ecdlp.Weil.evalReg_mul
+#print axioms Ecdlp.Weil.divEval_mul
