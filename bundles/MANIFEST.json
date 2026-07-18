@@ -17,7 +17,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 8189
+        "bytes": 10214
       },
       {
         "path": "data/stats.json",
@@ -43,7 +43,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 8189
+        "bytes": 10214
       },
       {
         "path": "data/stats.json",
@@ -67,7 +67,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 7722
+        "bytes": 7906
       },
       {
         "path": "VERIFIED.md",
@@ -111,7 +111,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 8189
+        "bytes": 10214
       },
       {
         "path": "data/stats.json",
@@ -135,7 +135,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 7722
+        "bytes": 7906
       },
       {
         "path": "VERIFIED.md",
