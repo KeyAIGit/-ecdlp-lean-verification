@@ -128,21 +128,24 @@ round trip. Closing that gap is where a ~10× lives. The levers, split by who ca
   (c) batch *independent, individually pre-verified* rungs into one CI run when they don't
   conflict, so one cold build amortizes several rungs (never batch things that share a risk
   — a batch fails as a unit). These raise throughput without any infra change.
-- **The maintainer's to unblock (the real 10×, infra — surface, don't route around):**
-  1. **Egress-allowlist the Lean toolchain host** (`release.lean-lang.org`, and the GitHub
-     release assets for the toolchain tarball) in the environment's network policy. With
-     the toolchain installed and the Mathlib cache warm, `lake env lean File.lean` gives
-     **seconds** of local feedback — the CI round trip leaves the *inner* loop entirely and
-     becomes only the final gate. This is the single highest-value change. The proxy is
-     configured to *block* it (403 on CONNECT); per `/root/.ccr/README.md` I must report it,
-     never tunnel around it.
-  2. **Register the paid server as a self-hosted CI runner** with a pre-built `.lake`, so CI
-     itself runs in seconds instead of rebuilding Mathlib cold — using the box already being
-     paid for, while keeping CI as the trusted kernel gate.
+- **The maintainer's to unblock (the real 10×). Verified 2026-07-18:**
+  1. **Local Lean in the cloud sandbox is NOT achievable** — even with Network access set to
+     Full. The toolchain + Mathlib source repos live on `github.com/leanprover*`, and github
+     is gated by a *separate* Anthropic proxy to this session's repo scope (independent of the
+     network policy); the toolchain download returns "GitHub access to this repository is not
+     enabled for this session." There is no non-github toolchain mirror, and the container
+     cannot add upstream repos to scope. `scripts/warm_lean.sh` now detects this exact gate and
+     reports it; it still works in a `--teleport` terminal session or a self-managed box, where
+     github is not scope-gated.
+  2. **The working path: the server bridge `.github/workflows/server-run.yml`** (already built).
+     A GitHub runner SSHes to the maintainer's server — whose own IP is **not** github-gated —
+     and runs `lake env lean File.lean` on a warm toolchain, returning the log; single-file
+     checks are seconds, round trip ~1 min. Needs repo secrets `SERVER_HOST` + `SSH_PRIVATE_KEY`
+     (one-time bootstrap via `server-bootstrap.yml`). **Security posture:** the server is a
+     fast *pre-check only* — every merge still requires the trusted cloud `ci.yml` (the kernel
+     re-checks), so a compromised server can never inject a false proof into `main`. Rotate the
+     leaked root password / IP (task #36) before enabling.
   Both require access the container does not have; they are the maintainer's to set up once.
-  The repo ships **`scripts/warm_lean.sh`** — once the allowlist is open it installs the
-  pinned toolchain + Mathlib olean cache so `lake env lean File.lean` checks in seconds
-  (it preflights egress and no-ops with a precise message while the hosts are still blocked).
 
 ## Planning & models
 
