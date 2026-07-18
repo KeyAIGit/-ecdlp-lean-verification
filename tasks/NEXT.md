@@ -138,9 +138,13 @@ of the cycle queue (W3-eval → W4 reciprocity → W5 `eₙ`/bilinear/non-degene
 CI (kernel) judges → adversarially verify → merge on green (pure-fact ledger row, no
 novelty claims). A rung that is a genuine Mathlib gap and resists an honest cycle → freeze
 a precise blocker in `BARRIERS.md`, mark the target `blocked`, take the next independent
-rung. **Next rung: W3e-1** `divEval` (`Ecdlp/Targets/weil_w3eval_diveval.lean`,
-`targets/weil_w3eval_diveval.json`). Secondary/independent track: general-`n` separability
-(below). Mathlib has no Weil pairing — this is from-substrate; expect multi-cycle.
+rung. **Progress (2026-07-18): W3e-1** (`divEval` multiplicativity, `WeilDivisorEval.lean`)
+**and W3e-2** (Miller-representative scaling law + conditional representative-independence,
+`WeilDivisorRepIndep.lean`) **are landed**; **W4-1** (Weil reciprocity) **is a frozen no-go**
+(`BARRIERS.md` §B3 — genuine Mathlib gap, no reachable non-vacuous case). **Next rung: W3e-3**
+(support-disjointness packaging of `secp256k1_millerEval`, `notes/WEIL_LADDER.md`) — independent
+of the blocked W4. Secondary/independent track: general-`n` separability (below). Mathlib has no
+Weil pairing — this is from-substrate; expect multi-cycle.
 
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`

@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 279,
+    "theorems": 280,
     "barriers": 6,
-    "edges": 420,
+    "edges": 422,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -116,12 +116,13 @@
       "evalAt`/`evalRatAt` layer + `secp256k1_miller_function_unique` (W2)": 1,
       "IsLocalization.surj`/`IsFractionRing.injective` (source-verified) + `evalFracAt` layer + W2": 1,
       "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer": 1,
-      "evalReg`/`evalFracAt` layer (`FunctionFieldRegular.lean`) + field algebra": 1
+      "evalReg`/`evalFracAt` layer (`FunctionFieldRegular.lean`) + field algebra": 1,
+      "evalReg`/`divEval` layer + `evalFracAt_unit_mul` + field algebra": 1
     },
     "by_area": {
       "curve-torsion": 146,
       "primality": 49,
-      "other": 25,
+      "other": 26,
       "generic-hardness": 24,
       "protocol-soundness": 23,
       "attack-resistance": 6,
@@ -3756,6 +3757,19 @@
       "area": "other",
       "dependency_depth": 7,
       "gated": true
+    },
+    {
+      "id": "thm-279",
+      "name": "Ecdlp.Weil.divEval_smul_unit`, `divEval_smul_unit_eq`, `evalReg_smul_unit",
+      "short_name": "divEval_smul_unit`,",
+      "module": "Ecdlp.Proved.WeilDivisorRepIndep",
+      "file": "Ecdlp/Proved/WeilDivisorRepIndep.lean",
+      "claim": "Weil ladder W3e-2 — how the Miller representative enters `divEval`, and conditional representative-independence (`divEval_smul_unit`: for `g = u·f` with `u` a unit of `F[E]` and `f, g` regular at `Q, O`, `divEval g = (u(Q)/u(O)) · divEval f` — the entire dependence of `divEval` on the choice of Miller function is the single ratio `u(Q)/u(O)`, from the pointwise `evalReg_smul_unit` = `evalReg (u·f) = u(P)·evalReg f` via `evalFracAt_unit_mul`; and `divEval_smul_unit_eq`: if additionally `u(Q) = u(O)` the ratio is `1`, so `divEval g = divEval f`. secp256k1 forms `secp256k1_divEval_miller_rep_scaling`/`_indep` apply this to the `secp256k1_miller_function_unique` ambiguity. Honest scope: unconditional independence needs `u(Q)=u(O)`, i.e. that units of `F[E]` are constants — absent from Mathlib v4.31, carried as an explicit hypothesis, not proved)",
+      "method": "evalReg`/`divEval` layer + `evalFracAt_unit_mul` + field algebra",
+      "status": "proved",
+      "area": "other",
+      "dependency_depth": 8,
+      "gated": true
     }
   ],
   "barriers": [
@@ -5154,6 +5168,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.WeilDivisorRepIndep",
+      "to": "Ecdlp.Proved.WeilDivisorEval",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -5871,6 +5890,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.WeilDivisorEval",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.WeilDivisorRepIndep",
       "type": "imports"
     },
     {

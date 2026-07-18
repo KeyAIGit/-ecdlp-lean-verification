@@ -188,6 +188,14 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Weil.xyIdeal_ne_of_y_ne
 #print axioms Ecdlp.Weil.xyIdeal_ne_of_ne
 
+-- Weil ladder W3-eval: divisor evaluation `f((Q)−(O))` — multiplicativity (W3e-1) and the
+-- Miller-representative scaling law / conditional representative-independence (W3e-2)
+#print axioms Ecdlp.Weil.divEval_mul
+#print axioms Ecdlp.Weil.evalReg_mul
+#print axioms Ecdlp.Weil.evalReg_smul_unit
+#print axioms Ecdlp.Weil.divEval_smul_unit
+#print axioms Ecdlp.Weil.divEval_smul_unit_eq
+
 -- Weil H4 bridge: division-polynomial tower ⟺ Miller/divisor tower (ψ n root ⟺ n·([P]−[O]) principal)
 #print axioms Ecdlp.Weil.secp256k1_psi3_root_iff_class_torsion
 #print axioms Ecdlp.Weil.secp256k1_psi5_root_iff_class_torsion
