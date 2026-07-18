@@ -69,6 +69,12 @@ only judge; CI is how the kernel votes here.
   real source: grep a Mathlib checkout if one exists (`.lake/packages/mathlib`, or a
   scratchpad clone), else GitHub code-search the pinned rev (monotone: absent on master ⇒
   absent at the older pin). The `smul_def` step of W3e-2 was retired exactly this way.
+  **Also collision-check the *new* names you are about to declare** — grep the repo for each
+  exact `theorem`/`def` name before writing it. A name already defined elsewhere makes the
+  whole `Ecdlp` import fail (`environment already contains …`) and burns a CI cycle; worse,
+  had it not collided it would have been a silent **duplicate** (anti-inflation). This is
+  also the fastest existence check: if the name is already there, the rung is already done —
+  back out instead of re-proving it (the N4 degree layer was found already-landed this way).
 - **Anti-inflation.** No duplicate, padded, or restated results to move counts. Ledger
   rows state *what is proved* — never novelty, priority, "first-in-Lean", or superlatives
   (those are the maintainer's prerogative, and unverifiable by the kernel).
