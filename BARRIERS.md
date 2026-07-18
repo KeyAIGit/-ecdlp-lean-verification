@@ -213,6 +213,23 @@ exact `Θ` statements.
   `Ecdlp/Targets/normeds_no_consecutive_zero.lean`; the remaining CORE-by-effort item on
   that path is N7 (general multiplication formula). See the TASK-005 memo in
   `notes/POINT_COUNTING_KEYSTONE.md` and `notes/DIVISION_POLY_TORSION_MAP.md`.
+  - **N7-uniform `x([n]P) = Φₙ(x)/ΨSqₙ(x)` (general `n`) — precise wall mapped (2026-07-18).**
+    Fixed `n = 2,3,4,5` are landed as per-`n` coordinate-level `linear_combination` certificates
+    (`MultiplicationFormula.lean`, `Triple/Quadruple/QuintupleMultiplicationFormula.lean`); the
+    *uniform* statement is the missing rung. Mathlib v4.31 provides the univariate `Φ`/`ΨSq`/`preΨ`
+    polynomials **and** their recurrences (`preΨ_even/odd`, `ΨSq_even/odd`, `Φ_ofNat`,
+    `mk_Ψ_sq`) — but has **no y-coordinate (`ω`) division polynomial**, **no multiplication-by-`n`
+    coordinate map**, and **no `Point`↔`Ψ/Φ` connection at all** (`Point` occurs once in
+    `DivisionPolynomial/Basic.lean`, zero times in `Degree.lean`; verified against the pinned tree).
+    So a from-substrate uniform proof must first **build** (i) the `ωₙ` (y-coordinate) division
+    polynomial and its addition/recurrence theory, then (ii) the coordinate `[n]`-map, then (iii)
+    the general induction `x([n+1]P) = addX(x([n]P), x, slope(…))` with `x([n]P)=Φₙ/ΨSqₙ` and the
+    `ω`-based `y([n]P)` substituted — a single monstrous rational-function identity per step. This
+    is upstream-grade, multi-month infrastructure (comparable to a stalled Mathlib PR), and it does
+    **not** decompose into small independent rungs. **Note on the fast-feedback lever:** the live
+    `server-run.yml` bridge (~5 s single-file `lake env lean`) speeds *verification* but not the
+    *authoring* of this missing theory, so it does not change the scale. Recorded as the precise
+    wall; the `#E[n]=n²` structure is already landed for `n ∈ {2,3,5,7}` without it.
   - **Weil reciprocity `f(div g) = g(div f)` (ladder rung W4-1) — frozen no-go
     (2026-07-18).** The evaluation half of the Weil pairing is landed at the
     function-field level (W3e-1 divisor evaluation, W3e-2 representative-scaling),
