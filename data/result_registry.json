@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 722,
-  "distinct_qualified_names": 568,
-  "verified_md_citations": 210,
+  "declaration_count": 726,
+  "distinct_qualified_names": 572,
+  "verified_md_citations": 211,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -861,6 +861,22 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/Secp256k1Params.lean",
       "line": 8,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.p_mod_three": {
+      "name": "p_mod_three",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SqrtThreeModFour.lean",
+      "line": 53,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.p_mod_twelve": {
+      "name": "p_mod_twelve",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SqrtThreeModFour.lean",
+      "line": 49,
       "occurrences": 1
     },
     "Ecdlp.Curve.pointX": {
@@ -1999,6 +2015,14 @@
       "line": 36,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_sqrt_of_isSquare": {
+      "name": "secp256k1_sqrt_of_isSquare",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SqrtThreeModFour.lean",
+      "line": 58,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_taproot_tweak_verify": {
       "name": "secp256k1_taproot_tweak_verify",
       "namespace": "Ecdlp.Curve",
@@ -2253,6 +2277,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/SevenTorsionBridgeBar.lean",
       "line": 172,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.sqrt_of_three_mod_four": {
+      "name": "sqrt_of_three_mod_four",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SqrtThreeModFour.lean",
+      "line": 38,
       "occurrences": 1
     },
     "Ecdlp.Curve.threeTorsionX": {

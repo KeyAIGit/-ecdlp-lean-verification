@@ -54,6 +54,7 @@ git history and the GitHub Actions tab.
 | secp256k1 invariant `c₄ = 0` | `Ecdlp.Curve.secp256k1_c₄_eq_zero` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib | proved |
 | **secp256k1 j-invariant `j = 0`** (CM by `ℤ[ζ₃]` ⇒ GLV `λ`) | `Ecdlp.Curve.secp256k1_j_eq_zero` | Ecdlp/Proved/Secp256k1Curve.lean | Mathlib | proved² |
 | secp256k1 `p ≡ 3 (mod 4)` (point decompression) | `Ecdlp.Curve.p_mod_four` | Ecdlp/Proved/Secp256k1Params.lean | native_decide | proved |
+| **√ in `𝔽_q` for `q≡3 (mod 4)`: `(a^((q+1)/4))² = a`** (`sqrt_of_three_mod_four`: for a prime `q≡3 (mod 4)` and any square `a ∈ ZMod q`, the closed form `a^((q+1)/4)` squares back to `a` — proved via the Frobenius/Fermat identity `ZMod.pow_card` (`b^q = b`), so the `a=0` case is covered uniformly (no split). Specialized to `q=p` as `secp256k1_sqrt_of_isSquare` (the point-decompression identity); companion congruences `p_mod_twelve` (`p≡7 mod 12`) and `p_mod_three` (`p≡1 mod 3`). FBL-PURE-003; general theorem kernel-pure, congruences `native_decide`) | `Ecdlp.Curve.sqrt_of_three_mod_four` | Ecdlp/Proved/SqrtThreeModFour.lean | Mathlib (`ZMod.pow_card`, `pow_two`/`pow_mul`/`pow_succ`) + `omega` | proved |
 | secp256k1 `3 ∣ (p−1)` (cube root `β` in `𝔽_p`) | `Ecdlp.Curve.three_dvd_p_sub_one` | Ecdlp/Proved/Secp256k1Params.lean | native_decide | proved |
 | secp256k1 `3 ∣ (n−1)` (GLV eigenvalue `λ` in `ℤ/n`) | `Ecdlp.Curve.three_dvd_n_sub_one` | Ecdlp/Proved/Secp256k1Params.lean | native_decide | proved |
 | **Adaptor signature witness extraction** (atomic swaps / Lightning) | `Ecdlp.Schnorr.adaptor_extract` | Ecdlp/Proved/SchnorrSoundness.lean | Mathlib | proved |
@@ -299,7 +300,7 @@ is Xu & Angdinata's. It is built and gated (the one-invariant holds), but delibe
 `isEllSequence_of_rec_one` (headline row above) remains this repo's own contribution.
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**267 ledger rows / ~228 distinct kernel-verified results** (39 rows are alternate-form,
+**268 ledger rows / ~229 distinct kernel-verified results** (39 rows are alternate-form,
 `supporting:`, or instantiation restatements of the same fact, e.g. the `ZMod`/ring forms
 of the GLV eigenvalue, the operator form of the GLV cube relation, the Semaev `S₃` symmetry
 lemmas, and the concrete-`⟨G⟩` instantiations of the abstract protocol suite — the two

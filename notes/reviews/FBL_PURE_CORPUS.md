@@ -111,13 +111,18 @@ Record fields per task: claim_id · status · lean_files · lean_theorems · sou
   Mathlib's own Nonsingular vocabulary, instantiated at secp256k1". limitations: kernel-only
   (no native_decide); `[Fact p.Prime]` hypothesis for the 𝔽_p specialization.
 
-### FBL-PURE-003 — √ in K0 via a^((q+1)/4) for q≡3 mod 4 — **partial**
-- current: `p ≡ 3 mod 4` (`Secp256k1Params.p_mod_four`), `p ≡ 1 mod 3` present; the general
-  sqrt theorem is not stated.
-- next_action: prove the general finite-field theorem (odd prime q, q%4=3, a a square ⇒
-  r=a^((q+1)/4) has r²=a; a=0 handled) — check Mathlib `ZMod.sqrt`/`Finset`; specialize K0.
-- barrier: possibly already a one-liner via Mathlib. paper_hook: "closed square-root map for
-  3-mod-4 primes, verified".
+### FBL-PURE-003 — √ in K0 via a^((q+1)/4) for q≡3 mod 4 — **verified** (#184)
+- lean_files: `Ecdlp/Proved/SqrtThreeModFour.lean`
+- lean_theorems: `Ecdlp.Curve.sqrt_of_three_mod_four` (general: prime `q≡3 mod4`, `IsSquare a` ⇒
+  `(a^((q+1)/4))² = a`, via `ZMod.pow_card` so `a=0` is uniform — no case split);
+  `secp256k1_sqrt_of_isSquare` (q=p specialization, point decompression); congruences
+  `p_mod_twelve` (`p≡7 mod12`), `p_mod_three` (`p≡1 mod3`); reuses `p_mod_four`.
+- barrier: none — confirmed no ready-made Mathlib closed-form `q≡3 mod4` sqrt lemma (nearest
+  are existence-only `ZMod.euler_criterion` / `FiniteField.isSquare_iff`); this is a genuine
+  ~5-line formalization on `ZMod.pow_card`. next_action: none.
+- paper_hook: "closed square-root map √a = a^((q+1)/4) for 3-mod-4 primes, machine-verified,
+  instantiated at secp256k1 (point decompression)". limitations: general theorem kernel-pure;
+  congruences `native_decide`; gives closed-form correctness only (not sign/parity selection).
 
 ### FBL-PURE-008 — compressed ψ_m = R_m(x³) [or x·R_m(x³)] + exact deg R_m — **partial**
 - current: GLV invariance (007) done; specific degrees exist (`preΨ'11`=60, `preΨ'13`=84 in
