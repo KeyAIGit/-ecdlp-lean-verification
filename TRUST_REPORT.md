@@ -2,8 +2,8 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `267 ledger rows / ~228 distinct kernel-verified
-results` (≈39 of the 267 rows are alternate-form or `supporting:` restatements of the
+**Scope of the verified body.** `268 ledger rows / ~229 distinct kernel-verified
+results` (≈39 of the 268 rows are alternate-form or `supporting:` restatements of the
 same underlying fact — e.g. the `ZMod`/ring forms of the GLV eigenvalue, or the
 concrete-`⟨G⟩` instantiations of the abstract protocol suite — so they do
 not add new content). **0 `sorry`, 0 `admit`, 0 open obligations, 0 custom axioms.**
@@ -55,9 +55,11 @@ these are on the audit's permanent forbidden list.
 
 Every result falls into exactly one of three buckets. The partition is by whether the
 result's proof term depends on `Lean.ofReduceBool` (i.e. uses `native_decide` anywhere,
-directly or transitively). There are **no uses of the kernel `decide` tactic anywhere**
-in `Ecdlp/` (a grep for the `decide` tactic returns no matches); the only decision
-procedure that appears at scale is `native_decide`.
+directly or transitively). The kernel `decide` tactic is also used, for a handful of
+small finite checks (e.g. `¬ (p ∣ m)` for tiny `m`, and `Fin`/`ZMod` residue facts);
+unlike `native_decide`, `decide` is **kernel-checked** — it emits a proof term the kernel
+re-validates — so those results stay in bucket (a) and add **nothing** to the TCB. Only
+`native_decide` (the compiler path) extends it, and those facts are catalogued in (b).
 
 ### (a) Pure Mathlib / kernel — NO `native_decide` (kernel-only TCB)
 
