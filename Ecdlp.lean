@@ -143,3 +143,4 @@ import Ecdlp.Proved.FiveTorsionStructure
 import Ecdlp.Proved.SevenTorsionStructure
 import Ecdlp.Proved.WeilDivisorEval
 import Ecdlp.Proved.WeilDivisorRepIndep
+import Ecdlp.Proved.WeilMillerEval

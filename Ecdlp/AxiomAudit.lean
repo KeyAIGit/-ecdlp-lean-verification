@@ -196,6 +196,10 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Weil.divEval_smul_unit
 #print axioms Ecdlp.Weil.divEval_smul_unit_eq
 
+-- Weil ladder W3e-3: raw-pairing-value domain (support-disjointness bridge) + divEval unit law
+#print axioms Ecdlp.Weil.secp256k1_miller_jointly_regular
+#print axioms Ecdlp.Weil.divEval_one
+
 -- Weil H4 bridge: division-polynomial tower ⟺ Miller/divisor tower (ψ n root ⟺ n·([P]−[O]) principal)
 #print axioms Ecdlp.Weil.secp256k1_psi3_root_iff_class_torsion
 #print axioms Ecdlp.Weil.secp256k1_psi5_root_iff_class_torsion
