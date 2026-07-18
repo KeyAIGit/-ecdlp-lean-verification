@@ -130,7 +130,7 @@ Files allowed to edit:
 - `scripts/`
 - `notes/`
 
-### TASK-005 - Geometric `E[n] ≅ (ℤ/n)²`: prove the N5 scalar rung
+### TASK-005 - Geometric torsion frontier: general-`n` separability + Weil pairing
 
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
@@ -155,31 +155,20 @@ Expected output:
   per the standard lifecycle (stem consumed, registry verified, ledger row). No
   weakening, no `sorry`. If attempts stall, a frozen memo recording the exact
   failing induction step instead.
-- **Immediate action (2026-07-18) — reconcile & land PR #172's crown:** the N5
-  scalar rung (`NormEDSConsecutiveZeros.lean`) and the whole divpoly
-  infrastructure (Bar bridges, `DivisionPolynomial{Coprime,Squarefree,Separable}`)
-  **already landed on `main`** via the sibling sessions. The only unmerged part of
-  #172 (orphaned branch `origin/claude/repo-analysis-next-steps-btomml`) is the
-  **structure family** `E[n](𝔽̄_p) ≅ (ℤ/n)²` for `n ∈ {3,5,7}`:
-  `{Two,Three,Five,Seven}TorsionStructure.lean` + `FunctionField{Eval,Repr,Regular}.lean`
-  + `{Quadruple,Quintuple}MultiplicationFormula.lean` + `CubicSeparable.lean`. The math
-  is sound and honestly scoped in the docstrings. This is exactly **Split-PR 4** of the
-  documented plan `notes/reviews/PR172_SPLIT_PLAN.md` (Split-PR 1/2/3 already landed on
-  `main`); the companion audit is `notes/reviews/GEOMETRIC_TORSION_AUDIT.md`. Reconcile
-  onto current `main`, let CI (the kernel) judge, and merge only on green. Concrete musts
-  before merge (confirmed by a second adversarial audit, 2026-07-18):
-  1. **Strip the novelty/priority claims** from the VERIFIED.md ledger rows and the
-     `ThreeTorsionStructure.lean` docstrings ("first-in-Lean", "first full N13 instance"
-     → the pure statement of what is proved), per the `AUTONOMY.md` anti-inflation rail;
-     soften the SOFT superlatives ("first even rung"→"the even rung n=4", "simplest", etc.).
-  2. **Fix the build-breaker duplicate**: `Ecdlp.Curve.secp256k1Bar_two_nsmul_eq_zero_iff`
-     is declared in both `main`'s `FiveTorsionBridgeBar.lean` and the branch's
-     `TwoTorsionStructure.lean` — keep exactly one (import & reuse the existing one).
-  3. **Union the ledger, never take the branch VERIFIED.md wholesale** — it drops ~20
-     main-only rows (P256TwistSecurity, EcdsaMalleability, Eleven/Thirteen torsion,
-     TorsionCounting, …); keep all main rows AND add the branch's, then regenerate.
-  This is a reconciliation, not a re-proof; the math (n∈{3,5,7}: #E[n]=n², E[n]≅(ℤ/n)²)
-  is independently confirmed sound.
+- **Landed (2026-07-18):** the `E[n](𝔽̄_p) ≅ (ℤ/n)²` / `#E[n]=n²` structure family for
+  **`n ∈ {2,3,5,7}`** is on `main` (PR #186, kernel-verified; PR #172 reconciled &
+  closed, novelty/priority claims stripped per `AUTONOMY.md`). The `n`-by-`n` instances,
+  the N7 formulas `n=2,3,4,5`, and the Weil W3 function-field evaluation layer
+  (`FunctionField{Eval,Repr,Regular}`) all landed. What remains is the **general-`n`**
+  program, the genuine open frontier:
+  1. **Uniform separability of `[n]`** (N10 (i)+(ii) general core) — the one CORE item;
+     the N5 scalar no-consecutive-zeros lemma (`NormEDSConsecutiveZeros.lean`) landed, so
+     the descent toward `#E[n]=n²` for all `n` prime to `p` is the next reachable rung.
+  2. **Weil pairing non-degeneracy** — the W3 evaluation layer is closed at the
+     function-field level; next rungs: divisor evaluation `f_P(D_Q)`, W4 reciprocity,
+     the bilinear `eₙ → μₙ` (the multi-month substrate, `notes/FOUNDATIONS.md`).
+  Attempt one reachable rung; if it is Mathlib-blocked, record the precise no-go and
+  move down the `AUTONOMY.md` priority ladder.
 Exit criteria:
 - Either the rung proved and promoted (possibly via a reviewed #172 merge with
   statement-identity check), or the blocker memo naming the precise identity
