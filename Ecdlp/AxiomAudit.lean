@@ -267,3 +267,7 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 -- multiplicative in f (evalReg_mul: value of a product = product of values at a point)
 #print axioms Ecdlp.Weil.evalReg_mul
 #print axioms Ecdlp.Weil.divEval_mul
+
+-- N7-uniform S1 brick: coordinate-ring translation φₙ·ΨSqₙ = Φₙ·ψₙ² (bivariate ↔ univariate)
+#print axioms Ecdlp.Curve.mk_ψ_sq
+#print axioms Ecdlp.Curve.mk_φ_mul_ΨSq

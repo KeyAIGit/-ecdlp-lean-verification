@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 891,
-  "distinct_qualified_names": 684,
-  "verified_md_citations": 224,
+  "declaration_count": 893,
+  "distinct_qualified_names": 685,
+  "verified_md_citations": 225,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -1022,6 +1022,14 @@
       "file": "Ecdlp/Proved/FiveTorsionStructure.lean",
       "line": 162,
       "occurrences": 1
+    },
+    "Ecdlp.Curve.mk_": {
+      "name": "mk_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/MultiplicationXCoordinateRing.lean",
+      "line": 32,
+      "occurrences": 2
     },
     "Ecdlp.Curve.natDegree_pre": {
       "name": "natDegree_pre",

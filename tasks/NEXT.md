@@ -174,6 +174,19 @@ remains the sole merge gate (the server is a fast pre-check only, never the trus
 manufacture single-cycle filler; the remaining work is the two hard gates, now attackable. Reopen
 the Weil track only if the pin gains residue/tame-symbol/divisor-degree machinery.
 
+**N7-UNIFORM BUILD — brick 1 landed (2026-07-18, PR #200).** The maintainer's "build"
+directive committed to constructing the N7-uniform infrastructure incrementally. First brick:
+`Ecdlp/Proved/MultiplicationXCoordinateRing.lean` — the coordinate-ring translation
+`φₙ·ΨSqₙ = Φₙ·ψₙ²` (`mk_ψ_sq`, `mk_φ_mul_ΨSq`), curve-generic, all `n:ℤ`, over Mathlib's
+`mk_ψ`/`mk_Ψ_sq`/`mk_φ` congruences. Server-prechecked (`LEAN_OK_S1`, ~4.5 s warm) then CI-gated.
+This is node **S1** only (coordinate-ring identity); the Point-level map `x([n]•P)=φₙ(P)/ψₙ(P)²`
+on `E(k)` (node **S3**) still needs the multiplication-by-`n` coordinate map, absent from Mathlib.
+**Next brick:** scout Mathlib for any `[n]`-on-`Point` ↔ `φ`/`ψ` connection (Basic.lean has
+`W.ψ`/`W.φ` and `mk`, but `Point` appears there once, 0× in Degree.lean); if the group-law map is
+genuinely absent, the next reachable rung is the **ω / y-coordinate division-polynomial** layer
+(node **S2**, Mathlib's own open ÷2 TODO) or a fixed-`n` extension of the existing `n=2..5` point
+formulas. Keep one brick per cycle, server-verified, ledger-honest about scope.
+
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
 Why it matters: The scoping half of this task is **delivered** (2026-07-16): the
