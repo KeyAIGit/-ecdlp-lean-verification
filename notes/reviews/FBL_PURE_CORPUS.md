@@ -99,14 +99,17 @@ Record fields per task: claim_id · status · lean_files · lean_theorems · sou
 
 ## Genuine gaps — agent-drafted, driven through CI (6)
 
-### FBL-PURE-001 — general projective smoothness of Y²Z=X³+bZ³ — **open** (drafting)
-- current: only secp256k1-specific `secp256k1_Δ_ne_zero` exists; no general-K, direct-Jacobian,
-  two-chart theorem.
-- next_action: draft `Ecdlp/Proved/CurveSmoothness.lean` — general-K Jacobian criterion (no
-  nontrivial simultaneous zero of F and F_X,F_Y,F_Z, affine chart + ∞ separately) when 2,3,b≠0;
-  specialize b=7,K0. Two independent agent drafts in flight → synthesize → CI.
-- barrier: Mathlib projective-nonsingularity API ergonomics. paper_hook: "reusable projective
-  smoothness criterion for j=0 short-Weierstrass families".
+### FBL-PURE-001 — general projective smoothness of Y²Z=X³+bZ³ — **verified** (#183)
+- lean_files: `Ecdlp/Proved/CurveSmoothness.lean`
+- lean_theorems: `Ecdlp.Curve.curveB_toProjective_nonsingular` (general-K:
+  `2,3,b≠0 ⇒ (curveB b).toProjective.Nonsingular P` for `P≠0` on the curve — Mathlib's genuine
+  `WeierstrassCurve.Projective.Nonsingular`, via `nonsingular_iff`'s three `pderiv` partials
+  discharged by the two-chart `jacobian_core`); `secp256k1_projective_nonsingular` (b=7,K0);
+  `secp256k1_infinity_nonsingular` (`[0:1:0]`); `curveB_Δ` (`=−432b²`), `curveB_Δ_ne_zero`.
+- barrier: none (Mathlib projective API navigated). next_action: none.
+- paper_hook: "reusable projective smoothness criterion for j=0 short-Weierstrass families, in
+  Mathlib's own Nonsingular vocabulary, instantiated at secp256k1". limitations: kernel-only
+  (no native_decide); `[Fact p.Prime]` hypothesis for the 𝔽_p specialization.
 
 ### FBL-PURE-003 — √ in K0 via a^((q+1)/4) for q≡3 mod 4 — **partial**
 - current: `p ≡ 3 mod 4` (`Secp256k1Params.p_mod_four`), `p ≡ 1 mod 3` present; the general
