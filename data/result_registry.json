@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 882,
-  "distinct_qualified_names": 675,
-  "verified_md_citations": 222,
+  "declaration_count": 887,
+  "distinct_qualified_names": 680,
+  "verified_md_citations": 223,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -4655,6 +4655,22 @@
       "line": 57,
       "occurrences": 1
     },
+    "Ecdlp.Weil.divEval_smul_unit": {
+      "name": "divEval_smul_unit",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilDivisorRepIndep.lean",
+      "line": 70,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.divEval_smul_unit_eq": {
+      "name": "divEval_smul_unit_eq",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilDivisorRepIndep.lean",
+      "line": 88,
+      "occurrences": 1
+    },
     "Ecdlp.Weil.evalAt": {
       "name": "evalAt",
       "namespace": "Ecdlp.Weil",
@@ -4855,6 +4871,14 @@
       "line": 33,
       "occurrences": 1
     },
+    "Ecdlp.Weil.evalReg_smul_unit": {
+      "name": "evalReg_smul_unit",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilDivisorRepIndep.lean",
+      "line": 51,
+      "occurrences": 1
+    },
     "Ecdlp.Weil.functionField_exists_mul_num_den": {
       "name": "functionField_exists_mul_num_den",
       "namespace": "Ecdlp.Weil",
@@ -4933,6 +4957,22 @@
       "kind": "def",
       "file": "Ecdlp/Proved/PointEvaluation.lean",
       "line": 65,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.secp256k1_divEval_miller_rep_indep": {
+      "name": "secp256k1_divEval_miller_rep_indep",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilDivisorRepIndep.lean",
+      "line": 140,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.secp256k1_divEval_miller_rep_scaling": {
+      "name": "secp256k1_divEval_miller_rep_scaling",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilDivisorRepIndep.lean",
+      "line": 109,
       "occurrences": 1
     },
     "Ecdlp.Weil.secp256k1_miller_eval_scaling": {

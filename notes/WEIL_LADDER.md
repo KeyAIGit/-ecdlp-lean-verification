@@ -7,9 +7,11 @@ CI (the kernel) judge, and merges only on green — recording a precise no-go if
 genuine Mathlib gap and moving to the next independent rung.
 
 This file is the granular, machine-followable decomposition of the high-level `W1…W5`
-sub-ladder in `notes/FOUNDATIONS.md`. The high-level status there: **W1, W2, and W3's
-representative-independence half are landed**; the open frontier is **W3's evaluation half
-(`f_P(D_Q)`) → W4 (Weil reciprocity) → W5 (define `eₙ` + properties)**.
+sub-ladder in `notes/FOUNDATIONS.md`. The high-level status there: **W1, W2, W3's
+representative-independence half, and the divisor-evaluation rungs W3e-1 (multiplicativity)
+and W3e-2 (Miller-representative scaling law + conditional representative-independence) are
+landed**; the open frontier is **W3e-3/W3e-4 → W4 (Weil reciprocity, now a frozen no-go,
+see below) → W5 (define `eₙ` + properties)**.
 
 ## Landed substrate the ladder builds on (do not re-prove)
 
@@ -33,14 +35,18 @@ the no-go if it resists).
 
 ### W3-eval — evaluate `f_P` at the divisor `D_Q = (Q) − (O)`
 
-- **W3e-1 (S)** — `divEval`: for `f` regular at points `Q, O` with `Q ≠ O`, define
-  `divEval f ((Q)−(O)) := evalReg f Q / evalReg f O` and its basic algebra
-  (`divEval (f·g) = divEval f · divEval g`, `divEval 1 = 1`). Builds on `evalReg` +
-  `evalFracAt_mul`. Target stem: `Ecdlp/Targets/weil_w3eval_divEval.lean`.
-- **W3e-2 (S)** — `divEval` representative-independence: if `f' = u·f` with `u` a unit of
-  `F[E]` (i.e. `f, f'` two Miller functions, `secp256k1_miller_function_unique`), then
-  `divEval f' D = divEval f D` (the unit's value cancels in the ratio, via
-  `secp256k1_miller_eval_scaling`: `u` nonvanishing at every rational point).
+- **W3e-1 (S) — LANDED** (`Ecdlp/Proved/WeilDivisorEval.lean`, `divEval_mul`/`evalReg_mul`):
+  for `f` regular at points `Q, O`, `divEval f ((Q)−(O)) := evalReg f Q / evalReg f O`, and
+  `divEval (f·g) = divEval f · divEval g` via pointwise multiplicativity `evalReg_mul` +
+  `evalFracAt_mul`.
+- **W3e-2 (S) — LANDED** (`Ecdlp/Proved/WeilDivisorRepIndep.lean`,
+  `divEval_smul_unit`/`divEval_smul_unit_eq`/`evalReg_smul_unit`): if `g = u·f` with `u` a unit
+  of `F[E]` (two Miller functions, `secp256k1_miller_function_unique`) then
+  `divEval g = (u(Q)/u(O)) · divEval f` (scaling law, unconditional); and `divEval g = divEval f`
+  when `u(Q) = u(O)` (conditional representative-independence). **Honest residual:** the
+  hypothesis `u(Q) = u(O)` — i.e. units of `F[E]` are constants — is absent from Mathlib v4.31
+  (`secp256k1_miller_eval_scaling` gives only nonvanishing `u(P) ≠ 0`, not equality across
+  points), so it is carried as an explicit hypothesis rather than proved.
 - **W3e-3 (M)** — support disjointness hypothesis packaging: state `f_P(D_Q)` for `P, Q`
   with `{P,O} ∩ {Q,O}` off `supp(div f_P)`; the `n=3,5,7` closure instances give concrete
   witnesses. Produces `secp256k1_millerEval P Q : F` (the raw pairing value, pre-μₙ).
@@ -49,11 +55,15 @@ the no-go if it resists).
 
 ### W4 — Weil reciprocity `f(div g) = g(div f)`
 
-- **W4-1 (G)** — reciprocity for a **single pair of degree-0 divisors with disjoint
-  support** on `secp256k1` (the crux identity). Genuine Mathlib gap; likely needs the
-  local-symbol / tame-symbol machinery or a direct residue computation. Attempt a special
-  case first (e.g. both divisors `(A)−(B)`); if it resists, freeze a precise blocker memo
-  naming the missing lemma.
+- **W4-1 (G) — BLOCKED (frozen no-go, 2026-07-18; see `BARRIERS.md` §B3 Weil reciprocity).**
+  Reciprocity for a single pair of degree-0 divisors with disjoint support on `secp256k1`.
+  Assessed as a genuine Mathlib gap with **no reachable non-vacuous special case**: the landed
+  layer rides on `toClass`/`ClassGroup` (divisors mod principal), which forgets exactly the
+  `F*`-valued data reciprocity equates; the three missing pieces (differential residue + residue
+  theorem; tame symbol + product formula; `x:E→ℙ¹` pull-back + symbol norm-compatibility) are
+  each an upstream-grade port absent at v4.31 and on master; and a concrete `native_decide`
+  instance is blocked by the non-constructive Miller function (`ClassGroup.mk_eq_one_iff`). The
+  loop routes to the independent rung **W3e-3** instead.
 - **W4-2 (G)** — general Weil reciprocity from W4-1 by bilinear extension over divisors.
 
 ### W5 — define `eₙ` and prove its properties

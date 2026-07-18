@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~240 distinct results / 279 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~241 distinct results / 280 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -213,6 +213,33 @@ exact `Θ` statements.
   `Ecdlp/Targets/normeds_no_consecutive_zero.lean`; the remaining CORE-by-effort item on
   that path is N7 (general multiplication formula). See the TASK-005 memo in
   `notes/POINT_COUNTING_KEYSTONE.md` and `notes/DIVISION_POLY_TORSION_MAP.md`.
+  - **Weil reciprocity `f(div g) = g(div f)` (ladder rung W4-1) — frozen no-go
+    (2026-07-18).** The evaluation half of the Weil pairing is landed at the
+    function-field level (W3e-1 divisor evaluation, W3e-2 representative-scaling),
+    but the reciprocity crux resists an honest cycle: it is a genuine Mathlib gap
+    with **no reachable non-vacuous special case**. The landed Weil layer rides on
+    Mathlib's `toClass : W.Point →+ Additive (ClassGroup W.CoordinateRing)` (the
+    Abel–Jacobi map into the *ideal class group* = divisors mod principal); passing
+    to classes forgets exactly the `F*`-valued products `f(div g)`, `g(div f)` that
+    reciprocity equates, so `toClass`/`ClassGroup` — necessary for W1/W2 — is
+    provably insufficient for W4 and cannot be leveraged into a special case. The
+    exact missing Mathlib lemmas (absent at v4.31 **and** on current master, verified
+    by code search): (1) a differential residue on a function field and the residue
+    theorem `∑_P res_P ω = 0` (Mathlib's only `residue` is `IsLocalRing.residue
+    R→R/m`); (2) a tame/local symbol `(f,g)_v` and its product formula `∏_v (f,g)_v =
+    1`; (3) a `Divisor` type with `degree`/`deg(div f)=0` and a valuation family over
+    **all** closed points including the place at infinity `O` (Mathlib's
+    `HeightOneSpectrum` valuations cover only the affine coordinate ring, missing `O`
+    — and the target divisors `n·([P]−[O])` mix affine points with `O`). Each of the
+    three proof routes (residue theorem; tame-symbol product formula; `x:E→ℙ¹`
+    pull-back reducing to `Polynomial.resultant` symmetry via a symbol
+    norm-compatibility lemma) needs a new upstream-grade development comparable to the
+    Riemann–Roch gap. A concrete `native_decide` instance is also blocked: the repo's
+    Miller function is produced non-constructively (`ClassGroup.mk_eq_one_iff`), so
+    `divEval f_P` does not reduce to a `ZMod p` computation. **Status:** W4-1/W4-2 and
+    all of W5 (`eₙ`, bilinear/alternating/non-degenerate) stay parked behind this; the
+    loop routes to the independent rung W3e-3 (support-disjointness packaging), which
+    builds only on the landed `evalReg`/`divEval` layer. See `notes/WEIL_LADDER.md`.
 - **Point counting** — **closed for secp256k1**: `#E(𝔽_p) = n` is now a kernel
   theorem (`CurveCardinalityExact.lean` — a curve-specific certificate, `n ∣ #E`
   plus `#E ≤ 2p+1 < 3n` plus `E[2] = {O}`, no Hasse/Schoof needed). The general

@@ -17,7 +17,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 10083
+        "bytes": 10460
       },
       {
         "path": "data/stats.json",
@@ -43,7 +43,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 10083
+        "bytes": 10460
       },
       {
         "path": "data/stats.json",
@@ -73,13 +73,13 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 128961
+        "bytes": 130032
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 21138
+        "bytes": 23400
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -111,7 +111,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 10083
+        "bytes": 10460
       },
       {
         "path": "data/stats.json",
@@ -141,13 +141,13 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 128961
+        "bytes": 130032
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 21138
+        "bytes": 23400
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -171,7 +171,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 265679
+        "bytes": 267336
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
