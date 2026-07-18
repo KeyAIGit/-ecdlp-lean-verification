@@ -189,7 +189,7 @@
         "path": "TRUST_REPORT.md",
         "reason": "the trust boundary: what native_decide adds to the TCB",
         "exists": true,
-        "bytes": 17564
+        "bytes": 17783
       }
     ]
   }
