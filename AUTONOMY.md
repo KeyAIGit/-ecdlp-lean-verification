@@ -37,9 +37,14 @@ only judge; CI is how the kernel votes here.
    (orphaned parallel work): adversarially audit it for honesty/overclaim/hidden
    assumptions, reconcile onto current main, and land it **only on green CI** — stripping
    any novelty/priority claim (see Rails) from ledger rows before merge.
-3. **Advance one item.** Take the highest-priority actionable item from `tasks/NEXT.md`
-   (or the Priority ladder below). Do one unit: draft → CI builds (kernel judges) →
-   adversarial verify (for anything nontrivial) → PR.
+3. **Advance — one rung, or several independent ones in parallel.** Take the
+   highest-priority actionable item(s) from `tasks/NEXT.md` (or the Priority ladder
+   below). Prefer to **fan out** with a `Workflow`: draft several *mutually independent*
+   rungs concurrently (e.g. the next open rung + an assessment of a harder one), each
+   agent adversarially self-verifying its lemma names against real Mathlib source before
+   returning. Then *I* re-review each draft independently (never merge a subagent's work
+   on faith — reproduce the design and re-check the risky steps) and integrate the ones
+   that survive. Sequential single-rung is the fallback when nothing else is independent.
 4. **Integrate.** Wire the import into `Ecdlp.lean`; add the `#print axioms` line in
    `Ecdlp/AxiomAudit.lean`; append a **pure-fact** `VERIFIED.md` row; regenerate all
    derived artifacts; run the full gate battery **and** a hard conflict-marker scan as a
@@ -58,6 +63,12 @@ only judge; CI is how the kernel votes here.
 - **Verify before trust.** No local Lean toolchain exists here — the kernel check is CI's
   job, but the honesty / overclaim / hidden-assumption / scope checks are *mine*, and
   must run (adversarially, ideally a `Workflow`) before merging anything nontrivial.
+- **Pre-verify every lemma name (the cheapest 10× there is).** A blind proof that fails
+  CI on a mistyped Mathlib name burns a full ~10-min cold-build round trip for nothing.
+  Before pushing, confirm each Mathlib lemma/def with **no in-repo precedent** against a
+  real source: grep a Mathlib checkout if one exists (`.lake/packages/mathlib`, or a
+  scratchpad clone), else GitHub code-search the pinned rev (monotone: absent on master ⇒
+  absent at the older pin). The `smul_def` step of W3e-2 was retired exactly this way.
 - **Anti-inflation.** No duplicate, padded, or restated results to move counts. Ledger
   rows state *what is proved* — never novelty, priority, "first-in-Lean", or superlatives
   (those are the maintainer's prerogative, and unverifiable by the kernel).
@@ -90,8 +101,12 @@ Park the item and surface a concise note instead of proceeding when the action w
 - **GitHub API rate-limit** (the account is shared with sibling containers): back off; do
   local-only work this cycle (drafting, local gates, git); retry the API next cycle. Never
   spin.
-- **Usage / token cap**: the cycle ends where it is; everything worth keeping is already
-  committed and pushed, so the next scheduled firing resumes cleanly. No hand-off needed.
+- **Usage / subscription cap** (the operation is bounded by the maintainer's subscription,
+  not a metered API): a cap is a **pause, never a done**. The cycle ends where it is;
+  everything worth keeping is already committed and pushed, so when the allowance refreshes
+  (rolling window; also the weekly reset) the next scheduled firing resumes cleanly from git
+  state. Never treat "hit the limit" as "work finished" — the queue in `tasks/NEXT.md` is
+  the source of truth for what remains. No hand-off needed.
 - **CI red after a push**: diagnose; fix forward with an additive commit, or revert the
   offending commit. Never merge red. If unfixable this cycle, park with a precise memo.
 - **Blocked item**: park it with a memo naming exactly what resists (the failing induction
@@ -100,6 +115,39 @@ Park the item and surface a concise note instead of proceeding when the action w
 - **Container is ephemeral**: the trigger re-materializes the environment and re-clones on
   each fire; nothing lives in memory — only in git and `tasks/NEXT.md`.
 - Never `sleep`-spin to wait on CI; use the scheduled cadence and background waits.
+
+## Speed: the feedback loop is the bottleneck (the 10× question)
+
+Throughput is gated almost entirely by **how fast a written proof is judged**. Today every
+proof is written *blind* and judged only by GitHub CI — a ~10-min cold Mathlib build per
+round trip. Closing that gap is where a ~10× lives. The levers, split by who can pull them:
+
+- **Mine, in effect now:** (a) pre-verify every non-precedented lemma name against Mathlib
+  source before pushing (kills the most common wasted round trip — see the rail above);
+  (b) fan out independent rungs per cycle so drafting is parallel, not serial;
+  (c) batch *independent, individually pre-verified* rungs into one CI run when they don't
+  conflict, so one cold build amortizes several rungs (never batch things that share a risk
+  — a batch fails as a unit). These raise throughput without any infra change.
+- **The maintainer's to unblock (the real 10×, infra — surface, don't route around):**
+  1. **Egress-allowlist the Lean toolchain host** (`release.lean-lang.org`, and the GitHub
+     release assets for the toolchain tarball) in the environment's network policy. With
+     the toolchain installed and the Mathlib cache warm, `lake env lean File.lean` gives
+     **seconds** of local feedback — the CI round trip leaves the *inner* loop entirely and
+     becomes only the final gate. This is the single highest-value change. The proxy is
+     configured to *block* it (403 on CONNECT); per `/root/.ccr/README.md` I must report it,
+     never tunnel around it.
+  2. **Register the paid server as a self-hosted CI runner** with a pre-built `.lake`, so CI
+     itself runs in seconds instead of rebuilding Mathlib cold — using the box already being
+     paid for, while keeping CI as the trusted kernel gate.
+  Both require access the container does not have; they are the maintainer's to set up once.
+
+## Planning & models
+
+- Hard planning / strategy / adversarial design → prefer **Fable** (a `Workflow` agent with
+  `model: 'fable'`). If Fable is usage-limited or unavailable, **do the planning on the
+  default model and iterate to the same quality — never skip the planning step.** (This
+  cycle Fable was limit-blocked; the strategy was done on Opus instead.)
+- Routine drafting / verification / integration → the default model, fanned out as above.
 
 ## Priority ladder (the standing plan; `tasks/NEXT.md` holds the live detail)
 
