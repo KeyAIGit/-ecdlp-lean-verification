@@ -167,6 +167,11 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_Φ₂
 #print axioms Ecdlp.Curve.secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq
 
+-- N4: general-n degree/monic layer of secp256k1's division polynomials (degree half of #E[n]=n²)
+#print axioms Ecdlp.Curve.secp256k1_Φ_natDegree
+#print axioms Ecdlp.Curve.secp256k1_Φ_monic
+#print axioms Ecdlp.Curve.secp256k1_ΨSq_natDegree
+
 -- Weil-pairing foundations, rungs 1–3: torsion ⟺ principal; Miller function exists + unique
 #print axioms Ecdlp.Weil.secp256k1_torsion_iff_principal
 #print axioms Ecdlp.Weil.secp256k1_miller_function_exists

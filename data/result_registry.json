@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 891,
+  "declaration_count": 896,
   "distinct_qualified_names": 684,
   "verified_md_citations": 224,
   "unresolved_citations": [],
@@ -1509,7 +1509,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomial.lean",
       "line": 50,
-      "occurrences": 26
+      "occurrences": 31
     },
     "Ecdlp.Curve.secp256k1_G": {
       "name": "secp256k1_G",

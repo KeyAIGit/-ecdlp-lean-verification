@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 281,
+    "theorems": 282,
     "barriers": 6,
-    "edges": 424,
+    "edges": 426,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -118,10 +118,11 @@
       "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer": 1,
       "evalReg`/`evalFracAt` layer (`FunctionFieldRegular.lean`) + field algebra": 1,
       "evalReg`/`divEval` layer + `evalFracAt_unit_mul` + field algebra": 1,
-      "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer": 1
+      "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer": 1,
+      "Mathlib `DivisionPolynomial.Degree` (`natDegree_Φ`/`leadingCoeff_Φ`/`natDegree_ΨSq`)": 1
     },
     "by_area": {
-      "curve-torsion": 147,
+      "curve-torsion": 148,
       "primality": 49,
       "other": 26,
       "generic-hardness": 24,
@@ -3784,6 +3785,19 @@
       "area": "curve-torsion",
       "dependency_depth": 8,
       "gated": true
+    },
+    {
+      "id": "thm-281",
+      "name": "Ecdlp.Curve.secp256k1_Φ_natDegree`, `secp256k1_Φ_monic`, `secp256k1_ΨSq_natDegree",
+      "short_name": "secp256k1_Φ_natDegree`,",
+      "module": "Ecdlp.Proved.DivisionPolynomialGeneralDegree",
+      "file": "Ecdlp/Proved/DivisionPolynomialGeneralDegree.lean",
+      "claim": "N4 — general-`n` degree/monic layer of secp256k1's division polynomials (`secp256k1_Φ_natDegree`: `Φₙ` monic (`secp256k1_Φ_monic`, leading coeff `1`) of degree `n`, nonzero, for all `n`; `secp256k1_ΨSq_natDegree`: `ΨSqₙ` has degree `n−1` for `n ≠ 0` — the numerator/denominator degrees of the multiplication-by-`n` `x`-map `x∘[n]=Φₙ/ΨSqₙ`. Mathlib-instantiated for secp256k1 over `𝔽_p` from `WeierstrassCurve.natDegree_Φ`/`leadingCoeff_Φ`/`natDegree_ΨSq`. The repo previously had only fixed `n` (`Φ₂`,`Φ₃`,`Ψ₂Sq`,`Ψ₃`); this is the uniform statement — node N4 on the `ψₙ↔E[n]` path, the degree half of the `#E[n]=n` count (N10). Honest scope: the separability half — uniform `gcd(Φₙ,ΨSqₙ)=1` (N5→N10) — remains the open gate, not claimed here)",
+      "method": "Mathlib `DivisionPolynomial.Degree` (`natDegree_Φ`/`leadingCoeff_Φ`/`natDegree_ΨSq`)",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 3,
+      "gated": true
     }
   ],
   "barriers": [
@@ -4084,6 +4098,11 @@
     {
       "from": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
       "to": "Ecdlp.Proved.Secp256k1PrimeP",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DivisionPolynomialGeneralDegree",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
     },
     {
@@ -5919,6 +5938,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.WeilMillerEval",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.DivisionPolynomialGeneralDegree",
       "type": "imports"
     },
     {
