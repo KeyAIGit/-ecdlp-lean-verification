@@ -149,15 +149,34 @@ three unledgered modules, stale TASK-005/P-256 note/ENGINE schedule wording) and
 structural cleanup of tranche 1. Remaining, in order:
 
 1. ~~Tranche-2 merges + README v0.1 rewrite~~ (done; remaining: tag v0.1 on main after merge).
-2. `ci.yml`: root-file no-sorry coverage; drop the per-push prover step;
-   `docs-sync.yml` remediation message lists all 8 generators. *(done in this PR if
-   present in the diff; else next)*
-3. Target lifecycle: registry JSONs for `queue.json` entries; `promote_candidate.py`
-   nulls `stem_file` on promotion; `check_targets.py` validates queue entries.
-4. `hypothesis-explore.yml` PR step `git add` fix (backport from explore-pipeline).
-5. `foundation_map.py` docstring vs behavior; `prover_daemon.sh` parameterized
-   branch; server workflows' clone assumptions reconciled.
-6. Frontier triage of the 95 unassigned corpus claims (valuable for the map, not
-   blocking v0.1).
-7. `explore.html`: fold its hardcoded data into the dashboard generator or retire
-   it — it must not remain an ungated public surface.
+2. ~~`ci.yml`: root-file no-sorry coverage; drop the per-push prover step;
+   `docs-sync.yml` remediation message lists all 8 generators.~~ (done on `main`:
+   the no-sorry gate scans `Ecdlp.lean` + `Ecdlp/` + `ResearchOS/`, the per-push
+   prover step is removed, the remediation message lists all 8 generators.)
+3. ~~Target lifecycle: registry JSONs for `queue.json` entries; `promote_candidate.py`
+   nulls `stem_file` on promotion; `check_targets.py` validates queue entries.~~
+   (done: `queue.json` seeds have registry JSONs + open stems
+   (`eleven_torsion_degree`, `thirteen_torsion_degree`); promotion consumes the
+   stem and nulls `stem_file`; `check_targets.py` fails on unregistered/solved
+   queue entries and on dead `stem_file` pointers — the 16 legacy dead pointers
+   are nulled.)
+4. ~~`hypothesis-explore.yml` PR step `git add` fix (backport from explore-pipeline).~~
+   (done: PR step stages `notes/` wholesale, so a 0-lead run without
+   `HYPOTHESIS_LEADS.md` no longer breaks `git add`.)
+5. ~~`foundation_map.py` docstring vs behavior; `prover_daemon.sh` parameterized
+   branch; server workflows' clone assumptions reconciled.~~ (done: docstring now
+   states the script prints to stdout and `notes/FOUNDATION_ROADMAP.md` is the
+   hand-maintained memo; daemon takes `DEV_BRANCH`/`RESULTS_BRANCH`/`REPO_URL`
+   from env (default `main`) instead of a stale hardcoded session branch;
+   bootstrap-rsync vs server-clone comments now state the real credential
+   precondition instead of contradicting each other.)
+6. ~~Frontier triage of the 95 unassigned corpus claims (valuable for the map, not
+   blocking v0.1).~~ (done: conservative adversarial triage — all 95 resolved to
+   `blocked` (25, a genuine math statement needing a missing foundation) or
+   `informal` (70, prose/heuristic/attack-assessment); `data/corpus_triage.json`,
+   applied only to the unassigned gap; frontier completeness now 100%.)
+7. ~~`explore.html`: fold its hardcoded data into the dashboard generator or retire
+   it — it must not remain an ungated public surface.~~ (done: folded — its two KPI
+   counters are stamped from `data/stats.json` by `build_dashboard.py`
+   (`sync_explore_html`) and gated by `check_status_consistency.py`; the stale
+   hardcoded KPI that escaped every gate is now regenerated + drift-checked.)

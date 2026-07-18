@@ -6,9 +6,9 @@
 ## Verified asset (the ledger)
 | metric | value | source |
 |---|---|---|
-| ledger rows | **248** | `VERIFIED.md` → `data/stats.json` |
-| distinct results | **~209** | `data/stats.json` |
-| proved modules | **112** | `data/stats.json` |
+| ledger rows | **278** | `VERIFIED.md` → `data/stats.json` |
+| distinct results | **~239** | `data/stats.json` |
+| proved modules | **139** | `data/stats.json` |
 | `sorry` | **0** | axiom-audit + no-sorry gate |
 | custom axioms | **0** | axiom-audit gate |
 
@@ -24,10 +24,10 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 | verified | **10** | a named kernel-verified theorem discharges the claim |
 | partial | **46** | a theorem addresses part of it |
 | tractable | **31** | reachable now, no theorem yet |
-| blocked | **143** | needs a missing Mathlib foundation |
-| informal | **161** | not a formal statement by nature |
-| unassigned | **95** | not yet triaged |
-| **total** | **486** | frontier completeness 80.5% |
+| blocked | **168** | needs a missing Mathlib foundation |
+| informal | **231** | not a formal statement by nature |
+| unassigned | **0** | not yet triaged |
+| **total** | **486** | frontier completeness 100.0% |
 
 ## What is true right now (honest)
 - This is a **verified substrate** for ECDLP / secp256k1 research. It does **not** solve ECDLP on

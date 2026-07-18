@@ -94,6 +94,12 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_twist_maxprime_prime
 #print axioms Ecdlp.Curve.secp256k1_twist_security_profile
 
+-- P-256 twist companion: 2p+2−n = 3·5·13·179·Q (Q a 241-bit prime), cofactor 34905 ≈ 2¹⁵,
+-- twist DLP ≈√Q ≈ 2¹²⁰ < 2¹²⁸; interpretation as #Ẽ conditional on #E=n (in-repo: n∣#E only)
+#print axioms Ecdlp.P256.p256_twist_order_factorization
+#print axioms Ecdlp.P256.p256_twist_maxprime_prime
+#print axioms Ecdlp.P256.p256_twist_security_profile
+
 -- CM-by-ℤ[ω] Frobenius arithmetic certificate: N(π)=p, Tr(π)=p+1−n, 4p=t²+3b² (End⊗ℚ=ℚ(√−3))
 #print axioms Ecdlp.Curve.secp256k1_frobenius_norm
 #print axioms Ecdlp.Curve.secp256k1_frobenius_trace
@@ -105,6 +111,13 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 
 -- discrete-log protocol algebra (representative)
 #print axioms Ecdlp.Schnorr.schnorr_extract
+
+-- ECDSA malleability core (BIP-62 r.5/BIP-146 low-s): sibling (r,−s) via point negation
+-- preserving x; field-side lemmas pure-kernel, curve-side conditional on [Fact p.Prime]
+#print axioms Ecdlp.Curve.secp256k1_pointX_neg
+#print axioms Ecdlp.Curve.secp256k1_pointX_neg_zsmul_add
+#print axioms Ecdlp.Schnorr.ecdsa_sibling_signing_equation
+#print axioms Ecdlp.Schnorr.ecdsa_sibling_scalars
 
 -- Semaev's 3rd summation polynomial, forward direction (clean base: pure `linear_combination`)
 #print axioms Ecdlp.Semaev.S₃_eq_zero_of_chord
@@ -218,3 +231,22 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms ResearchOS.NumberTheory.carmichael_1729_factorization
 #print axioms ResearchOS.NumberTheory.prime_10007
 #print axioms ResearchOS.NumberTheory.prime_10009
+
+-- geometric torsion structure family: E[n](𝔽̄_p) ≅ (ℤ/n)² for n ∈ {2,3,5,7} (closure), via
+-- closure bridge + exact root count + ±y pairing + N10(iii); the ψₙ↔E[n] critical path N13@n
+#print axioms Ecdlp.Curve.secp256k1Bar_two_torsion_structure
+#print axioms Ecdlp.Curve.secp256k1Bar_three_torsion_structure
+#print axioms Ecdlp.Curve.secp256k1Bar_five_torsion_structure
+#print axioms Ecdlp.Curve.secp256k1Bar_seven_torsion_structure
+
+-- 2-torsion cubic separability (X³+7 has 3 distinct roots over 𝔽̄_p) — counting brick of E[2]
+#print axioms Ecdlp.Curve.secp256k1_cubic_separable
+
+-- N7 multiplication-by-n x-coordinate formulas x(nP)=Φₙ/ΨSqₙ, n = 4 (doubling²) and n = 5 (chord)
+#print axioms Ecdlp.Curve.secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄
+#print axioms Ecdlp.Curve.secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅
+
+-- Weil W3 function-field evaluation layer: fraction eval well-definedness + a/b extraction + RegularAt
+#print axioms Ecdlp.Weil.evalFracAt_well_defined
+#print axioms Ecdlp.Weil.functionField_exists_num_den
+#print axioms Ecdlp.Weil.evalRatAt_eq_evalReg

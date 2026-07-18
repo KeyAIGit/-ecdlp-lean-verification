@@ -14,7 +14,7 @@
     ],
     "escalate_if_failed": true
   },
-  "stem_file": "Ecdlp/Targets/frontier_mem_torsionBy_zero.lean",
+  "stem_file": null,
   "source": {
     "family": "frontier-expander",
     "from": "verified frontier"

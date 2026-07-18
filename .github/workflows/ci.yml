@@ -62,6 +62,11 @@ jobs:
       - name: Check count consistency (docs)
         run: python3 scripts/check_counts.py
 
+      # Regression fixtures for the count-gate hardening (table-identity guard, bidirectional
+      # off-canonical scan, canonical-line uniqueness). Fast, pure-Python, no toolchain.
+      - name: Count-gate fixtures
+        run: python3 scripts/test_check_counts.py
+
       # Semantic-drift gate: fail if a retired unconditional overclaim (full Shoup, proved
       # Θ(√n), universal GLV no-go, Semaev prime-field no-advantage, unconditional trace)
       # reappears in the docs / Lean docstrings / publication surfaces.

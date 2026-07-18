@@ -85,6 +85,8 @@ jobs:
           REMOTE='set -e
             export PATH="$HOME/.elan/bin:$PATH"
             if [ ! -d ~/-ecdlp-lean-verification ]; then
+              # Needs ~/.git-credentials (provisioned by the GH_TOKEN step above) unless the
+              # repo is public; the first copy normally arrives via server-bootstrap.yml rsync.
               git clone --quiet https://github.com/KeyAIGit/-ecdlp-lean-verification.git ~/-ecdlp-lean-verification
             fi
             cd ~/-ecdlp-lean-verification

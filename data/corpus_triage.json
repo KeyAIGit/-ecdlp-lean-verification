@@ -1,0 +1,414 @@
+{
+  "_meta": {
+    "purpose": "Conservative triage of the 95 corpus claims left 'unassigned' by build_frontier_map's overrides+heuristics (ROADMAP.md §7 item 6). Applied by build_frontier_map.py ONLY where classify() returns 'unassigned' (never overrides a corpus/heuristic/verified call); confidence tagged 'triage'.",
+    "provenance": "workflow run wf_1e87672b-249 (frontier-triage): 6 batch classifiers over the 95 unassigned claims + an adversarial skeptic pass on every verified/partial/tractable call. Result: 0 optimistic classifications survived scrutiny (none were proposed) — every claim is blocked (a genuine math statement needing a missing foundation) or informal (prose / attack-assessment / heuristic / method description). Conservatism rule: informal < blocked < tractable < partial < verified; ties break to the weaker bucket.",
+    "note": "Only fills the unassigned gap. 'heights' and 'elliptic_nets' are new foundation keys (canonical/Neron-Tate heights + Mordell-Weil / point lifting; and general rank>=2 elliptic nets) — distinct confirmed barriers per BARRIERS.md, not curve_depth."
+  },
+  "triage": {
+    "jacobson-xedni-reverse-mestre-heuristic-004": {
+      "status": "informal",
+      "reason": "Rank-bias heuristic evaluation of reverse-Mestre conditions; a heuristic method description, not a formal statement."
+    },
+    "bh-biased-012": {
+      "status": "informal",
+      "reason": "Attack assessment prose ('multiple implementation-failure classes identified'); no formal content."
+    },
+    "bh-biased-013": {
+      "status": "informal",
+      "reason": "Security-assessment remark about deterministic nonces and side-channel resistance; not a math statement."
+    },
+    "bh-biased-014": {
+      "status": "informal",
+      "reason": "Prose about signature normalization/protocol affecting preprocessing; not formalizable as stated."
+    },
+    "bh-biased-015": {
+      "status": "informal",
+      "reason": "Description of an attack pipeline (clustering, candidate nonce models); method description."
+    },
+    "bv-hnp-005": {
+      "status": "informal",
+      "reason": "Scoping remark that the result is not a direct single-target ECDLP attack; not a formal statement."
+    },
+    "bv-hnp-006": {
+      "status": "informal",
+      "reason": "Heuristic dependency remark on multiplier distribution and approximation accuracy."
+    },
+    "bv-hnp-008": {
+      "status": "informal",
+      "reason": "Method-requirement remark (needs auxiliary info beyond G and Q); prose, not formal."
+    },
+    "bv-hnp-010": {
+      "status": "informal",
+      "reason": "Scope caveat that the theorem excludes arbitrary noisy/adversarial leakage; not a math statement."
+    },
+    "hgs-lattice-001": {
+      "status": "informal",
+      "reason": "Description of the attack target (DSA-like signatures with known partial nonce bits)."
+    },
+    "hgs-lattice-002": {
+      "status": "informal",
+      "reason": "Scoping remark: attack operates on signature equations, not a single ECDLP instance."
+    },
+    "hgs-lattice-003": {
+      "status": "informal",
+      "reason": "Prose describing that known contiguous nonce bits bound unknown fragments; leakage-model description, no formal statement."
+    },
+    "hgs-lattice-004": {
+      "status": "informal",
+      "reason": "Method description: transforming signature equations into small-unknown congruences (HNP setup)."
+    },
+    "hgs-lattice-010": {
+      "status": "informal",
+      "reason": "Empirical feasibility observation about small leakage fractions in an implementation."
+    },
+    "hgs-lattice-012": {
+      "status": "informal",
+      "reason": "Assumption description (many signatures per key, informative per-nonce leakage); not formal."
+    },
+    "hgs-lattice-013": {
+      "status": "informal",
+      "reason": "Open-problem framing: no generic sub-Pollard ECDLP algorithm without leakage; a negative meta-remark, not a formal claim."
+    },
+    "ladderleak-001": {
+      "status": "informal",
+      "reason": "Prose description of a side-channel leakage behavior (MSB of nonce leaks probabilistically); not a formal math statement."
+    },
+    "ladderleak-002": {
+      "status": "informal",
+      "reason": "Qualitative description of leakage magnitude (<1 reliable bit/signature); implementation-attack prose, not formalizable content."
+    },
+    "ladderleak-007": {
+      "status": "informal",
+      "reason": "Empirical demonstration report (key recovery on sect163r1/P-192); an attack assessment, not a formal statement."
+    },
+    "ladderleak-010": {
+      "status": "informal",
+      "reason": "Scope/method-independence remark (weakness is implementation, not abstract ECDLP); prose."
+    },
+    "ladderleak-012": {
+      "status": "informal",
+      "reason": "Prose about data requirements (many signatures per key); not a formal math statement."
+    },
+    "minerva-001": {
+      "status": "informal",
+      "reason": "Attack description (timing leakage of ECDSA nonce bit-length in libraries/smartcard); prose."
+    },
+    "minerva-003": {
+      "status": "informal",
+      "reason": "Empirical recovery report on a 256-bit curve; attack assessment, not a formal statement."
+    },
+    "minerva-005": {
+      "status": "informal",
+      "reason": "Prose noting signature-count varies with leakage quality/noise; heuristic evaluation, not formalizable."
+    },
+    "minerva-007": {
+      "status": "informal",
+      "reason": "Empirical comparison of signature counts (~40000 to ~900); measurement report, not a formal statement."
+    },
+    "minerva-010": {
+      "status": "informal",
+      "reason": "Attack-assessment remark (deterministic nonces don't remove timing leakage); prose."
+    },
+    "minerva-011": {
+      "status": "informal",
+      "reason": "Informational description of how each nonce bit-length adds key information; heuristic prose."
+    },
+    "ns-ecdsa-001": {
+      "status": "blocked",
+      "reason": "Core HNP claim: partial nonce leakage enables key recovery — a genuine math statement requiring lattice-reduction (LLL/BKZ, CVP) absent from Mathlib per BARRIERS B2.",
+      "foundation": "lattice_reduction"
+    },
+    "ns-ecdsa-002": {
+      "status": "informal",
+      "reason": "Describes what the work studies (ECDSA modular relations from signatures/nonce bits); framing prose, not a formal statement."
+    },
+    "ns-ecdsa-003": {
+      "status": "informal",
+      "reason": "Prose noting the analysis distinguishes MSB vs LSB leakage; descriptive, not a formal statement."
+    },
+    "ns-ecdsa-005": {
+      "status": "informal",
+      "reason": "Prose about dependence on sufficiently many signatures; qualifier remark, not formalizable."
+    },
+    "ns-ecdsa-006": {
+      "status": "informal",
+      "reason": "States nonce-independence and distributional model are assumptions; meta/assumption remark, not a formal statement."
+    },
+    "ns-ecdsa-008": {
+      "status": "informal",
+      "reason": "Prose clarification of the ECDSA key-recovery threat model (key recovery from signatures + side info, not from G,Q alone); a scoping remark, not a formal statement."
+    },
+    "ns-ecdsa-010": {
+      "status": "informal",
+      "reason": "Qualitative heuristic ('incorrect leakage can violate recovery conditions'); an attack-assessment remark with no crisp mathematical content."
+    },
+    "ns-ecdsa-011": {
+      "status": "informal",
+      "reason": "Vague dependency statement ('sample size depends on leakage amount and bit position'); no formalized bound, so informal by the conservatism rule."
+    },
+    "vow-distinguished-points-001": {
+      "status": "blocked",
+      "reason": "Distinguished-point method with expected extra work O(1/theta) per trail; an expected-running-time complexity claim needing an oracle/operation-count framework absent from Mathlib.",
+      "foundation": "cost_model"
+    },
+    "vow-naive-parallel-002": {
+      "status": "blocked",
+      "reason": "Theta(sqrt(m)) parallel-speedup / total-work claim for independent rho walks; a running-time statement requiring a cost model Lean lacks (BARRIERS B1).",
+      "foundation": "cost_model"
+    },
+    "vow-work-per-processor-004": {
+      "status": "blocked",
+      "reason": "Exact expected work sqrt(pi*n/2)/m per processor plus overhead; a quantitative Theta running-time claim with no Mathlib operation-count framework.",
+      "foundation": "cost_model"
+    },
+    "cheon-optimal-divisor-exponents-008": {
+      "status": "blocked",
+      "reason": "Cheon-attack complexity exponents (p^{1/4}, p^{1/3}) from minimizing cost bounds over divisors d; a complexity statement requiring a cost model.",
+      "foundation": "cost_model"
+    },
+    "ghs-transfer-map-dlp-006": {
+      "status": "blocked",
+      "reason": "GHS/Weil-descent transfer of the EC relation to a DLP in the Jacobian (divisor class group) of the descended curve; needs higher-genus curve / divisor-class-group theory not in Mathlib. Closest fixed foundation is curve_depth; may warrant a new 'jacobian_divisor_class'.",
+      "foundation": "curve_depth"
+    },
+    "smart-logarithm-quotient-formula-003": {
+      "status": "blocked",
+      "reason": "Smart attack on anomalous curves: log_P(Q) = psi([p]Q)/psi([p]P) via the p-adic elliptic (formal-group) logarithm; needs formal-group/p-adic-log theory absent from Mathlib. Repo's anti-Smart result only proves secp256k1 is non-anomalous, not this attack formula. Closest fixed foundation curve_depth; may warrant new 'formal_group_padic_log'.",
+      "foundation": "curve_depth"
+    },
+    "smart-padic-lift-reduction-002": {
+      "status": "blocked",
+      "reason": "Smart method: lift to E(Q_p), multiply by p into the formal-group kernel, apply p-adic elliptic logarithm for a Z_p-linear relation; requires p-adic formal-group logarithm theory not in Mathlib. Closest curve_depth; possible new 'formal_group_padic_log'.",
+      "foundation": "curve_depth"
+    },
+    "cheng-huang-shifting-prime-definition-006": {
+      "status": "informal",
+      "reason": "Explicitly a problem_definition (the 'shifting-prime problem'); a definitional framing, not an asserted theorem."
+    },
+    "lauter-stange-net-zero-linear-relation-004": {
+      "status": "blocked",
+      "reason": "Net-polynomial term vanishes iff sum v_i P_i = O (elliptic nets); elliptic-net theory (a multi-index generalization of division polynomials) is not in Mathlib. Closest fixed foundation curve_depth; may warrant new 'elliptic_nets'.",
+      "foundation": "curve_depth"
+    },
+    "stange-zero-iff-point-relation-009": {
+      "status": "blocked",
+      "reason": "Nondegenerate-elliptic-net term vanishes iff the indexed integer combination of points is O; requires elliptic-net theory absent from Mathlib. Closest curve_depth; possible new 'elliptic_nets'.",
+      "foundation": "curve_depth"
+    },
+    "gaudry-small-degree-limitation-008": {
+      "status": "informal",
+      "reason": "Attack-applicability assessment (hidden constant grows with extension degree, so relevant only to small-degree fields); a heuristic scoping remark with no formal_statement."
+    },
+    "semaev-binary-analogue-007": {
+      "status": "informal",
+      "reason": "Prose description of a characteristic-two proposal (low-degree F2 polynomials with a summation-polynomial congruence); a method description with no formal_statement."
+    },
+    "survey-ffd-lfd-006": {
+      "status": "informal",
+      "reason": "Survey commentary comparing first-fall-degree vs last-fall-degree assumptions; a heuristic evaluation of proof-technique quality, not a formal statement."
+    },
+    "survey-invariants-not-competitive-003": {
+      "status": "informal",
+      "reason": "Empirical attack-assessment: cited binary-field symmetry+invariant algorithms 'reported as not competitive with Pollard rho' — a performance/no-go remark, not a formal statement."
+    },
+    "fppr2012-multihomogeneous-002": {
+      "status": "informal",
+      "reason": "Prose describing an algebraic-attack method (multihomogeneous block structure, Sub-Macaulay equation generation); a method description, not a crisp theorem."
+    },
+    "gg2014-binary-edwards-coordinate-001": {
+      "status": "blocked",
+      "reason": "Math claim about t=x+y invariance yielding lower-degree summation-polynomial reps on binary Edwards curves; rests on Semaev/summation polynomials Mathlib lacks.",
+      "foundation": "semaev_polynomials"
+    },
+    "gg2014-symmetry-breaking-dreg-006": {
+      "status": "informal",
+      "reason": "Empirical observation ('often had degree of regularity 3... reason was unclear') from experiments — a heuristic evaluation, not a formal statement."
+    },
+    "ky2015-dreg-growth-005": {
+      "status": "informal",
+      "reason": "Experimental measurement (first fall degree fixed at 2, degree of regularity rising, 38 GB memory) — empirical benchmark data, not a theorem."
+    },
+    "ky2015-trace-morphism-003": {
+      "status": "blocked",
+      "reason": "Genuine math statement (trace on x-coord as surjective morphism to F2 giving a linear relation in the descended ideal) but tied to Semaev/descended-ideal machinery absent from Mathlib.",
+      "foundation": "semaev_polynomials"
+    },
+    "semaev2015-splitting-001": {
+      "status": "informal",
+      "reason": "Algorithm description: replacing one high-degree summation equation with a chain of third-summation equations via intermediate variables — a method, not a formal claim."
+    },
+    "st2013-hybrid-results-004": {
+      "status": "informal",
+      "reason": "Empirical comparison of hybrid variable-fixing strategies ('outperformed', 'no significant improvement') — attack/performance assessment, not formalizable."
+    },
+    "st2013-subfield-basis-005": {
+      "status": "informal",
+      "reason": "Experimental result (subfield basis gave 'extremely large speedups' and degree of regularity 3 for tested systems) — heuristic/empirical, not a theorem."
+    },
+    "f4-minimum-degree-selection-008": {
+      "status": "informal",
+      "reason": "Describes F4 critical-pair selection heuristic as 'crucial for performance' — an algorithm/method description, not a formal statement."
+    },
+    "f4-strategy-sequentiality-005": {
+      "status": "informal",
+      "reason": "Prose about how selection/sugar strategies affect performance and parallelization of F4 — method-assessment commentary, not formalizable."
+    },
+    "f5-reducer-four-conditions-008": {
+      "status": "informal",
+      "reason": "Step-by-step description of F5's IsReducible conditions — an algorithm specification, not a mathematical theorem."
+    },
+    "f5-signature-reuse-004": {
+      "status": "informal",
+      "reason": "Describes what F5 signatures do (provenance, reuse of lower-degree computations) — algorithm description, not a formal claim."
+    },
+    "galbraith-three-variable-heuristic-006": {
+      "status": "informal",
+      "reason": "Open-problem/heuristic framing: multivariable small-root methods 'may' produce root-sharing polys with 'no general guarantee' of algebraic independence — a caveat, not a theorem."
+    },
+    "cheng-huang-corollary-short-lift-program-014": {
+      "status": "blocked",
+      "reason": "Crisp existence claim (a rational lift with polylog-length straight-line program of its projective coords) but needs point-lifting/height + SLP-complexity foundations absent from Mathlib.",
+      "foundation": "heights"
+    },
+    "cheng-huang-height-decision-definition-003": {
+      "status": "informal",
+      "reason": "Stated as a problem_definition ('the height decision problem asks whether...') — a decision-problem definition by nature, not a formal mathematical statement."
+    },
+    "cheng-huang-proposition1-polylog-slp-013": {
+      "status": "blocked",
+      "reason": "Polylog straight-line-program length bound for coords of mP; Mathlib has no SLP/computational-complexity framework to state program-length bounds.",
+      "foundation": "cost_model"
+    },
+    "cheng-huang-slp-definition-008": {
+      "status": "informal",
+      "reason": "claim_type problem_definition; defines the straight-line-description problem, not a formal assertion to verify."
+    },
+    "hkt-construction-independent-bound-008": {
+      "status": "informal",
+      "reason": "method_independence meta-remark that the obstruction is construction-independent; prose, not a formal statement."
+    },
+    "hkt-lifting-two-obstacles-001": {
+      "status": "informal",
+      "reason": "bottleneck_decomposition prose describing two obstacles of a lifting index-calculus approach; no crisp mathematical statement."
+    },
+    "hkt-proposition1-relation-coefficient-bound-004": {
+      "status": "blocked",
+      "reason": "Integer relation among r+1 points of bounded canonical height needs Neron-Tate height + Mordell-Weil lattice/geometry-of-numbers, absent in Mathlib (new foundation, flagged).",
+      "foundation": "heights"
+    },
+    "jacobson-xedni-constant-relation-bound-007": {
+      "status": "blocked",
+      "reason": "Nonzero bounded-coefficient relation for a dependent lifted tuple under height/discriminant conditions; requires canonical-height/Mordell-Weil theory not in Mathlib (new foundation, flagged).",
+      "foundation": "heights"
+    },
+    "jacobson-xedni-lift-curve-fit-001": {
+      "status": "informal",
+      "reason": "claim_type algorithm_description of the xedni lift/curve-fit construction; procedural prose, not a formal statement."
+    },
+    "jacobson-xedni-practical-negative-result-012": {
+      "status": "informal",
+      "reason": "attack_assessment concluding xedni is impractical for crypto-size fields; evaluative prose over experiments, not formalizable as stated."
+    },
+    "jacobson-xedni-random-combinations-002": {
+      "status": "informal",
+      "reason": "input_transformation describing the attack's initial random combinations of P,Q; algorithm-setup prose."
+    },
+    "jacobson-xedni-reverse-mestre-correlation-011": {
+      "status": "informal",
+      "reason": "heuristic_evaluation of an experimentally measured correlation effect; not a formal mathematical statement."
+    },
+    "jacobson-xedni-theorem4-success-bound-006": {
+      "status": "blocked",
+      "reason": "Per-trial success probability bounded by const/p under height/discriminant assumptions; needs canonical-height + counting of rational lifts machinery absent in Mathlib (new foundation, flagged).",
+      "foundation": "heights"
+    },
+    "lauter-stange-perfect-periodic-point-computation-006": {
+      "status": "blocked",
+      "reason": "Computing perfectly-periodic net value at n from [n]P; requires Stange elliptic-net theory (beyond rank-1 normEDS in Mathlib), not present (new foundation, flagged).",
+      "foundation": "elliptic_nets"
+    },
+    "stange-arbitrary-field-net-polynomials-007": {
+      "status": "blocked",
+      "reason": "Net-polynomial construction over arbitrary base fields; a real construction absent from Mathlib (only rank-1 EDS exists), so blocked not informal (new foundation, flagged).",
+      "foundation": "elliptic_nets"
+    },
+    "stange-degenerate-cases-open-014": {
+      "status": "informal",
+      "reason": "claim_type open_problem; explicitly frames degenerate/singular net cases as left to further work."
+    },
+    "stange-finite-initial-determination-004": {
+      "status": "blocked",
+      "reason": "Finite initial values determine rank-one/two/higher elliptic nets via recurrence; general multi-index (rank>=2) elliptic nets are absent from Mathlib per BARRIERS (new foundation, flagged).",
+      "foundation": "elliptic_nets"
+    },
+    "stange-general-reconstruction-theorem-012": {
+      "status": "blocked",
+      "reason": "Stange reconstruction: normalized nondegenerate net determines a cubic + marked points up to change of variables; deep general-elliptic-net theorem not in Mathlib (new foundation, flagged).",
+      "foundation": "elliptic_nets"
+    },
+    "stange-laurentness-integrality-005": {
+      "status": "blocked",
+      "reason": "Genuine theorem (Laurent property of elliptic-net recurrence -> integrality) but rank>=2 elliptic nets / net polynomials are absent from Mathlib; BARRIERS notes only rank-1 normEDS exists. Proposing NEW foundation 'elliptic_nets' (adjacent to curve_depth).",
+      "foundation": "elliptic_nets"
+    },
+    "stange-net-polynomial-linear-relation-006": {
+      "status": "blocked",
+      "reason": "Real math (net polynomials as rational functions on E^n whose zeros encode integer linear relations) but multi-index elliptic nets not in Mathlib. Proposing NEW foundation 'elliptic_nets' (flagged).",
+      "foundation": "elliptic_nets"
+    },
+    "stange-unique-net-polynomial-family-008": {
+      "status": "blocked",
+      "reason": "Uniqueness theorem for the normalized net-polynomial family; requires the missing elliptic-nets construction (rank>=2). Proposing NEW foundation 'elliptic_nets' (flagged).",
+      "foundation": "elliptic_nets"
+    },
+    "luo-exact-register-sharing-004": {
+      "status": "informal",
+      "reason": "Attack-design assessment of a reversible register-sharing construction vs Proos-Zalka; no formal mathematical statement."
+    },
+    "luo-length-register-location-arithmetic-003": {
+      "status": "informal",
+      "reason": "Implementation/method description of compact register storage; not a formal statement."
+    },
+    "luo-prime-field-scope-014": {
+      "status": "informal",
+      "reason": "Scope/applicability remark (prime fields, not binary curves); prose, not a theorem."
+    },
+    "pz-hidden-sublattice-formulation-004": {
+      "status": "informal",
+      "reason": "Description of Shor/HSP encoding via 2D periodicity of (x,y)->xP+yQ and Fourier sampling; algorithm-formulation prose, not a crisp verifiable statement."
+    },
+    "pz-prime-field-scope-002": {
+      "status": "informal",
+      "reason": "Scope statement (GF(p) only, no binary/extension fields); prose."
+    },
+    "pz-reversible-eea-011": {
+      "status": "informal",
+      "reason": "Method description of reversible extended-Euclidean circuit organization; not a formal statement."
+    },
+    "pz-unique-point-representation-006": {
+      "status": "informal",
+      "reason": "Implementation-design remark on unique affine coordinate representation and omitting point-at-infinity; prose."
+    },
+    "rns-binary-gcd-inversion-005": {
+      "status": "informal",
+      "reason": "Method description of reversible Montgomery inverse via binary extended Euclid; not a formal statement."
+    },
+    "rns-exceptional-addition-boundary-017": {
+      "status": "informal",
+      "reason": "Design assessment of affine addition exceptional-case handling vs complete addition law; commentary, not a theorem."
+    },
+    "rns-simulated-standard-curves-008": {
+      "status": "informal",
+      "reason": "Empirical claim about classical simulation/testing of point-addition networks for 192-521 bit curves; experimental, not formalizable."
+    },
+    "sch-eea-dialog-bezout-split-014": {
+      "status": "informal",
+      "reason": "Method description separating a reversible Euclidean transcript from Bezout reconstruction; not a formal statement."
+    },
+    "shor-good-output-constant-probability-008": {
+      "status": "blocked",
+      "reason": "Genuine quantitative claim (a constant-aggregate-probability set of good Fourier-sampling outputs yields the log) but requires a quantum algorithm / Fourier-sampling framework absent from Mathlib.",
+      "foundation": "quantum_cost"
+    }
+  }
+}

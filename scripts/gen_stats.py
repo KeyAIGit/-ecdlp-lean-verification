@@ -52,7 +52,10 @@ def count_ledger_rows(text: str) -> tuple[int, int]:
     """Recount the main ledger table: rows whose status cell is `proved`/`proved¹`/`proved²`.
 
     Returns (total_rows, bare_proved_rows). Only the region above HEADLINE_END counts,
-    so the tracked-separately sections cannot inflate the headline.
+    so the tracked-separately sections cannot inflate the headline. A counted row must also
+    cite a Lean declaration in backticks: every real ledger row names its theorem in
+    backticks, so this rejects a stray prose/status table above the cutoff whose rows happen
+    to end in a `proved…` cell (table-identity guard). `scripts/check_counts.py` mirrors this.
     """
     total = 0
     bare = 0
@@ -60,6 +63,8 @@ def count_ledger_rows(text: str) -> tuple[int, int]:
         if line.startswith(HEADLINE_END):
             break
         if not line.startswith("| "):
+            continue
+        if "`" not in line:
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
         if len(cells) >= 2 and cells[-1].startswith("proved"):

@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """Foundation dependency map: corpus claim -> missing Lean object that unlocks it.
 
-Turns the read-only claim corpus into a *prioritized foundation roadmap*
-(`notes/FOUNDATION_ROADMAP.md`): instead of asking "which claims are directly
-provable" (few), it asks "which missing Lean object, if built, unlocks the most
-claims" (high leverage). A claim may depend on more than one object.
+Prints the leverage buckets to **stdout**: instead of asking "which claims are
+directly provable" (few), it asks "which missing Lean object, if built, unlocks
+the most claims" (high leverage). A claim may depend on more than one object.
+
+This script does NOT write any file. `notes/FOUNDATION_ROADMAP.md` is the
+hand-maintained memo built *from* this output (curated table, difficulty
+column, prose); rerun this script and update that memo by hand when the corpus
+or the keyword signatures change.
 
 Run: python3 scripts/foundation_map.py
 """

@@ -15,7 +15,7 @@
     ],
     "escalate_if_failed": true
   },
-  "stem_file": "Ecdlp/Targets/glv_root_mod_n_condition_008.lean",
+  "stem_file": null,
   "source": {
     "formal_status": "formalizable",
     "mathlib_area": "Mathlib.GroupTheory.OrderOfElement",
