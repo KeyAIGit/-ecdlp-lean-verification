@@ -156,12 +156,23 @@ no-consecutive-zeros engine (`normEDS_not_consecutive_zeros`, unconditional), sm
 **The only remaining items are the two genuinely hard gates:** (a) **N7 uniform**
 (`x∘[n]=Φₙ/ΨSqₙ` in `k(E)` for all `n` — a large induction, "effort not theory") and
 (b) **N10 separability** (`[n]*ω=nω`, the one CORE-by-theory item). Neither is a single blind-CI
-rung; both need a **multi-cycle focused grind with fast feedback** — i.e. the `server-run.yml`
-bridge (maintainer secrets `SERVER_HOST`+`SSH_PRIVATE_KEY`), or new upstream Mathlib theory.
-**Loop directive: do NOT hunt for more single-cycle math rungs (they are done — hunting only
-re-discovers duplicates); hold the base healthy and reconcile PRs until the fast-feedback lever
-is enabled, then grind N7-uniform.** Reopen the Weil track only if the pin gains
-residue/tame-symbol/divisor-degree machinery.
+rung; both need a **multi-cycle focused grind with fast feedback**.
+
+**FAST-FEEDBACK LEVER IS LIVE (confirmed 2026-07-18).** The `server-run.yml` bridge works: a
+`workflow_dispatch` succeeded end-to-end (step "Run command on server" green in ~9 s), SSHing to
+the maintainer's server and running `lake env lean` on its warm Lean+Mathlib toolchain — and a
+prior successful run dates to 2026-07-10, so the secrets (`SERVER_HOST`+`SSH_PRIVATE_KEY`) have
+been set and the box bootstrapped all along (an earlier "blocked on maintainer secrets" note was
+wrong — the bridge was never tested until now). **Workflow for the grind:** draft a proof locally
+→ dispatch `server-run.yml` with a command that fetches the branch/patch and runs
+`lake env lean <file>` (single-file, seconds on the warm box; ~15-30 s round trip) to pre-verify
+BEFORE pushing → only push the CI-gated PR once the server is green. This makes N7-uniform /
+N10-separability tractable.
+**Loop directive (UPDATED): the fast-feedback lever is available — begin the N7-uniform grind,
+using `server-run.yml` for single-file pre-verification each iteration; the cloud `ci.yml` (kernel)
+remains the sole merge gate (the server is a fast pre-check only, never the trust root).** Do not
+manufacture single-cycle filler; the remaining work is the two hard gates, now attackable. Reopen
+the Weil track only if the pin gains residue/tame-symbol/divisor-degree machinery.
 
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
