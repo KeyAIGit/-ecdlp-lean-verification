@@ -181,11 +181,19 @@ directive committed to constructing the N7-uniform infrastructure incrementally.
 `mk_ψ`/`mk_Ψ_sq`/`mk_φ` congruences. Server-prechecked (`LEAN_OK_S1`, ~4.5 s warm) then CI-gated.
 This is node **S1** only (coordinate-ring identity); the Point-level map `x([n]•P)=φₙ(P)/ψₙ(P)²`
 on `E(k)` (node **S3**) still needs the multiplication-by-`n` coordinate map, absent from Mathlib.
-**Next brick:** scout Mathlib for any `[n]`-on-`Point` ↔ `φ`/`ψ` connection (Basic.lean has
-`W.ψ`/`W.φ` and `mk`, but `Point` appears there once, 0× in Degree.lean); if the group-law map is
-genuinely absent, the next reachable rung is the **ω / y-coordinate division-polynomial** layer
-(node **S2**, Mathlib's own open ÷2 TODO) or a fixed-`n` extension of the existing `n=2..5` point
-formulas. Keep one brick per cycle, server-verified, ledger-honest about scope.
+**Brick 2 landed (2026-07-18, PR TBD):** `Ecdlp/Proved/DivisionPolynomialDoubling.lean` — the
+**S2 ω-prerequisite** `ψₙ ∣ ψ₂ₙ` (`ψ_two_mul`: `ψ₂ₖ = ψₖ·complEDS₂…`; `ψ_dvd_ψ_two_mul`), curve-generic,
+all `k:ℤ`. Scouting found that Mathlib now carries the scalar 2-complement `complEDS₂`
+(`normEDS_mul_complEDS₂`/`normEDS_dvd_normEDS_two_mul`, `NumberTheory/EllipticDivisibilitySequence.lean`),
+so the "as a start … `ψₙ∣ψ₂ₙ`" step the ω-`TODO` names is now a direct specialization, not an induction.
+Server-prechecked (`LEAN_OK_S2`) then CI-gated. `ωₙ` itself still **not** defined (needs the `÷2`
+well-definedness — Mathlib's open `TODO`), no `Point`-level claim.
+**Next brick (S2 continued → S3):** the `÷2` step toward defining `ωₙ` is the genuine ω-`TODO` crux
+(medium/hard: needs `2 ∣ (ψ₂ₙ/ψₙ − ψₙ·(a₁φₙ+a₃ψₙ²))` in the char-0 universal ring, then the universal
+morphism image). Cheaper adjacent rungs first: (a) the analogous odd/`φ` coordinate-ring identities,
+(b) small-`n` explicit `complEDS₂` evaluations that pin `ψ₂ₙ/ψₙ` to a concrete polynomial for the
+fixed-`n` point-map ladder. Keep one brick per cycle, server-verified, ledger-honest about scope
+(coordinate-ring/polynomial layer only until the `Point`-level `[n]`-map, S3, is reachable).
 
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
