@@ -140,6 +140,9 @@ round trip. Closing that gap is where a ~10× lives. The levers, split by who ca
      itself runs in seconds instead of rebuilding Mathlib cold — using the box already being
      paid for, while keeping CI as the trusted kernel gate.
   Both require access the container does not have; they are the maintainer's to set up once.
+  The repo ships **`scripts/warm_lean.sh`** — once the allowlist is open it installs the
+  pinned toolchain + Mathlib olean cache so `lake env lean File.lean` checks in seconds
+  (it preflights egress and no-ops with a precise message while the hosts are still blocked).
 
 ## Planning & models
 
