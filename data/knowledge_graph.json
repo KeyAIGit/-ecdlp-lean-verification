@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 278,
     "barriers": 6,
-    "edges": 418,
+    "edges": 419,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -5132,6 +5132,11 @@
     {
       "from": "Ecdlp.Proved.WeilDivisorClass",
       "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Targets.weil_w3eval_diveval",
+      "to": "Ecdlp.Proved.FunctionFieldRegular",
       "type": "imports"
     },
     {

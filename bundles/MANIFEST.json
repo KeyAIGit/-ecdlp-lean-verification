@@ -17,7 +17,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 9277
+        "bytes": 10083
       },
       {
         "path": "data/stats.json",
@@ -43,7 +43,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 9277
+        "bytes": 10083
       },
       {
         "path": "data/stats.json",
@@ -91,7 +91,7 @@
         "path": "notes/FOUNDATIONS.md",
         "reason": "the Weil/Semaev foundation ladder and its open rungs",
         "exists": true,
-        "bytes": 10272
+        "bytes": 10477
       },
       {
         "path": "experiments/HYPOTHESES.yaml",
@@ -111,7 +111,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 9277
+        "bytes": 10083
       },
       {
         "path": "data/stats.json",
@@ -159,7 +159,7 @@
         "path": "notes/FOUNDATIONS.md",
         "reason": "the Weil/Semaev foundation ladder and its open rungs",
         "exists": true,
-        "bytes": 10272
+        "bytes": 10477
       },
       {
         "path": "experiments/HYPOTHESES.yaml",

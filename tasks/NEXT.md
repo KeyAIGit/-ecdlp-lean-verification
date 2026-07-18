@@ -130,7 +130,17 @@ Files allowed to edit:
 - `scripts/`
 - `notes/`
 
-### TASK-005 - Geometric torsion frontier: general-`n` separability + Weil pairing
+### TASK-005 - Weil pairing, ground one rung per cycle (primary) + general-`n` separability
+
+**STANDING DIRECTIVE (maintainer, 2026-07-18): grind the Weil pairing autonomously,
+one rung per cycle, per `notes/WEIL_LADDER.md`.** Each cycle: take the top un-done rung
+of the cycle queue (W3-eval → W4 reciprocity → W5 `eₙ`/bilinear/non-degenerate), draft →
+CI (kernel) judges → adversarially verify → merge on green (pure-fact ledger row, no
+novelty claims). A rung that is a genuine Mathlib gap and resists an honest cycle → freeze
+a precise blocker in `BARRIERS.md`, mark the target `blocked`, take the next independent
+rung. **Next rung: W3e-1** `divEval` (`Ecdlp/Targets/weil_w3eval_diveval.lean`,
+`targets/weil_w3eval_diveval.json`). Secondary/independent track: general-`n` separability
+(below). Mathlib has no Weil pairing — this is from-substrate; expect multi-cycle.
 
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
