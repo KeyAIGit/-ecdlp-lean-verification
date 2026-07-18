@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 280,
+    "theorems": 281,
     "barriers": 6,
-    "edges": 422,
+    "edges": 424,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -117,10 +117,11 @@
       "IsLocalization.surj`/`IsFractionRing.injective` (source-verified) + `evalFracAt` layer + W2": 1,
       "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer": 1,
       "evalReg`/`evalFracAt` layer (`FunctionFieldRegular.lean`) + field algebra": 1,
-      "evalReg`/`divEval` layer + `evalFracAt_unit_mul` + field algebra": 1
+      "evalReg`/`divEval` layer + `evalFracAt_unit_mul` + field algebra": 1,
+      "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer": 1
     },
     "by_area": {
-      "curve-torsion": 146,
+      "curve-torsion": 147,
       "primality": 49,
       "other": 26,
       "generic-hardness": 24,
@@ -3770,6 +3771,19 @@
       "area": "other",
       "dependency_depth": 8,
       "gated": true
+    },
+    {
+      "id": "thm-280",
+      "name": "Ecdlp.Weil.secp256k1_miller_jointly_regular`, `divEval_one",
+      "short_name": "secp256k1_miller_jointly_regular`,",
+      "module": "Ecdlp.Proved.WeilMillerEval",
+      "file": "Ecdlp/Proved/WeilMillerEval.lean",
+      "claim": "Weil ladder W3e-3 — the raw pairing value's domain (support-disjointness bridge) + the `divEval` unit law (`secp256k1_miller_jointly_regular`: a Miller function `f` for `(P,n)` has a fixed presentation `a/b`, and at any two points `A, B` where the single denominator `b` does not vanish — i.e. `A, B` off `supp(div f)` — `f` is regular at both, the joint-regularity hypothesis `divEval hA hB` consumes, from one geometric condition; and `divEval_one`/`evalReg_one`: `divEval 1 ((A)−(B)) = 1`, which with `divEval_mul` makes `divEval` a monoid hom on the functions regular at both points. Closes the reachable W3-evaluation scaffolding. Honest scope: this packages the raw value's domain + algebra; it does not assemble `eₙ(P,Q)` — that needs Weil reciprocity, the frozen W4 no-go, since the base point `O ∈ supp(div f_P)`)",
+      "method": "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer",
+      "status": "proved",
+      "area": "curve-torsion",
+      "dependency_depth": 8,
+      "gated": true
     }
   ],
   "barriers": [
@@ -5173,6 +5187,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.WeilMillerEval",
+      "to": "Ecdlp.Proved.WeilDivisorEval",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -5895,6 +5914,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.WeilDivisorRepIndep",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.WeilMillerEval",
       "type": "imports"
     },
     {

@@ -47,9 +47,14 @@ the no-go if it resists).
   hypothesis `u(Q) = u(O)` — i.e. units of `F[E]` are constants — is absent from Mathlib v4.31
   (`secp256k1_miller_eval_scaling` gives only nonvanishing `u(P) ≠ 0`, not equality across
   points), so it is carried as an explicit hypothesis rather than proved.
-- **W3e-3 (M)** — support disjointness hypothesis packaging: state `f_P(D_Q)` for `P, Q`
-  with `{P,O} ∩ {Q,O}` off `supp(div f_P)`; the `n=3,5,7` closure instances give concrete
-  witnesses. Produces `secp256k1_millerEval P Q : F` (the raw pairing value, pre-μₙ).
+- **W3e-3 (M) — LANDED** (`Ecdlp/Proved/WeilMillerEval.lean`): the reachable part is the
+  *domain + algebra* of the raw pairing value. `secp256k1_miller_jointly_regular` produces
+  joint regularity of `f_P` at any two points `A, B` off `supp(div f_P)` (one denominator
+  condition), the exact hypothesis `divEval hA hB` consumes; `divEval_one`/`evalReg_one` give
+  the unit law, so with `divEval_mul` (W3e-1) `divEval` is a monoid hom on the jointly-regular
+  functions. **Honest residual:** assembling `eₙ(P,Q)` itself is *not* reachable — the base
+  point `O ∈ supp(div f_P)`, so the standard construction evaluates a shifted divisor and
+  relates it back via **Weil reciprocity (W4, blocked below)**.
 - **W3e-4 (M/G)** — `f_P(D_Q) ∈ μₙ`: `millerEval P Q ^ n = 1`. Needs `div(f_P)=n·(…)` fed
   through a reciprocity fragment; may partially depend on W4. If blocked, record the no-go.
 

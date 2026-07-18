@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 887,
-  "distinct_qualified_names": 680,
-  "verified_md_citations": 223,
+  "declaration_count": 891,
+  "distinct_qualified_names": 684,
+  "verified_md_citations": 224,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -4655,6 +4655,14 @@
       "line": 57,
       "occurrences": 1
     },
+    "Ecdlp.Weil.divEval_one": {
+      "name": "divEval_one",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilMillerEval.lean",
+      "line": 58,
+      "occurrences": 1
+    },
     "Ecdlp.Weil.divEval_smul_unit": {
       "name": "divEval_smul_unit",
       "namespace": "Ecdlp.Weil",
@@ -4871,6 +4879,14 @@
       "line": 33,
       "occurrences": 1
     },
+    "Ecdlp.Weil.evalReg_one": {
+      "name": "evalReg_one",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilMillerEval.lean",
+      "line": 47,
+      "occurrences": 1
+    },
     "Ecdlp.Weil.evalReg_smul_unit": {
       "name": "evalReg_smul_unit",
       "namespace": "Ecdlp.Weil",
@@ -4943,6 +4959,14 @@
       "line": 190,
       "occurrences": 1
     },
+    "Ecdlp.Weil.regularAt_one": {
+      "name": "regularAt_one",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilMillerEval.lean",
+      "line": 41,
+      "occurrences": 1
+    },
     "Ecdlp.Weil.regularAt_toFunctionField": {
       "name": "regularAt_toFunctionField",
       "namespace": "Ecdlp.Weil",
@@ -5013,6 +5037,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/WeilDivisorClass.lean",
       "line": 90,
+      "occurrences": 1
+    },
+    "Ecdlp.Weil.secp256k1_miller_jointly_regular": {
+      "name": "secp256k1_miller_jointly_regular",
+      "namespace": "Ecdlp.Weil",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/WeilMillerEval.lean",
+      "line": 79,
       "occurrences": 1
     },
     "Ecdlp.Weil.secp256k1_psi3_root_iff_class_torsion": {
