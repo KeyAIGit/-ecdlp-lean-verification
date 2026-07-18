@@ -4,6 +4,11 @@ This file is the small-context task queue. Keep it short: 3-7 active tasks,
 each with a contract that an agent can execute without rediscovering the
 project from scratch.
 
+> **Unattended operation:** an hourly self-firing cycle advances this queue per
+> `AUTONOMY.md` (loop governance: rails, human-only escalations, robustness). The
+> kernel/CI is the sole judge; merges happen only on green CI; novelty/priority
+> claims never enter the ledger. Read `AUTONOMY.md` before acting as the loop.
+
 Canonical start order for agents:
 
 1. Read `STATUS.md`.
@@ -150,12 +155,31 @@ Expected output:
   per the standard lifecycle (stem consumed, registry verified, ledger row). No
   weakening, no `sorry`. If attempts stall, a frozen memo recording the exact
   failing induction step instead.
-- **Coordination (2026-07-16):** open draft PR #172 already carries a
-  candidate proof (`NormEDSConsecutiveZeros.lean`) plus the wider per-ℓ
-  structure family — unmerged/unreviewed. The adversarial audit is
-  `notes/reviews/GEOMETRIC_TORSION_AUDIT.md`; on #172's merge this task
-  becomes a reconciliation (verify statement identity, consume the stem),
-  not a re-proof.
+- **Immediate action (2026-07-18) — reconcile & land PR #172's crown:** the N5
+  scalar rung (`NormEDSConsecutiveZeros.lean`) and the whole divpoly
+  infrastructure (Bar bridges, `DivisionPolynomial{Coprime,Squarefree,Separable}`)
+  **already landed on `main`** via the sibling sessions. The only unmerged part of
+  #172 (orphaned branch `origin/claude/repo-analysis-next-steps-btomml`) is the
+  **structure family** `E[n](𝔽̄_p) ≅ (ℤ/n)²` for `n ∈ {3,5,7}`:
+  `{Two,Three,Five,Seven}TorsionStructure.lean` + `FunctionField{Eval,Repr,Regular}.lean`
+  + `{Quadruple,Quintuple}MultiplicationFormula.lean` + `CubicSeparable.lean`. The math
+  is sound and honestly scoped in the docstrings. This is exactly **Split-PR 4** of the
+  documented plan `notes/reviews/PR172_SPLIT_PLAN.md` (Split-PR 1/2/3 already landed on
+  `main`); the companion audit is `notes/reviews/GEOMETRIC_TORSION_AUDIT.md`. Reconcile
+  onto current `main`, let CI (the kernel) judge, and merge only on green. Concrete musts
+  before merge (confirmed by a second adversarial audit, 2026-07-18):
+  1. **Strip the novelty/priority claims** from the VERIFIED.md ledger rows and the
+     `ThreeTorsionStructure.lean` docstrings ("first-in-Lean", "first full N13 instance"
+     → the pure statement of what is proved), per the `AUTONOMY.md` anti-inflation rail;
+     soften the SOFT superlatives ("first even rung"→"the even rung n=4", "simplest", etc.).
+  2. **Fix the build-breaker duplicate**: `Ecdlp.Curve.secp256k1Bar_two_nsmul_eq_zero_iff`
+     is declared in both `main`'s `FiveTorsionBridgeBar.lean` and the branch's
+     `TwoTorsionStructure.lean` — keep exactly one (import & reuse the existing one).
+  3. **Union the ledger, never take the branch VERIFIED.md wholesale** — it drops ~20
+     main-only rows (P256TwistSecurity, EcdsaMalleability, Eleven/Thirteen torsion,
+     TorsionCounting, …); keep all main rows AND add the branch's, then regenerate.
+  This is a reconciliation, not a re-proof; the math (n∈{3,5,7}: #E[n]=n², E[n]≅(ℤ/n)²)
+  is independently confirmed sound.
 Exit criteria:
 - Either the rung proved and promoted (possibly via a reviewed #172 merge with
   statement-identity check), or the blocker memo naming the precise identity
