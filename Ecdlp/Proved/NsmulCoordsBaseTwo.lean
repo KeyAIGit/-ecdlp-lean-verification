@@ -56,7 +56,7 @@ theorem secp256k1_two_nsmul_coords_ωfree
       simp [WeierstrassCurve.Affine.negY, secp256k1]
     have h2y : (2 : ZMod Secp256k1.p) * y ≠ 0 := by
       intro hh; exact hy (by rw [hnegY]; linear_combination hh)
-    field_simp
+    rw [div_mul_eq_mul_div, div_mul_eq_mul_div, div_eq_iff (pow_ne_zero 3 h2y)]
     ring
 
 end Ecdlp.Curve
