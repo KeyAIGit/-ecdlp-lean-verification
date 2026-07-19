@@ -245,6 +245,29 @@ exact `Θ` statements.
       `Point`↔`ω/ψ` connection**, so `ωₙ` would be a bare polynomial with no `y([n]P)` meaning. The
       true wall is thus unchanged — step (iii), the coordinate `[n]`-map induction — and it does not
       shrink by defining `ωₙ` alone. No thin `ωₙ`-definition brick is minted for that reason.
+    - **The wall reduced and its reduction machine-checked (2026-07-19).** Two moves collapse the
+      scale estimate above. **(a) ω-free reformulation** sidesteps step (i) entirely: the `y`-conjunct
+      is stated with only Mathlib's `ψ`, as `Y·(4y)·ψₙ³ = ψ(n+2)ψ(n-1)² − ψ(n-2)ψ(n+1)²` (the identity
+      `4y·ωₙ = …`), so **no `ωₙ` object, no `÷2` obstruction, no universal ring** is needed — the
+      anchors at `n=2,3` are landed (`OmegaRecurrenceAnchors.lean`) and the general relation is the
+      `r=2` case of the landed `ψ_isEllSequence`. **(b) The full induction skeleton now elaborates in
+      the Lean kernel.** `Ecdlp/Targets/n7_uniform_carrier_induction.lean` carries the joint `(x,y)`
+      predicate `Carrier` through `WeierstrassCurve.normEDSRec'`; the base leaves `n=0,1,2`, the `n=4`
+      x-conjunct, the entire **`Point`-group plumbing** (`even_step_group`/`odd_step_group`: `add_nsmul`
+      decomposition, degenerate-branch handling via `some_ne_zero`/`add_self_of_Y_eq`, tangent/secant
+      slope reconstruction, `some.injEq`), and the `normEDSRec'` capstone `secp256k1_nsmul_coords` are
+      **`sorry`-free and server-verified** (`lake env lean` → `LEAN_OK`, only the named-wall `sorry`
+      warnings). So step (iii) is no longer a "single monstrous identity" but a *machine-checked
+      reduction* of the whole uniform target to a short list of **named** standalone lemmas. The
+      residual wall is now precisely: `even_x_algebra`/`odd_x_algebra` (the per-step x-identity — the
+      point-transport of the already-proved curve-generic `φ_ψ_diff`), `even_y_algebra`/`odd_y_algebra`
+      (the ω-free y-step), the non-degeneracy bridge `nsmul_eq_zero_iff_psi_evalEval_zero` /
+      `psiSq_ne_zero_of_nsmul_some`, and the mechanical leaves `carrier_three` / `carrier_four`-y.
+      Crucially the x-walls are **not** the previously-feared missing `Point↔ω/ψ` map: the eval bridge
+      `eval_ΨSq_eq_normEDS_sq` / `eval_Φ_eq_normEDS` (`DivisionPolynomialEvalBridge.lean`) already
+      transports `ΨSqₙ.eval x`, `Φₙ.eval x` to the scalar `wₙ = ψₙ.evalEval x y`, turning each x-wall
+      into a scalar field identity provable from `φ_ψ_diff` — attackable, not upstream-grade. Held on
+      branch `claude/admiring-darwin-uouep1` (open stem, `sorry`s, excluded from the gate).
   - **Weil reciprocity `f(div g) = g(div f)` (ladder rung W4-1) — frozen no-go
     (2026-07-18).** The evaluation half of the Weil pairing is landed at the
     function-field level (W3e-1 divisor evaluation, W3e-2 representative-scaling),

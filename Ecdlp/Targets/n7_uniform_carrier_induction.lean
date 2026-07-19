@@ -47,6 +47,12 @@ Named residual walls (each a standalone lemma stating exactly what it needs):
   are left as inline `sorry`.
 
 Open stem: NOT imported from `Ecdlp.lean`; excluded from the no-`sorry` gate.
+
+**Provenance.** The whole file elaborates on the warm-Lean server (v4.31.0) with `LEAN_OK`:
+the only diagnostics are the named `declaration uses 'sorry'` warnings above — no type or
+elaboration errors. So the reduction of the entire uniform-N7 target to the isolated
+rational-identity walls (and the `normEDSRec'` capstone assembly) is machine-verified; only the
+listed walls remain open.
 -/
 import Mathlib
 import Ecdlp.Proved.DivisionPolynomialEllSequence
