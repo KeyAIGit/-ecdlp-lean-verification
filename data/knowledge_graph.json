@@ -127,8 +127,8 @@
       "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer": 1
     },
     "by_area": {
-      "curve-torsion": 151,
-      "primality": 49,
+      "curve-torsion": 150,
+      "primality": 50,
       "generic-hardness": 27,
       "other": 26,
       "protocol-soundness": 23,
@@ -2653,10 +2653,10 @@
       "short_name": "secp256k1_one_nsmul_coords`,",
       "module": "Ecdlp.Proved.NsmulCoordsBaseOne.lean, NsmulCoordsBaseTwo.lean, OmegaRecurrenceAnchors",
       "file": "Ecdlp/Proved/NsmulCoordsBaseOne.lean, NsmulCoordsBaseTwo.lean, OmegaRecurrenceAnchors.lean",
-      "claim": "N7-uniform ω-free base: joint `(x,y)` carrier rungs `n=1,2` + ω-recurrence anchors (secp256k1) (`secp256k1_one_nsmul_coords` / `secp256k1_two_nsmul_coords_ωfree`: the `n=1,2` base cases of the joint carrier — whenever `n•P=(X,Y)` is affine, `X=Φₙ(x)/ΨSqₙ(x)` and the ω-free `y`-relation `Y·(4y)·ψₙ(P)³ = ψ(n+2)ψ(n−1) − ψ(n−2)ψ(n+1)`; and `secp256k1_omega_recurrence_two`/`_three`: that ω-recurrence numerator equals `4y·ωₙ` at `n=2,3`, cross-checking the group-law-derived `ω₂,ω₃`. The `y`-conjunct uses only Mathlib's `ψ` — no `ω` division polynomial. Honest scope: base leaves + anchors only; the uniform induction over all `n` stays the open target `n7_uniform_secp256k1_x` (`Ecdlp/Targets/n7_uniform_carrier_induction.lean`, whose `normEDSRec'` reduction to these leaves + named residual walls is machine-checked). No `native_decide`, no new axioms)",
+      "claim": "N7-uniform ω-free base: joint `(x,y)` carrier rungs `n=1,2` + ω-recurrence anchors (secp256k1) (`secp256k1_one_nsmul_coords` / `secp256k1_two_nsmul_coords_ωfree`: the `n=1,2` base cases of the joint carrier — whenever `n•P=(X,Y)` is affine, `X=Φₙ(x)/ΨSqₙ(x)` and the ω-free `y`-relation `Y·(4y)·ψₙ(P)³ = ψ(n+2)ψ(n−1) − ψ(n−2)ψ(n+1)`; and `secp256k1_omega_recurrence_two`/`_three`: that ω-recurrence numerator equals `4y·ωₙ` at `n=2,3`, cross-checking the group-law-derived `ω₂,ω₃`. The `y`-conjunct uses only Mathlib's `ψ` — no `ω` division polynomial. Honest scope: base leaves + anchors only; the uniform induction over all `n` stays the open target `n7_uniform_secp256k1_x` (`Ecdlp/Targets/n7_uniform_carrier_induction.lean`, whose `normEDSRec'` reduction to these leaves + named residual walls is machine-checked). These four secp256k1 forms inherit `Lean.ofReduceBool` from the secp256k1 primality/coefficient facts (`native_decide`); no *new* axioms beyond the trusted base)",
       "method": "landed `n=2,3` coordinate formulas + `ψ_isEllSequence",
       "status": "proved",
-      "area": "curve-torsion",
+      "area": "primality",
       "dependency_depth": 0,
       "gated": false
     },
