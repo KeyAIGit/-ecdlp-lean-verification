@@ -277,7 +277,20 @@ exact `Θ` statements.
       **not a finite certificate**:
       substituting `normEDS_even/odd`+Somos-4 leaves a remainder in `w(k±2)²` whose pinning cascades
       outward unboundedly, so closing them needs a **strong induction on `k`** over the elliptic net
-      (the `NormEDSSomos4.lean` technique, ~200 lines) — a real EDS sub-development, not a `ring` fill. **Correction to the "clean reduction" above:** an
+      (the `NormEDSSomos4.lean` technique, ~200 lines) — a real EDS sub-development, not a `ring` fill.
+      **Reduction fully mapped + CAS-validated (2026-07-19, ultracode `n7-even-x-doubling`).** `even_x`
+      now reduces to two curve-generic scalar cores over `w=normEDS β c d` — CORE-I
+      `(w(k−1)²w(k+2)−w(k−2)w(k+1)²)² = 4β²(A³+7B³)` and CORE-II
+      `w(2k+1)w(2k−1) = 3A⁴+4PA³+84AB³+28PB³` — each provable by `WeierstrassCurve.normEDSRec'` with the
+      *same seven-case skeleton and index window as the landed `normEDS_somos4`*. Both cores + both
+      targets + all 10 base cases (in the curve ideal, remainder 0) are CAS-validated end-to-end
+      (`scripts/certs/core_check.py`, 804 tests True; full plan in `notes/N7_EVEN_X_REDUCTION.md`). The
+      residual is now purely mechanical: 4 `linear_combination` step certificates (coreI/coreII ×
+      even/odd) whose ~20–40-term cofactor bundles must be machine-generated (sympy Groebner/linear-solve)
+      and kernel-judged, exactly like `somos4_odd_step`/`somos4_even_step_scaled`. No mathematical unknown
+      remains; the closure is a multi-cycle CAS+kernel effort (heavier than the original `NormEDSSomos4`),
+      bottlenecked without a local Lean toolchain to iterate the induction assembly.
+      **Correction to the "clean reduction" above:** an
       adversarial audit found that three of the abstracted step-lemmas — `odd_x_algebra`,
       `even_y_algebra`, `odd_y_algebra` — are *under-hypothesized* (they leave the `y`-sign of the
       intermediate points free, so the universally-quantified forms are literally false: flipping
