@@ -245,7 +245,7 @@ theorem even_step_group (k : ℕ) (hk : Carrier x y h k) : Carrier x y h (2 * k)
   · rw [hk0, zero_add] at hn
     exact absurd hn.symm (Point.some_ne_zero h')
   · obtain ⟨Xk, Yk, hk_ns, hkP⟩ :
-        ∃ Xk Yk (hns : secp256k1.toAffine.Nonsingular Xk Yk),
+        ∃ Xk Yk, ∃ hns : secp256k1.toAffine.Nonsingular Xk Yk,
           k • Point.some x y h = Point.some Xk Yk hns := by
       cases hq : k • Point.some x y h with
       | zero => exact absurd hq hkne
@@ -291,13 +291,13 @@ theorem odd_step_group (k : ℕ) (hk : Carrier x y h k) (hk1 : Carrier x y h (k 
     · -- `(k+1)•P = O`: index shift `2k+1 ↦ k`. Symmetric residual side-branch.
       sorry
     · obtain ⟨Xk, Yk, hk_ns, hkP⟩ :
-          ∃ Xk Yk (hns : secp256k1.toAffine.Nonsingular Xk Yk),
+          ∃ Xk Yk, ∃ hns : secp256k1.toAffine.Nonsingular Xk Yk,
             k • Point.some x y h = Point.some Xk Yk hns := by
         cases hq : k • Point.some x y h with
         | zero => exact absurd hq hkne
         | some Xk Yk hns => exact ⟨Xk, Yk, hns, hq⟩
       obtain ⟨Xk1, Yk1, hk1_ns, hk1P⟩ :
-          ∃ Xk1 Yk1 (hns : secp256k1.toAffine.Nonsingular Xk1 Yk1),
+          ∃ Xk1 Yk1, ∃ hns : secp256k1.toAffine.Nonsingular Xk1 Yk1,
             (k + 1) • Point.some x y h = Point.some Xk1 Yk1 hns := by
         cases hq : (k + 1) • Point.some x y h with
         | zero => exact absurd hq hk1ne
