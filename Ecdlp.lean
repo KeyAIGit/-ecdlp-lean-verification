@@ -149,3 +149,10 @@ import Ecdlp.Proved.DivisionPolynomialDoubling
 import Ecdlp.Proved.MultiplicationYFormula
 import Ecdlp.Proved.DoublingPointFormula
 import Ecdlp.Proved.MultiplicationYTripleFormula
+-- N7-uniform ω-free substrate: EDS engine (curve-generic), ω-recurrence anchors, and the
+-- n=1,2 base rungs of the joint (x,y) carrier (all kernel-checked; the uniform induction stem
+-- itself stays an open target in Ecdlp/Targets/, excluded from the built base).
+import Ecdlp.Proved.DivisionPolynomialEllSequence
+import Ecdlp.Proved.OmegaRecurrenceAnchors
+import Ecdlp.Proved.NsmulCoordsBaseOne
+import Ecdlp.Proved.NsmulCoordsBaseTwo

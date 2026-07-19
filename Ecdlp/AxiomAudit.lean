@@ -284,3 +284,19 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 
 -- N7-uniform S3a: y-coordinate tripling y(3P)=ω₃/ψ₃³ for secp256k1
 #print axioms Ecdlp.Curve.secp256k1_triple_y_eq_ω₃
+
+-- N7-uniform ω-free EDS engine (curve-generic): the elliptic-net relation for ψ, the
+-- neighbour-product identity, and the x-coordinate difference identity φₙψₘ²−φₘψₙ²=ψ(m+n)ψ(m−n)
+-- (Silverman AEC III Ex. 3.7)
+#print axioms Ecdlp.Curve.ψ_isEllSequence
+#print axioms Ecdlp.Curve.ψ_succ_mul_ψ_pred
+#print axioms Ecdlp.Curve.φ_ψ_diff
+
+-- N7-uniform ω-recurrence anchors: 4y·ωₙ = ψ(n+2)ψ(n−1)²−ψ(n−2)ψ(n+1)² reproduces the
+-- group-law-derived ω₂, ω₃ on a secp256k1 point (n = 2, 3)
+#print axioms Ecdlp.Curve.secp256k1_omega_recurrence_two
+#print axioms Ecdlp.Curve.secp256k1_omega_recurrence_three
+
+-- N7-uniform base rungs of the joint ω-free (x,y) carrier for secp256k1 (n = 1, 2)
+#print axioms Ecdlp.Curve.secp256k1_one_nsmul_coords
+#print axioms Ecdlp.Curve.secp256k1_two_nsmul_coords_ωfree

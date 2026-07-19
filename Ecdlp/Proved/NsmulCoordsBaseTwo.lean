@@ -19,8 +19,8 @@ The `x`-conjunct is `secp256k1.ΨSq_two : ΨSq 2 = Ψ₂Sq` away from the doubli
 numerator `4y·ω₂`, using `2y ≠ 0` (from the non-2-torsion hypothesis). Kernel-checked, no
 `native_decide`.
 
-Grind-in-progress: not imported into `Ecdlp.lean`, held on the feature branch per the "no merges
-until the wall cracks or a final barrier" directive.
+The uniform induction itself stays an open target (`Ecdlp/Targets/n7_uniform_carrier_induction.lean`),
+excluded from the built base; this base rung is a standalone closed result.
 -/
 import Mathlib
 import Ecdlp.Proved.DoublingPointFormula

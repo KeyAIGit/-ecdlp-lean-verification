@@ -14,9 +14,7 @@ This file lands that engine, curve-generic (any Weierstrass curve over any `Comm
 
 These are the algebraic soul of the uniform N7 induction. The **residual barrier** stays the
 `Point`-group assembly (double induction on consecutive pairs `(nP,(n-1)P)`, degenerate-case
-analysis, and the still-absent-from-Mathlib `Point ↔ ψ/φ` map) — see `BARRIERS.md §B3`. Grind-in-
-progress: not imported into `Ecdlp.lean`, held on the branch per the "no merges until the wall
-cracks or a final barrier" directive.
+analysis, and the still-absent-from-Mathlib `Point ↔ ψ/φ` map) — see `BARRIERS.md §B3`.
 -/
 import Mathlib
 import Ecdlp.Proved.NormEDSIsElliptic

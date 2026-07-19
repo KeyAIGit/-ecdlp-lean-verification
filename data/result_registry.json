@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 896,
-  "distinct_qualified_names": 688,
-  "verified_md_citations": 228,
+  "declaration_count": 900,
+  "distinct_qualified_names": 692,
+  "verified_md_citations": 229,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -2263,6 +2263,30 @@
       "line": 26,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_omega_recurrence_three": {
+      "name": "secp256k1_omega_recurrence_three",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/OmegaRecurrenceAnchors.lean",
+      "line": 40,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_omega_recurrence_two": {
+      "name": "secp256k1_omega_recurrence_two",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/OmegaRecurrenceAnchors.lean",
+      "line": 28,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_one_nsmul_coords": {
+      "name": "secp256k1_one_nsmul_coords",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NsmulCoordsBaseOne.lean",
+      "line": 30,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_pointGroupEquiv": {
       "name": "secp256k1_pointGroupEquiv",
       "namespace": "Ecdlp.Curve",
@@ -2685,6 +2709,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DoublingPointFormula.lean",
       "line": 34,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_two_nsmul_coords_": {
+      "name": "secp256k1_two_nsmul_coords_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NsmulCoordsBaseTwo.lean",
+      "line": 41,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff": {
