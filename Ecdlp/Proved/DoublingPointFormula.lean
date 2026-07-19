@@ -39,8 +39,8 @@ theorem secp256k1_two_nsmul_coords
     (hP : (2 : ℕ) • Point.some x y h = Point.some X Y h') :
     X = (secp256k1.Φ 2).eval x / secp256k1.Ψ₂Sq.eval x
       ∧ Y = (x ^ 6 + 140 * x ^ 3 - 392) / (2 * y) ^ 3 := by
-  rw [two_nsmul, Point.add_self_of_Y_ne hy, Point.some.injEq] at hP
-  obtain ⟨hX, hY, _⟩ := hP
+  rw [two_nsmul, Point.add_self_of_Y_ne hy] at hP
+  injection hP with hX hY
   refine ⟨?_, ?_⟩
   · rw [← hX]; exact secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq x y hc hy
   · rw [← hY]; exact secp256k1_double_y_eq_ω₂ x y hc hy
