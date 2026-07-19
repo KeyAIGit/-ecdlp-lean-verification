@@ -188,12 +188,19 @@ all `k:ℤ`. Scouting found that Mathlib now carries the scalar 2-complement `co
 so the "as a start … `ψₙ∣ψ₂ₙ`" step the ω-`TODO` names is now a direct specialization, not an induction.
 Server-prechecked (`LEAN_OK_S2`) then CI-gated. `ωₙ` itself still **not** defined (needs the `÷2`
 well-definedness — Mathlib's open `TODO`), no `Point`-level claim.
-**Next brick (S2 continued → S3):** the `÷2` step toward defining `ωₙ` is the genuine ω-`TODO` crux
-(medium/hard: needs `2 ∣ (ψ₂ₙ/ψₙ − ψₙ·(a₁φₙ+a₃ψₙ²))` in the char-0 universal ring, then the universal
-morphism image). Cheaper adjacent rungs first: (a) the analogous odd/`φ` coordinate-ring identities,
-(b) small-`n` explicit `complEDS₂` evaluations that pin `ψ₂ₙ/ψₙ` to a concrete polynomial for the
-fixed-`n` point-map ladder. Keep one brick per cycle, server-verified, ledger-honest about scope
-(coordinate-ring/polynomial layer only until the `Point`-level `[n]`-map, S3, is reachable).
+**Reachable clean substrate is now exhausted (assessed 2026-07-18, after S1+S2).** The `÷2` step
+toward defining `ωₙ` reduces (given S2's `ψ₂ₙ/ψₙ = complEDS₂ …`) to `2 ∣ (ψ₂ₙ/ψₙ − ψₙ(a₁φₙ+a₃ψₙ²))`
+in `R[X][Y]` — vacuous when `2` is invertible (secp256k1's `𝔽_p`, any char `≠ 2`), but in full
+generality needs the char-`0` universal ring `ℤ[A₁..A₆][X][Y]` + specialization, which **Mathlib
+lacks** (no `WeierstrassCurve.Universal`). Crucially, **even a defined `ωₙ` proves nothing** without
+step (iii), the `Point`↔`ω/ψ` coordinate `[n]`-map — still the true wall (`BARRIERS.md §B3`). So the
+candidate "cheap adjacent rungs" (a bare secp256k1 `ωₙ := complEDS₂/2`, small-`n` `complEDS₂` values)
+are **thin/circular** (definitional restatements, no new `Point`-level content) and are **not** to be
+minted — that would be ledger inflation. **Next real rung is multi-cycle-hard:** either (A) build the
+`Point`-level `[n]`-map induction (step iii, the monolith), or (B) build the universal-ring `÷2`
+machinery Mathlib omits. Attempt one as a *focused, possibly-non-closing* grind (a precise failing
+step is a first-class barrier), not as a one-cycle brick. If neither is attempted a given cycle,
+prefer a genuinely independent item off the `AUTONOMY.md` priority ladder over a thin N7 filler.
 
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
