@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 902,
-  "distinct_qualified_names": 694,
-  "verified_md_citations": 229,
+  "declaration_count": 905,
+  "distinct_qualified_names": 697,
+  "verified_md_citations": 230,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -1151,6 +1151,14 @@
       "line": 92,
       "occurrences": 1
     },
+    "Ecdlp.Curve.quad_y_core": {
+      "name": "quad_y_core",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/QuadrupleMultiplicationYFormula.lean",
+      "line": 34,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.quint_x_core": {
       "name": "quint_x_core",
       "namespace": "Ecdlp.Curve",
@@ -1831,6 +1839,14 @@
       "line": 86,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_four_nsmul_coords_": {
+      "name": "secp256k1_four_nsmul_coords_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NsmulCoordsBaseFour.lean",
+      "line": 41,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_four_p_eq_trace_sq": {
       "name": "secp256k1_four_p_eq_trace_sq",
       "namespace": "Ecdlp.Curve",
@@ -2413,6 +2429,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/QuadrupleMultiplicationFormula.lean",
       "line": 238,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_quadruple_y": {
+      "name": "secp256k1_quadruple_y",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/QuadrupleMultiplicationYFormula.lean",
+      "line": 62,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_quintuple_x_eq_": {

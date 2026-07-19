@@ -300,6 +300,11 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_psi6_evalEval
 #print axioms Ecdlp.Curve.secp256k1_omega_recurrence_four
 
--- N7-uniform base rungs of the joint ω-free (x,y) carrier for secp256k1 (n = 1, 2)
+-- N7-uniform base rungs of the joint ω-free (x,y) carrier for secp256k1 (n = 1, 2, 4)
 #print axioms Ecdlp.Curve.secp256k1_one_nsmul_coords
 #print axioms Ecdlp.Curve.secp256k1_two_nsmul_coords_ωfree
+#print axioms Ecdlp.Curve.secp256k1_four_nsmul_coords_ωfree
+
+-- N7-uniform y-coordinate multiplication-by-4 formula: y(4P)=ω₄/ψ₄³ (the y-companion of the
+-- landed x(4P)=Φ₄/ΨSq₄; the missing certificate for the carrier_four y-conjunct)
+#print axioms Ecdlp.Curve.secp256k1_quadruple_y

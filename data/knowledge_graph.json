@@ -4,9 +4,9 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape for secp256k1: proved theorems, their import dependencies, the corpus claims they verify, and the formalization barriers that bound them. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every theorem listed is accepted by the Lean kernel with no sorry and no added axioms. Truth is decided only by the kernel; this graph is derived from the ledger, it does not assert proofs.",
   "counts": {
-    "theorems": 288,
+    "theorems": 289,
     "barriers": 6,
-    "edges": 453,
+    "edges": 459,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -117,6 +117,7 @@
       "Mathlib (finset card algebra, `torsionBy`) + closure bridge + separability + coprimality + N10(iii)": 1,
       "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₅` + N10(iii)": 1,
       "E[3] pattern + separability + `Ψ₂Sq⊥preΨ₇` + N10(iii)": 1,
+      "landed `x(4P)` + `y(2P)`/`y(3P)` formulas + Mathlib `ψ_even`/`ψ_four": 1,
       "Mathlib (`Separable`, `Separable.map`, `IsAlgClosed.splits`, `nodup_roots`) + Bézout native_decide": 1,
       "closure 2-torsion (`y=0`) + `CubicSeparable` roots + N10(iii)": 1,
       "evalAt`/`evalRatAt` layer + `secp256k1_miller_function_unique` (W2)": 1,
@@ -128,7 +129,7 @@
     },
     "by_area": {
       "curve-torsion": 150,
-      "primality": 50,
+      "primality": 51,
       "generic-hardness": 27,
       "other": 26,
       "protocol-soundness": 23,
@@ -3780,6 +3781,19 @@
     },
     {
       "id": "thm-280",
+      "name": "Ecdlp.Curve.secp256k1_quadruple_y`, `quad_y_core`, `secp256k1_four_nsmul_coords_ωfree`, `secp256k1_omega_recurrence_four`, `secp256k1_psi6_evalEval",
+      "short_name": "secp256k1_quadruple_y`,",
+      "module": "Ecdlp.Proved.QuadrupleMultiplicationYFormula.lean, NsmulCoordsBaseFour.lean, OmegaRecurrenceAnchors",
+      "file": "Ecdlp/Proved/QuadrupleMultiplicationYFormula.lean, NsmulCoordsBaseFour.lean, OmegaRecurrenceAnchors.lean",
+      "claim": "N7@4 — multiplication-by-4 `y`-coordinate formula `y(4•P) = ω₄/ψ₄³` + fully closed `carrier_four` leaf (`secp256k1_quadruple_y`: whenever `4•P` is an affine point `(X,Y)`, `Y·ψ₄³ = ω₄(x)` with `ψ₄ = (2x⁶+280x³−784)(2y)` and the degree-24 `ω₄(x) = x⁴+8624x−2875712x⁸−16946944x⁵−1054135040x−35487778816x⁹−229379784704x⁶−701632282624x³−188900999168` — the `y`-companion of the landed `x(4P)=Φ₄/ΨSq₄`, and the `n=4` analogue of `y(2P)=ω₂/(2y)³` / `y(3P)=ω₃/ψ₃³`. The core `quad_y_core` runs doubling-of-doubling (tangents `s₂` at `P`, `s₄` at `2P`) and closes by three CAS-designed `linear_combination` certificates assembled via the exact identity `(2Y2)³·4096y = ψ₄³`. Fed by the freshly-derived even-index brick `secp256k1_psi6_evalEval` (`ψ6 = 2y·(3x⁶+4704x³−131712x⁰−7639296x⁷−12907776x⁴−103262208x)`) and its anchor `secp256k1_omega_recurrence_four` (`ψ₆ψ₃−ψ₂ψ₅ = 4y·ω₄`), it reshapes into the joint ω-free carrier leaf `secp256k1_four_nsmul_coords_ωfree`, which closes `carrier_four` (both conjuncts) in the uniform induction stem — the `n=4` (even) base rung of `n7_uniform_secp256k1_x`. `ω₄`/`ψ₆` CAS-validated (on-curve `(A,B)` representation) + 10-prime numeric `Y(4P)·ψ₄³=ω₄` check. Honest scope: fixed `n=4`; the uniform induction over all `n` stays open. No `native_decide`, no new axioms)",
+      "method": "landed `x(4P)` + `y(2P)`/`y(3P)` formulas + Mathlib `ψ_even`/`ψ_four",
+      "status": "proved",
+      "area": "primality",
+      "dependency_depth": 0,
+      "gated": false
+    },
+    {
+      "id": "thm-281",
       "name": "Ecdlp.Curve.secp256k1_cubic_separable`, `secp256k1_cubic_isCoprime_derivative`, `secp256k1_cubic_roots_card_bar`, `secp256k1_cubic_roots_nodup_bar",
       "short_name": "secp256k1_cubic_separable`,",
       "module": "Ecdlp.Proved.CubicSeparable",
@@ -3792,7 +3806,7 @@
       "gated": true
     },
     {
-      "id": "thm-281",
+      "id": "thm-282",
       "name": "Ecdlp.Curve.secp256k1Bar_two_torsion_structure`, `secp256k1Bar_two_nsmul_eq_zero_iff`, `secp256k1Bar_two_torsion_ncard",
       "short_name": "secp256k1Bar_two_torsion_structure`,",
       "module": "Ecdlp.Proved.TwoTorsionStructure",
@@ -3805,7 +3819,7 @@
       "gated": true
     },
     {
-      "id": "thm-282",
+      "id": "thm-283",
       "name": "Ecdlp.Weil.evalFracAt_well_defined`, `evalFracAt_mul`, `evalAt_unit_ne_zero`, `evalRatAt_eq_evalFracAt`, `secp256k1_miller_eval_scaling",
       "short_name": "evalFracAt_well_defined`,",
       "module": "Ecdlp.Proved.FunctionFieldEval",
@@ -3818,7 +3832,7 @@
       "gated": true
     },
     {
-      "id": "thm-283",
+      "id": "thm-284",
       "name": "Ecdlp.Weil.functionField_exists_num_den`, `functionField_num_den_cross`, `evalFracAt_num_den_well_defined`, `secp256k1_miller_function_num_den",
       "short_name": "functionField_exists_num_den`,",
       "module": "Ecdlp.Proved.FunctionFieldRepr",
@@ -3831,7 +3845,7 @@
       "gated": true
     },
     {
-      "id": "thm-284",
+      "id": "thm-285",
       "name": "Ecdlp.Weil.RegularAt`, `evalReg`, `evalRatAt_eq_evalReg` (+ 14 supporting)",
       "short_name": "RegularAt`,",
       "module": "Ecdlp.Proved.FunctionFieldRegular",
@@ -3844,7 +3858,7 @@
       "gated": true
     },
     {
-      "id": "thm-285",
+      "id": "thm-286",
       "name": "Ecdlp.Weil.divEval_mul`, `evalReg_mul",
       "short_name": "divEval_mul`,",
       "module": "Ecdlp.Proved.WeilDivisorEval",
@@ -3857,7 +3871,7 @@
       "gated": true
     },
     {
-      "id": "thm-286",
+      "id": "thm-287",
       "name": "Ecdlp.Weil.divEval_smul_unit`, `divEval_smul_unit_eq`, `evalReg_smul_unit",
       "short_name": "divEval_smul_unit`,",
       "module": "Ecdlp.Proved.WeilDivisorRepIndep",
@@ -3870,7 +3884,7 @@
       "gated": true
     },
     {
-      "id": "thm-287",
+      "id": "thm-288",
       "name": "Ecdlp.Weil.secp256k1_miller_jointly_regular`, `divEval_one",
       "short_name": "secp256k1_miller_jointly_regular`,",
       "module": "Ecdlp.Proved.WeilMillerEval",
@@ -4754,6 +4768,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.NsmulCoordsBaseFour",
+      "to": "Ecdlp.Proved.QuadrupleMultiplicationYFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.NsmulCoordsBaseFour",
+      "to": "Ecdlp.Proved.OmegaRecurrenceAnchors",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.NsmulCoordsBaseOne",
       "to": "Ecdlp.Proved.FiveTorsionBridge",
       "type": "imports"
@@ -4906,6 +4930,11 @@
     {
       "from": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
       "to": "Ecdlp.Proved.MultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.QuadrupleMultiplicationYFormula",
+      "to": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
       "type": "imports"
     },
     {
@@ -5366,6 +5395,11 @@
     {
       "from": "Ecdlp.Targets.n7_uniform_carrier_induction",
       "to": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Targets.n7_uniform_carrier_induction",
+      "to": "Ecdlp.Proved.NsmulCoordsBaseFour",
       "type": "imports"
     },
     {
@@ -6161,6 +6195,16 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.NsmulCoordsBaseTwo",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.QuadrupleMultiplicationYFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.NsmulCoordsBaseFour",
       "type": "imports"
     },
     {
