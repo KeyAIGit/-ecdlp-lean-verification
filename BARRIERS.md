@@ -230,6 +230,21 @@ exact `Θ` statements.
     `server-run.yml` bridge (~5 s single-file `lake env lean`) speeds *verification* but not the
     *authoring* of this missing theory, so it does not change the scale. Recorded as the precise
     wall; the `#E[n]=n²` structure is already landed for `n ∈ {2,3,5,7}` without it.
+    - **Substrate progress against step (i), and where the wall now sits (2026-07-18).** Two
+      curve-generic substrate bricks landed: the coordinate-ring translation `φₙ·ΨSqₙ = Φₙ·ψₙ²`
+      (`MultiplicationXCoordinateRing.lean`) and the doubling divisibility `ψₙ ∣ ψ₂ₙ`
+      (`DivisionPolynomialDoubling.lean`, the explicit `ψ₂ₙ/ψₙ = complEDS₂ …`) — the latter is
+      exactly the "as a start" prerequisite Mathlib's own `ω`-`TODO` names. With it, the remaining
+      obstruction to *defining* `ωₙ := (ψ₂ₙ/ψₙ − ψₙ(a₁φₙ+a₃ψₙ²))/2` is pinned to the single
+      `÷2` well-definedness: `2 ∣ (ψ₂ₙ/ψₙ − ψₙ(a₁φₙ+a₃ψₙ²))` in `R[X][Y]`. **This obstruction is
+      genuine only in characteristic `2`** — where `2` is invertible (any char `≠ 2` field, so in
+      particular secp256k1's `𝔽_p`) it is vacuous and `ωₙ` is immediately definable. In *full*
+      generality it needs the char-`0` universal ring `ℤ[A₁..A₆][X][Y]` + specialization morphism,
+      which **Mathlib does not provide** (no `WeierstrassCurve.Universal`; verified against the
+      pinned tree). But even a defined `ωₙ` proves nothing until step (iii): there is still **no
+      `Point`↔`ω/ψ` connection**, so `ωₙ` would be a bare polynomial with no `y([n]P)` meaning. The
+      true wall is thus unchanged — step (iii), the coordinate `[n]`-map induction — and it does not
+      shrink by defining `ωₙ` alone. No thin `ωₙ`-definition brick is minted for that reason.
   - **Weil reciprocity `f(div g) = g(div f)` (ladder rung W4-1) — frozen no-go
     (2026-07-18).** The evaluation half of the Weil pairing is landed at the
     function-field level (W3e-1 divisor evaluation, W3e-2 representative-scaling),

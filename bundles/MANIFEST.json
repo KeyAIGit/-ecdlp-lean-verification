@@ -17,7 +17,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 14789
+        "bytes": 15515
       },
       {
         "path": "data/stats.json",
@@ -43,7 +43,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 14789
+        "bytes": 15515
       },
       {
         "path": "data/stats.json",
@@ -79,7 +79,7 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 25071
+        "bytes": 26639
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -111,7 +111,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 14789
+        "bytes": 15515
       },
       {
         "path": "data/stats.json",
@@ -147,7 +147,7 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 25071
+        "bytes": 26639
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
