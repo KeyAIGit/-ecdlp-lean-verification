@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 893,
-  "distinct_qualified_names": 685,
-  "verified_md_citations": 225,
+  "declaration_count": 894,
+  "distinct_qualified_names": 686,
+  "verified_md_citations": 226,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -1757,6 +1757,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/MultiplicationFormula.lean",
       "line": 59,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_double_y_eq_": {
+      "name": "secp256k1_double_y_eq_",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/MultiplicationYFormula.lean",
+      "line": 41,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_embedding_degree_gt_100": {
