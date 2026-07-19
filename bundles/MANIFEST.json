@@ -73,7 +73,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 139429
+        "bytes": 139556
       },
       {
         "path": "BARRIERS.md",
@@ -141,7 +141,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 139429
+        "bytes": 139556
       },
       {
         "path": "BARRIERS.md",
