@@ -202,6 +202,21 @@ machinery Mathlib omits. Attempt one as a *focused, possibly-non-closing* grind 
 step is a first-class barrier), not as a one-cycle brick. If neither is attempted a given cycle,
 prefer a genuinely independent item off the `AUTONOMY.md` priority ladder over a thin N7 filler.
 
+**S3a base fully landed for n=2 and n=3 (2026-07-19, PRs #204/#205/#206).** The concrete
+`y`-coordinate + Point-level layer is done at small `n`: `y(2P)=(x⁶+140x³−392)/(2y)³`
+(`MultiplicationYFormula`), **Point-level** `2•P=(Φ₂/Ψ₂Sq, ω₂/(2y)³)` on the actual group
+(`DoublingPointFormula`), and `y(3P)=ω₃/(3x⁴+84x)³` (`MultiplicationYTripleFormula`). The computed
+`y`-coordinate ("omega") numerators: **ω₂ = x⁶+140x³−392** (even `n`, no `y` factor),
+**ω₃ = y·(x¹²+1540x⁹−87024x⁶−109760x³−1229312)** (odd `n`, `y` factor). Note `FiveTorsionBridge`
+already carries the `s₂/s₃ → Point`-level `3•P=some(X3,Y3)` connection (`hsl3s` == the y-triple's
+`hℓ3`), so per-`n` Point-level assembly is now mechanical. **Decision: stop the fixed-`n` grind
+(breadth) here** — more per-`n` formulas do not approach the uniform statement and risk ledger
+inflation. **Next is depth:** define the general secp256k1 `ωₙ` bivariately (via the standard
+recurrence `ωₙ=(ψ(n+2)ψ(n−1)²−ψ(n−2)ψ(n+1)²)/(4y)` over Mathlib's `W.ψ`, `4y` a unit in `𝔽_p`) and
+prove it reproduces the landed `ω₂`, `ω₃` (evalEval anchors) — grounding the general object in two
+independent kernel-verified derivations — then the uniform `y(nP)=ωₙ/ψₙ³` and the x-induction (S3b).
+Full DAG + anchors recorded in `targets/n7_uniform_secp256k1_x.json`.
+
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
 Why it matters: The scoping half of this task is **delivered** (2026-07-16): the
