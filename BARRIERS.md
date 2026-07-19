@@ -272,7 +272,9 @@ exact `Θ` statements.
       both conjuncts) is now server-verified `sorry`-free — base leaves `n=0,1,2,3` and the `n=4`
       x-conjunct are done. `even_x_algebra` reduces to two univariate division-polynomial
       *doubling* identities (`ΨSq(2k)=4B(A³+7B³)`, `Φ(2k)=A⁴−56AB³` with `A=Φ(k),B=ΨSq(k)`) — both
-      **true** (checked `k=1..5`), but a deeper audit found they are **not a finite certificate**:
+      **true** (reproducibly CAS-certified `k=1..8`, degrees to 255/256, in
+      `scripts/certs/division_doubling_secp.py` → `CERT_OK`), but a deeper audit found they are
+      **not a finite certificate**:
       substituting `normEDS_even/odd`+Somos-4 leaves a remainder in `w(k±2)²` whose pinning cascades
       outward unboundedly, so closing them needs a **strong induction on `k`** over the elliptic net
       (the `NormEDSSomos4.lean` technique, ~200 lines) — a real EDS sub-development, not a `ring` fill. **Correction to the "clean reduction" above:** an
