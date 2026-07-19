@@ -30,7 +30,7 @@ theorem secp256k1_omega_recurrence_two (x y : ZMod Secp256k1.p) :
       - (secp256k1.ψ 0).evalEval x y * (secp256k1.ψ 3).evalEval x y ^ 2
     = 4 * y * (x ^ 6 + 140 * x ^ 3 - 392) := by
   rw [secp256k1.ψ_four, secp256k1.ψ_one, secp256k1.ψ_zero, secp256k1.ψ_three]
-  simp only [evalEval_mul, evalEval_C, evalEval_one, evalEval_zero, zero_mul, sub_zero, mul_one]
+  simp only [evalEval_mul, evalEval_C, evalEval_one, evalEval_zero, zero_mul, sub_zero]
   rw [secp256k1_psi2_evalEval, secp256k1_preΨ₄_eval]
   ring
 
