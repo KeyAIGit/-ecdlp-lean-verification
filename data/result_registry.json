@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 894,
-  "distinct_qualified_names": 686,
-  "verified_md_citations": 226,
+  "declaration_count": 895,
+  "distinct_qualified_names": 687,
+  "verified_md_citations": 227,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -2669,6 +2669,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/TwistSecurity.lean",
       "line": 244,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_two_nsmul_coords": {
+      "name": "secp256k1_two_nsmul_coords",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DoublingPointFormula.lean",
+      "line": 34,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff": {

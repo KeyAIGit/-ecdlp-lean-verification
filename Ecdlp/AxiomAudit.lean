@@ -278,3 +278,6 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 
 -- N7-uniform S3a base: y-coordinate doubling y(2P)=ω₂/(2y)³ for secp256k1
 #print axioms Ecdlp.Curve.secp256k1_double_y_eq_ω₂
+
+-- N7-uniform S3a: Point-level doubling 2•P=(Φ₂/Ψ₂Sq, ω₂/(2y)³) for secp256k1
+#print axioms Ecdlp.Curve.secp256k1_two_nsmul_coords
