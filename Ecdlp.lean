@@ -156,3 +156,5 @@ import Ecdlp.Proved.DivisionPolynomialEllSequence
 import Ecdlp.Proved.OmegaRecurrenceAnchors
 import Ecdlp.Proved.NsmulCoordsBaseOne
 import Ecdlp.Proved.NsmulCoordsBaseTwo
+import Ecdlp.Proved.QuadrupleMultiplicationYFormula
+import Ecdlp.Proved.NsmulCoordsBaseFour
