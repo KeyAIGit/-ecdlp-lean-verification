@@ -61,6 +61,8 @@ import Ecdlp.Proved.NsmulCoordsBaseOne
 import Ecdlp.Proved.NsmulCoordsBaseTwo
 import Ecdlp.Proved.OmegaRecurrenceAnchors
 import Ecdlp.Proved.QuadrupleMultiplicationFormula
+import Ecdlp.Proved.TripleMultiplicationFormula
+import Ecdlp.Proved.MultiplicationYTripleFormula
 import Ecdlp.Proved.FiveTorsionBridge
 
 namespace Ecdlp.Curve.N7Uniform
@@ -149,7 +151,127 @@ theorem carrier_two (hc : y ^ 2 = x ^ 3 + 7) : Carrier x y h 2 := by
 y-conjunct, with the `ΨSq_three`/`ψ`-index normalisation. `3•P = O` is excluded by the affine
 hypothesis on `3•P`. -/
 theorem carrier_three (hc : y ^ 2 = x ^ 3 + 7) : Carrier x y h 3 := by
-  sorry
+  intro X Y h' hn
+  have hnegY : secp256k1.toAffine.negY x y = -y := negY_eq x y
+  by_cases hy0 : y = secp256k1.toAffine.negY x y
+  · -- 2-torsion branch: `y = negY x y ⟹ y = 0`, so `3•P = P`.
+    have h2 : (2 : ZMod Secp256k1.p) ≠ 0 := by
+      have hnd : ¬ Secp256k1.p ∣ 2 := by decide
+      have h2n : ((2 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by
+        rw [Ne, ZMod.natCast_eq_zero_iff]; exact hnd
+      simpa using h2n
+    have hy00 : y = 0 := by
+      have hyy : y = -y := by rw [← hnegY]; exact hy0
+      have h2y : (2 : ZMod Secp256k1.p) * y = 0 := by linear_combination hyy
+      rcases mul_eq_zero.mp h2y with hcc | hcc
+      · exact absurd hcc h2
+      · exact hcc
+    have h2P : (2 : ℕ) • Point.some x y h = 0 := by
+      rw [two_nsmul]; exact Point.add_self_of_Y_eq hy0
+    have h3ne0 : (3 : ℕ) • Point.some x y h ≠ 0 := by
+      rw [show (3 : ℕ) = 1 + 2 from rfl, add_nsmul, one_nsmul, h2P, add_zero]
+      exact Point.some_ne_zero h
+    have hΨ3ne : 3 * x ^ 4 + 84 * x ≠ 0 := fun hc0 =>
+      h3ne0 ((secp256k1_three_nsmul_eq_zero_iff x y h).mpr
+        (by rw [secp256k1_psi3_evalEval]; exact hc0))
+    have hx3 : x ^ 3 = -7 := by rw [hy00] at hc; linear_combination -hc
+    rw [show (3 : ℕ) = 1 + 2 from rfl, add_nsmul, one_nsmul, h2P, add_zero,
+        Point.some.injEq] at hn
+    obtain ⟨hXe, hYe⟩ := hn
+    refine ⟨?_, ?_⟩
+    · -- x-conjunct: `X = x = Φ₃(x)/ΨSq₃(x)` using `x³ = -7`.
+      rw [← hXe]
+      have hden' : (9 * x ^ 8 + 504 * x ^ 5 + 7056 * x ^ 2 : ZMod Secp256k1.p) ≠ 0 := by
+        have heq : (9 * x ^ 8 + 504 * x ^ 5 + 7056 * x ^ 2 : ZMod Secp256k1.p)
+            = (3 * x ^ 4 + 84 * x) ^ 2 := by ring
+        rw [heq]; exact pow_ne_zero 2 hΨ3ne
+      have hgoal3 : x = (secp256k1.Φ (3 : ℤ)).eval x / (secp256k1.ΨSq (3 : ℤ)).eval x := by
+        rw [secp256k1_Φ₃_eval, secp256k1_ΨSq₃_eval, eq_div_iff hden']
+        linear_combination (8 * x ^ 6 + 1120 * x ^ 3 - 3136) * hx3
+      exact_mod_cast hgoal3
+    · -- y-conjunct: both sides vanish since `Y = y = 0`.
+      rw [show ((3 : ℕ) : ℤ) = 3 by norm_num, show (3 : ℤ) + 2 = 5 by norm_num,
+          show (3 : ℤ) - 1 = 2 by norm_num, show (3 : ℤ) - 2 = 1 by norm_num,
+          show (3 : ℤ) + 1 = 4 by norm_num]
+      rw [← hYe, secp256k1_omega_recurrence_three x y hc, hy00]
+      ring
+  · -- Main branch: `y ≠ 0`, `3•P ≠ 0`. Reconstruct the FiveTorsionBridge `3•P` assembly.
+    have hy : y ≠ 0 := by
+      intro h0; exact hy0 (by rw [hnegY, h0]; ring)
+    have h3ne0 : (3 : ℕ) • Point.some x y h ≠ 0 := by rw [hn]; exact Point.some_ne_zero h'
+    have hΨ3ne : 3 * x ^ 4 + 84 * x ≠ 0 := fun hc0 =>
+      h3ne0 ((secp256k1_three_nsmul_eq_zero_iff x y h).mpr
+        (by rw [secp256k1_psi3_evalEval]; exact hc0))
+    have hYd : y - secp256k1.toAffine.negY x y ≠ 0 := sub_ne_zero.mpr hy0
+    set s2 := secp256k1.toAffine.slope x x y y with hs2def
+    set X2 := secp256k1.toAffine.addX x x s2 with hX2def
+    set Y2 := secp256k1.toAffine.addY x x y s2 with hY2def
+    have hsl2 : s2 * (2 * y) = 3 * x ^ 2 := by
+      rw [hs2def, slope_of_Y_ne rfl hy0, div_mul_eq_mul_div, div_eq_iff hYd]
+      simp only [secp256k1, WeierstrassCurve.Affine.negY]
+      ring
+    have hsl2v : 2 * y * s2 = 3 * x ^ 2 := by linear_combination hsl2
+    have hId : (s2 ^ 2 - 3 * x) * (4 * y ^ 2) = -(3 * x ^ 4 + 84 * x) := by
+      linear_combination (2 * s2 * y + 3 * x ^ 2) * hsl2 + (-12 * x) * hc
+    have hd : s2 ^ 2 - 3 * x ≠ 0 := by
+      intro hcc
+      apply hΨ3ne
+      have hh := hId
+      rw [hcc, zero_mul] at hh
+      linear_combination hh
+    have hx2val : X2 = s2 ^ 2 - 2 * x := by
+      rw [hX2def]; simp only [WeierstrassCurve.Affine.addX, secp256k1]; ring
+    have hx2x : X2 - x = s2 ^ 2 - 3 * x := by rw [hx2val]; ring
+    have hx2ne : X2 ≠ x := by rw [← sub_ne_zero, hx2x]; exact hd
+    have hy2val : Y2 = -(s2 * (s2 ^ 2 - 3 * x) + y) := by
+      rw [hY2def]
+      simp only [WeierstrassCurve.Affine.addY, WeierstrassCurve.Affine.negAddY,
+        WeierstrassCurve.Affine.negY, WeierstrassCurve.Affine.addX, secp256k1]
+      ring
+    have hns2 : secp256k1.toAffine.Nonsingular X2 Y2 :=
+      nonsingular_add h h (fun hxy => hy0 hxy.2)
+    have hP2 : (2 : ℕ) • (Point.some x y h) = Point.some X2 Y2 hns2 := by
+      rw [two_nsmul]; exact Point.add_self_of_Y_ne hy0
+    set s3 := secp256k1.toAffine.slope X2 x Y2 y with hs3def
+    set X3 := secp256k1.toAffine.addX X2 x s3 with hX3def
+    set Y3 := secp256k1.toAffine.addY X2 x Y2 s3 with hY3def
+    have hx3val : X3 = s3 ^ 2 - (s2 ^ 2 - 2 * x) - x := by
+      rw [hX3def]
+      simp only [WeierstrassCurve.Affine.addX, secp256k1]
+      rw [hx2val]; ring
+    have hns3 : secp256k1.toAffine.Nonsingular X3 Y3 :=
+      nonsingular_add hns2 h (fun hxy => hx2ne hxy.1)
+    have hP3 : (3 : ℕ) • (Point.some x y h) = Point.some X3 Y3 hns3 := by
+      rw [show (3 : ℕ) = 2 + 1 from rfl, add_nsmul, one_nsmul, hP2]
+      exact Point.add_some (fun hxy => hx2ne hxy.1)
+    have hsl3s : s3 * (X2 - x) = Y2 - y := by
+      rw [hs3def, slope_of_X_ne hx2ne]
+      exact div_mul_cancel₀ _ (sub_ne_zero.mpr hx2ne)
+    have hℓ3 : (s2 ^ 2 - 3 * x) * s3 = -(s2 * (s2 ^ 2 - 3 * x) + y) - y := by
+      have hstep := hsl3s
+      rw [hy2val, hx2x] at hstep
+      linear_combination hstep
+    have hY3val : Y3 = s3 * (s2 ^ 2 - s3 ^ 2) - y := by
+      rw [hY3def]
+      simp only [WeierstrassCurve.Affine.addY, WeierstrassCurve.Affine.negAddY,
+        WeierstrassCurve.Affine.negY, WeierstrassCurve.Affine.addX, secp256k1]
+      rw [hx2val, hy2val]
+      linear_combination hℓ3
+    rw [hP3, Point.some.injEq] at hn
+    obtain ⟨hXe, hYe⟩ := hn
+    refine ⟨?_, ?_⟩
+    · -- x-conjunct via `secp256k1_triple_x_eq_Φ₃_div_ΨSq₃`.
+      rw [← hXe, hx3val]
+      exact_mod_cast secp256k1_triple_x_eq_Φ₃_div_ΨSq₃ x y s2 s3 hy hc hΨ3ne hd hsl2v hℓ3
+    · -- y-conjunct via `secp256k1_triple_y_eq_ω₃` + `secp256k1_omega_recurrence_three`.
+      rw [show ((3 : ℕ) : ℤ) = 3 by norm_num, show (3 : ℤ) + 2 = 5 by norm_num,
+          show (3 : ℤ) - 1 = 2 by norm_num, show (3 : ℤ) - 2 = 1 by norm_num,
+          show (3 : ℤ) + 1 = 4 by norm_num]
+      rw [← hYe, hY3val, secp256k1_psi3_evalEval,
+          secp256k1_omega_recurrence_three x y hc,
+          secp256k1_triple_y_eq_ω₃ x y s2 s3 hy hc hΨ3ne hd hsl2v hℓ3]
+      rw [div_mul_eq_mul_div, div_mul_eq_mul_div, div_eq_iff (pow_ne_zero 3 hΨ3ne)]
+      ring
 
 /-- Leaf `n = 4` (ω-free). x-conjunct CLOSED from the landed Point-level quadruple lemma; the
 y-conjunct is the residual ω→ψ bridge at index 4. -/
