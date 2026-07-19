@@ -217,6 +217,31 @@ prove it reproduces the landed `ω₂`, `ω₃` (evalEval anchors) — grounding
 independent kernel-verified derivations — then the uniform `y(nP)=ωₙ/ψₙ³` and the x-induction (S3b).
 Full DAG + anchors recorded in `targets/n7_uniform_secp256k1_x.json`.
 
+**ω-anchors + `n=4` base leaf fully landed (2026-07-19, PRs #209/#210).** The general ωₙ
+grounding is done for the anchors: `secp256k1_omega_recurrence_{two,three,four}`
+(`OmegaRecurrenceAnchors.lean`) reproduce `ω₂,ω₃,ω₄` off Mathlib's `ψ` (the `n=4` case needed the
+fresh even-index brick `secp256k1_psi6_evalEval`). On top, the **`n=4` (even) base rung of the joint
+ω-free carrier is fully closed both coordinates**: `secp256k1_quadruple_y`
+(`QuadrupleMultiplicationYFormula.lean`) proves the missing `y(4P)=ω₄/ψ₄³` (via `quad_y_core`,
+doubling-of-doubling + three CAS `linear_combination` certs, assembled by the exact identity
+`(2Y2)³·4096y¹²=ψ₄³`), and `secp256k1_four_nsmul_coords_ωfree` (`NsmulCoordsBaseFour.lean`) reshapes
+it into the carrier format — **closing `carrier_four` (both conjuncts) in the induction stem**
+(server-confirmed sorry-free). Base leaves `n=0,1,2,3,4` of `normEDSRec'` are now all closed. One
+new honest ledger row; count 289 rows / 250 distinct.
+
+**Sharpened frontier (what actually remains for N7-uniform, no clean single-cycle rung):**
+the residual walls all live inside the open stem `Ecdlp/Targets/n7_uniform_carrier_induction.lean`
+and are interdependent (not a CI-gated merge unit on their own):
+(1) **uniform torsion bridge** `nsmul_eq_zero_iff_psi_evalEval_zero` (`n•P=O ⟺ ψₙ(P)=0`) — the one
+genuine missing-Mathlib `Point→ψ` map, the true conceptual wall;
+(2) **three under-hypothesized step lemmas** (`odd_x_algebra`, `even_y_algebra`, `odd_y_algebra`)
+needing restatement to thread the `Carrier` y-coupling (effort, not theory) + three `odd_step_group`
+degenerate branches;
+(3) `even_x_algebra` — CAS-validated but compute-blocked (Groebner cofactor generation infeasible
+here), reduced to CORE-I/CORE-II via `normEDSRec'` (`notes/N7_EVEN_X_REDUCTION.md`).
+Next real advance = a **multi-cycle focused grind** on (1) or (2) with server pre-verification;
+not a one-cycle brick. Do not mint per-`n` filler.
+
 Kind: theorem | research
 Hypothesis: `H2_GLV_SUBGROUP_VS_WHOLE_GROUP`
 Why it matters: The scoping half of this task is **delivered** (2026-07-16): the
