@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every theorem below is kernel-checked (no `sorry`, no axioms).
 
-**283 theorem nodes** · **6 barriers** · **426 edges**
+**283 theorem nodes** · **6 barriers** · **427 edges**
 
 > *Theorem-node count is the graph's own view (unique parsed ledger entries) and may differ by a row or two from the canonical ledger figure — the single source of truth for headline counts is `STATUS.md`.*
 

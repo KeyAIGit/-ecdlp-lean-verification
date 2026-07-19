@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 283,
     "barriers": 6,
-    "edges": 426,
+    "edges": 427,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -5217,6 +5217,11 @@
     {
       "from": "Ecdlp.Proved.WeilMillerEval",
       "to": "Ecdlp.Proved.WeilDivisorEval",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Targets.n7_uniform_secp256k1_x",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
     },
     {
