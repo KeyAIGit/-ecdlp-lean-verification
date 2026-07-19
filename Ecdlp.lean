@@ -146,3 +146,4 @@ import Ecdlp.Proved.WeilDivisorRepIndep
 import Ecdlp.Proved.WeilMillerEval
 import Ecdlp.Proved.MultiplicationXCoordinateRing
 import Ecdlp.Proved.DivisionPolynomialDoubling
+import Ecdlp.Proved.MultiplicationYFormula

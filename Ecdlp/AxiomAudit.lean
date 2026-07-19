@@ -275,3 +275,6 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 -- N7-uniform S2 brick: division-polynomial doubling ψₙ∣ψ₂ₙ (ω prerequisite)
 #print axioms Ecdlp.Curve.ψ_two_mul
 #print axioms Ecdlp.Curve.ψ_dvd_ψ_two_mul
+
+-- N7-uniform S3a base: y-coordinate doubling y(2P)=ω₂/(2y)³ for secp256k1
+#print axioms Ecdlp.Curve.secp256k1_double_y_eq_ω₂
