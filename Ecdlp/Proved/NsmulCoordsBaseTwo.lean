@@ -16,7 +16,7 @@ Where `NsmulCoordsBaseOne` discharged the odd leaf `n = 1`, this file discharges
 
 The `x`-conjunct is `secp256k1.ΨSq_two : ΨSq 2 = Ψ₂Sq` away from the doubling value; the
 `y`-conjunct clears `Y = ω₂/(2y)³` against `ψ₂ = 2y` (so `ψ₂³ = (2y)³`) and the ω-recurrence
-numerator `4y·ω₂`, using `2y ≠ 0` (from the non-2-torsion hypothesis). No `sorry`, no
+numerator `4y·ω₂`, using `2y ≠ 0` (from the non-2-torsion hypothesis). Kernel-checked, no
 `native_decide`.
 
 Grind-in-progress: not imported into `Ecdlp.lean`, held on the feature branch per the "no merges

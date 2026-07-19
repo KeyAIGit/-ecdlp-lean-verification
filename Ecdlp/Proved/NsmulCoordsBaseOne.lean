@@ -10,7 +10,7 @@ via the EDS omega-relation `4y·ωₙ = ψ(n+2)ψ(n-1)² − ψ(n-2)ψ(n+1)²` u
 
 This file discharges the **`n = 1` base rung** of that carrier — the first leaf `normEDSRec'`
 demands — validating the ω-free `y`-conjunct format before the wall (`step_algebra`) is attacked.
-Fully closeable with existing API; no `sorry`, no `native_decide`.
+Fully closed with existing API (kernel-checked); no `native_decide`.
 
 Grind-in-progress: not imported into `Ecdlp.lean`, held on the feature branch per the "no merges
 until the wall cracks or a final barrier" directive.
