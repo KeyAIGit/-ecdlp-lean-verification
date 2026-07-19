@@ -249,7 +249,7 @@ theorem even_step_group (k : ℕ) (hk : Carrier x y h k) : Carrier x y h (2 * k)
           k • Point.some x y h = Point.some Xk Yk hns := by
       cases hq : k • Point.some x y h with
       | zero => exact absurd hq hkne
-      | some Xk Yk hns => exact ⟨Xk, Yk, hns, hq⟩
+      | some Xk Yk hns => exact ⟨Xk, Yk, hns, rfl⟩
     obtain ⟨hXk, _⟩ := hk Xk Yk hk_ns hkP
     have hckk : Yk ^ 2 = Xk ^ 3 + 7 := curve_of_nonsingular hk_ns
     have hden : (secp256k1.ΨSq (k : ℤ)).eval x ≠ 0 := psiSq_ne_zero_of_nsmul_some hkP
@@ -295,13 +295,13 @@ theorem odd_step_group (k : ℕ) (hk : Carrier x y h k) (hk1 : Carrier x y h (k 
             k • Point.some x y h = Point.some Xk Yk hns := by
         cases hq : k • Point.some x y h with
         | zero => exact absurd hq hkne
-        | some Xk Yk hns => exact ⟨Xk, Yk, hns, hq⟩
+        | some Xk Yk hns => exact ⟨Xk, Yk, hns, rfl⟩
       obtain ⟨Xk1, Yk1, hk1_ns, hk1P⟩ :
           ∃ Xk1 Yk1, ∃ hns : secp256k1.toAffine.Nonsingular Xk1 Yk1,
             (k + 1) • Point.some x y h = Point.some Xk1 Yk1 hns := by
         cases hq : (k + 1) • Point.some x y h with
         | zero => exact absurd hq hk1ne
-        | some Xk1 Yk1 hns => exact ⟨Xk1, Yk1, hns, hq⟩
+        | some Xk1 Yk1 hns => exact ⟨Xk1, Yk1, hns, rfl⟩
       obtain ⟨hXk, _⟩ := hk Xk Yk hk_ns hkP
       obtain ⟨hXk1, _⟩ := hk1 Xk1 Yk1 hk1_ns hk1P
       have hckk : Yk ^ 2 = Xk ^ 3 + 7 := curve_of_nonsingular hk_ns
