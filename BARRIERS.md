@@ -277,7 +277,20 @@ exact `Θ` statements.
       **not a finite certificate**:
       substituting `normEDS_even/odd`+Somos-4 leaves a remainder in `w(k±2)²` whose pinning cascades
       outward unboundedly, so closing them needs a **strong induction on `k`** over the elliptic net
-      (the `NormEDSSomos4.lean` technique, ~200 lines) — a real EDS sub-development, not a `ring` fill. **Correction to the "clean reduction" above:** an
+      (the `NormEDSSomos4.lean` technique, ~200 lines) — a real EDS sub-development, not a `ring` fill.
+      **Reduction fully mapped + CAS-validated (2026-07-19, ultracode `n7-even-x-doubling`).** `even_x`
+      now reduces to two curve-generic scalar cores over `w=normEDS β c d` — CORE-I
+      `(w(k−1)²w(k+2)−w(k−2)w(k+1)²)² = 4β²(A³+7B³)` and CORE-II
+      `w(2k+1)w(2k−1) = 3A⁴+4PA³+84AB³+28PB³` — each provable by `WeierstrassCurve.normEDSRec'` with the
+      *same seven-case skeleton and index window as the landed `normEDS_somos4`*. Both cores + both
+      targets + all 10 base cases (in the curve ideal, remainder 0) are CAS-validated end-to-end
+      (`scripts/certs/core_check.py`, 804 tests True; full plan in `notes/N7_EVEN_X_REDUCTION.md`). The
+      residual is now purely mechanical: 4 `linear_combination` step certificates (coreI/coreII ×
+      even/odd) whose ~20–40-term cofactor bundles must be machine-generated (sympy Groebner/linear-solve)
+      and kernel-judged, exactly like `somos4_odd_step`/`somos4_even_step_scaled`. No mathematical unknown
+      remains; the closure is a multi-cycle CAS+kernel effort (heavier than the original `NormEDSSomos4`),
+      bottlenecked without a local Lean toolchain to iterate the induction assembly.
+      **Correction to the "clean reduction" above:** an
       adversarial audit found that three of the abstracted step-lemmas — `odd_x_algebra`,
       `even_y_algebra`, `odd_y_algebra` — are *under-hypothesized* (they leave the `y`-sign of the
       intermediate points free, so the universally-quantified forms are literally false: flipping
@@ -288,6 +301,15 @@ exact `Θ` statements.
       So the residual is: (1) the two `even_x` univariate doubling identities, (2) restate+prove the
       three coupled step-identities, (3) the torsion bridge `nsmul_eq_zero_iff_psi_evalEval_zero`
       (the one genuine missing-Mathlib `Point→ψ` direction), (4) the `carrier_four` y-leaf.
+    - **`carrier_four`-y sharpened (2026-07-19).** Residual (4) is now down to a single missing
+      certificate. The `n=4` ω-anchor is landed and server-verified: `secp256k1_omega_recurrence_four`
+      (`OmegaRecurrenceAnchors.lean`) proves `ψ₆ψ₃²−ψ₂ψ₅² = 4y·ω₄` with the degree-24
+      `ω₄`, built on the freshly-derived even-index brick `secp256k1_psi6_evalEval`
+      (`ψ 6 = 2y·(3x¹⁶+4704x¹³−131712x¹⁰−7639296x⁷−12907776x⁴−103262208x)`, from `ψ_even 3` after
+      cancelling the `ψ₂=2y` factor). Both close by `ring` after the evalEval bricks; CAS-validated
+      (on-curve `(A,B)` representation) and kernel-checked (no `native_decide`). The carrier's y-coupling
+      RHS is thereby discharged; the one remaining piece for the leaf is a `y(4P)=ω₄/ψ₄³` cert (the
+      doubling² y-formula, the `n=4` analogue of `DoublingPointFormula`/`MultiplicationYTripleFormula`).
   - **Weil reciprocity `f(div g) = g(div f)` (ladder rung W4-1) — frozen no-go
     (2026-07-18).** The evaluation half of the Weil pairing is landed at the
     function-field level (W3e-1 divisor evaluation, W3e-2 representative-scaling),

@@ -293,9 +293,12 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.φ_ψ_diff
 
 -- N7-uniform ω-recurrence anchors: 4y·ωₙ = ψ(n+2)ψ(n−1)²−ψ(n−2)ψ(n+1)² reproduces the
--- group-law-derived ω₂, ω₃ on a secp256k1 point (n = 2, 3)
+-- group-law-derived ω₂, ω₃ on a secp256k1 point (n = 2, 3), extended to n = 4 via the
+-- recurrence-derived even-index ψ₆ brick
 #print axioms Ecdlp.Curve.secp256k1_omega_recurrence_two
 #print axioms Ecdlp.Curve.secp256k1_omega_recurrence_three
+#print axioms Ecdlp.Curve.secp256k1_psi6_evalEval
+#print axioms Ecdlp.Curve.secp256k1_omega_recurrence_four
 
 -- N7-uniform base rungs of the joint ω-free (x,y) carrier for secp256k1 (n = 1, 2)
 #print axioms Ecdlp.Curve.secp256k1_one_nsmul_coords

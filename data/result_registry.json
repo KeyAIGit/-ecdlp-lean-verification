@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 900,
-  "distinct_qualified_names": 692,
+  "declaration_count": 902,
+  "distinct_qualified_names": 694,
   "verified_md_citations": 229,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -2263,12 +2263,20 @@
       "line": 26,
       "occurrences": 1
     },
+    "Ecdlp.Curve.secp256k1_omega_recurrence_four": {
+      "name": "secp256k1_omega_recurrence_four",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/OmegaRecurrenceAnchors.lean",
+      "line": 80,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.secp256k1_omega_recurrence_three": {
       "name": "secp256k1_omega_recurrence_three",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/OmegaRecurrenceAnchors.lean",
-      "line": 40,
+      "line": 44,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_omega_recurrence_two": {
@@ -2276,7 +2284,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/OmegaRecurrenceAnchors.lean",
-      "line": 28,
+      "line": 32,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_one_nsmul_coords": {
@@ -2381,6 +2389,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FiveTorsionBridge.lean",
       "line": 44,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_psi6_evalEval": {
+      "name": "secp256k1_psi6_evalEval",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/OmegaRecurrenceAnchors.lean",
+      "line": 60,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_psi7_evalEval": {

@@ -50,8 +50,11 @@ Named residual walls (adversarial ultracode audit, 2026-07-19 — honest current
   needs these three **restated** to thread the `Carrier` y-coupling into the signature (or inlined
   into `even_step_group`/`odd_step_group`, where the IH supplies the coupling). Refactor, then the
   x-part reduces via `φ_ψ_diff` at `(k+1,k)` and the y-part via the ω-recurrence. Not a Mathlib gap.
-* `carrier_four` **y-conjunct** — remaining base leaf (needs a `y(4P)` cert + an `n=4` ω-anchor,
-  as `carrier_two`/`carrier_three` did at `n=2,3`). Mechanical.
+* `carrier_four` **y-conjunct** — remaining base leaf. The `n=4` ω-anchor is now landed
+  (`secp256k1_omega_recurrence_four` in `OmegaRecurrenceAnchors`, giving `ψ₆ψ₃²−ψ₂ψ₅² = 4y·ω₄`
+  off the freshly-derived `secp256k1_psi6_evalEval`), so the RHS of the carrier's y-coupling is
+  discharged; the one residual is a `y(4P)=ω₄/ψ₄³` cert (the doubling² y-formula, analogue of
+  `DoublingPointFormula`/`MultiplicationYTripleFormula` at `n=2,3`). Mechanical.
 * `nsmul_eq_zero_iff_psi_evalEval_zero`, `psiSq_ne_zero_of_nsmul_some` — the uniform
   non-degeneracy / torsion bridge (`n•P = O ⟺ ψₙ(P) = 0`). `psiSq_ne_zero` reduces to it via
   `eval_ΨSq_eq_normEDS_sq`; the `Point → ψ` direction is the genuinely missing Mathlib map (the
