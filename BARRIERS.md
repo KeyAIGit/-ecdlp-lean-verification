@@ -268,6 +268,21 @@ exact `Θ` statements.
       transports `ΨSqₙ.eval x`, `Φₙ.eval x` to the scalar `wₙ = ψₙ.evalEval x y`, turning each x-wall
       into a scalar field identity provable from `φ_ψ_diff` — attackable, not upstream-grade. Held on
       branch `claude/admiring-darwin-uouep1` (open stem, `sorry`s, excluded from the gate).
+    - **Wall-crack pass + honest correction (2026-07-19).** `carrier_three` (the `n=3` base leaf,
+      both conjuncts) is now server-verified `sorry`-free — base leaves `n=0,1,2,3` and the `n=4`
+      x-conjunct are done. `even_x_algebra` is fully reduced to two univariate division-polynomial
+      *doubling* identities (`ΨSq(2k)=4B(A³+7B³)`, `Φ(2k)=A⁴−56AB³` with `A=Φ(k),B=ΨSq(k)`), provable
+      via the eval bridge + `normEDS_isEllSequence`. **Correction to the "clean reduction" above:** an
+      adversarial audit found that three of the abstracted step-lemmas — `odd_x_algebra`,
+      `even_y_algebra`, `odd_y_algebra` — are *under-hypothesized* (they leave the `y`-sign of the
+      intermediate points free, so the universally-quantified forms are literally false: flipping
+      `Yk↦−Yk` realises `(−kP)+(k+1)P=P`). The induction is still sound — every instance the
+      `even/odd_step_group` callers use is a genuine consecutive-multiple pair where the identity
+      holds — but completing the proof requires these three lemmas *restated* to thread the `Carrier`
+      y-coupling through their signatures (or inlined into the step-group), not merely a `sorry` fill.
+      So the residual is: (1) the two `even_x` univariate doubling identities, (2) restate+prove the
+      three coupled step-identities, (3) the torsion bridge `nsmul_eq_zero_iff_psi_evalEval_zero`
+      (the one genuine missing-Mathlib `Point→ψ` direction), (4) the `carrier_four` y-leaf.
   - **Weil reciprocity `f(div g) = g(div f)` (ladder rung W4-1) — frozen no-go
     (2026-07-18).** The evaluation half of the Weil pairing is landed at the
     function-field level (W3e-1 divisor evaluation, W3e-2 representative-scaling),

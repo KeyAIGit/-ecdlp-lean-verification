@@ -18,6 +18,9 @@ Fully closed (no `sorry`):
 * `carrier_one`                — delegates verbatim to landed `secp256k1_one_nsmul_coords`.
 * `carrier_two`                — delegates to landed `secp256k1_two_nsmul_coords_ωfree`
                                  (`NsmulCoordsBaseTwo.lean`), non-2-torsion from affineness.
+* `carrier_three`              — **server-verified (2026-07-19)**: 2-torsion (`y=0`) branch +
+                                 FiveTorsionBridge `3•P` reconstruction, then landed triple x/y +
+                                 `secp256k1_omega_recurrence_three`. Both conjuncts closed.
 * `carrier_four` **x-conjunct** — closed from the landed Point-level
                                  `secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄` (`h` passed explicitly).
 * `even_step_group`, `odd_step_group` (generic secant branch) — the **group-law plumbing**:
@@ -29,30 +32,39 @@ Fully closed (no `sorry`):
 * `secp256k1_nsmul_coords`      — the capstone: `normEDSRec'` assembly, index-correct
   (even `2*(m+3)` via `k=m+3`; odd `2*(m+2)+1` via `k=m+2, k+1=m+3`), `sorry`-free modulo walls.
 
-Named residual walls (each a standalone lemma stating exactly what it needs):
-* `even_x_algebra`, `odd_x_algebra` — the per-step rational identity that the group-law
-  `x`-coordinate equals `Φₘ(x)/ΨSqₘ(x)`. `odd_x_algebra` is the point-transport of the already
-  proved curve-generic `φ_ψ_diff` (`DivisionPolynomialEllSequence.lean`); `even_x_algebra`
-  additionally consumes the doubling divisibility `ψₙ ∣ ψ₂ₙ` (`DivisionPolynomialDoubling.lean`).
-  The missing object is the transport `x([j]P) = φⱼ(P)/ψⱼ(P)²` (no `Point ↔ ψ/φ` map in Mathlib).
-* `even_y_algebra`, `odd_y_algebra` — the ω-free `y`-conjunct per step (addY analogue via the
-  ω-recurrence, anchors proved in `OmegaRecurrenceAnchors`).
-* `carrier_three` (both conjuncts), `carrier_four` **y-conjunct** — the remaining base leaves in
-  ω-free form (mechanical from `TripleMultiplicationFormula`/`MultiplicationYTripleFormula` +
-  a FiveTorsionBridge-style slope reconstruction + the `n=3,4` ω-anchors; not a conceptual wall).
+Named residual walls (adversarial ultracode audit, 2026-07-19 — honest current factoring):
+* `even_x_algebra` — **fully reduced** to two univariate division-polynomial *doubling* identities
+  `ΨSq(2k).eval x = 4B(A³+7B³)` and `Φ(2k).eval x = A⁴−56AB³` (with `A=Φ(k).eval x`, `B=ΨSq(k).eval x`);
+  everything else (addX unfold, slope-square elimination `sk²·4(Xk³+7)=9Xk⁴`, `B≠0` denominator,
+  final `linear_combination B⁴·hsk`) is closed. Those two identities are provable via the eval
+  bridge (`eval_ΨSq_eq_normEDS_sq`/`eval_Φ_eq_normEDS`, `β=2y`) + `normEDS_isEllSequence`. Tractable.
+* `odd_x_algebra`, `even_y_algebra`, `odd_y_algebra` — **UNDER-HYPOTHESIZED as currently factored.**
+  The abstract lemmas quantify `Yk`(,`Yk1`) with only the curve equation, leaving the y-sign free;
+  flipping `Yk ↦ −Yk` gives a different valid input (`(−kP)+(k+1)P = P`) with a different `addX`,
+  so the universally-quantified statements are **not theorems**. Every INSTANCE the step-group uses
+  is true (real consecutive multiples `kP,(k+1)P`), so the induction is sound — but completing it
+  needs these three **restated** to thread the `Carrier` y-coupling into the signature (or inlined
+  into `even_step_group`/`odd_step_group`, where the IH supplies the coupling). Refactor, then the
+  x-part reduces via `φ_ψ_diff` at `(k+1,k)` and the y-part via the ω-recurrence. Not a Mathlib gap.
+* `carrier_four` **y-conjunct** — remaining base leaf (needs a `y(4P)` cert + an `n=4` ω-anchor,
+  as `carrier_two`/`carrier_three` did at `n=2,3`). Mechanical.
 * `nsmul_eq_zero_iff_psi_evalEval_zero`, `psiSq_ne_zero_of_nsmul_some` — the uniform
-  non-degeneracy / torsion bridge (`n•P = O ⟺ ψₙ(P) = 0`), which breaks the circularity of the
-  `x`-conjunct; the `Point → ψ` direction is the missing Mathlib map.
+  non-degeneracy / torsion bridge (`n•P = O ⟺ ψₙ(P) = 0`). `psiSq_ne_zero` reduces to it via
+  `eval_ΨSq_eq_normEDS_sq`; the `Point → ψ` direction is the genuinely missing Mathlib map (the
+  one true remaining conceptual wall).
 * Two `odd_step_group` degenerate branches (a summand `= O`) and the secant `x`-collision branch
-  are left as inline `sorry`.
+  are left as inline `sorry` (dischargeable once the torsion bridge lands).
 
 Open stem: NOT imported from `Ecdlp.lean`; excluded from the no-`sorry` gate.
 
 **Provenance.** The whole file elaborates on the warm-Lean server (v4.31.0) with `LEAN_OK`:
 the only diagnostics are the named `declaration uses 'sorry'` warnings above — no type or
 elaboration errors. So the reduction of the entire uniform-N7 target to the isolated
-rational-identity walls (and the `normEDSRec'` capstone assembly) is machine-verified; only the
-listed walls remain open.
+rational-identity walls (and the `normEDSRec'` capstone assembly) is machine-verified. Base leaves
+`n=0,1,2,3` and the `n=4` x-conjunct are server-verified `sorry`-free. The residual walls are as
+listed above — honestly, three of them (`odd_x_algebra`, `even_y_algebra`, `odd_y_algebra`) are
+under-hypothesized as currently factored and need signature-strengthening (not just a `sorry` fill),
+per the 2026-07-19 adversarial audit.
 -/
 import Mathlib
 import Ecdlp.Proved.DivisionPolynomialEllSequence
