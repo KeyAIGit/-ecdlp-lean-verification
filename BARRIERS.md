@@ -270,9 +270,12 @@ exact `Θ` statements.
       branch `claude/admiring-darwin-uouep1` (open stem, `sorry`s, excluded from the gate).
     - **Wall-crack pass + honest correction (2026-07-19).** `carrier_three` (the `n=3` base leaf,
       both conjuncts) is now server-verified `sorry`-free — base leaves `n=0,1,2,3` and the `n=4`
-      x-conjunct are done. `even_x_algebra` is fully reduced to two univariate division-polynomial
-      *doubling* identities (`ΨSq(2k)=4B(A³+7B³)`, `Φ(2k)=A⁴−56AB³` with `A=Φ(k),B=ΨSq(k)`), provable
-      via the eval bridge + `normEDS_isEllSequence`. **Correction to the "clean reduction" above:** an
+      x-conjunct are done. `even_x_algebra` reduces to two univariate division-polynomial
+      *doubling* identities (`ΨSq(2k)=4B(A³+7B³)`, `Φ(2k)=A⁴−56AB³` with `A=Φ(k),B=ΨSq(k)`) — both
+      **true** (checked `k=1..5`), but a deeper audit found they are **not a finite certificate**:
+      substituting `normEDS_even/odd`+Somos-4 leaves a remainder in `w(k±2)²` whose pinning cascades
+      outward unboundedly, so closing them needs a **strong induction on `k`** over the elliptic net
+      (the `NormEDSSomos4.lean` technique, ~200 lines) — a real EDS sub-development, not a `ring` fill. **Correction to the "clean reduction" above:** an
       adversarial audit found that three of the abstracted step-lemmas — `odd_x_algebra`,
       `even_y_algebra`, `odd_y_algebra` — are *under-hypothesized* (they leave the `y`-sign of the
       intermediate points free, so the universally-quantified forms are literally false: flipping

@@ -33,11 +33,15 @@ Fully closed (no `sorry`):
   (even `2*(m+3)` via `k=m+3`; odd `2*(m+2)+1` via `k=m+2, k+1=m+3`), `sorry`-free modulo walls.
 
 Named residual walls (adversarial ultracode audit, 2026-07-19 — honest current factoring):
-* `even_x_algebra` — **fully reduced** to two univariate division-polynomial *doubling* identities
+* `even_x_algebra` — **reduced** to two univariate division-polynomial *doubling* identities
   `ΨSq(2k).eval x = 4B(A³+7B³)` and `Φ(2k).eval x = A⁴−56AB³` (with `A=Φ(k).eval x`, `B=ΨSq(k).eval x`);
   everything else (addX unfold, slope-square elimination `sk²·4(Xk³+7)=9Xk⁴`, `B≠0` denominator,
-  final `linear_combination B⁴·hsk`) is closed. Those two identities are provable via the eval
-  bridge (`eval_ΨSq_eq_normEDS_sq`/`eval_Φ_eq_normEDS`, `β=2y`) + `normEDS_isEllSequence`. Tractable.
+  final `linear_combination B⁴·hsk`) is closed, and the two identities are **true** (checked
+  `k=1..5` via the eval bridge). But a deeper audit (2026-07-19) found they are **NOT a finite
+  certificate**: substituting `normEDS_even/odd` + Somos-4 leaves a remainder depending on
+  `w(k±2)²` individually, and pinning those cascades outward unboundedly (`w(k+4), w(k+6), …`).
+  Closing them needs a **strong induction on `k`** over the elliptic net (the `NormEDSSomos4.lean`
+  technique, ~200 lines) — a real EDS sub-development, not a `ring`/`linear_combination` fill.
 * `odd_x_algebra`, `even_y_algebra`, `odd_y_algebra` — **UNDER-HYPOTHESIZED as currently factored.**
   The abstract lemmas quantify `Yk`(,`Yk1`) with only the curve equation, leaving the y-sign free;
   flipping `Yk ↦ −Yk` gives a different valid input (`(−kP)+(k+1)P = P`) with a different `addX`,
