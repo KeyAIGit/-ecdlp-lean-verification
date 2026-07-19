@@ -1,0 +1,25 @@
+{
+  "id": "n7_uniform_secp256k1_x",
+  "name": "N7UniformSecp256k1X",
+  "status": "todo",
+  "difficulty": "hard",
+  "template": "point_level_multiplication_formula",
+  "why_it_matters": "The uniform multiplication-by-n x-coordinate formula x(n*P) = Phi_n(x)/PsiSq_n(x) on the actual secp256k1 point group, for all n at once - the monolithic missing rung (node S3/N7, BARRIERS.md B3). Fixed n=2,3,4,5 are proved as per-n certificates; this is the general induction, absent from Mathlib (no Point<->Psi/Phi connection, no omega y-coordinate division polynomial). Substrate landed: coordinate-ring translation phi_n*PsiSq_n=Phi_n*psi_n^2 (S1) and doubling divisibility psi_n | psi_2n (S2, the omega prerequisite).",
+  "default_budget": {
+    "tier0_tactics": [],
+    "escalate_if_failed": true,
+    "note": "Not a tier-0 target. Multi-cycle focused grind per the proof DAG; the fast-feedback server bridge speeds verification, not authoring."
+  },
+  "stem_file": "Ecdlp/Targets/n7_uniform_secp256k1_x.lean",
+  "lean_stem": null,
+  "hint": "Proof DAG (attack order): (S2') define omega_n via psi_2n/psi_n = complEDS2... (S2 landed), dividing by 2 which is a unit in F_p; (S3a) y(n*P) = omega_n(P)/psi_n(P)^3 on Points; (S3b) the induction x((n+1)P) = addX(x(nP), x, slope(x(nP), x, y(nP), y)) with x(nP)=Phi_n/PsiSq_n and the omega-based y(nP) substituted, closing via the division-polynomial addition recurrences (prePsi_even/odd, PsiSq_even/odd, Phi_ofNat) and the S1 coordinate-ring translation. Denominator nonzero because n*P affine => psi_n(P) != 0 => PsiSq_n(x) = psi_n(P)^2 != 0 on the curve (eval bridge eval_PsiSq_eq_normEDS_sq + torsion bridge). Each arrow is a self-contained obligation.",
+  "promotion_target_file": "Ecdlp/Proved/MultiplicationFormulaUniform.lean",
+  "source": {
+    "family": "n7-uniform",
+    "from": "manual (S1/S2 substrate landed, PR #200/#201; wall mapped BARRIERS.md B3)"
+  },
+  "depends_on": [
+    "Ecdlp/Proved/MultiplicationXCoordinateRing.lean",
+    "Ecdlp/Proved/DivisionPolynomialDoubling.lean"
+  ]
+}
