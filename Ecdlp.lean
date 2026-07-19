@@ -148,3 +148,4 @@ import Ecdlp.Proved.MultiplicationXCoordinateRing
 import Ecdlp.Proved.DivisionPolynomialDoubling
 import Ecdlp.Proved.MultiplicationYFormula
 import Ecdlp.Proved.DoublingPointFormula
+import Ecdlp.Proved.MultiplicationYTripleFormula
