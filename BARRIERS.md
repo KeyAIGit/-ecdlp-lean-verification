@@ -301,6 +301,15 @@ exact `Θ` statements.
       So the residual is: (1) the two `even_x` univariate doubling identities, (2) restate+prove the
       three coupled step-identities, (3) the torsion bridge `nsmul_eq_zero_iff_psi_evalEval_zero`
       (the one genuine missing-Mathlib `Point→ψ` direction), (4) the `carrier_four` y-leaf.
+    - **`carrier_four`-y sharpened (2026-07-19).** Residual (4) is now down to a single missing
+      certificate. The `n=4` ω-anchor is landed and server-verified: `secp256k1_omega_recurrence_four`
+      (`OmegaRecurrenceAnchors.lean`) proves `ψ₆ψ₃²−ψ₂ψ₅² = 4y·ω₄` with the degree-24
+      `ω₄`, built on the freshly-derived even-index brick `secp256k1_psi6_evalEval`
+      (`ψ 6 = 2y·(3x¹⁶+4704x¹³−131712x¹⁰−7639296x⁷−12907776x⁴−103262208x)`, from `ψ_even 3` after
+      cancelling the `ψ₂=2y` factor). Both close by `ring` after the evalEval bricks; CAS-validated
+      (on-curve `(A,B)` representation) and kernel-checked (no `native_decide`). The carrier's y-coupling
+      RHS is thereby discharged; the one remaining piece for the leaf is a `y(4P)=ω₄/ψ₄³` cert (the
+      doubling² y-formula, the `n=4` analogue of `DoublingPointFormula`/`MultiplicationYTripleFormula`).
   - **Weil reciprocity `f(div g) = g(div f)` (ladder rung W4-1) — frozen no-go
     (2026-07-18).** The evaluation half of the Weil pairing is landed at the
     function-field level (W3e-1 divisor evaluation, W3e-2 representative-scaling),
