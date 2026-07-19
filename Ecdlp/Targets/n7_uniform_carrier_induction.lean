@@ -21,8 +21,11 @@ Fully closed (no `sorry`):
 * `carrier_three`              — **server-verified (2026-07-19)**: 2-torsion (`y=0`) branch +
                                  FiveTorsionBridge `3•P` reconstruction, then landed triple x/y +
                                  `secp256k1_omega_recurrence_three`. Both conjuncts closed.
-* `carrier_four` **x-conjunct** — closed from the landed Point-level
-                                 `secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄` (`h` passed explicitly).
+* `carrier_four`               — **CLOSED (2026-07-19)**: both conjuncts, via
+                                 `secp256k1_four_nsmul_coords_ωfree` (`NsmulCoordsBaseFour.lean`) —
+                                 x from `secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`, y from the new
+                                 `secp256k1_quadruple_y` (`y(4P)=ω₄/ψ₄³`) bridged by
+                                 `secp256k1_omega_recurrence_four`; non-2-torsion forced by affine `4•P`.
 * `even_step_group`, `odd_step_group` (generic secant branch) — the **group-law plumbing**:
   reduce `Carrier (2k)` / `Carrier (2k+1)` to scalar field-identity obligations about
   `addX/addY/slope`, discharging every `Point`-level move (`two_mul`+`add_nsmul` / `add_nsmul`,
@@ -50,11 +53,6 @@ Named residual walls (adversarial ultracode audit, 2026-07-19 — honest current
   needs these three **restated** to thread the `Carrier` y-coupling into the signature (or inlined
   into `even_step_group`/`odd_step_group`, where the IH supplies the coupling). Refactor, then the
   x-part reduces via `φ_ψ_diff` at `(k+1,k)` and the y-part via the ω-recurrence. Not a Mathlib gap.
-* `carrier_four` **y-conjunct** — remaining base leaf. The `n=4` ω-anchor is now landed
-  (`secp256k1_omega_recurrence_four` in `OmegaRecurrenceAnchors`, giving `ψ₆ψ₃²−ψ₂ψ₅² = 4y·ω₄`
-  off the freshly-derived `secp256k1_psi6_evalEval`), so the RHS of the carrier's y-coupling is
-  discharged; the one residual is a `y(4P)=ω₄/ψ₄³` cert (the doubling² y-formula, analogue of
-  `DoublingPointFormula`/`MultiplicationYTripleFormula` at `n=2,3`). Mechanical.
 * `nsmul_eq_zero_iff_psi_evalEval_zero`, `psiSq_ne_zero_of_nsmul_some` — the uniform
   non-degeneracy / torsion bridge (`n•P = O ⟺ ψₙ(P) = 0`). `psiSq_ne_zero` reduces to it via
   `eval_ΨSq_eq_normEDS_sq`; the `Point → ψ` direction is the genuinely missing Mathlib map (the
@@ -80,6 +78,7 @@ import Ecdlp.Proved.NsmulCoordsBaseOne
 import Ecdlp.Proved.NsmulCoordsBaseTwo
 import Ecdlp.Proved.OmegaRecurrenceAnchors
 import Ecdlp.Proved.QuadrupleMultiplicationFormula
+import Ecdlp.Proved.NsmulCoordsBaseFour
 import Ecdlp.Proved.TripleMultiplicationFormula
 import Ecdlp.Proved.MultiplicationYTripleFormula
 import Ecdlp.Proved.FiveTorsionBridge
@@ -292,18 +291,25 @@ theorem carrier_three (hc : y ^ 2 = x ^ 3 + 7) : Carrier x y h 3 := by
       rw [div_mul_eq_mul_div, div_mul_eq_mul_div, div_eq_iff (pow_ne_zero 3 hΨ3ne)]
       ring
 
-/-- Leaf `n = 4` (ω-free). x-conjunct CLOSED from the landed Point-level quadruple lemma; the
-y-conjunct is the residual ω→ψ bridge at index 4. -/
+/-- Leaf `n = 4` (ω-free), **CLOSED**. Both conjuncts discharged from the landed Point-level
+`n = 4` coordinate lemmas, reshaped into the joint carrier format by
+`secp256k1_four_nsmul_coords_ωfree` (`NsmulCoordsBaseFour`): the x-conjunct from
+`secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`, the y-conjunct from `secp256k1_quadruple_y`
+(`y(4P)=ω₄/ψ₄³`) bridged via `secp256k1_omega_recurrence_four`. Non-2-torsion is forced by `hn`
+(an affine `4•P` rules out `2•P = O`). -/
 theorem carrier_four (hc : y ^ 2 = x ^ 3 + 7) : Carrier x y h 4 := by
   intro X Y h' hn
-  refine ⟨?_, ?_⟩
-  · -- x-conjunct: `secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄` takes `h` explicitly, then `hn`; it
-    -- handles the `4•P = O` / 2-torsion degeneracies internally.
-    exact_mod_cast secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄ h hn
-  · -- y-conjunct (residual). NEEDS: the secp256k1 `evalEval` of `ψ₆,ψ₅,ψ₄,ψ₃,ψ₂` and a `y(4P)`
-    -- cert bridged to `Y·(4y)·ψ₄³ = ψ₆ψ₃² − ψ₂ψ₅²` via the `n=4` ω-anchor (`OmegaRecurrenceAnchors`
-    -- extended to index 4, or `ψ_even`/`ψ_odd` from `ψ_isEllSequence`), exactly as `carrier_two`.
-    sorry
+  have hy : y ≠ secp256k1.toAffine.negY x y := by
+    intro hy0
+    refine Point.some_ne_zero h' ?_
+    rw [← hn, show (4 : ℕ) = 2 + 2 from rfl, add_nsmul, two_nsmul,
+      Point.add_self_of_Y_eq hy0, add_zero]
+  obtain ⟨hX, hY⟩ := secp256k1_four_nsmul_coords_ωfree x y X Y hc h h' hy hn
+  refine ⟨hX, ?_⟩
+  rw [show ((4 : ℕ) : ℤ) + 2 = 6 by norm_num, show ((4 : ℕ) : ℤ) - 1 = 3 by norm_num,
+    show ((4 : ℕ) : ℤ) - 2 = 2 by norm_num, show ((4 : ℕ) : ℤ) + 1 = 5 by norm_num,
+    show ((4 : ℕ) : ℤ) = 4 by norm_num]
+  exact hY
 
 /-! ## Non-degeneracy / torsion bridge (breaks the circularity) -/
 
