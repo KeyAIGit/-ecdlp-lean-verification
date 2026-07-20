@@ -10,14 +10,14 @@
     "informal": 231,
     "blocked": 168,
     "partial": 46,
-    "tractable": 31,
-    "verified": 10
+    "tractable": 30,
+    "verified": 11
   },
   "confidence_summary": {
     "corpus": 298,
     "triage": 95,
-    "heuristic": 73,
-    "verified-remap": 20
+    "heuristic": 72,
+    "verified-remap": 21
   },
   "foundations": {
     "weil_pairing": {
@@ -1148,12 +1148,12 @@
     {
       "id": "cheon-multidivisor-crt-004",
       "formal_status": "formalizable",
-      "status": "tractable",
+      "status": "partial",
       "blocking_foundation": null,
-      "confidence": "heuristic",
+      "confidence": "verified-remap",
       "mathlib_area": "(unassigned)",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.PohligHellman.reconstruct"
     },
     {
       "id": "cheon-optimal-divisor-exponents-008",
@@ -4888,12 +4888,12 @@
     {
       "id": "smart-secp256k1-boundary-006",
       "formal_status": "scope_meta",
-      "status": "partial",
+      "status": "verified",
       "blocking_foundation": null,
       "confidence": "verified-remap",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
-      "verified": false,
-      "discharged_by": "Ecdlp.Primality.secp256k1_n_prime"
+      "verified": true,
+      "discharged_by": "Ecdlp.Curve.secp256k1_classical_security_profile"
     },
     {
       "id": "cheng-huang-gjosteen-comparison-005",
