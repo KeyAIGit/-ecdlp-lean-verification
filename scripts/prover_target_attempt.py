@@ -200,7 +200,9 @@ def call_model(
 ) -> str:
     url, _, user_agent, max_tokens = PROVIDERS[provider]
     prompt = make_prompt(target, previous_candidate, previous_error)
-    temperature = min(0.9, 0.15 + 0.06 * attempt)
+    # kimi-k3 only accepts temperature == 1 (rejects anything else with a 400); the Featherless
+    # provers keep the escalating schedule that widens the search across repair attempts.
+    temperature = 1.0 if provider == "moonshot" else min(0.9, 0.15 + 0.06 * attempt)
     payload = {
         "model": model,
         "messages": [
