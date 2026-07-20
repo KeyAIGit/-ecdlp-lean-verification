@@ -117,7 +117,9 @@ def call_kimi(prompt: str, max_tokens: int) -> str | None:
     model = os.environ.get("KIMI_MODEL") or "kimi-k3"
     # json_object first; retry plain if the provider rejects response_format.
     for use_json in (True, False):
-        kw = {"model": model, "temperature": 0.6, "max_tokens": max_tokens,
+        # kimi-k3 rejects any temperature != 1 ("invalid temperature: only 1 is allowed
+        # for this model"), so pin it to 1.0.
+        kw = {"model": model, "temperature": 1.0, "max_tokens": max_tokens,
               "messages": [{"role": "user", "content": prompt}]}
         if use_json:
             kw["response_format"] = {"type": "json_object"}
