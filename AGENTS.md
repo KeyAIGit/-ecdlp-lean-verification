@@ -3,7 +3,9 @@
 Single source of truth for "what this is, what's done, what to run next". Read this
 together with `VERIFIED.md` (the proved-theorem ledger) and `BARRIERS.md` (what's
 blocked and why). The prover-loop protocol is §"Prover-loop protocol" below;
-conventions: `CLAUDE.md`.
+conventions: `CLAUDE.md`. **When running as the unattended hourly cycle, `AUTONOMY.md`
+governs when to act alone vs. escalate** (merge authority is delegated but bounded; the
+kernel/CI remains the sole judge).
 For a small-context start, read `STATUS.md` first, then `tasks/NEXT.md`; load
 `experiments/HYPOTHESES.yaml` when the task touches hypotheses, experiments,
 frontier interpretation, or publication planning. Before moving, deleting, or

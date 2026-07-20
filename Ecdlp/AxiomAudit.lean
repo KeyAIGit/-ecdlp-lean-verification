@@ -188,6 +188,18 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Weil.xyIdeal_ne_of_y_ne
 #print axioms Ecdlp.Weil.xyIdeal_ne_of_ne
 
+-- Weil ladder W3-eval: divisor evaluation `f((Q)−(O))` — multiplicativity (W3e-1) and the
+-- Miller-representative scaling law / conditional representative-independence (W3e-2)
+#print axioms Ecdlp.Weil.divEval_mul
+#print axioms Ecdlp.Weil.evalReg_mul
+#print axioms Ecdlp.Weil.evalReg_smul_unit
+#print axioms Ecdlp.Weil.divEval_smul_unit
+#print axioms Ecdlp.Weil.divEval_smul_unit_eq
+
+-- Weil ladder W3e-3: raw-pairing-value domain (support-disjointness bridge) + divEval unit law
+#print axioms Ecdlp.Weil.secp256k1_miller_jointly_regular
+#print axioms Ecdlp.Weil.divEval_one
+
 -- Weil H4 bridge: division-polynomial tower ⟺ Miller/divisor tower (ψ n root ⟺ n·([P]−[O]) principal)
 #print axioms Ecdlp.Weil.secp256k1_psi3_root_iff_class_torsion
 #print axioms Ecdlp.Weil.secp256k1_psi5_root_iff_class_torsion
@@ -231,3 +243,72 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms ResearchOS.NumberTheory.carmichael_1729_factorization
 #print axioms ResearchOS.NumberTheory.prime_10007
 #print axioms ResearchOS.NumberTheory.prime_10009
+
+-- geometric torsion structure family: E[n](𝔽̄_p) ≅ (ℤ/n)² for n ∈ {2,3,5,7} (closure), via
+-- closure bridge + exact root count + ±y pairing + N10(iii); the ψₙ↔E[n] critical path N13@n
+#print axioms Ecdlp.Curve.secp256k1Bar_two_torsion_structure
+#print axioms Ecdlp.Curve.secp256k1Bar_three_torsion_structure
+#print axioms Ecdlp.Curve.secp256k1Bar_five_torsion_structure
+#print axioms Ecdlp.Curve.secp256k1Bar_seven_torsion_structure
+
+-- 2-torsion cubic separability (X³+7 has 3 distinct roots over 𝔽̄_p) — counting brick of E[2]
+#print axioms Ecdlp.Curve.secp256k1_cubic_separable
+
+-- N7 multiplication-by-n x-coordinate formulas x(nP)=Φₙ/ΨSqₙ, n = 4 (doubling²) and n = 5 (chord)
+#print axioms Ecdlp.Curve.secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄
+#print axioms Ecdlp.Curve.secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅
+
+-- Weil W3 function-field evaluation layer: fraction eval well-definedness + a/b extraction + RegularAt
+#print axioms Ecdlp.Weil.evalFracAt_well_defined
+#print axioms Ecdlp.Weil.functionField_exists_num_den
+#print axioms Ecdlp.Weil.evalRatAt_eq_evalReg
+
+-- Weil ladder W3e-1: divisor evaluation f((Q)−(O)) as a ratio of evalReg point values,
+-- multiplicative in f (evalReg_mul: value of a product = product of values at a point)
+#print axioms Ecdlp.Weil.evalReg_mul
+#print axioms Ecdlp.Weil.divEval_mul
+
+-- N7-uniform S1 brick: coordinate-ring translation φₙ·ΨSqₙ = Φₙ·ψₙ² (bivariate ↔ univariate)
+#print axioms Ecdlp.Curve.mk_ψ_sq
+#print axioms Ecdlp.Curve.mk_φ_mul_ΨSq
+
+-- N7-uniform S2 brick: division-polynomial doubling ψₙ∣ψ₂ₙ (ω prerequisite)
+#print axioms Ecdlp.Curve.ψ_two_mul
+#print axioms Ecdlp.Curve.ψ_dvd_ψ_two_mul
+
+-- N7-uniform S3a base: y-coordinate doubling y(2P)=ω₂/(2y)³ for secp256k1
+#print axioms Ecdlp.Curve.secp256k1_double_y_eq_ω₂
+
+-- N7-uniform S3a: Point-level doubling 2•P=(Φ₂/Ψ₂Sq, ω₂/(2y)³) for secp256k1
+#print axioms Ecdlp.Curve.secp256k1_two_nsmul_coords
+
+-- N7-uniform S3a: y-coordinate tripling y(3P)=ω₃/ψ₃³ for secp256k1
+#print axioms Ecdlp.Curve.secp256k1_triple_y_eq_ω₃
+
+-- N7-uniform ω-free EDS engine (curve-generic): the elliptic-net relation for ψ, the
+-- neighbour-product identity, and the x-coordinate difference identity φₙψₘ²−φₘψₙ²=ψ(m+n)ψ(m−n)
+-- (Silverman AEC III Ex. 3.7)
+#print axioms Ecdlp.Curve.ψ_isEllSequence
+#print axioms Ecdlp.Curve.ψ_succ_mul_ψ_pred
+#print axioms Ecdlp.Curve.φ_ψ_diff
+
+-- N7-uniform ω-recurrence anchors: 4y·ωₙ = ψ(n+2)ψ(n−1)²−ψ(n−2)ψ(n+1)² reproduces the
+-- group-law-derived ω₂, ω₃ on a secp256k1 point (n = 2, 3), extended to n = 4 via the
+-- recurrence-derived even-index ψ₆ brick
+#print axioms Ecdlp.Curve.secp256k1_omega_recurrence_two
+#print axioms Ecdlp.Curve.secp256k1_omega_recurrence_three
+#print axioms Ecdlp.Curve.secp256k1_psi6_evalEval
+#print axioms Ecdlp.Curve.secp256k1_omega_recurrence_four
+
+-- N7-uniform base rungs of the joint ω-free (x,y) carrier for secp256k1 (n = 1, 2, 4)
+#print axioms Ecdlp.Curve.secp256k1_one_nsmul_coords
+#print axioms Ecdlp.Curve.secp256k1_two_nsmul_coords_ωfree
+#print axioms Ecdlp.Curve.secp256k1_four_nsmul_coords_ωfree
+
+-- N7-uniform y-coordinate multiplication-by-4 formula: y(4P)=ω₄/ψ₄³ (the y-companion of the
+-- landed x(4P)=Φ₄/ΨSq₄; the missing certificate for the carrier_four y-conjunct)
+#print axioms Ecdlp.Curve.secp256k1_quadruple_y
+
+-- N7 non-degeneracy leaf: the n=4 division-polynomial torsion bridge 4•P=0 ⟺ ψ₄(P)=0
+-- (fills the even-index gap in the {2,3,5,7} family; inherits Lean.ofReduceBool from the 2≠0 fact)
+#print axioms Ecdlp.Curve.secp256k1_four_nsmul_eq_zero_iff

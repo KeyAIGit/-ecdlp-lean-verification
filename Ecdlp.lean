@@ -131,3 +131,31 @@ import Ecdlp.Proved.DivisionPolynomialSeparable
 import Ecdlp.Proved.ThreeTorsionBridgeBar
 import Ecdlp.Proved.FiveTorsionBridgeBar
 import Ecdlp.Proved.SevenTorsionBridgeBar
+import Ecdlp.Proved.FunctionFieldEval
+import Ecdlp.Proved.FunctionFieldRepr
+import Ecdlp.Proved.FunctionFieldRegular
+import Ecdlp.Proved.CubicSeparable
+import Ecdlp.Proved.QuadrupleMultiplicationFormula
+import Ecdlp.Proved.QuintupleMultiplicationFormula
+import Ecdlp.Proved.TwoTorsionStructure
+import Ecdlp.Proved.ThreeTorsionStructure
+import Ecdlp.Proved.FiveTorsionStructure
+import Ecdlp.Proved.SevenTorsionStructure
+import Ecdlp.Proved.WeilDivisorEval
+import Ecdlp.Proved.WeilDivisorRepIndep
+import Ecdlp.Proved.WeilMillerEval
+import Ecdlp.Proved.MultiplicationXCoordinateRing
+import Ecdlp.Proved.DivisionPolynomialDoubling
+import Ecdlp.Proved.MultiplicationYFormula
+import Ecdlp.Proved.DoublingPointFormula
+import Ecdlp.Proved.MultiplicationYTripleFormula
+-- N7-uniform ω-free substrate: EDS engine (curve-generic), ω-recurrence anchors, and the
+-- n=1,2 base rungs of the joint (x,y) carrier (all kernel-checked; the uniform induction stem
+-- itself stays an open target in Ecdlp/Targets/, excluded from the built base).
+import Ecdlp.Proved.DivisionPolynomialEllSequence
+import Ecdlp.Proved.OmegaRecurrenceAnchors
+import Ecdlp.Proved.NsmulCoordsBaseOne
+import Ecdlp.Proved.NsmulCoordsBaseTwo
+import Ecdlp.Proved.QuadrupleMultiplicationYFormula
+import Ecdlp.Proved.NsmulCoordsBaseFour
+import Ecdlp.Proved.FourTorsionBridge

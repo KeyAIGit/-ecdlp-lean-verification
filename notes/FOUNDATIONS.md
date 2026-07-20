@@ -114,7 +114,7 @@ W1, W2, and W3's representative-independence half are landed (W3 via a Fable-des
 kernel-verified proof). The open frontier is the **function-evaluation API** (W3's evaluation half,
 `f_P(D_Q)`) and **Weil reciprocity** (W4) — both genuine Mathlib gaps. This replaces the earlier
 "multi-month from zero" estimate: the **hardest substrate (Abel–Jacobi) is already Mathlib's**, and
-the remaining work is the function-evaluation + reciprocity layer.
+the remaining work is the function-evaluation + reciprocity layer. The **autonomous cycle queue** — this frontier decomposed into one-rung-per-cycle targets the loop grinds — is `notes/WEIL_LADDER.md` (first rung: W3e-1 `divEval`, `targets/weil_w3eval_diveval.json`).
 
 ### `E[n]` as a group object — closed via Mathlib (`Ecdlp/Proved/Torsion.lean`)
 

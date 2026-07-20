@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~229 distinct results / 268 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~251 distinct results / 290 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -213,6 +213,150 @@ exact `Θ` statements.
   `Ecdlp/Targets/normeds_no_consecutive_zero.lean`; the remaining CORE-by-effort item on
   that path is N7 (general multiplication formula). See the TASK-005 memo in
   `notes/POINT_COUNTING_KEYSTONE.md` and `notes/DIVISION_POLY_TORSION_MAP.md`.
+  - **N7-uniform `x([n]P) = Φₙ(x)/ΨSqₙ(x)` (general `n`) — precise wall mapped (2026-07-18).**
+    Fixed `n = 2,3,4,5` are landed as per-`n` coordinate-level `linear_combination` certificates
+    (`MultiplicationFormula.lean`, `Triple/Quadruple/QuintupleMultiplicationFormula.lean`); the
+    *uniform* statement is the missing rung. Mathlib v4.31 provides the univariate `Φ`/`ΨSq`/`preΨ`
+    polynomials **and** their recurrences (`preΨ_even/odd`, `ΨSq_even/odd`, `Φ_ofNat`,
+    `mk_Ψ_sq`) — but has **no y-coordinate (`ω`) division polynomial**, **no multiplication-by-`n`
+    coordinate map**, and **no `Point`↔`Ψ/Φ` connection at all** (`Point` occurs once in
+    `DivisionPolynomial/Basic.lean`, zero times in `Degree.lean`; verified against the pinned tree).
+    So a from-substrate uniform proof must first **build** (i) the `ωₙ` (y-coordinate) division
+    polynomial and its addition/recurrence theory, then (ii) the coordinate `[n]`-map, then (iii)
+    the general induction `x([n+1]P) = addX(x([n]P), x, slope(…))` with `x([n]P)=Φₙ/ΨSqₙ` and the
+    `ω`-based `y([n]P)` substituted — a single monstrous rational-function identity per step. This
+    is upstream-grade, multi-month infrastructure (comparable to a stalled Mathlib PR), and it does
+    **not** decompose into small independent rungs. **Note on the fast-feedback lever:** the live
+    `server-run.yml` bridge (~5 s single-file `lake env lean`) speeds *verification* but not the
+    *authoring* of this missing theory, so it does not change the scale. Recorded as the precise
+    wall; the `#E[n]=n²` structure is already landed for `n ∈ {2,3,5,7}` without it.
+    - **Substrate progress against step (i), and where the wall now sits (2026-07-18).** Two
+      curve-generic substrate bricks landed: the coordinate-ring translation `φₙ·ΨSqₙ = Φₙ·ψₙ²`
+      (`MultiplicationXCoordinateRing.lean`) and the doubling divisibility `ψₙ ∣ ψ₂ₙ`
+      (`DivisionPolynomialDoubling.lean`, the explicit `ψ₂ₙ/ψₙ = complEDS₂ …`) — the latter is
+      exactly the "as a start" prerequisite Mathlib's own `ω`-`TODO` names. With it, the remaining
+      obstruction to *defining* `ωₙ := (ψ₂ₙ/ψₙ − ψₙ(a₁φₙ+a₃ψₙ²))/2` is pinned to the single
+      `÷2` well-definedness: `2 ∣ (ψ₂ₙ/ψₙ − ψₙ(a₁φₙ+a₃ψₙ²))` in `R[X][Y]`. **This obstruction is
+      genuine only in characteristic `2`** — where `2` is invertible (any char `≠ 2` field, so in
+      particular secp256k1's `𝔽_p`) it is vacuous and `ωₙ` is immediately definable. In *full*
+      generality it needs the char-`0` universal ring `ℤ[A₁..A₆][X][Y]` + specialization morphism,
+      which **Mathlib does not provide** (no `WeierstrassCurve.Universal`; verified against the
+      pinned tree). But even a defined `ωₙ` proves nothing until step (iii): there is still **no
+      `Point`↔`ω/ψ` connection**, so `ωₙ` would be a bare polynomial with no `y([n]P)` meaning. The
+      true wall is thus unchanged — step (iii), the coordinate `[n]`-map induction — and it does not
+      shrink by defining `ωₙ` alone. No thin `ωₙ`-definition brick is minted for that reason.
+    - **The wall reduced and its reduction machine-checked (2026-07-19).** Two moves collapse the
+      scale estimate above. **(a) ω-free reformulation** sidesteps step (i) entirely: the `y`-conjunct
+      is stated with only Mathlib's `ψ`, as `Y·(4y)·ψₙ³ = ψ(n+2)ψ(n-1)² − ψ(n-2)ψ(n+1)²` (the identity
+      `4y·ωₙ = …`), so **no `ωₙ` object, no `÷2` obstruction, no universal ring** is needed — the
+      anchors at `n=2,3` are landed (`OmegaRecurrenceAnchors.lean`) and the general relation is the
+      `r=2` case of the landed `ψ_isEllSequence`. **(b) The full induction skeleton now elaborates in
+      the Lean kernel.** `Ecdlp/Targets/n7_uniform_carrier_induction.lean` carries the joint `(x,y)`
+      predicate `Carrier` through `WeierstrassCurve.normEDSRec'`; the base leaves `n=0,1,2`, the `n=4`
+      x-conjunct, the entire **`Point`-group plumbing** (`even_step_group`/`odd_step_group`: `add_nsmul`
+      decomposition, degenerate-branch handling via `some_ne_zero`/`add_self_of_Y_eq`, tangent/secant
+      slope reconstruction, `some.injEq`), and the `normEDSRec'` capstone `secp256k1_nsmul_coords` are
+      **`sorry`-free and server-verified** (`lake env lean` → `LEAN_OK`, only the named-wall `sorry`
+      warnings). So step (iii) is no longer a "single monstrous identity" but a *machine-checked
+      reduction* of the whole uniform target to a short list of **named** standalone lemmas. The
+      residual wall is now precisely: `even_x_algebra`/`odd_x_algebra` (the per-step x-identity — the
+      point-transport of the already-proved curve-generic `φ_ψ_diff`), `even_y_algebra`/`odd_y_algebra`
+      (the ω-free y-step), the non-degeneracy bridge `nsmul_eq_zero_iff_psi_evalEval_zero` /
+      `psiSq_ne_zero_of_nsmul_some`, and the mechanical leaves `carrier_three` / `carrier_four`-y.
+      Crucially the x-walls are **not** the previously-feared missing `Point↔ω/ψ` map: the eval bridge
+      `eval_ΨSq_eq_normEDS_sq` / `eval_Φ_eq_normEDS` (`DivisionPolynomialEvalBridge.lean`) already
+      transports `ΨSqₙ.eval x`, `Φₙ.eval x` to the scalar `wₙ = ψₙ.evalEval x y`, turning each x-wall
+      into a scalar field identity provable from `φ_ψ_diff` — attackable, not upstream-grade. Held on
+      branch `claude/admiring-darwin-uouep1` (open stem, `sorry`s, excluded from the gate).
+    - **Wall-crack pass + honest correction (2026-07-19).** `carrier_three` (the `n=3` base leaf,
+      both conjuncts) is now server-verified `sorry`-free — base leaves `n=0,1,2,3` and the `n=4`
+      x-conjunct are done. `even_x_algebra` reduces to two univariate division-polynomial
+      *doubling* identities (`ΨSq(2k)=4B(A³+7B³)`, `Φ(2k)=A⁴−56AB³` with `A=Φ(k),B=ΨSq(k)`) — both
+      **true** (reproducibly CAS-certified `k=1..8`, degrees to 255/256, in
+      `scripts/certs/division_doubling_secp.py` → `CERT_OK`), but a deeper audit found they are
+      **not a finite certificate**:
+      substituting `normEDS_even/odd`+Somos-4 leaves a remainder in `w(k±2)²` whose pinning cascades
+      outward unboundedly, so closing them needs a **strong induction on `k`** over the elliptic net
+      (the `NormEDSSomos4.lean` technique, ~200 lines) — a real EDS sub-development, not a `ring` fill.
+      **Reduction fully mapped + CAS-validated (2026-07-19, ultracode `n7-even-x-doubling`).** `even_x`
+      now reduces to two curve-generic scalar cores over `w=normEDS β c d` — CORE-I
+      `(w(k−1)²w(k+2)−w(k−2)w(k+1)²)² = 4β²(A³+7B³)` and CORE-II
+      `w(2k+1)w(2k−1) = 3A⁴+4PA³+84AB³+28PB³` — each provable by `WeierstrassCurve.normEDSRec'` with the
+      *same seven-case skeleton and index window as the landed `normEDS_somos4`*. Both cores + both
+      targets + all 10 base cases (in the curve ideal, remainder 0) are CAS-validated end-to-end
+      (`scripts/certs/core_check.py`, 804 tests True; full plan in `notes/N7_EVEN_X_REDUCTION.md`). The
+      residual is now purely mechanical: 4 `linear_combination` step certificates (coreI/coreII ×
+      even/odd) whose ~20–40-term cofactor bundles must be machine-generated (sympy Groebner/linear-solve)
+      and kernel-judged, exactly like `somos4_odd_step`/`somos4_even_step_scaled`. No mathematical unknown
+      remains; the closure is a multi-cycle CAS+kernel effort (heavier than the original `NormEDSSomos4`),
+      bottlenecked without a local Lean toolchain to iterate the induction assembly.
+      **Correction to the "clean reduction" above:** an
+      adversarial audit found that three of the abstracted step-lemmas — `odd_x_algebra`,
+      `even_y_algebra`, `odd_y_algebra` — are *under-hypothesized* (they leave the `y`-sign of the
+      intermediate points free, so the universally-quantified forms are literally false: flipping
+      `Yk↦−Yk` realises `(−kP)+(k+1)P=P`). The induction is still sound — every instance the
+      `even/odd_step_group` callers use is a genuine consecutive-multiple pair where the identity
+      holds — but completing the proof requires these three lemmas *restated* to thread the `Carrier`
+      y-coupling through their signatures (or inlined into the step-group), not merely a `sorry` fill.
+      So the residual is: (1) the two `even_x` univariate doubling identities, (2) restate+prove the
+      three coupled step-identities, (3) the torsion bridge `nsmul_eq_zero_iff_psi_evalEval_zero`
+      (the one genuine missing-Mathlib `Point→ψ` direction), (4) the `carrier_four` y-leaf.
+    - **`carrier_four`-y sharpened (2026-07-19).** Residual (4) is now down to a single missing
+      certificate. The `n=4` ω-anchor is landed and server-verified: `secp256k1_omega_recurrence_four`
+      (`OmegaRecurrenceAnchors.lean`) proves `ψ₆ψ₃²−ψ₂ψ₅² = 4y·ω₄` with the degree-24
+      `ω₄`, built on the freshly-derived even-index brick `secp256k1_psi6_evalEval`
+      (`ψ 6 = 2y·(3x¹⁶+4704x¹³−131712x¹⁰−7639296x⁷−12907776x⁴−103262208x)`, from `ψ_even 3` after
+      cancelling the `ψ₂=2y` factor). Both close by `ring` after the evalEval bricks; CAS-validated
+      (on-curve `(A,B)` representation) and kernel-checked (no `native_decide`). The carrier's y-coupling
+      RHS is thereby discharged; the one remaining piece for the leaf is a `y(4P)=ω₄/ψ₄³` cert (the
+      doubling² y-formula, the `n=4` analogue of `DoublingPointFormula`/`MultiplicationYTripleFormula`).
+    - **`y(4P)` + `carrier_four` fully landed (2026-07-19, PR #210).** `secp256k1_quadruple_y`
+      (`QuadrupleMultiplicationYFormula.lean`) closes the doubling² `y`-cert, and
+      `secp256k1_four_nsmul_coords_ωfree` (`NsmulCoordsBaseFour.lean`) closes `carrier_four`
+      (both conjuncts). Base leaves `n=0..4` of `normEDSRec'` are now all closed.
+    - **Frontier re-scoped after the `n=4` landing (2026-07-19, scout).** With every base leaf and
+      anchor closed, the two named residuals — (2) the three under-hypothesized step lemmas and (3)
+      the torsion bridge `nsmul_eq_zero_iff_psi_evalEval_zero` — are **not two independent bricks but
+      one entangled monolith.** The scout confirmed: (a) the landed per-`n` bridges
+      (`secp256k1_{two,three,five,seven}_nsmul_eq_zero_iff`) are **bespoke `n=2+1`-style hand proofs**
+      (explicit `P+P+P` expansion + 2-torsion case split reduced to the *specific* `ψₙ` polynomial) that
+      do **not** generalize mechanically; (b) our pinned Mathlib `DivisionPolynomial/{Basic,Degree}`
+      carries only algebraic `ψ`/`Φ`/`ΨSq` facts — **no `Point ↔ ψ` vanishing lemma** (the `Point→ψ`
+      link lives only in the stalled upstream PR #13782); and (c) the uniform bridge is **circular with
+      the still-open uniform x-map** `x([n]P)=Φₙ/ΨSqₙ` — proving the bridge needs the x-coordinatisation,
+      whose non-degeneracy needs the bridge. **Concrete unblock (single route):** strengthen the stem's
+      `Carrier` predicate to also carry `n•P affine ⟺ ψₙ(P) ≠ 0`, proving the x-map, the y-relation, and
+      the torsion bridge **jointly** in the one `normEDSRec'` induction (the stem docstring already names
+      this). That is a **single multi-cycle refactor of the induction**, not a mergeable single-cycle
+      brick; per-`n` formulas beyond `n=4` are ledger inflation and are not to be minted. Alternative:
+      port the mul-by-`n`/torsion machinery if upstream PR #13782 lands.
+  - **Weil reciprocity `f(div g) = g(div f)` (ladder rung W4-1) — frozen no-go
+    (2026-07-18).** The evaluation half of the Weil pairing is landed at the
+    function-field level (W3e-1 divisor evaluation, W3e-2 representative-scaling),
+    but the reciprocity crux resists an honest cycle: it is a genuine Mathlib gap
+    with **no reachable non-vacuous special case**. The landed Weil layer rides on
+    Mathlib's `toClass : W.Point →+ Additive (ClassGroup W.CoordinateRing)` (the
+    Abel–Jacobi map into the *ideal class group* = divisors mod principal); passing
+    to classes forgets exactly the `F*`-valued products `f(div g)`, `g(div f)` that
+    reciprocity equates, so `toClass`/`ClassGroup` — necessary for W1/W2 — is
+    provably insufficient for W4 and cannot be leveraged into a special case. The
+    exact missing Mathlib lemmas (absent at v4.31 **and** on current master, verified
+    by code search): (1) a differential residue on a function field and the residue
+    theorem `∑_P res_P ω = 0` (Mathlib's only `residue` is `IsLocalRing.residue
+    R→R/m`); (2) a tame/local symbol `(f,g)_v` and its product formula `∏_v (f,g)_v =
+    1`; (3) a `Divisor` type with `degree`/`deg(div f)=0` and a valuation family over
+    **all** closed points including the place at infinity `O` (Mathlib's
+    `HeightOneSpectrum` valuations cover only the affine coordinate ring, missing `O`
+    — and the target divisors `n·([P]−[O])` mix affine points with `O`). Each of the
+    three proof routes (residue theorem; tame-symbol product formula; `x:E→ℙ¹`
+    pull-back reducing to `Polynomial.resultant` symmetry via a symbol
+    norm-compatibility lemma) needs a new upstream-grade development comparable to the
+    Riemann–Roch gap. A concrete `native_decide` instance is also blocked: the repo's
+    Miller function is produced non-constructively (`ClassGroup.mk_eq_one_iff`), so
+    `divEval f_P` does not reduce to a `ZMod p` computation. **Status:** W4-1/W4-2 and
+    all of W5 (`eₙ`, bilinear/alternating/non-degenerate) stay parked behind this; the
+    loop routes to the independent rung W3e-3 (support-disjointness packaging), which
+    builds only on the landed `evalReg`/`divEval` layer. See `notes/WEIL_LADDER.md`.
 - **Point counting** — **closed for secp256k1**: `#E(𝔽_p) = n` is now a kernel
   theorem (`CurveCardinalityExact.lean` — a curve-specific certificate, `n ∣ #E`
   plus `#E ≤ 2p+1 < 3n` plus `E[2] = {O}`, no Hasse/Schoof needed). The general

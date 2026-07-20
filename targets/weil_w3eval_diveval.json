@@ -1,0 +1,16 @@
+{
+  "id": "weil_w3eval_diveval",
+  "name": "weil_w3eval_diveval",
+  "status": "verified",
+  "difficulty": "small",
+  "why_it_matters": "Weil ladder rung W3e-1 (notes/WEIL_LADDER.md): divisor evaluation f(D) for D=(Q)-(O) as a ratio of evalReg point values, multiplicative in f. First evaluation-half rung toward f_P(D_Q) and the Weil pairing e_n. Builds on the landed evalReg / RegularAt layer (FunctionFieldRegular.lean, #186).",
+  "default_budget": {
+    "pythagoras_4b_attempts": 1,
+    "goedel_32b_attempts": 1,
+    "escalate_if_failed": true
+  },
+  "stem_file": null,
+  "hint": "Unfold divEval; crux sub-lemma is evalReg multiplicativity at a point (evalReg h (f*g) = evalReg h f * evalReg h g) via evalReg_eq + evalFracAt_mul with presentations f=a1/b1, g=a2/b2, b_i(P) != 0; then recombine the two ratios.",
+  "promotion_target_file": "Ecdlp/Proved/",
+  "verified_equivalent": "Ecdlp.Weil.divEval_mul"
+}

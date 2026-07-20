@@ -1,0 +1,25 @@
+{
+  "id": "n7_uniform_secp256k1_x",
+  "name": "N7UniformSecp256k1X",
+  "status": "todo",
+  "difficulty": "hard",
+  "template": "point_level_multiplication_formula",
+  "why_it_matters": "The uniform multiplication-by-n x-coordinate formula x(n*P)=Phi_n(x)/PsiSq_n(x) on the actual secp256k1 point group, for all n at once - the monolithic missing rung (node S3/N7, BARRIERS.md B3). Substrate landed: S1 coordinate-ring translation, S2 psi_n|psi_2n, and the full S3a base for n=2 (x/y/Point) and n=3 (x/y). The remaining wall is the general induction (absent from Mathlib: no omega division polynomial, no uniform Point<->Psi/Phi map).",
+  "default_budget": {
+    "tier0_tactics": [],
+    "escalate_if_failed": true,
+    "note": "Not a tier-0 target. Multi-cycle focused grind per the proof DAG; the fast-feedback server bridge speeds verification, not authoring."
+  },
+  "stem_file": "Ecdlp/Targets/n7_uniform_secp256k1_x.lean",
+  "lean_stem": null,
+  "hint": "REDUCTION MACHINE-CHECKED (2026-07-19): Ecdlp/Targets/n7_uniform_carrier_induction.lean carries the joint (x,y) ω-free predicate through normEDSRec' and ELABORATES on the warm-Lean server (LEAN_OK, only named-wall sorries). Sorry-free + server-verified: Carrier predicate, base leaves n=0/1/2, n=4 x-conjunct, the FULL Point-group plumbing (even_step_group/odd_step_group), and the normEDSRec' capstone secp256k1_nsmul_coords. The ω-free reformulation (y-conjunct via 4y*omega_n = psi(n+2)psi(n-1)^2 - psi(n-2)psi(n+1)^2, only Mathlib psi) SIDESTEPS defining omega_n entirely. Residual named walls: even_x_algebra/odd_x_algebra (per-step x-identity = point-transport of the LANDED curve-generic phi_psi_diff, DivisionPolynomialEllSequence.lean; attackable in SCALAR form via the eval bridge eval_ΨSq_eq_normEDS_sq/eval_Φ_eq_normEDS turning ΨSqₙ.eval x, Φₙ.eval x into wₙ=ψₙ.evalEval x y), even_y_algebra/odd_y_algebra (ω-free y-step), non-degeneracy bridge nsmul_eq_zero_iff_psi_evalEval_zero/psiSq_ne_zero_of_nsmul_some, and mechanical leaves carrier_three/carrier_four-y. Next grind: crack carrier_three + carrier_four-y (mechanical, landed lemmas), then the x-walls via the scalar eval bridge. --- ORIGINAL DAG (attack order). S3a LANDED for n=2,3 (coordinate + Point level): y(2P)=(x^6+140x^3-392)/(2y)^3 (MultiplicationYFormula), Point-level 2*P=(Phi2/Psi2Sq, omega2/(2y)^3) (DoublingPointFormula), and y(3P)=omega3/(3x^4+84x)^3 with omega3=y*(x^12+1540x^9-87024x^6-109760x^3-1229312) (MultiplicationYTripleFormula). Computed y-coordinate division-polynomial numerators so far: omega2 = x^6+140x^3-392 (even n, no y factor); omega3 = y*(x^12+1540x^9-87024x^6-109760x^3-1229312) (odd n, y factor). NEXT (depth, not more fixed-n): (S2') define the general secp256k1 omega_n bivariately via the standard recurrence omega_n = (psi(n+2)*psi(n-1)^2 - psi(n-2)*psi(n+1)^2)/(4y) using Mathlib's W.psi (4y a unit in F_p), and prove it reproduces the landed omega2, omega3 (evalEval anchors) -- grounding the general object in two independent kernel-verified derivations. Then (S3a-uniform) y(nP)=omega_n/psi_n^3 on Points, and (S3b) the x-induction x((n+1)P)=addX(x(nP),x,slope(...)) with x(nP)=Phi_n/PsiSq_n and the omega-based y(nP) substituted, via prePsi_even/odd, PsiSq_even/odd, Phi_ofNat + the S1 coordinate-ring translation. The FiveTorsionBridge already carries the s2/s3 -> Point-level 3*P=some(X3,Y3) connection (hsl3s == the y-triple hl3 hypothesis), so per-n Point-level assembly is mechanical; the remaining WALL is the uniform induction over all n. Denominator nonzero: n*P affine => psi_n(P)!=0 => PsiSq_n(x)=psi_n(P)^2!=0 (eval bridge eval_PsiSq_eq_normEDS_sq + torsion bridge).",
+  "promotion_target_file": "Ecdlp/Proved/MultiplicationFormulaUniform.lean",
+  "source": {
+    "family": "n7-uniform",
+    "from": "manual (S1/S2 substrate landed, PR #200/#201; wall mapped BARRIERS.md B3)"
+  },
+  "depends_on": [
+    "Ecdlp/Proved/MultiplicationXCoordinateRing.lean",
+    "Ecdlp/Proved/DivisionPolynomialDoubling.lean"
+  ]
+}

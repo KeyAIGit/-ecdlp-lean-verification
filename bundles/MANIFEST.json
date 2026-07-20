@@ -17,7 +17,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 8189
+        "bytes": 18913
       },
       {
         "path": "data/stats.json",
@@ -43,7 +43,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 8189
+        "bytes": 18913
       },
       {
         "path": "data/stats.json",
@@ -67,19 +67,19 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 7722
+        "bytes": 7906
       },
       {
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 116985
+        "bytes": 142344
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 21138
+        "bytes": 35086
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -91,7 +91,7 @@
         "path": "notes/FOUNDATIONS.md",
         "reason": "the Weil/Semaev foundation ladder and its open rungs",
         "exists": true,
-        "bytes": 10272
+        "bytes": 10477
       },
       {
         "path": "experiments/HYPOTHESES.yaml",
@@ -111,7 +111,7 @@
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 8189
+        "bytes": 18913
       },
       {
         "path": "data/stats.json",
@@ -135,19 +135,19 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 7722
+        "bytes": 7906
       },
       {
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 116985
+        "bytes": 142344
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 21138
+        "bytes": 35086
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -159,7 +159,7 @@
         "path": "notes/FOUNDATIONS.md",
         "reason": "the Weil/Semaev foundation ladder and its open rungs",
         "exists": true,
-        "bytes": 10272
+        "bytes": 10477
       },
       {
         "path": "experiments/HYPOTHESES.yaml",
@@ -171,7 +171,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 241706
+        "bytes": 288761
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
