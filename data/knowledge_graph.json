@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 290,
     "barriers": 6,
-    "edges": 463,
+    "edges": 474,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -4022,6 +4022,56 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.CompressedDivisionPoly",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CompressedDivisionPoly",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CompressedDivisionPoly",
+      "to": "Ecdlp.Proved.ThreeTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CompressedDivisionPoly",
+      "to": "Ecdlp.Proved.FiveTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CompressedDivisionPoly",
+      "to": "Ecdlp.Proved.SevenTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CompressedDivisionPoly",
+      "to": "Ecdlp.Proved.ElevenTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CompressedDivisionPoly",
+      "to": "Ecdlp.Proved.ThirteenTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CompressedDivisionPoly",
+      "to": "Ecdlp.Proved.OddTorsionBound",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CompressedDivisionPoly",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi5",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.CompressedDivisionPoly",
+      "to": "Ecdlp.Proved.CoprimePsi3Psi7",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.CoprimePsi2PrePsi4",
       "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
@@ -6239,6 +6289,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.FourTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.CompressedDivisionPoly",
       "type": "imports"
     },
     {

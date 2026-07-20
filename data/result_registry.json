@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 906,
-  "distinct_qualified_names": 698,
+  "declaration_count": 929,
+  "distinct_qualified_names": 713,
   "verified_md_citations": 231,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -463,6 +463,14 @@
       "line": 27,
       "occurrences": 9
     },
+    "Ecdlp.Curve.X_mul_compressed_of_support": {
+      "name": "X_mul_compressed_of_support",
+      "namespace": "Ecdlp.Curve",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 172,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.a": {
       "name": "a",
       "namespace": "Ecdlp.Curve",
@@ -567,12 +575,60 @@
       "line": 28,
       "occurrences": 1
     },
+    "Ecdlp.Curve.beta_ne_zero": {
+      "name": "beta_ne_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 98,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.beta_pow_mod": {
+      "name": "beta_pow_mod",
+      "namespace": "Ecdlp.Curve",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 92,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.beta_sq_ne_beta": {
+      "name": "beta_sq_ne_beta",
+      "namespace": "Ecdlp.Curve",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 115,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.beta_sq_ne_one": {
+      "name": "beta_sq_ne_one",
+      "namespace": "Ecdlp.Curve",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 104,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.c": {
       "name": "c",
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/CoprimePsi2PrePsi4.lean",
       "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.coeff_comp_C_mul_X": {
+      "name": "coeff_comp_C_mul_X",
+      "namespace": "Ecdlp.Curve",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 80,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.compressed_of_support": {
+      "name": "compressed_of_support",
+      "namespace": "Ecdlp.Curve",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 163,
       "occurrences": 1
     },
     "Ecdlp.Curve.const_ne": {
@@ -589,6 +645,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FiveTorsionBridgeBar.lean",
       "line": 70,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.cube_covariant_support": {
+      "name": "cube_covariant_support",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 147,
       "occurrences": 1
     },
     "Ecdlp.Curve.cubicbar_eval": {
@@ -663,6 +727,14 @@
       "line": 183,
       "occurrences": 1
     },
+    "Ecdlp.Curve.eq_expand_contract_of_support": {
+      "name": "eq_expand_contract_of_support",
+      "namespace": "Ecdlp.Curve",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 154,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.eval_": {
       "name": "eval_",
       "namespace": "Ecdlp.Curve",
@@ -701,6 +773,22 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
       "line": 56,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.exists_X_mul_comp_of_covariant": {
+      "name": "exists_X_mul_comp_of_covariant",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 199,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.exists_comp_X_pow_of_invariant": {
+      "name": "exists_comp_X_pow_of_invariant",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 187,
       "occurrences": 1
     },
     "Ecdlp.Curve.exists_nonsingular_y": {
@@ -1117,6 +1205,22 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/EcdsaMalleability.lean",
       "line": 54,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.pow_eq_beta_iff_mod": {
+      "name": "pow_eq_beta_iff_mod",
+      "namespace": "Ecdlp.Curve",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 136,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.pow_eq_one_iff_three_dvd": {
+      "name": "pow_eq_one_iff_three_dvd",
+      "namespace": "Ecdlp.Curve",
+      "kind": "lemma",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 123,
       "occurrences": 1
     },
     "Ecdlp.Curve.pre": {
@@ -5551,6 +5655,14 @@
       "line": 3,
       "occurrences": 1
     },
+    "pre": {
+      "name": "pre",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 288,
+      "occurrences": 2
+    },
     "rel": {
       "name": "rel",
       "namespace": "",
@@ -5571,9 +5683,9 @@
       "name": "secp256k1_",
       "namespace": "",
       "kind": "theorem",
-      "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
-      "line": 181,
-      "occurrences": 1
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 221,
+      "occurrences": 2
     },
     "secp256k1_exists_normEDS_consecutive_eq_zero_of_not_isCoprime": {
       "name": "secp256k1_exists_normEDS_consecutive_eq_zero_of_not_isCoprime",
@@ -5582,6 +5694,14 @@
       "file": "Ecdlp/Proved/DivisionPolynomialEvalBridge.lean",
       "line": 169,
       "occurrences": 1
+    },
+    "secp256k1_pre": {
+      "name": "secp256k1_pre",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
+      "line": 237,
+      "occurrences": 7
     },
     "tying": {
       "name": "tying",
