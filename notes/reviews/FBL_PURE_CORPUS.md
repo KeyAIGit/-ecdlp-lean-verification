@@ -124,13 +124,17 @@ Record fields per task: claim_id · status · lean_files · lean_theorems · sou
   instantiated at secp256k1 (point decompression)". limitations: general theorem kernel-pure;
   congruences `native_decide`; gives closed-form correctness only (not sign/parity selection).
 
-### FBL-PURE-008 — compressed ψ_m = R_m(x³) [or x·R_m(x³)] + exact deg R_m — **partial**
-- current: GLV invariance (007) done; specific degrees exist (`preΨ'11`=60, `preΨ'13`=84 in
-  Eleven/ThirteenTorsion) but no general R_m existence + degree formula.
-- next_action: from 007's covariance, prove ∃ R_m with the exponent-≡0-mod-3 structure and
-  `deg R_m = (m²-1)/6` (3∤m) / `(m²-3)/6` (3∣m); specialize m=3,5,7,9,11,13.
-- barrier: general division-poly recurrence bookkeeping. paper_hook: "3× compression of j=0
-  division polynomials".
+### FBL-PURE-008 — compressed ψ_m = R_m(x³) [or x·R_m(x³)] + exact deg R_m — **verified**
+- verified: `Ecdlp/Proved/CompressedDivisionPoly.lean` (merged `c0994fc`, imported in `Ecdlp.lean`,
+  CI-green, no `sorry`). Reusable core over any field with a primitive cube root β:
+  `cube_covariant_support`, `exists_comp_X_pow_of_invariant` (c=1 ⇒ p∈F[X³], 3·deg R = deg p),
+  `exists_X_mul_comp_of_covariant` (c=β ⇒ p∈X·F[X³], 3·deg R+1 = deg p). Unconditional secp256k1:
+  `secp256k1_Ψ₃_compressed` (R₃=3X+84), `secp256k1_preΨ₅_compressed` (deg 4),
+  `secp256k1_preΨ₇_compressed` (deg 8), `secp256k1_preΨ₉_natDegree` (=40).
+- limitation: the compressed form for m∈{9,11,13} is stated **covariance-conditional** (explicit
+  `hcov` hypothesis) — the one missing foundation is the polynomial-level cube-covariance of
+  `preΨ' m` for general odd m (repo has only the `eval`-level version, m∈{3,5,7}). Bare degrees
+  `deg ψ_{9,11,13}` are unconditional. paper_hook: "3× compression of j=0 division polynomials".
 
 ### FBL-PURE-009 — general coprimality ψ_m ⊥ ψ_n (coprime odd m,n) — **partial** ⋆GPT-top⋆
 - current: 8 specific pairs proved (`CoprimePsi2Psi3/2Psi5/2Psi7/3PrePsi4/3Psi5/3Psi7/…`) via
