@@ -39,6 +39,18 @@ on:
         description: "Gate (faithfulness judge) provider: anthropic | featherless | deepseek | moonshot"
         required: false
         default: "anthropic"
+      breadth_provider:
+        description: "Breadth (idea) tier provider: anthropic | featherless | deepseek | moonshot"
+        required: false
+        default: "anthropic"
+      breadth_model:
+        description: "Breadth model (default Fable; set for a non-anthropic breadth tier, e.g. kimi-k3)"
+        required: false
+        default: "claude-fable-5"
+      gate_model:
+        description: "Gate model (default Opus; REQUIRED to match a non-anthropic gate_provider, e.g. kimi-k3)"
+        required: false
+        default: "claude-opus-4-8"
   # SECURITY (2026-07 audit): scheduled cron removed. Runs model-generated exploration with
   # DEEPSEEK/ANTHROPIC/FEATHERLESS keys + GITHUB_TOKEN in scope — unattended untrusted-code
   # execution with live secrets. Manual dispatch only until sandboxed. See
@@ -96,9 +108,12 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
           KIMI_API_KEY: ${{ secrets.KIMI_API_KEY }}
+          EXPLORE_BREADTH_PROVIDER: ${{ github.event.inputs.breadth_provider || 'anthropic' }}
+          EXPLORE_BREADTH_MODEL: ${{ github.event.inputs.breadth_model || 'claude-fable-5' }}
           EXPLORE_RIGOUR_PROVIDER: ${{ github.event.inputs.rigour_provider || 'anthropic' }}
           EXPLORE_RIGOUR_MODEL: ${{ github.event.inputs.rigour_model || 'claude-fable-5' }}
           EXPLORE_GATE_PROVIDER: ${{ github.event.inputs.gate_provider || 'anthropic' }}
+          EXPLORE_GATE_MODEL: ${{ github.event.inputs.gate_model || 'claude-opus-4-8' }}
         run: |
           set -euo pipefail
           python3 scripts/explore_pipeline.py \
