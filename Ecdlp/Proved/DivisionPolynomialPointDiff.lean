@@ -36,4 +36,19 @@ theorem φ_ψ_diff_evalEval (x y : R) (m n : ℤ) :
   have h := congrArg (Polynomial.evalEval x y) (φ_ψ_diff W m n)
   simpa only [evalEval_mul, evalEval_sub, evalEval_pow] using h
 
+/-- **The three-term elliptic-net relation `ψ_isEllSequence` evaluated at a point `(x, y)`.**
+For all `m n r : ℤ`,
+`ψ(m+n)(P)·ψ(m−n)(P)·ψr(P)² = ψ(m+r)(P)·ψ(m−r)(P)·ψn(P)² − ψ(n+r)(P)·ψ(n−r)(P)·ψm(P)²`,
+with `·(P) = evalEval x y`. The point-level form of the ω-free net relation (`ψ_isEllSequence`,
+`DivisionPolynomialEllSequence.lean`) — the general index-arithmetic tool the even/odd steps of
+the N7-uniform carrier use to relate `ψ` at `2k, 2k±1, 2k±2` to `ψ` at `k, k±1` (its `r = 1`
+specialisation is `φ_ψ_diff_evalEval`). Same `congrArg (evalEval x y)` + `evalEval_mul`/`sub`/`pow`
+distribution over the proved `R[X][Y]` identity. No `native_decide`, no new axioms. -/
+theorem ψ_isEllSequence_evalEval (x y : R) (m n r : ℤ) :
+    (W.ψ (m + n)).evalEval x y * (W.ψ (m - n)).evalEval x y * (W.ψ r).evalEval x y ^ 2
+      = (W.ψ (m + r)).evalEval x y * (W.ψ (m - r)).evalEval x y * (W.ψ n).evalEval x y ^ 2
+        - (W.ψ (n + r)).evalEval x y * (W.ψ (n - r)).evalEval x y * (W.ψ m).evalEval x y ^ 2 := by
+  have h := congrArg (Polynomial.evalEval x y) (ψ_isEllSequence W m n r)
+  simpa only [evalEval_mul, evalEval_sub, evalEval_pow] using h
+
 end Ecdlp.Curve
