@@ -110,9 +110,12 @@ def call_kimi(prompt: str, max_tokens: int) -> str | None:
     # `or` (not a get-default): CI sets KIMI_BASE_URL to "" when the secret is undefined, and an
     # empty base_url makes the OpenAI client raise a bare "Connection error". Fall back to the
     # public endpoint on empty; a real KIMI_BASE_URL secret (e.g. the .cn platform) still wins.
+    # Explicit timeout: kimi-k3 is slow, and with no timeout a stuck call hangs until the SDK
+    # default (~10 min) / the workflow's 20-min limit. Fail fast (5 min) instead.
     client = OpenAI(
         base_url=os.environ.get("KIMI_BASE_URL") or "https://api.moonshot.ai/v1",
         api_key=os.environ["KIMI_API_KEY"],
+        timeout=300.0,
     )
     model = os.environ.get("KIMI_MODEL") or "kimi-k3"
     # json_object first; retry plain if the provider rejects response_format.
@@ -157,8 +160,9 @@ def render(proposals: list[dict], model: str) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=8, help="number of proposals to request")
-    ap.add_argument("--max-tokens", type=int, default=16000,
-                    help="output cap (kimi-k3 is verbose; keep generous to avoid truncation)")
+    ap.add_argument("--max-tokens", type=int, default=6000,
+                    help="output cap (enough for ~8 proposals; too high makes kimi-k3 run for many "
+                         "minutes and hit the SDK/workflow timeout)")
     args = ap.parse_args()
 
     if not os.environ.get("KIMI_API_KEY"):
