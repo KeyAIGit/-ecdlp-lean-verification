@@ -26,6 +26,18 @@ on:
         description: Goedel 32B attempts
         required: true
         default: '2'
+      provider:
+        description: Drafter provider (moonshot routes all attempts to Kimi kimi-k3)
+        required: false
+        default: featherless
+        type: choice
+        options:
+          - featherless
+          - moonshot
+      kimi_attempts:
+        description: Kimi draft→verify→repair rounds (when provider=moonshot)
+        required: false
+        default: '6'
 
 permissions:
   contents: read
@@ -49,17 +61,25 @@ jobs:
       - name: Run target theorem attempt
         env:
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+          KIMI_API_KEY: ${{ secrets.KIMI_API_KEY }}
+          KIMI_CHAT_URL: ${{ secrets.KIMI_CHAT_URL }}
           INPUT_TARGET: ${{ inputs.target }}
           INPUT_FAST_ATTEMPTS: ${{ inputs.fast_attempts }}
           INPUT_HEAVY_ATTEMPTS: ${{ inputs.heavy_attempts }}
+          INPUT_PROVIDER: ${{ inputs.provider }}
+          INPUT_KIMI_ATTEMPTS: ${{ inputs.kimi_attempts }}
         run: |
           TARGET="${INPUT_TARGET:-zmod_from_mod_zero}"
           FAST_ATTEMPTS="${INPUT_FAST_ATTEMPTS:-4}"
           HEAVY_ATTEMPTS="${INPUT_HEAVY_ATTEMPTS:-2}"
+          PROVIDER="${INPUT_PROVIDER:-featherless}"
+          KIMI_ATTEMPTS="${INPUT_KIMI_ATTEMPTS:-6}"
           python3 scripts/prover_target_attempt.py \
             --target "$TARGET" \
+            --provider "$PROVIDER" \
             --fast-attempts "$FAST_ATTEMPTS" \
-            --heavy-attempts "$HEAVY_ATTEMPTS"
+            --heavy-attempts "$HEAVY_ATTEMPTS" \
+            --kimi-attempts "$KIMI_ATTEMPTS"
 
       - name: Write job summary
         if: always()

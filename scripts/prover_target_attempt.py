@@ -35,6 +35,21 @@ GOEDEL_32B = "Goedel-LM/Goedel-Prover-V2-32B"
 # budget "kimina_model" if a larger Kimina becomes available on the plan.
 KIMINA_PROVER = "AI-MO/Kimina-Prover-Distill-8B"
 
+# Moonshot/Kimi as a general drafter tier: kimi-k3 (the 2.8T flagship) drafts Lean, the kernel
+# (`lake env lean`) re-checks every attempt exactly as for the Featherless provers. Drafter only.
+# `or` (not a get-default): CI sets these env vars to "" when the secret is undefined, and an
+# empty string must fall back to the default rather than becoming a broken URL / model id.
+MOONSHOT_URL = os.environ.get("KIMI_CHAT_URL") or "https://api.moonshot.ai/v1/chat/completions"
+KIMI_K3 = os.environ.get("KIMI_MODEL") or "kimi-k3"
+
+# provider → (chat-completions URL, api-key env var, User-Agent or None, max_tokens).
+# Featherless sits behind Cloudflare (needs a browser UA); Moonshot is plain OpenAI-compatible.
+# kimi-k3 is verbose, so it gets a larger token budget to avoid truncated proof bodies.
+PROVIDERS: dict[str, tuple[str, str, str | None, int]] = {
+    "featherless": (API_URL, "FEATHERLESS_API_KEY", USER_AGENT, 1000),
+    "moonshot": (MOONSHOT_URL, "KIMI_API_KEY", None, 4000),
+}
+
 
 @dataclass(frozen=True)
 class Target:
@@ -175,6 +190,7 @@ def make_prompt(target: Target, previous_candidate: str | None, previous_error: 
 
 
 def call_model(
+    provider: str,
     api_key: str,
     model: str,
     target: Target,
@@ -182,6 +198,7 @@ def call_model(
     previous_candidate: str | None,
     previous_error: str | None,
 ) -> str:
+    url, _, user_agent, max_tokens = PROVIDERS[provider]
     prompt = make_prompt(target, previous_candidate, previous_error)
     temperature = min(0.9, 0.15 + 0.06 * attempt)
     payload = {
@@ -194,17 +211,19 @@ def call_model(
             {"role": "user", "content": prompt},
         ],
         "temperature": temperature,
-        "max_tokens": 1000,
+        "max_tokens": max_tokens,
     }
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
+    if user_agent:
+        headers["User-Agent"] = user_agent
     request = urllib.request.Request(
-        API_URL,
+        url,
         data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "User-Agent": USER_AGENT,
-        },
+        headers=headers,
         method="POST",
     )
     try:
@@ -212,7 +231,7 @@ def call_model(
             body = response.read().decode("utf-8")
     except urllib.error.HTTPError as exc:
         error_body = exc.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"Featherless HTTP {exc.code}: {error_body}") from exc
+        raise RuntimeError(f"{provider} HTTP {exc.code}: {error_body}") from exc
 
     parsed = json.loads(body)
     return parsed["choices"][0]["message"]["content"]
@@ -248,31 +267,45 @@ def main() -> int:
     parser.add_argument("--heavy-model", default=GOEDEL_32B)
     parser.add_argument("--kimina-model", default=KIMINA_PROVER)
     parser.add_argument("--kimina-attempts", type=int, default=2)
+    parser.add_argument("--provider", choices=sorted(PROVIDERS), default="featherless",
+                        help="drafter provider; 'moonshot' routes all attempts to Kimi")
+    parser.add_argument("--kimi-model", default=KIMI_K3)
+    parser.add_argument("--kimi-attempts", type=int, default=6,
+                        help="draft→verify→repair rounds when --provider moonshot")
     args = parser.parse_args()
 
-    api_key = os.environ.get("FEATHERLESS_API_KEY", "").strip()
+    key_env = PROVIDERS[args.provider][1]
+    api_key = os.environ.get(key_env, "").strip()
     if not api_key:
-        print("FEATHERLESS_API_KEY is missing", flush=True)
-        REPORT_FILE.write_text("# Prover target attempt\n\nFEATHERLESS_API_KEY is missing.\n", encoding="utf-8")
+        print(f"{key_env} is missing", flush=True)
+        REPORT_FILE.write_text(f"# Prover target attempt\n\n{key_env} is missing.\n", encoding="utf-8")
         return 0
 
     target = TARGETS[args.target]
-    REPORT_FILE.write_text(
-        f"# Prover target attempt\n\n"
-        f"Target: `{target.name}`\n\n"
-        f"Description: {target.description}\n\n"
-        f"Fast model: `{args.fast_model}` × {args.fast_attempts}\n\n"
-        f"Heavy model: `{args.heavy_model}` × {args.heavy_attempts}\n\n"
-        f"Prompt source: `prompts/lean_prover_prompt.md`, `prompts/lean_repair_prompt.md`\n\n",
-        encoding="utf-8",
-    )
 
     previous_error: str | None = None
     previous_candidate: str | None = None
     sequence: list[tuple[str, int, str]] = []
-    sequence.extend((args.fast_model, i, "fast") for i in range(1, args.fast_attempts + 1))
-    sequence.extend((args.heavy_model, i, "heavy") for i in range(1, args.heavy_attempts + 1))
-    sequence.extend((args.kimina_model, i, "kimina") for i in range(1, args.kimina_attempts + 1))
+    if args.provider == "moonshot":
+        sequence.extend((args.kimi_model, i, "kimi") for i in range(1, args.kimi_attempts + 1))
+        models_line = f"Model: `{args.kimi_model}` × {args.kimi_attempts}"
+    else:
+        sequence.extend((args.fast_model, i, "fast") for i in range(1, args.fast_attempts + 1))
+        sequence.extend((args.heavy_model, i, "heavy") for i in range(1, args.heavy_attempts + 1))
+        sequence.extend((args.kimina_model, i, "kimina") for i in range(1, args.kimina_attempts + 1))
+        models_line = (f"Fast `{args.fast_model}` × {args.fast_attempts}; "
+                       f"heavy `{args.heavy_model}` × {args.heavy_attempts}; "
+                       f"kimina `{args.kimina_model}` × {args.kimina_attempts}")
+
+    REPORT_FILE.write_text(
+        f"# Prover target attempt\n\n"
+        f"Target: `{target.name}`\n\n"
+        f"Description: {target.description}\n\n"
+        f"Provider: `{args.provider}`\n\n"
+        f"{models_line}\n\n"
+        f"Prompt source: `prompts/lean_prover_prompt.md`, `prompts/lean_repair_prompt.md`\n\n",
+        encoding="utf-8",
+    )
 
     infrastructure_error = False
     solved = False
@@ -280,7 +313,7 @@ def main() -> int:
     for model, attempt, phase in sequence:
         print(f"{phase.upper()} attempt {attempt} with {model} on {target.name}", flush=True)
         try:
-            raw = call_model(api_key, model, target, attempt, previous_candidate, previous_error)
+            raw = call_model(args.provider, api_key, model, target, attempt, previous_candidate, previous_error)
         except Exception as exc:  # noqa: BLE001
             infrastructure_error = True
             msg = f"Model/API call failed for {model}: {exc}"

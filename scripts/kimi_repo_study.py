@@ -107,11 +107,14 @@ def parse_json(raw: str) -> dict | None:
 def call_kimi(prompt: str, max_tokens: int) -> str | None:
     from openai import OpenAI
 
+    # `or` (not a get-default): CI sets KIMI_BASE_URL to "" when the secret is undefined, and an
+    # empty base_url makes the OpenAI client raise a bare "Connection error". Fall back to the
+    # public endpoint on empty; a real KIMI_BASE_URL secret (e.g. the .cn platform) still wins.
     client = OpenAI(
-        base_url=os.environ.get("KIMI_BASE_URL", "https://api.moonshot.ai/v1"),
+        base_url=os.environ.get("KIMI_BASE_URL") or "https://api.moonshot.ai/v1",
         api_key=os.environ["KIMI_API_KEY"],
     )
-    model = os.environ.get("KIMI_MODEL", "kimi-k3")
+    model = os.environ.get("KIMI_MODEL") or "kimi-k3"
     # json_object first; retry plain if the provider rejects response_format.
     for use_json in (True, False):
         kw = {"model": model, "temperature": 0.6, "max_tokens": max_tokens,
