@@ -1,7 +1,7 @@
 {
   "_meta": {
     "purpose": "Adversarially-verified corpus-coverage overrides applied by build_frontier_map.py. Each entry: a corpus claim discharged (verified) or partially addressed (partial) by a named kernel-verified theorem, confirmed by an independent skeptic pass.",
-    "provenance": "workflow run wf_0230ddd8-5a5 (corpus-coverage-remap): 486 claims mapped vs VERIFIED.md, every verified/partial upgrade re-checked by an adversarial verifier; 18 confirmed, 2 downgraded verified->partial, 0 rejected.",
+    "provenance": "workflow run wf_0230ddd8-5a5 (corpus-coverage-remap): 486 claims mapped vs VERIFIED.md, every verified/partial upgrade re-checked by an adversarial verifier; 18 confirmed, 2 downgraded verified->partial, 0 rejected. Closure-program re-audit (5 independent skeptic agents, one per candidate): 7 existing partial/verified mappings re-confirmed unchanged (pollard-rho-collision-002, mov-random-q-006, semaev-definition-001, semaev-recursion-degree-002, glv-root-mod-n-008, glv-jzero-orderthree-005 all genuinely partial); ONE upgrade smart-secp256k1-boundary-006 partial->verified (capstone Ecdlp.Curve.secp256k1_classical_security_profile proves BOTH conjuncts: Nat.card = n [cofactor 1] AND Nat.Prime n [prime order]); ONE reclassification cheon-multidivisor-crt-004 tractable->partial (CRT reconstruction kernel is already proved by Ecdlp.PohligHellman.reconstruct [two-factor ZMod.chineseRemainder bijection]; the load-bearing attack step 'auxiliary powers => residues recoverable' and the n-ary product remain unproven, hence partial not verified).",
     "note": "Overrides win over the heuristic/VERIFIED-membership classification. Only verified/partial upgrades are recorded here; lateral reclassifications and demotions of existing verified claims are intentionally NOT auto-applied."
   },
   "overrides": {
@@ -82,8 +82,12 @@
       "theorem": "Ecdlp.GenericGroup.generic_dlog_sqrt_bound"
     },
     "smart-secp256k1-boundary-006": {
+      "status": "verified",
+      "theorem": "Ecdlp.Curve.secp256k1_classical_security_profile"
+    },
+    "cheon-multidivisor-crt-004": {
       "status": "partial",
-      "theorem": "Ecdlp.Primality.secp256k1_n_prime"
+      "theorem": "Ecdlp.PohligHellman.reconstruct"
     }
   }
 }
