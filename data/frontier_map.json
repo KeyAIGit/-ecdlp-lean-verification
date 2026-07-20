@@ -7,18 +7,18 @@
     "regenerate": "python3 scripts/build_frontier_map.py"
   },
   "status_summary": {
-    "informal": 238,
-    "blocked": 185,
-    "partial": 50,
-    "verified": 11,
+    "informal": 225,
+    "blocked": 193,
+    "partial": 54,
+    "verified": 12,
     "tractable": 2
   },
   "confidence_summary": {
-    "corpus": 268,
-    "triage": 95,
-    "heuristic": 71,
-    "audit-reclassify": 28,
-    "verified-remap": 24
+    "corpus": 262,
+    "triage": 93,
+    "heuristic": 66,
+    "audit-reclassify": 36,
+    "verified-remap": 29
   },
   "foundations": {
     "weil_pairing": {
@@ -40,7 +40,7 @@
       "mathlib_gap": "No group-operation / oracle-query cost model, so exact Θ running times (index calculus, distinguished points) can't be stated. The generic Ω(√p) core was formalized by sidestepping this.",
       "leverage": "medium",
       "effort": "weeks-months",
-      "blocks_corpus_claims": 44
+      "blocks_corpus_claims": 47
     },
     "lattice_reduction": {
       "status": "missing_from_mathlib",
@@ -54,7 +54,7 @@
       "mathlib_gap": "MvPolynomial exists but not the elliptic summation polynomials Sₙ (index calculus over extension fields).",
       "leverage": "medium",
       "effort": "weeks-months",
-      "blocks_corpus_claims": 56
+      "blocks_corpus_claims": 57
     },
     "quantum_cost": {
       "status": "out_of_scope",
@@ -75,14 +75,14 @@
       "mathlib_gap": "Only rank-1 normEDS / IsEllSequence exists (+ a stalled net-relation PR). General multi-index (rank≥2) elliptic nets, net polynomials over arbitrary fields, and Stange's reconstruction / Laurent-property theory are absent — gating elliptic-net index calculus and net-based point relations.",
       "leverage": "low",
       "effort": "months (research-grade)",
-      "blocks_corpus_claims": 12
+      "blocks_corpus_claims": 15
     },
     "heights": {
       "status": "missing_from_mathlib",
       "mathlib_gap": "No canonical (Néron–Tate) height, Mordell–Weil lattice, or point-lifting to characteristic 0. Blocks the xedni-calculus / height-bound relation claims (all negative-result / heuristic in nature).",
       "leverage": "low",
       "effort": "months",
-      "blocks_corpus_claims": 5
+      "blocks_corpus_claims": 6
     }
   },
   "claims": [
@@ -1099,9 +1099,9 @@
     {
       "id": "vow-shared-linear-speedup-003",
       "formal_status": "formalizable",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "heuristic",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -1659,9 +1659,9 @@
     {
       "id": "diem2013-success-probability-006",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "heuristic",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -2519,9 +2519,9 @@
     {
       "id": "cheng-huang-height-decision-definition-003",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "triage",
+      "status": "blocked",
+      "blocking_foundation": "heights",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -2559,9 +2559,9 @@
     {
       "id": "cheng-huang-slp-definition-008",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "triage",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -2719,9 +2719,9 @@
     {
       "id": "lauter-stange-eds-problem-definitions-001",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "heuristic",
+      "status": "blocked",
+      "blocking_foundation": "elliptic_nets",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -2819,9 +2819,9 @@
     {
       "id": "stange-curve-net-poset-isomorphism-013",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "heuristic",
+      "status": "blocked",
+      "blocking_foundation": "elliptic_nets",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -2909,9 +2909,9 @@
     {
       "id": "stange-scale-equivalence-normalization-010",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "heuristic",
+      "status": "blocked",
+      "blocking_foundation": "elliptic_nets",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -4039,12 +4039,12 @@
     {
       "id": "galbraith-diem-scope-004",
       "formal_status": "informal_only",
-      "status": "informal",
+      "status": "verified",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
-      "verified": false,
-      "discharged_by": null
+      "verified": true,
+      "discharged_by": "Ecdlp.Curve.secp256k1_generator_equation"
     },
     {
       "id": "galbraith-gaudry-total-complexity-003",
@@ -4639,12 +4639,12 @@
     {
       "id": "shoup-index-calculus-excluded-005",
       "formal_status": "scope_meta",
-      "status": "informal",
+      "status": "partial",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "(unassigned)",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.GenericGroup.generic_success_le"
     },
     {
       "id": "teske-generic-input-model-005",
@@ -4709,9 +4709,9 @@
     {
       "id": "mm2017-pollard-limit-007",
       "formal_status": "scope_meta",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -4849,12 +4849,12 @@
     {
       "id": "mov-secp256k1-applicability-boundary-010",
       "formal_status": "scope_meta",
-      "status": "informal",
+      "status": "partial",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.Curve.secp256k1_embedding_degree_gt_100"
     },
     {
       "id": "mov-special-families-only-009",
@@ -4879,12 +4879,12 @@
     {
       "id": "satoh-nonprime-p-primary-extension-008",
       "formal_status": "scope_meta",
-      "status": "informal",
+      "status": "partial",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.PohligHellman.component"
     },
     {
       "id": "smart-secp256k1-boundary-006",
@@ -4909,12 +4909,12 @@
     {
       "id": "glv-security-screening-020",
       "formal_status": "scope_meta",
-      "status": "informal",
+      "status": "partial",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.Curve.secp256k1_classical_security_profile"
     },
     {
       "id": "hgs-lattice-006",
