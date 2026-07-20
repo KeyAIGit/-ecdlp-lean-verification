@@ -11,13 +11,13 @@ import Ecdlp.Proved.CoprimePsi3Psi5
 import Ecdlp.Proved.CoprimePsi3Psi7
 
 /-!
-# FBL-PURE-008 — compressed division polynomials (structural core) — DRAFT (uncompiled)
+# FBL-PURE-008 — compressed division polynomials (structural core)
 
-> **STATUS: DRAFT.** This file has NOT been through the Lean kernel (no local toolchain).
-> Every Mathlib/repo name was verified by reading source at the pinned commit
-> (`mathlib4 @ fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`, Lean v4.31.0), but tactic
-> behaviour (`ring`, `simp only [...]`, `compute_degree`, `omega`, `native_decide`) is only
-> CI-checkable. Do **not** import from `Ecdlp.lean` until CI is green.
+> **STATUS: kernel-verified.** Drafted with the Kimi K3 proof-drafter (PR #218), then
+> accepted by the Lean kernel in CI (`build` green) and imported into `Ecdlp.lean` — it is
+> part of the built, completeness-gated base (Lean v4.31.0, `mathlib4 @
+> fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`). No axioms beyond the trusted base; the concrete
+> `m ∈ {3,5,7,9,11,13}` results inherit `Lean.ofReduceBool` from the `native_decide` degree facts.
 
 ## The claim (FBL-PURE-008)
 
