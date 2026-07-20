@@ -11,7 +11,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4828
+        "bytes": 4827
       },
       {
         "path": "tasks/NEXT.md",
@@ -29,7 +29,7 @@
         "path": "data/frontier_map.json",
         "reason": "per-claim frontier status: verified / tractable / blocked / informal",
         "exists": true,
-        "bytes": 151831
+        "bytes": 152305
       }
     ],
     "medium": [
@@ -37,7 +37,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4828
+        "bytes": 4827
       },
       {
         "path": "tasks/NEXT.md",
@@ -55,7 +55,7 @@
         "path": "data/frontier_map.json",
         "reason": "per-claim frontier status: verified / tractable / blocked / informal",
         "exists": true,
-        "bytes": 151831
+        "bytes": 152305
       },
       {
         "path": "README.md",
@@ -105,7 +105,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4828
+        "bytes": 4827
       },
       {
         "path": "tasks/NEXT.md",
@@ -123,7 +123,7 @@
         "path": "data/frontier_map.json",
         "reason": "per-claim frontier status: verified / tractable / blocked / informal",
         "exists": true,
-        "bytes": 151831
+        "bytes": 152305
       },
       {
         "path": "README.md",

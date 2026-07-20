@@ -1,0 +1,37 @@
+{
+  "_meta": {
+    "purpose": "Audit-driven reclassifications applied by build_frontier_map.py. Each entry corrects a vendored-CSV mathlib_area mis-tag: the corpus tagged many claims 'Mathlib.GroupTheory.OrderOfElement / Subgroup', which the classifier defaulted to status='tractable', even when the claim's actual content is a running-time complexity bound, a quantum (Shor/QFT) procedure, an index-calculus/Groebner step, a Weil pairing, an elliptic-net/EDS-period statement, or non-formalizable prose. These are status/foundation DEMOTIONS (and lateral moves) that the theorem-discharge overrides file intentionally does not carry. Applied after triage and before the verified/override paths, so a VERIFIED.md citation or a theorem-discharge override still wins.",
+    "provenance": "Tractable-bucket over-optimism audit (2 independent strict skeptic agents over all 30 status='tractable' claims). 28 of 30 were mislabeled tractable purely from the lazy 'OrderOfElement / Subgroup' CSV area tag; each demotion re-derived from the claim's own statement content. 2 claims kept tractable (NOT listed here): glv-euclidean-basis-vector-015 (extended-Euclidean short kernel-lattice vector, pure number theory) and glv-frobenius-fast-example-004 (q-power Frobenius is a ring/curve endomorphism, elementary) — both genuinely formalizable now with no missing foundation.",
+    "note": "foundation=null means the claim is non-formalizable prose (informal): paper-scope reportage, empirical 'Assumption N states ...', or algorithm-design description."
+  },
+  "reclassify": {
+    "pollard-lambda-005": {"status": "blocked", "foundation": "cost_model"},
+    "cheon-pminus1-theorem-002": {"status": "blocked", "foundation": "cost_model"},
+    "ghs-theorem1-conditional-complexity-002": {"status": "blocked", "foundation": "cost_model"},
+    "smart-group-operation-complexity-004": {"status": "blocked", "foundation": "cost_model"},
+    "jacobson-xedni-linear-runtime-lower-bound-008": {"status": "blocked", "foundation": "cost_model"},
+    "mov-weil-pairing-target-001": {"status": "blocked", "foundation": "weil_pairing"},
+    "hkt-theorem1-liftable-tuple-bound-005": {"status": "blocked", "foundation": "heights"},
+    "fhjrv-factor-base-reduction-003": {"status": "blocked", "foundation": "semaev_polynomials"},
+    "ky2015-npcomplete-001": {"status": "blocked", "foundation": "semaev_polynomials"},
+    "diem2011-two-thirds-003": {"status": "blocked", "foundation": "semaev_polynomials"},
+    "lauter-stange-residue-oracle-ecdlp-014": {"status": "blocked", "foundation": "elliptic_nets"},
+    "lauter-stange-period-formula-007": {"status": "blocked", "foundation": "elliptic_nets"},
+    "stange-subnet-functoriality-003": {"status": "blocked", "foundation": "elliptic_nets"},
+    "lauter-stange-perfect-periodic-construction-005": {"status": "blocked", "foundation": "elliptic_nets"},
+    "lauter-stange-residue-conditions-015": {"status": "blocked", "foundation": "elliptic_nets"},
+    "pz-power-two-qft-postprocessing-005": {"status": "blocked", "foundation": "quantum_cost"},
+    "pz-prime-known-order-assumption-003": {"status": "blocked", "foundation": "quantum_cost"},
+    "shor-cyclic-field-generalization-010": {"status": "blocked", "foundation": "quantum_cost"},
+    "shor-order-finding-periodicity-005": {"status": "blocked", "foundation": "quantum_cost"},
+    "shor-order-finding-repetition-006": {"status": "blocked", "foundation": "quantum_cost"},
+    "shor-polynomial-recovery-crt-009": {"status": "blocked", "foundation": "quantum_cost"},
+    "fghr-char2-limit-007": {"status": "informal", "foundation": null},
+    "teske-prime-order-proof-003": {"status": "informal", "foundation": null},
+    "fhjrv-higher-torsion-008": {"status": "informal", "foundation": null},
+    "pq2012-ffd-assumption-003": {"status": "informal", "foundation": null},
+    "f4-drl-design-004": {"status": "informal", "foundation": null},
+    "f4-full-solving-pipeline-003": {"status": "informal", "foundation": null},
+    "shor-abelian-extension-reported-011": {"status": "informal", "foundation": null}
+  }
+}
