@@ -9,8 +9,8 @@
   "status_summary": {
     "informal": 225,
     "blocked": 193,
-    "partial": 54,
-    "verified": 12,
+    "partial": 55,
+    "verified": 11,
     "tractable": 2
   },
   "confidence_summary": {
@@ -4039,11 +4039,11 @@
     {
       "id": "galbraith-diem-scope-004",
       "formal_status": "informal_only",
-      "status": "verified",
+      "status": "partial",
       "blocking_foundation": null,
       "confidence": "verified-remap",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
-      "verified": true,
+      "verified": false,
       "discharged_by": "Ecdlp.Curve.secp256k1_generator_equation"
     },
     {
