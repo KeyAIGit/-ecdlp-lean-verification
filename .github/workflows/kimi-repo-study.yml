@@ -1,0 +1,113 @@
+name: Kimi repo-study (grounded next-theorem proposals)
+
+# Kimi (kimi-k3) STUDIES the repo frontier — open barriers, the proved-theorem inventory,
+# and the registered open Target stems — and proposes GROUNDED, checkable next theorems that
+# build on lemmas already in the repo. Output → notes/KIMI_REPO_STUDY.md via a draft PR.
+#
+# Kimi is a DRAFTER only: every proposal is a LEAD for the Lean kernel / CI to verify; nothing
+# here enters the corpus until Lean accepts it. No KIMI_API_KEY ⇒ clean no-op (green, zero spend).
+
+on:
+  workflow_dispatch:
+    inputs:
+      n:
+        description: "Number of grounded proposals to request"
+        required: false
+        default: "8"
+      kimi_model:
+        description: "Moonshot model id"
+        required: false
+        default: "kimi-k3"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: kimi-repo-study
+  cancel-in-progress: false
+
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Guard — is KIMI_API_KEY configured?
+        id: guard
+        env:
+          KIMI_API_KEY: ${{ secrets.KIMI_API_KEY }}
+        run: |
+          if [ -z "${KIMI_API_KEY:-}" ]; then
+            echo "KIMI_API_KEY absent — study no-ops (green, zero spend)."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Python
+        if: steps.guard.outputs.enabled == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        if: steps.guard.outputs.enabled == 'true'
+        run: pip install --quiet openai
+
+      - name: Run Kimi repo-study
+        id: run
+        if: steps.guard.outputs.enabled == 'true'
+        env:
+          KIMI_API_KEY: ${{ secrets.KIMI_API_KEY }}
+          KIMI_BASE_URL: ${{ secrets.KIMI_BASE_URL }}
+          KIMI_MODEL: ${{ github.event.inputs.kimi_model || 'kimi-k3' }}
+        run: |
+          set -euo pipefail
+          python3 scripts/kimi_repo_study.py --n "${{ github.event.inputs.n || '8' }}" \
+            | tee kimi-study-output.txt
+          git add -A notes/
+          if git diff --cached --quiet -- notes/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open ONE draft PR with the study
+        if: steps.guard.outputs.enabled == 'true' && steps.run.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          ts="$(date +%Y%m%d-%H%M%S)"
+          branch="kimi-study/${ts}"
+          git config user.name "keyai-engine-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add -A notes/
+          git commit -m "kimi repo-study: grounded next-theorem proposals (${ts})"
+          git push -u origin "$branch"
+          {
+            echo "Kimi (\`kimi-k3\`, Moonshot) studied the repository frontier — open barriers,"
+            echo "the proved-theorem inventory, and the registered open Target stems — and proposed"
+            echo "grounded, checkable next theorems in \`notes/KIMI_REPO_STUDY.md\`."
+            echo
+            echo "**Drafter only.** Every proposal is a LEAD; the Lean kernel / CI is the sole verifier."
+            echo "Nothing enters the corpus until Lean accepts it. Review and turn the good ones into"
+            echo "targets / issues / proof attempts."
+            echo
+            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+          } > pr-body.txt
+          gh pr create --draft --base main --head "$branch" \
+            --title "kimi repo-study: grounded next-theorem proposals (${ts})" \
+            --body-file pr-body.txt
+
+      - name: Upload run log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kimi-repo-study-run
+          path: kimi-study-output.txt
+          if-no-files-found: ignore
