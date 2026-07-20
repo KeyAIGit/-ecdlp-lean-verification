@@ -3,7 +3,7 @@
   "source": "Ecdlp/**/*.lean minus Targets/",
   "declaration_count": 929,
   "distinct_qualified_names": 713,
-  "verified_md_citations": 231,
+  "verified_md_citations": 232,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {

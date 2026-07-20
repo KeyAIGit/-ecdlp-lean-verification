@@ -312,3 +312,13 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 -- N7 non-degeneracy leaf: the n=4 division-polynomial torsion bridge 4•P=0 ⟺ ψ₄(P)=0
 -- (fills the even-index gap in the {2,3,5,7} family; inherits Lean.ofReduceBool from the 2≠0 fact)
 #print axioms Ecdlp.Curve.secp256k1_four_nsmul_eq_zero_iff
+
+-- Compressed division polynomials (FBL-PURE-008, Kimi K3-drafted): the cube-covariance
+-- structural core is pure (no native_decide) — p(βX)=c·p(X) ⇒ p ∈ F[X³] or X·F[X³]
+#print axioms Ecdlp.Curve.cube_covariant_support
+#print axioms Ecdlp.Curve.exists_comp_X_pow_of_invariant
+#print axioms Ecdlp.Curve.exists_X_mul_comp_of_covariant
+-- the concrete m∈{3,5,7} compressed forms + deg(preΨ'9)=40 inherit Lean.ofReduceBool via the
+-- native_decide degree facts
+#print axioms Ecdlp.Curve.secp256k1_preΨ₅_compressed
+#print axioms Ecdlp.Curve.secp256k1_preΨ₉_natDegree
