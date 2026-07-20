@@ -308,3 +308,7 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 -- N7-uniform y-coordinate multiplication-by-4 formula: y(4P)=ω₄/ψ₄³ (the y-companion of the
 -- landed x(4P)=Φ₄/ΨSq₄; the missing certificate for the carrier_four y-conjunct)
 #print axioms Ecdlp.Curve.secp256k1_quadruple_y
+
+-- N7 non-degeneracy leaf: the n=4 division-polynomial torsion bridge 4•P=0 ⟺ ψ₄(P)=0
+-- (fills the even-index gap in the {2,3,5,7} family; inherits Lean.ofReduceBool from the 2≠0 fact)
+#print axioms Ecdlp.Curve.secp256k1_four_nsmul_eq_zero_iff

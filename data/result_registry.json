@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 905,
-  "distinct_qualified_names": 697,
-  "verified_md_citations": 230,
+  "declaration_count": 906,
+  "distinct_qualified_names": 698,
+  "verified_md_citations": 231,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
   "declarations": {
@@ -1845,6 +1845,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/NsmulCoordsBaseFour.lean",
       "line": 41,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_four_nsmul_eq_zero_iff": {
+      "name": "secp256k1_four_nsmul_eq_zero_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionBridge.lean",
+      "line": 37,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_four_p_eq_trace_sq": {
