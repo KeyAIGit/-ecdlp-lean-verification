@@ -40,8 +40,12 @@ Targets → Proved only when Lean accepts the proof. Then: add the import to
 a direct push to `main`; a human merges.
 
 ## Hard rules
-- No secrets in the repo. The Featherless key is only a GitHub Actions secret
-  (`FEATHERLESS_API_KEY`). Never print API keys.
+- No secrets in the repo. External model keys live **only** as GitHub Actions secrets —
+  `FEATHERLESS_API_KEY` (prover loop), and `KIMI_API_KEY` (Moonshot/Kimi: the `moonshot`
+  provider tier of the explore pipeline; `KIMI_MODEL` default `kimi-latest`,
+  `KIMI_BASE_URL` default `https://api.moonshot.ai/v1`, both overridable). Never print API keys.
+  **Every model is a drafter only** — Kimi/Featherless/DeepSeek outputs are never trusted; the
+  Lean kernel / CI is the sole verifier. This keeps the one invariant intact.
 - Reproducibility: Mathlib is pinned via `lake-manifest.json` / `lakefile.toml`
   (Lean v4.31.0). Do not bump without intent.
 - No local Lean toolchain is assumed in dev containers; CI is the verifier.

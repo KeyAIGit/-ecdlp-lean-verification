@@ -44,9 +44,11 @@ SYMPY_TIMEOUT_S = int(os.environ.get("CERTIFY_TIMEOUT_S", "60"))
 OPUS_MODEL = os.environ.get("EXPLORE_OPUS_MODEL", "claude-opus-4-8")
 FABLE_MODEL = os.environ.get("EXPLORE_FABLE_MODEL", "claude-fable-5")
 DEEPSEEK_MODEL = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+KIMI_MODEL = os.environ.get("KIMI_MODEL", "kimi-latest")
 
 # Per-tier model routing — any tier is (provider, model). Provider ∈ {"anthropic", "deepseek",
-# "featherless"}. Default config is all-Anthropic (Opus + Fable), no DeepSeek: Fable generates the
+# "featherless", "moonshot"}. Default config is all-Anthropic (Opus + Fable), no DeepSeek: Fable
+# generates the
 # ideas and writes the rigour scripts (strong, cheaper/faster than Opus); Opus is the faithfulness
 # gate. Override any tier via the EXPLORE_*_PROVIDER / EXPLORE_*_MODEL env vars (or workflow inputs).
 BREADTH_PROVIDER = os.environ.get("EXPLORE_BREADTH_PROVIDER", "anthropic")
@@ -56,10 +58,14 @@ RIGOUR_MODEL = os.environ.get("EXPLORE_RIGOUR_MODEL", FABLE_MODEL)
 GATE_PROVIDER = os.environ.get("EXPLORE_GATE_PROVIDER", "anthropic")
 GATE_MODEL = os.environ.get("EXPLORE_GATE_MODEL", OPUS_MODEL)
 
-# OpenAI-compatible providers: (base_url, api-key env var).
+# OpenAI-compatible providers: (base_url, api-key env var). Moonshot/Kimi is OpenAI-compatible; its
+# base URL and key env are overridable so the same wiring serves the .ai (international) and .cn
+# endpoints. Kimi is a DRAFTER only — like every other provider here, its output is never trusted;
+# the Lean kernel / CI is the sole verifier.
 PROVIDERS = {
     "deepseek": ("https://api.deepseek.com", "DEEPSEEK_API_KEY"),
     "featherless": ("https://api.featherless.ai/v1", "FEATHERLESS_API_KEY"),
+    "moonshot": (os.environ.get("KIMI_BASE_URL", "https://api.moonshot.ai/v1"), "KIMI_API_KEY"),
 }
 
 # Per-1M-token USD (input, output). Anthropic + DeepSeek published rates; Featherless is a flat-rate
@@ -67,6 +73,9 @@ PROVIDERS = {
 PRICES = {
     "claude-opus-4-8": (5.0, 25.0), "claude-sonnet-5": (3.0, 15.0), "claude-haiku-4-5": (1.0, 5.0),
     "deepseek-chat": (0.28, 0.42), "deepseek-reasoner": (0.55, 2.19),
+    # Moonshot/Kimi, per-1M-token cache-miss (input, output). A KIMI_MODEL id NOT listed here
+    # prices at $0 and would bypass the --budget-usd cap — add any pinned id you use.
+    "kimi-latest": (0.60, 3.00), "kimi-k2.5": (0.60, 3.00), "kimi-k2.6": (0.95, 4.00),
 }
 
 AXES = [
@@ -113,7 +122,9 @@ def _usd(model: str, usage) -> float:
 
 def oai_call(provider: str, model: str, system: str, user: str, bucket: str,
              json_mode: bool = True, max_tokens: int = 4000, temperature: float = 0.7) -> str | None:
-    """Call any OpenAI-compatible provider (DeepSeek / Featherless). Returns content or None."""
+    """Call any OpenAI-compatible provider (DeepSeek / Featherless / Moonshot). Returns content or
+    None. json_mode is attempted first and, if the provider rejects `response_format`, silently
+    retried without it (the fallback below)."""
     base, keyenv = PROVIDERS[provider]
     key = os.environ.get(keyenv)
     if not key:

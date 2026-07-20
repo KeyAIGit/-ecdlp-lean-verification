@@ -9,7 +9,8 @@ name: Explore pipeline (DeepSeek breadth → Opus rigour → sympy → Opus gate
 # cheap breadth tier earns its place.
 #
 # SAFETY: draft PR only; a clean no-op (green, zero spend) when either key is absent; hard USD budget.
-# REQUIRED secrets: DEEPSEEK_API_KEY, ANTHROPIC_API_KEY. Set spend caps on both as a backstop.
+# REQUIRED secrets: DEEPSEEK_API_KEY, ANTHROPIC_API_KEY. OPTIONAL: FEATHERLESS_API_KEY,
+# KIMI_API_KEY (Moonshot/Kimi — enables the `moonshot` provider tier). Set spend caps as a backstop.
 
 on:
   workflow_dispatch:
@@ -27,7 +28,7 @@ on:
         required: false
         default: "6"
       rigour_provider:
-        description: "Rigour tier provider: anthropic | featherless | deepseek"
+        description: "Rigour tier provider: anthropic | featherless | deepseek | moonshot"
         required: false
         default: "anthropic"
       rigour_model:
@@ -35,7 +36,7 @@ on:
         required: false
         default: "claude-fable-5"
       gate_provider:
-        description: "Gate (faithfulness judge) provider: anthropic | featherless | deepseek"
+        description: "Gate (faithfulness judge) provider: anthropic | featherless | deepseek | moonshot"
         required: false
         default: "anthropic"
   # SECURITY (2026-07 audit): scheduled cron removed. Runs model-generated exploration with
@@ -65,6 +66,7 @@ jobs:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+          KIMI_API_KEY: ${{ secrets.KIMI_API_KEY }}
         run: |
           # Default config is all-Anthropic (breadth+rigour=Fable, gate=Opus), so ANTHROPIC_API_KEY
           # is required. The script self-checks any Featherless/DeepSeek keys only if a tier is
@@ -93,6 +95,7 @@ jobs:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+          KIMI_API_KEY: ${{ secrets.KIMI_API_KEY }}
           EXPLORE_RIGOUR_PROVIDER: ${{ github.event.inputs.rigour_provider || 'anthropic' }}
           EXPLORE_RIGOUR_MODEL: ${{ github.event.inputs.rigour_model || 'claude-fable-5' }}
           EXPLORE_GATE_PROVIDER: ${{ github.event.inputs.gate_provider || 'anthropic' }}
