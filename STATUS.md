@@ -22,9 +22,9 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 | status | claims | meaning |
 |---|---|---|
 | verified | **11** | a named kernel-verified theorem discharges the claim |
-| partial | **46** | a theorem addresses part of it |
+| partial | **50** | a theorem addresses part of it |
 | tractable | **30** | reachable now, no theorem yet |
-| blocked | **168** | needs a missing Mathlib foundation |
+| blocked | **164** | needs a missing Mathlib foundation |
 | informal | **231** | not a formal statement by nature |
 | unassigned | **0** | not yet triaged |
 | **total** | **486** | frontier completeness 100.0% |

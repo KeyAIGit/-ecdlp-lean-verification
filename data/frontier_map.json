@@ -8,16 +8,16 @@
   },
   "status_summary": {
     "informal": 231,
-    "blocked": 168,
-    "partial": 46,
+    "blocked": 164,
+    "partial": 50,
     "tractable": 30,
     "verified": 11
   },
   "confidence_summary": {
-    "corpus": 298,
+    "corpus": 295,
     "triage": 95,
     "heuristic": 72,
-    "verified-remap": 21
+    "verified-remap": 24
   },
   "foundations": {
     "weil_pairing": {
@@ -39,7 +39,7 @@
       "mathlib_gap": "No group-operation / oracle-query cost model, so exact Θ running times (index calculus, distinguished points) can't be stated. The generic Ω(√p) core was formalized by sidestepping this.",
       "leverage": "medium",
       "effort": "weeks-months",
-      "blocks_corpus_claims": 40
+      "blocks_corpus_claims": 39
     },
     "lattice_reduction": {
       "status": "missing_from_mathlib",
@@ -67,7 +67,7 @@
       "mathlib_gap": "Mathlib has EllipticCurve + group law, but not the deeper ECDLP constructions (higher division polynomials, torsion structure E[n]≅(ℤ/n)², isogeny depth). Partly tractable — the active Track-B DAG.",
       "leverage": "medium",
       "effort": "weeks each rung",
-      "blocks_corpus_claims": 38
+      "blocks_corpus_claims": 39
     },
     "elliptic_nets": {
       "status": "partial_in_mathlib",
@@ -1448,12 +1448,12 @@
     {
       "id": "glv-endomorphism-definition-003",
       "formal_status": "formalizable",
-      "status": "blocked",
+      "status": "partial",
       "blocking_foundation": "weil_pairing",
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.Curve.glvPoint_add"
     },
     {
       "id": "glv-euclidean-basis-vector-015",
@@ -2728,12 +2728,12 @@
     {
       "id": "lauter-stange-elliptic-net-recurrence-003",
       "formal_status": "formalizable_hard",
-      "status": "blocked",
+      "status": "partial",
       "blocking_foundation": "lattice_reduction",
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "(not in Mathlib: lattice reduction)",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.EDS.isEllSequence_of_rec_one"
     },
     {
       "id": "lauter-stange-fast-term-computation-010",
@@ -2788,8 +2788,8 @@
     {
       "id": "lauter-stange-residue-product-parity-013",
       "formal_status": "formalizable_hard",
-      "status": "blocked",
-      "blocking_foundation": "cost_model",
+      "status": "partial",
+      "blocking_foundation": "curve_depth",
       "confidence": "heuristic",
       "mathlib_area": "(unassigned)",
       "verified": false,
@@ -2998,12 +2998,12 @@
     {
       "id": "glv-prime-field-generalization-007",
       "formal_status": "formalizable_hard",
-      "status": "blocked",
+      "status": "partial",
       "blocking_foundation": "weil_pairing",
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve.Isogeny (partial)",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.Curve.secp256k1_glvHom_eq_zsmul_unconditional"
     },
     {
       "id": "glv-rounding-norm-bound-018",
