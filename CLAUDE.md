@@ -42,8 +42,9 @@ a direct push to `main`; a human merges.
 ## Hard rules
 - No secrets in the repo. External model keys live **only** as GitHub Actions secrets —
   `FEATHERLESS_API_KEY` (prover loop), and `KIMI_API_KEY` (Moonshot/Kimi: the `moonshot`
-  provider tier of the explore pipeline; `KIMI_MODEL` default `kimi-latest`,
-  `KIMI_BASE_URL` default `https://api.moonshot.ai/v1`, both overridable). Never print API keys.
+  provider tier of the explore pipeline; `KIMI_MODEL` default `kimi-k3` (the current
+  Moonshot flagship, launched 2026-07-16), `KIMI_BASE_URL` default
+  `https://api.moonshot.ai/v1`, both overridable). Never print API keys.
   **Every model is a drafter only** — Kimi/Featherless/DeepSeek outputs are never trusted; the
   Lean kernel / CI is the sole verifier. This keeps the one invariant intact.
 - Reproducibility: Mathlib is pinned via `lake-manifest.json` / `lakefile.toml`

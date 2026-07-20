@@ -44,7 +44,7 @@ SYMPY_TIMEOUT_S = int(os.environ.get("CERTIFY_TIMEOUT_S", "60"))
 OPUS_MODEL = os.environ.get("EXPLORE_OPUS_MODEL", "claude-opus-4-8")
 FABLE_MODEL = os.environ.get("EXPLORE_FABLE_MODEL", "claude-fable-5")
 DEEPSEEK_MODEL = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
-KIMI_MODEL = os.environ.get("KIMI_MODEL", "kimi-latest")
+KIMI_MODEL = os.environ.get("KIMI_MODEL", "kimi-k3")
 
 # Per-tier model routing — any tier is (provider, model). Provider ∈ {"anthropic", "deepseek",
 # "featherless", "moonshot"}. Default config is all-Anthropic (Opus + Fable), no DeepSeek: Fable
@@ -75,7 +75,11 @@ PRICES = {
     "deepseek-chat": (0.28, 0.42), "deepseek-reasoner": (0.55, 2.19),
     # Moonshot/Kimi, per-1M-token cache-miss (input, output). A KIMI_MODEL id NOT listed here
     # prices at $0 and would bypass the --budget-usd cap — add any pinned id you use.
-    "kimi-latest": (0.60, 3.00), "kimi-k2.5": (0.60, 3.00), "kimi-k2.6": (0.95, 4.00),
+    # kimi-k3 (2.8T MoE, launched 2026-07-16) is the current flagship and the default KIMI_MODEL;
+    # public rates ≈ $3.00/M cache-miss input, $15.00/M output. `kimi-latest` now resolves to k3,
+    # so it is priced at the same (conservative — over-pricing only tightens the cap) k3 rate.
+    "kimi-k3": (3.00, 15.00), "kimi-latest": (3.00, 15.00),
+    "kimi-k2.5": (0.60, 3.00), "kimi-k2.6": (0.95, 4.00),
 }
 
 AXES = [
