@@ -310,6 +310,26 @@ exact `Θ` statements.
       (on-curve `(A,B)` representation) and kernel-checked (no `native_decide`). The carrier's y-coupling
       RHS is thereby discharged; the one remaining piece for the leaf is a `y(4P)=ω₄/ψ₄³` cert (the
       doubling² y-formula, the `n=4` analogue of `DoublingPointFormula`/`MultiplicationYTripleFormula`).
+    - **`y(4P)` + `carrier_four` fully landed (2026-07-19, PR #210).** `secp256k1_quadruple_y`
+      (`QuadrupleMultiplicationYFormula.lean`) closes the doubling² `y`-cert, and
+      `secp256k1_four_nsmul_coords_ωfree` (`NsmulCoordsBaseFour.lean`) closes `carrier_four`
+      (both conjuncts). Base leaves `n=0..4` of `normEDSRec'` are now all closed.
+    - **Frontier re-scoped after the `n=4` landing (2026-07-19, scout).** With every base leaf and
+      anchor closed, the two named residuals — (2) the three under-hypothesized step lemmas and (3)
+      the torsion bridge `nsmul_eq_zero_iff_psi_evalEval_zero` — are **not two independent bricks but
+      one entangled monolith.** The scout confirmed: (a) the landed per-`n` bridges
+      (`secp256k1_{two,three,five,seven}_nsmul_eq_zero_iff`) are **bespoke `n=2+1`-style hand proofs**
+      (explicit `P+P+P` expansion + 2-torsion case split reduced to the *specific* `ψₙ` polynomial) that
+      do **not** generalize mechanically; (b) our pinned Mathlib `DivisionPolynomial/{Basic,Degree}`
+      carries only algebraic `ψ`/`Φ`/`ΨSq` facts — **no `Point ↔ ψ` vanishing lemma** (the `Point→ψ`
+      link lives only in the stalled upstream PR #13782); and (c) the uniform bridge is **circular with
+      the still-open uniform x-map** `x([n]P)=Φₙ/ΨSqₙ` — proving the bridge needs the x-coordinatisation,
+      whose non-degeneracy needs the bridge. **Concrete unblock (single route):** strengthen the stem's
+      `Carrier` predicate to also carry `n•P affine ⟺ ψₙ(P) ≠ 0`, proving the x-map, the y-relation, and
+      the torsion bridge **jointly** in the one `normEDSRec'` induction (the stem docstring already names
+      this). That is a **single multi-cycle refactor of the induction**, not a mergeable single-cycle
+      brick; per-`n` formulas beyond `n=4` are ledger inflation and are not to be minted. Alternative:
+      port the mul-by-`n`/torsion machinery if upstream PR #13782 lands.
   - **Weil reciprocity `f(div g) = g(div f)` (ladder rung W4-1) — frozen no-go
     (2026-07-18).** The evaluation half of the Weil pairing is landed at the
     function-field level (W3e-1 divisor evaluation, W3e-2 representative-scaling),
