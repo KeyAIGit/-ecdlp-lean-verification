@@ -1,7 +1,7 @@
 {
   "_meta": {
     "purpose": "Adversarially-verified corpus-coverage overrides applied by build_frontier_map.py. Each entry: a corpus claim discharged (verified) or partially addressed (partial) by a named kernel-verified theorem, confirmed by an independent skeptic pass.",
-    "provenance": "workflow run wf_0230ddd8-5a5 (corpus-coverage-remap): 486 claims mapped vs VERIFIED.md, every verified/partial upgrade re-checked by an adversarial verifier; 18 confirmed, 2 downgraded verified->partial, 0 rejected.",
+    "provenance": "workflow run wf_0230ddd8-5a5 (corpus-coverage-remap): 486 claims mapped vs VERIFIED.md, every verified/partial upgrade re-checked by an adversarial verifier; 18 confirmed, 2 downgraded verified->partial, 0 rejected. Closure-program re-audit (5 independent skeptic agents, one per candidate): 7 existing partial/verified mappings re-confirmed unchanged (pollard-rho-collision-002, mov-random-q-006, semaev-definition-001, semaev-recursion-degree-002, glv-root-mod-n-008, glv-jzero-orderthree-005 all genuinely partial); ONE upgrade smart-secp256k1-boundary-006 partial->verified (capstone Ecdlp.Curve.secp256k1_classical_security_profile proves BOTH conjuncts: Nat.card = n [cofactor 1] AND Nat.Prime n [prime order]); ONE reclassification cheon-multidivisor-crt-004 tractable->partial (CRT reconstruction kernel is already proved by Ecdlp.PohligHellman.reconstruct [two-factor ZMod.chineseRemainder bijection]; the load-bearing attack step 'auxiliary powers => residues recoverable' and the n-ary product remain unproven, hence partial not verified). Blocked-bucket re-audit (5 strict skeptic agents over all 168 blocked claims — semaev 51, cost_model 38, quantum_cost 30, lattice_reduction 25, weil_pairing 8, elliptic_nets 7, curve_depth 5, heights 4): 164 confirmed correctly blocked; 3 blocked->partial reclassifications (foundation was mislabeled, an existing theorem discharges the concrete case): glv-endomorphism-definition-003 (was weil_pairing; Ecdlp.Curve.glvPoint_add proves the secp256k1 GLV endomorphism is additive/a homomorphism, general all-extensions case uncovered), glv-prime-field-generalization-007 (was weil_pairing; Ecdlp.Curve.secp256k1_glvHom_eq_zsmul_unconditional realizes GLV as scalar mult on secp256k1, general prime-field class uncovered), lauter-stange-elliptic-net-recurrence-003 (was lattice_reduction; Ecdlp.EDS.isEllSequence_of_rec_one proves rank-1 nets are EDS, arbitrary-rank nets uncovered); plus 1 heuristic-foundation fix in build_frontier_map.py (bare 'parity' keyword over-matched lauter-stange-residue-product-parity-013, a pure quadratic-residuosity claim, into cost_model).",
     "note": "Overrides win over the heuristic/VERIFIED-membership classification. Only verified/partial upgrades are recorded here; lateral reclassifications and demotions of existing verified claims are intentionally NOT auto-applied."
   },
   "overrides": {
@@ -82,8 +82,24 @@
       "theorem": "Ecdlp.GenericGroup.generic_dlog_sqrt_bound"
     },
     "smart-secp256k1-boundary-006": {
+      "status": "verified",
+      "theorem": "Ecdlp.Curve.secp256k1_classical_security_profile"
+    },
+    "cheon-multidivisor-crt-004": {
       "status": "partial",
-      "theorem": "Ecdlp.Primality.secp256k1_n_prime"
+      "theorem": "Ecdlp.PohligHellman.reconstruct"
+    },
+    "glv-endomorphism-definition-003": {
+      "status": "partial",
+      "theorem": "Ecdlp.Curve.glvPoint_add"
+    },
+    "glv-prime-field-generalization-007": {
+      "status": "partial",
+      "theorem": "Ecdlp.Curve.secp256k1_glvHom_eq_zsmul_unconditional"
+    },
+    "lauter-stange-elliptic-net-recurrence-003": {
+      "status": "partial",
+      "theorem": "Ecdlp.EDS.isEllSequence_of_rec_one"
     }
   }
 }

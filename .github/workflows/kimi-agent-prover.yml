@@ -1,0 +1,100 @@
+name: "Kimi agent-prover (tool-calling: grep / read_file / run_lean)"
+
+# Kimi (kimi-k3) as a TOOL-CALLING agent: it greps the repo, reads files, and runs
+# `lake env lean` on its own candidate proofs, looping until the kernel accepts one.
+# Kimi is a DRAFTER only — the Lean kernel (run_lean, and any promotion CI) is the sole
+# verifier; artifact-only, never commits model output to main. No KIMI_API_KEY ⇒ no-op.
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Target theorem for Kimi to prove
+        required: true
+        default: n7_even_x_psisq
+        type: choice
+        options:
+          - nat_add_comm
+          - zmod_from_mod_zero
+          - lambda_cube_root_shape
+          - n7_even_x_psisq
+          - preps_somos4
+      max_iters:
+        description: Max tool-call rounds
+        required: false
+        default: '30'
+      verify_only:
+        description: Just compile scripts/seeds/<target>.lean on the kernel (no model, no API)
+        required: false
+        default: 'false'
+
+permissions:
+  contents: read
+
+jobs:
+  agent-prove:
+    runs-on: ubuntu-latest
+    # N7's converging proof is large: each run_lean compile is ~60s and the agent needs many
+    # rounds, so 45 iters blew the old 55-min wall mid-polish. Give a resumed (seeded) run room.
+    timeout-minutes: 110
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install elan (Lean toolchain manager)
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch prebuilt Mathlib cache
+        run: lake exe cache get
+
+      - name: Build the Ecdlp modules the targets import (so run_lean's imports resolve)
+        run: |
+          lake build \
+            Ecdlp.Proved.NormEDSSomos4 \
+            Ecdlp.Proved.DivisionPolynomialDoubling \
+            Ecdlp.Proved.DivisionPolynomialDegree \
+            Ecdlp.Proved.MultiplicationXCoordinateRing \
+            Ecdlp.Proved.OddTorsionBound
+
+      - name: Install Python deps
+        run: pip install --quiet openai
+
+      - name: Run Kimi agent-prover
+        env:
+          KIMI_API_KEY: ${{ secrets.KIMI_API_KEY }}
+          KIMI_BASE_URL: ${{ secrets.KIMI_BASE_URL }}
+          KIMI_MODEL: ${{ secrets.KIMI_MODEL }}
+          INPUT_TARGET: ${{ inputs.target }}
+          INPUT_MAX_ITERS: ${{ inputs.max_iters }}
+          INPUT_VERIFY_ONLY: ${{ inputs.verify_only }}
+        run: |
+          TARGET="${INPUT_TARGET:-n7_even_x_psisq}"
+          MAX_ITERS="${INPUT_MAX_ITERS:-30}"
+          if [ "${INPUT_VERIFY_ONLY:-false}" = "true" ]; then
+            python3 scripts/kimi_agent_prover.py --verify-only --target "$TARGET"
+          else
+            python3 scripts/kimi_agent_prover.py --target "$TARGET" --max-iters "$MAX_ITERS"
+          fi
+
+      - name: Write job summary
+        if: always()
+        run: |
+          if [ -f kimi-agent-report.md ]; then
+            cat kimi-agent-report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No kimi-agent-report.md was produced." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload agent report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kimi-agent-prover-report
+          path: |
+            kimi-agent-report.md
+            kimi-agent-success.lean
+            ProverTargetAttempt.lean
+          if-no-files-found: ignore

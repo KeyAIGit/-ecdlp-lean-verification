@@ -125,9 +125,13 @@ HEURISTICS = [
     # pairing / transfer / isogeny depth
     (("weil", "tate pairing", " pairing", "mov", "frey", "embedding degree", "isogeny",
       "supersingular"), "blocked", "weil_pairing"),
-    # complexity / cost statements
+    # complexity / cost statements. NB: bare "parity" was removed — it over-matched
+    # pure number-theory statements about the *parity of the discrete-log multiplier*
+    # (e.g. lauter-stange-residue-product-parity-013, a quadratic-residuosity/EDS claim
+    # with no complexity content), mis-bucketing them as cost_model. Genuine
+    # parity-of-work claims still match via "operations"/"oracle"/"queries".
     (("running time", "time complexity", "subexponential", "operations", "queries",
-      "oracle", "cost ", "parity", "number of group"), "blocked", "cost_model"),
+      "oracle", "cost ", "number of group"), "blocked", "cost_model"),
     # curve / torsion / division-polynomial / EDS / GLV depth (partly tractable, Track B)
     (("torsion", "division polynomial", "elliptic divisibility", " eds", "endomorphism",
       "lambda", "glv", "decomposition", "j-invariant", "trace of frobenius"), "partial", "curve_depth"),

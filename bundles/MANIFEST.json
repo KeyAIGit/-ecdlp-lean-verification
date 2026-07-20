@@ -29,7 +29,7 @@
         "path": "data/frontier_map.json",
         "reason": "per-claim frontier status: verified / tractable / blocked / informal",
         "exists": true,
-        "bytes": 151656
+        "bytes": 151831
       }
     ],
     "medium": [
@@ -55,7 +55,7 @@
         "path": "data/frontier_map.json",
         "reason": "per-claim frontier status: verified / tractable / blocked / informal",
         "exists": true,
-        "bytes": 151656
+        "bytes": 151831
       },
       {
         "path": "README.md",
@@ -123,7 +123,7 @@
         "path": "data/frontier_map.json",
         "reason": "per-claim frontier status: verified / tractable / blocked / informal",
         "exists": true,
-        "bytes": 151656
+        "bytes": 151831
       },
       {
         "path": "README.md",

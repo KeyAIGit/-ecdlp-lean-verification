@@ -18,6 +18,7 @@ on:
           - nat_add_comm
           - zmod_from_mod_zero
           - lambda_cube_root_shape
+          - n7_even_x_psisq
       fast_attempts:
         description: Pythagoras 4B attempts
         required: true

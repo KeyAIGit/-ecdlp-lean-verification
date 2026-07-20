@@ -97,6 +97,62 @@ example {R : Type} [CommRing R] (x : R) (h : x ^ 2 + x + 1 = 0) :
 """,
         hint="Use h and ring/linear algebraic manipulation in a commutative ring.",
     ),
+    "n7_even_x_psisq": Target(
+        name="n7_even_x_psisq",
+        description="N7 even-doubling: secp256k1 ΨSq(2k) = 4·ΨSq(k)·(Φ(k)³ + 7·ΨSq(k)³).",
+        stem="""import Mathlib
+import Ecdlp.Proved.NormEDSSomos4
+import Ecdlp.Proved.DivisionPolynomialDoubling
+import Ecdlp.Proved.MultiplicationXCoordinateRing
+import Ecdlp.Proved.OddTorsionBound
+
+namespace Ecdlp.Curve
+
+open Polynomial WeierstrassCurve
+
+set_option maxHeartbeats 6400000 in
+set_option maxRecDepth 8000 in
+theorem n7_even_x_psisq (k : ℤ) :
+    secp256k1.ΨSq (2 * k)
+      = 4 * secp256k1.ΨSq k * (secp256k1.Φ k ^ 3 + 7 * secp256k1.ΨSq k ^ 3) := by
+""",
+        hint=(
+            "GOAL SHAPE: `k` is a VARIABLE (∀ k : ℤ), so `ΨSq (2*k)` is NOT a fixed polynomial — do "
+            "NOT unfold it to explicit coefficients; that only settles a single index (e.g. Ψ₂Sq is "
+            "just the k=1 instance) and can never discharge the ∀k goal. "
+            "Even-index doubling of the j=0 (y^2=x^3+7) division polynomials. Proceed by induction "
+            "over the elliptic-net recurrence (normEDS_somos4) or a direct chain from Mathlib's "
+            "ΨSq/Φ/ψ doubling; ψ_two_mul (ψ_n ∣ ψ_2n) and MultiplicationXCoordinateRing "
+            "(φ·ΨSq = Φ·ψ^2) are the algebraic bridges."
+        ),
+    ),
+    "preps_somos4": Target(
+        name="preps_somos4",
+        description="Polynomial preΨ Somos-4 for secp256k1 (specialization of normEDS_somos4) — a "
+                    "reusable building block for the N7 even_x induction.",
+        stem="""import Mathlib
+import Ecdlp.Proved.NormEDSSomos4
+import Ecdlp.Proved.DivisionPolynomialDegree
+import Ecdlp.Proved.OddTorsionBound
+
+namespace Ecdlp.Curve
+
+open Polynomial WeierstrassCurve
+
+theorem secp256k1_preΨ_somos4 (m : ℤ) :
+    secp256k1.preΨ (m + 2) * secp256k1.preΨ (m - 2)
+      = (if Even m then 1 else secp256k1.Ψ₂Sq ^ 4)
+          * (secp256k1.preΨ (m + 1) * secp256k1.preΨ (m - 1))
+        - secp256k1.Ψ₃ * secp256k1.preΨ m ^ 2 := by
+""",
+        hint=(
+            "Specialize the proved normEDS_somos4 at (b,c,d)=(Ψ₂Sq, Ψ₃, preΨ₄). Bridge: "
+            "normEDS Ψ₂Sq Ψ₃ preΨ₄ n = preΨ n * (if Even n then Ψ₂Sq else 1) (because preΨ = "
+            "preNormEDS (Ψ₂Sq^2) Ψ₃ preΨ₄ and normEDS b c d n = preNormEDS (b^2) c d n * (Even n ? b : 1)). "
+            "Rewrite all five normEDS terms in normEDS_somos4, resolve parities of m±1,m±2, then "
+            "cancel Ψ₂Sq² (secp256k1_Ψ₂Sq_ne_zero) on the even branch; odd branch is direct."
+        ),
+    ),
 }
 
 
@@ -252,7 +308,10 @@ def run_lean(target: Target, candidate: str) -> tuple[bool, str]:
         stderr=subprocess.STDOUT,
         timeout=240,
     )
-    return proc.returncode == 0, proc.stdout
+    low = proc.stdout.lower()
+    ok = (proc.returncode == 0 and "error" not in low
+          and "sorry" not in low and "declaration uses" not in low)
+    return ok, proc.stdout
 
 
 def append_report(text: str) -> None:
