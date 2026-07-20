@@ -158,3 +158,4 @@ import Ecdlp.Proved.NsmulCoordsBaseOne
 import Ecdlp.Proved.NsmulCoordsBaseTwo
 import Ecdlp.Proved.QuadrupleMultiplicationYFormula
 import Ecdlp.Proved.NsmulCoordsBaseFour
+import Ecdlp.Proved.FourTorsionBridge
