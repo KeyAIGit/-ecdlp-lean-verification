@@ -65,3 +65,24 @@ budget), and (b) assembling the ~300-line `normEDSRec'` induction and iterating 
 Without a local Lean toolchain the (b) loop is server-round-trip-only. It is *mechanical, no
 mathematical unknown remains* — but it is a multi-cycle CAS+kernel effort comparable to (and larger
 than) the original `NormEDSSomos4` development.
+
+## Tooling update (2026-07-21): cofactor generation is unblocked in-container
+
+Part (a) above — "machine-generating the ~4 cofactor bundles exceeded the sandbox compute
+budget" — no longer holds. `sympy` (1.14.0) is available in-container and
+`scripts/certs/eds_cofactor_gen.py` generates Lean-ready cofactor bundles:
+
+- `solve_cofactors(goal, hyps, gens)` runs multivariate division (`sympy.reduced`) of the
+  step goal by the **original** hypothesis list (recurrences + IH + somos4 instances), with the
+  doubled-index `W(2M±i)` variables ordered first so the triangular recurrences eliminate them.
+  When the remainder is 0 the returned quotients are exactly the cofactors a Lean
+  `linear_combination (norm := ring1) …` cites — no Groebner-basis change-of-variables needed.
+- `self_test()` validates the encoding + solver end-to-end: it reproduces the proven
+  `somos4_odd_step` bundle (residual 0) **and** re-derives a valid bundle from scratch
+  (`python3 scripts/certs/eds_cofactor_gen.py` → `self_test OK`).
+
+Residual is now purely (b): set up the CORE-I/CORE-II even/odd step goals + hypothesis lists,
+run `solve_cofactors`, transcribe the four bundles + the two finite base cases into the Lean
+step lemmas, assemble the two `normEDSRec'` inductions (porting the `somos4_dom` skeleton), and
+kernel-judge via `n7-stem-check` / `build`. The kernel remains the sole judge — a generated
+bundle is trusted only once `lake` accepts it.
