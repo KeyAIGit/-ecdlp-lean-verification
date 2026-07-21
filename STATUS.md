@@ -6,9 +6,9 @@
 ## Verified asset (the ledger)
 | metric | value | source |
 |---|---|---|
-| ledger rows | **291** | `VERIFIED.md` → `data/stats.json` |
-| distinct results | **~252** | `data/stats.json` |
-| proved modules | **155** | `data/stats.json` |
+| ledger rows | **292** | `VERIFIED.md` → `data/stats.json` |
+| distinct results | **~253** | `data/stats.json` |
+| proved modules | **156** | `data/stats.json` |
 | `sorry` | **0** | axiom-audit + no-sorry gate |
 | custom axioms | **0** | axiom-audit gate |
 
@@ -22,10 +22,10 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 | status | claims | meaning |
 |---|---|---|
 | verified | **11** | a named kernel-verified theorem discharges the claim |
-| partial | **50** | a theorem addresses part of it |
-| tractable | **30** | reachable now, no theorem yet |
-| blocked | **164** | needs a missing Mathlib foundation |
-| informal | **231** | not a formal statement by nature |
+| partial | **55** | a theorem addresses part of it |
+| tractable | **2** | reachable now, no theorem yet |
+| blocked | **193** | needs a missing Mathlib foundation |
+| informal | **225** | not a formal statement by nature |
 | unassigned | **0** | not yet triaged |
 | **total** | **486** | frontier completeness 100.0% |
 

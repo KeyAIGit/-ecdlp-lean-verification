@@ -57,6 +57,7 @@ classes:
       - data/KG_CLAIM_FORMALIZATION_v1.csv
       - data/corpus_coverage_overrides.json
       - data/corpus_triage.json
+      - data/corpus_reclassify.json
       - data/claim_traceability.jsonl
       - data/README.md
     owner: frontier

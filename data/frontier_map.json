@@ -2,22 +2,23 @@
   "meta": {
     "purpose": "Machine-actionable frontier map of ECDLP formalization. Verified facts + precisely-mapped barriers. Asserts NO solution to ECDLP.",
     "corpus_claims": 486,
-    "verified_ledger_rows": 291,
+    "verified_ledger_rows": 292,
     "frontier_completeness_pct": 100.0,
     "regenerate": "python3 scripts/build_frontier_map.py"
   },
   "status_summary": {
-    "informal": 231,
-    "blocked": 164,
-    "partial": 50,
-    "tractable": 30,
-    "verified": 11
+    "informal": 225,
+    "blocked": 193,
+    "partial": 55,
+    "verified": 11,
+    "tractable": 2
   },
   "confidence_summary": {
-    "corpus": 295,
-    "triage": 95,
-    "heuristic": 72,
-    "verified-remap": 24
+    "corpus": 262,
+    "triage": 93,
+    "heuristic": 66,
+    "audit-reclassify": 36,
+    "verified-remap": 29
   },
   "foundations": {
     "weil_pairing": {
@@ -25,7 +26,7 @@
       "mathlib_gap": "No Weil/Tate pairing eₙ. Needs divisors, function fields, Miller's algorithm. Gates the MOV/Frey-Rück transfer reduction itself.",
       "leverage": "highest",
       "effort": "months (research-grade)",
-      "blocks_corpus_claims": 8
+      "blocks_corpus_claims": 9
     },
     "point_counting": {
       "status": "missing_from_mathlib",
@@ -39,7 +40,7 @@
       "mathlib_gap": "No group-operation / oracle-query cost model, so exact Θ running times (index calculus, distinguished points) can't be stated. The generic Ω(√p) core was formalized by sidestepping this.",
       "leverage": "medium",
       "effort": "weeks-months",
-      "blocks_corpus_claims": 39
+      "blocks_corpus_claims": 47
     },
     "lattice_reduction": {
       "status": "missing_from_mathlib",
@@ -53,14 +54,14 @@
       "mathlib_gap": "MvPolynomial exists but not the elliptic summation polynomials Sₙ (index calculus over extension fields).",
       "leverage": "medium",
       "effort": "weeks-months",
-      "blocks_corpus_claims": 53
+      "blocks_corpus_claims": 57
     },
     "quantum_cost": {
       "status": "out_of_scope",
       "mathlib_gap": "No quantum circuit cost model (Shor-style resource estimates). Out of scope for Mathlib.",
       "leverage": "low (out of scope)",
       "effort": "n/a",
-      "blocks_corpus_claims": 30
+      "blocks_corpus_claims": 36
     },
     "curve_depth": {
       "status": "partial_in_mathlib",
@@ -74,14 +75,14 @@
       "mathlib_gap": "Only rank-1 normEDS / IsEllSequence exists (+ a stalled net-relation PR). General multi-index (rank≥2) elliptic nets, net polynomials over arbitrary fields, and Stange's reconstruction / Laurent-property theory are absent — gating elliptic-net index calculus and net-based point relations.",
       "leverage": "low",
       "effort": "months (research-grade)",
-      "blocks_corpus_claims": 7
+      "blocks_corpus_claims": 15
     },
     "heights": {
       "status": "missing_from_mathlib",
       "mathlib_gap": "No canonical (Néron–Tate) height, Mordell–Weil lattice, or point-lifting to characteristic 0. Blocks the xedni-calculus / height-bound relation claims (all negative-result / heuristic in nature).",
       "leverage": "low",
       "effort": "months",
-      "blocks_corpus_claims": 4
+      "blocks_corpus_claims": 6
     }
   },
   "claims": [
@@ -178,9 +179,9 @@
     {
       "id": "lauter-stange-residue-oracle-ecdlp-014",
       "formal_status": "conditional",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "elliptic_nets",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -978,9 +979,9 @@
     {
       "id": "pollard-lambda-005",
       "formal_status": "formalizable",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1098,9 +1099,9 @@
     {
       "id": "vow-shared-linear-speedup-003",
       "formal_status": "formalizable",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "heuristic",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -1118,9 +1119,9 @@
     {
       "id": "diem2011-two-thirds-003",
       "formal_status": "formalizable",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1168,9 +1169,9 @@
     {
       "id": "cheon-pminus1-theorem-002",
       "formal_status": "formalizable",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1198,9 +1199,9 @@
     {
       "id": "ghs-theorem1-conditional-complexity-002",
       "formal_status": "formalizable",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1258,9 +1259,9 @@
     {
       "id": "mov-weil-pairing-target-001",
       "formal_status": "formalizable",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "weil_pairing",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1328,9 +1329,9 @@
     {
       "id": "smart-group-operation-complexity-004",
       "formal_status": "formalizable",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1378,9 +1379,9 @@
     {
       "id": "hkt-theorem1-liftable-tuple-bound-005",
       "formal_status": "formalizable",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "heights",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1418,9 +1419,9 @@
     {
       "id": "lauter-stange-period-formula-007",
       "formal_status": "formalizable",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "elliptic_nets",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1428,9 +1429,9 @@
     {
       "id": "stange-subnet-functoriality-003",
       "formal_status": "formalizable",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "elliptic_nets",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1498,9 +1499,9 @@
     {
       "id": "teske-prime-order-proof-003",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
+      "status": "informal",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1658,9 +1659,9 @@
     {
       "id": "diem2013-success-probability-006",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "heuristic",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -1818,9 +1819,9 @@
     {
       "id": "fghr-char2-limit-007",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
+      "status": "informal",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1858,9 +1859,9 @@
     {
       "id": "fhjrv-factor-base-reduction-003",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -1888,9 +1889,9 @@
     {
       "id": "fhjrv-higher-torsion-008",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
+      "status": "informal",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -2008,9 +2009,9 @@
     {
       "id": "ky2015-npcomplete-001",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "semaev_polynomials",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -2118,9 +2119,9 @@
     {
       "id": "pq2012-ffd-assumption-003",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
+      "status": "informal",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -2288,9 +2289,9 @@
     {
       "id": "f4-drl-design-004",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
+      "status": "informal",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -2298,9 +2299,9 @@
     {
       "id": "f4-full-solving-pipeline-003",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
+      "status": "informal",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -2518,9 +2519,9 @@
     {
       "id": "cheng-huang-height-decision-definition-003",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "triage",
+      "status": "blocked",
+      "blocking_foundation": "heights",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -2558,9 +2559,9 @@
     {
       "id": "cheng-huang-slp-definition-008",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "triage",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -2658,9 +2659,9 @@
     {
       "id": "jacobson-xedni-linear-runtime-lower-bound-008",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -2718,9 +2719,9 @@
     {
       "id": "lauter-stange-eds-problem-definitions-001",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "heuristic",
+      "status": "blocked",
+      "blocking_foundation": "elliptic_nets",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -2758,9 +2759,9 @@
     {
       "id": "lauter-stange-perfect-periodic-construction-005",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "elliptic_nets",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -2778,9 +2779,9 @@
     {
       "id": "lauter-stange-residue-conditions-015",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "elliptic_nets",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -2818,9 +2819,9 @@
     {
       "id": "stange-curve-net-poset-isomorphism-013",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "heuristic",
+      "status": "blocked",
+      "blocking_foundation": "elliptic_nets",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -2908,9 +2909,9 @@
     {
       "id": "stange-scale-equivalence-normalization-010",
       "formal_status": "formalizable_hard",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "heuristic",
+      "status": "blocked",
+      "blocking_foundation": "elliptic_nets",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -3218,9 +3219,9 @@
     {
       "id": "pz-power-two-qft-postprocessing-005",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -3238,9 +3239,9 @@
     {
       "id": "pz-prime-known-order-assumption-003",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -3498,9 +3499,9 @@
     {
       "id": "shor-abelian-extension-reported-011",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
+      "status": "informal",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -3518,9 +3519,9 @@
     {
       "id": "shor-cyclic-field-generalization-010",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -3558,9 +3559,9 @@
     {
       "id": "shor-order-finding-periodicity-005",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -3568,9 +3569,9 @@
     {
       "id": "shor-order-finding-repetition-006",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "confidence": "audit-reclassify",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
       "discharged_by": null
@@ -3578,9 +3579,9 @@
     {
       "id": "shor-polynomial-recovery-crt-009",
       "formal_status": "formalizable_hard",
-      "status": "tractable",
-      "blocking_foundation": null,
-      "confidence": "heuristic",
+      "status": "blocked",
+      "blocking_foundation": "quantum_cost",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -4038,12 +4039,12 @@
     {
       "id": "galbraith-diem-scope-004",
       "formal_status": "informal_only",
-      "status": "informal",
+      "status": "partial",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.Curve.secp256k1_generator_equation"
     },
     {
       "id": "galbraith-gaudry-total-complexity-003",
@@ -4638,12 +4639,12 @@
     {
       "id": "shoup-index-calculus-excluded-005",
       "formal_status": "scope_meta",
-      "status": "informal",
+      "status": "partial",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "(unassigned)",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.GenericGroup.generic_success_le"
     },
     {
       "id": "teske-generic-input-model-005",
@@ -4708,9 +4709,9 @@
     {
       "id": "mm2017-pollard-limit-007",
       "formal_status": "scope_meta",
-      "status": "informal",
-      "blocking_foundation": null,
-      "confidence": "corpus",
+      "status": "blocked",
+      "blocking_foundation": "cost_model",
+      "confidence": "audit-reclassify",
       "mathlib_area": "(unassigned)",
       "verified": false,
       "discharged_by": null
@@ -4848,12 +4849,12 @@
     {
       "id": "mov-secp256k1-applicability-boundary-010",
       "formal_status": "scope_meta",
-      "status": "informal",
+      "status": "partial",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "Mathlib.AlgebraicGeometry.EllipticCurve",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.Curve.secp256k1_embedding_degree_gt_100"
     },
     {
       "id": "mov-special-families-only-009",
@@ -4878,12 +4879,12 @@
     {
       "id": "satoh-nonprime-p-primary-extension-008",
       "formal_status": "scope_meta",
-      "status": "informal",
+      "status": "partial",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.PohligHellman.component"
     },
     {
       "id": "smart-secp256k1-boundary-006",
@@ -4908,12 +4909,12 @@
     {
       "id": "glv-security-screening-020",
       "formal_status": "scope_meta",
-      "status": "informal",
+      "status": "partial",
       "blocking_foundation": null,
-      "confidence": "corpus",
+      "confidence": "verified-remap",
       "mathlib_area": "Mathlib.GroupTheory.OrderOfElement / Subgroup",
       "verified": false,
-      "discharged_by": null
+      "discharged_by": "Ecdlp.Curve.secp256k1_classical_security_profile"
     },
     {
       "id": "hgs-lattice-006",

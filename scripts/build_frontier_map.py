@@ -32,6 +32,10 @@ OVERRIDES = ROOT / "data" / "corpus_coverage_overrides.json"
 # Conservative triage of the claims the overrides+heuristics leave 'unassigned' (ROADMAP §7.6).
 # Fills ONLY the unassigned gap — never overrides a corpus/heuristic/verified classification.
 TRIAGE = ROOT / "data" / "corpus_triage.json"
+# Audit-driven reclassifications correcting vendored-CSV mathlib_area mis-tags (demotions /
+# lateral moves that the theorem-discharge overrides file intentionally does NOT carry). Each
+# entry is an adversarially-audited status/foundation correction; see the file's _meta.
+RECLASSIFY = ROOT / "data" / "corpus_reclassify.json"
 OUT = ROOT / "data" / "frontier_map.json"
 
 # The missing-foundation registry: what Mathlib lacks, and what it would unlock. `key` is
@@ -179,6 +183,9 @@ def main(argv: list[str]) -> int:
     triage = {}
     if TRIAGE.exists():
         triage = (json.loads(TRIAGE.read_text(encoding="utf-8")) or {}).get("triage", {})
+    reclassify = {}
+    if RECLASSIFY.exists():
+        reclassify = (json.loads(RECLASSIFY.read_text(encoding="utf-8")) or {}).get("reclassify", {})
     # Headline ledger-row count comes from the ONE canonical source (stats.json → VERIFIED.md's
     # canonical figure), never re-tallied here, so this map can't disagree with STATUS.md.
     # Fall back to the regex tally only if stats.json is absent (first-run bootstrap).
@@ -205,6 +212,17 @@ def main(argv: list[str]) -> int:
                 status = t.get("status", "unassigned")
                 foundation = t.get("foundation") or None
                 confidence = "triage"
+        # Audited reclassifications correct vendored-CSV mathlib_area mis-tags (e.g. a lazy
+        # "OrderOfElement / Subgroup" tag that made Shor/quantum, running-time-complexity,
+        # index-calculus, or EDS-net statements falsely "tractable"). Applied AFTER triage and
+        # BEFORE the verified/override paths, so a VERIFIED.md citation or a theorem-discharge
+        # override still wins over any correction here.
+        rc = reclassify.get(cid)
+        if rc:
+            status = rc.get("status", status)
+            if "foundation" in rc:
+                foundation = rc["foundation"] or None
+            confidence = "audit-reclassify"
         verified = bool(cid and cid in vtext)
         if verified:
             status, confidence = "verified", "corpus"

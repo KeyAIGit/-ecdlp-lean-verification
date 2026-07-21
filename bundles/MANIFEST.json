@@ -11,7 +11,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4828
+        "bytes": 4827
       },
       {
         "path": "tasks/NEXT.md",
@@ -29,7 +29,7 @@
         "path": "data/frontier_map.json",
         "reason": "per-claim frontier status: verified / tractable / blocked / informal",
         "exists": true,
-        "bytes": 151831
+        "bytes": 152664
       }
     ],
     "medium": [
@@ -37,7 +37,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4828
+        "bytes": 4827
       },
       {
         "path": "tasks/NEXT.md",
@@ -55,7 +55,7 @@
         "path": "data/frontier_map.json",
         "reason": "per-claim frontier status: verified / tractable / blocked / informal",
         "exists": true,
-        "bytes": 151831
+        "bytes": 152664
       },
       {
         "path": "README.md",
@@ -73,7 +73,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 143804
+        "bytes": 145117
       },
       {
         "path": "BARRIERS.md",
@@ -105,7 +105,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4828
+        "bytes": 4827
       },
       {
         "path": "tasks/NEXT.md",
@@ -123,7 +123,7 @@
         "path": "data/frontier_map.json",
         "reason": "per-claim frontier status: verified / tractable / blocked / informal",
         "exists": true,
-        "bytes": 151831
+        "bytes": 152664
       },
       {
         "path": "README.md",
@@ -141,7 +141,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 143804
+        "bytes": 145117
       },
       {
         "path": "BARRIERS.md",
@@ -171,7 +171,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 292067
+        "bytes": 294025
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
