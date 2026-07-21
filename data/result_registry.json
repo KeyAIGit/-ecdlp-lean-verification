@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 929,
-  "distinct_qualified_names": 713,
+  "declaration_count": 930,
+  "distinct_qualified_names": 714,
   "verified_md_citations": 232,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -2597,6 +2597,14 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/ProtocolInstantiation.lean",
       "line": 85,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.secp256k1_secant_addX_cleared": {
+      "name": "secp256k1_secant_addX_cleared",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SecantAddX.lean",
+      "line": 26,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_seven_nsmul_eq_zero_iff": {

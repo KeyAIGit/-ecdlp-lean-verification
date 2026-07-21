@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 292,
     "barriers": 6,
-    "edges": 476,
+    "edges": 478,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -5100,6 +5100,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.SecantAddX",
+      "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.Secp256k1Curve",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -6297,6 +6302,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.DivisionPolynomialPointDiff",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.SecantAddX",
       "type": "imports"
     },
     {

@@ -154,6 +154,7 @@ import Ecdlp.Proved.MultiplicationYTripleFormula
 -- itself stays an open target in Ecdlp/Targets/, excluded from the built base).
 import Ecdlp.Proved.DivisionPolynomialEllSequence
 import Ecdlp.Proved.DivisionPolynomialPointDiff
+import Ecdlp.Proved.SecantAddX
 import Ecdlp.Proved.OmegaRecurrenceAnchors
 import Ecdlp.Proved.NsmulCoordsBaseOne
 import Ecdlp.Proved.NsmulCoordsBaseTwo

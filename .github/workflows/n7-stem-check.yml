@@ -1,0 +1,99 @@
+name: "N7 stem elaboration check (lake env lean on an open Targets stem)"
+
+# The N7-uniform carrier stem (`Ecdlp/Targets/n7_uniform_carrier_induction.lean`) is an OPEN
+# target: it is NOT imported from `Ecdlp.lean`, so `lake build` never elaborates it and the
+# no-`sorry` gate excludes it. This job is the ONLY way to verify that edits to the stem still
+# elaborate on the kernel. It builds the Proved modules the stem imports, runs `lake env lean`
+# on the stem, reports the residual `sorry`-count, and FAILS on any real type/elaboration error
+# (open-stem `sorry` warnings are expected and do NOT fail). It commits nothing — read-only,
+# artifact/summary only. This unblocks iterating on the stem's residual walls with CI feedback.
+
+on:
+  # Runs when a stem changes (or when this workflow file itself changes — which gives a baseline
+  # run on first push). Path-filtered so it does not run on unrelated commits. Also manually
+  # dispatchable once this file is on the default branch.
+  push:
+    paths:
+      - 'Ecdlp/Targets/**'
+      - '.github/workflows/n7-stem-check.yml'
+  workflow_dispatch:
+    inputs:
+      stem:
+        description: Stem file basename under Ecdlp/Targets/ (no .lean)
+        required: false
+        default: n7_uniform_carrier_induction
+
+permissions:
+  contents: read
+
+jobs:
+  stem-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install elan (Lean toolchain manager)
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch prebuilt Mathlib cache
+        run: lake exe cache get
+
+      - name: Build the Proved modules the stem imports
+        run: |
+          lake build \
+            Ecdlp.Proved.DivisionPolynomialEllSequence \
+            Ecdlp.Proved.DivisionPolynomialEvalBridge \
+            Ecdlp.Proved.DivisionPolynomialPointDiff \
+            Ecdlp.Proved.NsmulCoordsBaseOne \
+            Ecdlp.Proved.NsmulCoordsBaseTwo \
+            Ecdlp.Proved.OmegaRecurrenceAnchors \
+            Ecdlp.Proved.QuadrupleMultiplicationFormula \
+            Ecdlp.Proved.NsmulCoordsBaseFour \
+            Ecdlp.Proved.TripleMultiplicationFormula \
+            Ecdlp.Proved.MultiplicationYTripleFormula \
+            Ecdlp.Proved.FiveTorsionBridge
+
+      - name: Elaborate the stem (lake env lean) — sorry warnings OK, real errors fail
+        env:
+          INPUT_STEM: ${{ inputs.stem }}
+        run: |
+          STEM="${INPUT_STEM:-n7_uniform_carrier_induction}"
+          FILE="Ecdlp/Targets/${STEM}.lean"
+          echo "Elaborating $FILE ..."
+          set +e
+          lake env lean "$FILE" > lean_out.txt 2>&1
+          RC=$?
+          set -e
+          # Count sorry TACTICS from the source (reliable; `lake env lean` does not always emit a
+          # per-declaration warning to stdout). ERRORS come from the elaborator output.
+          SORRIES=$(grep -cE '^[[:space:]]*sorry([[:space:]]|$)' "$FILE" || true)
+          ERRORS=$(grep -c "error:" lean_out.txt || true)
+          {
+            echo "## N7 stem elaboration — \`$FILE\`"
+            echo ""
+            echo "- exit code: \`$RC\`"
+            echo "- \`sorry\` warnings (open walls): **$SORRIES**"
+            echo "- errors: **$ERRORS**"
+            echo ""
+            echo '```'
+            tail -80 lean_out.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "${ERRORS:-0}" -gt 0 ]; then
+            echo "::error::Real elaboration errors in $FILE ($ERRORS). See job summary."
+            exit 1
+          fi
+          echo "OK: $FILE elaborates; $SORRIES residual sorry warning(s), no errors."
+
+      - name: Upload lean output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: n7-stem-lean-output
+          path: lean_out.txt
+          if-no-files-found: ignore
