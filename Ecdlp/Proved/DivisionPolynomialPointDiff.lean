@@ -51,4 +51,17 @@ theorem ψ_isEllSequence_evalEval (x y : R) (m n r : ℤ) :
   have h := congrArg (Polynomial.evalEval x y) (ψ_isEllSequence W m n r)
   simpa only [evalEval_mul, evalEval_sub, evalEval_pow] using h
 
+/-- **The neighbour-product identity `ψ_succ_mul_ψ_pred` evaluated at a point `(x, y)`.** For all
+`n : ℤ`, `ψ(n+1)(P)·ψ(n−1)(P) = x·ψn(P)² − φn(P)` with `·(P) = evalEval x y` — the point-level form
+of `ψ(n+1)ψ(n−1) = X·ψn² − φn` (`DivisionPolynomialEllSequence.lean`, Mathlib's `φ` definition
+rearranged). Relates the `φ` numerator to the neighbouring `ψ` values at a point — a brick the
+odd/even x-coordinate reductions of the N7-uniform carrier consume. Same `congrArg (evalEval x y)`
+idiom; the constant `C X` collapses by `evalEval_C` then `eval_X` to `x`. No `native_decide`, no
+new axioms. -/
+theorem ψ_succ_mul_ψ_pred_evalEval (x y : R) (n : ℤ) :
+    (W.ψ (n + 1)).evalEval x y * (W.ψ (n - 1)).evalEval x y
+      = x * (W.ψ n).evalEval x y ^ 2 - (W.φ n).evalEval x y := by
+  have h := congrArg (Polynomial.evalEval x y) (ψ_succ_mul_ψ_pred W n)
+  simpa only [evalEval_mul, evalEval_sub, evalEval_pow, evalEval_C, eval_X] using h
+
 end Ecdlp.Curve
