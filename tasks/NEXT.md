@@ -229,17 +229,25 @@ it into the carrier format — **closing `carrier_four` (both conjuncts) in the 
 (server-confirmed sorry-free). Base leaves `n=0,1,2,3,4` of `normEDSRec'` are now all closed. One
 new honest ledger row; count 289 rows / 250 distinct.
 
-**Sharpened frontier (what actually remains for N7-uniform, no clean single-cycle rung):**
-the residual walls all live inside the open stem `Ecdlp/Targets/n7_uniform_carrier_induction.lean`
-and are interdependent (not a CI-gated merge unit on their own):
-(1) **uniform torsion bridge** `nsmul_eq_zero_iff_psi_evalEval_zero` (`n•P=O ⟺ ψₙ(P)=0`) — the one
-genuine missing-Mathlib `Point→ψ` map, the true conceptual wall;
-(2) **three under-hypothesized step lemmas** (`odd_x_algebra`, `even_y_algebra`, `odd_y_algebra`)
-needing restatement to thread the `Carrier` y-coupling (effort, not theory) + three `odd_step_group`
-degenerate branches;
-(3) `even_x_algebra` — CAS-validated but compute-blocked (Groebner cofactor generation infeasible
-here), reduced to CORE-I/CORE-II via `normEDSRec'` (`notes/N7_EVEN_X_REDUCTION.md`).
-Next real advance = a **multi-cycle focused grind** on (1) or (2) with server pre-verification;
+**Point-eval substrate + soundness complete; one degenerate branch closed (2026-07-21, PRs #223–#229).**
+The reusable point-evaluated bricks and the univariate↔bivariate keystone are all on `main`:
+`φ_ψ_diff_evalEval`, `ψ_isEllSequence_evalEval`, `ψ_succ_mul_ψ_pred_evalEval` (transport trio, #223/#224),
+`secp256k1_secant_addX_cleared` (odd-step secant geometry, #225), and the keystone
+`ΨSq_eval_eq_ψ_evalEval_sq` / `Φ_eval_eq_φ_evalEval` (#227). The three walls flagged under-hypothesized are
+now soundly stated: `odd_x/even_y/odd_y_algebra` thread the `Carrier` y-coupling (Y-sign, #226), and
+`odd_x/odd_y` also thread the source denominators `ΨSqₖ, ΨSq_{k+1} ≠ 0` (#228). The odd-step secant
+`x`-collision degenerate branch is **closed** — a pure `Point`-group contradiction, not a rational
+identity (#229). A read-only `.github/workflows/n7-stem-check.yml` (#225) elaborate-checks the open stem
+on every `Targets/**` push (fast feedback; not a merge gate). Stem `sorry` count **9 → 8**.
+
+**Sharpened frontier — 8 residual `sorry`, all in two hard cores (no tractable single-cycle rung left):**
+(a) the **uniform torsion bridge** `nsmul_eq_zero_iff_psi_evalEval_zero` (`n•P=O ⟺ ψₙ(P)=0`) plus the
+lemmas gated on it — `psiSq_ne_zero_of_nsmul_some` and the two `odd_step_group` torsion side-branches
+(`k-`, `(k+1)-`torsion) — the one genuine missing-Mathlib `Point→ψ` map, the true conceptual wall;
+(b) the **four algebra walls** `even_x/odd_x/even_y/odd_y_algebra`, each reducing (structure supplied by
+the bricks above) to a `field_simp`+`linear_combination` whose cofactor certificate needs **offline
+Groebner** — infeasible to author blind in CI (`notes/N7_EVEN_X_REDUCTION.md` for even_x).
+Next real advance = the **multi-cycle CAS-assisted / torsion-bridge grind** with server pre-verification;
 not a one-cycle brick. Do not mint per-`n` filler.
 
 Kind: theorem | research
