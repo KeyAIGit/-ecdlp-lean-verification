@@ -69,7 +69,9 @@ jobs:
           lake env lean "$FILE" > lean_out.txt 2>&1
           RC=$?
           set -e
-          SORRIES=$(grep -c "uses 'sorry'" lean_out.txt || true)
+          # Count sorry TACTICS from the source (reliable; `lake env lean` does not always emit a
+          # per-declaration warning to stdout). ERRORS come from the elaborator output.
+          SORRIES=$(grep -cE '^[[:space:]]*sorry([[:space:]]|$)' "$FILE" || true)
           ERRORS=$(grep -c "error:" lean_out.txt || true)
           {
             echo "## N7 stem elaboration — \`$FILE\`"
