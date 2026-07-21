@@ -86,3 +86,22 @@ run `solve_cofactors`, transcribe the four bundles + the two finite base cases i
 step lemmas, assemble the two `normEDSRec'` inductions (porting the `somos4_dom` skeleton), and
 kernel-judge via `n7-stem-check` / `build`. The kernel remains the sole judge — a generated
 bundle is trusted only once `lake` accepts it.
+
+## CORE-II residual pinned (2026-07-21): the exact "+companion" identity
+
+Running the `sympy` reduction of CORE-II by `{normEDS_odd(2k+1), normEDS_odd(2k-1), somos4(k),
+curve}` leaves a residual that factors as `w(k)³ w(k+1) w(k-1) · [ … ]`, and the surviving bracket
+is a genuine 5-term EDS relation — the **"+companion"** (the `+` twin of the `ω`-numerator). It is
+pinned to an EXACT identity, numerically certified for secp256k1 by
+`scripts/certs/core_companion_check.py` (`CERT_OK`, k=1..11):
+
+```
+w(k-1)² w(k+2) + w(k-2) w(k+1)²  =  6 x² w(k) w(k+1) w(k-1) − (4x³+28) w(k)³
+```
+
+Because it carries **individual** `w(k±2)` (not the somos4 *product* `w(k+2)w(k-2)`), it is not a
+finite consequence of the somos4 slice + the `r=1` net relation — it needs its **own** `normEDSRec'`
+induction (same skeleton as `somos4_dom`, cofactor via `eds_cofactor_gen.py`). Once this companion
+lemma lands, CORE-II closes as a finite `linear_combination` over
+`{normEDS_odd×2, somos4, companion, curve}`. This is the precise, verified next brick for CORE-II
+(and, with the analogous `−`-form already in hand as the `ω`-numerator, sharpens CORE-I too).
