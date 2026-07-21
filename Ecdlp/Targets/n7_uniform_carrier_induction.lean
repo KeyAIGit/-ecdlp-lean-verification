@@ -45,14 +45,22 @@ Named residual walls (adversarial ultracode audit, 2026-07-19 — honest current
   `w(k±2)²` individually, and pinning those cascades outward unboundedly (`w(k+4), w(k+6), …`).
   Closing them needs a **strong induction on `k`** over the elliptic net (the `NormEDSSomos4.lean`
   technique, ~200 lines) — a real EDS sub-development, not a `ring`/`linear_combination` fill.
-* `odd_x_algebra`, `even_y_algebra`, `odd_y_algebra` — **UNDER-HYPOTHESIZED as currently factored.**
+* `odd_x_algebra` — **restated soundly (2026-07-21).** Previously under-hypothesized (the y-sign was
+  free: flipping only `Yk ↦ −Yk` gives a different valid input `(−kP)+(k+1)P = P` with a different
+  `addX`, so the old signature was **not a theorem**). Now the two `Carrier` y-conjuncts `hYk, hYk1`
+  (at `k, k+1`) are threaded into the signature, pinning the `Yk·Yk1` cross term that
+  `secp256k1_secant_addX_cleared` exposes and excluding the spurious single-sign flip. The residual
+  `sorry` is a genuine **proof fill** (no longer a signature gap): combine
+  `secp256k1_secant_addX_cleared` (geometry) + `φ_ψ_diff_evalEval` (arithmetic) through `hYk, hYk1`,
+  then the `x([j]P) = φⱼ/ψⱼ²` transport clears the denominators. Not a Mathlib gap.
+* `even_y_algebra`, `odd_y_algebra` — **UNDER-HYPOTHESIZED as currently factored.**
   The abstract lemmas quantify `Yk`(,`Yk1`) with only the curve equation, leaving the y-sign free;
-  flipping `Yk ↦ −Yk` gives a different valid input (`(−kP)+(k+1)P = P`) with a different `addX`,
+  flipping `Yk ↦ −Yk` gives a different valid input (`(−kP)+(k+1)P = P`) with a different `addY`,
   so the universally-quantified statements are **not theorems**. Every INSTANCE the step-group uses
-  is true (real consecutive multiples `kP,(k+1)P`), so the induction is sound — but completing it
-  needs these three **restated** to thread the `Carrier` y-coupling into the signature (or inlined
-  into `even_step_group`/`odd_step_group`, where the IH supplies the coupling). Refactor, then the
-  x-part reduces via `φ_ψ_diff` at `(k+1,k)` and the y-part via the ω-recurrence. Not a Mathlib gap.
+  is true (real consecutive multiples `kP,(k+1)P`), so the induction is sound — but completing them
+  needs these two **restated** to thread the `Carrier` y-coupling into the signature (or inlined
+  into `even_step_group`/`odd_step_group`, where the IH supplies the coupling), same as `odd_x_algebra`
+  above. Refactor, then the y-part reduces via the ω-recurrence. Not a Mathlib gap.
 * `nsmul_eq_zero_iff_psi_evalEval_zero`, `psiSq_ne_zero_of_nsmul_some` — the uniform
   non-degeneracy / torsion bridge (`n•P = O ⟺ ψₙ(P) = 0`). `psiSq_ne_zero` reduces to it via
   `eval_ΨSq_eq_normEDS_sq`; the `Point → ψ` direction is the genuinely missing Mathlib map (the
@@ -67,9 +75,11 @@ the only diagnostics are the named `declaration uses 'sorry'` warnings above —
 elaboration errors. So the reduction of the entire uniform-N7 target to the isolated
 rational-identity walls (and the `normEDSRec'` capstone assembly) is machine-verified. Base leaves
 `n=0,1,2,3` and the `n=4` x-conjunct are server-verified `sorry`-free. The residual walls are as
-listed above — honestly, three of them (`odd_x_algebra`, `even_y_algebra`, `odd_y_algebra`) are
-under-hypothesized as currently factored and need signature-strengthening (not just a `sorry` fill),
-per the 2026-07-19 adversarial audit.
+listed above. `odd_x_algebra` has since (2026-07-21) been **restated soundly** — the `Carrier`
+y-coupling `hYk, hYk1` is now threaded into its signature, so its residual is an honest proof fill.
+The other two (`even_y_algebra`, `odd_y_algebra`) are still under-hypothesized as currently factored
+and need the same signature-strengthening (not just a `sorry` fill), per the 2026-07-19 adversarial
+audit.
 -/
 import Mathlib
 import Ecdlp.Proved.DivisionPolynomialEllSequence
@@ -349,15 +359,29 @@ theorem even_x_algebra (k : ℕ) (Xk Yk sk : ZMod Secp256k1.p)
 /-- **Odd x-wall = point-transported `φ_ψ_diff`.** Secant addition (`k•P + (k+1)•P`): the group-law
 `x`-coordinate equals the canonical ratio at index `2k+1`. The cleared identity is the Silverman
 x-difference `x((2k+1)P) − x(kP) = −ψ_{2k+1}ψ_1/(ψ_{k+1}²ψ_k²)`, i.e. `φ_ψ_diff` at `(m,n)=(k,k+1)`.
-`needs`: `φ_ψ_diff secp256k1 k (k+1)` (proved) evaluated at `P` via the missing
-`x([j]P) = φⱼ(P)/ψⱼ(P)²` transport; the two denominators `ΨSqₖ(x), ΨSq_{k+1}(x) ≠ 0`. -/
+The two `y`-coupling hypotheses `hYk, hYk1` are the `Carrier` `y`-conjuncts at `k, k+1`; they pin the
+`Yk·Yk1` cross term that `secp256k1_secant_addX_cleared` exposes (without them the statement is
+sign-ambiguous in `Yk, Yk1` and *not* a theorem — this is the soundness fix, not a Mathlib gap).
+`needs`: `secp256k1_secant_addX_cleared` (proved, geometry half) + `φ_ψ_diff_evalEval` (proved,
+arithmetic half), combined through `hYk, hYk1` to pin `Yk·Yk1`, then the `x([j]P) = φⱼ(P)/ψⱼ(P)²`
+transport clearing the two denominators `ΨSqₖ(x), ΨSq_{k+1}(x) ≠ 0`. -/
 theorem odd_x_algebra (k : ℕ) (Xk Xk1 Yk Yk1 sk : ZMod Secp256k1.p)
     (hXk : Xk = (secp256k1.Φ (k : ℤ)).eval x / (secp256k1.ΨSq (k : ℤ)).eval x)
     (hXk1 : Xk1 = (secp256k1.Φ ((k + 1 : ℕ) : ℤ)).eval x
                     / (secp256k1.ΨSq ((k + 1 : ℕ) : ℤ)).eval x)
     (hne : Xk ≠ Xk1)
     (hslope : sk * (Xk - Xk1) = Yk - Yk1)
-    (hck : Yk ^ 2 = Xk ^ 3 + 7) (hck1 : Yk1 ^ 2 = Xk1 ^ 3 + 7) :
+    (hck : Yk ^ 2 = Xk ^ 3 + 7) (hck1 : Yk1 ^ 2 = Xk1 ^ 3 + 7)
+    (hYk : Yk * (4 * y) * ((secp256k1.ψ (k : ℤ)).evalEval x y) ^ 3
+        = (secp256k1.ψ ((k : ℤ) + 2)).evalEval x y
+            * ((secp256k1.ψ ((k : ℤ) - 1)).evalEval x y) ^ 2
+          - (secp256k1.ψ ((k : ℤ) - 2)).evalEval x y
+            * ((secp256k1.ψ ((k : ℤ) + 1)).evalEval x y) ^ 2)
+    (hYk1 : Yk1 * (4 * y) * ((secp256k1.ψ ((k + 1 : ℕ) : ℤ)).evalEval x y) ^ 3
+        = (secp256k1.ψ (((k + 1 : ℕ) : ℤ) + 2)).evalEval x y
+            * ((secp256k1.ψ (((k + 1 : ℕ) : ℤ) - 1)).evalEval x y) ^ 2
+          - (secp256k1.ψ (((k + 1 : ℕ) : ℤ) - 2)).evalEval x y
+            * ((secp256k1.ψ (((k + 1 : ℕ) : ℤ) + 1)).evalEval x y) ^ 2) :
     secp256k1.toAffine.addX Xk Xk1 sk
       = (secp256k1.Φ ((2 * k + 1 : ℕ) : ℤ)).eval x
           / (secp256k1.ΨSq ((2 * k + 1 : ℕ) : ℤ)).eval x := by
@@ -455,8 +479,8 @@ theorem odd_step_group (k : ℕ) (hk : Carrier x y h k) (hk1 : Carrier x y h (k 
         cases hq : (k + 1) • Point.some x y h with
         | zero => exact absurd hq hk1ne
         | some Xk1 Yk1 hns => exact ⟨Xk1, Yk1, hns, rfl⟩
-      obtain ⟨hXk, _⟩ := hk Xk Yk hk_ns hkP
-      obtain ⟨hXk1, _⟩ := hk1 Xk1 Yk1 hk1_ns hk1P
+      obtain ⟨hXk, hYk⟩ := hk Xk Yk hk_ns hkP
+      obtain ⟨hXk1, hYk1⟩ := hk1 Xk1 Yk1 hk1_ns hk1P
       have hckk : Yk ^ 2 = Xk ^ 3 + 7 := curve_of_nonsingular hk_ns
       have hckk1 : Yk1 ^ 2 = Xk1 ^ 3 + 7 := curve_of_nonsingular hk1_ns
       rw [hkP, hk1P] at hn
@@ -472,7 +496,7 @@ theorem odd_step_group (k : ℕ) (hk : Carrier x y h k) (hk1 : Carrier x y h (k 
           exact div_mul_cancel₀ _ (sub_ne_zero.mpr hX)
         refine ⟨?_, ?_⟩
         · rw [← hXeq]
-          exact odd_x_algebra k Xk Xk1 Yk Yk1 sk hXk hXk1 hX hslope hckk hckk1
+          exact odd_x_algebra k Xk Xk1 Yk Yk1 sk hXk hXk1 hX hslope hckk hckk1 hYk hYk1
         · exact odd_y_algebra k Xk Xk1 Yk sk Y hYeq.symm
 
 end Fixed
