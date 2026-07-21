@@ -49,6 +49,7 @@ jobs:
             Ecdlp.Proved.DivisionPolynomialEllSequence \
             Ecdlp.Proved.DivisionPolynomialEvalBridge \
             Ecdlp.Proved.DivisionPolynomialPointDiff \
+            Ecdlp.Proved.DivisionPolynomialPointBridge \
             Ecdlp.Proved.NsmulCoordsBaseOne \
             Ecdlp.Proved.NsmulCoordsBaseTwo \
             Ecdlp.Proved.OmegaRecurrenceAnchors \
