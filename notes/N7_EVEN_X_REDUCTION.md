@@ -105,3 +105,25 @@ induction (same skeleton as `somos4_dom`, cofactor via `eds_cofactor_gen.py`). O
 lemma lands, CORE-II closes as a finite `linear_combination` over
 `{normEDS_odd×2, somos4, companion, curve}`. This is the precise, verified next brick for CORE-II
 (and, with the analogous `−`-form already in hand as the `ω`-numerator, sharpens CORE-I too).
+
+## Honest caveat on the cofactor generator (2026-07-21)
+
+Follow-up probing shows the `eds_cofactor_gen.solve_cofactors` (`sympy.reduced`) path is **not**
+a turn-key solver for every step. It cleanly extracts a bundle only when the divisor set reduces
+**triangularly** (as in `somos4_odd_step`, where the doubled-index recurrences eliminate in one
+pass — validated, residual 0). For the harder steps it does **not** terminate at remainder 0 under
+plain multivariate division:
+
+- CORE-I even-step: 186-term residual;
+- CORE-II "+companion" even-step: 33-term residual.
+
+These residuals are an artifact of `reduced()` being order-dependent and incomplete for a
+non-Groebner divisor set — **not** proof the identity is outside the ideal. But they mean the
+Lean-ready cofactor bundle for these steps needs a stronger extraction than a single `reduced`
+call: a Groebner basis of the M-window ideal **with change-of-basis tracking** back to the
+original hypotheses (the reduced-vs-original-generator gap), or a degree-bounded linear solve
+(dense ansatz is combinatorially infeasible at the required ~degree 6 over ~12 vars). This is
+almost certainly how the original `NormEDSSomos4` cofactors were produced, and is the real
+remaining cost — consistent with this note's "larger than the original NormEDSSomos4 development"
+estimate. The generator's `self_test` (somos4) remains a valid, working reference; the CORE /
+companion steps are the harder cases it does not yet dispatch automatically.
