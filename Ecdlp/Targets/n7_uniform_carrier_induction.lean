@@ -518,9 +518,29 @@ theorem odd_step_group (k : ℕ) (hk : Carrier x y h k) (hk1 : Carrier x y h (k 
       have hckk1 : Yk1 ^ 2 = Xk1 ^ 3 + 7 := curve_of_nonsingular hk1_ns
       rw [hkP, hk1P] at hn
       by_cases hX : Xk = Xk1
-      · -- secant `x`-collision: either same point (`2k+1 ≡ 2k`, contra) or negatives (sum `= O`,
-        -- contra affine); decided by `Y_eq_of_X_eq`/`X_eq_iff`. Residual side-branch.
-        sorry
+      · -- secant `x`-collision (`Xk = Xk1`): `k•P` and `(k+1)•P` share an `x`-coordinate, so on the
+        -- curve they are equal (`Yk = Yk1`) or negatives (`Yk = -Yk1`). Equal ⟹ `k•P = (k+1)•P` ⟹
+        -- `P = O` (contra `some_ne_zero`); negatives ⟹ their sum `= O`, but the sum is `some X Y ≠ O`
+        -- (contra `hn`). Both branches close — no residual `sorry`.
+        exfalso
+        have hfac : (Yk - Yk1) * (Yk + Yk1) = 0 := by
+          have hsq : Yk ^ 2 - Yk1 ^ 2 = 0 := by rw [hckk, hckk1, hX]; ring
+          linear_combination hsq
+        rcases mul_eq_zero.mp hfac with hd | hs
+        · have hYeq : Yk = Yk1 := by linear_combination hd
+          have hpe : Point.some Xk Yk hk_ns = Point.some Xk1 Yk1 hk1_ns := by
+            rw [Point.some.injEq]; exact ⟨hX, hYeq⟩
+          have h0 : (k + 1) • Point.some x y h = k • Point.some x y h := by
+            rw [hk1P, hkP, hpe]
+          have h1 : k • Point.some x y h + Point.some x y h = k • Point.some x y h := by
+            rw [← succ_nsmul]; exact h0
+          exact Point.some_ne_zero h (add_right_eq_self.mp h1)
+        · have hYneg : Yk1 = -Yk := by linear_combination hs
+          have hneg : Point.some Xk1 Yk1 hk1_ns = -Point.some Xk Yk hk_ns := by
+            rw [Point.neg_some, Point.some.injEq]
+            exact ⟨hX.symm, by rw [negY_eq]; exact hYneg⟩
+          rw [hneg, add_neg_cancel] at hn
+          exact Point.some_ne_zero h' hn.symm
       · rw [Point.add_of_X_ne hX, Point.some.injEq] at hn
         obtain ⟨hXeq, hYeq⟩ := hn
         set sk := secp256k1.toAffine.slope Xk Xk1 Yk Yk1 with hskdef
