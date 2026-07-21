@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 292,
     "barriers": 6,
-    "edges": 478,
+    "edges": 480,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -4295,6 +4295,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.DivisionPolynomialPointBridge",
+      "to": "Ecdlp.Proved.MultiplicationXCoordinateRing",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.DivisionPolynomialPointDiff",
       "to": "Ecdlp.Proved.DivisionPolynomialEllSequence",
       "type": "imports"
@@ -6302,6 +6307,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.DivisionPolynomialPointDiff",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.DivisionPolynomialPointBridge",
       "type": "imports"
     },
     {
