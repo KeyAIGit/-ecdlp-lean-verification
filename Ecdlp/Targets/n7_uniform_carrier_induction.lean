@@ -360,7 +360,9 @@ The two `y`-coupling hypotheses `hYk, hYk1` are the `Carrier` `y`-conjuncts at `
 sign-ambiguous in `Yk, Yk1` and *not* a theorem — this is the soundness fix, not a Mathlib gap).
 `needs`: `secp256k1_secant_addX_cleared` (proved, geometry half) + `φ_ψ_diff_evalEval` (proved,
 arithmetic half), combined through `hYk, hYk1` to pin `Yk·Yk1`, then the `x([j]P) = φⱼ(P)/ψⱼ(P)²`
-transport clearing the two denominators `ΨSqₖ(x), ΨSq_{k+1}(x) ≠ 0`. -/
+transport clearing the two denominators `ΨSqₖ(x), ΨSq_{k+1}(x) ≠ 0` — now threaded as `hdenk, hdenk1`
+(supplied at the call site by `psiSq_ne_zero_of_nsmul_some` at `k`, `k+1`), so the statement is a
+genuine theorem at every `k` and the residual `sorry` is a pure proof fill. -/
 theorem odd_x_algebra (k : ℕ) (Xk Xk1 Yk Yk1 sk : ZMod Secp256k1.p)
     (hXk : Xk = (secp256k1.Φ (k : ℤ)).eval x / (secp256k1.ΨSq (k : ℤ)).eval x)
     (hXk1 : Xk1 = (secp256k1.Φ ((k + 1 : ℕ) : ℤ)).eval x
@@ -377,7 +379,9 @@ theorem odd_x_algebra (k : ℕ) (Xk Xk1 Yk Yk1 sk : ZMod Secp256k1.p)
         = (secp256k1.ψ (((k + 1 : ℕ) : ℤ) + 2)).evalEval x y
             * ((secp256k1.ψ (((k + 1 : ℕ) : ℤ) - 1)).evalEval x y) ^ 2
           - (secp256k1.ψ (((k + 1 : ℕ) : ℤ) - 2)).evalEval x y
-            * ((secp256k1.ψ (((k + 1 : ℕ) : ℤ) + 1)).evalEval x y) ^ 2) :
+            * ((secp256k1.ψ (((k + 1 : ℕ) : ℤ) + 1)).evalEval x y) ^ 2)
+    (hdenk : (secp256k1.ΨSq (k : ℤ)).eval x ≠ 0)
+    (hdenk1 : (secp256k1.ΨSq ((k + 1 : ℕ) : ℤ)).eval x ≠ 0) :
     secp256k1.toAffine.addX Xk Xk1 sk
       = (secp256k1.Φ ((2 * k + 1 : ℕ) : ℤ)).eval x
           / (secp256k1.ΨSq ((2 * k + 1 : ℕ) : ℤ)).eval x := by
@@ -429,6 +433,8 @@ theorem odd_y_algebra (k : ℕ) (Xk Xk1 Yk Yk1 sk Y : ZMod Secp256k1.p)
             * ((secp256k1.ψ (((k + 1 : ℕ) : ℤ) - 1)).evalEval x y) ^ 2
           - (secp256k1.ψ (((k + 1 : ℕ) : ℤ) - 2)).evalEval x y
             * ((secp256k1.ψ (((k + 1 : ℕ) : ℤ) + 1)).evalEval x y) ^ 2)
+    (hdenk : (secp256k1.ΨSq (k : ℤ)).eval x ≠ 0)
+    (hdenk1 : (secp256k1.ΨSq ((k + 1 : ℕ) : ℤ)).eval x ≠ 0)
     (hY : Y = secp256k1.toAffine.addY Xk Xk1 Yk sk) :
     Y * (4 * y) * ((secp256k1.ψ ((2 * k + 1 : ℕ) : ℤ)).evalEval x y) ^ 3
         = (secp256k1.ψ (((2 * k + 1 : ℕ) : ℤ) + 2)).evalEval x y
@@ -521,10 +527,14 @@ theorem odd_step_group (k : ℕ) (hk : Carrier x y h k) (hk1 : Carrier x y h (k 
         have hslope : sk * (Xk - Xk1) = Yk - Yk1 := by
           rw [hskdef, WeierstrassCurve.Affine.slope_of_X_ne hX]
           exact div_mul_cancel₀ _ (sub_ne_zero.mpr hX)
+        have hdenk : (secp256k1.ΨSq (k : ℤ)).eval x ≠ 0 := psiSq_ne_zero_of_nsmul_some hkP
+        have hdenk1 : (secp256k1.ΨSq ((k + 1 : ℕ) : ℤ)).eval x ≠ 0 :=
+          psiSq_ne_zero_of_nsmul_some hk1P
         refine ⟨?_, ?_⟩
         · rw [← hXeq]
-          exact odd_x_algebra k Xk Xk1 Yk Yk1 sk hXk hXk1 hX hslope hckk hckk1 hYk hYk1
-        · exact odd_y_algebra k Xk Xk1 Yk Yk1 sk Y hXk hXk1 hX hslope hckk hckk1 hYk hYk1 hYeq.symm
+          exact odd_x_algebra k Xk Xk1 Yk Yk1 sk hXk hXk1 hX hslope hckk hckk1 hYk hYk1 hdenk hdenk1
+        · exact odd_y_algebra k Xk Xk1 Yk Yk1 sk Y hXk hXk1 hX hslope hckk hckk1 hYk hYk1
+            hdenk hdenk1 hYeq.symm
 
 end Fixed
 
