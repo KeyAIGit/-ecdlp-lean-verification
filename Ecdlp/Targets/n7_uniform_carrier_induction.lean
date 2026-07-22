@@ -548,7 +548,10 @@ theorem odd_step_group (k : ℕ) (hk : Carrier x y h k) (hk1 : Carrier x y h (k 
             rw [hk1P, hkP, hpe]
           have h1 : k • Point.some x y h + Point.some x y h = k • Point.some x y h := by
             rw [← succ_nsmul]; exact h0
-          exact Point.some_ne_zero h (add_right_eq_self.mp h1)
+          have hP0 : (0 : secp256k1.toAffine.Point) = Point.some x y h :=
+            add_left_cancel (show k • Point.some x y h + 0
+              = k • Point.some x y h + Point.some x y h by rw [add_zero]; exact h1.symm)
+          exact Point.some_ne_zero h hP0.symm
         · have hYneg : Yk1 = -Yk := by linear_combination hs
           have hneg : Point.some Xk1 Yk1 hk1_ns = -Point.some Xk Yk hk_ns := by
             rw [Point.neg_some, Point.some.injEq]
