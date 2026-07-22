@@ -79,3 +79,27 @@ elaborated by `ring1` (OOM/timeout even at `maxHeartbeats 6400000`).
 3. **Upstream Mathlib** — a general division-polynomial duplication formula.
 
 `even_y_algebra` has the identical structure (ω-recurrence at `2k`) and the same verdict.
+
+## All four walls: independent point-level validation (2026-07-22)
+
+Separately from the univariate `(I1)/(I2)` check above, all **four** algebra walls were validated
+directly at the group-law/point level (`odd_wall_verify.py`): build the secp256k1 division
+polynomials in `E = ℚ[x,y]/(y²−x³−7)` (elements `a(x)+b(x)·y`, exact `/(2y)` in the even
+recurrence), form the point coordinates `x(nP)=φₙ/ψₙ²`, `y(nP)=(ψ_{n+2}ψ_{n−1}²−ψ_{n−2}ψ_{n+1}²)/(4y·ψₙ³)`,
+apply the affine group law (tangent slope `3X²/2Y` for `2k`; secant slope `(Yₖ−Y_{k+1})/(Xₖ−X_{k+1})`
+for `2k+1`), and compare to the canonical ratio/`ψ`-product at the doubled index.
+
+**Result — all TRUE for `k = 1,2,3,4`:** `even_x`, `even_y`, `odd_x`, `odd_y` each hold as exact
+identities on the curve. This independently confirms the four wall *statements* (as restated with
+the `Carrier` y-coupling, 2026-07-21) are genuine theorems — a fact the open `sorry`s cannot attest.
+
+**Degree profile.** `deg_x ψ_{2k+1} = (n²−1)/2` (4, 12, 24, 40 at `n = 3,5,7,9`), so the concrete
+per-`k` polynomials grow quadratically — there is no fixed-degree per-`k` certificate, and the
+uniform (symbolic-`k`) proof must go through the `ψ`-net relations.
+
+**Odd (secant) walls — same verdict.** The `odd_x`/`odd_y` closure has both halves already landed
+(`secp256k1_secant_addX_cleared` geometry, `φ_ψ_diff_evalEval` arithmetic), but assembling them pins
+`Yₖ·Y_{k+1}` from the two `Carrier` y-conjuncts (products of `ψ` over `k−2 … k+3`) and must reduce
+those to `ψ_{2k+1}²` — i.e. bridge the `{k}`-cluster to the `{2k}`-cluster, the *same* degree-heavy
+doubling step as `even_x`. So the odd walls are in the same certificate-generator class, not a short
+`linear_combination` fill; the completion paths above apply uniformly to all four.
