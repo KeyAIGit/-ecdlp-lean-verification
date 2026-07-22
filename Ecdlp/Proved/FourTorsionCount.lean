@@ -28,7 +28,7 @@ next step; this file records only the clean generic bound. No new `native_decide
 
 namespace Ecdlp.Curve
 
-open Polynomial
+open Polynomial WeierstrassCurve.Affine
 
 /-- **`#E[4](𝔽_p) ≤ 19`** — secp256k1 has at most 19 four-torsion points (set form). The generic
 `≤ 2m+1` fiber bound with `m = 9 = deg((X³+7)·preΨ₄)`; the tight value is `16` (see module
