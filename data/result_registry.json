@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 963,
-  "distinct_qualified_names": 737,
+  "declaration_count": 969,
+  "distinct_qualified_names": 741,
   "verified_md_citations": 232,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -2469,7 +2469,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi4Psi5.lean",
       "line": 39,
-      "occurrences": 9
+      "occurrences": 10
     },
     "Ecdlp.Curve.secp256k1_j_eq_zero": {
       "name": "secp256k1_j_eq_zero",
@@ -2669,7 +2669,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi3Psi5.lean",
       "line": 40,
-      "occurrences": 28
+      "occurrences": 29
     },
     "Ecdlp.Curve.secp256k1_projective_nonsingular": {
       "name": "secp256k1_projective_nonsingular",
@@ -3247,12 +3247,28 @@
       "line": 62,
       "occurrences": 1
     },
+    "Ecdlp.Curve.u4_0": {
+      "name": "u4_0",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
+      "line": 113,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.u4_3": {
+      "name": "u4_3",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
+      "line": 111,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.u5_0": {
       "name": "u5_0",
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 117,
+      "line": 169,
       "occurrences": 1
     },
     "Ecdlp.Curve.u5_3": {
@@ -3260,7 +3276,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 115,
+      "line": 167,
       "occurrences": 1
     },
     "Ecdlp.Curve.u5_6": {
@@ -3268,7 +3284,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 113,
+      "line": 165,
       "occurrences": 1
     },
     "Ecdlp.Curve.u5_9": {
@@ -3276,7 +3292,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 111,
+      "line": 163,
       "occurrences": 1
     },
     "Ecdlp.Curve.u7_0": {
@@ -3284,7 +3300,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 209,
+      "line": 261,
       "occurrences": 1
     },
     "Ecdlp.Curve.u7_12": {
@@ -3292,7 +3308,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 201,
+      "line": 253,
       "occurrences": 1
     },
     "Ecdlp.Curve.u7_15": {
@@ -3300,7 +3316,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 199,
+      "line": 251,
       "occurrences": 1
     },
     "Ecdlp.Curve.u7_18": {
@@ -3308,7 +3324,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 197,
+      "line": 249,
       "occurrences": 1
     },
     "Ecdlp.Curve.u7_21": {
@@ -3316,7 +3332,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 195,
+      "line": 247,
       "occurrences": 1
     },
     "Ecdlp.Curve.u7_3": {
@@ -3324,7 +3340,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 207,
+      "line": 259,
       "occurrences": 1
     },
     "Ecdlp.Curve.u7_6": {
@@ -3332,7 +3348,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 205,
+      "line": 257,
       "occurrences": 1
     },
     "Ecdlp.Curve.u7_9": {
@@ -3340,7 +3356,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 203,
+      "line": 255,
       "occurrences": 1
     },
     "Ecdlp.Curve.v": {
@@ -3367,12 +3383,28 @@
       "line": 64,
       "occurrences": 1
     },
+    "Ecdlp.Curve.v4_1": {
+      "name": "v4_1",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
+      "line": 117,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.v4_4": {
+      "name": "v4_4",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
+      "line": 115,
+      "occurrences": 1
+    },
     "Ecdlp.Curve.v5_1": {
       "name": "v5_1",
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 125,
+      "line": 177,
       "occurrences": 1
     },
     "Ecdlp.Curve.v5_10": {
@@ -3380,7 +3412,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 119,
+      "line": 171,
       "occurrences": 1
     },
     "Ecdlp.Curve.v5_4": {
@@ -3388,7 +3420,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 123,
+      "line": 175,
       "occurrences": 1
     },
     "Ecdlp.Curve.v5_7": {
@@ -3396,7 +3428,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 121,
+      "line": 173,
       "occurrences": 1
     },
     "Ecdlp.Curve.v7_1": {
@@ -3404,7 +3436,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 225,
+      "line": 277,
       "occurrences": 1
     },
     "Ecdlp.Curve.v7_10": {
@@ -3412,7 +3444,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 219,
+      "line": 271,
       "occurrences": 1
     },
     "Ecdlp.Curve.v7_13": {
@@ -3420,7 +3452,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 217,
+      "line": 269,
       "occurrences": 1
     },
     "Ecdlp.Curve.v7_16": {
@@ -3428,7 +3460,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 215,
+      "line": 267,
       "occurrences": 1
     },
     "Ecdlp.Curve.v7_19": {
@@ -3436,7 +3468,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 213,
+      "line": 265,
       "occurrences": 1
     },
     "Ecdlp.Curve.v7_22": {
@@ -3444,7 +3476,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 211,
+      "line": 263,
       "occurrences": 1
     },
     "Ecdlp.Curve.v7_4": {
@@ -3452,7 +3484,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 223,
+      "line": 275,
       "occurrences": 1
     },
     "Ecdlp.Curve.v7_7": {
@@ -3460,7 +3492,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "def",
       "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 221,
+      "line": 273,
       "occurrences": 1
     },
     "Ecdlp.Curve.x_cube_add_seven_ne_zero_of_root": {
