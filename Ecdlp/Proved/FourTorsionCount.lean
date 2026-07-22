@@ -45,6 +45,9 @@ theorem secp256k1_four_torsion_ncard_le :
     simpa using this
   have h4ne : (4 : ZMod Secp256k1.p) ≠ 0 := by
     rw [show (4 : ZMod Secp256k1.p) = 2 * 2 by norm_num]; exact mul_ne_zero h2ne h2ne
+  -- The point at infinity satisfies `2•O = 0`, so it is never a *primitive* 4-torsion point.
+  have hzero2 : (2 : ℕ) • (Point.zero : secp256k1.toAffine.Point) = 0 := by
+    rw [show (Point.zero : secp256k1.toAffine.Point) = 0 from rfl, two_nsmul, add_zero]
   -- The primitive 4-torsion set and the `≤ 6` bound on the `preΨ₄`-roots.
   set P4 := {P : secp256k1.toAffine.Point | (4 : ℕ) • P = 0 ∧ (2 : ℕ) • P ≠ 0} with hP4def
   have hXcard : secp256k1.preΨ₄.roots.toFinset.card ≤ 6 :=
@@ -82,7 +85,7 @@ theorem secp256k1_four_torsion_ncard_le :
       obtain ⟨P, hPmem, hPa⟩ := ha
       rw [Set.mem_toFinset] at hPmem
       rcases P with _ | ⟨x, y, h⟩
-      · exact absurd (by rw [two_nsmul, add_zero]) hPmem.2
+      · exact absurd hzero2 hPmem.2
       · simp only [px] at hPa; rw [← hPa]; exact hmem x y h hPmem
     have hfib : ∀ a ∈ P4.toFinset.image px,
         (P4.toFinset.filter (fun P => px P = a)).card ≤ 2 := by
@@ -100,7 +103,7 @@ theorem secp256k1_four_torsion_ncard_le :
         rw [Finset.mem_coe, Finset.mem_filter, Set.mem_toFinset] at hP
         obtain ⟨hPmem, hPa⟩ := hP
         rcases P with _ | ⟨x, y, h⟩
-        · exact absurd (by rw [two_nsmul, add_zero]) hPmem.2
+        · exact absurd hzero2 hPmem.2
         · simp only [px] at hPa; subst hPa
           have hcurve : y ^ 2 = x ^ 3 + 7 := secp256k1_curve_of_nonsingular x y h
           simp only [py, Finset.mem_coe, Multiset.mem_toFinset, mem_roots', IsRoot.def, eval_sub,
@@ -109,9 +112,9 @@ theorem secp256k1_four_torsion_ncard_le :
       · intro P hP Q hQ hPQ
         rw [Finset.mem_coe, Finset.mem_filter, Set.mem_toFinset] at hP hQ
         rcases P with _ | ⟨x1, y1, h1⟩
-        · exact absurd (by rw [two_nsmul, add_zero]) hP.1.2
+        · exact absurd hzero2 hP.1.2
         rcases Q with _ | ⟨x2, y2, h2⟩
-        · exact absurd (by rw [two_nsmul, add_zero]) hQ.1.2
+        · exact absurd hzero2 hQ.1.2
         · simp only [px] at hP hQ
           simp only [py] at hPQ
           have hxx : x1 = x2 := hP.2.trans hQ.2.symm
