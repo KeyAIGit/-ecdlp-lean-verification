@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 296,
     "barriers": 6,
-    "edges": 502,
+    "edges": 503,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -71,7 +71,7 @@
       "the bridges + Mathlib (`card_roots'`, `Finset.card_le_mul_card_image`, `Set.ncard_insert_le`)": 1,
       "Mathlib (`Finset.card_le_mul_card_image`, `card_roots'`, `Set.ncard_eq_toFinset_card'`)": 1,
       "secp256k1_two_nsmul_eq_zero_iff` + Mathlib (`card_roots'`, `Set.ncard_insert_le`)": 1,
-      "secp256k1_four_nsmul_eq_zero_iff` + `secp256k1_torsion_ncard_le` + Mathlib": 1,
+      "secp256k1_four_nsmul_eq_zero_iff` + `secp256k1_two_torsion_ncard_le` + curve-fiber count + Mathlib": 1,
       "secp256k1_mem_torsionBy_iff_addOrderOf_dvd` + Mathlib (`Nat.dvd_gcd`, `AddSubgroup.mem_inf`)": 1,
       "glvHom`/`glvPoint_bijective`/`glvPoint_cube_eq_id` + Mathlib (`map_nsmul`)": 1,
       "secp256k1_glvPoint_fixed_three_torsion` + Mathlib (`Nat.dvd_gcd`, `addOrderOf_dvd_*`)": 1,
@@ -3048,8 +3048,8 @@
       "short_name": "secp256k1_four_torsion_ncard_le",
       "module": "Ecdlp.Proved.FourTorsionCount",
       "file": "Ecdlp/Proved/FourTorsionCount.lean",
-      "claim": "#E[4](𝔽_p) ≤ 19` point-cardinality bound (`secp256k1_four_torsion_ncard_le`: `Set.ncard {P \\| 4•P=0} ≤ 19` — the even-index entry of the `#E[n]` count family, via the 4-torsion bridge `4•P=0 ⟺ ψ₄(P)=0`, the factorization `ψ₄ = 4y·(x⁶+140x³−392)` (so `x` is a root of `g = (X³+7)·preΨ₄`, deg 9), and the generic `≤2m+1` fiber bound at `m=9`. Honest scope: the *generic* bound, not the tight `#E[4]=16` — the three 2-torsion points (`y=0`) are self-paired, so `2m+1` over-counts by 3; the tight refinement (per-fiber, or `#E[4]=#E[2]·#im[2]≤#E[2]`) is deferred)",
-      "method": "secp256k1_four_nsmul_eq_zero_iff` + `secp256k1_torsion_ncard_le` + Mathlib",
+      "claim": "Tight `#E[4](𝔽_p) ≤ 16` point-cardinality bound (`secp256k1_four_torsion_ncard_le`: `Set.ncard {P \\| 4•P=0} ≤ 16 = 4` — the even-index entry of the `#E[n]` count family, at the tight value. `n=4` mixes self-paired 2-torsion (`y=0`) with `±y`-paired primitive 4-torsion, so instead of the generic `≤2m+1` we split `E[4] = E[2] ⊔ P₄` (`P₄ = {4•P=0, 2•P≠0}`): `#E[2] ≤ 4` (`secp256k1_two_torsion_ncard_le`) + a `≤2`-to-`1` fiber count `#P₄ ≤ 12` over the six `preΨ₄`-roots — via the 4-torsion bridge `4•P=0 ⟺ ψ₄=0` and `ψ₄=4y·(x⁶+140x³−392)`, a primitive point (`2•P≠0`⟹`y≠0`) forces `preΨ₄(x)=0`. `4+12=16`. Finiteness from the global `Finite W.Point` instance; reuses the `px`/`py` curve-fiber machinery of `TorsionPointCount`. The even-index tight companion of `#E[3]≤9`/`#E[5]≤25`/`#E[7]≤49`)",
+      "method": "secp256k1_four_nsmul_eq_zero_iff` + `secp256k1_two_torsion_ncard_le` + curve-fiber count + Mathlib",
       "status": "proved",
       "area": "generic-hardness",
       "dependency_depth": 9,
@@ -4635,6 +4635,11 @@
     {
       "from": "Ecdlp.Proved.FourTorsionCount",
       "to": "Ecdlp.Proved.FourDivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionCount",
+      "to": "Ecdlp.Proved.AffinePointFinite",
       "type": "imports"
     },
     {

@@ -2,94 +2,139 @@ import Mathlib
 import Ecdlp.Proved.FourTorsionBridge
 import Ecdlp.Proved.TorsionPointCount
 import Ecdlp.Proved.FourDivisionPolynomial
+import Ecdlp.Proved.AffinePointFinite
 
 /-!
-# A point-count bound for the 4-torsion of secp256k1 over `𝔽_p`
+# The tight 4-torsion point count for secp256k1 over `𝔽_p`: `#E[4] ≤ 16`
 
-The even-index entry of the `#E[n]` counting family (`TorsionPointCount.lean`, which has the
-odd `#E[3]≤9`, `#E[5]≤25`, `#E[7]≤49`). Using the point-level 4-torsion bridge
-`secp256k1_four_nsmul_eq_zero_iff` (`4•P = 0 ⟺ ψ₄(P) = 0`) and the factorization
-`ψ₄(P) = 4y·(x⁶+140x³−392)` (so `ψ₄(P) = 0 ⟺ y = 0 ∨ preΨ₄(x) = 0`), every `4`-torsion point's
-`x`-coordinate is a root of `g := (X³+7)·preΨ₄` (degree `9`): the `y = 0` branch gives an `X³+7`
-root (the 2-torsion `x`-locus), the `y ≠ 0` branch a `preΨ₄` root (the primitive-4-torsion locus,
-`preΨ₄ = 2·(x⁶+140x³−392)`). Feeding this into the generic `≤ 2m+1` fiber bound
-`secp256k1_torsion_ncard_le` (each `x` has `≤ 2` points on the curve, plus `O`) gives
+The even-index entry of the `#E[n]` counting family (`TorsionPointCount.lean`: `#E[3]≤9`,
+`#E[5]≤25`, `#E[7]≤49`), at the tight value `16 = 4²`. Unlike the odd cases, `n = 4` mixes two
+kinds of torsion: the `y = 0` two-torsion (self-paired — one point per `x`) and the primitive
+4-torsion (`±y`-paired). The generic `≤2m+1` fiber bound would over-count the self-paired points,
+so we split instead:
 
-  **`#E[4](𝔽_p) ≤ 2·9 + 1 = 19`.**
+  `E[4] = E[2] ⊔ P₄`,  `P₄ := {P | 4•P = 0 ∧ 2•P ≠ 0}` (the primitive 4-torsion),
 
-**Honest scope — this is the *generic* bound, not the tight count.** The exact value is
-`#E[4] = 16 = 4²`: the generic `≤ 2m+1` over-counts because the `3` two-torsion `x`-coordinates
-(`y = 0`) are *self-paired* — each carries one point, not the `±y` pair the bound assumes — so the
-tight count is `1 + 3·1 + 6·2 = 16`, three below `19`. Closing that gap (a per-fiber refinement
-distinguishing the `y = 0` locus, or the group-theoretic `#E[4] = #E[2]·#im[2] ≤ #E[2]²`) is the
-next step; this file records only the clean generic bound. No new `native_decide` beyond the
-`7 ≠ 0` / `2 ≠ 0` residue facts.
+and bound each part tightly: `#E[2] ≤ 4` (`secp256k1_two_torsion_ncard_le`) and `#P₄ ≤ 12`. The
+`P₄` bound is a `≤2`-to-`1` fiber count over the roots of `preΨ₄` (degree `6`): via the 4-torsion
+bridge `4•P = 0 ⟺ ψ₄(P) = 0` and the factorization `ψ₄(P) = 4y·(x⁶+140x³−392)`, a primitive point
+(`2•P ≠ 0`, hence `y ≠ 0`) forces `preΨ₄(x) = 2·(x⁶+140x³−392) = 0`, so its `x` is one of the `≤6`
+`preΨ₄`-roots; at most two `y` per `x` gives `≤ 12`. Hence `#E[4] ≤ 4 + 12 = 16`.
+
+Finiteness of every point set is free from the global `Finite W.Point` instance
+(`AffinePointFinite.lean`). Reuses the public `px`/`py` projections and the `≤2`-per-`x` curve-fiber
+argument of `TorsionPointCount.lean`. No new `native_decide` beyond the `7 ≠ 0` / `2 ≠ 0` facts.
 -/
 
 namespace Ecdlp.Curve
 
 open Polynomial WeierstrassCurve.Affine
 
-/-- **`#E[4](𝔽_p) ≤ 19`** — secp256k1 has at most 19 four-torsion points (set form). The generic
-`≤ 2m+1` fiber bound with `m = 9 = deg((X³+7)·preΨ₄)`; the tight value is `16` (see module
-docstring: the three `y = 0` two-torsion points are self-paired). Even-index companion of the odd
-`#E[3]≤9` / `#E[5]≤25` / `#E[7]≤49`. -/
+/-- **`#E[4](𝔽_p) ≤ 16`** — the tight point count for the 4-torsion of secp256k1 (set form),
+`16 = 4²`. Proved by the split `E[4] = E[2] ⊔ P₄` with `#E[2] ≤ 4` and a `≤2`-to-`1` fiber count
+`#P₄ ≤ 12` over the six `preΨ₄`-roots. The even-index tight companion of `#E[3]≤9`, `#E[5]≤25`,
+`#E[7]≤49`. -/
 theorem secp256k1_four_torsion_ncard_le :
-    Set.ncard {P : secp256k1.toAffine.Point | (4 : ℕ) • P = 0} ≤ 19 := by
+    Set.ncard {P : secp256k1.toAffine.Point | (4 : ℕ) • P = 0} ≤ 16 := by
   classical
   haveI : NeZero Secp256k1.p := ⟨(Fact.out : Nat.Prime Secp256k1.p).pos.ne'⟩
   have h2ne : (2 : ZMod Secp256k1.p) ≠ 0 := by
     have : ((2 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by
       rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide
     simpa using this
-  -- `g = (X³ + 7) · preΨ₄`: nonzero, degree `9`, so `≤ 9` distinct roots.
-  set g : (ZMod Secp256k1.p)[X] := (X ^ 3 + C 7) * secp256k1.preΨ₄ with hg
-  have hcubic_ne : (X ^ 3 + C 7 : (ZMod Secp256k1.p)[X]) ≠ 0 := by
-    intro hz
-    have h7 : (7 : ZMod Secp256k1.p) ≠ 0 := by
-      have : ((7 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by
-        rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide
-      simpa using this
-    have h0 : (X ^ 3 + C 7 : (ZMod Secp256k1.p)[X]).eval 0 = 0 := by rw [hz, eval_zero]
-    simp only [eval_add, eval_pow, eval_X, eval_C] at h0
-    exact h7 (by linear_combination h0)
-  have hg_ne : g ≠ 0 := mul_ne_zero hcubic_ne secp256k1_preΨ₄_ne_zero
-  have hcubic_deg : (X ^ 3 + C 7 : (ZMod Secp256k1.p)[X]).natDegree = 3 := by compute_degree!
-  have hg_deg : g.natDegree = 9 := by
-    rw [hg, natDegree_mul hcubic_ne secp256k1_preΨ₄_ne_zero, hcubic_deg,
-      secp256k1_preΨ₄_natDegree]
-  have hcard : g.roots.toFinset.card ≤ 9 :=
-    (Multiset.toFinset_card_le _).trans ((card_roots' _).trans (le_of_eq hg_deg))
-  -- Every nonzero 4-torsion point has its `x` among the roots of `g`.
+  have h4ne : (4 : ZMod Secp256k1.p) ≠ 0 := by
+    rw [show (4 : ZMod Secp256k1.p) = 2 * 2 by norm_num]; exact mul_ne_zero h2ne h2ne
+  -- The primitive 4-torsion set and the `≤ 6` bound on the `preΨ₄`-roots.
+  set P4 := {P : secp256k1.toAffine.Point | (4 : ℕ) • P = 0 ∧ (2 : ℕ) • P ≠ 0} with hP4def
+  have hXcard : secp256k1.preΨ₄.roots.toFinset.card ≤ 6 :=
+    (Multiset.toFinset_card_le _).trans ((card_roots' _).trans (le_of_eq secp256k1_preΨ₄_natDegree))
+  -- Every primitive 4-torsion point has its `x`-coordinate a root of `preΨ₄`.
   have hmem : ∀ (x y : ZMod Secp256k1.p) (h : secp256k1.toAffine.Nonsingular x y),
-      (4 : ℕ) • Point.some x y h = 0 → x ∈ g.roots.toFinset := by
-    intro x y h ht
+      (4 : ℕ) • Point.some x y h = 0 ∧ (2 : ℕ) • Point.some x y h ≠ 0 →
+      x ∈ secp256k1.preΨ₄.roots.toFinset := by
+    rintro x y h ⟨h4, h2⟩
     have hcurve : y ^ 2 = x ^ 3 + 7 := secp256k1_curve_of_nonsingular x y h
-    have hev := (secp256k1_four_nsmul_eq_zero_iff x y h).mp ht
+    have hy : y ≠ 0 := fun hy0 => h2 ((secp256k1_two_nsmul_eq_zero_iff x y h).mpr hy0)
+    have hev := (secp256k1_four_nsmul_eq_zero_iff x y h).mp h4
     have hψ4 : (secp256k1.ψ 4).evalEval x y = 4 * y * (x ^ 6 + 140 * x ^ 3 - 392) := by
       rw [secp256k1.ψ_four]
       simp only [evalEval_mul, evalEval_C]
       rw [secp256k1_preΨ₄_eval, secp256k1_psi2_evalEval]
       ring
     rw [hψ4] at hev
-    -- `4y·(x⁶+140x³−392) = 0`, so `y = 0` or `x⁶+140x³−392 = 0`; either forces `g.eval x = 0`.
+    have hω : x ^ 6 + 140 * x ^ 3 - 392 = 0 := by
+      rcases mul_eq_zero.mp hev with h4y | hω
+      · rcases mul_eq_zero.mp h4y with hc | hc
+        · exact absurd hc h4ne
+        · exact absurd hc hy
+      · exact hω
     rw [Multiset.mem_toFinset, mem_roots']
-    refine ⟨hg_ne, ?_⟩
-    rw [hg, IsRoot.def, eval_mul, eval_add, eval_pow, eval_X, eval_C, secp256k1_preΨ₄_eval]
-    -- goal: `(x³ + 7) * (2x⁶ + 280x³ − 784) = 0`
-    have h4ne : (4 : ZMod Secp256k1.p) ≠ 0 := by
-      rw [show (4 : ZMod Secp256k1.p) = 2 * 2 by norm_num]; exact mul_ne_zero h2ne h2ne
-    rcases mul_eq_zero.mp hev with h4y | hω
-    · rcases mul_eq_zero.mp h4y with h4 | hy0
-      · exact absurd h4 h4ne
-      · -- `y = 0` ⟹ `x³ + 7 = 0` (curve), so the first factor vanishes.
-        have hx3 : x ^ 3 + 7 = 0 := by rw [← hcurve, hy0]; ring
-        rw [hx3, zero_mul]
-    · -- `x⁶+140x³−392 = 0` ⟹ `2x⁶+280x³−784 = 2·(…) = 0`, so the second factor vanishes.
-      have hf2 : (2 * x ^ 6 + 280 * x ^ 3 - 784 : ZMod Secp256k1.p) = 0 := by
-        linear_combination (2 : ZMod Secp256k1.p) * hω
-      rw [hf2, mul_zero]
-  have hbound := secp256k1_torsion_ncard_le 4 9 g.roots.toFinset hcard hmem
-  simpa using hbound
+    refine ⟨secp256k1_preΨ₄_ne_zero, ?_⟩
+    rw [IsRoot.def, secp256k1_preΨ₄_eval]
+    linear_combination (2 : ZMod Secp256k1.p) * hω
+  -- `#P₄ ≤ 12` by a `≤2`-to-`1` fiber count over `preΨ₄.roots`.
+  haveI : Fintype ↥P4 := Fintype.ofFinite _
+  have hP4card : Set.ncard P4 ≤ 12 := by
+    have himg_sub : P4.toFinset.image px ⊆ secp256k1.preΨ₄.roots.toFinset := by
+      intro a ha
+      rw [Finset.mem_image] at ha
+      obtain ⟨P, hPmem, hPa⟩ := ha
+      rw [Set.mem_toFinset] at hPmem
+      rcases P with _ | ⟨x, y, h⟩
+      · exact absurd (by simp) hPmem.2
+      · simp only [px] at hPa; rw [← hPa]; exact hmem x y h hPmem
+    have hfib : ∀ a ∈ P4.toFinset.image px,
+        (P4.toFinset.filter (fun P => px P = a)).card ≤ 2 := by
+      intro a _
+      have hpoly_ne : (X ^ 2 - C (a ^ 3 + 7) : (ZMod Secp256k1.p)[X]) ≠ 0 :=
+        X_pow_sub_C_ne_zero (by norm_num) (a ^ 3 + 7)
+      have hpoly_deg : (X ^ 2 - C (a ^ 3 + 7) : (ZMod Secp256k1.p)[X]).natDegree ≤ 2 := by
+        compute_degree
+      have hroots_card :
+          (X ^ 2 - C (a ^ 3 + 7) : (ZMod Secp256k1.p)[X]).roots.toFinset.card ≤ 2 :=
+        (Multiset.toFinset_card_le _).trans ((card_roots' _).trans hpoly_deg)
+      refine le_trans ?_ hroots_card
+      apply Finset.card_le_card_of_injOn py
+      · intro P hP
+        rw [Finset.mem_coe, Finset.mem_filter, Set.mem_toFinset] at hP
+        obtain ⟨hPmem, hPa⟩ := hP
+        rcases P with _ | ⟨x, y, h⟩
+        · exact absurd (by simp) hPmem.2
+        · simp only [px] at hPa; subst hPa
+          have hcurve : y ^ 2 = x ^ 3 + 7 := secp256k1_curve_of_nonsingular x y h
+          simp only [py, Finset.mem_coe, Multiset.mem_toFinset, mem_roots', IsRoot.def, eval_sub,
+            eval_pow, eval_X, eval_C]
+          exact ⟨hpoly_ne, by linear_combination hcurve⟩
+      · intro P hP Q hQ hPQ
+        rw [Finset.mem_coe, Finset.mem_filter, Set.mem_toFinset] at hP hQ
+        rcases P with _ | ⟨x1, y1, h1⟩
+        · exact absurd (by simp) hP.1.2
+        rcases Q with _ | ⟨x2, y2, h2⟩
+        · exact absurd (by simp) hQ.1.2
+        · simp only [px] at hP hQ
+          simp only [py] at hPQ
+          have hxx : x1 = x2 := hP.2.trans hQ.2.symm
+          subst hxx; subst hPQ; rfl
+    rw [Set.ncard_eq_toFinset_card' P4]
+    calc P4.toFinset.card
+        ≤ 2 * (P4.toFinset.image px).card := by
+          apply Finset.card_le_mul_card_image; exact hfib
+      _ ≤ 2 * secp256k1.preΨ₄.roots.toFinset.card :=
+          Nat.mul_le_mul_left 2 (Finset.card_le_card himg_sub)
+      _ ≤ 2 * 6 := Nat.mul_le_mul_left 2 hXcard
+  -- Combine: `E[4] ⊆ E[2] ∪ P₄`, so `#E[4] ≤ #E[2] + #P₄ ≤ 4 + 12`.
+  have hsub : {P : secp256k1.toAffine.Point | (4 : ℕ) • P = 0}
+      ⊆ {P : secp256k1.toAffine.Point | (2 : ℕ) • P = 0} ∪ P4 := by
+    intro P hP
+    by_cases h2 : (2 : ℕ) • P = 0
+    · exact Or.inl h2
+    · exact Or.inr ⟨hP, h2⟩
+  calc Set.ncard {P : secp256k1.toAffine.Point | (4 : ℕ) • P = 0}
+      ≤ Set.ncard ({P : secp256k1.toAffine.Point | (2 : ℕ) • P = 0} ∪ P4) :=
+        Set.ncard_le_ncard hsub (Set.toFinite _)
+    _ ≤ Set.ncard {P : secp256k1.toAffine.Point | (2 : ℕ) • P = 0} + Set.ncard P4 :=
+        Set.ncard_union_le _ _
+    _ ≤ 4 + 12 := Nat.add_le_add secp256k1_two_torsion_ncard_le hP4card
+    _ = 16 := by norm_num
 
 end Ecdlp.Curve
