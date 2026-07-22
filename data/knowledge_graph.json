@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 296,
     "barriers": 6,
-    "edges": 503,
+    "edges": 504,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -3052,7 +3052,7 @@
       "method": "secp256k1_four_nsmul_eq_zero_iff` + `secp256k1_two_torsion_ncard_le` + curve-fiber count + Mathlib",
       "status": "proved",
       "area": "generic-hardness",
-      "dependency_depth": 9,
+      "dependency_depth": 10,
       "gated": true
     },
     {
@@ -4640,6 +4640,11 @@
     {
       "from": "Ecdlp.Proved.FourTorsionCount",
       "to": "Ecdlp.Proved.AffinePointFinite",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionCount",
+      "to": "Ecdlp.Proved.TwoTorsionCount",
       "type": "imports"
     },
     {
