@@ -48,6 +48,11 @@ private noncomputable abbrev φac :
 theorem secp256k1_Ψ₃_separable : secp256k1.Ψ₃.Separable :=
   secp256k1_isCoprime_Ψ₃_derivative
 
+/-- **`preΨ₄` (the primitive-4-division polynomial) is separable** — the even-index
+companion; separability is literally the B4 certificate `secp256k1_isCoprime_preΨ₄_derivative`. -/
+theorem secp256k1_preΨ₄_separable : (secp256k1.preΨ₄).Separable :=
+  secp256k1_isCoprime_preΨ₄_derivative
+
 /-- **`preΨ₅` (the univariate 5-division polynomial) is separable.** -/
 theorem secp256k1_preΨ₅_separable : (secp256k1.preΨ' 5).Separable :=
   secp256k1_isCoprime_preΨ₅_derivative
@@ -83,6 +88,19 @@ theorem secp256k1_Ψ₃_roots_card_bar :
 theorem secp256k1_Ψ₃_roots_nodup_bar :
     ((secp256k1.Ψ₃).map φac).roots.Nodup :=
   roots_nodup_map_of_separable secp256k1_Ψ₃_separable
+
+/-- **`preΨ₄` has exactly `6` distinct roots over `𝔽̄_p`** (distinct by
+`secp256k1_preΨ₄_roots_nodup_bar`). Here `deg preΨ₄ = 6` counts the *primitive* 4-torsion
+`x`-coordinates (`#E[4] − #E[2] = 16 − 4 = 12` points, `/2` for the `±y` pairing) — the
+even-index count, not the odd `(n²−1)/2` formula. -/
+theorem secp256k1_preΨ₄_roots_card_bar :
+    ((secp256k1.preΨ₄).map φac).roots.card = 6 :=
+  roots_card_map_of_separable secp256k1_preΨ₄_separable secp256k1_preΨ₄_natDegree
+
+/-- The closure roots of `preΨ₄` are pairwise distinct. -/
+theorem secp256k1_preΨ₄_roots_nodup_bar :
+    ((secp256k1.preΨ₄).map φac).roots.Nodup :=
+  roots_nodup_map_of_separable secp256k1_preΨ₄_separable
 
 /-- **`preΨ₅` has exactly `12 = (5²−1)/2` roots over `𝔽̄_p`** (distinct by
 `secp256k1_preΨ₅_roots_nodup_bar`), i.e. `preΨ₅` has exactly 12 distinct roots in `𝔽̄_p`.

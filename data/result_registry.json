@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 969,
+  "declaration_count": 972,
   "distinct_qualified_names": 741,
   "verified_md_citations": 232,
   "unresolved_citations": [],
@@ -1460,7 +1460,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomialSeparable.lean",
-      "line": 63,
+      "line": 68,
       "occurrences": 1
     },
     "Ecdlp.Curve.roots_nodup_map_of_separable": {
@@ -1468,7 +1468,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomialSeparable.lean",
-      "line": 71,
+      "line": 76,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1": {
@@ -2669,7 +2669,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi3Psi5.lean",
       "line": 40,
-      "occurrences": 29
+      "occurrences": 32
     },
     "Ecdlp.Curve.secp256k1_projective_nonsingular": {
       "name": "secp256k1_projective_nonsingular",
