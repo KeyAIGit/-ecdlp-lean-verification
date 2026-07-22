@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~253 distinct results / 292 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~254 distinct results / 293 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -32,13 +32,15 @@ group-theory zone and are the realised part of "Tractable now":
 - `order_dvd_card` (Lagrange), `cofactor_card_mul_index` (`#E = n·h` abstractly),
   `orderOf_eq_card_of_prime` (prime order ⇒ generator, no small subgroup),
   `cube_root_of_eigenvalue` (root of `x²+x+1` ⇒ `x³=1`) — Mathlib.
-- **Distinct-prime torsion x-loci are disjoint** (no-go certificate family). For `y²=x³+7`,
-  the `x`-coordinates of the `ℓ`- and `ℓ'`-torsion (`ℓ≠ℓ'` prime) never coincide, via
-  `gcd(ψ_ℓ, ψ_ℓ') = 1` with an explicit resultant + Bézout certificate. Done for `E[2]⊥E[3]`
-  (`Res = −3⁶·7⁴`) and `E[5]⊥E[7]` (`Res = 2¹⁹²·3¹⁴⁴·7⁹⁶`); in both the resultant's prime
-  support equals the bad-reduction primes `{2,3,7}` of the curve — the only primes where the
-  loci can collide on reduction. Sympy-certified (`scripts/certs/`), kernel-promotion pending
-  (sibling of `Ecdlp/Proved/CoprimePsi2Psi3.lean`).
+- **Distinct-prime torsion x-loci are disjoint** (no-go certificate family, **kernel-verified**).
+  For `y²=x³+7`, the `x`-coordinates of the `ℓ`- and `ℓ'`-torsion (`ℓ≠ℓ'` prime) never coincide,
+  via `gcd(ψ_ℓ, ψ_ℓ') = 1` with an explicit resultant + Bézout certificate. The **entire pairwise
+  `{2,3,5,7}` family is now proved** in `Ecdlp/Proved/CoprimePsi{2Psi3,2Psi5,2Psi7,3Psi5,3Psi7,5Psi7}.lean`
+  (plus `Ψ₂Sq⊥preΨ₄`, `Ψ₃⊥preΨ₄`): each an `IsCoprime` theorem discharged by a CAS extended-Euclid
+  Bézout certificate over `𝔽_p` (`native_decide` residue equations), the last rung `E[5]⊥E[7]`
+  (`Res = 2¹⁹²·3¹⁴⁴·7⁹⁶`, `CoprimePsi5Psi7.lean`) completing pairwise disjointness. In every case the
+  resultant's prime support equals the bad-reduction primes `{2,3,7}` of the curve — the only primes
+  where the loci can collide on reduction. Certificates in `scripts/certs/torsion_disjoint_*.py`.
 
 ### Foundation formalized: the generic-group `Ω(√p)`/`Θ(√n)` results
 Previously listed under B1 as blocked-by-missing-cost-model, the **Shoup/Nechaev

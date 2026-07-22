@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 932,
-  "distinct_qualified_names": 715,
+  "declaration_count": 945,
+  "distinct_qualified_names": 727,
   "verified_md_citations": 232,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -262,6 +262,102 @@
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
       "line": 51,
       "occurrences": 2
+    },
+    "Ecdlp.Curve.A0": {
+      "name": "A0",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 51,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.A12": {
+      "name": "A12",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 43,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.A15": {
+      "name": "A15",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 41,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.A18": {
+      "name": "A18",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 39,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.A21": {
+      "name": "A21",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 37,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.A3": {
+      "name": "A3",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 49,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.A6": {
+      "name": "A6",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 47,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.A9": {
+      "name": "A9",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 45,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.B0": {
+      "name": "B0",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 59,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.B3": {
+      "name": "B3",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 57,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.B6": {
+      "name": "B6",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 55,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.B9": {
+      "name": "B9",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 53,
+      "occurrences": 1
     },
     "Ecdlp.Curve.HasOnlySecp256k1BadPrimeDivisors": {
       "name": "HasOnlySecp256k1BadPrimeDivisors",
@@ -2291,9 +2387,9 @@
       "name": "secp256k1_isCoprime_pre",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
-      "file": "Ecdlp/Proved/DivisionPolynomialSquarefree.lean",
-      "line": 134,
-      "occurrences": 6
+      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
+      "line": 68,
+      "occurrences": 7
     },
     "Ecdlp.Curve.secp256k1_j_eq_zero": {
       "name": "secp256k1_j_eq_zero",
