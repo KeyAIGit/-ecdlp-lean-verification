@@ -123,7 +123,7 @@ theorem secp256k1_isCoprime_preΨ₅_preΨ₇ :
         + C (5 * A15 + 2660 * A18 - 11760 * A21 + 7 * B3 + 27608 * B6 - 2101904 * B9) * X ^ 27
         + C (5 * A18 + 2660 * A21 + 7 * B6 + 27608 * B9) * X ^ 30
         + C (5 * A21 + 7 * B9) * X ^ 33 := by
-    simp only [map_add, map_sub, map_mul, map_ofNat]; ring
+    simp only [map_add, map_sub, map_mul, map_neg, map_ofNat]; ring
   rw [key, e0, e3, e6, e9, e12, e15, e18, e21, e24, e27, e30, e33]
   simp
 
