@@ -3,6 +3,7 @@ import Ecdlp.Proved.FourTorsionBridge
 import Ecdlp.Proved.TorsionPointCount
 import Ecdlp.Proved.FourDivisionPolynomial
 import Ecdlp.Proved.AffinePointFinite
+import Ecdlp.Proved.TwoTorsionCount
 
 /-!
 # The tight 4-torsion point count for secp256k1 over `𝔽_p`: `#E[4] ≤ 16`
@@ -81,7 +82,7 @@ theorem secp256k1_four_torsion_ncard_le :
       obtain ⟨P, hPmem, hPa⟩ := ha
       rw [Set.mem_toFinset] at hPmem
       rcases P with _ | ⟨x, y, h⟩
-      · exact absurd (by simp) hPmem.2
+      · exact absurd (by rw [two_nsmul, add_zero]) hPmem.2
       · simp only [px] at hPa; rw [← hPa]; exact hmem x y h hPmem
     have hfib : ∀ a ∈ P4.toFinset.image px,
         (P4.toFinset.filter (fun P => px P = a)).card ≤ 2 := by
@@ -99,7 +100,7 @@ theorem secp256k1_four_torsion_ncard_le :
         rw [Finset.mem_coe, Finset.mem_filter, Set.mem_toFinset] at hP
         obtain ⟨hPmem, hPa⟩ := hP
         rcases P with _ | ⟨x, y, h⟩
-        · exact absurd (by simp) hPmem.2
+        · exact absurd (by rw [two_nsmul, add_zero]) hPmem.2
         · simp only [px] at hPa; subst hPa
           have hcurve : y ^ 2 = x ^ 3 + 7 := secp256k1_curve_of_nonsingular x y h
           simp only [py, Finset.mem_coe, Multiset.mem_toFinset, mem_roots', IsRoot.def, eval_sub,
@@ -108,9 +109,9 @@ theorem secp256k1_four_torsion_ncard_le :
       · intro P hP Q hQ hPQ
         rw [Finset.mem_coe, Finset.mem_filter, Set.mem_toFinset] at hP hQ
         rcases P with _ | ⟨x1, y1, h1⟩
-        · exact absurd (by simp) hP.1.2
+        · exact absurd (by rw [two_nsmul, add_zero]) hP.1.2
         rcases Q with _ | ⟨x2, y2, h2⟩
-        · exact absurd (by simp) hQ.1.2
+        · exact absurd (by rw [two_nsmul, add_zero]) hQ.1.2
         · simp only [px] at hP hQ
           simp only [py] at hPQ
           have hxx : x1 = x2 := hP.2.trans hQ.2.symm
