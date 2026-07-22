@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 945,
-  "distinct_qualified_names": 727,
+  "declaration_count": 963,
+  "distinct_qualified_names": 737,
   "verified_md_citations": 232,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -551,6 +551,70 @@
       "line": 23,
       "occurrences": 28
     },
+    "Ecdlp.Curve.U0": {
+      "name": "U0",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi4Psi5.lean",
+      "line": 30,
+      "occurrences": 2
+    },
+    "Ecdlp.Curve.U12": {
+      "name": "U12",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi4Psi7.lean",
+      "line": 29,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.U15": {
+      "name": "U15",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi4Psi7.lean",
+      "line": 27,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.U18": {
+      "name": "U18",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi4Psi7.lean",
+      "line": 25,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.U21": {
+      "name": "U21",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi4Psi7.lean",
+      "line": 23,
+      "occurrences": 1
+    },
+    "Ecdlp.Curve.U3": {
+      "name": "U3",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi4Psi5.lean",
+      "line": 28,
+      "occurrences": 2
+    },
+    "Ecdlp.Curve.U6": {
+      "name": "U6",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi4Psi5.lean",
+      "line": 26,
+      "occurrences": 2
+    },
+    "Ecdlp.Curve.U9": {
+      "name": "U9",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi4Psi5.lean",
+      "line": 24,
+      "occurrences": 2
+    },
     "Ecdlp.Curve.V": {
       "name": "V",
       "namespace": "Ecdlp.Curve",
@@ -558,6 +622,22 @@
       "file": "Ecdlp/Proved/CoprimePsi2Psi3.lean",
       "line": 27,
       "occurrences": 9
+    },
+    "Ecdlp.Curve.V0": {
+      "name": "V0",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi4Psi5.lean",
+      "line": 34,
+      "occurrences": 2
+    },
+    "Ecdlp.Curve.V3": {
+      "name": "V3",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/CoprimePsi4Psi5.lean",
+      "line": 32,
+      "occurrences": 2
     },
     "Ecdlp.Curve.X_mul_compressed_of_support": {
       "name": "X_mul_compressed_of_support",
@@ -2387,9 +2467,9 @@
       "name": "secp256k1_isCoprime_pre",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
-      "file": "Ecdlp/Proved/CoprimePsi5Psi7.lean",
-      "line": 68,
-      "occurrences": 7
+      "file": "Ecdlp/Proved/CoprimePsi4Psi5.lean",
+      "line": 39,
+      "occurrences": 9
     },
     "Ecdlp.Curve.secp256k1_j_eq_zero": {
       "name": "secp256k1_j_eq_zero",

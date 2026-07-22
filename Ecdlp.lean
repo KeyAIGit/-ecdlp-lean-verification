@@ -63,6 +63,8 @@ import Ecdlp.Proved.CoprimePsi2Psi5
 import Ecdlp.Proved.CoprimePsi3Psi7
 import Ecdlp.Proved.CoprimePsi2Psi7
 import Ecdlp.Proved.CoprimePsi5Psi7
+import Ecdlp.Proved.CoprimePsi4Psi5
+import Ecdlp.Proved.CoprimePsi4Psi7
 import Ecdlp.Proved.CoprimePsi2PrePsi4
 import Ecdlp.Proved.CoprimeCommonRoot
 import Ecdlp.Proved.GlvScalarAction
