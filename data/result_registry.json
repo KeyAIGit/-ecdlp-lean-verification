@@ -2156,7 +2156,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FourTorsionCount.lean",
-      "line": 38,
+      "line": 51,
       "occurrences": 1
     },
     "Ecdlp.Curve.secp256k1_frobenius_norm": {
