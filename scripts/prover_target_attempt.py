@@ -141,16 +141,19 @@ open Polynomial WeierstrassCurve
 
 theorem secp256k1_preΨ_somos4 (m : ℤ) :
     secp256k1.preΨ (m + 2) * secp256k1.preΨ (m - 2)
-      = (if Even m then 1 else secp256k1.Ψ₂Sq ^ 4)
+      = (if Even m then 1 else secp256k1.Ψ₂Sq ^ 2)
           * (secp256k1.preΨ (m + 1) * secp256k1.preΨ (m - 1))
         - secp256k1.Ψ₃ * secp256k1.preΨ m ^ 2 := by
 """,
         hint=(
-            "Specialize the proved normEDS_somos4 at (b,c,d)=(Ψ₂Sq, Ψ₃, preΨ₄). Bridge: "
-            "normEDS Ψ₂Sq Ψ₃ preΨ₄ n = preΨ n * (if Even n then Ψ₂Sq else 1) (because preΨ = "
-            "preNormEDS (Ψ₂Sq^2) Ψ₃ preΨ₄ and normEDS b c d n = preNormEDS (b^2) c d n * (Even n ? b : 1)). "
-            "Rewrite all five normEDS terms in normEDS_somos4, resolve parities of m±1,m±2, then "
-            "cancel Ψ₂Sq² (secp256k1_Ψ₂Sq_ne_zero) on the even branch; odd branch is direct."
+            "PROVED — see Ecdlp/Proved/PrePsiSomos4.lean (secp256k1_preΨ_somos4). NOTE the odd "
+            "coefficient is Ψ₂Sq^2, NOT ^4 (a prior version of this target was WRONG): Mathlib's "
+            "normEDS b c d n = preNormEDS (b^4) c d n * (Even n ? b : 1), and preΨ = "
+            "preNormEDS (Ψ₂Sq^2) Ψ₃ preΨ₄, so one needs a b with b^4 = Ψ₂Sq^2, i.e. b^2 = Ψ₂Sq. "
+            "Adjoin √Ψ₂Sq in S := AdjoinRoot (X^2 - C Ψ₂Sq) (b := root, b^2 = ι Ψ₂Sq, b^4 = ι Ψ₂Sq^2), "
+            "so normEDS b (ιΨ₃) (ιpreΨ₄) n = ι(preΨ n) * (Even n ? b : 1); substitute into "
+            "normEDS_somos4 b …, resolve parities of m±1,m±2, and descend through the injective "
+            "algebraMap (X^2-C a monic, degree 2, A a domain), clearing b^2 on the even branch."
         ),
     ),
 }

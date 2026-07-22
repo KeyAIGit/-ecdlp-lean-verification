@@ -73,13 +73,13 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 145117
+        "bytes": 148718
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 35086
+        "bytes": 35490
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -141,13 +141,13 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 145117
+        "bytes": 148718
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 35086
+        "bytes": 35490
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -171,7 +171,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 294518
+        "bytes": 302423
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
