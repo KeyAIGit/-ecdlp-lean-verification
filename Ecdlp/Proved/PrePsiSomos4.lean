@@ -67,10 +67,7 @@ theorem preNormEDS_sq_somos4 {A : Type*} [CommRing A] [IsDomain A]
   have hdeg : f.degree ≠ 0 := by
     have hfe : f = X ^ 2 - C a := rfl
     rw [hfe, Polynomial.degree_X_pow_sub_C (n := 2) (by norm_num) a]
-    first
-      | decide
-      | simp
-      | norm_num
+    decide
   have hinj : Function.Injective ι := by
     show Function.Injective (algebraMap A (AdjoinRoot f))
     rw [AdjoinRoot.algebraMap_eq]
