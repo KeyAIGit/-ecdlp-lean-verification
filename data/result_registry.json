@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "source": "Ecdlp/**/*.lean minus Targets/",
-  "declaration_count": 930,
-  "distinct_qualified_names": 714,
+  "declaration_count": 932,
+  "distinct_qualified_names": 715,
   "verified_md_citations": 232,
   "unresolved_citations": [],
   "note": "Derived from Lean source; the headline ledger figure remains VERIFIED.md canonical.",
@@ -1230,6 +1230,14 @@
       "file": "Ecdlp/Proved/FiveTorsionStructure.lean",
       "line": 136,
       "occurrences": 6
+    },
+    "Ecdlp.Curve.preNormEDS_sq_somos4": {
+      "name": "preNormEDS_sq_somos4",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PrePsiSomos4.lean",
+      "line": 43,
+      "occurrences": 1
     },
     "Ecdlp.Curve.px": {
       "name": "px",
@@ -2485,7 +2493,7 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/CoprimePsi3Psi5.lean",
       "line": 40,
-      "occurrences": 27
+      "occurrences": 28
     },
     "Ecdlp.Curve.secp256k1_projective_nonsingular": {
       "name": "secp256k1_projective_nonsingular",

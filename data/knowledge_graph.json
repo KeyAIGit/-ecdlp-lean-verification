@@ -6,7 +6,7 @@
   "counts": {
     "theorems": 292,
     "barriers": 6,
-    "edges": 482,
+    "edges": 487,
     "by_method": {
       "Mathlib": 106,
       "Mathlib + native_decide": 31,
@@ -5020,6 +5020,21 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.PrePsiSomos4",
+      "to": "Ecdlp.Proved.NormEDSSomos4",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.PrePsiSomos4",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.PrePsiSomos4",
+      "to": "Ecdlp.Proved.DivisionPolynomialDegree",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.ProtocolInstantiation",
       "to": "Ecdlp.Proved.GeneratorOrder",
       "type": "imports"
@@ -5502,6 +5517,11 @@
     {
       "from": "Ecdlp.Targets.n7_uniform_carrier_induction",
       "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Targets.n7_uniform_carrier_induction",
+      "to": "Ecdlp.Proved.DivisionPolynomialPointBridge",
       "type": "imports"
     },
     {
@@ -6322,6 +6342,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.DivisionPolynomialPointDoubling",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.PrePsiSomos4",
       "type": "imports"
     },
     {

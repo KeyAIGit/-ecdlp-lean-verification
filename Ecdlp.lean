@@ -156,6 +156,7 @@ import Ecdlp.Proved.DivisionPolynomialEllSequence
 import Ecdlp.Proved.DivisionPolynomialPointDiff
 import Ecdlp.Proved.DivisionPolynomialPointBridge
 import Ecdlp.Proved.DivisionPolynomialPointDoubling
+import Ecdlp.Proved.PrePsiSomos4
 import Ecdlp.Proved.SecantAddX
 import Ecdlp.Proved.OmegaRecurrenceAnchors
 import Ecdlp.Proved.NsmulCoordsBaseOne
