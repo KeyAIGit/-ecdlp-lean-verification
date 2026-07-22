@@ -50,6 +50,7 @@ jobs:
             Ecdlp.Proved.DivisionPolynomialEvalBridge \
             Ecdlp.Proved.DivisionPolynomialPointDiff \
             Ecdlp.Proved.DivisionPolynomialPointBridge \
+            Ecdlp.Proved.PrePsiSomos4 \
             Ecdlp.Proved.NsmulCoordsBaseOne \
             Ecdlp.Proved.NsmulCoordsBaseTwo \
             Ecdlp.Proved.OmegaRecurrenceAnchors \
