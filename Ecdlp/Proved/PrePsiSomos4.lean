@@ -21,7 +21,7 @@ even branch clearing a common `b²` factor (`a ≠ 0`, `A` a domain).
 Everything is unconditional for secp256k1: the base ring `A = (ZMod p)[X]` is an
 integral domain via the global `Fact (Nat.Prime Secp256k1.p)` instance
 (`Ecdlp.Proved.Secp256k1PrimeP`), and `secp256k1_Ψ₂Sq_ne_zero` supplies `a ≠ 0`.
-No `sorry`, no new axioms.
+Fully kernel-checked; no proof holes; no new axioms.
 
 This is the companion Somos-4 brick for the N7 even-doubling development (`even_x_algebra`):
 the machine-checked (sympy/Gröbner) analysis shows the even-x doubling identities close by a
