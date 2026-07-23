@@ -4,17 +4,21 @@ on:
   pull_request:
     paths:
       - 'domains/**/corpus_manifest.json'
+      - 'domains/**/corpus_snapshots/**'
       - 'domains/corpus_manifest.schema.json'
       - 'domains/registry.json'
       - 'scripts/check_corpus_manifest.py'
+      - 'scripts/corpus_manifest_v2.py'
       - '.github/workflows/corpus-manifest-check.yml'
   push:
     branches: [main]
     paths:
       - 'domains/**/corpus_manifest.json'
+      - 'domains/**/corpus_snapshots/**'
       - 'domains/corpus_manifest.schema.json'
       - 'domains/registry.json'
       - 'scripts/check_corpus_manifest.py'
+      - 'scripts/corpus_manifest_v2.py'
       - '.github/workflows/corpus-manifest-check.yml'
   workflow_dispatch:
 
