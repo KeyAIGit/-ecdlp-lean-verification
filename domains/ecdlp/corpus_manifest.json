@@ -232,7 +232,7 @@
           "title": "Reducing the Number of Qubits in Quantum Discrete Logarithms on Elliptic Curves",
           "authors": "Clémence Chevignard; Pierre-Alain Fouque; André Schrottenloher",
           "year": 2026,
-          "venue": "EUROCRYPT 2026, LNCS 16541, pp. 371-401",
+          "venue": "EUROCRYPT 2026, LNCS 16541, pp. 371-401; corrected IACR ePrint 2026/280 revision 2026-06-04",
           "priority": "P1",
           "topic": "09_Quantum_ECDLP",
           "threat_models": [
@@ -249,7 +249,7 @@
           "artifact": {
             "drive_file_id": null,
             "drive_path": null,
-            "official_url": "https://link.springer.com/chapter/10.1007/978-3-032-25291-3_13",
+            "official_url": "https://eprint.iacr.org/2026/280",
             "sha256": null,
             "pages": 31,
             "bytes": null
@@ -263,27 +263,66 @@
           "provenance": {
             "introduced_in_snapshot": "literature-audit-2026-07-23",
             "verified_against": [
-              "Springer EUROCRYPT 2026 record and abstract"
+              "IACR ePrint 2026/280 revision dated 2026-06-04",
+              "Springer EUROCRYPT 2026 published abstract dated 2026-05-08"
             ]
           },
-          "review_boundary": "The 1098-qubit result trades space for substantially higher gate count and repeated runs. It does not imply current hardware feasibility.",
+          "review_boundary": "The current IACR ePrint revision corrects a P-224/P-256 number swap and reports 1193 qubits and 2^38.98 Toffoli gates for P-256; the Springer published abstract still displays 1098 and 2^38.10. Preserve both records, prefer the corrected ePrint for current numeric claims, and do not infer fault-tolerant hardware feasibility.",
           "reported_results": [
             {
               "metric": "logical_qubits",
-              "condition": "n=256",
-              "value": "1098"
+              "condition": "n=256; corrected IACR ePrint revision 2026-06-04",
+              "value": "1193"
             },
             {
               "metric": "independent_runs",
-              "condition": "n=256",
+              "condition": "n=256; corrected IACR ePrint revision 2026-06-04",
               "value": "22"
             },
             {
               "metric": "toffoli_gates_per_run",
-              "condition": "n=256",
+              "condition": "n=256; corrected IACR ePrint revision 2026-06-04",
+              "value": "2^38.98"
+            },
+            {
+              "metric": "logical_qubits",
+              "condition": "n=256; Springer published abstract 2026-05-08; superseded numeric value",
+              "value": "1098"
+            },
+            {
+              "metric": "independent_runs",
+              "condition": "n=256; Springer published abstract 2026-05-08",
+              "value": "22"
+            },
+            {
+              "metric": "toffoli_gates_per_run",
+              "condition": "n=256; Springer published abstract 2026-05-08; superseded numeric value",
               "value": "2^38.10"
             }
-          ]
+          ],
+          "version_discrepancy": {
+            "status": "resolved_by_preferred_version",
+            "preferred_version": "iacr_eprint_revision_2026-06-04",
+            "reason": "The IACR ePrint history explicitly labels the June 4 revision as a correction of an abstract typo that swapped P-224 and P-256 numbers.",
+            "observed_versions": [
+              {
+                "id": "iacr_eprint_revision_2026-06-04",
+                "date": "2026-06-04",
+                "role": "current_corrected_numeric_source",
+                "logical_qubits_n256": "1193",
+                "independent_runs_n256": "22",
+                "toffoli_gates_per_run_n256": "2^38.98"
+              },
+              {
+                "id": "springer_eurocrypt_published_2026-05-08",
+                "date": "2026-05-08",
+                "role": "published_record_with_superseded_numeric_abstract",
+                "logical_qubits_n256": "1098",
+                "independent_runs_n256": "22",
+                "toffoli_gates_per_run_n256": "2^38.10"
+              }
+            ]
+          }
         },
         {
           "source_id": "luo-et-al-2026-point-addition",
@@ -367,13 +406,14 @@
       "reviewed_scope": [
         "current quantum ECDLP resource estimates for 256-bit prime-field curves and secp256k1",
         "the explicit supersession relationship between arXiv:2604.02311 and arXiv:2607.13816",
-        "a bounded search for a validated new classical proposal-level non-generic secp256k1 mechanism"
+        "a bounded search for a validated new classical proposal-level non-generic secp256k1 mechanism",
+        "the Chevignard-Fouque-Schrottenloher discrepancy between the Springer abstract and the corrected 2026-06-04 IACR ePrint revision"
       ],
       "decision_impact": "No new classical proposal selected. The delta improves threat-model accuracy and corpus freshness; it does not authorize a new experiment.",
       "limitations": [
         "A bounded literature audit is not a proof that no relevant paper exists.",
-        "The EUROCRYPT 2026 local PDF copy remains pending; metadata and abstract were verified from the publisher record.",
-        "Two downloaded PDFs are hash-pinned locally but do not yet have Drive PDF file IDs."
+        "Two downloaded PDFs are hash-pinned locally but do not yet have Drive PDF file IDs.",
+        "The corrected IACR ePrint metadata and abstract are verified, but a local PDF checksum remains pending because the PDF endpoint rejected automated retrieval."
       ]
     }
   ],
