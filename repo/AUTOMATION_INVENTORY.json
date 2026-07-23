@@ -24,6 +24,14 @@
       "reason": "Regenerates and drift-gates canonical derived artifacts."
     },
     {
+      "file": ".github/workflows/corpus-manifest-check.yml",
+      "class": "core_gate",
+      "trigger_policy": "scoped_push_pr_manual",
+      "disposition": "keep",
+      "spends_external_budget": false,
+      "reason": "Validates registered versioned corpus manifests, source relations, counts, hashes, and the experiment-authorization boundary."
+    },
+    {
       "file": ".github/workflows/n7-stem-check.yml",
       "class": "proof_diagnostic",
       "trigger_policy": "target_push_or_manual",
@@ -119,27 +127,27 @@
       "spends_external_budget": true,
       "reason": "Next-theorem proposals require a newly selected route rather than claim-count priority."
     },
-      {
-        "file": ".github/workflows/anthropic-smoke.yml",
-        "class": "integration_smoke",
-        "trigger_policy": "manual_only",
+    {
+      "file": ".github/workflows/anthropic-smoke.yml",
+      "class": "integration_smoke",
+      "trigger_policy": "manual_only",
       "disposition": "review_for_retirement",
       "spends_external_budget": true,
       "reason": "Useful only when changing the integration or its secret."
     },
-      {
-        "file": ".github/workflows/prover-smoke-test.yml",
-        "class": "integration_smoke",
-        "trigger_policy": "manual_only",
+    {
+      "file": ".github/workflows/prover-smoke-test.yml",
+      "class": "integration_smoke",
+      "trigger_policy": "manual_only",
       "disposition": "review_for_retirement",
       "spends_external_budget": true,
       "reason": "Self-test surface duplicates newer manual prover workflows."
     },
-      {
-        "file": ".github/workflows/prover-target-attempt.yml",
-        "class": "integration_smoke",
-        "trigger_policy": "manual_only",
-        "disposition": "park",
+    {
+      "file": ".github/workflows/prover-target-attempt.yml",
+      "class": "integration_smoke",
+      "trigger_policy": "manual_only",
+      "disposition": "park",
       "spends_external_budget": true,
       "reason": "No target is currently registered in the paid attempt queue."
     }
