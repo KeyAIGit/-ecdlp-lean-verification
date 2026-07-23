@@ -245,7 +245,8 @@ def compute_where_used(sources: list[dict]) -> dict[str, list[str]]:
         hits = []
         for p, text in texts.items():
             if any(pat.search(text) for pat in pats):
-                hits.append(str(p.relative_to(ROOT)))
+                # Registry paths are repository identifiers, not host paths.
+                hits.append(p.relative_to(ROOT).as_posix())
         where[src["id"]] = sorted(hits)
     return where
 

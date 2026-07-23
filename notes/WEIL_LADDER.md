@@ -10,7 +10,8 @@ This file is the granular, machine-followable decomposition of the high-level `W
 sub-ladder in `notes/FOUNDATIONS.md`. The high-level status there: **W1, W2, W3's
 representative-independence half, and the divisor-evaluation rungs W3e-1 (multiplicativity)
 and W3e-2 (Miller-representative scaling law + conditional representative-independence) are
-landed**; the open frontier is **W3e-3/W3e-4 → W4 (Weil reciprocity, now a frozen no-go,
+landed**; **W3e-3 is also landed**, closing the reachable evaluation scaffolding. The open
+frontier is **W3e-4 → W4 (Weil reciprocity, now a frozen no-go,
 see below) → W5 (define `eₙ` + properties)**.
 
 ## Landed substrate the ladder builds on (do not re-prove)
@@ -68,7 +69,7 @@ the no-go if it resists).
   theorem; tame symbol + product formula; `x:E→ℙ¹` pull-back + symbol norm-compatibility) are
   each an upstream-grade port absent at v4.31 and on master; and a concrete `native_decide`
   instance is blocked by the non-constructive Miller function (`ClassGroup.mk_eq_one_iff`). The
-  loop routes to the independent rung **W3e-3** instead.
+  loop recorded W4 as blocked; W3e-3 subsequently landed independently.
 - **W4-2 (G)** — general Weil reciprocity from W4-1 by bilinear extension over divisors.
 
 ### W5 — define `eₙ` and prove its properties

@@ -1,0 +1,526 @@
+{
+  "schema_version": "1.0",
+  "name": "KeyAI ECDLP formal substrate",
+  "purpose": "Canonical architecture map of the verified result families, their critical dependencies, and the exact formal frontier.",
+  "canonical_sources": {
+    "ledger": "VERIFIED.md",
+    "built_surfaces": [
+      "Ecdlp.lean",
+      "ResearchOS.lean"
+    ],
+    "live_counts": "data/stats.json",
+    "declaration_registry": "data/result_registry.json",
+    "artifact_ownership": "repo/ARTIFACTS.yaml",
+    "barriers": "BARRIERS.md",
+    "target_registry": "targets/"
+  },
+  "release": {
+    "id": "formal-substrate-closure",
+    "merge_policy": "draft-review-only",
+    "closure_rule": "Every required critical node is either closed or blocked_accepted with a precise blocker, evidence, and resume condition.",
+    "required_nodes": [
+      "truth-layer",
+      "secp-parameters",
+      "secp-rational-group",
+      "generic-security-core",
+      "protocol-soundness",
+      "glv-rational-scope",
+      "semaev-foundations",
+      "division-polynomial-foundations",
+      "small-torsion-family",
+      "torsion-loci",
+      "weil-w1-w3",
+      "n7-uniform",
+      "n10-uniform-separability",
+      "general-n-torsion",
+      "weil-w4-w5"
+    ]
+  },
+  "status_vocabulary": {
+    "closed": "The declared scope is kernel-backed and its release contract is complete.",
+    "blocked": "The node is not proved; an exact blocker and resume condition are recorded.",
+    "parked": "Work is deliberately deferred and is not part of the active proof queue.",
+    "out_of_release": "Useful adjacent work that is explicitly outside this release boundary."
+  },
+  "families": [
+    {
+      "id": "family-curve-torsion",
+      "area": "curve-torsion",
+      "title": "Curve arithmetic, group structure, division polynomials, and torsion"
+    },
+    {
+      "id": "family-primality",
+      "area": "primality",
+      "title": "Primality and concrete arithmetic certificates"
+    },
+    {
+      "id": "family-generic-hardness",
+      "area": "generic-hardness",
+      "title": "Generic-group lower and upper-side arithmetic bounds"
+    },
+    {
+      "id": "family-protocol-soundness",
+      "area": "protocol-soundness",
+      "title": "Protocol algebra and concrete secp256k1 instantiations"
+    },
+    {
+      "id": "family-attack-resistance",
+      "area": "attack-resistance",
+      "title": "Classical structural attack-resistance facts"
+    },
+    {
+      "id": "family-reduction",
+      "area": "reduction",
+      "title": "DLP reductions and subgroup decomposition"
+    },
+    {
+      "id": "family-params",
+      "area": "params",
+      "title": "Domain-parameter arithmetic"
+    },
+    {
+      "id": "family-other",
+      "area": "other",
+      "title": "Foundational results not captured by a narrower family"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "blocker-point-division-map",
+      "kind": "upstream-foundation",
+      "title": "No uniform Point-to-division-polynomial multiplication map",
+      "description": "Mathlib exposes the polynomial identities but not the theorem connecting [n]P to the phi/psi coordinate formulas for all n.",
+      "evidence_files": [
+        "BARRIERS.md",
+        "notes/UPSTREAM_SCAN.md",
+        "Ecdlp/Targets/n7_uniform_carrier_induction.lean"
+      ],
+      "resume_condition": "An upstream multiplication-coordinate theorem lands, or a reviewed in-repo induction closes the torsion bridge."
+    },
+    {
+      "id": "blocker-n7-certificates",
+      "kind": "proof-engineering",
+      "title": "Four N7 algebra walls need large checked elimination certificates",
+      "description": "The statements are machine-elaborated and numerically/symbolically validated, but checked cofactors for the degree-heavy identities are not yet authored.",
+      "evidence_files": [
+        "notes/N7_EVEN_X_DOUBLING_ANALYSIS.md",
+        "Ecdlp/Targets/n7_uniform_carrier_induction.lean"
+      ],
+      "resume_condition": "A reproducible certificate generator emits Lean-checkable cofactors for all four algebra walls."
+    },
+    {
+      "id": "blocker-uniform-separability",
+      "kind": "missing-theory",
+      "title": "Uniform separability of multiplication-by-n is not available",
+      "description": "Small n is closed, while the general prime-to-characteristic counting and differential argument remains absent.",
+      "evidence_files": [
+        "BARRIERS.md",
+        "notes/SEPARABILITY_ROUTES.md"
+      ],
+      "resume_condition": "A checked [n]*omega=n omega or equivalent general separability theorem is available."
+    },
+    {
+      "id": "blocker-weil-reciprocity",
+      "kind": "upstream-foundation",
+      "title": "Weil reciprocity and divisor-degree machinery are missing",
+      "description": "The reachable W1-W3 evaluation substrate is closed; W4 reciprocity is required before the pairing can be assembled.",
+      "evidence_files": [
+        "BARRIERS.md",
+        "notes/WEIL_LADDER.md",
+        "notes/FOUNDATIONS.md"
+      ],
+      "resume_condition": "Mathlib or this repository gains the needed divisor/tame-symbol reciprocity layer."
+    },
+    {
+      "id": "blocker-p256-cardinality",
+      "kind": "out-of-scope-foundation",
+      "title": "P-256 exact cardinality needs a general point-counting/Hasse route",
+      "description": "Only n divides the P-256 group cardinality is proved; the secp256k1 j=0 certificate does not transfer.",
+      "evidence_files": [
+        "notes/POINT_COUNTING_KEYSTONE.md",
+        "BARRIERS.md"
+      ],
+      "resume_condition": "A reviewed Hasse/Schoof or curve-specific exact-cardinality proof becomes available."
+    }
+  ],
+  "critical_nodes": [
+    {
+      "id": "truth-layer",
+      "title": "Canonical counts, registries, generated views, and active queue",
+      "status": "closed",
+      "release_disposition": "closed",
+      "family_ids": [
+        "family-other"
+      ],
+      "depends_on": [],
+      "blocker_ids": [],
+      "anchors": [],
+      "evidence_files": [
+        "STATUS.md",
+        "tasks/NEXT.md",
+        "repo/ARTIFACTS.yaml"
+      ]
+    },
+    {
+      "id": "secp-parameters",
+      "title": "secp256k1 field and subgroup parameters",
+      "status": "closed",
+      "release_disposition": "closed",
+      "family_ids": [
+        "family-primality",
+        "family-params"
+      ],
+      "depends_on": [],
+      "blocker_ids": [],
+      "anchors": [
+        "Ecdlp.Primality.secp256k1_p_prime",
+        "Ecdlp.Primality.secp256k1_n_prime"
+      ],
+      "evidence_files": [
+        "Ecdlp/Proved/Secp256k1PrimeP.lean",
+        "Ecdlp/Proved/Secp256k1PrimeN.lean"
+      ]
+    },
+    {
+      "id": "secp-rational-group",
+      "title": "Exact rational-point cardinality and full cyclic group",
+      "status": "closed",
+      "release_disposition": "closed",
+      "family_ids": [
+        "family-curve-torsion"
+      ],
+      "depends_on": [
+        "secp-parameters"
+      ],
+      "blocker_ids": [],
+      "anchors": [
+        "Ecdlp.Curve.secp256k1_card_point_eq_n",
+        "Ecdlp.Curve.secp256k1_grp_eq_top"
+      ],
+      "evidence_files": [
+        "Ecdlp/Proved/CurveCardinalityExact.lean",
+        "Ecdlp/Proved/CurveFullGroup.lean"
+      ]
+    },
+    {
+      "id": "generic-security-core",
+      "title": "Fixed-transcript generic-group collision core",
+      "status": "closed",
+      "release_disposition": "closed",
+      "family_ids": [
+        "family-generic-hardness",
+        "family-reduction"
+      ],
+      "depends_on": [
+        "secp-rational-group"
+      ],
+      "blocker_ids": [],
+      "anchors": [
+        "Ecdlp.GenericGroup.secp256k1_generic_security"
+      ],
+      "evidence_files": [
+        "Ecdlp/Proved/GenericGroupBound.lean",
+        "notes/SECURITY_SCOPE.md"
+      ]
+    },
+    {
+      "id": "protocol-soundness",
+      "title": "Abstract protocol algebra and concrete curve instantiation",
+      "status": "closed",
+      "release_disposition": "closed",
+      "family_ids": [
+        "family-protocol-soundness"
+      ],
+      "depends_on": [
+        "secp-rational-group"
+      ],
+      "blocker_ids": [],
+      "anchors": [
+        "Ecdlp.Curve.secp256k1_dh_agree"
+      ],
+      "evidence_files": [
+        "Ecdlp/Proved/ProtocolInstantiation.lean"
+      ]
+    },
+    {
+      "id": "glv-rational-scope",
+      "title": "GLV automorphism on the full rational point group",
+      "status": "closed",
+      "release_disposition": "closed",
+      "family_ids": [
+        "family-curve-torsion",
+        "family-attack-resistance"
+      ],
+      "depends_on": [
+        "secp-rational-group"
+      ],
+      "blocker_ids": [],
+      "anchors": [
+        "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples"
+      ],
+      "evidence_files": [
+        "Ecdlp/Proved/GlvSubgroupEigenvalue.lean",
+        "notes/SECURITY_SCOPE.md"
+      ]
+    },
+    {
+      "id": "semaev-foundations",
+      "title": "Semaev S3/S4 formal foundations",
+      "status": "closed",
+      "release_disposition": "closed",
+      "family_ids": [
+        "family-curve-torsion",
+        "family-other"
+      ],
+      "depends_on": [
+        "secp-rational-group"
+      ],
+      "blocker_ids": [],
+      "anchors": [
+        "Ecdlp.Semaev.S₃_eq_zero_iff",
+        "Ecdlp.Semaev.S₄_common_root_of_eq_zero"
+      ],
+      "evidence_files": [
+        "Ecdlp/Proved/SemaevThree.lean",
+        "Ecdlp/Proved/SemaevFour.lean"
+      ]
+    },
+    {
+      "id": "division-polynomial-foundations",
+      "title": "Division-polynomial, EDS, degree, and coprimality substrate",
+      "status": "closed",
+      "release_disposition": "closed",
+      "family_ids": [
+        "family-curve-torsion"
+      ],
+      "depends_on": [
+        "secp-parameters"
+      ],
+      "blocker_ids": [],
+      "anchors": [
+        "Ecdlp.Curve.secp256k1_isCoprime_Φ_ΨSq",
+        "Ecdlp.NormEDS.normEDS_not_consecutive_zeros"
+      ],
+      "evidence_files": [
+        "Ecdlp/Proved/DivisionPolynomialCoprime.lean",
+        "Ecdlp/Proved/NormEDSConsecutiveZeros.lean"
+      ]
+    },
+    {
+      "id": "small-torsion-family",
+      "title": "Closed E[n] structure for n in {2,3,5,7} and fixed multiplication rungs through 5",
+      "status": "closed",
+      "release_disposition": "closed",
+      "family_ids": [
+        "family-curve-torsion"
+      ],
+      "depends_on": [
+        "division-polynomial-foundations"
+      ],
+      "blocker_ids": [],
+      "anchors": [
+        "Ecdlp.Curve.secp256k1Bar_two_torsion_structure",
+        "Ecdlp.Curve.secp256k1Bar_seven_torsion_structure"
+      ],
+      "evidence_files": [
+        "Ecdlp/Proved/TwoTorsionStructure.lean",
+        "Ecdlp/Proved/SevenTorsionStructure.lean"
+      ]
+    },
+    {
+      "id": "torsion-loci",
+      "title": "Coprime and distinct torsion loci",
+      "status": "closed",
+      "release_disposition": "closed",
+      "family_ids": [
+        "family-curve-torsion"
+      ],
+      "depends_on": [
+        "division-polynomial-foundations"
+      ],
+      "blocker_ids": [],
+      "anchors": [
+        "Ecdlp.Curve.secp256k1_torsionBy_inf_eq_gcd"
+      ],
+      "evidence_files": [
+        "Ecdlp/Proved/TwoTorsionCount.lean"
+      ]
+    },
+    {
+      "id": "weil-w1-w3",
+      "title": "Weil divisor, Miller function, and reachable evaluation layer",
+      "status": "closed",
+      "release_disposition": "closed",
+      "family_ids": [
+        "family-curve-torsion",
+        "family-other"
+      ],
+      "depends_on": [
+        "small-torsion-family"
+      ],
+      "blocker_ids": [],
+      "anchors": [
+        "Ecdlp.Weil.secp256k1_miller_jointly_regular"
+      ],
+      "evidence_files": [
+        "Ecdlp/Proved/WeilMillerEval.lean",
+        "notes/WEIL_LADDER.md"
+      ]
+    },
+    {
+      "id": "n7-uniform",
+      "title": "Uniform point-level multiplication coordinate formula",
+      "status": "blocked",
+      "release_disposition": "blocked_accepted",
+      "family_ids": [
+        "family-curve-torsion"
+      ],
+      "depends_on": [
+        "division-polynomial-foundations",
+        "small-torsion-family"
+      ],
+      "blocker_ids": [
+        "blocker-point-division-map",
+        "blocker-n7-certificates"
+      ],
+      "anchors": [
+        "Ecdlp.Curve.mk_ψ_sq"
+      ],
+      "evidence_files": [
+        "Ecdlp/Targets/n7_uniform_carrier_induction.lean",
+        "targets/n7_uniform_secp256k1_x.json",
+        "notes/N7_UNIFORM_BLOCKER.md"
+      ]
+    },
+    {
+      "id": "n10-uniform-separability",
+      "title": "Uniform separability and geometric n-torsion count",
+      "status": "blocked",
+      "release_disposition": "blocked_accepted",
+      "family_ids": [
+        "family-curve-torsion"
+      ],
+      "depends_on": [
+        "division-polynomial-foundations"
+      ],
+      "blocker_ids": [
+        "blocker-uniform-separability"
+      ],
+      "anchors": [
+        "Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq"
+      ],
+      "evidence_files": [
+        "notes/SEPARABILITY_ROUTES.md"
+      ]
+    },
+    {
+      "id": "general-n-torsion",
+      "title": "General E[n] structure over the algebraic closure",
+      "status": "blocked",
+      "release_disposition": "blocked_accepted",
+      "family_ids": [
+        "family-curve-torsion"
+      ],
+      "depends_on": [
+        "n7-uniform",
+        "n10-uniform-separability"
+      ],
+      "blocker_ids": [
+        "blocker-point-division-map",
+        "blocker-uniform-separability"
+      ],
+      "anchors": [
+        "Ecdlp.Curve.secp256k1_isCoprime_Φ_ΨSq"
+      ],
+      "evidence_files": [
+        "notes/DIVISION_POLY_TORSION_MAP.md"
+      ]
+    },
+    {
+      "id": "weil-w4-w5",
+      "title": "Weil reciprocity and the bilinear non-degenerate pairing",
+      "status": "blocked",
+      "release_disposition": "blocked_accepted",
+      "family_ids": [
+        "family-curve-torsion",
+        "family-other"
+      ],
+      "depends_on": [
+        "weil-w1-w3",
+        "general-n-torsion"
+      ],
+      "blocker_ids": [
+        "blocker-weil-reciprocity"
+      ],
+      "anchors": [
+        "Ecdlp.Weil.divEval_mul"
+      ],
+      "evidence_files": [
+        "notes/WEIL_LADDER.md",
+        "BARRIERS.md"
+      ]
+    },
+    {
+      "id": "p256-exact-cardinality",
+      "title": "P-256 exact rational-point cardinality",
+      "status": "out_of_release",
+      "release_disposition": "deferred",
+      "family_ids": [
+        "family-curve-torsion"
+      ],
+      "depends_on": [
+        "secp-parameters"
+      ],
+      "blocker_ids": [
+        "blocker-p256-cardinality"
+      ],
+      "anchors": [
+        "Ecdlp.P256.p256_n_dvd_card_point"
+      ],
+      "evidence_files": [
+        "Ecdlp/Proved/P256Cardinality.lean"
+      ]
+    },
+    {
+      "id": "experimental-hypotheses",
+      "title": "New cryptanalytic hypothesis testing",
+      "status": "parked",
+      "release_disposition": "deferred",
+      "family_ids": [
+        "family-attack-resistance"
+      ],
+      "depends_on": [
+        "truth-layer"
+      ],
+      "blocker_ids": [],
+      "anchors": [
+        "Ecdlp.Semaev.secp256k1_decomposition_completions_le_two"
+      ],
+      "evidence_files": [
+        "experiments/HYPOTHESES.yaml"
+      ]
+    }
+  ],
+  "open_targets": [
+    {
+      "id": "n7_uniform_secp256k1_x",
+      "status": "blocked",
+      "critical_node": "n7-uniform",
+      "registry": "targets/n7_uniform_secp256k1_x.json",
+      "stems": [
+        {
+          "file": "Ecdlp/Targets/n7_uniform_carrier_induction.lean",
+          "expected_sorry": 7
+        },
+        {
+          "file": "Ecdlp/Targets/n7_uniform_secp256k1_x.lean",
+          "expected_sorry": 1
+        }
+      ],
+      "blocker_ids": [
+        "blocker-point-division-map",
+        "blocker-n7-certificates"
+      ]
+    }
+  ]
+}

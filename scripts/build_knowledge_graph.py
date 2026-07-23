@@ -2,8 +2,8 @@
 """Build the machine-readable ECDLP knowledge graph.
 
 Emits `data/knowledge_graph.json`: a navigable, structured index that links every
-machine-checked theorem to (a) the knowledge-graph claim it verifies, (b) the Lean
-file and import dependencies it rests on, and (c) the formalization barriers that
+verified ledger row to (a) the knowledge-graph claim it supports, (b) the Lean
+files and import dependencies it rests on, and (c) the formalization barriers that
 bound what is provable. The intent (see the project north star) is a verified,
 navigable substrate a future automated reasoner can load to understand the *known
 and machine-checked* structure of the ECDLP landscape — proofs, dependencies, and
@@ -13,7 +13,7 @@ This script READS the human-maintained sources of truth and DERIVES the graph; i
 never asserts a proof. The Lean kernel remains the only judge of correctness.
 
 Sources of truth (read-only):
-  - VERIFIED.md                      — ledger of proved theorems (the nodes)
+  - VERIFIED.md                      — ledger of verified results (the nodes)
   - Ecdlp/*.lean, Ecdlp/Proved/*.lean — Lean sources (import dependency edges)
   - Ecdlp.lean                       — the built import surface (what is gated)
   - BARRIERS.md                      — the no-go / missing-foundation map
@@ -32,47 +32,26 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+from ledger_utils import parse_ledger as parse_verified_ledger
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "knowledge_graph.json"
-
-# --- parse VERIFIED.md: the proved-theorem ledger -------------------------------
-
-_ROW = re.compile(r"^\|(.+)\|(.+)\|(.+)\|(.+)\|(.+)\|\s*$")
-
-
-def _strip_md(s: str) -> str:
-    """Drop markdown emphasis/backticks/footnote marks, collapse whitespace."""
-    s = s.strip()
-    s = s.replace("**", "")
-    s = s.strip("`")
-    s = s.replace("¹", "").replace("²", "")
-    return s.strip()
+SUBSTRATE = ROOT / "repo" / "FORMAL_SUBSTRATE.json"
 
 
 def parse_ledger() -> list[dict]:
+    """Compatibility view over the shared canonical-ledger parser."""
     rows: list[dict] = []
-    seen_header = False
-    for line in (ROOT / "VERIFIED.md").read_text(encoding="utf-8").splitlines():
-        m = _ROW.match(line)
-        if not m:
-            continue
-        cells = [c.strip() for c in m.groups()]
-        # skip the header row and the |---|---| separator
-        if cells[0].lower() == "claim_id":
-            seen_header = True
-            continue
-        if set("".join(cells)) <= set("-: "):
-            continue
-        if not seen_header:
-            continue
-        claim, name, file, method, status = cells
+    for row in parse_verified_ledger(ROOT):
+        files = row["files"] or [row["file_cell"].strip().strip("`")]
         rows.append(
             {
-                "claim": _strip_md(claim),
-                "name": _strip_md(name),
-                "file": _strip_md(file),
-                "method": _strip_md(method),
-                "status": _strip_md(status),
+                "claim": row["claim"],
+                "name": row["name"],
+                "file": files[0],
+                "files": files,
+                "method": row["method"],
+                "status": row["status"],
             }
         )
     return rows
@@ -95,7 +74,11 @@ def parse_imports() -> dict[str, list[str]]:
     # sorted() makes the module order (hence the emitted edge order) deterministic:
     # bare glob() yields filesystem order, which differs between machines/CI and made
     # data/knowledge_graph.json non-reproducible (docs-sync drift).
-    lean_files = sorted(ROOT.glob("Ecdlp/**/*.lean")) + [ROOT / "Ecdlp.lean"]
+    lean_files = sorted(
+        path
+        for path in ROOT.glob("Ecdlp/**/*.lean")
+        if "Targets" not in path.parts and not path.name.endswith("AxiomAudit.lean")
+    ) + [ROOT / "Ecdlp.lean"]
     for f in lean_files:
         if not f.exists():
             continue
@@ -276,12 +259,16 @@ def module_depth(module: str, imports: dict[str, list[str]],
 def build() -> dict:
     ledger = parse_ledger()
     imports = parse_imports()
+    substrate = json.loads(SUBSTRATE.read_text(encoding="utf-8"))
+    family_by_area = {family["area"]: family["id"] for family in substrate["families"]}
     built_modules = set(imports.get("Ecdlp", []))  # what Ecdlp.lean gates
     depth_cache: dict[str, int] = {}
 
     theorems = []
     for i, r in enumerate(ledger):
-        module = file_to_module(r["file"])
+        modules = [file_to_module(file) for file in r["files"]]
+        module = modules[0]
+        area = classify_area(r["claim"], " ".join(modules))
         sn = short_name(r["name"])
         theorems.append(
             {
@@ -289,14 +276,27 @@ def build() -> dict:
                 "name": r["name"],
                 "short_name": sn,
                 "module": module,
+                "modules": modules,
                 "file": r["file"],
+                "files": r["files"],
                 "claim": r["claim"],
                 "method": r["method"],
                 "status": r["status"],
-                "area": classify_area(r["claim"], module),
-                "dependency_depth": module_depth(module, imports, depth_cache),
-                "gated": module in built_modules or module
-                in {"Ecdlp.Secp256k1Verified", "Ecdlp.Lagrange", "Ecdlp.Statements"},
+                "area": area,
+                "family_id": family_by_area[area],
+                "dependency_depth": max(
+                    (module_depth(item, imports, depth_cache) for item in modules),
+                    default=0,
+                ),
+                "gated": all(
+                    item in built_modules
+                    or item in {
+                        "Ecdlp.Secp256k1Verified",
+                        "Ecdlp.Lagrange",
+                        "Ecdlp.Statements",
+                    }
+                    for item in modules
+                ),
             }
         )
 
@@ -315,29 +315,71 @@ def build() -> dict:
                     {"from": name_to_id[nm], "to": bid, "type": "frontier_of"}
                 )
 
+    # Semantic architecture edges. Import edges explain compilation; these explain
+    # research meaning and release dependencies.
+    for theorem in theorems:
+        edges.append(
+            {"from": theorem["id"], "to": theorem["family_id"], "type": "member_of"}
+        )
+    for node in substrate["critical_nodes"]:
+        node_id = node["id"]
+        for anchor in node.get("anchors", []):
+            for theorem in theorems:
+                if anchor in theorem["name"]:
+                    edges.append(
+                        {
+                            "from": theorem["id"],
+                            "to": node_id,
+                            "type": "supports",
+                            "anchor": anchor,
+                        }
+                    )
+        for dependency in node.get("depends_on", []):
+            edges.append(
+                {"from": node_id, "to": dependency, "type": "depends_on"}
+            )
+        for blocker in node.get("blocker_ids", []):
+            edges.append(
+                {"from": node_id, "to": blocker, "type": "blocked_by"}
+            )
+
     method_hist = Counter(t["method"] for t in theorems)
+    edge_hist = Counter(edge["type"] for edge in edges)
 
     return {
-        "schema_version": "1.0",
+        "schema_version": "2.0",
         "name": "ECDLP verified knowledge graph",
         "purpose": "A machine-readable, navigable index of the machine-checked "
-        "(Lean 4 + Mathlib, no sorry, no axioms) structure of the ECDLP landscape "
-        "for secp256k1: proved theorems, their import dependencies, the corpus "
+        "(Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the "
+        "ECDLP landscape for secp256k1: verified ledger rows, their declaration "
+        "and import dependencies, the corpus "
         "claims they verify, and the formalization barriers that bound them. "
         "Built for a future automated reasoner to load the known-and-verified "
         "frontier without re-deriving it.",
-        "invariant": "Every theorem listed is accepted by the Lean kernel with no "
-        "sorry and no added axioms. Truth is decided only by the kernel; this graph "
-        "is derived from the ledger, it does not assert proofs.",
+        "invariant": "Every ledger row resolves to declarations accepted by the Lean "
+        "kernel with no sorry or project-defined axioms; compiler-trusted native_decide "
+        "use is disclosed separately. This graph is derived evidence, not a proof.",
         "counts": {
             "theorems": len(theorems),
+            "ledger_rows": len(theorems),
             "barriers": len(BARRIERS),
+            "families": len(substrate["families"]),
+            "critical_nodes": len(substrate["critical_nodes"]),
             "edges": len(edges),
+            "by_edge_type": dict(edge_hist.most_common()),
             "by_method": dict(method_hist.most_common()),
             "by_area": dict(Counter(t["area"] for t in theorems).most_common()),
         },
         "theorems": theorems,
         "barriers": BARRIERS,
+        "formal_substrate": {
+            "source": "repo/FORMAL_SUBSTRATE.json",
+            "release": substrate["release"],
+            "families": substrate["families"],
+            "blockers": substrate["blockers"],
+            "critical_nodes": substrate["critical_nodes"],
+            "open_targets": substrate["open_targets"],
+        },
         "corpus": parse_corpus(),
         "edges": edges,
     }
@@ -356,19 +398,18 @@ def render_markdown(graph: dict) -> str:
     lines.append(
         "> Auto-generated from `VERIFIED.md` + the Lean import surface by "
         "`scripts/build_knowledge_graph.py`. Machine source of truth: "
-        "`data/knowledge_graph.json`. Every theorem below is kernel-checked "
-        "(no `sorry`, no axioms)."
+        "`data/knowledge_graph.json`. Every ledger row below cites kernel-checked "
+        "declarations (no `sorry`, no custom axioms)."
     )
     lines.append("")
     lines.append(
-        f"**{c['theorems']} theorem nodes** · **{c['barriers']} barriers** · "
-        f"**{c['edges']} edges**"
+        f"**{c['ledger_rows']} ledger-row nodes** · **{c['families']} result families** · "
+        f"**{c['critical_nodes']} critical nodes** · **{c['edges']} edges**"
     )
     lines.append("")
     lines.append(
-        "> *Theorem-node count is the graph's own view (unique parsed ledger entries) and "
-        "may differ by a row or two from the canonical ledger figure — the single source of "
-        "truth for headline counts is `STATUS.md`.*"
+        "> A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline "
+        "counts; `data/result_registry.json` owns declaration-level resolution."
     )
     lines.append("")
     lines.append("By proof method: "
@@ -377,12 +418,54 @@ def render_markdown(graph: dict) -> str:
     lines.append("By research area: "
                  + ", ".join(f"{k} ({v})" for k, v in c["by_area"].items()))
     lines.append("")
+    lines.append("By edge type: "
+                 + ", ".join(f"{k} ({v})" for k, v in c["by_edge_type"].items()))
+    lines.append("")
 
-    # group theorems by area
+    substrate = graph["formal_substrate"]
+    lines.append("## Formal substrate critical path")
+    lines.append("")
+    lines.append(
+        "This is the release-facing dependency map from `repo/FORMAL_SUBSTRATE.json`. "
+        "`closed` means the declared scope is landed; `blocked` is an explicit frontier, "
+        "not a proved result."
+    )
+    lines.append("")
+    lines.append("| node | status | release | depends on | blockers |")
+    lines.append("|---|---|---|---|---|")
+    for node in substrate["critical_nodes"]:
+        deps = ", ".join(f"`{item}`" for item in node.get("depends_on", [])) or "—"
+        blockers = ", ".join(f"`{item}`" for item in node.get("blocker_ids", [])) or "—"
+        lines.append(
+            f"| **{node['id']}** — {node['title']} | {node['status']} | "
+            f"{node['release_disposition']} | {deps} | {blockers} |"
+        )
+    lines.append("")
+
+    lines.append("### Declared blockers")
+    lines.append("")
+    for blocker in substrate["blockers"]:
+        lines.append(
+            f"- **{blocker['id']} — {blocker['title']}.** "
+            f"{blocker['description']} Resume: {blocker['resume_condition']}"
+        )
+    lines.append("")
+
+    lines.append("### Exhaustive result families")
+    lines.append("")
+    area_counts = c["by_area"]
+    for family in substrate["families"]:
+        lines.append(
+            f"- **{family['id']}** (`{family['area']}`, "
+            f"{area_counts.get(family['area'], 0)} rows in this family): {family['title']}."
+        )
+    lines.append("")
+
+    # Group compatibility-key `theorems` (ledger-row nodes) by area.
     by_area: dict[str, list[dict]] = {}
     for t in graph["theorems"]:
         by_area.setdefault(t["area"], []).append(t)
-    lines.append("## Verified theorems by area")
+    lines.append("## Verified ledger rows by area")
     lines.append("")
     for area in sorted(by_area, key=lambda a: -len(by_area[a])):
         lines.append(f"### {area} ({len(by_area[area])})")
@@ -396,14 +479,14 @@ def render_markdown(graph: dict) -> str:
             )
         lines.append("")
 
-    # frontier: theorems sitting at a barrier boundary
+    # Frontier: ledger-row nodes sitting at a barrier boundary.
     frontier = [e for e in graph["edges"] if e["type"] == "frontier_of"]
     id_to_thm = {t["id"]: t for t in graph["theorems"]}
     lines.append("## Barriers and their verified frontier")
     lines.append("")
     lines.append(
         "Each barrier is a foundation Mathlib lacks. The *frontier* lists verified "
-        "theorems sitting at that boundary — the realised edge of the missing work."
+        "ledger rows sitting at that boundary — the realised edge of the missing work."
     )
     lines.append("")
     for b in graph["barriers"]:
@@ -439,12 +522,12 @@ def main() -> int:
                 file=sys.stderr,
             )
             return 1
-        print(f"up to date ({graph['counts']['theorems']} theorems).")
+        print(f"up to date ({graph['counts']['ledger_rows']} ledger rows).")
         return 0
     OUT.write_text(text, encoding="utf-8")
     OUT_MD.write_text(md, encoding="utf-8")
     print(
-        f"wrote {OUT} and {OUT_MD}: {graph['counts']['theorems']} theorems, "
+        f"wrote {OUT} and {OUT_MD}: {graph['counts']['ledger_rows']} ledger rows, "
         f"{graph['counts']['barriers']} barriers, {graph['counts']['edges']} edges."
     )
     return 0

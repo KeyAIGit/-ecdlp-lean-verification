@@ -5,6 +5,10 @@ purpose: >
   Machine-readable hypothesis registry for the Research OS layer. These are not
   claims of success; they are testable directions with exit criteria so agents
   can decide whether to prove, experiment, document, or freeze a route.
+status_vocabulary:
+  active: "Current non-experimental work tied to an active task."
+  closed: "Exit criteria met; retained as durable decision evidence."
+  parked: "No work is authorized until resume_after is satisfied."
 
 hypotheses:
   - id: H1_RESEARCH_OS_TRUTH_LAYER
@@ -30,7 +34,8 @@ hypotheses:
   - id: H2_GLV_SUBGROUP_VS_WHOLE_GROUP
     title: "The GLV result must be stated at the exact proved scope"
     direction: "formalization"
-    status: "active"
+    status: "closed"
+    resolution: "The subgroup-versus-whole-group scope is now stated consistently."
     owner: "proof-docs"
     why_it_matters: >
       The crypto-subgroup statement and the whole-point-group statement carry
@@ -66,7 +71,8 @@ hypotheses:
   - id: H4_FRONTIER_TRACEABILITY
     title: "Corpus coverage and theorem coverage should remain visibly separate"
     direction: "data"
-    status: "active"
+    status: "closed"
+    resolution: "Corpus and theorem denominators are separated in canonical generated views."
     owner: "frontier"
     why_it_matters: >
       The 486-claim corpus is a frontier map; the theorem ledger is a verified
@@ -84,7 +90,9 @@ hypotheses:
   - id: H5_SEMAEV_WINDOW
     title: "Any plausible subgeneric route should leave experimental evidence in algebraic relation generation"
     direction: "experiment"
-    status: "proposed"
+    status: "parked"
+    resume_after: "repo/FORMAL_SUBSTRATE.json passes its checker and the final architecture PR is reviewed."
+    park_reason: "Superseded by HYP_GLV_SEMAEV_001; new experiments are deferred during substrate closure."
     owner: "experiments"
     why_it_matters: >
       Semaev/Groebner work can produce useful negative evidence even if no attack
@@ -102,7 +110,9 @@ hypotheses:
   - id: H6_PUBLICATION_BOUNDARY_TRACK
     title: "The verified boundary map is publishable even without a subgeneric attack"
     direction: "publication"
-    status: "active"
+    status: "parked"
+    resume_after: "The formal-substrate map and exhaustive ledger trust audit are complete."
+    park_reason: "Publication packaging should consume the final map, not race it."
     owner: "publication"
     why_it_matters: >
       The strongest near-term output is a precise map of what is proved, blocked,
@@ -119,7 +129,9 @@ hypotheses:
   - id: HYP_GLV_SEMAEV_001
     title: "GLV-symmetrized Semaev index calculus over prime-field j=0 curves"
     direction: "experiment"
-    status: "active"
+    status: "parked"
+    resume_after: "The formal-substrate map is complete and TASK-001 through TASK-003 have final dispositions."
+    park_reason: "Hypothesis testing is intentionally deferred while the verified substrate is normalized."
     resolution: "partial negative: m=2 orbit-enumeration baseline is constant-factor only"
     result: >
       PARTIAL MEASUREMENT (experiments/p0_glv_semaev/RESULTS.md): direct enumeration of m=2
@@ -183,7 +195,9 @@ hypotheses:
   - id: HYP_WARD_EDS_001
     title: "Ward elliptic divisibility sequences as a structural probe of torsion/apparition on prime-field toy curves"
     direction: "experiment"
-    status: "proposed"
+    status: "parked"
+    resume_after: "The formal-substrate map is complete and a new experiment is explicitly promoted into tasks/NEXT.md."
+    park_reason: "The numerical confirmation is complete; no further experiment is authorized in this phase."
     owner: "experiments"
     prior_art: "experiments/p2_ward_eds/README.md"
     result: >

@@ -50,6 +50,7 @@ jobs:
             Ecdlp.Proved.DivisionPolynomialEvalBridge \
             Ecdlp.Proved.DivisionPolynomialPointDiff \
             Ecdlp.Proved.DivisionPolynomialPointBridge \
+            Ecdlp.Proved.PrePsiSomos4 \
             Ecdlp.Proved.NsmulCoordsBaseOne \
             Ecdlp.Proved.NsmulCoordsBaseTwo \
             Ecdlp.Proved.OmegaRecurrenceAnchors \
@@ -73,7 +74,11 @@ jobs:
           # Count sorry TACTICS from the source (reliable; `lake env lean` does not always emit a
           # per-declaration warning to stdout). ERRORS come from the elaborator output.
           SORRIES=$(grep -cE '^[[:space:]]*sorry([[:space:]]|$)' "$FILE" || true)
-          ERRORS=$(grep -c "error:" lean_out.txt || true)
+          # Match BOTH Lean diagnostic spellings: the classic `error:` and the newer
+          # `error(<code>):` form (e.g. `error(lean.unknownIdentifier):`). A plain `grep 'error:'`
+          # silently misses the parenthesized-code form, which would let a real elaboration error
+          # pass as "0 errors" (green) — exactly the masking this gate exists to prevent.
+          ERRORS=$(grep -cE 'error(:|\()' lean_out.txt || true)
           {
             echo "## N7 stem elaboration — \`$FILE\`"
             echo ""
