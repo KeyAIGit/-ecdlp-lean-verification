@@ -55,7 +55,7 @@ publication reviewers. Each audience needs a stable route through the repo.
 | Reproducible experiments | Non-kernel scripts, manifests, and measured evidence | `experiments/` | Measurements are evidence, never proofs. Parked hypotheses authorize no new runs. |
 | Automation and scripts | CI, generators, checks, autonomous loops, server helpers | `.github/workflows/`, `scripts/`, `requirements.txt`, `prompts/` | Prefer explicit gates over narrative promises. Scripts that generate committed artifacts must document outputs. |
 | Research notes | Durable mathematical strategy, maps, and reviewed reasoning | `notes/*.md`, `docs/`, `PUBLISHABLE_UNITS.md` | Keep as curated research memory. Link to canonical counts instead of copying them. |
-| Archive (frozen) | Superseded docs and exploratory traces, preserved for provenance | `archive/` (docs, ward, scratch, platform, generator-report) | Do not delete in this PR. Classify, preserve provenance, and ask Claude/human review before archive/delete. |
+| Archive (frozen) | Superseded docs and exploratory traces, preserved for provenance | `archive/` (docs, ward, scratch, platform, generator-report) | Do not delete in ordinary work. Classify, preserve provenance, and use a dedicated retention audit before archive/delete. |
 
 ## Source Of Truth Matrix
 
@@ -72,7 +72,7 @@ publication reviewers. Each audience needs a stable route through the repo.
 | What is safe to claim publicly? | `STATUS.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `notes/SECURITY_SCOPE.md` | `README.md`, `PUBLISHABLE_UNITS.md` |
 | What should an agent work on next? | `tasks/NEXT.md` | `experiments/HYPOTHESES.yaml`, `AGENTS.md`, `ROADMAP.md` |
 | What must any future candidate report and pass? | `experiments/framework/candidate_run.schema.json` plus `candidate_contract.py` | deterministic positive/negative fixtures and independent `ec_oracle.py` validation |
-| What should be archived or deleted? | `repo/CLEANUP_PLAN.md` after review | `repo/ARTIFACTS.yaml`, Claude review comments |
+| What should be archived or deleted? | `repo/CLEANUP_PLAN.md` after a dedicated retention audit | `repo/ARTIFACTS.yaml`, reference scans, and the audit record |
 
 ## Generated Artifact Rules
 
@@ -127,8 +127,8 @@ Cleanup should follow this sequence:
 
 1. Classify each area as canonical, generated, curated note, operational,
    experimental trace, scratch, static asset, or archive candidate.
-2. Include misclassifications and deletion risks in the one final whole-program
-   Claude/Opus review.
+2. Review misclassifications and deletion risks at a stable checkpoint; use an
+   independent reviewer when one is available.
 3. Move/archive only files with clear provenance and no import/site references.
 4. Run generator checks and Lean/CI gates after every movement that touches
    imports, generated views, links, or public surfaces.
@@ -143,16 +143,18 @@ High-risk areas:
 
 ## Review Discipline
 
-The current normalization is intentionally one integration draft: it must expose the
-whole repository and its generated consequences to one final adversarial review. It
-must not merge before that review. Destructive branch/file cleanup remains a separate,
-post-review action. After this baseline lands, proof, generator, site, and archive risks
-should again use narrowly scoped PRs.
+The current normalization exposes the whole repository and its generated
+consequences in one integration PR. The owner delegated merge authority on
+2026-07-22: green required CI, explicit scope, and rollback safety are the merge
+gate. Independent adversarial review remains useful but is not blocking while
+no other reviewer is connected. Destructive branch/file cleanup remains a
+separate inventory-first action. After this baseline lands, proof, generator,
+site, and archive risks should again use narrowly scoped PRs.
 
-## Claude Review Contract
+## Independent Review Contract
 
-When Claude reviews this architecture, ask it to assume the map is wrong until
-proved otherwise. The review should answer:
+When an independent reviewer audits this architecture, ask it to assume the map
+is wrong until proved otherwise. The review should answer:
 
 1. Which files or directories are misclassified?
 2. Which generated artifacts are still being hand-edited or checked weakly?

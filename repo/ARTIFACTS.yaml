@@ -181,7 +181,7 @@ classes:
       - scripts/check_automation_inventory.py
       - scripts/check_ecdlp_decision_substrate.py
       - scripts/check_domains.py
-      - adversarial Claude review
+      - independent architecture review when available
     risks:
       - Too much prose can become another stale source of truth.
 
@@ -262,11 +262,11 @@ allowed_overlap_paths:
 
 cleanup_candidates:
   - path: archive/
-    proposed_action: review_retention_after_final_adversarial_review
+    proposed_action: review_retention_in_dedicated_audit
     priority: low
     reason: >
       Archived material is excluded from the canonical truth surface. Retain it
-      through the final review, then remove only entries whose provenance and
+      through a dedicated retention audit, then remove only entries whose provenance and
       replacement are both documented.
     delete_now: false
 
@@ -277,9 +277,9 @@ cleanup_candidates:
 
 deferred_actions:
   - id: archive-retention-review
-    goal: Decide archive retention only after the final adversarial review; do not delete during substrate normalization.
+    goal: Decide archive retention only in a dedicated inventory-first audit with reference scans and a restore path; do not delete during substrate or product normalization.
   - id: v01-tag
-    goal: Tag v0.1 only after the reviewed integration PR merges and the full gate battery is green on main.
+    goal: Tag v0.1 only after the integration PR merges and the full gate battery is green on main.
 
 review_questions:
   - Which paths are misclassified?

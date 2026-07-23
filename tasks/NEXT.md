@@ -20,8 +20,9 @@ priority for the exact secp256k1 objective. A missing Mathlib foundation does
 not authorize work by itself.
 
 If prose conflicts with a canonical or generated registry, correct the prose in
-the same branch. No task in this queue authorizes an experiment run, a merge, or
-piecemeal Claude review.
+the same branch. No task in this queue authorizes an experiment run or
+destructive cleanup. Merge authority is delegated but requires green CI, a
+reviewed scope, and a documented rollback path.
 
 ## Active Tasks
 
@@ -85,25 +86,26 @@ Files that must be regenerated:
 How to verify:
 - route-specific checks plus the full repository gate battery
 
-### TASK-010 - Final whole-program Claude/Opus review
+### TASK-010 - Periodic independent adversarial audit
 
-Status: blocked_on_program_freeze_and_opus_availability
+Status: parked_until_independent_reviewer_available
 Kind: review | ops
 Hypothesis: none
-Why it matters: The user requested one adversarial review of the integrated
-program, not repeated review after each tranche.
+Why it matters: An independent reviewer can still find architecture, scope, or
+deletion risks that internal gates do not model.
 Inputs:
-- the final unmerged architecture branch
+- a stable, integrated project checkpoint
 - all green local gates and GitHub CI
 - a review packet covering architecture, formal trust, route decisions,
   experiment provenance, generated artifacts, and residual risks
 Expected output:
-- One Claude/Opus adversarial review with severity-ranked findings.
-- A disposition for every finding and a final merge recommendation.
+- One independent adversarial review with severity-ranked findings.
+- A disposition for every finding and a release/maintenance recommendation.
 Exit criteria:
-- Review happens only after the program state is frozen for evaluation.
+- Review happens at a meaningful stable checkpoint.
 - Actionable findings are resolved or explicitly accepted with rationale.
-- Merge remains a separate human decision.
+- Review remains additional evidence and does not block otherwise authorized,
+  green, rollback-safe merges.
 Files allowed to edit:
 - the final review packet and files needed to resolve accepted findings
 Files that must be regenerated:

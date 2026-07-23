@@ -6734,9 +6734,10 @@
         "Start or resume a cryptanalytic experiment without a new explicit route-selection decision and matching task/hypothesis promotion.",
         "Build a missing Mathlib foundation merely because it is absent or mathematically interesting.",
         "Treat a constant-factor result, structural identity, or toy measurement as a subgeneric attack.",
-        "Merge the branch before the final whole-program adversarial review."
+        "Delete or rewrite provenance-bearing assets without an inventory, reference scan, and documented restore path."
       ],
-      "promotion_rule": "A future dated decision may promote at most one parked route only after new evidence satisfies the acceptance gate at proposal level and tasks/NEXT.md plus experiments/HYPOTHESES.yaml explicitly authorize the same work."
+      "promotion_rule": "A future dated decision may promote at most one parked route only after new evidence satisfies the acceptance gate at proposal level and tasks/NEXT.md plus experiments/HYPOTHESES.yaml explicitly authorize the same work.",
+      "merge_rule": "The owner delegated merge authority on 2026-07-22. Merge only from a clean branch after required CI is green, the diff has a documented scope and rollback path, and no unresolved blocking finding is known."
     },
     "route_selection": {
       "decision_id": "RS-2026-07-22-001",
@@ -6779,7 +6780,7 @@
         "All cryptanalytic hypotheses remain parked.",
         "No conditional formal foundation is promoted.",
         "Candidate intake and evidence maintenance continue through the neutral evaluation contract.",
-        "Claude/Opus review remains deferred to the final whole-program checkpoint."
+        "Independent adversarial review remains useful when another reviewer is available, but is not a merge prerequisite."
       ]
     },
     "routes": [

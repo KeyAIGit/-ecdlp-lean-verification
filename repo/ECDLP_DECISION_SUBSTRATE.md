@@ -351,4 +351,4 @@ The tracked 2026 quantum update (`luo2026`) reports **835 logical qubits** and *
 
 **Route selection:** RS-2026-07-22-001 selected zero routes. Monitoring is an active evidence policy, not a claim that no future route can work.
 
-**Final review:** Claude/Opus adversarial review is requested once the integrated branch is frozen and all repository checks are complete. If a future decision opens TASK-009 first, review follows that selected foundation work. No merge occurs before review.
+**Final review:** Independent adversarial review is requested when another qualified reviewer is available. It is an additional audit, not a merge prerequisite; required CI, explicit scope, rollback safety, and the owner's standing authorization govern merges.

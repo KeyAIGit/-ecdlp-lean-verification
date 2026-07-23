@@ -98,8 +98,8 @@ local Mathlib source for exact API. 3. Push → CI (or local build). 4. On green
   because it is deep or absent from Mathlib.
 - `TASK-009` opens only after a superseding dated decision selects one route and
   names the smallest foundation needed for its next falsifiable decision.
-- `TASK-010` is the single final Claude/Opus adversarial review. It remains
-  blocked until the integrated program is frozen and the model is available.
+- `TASK-010` is a periodic independent adversarial audit. It remains parked
+  until another qualified reviewer is available and is not a merge prerequisite.
 
 ## Prover-loop protocol (formerly AGENT.md)
 

@@ -138,12 +138,14 @@ Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` 
   computational validation; preserve rigorous negative boundaries as first-class
   results.
 
-**Final integration and review:**
+**Integration and review:**
 
-- Regenerate all views, pass the full Python/Lean/CI gate battery, and prepare
-  one whole-program adversarial review packet for Claude/Opus.
-- Do not merge before that final review. Destructive archive or branch cleanup
-  remains a separate post-review decision.
+- Regenerate all views and pass the full Python/Lean/CI gate battery before
+  merging an owned branch.
+- Independent adversarial review remains valuable at stable checkpoints, but is
+  not a merge prerequisite while no other reviewer is connected.
+- Destructive archive or branch cleanup remains a separate, inventory-first
+  decision with a documented restore path.
 - Publication and upstreaming consume the reviewed state; they do not race the
   research loop.
 
@@ -152,14 +154,14 @@ concrete consumer exists. The archived platform waits until then.
 
 ## 6. Standing decision rights (compressed from the old charter)
 
-Agents decide autonomously within the active task and decision-substrate
-constraints: formalization routes, doc/gate maintenance, branch commits, and
-retries. A new theorem/rung or experiment requires an explicit selected route.
-Humans decide: merges to `main`,
-anything public-facing (site, publications, external posts), positioning changes,
-spend beyond an agreed budget, and any security-relevant finding (freeze + escalate
-before any external mention). Honesty rules are absolute: never overclaim, state
-limits plainly, verify model output independently before believing it.
+Codex decides autonomously within the active task and decision-substrate
+constraints: formalization routes, product/site work, doc/gate maintenance,
+branch commits, and merges after required CI is green. A new theorem/rung or
+experiment requires an explicit selected route. Bulk deletion, irreversible
+history changes, external spend, and security-relevant findings require an
+inventory, rollback plan, and escalation before execution or external mention.
+Honesty rules are absolute: never overclaim, state limits plainly, and verify
+model output independently before believing it.
 
 ## 7. Backlog (audit defect register, post-PR state)
 

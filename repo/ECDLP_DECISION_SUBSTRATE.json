@@ -119,9 +119,10 @@
       "Start or resume a cryptanalytic experiment without a new explicit route-selection decision and matching task/hypothesis promotion.",
       "Build a missing Mathlib foundation merely because it is absent or mathematically interesting.",
       "Treat a constant-factor result, structural identity, or toy measurement as a subgeneric attack.",
-      "Merge the branch before the final whole-program adversarial review."
+      "Delete or rewrite provenance-bearing assets without an inventory, reference scan, and documented restore path."
     ],
-    "promotion_rule": "A future dated decision may promote at most one parked route only after new evidence satisfies the acceptance gate at proposal level and tasks/NEXT.md plus experiments/HYPOTHESES.yaml explicitly authorize the same work."
+    "promotion_rule": "A future dated decision may promote at most one parked route only after new evidence satisfies the acceptance gate at proposal level and tasks/NEXT.md plus experiments/HYPOTHESES.yaml explicitly authorize the same work.",
+    "merge_rule": "The owner delegated merge authority on 2026-07-22. Merge only from a clean branch after required CI is green, the diff has a documented scope and rollback path, and no unresolved blocking finding is known."
   },
   "route_selection": {
     "decision_id": "RS-2026-07-22-001",
@@ -164,7 +165,7 @@
       "All cryptanalytic hypotheses remain parked.",
       "No conditional formal foundation is promoted.",
       "Candidate intake and evidence maintenance continue through the neutral evaluation contract.",
-      "Claude/Opus review remains deferred to the final whole-program checkpoint."
+      "Independent adversarial review remains useful when another reviewer is available, but is not a merge prerequisite."
     ]
   },
   "upstream_snapshot": {
@@ -1169,6 +1170,6 @@
       "Promote the same route and hypothesis in the decision substrate, tasks/NEXT.md, and experiments/HYPOTHESES.yaml."
     ],
     "decision": "RS-2026-07-22-001 selected zero routes. Monitoring is an active evidence policy, not a claim that no future route can work.",
-    "final_review": "Claude/Opus adversarial review is requested once the integrated branch is frozen and all repository checks are complete. If a future decision opens TASK-009 first, review follows that selected foundation work. No merge occurs before review."
+    "final_review": "Independent adversarial review is requested when another qualified reviewer is available. It is an additional audit, not a merge prerequisite; required CI, explicit scope, rollback safety, and the owner's standing authorization govern merges."
   }
 }

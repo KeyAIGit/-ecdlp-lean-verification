@@ -17,13 +17,13 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 54762
+        "bytes": 55074
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 5165
+        "bytes": 5307
       },
       {
         "path": "data/stats.json",
@@ -49,13 +49,13 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 54762
+        "bytes": 55074
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 5165
+        "bytes": 5307
       },
       {
         "path": "data/stats.json",
@@ -79,7 +79,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 8341
+        "bytes": 8345
       },
       {
         "path": "VERIFIED.md",
@@ -109,7 +109,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 21331
+        "bytes": 21334
       }
     ],
     "large": [
@@ -123,13 +123,13 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 54762
+        "bytes": 55074
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 5165
+        "bytes": 5307
       },
       {
         "path": "data/stats.json",
@@ -153,7 +153,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 8341
+        "bytes": 8345
       },
       {
         "path": "VERIFIED.md",
@@ -183,19 +183,19 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 21331
+        "bytes": 21334
       },
       {
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 472232
+        "bytes": 472544
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 11433
+        "bytes": 11665
       },
       {
         "path": "PUBLISHABLE_UNITS.md",
