@@ -7,7 +7,8 @@ conventions: `CLAUDE.md`. **When an autonomous cycle is explicitly dispatched,
 `AUTONOMY.md` governs when to act alone vs. escalate** (merge authority is
 delegated but bounded; the kernel/CI remains the sole judge).
 For a small-context start, read `STATUS.md`, then
-`repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/PRODUCT_MODEL.json`, then
+`repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/PRODUCT_MODEL.json`,
+`repo/PILOT_PROTOCOL.json`, then
 `tasks/NEXT.md`; load
 `experiments/HYPOTHESES.yaml` when the task touches hypotheses, experiments,
 frontier interpretation, or publication planning. Before moving, deleting, or
@@ -74,7 +75,8 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 `TIERS` in `scripts/export_agent_bundle.py`):
 - **small** — the live snapshot: `STATUS.md`,
   `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/PRODUCT_MODEL.json`,
-  `tasks/NEXT.md`, `data/stats.json`, `data/frontier_map.json`.
+  `repo/PILOT_PROTOCOL.json`, `tasks/NEXT.md`, `data/stats.json`,
+  `data/frontier_map.json`.
 - **medium** — adds `README.md`, this file, `VERIFIED.md`, `BARRIERS.md`,
   `notes/SECURITY_SCOPE.md`, `notes/FOUNDATIONS.md`, `experiments/HYPOTHESES.yaml`.
 - **large** — adds `data/knowledge_graph.json`, `REPOSITORY_ARCHITECTURE.md`,
@@ -87,7 +89,8 @@ committed — see `bundles/README.md`).
 ## Workflow
 1. Branch from `main` (a fresh session branch). 2. Add theorem(s), grep the
 local Mathlib source for exact API. 3. Push → CI (or local build). 4. On green: add a
-`VERIFIED.md` row, open a PR, squash-merge to `main`. 5. Reset branch to `main`, repeat.
+`VERIFIED.md` row, open a PR, squash-merge to `main`. 5. After merge, start a fresh
+branch from current `main`; preserve any unrelated local changes.
 
 ## Current work selection
 - Route decision `RS-2026-07-22-001` evaluated all 17 registered routes and
@@ -102,10 +105,12 @@ local Mathlib source for exact API. 3. Push → CI (or local build). 4. On green
   names the smallest foundation needed for its next falsifiable decision.
 - `TASK-010` is a periodic independent adversarial audit. It remains parked
   until another qualified reviewer is available and is not a merge prerequisite.
-- `TASK-011` validates the first external product pilot. Do not claim users,
-  retention, or willingness to pay before this task records direct evidence.
-- `TASK-012` is blocked until that pilot defines the smallest configurable
-  intake and verifier-adapter contract.
+- `TASK-011` runs bounded external discovery and ends with a recorded
+  `build/change/stop/pending` disposition for CH-001. It does not validate the
+  adapter or authorize candidate execution. Do not claim users, retention, or
+  willingness to pay before direct evidence exists.
+- `TASK-012` is blocked until `TASK-011` records a `build` disposition and defines
+  the smallest configurable intake and verifier-adapter contract.
 
 ## Prover-loop protocol (formerly AGENT.md)
 

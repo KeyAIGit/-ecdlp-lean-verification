@@ -119,27 +119,27 @@
       "spends_external_budget": true,
       "reason": "Next-theorem proposals require a newly selected route rather than claim-count priority."
     },
-    {
-      "file": ".github/workflows/anthropic-smoke.yml",
-      "class": "integration_smoke",
-      "trigger_policy": "manual_or_self_test",
+      {
+        "file": ".github/workflows/anthropic-smoke.yml",
+        "class": "integration_smoke",
+        "trigger_policy": "manual_only",
       "disposition": "review_for_retirement",
       "spends_external_budget": true,
       "reason": "Useful only when changing the integration or its secret."
     },
-    {
-      "file": ".github/workflows/prover-smoke-test.yml",
-      "class": "integration_smoke",
-      "trigger_policy": "manual_or_self_test",
+      {
+        "file": ".github/workflows/prover-smoke-test.yml",
+        "class": "integration_smoke",
+        "trigger_policy": "manual_only",
       "disposition": "review_for_retirement",
       "spends_external_budget": true,
       "reason": "Self-test surface duplicates newer manual prover workflows."
     },
-    {
-      "file": ".github/workflows/prover-target-attempt.yml",
-      "class": "integration_smoke",
-      "trigger_policy": "manual_or_self_test",
-      "disposition": "park",
+      {
+        "file": ".github/workflows/prover-target-attempt.yml",
+        "class": "integration_smoke",
+        "trigger_policy": "manual_only",
+        "disposition": "park",
       "spends_external_budget": true,
       "reason": "No target is currently registered in the paid attempt queue."
     }

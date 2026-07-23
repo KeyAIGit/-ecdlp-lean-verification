@@ -66,17 +66,16 @@ export FEATHERLESS_API_KEY=...           # same secret as the GitHub Actions one
 python3 scripts/prover_loop.py
 ```
 
-## 4. Make it autonomous (cron)
+## 4. Run an unattended cycle after explicit dispatch
 
-Run the loop hourly and capture logs; promotion still happens by PR, not by the
-server pushing to `main`:
+Do not install a recurring cron on a secret-bearing verifier host. The scheduled
+triggers were removed by the 2026-07 execution-security audit; repository workflows
+remain manual-only until model-generated code runs in a secret-free, network-off,
+ephemeral sandbox. See `notes/EXECUTION_SECURITY.md`.
 
-```sh
-crontab -e
-# m h dom mon dow
-0 * * * * cd ~/-ecdlp-lean-verification && git pull --quiet && \
-  FEATHERLESS_API_KEY=... python3 scripts/prover_loop.py >> ~/prover.log 2>&1
-```
+An explicitly dispatched server or GitHub Actions run may complete one bounded
+cycle and capture logs. A separate external Codex scheduler may dispatch repository
+maintenance work, but it is not configured or claimed by this repository.
 
 For a Lean-accepted candidate, the loop writes it under `candidates/`. To close the
 loop end-to-end on the server, the promotion step (move `Targets/`→`Proved/`, import

@@ -1,9 +1,11 @@
 # AUTONOMY.md — operating charter for unattended cycles
 
-This file governs the **self-firing autonomous loop** that advances this repository
-without a human in the loop for each step. A scheduled trigger fires one **cycle** per
-hour; each cycle reads this charter plus `STATUS.md` and `tasks/NEXT.md`, then does one
-well-scoped unit of productive work and stops.
+This file governs an **on-demand autonomous cycle** that advances this repository
+without a human in the loop for each step. A maintainer or external Codex scheduler
+explicitly dispatches each cycle; the repository itself has no recurring scheduler.
+Each cycle reads this charter plus `STATUS.md` and `tasks/NEXT.md`, then does one
+well-scoped unit of productive work and stops. Secret-bearing GitHub workflows remain
+manual-only until the isolation gate in `notes/EXECUTION_SECURITY.md` is satisfied.
 
 It does **not** replace the domain protocol. Authority order:
 `CLAUDE.md` (conventions) → `AGENTS.md` (prover-loop protocol) → this file (loop
@@ -26,25 +28,28 @@ only judge; CI is how the kernel votes here.
 
 ## The cycle (each firing does exactly this, then stops)
 
-0. **Orient.** `git fetch origin && git reset --hard origin/main`. Read `STATUS.md`,
-   `tasks/NEXT.md`, this file. Never rely on memory across cycles — state lives in git.
+0. **Orient without destroying work.** Run `git fetch origin`, inspect the current
+   branch and worktree, and preserve every uncommitted or unfamiliar change. When the
+   worktree is clean and the intended branch is `main`, update only with
+   `git merge --ff-only origin/main`. Never use `git reset --hard`, force checkout, or
+   destructive cleanup as cycle setup. Read `STATUS.md`, `tasks/NEXT.md`, and this file.
+   Never rely on memory across cycles; durable state lives in git.
 1. **Health-gate main (local, no API).** Scan the built base (everything under `Ecdlp/`
    except `Ecdlp/Targets/`) for real `sorry`/`admit`/`axiom`; run the full gate battery
    (`check_counts`, `check_status_consistency`, `check_semantic_drift`, `check_targets`,
    `check_repo_artifacts`, `check_domains`, `gen_result_registry --check`,
    `gen_source_registry --check`). If main is unhealthy, fixing it is the whole cycle.
-2. **Reconcile in-flight work.** For each open PR on this account with no active session
-   (orphaned parallel work): adversarially audit it for honesty/overclaim/hidden
-   assumptions, reconcile onto current main, and land it **only on green CI** — stripping
-   any novelty/priority claim (see Rails) from ledger rows before merge.
-3. **Advance — one rung, or several independent ones in parallel.** Take the
-   highest-priority actionable item(s) from `tasks/NEXT.md` (or the Priority ladder
-   below). Prefer to **fan out** with a `Workflow`: draft several *mutually independent*
-   rungs concurrently (e.g. the next open rung + an assessment of a harder one), each
-   agent adversarially self-verifying its lemma names against real Mathlib source before
-   returning. Then *I* re-review each draft independently (never merge a subagent's work
-   on faith — reproduce the design and re-check the risky steps) and integrate the ones
-   that survive. Sequential single-rung is the fallback when nothing else is independent.
+2. **Reconcile in-flight work.** Inspect only open PRs in this repository that were
+   created by its delegated autonomous branches and have no active session. Adversarially
+   audit them for honesty, overclaim, and hidden assumptions; reconcile onto current
+   `main` and land only on green CI. Never act on another repository merely because the
+   same account owns it.
+3. **Advance one decision, with independent work in parallel.** Take the
+   highest-priority actionable item from `tasks/NEXT.md`. Fan out only bounded,
+   non-overlapping side work such as product review, formal-scope review, cryptographic
+   threat-model review, frontend QA, or CI diagnosis. Runtime agent instances are
+   temporary; the role contracts below are persistent. The project lead re-reviews every
+   result and owns integration. Never merge a subagent's work on faith.
 4. **Integrate.** Wire the import into `Ecdlp.lean`; add the `#print axioms` line in
    `Ecdlp/AxiomAudit.lean`; append a **pure-fact** `VERIFIED.md` row; regenerate all
    derived artifacts; run the full gate battery **and** a hard conflict-marker scan as a
@@ -55,6 +60,39 @@ only judge; CI is how the kernel votes here.
 6. **Report only if it matters.** Message the user (in Russian) only for: a milestone
    landed, a decision that is genuinely theirs, or a blocker. Otherwise end the cycle in
    silence.
+
+## Persistent role contracts
+
+The main project lead is the durable coordinator and final integrator. Specialized
+agents are temporary runtime instances, not permanent identities. Recreate them when
+their review lens is useful, using the same bounded contracts:
+
+- **Product / CEO review:** customer, wedge, MVP, pilot evidence, sequencing, and work
+  that should be cut. It may challenge strategy but cannot publish traction claims.
+- **Formal architecture:** theorem ownership, source-of-truth boundaries, dependency
+  shape, Mathlib gaps, and the kernel trust surface.
+- **Cryptography scope:** threat model, applicability, asymptotic claims, secret-handling,
+  and separation of structural facts from an ECDLP break.
+- **Frontend / QA:** generated public surfaces, accessibility, responsive behavior,
+  interaction, visual integrity, and public-claim rendering.
+- **Research operations:** tasks, provenance, manifests, generators, rollback, and CI
+  closure.
+- **Adversarial reviewer:** a final independent pass across all changed surfaces,
+  severity-ranked and evidence-linked.
+
+Agents work in parallel only when their write sets are disjoint or when they are
+read-only reviewers. The project lead resolves disagreements against canonical sources,
+reproduces risky checks, and records the accepted disposition. Agent consensus is not a
+proof and does not override the Lean kernel, measured pilot behavior, or the route gate.
+
+## Hypothesis unlock rule
+
+No new cryptanalytic experiment or formal-foundation build starts merely because an
+agent proposes it. New hypothesis testing begins only after
+`repo/ECDLP_DECISION_SUBSTRATE.json` records a superseding dated decision that selects a
+route, names the exact uncertainty to reduce, and defines success and stop conditions.
+Until then, candidate intake may collect new evidence under `TASK-008`, while parked
+hypotheses remain research memory rather than an active queue.
 
 ## Inviolable rails (apply every cycle, no exceptions)
 
@@ -110,7 +148,7 @@ Park the item and surface a concise note instead of proceeding when the action w
 - **Usage / subscription cap** (the operation is bounded by the maintainer's subscription,
   not a metered API): a cap is a **pause, never a done**. The cycle ends where it is;
   everything worth keeping is already committed and pushed, so when the allowance refreshes
-  (rolling window; also the weekly reset) the next scheduled firing resumes cleanly from git
+  (rolling window; also the weekly reset) the next dispatched cycle resumes cleanly from git
   state. Never treat "hit the limit" as "work finished" — the queue in `tasks/NEXT.md` is
   the source of truth for what remains. No hand-off needed.
 - **CI red after a push**: diagnose; fix forward with an additive commit, or revert the
@@ -120,7 +158,8 @@ Park the item and surface a concise note instead of proceeding when the action w
   report to the user.
 - **Container is ephemeral**: the trigger re-materializes the environment and re-clones on
   each fire; nothing lives in memory — only in git and `tasks/NEXT.md`.
-- Never `sleep`-spin to wait on CI; use the scheduled cadence and background waits.
+- Never `sleep`-spin to wait on CI; use bounded background waits or resume in the next
+  dispatched cycle.
 
 ## Speed: the feedback loop is the bottleneck (the 10× question)
 
@@ -153,29 +192,30 @@ round trip. Closing that gap is where a ~10× lives. The levers, split by who ca
      leaked root password / IP (task #36) before enabling.
   Both require access the container does not have; they are the maintainer's to set up once.
 
-## Planning & models
+## Planning and models
 
-- Hard planning / strategy / adversarial design → prefer **Fable** (a `Workflow` agent with
-  `model: 'fable'`). If Fable is usage-limited or unavailable, **do the planning on the
-  default model and iterate to the same quality — never skip the planning step.** (This
-  cycle Fable was limit-blocked; the strategy was done on Opus instead.)
-- Routine drafting / verification / integration → the default model, fanned out as above.
+- Use the strongest available reasoning model for project strategy, route selection,
+  trust-boundary changes, and adversarial review.
+- Use faster agents for bounded drafting and mechanical verification only when the
+  project lead can independently reproduce their result.
+- Model availability changes. Roles, evidence contracts, canonical sources, and gates
+  must not depend on one provider or model name.
 
 ## Priority ladder (the standing plan; `tasks/NEXT.md` holds the live detail)
 
 1. **Health of `main`** — the invariant and the gate battery, always first.
 2. **Reconcile orphaned parallel PRs** onto main (honest, CI-green, overclaim-stripped).
-3. **Geometric torsion frontier** — the `ψₙ ↔ E[n]` critical path toward `E[n] ≅ (ℤ/n)²`
-   for general `n` (the uniform separability of `[n]` is the one CORE open item; the
-   `n ∈ {3,5,7}` instances land via the reconciliation) and onward to the **Weil-pairing**
-   non-degeneracy substrate.
-4. **Security/structure surface for secp256k1 & P-256** — extend proved structure
-   (full-group `Module (ZMod n)`, twist/security certificates) where unblocked; park
-   P-256 `#E = n` on the Hasse gap with an honest note.
-5. **Protocol algebra & attack landscape** — additional honest identity-level results
-   (malleability, extraction) that stay within `ABSTRACT_SCOPE.md`.
-6. **Research-OS hygiene** — keep drift gates, provenance registries, and the public
-   surface truthful and in sync.
+3. **External product pilot (`TASK-011`)** — recruit and observe a non-owner, preserve
+   the public/sanitized boundary, and record behavior before changing hypothesis status.
+4. **Pilot disposition** — make the explicit build/change/stop/pending decision and update product
+   claims only to the level supported by direct evidence.
+5. **Configurable intake (`TASK-012`)** — begin only if the pilot identifies the
+   smallest real adapter contract; do not build speculative platform breadth.
+6. **Evidence-gated candidate intake (`TASK-008`)** — accept new primary evidence or a
+   complete proposal without treating intake as route authorization.
+7. **Formal or experimental work** — begin only after a superseding route decision
+   selects the work and names its falsifiable gate. Otherwise maintain the mapped
+   substrate, provenance, generated views, and rollback safety.
 
 Deep, honest, kernel-checked progress on one rung beats broad shallow additions. When a
 rung is genuinely blocked upstream (Mathlib gap), record the no-go and move down the

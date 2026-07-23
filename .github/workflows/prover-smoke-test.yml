@@ -1,10 +1,6 @@
 name: Prover smoke test
 
 on:
-  push:
-    paths:
-      - '.github/workflows/prover-smoke-test.yml'
-      - 'scripts/prover_smoke_test.py'
   workflow_dispatch:
     inputs:
       attempts:

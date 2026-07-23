@@ -1,8 +1,9 @@
 {
   "schema_version": "1.0",
   "name": "KeyAI",
+  "repository_url": "https://github.com/KeyAIGit/-ecdlp-lean-verification",
   "category": "verification workspace for AI research",
-  "one_liner": "KeyAI turns model-generated research into evidence-linked, machine-checked assets.",
+  "one_liner": "KeyAI turns model-generated research into evidence-linked, verifier-scoped assets.",
   "problem": {
     "statement": "Research agents can generate claims, proofs, experiments, and code faster than a team can establish what is true, why a decision was made, and what should happen next.",
     "failure_modes": [
@@ -64,14 +65,16 @@
       "user": "Technical lead of an AI-for-mathematics or formalization team",
       "pain": "The team has theorem provers and coding agents, but no durable control plane for a multi-week research program.",
       "job": "Know which claims are verified, which routes are worth model time, and why the next task is justified.",
-      "status": "unvalidated"
+      "status": "unvalidated",
+      "evidence": []
     },
     {
       "id": "CH-002",
       "user": "Formal-methods team evaluating AI-generated artifacts",
       "pain": "A successful checker run does not by itself preserve source scope, assumptions, semantic faithfulness, or decision history.",
       "job": "Review candidate outputs with a complete evidence and trust trail.",
-      "status": "unvalidated"
+      "status": "unvalidated",
+      "evidence": []
     }
   ],
   "reference_environment": {
@@ -163,7 +166,20 @@
         "target": "At least one external team completes the core loop and returns for a second session."
       }
     ],
-    "yc_readiness": "Not ready today. Apply after the external-pilot loop is real and user behavior, retention, and the narrow buyer are evidenced rather than inferred."
+    "yc_readiness": "Not ready today. A technical MVP is necessary but not sufficient; a credible accelerator narrative additionally requires repeatable buyer evidence across more than one team and direct willingness-to-pay evidence."
+  },
+  "pilot": {
+    "id": "KEYAI-PILOT-001",
+    "task_id": "TASK-011",
+    "status": "recruiting",
+    "protocol_source": "repo/PILOT_PROTOCOL.json",
+    "public_surface": "pilot.html",
+    "intake_surface": ".github/ISSUE_TEMPLATE/keyai-pilot.yml",
+    "primary_hypothesis_id": "CH-001",
+    "secondary_hypothesis_ids": [
+      "CH-002"
+    ],
+    "evidence_summary": "No external pilot session has been completed or recorded."
   },
   "competitive_position": {
     "not_a": [
@@ -174,7 +190,7 @@
     ],
     "distinction": "Proof agents attempt individual proofs. KeyAI preserves and governs the research program around those attempts: what was asked, what evidence applies, what the verifier accepted, what failed, and what should be tried next.",
     "model_policy": "Model-agnostic at the research-state boundary; current integrations remain repository tools, not a hosted product claim.",
-    "verifier_policy": "Lean is the current exact verifier. Additional verifier adapters are a future product capability, not a current claim."
+    "verifier_policy": "The Lean kernel checks declared formal statements and proof terms. Acceptance does not establish semantic faithfulness, empirical validity, deployed-protocol security, or cryptanalytic success. Additional verifier adapters are a future product capability, not a current claim."
   },
   "public_claim_policy": {
     "required": [
@@ -204,6 +220,10 @@
     {
       "path": "explore.html",
       "role": "Canonical route and decision explorer generated from the ECDLP decision substrate"
+    },
+    {
+      "path": "pilot.html",
+      "role": "External-pilot qualification, protocol, measures, safety boundary, and public intake"
     }
   ]
 }

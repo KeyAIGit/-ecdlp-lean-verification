@@ -95,5 +95,6 @@ sub-claim + a sympy script that is executed offline (`run_sympy` → supported/r
 ledger dedup by canonical signature, and a leads file for the depth tier. Locally verified: the
 module compiles, no-ops with zero spend when `DEEPSEEK_API_KEY` is absent, and the sympy verifier
 correctly returns supported/refuted/parked on known inputs. The DeepSeek calls run only where the
-key lives — GitHub Actions: `.github/workflows/hypothesis-explore.yml` (dispatch + weekly cron,
-draft-PR only, `DEEPSEEK_API_KEY` secret). Not yet exercised against the live DeepSeek API.
+key lives — GitHub Actions: `.github/workflows/hypothesis-explore.yml` (manual dispatch only,
+draft-PR only, `DEEPSEEK_API_KEY` secret). The weekly cron was removed by the execution-security
+audit. Not yet exercised against the live DeepSeek API.

@@ -1,14 +1,11 @@
 name: Anthropic API smoke test
 
 # Verifies the ANTHROPIC_API_KEY repo secret is present and works, WITHOUT ever
-# printing the key. Runs once when this file is pushed, and can be re-run manually
-# from the Actions tab. Uses the cheapest model (Haiku) with a tiny max_tokens.
+# printing the key. Manual dispatch only from the Actions tab. Uses the cheapest
+# model (Haiku) with a tiny max_tokens.
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/anthropic-smoke.yml'
 
 permissions:
   contents: read

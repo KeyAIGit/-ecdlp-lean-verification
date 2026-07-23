@@ -40,6 +40,8 @@ _SMALL = [
      "exact target, route dispositions, evidence gates, and foundation priority"),
     ("repo/PRODUCT_MODEL.json",
      "product category, current-vs-future boundary, public claims, and MVP evidence gate"),
+    ("repo/PILOT_PROTOCOL.json",
+     "TASK-011 discovery contract, safety boundary, evidence schema, and disposition gate"),
     ("tasks/NEXT.md", "the 3-7 active task contracts with exit criteria — where to start"),
     ("data/stats.json", "machine-readable headline counts (ledger rows / distinct / modules)"),
     ("data/frontier_map.json", "per-claim frontier status: verified / tractable / blocked / informal"),
@@ -81,6 +83,7 @@ Ground rules:
 - `STATUS.md` is the canonical live snapshot. If prose anywhere conflicts with it, STATUS wins.
 - `repo/ECDLP_DECISION_SUBSTRATE.json` owns route applicability and foundation priority.
 - `repo/PRODUCT_MODEL.json` owns product rhetoric, current capability, and MVP boundaries.
+- `repo/PILOT_PROTOCOL.json` owns TASK-011 discovery, safety, evidence, and disposition.
 - Never weaken a proof, add a `sorry`/`admit`, or add an axiom to make anything pass.
 - Pick work from `tasks/NEXT.md`; each task has explicit exit criteria.
 

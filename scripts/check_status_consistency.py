@@ -12,6 +12,8 @@ import re
 import sys
 from pathlib import Path
 
+from pilot_evidence import task_012_unlocked
+
 ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -21,6 +23,28 @@ def read_text(path: str) -> str:
 
 def read_json(path: str) -> dict:
     return json.loads(read_text(path))
+
+
+def relative_luminance(hex_color: str) -> float:
+    channels = [int(hex_color[index:index + 2], 16) / 255 for index in (1, 3, 5)]
+    linear = [
+        value / 12.92 if value <= 0.04045 else ((value + 0.055) / 1.055) ** 2.4
+        for value in channels
+    ]
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+
+def contrast_ratio(foreground: str, background: str) -> float:
+    lighter, darker = sorted(
+        (relative_luminance(foreground), relative_luminance(background)),
+        reverse=True,
+    )
+    return (lighter + 0.05) / (darker + 0.05)
+
+
+def css_hex_variable(stylesheet: str, name: str) -> str | None:
+    match = re.search(rf"{re.escape(name)}:\s*(#[0-9a-fA-F]{{6}})\s*;", stylesheet)
+    return match.group(1) if match else None
 
 
 def main() -> int:
@@ -35,12 +59,20 @@ def main() -> int:
     graph = read_json("data/knowledge_graph.json")
     decisions = read_json("repo/ECDLP_DECISION_SUBSTRATE.json")
     product = read_json("repo/PRODUCT_MODEL.json")
+    pilot_protocol = read_json("repo/PILOT_PROTOCOL.json")
     status = read_text("STATUS.md")
     index = read_text("index.html")
     dashboard = read_text("dashboard.html")
     explore = read_text("explore.html")
+    pilot = read_text("pilot.html")
     tasks = read_text("tasks/NEXT.md")
     hypotheses = read_text("experiments/HYPOTHESES.yaml")
+    autonomy = read_text("AUTONOMY.md")
+    agents = read_text("AGENTS.md")
+    architecture = read_text("REPOSITORY_ARCHITECTURE.md")
+    site_css = read_text("assets/site.css")
+    autonomous_workflow = read_text(".github/workflows/autonomous-engine.yml")
+    ci_workflow = read_text(".github/workflows/ci.yml")
 
     ledger_rows = stats.get("ledger_rows")
     distinct = stats.get("distinct_results")
@@ -88,6 +120,12 @@ def main() -> int:
         product.get("mvp", {}).get("definition") in status,
         "STATUS.md must expose the canonical MVP boundary",
     )
+    check(
+        pilot_protocol.get("id") in status
+        and pilot_protocol.get("status") in status
+        and pilot_protocol.get("evidence_state") in status,
+        "STATUS.md must expose the canonical pilot state",
+    )
 
     check(
         f'data-metric="ledger-rows">{ledger_rows}</div>' in index,
@@ -114,7 +152,8 @@ def main() -> int:
     check(
         product.get("category") in index
         and product.get("category") in dashboard
-        and product.get("category") in explore,
+        and product.get("category") in explore
+        and product.get("category") in pilot,
         "all public surfaces must expose the canonical product category",
     )
     check(
@@ -125,16 +164,50 @@ def main() -> int:
     check(
         "repo/PRODUCT_MODEL.json" in index
         and "repo/PRODUCT_MODEL.json" in dashboard
-        and "repo/PRODUCT_MODEL.json" in explore,
+        and "repo/PRODUCT_MODEL.json" in explore
+        and "repo/PRODUCT_MODEL.json" in pilot,
         "all public surfaces must link the canonical product model",
     )
     check(
         all("assets/site.css" in page and "assets/site.js" in page
-            for page in (index, dashboard, explore)),
+            for page in (index, dashboard, explore, pilot)),
         "all public surfaces must use the shared site assets",
     )
-    public_site = (index + dashboard + explore).lower()
-    for retired_claim in ("autonomous engine", "verified environment for a strong ai"):
+    check(
+        all(
+            "The Lean kernel checks declared statements and proof terms" in page
+            for page in (index, dashboard, explore, pilot)
+        ),
+        "all public surfaces must expose the verifier-scope caveat",
+    )
+    check(
+        pilot_protocol.get("task_id") in pilot
+        and pilot_protocol.get("status", "").title() in pilot
+        and pilot_protocol.get("evidence_state") in pilot,
+        "pilot.html must expose the canonical task, status, and evidence state",
+    )
+    intake_template = Path(product.get("pilot", {}).get("intake_surface", "")).name
+    intake_url = (
+        f"{product.get('repository_url', '').rstrip('/')}/issues/new?template={intake_template}"
+    )
+    check(
+        bool(intake_template)
+        and intake_url in index
+        and intake_url in pilot,
+        "product and pilot pages must derive the public intake URL from PRODUCT_MODEL.json",
+    )
+    check(
+        'data-route-count aria-live="polite"' in explore
+        and 'data-route-empty role="status" aria-live="polite"' in explore,
+        "route result changes must be announced to assistive technology",
+    )
+    public_site = (index + dashboard + explore + pilot).lower()
+    for retired_claim in (
+        "autonomous engine",
+        "verified environment for a strong ai",
+        "turn ai research into verified, reusable state",
+        "source material to verified asset",
+    ):
         check(
             retired_claim not in public_site,
             f"public site contains retired product claim: {retired_claim!r}",
@@ -145,7 +218,7 @@ def main() -> int:
         "dashboard route count must match the decision substrate",
     )
     check(
-        f"data-route-count>{route_count} routes" in explore,
+        f'data-route-count aria-live="polite">{route_count} routes' in explore,
         "explore route count must match the decision substrate",
     )
     check(
@@ -210,6 +283,84 @@ def main() -> int:
           "experiments/HYPOTHESES.yaml must define at least three hypotheses")
     check('status: "parked"' in hypotheses and "resume_after:" in hypotheses,
           "deferred experiments must be parked with an explicit resume condition")
+    check("Never use `git reset --hard`" in autonomy,
+          "AUTONOMY.md must explicitly forbid destructive branch resets")
+    check("Reset branch to `main`" not in agents,
+          "AGENTS.md must not prescribe ambiguous branch resets")
+    check(
+        "repo/PILOT_PROTOCOL.json" in agents
+        and "`build/change/stop/pending`" in agents
+        and re.search(r"does not validate\s+the\s+adapter", agents) is not None,
+        "AGENTS.md must expose the canonical TASK-011 discovery boundary",
+    )
+    check(
+        "on-demand autonomous cycle" in autonomy
+        and "repository itself has no recurring scheduler" in autonomy
+        and "workflow_dispatch:" in autonomous_workflow
+        and "\n  schedule:" not in autonomous_workflow,
+        "autonomy documentation must match the dispatch-only autonomous workflow",
+    )
+    check(
+        "${{ secrets." not in ci_workflow,
+        "ordinary push/PR verification CI must not receive repository secrets",
+    )
+    secret_auto_triggers: list[str] = []
+    for workflow_path in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
+        workflow_text = workflow_path.read_text(encoding="utf-8")
+        if "${{ secrets." not in workflow_text:
+            continue
+        if re.search(
+            r"^  (?:push|pull_request|pull_request_target|schedule):",
+            workflow_text,
+            flags=re.MULTILINE,
+        ):
+            secret_auto_triggers.append(workflow_path.name)
+    check(
+        not secret_auto_triggers,
+        "secret-bearing workflows must remain manual-only: "
+        + ", ".join(secret_auto_triggers),
+    )
+    check(
+        "only open PRs in this repository" in autonomy
+        and "Never act on another repository" in autonomy,
+        "autonomous PR reconciliation must remain scoped to this repository",
+    )
+    check(
+        "repo/PILOT_PROTOCOL.json" in architecture
+        and "pilot.html" in architecture
+        and "Generate all four pages" in architecture,
+        "repository architecture must map the pilot protocol and all four public surfaces",
+    )
+    task_012_match = re.search(
+        r"^### TASK-012\b.*?^Status:\s*([^\n]+)",
+        tasks,
+        flags=re.MULTILINE | re.DOTALL,
+    )
+    task_012_status = task_012_match.group(1).strip() if task_012_match else None
+    check(task_012_match is not None, "tasks/NEXT.md must retain a TASK-012 contract")
+    if task_012_unlocked(pilot_protocol):
+        check(
+            task_012_status in {"active", "done", "completed"},
+            "TASK-012 must have an explicit actionable or completed status after the "
+            "latest primary build disposition",
+        )
+    else:
+        check(
+            task_012_status == "blocked_on_task_011_build_disposition"
+            and "completed `TASK-011` discovery record with a `build` disposition" in tasks,
+            "TASK-012 must remain explicitly blocked unless the latest primary "
+            "discovery disposition is build",
+        )
+    blue = css_hex_variable(site_css, "--blue")
+    quiet = css_hex_variable(site_css, "--quiet")
+    check(
+        blue is not None and contrast_ratio(blue, "#ffffff") >= 4.5,
+        "primary blue must meet WCAG AA contrast against white text",
+    )
+    check(
+        quiet is not None and contrast_ratio(quiet, "#e9eef1") >= 4.5,
+        "quiet text must meet WCAG AA contrast on muted surfaces",
+    )
 
     if errors:
         print("Research OS consistency check failed:")

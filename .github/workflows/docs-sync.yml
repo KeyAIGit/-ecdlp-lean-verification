@@ -11,11 +11,8 @@ name: Docs sync
 # SUPERSEDES stats.yml: this is a strict superset (it regenerates stats.json + badge +
 # dashboard as well), so stats.yml was retired to avoid two workflows racing to push.
 #
-# PURE vs SITE.  build_dashboard.py is the ONE generator that reads *git history* (the
-# "Recent build milestones" list), so dashboard.html / index.html are NOT a pure function
-# of the committed sources — they can never satisfy a strict PR drift check (a page cannot
-# contain the very commit that adds it). They are therefore regenerated + committed on main
-# but EXCLUDED from the PR drift gate. Everything else is drift-gated.
+# The public site generator is deterministic. Machine-readable views and all four site pages
+# are regenerated and drift-gated together on pull requests.
 #
 # Derived files (never hand-edit — regenerate via the scripts below):
 #   PURE  (drift-gated on PRs):
@@ -29,8 +26,7 @@ name: Docs sync
 #     data/source_registry.json                (gen_source_registry.py)
 #     repo/ECDLP_DECISION_SUBSTRATE.md         (build_ecdlp_decision_view.py)
 #     bundles/MANIFEST.json                    (export_agent_bundle.py)
-#   SITE  (git-log-derived; committed on main, not PR-gated):
-#     dashboard.html, index.html, explore.html (build_dashboard.py -> site_generator.py)
+#     dashboard.html, index.html, explore.html, pilot.html (build_dashboard.py -> site_generator.py)
 
 on:
   push:
@@ -59,6 +55,7 @@ on:
       - 'dashboard.html'
       - 'index.html'
       - 'explore.html'
+      - 'pilot.html'
       - 'assets/**'
   pull_request:
     paths:
@@ -85,6 +82,7 @@ on:
       - 'dashboard.html'
       - 'index.html'
       - 'explore.html'
+      - 'pilot.html'
       - 'assets/**'
   workflow_dispatch:
 
@@ -112,21 +110,16 @@ env:
     data/source_registry.json
     repo/ECDLP_DECISION_SUBSTRATE.md
     bundles/MANIFEST.json
-  # SITE pages — derived partly from git history (build milestones). Committed on main,
-  # never PR-drift-gated (they cannot be reproduced from committed sources alone).
-  DERIVED_SITE: >-
     dashboard.html
     index.html
     explore.html
+    pilot.html
 
 jobs:
   docs-sync:
     runs-on: ubuntu-latest
     steps:
-      # full history so build_dashboard.py's git-log "build milestones" populate on main
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       # ---- regenerate every derived artifact from its real source, in dependency order ----
       - name: Stats + badge (data/stats.json, badges/theorems.json)
@@ -151,7 +144,7 @@ jobs:
       # (STATUS.md, COVERAGE.md, knowledge_graph.json, …), so its inputs must be fresh first.
       - name: Agent-bundle manifest (bundles/MANIFEST.json)
         run: python3 scripts/export_agent_bundle.py --manifest
-      - name: Dashboard + public site (dashboard.html, index.html, explore.html)
+      - name: Dashboard + public site (dashboard.html, index.html, explore.html, pilot.html)
         run: python3 scripts/build_dashboard.py
 
       # ---- consistency gate: no retired headline counts, canonical figure present ----
@@ -161,6 +154,8 @@ jobs:
         run: python3 scripts/check_status_consistency.py
       - name: Product model and public-claim gate
         run: python3 scripts/check_product_model.py
+      - name: Product-model evidence lifecycle fixtures
+        run: python3 scripts/test_check_product_model.py
       - name: Formal-substrate architecture gate
         run: python3 scripts/check_formal_substrate.py
       - name: ECDLP decision-substrate gate
@@ -178,13 +173,13 @@ jobs:
       - name: Source-registry gate (cited works ↔ docs provenance in sync)
         run: python3 scripts/gen_source_registry.py --check
 
-      # ---- did regeneration change a PURE artifact? (SITE pages are git-derived, not gated) ----
+      # ---- did regeneration change any generated artifact? ----
       - name: Detect derived-artifact drift
         id: drift
         run: |
           if git diff --quiet -- $DERIVED_PURE; then
             echo "dirty=false" >> "$GITHUB_OUTPUT"
-            echo "pure derived artifacts already in sync with sources"
+            echo "generated artifacts already in sync with sources"
           else
             echo "dirty=true" >> "$GITHUB_OUTPUT"
             echo "::group::derived-artifact drift"
@@ -203,19 +198,20 @@ jobs:
           echo "  python3 scripts/gen_status.py"
           echo "  python3 scripts/gen_source_registry.py && python3 scripts/build_ecdlp_decision_view.py"
           echo "  python3 scripts/export_agent_bundle.py --manifest"
+          echo "  python3 scripts/build_dashboard.py"
           git --no-pager diff -- $DERIVED_PURE
           exit 1
 
-      # ---- on main / manual run: auto-commit the refreshed artifacts (PURE + SITE) ----
+      # ---- on main / manual run: auto-commit the refreshed artifacts ----
       - name: Commit refreshed artifacts
         if: github.event_name != 'pull_request'
         run: |
-          if git diff --quiet -- $DERIVED_PURE $DERIVED_SITE; then
+          if git diff --quiet -- $DERIVED_PURE; then
             echo "nothing to commit"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add $DERIVED_PURE $DERIVED_SITE
+          git add $DERIVED_PURE
           git commit -m "chore(docs): resync derived artifacts from sources [skip ci]"
           git push

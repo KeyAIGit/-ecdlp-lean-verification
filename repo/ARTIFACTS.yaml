@@ -106,6 +106,7 @@ classes:
       - index.html
       - dashboard.html
       - explore.html
+      - pilot.html
       - bundles/MANIFEST.json
       - data/result_registry.json
       - data/source_registry.json
@@ -144,6 +145,7 @@ classes:
       - index.html
       - dashboard.html
       - explore.html
+      - pilot.html
       - assets/
       - fonts/
       - CNAME
@@ -175,6 +177,7 @@ classes:
       - repo/FORMAL_SUBSTRATE.json
       - repo/ECDLP_DECISION_SUBSTRATE.json
       - repo/PRODUCT_MODEL.json
+      - repo/PILOT_PROTOCOL.json
       - repo/AUTOMATION_INVENTORY.json
       - repo/BRANCH_INVENTORY.json
       - repo/FINAL_REVIEW_PACKET.md
@@ -198,6 +201,7 @@ classes:
     description: CI, generators, autonomous loops, server helpers, and prompts.
     paths:
       - .github/workflows/
+      - .github/ISSUE_TEMPLATE/
       - scripts/
       - prompts/
       - requirements.txt
@@ -267,6 +271,7 @@ allowed_overlap_paths:
   - index.html
   - dashboard.html
   - explore.html
+  - pilot.html
   - Ecdlp/LedgerAxiomAudit.lean
   - experiments/HYPOTHESES.yaml
   - notes/SECURITY_SCOPE.md

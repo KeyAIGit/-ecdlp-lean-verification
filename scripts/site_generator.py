@@ -8,13 +8,13 @@ import re
 from collections import Counter
 from pathlib import Path
 
+from pilot_evidence import primary_dispositions, valid_second_projects
+
 ROOT = Path(__file__).resolve().parent.parent
-REPO = "https://github.com/KeyAIGit/-ecdlp-lean-verification"
-BLOB = f"{REPO}/blob/main"
-TREE = f"{REPO}/tree/main"
-ASSET_VERSION = "20260722-1"
+ASSET_VERSION = "20260723-2"
 
 PRODUCT_PATH = ROOT / "repo" / "PRODUCT_MODEL.json"
+PILOT_PATH = ROOT / "repo" / "PILOT_PROTOCOL.json"
 DECISION_PATH = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
 FORMAL_PATH = ROOT / "repo" / "FORMAL_SUBSTRATE.json"
 STATS_PATH = ROOT / "data" / "stats.json"
@@ -25,6 +25,7 @@ TASKS_PATH = ROOT / "tasks" / "NEXT.md"
 INDEX_PATH = ROOT / "index.html"
 DASHBOARD_PATH = ROOT / "dashboard.html"
 EXPLORE_PATH = ROOT / "explore.html"
+PILOT_OUTPUT_PATH = ROOT / "pilot.html"
 
 ROUTE_STATUS = {
     "guardrail": ("Guardrail", "guardrail"),
@@ -68,16 +69,22 @@ def write_text(path: Path, text: str) -> None:
     path.write_text(text.rstrip() + "\n", encoding="utf-8", newline="\n")
 
 
-def repo_url(path: str) -> str:
+def repo_url(product: dict, path: str) -> str:
+    repository = product["repository_url"].rstrip("/")
     if path.endswith("/"):
-        return f"{TREE}/{path.rstrip('/')}"
-    return f"{BLOB}/{path}"
+        return f"{repository}/tree/main/{path.rstrip('/')}"
+    return f"{repository}/blob/main/{path}"
 
 
-def evidence_links(paths: list[str], limit: int | None = None) -> str:
+def pilot_intake_url(product: dict) -> str:
+    template = Path(product["pilot"]["intake_surface"]).name
+    return f"{product['repository_url'].rstrip('/')}/issues/new?template={template}"
+
+
+def evidence_links(product: dict, paths: list[str], limit: int | None = None) -> str:
     selected = paths if limit is None else paths[:limit]
     return "".join(
-        f'<a class="source-link" href="{esc(repo_url(path))}">{esc(path)}</a>'
+        f'<a class="source-link" href="{esc(repo_url(product, path))}">{esc(path)}</a>'
         for path in selected
     )
 
@@ -144,7 +151,7 @@ def page_head(title: str, description: str) -> str:
   <meta property="og:title" content="{esc(title)}">
   <meta property="og:description" content="{esc(description)}">
   <meta property="og:image" content="assets/logo-wordmark.png">
-  <meta name="theme-color" content="#f7f8f6">
+  <meta name="theme-color" content="#07182d">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -152,7 +159,8 @@ def page_head(title: str, description: str) -> str:
 </head>"""
 
 
-def site_header() -> str:
+def site_header(product: dict) -> str:
+    repository = product["repository_url"].rstrip("/")
     return f"""<a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="shell site-header__inner">
@@ -163,24 +171,27 @@ def site_header() -> str:
       <a data-nav-page="product" href="index.html">Product</a>
       <a data-nav-page="workspace" href="dashboard.html">Workspace</a>
       <a data-nav-page="routes" href="explore.html">Route map</a>
-      <a href="{REPO}/blob/main/STATUS.md">Status</a>
-      <a class="nav-cta" href="{REPO}">GitHub</a>
+      <a href="{repository}">GitHub</a>
+      <a class="nav-cta" data-nav-page="pilot" href="pilot.html">Join pilot</a>
     </nav>
   </div>
 </header>"""
 
 
 def site_footer(product: dict) -> str:
+    repository = product["repository_url"].rstrip("/")
     return f"""<footer class="site-footer">
   <div class="shell site-footer__inner">
     <img src="assets/logo-wordmark.png" alt="KeyAI" width="100" height="38">
     <p>{esc(product["category"])}. Current stage: {esc(product["current_stage"]["label"])}.
-      Lean is the current exact verifier; product and customer claims remain evidence-gated.</p>
+      The Lean kernel checks declared statements and proof terms; semantic, empirical,
+      security, and product claims remain separately evidence-gated.</p>
     <nav class="footer-links" aria-label="Footer navigation">
       <a href="dashboard.html">Reference workspace</a>
       <a href="explore.html">Decision routes</a>
-      <a href="{REPO}/blob/main/repo/PRODUCT_MODEL.json">Product model</a>
-      <a href="{REPO}">Repository</a>
+      <a href="pilot.html">External pilot</a>
+      <a href="{repository}/blob/main/repo/PRODUCT_MODEL.json">Product model</a>
+      <a href="{repository}">Repository</a>
     </nav>
   </div>
 </footer>
@@ -191,6 +202,7 @@ def site_footer(product: dict) -> str:
 
 def build_index(
     product: dict,
+    pilot: dict,
     stats: dict,
     frontier: dict,
     decisions: dict,
@@ -200,6 +212,11 @@ def build_index(
     routes = decisions["routes"]
     current_stage = product["current_stage"]
     mvp = product["mvp"]
+    pilot_model = product["pilot"]
+    completed_discovery = sum(
+        record.get("disposition") in {"build", "change", "stop"}
+        for record in primary_dispositions(pilot)
+    )
     workflow_html = "".join(
         f"""<article class="workflow__step">
   <span class="workflow__index">{index:02d}</span>
@@ -212,7 +229,7 @@ def build_index(
         f"""<article class="evidence-card">
   <h3>{esc(capability["label"])}</h3>
   <p>Inspectable in the reference repository and checked by the repository gates.</p>
-  {evidence_links(capability["evidence"], limit=1)}
+  {evidence_links(product, capability["evidence"], limit=1)}
 </article>"""
         for capability in current_stage["capabilities_now"]
     )
@@ -235,22 +252,27 @@ def build_index(
     description = product["one_liner"]
     return f"""{page_head("KeyAI | Verification workspace for AI research", description)}
 <body data-page="product">
-{site_header()}
+{site_header(product)}
 <main id="main">
   <section class="hero" aria-labelledby="hero-title">
     <canvas class="hero__canvas" id="route-canvas" aria-hidden="true"></canvas>
     <div class="shell hero__inner">
       <div class="hero__copy">
         <p class="eyebrow">{esc(product["category"])}</p>
-        <h1 id="hero-title">The verification workspace for AI research.</h1>
+        <h1 id="hero-title">Turn AI research into verifier-scoped, reusable state.</h1>
         <p class="hero__lede">{esc(product["one_liner"])}
           It keeps claims, evidence, decisions, verifier outcomes, and provenance in one inspectable state.</p>
         <div class="actions">
-          <a class="button button--primary" href="dashboard.html">Open the reference workspace</a>
-          <a class="button" href="{REPO}/blob/main/repo/PRODUCT_MODEL.json">Inspect the product contract</a>
+          <a class="button button--primary" href="pilot.html">Bring a research workflow</a>
+          <a class="button button--on-dark" href="dashboard.html">Open the reference workspace</a>
         </div>
         <p class="stage-note">{status_badge("blue", current_stage["label"])}
           <span>{esc(current_stage["summary"])}</span></p>
+      </div>
+      <div class="hero__signal" aria-label="Current reference decision">
+        <span>Live decision graph</span>
+        <strong>{len(routes)} routes evaluated / {len(selection["selected_route_ids"])} selected</strong>
+        <code>{esc(selection["decision_id"])}</code>
       </div>
     </div>
     <script type="application/json" id="route-visual-data">{route_visual}</script>
@@ -302,11 +324,31 @@ def build_index(
     <div class="shell">
       <div class="section-heading">
         <p class="eyebrow">Product loop</p>
-        <h2>One state from source material to verified asset.</h2>
+        <h2>One state from source material to a governed result.</h2>
         <p>The current repository implements this loop through machine-readable contracts. The next product
           step is to make the same loop configurable for an external team.</p>
       </div>
       <div class="workflow">{workflow_html}</div>
+    </div>
+  </section>
+
+  <section class="pilot-callout" aria-labelledby="pilot-callout-title">
+    <div class="shell pilot-callout__inner">
+      <div>
+        <p class="eyebrow">Active validation / {esc(pilot_model["task_id"])}</p>
+        <h2 id="pilot-callout-title">The next result must come from another team.</h2>
+        <p>We are recruiting one formal-research team to test the current workspace, map one repeated
+          workflow, and make an evidence-based build, change, stop, or pending decision.</p>
+      </div>
+      <dl class="pilot-callout__facts">
+        <div><dt>Status</dt><dd>{esc(pilot_model["status"])}</dd></div>
+        <div><dt>Session</dt><dd>{sum(item["minutes"] for item in pilot["session_plan"])} minutes</dd></div>
+        <div><dt>Completed discovery</dt><dd>{completed_discovery} sessions</dd></div>
+      </dl>
+      <div class="actions">
+        <a class="button button--light" href="pilot.html">Read the pilot contract</a>
+        <a class="text-link text-link--light" href="{pilot_intake_url(product)}">Apply on GitHub</a>
+      </div>
     </div>
   </section>
 
@@ -376,7 +418,7 @@ def build_index(
       <div class="section-heading">
         <p class="eyebrow">The next product milestone</p>
         <h2>We will call it an MVP when another team can run the loop.</h2>
-        <p>{esc(mvp["definition"])} This is also the evidence threshold before a credible accelerator application.</p>
+        <p>{esc(mvp["definition"])} A technical MVP still does not establish a repeatable buyer or willingness to pay.</p>
       </div>
       <div class="metric-lines">{metric_html}</div>
     </div>
@@ -449,7 +491,7 @@ def build_dashboard(
   <td>{status_badge(node["status"])}</td>
   <td>{esc(", ".join(node.get("depends_on", [])) or "none")}</td>
   <td>{esc(", ".join(node.get("blocker_ids", [])) or "none")}</td>
-  <td>{evidence_links(node.get("evidence_files", []), limit=2)}</td>
+  <td>{evidence_links(product, node.get("evidence_files", []), limit=2)}</td>
 </tr>"""
         for node in formal["critical_nodes"]
     )
@@ -497,7 +539,7 @@ def build_dashboard(
     health_html = "".join(
         f"""<article class="surface">
   <div class="surface__head"><div><h3>{esc(label)}</h3><p>{esc(value)}</p></div>{status_badge(status, "OK")}</div>
-  <div class="surface__body">{evidence_links(paths)}</div>
+  <div class="surface__body">{evidence_links(product, paths)}</div>
 </article>"""
         for label, value, paths, status in health_cards
     )
@@ -507,7 +549,7 @@ def build_dashboard(
     )
     return f"""{page_head("KeyAI Workspace | secp256k1 reference environment", description)}
 <body data-page="workspace">
-{site_header()}
+{site_header(product)}
 <main id="main">
   <section class="workspace-mast">
     <div class="shell">
@@ -560,7 +602,7 @@ def build_dashboard(
         </article>
         <aside class="surface">
           <div class="surface__head"><div><h3>Active queue</h3><p>{active_count} active of {len(tasks)} task contracts</p></div>
-            <a href="{REPO}/blob/main/tasks/NEXT.md">Open source</a></div>
+            <a href="{repo_url(product, "tasks/NEXT.md")}">Open source</a></div>
           <div class="surface__body">{active_task_html}</div>
         </aside>
       </div>
@@ -583,7 +625,7 @@ def build_dashboard(
     <section class="tab-panel" role="tabpanel" id="panel-formal" aria-labelledby="tab-formal" data-tab-panel="formal" hidden>
       <div class="panel-heading"><div><h2>Formal substrate</h2>
         <p>{closed_count} of {len(formal["critical_nodes"])} critical nodes are closed. Blocked nodes retain exact resume conditions.</p></div>
-        <a class="button" href="{REPO}/blob/main/repo/FORMAL_SUBSTRATE.json">Open canonical map</a></div>
+        <a class="button" href="{repo_url(product, "repo/FORMAL_SUBSTRATE.json")}">Open canonical map</a></div>
       <div class="table-wrap" style="margin-bottom:28px"><table class="data-table">
         <thead><tr><th>Critical node</th><th>Status</th><th>Depends on</th><th>Blocker</th><th>Evidence</th></tr></thead>
         <tbody>{formal_rows}</tbody>
@@ -612,7 +654,7 @@ def build_dashboard(
               <li><strong>Experiments authorized</strong><span>{str(phase_policy["experiments_authorized"]).lower()}</span></li>
               <li><strong>Selected route</strong><span>{esc(phase_policy["selected_attack_route"] or "none")}</span></li>
               <li><strong>Merge rule</strong><span>{esc(phase_policy["merge_rule"])}</span></li>
-              <li><strong>Product claim policy</strong>{evidence_links(["repo/PRODUCT_MODEL.json", "scripts/check_product_model.py"])}</li>
+              <li><strong>Product claim policy</strong>{evidence_links(product, ["repo/PRODUCT_MODEL.json", "scripts/check_product_model.py"])}</li>
             </ul>
           </div>
         </article>
@@ -622,7 +664,7 @@ def build_dashboard(
     <section class="tab-panel" role="tabpanel" id="panel-activity" aria-labelledby="tab-activity" data-tab-panel="activity" hidden>
       <div class="panel-heading"><div><h2>Work queue</h2>
         <p>Every active, blocked, or parked item is generated from a bounded task contract with an exit condition.</p></div>
-        <a class="button" href="{REPO}/blob/main/tasks/NEXT.md">Open canonical queue</a></div>
+        <a class="button" href="{repo_url(product, "tasks/NEXT.md")}">Open canonical queue</a></div>
       <div class="surface"><div class="surface__body">{task_html}</div></div>
     </section>
   </div>
@@ -681,7 +723,7 @@ def build_explore(product: dict, stats: dict, decisions: dict) -> str:
     <section class="route-detail"><h3>Success gate</h3><p>{esc(route.get("success_gate", ""))}</p></section>
     <section class="route-detail"><h3>Stop condition</h3><p>{esc(route.get("stop_condition", ""))}</p></section>
     <section class="route-detail route-detail--wide"><h3>Next action</h3><p>{esc(route.get("next_action", ""))}</p></section>
-    <section class="route-detail route-detail--wide"><h3>Evidence files</h3>{evidence_links(evidence)}</section>
+    <section class="route-detail route-detail--wide"><h3>Evidence files</h3>{evidence_links(product, evidence)}</section>
   </div>
 </details>"""
         )
@@ -691,7 +733,7 @@ def build_explore(product: dict, stats: dict, decisions: dict) -> str:
     )
     return f"""{page_head("KeyAI Route Map | secp256k1 ECDLP", description)}
 <body data-page="routes">
-{site_header()}
+{site_header(product)}
 <main id="main">
   <section class="explorer-mast">
     <div class="shell explorer-mast__title">
@@ -717,17 +759,198 @@ def build_explore(product: dict, stats: dict, decisions: dict) -> str:
 
     <section class="explorer-results" aria-labelledby="route-results-title">
       <div class="explorer-results__head"><h2 id="route-results-title">Evaluated routes</h2>
-        <span class="result-count" data-route-count>{len(routes)} routes</span></div>
+        <span class="result-count" data-route-count aria-live="polite">{len(routes)} routes</span></div>
       <div class="route-list" data-route-list>{"".join(route_cards)}</div>
-      <div class="empty-state" hidden data-route-empty>No route matches this filter.</div>
+      <div class="empty-state" hidden data-route-empty role="status" aria-live="polite">No route matches this filter.</div>
     </section>
   </div>
 </main>
 {site_footer(product)}"""
 
 
+def build_pilot(product: dict, pilot: dict) -> str:
+    intake_url = pilot_intake_url(product)
+    session_total = sum(item["minutes"] for item in pilot["session_plan"])
+    completed_external_pilots = len(valid_second_projects(pilot))
+    primary_hypothesis = next(
+        item
+        for item in product["customer_hypotheses"]
+        if item["id"] == pilot["primary_hypothesis_id"]
+    )
+    role_html = "".join(
+        f"<li>{esc(item)}</li>" for item in pilot["target_participant"]["roles"]
+    )
+    signal_html = "".join(
+        f"<li>{esc(item)}</li>"
+        for item in pilot["target_participant"]["required_signals"]
+    )
+    out_of_scope_html = "".join(
+        f"<li>{esc(item)}</li>"
+        for item in pilot["target_participant"]["out_of_scope"]
+    )
+    session_html = "".join(
+        f"""<article class="pilot-step">
+  <div class="pilot-step__meta"><span>{index:02d}</span><strong>{phase["minutes"]} min</strong></div>
+  <div class="pilot-step__copy">
+    <h3>{esc(phase["label"])}</h3>
+    <p>{esc(phase["objective"])}</p>
+    <p class="pilot-step__gate"><strong>Exit gate</strong>{esc(phase["exit_gate"])}</p>
+  </div>
+</article>"""
+        for index, phase in enumerate(pilot["session_plan"], start=1)
+    )
+    measurement_rows = "".join(
+        f"""<tr>
+  <td><code>{esc(metric["id"])}</code><small>{esc(metric["kind"])}</small></td>
+  <td>{esc(metric["operational_definition"])}</td>
+  <td><strong>{esc(metric["target"])}</strong></td>
+  <td>{esc(metric["evidence_source"])}</td>
+</tr>"""
+        for metric in pilot["measurements"]
+    )
+    decision_columns = "".join(
+        f"""<section class="decision-rule decision-rule--{esc(outcome)}">
+  <h3>{esc(outcome.title())}</h3>
+  <ul>{''.join(f'<li>{esc(item)}</li>' for item in pilot["decision_rules"][outcome])}</ul>
+</section>"""
+        for outcome in ("build", "change", "stop", "pending")
+    )
+    prohibited_html = "".join(
+        f"<li>{esc(item)}</li>"
+        for item in pilot["privacy_and_safety"]["prohibited_inputs"]
+    )
+    description = (
+        "The evidence-gated KeyAI external pilot for formal-research teams: "
+        "qualification, observed orientation, workflow mapping, measures, and decision rules."
+    )
+    return f"""{page_head("KeyAI External Pilot | Test one research workflow", description)}
+<body data-page="pilot">
+{site_header(product)}
+<main id="main">
+  <section class="pilot-mast" aria-labelledby="pilot-title">
+    <div class="shell pilot-mast__inner">
+      <div class="pilot-mast__copy">
+        <p class="eyebrow">External pilot / {esc(pilot["task_id"])}</p>
+        <h1 id="pilot-title">Bring one research workflow that keeps losing its state.</h1>
+        <p>We will observe how your team understands the current KeyAI reference environment, map one
+          repeated formal-research workflow, and decide whether a bounded TASK-012 adapter test is justified.</p>
+        <div class="actions">
+          <a class="button button--primary" href="{intake_url}">Apply on GitHub</a>
+          <a class="button button--on-dark" href="{repo_url(product, product["pilot"]["protocol_source"])}">Inspect the protocol JSON</a>
+        </div>
+      </div>
+      <aside class="pilot-state" aria-label="Pilot evidence state">
+        <div><span>Status</span><strong>{esc(pilot["status"].title())}</strong></div>
+        <div><span>Observed session</span><strong>{session_total} minutes</strong></div>
+        <div><span>Completed external pilots</span><strong>{completed_external_pilots}</strong></div>
+        <p>{esc(pilot["evidence_state"])}</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="pilot-safety" aria-label="Public intake boundary">
+    <div class="shell pilot-safety__inner">
+      <strong>Public and sanitized inputs only.</strong>
+      <span>{esc(pilot["privacy_and_safety"]["public_intake"])}</span>
+      <a href="#safety">Read the safety boundary</a>
+    </div>
+  </section>
+
+  <section class="band band--white">
+    <div class="shell split">
+      <div class="split__lead">
+        <p class="eyebrow">Who this is for</p>
+        <h2>A team with a durable coordination problem, not a one-off proof request.</h2>
+        <p>{esc(pilot["purpose"])}</p>
+        <p class="pilot-primary"><strong>Primary hypothesis {esc(primary_hypothesis["id"])}</strong>
+          {esc(primary_hypothesis["user"])}</p>
+        <ul class="role-list">{role_html}</ul>
+      </div>
+      <div class="qualification">
+        <section>
+          <h3>Signals we need</h3>
+          <ul class="check-list">{signal_html}</ul>
+        </section>
+        <section>
+          <h3>Outside this pilot</h3>
+          <ul class="check-list check-list--not">{out_of_scope_html}</ul>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Observed session</p>
+        <h2>{session_total} minutes from qualification to an explicit decision.</h2>
+        <p>The first session tests orientation and problem fit. It does not count a scheduled follow-up
+          or polite interest as product validation.</p>
+      </div>
+      <div class="pilot-steps">{session_html}</div>
+    </div>
+  </section>
+
+  <section class="band band--muted">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Measurement contract</p>
+        <h2>Behavior first. Claims only after evidence.</h2>
+        <p>Every measure has an operational definition, target, and evidence source. The pilot remains
+          recruiting until an external session is actually recorded.</p>
+      </div>
+      <div class="table-wrap pilot-measures"><table class="data-table">
+        <thead><tr><th>Measure</th><th>What is observed</th><th>Target</th><th>Evidence</th></tr></thead>
+        <tbody>{measurement_rows}</tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="band band--white">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Decision contract</p>
+        <h2>Discovery ends with build, change, stop, or pending.</h2>
+        <p>{esc(pilot["decision_rules"]["minimum_evidence"])}</p>
+      </div>
+      <div class="decision-rules">{decision_columns}</div>
+    </div>
+  </section>
+
+  <section class="band pilot-boundary" id="safety">
+    <div class="shell split">
+      <div class="split__lead">
+        <p class="eyebrow">Safety and scope</p>
+        <h2>No secrets belong in the intake.</h2>
+        <p>{esc(pilot["privacy_and_safety"]["reference_boundary"])}</p>
+        <dl class="scope-contract">
+          <div><dt>TASK-011 authority</dt><dd>{esc(pilot["privacy_and_safety"]["task_authority"])}</dd></div>
+          <div><dt>Experiment gate</dt><dd>{esc(pilot["privacy_and_safety"]["experiment_gate"])}</dd></div>
+          <div><dt>Evidence retention</dt><dd>{esc(pilot["privacy_and_safety"]["retention_policy"])}</dd></div>
+        </dl>
+      </div>
+      <div>
+        <h3>Never submit</h3>
+        <ul class="check-list check-list--not">{prohibited_html}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="pilot-cta">
+    <div class="shell pilot-cta__inner">
+      <div><p class="eyebrow">Recruiting now</p>
+        <h2>One real workflow is more valuable than another speculative feature.</h2>
+        <p>Open the public intake with a repeated failure, current verifier, and a safe project boundary.</p></div>
+      <a class="button button--light" href="{intake_url}">Start the pilot intake</a>
+    </div>
+  </section>
+</main>
+{site_footer(product)}"""
+
+
 def main() -> int:
     product = load_json(PRODUCT_PATH)
+    pilot = load_json(PILOT_PATH)
     stats = load_json(STATS_PATH)
     frontier = load_json(FRONTIER_PATH)
     decisions = load_json(DECISION_PATH)
@@ -735,19 +958,22 @@ def main() -> int:
     graph = load_json(GRAPH_PATH)
     tasks = parse_tasks()
 
-    index = build_index(product, stats, frontier, decisions, formal)
+    index = build_index(product, pilot, stats, frontier, decisions, formal)
     dashboard = build_dashboard(product, stats, frontier, decisions, formal, graph, tasks)
     explore = build_explore(product, stats, decisions)
+    pilot_page = build_pilot(product, pilot)
     write_text(INDEX_PATH, index)
     write_text(DASHBOARD_PATH, dashboard)
     write_text(EXPLORE_PATH, explore)
+    write_text(PILOT_OUTPUT_PATH, pilot_page)
 
     print(
         "wrote KeyAI public site: "
         f"{stats['ledger_rows']} ledger rows, "
         f"{len(decisions['routes'])} decision routes, "
         f"{len(formal['critical_nodes'])} formal nodes, "
-        f"{len(tasks)} task contracts"
+        f"{len(tasks)} task contracts, "
+        f"pilot {pilot['status']}"
     )
     return 0
 

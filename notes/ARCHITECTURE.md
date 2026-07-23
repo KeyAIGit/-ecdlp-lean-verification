@@ -30,7 +30,7 @@ flowchart TB
 
   C -- "git push" --> REPO
   REPO -- "push triggers" --> CI
-  REPO -- "cron / dispatch" --> PROVE
+  REPO -- "manual dispatch" --> PROVE
   PROVE -. "blocked" .-> FEATHER
   BOOT -- "ssh + rsync" --> HZ
   RUN -- "ssh (key)" --> HZ
