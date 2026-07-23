@@ -178,6 +178,11 @@ paper could carry both, or they could split).
   — `EvalRatAtCompat.lean`; divisor-support separation `xyIdeal_ne_of_x_ne`, `xyIdeal_ne_of_ne`
   (+ `xyIdeal_ne_of_y_ne`) — `PointSeparation.lean`; the vanishing/nonvanishing criteria
   `evalRatAt_eq_zero_iff`, `evalRatAt_ne_zero_iff_isUnit` — `EvalRatAtNonvanishing.lean`.
+- The abstract-function and divisor-evaluation completion: `evalFracAt`, quotient extraction,
+  `RegularAt`/`evalReg`, `divEval_mul`, Miller-representative scaling, and
+  `secp256k1_miller_jointly_regular`/`divEval_one` — `FunctionField{Eval,Repr,Regular}.lean`
+  and `Weil{DivisorEval,DivisorRepIndep,MillerEval}.lean`. This closes the reachable W3
+  evaluation scaffolding.
 - The bridge welding the division-polynomial tower to the divisor class:
   `secp256k1_psi3_root_iff_class_torsion` (+ `_psi5_`, `_psi7_`) — `ψₙ(P)=0 ⟺ n•toClass P = 0`
   — `MillerDivisionPolynomialBridge.lean`.
@@ -188,9 +193,9 @@ paper could carry both, or they could split).
   it. The genuinely new-to-Lean machinery is the point-evaluation layer (`evalAt` and its
   localization/separation/nonvanishing lemmas) and the `ψₙ ↔ class-torsion` bridge.
 - The pairing `eₙ : E[n] × E[n] → μₙ` is **not** defined, and bilinear/alternating/non-degenerate
-  are **not** proved. What remains open and hard: evaluating `f_P` over a full divisor `f_P(D_Q)`
-  (W3 evaluation half), Weil reciprocity `f(div g) = g(div f)` (W4), and the pairing itself (W5) —
-  multi-month, genuine Mathlib gaps.
+  are **not** proved. What remains open and hard is Weil reciprocity
+  `f(div g) = g(div f)` (W4), then the root-of-unity/bilinearity/non-degeneracy assembly (W5).
+  The raw W3 evaluation domain and algebra are present; they are not the pairing.
 - `secp256k1_miller_function_unique` was **designed by the strong model (Fable) and kernel-verified**
   — an engine-track provenance note, not a mathematical claim; the result stands on the kernel.
 - Everything is stated for secp256k1, though much of the evaluation layer is curve-agnostic

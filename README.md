@@ -91,7 +91,8 @@ concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofRed
 | `BARRIERS.md` · `TRUST_REPORT.md` · `ABSTRACT_SCOPE.md` | the no-go map and the exact trust/scope boundaries |
 | `ROADMAP.md` | the one strategy document (position, north star, program) |
 | `AGENTS.md` · `CLAUDE.md` · `tasks/NEXT.md` | agent orientation, conventions, active queue |
-| `REPOSITORY_ARCHITECTURE.md` + `repo/ARTIFACTS.yaml` | whole-repo ownership map (read before moving/deleting files) |
+| `REPOSITORY_ARCHITECTURE.md` + `repo/ARTIFACTS.yaml` | exhaustive whole-repo ownership map |
+| `repo/FORMAL_SUBSTRATE.json` | machine-readable result families, critical path, blockers, and release boundary |
 | `experiments/` · `domains/` · `notes/` (`notes/INDEX.md`) | validated experiments, domain registry, curated research memory |
 | `archive/` | frozen history: superseded docs, raw traces, the undeployed platform scaffold |
 

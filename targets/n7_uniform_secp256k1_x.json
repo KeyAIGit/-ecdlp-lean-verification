@@ -1,7 +1,7 @@
 {
   "id": "n7_uniform_secp256k1_x",
   "name": "N7UniformSecp256k1X",
-  "status": "todo",
+  "status": "blocked",
   "difficulty": "hard",
   "template": "point_level_multiplication_formula",
   "why_it_matters": "The uniform multiplication-by-n x-coordinate formula x(n*P)=Phi_n(x)/PsiSq_n(x) on the actual secp256k1 point group, for all n at once - the monolithic missing rung (node S3/N7, BARRIERS.md B3). Substrate landed: S1 coordinate-ring translation, S2 psi_n|psi_2n, and the full S3a base for n=2 (x/y/Point) and n=3 (x/y). The remaining wall is the general induction (absent from Mathlib: no omega division polynomial, no uniform Point<->Psi/Phi map).",
@@ -21,5 +21,31 @@
   "depends_on": [
     "Ecdlp/Proved/MultiplicationXCoordinateRing.lean",
     "Ecdlp/Proved/DivisionPolynomialDoubling.lean"
-  ]
+  ],
+  "critical_node": "n7-uniform",
+  "blocker_ids": [
+    "blocker-point-division-map",
+    "blocker-n7-certificates"
+  ],
+  "blocked_evidence": {
+    "carrier_stem": "Ecdlp/Targets/n7_uniform_carrier_induction.lean",
+    "carrier_bare_sorry": 7,
+    "wrapper_stem": "Ecdlp/Targets/n7_uniform_secp256k1_x.lean",
+    "wrapper_bare_sorry": 1,
+    "analysis": "notes/N7_EVEN_X_DOUBLING_ANALYSIS.md"
+  },
+  "resume_condition": "Resume only when the uniform Point-to-division-polynomial bridge or a reproducible Lean certificate generator removes at least one named blocker.",
+  "last_bounded_pass": {
+    "date": "2026-07-22",
+    "result": "blocked",
+    "record": "notes/N7_UNIFORM_BLOCKER.md",
+    "upstream": "https://github.com/leanprover-community/mathlib4/pull/13782",
+    "certificates_passed": [
+      "scripts/certs/division_doubling_secp.py",
+      "scripts/certs/eval_bridge_check.py",
+      "scripts/certs/triple_mult_formula_check.py",
+      "scripts/certs/quad_mult_formula_check.py",
+      "scripts/certs/quint_mult_formula_check.py"
+    ]
+  }
 }

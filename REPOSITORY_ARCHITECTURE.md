@@ -5,16 +5,23 @@ not introduce new mathematical claims. Its job is to separate sources of truth,
 generated views, operational controls, public surfaces, and cleanup candidates
 so future agents can improve the repository without drifting the facts.
 
-For the machine-readable companion, see `repo/ARTIFACTS.yaml`. For proposed
-cleanup sequencing, see `repo/CLEANUP_PLAN.md`. The manifest is checked by
-`scripts/check_repo_artifacts.py`.
+Machine-readable companions:
+
+- `repo/ARTIFACTS.yaml` classifies every repository file by ownership and edit policy.
+- `repo/FORMAL_SUBSTRATE.json` maps result families, critical dependencies, blockers,
+  release disposition, and open targets.
+- `repo/AUTOMATION_INVENTORY.json` classifies every workflow.
+
+Their checks live under `scripts/check_*inventory.py`,
+`scripts/check_formal_substrate.py`, and `scripts/check_repo_artifacts.py`.
 
 ## Operating Principle
 
 The repository is a verified research asset, not just a pile of proofs. Every
 change should preserve three invariants:
 
-1. The Lean kernel remains the only judge of proved mathematics.
+1. Lean elaboration and the kernel remain the proof authority; uses of
+   `native_decide` additionally trust the compiler and are disclosed by the axiom audit.
 2. `STATUS.md` and `data/stats.json` remain the canonical human/machine
    snapshot for live counts.
 3. Cleanup happens by classification first, then review, then movement or
@@ -32,9 +39,10 @@ publication reviewers. Each audience needs a stable route through the repo.
 | Open proof targets | Candidate statements and target metadata | `Ecdlp/Targets/`, `targets/` | Open conjectures live here, not in `Ecdlp/Proved/`. Target JSON should track target stems. |
 | Canonical corpus and overlays | Read-only claim corpus plus curated coverage overrides | `data/KG_CLAIM_FORMALIZATION_v1.csv`, `data/corpus_coverage_overrides.json`, `data/claim_traceability.jsonl` | Treat the corpus as vendored input. Curated overlays may be edited with review. |
 | Verified ledger and trust boundary | Human-auditable theorem ledger and scope statements | `VERIFIED.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `BARRIERS.md`, `COVERAGE.md` | Keep counts delegated to `STATUS.md`/`data/stats.json`; keep scope wording adversarially honest. |
-| Generated machine views | Derived stats, graphs, frontier maps, badges, and snapshots | `data/stats.json`, `data/frontier_map.json`, `data/knowledge_graph.json`, `data/knowledge_graph.md`, `badges/theorems.json`, `STATUS.md` | Do not hand-edit generated numbers. Change generators and regenerate. |
-| Public surfaces | Static site and dashboard | `index.html`, `dashboard.html`, `assets/`, `fonts/`, `CNAME` | Site may be hand-maintained, but canonical counters should come from generated data or checked sync paths. |
-| Research OS control plane | Active tasks, hypotheses, strategy, architecture map, and agent orientation | `AGENTS.md`, `AGENT.md`, `CLAUDE.md`, `ROADMAP.md`, `tasks/NEXT.md`, `experiments/HYPOTHESES.yaml`, `REPOSITORY_ARCHITECTURE.md`, `repo/` | Keep short, current, and executable by low-context agents. |
+| Generated machine views | Derived stats, registries, graphs, audits, badges, and snapshots | `data/stats.json`, `data/{result_registry,source_registry,knowledge_graph}.json`, `Ecdlp/LedgerAxiomAudit.lean`, `badges/theorems.json`, `STATUS.md` | Do not hand-edit. Change generators and regenerate. |
+| Public surfaces | Static site, dashboard, and 3D map | `index.html`, `dashboard.html`, `explore.html`, `assets/`, `fonts/`, `CNAME` | Canonical counters must remain useful without JavaScript and pass sync checks. |
+| Research OS control plane | Active tasks, hypotheses, formal architecture, automation, and agent orientation | `AGENTS.md`, `CLAUDE.md`, `ROADMAP.md`, `tasks/NEXT.md`, `experiments/HYPOTHESES.yaml`, `REPOSITORY_ARCHITECTURE.md`, `repo/` | Keep short, current, and executable by low-context agents. |
+| Reproducible experiments | Non-kernel scripts, manifests, and measured evidence | `experiments/` | Measurements are evidence, never proofs. Parked hypotheses authorize no new runs. |
 | Automation and scripts | CI, generators, checks, autonomous loops, server helpers | `.github/workflows/`, `scripts/`, `requirements.txt`, `prompts/` | Prefer explicit gates over narrative promises. Scripts that generate committed artifacts must document outputs. |
 | Research notes | Durable mathematical strategy, maps, and reviewed reasoning | `notes/*.md`, `docs/`, `PUBLISHABLE_UNITS.md` | Keep as curated research memory. Link to canonical counts instead of copying them. |
 | Archive (frozen) | Superseded docs and exploratory traces, preserved for provenance | `archive/` (docs, ward, scratch, platform, generator-report) | Do not delete in this PR. Classify, preserve provenance, and ask Claude/human review before archive/delete. |
@@ -45,6 +53,8 @@ publication reviewers. Each audience needs a stable route through the repo.
 |---|---|---|
 | How many verified ledger rows/distinct results/modules exist now? | `data/stats.json`, generated from `VERIFIED.md` | `STATUS.md`, `badges/theorems.json`, site counters |
 | What is actually proved? | `Ecdlp/Proved/*.lean` plus `VERIFIED.md` | `data/knowledge_graph.json`, `data/knowledge_graph.md` |
+| Which exact declarations does each ledger row cite? | `data/result_registry.json` | `Ecdlp/LedgerAxiomAudit.lean` |
+| What is the formal critical path and release boundary? | `repo/FORMAL_SUBSTRATE.json` | semantic edges in `data/knowledge_graph.json` |
 | What corpus claims exist? | `data/KG_CLAIM_FORMALIZATION_v1.csv` | `data/frontier_map.json`, `targets/*.json` |
 | Which corpus claims are verified/partial/blocked/etc.? | `data/frontier_map.json` plus `data/corpus_coverage_overrides.json` | `STATUS.md`, `COVERAGE.md`, dashboard |
 | What is safe to claim publicly? | `STATUS.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `notes/SECURITY_SCOPE.md` | `README.md`, `PUBLISHABLE_UNITS.md` |
@@ -62,10 +72,14 @@ possible:
 | `STATUS.md` | `scripts/gen_status.py` |
 | `data/frontier_map.json` | `scripts/build_frontier_map.py` |
 | `data/knowledge_graph.json`, `data/knowledge_graph.md` | `scripts/build_knowledge_graph.py` |
+| `data/result_registry.json` | `scripts/gen_result_registry.py` |
+| `Ecdlp/LedgerAxiomAudit.lean` | `scripts/gen_axiom_audit.py` |
 | `COVERAGE.md` | `scripts/coverage_report.py` |
 | `dashboard.html` | `scripts/build_dashboard.py` |
 | obvious cross-surface drift | `scripts/check_status_consistency.py`, `scripts/check_counts.py` |
 | repository artifact classification | `scripts/check_repo_artifacts.py` |
+| formal dependency/release map | `scripts/check_formal_substrate.py` |
+| generated-artifact closure | `scripts/check_generated_fixpoint.py --check` |
 
 If a generated artifact must be hand-edited in an emergency, the follow-up PR
 should either encode the change in the generator or mark the artifact as
@@ -93,19 +107,13 @@ High-risk areas:
 - `archive/ward/`: noisy, but may contain provenance for Ward/EDS work (frozen).
 - `archive/scratch/`: unpromoted Lean experiments, frozen; revive via git mv.
 
-## PR Discipline
+## Review Discipline
 
-Use separate PRs for separate kinds of risk:
-
-| PR type | Allowed risk |
-|---|---|
-| Architecture/classification | Adds maps, manifests, review packets; no file deletion. |
-| Generator/gate | Changes scripts and generated artifacts together. |
-| Lean proof | Changes Lean surface, `VERIFIED.md`, stats, graph, and gates together. |
-| Public site | Changes site/dashboard; checks counters and wording against canonical data. |
-| Archive/delete | Moves or deletes classified artifacts after review. |
-
-This keeps Claude review useful: reviewers can attack one risk class at a time.
+The current normalization is intentionally one integration draft: it must expose the
+whole repository and its generated consequences to one final adversarial review. It
+must not merge before that review. Destructive branch/file cleanup remains a separate,
+post-review action. After this baseline lands, proof, generator, site, and archive risks
+should again use narrowly scoped PRs.
 
 ## Claude Review Contract
 

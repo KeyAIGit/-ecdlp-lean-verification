@@ -9,7 +9,8 @@ kernel/CI remains the sole judge).
 For a small-context start, read `STATUS.md` first, then `tasks/NEXT.md`; load
 `experiments/HYPOTHESES.yaml` when the task touches hypotheses, experiments,
 frontier interpretation, or publication planning. Before moving, deleting, or
-reclassifying files, read `REPOSITORY_ARCHITECTURE.md` and `repo/ARTIFACTS.yaml`.
+reclassifying files, read `REPOSITORY_ARCHITECTURE.md`, `repo/ARTIFACTS.yaml`,
+and `repo/FORMAL_SUBSTRATE.json`.
 
 ## What this project actually is (read this first)
 A **machine-checked formalization** of the mathematics of ECDLP / elliptic-curve

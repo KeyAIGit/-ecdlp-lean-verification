@@ -110,10 +110,10 @@ NAV = [
         ("repo/CLEANUP_PLAN.md", "Cleanup plan: classify, review, then move/delete (tranche 1 executed)"),
     ]),
     ("The ledger & proofs", [
-        ("VERIFIED.md", "The canonical ledger — every kernel-verified theorem, one row each"),
-        ("Ecdlp/Proved/", "The Lean source of every verified theorem (38 files)", TREE + "/Ecdlp/Proved"),
-        ("Ecdlp/Targets/", "Open conjecture stems — not built, not gated (13 files)", TREE + "/Ecdlp/Targets"),
-        ("Ecdlp/AxiomAudit.lean", "The axiom-audit harness (#print axioms on headline results)"),
+        ("VERIFIED.md", "The canonical ledger of kernel-verified results"),
+        ("Ecdlp/Proved/", "Lean sources for promoted verified results", TREE + "/Ecdlp/Proved"),
+        ("Ecdlp/Targets/", "Excluded conjecture stems: explicitly open, blocked, or deferred", TREE + "/Ecdlp/Targets"),
+        ("Ecdlp/LedgerAxiomAudit.lean", "Generated #print axioms audit for the complete verified ledger"),
         ("TRUST_REPORT.md", "Trust boundary: pure-kernel vs native_decide (compiler-trust) classification"),
     ]),
     ("Honesty & independent review", [
@@ -419,26 +419,43 @@ def build_foundations_chart(foundations: dict) -> tuple[str, str]:
 
 def sync_index_html(vcount: int, distinct: int, completeness, total: int) -> None:
     """Keep the hand-authored landing page (index.html) counters in sync with the
-    canonical ledger. index.html is otherwise hand-maintained — this only rewrites the
-    numeric `data-to`/`data-w` values, anchored on their adjacent human labels so it is
-    robust to layout edits. Warns (never raises) if a counter's structure has drifted,
-    so a stale-count patch can never break the stats workflow."""
+    canonical ledger. index.html is otherwise hand-maintained — this only rewrites
+    numeric animation values and their visible fallback text, anchored on adjacent
+    labels. The fallback matters to crawlers, no-JS readers, and review tools: a
+    canonical nonzero value must never appear as zero until JavaScript runs."""
     if not INDEX.exists():
         return
     html = INDEX.read_text(encoding="utf-8")
     comp = int(round(float(completeness)))
     verified_pct = int(round(vcount / total * 100)) if total else 0
-    # (regex, replacement, human name) — each anchored on its label text.
-    subs = [
-        (r'(data-to=")\d+("[^>]*>0</div><div class="l">ledger rows)', vcount, "ledger rows stat"),
-        (r'(data-to=")\d+("[^>]*data-pre="~">0</div><div class="l">distinct results)', distinct, "distinct-results stat"),
-        (r'(<b class="mono" data-to=")\d+(")', distinct, "distinct-verified callout"),
-        (r'(Kernel-verified results</span><b data-to=")\d+(")', vcount, "kernel-verified bar"),
+    # (regex, target, visible fallback, human name) — each anchored on its label.
+    counters = [
+        (r'(data-to=")\d+("[^>]*>)[^<]*(</div><div class="l">ledger rows)',
+         vcount, str(vcount), "ledger rows stat"),
+        (r'(data-to=")\d+("[^>]*data-pre="~">)[^<]*(</div><div class="l">distinct results)',
+         distinct, f"~{distinct}", "distinct-results stat"),
+        (r'(<b class="mono" data-to=")\d+("[^>]*>)[^<]*(</b>)',
+         distinct, f"~{distinct}", "distinct-verified callout"),
+        (r'(Kernel-verified results</span><b data-to=")\d+("[^>]*>)[^<]*(</b>)',
+         vcount, str(vcount), "kernel-verified bar"),
+        (r'(Frontier mapped &amp; classified</span><b data-to=")\d+("[^>]*data-suf="%"[^>]*>)[^<]*(</b>)',
+         comp, f"{comp}%", "frontier-mapped bar"),
+    ]
+    for pat, target, visible, name in counters:
+        html, n = re.subn(
+            pat,
+            lambda m, t=target, v=visible: f"{m.group(1)}{t}{m.group(2)}{v}{m.group(3)}",
+            html,
+            flags=re.S,
+        )
+        if n == 0:
+            print(f"  warn: index.html counter '{name}' not found — layout may have drifted")
+
+    widths = [
         (r'(<div class="fill g" data-w=")\d+(")', verified_pct, "kernel-verified bar width"),
-        (r'(Frontier mapped &amp; classified</span><b data-to=")\d+("[^>]*data-suf="%")', comp, "frontier-mapped bar"),
         (r'(Frontier mapped &amp; classified</span>.*?<div class="fill" data-w=")\d+(")', comp, "frontier bar width"),
     ]
-    for pat, val, name in subs:
+    for pat, val, name in widths:
         html, n = re.subn(pat, lambda m, v=val: f"{m.group(1)}{v}{m.group(2)}", html, flags=re.S)
         if n == 0:
             print(f"  warn: index.html counter '{name}' not found — layout may have drifted")
@@ -531,7 +548,7 @@ def main() -> int:
     nav_html = build_nav_html()
 
     # ---- Research OS pipeline: every counter pulled live from its source artifact ----
-    n_hyp = count_lines_matching(HYPOTHESES, r"^  - id:")
+    n_hyp = count_lines_matching(HYPOTHESES, r'^    status: "active"\s*$')
     n_tasks = count_lines_matching(TASKS, r"^### TASK-")
     n_units = count_lines_matching(PUB_UNITS, r"^## Unit ")
     n_theorems = int(graph.get("counts", {}).get("theorems") or len(graph.get("theorems", [])))
@@ -544,7 +561,7 @@ def main() -> int:
          "role": f"each claim given a status — {status.get('verified',0)} verified, "
                  f"{status.get('tractable',0)} tractable, {n_blocked} blocked",
          "src": "data/frontier_map.json", "href": "#frontier"},
-        {"layer": "Hypotheses", "value": n_hyp, "unit": "open",
+        {"layer": "Hypotheses", "value": n_hyp, "unit": "active",
          "role": "testable directions with evidence and exit criteria",
          "src": "experiments/HYPOTHESES.yaml", "href": f"{BLOB}/experiments/HYPOTHESES.yaml"},
         {"layer": "Tasks", "value": n_tasks, "unit": "active",

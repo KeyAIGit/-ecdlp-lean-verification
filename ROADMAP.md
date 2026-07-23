@@ -12,7 +12,8 @@
 A whole-repository audit (2026-07, three independent inventory passes + gate runs +
 CI history) found a project whose **object layer is stronger than its meta layer**:
 
-- **Real and durable:** the Lean library. ~110 proved modules, 0 `sorry`, 0 custom
+- **Real and durable:** the Lean library. The current module count is generated in
+  `STATUS.md`; the built surface has 0 `sorry` and 0 custom
   axioms, machine-enforced. Several results are first-in-Lean and externally
   valuable: the Semaev summation polynomials `S₃`/`S₄`, the division-polynomial /
   torsion-disjointness ladder, machine-checked Pratt certificates for `p`/`n`, the

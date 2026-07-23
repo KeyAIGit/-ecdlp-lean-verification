@@ -1,4 +1,4 @@
-version: 1
+version: 2
 status: accepted
 scope: whole_repository
 origin_branch: codex/research-os-truth-layer   # reviewed and merged to main; historical reference
@@ -6,6 +6,8 @@ purpose: >
   Classify repository artifacts by ownership and edit policy. Accepted and now
   partially enforced: `scripts/check_repo_artifacts.py` (a CI gate) checks the
   path classes and referenced files below stay consistent.
+  Every repository file must match at least one class; overlaps require an
+  explicit entry in allowed_overlap_paths.
 
 principles:
   - lean_kernel_is_the_proof_authority
@@ -59,6 +61,8 @@ classes:
       - data/corpus_triage.json
       - data/corpus_reclassify.json
       - data/claim_traceability.jsonl
+      - data/attack_registry.json
+      - data/research_decisions.md
       - data/README.md
     owner: frontier
     hand_edit: mixed
@@ -102,6 +106,7 @@ classes:
       - bundles/MANIFEST.json
       - data/result_registry.json
       - data/source_registry.json
+      - Ecdlp/LedgerAxiomAudit.lean
     owner: generators
     hand_edit: false
     generated: true
@@ -115,6 +120,7 @@ classes:
       - scripts/export_agent_bundle.py
       - scripts/gen_result_registry.py
       - scripts/gen_source_registry.py
+      - scripts/gen_axiom_audit.py
     gates:
       - scripts/check_status_consistency.py
       - scripts/check_counts.py
@@ -129,6 +135,7 @@ classes:
     paths:
       - index.html
       - dashboard.html
+      - explore.html
       - assets/
       - fonts/
       - CNAME
@@ -147,20 +154,25 @@ classes:
     paths:
       - AGENTS.md
       - CLAUDE.md
+      - AUTONOMY.md
+      - README.md
       - ROADMAP.md
       - tasks/NEXT.md
       - experiments/HYPOTHESES.yaml
       - REPOSITORY_ARCHITECTURE.md
       - repo/ARTIFACTS.yaml
       - repo/CLEANUP_PLAN.md
-      - domains/registry.json
-      - domains/README.md
+      - repo/FORMAL_SUBSTRATE.json
+      - repo/AUTOMATION_INVENTORY.json
+      - bundles/README.md
+      - domains/
     owner: operations
     hand_edit: true
     generated: false
     gates:
       - scripts/check_status_consistency.py
       - scripts/check_repo_artifacts.py
+      - scripts/check_automation_inventory.py
       - scripts/check_domains.py
       - adversarial Claude review
     risks:
@@ -173,6 +185,7 @@ classes:
       - scripts/
       - prompts/
       - requirements.txt
+      - .gitignore
     owner: automation
     hand_edit: true
     generated: false
@@ -188,6 +201,7 @@ classes:
     description: Durable research memory and publication planning.
     paths:
       - notes/*.md
+      - notes/reviews/
       - docs/
       - PUBLISHABLE_UNITS.md
       - SETUP.md
@@ -220,13 +234,33 @@ classes:
       - Archived prose can contain stale claims; nothing may cite it as current
         except with an explicit archive/ path.
 
+  reproducible_experiments:
+    description: Reproducible but non-kernel experimental code, manifests, and measured results.
+    paths:
+      - experiments/
+    owner: experiments
+    hand_edit: true
+    generated: mixed
+    gates:
+      - experiment-specific validation scripts
+      - hypotheses must authorize active work
+    risks:
+      - Measurements are evidence, never proofs or verified ECDLP claims.
+
+allowed_overlap_paths:
+  - dashboard.html
+  - Ecdlp/LedgerAxiomAudit.lean
+  - experiments/HYPOTHESES.yaml
+  - notes/SECURITY_SCOPE.md
+
 cleanup_candidates:
-  - path: dashboard.html
-    proposed_action: make_generator_and_encoding_path_robust
-    priority: medium
+  - path: archive/
+    proposed_action: review_retention_after_final_adversarial_review
+    priority: low
     reason: >
-      Public surface is important, but generated dashboard updates can create
-      drift if local generator behavior differs by environment.
+      Archived material is excluded from the canonical truth surface. Retain it
+      through the final review, then remove only entries whose provenance and
+      replacement are both documented.
     delete_now: false
 
 # Executed 2026-07 (ROADMAP.md §4, tranche 1): notes/ward/ -> archive/ward/,
@@ -234,15 +268,15 @@ cleanup_candidates:
 # platform/ -> archive/platform/ (platform-ci.yml retired), and the superseded
 # strategy/review docs -> archive/docs/.
 
-follow_up_prs:
-  - id: repo-manifest-schema-hardening
-    goal: Expand scripts/check_repo_artifacts.py beyond path existence into a stricter schema gate.
+deferred_actions:
+  - id: archive-retention-review
+    goal: Decide archive retention only after the final adversarial review; do not delete during substrate normalization.
   - id: v01-tag
-    goal: Tag v0.1 on main once the consolidation PR merges and the gate battery is green there (tranche 2 executed in that PR).
+    goal: Tag v0.1 only after the reviewed integration PR merges and the full gate battery is green on main.
 
 review_questions:
   - Which paths are misclassified?
   - Which cleanup candidates are actually still active?
   - Which generated artifacts lack a reliable generator or check?
   - Which public docs still duplicate canonical counts or stale workflow names?
-  - Which single follow-up PR would reduce the most future drift?
+  - Which deferred action would reduce the most future drift without erasing evidence?

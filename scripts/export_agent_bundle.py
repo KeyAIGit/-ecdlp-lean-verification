@@ -81,6 +81,12 @@ The files below are inlined in full, in load order for this tier.
 """
 
 
+def _logical_text_bytes(path: Path) -> int:
+    """Return the repository (LF-normalized UTF-8) size of a text artifact."""
+    text = path.read_text(encoding="utf-8")
+    return len(text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8"))
+
+
 def _entries(tier: str) -> list[dict]:
     out = []
     for path, reason in TIERS[tier]:
@@ -90,7 +96,7 @@ def _entries(tier: str) -> list[dict]:
             "path": path,
             "reason": reason,
             "exists": exists,
-            "bytes": (p.stat().st_size if exists else 0),
+            "bytes": (_logical_text_bytes(p) if exists else 0),
         })
     return out
 

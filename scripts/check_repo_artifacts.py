@@ -16,7 +16,10 @@ see from the normal entry points.
 from __future__ import annotations
 
 import re
+import shutil
+import subprocess
 import sys
+from pathlib import PurePosixPath
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -43,13 +46,15 @@ def normalize_item(raw: str) -> str:
     return value
 
 
-def parse_manifest(text: str) -> tuple[dict[str, ArtifactClass], list[str]]:
+def parse_manifest(text: str) -> tuple[dict[str, ArtifactClass], list[str], list[str]]:
     classes: dict[str, ArtifactClass] = {}
     cleanup_paths: list[str] = []
+    allowed_overlaps: list[str] = []
 
     in_classes = False
     current_class: ArtifactClass | None = None
     current_list: str | None = None
+    top_list: str | None = None
 
     for line in text.splitlines():
         if line.startswith("classes:"):
@@ -57,6 +62,15 @@ def parse_manifest(text: str) -> tuple[dict[str, ArtifactClass], list[str]]:
             current_class = None
             current_list = None
             continue
+
+        if line.startswith("allowed_overlap_paths:"):
+            top_list = "allowed_overlap_paths"
+            continue
+        if line.startswith("cleanup_candidates:"):
+            top_list = "cleanup_candidates"
+            continue
+        if line and not line.startswith(" "):
+            top_list = None
 
         if line and not line.startswith(" ") and not line.startswith("-"):
             in_classes = False
@@ -83,11 +97,15 @@ def parse_manifest(text: str) -> tuple[dict[str, ArtifactClass], list[str]]:
                 getattr(current_class, current_list).append(item)
                 continue
 
+        overlap_match = re.match(r"^  - (.+)$", line)
+        if overlap_match and top_list == "allowed_overlap_paths":
+            allowed_overlaps.append(normalize_item(overlap_match.group(1)))
+
         cleanup_match = re.match(r"^  - path: (.+)$", line)
-        if cleanup_match:
+        if cleanup_match and top_list == "cleanup_candidates":
             cleanup_paths.append(normalize_item(cleanup_match.group(1)))
 
-    return classes, cleanup_paths
+    return classes, cleanup_paths, allowed_overlaps
 
 
 def is_safe_relative_path(pattern: str) -> bool:
@@ -109,6 +127,30 @@ def matches(pattern: str) -> list[Path]:
     return [candidate] if candidate.exists() else []
 
 
+def pattern_matches_file(pattern: str, path: str) -> bool:
+    if pattern.endswith("/"):
+        return path.startswith(pattern)
+    if any(ch in pattern for ch in "*?[]"):
+        return PurePosixPath(path).match(pattern)
+    return path == pattern
+
+
+def repository_files() -> list[str]:
+    git = shutil.which("git")
+    if not git:
+        runtime_root = Path.home() / ".cache" / "codex-runtimes"
+        git = next((str(path) for path in runtime_root.rglob("git.exe")), None)
+    if not git:
+        raise RuntimeError("git executable not found; cannot classify tracked files")
+    command = [
+        git, "ls-files", "--cached", "--others", "--exclude-standard",
+    ]
+    result = subprocess.run(
+        command, cwd=ROOT, check=True, text=True, capture_output=True, encoding="utf-8"
+    )
+    return sorted(line for line in result.stdout.splitlines() if line)
+
+
 def require_contains(path: str, needles: list[str], errors: list[str]) -> None:
     text = (ROOT / path).read_text(encoding="utf-8")
     for needle in needles:
@@ -124,7 +166,9 @@ def main() -> int:
         print("- repo/ARTIFACTS.yaml is missing")
         return 1
 
-    classes, cleanup_paths = parse_manifest(MANIFEST.read_text(encoding="utf-8"))
+    classes, cleanup_paths, allowed_overlaps = parse_manifest(
+        MANIFEST.read_text(encoding="utf-8")
+    )
 
     if not classes:
         errors.append("repo/ARTIFACTS.yaml: no classes parsed")
@@ -175,6 +219,29 @@ def main() -> int:
         if not matches(pattern):
             errors.append(f"cleanup_candidates: path does not exist: {pattern}")
 
+    files = repository_files()
+    classifications: dict[str, list[str]] = {}
+    for path in files:
+        classifications[path] = [
+            class_name
+            for class_name, artifact_class in classes.items()
+            if any(pattern_matches_file(pattern, path) for pattern in artifact_class.paths)
+        ]
+    unclassified = [path for path, owners in classifications.items() if not owners]
+    overlaps = {
+        path: owners for path, owners in classifications.items()
+        if len(owners) > 1 and path not in allowed_overlaps
+    }
+    for path in unclassified:
+        errors.append(f"unclassified tracked file: {path}")
+    for path, owners in overlaps.items():
+        errors.append(f"unapproved class overlap: {path} -> {', '.join(owners)}")
+    for path in allowed_overlaps:
+        if path not in classifications:
+            errors.append(f"allowed overlap path is not tracked: {path}")
+        elif len(classifications[path]) < 2:
+            errors.append(f"allowed overlap path no longer overlaps classes: {path}")
+
     require_contains(
         "README.md",
         ["REPOSITORY_ARCHITECTURE.md", "repo/ARTIFACTS.yaml"],
@@ -187,7 +254,7 @@ def main() -> int:
     )
     require_contains(
         "tasks/NEXT.md",
-        ["REPOSITORY_ARCHITECTURE.md", "repo/CLEANUP_PLAN.md"],
+        ["repo/FORMAL_SUBSTRATE.json", "repo/ARTIFACTS.yaml"],
         errors,
     )
     require_contains(
@@ -222,6 +289,7 @@ def main() -> int:
     print(
         "repo artifact check OK: "
         f"{len(classes)} classes, {len(cleanup_paths)} cleanup candidates, "
+        f"{len(files)} repository files exhaustively classified, "
         f"{checked_paths} path entries"
     )
     return 0

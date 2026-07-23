@@ -6,6 +6,13 @@ what is true, why there is no blind shortcut, and the turnkey structure for comp
 Lean-*running* certificate generator (polyrith+solver / a prover-loop drafter / local Lean) is
 available. All facts below are machine-checked (sympy scripts in the session scratchpad).
 
+> **Reproducibility boundary (2026-07-22 audit):** the committed
+> `scripts/certs/division_doubling_secp.py` reproduces the even doubling identities
+> through `k=8` and prints `CERT_OK`. The broader scratch scripts named below
+> (`ground_truth.py`, `allsteps.py`, `odd_wall_verify.py`) were not committed.
+> Their results are supporting history, not release-gated evidence. The canonical
+> disposition is `notes/N7_UNIFORM_BLOCKER.md`.
+
 ## The two identities (secp256k1, `y²=x³+7`; univariate in `ℤ[X]`, all `k:ℤ`)
 
     (I1)  ΨSq(2k) = 4·ΨSq(k)·(Φ(k)³ + 7·ΨSq(k)³)
