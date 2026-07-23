@@ -1,0 +1,30 @@
+name: Corpus manifest check
+
+on:
+  pull_request:
+    paths:
+      - 'domains/**/corpus_manifest.json'
+      - 'domains/corpus_manifest.schema.json'
+      - 'domains/registry.json'
+      - 'scripts/check_corpus_manifest.py'
+      - '.github/workflows/corpus-manifest-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'domains/**/corpus_manifest.json'
+      - 'domains/corpus_manifest.schema.json'
+      - 'domains/registry.json'
+      - 'scripts/check_corpus_manifest.py'
+      - '.github/workflows/corpus-manifest-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate registered corpus manifests
+        run: python3 scripts/check_corpus_manifest.py
