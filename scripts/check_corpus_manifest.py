@@ -76,6 +76,28 @@ def validate_delta_source(tag: str, src: dict) -> list[str]:
             errors.append(f"{prefix}: missing primary must use secondary_dossier_only")
         if src.get("claim_extraction_status") != "blocked_missing_primary":
             errors.append(f"{prefix}: missing primary must remain blocked_missing_primary")
+    discrepancy = src.get("version_discrepancy")
+    if discrepancy is not None:
+        if not isinstance(discrepancy, dict):
+            errors.append(f"{prefix}: version_discrepancy must be an object")
+        else:
+            preferred = discrepancy.get("preferred_version")
+            observed = discrepancy.get("observed_versions")
+            if not isinstance(preferred, str) or not preferred:
+                errors.append(f"{prefix}: version_discrepancy requires preferred_version")
+            if not isinstance(observed, list) or len(observed) < 2:
+                errors.append(f"{prefix}: version_discrepancy requires at least two observed_versions")
+            else:
+                version_ids = [item.get("id") for item in observed if isinstance(item, dict)]
+                if len(version_ids) != len(observed) or any(not isinstance(x, str) or not x for x in version_ids):
+                    errors.append(f"{prefix}: every observed version requires a non-empty id")
+                elif len(version_ids) != len(set(version_ids)):
+                    errors.append(f"{prefix}: duplicate observed version id")
+                elif preferred not in version_ids:
+                    errors.append(f"{prefix}: preferred_version is not one of observed_versions")
+                roles = [item.get("role") for item in observed if isinstance(item, dict)]
+                if "current_corrected_numeric_source" not in roles:
+                    errors.append(f"{prefix}: version_discrepancy lacks a current_corrected_numeric_source")
     return errors
 
 
