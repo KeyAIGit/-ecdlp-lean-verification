@@ -38,6 +38,8 @@ _SMALL = [
     ("STATUS.md", "canonical live snapshot — counts, active goal, bottleneck; wins over prose"),
     ("repo/ECDLP_DECISION_SUBSTRATE.json",
      "exact target, route dispositions, evidence gates, and foundation priority"),
+    ("repo/PRODUCT_MODEL.json",
+     "product category, current-vs-future boundary, public claims, and MVP evidence gate"),
     ("tasks/NEXT.md", "the 3-7 active task contracts with exit criteria — where to start"),
     ("data/stats.json", "machine-readable headline counts (ledger rows / distinct / modules)"),
     ("data/frontier_map.json", "per-claim frontier status: verified / tractable / blocked / informal"),
@@ -69,14 +71,16 @@ MANIFEST_PATH = "bundles/MANIFEST.json"
 HEADER = """\
 # KeyAI Research OS — agent context bundle ({tier} tier)
 
-You are working on the KeyAI machine-verifiable Research OS (Lean 4 + Mathlib), whose first
-use case is secp256k1 / ECDLP. The Lean kernel is the only judge of correctness: a green
-build means every listed theorem is fully proved, with no `sorry` and no custom axioms. This
-is a **verified research asset**, not an attempt to break secp256k1.
+You are working on KeyAI, a verification workspace for AI research. Its public reference
+deployment is a Lean 4 + Mathlib environment for secp256k1 / ECDLP. The Lean kernel is the
+only judge of proof acceptance: a green build means every listed theorem is fully proved,
+with no `sorry` and no custom axioms. This is a **verified research asset**, not an attempt
+to break secp256k1 or a claim that the hosted product is complete.
 
 Ground rules:
 - `STATUS.md` is the canonical live snapshot. If prose anywhere conflicts with it, STATUS wins.
 - `repo/ECDLP_DECISION_SUBSTRATE.json` owns route applicability and foundation priority.
+- `repo/PRODUCT_MODEL.json` owns product rhetoric, current capability, and MVP boundaries.
 - Never weaken a proof, add a `sorry`/`admit`, or add an axiom to make anything pass.
 - Pick work from `tasks/NEXT.md`; each task has explicit exit criteria.
 

@@ -10,8 +10,9 @@ non-barrier-blocked theorems, each as a full prompt (name + NL + Lean signature 
 + proof hint) in the exact schema `agent_day.py` consumes.
 
 Output: merges proposals into `targets/queue.json`. Safe by construction — proposals are
-only *attempted* downstream; the Lean kernel + CI decide truth and a human merges the
-draft PR. Budget: one model call, hard-capped (`DISCOVER_BUDGET_USD`, default $1.50).
+only *attempted* downstream; the Lean kernel + CI decide acceptance and a delegated maintainer
+decides whether to merge the draft PR. Budget: one model call, hard-capped
+(`DISCOVER_BUDGET_USD`, default $1.50).
 
 Usage:
     python3 scripts/autonomous_discover.py            # calls the model, writes queue.json

@@ -78,6 +78,9 @@ jobs:
       - name: Check Research OS consistency
         run: python3 scripts/check_status_consistency.py
 
+      - name: Check product model and public-claim boundary
+        run: python3 scripts/check_product_model.py
+
       - name: Check formal-substrate architecture
         run: python3 scripts/check_formal_substrate.py
 

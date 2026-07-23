@@ -33,7 +33,7 @@ Be fair: the pipeline is not naive. The following gates exist on `main` today (w
 - Count/status/drift gates: `check_counts.py`, `check_status_consistency.py`, `check_semantic_drift.py`.
 
 **In the workflow (`prove.yml`):**
-- Promotion lands on the `prover/candidates` branch via a PR; `main` is never pushed directly; a human merges. The scheduled cron was removed for security (untrusted `native_decide` execution with live secrets).
+- Promotion lands on the `prover/candidates` branch via a PR; `main` is never pushed directly. A delegated maintainer merges only after reviewing the independent gates. The scheduled cron was removed for security (untrusted `native_decide` execution with live secrets).
 
 **What is genuinely missing** is the *binding*: nothing verifies that the file sitting in `candidates/<id>.lean` at promotion time (a) is the file the loop verified *in this run*, (b) states the registered target, and (c) contains nothing beyond the one expected declaration. The promoter trusts the filename and `DECL_RE.search(text)` — the first regex match. Everything below exists to replace that trust with evidence.
 
@@ -228,7 +228,7 @@ Total: roughly 4–7 working days spread over independently reviewable PRs. M0 s
 ## 5. Deliberately out of scope
 
 - **Sandboxing untrusted `native_decide` execution.** The loop still elaborates model-generated Lean, which can execute code via `native_decide`. That is the runner-isolation problem tracked in `notes/EXECUTION_SECURITY.md` (secret-free, network-off, ephemeral sandbox) and is why the cron stays removed. This gate assumes the *content* may be adversarial but the *runner compromise* threat is handled elsewhere; the manifest's run-binding reduces, but does not eliminate, that surface.
-- **Auto-merge or reviving scheduled runs.** A human merges every promotion PR; nothing here changes that.
+- **Auto-merge or reviving scheduled runs.** Promotion output always requires a delegated maintainer decision; nothing here enables auto-merge.
 - **`Expr`-level normalized signatures in the registry.** Rejected above (§3.1): source hash + in-environment defeq check achieves the binding at a fraction of the complexity of serializing elaborated terms. Revisit only if F4's normalization proves too brittle in practice.
 - **Redesigning `queue.json` / `agent_day.py` scheduling.** The queue keeps its schema; only its interaction with the new statuses is touched (M5).
 - **Reclassifying any promoted result as headline.** The gate makes promoter-side inflation impossible; the *policy* for when a coverage result may become headline remains a human decision recorded as a reviewed diff to `data/promotions.json`.

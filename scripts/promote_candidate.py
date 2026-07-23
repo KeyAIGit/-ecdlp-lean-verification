@@ -17,7 +17,7 @@ instead of a raw candidate for a human to wire by hand:
 
 HARD RULES (this script only MOVES kernel-accepted proofs; it never proves or weakens anything):
   * `main` is never touched — only the working tree is edited; `prove.yml` commits the result
-    onto the `prover/candidates` PR branch and a human merges. Nothing auto-merges.
+    onto the `prover/candidates` PR branch. A delegated maintainer reviews it; nothing auto-merges.
   * A candidate is promoted ONLY if it declares a NAMED `theorem`/`lemma`/`def`/`instance`
     and contains no `sorry`/`admit`. An anonymous `example` is verification-only and SKIPPED
     (e.g. the smoke target), as is anything with a leaked obligation.

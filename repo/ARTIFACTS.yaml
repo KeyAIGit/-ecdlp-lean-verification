@@ -15,6 +15,7 @@ principles:
   - generated_artifacts_should_be_changed_through_generators
   - cleanup_is_classify_then_review_then_move_or_delete
   - public_claims_must_preserve_trust_boundaries
+  - product_claims_and_mvp_boundaries_are_canonical
 
 classes:
   kernel_verified_surface:
@@ -102,7 +103,9 @@ classes:
       - data/knowledge_graph.json
       - data/knowledge_graph.md
       - COVERAGE.md
+      - index.html
       - dashboard.html
+      - explore.html
       - bundles/MANIFEST.json
       - data/result_registry.json
       - data/source_registry.json
@@ -118,6 +121,7 @@ classes:
       - scripts/build_knowledge_graph.py
       - scripts/coverage_report.py
       - scripts/build_dashboard.py
+      - scripts/site_generator.py
       - scripts/export_agent_bundle.py
       - scripts/gen_result_registry.py
       - scripts/gen_source_registry.py
@@ -130,6 +134,7 @@ classes:
       - scripts/export_agent_bundle.py --check
       - scripts/gen_result_registry.py --check
       - scripts/build_ecdlp_decision_view.py --check
+      - scripts/check_product_model.py
     risks:
       - Hand edits create invisible drift unless encoded in generators.
 
@@ -146,11 +151,13 @@ classes:
     hand_edit: mixed
     generated: mixed
     gates:
-      - dashboard regeneration
+      - public-site regeneration
       - status consistency check
+      - product model check
       - link/counter review
     risks:
       - Site counters can become stale while proofs remain correct.
+      - Product rhetoric can overstate reference-deployment capabilities or imply traction.
 
   research_os_control_plane:
     description: Files that orient low-context agents and hold active work.
@@ -167,6 +174,7 @@ classes:
       - repo/CLEANUP_PLAN.md
       - repo/FORMAL_SUBSTRATE.json
       - repo/ECDLP_DECISION_SUBSTRATE.json
+      - repo/PRODUCT_MODEL.json
       - repo/AUTOMATION_INVENTORY.json
       - repo/BRANCH_INVENTORY.json
       - repo/FINAL_REVIEW_PACKET.md
@@ -180,6 +188,7 @@ classes:
       - scripts/check_repo_artifacts.py
       - scripts/check_automation_inventory.py
       - scripts/check_ecdlp_decision_substrate.py
+      - scripts/check_product_model.py
       - scripts/check_domains.py
       - independent architecture review when available
     risks:
@@ -255,7 +264,9 @@ classes:
       - Measurements are evidence, never proofs or verified ECDLP claims.
 
 allowed_overlap_paths:
+  - index.html
   - dashboard.html
+  - explore.html
   - Ecdlp/LedgerAxiomAudit.lean
   - experiments/HYPOTHESES.yaml
   - notes/SECURITY_SCOPE.md

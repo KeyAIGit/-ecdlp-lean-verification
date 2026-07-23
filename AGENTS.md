@@ -1,4 +1,4 @@
-# AGENTS.md — orientation for any Claude instance (web or server)
+# AGENTS.md — orientation for any AI research agent
 
 Single source of truth for "what this is, what's done, what to run next". Read this
 together with `VERIFIED.md` (the proved-theorem ledger) and `BARRIERS.md` (what's
@@ -7,23 +7,24 @@ conventions: `CLAUDE.md`. **When an autonomous cycle is explicitly dispatched,
 `AUTONOMY.md` governs when to act alone vs. escalate** (merge authority is
 delegated but bounded; the kernel/CI remains the sole judge).
 For a small-context start, read `STATUS.md`, then
-`repo/ECDLP_DECISION_SUBSTRATE.json`, then `tasks/NEXT.md`; load
+`repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/PRODUCT_MODEL.json`, then
+`tasks/NEXT.md`; load
 `experiments/HYPOTHESES.yaml` when the task touches hypotheses, experiments,
 frontier interpretation, or publication planning. Before moving, deleting, or
 reclassifying files, read `REPOSITORY_ARCHITECTURE.md`, `repo/ARTIFACTS.yaml`,
 `repo/FORMAL_SUBSTRATE.json`, and `repo/ECDLP_DECISION_SUBSTRATE.json`.
-`repo/FINAL_REVIEW_PACKET.md` is the frozen review contract for draft PR #235,
-not the final packet for the current architecture branch. Neither review
-grants merge or branch-deletion authority.
+`repo/FINAL_REVIEW_PACKET.md` is the frozen historical review contract for
+draft PR #235. It does not govern current merge authority or product claims.
 
 ## What this project actually is (read this first)
-A **machine-checked formalization** of the mathematics of ECDLP / elliptic-curve
-discrete-log cryptography in **Lean 4 + Mathlib**. It is a verified knowledge and
-decision asset for investigating the exact secp256k1 problem. It contains no
+KeyAI is a **verification workspace for AI research**. This repository is its
+public reference deployment: a machine-checked formalization of ECDLP /
+elliptic-curve discrete-log cryptography in **Lean 4 + Mathlib**, plus a verified
+knowledge and decision layer for the exact secp256k1 problem. It contains no
 break and claims no shortcut: the best audited plain classical baseline remains
-roughly `2^128` work, and no validated subgeneric route is registered. The
-durable program is a verified EC/DL library plus a falsifiable evaluation layer
-for any future candidate.
+roughly `2^128` work, and no validated subgeneric route is registered. Product
+category, current capability, public rhetoric, and the MVP evidence threshold
+are canonical in `repo/PRODUCT_MODEL.json`.
 
 ## The one invariant
 Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorry`/
@@ -34,7 +35,8 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 - **Theorem count: see `STATUS.md` / `data/stats.json`** (canonical, live row & distinct
   count) — `0 `sorry`, no custom axioms (the axiom-audit gate enforces it; `native_decide`
   facts trust the compiler, see `TRUST_REPORT.md`). Do not hardcode a number here; it
-  drifts. Work happens on per-session dev branches; a human merges draft PRs to `main`.
+  drifts. Work happens on per-session branches; the delegated project operator
+  may merge clean PRs after required CI is green and rollback is documented.
 - Pillars: (1) Shoup/Nechaev generic-group `Ω(√p)` + BSGS/rho `O(√n)` ⇒ `Θ(√n)`,
   secp256k1 ≥128-bit **classical, generic** security (black-box model only, classical —
   not unconditional, and false against quantum/Shor; see `notes/SECURITY_SCOPE.md`); the
@@ -71,8 +73,8 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 `bundles/MANIFEST.json` is the routing table for three cumulative tiers (source of truth:
 `TIERS` in `scripts/export_agent_bundle.py`):
 - **small** — the live snapshot: `STATUS.md`,
-  `repo/ECDLP_DECISION_SUBSTRATE.json`, `tasks/NEXT.md`, `data/stats.json`,
-  `data/frontier_map.json`.
+  `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/PRODUCT_MODEL.json`,
+  `tasks/NEXT.md`, `data/stats.json`, `data/frontier_map.json`.
 - **medium** — adds `README.md`, this file, `VERIFIED.md`, `BARRIERS.md`,
   `notes/SECURITY_SCOPE.md`, `notes/FOUNDATIONS.md`, `experiments/HYPOTHESES.yaml`.
 - **large** — adds `data/knowledge_graph.json`, `REPOSITORY_ARCHITECTURE.md`,
@@ -100,6 +102,10 @@ local Mathlib source for exact API. 3. Push → CI (or local build). 4. On green
   names the smallest foundation needed for its next falsifiable decision.
 - `TASK-010` is a periodic independent adversarial audit. It remains parked
   until another qualified reviewer is available and is not a merge prerequisite.
+- `TASK-011` validates the first external product pilot. Do not claim users,
+  retention, or willingness to pay before this task records direct evidence.
+- `TASK-012` is blocked until that pilot defines the smallest configurable
+  intake and verifier-adapter contract.
 
 ## Prover-loop protocol (formerly AGENT.md)
 
@@ -110,7 +116,7 @@ budgets, reads Lean errors and chooses repair strategy. (2) *Prover models* — 
 Featherless tier (Pythagoras-4B → Goedel-32B → Kimina-8B escalation) is **dead from CI**
 (Cloudflare bot-block of GitHub runners, verified 2026-07-15; 0 proofs ever accepted) and
 may only work from the warm server; in practice proofs come from the zero-cost tactic
-ladder + human/Claude formalization. (3) *Verifier* — `lake build` / `lake env lean`;
+ladder + human/AI-assisted formalization. (3) *Verifier* — `lake build` / `lake env lean`;
 a theorem is accepted only if Lean verifies it with no `sorry`. (4) *Ledger* —
 `VERIFIED.md` records accepted claims; failed model attempts are failed searches, not
 failures of the theorem.
@@ -122,8 +128,8 @@ attempts keep failing, split the theorem instead of brute-forcing.
 
 **Promotion.** Candidate accepted by the kernel → human/assistant review (clean, not
 overfitted) → move into `Ecdlp/Proved/`, add the import to `Ecdlp.lean`, append a
-`VERIFIED.md` row, set the `targets/*.json` status to `verified` — via a **draft PR**;
-a human merges.
+`VERIFIED.md` row, set the `targets/*.json` status to `verified`, and open a
+scoped PR. Merge only after required CI is green and rollback is documented.
 
 **Layout invariant.** `Ecdlp/Proved/*` + top-level `Ecdlp/*.lean` are the built, gated
 proof base. `Ecdlp/Targets/*` are open stems (one `sorry` each) — never imported, never

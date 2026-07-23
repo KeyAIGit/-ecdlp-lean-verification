@@ -39,7 +39,7 @@ DISCOVER ──▶ PROVE ──▶ SURFACE
 
 3. **Surface** — the accepted nodes are opened as **one draft PR**. `main` is never touched;
    CI's own `lake build` + no-sorry + axiom-audit gates **re-verify each node independently**
-   on the PR before a human merges.
+   on the PR before a delegated maintainer decides whether to merge.
 
 ## Safety (why this can run unattended)
 

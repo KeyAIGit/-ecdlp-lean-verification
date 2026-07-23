@@ -113,6 +113,77 @@ Files that must be regenerated:
 How to verify:
 - rerun local and GitHub gates after the final finding-resolution pass
 
+### TASK-011 - Validate the external product pilot
+
+Status: active
+Kind: product | research | ops
+Hypothesis: `CH-001` and `CH-002` in `repo/PRODUCT_MODEL.json`
+Why it matters: The secp256k1 repository proves that the research-state loop can
+work in one owner-operated environment. It does not prove that another team has
+the same pain, can use the contracts, or will return. Product work should now
+reduce that uncertainty instead of adding speculative platform features.
+Inputs:
+- `repo/PRODUCT_MODEL.json`
+- the generated public workspace and route explorer
+- one candidate external Lean/formalization team or repository
+Expected output:
+- A dated pilot brief naming the user, existing workflow, failure points, and
+  narrow project boundary.
+- One observed onboarding session using the current reference environment.
+- A go/change/stop decision for `CH-001` and `CH-002`.
+Exit criteria:
+- A non-owner can identify current state, blockers, and next action in ten
+  minutes or less.
+- The user names a repeated workflow painful enough to test on a second project.
+- No customer, retention, or willingness-to-pay claim is published without
+  direct evidence.
+Files allowed to edit:
+- `repo/PRODUCT_MODEL.json`
+- product research notes linked from that model
+- public site generators and directly affected checks
+Files that must be regenerated:
+- `index.html`
+- `dashboard.html`
+- `explore.html`
+How to verify:
+- `python scripts/check_product_model.py`
+- `python scripts/build_dashboard.py`
+- `python scripts/check_status_consistency.py`
+- browser validation on desktop and mobile
+
+### TASK-012 - Build configurable intake after a pilot contract
+
+Status: blocked_on_external_pilot_contract
+Kind: product | data | ops
+Hypothesis: exactly one validated customer hypothesis from `TASK-011`
+Why it matters: A hosted or multi-project platform is justified only after a
+real team exposes the minimum adapter boundary. Building it earlier would
+replace evidence with architecture.
+Inputs:
+- a completed `TASK-011` pilot decision
+- one external repository/corpus with permission to use it
+- a minimal claim, evidence, task, and verifier-adapter contract
+Expected output:
+- Repository or corpus intake with a pinned source manifest.
+- A workspace generated without editing KeyAI's generator code.
+- One candidate run with captured verifier output, decision history, export,
+  and rollback.
+Exit criteria:
+- A non-owner completes the ingest -> structure -> decide -> execute -> verify
+  -> retain loop on the second project.
+- The implementation satisfies the MVP provenance, state-drift, and external
+  pilot metrics in `repo/PRODUCT_MODEL.json`.
+- Authentication, billing, and additional verifier adapters remain out of
+  scope unless the pilot requires them.
+Files allowed to edit:
+- only paths named by the future pilot implementation contract
+Files that must be regenerated:
+- every public, agent-facing, and machine-readable view affected by the adapter
+How to verify:
+- adapter-specific tests
+- product-model and repository gates
+- an observed end-to-end pilot run
+
 ## Task Contract Template
 
 ```md
@@ -120,7 +191,7 @@ How to verify:
 
 ID:
 Status:
-Kind: theorem | experiment | data | site | publication | ops | agent
+Kind: theorem | experiment | data | product | site | publication | research | review | ops | agent
 Hypothesis:
 Why it matters:
 Inputs:

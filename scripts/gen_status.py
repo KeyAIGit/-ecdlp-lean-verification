@@ -5,6 +5,7 @@ The single source of operational truth for any reader (human or AI, large or sma
 Every number here is pulled live from the machine sources, never hand-typed, so it cannot drift:
   - data/stats.json          (ledger_rows, distinct_results, proved_modules, sorry, axioms)
   - data/frontier_map.json   (corpus status_summary, completeness)
+  - repo/PRODUCT_MODEL.json  (product category, stage, capability boundary)
   - repo/ECDLP_DECISION_SUBSTRATE.json (phase, routes, foundation decisions)
 Other summary docs should link to STATUS.md rather than duplicate counts.
 
@@ -19,6 +20,7 @@ ROOT = Path(__file__).resolve().parent.parent
 STATS = ROOT / "data" / "stats.json"
 FM = ROOT / "data" / "frontier_map.json"
 DECISIONS = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
+PRODUCT = ROOT / "repo" / "PRODUCT_MODEL.json"
 OUT = ROOT / "STATUS.md"
 
 
@@ -26,6 +28,7 @@ def main() -> int:
     s = json.loads(STATS.read_text(encoding="utf-8"))
     fm = json.loads(FM.read_text(encoding="utf-8"))
     decisions = json.loads(DECISIONS.read_text(encoding="utf-8"))
+    product = json.loads(PRODUCT.read_text(encoding="utf-8"))
     ss = fm["status_summary"]
     meta = fm["meta"]
     total = meta.get("corpus_claims", sum(ss.values()))
@@ -34,6 +37,8 @@ def main() -> int:
     routes = decisions["routes"]
     foundations = decisions["foundations"]
     build_now = [item for item in foundations if item["build_now"]]
+    product_stage = product["current_stage"]
+    customer_hypotheses = product["customer_hypotheses"]
 
     def g(k, d=0):
         return s.get(k, d)
@@ -41,7 +46,8 @@ def main() -> int:
     md = f"""# STATUS — canonical snapshot
 
 > **Generated** by `scripts/gen_status.py` from `data/stats.json`,
-> `data/frontier_map.json`, and `repo/ECDLP_DECISION_SUBSTRATE.json`.
+> `data/frontier_map.json`, `repo/PRODUCT_MODEL.json`, and
+> `repo/ECDLP_DECISION_SUBSTRATE.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -54,6 +60,16 @@ def main() -> int:
 | custom axioms | **{g('custom_axioms')}** | axiom-audit gate |
 
 Toolchain: {g('toolchain', 'Lean 4 + Mathlib (see lakefile.toml)')}.
+
+## Product state
+- **Category:** {product['category']}.
+- **Current stage:** {product_stage['label']}. {product_stage['summary']}
+- **Reference deployment:** this secp256k1 repository demonstrates the research-state loop on one
+  difficult domain; it is evidence for the product design, not a claim of a hosted multi-project
+  product or an ECDLP break.
+- **MVP boundary:** {product['mvp']['definition']}
+- **Customer evidence:** {len(customer_hypotheses)} customer hypotheses are recorded and all are
+  currently unvalidated. The project is not YC-ready until the external-pilot loop is evidenced.
 
 ## Corpus coverage (the 486-claim map)
 The 486 corpus claims (`data/KG_CLAIM_FORMALIZATION_v1.csv`) are a *different* denominator from the
@@ -71,8 +87,9 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 | **total** | **{total}** | frontier completeness {meta.get('frontier_completeness_pct','?')}% |
 
 ## What is true right now (honest)
-- This is a **verified substrate** for ECDLP / secp256k1 research. It does **not** solve ECDLP on
-  secp256k1, and claims no shortcut.
+- KeyAI is a **verification workspace for AI research**. This repository is its public
+  **verified substrate** and reference deployment for ECDLP / secp256k1 research. It does **not**
+  solve ECDLP on secp256k1, and claims no shortcut.
 - The generic-group `Ω(√n)` bound (formalized here) constrains only **black-box** algorithms; it
   says nothing about non-generic attacks on this concrete curve, whose hardness is an **open
   conjecture**, not a theorem.
@@ -108,6 +125,10 @@ when new evidence satisfies a recorded reconsideration trigger and the proposal 
 The active queue is `tasks/NEXT.md`. Keep it short (3-7 task contracts) so a
 small-context agent can start work without rereading the whole repository.
 
+The product authority is `repo/PRODUCT_MODEL.json`; `scripts/check_product_model.py` enforces its
+claim boundary. Public surfaces must distinguish current capabilities, the reference deployment,
+customer hypotheses, and future product direction.
+
 The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view is generated.
 The candidate-neutral validation contract lives in `experiments/framework/`. Neither file
 authorizes an experiment by itself.
@@ -119,7 +140,8 @@ The drift gate is `scripts/check_status_consistency.py`. Run it whenever stats,
 frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 
 ## Where to go deeper
-`README.md` (the front door) · `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
+`README.md` (the front door) · `repo/PRODUCT_MODEL.json` (product and MVP authority) ·
+`repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
 `tasks/NEXT.md` (active queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
 standalone results) · `ROADMAP.md` (strategy & program) · `VERIFIED.md` (ledger) ·

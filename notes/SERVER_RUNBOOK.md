@@ -87,7 +87,7 @@ step — mirror `.github/workflows/prove.yml` Stage B. Keep a human in the merge
 
 - The server **finds** proofs fast (warm `lake env lean`).
 - Candidates → a branch → a **draft PR** → CI re-verifies with the no-`sorry` gate →
-  a human merges. The trust boundary is unchanged; the server only accelerates
+  a delegated maintainer reviews and merges. The trust boundary is unchanged; the server only accelerates
   search. The kernel remains the only judge.
 
 ## 6. GitHub Actions → server bridge (automation)

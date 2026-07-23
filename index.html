@@ -1,393 +1,246 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KeyAI — a formal research OS for arithmetic geometry</title>
-<meta name="description" content="KeyAI is building the verified substrate for machine-driven mathematical discovery — an autonomous proof engine on a foundation the Lean kernel certifies line by line.">
-<meta property="og:title" content="KeyAI — where machines discover mathematics, and prove every step">
-<meta property="og:description" content="The verified substrate for a new era of mathematical discovery. Autonomous proof engine, Lean-kernel-certified, zero unproven steps.">
-<meta property="og:image" content="assets/logo-wordmark.png">
-<meta name="theme-color" content="#001a3f">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<style>
-  @font-face{font-family:"Baloo 2";font-style:normal;font-weight:500 800;font-display:swap;
-    src:url("fonts/Baloo2-Variable.woff2") format("woff2");}
-  @font-face{font-family:"Nunito";font-style:normal;font-weight:400 900;font-display:swap;
-    src:url("fonts/Nunito-Variable.woff2") format("woff2");}
-  :root{
-    --bg:#00122b; --bg2:#001a3f; --fg:#eaf1fb; --muted:#93a8c9; --line:#12315a;
-    --card:#04203f; --card2:#052c57; --navy:#001327; --blue:#1d85ff; --blue2:#7db0ff;
-    --blue-deep:#0f66d1; --good:#3fd08a; --warn:#fab219; --chip:#08294f;
-    --grad:linear-gradient(135deg,#1d85ff,#7db0ff);
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  body{margin:0;background:var(--bg);color:var(--fg);overflow-x:hidden;
-    font:16px/1.65 "Nunito",-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;}
-  h1,h2,h3,.brand{font-family:"Baloo 2","Nunito",sans-serif;letter-spacing:-.01em}
-  code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-  a{color:var(--blue2);text-decoration:none}a:hover{text-decoration:underline}
-  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
-
-  #prog{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;background:var(--grad);box-shadow:0 0 12px rgba(29,133,255,.7)}
-
-  nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:.35s;padding:16px 0;border-bottom:1px solid transparent}
-  nav.solid{background:rgba(0,18,43,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:11px 0}
-  nav .row{display:flex;align-items:center;justify-content:space-between}
-  nav img{height:24px;display:block}
-  nav .links a{color:var(--muted);font-size:14px;font-weight:700;margin-left:20px}
-  nav .links a:hover{color:var(--fg);text-decoration:none}
-  @media(max-width:560px){nav .links a{margin-left:13px;font-size:13px}}
-
-  .hero{position:relative;min-height:94vh;display:flex;align-items:center;overflow:hidden}
-  #cv{position:absolute;inset:0;width:100%;height:100%;display:block}
-  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(90deg,rgba(0,18,43,.92) 30%,rgba(0,18,43,.35) 60%,transparent 82%),
-      linear-gradient(180deg,rgba(0,18,43,.2),rgba(0,18,43,.85))}
-  .hero .wrap{position:relative;z-index:2;padding-top:64px;padding-bottom:40px}
-  .kicker{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--blue2);font-weight:800;border:1px solid var(--line);background:rgba(8,41,79,.6);padding:7px 13px;border-radius:999px}
-  .kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 10px var(--good);animation:pulse 2.4s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-  @keyframes introUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-  .hero .wrap>*{animation:introUp .85s cubic-bezier(.2,.7,.2,1) both}
-  .hero .wrap>h1{animation-delay:.14s}.hero .wrap>.lede{animation-delay:.28s}
-  .hero .wrap>.cta{animation-delay:.42s}.hero .wrap>.stats{animation-delay:.56s}
-  @media(prefers-reduced-motion:reduce){.hero .wrap>*{animation:none!important}}
-  h1.big{font-size:clamp(33px,6.4vw,64px);line-height:1.03;margin:.42em 0 .3em;font-weight:800;max-width:17ch}
-  h1.big .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .lede{font-size:clamp(17px,2.3vw,21px);color:#cdddf3;max-width:60ch;margin:0 0 30px}
-  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:34px}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:11px;font-weight:800;font-size:15px;border:1px solid var(--line);transition:.2s}
-  .btn.primary{background:var(--grad);color:#00122b;border-color:transparent;box-shadow:0 8px 30px rgba(29,133,255,.35)}
-  .btn.primary:hover{transform:translateY(-2px);text-decoration:none}
-  .btn.ghost{background:rgba(8,41,79,.5);color:var(--fg)}.btn.ghost:hover{border-color:var(--blue);text-decoration:none}
-
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:720px}
-  @media(max-width:620px){.stats{grid-template-columns:repeat(2,1fr)}}
-  .stat{background:rgba(4,32,63,.6);border:1px solid var(--line);border-radius:14px;padding:16px 16px;backdrop-filter:blur(3px)}
-  .stat .n{font-family:ui-monospace,Menlo,monospace;font-size:clamp(24px,4vw,34px);font-weight:700;color:#fff;line-height:1}
-  .stat .n.good{color:var(--good)}
-  .stat .l{font-size:12.5px;color:var(--muted);margin-top:6px}
-
-  section.blk{padding:72px 0;border-top:1px solid var(--line)}
-  .eyebrow{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);font-weight:800;margin-bottom:12px}
-  h2{font-size:clamp(24px,3.6vw,34px);margin:0 0 16px;font-weight:800;line-height:1.12}
-  .sub{color:var(--muted);max-width:64ch;margin:0 0 8px;font-size:16.5px}
-  p{margin:0 0 14px}
-  .grid{display:grid;gap:16px}
-  @media(min-width:640px){.grid.c2{grid-template-columns:1fr 1fr}.grid.c4{grid-template-columns:repeat(2,1fr)}}
-  @media(min-width:900px){.grid.c4{grid-template-columns:repeat(4,1fr)}}
-  .card{background:linear-gradient(180deg,var(--card),var(--navy));border:1px solid var(--line);border-radius:16px;padding:20px 22px;transition:.25s}
-  .card:hover{border-color:var(--blue-deep);transform:translateY(-3px)}
-  .card h3{font-size:18px;margin:0 0 7px;font-weight:700}
-  .card p{margin:0;color:var(--muted);font-size:14.5px}
-  .card .ic{width:38px;height:38px;border-radius:10px;background:var(--chip);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:12px;color:var(--blue2)}
-
-  .pipe{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin-top:8px}
-  .pstep{flex:1 1 150px;background:linear-gradient(180deg,var(--card),var(--navy));border:1px solid var(--line);border-radius:14px;padding:16px 16px;position:relative}
-  .pstep .k{font-family:ui-monospace,monospace;font-size:12px;color:var(--blue2);font-weight:700}
-  .pstep h4{margin:6px 0 4px;font-size:16px;font-family:"Baloo 2"}
-  .pstep p{font-size:13px;color:var(--muted);margin:0}
-  .pstep::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--blue);font-weight:800;z-index:3}
-  .pstep:last-child::after{display:none}
-  @media(max-width:720px){.pstep::after{content:"↓";right:auto;left:50%;top:auto;bottom:-15px;transform:translateX(-50%)}}
-
-  .viz{display:grid;gap:26px;align-items:center}
-  @media(min-width:720px){.viz{grid-template-columns:260px 1fr}}
-  .ring{position:relative;width:230px;height:230px;margin:0 auto}
-  .ring svg{transform:rotate(-90deg)}
-  .ring .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-  .ring .center b{font-family:ui-monospace,Menlo,monospace;font-size:40px;color:#fff;line-height:1}
-  .ring .center span{font-size:12.5px;color:var(--muted);margin-top:4px}
-  .bars{display:grid;gap:14px}
-  .bar .top{display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px}
-  .bar .top b{font-family:ui-monospace,monospace;color:#fff}
-  .bar .track{height:10px;border-radius:999px;background:var(--chip);overflow:hidden;border:1px solid var(--line)}
-  .bar .fill{height:100%;width:0;border-radius:999px;background:var(--grad);transition:width 1.3s cubic-bezier(.2,.7,.2,1)}
-  .bar .fill.g{background:linear-gradient(90deg,#3fd08a,#7de3b6)}
-  .bar .fill.m{background:linear-gradient(90deg,#5a76a8,#93a8c9)}
-  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;font-size:13px;color:var(--muted)}
-  .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;vertical-align:middle}
-
-  .tl{position:relative;margin-top:10px;padding-left:8px}
-  .tl::before{content:"";position:absolute;left:19px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--blue),var(--line))}
-  .tl .it{position:relative;padding:0 0 26px 56px}
-  .tl .it:last-child{padding-bottom:0}
-  .tl .it .num{position:absolute;left:0;top:-2px;width:40px;height:40px;border-radius:50%;background:var(--card);border:1px solid var(--blue-deep);
-    color:var(--blue2);font-weight:800;font-family:ui-monospace,monospace;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 0 0 6px var(--bg)}
-  .tl .it h3{margin:2px 0 5px;font-size:18px}
-  .tl .it p{margin:0;color:var(--muted);font-size:14.5px}
-  .tl .it .tag{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-top:8px;border:1px solid var(--line)}
-  .tag.now{color:var(--good);background:rgba(63,208,138,.12)}
-  .tag.next{color:var(--blue2);background:rgba(29,133,255,.12)}
-  .tag.far{color:var(--muted);background:var(--chip)}
-
-  .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
-  .rv.in{opacity:1;transform:none}
-  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}#prog{display:none}}
-
-  footer{padding:56px 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
-  footer .links{display:flex;flex-wrap:wrap;gap:20px;margin:6px 0 20px}
-  footer a{color:var(--fg);font-weight:700}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KeyAI | Verification workspace for AI research</title>
+  <meta name="description" content="KeyAI turns model-generated research into evidence-linked, machine-checked assets.">
+  <meta property="og:title" content="KeyAI | Verification workspace for AI research">
+  <meta property="og:description" content="KeyAI turns model-generated research into evidence-linked, machine-checked assets.">
+  <meta property="og:image" content="assets/logo-wordmark.png">
+  <meta name="theme-color" content="#f7f8f6">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/site.css?v=20260722-1">
 </head>
-<body>
-<div id="prog"></div>
-
-<nav id="nav"><div class="wrap row">
-  <img src="assets/logo-wordmark.png" alt="KeyAI">
-  <div class="links">
-    <a href="#engine">Engine</a>
-    <a href="#asset">Asset</a>
-    <a href="#roadmap">Roadmap</a>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification">GitHub</a>
-  </div>
-</div></nav>
-
-<header class="hero">
-  <canvas id="cv"></canvas>
-  <div class="wrap">
-    <div class="kicker"><span class="dot"></span> Formal research OS</div>
-    <h1 class="big">Where machines <span class="g">discover</span> mathematics — and prove every step.</h1>
-    <p class="lede">KeyAI is building the verified substrate for a new era of mathematical discovery:
-      an autonomous engine that proposes and proves, on a foundation the Lean kernel certifies line by
-      line — <b>zero</b> unproven steps. It begins at the frontier of elliptic-curve cryptography and
-      reaches toward the deepest open questions in number theory.</p>
-    <div class="cta">
-      <a class="btn primary" href="#asset">See what's already proven →</a>
-      <a class="btn ghost" href="dashboard.html">Explore the environment</a>
-    </div>
-    <div class="stats">
-      <div class="stat"><div class="n" data-to="296">296</div><div class="l">ledger rows</div></div>
-      <div class="stat"><div class="n" data-to="257" data-pre="~">~257</div><div class="l">distinct results</div></div>
-      <div class="stat"><div class="n good" data-to="0">0</div><div class="l">sorry / admit</div></div>
-      <div class="stat"><div class="n good" data-to="0">0</div><div class="l">custom axioms</div></div>
-    </div>
+<body data-page="product">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="shell site-header__inner">
+    <a class="brand-link" href="index.html" aria-label="KeyAI home">
+      <img src="assets/logo-wordmark.png" alt="KeyAI" width="116" height="44">
+    </a>
+    <nav class="primary-nav" aria-label="Primary navigation">
+      <a data-nav-page="product" href="index.html">Product</a>
+      <a data-nav-page="workspace" href="dashboard.html">Workspace</a>
+      <a data-nav-page="routes" href="explore.html">Route map</a>
+      <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/STATUS.md">Status</a>
+      <a class="nav-cta" href="https://github.com/KeyAIGit/-ecdlp-lean-verification">GitHub</a>
+    </nav>
   </div>
 </header>
-
-<section class="blk" id="what"><div class="wrap rv">
-  <div class="eyebrow">What it is</div>
-  <h2>A graph of theorems that are proved, not asserted.</h2>
-  <p class="sub">KeyAI turns a body of mathematics into a living, verified substrate — re-checkable
-    from source, pinned to an exact toolchain, navigable by machine. On top of it runs an engine
-    that proposes, proves, and promotes new results, with the kernel as the gate. Nothing enters the
-    base unless Lean accepts it with no <code>sorry</code> and no added axioms.</p>
-</div></section>
-
-<section class="blk" id="engine"><div class="wrap rv">
-  <div class="eyebrow">The engine</div>
-  <h2>Ideas in, truth out.</h2>
-  <p class="sub">A three-party harness separates <em>ideas</em> from <em>truth</em>: models decompose
-    and draft; a warm Lean toolchain verifies each candidate in seconds; only kernel-accepted results
-    are promoted. The generator only <em>proposes</em> — it never asserts a proof.</p>
-  <div class="pipe">
-    <div class="pstep"><div class="k">01</div><h4>Decompose</h4><p>Break a target into leaf lemmas; adversarially design proofs.</p></div>
-    <div class="pstep"><div class="k">02</div><h4>Prove</h4><p>Tactic ladder + models draft candidate proofs.</p></div>
-    <div class="pstep"><div class="k">03</div><h4>Verify</h4><p>The Lean kernel accepts or rejects — no appeal.</p></div>
-    <div class="pstep"><div class="k">04</div><h4>Promote</h4><p>Kernel-clean results enter the base via review.</p></div>
-  </div>
-</div></section>
-
-<section class="blk" id="asset"><div class="wrap rv">
-  <div class="eyebrow">The current asset — secp256k1 &amp; the ECDLP</div>
-  <h2>A verified corpus, honestly mapped.</h2>
-  <div class="viz" style="margin:18px 0 30px">
-    <div class="ring">
-      <svg width="230" height="230" viewBox="0 0 230 230">
-        <circle cx="115" cy="115" r="100" fill="none" stroke="var(--chip)" stroke-width="18"/>
-        <circle id="arc" cx="115" cy="115" r="100" fill="none" stroke="url(#gr)" stroke-width="18"
-          stroke-linecap="round" stroke-dasharray="628" stroke-dashoffset="628"/>
-        <defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#1d85ff"/><stop offset="1" stop-color="#7db0ff"/></linearGradient></defs>
-      </svg>
-      <div class="center"><b class="mono" data-to="257" data-pre="~">~257</b><span>distinct verified<br>of 486 corpus claims</span></div>
-    </div>
-    <div>
-      <div class="bars">
-        <div class="bar"><div class="top"><span>Kernel-verified results</span><b data-to="296">296</b></div>
-          <div class="track"><div class="fill g" data-w="61"></div></div></div>
-        <div class="bar"><div class="top"><span>Frontier mapped &amp; classified</span><b data-to="100" data-suf="%">100%</b></div>
-          <div class="track"><div class="fill" data-w="100"></div></div></div>
-        <div class="bar"><div class="top"><span>Corpus claims catalogued</span><b data-to="486">0</b></div>
-          <div class="track"><div class="fill m" data-w="100"></div></div></div>
-      </div>
-      <div class="legend">
-        <span><i style="background:#3fd08a"></i>Verified</span>
-        <span><i style="background:#1d85ff"></i>Mapped</span>
-        <span><i style="background:#5a76a8"></i>Corpus</span>
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <canvas class="hero__canvas" id="route-canvas" aria-hidden="true"></canvas>
+    <div class="shell hero__inner">
+      <div class="hero__copy">
+        <p class="eyebrow">verification workspace for AI research</p>
+        <h1 id="hero-title">The verification workspace for AI research.</h1>
+        <p class="hero__lede">KeyAI turns model-generated research into evidence-linked, machine-checked assets.
+          It keeps claims, evidence, decisions, verifier outcomes, and provenance in one inspectable state.</p>
+        <div class="actions">
+          <a class="button button--primary" href="dashboard.html">Open the reference workspace</a>
+          <a class="button" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/PRODUCT_MODEL.json">Inspect the product contract</a>
+        </div>
+        <p class="stage-note"><span class="status status--blue">Reference deployment</span>
+          <span>The repository demonstrates the full research-state loop on one difficult domain, but it is not yet a self-serve hosted product.</span></p>
       </div>
     </div>
-  </div>
-  <div class="grid c2">
-    <div class="card">
-      <h3>What is verified</h3>
-      <p>Arithmetic of the secp256k1 curve and generic-hardness statements for the elliptic-curve
-        discrete-log problem: primality of field and group order, torsion structure, the GLV
-        endomorphism, division-polynomial degrees and coprimality, Baby-step/Giant-step and
-        Pollard-ρ bounds, and more.</p>
+    <script type="application/json" id="route-visual-data">[{"id":"R-GENERIC-LOWER-BOUND","status":"guardrail"},{"id":"R-GENERIC-BASELINE","status":"baseline"},{"id":"R-GLV","status":"constant_factor_only"},{"id":"R-POHLIG-HELLMAN","status":"ruled_out_for_target"},{"id":"R-PAIRING-TRANSFER","status":"ruled_out_for_target"},{"id":"R-ANOMALOUS-PADIC","status":"ruled_out_for_target"},{"id":"R-WEIL-DESCENT","status":"ruled_out_for_target"},{"id":"R-PRIME-FIELD-INDEX-CALCULUS","status":"open_parked"},{"id":"R-GLV-SEMAEV","status":"open_parked"},{"id":"R-PETIT-COMPOSED-MAPS","status":"open_parked"},{"id":"R-EDS-DIVISION-POLYNOMIAL","status":"open_parked"},{"id":"R-ISOGENY-ENDOMORPHISM-TRANSFER","status":"monitor"},{"id":"R-MULTI-TARGET-PRECOMPUTATION","status":"conditional_only"},{"id":"R-INTERVAL-AUXILIARY-INPUT","status":"conditional_only"},{"id":"R-HNP-NONCE-LEAKAGE","status":"separate_threat_model"},{"id":"R-PROTOCOL-FAULT-SIDECHANNEL","status":"separate_threat_model"},{"id":"R-QUANTUM-SHOR","status":"separate_threat_model"}]</script>
+  </section>
+
+  <section class="live-band" aria-label="Live reference environment">
+    <div class="shell live-band__inner">
+      <div class="live-band__context">
+        <strong>Live reference: secp256k1 ECDLP</strong>
+        <span>The environment maps and verifies the research boundary. It does not solve the plain secp256k1 discrete logarithm problem.</span>
+      </div>
+      <div class="live-metric"><div class="live-metric__value" data-metric="ledger-rows">296</div>
+        <div class="live-metric__label">verified ledger rows</div></div>
+      <div class="live-metric"><div class="live-metric__value" data-metric="distinct-results">~257</div>
+        <div class="live-metric__label">distinct results</div></div>
+      <div class="live-metric"><div class="live-metric__value">17</div>
+        <div class="live-metric__label">routes evaluated</div></div>
+      <div class="live-metric"><div class="live-metric__value">0</div>
+        <div class="live-metric__label">routes selected</div></div>
     </div>
-    <div class="card">
-      <h3>Honest by construction</h3>
-      <p>This is <b>not</b> an attack. Discrete-log hardness (~2<sup>128</sup>) is unchanged; the
-        value is the verified asset and the reusable engine. Negative and no-go results are
-        first-class. We map the frontier honestly — the kernel forbids wishful thinking.</p>
+  </section>
+
+  <section class="band band--white" id="product">
+    <div class="shell split">
+      <div class="split__lead">
+        <p class="eyebrow">The missing layer</p>
+        <h2>AI can propose. KeyAI keeps the research state.</h2>
+        <p>Individual agents already write proofs and code. A long research program needs a durable answer
+          to a different question: what should the next agent trust, challenge, or stop doing?</p>
+      </div>
+      <div class="principle-list">
+        <article class="principle">
+          <span class="principle__number">01</span>
+          <div><h3>Before execution</h3><p>Bind each task to a source, exact scope, route, and falsifiable exit condition.</p></div>
+        </article>
+        <article class="principle">
+          <span class="principle__number">02</span>
+          <div><h3>At verification</h3><p>Record what the declared verifier accepted and what remains a semantic or empirical assumption.</p></div>
+        </article>
+        <article class="principle">
+          <span class="principle__number">03</span>
+          <div><h3>After the attempt</h3><p>Retain accepted results, negative evidence, stop conditions, and a reproducible rollback path.</p></div>
+        </article>
+      </div>
     </div>
+  </section>
+
+  <section class="band" id="workflow">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Product loop</p>
+        <h2>One state from source material to verified asset.</h2>
+        <p>The current repository implements this loop through machine-readable contracts. The next product
+          step is to make the same loop configurable for an external team.</p>
+      </div>
+      <div class="workflow"><article class="workflow__step">
+  <span class="workflow__index">01</span>
+  <h3>Ingest</h3>
+  <p>Pin the corpus, sources, target, and verifier contract.</p>
+</article><article class="workflow__step">
+  <span class="workflow__index">02</span>
+  <h3>Structure</h3>
+  <p>Convert material into claims, dependencies, barriers, and threat models.</p>
+</article><article class="workflow__step">
+  <span class="workflow__index">03</span>
+  <h3>Decide</h3>
+  <p>Select, park, or reject routes under explicit evidence gates.</p>
+</article><article class="workflow__step">
+  <span class="workflow__index">04</span>
+  <h3>Execute</h3>
+  <p>Give a human or model one bounded task with a falsifiable exit condition.</p>
+</article><article class="workflow__step">
+  <span class="workflow__index">05</span>
+  <h3>Verify</h3>
+  <p>Run the declared verifier and an independent result validator where needed.</p>
+</article><article class="workflow__step">
+  <span class="workflow__index">06</span>
+  <h3>Retain</h3>
+  <p>Promote accepted results and preserve negative evidence, provenance, and rollback.</p>
+</article></div>
+    </div>
+  </section>
+
+  <section class="band band--muted" id="reference">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Reference deployment</p>
+        <h2>A difficult research boundary, represented honestly.</h2>
+        <p>secp256k1 is the test case, not the product claim. It forces KeyAI to distinguish a theorem,
+          an experiment, a threat model, a failed route, and a practical attack.</p>
+      </div>
+      <div class="reference-grid">
+        <article class="surface decision-summary">
+          <div class="surface__head">
+            <div><h3>Current route decision</h3><p>RS-2026-07-22-001 · 2026-07-22</p></div>
+            <span class="status status--amber">Monitoring</span>
+          </div>
+          <div class="surface__body">
+            <div class="decision-summary__code">SELECT_NONE</div>
+            <h3>No current route clears the proposal gate.</h3>
+            <p>No audited route currently satisfies every proposal-level requirement for a new experiment against the primary plain single-target secp256k1 objective.</p>
+            <ul><li>The generic lower bound and generic algorithms are guardrails or baselines, not non-generic attack mechanisms.</li><li>GLV supplies a verified constant-factor structure; Pohlig-Hellman, low-degree pairing transfer, anomalous lifting, and extension-field descent fail target-specific applicability screens.</li><li>The open prime-field algebraic, GLV-Semaev, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge.</li></ul>
+            <p><a href="explore.html">Inspect all 17 route dispositions</a></p>
+          </div>
+        </article>
+        <aside class="surface">
+          <div class="surface__head"><div><h3>Trust snapshot</h3><p>Current generated repository state</p></div></div>
+          <div class="surface__body trust-list">
+            <div class="trust-row"><div><strong>Lean ledger</strong><span>296 rows / ~257 distinct</span></div><span class="status status--closed">Checked</span></div>
+            <div class="trust-row"><div><strong>Built proof surface</strong><span>164 proved modules</span></div><span class="status status--closed">0 sorry</span></div>
+            <div class="trust-row"><div><strong>Formal release map</strong><span>11 of 17 critical nodes closed</span></div><span class="status status--blue">Mapped</span></div>
+            <div class="trust-row"><div><strong>Corpus frontier</strong><span>486 claims classified</span></div><span class="status status--blue">100.0%</span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--white">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">What exists now</p>
+        <h2>Evidence, not a product demo made of placeholders.</h2>
+        <p>Each capability below links to a live artifact in the reference repository.</p>
+      </div>
+      <div class="evidence-grid"><article class="evidence-card">
+  <h3>Kernel-checked result ledger</h3>
+  <p>Inspectable in the reference repository and checked by the repository gates.</p>
+  <a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/VERIFIED.md">VERIFIED.md</a>
+</article><article class="evidence-card">
+  <h3>Evidence-gated route decisions</h3>
+  <p>Inspectable in the reference repository and checked by the repository gates.</p>
+  <a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ECDLP_DECISION_SUBSTRATE.json">repo/ECDLP_DECISION_SUBSTRATE.json</a>
+</article><article class="evidence-card">
+  <h3>Reproducible candidate and independent validation contract</h3>
+  <p>Inspectable in the reference repository and checked by the repository gates.</p>
+  <a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/experiments/framework/candidate_run.schema.json">experiments/framework/candidate_run.schema.json</a>
+</article><article class="evidence-card">
+  <h3>Tasks, hypotheses, graph, provenance, and generated views</h3>
+  <p>Inspectable in the reference repository and checked by the repository gates.</p>
+  <a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/NEXT.md">tasks/NEXT.md</a>
+</article></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="shell boundary-columns">
+      <div class="boundary-column">
+        <p class="eyebrow">Current capability</p>
+        <h3>Reference system</h3>
+        <ul class="check-list"><li>Kernel-checked result ledger</li><li>Evidence-gated route decisions</li><li>Reproducible candidate and independent validation contract</li><li>Tasks, hypotheses, graph, provenance, and generated views</li></ul>
+      </div>
+      <div class="boundary-column">
+        <p class="eyebrow">Not yet</p>
+        <h3>Hosted product</h3>
+        <ul class="check-list check-list--not"><li>Self-serve repository or corpus import</li><li>Hosted multi-project workspaces</li><li>Authentication, collaboration, and organization controls</li><li>A verifier adapter beyond the current repository contracts</li><li>Validated external users, retention, or willingness to pay</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band mvp-band" id="mvp">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">The next product milestone</p>
+        <h2>We will call it an MVP when another team can run the loop.</h2>
+        <p>A non-owner research team can connect a second project, obtain a trustworthy initial map, run one candidate through its verifier, and understand the resulting decision without editing KeyAI&#x27;s generator code. This is also the evidence threshold before a credible accelerator application.</p>
+      </div>
+      <div class="metric-lines"><div class="metric-line">
+  <span class="metric-line__id">orientation-time</span>
+  <p>A new collaborator identifies current state, blockers, and next action in 10 minutes or less.</p>
+</div><div class="metric-line">
+  <span class="metric-line__id">provenance-completeness</span>
+  <p>Every promoted result links to its source, task, verifier result, and trust boundary.</p>
+</div><div class="metric-line">
+  <span class="metric-line__id">state-drift</span>
+  <p>Zero stale generated or public artifacts after a canonical state change.</p>
+</div><div class="metric-line">
+  <span class="metric-line__id">external-pilot</span>
+  <p>At least one external team completes the core loop and returns for a second session.</p>
+</div></div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="shell site-footer__inner">
+    <img src="assets/logo-wordmark.png" alt="KeyAI" width="100" height="38">
+    <p>verification workspace for AI research. Current stage: Reference deployment.
+      Lean is the current exact verifier; product and customer claims remain evidence-gated.</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="dashboard.html">Reference workspace</a>
+      <a href="explore.html">Decision routes</a>
+      <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/PRODUCT_MODEL.json">Product model</a>
+      <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification">Repository</a>
+    </nav>
   </div>
-  <p style="margin-top:18px"><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/VERIFIED.md">Browse the full verification ledger →</a>
-    &nbsp;·&nbsp; <a href="dashboard.html">Open the environment dashboard →</a></p>
-</div></section>
-
-<section class="blk" id="roadmap"><div class="wrap rv">
-  <div class="eyebrow">Roadmap</div>
-  <h2>One engine, widening scope.</h2>
-  <div class="tl">
-    <div class="it"><div class="num">1</div><h3>secp256k1 / ECDLP</h3>
-      <p>The proving ground: a self-contained verified corpus and a working autonomous pipeline.</p>
-      <span class="tag now">Live</span></div>
-    <div class="it"><div class="num">2</div><h3>General elliptic-curve arithmetic → upstream Mathlib</h3>
-      <p>The same machinery produces reusable, curve-agnostic contributions — e.g. the open Mathlib
-        TODO on elliptic divisibility sequences — that benefit the whole library.</p>
-      <span class="tag next">In progress</span></div>
-    <div class="it"><div class="num">3</div><h3>BSD-adjacent infrastructure</h3>
-      <p>The north star: formalize the machinery around elliptic curves over ℚ — heights, ranks,
-        L-functions — the substrate a future reasoner needs to attack the deepest open problems.</p>
-      <span class="tag far">Horizon</span></div>
-  </div>
-</div></section>
-
-<section class="blk" id="principles"><div class="wrap rv">
-  <div class="eyebrow">Principles</div>
-  <h2>Bold in ambition, ruthless about proof.</h2>
-  <div class="grid c4">
-    <div class="card"><div class="ic">✓</div><h3>Kernel is the judge</h3><p>Correctness is decided by Lean, not by a model's confidence.</p></div>
-    <div class="card"><div class="ic">◎</div><h3>Honesty over hype</h3><p>What's verified, assumed, and open — counts that don't drift.</p></div>
-    <div class="card"><div class="ic">⟲</div><h3>Reproducible</h3><p>Mathlib pinned; every result re-checks from source.</p></div>
-    <div class="card"><div class="ic">⌘</div><h3>Reusable engine</h3><p>Ontology + target layers are replaceable across domains.</p></div>
-  </div>
-</div></section>
-
-<footer><div class="wrap">
-  <div class="links">
-    <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification">GitHub ↗</a>
-    <a href="dashboard.html">Environment dashboard</a>
-    <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/VERIFIED.md">Verification ledger</a>
-    <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/BARRIERS.md">Barriers registry</a>
-  </div>
-  <div>KeyAI · formal research OS · built with Lean&nbsp;4 + Mathlib. Portions of the proof
-    development are AI-assisted; every result is verified by the Lean kernel.</div>
-</div></footer>
-
-<script>
-(function(){
-  var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-  var prog=document.getElementById('prog'), nav=document.getElementById('nav');
-  function onScroll(){var h=document.documentElement,sc=h.scrollTop,max=h.scrollHeight-h.clientHeight;
-    prog.style.width=(max>0?sc/max*100:0)+'%'; nav.classList.toggle('solid',sc>40);}
-  addEventListener('scroll',onScroll,{passive:true}); onScroll();
-
-  function animCount(el){var to=parseFloat(el.dataset.to),pre=el.dataset.pre||'',suf=el.dataset.suf||'',t0=null,dur=1500;
-    if(reduce){el.textContent=pre+to+suf;return;}
-    function step(ts){t0=t0||ts;var p=Math.min((ts-t0)/dur,1),e=1-Math.pow(1-p,3);
-      el.textContent=pre+Math.round(to*e)+suf; if(p<1)requestAnimationFrame(step);}
-    requestAnimationFrame(step);}
-  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(!en.isIntersecting)return;var t=en.target;t.classList.add('in');
-    t.querySelectorAll('[data-to]').forEach(animCount);
-    t.querySelectorAll('.fill[data-w]').forEach(function(f){f.style.width=f.dataset.w+'%';});
-    var arc=t.querySelector('#arc');if(arc){var pct=127/486;arc.style.transition='stroke-dashoffset 1.6s cubic-bezier(.2,.7,.2,1)';requestAnimationFrame(function(){arc.style.strokeDashoffset=628*(1-pct);});}
-    io.unobserve(t);});},{threshold:.18});
-  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
-  document.querySelectorAll('.hero [data-to]').forEach(animCount);
-
-  // ---------------- hero canvas: living elliptic-curve substrate ----------------
-  var cv=document.getElementById('cv'),ctx=cv.getContext('2d'),W,H,DPR;
-  var parts=[],nodes=[],pulses=[],upper=[],lower=[];
-  function view(){return {cx:W*0.60, cy:H*0.50, s:Math.min(W,H)*0.11};}
-  function mx(x,v){return v.cx+x*v.s;} function my(y,v){return v.cy-y*v.s;}
-  function build(){
-    var v=view(); upper=[]; lower=[];
-    for(var x=-1.913;x<=6.6;x+=0.02){var yy=x*x*x+7;if(yy<0)continue;var y=Math.sqrt(yy);upper.push([mx(x,v),my(y,v)]);}
-    for(var x2=6.6;x2>=-1.913;x2-=0.02){var yy2=x2*x2*x2+7;if(yy2<0)continue;lower.push([mx(x2,v),my(-Math.sqrt(yy2),v)]);}
-    // nodes: fixed on-curve points + drifting graph nodes in the right region
-    nodes=[];
-    var onc=[[-1.913,0],[0,2.646],[1,2.828],[2,3.873],[3,5.831],[4.2,9.1],[3,-5.831],[1.2,-2.99],[-0.5,2.55]];
-    for(var k=0;k<onc.length;k++){var px=mx(onc[k][0],v),py=my(onc[k][1],v);nodes.push({x:px,y:py,ph:Math.random()*6.28,onc:true,vx:0,vy:0});}
-    var fn=Math.max(6,Math.round(W/200));
-    for(var f=0;f<fn;f++){var nx=(0.5+Math.random()*0.46)*W, ny=(0.08+Math.random()*0.82)*H;
-      nodes.push({x:nx,y:ny,ph:Math.random()*6.28,onc:false,vx:(Math.random()-.5)*.16,vy:(Math.random()-.5)*.16});}
-  }
-  function resize(){DPR=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;
-    cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
-    var n=Math.round(W*H/11000);parts=[];
-    for(var i=0;i<n;i++){var right=Math.random()<0.62;
-      parts.push({x:(right?0.46+Math.random()*0.54:Math.random())*W,y:Math.random()*H,
-        vx:(Math.random()-.5)*.26,vy:(Math.random()-.5)*.26,r:Math.random()*1.7+.5,a:Math.random()*.5+.18});}
-    build();
-    pulses=[];for(var q=0;q<5;q++)pulses.push({i:Math.random(),spd:0.0007+Math.random()*0.0008,up:Math.random()<0.5});
-  }
-  resize();addEventListener('resize',resize);
-
-  var t=0,raf,chord=null,chordT=90,introT=reduce?1:0;
-  function path(a){ctx.beginPath();for(var i=0;i<a.length;i++){if(i===0)ctx.moveTo(a[i][0],a[i][1]);else ctx.lineTo(a[i][0],a[i][1]);}}
-  function pathN(a,fr){var n=Math.max(2,Math.floor(a.length*fr));ctx.beginPath();for(var i=0;i<n;i++){if(i===0)ctx.moveTo(a[i][0],a[i][1]);else ctx.lineTo(a[i][0],a[i][1]);}}
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    var g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#001a3f');g.addColorStop(1,'#00122b');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    if(introT<1)introT=Math.min(1,introT+0.012);
-    var eio=introT<1?1-Math.pow(1-introT,3):1;   // eased intro progress
-    // living glow behind the curve region (fades in with intro)
-    var gx=W*0.66+Math.sin(t*0.3)*W*0.02, gy=H*0.44+Math.cos(t*0.24)*H*0.02;
-    var rg=ctx.createRadialGradient(gx,gy,0,gx,gy,Math.max(W,H)*0.5);
-    rg.addColorStop(0,'rgba(29,133,255,.18)');rg.addColorStop(.5,'rgba(29,133,255,.05)');rg.addColorStop(1,'rgba(29,133,255,0)');
-    ctx.globalAlpha=eio;ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;
-    // particles
-    for(var i=0;i<parts.length;i++){var p=parts[i];p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0)p.x+=W;if(p.x>W)p.x-=W;if(p.y<0)p.y+=H;if(p.y>H)p.y-=H;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fillStyle='rgba(125,176,255,'+p.a+')';ctx.fill();}
-    // graph node drift
-    for(var n=0;n<nodes.length;n++){var nd=nodes[n];if(!nd.onc){nd.x+=nd.vx;nd.y+=nd.vy;
-      if(nd.x<W*0.48||nd.x>W*0.985)nd.vx*=-1;if(nd.y<H*0.05||nd.y>H*0.92)nd.vy*=-1;}}
-    // edges (living knowledge graph)
-    ctx.lineWidth=1;
-    for(var a=0;a<nodes.length;a++)for(var b=a+1;b<nodes.length;b++){
-      var dx=nodes[a].x-nodes[b].x,dy=nodes[a].y-nodes[b].y,d2=dx*dx+dy*dy;
-      if(d2<30000){var al=(1-d2/30000)*0.24*eio;ctx.strokeStyle='rgba(125,176,255,'+al+')';
-        ctx.beginPath();ctx.moveTo(nodes[a].x,nodes[a].y);ctx.lineTo(nodes[b].x,nodes[b].y);ctx.stroke();}}
-    // curve glow
-    ctx.save();ctx.shadowColor='rgba(29,133,255,.95)';ctx.shadowBlur=17;ctx.lineWidth=2.6;ctx.strokeStyle='rgba(140,186,255,.95)';
-    pathN(upper,eio);ctx.stroke();pathN(lower,eio);ctx.stroke();ctx.restore();
-    // energy pulses travelling along the curve (with fading trail) — only after the intro draw-in
-    if(introT>=1)for(var q=0;q<pulses.length;q++){var pu=pulses[q];pu.i+=pu.spd;if(pu.i>=1)pu.i-=1;var arr=pu.up?upper:lower;
-      var idx=Math.floor(pu.i*(arr.length-1));
-      for(var tr=12;tr>=0;tr--){var ti=idx-tr*2;if(ti<0||ti>=arr.length)continue;var pt=arr[ti];
-        ctx.beginPath();ctx.arc(pt[0],pt[1],Math.max(0.6,2.6-tr*0.18),0,6.283);
-        ctx.fillStyle='rgba(63,208,138,'+Math.max(0,0.55-tr*0.045)+')';ctx.fill();}
-      var hd=arr[idx];if(hd){ctx.save();ctx.shadowColor='#3fd08a';ctx.shadowBlur=14;
-        ctx.beginPath();ctx.arc(hd[0],hd[1],3.4,0,6.283);ctx.fillStyle='#b7f5d6';ctx.fill();ctx.restore();}}
-    // pulsing nodes
-    for(var m=0;m<nodes.length;m++){if(m/nodes.length>eio)continue;var q2=nodes[m];var pr=2.5+Math.sin(t*1.3+q2.ph)*0.8;
-      ctx.beginPath();ctx.arc(q2.x,q2.y,pr+3.5,0,6.283);ctx.fillStyle='rgba(29,133,255,.13)';ctx.fill();
-      ctx.beginPath();ctx.arc(q2.x,q2.y,pr,0,6.283);ctx.fillStyle=q2.onc?'#eaf1fb':'#7db0ff';ctx.fill();}
-    // occasional point-addition chord flash between two on-curve nodes
-    if(--chordT<=0){var oc=nodes.filter(function(z){return z.onc;});
-      var A=oc[(Math.random()*oc.length)|0],B=oc[(Math.random()*oc.length)|0];
-      if(A&&B&&A!==B)chord={a:A,b:B,life:78,max:78};chordT=150+((Math.random()*160)|0);}
-    if(chord&&chord.life>0){chord.life--;var la=Math.sin((chord.max-chord.life)/chord.max*Math.PI)*0.7;
-      ctx.strokeStyle='rgba(63,208,138,'+la+')';ctx.lineWidth=1.6;ctx.setLineDash([5,7]);
-      ctx.beginPath();ctx.moveTo(chord.a.x,chord.a.y);ctx.lineTo(chord.b.x,chord.b.y);ctx.stroke();ctx.setLineDash([]);}
-    t+=0.016;raf=requestAnimationFrame(frame);
-  }
-  function staticFrame(){ctx.fillStyle='#001a3f';ctx.fillRect(0,0,W,H);
-    ctx.lineWidth=2.6;ctx.strokeStyle='rgba(140,186,255,.92)';path(upper);ctx.stroke();path(lower);ctx.stroke();
-    for(var n=0;n<nodes.length;n++){ctx.beginPath();ctx.arc(nodes[n].x,nodes[n].y,3,0,6.283);ctx.fillStyle=nodes[n].onc?'#eaf1fb':'#7db0ff';ctx.fill();}}
-  if(reduce)staticFrame();else frame();
-  document.addEventListener('visibilitychange',function(){if(document.hidden){cancelAnimationFrame(raf);}else if(!reduce){raf=requestAnimationFrame(frame);}});
-})();
-</script>
+</footer>
+<script src="assets/site.js?v=20260722-1"></script>
 </body>
 </html>
