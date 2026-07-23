@@ -105,6 +105,10 @@ def main() -> int:
     )
     check("Sync Health" in dashboard,
           "dashboard.html must expose a Sync Health section")
+    check(
+        "Work queue" in dashboard and "tasks/NEXT.md" in dashboard,
+        "dashboard must expose the canonical bounded task queue",
+    )
     check("repo/ARTIFACTS.yaml" in dashboard and "scripts/check_repo_artifacts.py" in dashboard,
           "dashboard.html Sync Health must link the artifact manifest to its gate")
     check(
