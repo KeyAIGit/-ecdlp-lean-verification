@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "snapshot": {
-    "captured_at": "2026-07-22T21:01:21-07:00",
+    "captured_at": "2026-07-22T22:38:30-07:00",
     "remote": "origin",
     "base_ref": "origin/main",
     "base_sha": "cb791cc8f6cfb213fce261a4e1f9a0f74278ac86",
-    "real_remote_branch_count": 16,
+    "real_remote_branch_count": 17,
     "excluded_symbolic_refs": [
       "origin/HEAD"
     ],
@@ -16,15 +16,15 @@
     "merge_now": false,
     "delete_now": false,
     "cleanup_gate": "Final adversarial review plus content-level comparison and explicit owner approval.",
-    "active_integration": "agent/formal-substrate-closure",
-    "predecessor_draft_pr": 234
+    "active_integration": "agent/ecdlp-decision-substrate",
+    "predecessor_draft_pr": 235
   },
   "groups": {
     "keep_default": 1,
     "active_integration": 1,
     "predecessor_draft": 1,
     "candidate_queue": 2,
-    "historical_unmerged": 11
+    "historical_unmerged": 12
   },
   "branches": [
     {
@@ -39,17 +39,30 @@
       "next_action": "keep"
     },
     {
-      "name": "agent/formal-substrate-closure",
-      "tip": "13457ff85d30bfeba214166c10bc35a8eb3768f0",
+      "name": "agent/ecdlp-decision-substrate",
+      "tip": "f1e06373ed72781e88bd7b5895f05aa8b76e9dd7",
       "tip_date": "2026-07-22",
       "behind_main": 0,
-      "ahead_main": 23,
+      "ahead_main": 25,
       "merged_by_ancestry": false,
       "disposition": "active_integration",
+      "based_on_branch": "agent/formal-substrate-closure",
+      "pull_request": null,
+      "delete_now": false,
+      "next_action": "keep unmerged, open one draft PR, await CI, and request one final Claude/Opus adversarial review only at program freeze"
+    },
+    {
+      "name": "agent/formal-substrate-closure",
+      "tip": "2832f36cbdb51561bde64605e214388cace0dacd",
+      "tip_date": "2026-07-22",
+      "behind_main": 0,
+      "ahead_main": 24,
+      "merged_by_ancestry": false,
+      "disposition": "predecessor_draft",
       "based_on_branch": "claude/repo-analysis-next-steps-fpzxin",
       "pull_request": 235,
       "delete_now": false,
-      "next_action": "finish CI, open one draft integration PR, then request final adversarial review"
+      "next_action": "retain draft PR #235 frozen and unmerged as the direct predecessor of the decision-substrate branch"
     },
     {
       "name": "claude/repo-analysis-next-steps-fpzxin",
@@ -58,10 +71,10 @@
       "behind_main": 0,
       "ahead_main": 21,
       "merged_by_ancestry": false,
-      "disposition": "predecessor_draft",
+      "disposition": "historical_unmerged",
       "pull_request": 234,
       "delete_now": false,
-      "next_action": "retain draft and unmerged until the successor integration review is complete"
+      "next_action": "retain historical draft PR #234 unmerged until the successor integration review is complete"
     },
     {
       "name": "prover/candidates",
