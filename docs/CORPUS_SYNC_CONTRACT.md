@@ -6,6 +6,8 @@ KeyAI needs more than a folder of papers. A long-horizon research agent must kno
 
 The canonical machine-readable instance is `domains/ecdlp/corpus_manifest.json`. The reusable schema is `domains/corpus_manifest.schema.json`. Any future domain can adopt the same contract without inheriting ECDLP-specific assumptions.
 
+For scalable domains, schema v1.1 treats the manifest as a compact index: it references one immutable baseline snapshot and an ordered list of append-only delta files. This prevents a new literature audit from rewriting earlier research history.
+
 ## Invariants
 
 1. Source history is append-only. A superseded paper remains present and points to its replacement.
