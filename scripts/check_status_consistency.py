@@ -33,6 +33,7 @@ def main() -> int:
     stats = read_json("data/stats.json")
     frontier = read_json("data/frontier_map.json")
     graph = read_json("data/knowledge_graph.json")
+    decisions = read_json("repo/ECDLP_DECISION_SUBSTRATE.json")
     status = read_text("STATUS.md")
     index = read_text("index.html")
     dashboard = read_text("dashboard.html")
@@ -48,6 +49,7 @@ def main() -> int:
     corpus_claims = frontier.get("meta", {}).get("corpus_claims")
     frontier_rows = frontier.get("meta", {}).get("verified_ledger_rows")
     status_summary = frontier.get("status_summary", {})
+    route_selection = decisions.get("route_selection", {})
 
     check(isinstance(ledger_rows, int) and ledger_rows > 0,
           "data/stats.json must expose a positive integer ledger_rows")
@@ -77,6 +79,12 @@ def main() -> int:
           "index.html ledger counter does not match data/stats.json")
     check(f'data-to="{distinct}"' in index,
           "index.html distinct-results counter does not match data/stats.json")
+    check(f'data-to="{ledger_rows}">{ledger_rows}</div><div class="l">ledger rows' in index,
+          "index.html must expose the ledger count as visible static text")
+    check(
+        f'data-to="{distinct}" data-pre="~">~{distinct}</div><div class="l">distinct results' in index,
+        "index.html must expose the distinct-result count as visible static text",
+    )
     check(f"snapshot {ledger_rows} ledger rows / ~{distinct} distinct" in dashboard,
           "dashboard.html snapshot stamp does not match data/stats.json")
     # explore.html (3D map) KPI counters — generated + gated (ROADMAP §7.7; formerly an
@@ -95,6 +103,42 @@ def main() -> int:
     graph_counts = graph.get("counts", {})
     check(isinstance(graph_counts.get("theorems"), int) and graph_counts["theorems"] > 0,
           "data/knowledge_graph.json must expose counts.theorems")
+    check(graph_counts.get("ledger_rows") == ledger_rows,
+          "data/knowledge_graph.json counts.ledger_rows must match data/stats.json")
+    check(graph_counts.get("families") == 8,
+          "data/knowledge_graph.json must expose the exhaustive eight-family partition")
+    check(graph_counts.get("critical_nodes", 0) > 0,
+          "data/knowledge_graph.json must expose formal critical-path nodes")
+    check(graph_counts.get("attack_routes") == 17,
+          "data/knowledge_graph.json must expose all 17 decision routes")
+    check(graph_counts.get("decision_foundations") == 11,
+          "data/knowledge_graph.json must expose all 11 decision foundations")
+    check(graph.get("schema_version") == "3.0",
+          "data/knowledge_graph.json must use decision-aware schema 3.0")
+    check(
+        graph.get("decision_substrate", {}).get("route_selection") == route_selection,
+        "knowledge graph route selection must match ECDLP_DECISION_SUBSTRATE.json",
+    )
+    check(
+        route_selection.get("decision_id") in status,
+        "STATUS.md must expose the current route-selection decision",
+    )
+    edge_types = graph_counts.get("by_edge_type", {})
+    for edge_type in (
+        "imports",
+        "member_of",
+        "supports",
+        "depends_on",
+        "blocked_by",
+        "evaluated_under",
+        "detailed_by",
+        "requires_foundation",
+        "decision_grounded_in",
+        "governs_hypothesis",
+        "extends_frontier",
+    ):
+        check(edge_types.get(edge_type, 0) > 0,
+              f"knowledge graph is missing semantic edge type {edge_type!r}")
     check(graph.get("invariant", "").lower().find("lean kernel") >= 0,
           "data/knowledge_graph.json invariant should mention the Lean kernel")
 
@@ -108,6 +152,8 @@ def main() -> int:
           "experiments/HYPOTHESES.yaml must point at tasks/NEXT.md")
     check(len(re.findall(r"^  - id: H", hypotheses, flags=re.MULTILINE)) >= 3,
           "experiments/HYPOTHESES.yaml must define at least three hypotheses")
+    check('status: "parked"' in hypotheses and "resume_after:" in hypotheses,
+          "deferred experiments must be parked with an explicit resume condition")
 
     if errors:
         print("Research OS consistency check failed:")
@@ -118,7 +164,8 @@ def main() -> int:
     print(
         "Research OS consistency OK: "
         f"{ledger_rows} ledger rows / ~{distinct} distinct; "
-        f"{corpus_claims} corpus claims; {graph_counts['theorems']} graph theorems"
+        f"{corpus_claims} corpus claims; "
+        f"{graph_counts['ledger_rows']} graph ledger-row nodes"
     )
     return 0
 

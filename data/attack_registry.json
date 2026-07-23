@@ -39,7 +39,7 @@
       ]
     },
     "experiments-scaling": {
-      "description": "The reproducible prime-field index-calculus experiment families (P0-P4) - partial negatives, constant-factor only, HYP_GLV_SEMAEV_001 ACTIVE. This is the live open zone.",
+      "description": "The reproducible prime-field index-calculus experiment families (P0-P4) - partial negatives and constant-factor evidence only. The mathematical question is open; HYP_GLV_SEMAEV_001 is PARKED by the canonical decision substrate.",
       "members": [
         "IC-1-index-calculus-prime-field",
         "IC-2-semaev-summation-systems",
@@ -216,10 +216,10 @@
       "open_escape_routes": [
         "SCOPED no-go, NOT universal: GlvNoGo proves only THIS map used THIS way preserves the exponent. 'CM-by-Z[zeta_3] gives no asymptotic advantage' is BELIEVED, not a theorem (GlvNoGo.lean docstring).",
         "~sqrt(3)/2 rho and ~2x scalar-mult constants NOT formalized (no cost model).",
-        "HYP_GLV_SEMAEV_001 ACTIVE (experiments/HYPOTHESES.yaml): whether GLV-invariant RELATION GENERATION changes prime-field index-calculus asymptotics is OPEN. Honest prior: LOW; expected negative. See IC-3."
+        "HYP_GLV_SEMAEV_001 is PARKED (experiments/HYPOTHESES.yaml): whether GLV-invariant RELATION GENERATION changes prime-field index-calculus asymptotics is mathematically OPEN, but no execution is authorized. Honest prior: LOW; expected negative. See IC-3."
       ],
       "verdict": "CONSTANT-FACTOR speedup ONLY, exponent-preserving (machine-checked scoped no-go). Helpful for implementations, negligible for cryptanalysis. Asymptotic no-advantage of CM is believed but NOT proved. Does not break secp256k1.",
-      "blocked_on": "cost_model (for the sqrt(3) constant) + the OPEN conjecture that CM gives no asymptotic advantage. HYP_GLV_SEMAEV_001 active.",
+      "blocked_on": "cost_model (for the sqrt(3) constant) + the OPEN conjecture that CM gives no asymptotic advantage. HYP_GLV_SEMAEV_001 is parked pending explicit route selection.",
       "disclosure": "Real CM structure; no-go is only SCOPED. Project's best coherent cryptanalytic bet, honest expected outcome NEGATIVE. Equality-replay alone cannot establish a complexity no-go."
     },
     {
@@ -372,7 +372,7 @@
       "open_escape_routes": [
         "FORMAL GAP: 'F_p prime => no proper subfield => Weil restriction trivial => GHS inapplicable' is NOT machine-checked; a formal no-go is an unbuilt, tractable-ish target — the honest place where this resistance rests on docs, not the kernel.",
         "MECHANISM GAP: Weil restriction / cover theory entirely absent from Mathlib.",
-        "GENUINELY OPEN ADJACENT ZONE: whether some prime-field structure could substitute for the missing Weil restriction in a Semaev/Petit index calculus is UNRESOLVED (HYP_GLV_SEMAEV_001 ACTIVE; P0-P4 partial NEGATIVES, ~3x constant only). This is where the descent no-go ends and the unexplored prime-field index-calculus zone begins (IC-1..IC-4)."
+        "GENUINELY OPEN ADJACENT ZONE: whether some prime-field structure could substitute for the missing Weil restriction in a Semaev/Petit index calculus is UNRESOLVED (HYP_GLV_SEMAEV_001 PARKED; P0-P4 partial NEGATIVES, ~3x constant only). This is where the descent no-go ends and the unexplored prime-field index-calculus zone begins (IC-1..IC-4)."
       ],
       "verdict": "RESISTED-BY-CONSTRUCTION (prime field), WEAKEST kernel backing of the transfer families: resistance = secp256k1_p_prime + a documented structural argument, not a dedicated no-go. Mechanism blocked-foundation. Not a break; the live open question is the adjacent prime-field index-calculus zone.",
       "blocked_on": "No Weil restriction / GHS theory in Mathlib (mechanism). No formal 'prime field => no descent' theorem (boundary rests on documentation). Adjacent prime-field index-calculus hardness is OPEN.",
@@ -570,7 +570,7 @@
       "family": "index-calculus / glv-symmetry",
       "layer": "experiments-scaling",
       "verdict_class": "open-zone",
-      "one_line": "Close the Semaev factor base under the order-3 GLV automorphism phi(x,y)=(beta*x,y) (invariant u=x^3), or rewrite the S_m system in invariant coordinates, hoping to cut relation-generation cost / degree of regularity below a constant factor for the j=0 prime-field curve. Measured: constant ~3x only, no exponent change; HYP_GLV_SEMAEV_001 stays ACTIVE.",
+      "one_line": "Close the Semaev factor base under the order-3 GLV automorphism phi(x,y)=(beta*x,y) (invariant u=x^3), or rewrite the S_m system in invariant coordinates, hoping to cut relation-generation cost / degree of regularity below a constant factor for the j=0 prime-field curve. Measured: constant ~3x only, no exponent change; HYP_GLV_SEMAEV_001 is PARKED.",
       "required_properties": [
         "a genuine order-3 curve automorphism (CM, j=0)",
         "a phi-invariant coordinate u=x^3 collapsing each 3-element orbit",
@@ -618,13 +618,13 @@
         "P1 / P1-m3: GLV/u=x^3 orbit closure = constant ~3x storage at matched effective size, spurious=0",
         "P3: u=x^3 lowers d_reg number but larger matrices / ~80x slower, SAME variety and EC-confirmed relation set — constant-factor re-description"
       ],
-      "kill_criterion": "HYP_GLV_SEMAEV_001 exit: a stable T(p) = p^{1/2 - eps}, eps>0, with a theoretical scaling explanation. Observed: constant factor only, larger rings at lower d_reg number. Kept ACTIVE pending m>=3 with an external engine.",
+      "kill_criterion": "HYP_GLV_SEMAEV_001 promotion gate: a stable T(p) = p^{1/2 - eps}, eps>0, with a theoretical scaling explanation. Observed: constant factor only, larger rings at lower d_reg number. PARKED pending explicit route selection; m>=3 tooling alone does not authorize work.",
       "open_escape_routes": [
         "OPEN: m>=3 solving degree in invariant coordinates with an external Groebner/F4 engine (pure-Python intractable)",
-        "OPEN: whether invariant-coordinate RELATION GENERATION (not factor-base size) changes prime-field asymptotics — HYP_GLV_SEMAEV_001 ACTIVE",
+        "OPEN mathematical question: whether invariant-coordinate RELATION GENERATION (not factor-base size) changes prime-field asymptotics; HYP_GLV_SEMAEV_001 execution is PARKED",
         "OPEN: non-toy primes; the deg S4 = 4 tower node not yet built"
       ],
-      "verdict": "PARTIAL NEGATIVE (constant ~3x only, no exponent change); HYP_GLV_SEMAEV_001 remains ACTIVE — no advantage measured, the asymptotic question is open. Not a break.",
+      "verdict": "PARTIAL NEGATIVE (constant ~3x only, no exponent change); HYP_GLV_SEMAEV_001 is PARKED - no advantage measured, while the asymptotic question remains open. Not a break.",
       "blocked_on": "external Groebner engine for m>=3 invariant systems; non-toy primes; cost_model.",
       "disclosure": "The GLV/CM structure is real and machine-checked, but orbit closure buys only a constant factor. NOT a step toward breaking secp256k1; equality-replay alone cannot establish a complexity no-go. The proved eigenvalue facts describe structure, not an attack."
     },
@@ -818,11 +818,11 @@
         {
           "property": "resistance to Shor",
           "status": "not-satisfied-no-curve-resists",
-          "evidence": "documented EXTERNAL estimates only (Proos-Zalka 2003; Roetteler-Naehrig-Svore-Lauter 2017: ~2330 logical qubits, ~1.26e11 Toffoli gates for 256-bit ECDLP) — external literature, NOT a repo result"
+          "evidence": "documented EXTERNAL estimates only. Luo et al. 2026 (arXiv:2607.13816) report 835 logical qubits and 2^30.63 Toffoli gates for secp256k1, superseding their earlier preprint; this is external literature, NOT a repo result or evidence that suitable hardware exists"
         }
       ],
       "asymptotic_complexity": "Quantum polynomial time: ~O((log n)^3) qubit-operations / poly(log n) depth. Not expressible in Lean (no quantum cost model).",
-      "memory": "~2330 logical qubits (Roetteler et al. 2017) for 256-bit ECDLP; physical-qubit count depends on error-correction overhead. External estimate, not a repo measurement.",
+      "memory": "835 logical qubits for secp256k1 in Luo et al. 2026 (arXiv:2607.13816); physical-qubit count and runtime depend on error correction, architecture, and depth. External logical-resource estimate, not a repo measurement.",
       "secp256k1_constants": "256-bit order n; Shor cost scales with bit-length, not curve structure — GLV / j=0 / beta confer no quantum defense and no extra quantum weakness.",
       "lean_evidence": [],
       "experimental_evidence": [],
@@ -905,7 +905,7 @@
         "IC-2-semaev-summation-systems"
       ],
       "relation": "NO-GO-EDGE-MEETS-OPEN-ZONE",
-      "statement": "TRANSFER-WEIL-DESCENT's adjacent open zone IS the prime-field index-calculus question (IC-1/IC-2): whether some prime-field structure can substitute for the missing Weil restriction in a Semaev/Petit index calculus. HYP_GLV_SEMAEV_001 ACTIVE; P0-P4 are partial negatives (constant ~3x only). This edge marks precisely where a machine-checked-by-construction no-go ends and unexplored territory begins."
+      "statement": "TRANSFER-WEIL-DESCENT's adjacent open zone IS the prime-field index-calculus question (IC-1/IC-2): whether some prime-field structure can substitute for the missing Weil restriction in a Semaev/Petit index calculus. HYP_GLV_SEMAEV_001 is PARKED; P0-P4 are partial negatives (constant ~3x only). This edge marks precisely where a machine-checked-by-construction no-go ends and unexplored territory begins."
     },
     {
       "type": "weak-backing-flag",
@@ -1034,7 +1034,7 @@
         "projection_128bit": "descriptive-only, no asymptotic/advantage/no-go-proof claim, not projected"
       }
     },
-    "cross_cutting_conclusion": "At every rung the GLV / u=x^3 / composed-map orbit closure buys only a CONSTANT (~3x) storage reduction; the summation-polynomial solve reproduces the brute-force relation set with ZERO spurious roots (empirical signature of the Semaev iff-theorems S₃_eq_zero_iff / S₄_common_root_of_eq_zero); where reachable, degree_of_regularity is set by the factor-base DEFINING degree - neither invariant nor composed coordinates buy a net advantage (lower degree NUMBER is always paid back as a larger ring / larger Macaulay matrix / slower time on the SAME variety). No rung is a step toward breaking secp256k1; HYP_GLV_SEMAEV_001 stays ACTIVE (open, not a proven no-go)."
+    "cross_cutting_conclusion": "At every rung the GLV / u=x^3 / composed-map orbit closure buys only a CONSTANT (~3x) storage reduction; the summation-polynomial solve reproduces the brute-force relation set with ZERO spurious roots (empirical signature of the Semaev iff-theorems S₃_eq_zero_iff / S₄_common_root_of_eq_zero); where reachable, degree_of_regularity is set by the factor-base DEFINING degree - neither invariant nor composed coordinates buy a net advantage (lower degree NUMBER is always paid back as a larger ring / larger Macaulay matrix / slower time on the SAME variety). No rung is a step toward breaking secp256k1; HYP_GLV_SEMAEV_001 is mathematically open but execution is PARKED."
   },
   "priority_function": {
     "formula": "Priority(H) = P(H) * Impact(H) * InfoGain(H) / (ProofCost + ExperimentCost + SecurityRisk)",
@@ -1078,7 +1078,7 @@
     "EXPERIMENTAL CAVEAT (not Lean): P4 is NOT faithful Petit - a prime field affords no Weil restriction, so there is no F_p-linear-subspace factor base to imitate; P4 is an explicitly-labelled composed-low-degree-map approximation, measured only at |F|=4, m=2, toy primes.",
     "SCOPE (not a fabrication): Ecdlp.GenericGroup.secp256k1_generic_security takes a [Fact (Nat.Prime Secp256k1.n)] instance (supplied by secp256k1_n_prime); the formalized core is the fixed-transcript affine-collision count, NOT the full adaptive Shoup/Nechaev oracle-query theorem (GenericGroupBound.lean docstring). Primality is a proved hypothesis, not an axiom.",
     "LINE-NUMBER PRECISION: every cited theorem identifier was grep-confirmed to resolve to its named file; individual line numbers were spot-checked (e.g. SemaevFour.lean:71/81/140, GlvAutomorphism.lean:31, CurveCardinalityExact.lean:172) but not exhaustively re-verified for every citation. Identifiers are real; a few cited line numbers may drift by a small amount.",
-    "EXTERNAL (not a repo result): quantum-shor-ecdlp resource estimates (Proos-Zalka 2003; Roetteler-Naehrig-Svore-Lauter 2017: ~2330 logical qubits, ~1.26e11 Toffoli gates) are documented EXTERNAL literature, tagged out-of-scope in BARRIERS.md B2 / frontier_map.json; they are NOT machine-checked repo facts and the substrate makes no quantum claim.",
+    "EXTERNAL (not a repo result): Luo et al. 2026 (arXiv:2607.13816) report a space-optimized secp256k1 circuit estimate of 835 logical qubits and 2^30.63 Toffoli gates. It supersedes their April 2026 preprint, remains an external logical-resource estimate, and does not establish available fault-tolerant hardware. Quantum resource claims are not machine-checked repo facts.",
     "UNKNOWN (honest): the n±1 divisor structure a Cheon exponent would need is NOT measured in this substrate; only the tiny smooth part of p-1 = 2*3*7*13441 is documented (notes/PRIMALITY.md), which concerns F_p^x / p-1 routes, not the order-n curve subgroup. Marked unknown, not guessed."
   ]
 }

@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "snapshot": {
+    "captured_at": "2026-07-22T22:39:54-07:00",
+    "remote": "origin",
+    "base_ref": "origin/main",
+    "base_sha": "cb791cc8f6cfb213fce261a4e1f9a0f74278ac86",
+    "real_remote_branch_count": 17,
+    "excluded_symbolic_refs": [
+      "origin/HEAD"
+    ],
+    "comparison": "git rev-list --left-right --count origin/main...origin/<branch>",
+    "caveat": "merged_by_ancestry is commit-identity evidence only. Content may already be present through squash, cherry-pick, or later reimplementation."
+  },
+  "policy": {
+    "merge_now": false,
+    "delete_now": false,
+    "cleanup_gate": "Inventory, content-level comparison, reference scan, documented restore path, and explicit high-risk approval.",
+    "active_integration": "agent/ecdlp-decision-substrate",
+    "predecessor_draft_pr": 235
+  },
+  "groups": {
+    "keep_default": 1,
+    "active_integration": 1,
+    "predecessor_draft": 1,
+    "candidate_queue": 2,
+    "historical_unmerged": 12
+  },
+  "branches": [
+    {
+      "name": "main",
+      "tip": "cb791cc8f6cfb213fce261a4e1f9a0f74278ac86",
+      "tip_date": "2026-07-21",
+      "behind_main": 0,
+      "ahead_main": 0,
+      "merged_by_ancestry": true,
+      "disposition": "keep_default",
+      "delete_now": false,
+      "next_action": "keep"
+    },
+    {
+      "name": "agent/ecdlp-decision-substrate",
+      "tip": "2e17cde9348029cd259089912f3f7352843132c1",
+      "tip_date": "2026-07-22",
+      "behind_main": 0,
+      "ahead_main": 26,
+      "merged_by_ancestry": false,
+      "disposition": "active_integration",
+      "based_on_branch": "agent/formal-substrate-closure",
+      "pull_request": 236,
+      "delete_now": false,
+      "next_action": "merge draft PR #236 after the governance update passes required CI; preserve predecessor branches and start product/site work from refreshed main"
+    },
+    {
+      "name": "agent/formal-substrate-closure",
+      "tip": "2832f36cbdb51561bde64605e214388cace0dacd",
+      "tip_date": "2026-07-22",
+      "behind_main": 0,
+      "ahead_main": 24,
+      "merged_by_ancestry": false,
+      "disposition": "predecessor_draft",
+      "based_on_branch": "claude/repo-analysis-next-steps-fpzxin",
+      "pull_request": 235,
+      "delete_now": false,
+      "next_action": "retain draft PR #235 frozen and unmerged as the direct predecessor of the decision-substrate branch"
+    },
+    {
+      "name": "claude/repo-analysis-next-steps-fpzxin",
+      "tip": "aadcb61a17dc7fec4a863abe8749e47fda0cb062",
+      "tip_date": "2026-07-22",
+      "behind_main": 0,
+      "ahead_main": 21,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "pull_request": 234,
+      "delete_now": false,
+      "next_action": "retain historical draft PR #234 unmerged until the successor integration review is complete"
+    },
+    {
+      "name": "prover/candidates",
+      "tip": "8be6bf192301f23b7c3c420e0cfe02d942afe8c8",
+      "tip_date": "2026-07-15",
+      "behind_main": 136,
+      "ahead_main": 1,
+      "merged_by_ancestry": false,
+      "disposition": "candidate_queue",
+      "delete_now": false,
+      "next_action": "content-compare during a dedicated retention audit, then promote or archive with a restore path"
+    },
+    {
+      "name": "server/candidates",
+      "tip": "f4dacbfd99f1e4616531cad3ee397fdb183b130d",
+      "tip_date": "2026-07-21",
+      "behind_main": 2,
+      "ahead_main": 2,
+      "merged_by_ancestry": false,
+      "disposition": "candidate_queue",
+      "delete_now": false,
+      "next_action": "content-compare during a dedicated retention audit, then rebase, promote, or archive with a restore path"
+    },
+    {
+      "name": "claude/agent-bundle-export",
+      "tip": "e48fd2c8571f9390c8cea29164b6409f655845fb",
+      "tip_date": "2026-07-10",
+      "behind_main": 220,
+      "ahead_main": 1,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "content-compare, then archive or delete only with owner approval"
+    },
+    {
+      "name": "claude/coprimality-frontier-barrier",
+      "tip": "87151d6f0bab143ca383eadad17a75d4537b7364",
+      "tip_date": "2026-07-14",
+      "behind_main": 142,
+      "ahead_main": 1,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "content-compare, then archive or delete only with owner approval"
+    },
+    {
+      "name": "claude/dlog-iso-subgroup",
+      "tip": "41570123184aee5c5f5a04c881ecc2bc03cd3b7c",
+      "tip_date": "2026-07-10",
+      "behind_main": 222,
+      "ahead_main": 1,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "content-compare, then archive or delete only with owner approval"
+    },
+    {
+      "name": "claude/hasse-reduction",
+      "tip": "04e592faa17b4f64ce2ff5f51348839ba2d7f48f",
+      "tip_date": "2026-07-10",
+      "behind_main": 200,
+      "ahead_main": 2,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "content-compare, then archive or delete only with owner approval"
+    },
+    {
+      "name": "claude/n4-general-degree",
+      "tip": "e3efa3511f7e135fc83233522dba97c4c4d7faad",
+      "tip_date": "2026-07-18",
+      "behind_main": 75,
+      "ahead_main": 1,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "content-compare, then archive or delete only with owner approval"
+    },
+    {
+      "name": "claude/point-finite-general",
+      "tip": "e787b2d5c22cb96e00f6e0615e8a34c52b95a12d",
+      "tip_date": "2026-07-10",
+      "behind_main": 200,
+      "ahead_main": 1,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "content-compare, then archive or delete only with owner approval"
+    },
+    {
+      "name": "claude/repo-analysis-next-steps-btomml",
+      "tip": "393b7a56c01925626291bd79ea83fed9d8a6db05",
+      "tip_date": "2026-07-17",
+      "behind_main": 118,
+      "ahead_main": 26,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "content-compare in detail because of its 26 unique commits, then archive or retain"
+    },
+    {
+      "name": "claude/site-pipeline-layer",
+      "tip": "866573244fcaa453bb2da3f2fbd8e25bae33d00a",
+      "tip_date": "2026-07-10",
+      "behind_main": 218,
+      "ahead_main": 5,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "content-compare, then archive or delete only with owner approval"
+    },
+    {
+      "name": "codex/m3-scope-correction",
+      "tip": "c69f8e5f9f6e8983274db15da30667866a0d1092",
+      "tip_date": "2026-07-12",
+      "behind_main": 179,
+      "ahead_main": 3,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "compare with v2 and main, then archive or delete only with owner approval"
+    },
+    {
+      "name": "codex/m3-scope-correction-v2",
+      "tip": "55c636505a50a653162a3c687085f2004c7eec4d",
+      "tip_date": "2026-07-12",
+      "behind_main": 175,
+      "ahead_main": 5,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "compare with v1 and main, then archive or delete only with owner approval"
+    },
+    {
+      "name": "codex/p0-correctness-gates",
+      "tip": "f8c95a93b7d3fb9ecfc17acc954924fe955beff0",
+      "tip_date": "2026-07-10",
+      "behind_main": 199,
+      "ahead_main": 4,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "content-compare, then archive or delete only with owner approval"
+    }
+  ]
+}

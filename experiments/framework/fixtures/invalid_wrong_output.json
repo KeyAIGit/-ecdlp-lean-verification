@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "record_kind": "framework_fixture",
+  "candidate": {
+    "id": "fixture-contract-v1",
+    "route_id": "R-GENERIC-BASELINE",
+    "hypothesis_id": null,
+    "implementation": "deterministic fixture",
+    "code_commit": "0000000000000000000000000000000000000000",
+    "entrypoint": "fixture-only"
+  },
+  "target": {
+    "curve_id": "toy-f17-a0-b7",
+    "threat_model": "classical-single-target-plain",
+    "field_p": 17,
+    "curve_a": 0,
+    "curve_b": 7,
+    "base_point": [
+      1,
+      5
+    ],
+    "target_point": [
+      12,
+      16
+    ],
+    "base_order": 9,
+    "target_count": 1,
+    "auxiliary_inputs": [],
+    "scalar_interval": null
+  },
+  "result": {
+    "claimed_scalar": 4
+  },
+  "cost": {
+    "online": {
+      "wall_time_seconds": 0.001,
+      "group_operations": 4,
+      "field_operations": 20,
+      "peak_memory_bytes": 1024
+    },
+    "offline": {
+      "wall_time_seconds": 0.0,
+      "group_operations": 0,
+      "field_operations": 0,
+      "peak_memory_bytes": 0
+    },
+    "reusable_precomputation": false,
+    "amortization_target_count": 1,
+    "parallel_workers": 1,
+    "success_probability": 1.0
+  },
+  "environment": {
+    "python": "3.x fixture",
+    "platform": "deterministic-fixture",
+    "tool_versions": {}
+  },
+  "provenance": {
+    "seed": 0,
+    "command": [
+      "fixture-only"
+    ],
+    "dirty_worktree": false,
+    "input_sha256": "a03ebd2c7299cb35d2ed782b7609617a8666a3b8c7981af96b37c88053027893",
+    "output_sha256": "59e5ecd50654d0b87211415cd9d8bd45ed539b1a896f55797270d51163b15ea6",
+    "environment_sha256": "d2673f75e64254a126454f07eeec2c53480de46275a9ce5dfcc8659cf55892e8",
+    "record_sha256": "4faa0075c19424ae588064b23c12d78ed531e6798cf38e08ad8715dc96539519"
+  },
+  "validation": {
+    "validator_id": "framework.ec_oracle.v1",
+    "independent_implementation": true,
+    "shares_decisive_logic": false,
+    "passed": true,
+    "validator_output_sha256": "2dbcdc039c1903dddca1571ba5617d9777eb944fd6b8ae252cf481636c940b26"
+  },
+  "claims": {
+    "success_level": "scope-only",
+    "asymptotic_claim": null,
+    "secp256k1_break": false,
+    "disclosure_gate_acknowledged": false
+  }
+}

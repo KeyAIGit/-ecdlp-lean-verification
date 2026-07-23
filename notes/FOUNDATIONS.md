@@ -97,24 +97,24 @@ The concrete sub-ladder, from what is now done to the summit:
   representative. The **representative-independence half** is ✓ **done**
   (`secp256k1_miller_function_unique`: two Miller functions differ by a unit of `F[E]`, via
   `Submodule.span_singleton_eq_span_singleton` — **proof designed by the Fable model,
-  kernel-verified**, the first piloted "strong-model + Lean-kernel" rung). The **evaluation half**
-  (`f_P(D_Q)`) is being built as new infrastructure (Mathlib v4.31 has no rational-function
-  evaluation API and does not know `F[E]` is Dedekind): the **regular-function evaluation
+  kernel-verified**, the first piloted "strong-model + Lean-kernel" rung). The reachable
+  **evaluation half is also done**: the **regular-function evaluation
   homomorphism** `evalAt : F[E] →+* F` (value of a regular function at a rational point, via
   `quotientXYIdealEquiv`) is ✓ **done** (`Ecdlp/Proved/PointEvaluation.lean`: `evalAt_surjective`,
-  `evalAt_ker` = the maximal ideal at `P`). **Next:** extend `evalAt` to rational functions
-  *regular at `P`* via localization at the maximal ideal, so `f_P` itself can be evaluated where it
-  has no pole.
+  `evalAt_ker` = the maximal ideal at `P`), followed by `evalRatAt`, `evalFracAt`,
+  `RegularAt`/`evalReg`, multiplicative `divEval`, representative scaling, and the W3e-3
+  joint-regularity/unit layer. See `Ecdlp/Proved/FunctionField*.lean` and
+  `Weil{DivisorEval,DivisorRepIndep,MillerEval}.lean`.
 - **W4 — Weil reciprocity** `f(div g) = g(div f)` — the crux identity. *Likely a genuine Mathlib
   gap.*
 - **W5 — define `eₙ(P,Q)` and prove bilinear / alternating / non-degenerate / Galois-equivariant.*
   The summit.
 
-W1, W2, and W3's representative-independence half are landed (W3 via a Fable-designed,
-kernel-verified proof). The open frontier is the **function-evaluation API** (W3's evaluation half,
-`f_P(D_Q)`) and **Weil reciprocity** (W4) — both genuine Mathlib gaps. This replaces the earlier
+W1, W2, and the reachable W3 evaluation scaffolding are landed. The open frontier is
+**Weil reciprocity** (W4), a genuine Mathlib gap; W3e-4 and W5 depend on it. This replaces the earlier
 "multi-month from zero" estimate: the **hardest substrate (Abel–Jacobi) is already Mathlib's**, and
-the remaining work is the function-evaluation + reciprocity layer. The **autonomous cycle queue** — this frontier decomposed into one-rung-per-cycle targets the loop grinds — is `notes/WEIL_LADDER.md` (first rung: W3e-1 `divEval`, `targets/weil_w3eval_diveval.json`).
+the remaining work is the reciprocity/pairing layer. The durable dependency record is
+`notes/WEIL_LADDER.md`; active work is governed only by `tasks/NEXT.md`.
 
 ### `E[n]` as a group object — closed via Mathlib (`Ecdlp/Proved/Torsion.lean`)
 

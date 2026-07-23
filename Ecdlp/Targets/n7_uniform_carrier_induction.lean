@@ -80,6 +80,7 @@ reduction hides an unprovable placeholder.
 import Mathlib
 import Ecdlp.Proved.DivisionPolynomialEllSequence
 import Ecdlp.Proved.DivisionPolynomialEvalBridge
+import Ecdlp.Proved.DivisionPolynomialPointBridge
 import Ecdlp.Proved.NsmulCoordsBaseOne
 import Ecdlp.Proved.NsmulCoordsBaseTwo
 import Ecdlp.Proved.OmegaRecurrenceAnchors
@@ -319,24 +320,37 @@ theorem carrier_four (hc : y ^ 2 = x ^ 3 + 7) : Carrier x y h 4 := by
 
 /-! ## Non-degeneracy / torsion bridge (breaks the circularity) -/
 
-/-- **Uniform torsion bridge (missing-from-Mathlib direction).** `n • P = O ⟺ ψₙ(P) = 0`.
-`needs`: the uniform `Point ↔ ψ` map. The per-`n` instances
-(`secp256k1_two/three/five_nsmul_eq_zero_iff`) are proved; the uniform one is the wall. Composes
-with `eval_ΨSq_eq_normEDS_sq` (`DivisionPolynomialEvalBridge`) to move between `ψₙ(P)` and
-`ΨSqₙ(x)`. Provable jointly with the main induction by strengthening `Carrier` to also carry
-`n•P affine ⟺ ψₙ(P) ≠ 0`. -/
+/-- **Uniform torsion bridge — THE conceptual wall (upstream-gated).** `n • P = O ⟺ ψₙ(P) = 0`.
+Genuinely blocked on Mathlib v4.31.0: it needs the multiplication-by-`n` coordinate/torsion map
+(`[n]P = (φₙ : ωₙ : ψₙ)`), the content of the OPEN, unmerged PR `leanprover-community/mathlib4#13782`
+— absent from the pinned toolchain. The per-`n` instances (`secp256k1_two/three/five/seven_nsmul_eq_zero_iff`)
+do **not** generalize: each hard-codes a degree-≈`n²` `ψₙ` polynomial and a bespoke `linear_combination`
+certificate whose size grows with `n`, so there is no symbolic-`n` schema. In-repo the only route is a
+joint proof with the uniform `Carrier` induction (strengthen `Carrier` with `n•P affine ⟺ ψₙ(P) ≠ 0`),
+which is itself entangled with the open x/y-algebra walls. This is the single irreducible `sorry` of
+the stem; everything else (`psiSq_ne_zero_of_nsmul_some`, the `odd_step_group` side-branches) is a
+downstream consumer of it. -/
 theorem nsmul_eq_zero_iff_psi_evalEval_zero (n : ℕ) :
     n • (Point.some x y h) = 0 ↔ (secp256k1.ψ (n : ℤ)).evalEval x y = 0 := by
   sorry
 
-/-- Denominator non-vanishing from affineness: if `n•P` is an affine `some`, then `ΨSqₙ(x) ≠ 0`.
-`needs`: a curve-reduction `ΨSqₙ.eval x = (ψₙ.evalEval x y)²` (from `eval_ΨSq_eq_normEDS_sq`) +
-`nsmul_eq_zero_iff_psi_evalEval_zero` (contrapositive). -/
+/-- **Denominator non-vanishing from affineness — CLOSED (from the torsion bridge).** If `n•P` is
+an affine `some`, then `ΨSqₙ(x) ≠ 0`. Proof: `n•P` affine ⟹ `n•P ≠ 0` (`Point.some_ne_zero`); by
+`nsmul_eq_zero_iff_psi_evalEval_zero` (contrapositive) `ψₙ(P) ≠ 0`; and the landed point bridge
+`ΨSq_eval_eq_ψ_evalEval_sq` gives `ΨSqₙ(x) = ψₙ(P)²`, so `pow_ne_zero 2` finishes. No independent
+`sorry` — this consumes only the single torsion wall. -/
 theorem psiSq_ne_zero_of_nsmul_some {n : ℕ} {X Y : ZMod Secp256k1.p}
     {h' : secp256k1.toAffine.Nonsingular X Y}
     (hn : n • (Point.some x y h) = Point.some X Y h') :
     (secp256k1.ΨSq (n : ℤ)).eval x ≠ 0 := by
-  sorry
+  have hne : n • (Point.some x y h) ≠ 0 := by
+    rw [hn]; exact Point.some_ne_zero h'
+  have hψ : (secp256k1.ψ (n : ℤ)).evalEval x y ≠ 0 := fun hz =>
+    hne ((nsmul_eq_zero_iff_psi_evalEval_zero n).mpr hz)
+  have key : (secp256k1.ΨSq (n : ℤ)).eval x = (secp256k1.ψ (n : ℤ)).evalEval x y ^ 2 :=
+    ΨSq_eval_eq_ψ_evalEval_sq secp256k1 h.1 (n : ℤ)
+  rw [key]
+  exact pow_ne_zero 2 hψ
 
 /-! ## The per-step rational-identity walls (isolated) -/
 
@@ -534,7 +548,10 @@ theorem odd_step_group (k : ℕ) (hk : Carrier x y h k) (hk1 : Carrier x y h (k 
             rw [hk1P, hkP, hpe]
           have h1 : k • Point.some x y h + Point.some x y h = k • Point.some x y h := by
             rw [← succ_nsmul]; exact h0
-          exact Point.some_ne_zero h (add_right_eq_self.mp h1)
+          have hP0 : (0 : secp256k1.toAffine.Point) = Point.some x y h :=
+            add_left_cancel (show k • Point.some x y h + 0
+              = k • Point.some x y h + Point.some x y h by rw [add_zero]; exact h1.symm)
+          exact Point.some_ne_zero h hP0.symm
         · have hYneg : Yk1 = -Yk := by linear_combination hs
           have hneg : Point.some Xk1 Yk1 hk1_ns = -Point.some Xk Yk hk_ns := by
             rw [Point.neg_some, Point.some.injEq]

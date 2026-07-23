@@ -15,8 +15,10 @@ tiers.
 
 ## Tiers (cumulative: `medium ⊇ small`, `large ⊇ medium`)
 
-- **small** — the live snapshot only: `STATUS.md`, `tasks/NEXT.md`, `data/stats.json`,
-  `data/frontier_map.json`. Enough to know the counts, the active goal, and where to start.
+- **small** — the live snapshot only: `STATUS.md`,
+  `repo/ECDLP_DECISION_SUBSTRATE.json`, `tasks/NEXT.md`, `data/stats.json`,
+  `data/frontier_map.json`. Enough to know the exact target, route decisions,
+  counts, active goal, and where to start.
 - **medium** — adds orientation and the ledger: `README.md`, `AGENTS.md`, `VERIFIED.md`,
   `BARRIERS.md`, the security-scope and foundations notes, and `experiments/HYPOTHESES.yaml`.
 - **large** — adds the full machine views: `data/knowledge_graph.json`,

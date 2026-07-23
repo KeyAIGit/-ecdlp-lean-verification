@@ -24,8 +24,13 @@ name: Docs sync
 #     data/knowledge_graph.json, .md           (build_knowledge_graph.py)
 #     COVERAGE.md                              (coverage_report.py)
 #     STATUS.md                                (gen_status.py)
+#     data/result_registry.json                (gen_result_registry.py)
+#     Ecdlp/LedgerAxiomAudit.lean              (gen_axiom_audit.py)
+#     data/source_registry.json                (gen_source_registry.py)
+#     repo/ECDLP_DECISION_SUBSTRATE.md         (build_ecdlp_decision_view.py)
+#     bundles/MANIFEST.json                    (export_agent_bundle.py)
 #   SITE  (git-log-derived; committed on main, not PR-gated):
-#     dashboard.html, index.html               (build_dashboard.py)
+#     dashboard.html, index.html, explore.html (build_dashboard.py)
 
 on:
   push:
@@ -99,13 +104,16 @@ env:
     COVERAGE.md
     STATUS.md
     data/result_registry.json
+    Ecdlp/LedgerAxiomAudit.lean
     data/source_registry.json
+    repo/ECDLP_DECISION_SUBSTRATE.md
     bundles/MANIFEST.json
   # SITE pages — derived partly from git history (build milestones). Committed on main,
   # never PR-drift-gated (they cannot be reproduced from committed sources alone).
   DERIVED_SITE: >-
     dashboard.html
     index.html
+    explore.html
 
 jobs:
   docs-sync:
@@ -121,32 +129,46 @@ jobs:
         run: python3 scripts/gen_stats.py
       - name: Frontier map (data/frontier_map.json)
         run: python3 scripts/build_frontier_map.py
+      - name: Result registry (data/result_registry.json — Lean decls vs VERIFIED.md citations)
+        run: python3 scripts/gen_result_registry.py
+      - name: Full-ledger axiom audit
+        run: python3 scripts/gen_axiom_audit.py
       - name: Knowledge graph (data/knowledge_graph.json + .md)
         run: python3 scripts/build_knowledge_graph.py
-      - name: Dashboard + landing page (dashboard.html, index.html)
-        run: python3 scripts/build_dashboard.py
       - name: Coverage report (COVERAGE.md)
         run: python3 scripts/coverage_report.py
       - name: Canonical snapshot (STATUS.md)
         run: python3 scripts/gen_status.py
-      - name: Result registry (data/result_registry.json — Lean decls vs VERIFIED.md citations)
-        run: python3 scripts/gen_result_registry.py
       - name: Source registry (data/source_registry.json — cited works ↔ docs provenance)
         run: python3 scripts/gen_source_registry.py
+      - name: ECDLP decision view (repo/ECDLP_DECISION_SUBSTRATE.md)
+        run: python3 scripts/build_ecdlp_decision_view.py
       # Regenerated LAST: the manifest records byte sizes of the tier files above
       # (STATUS.md, COVERAGE.md, knowledge_graph.json, …), so its inputs must be fresh first.
       - name: Agent-bundle manifest (bundles/MANIFEST.json)
         run: python3 scripts/export_agent_bundle.py --manifest
+      - name: Dashboard + public site (dashboard.html, index.html, explore.html)
+        run: python3 scripts/build_dashboard.py
 
       # ---- consistency gate: no retired headline counts, canonical figure present ----
       - name: Count-consistency gate
         run: python3 scripts/check_counts.py
       - name: Research OS consistency gate
         run: python3 scripts/check_status_consistency.py
+      - name: Formal-substrate architecture gate
+        run: python3 scripts/check_formal_substrate.py
+      - name: ECDLP decision-substrate gate
+        run: python3 scripts/check_ecdlp_decision_substrate.py
+      - name: Candidate-evaluation framework tests
+        run: python3 experiments/framework/test_framework.py
       - name: Repository artifact manifest gate
         run: python3 scripts/check_repo_artifacts.py
       - name: Result-registry gate (VERIFIED.md citations resolve to Lean source)
         run: python3 scripts/gen_result_registry.py --check
+      - name: Full-ledger axiom-audit generation gate
+        run: python3 scripts/gen_axiom_audit.py --check
+      - name: Generated-artifact fixpoint gate
+        run: python3 scripts/check_generated_fixpoint.py --check
       - name: Source-registry gate (cited works ↔ docs provenance in sync)
         run: python3 scripts/gen_source_registry.py --check
 
@@ -170,9 +192,11 @@ jobs:
         run: |
           echo "::error::Derived artifacts are stale. Run ALL the generators locally (in this order) and commit the result:"
           echo "  python3 scripts/gen_stats.py && python3 scripts/build_frontier_map.py"
+          echo "  python3 scripts/gen_result_registry.py && python3 scripts/gen_axiom_audit.py"
           echo "  python3 scripts/build_knowledge_graph.py && python3 scripts/coverage_report.py"
-          echo "  python3 scripts/gen_status.py && python3 scripts/gen_result_registry.py"
-          echo "  python3 scripts/gen_source_registry.py && python3 scripts/export_agent_bundle.py --manifest"
+          echo "  python3 scripts/gen_status.py"
+          echo "  python3 scripts/gen_source_registry.py && python3 scripts/build_ecdlp_decision_view.py"
+          echo "  python3 scripts/export_agent_bundle.py --manifest"
           git --no-pager diff -- $DERIVED_PURE
           exit 1
 

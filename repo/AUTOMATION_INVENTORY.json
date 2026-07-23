@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "proof_authority": "Lean kernel and blocking CI only",
+    "external_spend": "Manual dispatch or a paths-scoped integration self-test only; never scheduled",
+    "parked_experiments": "Decision RS-2026-07-22-001 selected no route. Hypothesis-generation workflows remain manual and must not run until a superseding decision selects one route and both tasks/NEXT.md and experiments/HYPOTHESES.yaml explicitly authorize it",
+    "merge": "No workflow in this inventory is authorized to merge the architecture branch"
+  },
+  "workflows": [
+    {
+      "file": ".github/workflows/ci.yml",
+      "class": "core_gate",
+      "trigger_policy": "push_pr_manual",
+      "disposition": "keep",
+      "spends_external_budget": false,
+      "reason": "Blocking proof, trust, registry, and architecture verification."
+    },
+    {
+      "file": ".github/workflows/docs-sync.yml",
+      "class": "core_gate",
+      "trigger_policy": "scoped_push_pr_manual",
+      "disposition": "keep",
+      "spends_external_budget": false,
+      "reason": "Regenerates and drift-gates canonical derived artifacts."
+    },
+    {
+      "file": ".github/workflows/n7-stem-check.yml",
+      "class": "proof_diagnostic",
+      "trigger_policy": "target_push_or_manual",
+      "disposition": "keep_conditional",
+      "spends_external_budget": false,
+      "reason": "Elaborates the blocked N7 stem when that stem changes."
+    },
+    {
+      "file": ".github/workflows/p0-experiment-ci.yml",
+      "class": "experiment_gate",
+      "trigger_policy": "experiment_pr_or_manual",
+      "disposition": "keep_conditional",
+      "spends_external_budget": false,
+      "reason": "Replays existing experiment correctness checks; does not authorize new hypotheses."
+    },
+    {
+      "file": ".github/workflows/server-run.yml",
+      "class": "proof_infrastructure",
+      "trigger_policy": "manual_only",
+      "disposition": "keep",
+      "spends_external_budget": false,
+      "reason": "Manual warm Lean/CAS precheck; never a trust root."
+    },
+    {
+      "file": ".github/workflows/server-bootstrap.yml",
+      "class": "proof_infrastructure",
+      "trigger_policy": "manual_only",
+      "disposition": "break_glass",
+      "spends_external_budget": false,
+      "reason": "One-time server recovery/bootstrap path."
+    },
+    {
+      "file": ".github/workflows/agent-day.yml",
+      "class": "model_prover",
+      "trigger_policy": "manual_only",
+      "disposition": "park",
+      "spends_external_budget": true,
+      "reason": "No paid proof queue entries are authorized after the select-none route decision."
+    },
+    {
+      "file": ".github/workflows/agent-prove.yml",
+      "class": "model_prover",
+      "trigger_policy": "manual_only",
+      "disposition": "park",
+      "spends_external_budget": true,
+      "reason": "Draft-producing model work is deferred until a route or formal target is explicitly selected."
+    },
+    {
+      "file": ".github/workflows/autonomous-engine.yml",
+      "class": "model_prover",
+      "trigger_policy": "manual_only",
+      "disposition": "park",
+      "spends_external_budget": true,
+      "reason": "Discovery plus proof generation is outside monitored candidate intake after a select-none decision."
+    },
+    {
+      "file": ".github/workflows/prove.yml",
+      "class": "model_prover",
+      "trigger_policy": "manual_only",
+      "disposition": "park",
+      "spends_external_budget": true,
+      "reason": "Formal frontier nodes are mapped but none is selected merely because it is open."
+    },
+    {
+      "file": ".github/workflows/kimi-agent-prover.yml",
+      "class": "model_prover",
+      "trigger_policy": "manual_only",
+      "disposition": "park",
+      "spends_external_budget": true,
+      "reason": "Model drafting is deferred; the decision layer assigns no active proof target."
+    },
+    {
+      "file": ".github/workflows/explore-pipeline.yml",
+      "class": "hypothesis_generation",
+      "trigger_policy": "manual_only",
+      "disposition": "park",
+      "spends_external_budget": true,
+      "reason": "All experimental hypotheses remain parked after RS-2026-07-22-001 selected no route."
+    },
+    {
+      "file": ".github/workflows/hypothesis-explore.yml",
+      "class": "hypothesis_generation",
+      "trigger_policy": "manual_only",
+      "disposition": "park",
+      "spends_external_budget": true,
+      "reason": "New hypothesis generation is deferred until new evidence triggers a superseding route-selection decision."
+    },
+    {
+      "file": ".github/workflows/kimi-repo-study.yml",
+      "class": "hypothesis_generation",
+      "trigger_policy": "manual_only",
+      "disposition": "park",
+      "spends_external_budget": true,
+      "reason": "Next-theorem proposals require a newly selected route rather than claim-count priority."
+    },
+    {
+      "file": ".github/workflows/anthropic-smoke.yml",
+      "class": "integration_smoke",
+      "trigger_policy": "manual_or_self_test",
+      "disposition": "review_for_retirement",
+      "spends_external_budget": true,
+      "reason": "Useful only when changing the integration or its secret."
+    },
+    {
+      "file": ".github/workflows/prover-smoke-test.yml",
+      "class": "integration_smoke",
+      "trigger_policy": "manual_or_self_test",
+      "disposition": "review_for_retirement",
+      "spends_external_budget": true,
+      "reason": "Self-test surface duplicates newer manual prover workflows."
+    },
+    {
+      "file": ".github/workflows/prover-target-attempt.yml",
+      "class": "integration_smoke",
+      "trigger_policy": "manual_or_self_test",
+      "disposition": "park",
+      "spends_external_budget": true,
+      "reason": "No target is currently registered in the paid attempt queue."
+    }
+  ]
+}

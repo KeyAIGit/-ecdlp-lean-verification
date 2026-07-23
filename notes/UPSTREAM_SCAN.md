@@ -1,5 +1,10 @@
 # Upstream-existence scan — is it already formalized in Mathlib?
 
+> **Dated research memory.** The exact 2026-07-22 source-tree audit is recorded
+> in `repo/ECDLP_DECISION_SUBSTRATE.json`, including the pinned and observed
+> Mathlib commits and the lexical-method caveat. Upstream PR status can change;
+> this note does not authorize a port.
+
 *Engine artifact.* An automated multi-agent scan (`upstream-existence-scanner` workflow) of
 mathlib4 master + open PRs + Lean Zulip, for each open ECDLP target / barrier: does a Lean 4
 formalization already exist (free import / stalled PR / genuinely nowhere)? This is the
@@ -18,7 +23,7 @@ Things that exist in Mathlib master (hence already in pinned v4.31.0, adoptable 
 
 | Rank | Object | Where | Effort | Value for ECDLP |
 |---|---|---|---|---|
-| 1 | **Division polynomials ψₙ / φₙ / ωₙ** (defined as the normalised EDS) | master: `Mathlib/AlgebraicGeometry/EllipticCurve/DivisionPolynomial/Basic.lean` + `Degree.lean` — https://leanprover-community.github.io/mathlib4_docs/Mathlib/AlgebraicGeometry/EllipticCurve/DivisionPolynomial/Basic.html (merged PRs #6703, #13399, #10878, #14063) | **Zero** — plain import | The single most valuable free asset: ψₙ cuts out n-torsion x-coordinates and is the substrate for any torsion/Weil-pairing/Semaev work. |
+| 1 | **Division-polynomial `preΨ` / `ΨSq` / `Φ` infrastructure** (from the normalised EDS) | master: `Mathlib/AlgebraicGeometry/EllipticCurve/DivisionPolynomial/Basic.lean` + `Degree.lean` — https://leanprover-community.github.io/mathlib4_docs/Mathlib/AlgebraicGeometry/EllipticCurve/DivisionPolynomial/Basic.html (merged PRs #6703, #13399, #10878, #14063) | **Zero** — plain import | Valuable x-coordinate infrastructure. The audited `Basic.lean` still has a TODO for a bivariate `ωₙ`, and Mathlib does not supply the general point-`nsmul` bridge. |
 | 2 | **Rank-1 elliptic divisibility sequences** — `IsEllSequence`, `IsEllDivSequence`, `normEDS` over ℤ | master: `Mathlib/NumberTheory/EllipticDivisibilitySequence.lean` — https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/EllipticDivisibilitySequence.html (PRs #10814, #13786) | **Zero** — plain import | Foundation for divisibility/torsion recurrences; underlies the division polynomials above. |
 | 3 | **Weierstrass group law** — `WeierstrassCurve.Affine.Point` (also Projective/Jacobian) `AddCommGroup`, plus base-change (`WeierstrassCurve.map`) and variable-change | master: https://leanprover-community.github.io/mathlib4_docs/Mathlib/AlgebraicGeometry/EllipticCurve/Affine/Point.html ; 2-torsion unit formulas in `Jacobian/Formula.lean`, `Projective/Formula.lean` | **Zero** — plain import | The group structure every ECDLP statement quantifies over; also lets you *instantiate* P-256 as a short-Weierstrass curve by transcription. |
 | 4 | **Rank-1 net-relation layer** — `atom` / `atomRel` / `rel` / `IsEllipticNet := ∀ p q r s : ℤ, rel = 0`, with `map_*` naturality (the "recently-found net-relation port") | open PR #25989 (branch `Multramate:EllipticNet`) https://github.com/leanprover-community/mathlib4/pull/25989 ; groundwork PRs #13155 https://github.com/leanprover-community/mathlib4/pull/13155 , #13057 ; zsmul-via-ψₙ PR #13782 https://github.com/leanprover-community/mathlib4/pull/13782 | **Low** — PR-transcription onto v4.31 | Same class of port already adopted; a 4-index reformulation of Stange's net axiom. NB: rank-1 only — does *not* deliver general multi-index nets (see §3). |
@@ -57,4 +62,17 @@ The real gaps — the publishable no-go map. Each is the *precise missing object
 
 ## Bottom line
 
-The **generic algebraic scaffolding** of the ECDLP is in surprisingly good shape upstream: the Weierstrass group law across three coordinate models, base/variable change, the full division-polynomial namespace (ψₙ/φₙ/ωₙ), rank-1 elliptic divisibility sequences, plus lattice/geometry-of-numbers and multivariate-polynomial/resultant infrastructure are all already in pinned Mathlib v4.31 and adoptable at zero cost. What is *entirely* missing is every object that actually makes ECDLP-specific mathematics or hardness go: no Weil pairing and no `E[n] ≅ (ℤ/n)²`, no Semaev polynomials, no genuine multi-index nets, no isogeny/Frobenius layer, no point-counting (so no named-curve group orders), and — on the attack side — no LLL/SVP/CVP, no Hidden Number Problem, and no generic-group cost model. In short: the *foundation* is largely formalized, the *cryptographically load-bearing superstructure* is a green field. The **highest-ROI next port** is the **division-polynomial torsion bridge `ψₙ(P)=0 ⟺ P ∈ E[n]`**: the ψₙ machinery is already free by import, the open zsmul-via-ψₙ PR #13782 supplies the missing mul-by-n link to rebase against, and this single lemma is the keystone that unlocks n-torsion structure, the Weil pairing, and downstream ECDLP statements — the largest payoff for the least from-scratch work.
+The **generic algebraic scaffolding** of the ECDLP is in good shape upstream:
+the Weierstrass group law, base/variable change, division-polynomial
+`preΨ`/`ΨSq`/`Φ` infrastructure, rank-1 elliptic divisibility sequences,
+geometry-of-numbers primitives, and multivariate-polynomial/resultant
+infrastructure are available in pinned Mathlib v4.31. The audited tree still
+lacks the project-ready ECDLP superstructure: no Weil pairing or
+`E[n] ≅ (ℤ/n)²`, no Semaev family, no genuine multi-index nets, no
+isogeny/Frobenius layer, no point counting for named curves, no LLL/SVP/CVP or
+HNP, and no general generic-group cost model.
+
+The point/division-polynomial bridge remains a legitimate formal frontier, but
+it is no longer declared the unconditional "highest-ROI next port." It is
+`build_if_selected`/`retain_frontier` work: resume it when a surviving route in
+`repo/ECDLP_DECISION_SUBSTRATE.json` needs the general theorem.

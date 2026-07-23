@@ -62,6 +62,9 @@ import Ecdlp.Proved.CoprimePsi3Psi5
 import Ecdlp.Proved.CoprimePsi2Psi5
 import Ecdlp.Proved.CoprimePsi3Psi7
 import Ecdlp.Proved.CoprimePsi2Psi7
+import Ecdlp.Proved.CoprimePsi5Psi7
+import Ecdlp.Proved.CoprimePsi4Psi5
+import Ecdlp.Proved.CoprimePsi4Psi7
 import Ecdlp.Proved.CoprimePsi2PrePsi4
 import Ecdlp.Proved.CoprimeCommonRoot
 import Ecdlp.Proved.GlvScalarAction
@@ -155,6 +158,8 @@ import Ecdlp.Proved.MultiplicationYTripleFormula
 import Ecdlp.Proved.DivisionPolynomialEllSequence
 import Ecdlp.Proved.DivisionPolynomialPointDiff
 import Ecdlp.Proved.DivisionPolynomialPointBridge
+import Ecdlp.Proved.DivisionPolynomialPointDoubling
+import Ecdlp.Proved.PrePsiSomos4
 import Ecdlp.Proved.SecantAddX
 import Ecdlp.Proved.OmegaRecurrenceAnchors
 import Ecdlp.Proved.NsmulCoordsBaseOne
@@ -162,4 +167,5 @@ import Ecdlp.Proved.NsmulCoordsBaseTwo
 import Ecdlp.Proved.QuadrupleMultiplicationYFormula
 import Ecdlp.Proved.NsmulCoordsBaseFour
 import Ecdlp.Proved.FourTorsionBridge
+import Ecdlp.Proved.FourTorsionCount
 import Ecdlp.Proved.CompressedDivisionPoly

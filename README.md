@@ -9,7 +9,8 @@ It is a *verified research substrate* plus an honest no-go map of what is provab
 vs blocked — **not** a solution to any hard problem.
 
 This file is the front door for humans and low-context agents alike. Strategy lives in
-`ROADMAP.md`; live numbers live in `STATUS.md`; agents start at `AGENTS.md`.
+`ROADMAP.md`; live numbers live in `STATUS.md`; exact attack-route decisions live in
+`repo/ECDLP_DECISION_SUBSTRATE.json`; agents start at `AGENTS.md`.
 
 ## The one invariant (never violate)
 
@@ -23,9 +24,17 @@ intentionally never built or imported, so the invariant holds.
 **`STATUS.md`** — the single generated snapshot (ledger rows, distinct results, proved
 modules, `sorry` = 0, custom axioms = 0, corpus coverage). It is produced by
 `scripts/gen_status.py` from `data/stats.json` (which **recounts the `VERIFIED.md`
-ledger table mechanically**) and `data/frontier_map.json`. Do not quote a count from any
+ledger table mechanically**), `data/frontier_map.json`, and the ECDLP decision substrate.
+Do not quote a count from any
 other doc — prose may be stale; if in doubt, cite STATUS.md. Machine-readable:
 `data/stats.json` · badge endpoint `badges/theorems.json`.
+
+**Current research decision.** `RS-2026-07-22-001` evaluated all 17 registered
+routes and selected none: no audited proposal currently clears the common gate
+for the exact plain single-target objective. This parks experiments and
+conditional foundation work; it does not claim that no future route can work.
+New evidence enters through the candidate-neutral contract in
+`experiments/framework/` and explicit reconsideration triggers.
 
 ## What NOT to claim
 
@@ -64,10 +73,11 @@ The genuinely substantive results — each kernel-checked, each disclosed at its
 - **Semaev summation polynomials `S₃`/`S₄` — first formalized in Lean/Mathlib**, plus a
   division-polynomial / torsion-disjointness ladder (`Ψ₂…Ψ₇` coprimality via explicit
   Bézout certificates) and the early Weil ladder (W1–W3).
-- **Attack-boundary saturation**: Pohlig–Hellman, anti-MOV/Frey–Rück (embedding degree
+- **Audited attack boundaries**: Pohlig–Hellman, anti-MOV/Frey–Rück (embedding degree
   > 100), anti-Smart/SSSA (non-anomalous, ordinary trace), quadratic-twist security —
-  every classical attack statable without a missing Mathlib foundation has a verified
-  node; the rest are named barriers in `BARRIERS.md`.
+  verified structural exclusions at their exact scopes. The detailed attack evidence,
+  target applicability, and unresolved routes are separated in the attack registry and
+  decision substrate; this is not a proof against every classical algorithm.
 
 The rest of the ledger is verified engineering (Mathlib wrappers, protocol-algebra
 identities, instantiations) — honestly ~10–15% substantive, ~85% routine; the split is
@@ -91,7 +101,10 @@ concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofRed
 | `BARRIERS.md` · `TRUST_REPORT.md` · `ABSTRACT_SCOPE.md` | the no-go map and the exact trust/scope boundaries |
 | `ROADMAP.md` | the one strategy document (position, north star, program) |
 | `AGENTS.md` · `CLAUDE.md` · `tasks/NEXT.md` | agent orientation, conventions, active queue |
-| `REPOSITORY_ARCHITECTURE.md` + `repo/ARTIFACTS.yaml` | whole-repo ownership map (read before moving/deleting files) |
+| `REPOSITORY_ARCHITECTURE.md` + `repo/ARTIFACTS.yaml` | exhaustive whole-repo ownership map |
+| `repo/FORMAL_SUBSTRATE.json` | machine-readable result families, critical path, blockers, and release boundary |
+| `repo/ECDLP_DECISION_SUBSTRATE.json` | exact target, threat models, route dispositions, evidence gates, and foundation priority |
+| `experiments/framework/` | candidate-neutral run contract and independent toy-curve output validator; no hypothesis authorization |
 | `experiments/` · `domains/` · `notes/` (`notes/INDEX.md`) | validated experiments, domain registry, curated research memory |
 | `archive/` | frozen history: superseded docs, raw traces, the undeployed platform scaffold |
 
@@ -100,7 +113,7 @@ concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofRed
 Core verified file (no Mathlib): `lean Ecdlp/Secp256k1Verified.lean`.
 Full project: `lake exe cache get && lake build`.
 Toolchain pinned in `lean-toolchain` (Lean v4.31.0); Mathlib rev pinned in `lakefile.toml`.
-CI is the verifier of record: build + no-sorry gate + axiom audit + ten consistency gates
+CI is the verifier of record: build + no-sorry gate + axiom audit + consistency gates
 (counts are recounted from the ledger table, so prose cannot silently drift). See `SETUP.md`.
 
 ## The engine (honest)
@@ -124,7 +137,8 @@ not authorship. License and the final author list are set by the maintainer.
 
 ## Where to go deeper
 
-`STATUS.md` (canonical snapshot) · `ROADMAP.md` (strategy & program) · `VERIFIED.md`
+`STATUS.md` (canonical snapshot) · `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
+`ROADMAP.md` (strategy & program) · `VERIFIED.md`
 (the ledger) · `BARRIERS.md` (the no-go map) · `TRUST_REPORT.md` (what "verified" rests
 on) · `PUBLISHABLE_UNITS.md` (the 3 standalone results) · `notes/INDEX.md` (research
 memory) · `SETUP.md` (build + CI + regen) · `tasks/NEXT.md` (active queue).

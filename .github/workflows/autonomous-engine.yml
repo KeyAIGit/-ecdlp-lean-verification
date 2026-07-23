@@ -1,6 +1,6 @@
 name: Autonomous engine (discover → prove → draft PR)
 
-# The full autonomous research loop, on a schedule and with zero human prompting:
+# The full autonomous research loop, available only by explicit manual dispatch:
 #
 #   1. DISCOVER  scripts/autonomous_discover.py asks the model for the next batch of
 #                genuinely-closeable, non-barrier-blocked targets (the deterministic corpus

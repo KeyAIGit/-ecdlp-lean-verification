@@ -11,13 +11,19 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4827
+        "bytes": 5232
+      },
+      {
+        "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
+        "reason": "exact target, route dispositions, evidence gates, and foundation priority",
+        "exists": true,
+        "bytes": 55074
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 19827
+        "bytes": 5307
       },
       {
         "path": "data/stats.json",
@@ -37,13 +43,19 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4827
+        "bytes": 5232
+      },
+      {
+        "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
+        "reason": "exact target, route dispositions, evidence gates, and foundation priority",
+        "exists": true,
+        "bytes": 55074
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 19827
+        "bytes": 5307
       },
       {
         "path": "data/stats.json",
@@ -61,43 +73,43 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 8268
+        "bytes": 9329
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 7906
+        "bytes": 8345
       },
       {
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 145117
+        "bytes": 148718
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 35086
+        "bytes": 35680
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
         "reason": "precise scope of the generic-hardness claim (not unconditional)",
         "exists": true,
-        "bytes": 6124
+        "bytes": 6416
       },
       {
         "path": "notes/FOUNDATIONS.md",
         "reason": "the Weil/Semaev foundation ladder and its open rungs",
         "exists": true,
-        "bytes": 10477
+        "bytes": 10238
       },
       {
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 17775
+        "bytes": 21334
       }
     ],
     "large": [
@@ -105,13 +117,19 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4827
+        "bytes": 5232
+      },
+      {
+        "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
+        "reason": "exact target, route dispositions, evidence gates, and foundation priority",
+        "exists": true,
+        "bytes": 55074
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 19827
+        "bytes": 5307
       },
       {
         "path": "data/stats.json",
@@ -129,67 +147,67 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 8268
+        "bytes": 9329
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 7906
+        "bytes": 8345
       },
       {
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 145117
+        "bytes": 148718
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 35086
+        "bytes": 35680
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
         "reason": "precise scope of the generic-hardness claim (not unconditional)",
         "exists": true,
-        "bytes": 6124
+        "bytes": 6416
       },
       {
         "path": "notes/FOUNDATIONS.md",
         "reason": "the Weil/Semaev foundation ladder and its open rungs",
         "exists": true,
-        "bytes": 10477
+        "bytes": 10238
       },
       {
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 17775
+        "bytes": 21334
       },
       {
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 294518
+        "bytes": 472544
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 8058
+        "bytes": 11665
       },
       {
         "path": "PUBLISHABLE_UNITS.md",
         "reason": "the standalone publishable narratives with honest scope",
         "exists": true,
-        "bytes": 21722
+        "bytes": 22110
       },
       {
         "path": "TRUST_REPORT.md",
         "reason": "the trust boundary: what native_decide adds to the TCB",
         "exists": true,
-        "bytes": 17783
+        "bytes": 17293
       }
     ]
   }

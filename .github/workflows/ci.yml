@@ -78,10 +78,34 @@ jobs:
       - name: Check Research OS consistency
         run: python3 scripts/check_status_consistency.py
 
+      - name: Check formal-substrate architecture
+        run: python3 scripts/check_formal_substrate.py
+
+      - name: Check ECDLP decision substrate
+        run: python3 scripts/check_ecdlp_decision_substrate.py
+
+      - name: Check generated ECDLP decision view
+        run: python3 scripts/build_ecdlp_decision_view.py --check
+
+      - name: Test candidate-evaluation framework
+        run: python3 experiments/framework/test_framework.py
+
       # Repo architecture gate: keep the manifest/review packet honest before
       # any cleanup PR can rely on them.
       - name: Check repository artifact manifest
         run: python3 scripts/check_repo_artifacts.py
+
+      - name: Check workflow automation inventory
+        run: python3 scripts/check_automation_inventory.py
+
+      - name: Check remote branch inventory snapshot
+        run: python3 scripts/check_branch_inventory.py
+
+      - name: Test canonical ledger parser
+        run: python3 scripts/test_ledger_utils.py
+
+      - name: Test axiom-output parser
+        run: python3 scripts/test_check_axioms.py
 
       # Provenance gate: every theorem name cited in VERIFIED.md must resolve to an actual
       # declaration in the built Lean source (Ecdlp/ minus Targets/) — catches ledger drift
@@ -89,9 +113,13 @@ jobs:
       - name: Check result registry (VERIFIED.md ↔ Lean source)
         run: python3 scripts/gen_result_registry.py --check
 
+      - name: Check generated full-ledger axiom audit
+        run: python3 scripts/gen_axiom_audit.py --check
+
       # Provenance gate (literature side): every external work the docs cite (Shoup, Nechaev,
       # Semaev, Gaudry, Diem, FGHR, Petit, Pollard, Pohlig–Hellman, Schoof, Frey–Rück, MOV,
-      # Smart) must have a registry entry, and its recorded where_used must match the current
+      # Smart, SEC 2, GLV, Shor, Luo) must have a registry entry, and its recorded where_used
+      # must match the current
       # docs — catches a citation added/moved without updating the bibliography provenance.
       - name: Check source registry (docs ↔ bibliography provenance)
         run: python3 scripts/gen_source_registry.py --check
@@ -101,6 +129,9 @@ jobs:
       # sync with the tier definitions in scripts/export_agent_bundle.py.
       - name: Check agent-bundle manifest
         run: python3 scripts/export_agent_bundle.py --check
+
+      - name: Check generated-artifact fixpoint
+        run: python3 scripts/check_generated_fixpoint.py --check
 
       # Domain-registry honesty gate (Phase-1 platform layer): a 'live' domain must
       # have its slot files present; 'planned'/'exploratory' placeholders must claim
@@ -120,11 +151,11 @@ jobs:
       # README/markdown files that legitimately discuss `sorry`.
       - name: Ensure no incomplete proofs remain (built proof base only)
         run: |
-          # AxiomAudit.lean is a meta/audit harness (only `#print axioms` + docs that
-          # legitimately mention `sorryAx`); it contains no proofs and is not imported,
-          # so exclude it to avoid a prose false-positive. Its `sorryAx` check is the
-          # real, robust no-sorry gate for the audited theorems (scripts/check_axioms.py).
-          if grep -rniI --include='*.lean' --exclude-dir=Targets --exclude='AxiomAudit.lean' 'sorry' Ecdlp.lean Ecdlp/ ResearchOS/ ResearchOS.lean; then
+          # The AxiomAudit harnesses contain only `#print axioms` commands plus docs that
+          # legitimately mention `sorryAx`; they contain no proofs and are not imported,
+          # so exclude both to avoid a prose false-positive. The generated ledger audit's
+          # `sorryAx` check is the robust no-sorry gate (scripts/check_axioms.py).
+          if grep -rniI --include='*.lean' --exclude-dir=Targets --exclude='*AxiomAudit.lean' 'sorry' Ecdlp.lean Ecdlp/ ResearchOS/ ResearchOS.lean; then
             echo "::error::Found 'sorry' in a built Lean file - a proof is incomplete"
             exit 1
           fi
@@ -176,10 +207,10 @@ jobs:
       # also surfaces exactly which results extend the TCB via native_decide.
       - name: Axiom audit (no sorryAx, no custom axioms)
         run: |
-          lake env lean Ecdlp/AxiomAudit.lean > axiom_audit.txt 2>&1 \
+          lake env lean Ecdlp/LedgerAxiomAudit.lean > axiom_audit.txt 2>&1 \
             || { echo "::error::axiom audit file failed to elaborate"; cat axiom_audit.txt; exit 1; }
           cat axiom_audit.txt
-          python3 scripts/check_axioms.py axiom_audit.txt
+          python3 scripts/check_axioms.py axiom_audit.txt data/result_registry.json
 
       # Open conjecture stems in Ecdlp/Targets/ are not part of the build graph. This
       # step typechecks them so the generator's output is at least well-formed Lean.

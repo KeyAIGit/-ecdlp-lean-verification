@@ -3,22 +3,27 @@
 Single source of truth for "what this is, what's done, what to run next". Read this
 together with `VERIFIED.md` (the proved-theorem ledger) and `BARRIERS.md` (what's
 blocked and why). The prover-loop protocol is §"Prover-loop protocol" below;
-conventions: `CLAUDE.md`. **When running as the unattended hourly cycle, `AUTONOMY.md`
-governs when to act alone vs. escalate** (merge authority is delegated but bounded; the
-kernel/CI remains the sole judge).
-For a small-context start, read `STATUS.md` first, then `tasks/NEXT.md`; load
+conventions: `CLAUDE.md`. **When an autonomous cycle is explicitly dispatched,
+`AUTONOMY.md` governs when to act alone vs. escalate** (merge authority is
+delegated but bounded; the kernel/CI remains the sole judge).
+For a small-context start, read `STATUS.md`, then
+`repo/ECDLP_DECISION_SUBSTRATE.json`, then `tasks/NEXT.md`; load
 `experiments/HYPOTHESES.yaml` when the task touches hypotheses, experiments,
 frontier interpretation, or publication planning. Before moving, deleting, or
-reclassifying files, read `REPOSITORY_ARCHITECTURE.md` and `repo/ARTIFACTS.yaml`.
+reclassifying files, read `REPOSITORY_ARCHITECTURE.md`, `repo/ARTIFACTS.yaml`,
+`repo/FORMAL_SUBSTRATE.json`, and `repo/ECDLP_DECISION_SUBSTRATE.json`.
+`repo/FINAL_REVIEW_PACKET.md` is the frozen review contract for draft PR #235,
+not the final packet for the current architecture branch. Neither review
+grants merge or branch-deletion authority.
 
 ## What this project actually is (read this first)
 A **machine-checked formalization** of the mathematics of ECDLP / elliptic-curve
-discrete-log cryptography in **Lean 4 + Mathlib**. It is a *verified knowledge
-asset*, NOT an attempt to break secp256k1. Breaking ECDLP on secp256k1 (~2^128
-work) is infeasible; no "higher problem" gives a shortcut. The valuable, achievable
-program is: **a verified formal library of EC/DL cryptography** — which subsumes the
-ECDLP formalization and yields surplus (protocol library, hardness foundations,
-barriers map, potential upstream Mathlib contributions).
+discrete-log cryptography in **Lean 4 + Mathlib**. It is a verified knowledge and
+decision asset for investigating the exact secp256k1 problem. It contains no
+break and claims no shortcut: the best audited plain classical baseline remains
+roughly `2^128` work, and no validated subgeneric route is registered. The
+durable program is a verified EC/DL library plus a falsifiable evaluation layer
+for any future candidate.
 
 ## The one invariant
 Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorry`/
@@ -45,9 +50,10 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
   keystone `#E(𝔽_p) = n` is proved (`CurveCardinalityExact.lean`), so `E(𝔽_p) = ⟨G⟩`. (4) **machine-checked primality** of `p` and `n` (full
   Pratt certificates, `scripts/pratt_certificate.py`) — the `[Fact …]` hypotheses
   are now discharged by real instances, so those theorems are effectively
-  unconditional. (5) **attack-landscape saturation**: Pohlig–Hellman, anti-MOV
+  unconditional. (5) **audited structural attack boundaries**: Pohlig–Hellman, anti-MOV
   (embedding degree > 100), anti-Smart/SSSA + supersingular (trace of Frobenius) —
-  every classical attack formalizable without a missing Mathlib foundation. (6)
+  exact exclusions for the represented models, not a theorem against every
+  classical algorithm. (6)
   **deep-foundations ladder** toward the Weil pairing: secp256k1 division
   polynomials `Ψ₂Sq`, `Ψ₃` and the 2-torsion↔division-poly bridge
   (`DivisionPolynomial.lean`, `TwoTorsion.lean`, `notes/FOUNDATIONS.md`).
@@ -64,7 +70,8 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 ## Context bundles (what to load if your window is small)
 `bundles/MANIFEST.json` is the routing table for three cumulative tiers (source of truth:
 `TIERS` in `scripts/export_agent_bundle.py`):
-- **small** — the live snapshot: `STATUS.md`, `tasks/NEXT.md`, `data/stats.json`,
+- **small** — the live snapshot: `STATUS.md`,
+  `repo/ECDLP_DECISION_SUBSTRATE.json`, `tasks/NEXT.md`, `data/stats.json`,
   `data/frontier_map.json`.
 - **medium** — adds `README.md`, this file, `VERIFIED.md`, `BARRIERS.md`,
   `notes/SECURITY_SCOPE.md`, `notes/FOUNDATIONS.md`, `experiments/HYPOTHESES.yaml`.
@@ -80,17 +87,19 @@ committed — see `bundles/README.md`).
 local Mathlib source for exact API. 3. Push → CI (or local build). 4. On green: add a
 `VERIFIED.md` row, open a PR, squash-merge to `main`. 5. Reset branch to `main`, repeat.
 
-## Next high-value targets
-- **Deep-foundations ladder** (`notes/FOUNDATIONS.md`): next rungs are division-
-  polynomial degrees → torsion point counts, then the general `ψₙ`-vanishing ⟺
-  `n`-torsion equivalence (rung 4), then `E[n] ≅ (ℤ/n)²` and the **Weil pairing**
-  (rungs 5–6, the multi-month core; best on the server / human-directed).
-- Other standard curves (P-256, Curve25519) via the same machinery.
-- Drafting missing Mathlib foundations (Weil pairing, Semaev polynomials, cost model)
-  for upstream contribution.
-- Connect the rented server as an autonomous prover node (`notes/SERVER_RUNBOOK.md`)
-  — warm `lake env lean` ⇒ 10–50× faster than CI. *(Done: primality certificates
-  for `p`/`n` — no longer a target.)*
+## Current work selection
+- Route decision `RS-2026-07-22-001` evaluated all 17 registered routes and
+  selected none. All cryptanalytic hypotheses remain parked.
+- `TASK-008` accepts new primary evidence or a concrete proposal and checks it
+  against the common gate. Intake does not authorize proof generation or an
+  experiment by itself.
+- The division-polynomial, torsion, Weil, Semaev, cost-model, lattice, isogeny,
+  p-adic, and quantum gaps remain mapped assets. None is an active target merely
+  because it is deep or absent from Mathlib.
+- `TASK-009` opens only after a superseding dated decision selects one route and
+  names the smallest foundation needed for its next falsifiable decision.
+- `TASK-010` is a periodic independent adversarial audit. It remains parked
+  until another qualified reviewer is available and is not a merge prerequisite.
 
 ## Prover-loop protocol (formerly AGENT.md)
 

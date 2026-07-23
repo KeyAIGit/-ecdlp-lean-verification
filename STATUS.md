@@ -1,14 +1,15 @@
 # STATUS — canonical snapshot
 
-> **Generated** by `scripts/gen_status.py` from `data/stats.json` + `data/frontier_map.json`.
+> **Generated** by `scripts/gen_status.py` from `data/stats.json`,
+> `data/frontier_map.json`, and `repo/ECDLP_DECISION_SUBSTRATE.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
 | metric | value | source |
 |---|---|---|
-| ledger rows | **292** | `VERIFIED.md` → `data/stats.json` |
-| distinct results | **~253** | `data/stats.json` |
-| proved modules | **158** | `data/stats.json` |
+| ledger rows | **296** | `VERIFIED.md` → `data/stats.json` |
+| distinct results | **~257** | `data/stats.json` |
+| proved modules | **164** | `data/stats.json` |
 | `sorry` | **0** | axiom-audit + no-sorry gate |
 | custom axioms | **0** | axiom-audit gate |
 
@@ -49,20 +50,27 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
   **tactic ladder + human-in-loop** (external model-provers attempted, 0 accepted).
 
 ## Main current bottleneck
-The former bottleneck — point counting **`#E(𝔽_p) = n`**, the strong keystone — is **proved**
-(without Hasse or Schoof, via a curve-specific certificate: `n ∣ #E` and `#E ≤ 2p+1 < 3n` pin
-`#E ∈ {n, 2n}`, and `E[2] = {O}` excludes `2n`; `CurveCardinalityExact.lean`, 2026-07-13). With it, `E(𝔽_p) = ⟨G⟩` (cofactor 1), the
-point group is cyclic, and the GLV eigenvalue + `Module (ℤ/n)` structure + instantiated protocol
-algebra all hold **unconditionally on the full group**. The honest next bottlenecks:
-- the **geometric torsion structure** `E[n] ≅ (ℤ/n)²` (points over field extensions — a genuine
-  Mathlib gap, feeds the Weil pairing);
-- the **Weil ladder W4/W5** (reciprocity, then a bilinear non-degenerate `eₙ`);
-- a general **Hasse bound** in Mathlib — the secp256k1 certificate exploits `j = 0` structure, so
-  **P-256's `#E = n` is still open** and needs Hasse or its own certificate route.
+The current bottleneck is **a missing proposal-level non-generic mechanism, not theorem
+volume**. Decision `RS-2026-07-22-001` evaluated all **17 attack routes** and
+selected **none**: no audited route currently clears the common gate for the exact plain
+single-target objective. The map contains **11 foundation decisions**,
+experiments authorized = **false**, selected route =
+**none**.
+
+The completed `build_now` foundations are `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`.
+They make future candidates comparable and independently checkable; they do not test a parked
+hypothesis. The formal gaps `E[n] ≅ (ℤ/n)²`, Weil reciprocity/pairing, general point-division
+bridges, p-adic formal groups, lattice reduction, isogenies, and quantum circuits remain mapped,
+but none is automatically next merely because Mathlib lacks it. Route selection reopens only
+when new evidence satisfies a recorded reconsideration trigger and the proposal gate.
 
 ## Active work protocol
 The active queue is `tasks/NEXT.md`. Keep it short (3-7 task contracts) so a
 small-context agent can start work without rereading the whole repository.
+
+The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view is generated.
+The candidate-neutral validation contract lives in `experiments/framework/`. Neither file
+authorizes an experiment by itself.
 
 The hypothesis registry is `experiments/HYPOTHESES.yaml`. It records testable
 directions, evidence, and exit criteria; it is not a theorem ledger.
@@ -71,9 +79,11 @@ The drift gate is `scripts/check_status_consistency.py`. Run it whenever stats,
 frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 
 ## Where to go deeper
-`README.md` (the front door) · `tasks/NEXT.md` (active queue) ·
+`README.md` (the front door) · `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
+`tasks/NEXT.md` (active queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
 standalone results) · `ROADMAP.md` (strategy & program) · `VERIFIED.md` (ledger) ·
 `BARRIERS.md` (no-go map) · `notes/FOUNDATIONS.md` (Weil/Semaev ladder) ·
 `notes/POINT_COUNTING_KEYSTONE.md` (the `#E=n` keystone) · `TRUST_REPORT.md` (trust boundary) ·
-`data/frontier_map.json` (queryable per-claim status).
+`data/frontier_map.json` (queryable per-claim status) ·
+`experiments/framework/README.md` (candidate-evaluation contract).

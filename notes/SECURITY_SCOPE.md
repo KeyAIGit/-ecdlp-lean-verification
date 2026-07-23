@@ -28,21 +28,26 @@ composite-order DLP to the largest prime-order subgroup.
 
 2. **Classical only.** **Shor's algorithm** solves ECDLP in *polynomial time* on a quantum
    computer. The bound is a classical-query theorem and provably does **not** extend to
-   quantum adversaries. secp256k1's 128-bit claim is classical-only.
+   quantum adversaries. secp256k1's 128-bit claim is classical-only. The current tracked
+   logical-resource estimate by Luo et al. (2026, arXiv:2607.13816) reports 835 logical
+   qubits and `2^30.63` Toffoli gates for secp256k1; it is a circuit estimate, not evidence
+   that the required fault-tolerant physical hardware exists.
 
-3. **An unconditional lower bound is out of reach today.** ECDLP hardness implies `P ≠ NP`
-   (discrete log is in NP ∩ coNP), and there are **no** known unconditional super-polynomial
-   lower bounds for any natural problem. The generic bound is a *relativized* result (hardness
-   relative to a random-encoding oracle), and relativized separations provably cannot settle
-   real-world complexity.
+3. **An unconditional lower bound is out of reach today.** Current complexity methods do
+   not prove super-polynomial lower bounds for natural problems of this kind. The generic
+   bound is a *relativized* result (hardness relative to a random-encoding oracle), so it
+   does not settle the concrete representation problem.
 
-## What the repo *additionally* proves (the classical landscape is saturated)
+## Additional target-specific exclusions
 
-secp256k1 demonstrably avoids the known **non-generic classical** attacks — each machine-
-checked: embedding degree > 100 (anti-MOV/Frey–Rück, `EmbeddingDegree.lean`), trace `t ≠ 1`
-(anti-Smart/SSSA — not anomalous) and `t ≠ 0` with Hasse (ordinary, not supersingular,
-`TraceOfFrobenius.lean`), prime field (no Weil descent). So every classical attack expressible
-without a missing Mathlib foundation resists — the tractable attack landscape is saturated.
+secp256k1 avoids several important **non-generic classical** special cases:
+embedding degree > 100 (anti-MOV/Frey–Rück, `EmbeddingDegree.lean`), trace `t ≠ 1`
+(anti-Smart/SSSA: not anomalous), and `t ≠ 0` (ordinary, not supersingular,
+`TraceOfFrobenius.lean`). Its prime base field also makes the standard extension-field
+GHS/Weil-descent setup inapplicable, though the repository claims no dedicated Lean
+no-go theorem for that fact. These are exact route exclusions, not a completeness theorem
+over all classical algorithms. The canonical portfolio is
+`repo/ECDLP_DECISION_SUBSTRATE.json`.
 
 ## The one place the numbers are *worse*: the quadratic twist
 
@@ -82,8 +87,8 @@ probabilistic wrapper is standard on paper but **not** in the kernel. Primality 
 of this affects the mathematics — it bounds what "kernel-verified" covers.
 
 **Bottom line.** `Ω(√n)` is a *real, proven* lower bound **for black-box (generic), classical
-algorithms** — which happens to include every attack currently known against secp256k1 — and a
-*well-tested-but-unproven* bound against all classical algorithms (provably false against quantum
-ones). The Lean kernel adds certainty about the theorem *inside the model*, and none about the
-model matching reality. That residual gap is where secp256k1's security stops being mathematics
-and becomes a well-audited bet.
+algorithms** and a *well-tested-but-unproven* expectation for the full plain classical target
+(provably false against quantum algorithms). Non-generic proposals must be evaluated separately.
+The Lean kernel adds certainty about the theorem *inside the model*, and none about the model
+matching every concrete algorithm. That residual gap is the reason the decision substrate keeps
+applicability, evidence, and threat models explicit.

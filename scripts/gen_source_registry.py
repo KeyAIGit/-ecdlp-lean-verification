@@ -35,12 +35,27 @@ OUT = ROOT / "data" / "source_registry.json"
 # provenance map is computed only from hand-authored source-of-truth prose. (data/ holds generated
 # views like knowledge_graph.md; platform/ is the Node app; node_modules/.lake are deps/build.)
 EXCLUDE_DIR_PARTS = {".git", ".lake", "node_modules", "data", "platform", "archive"}
+EXCLUDE_FILES = {"repo/ECDLP_DECISION_SUBSTRATE.md"}
 
 # The canonical bibliography. `aliases` are the surname/acronym tokens the works are cited by in the
 # prose; the scan matches them on word boundaries to compute `where_used`. Keep aliases specific
 # enough not to collide (e.g. "Smart" is only ever the author here). `url`/`doi`/`venue`/`year` are
 # filled only where we are confident; otherwise null + a `note`, never a guess.
 SOURCES: list[dict] = [
+    {
+        "id": "sec2_v2",
+        "title": "SEC 2: Recommended Elliptic Curve Domain Parameters, Version 2.0",
+        "authors": ["Certicom Research"],
+        "year": 2010,
+        "venue": "Standards for Efficient Cryptography (SEC 2), Version 2.0",
+        "url": "https://www.secg.org/sec2-v2.pdf",
+        "doi": None,
+        "aliases": ["SEC 2", "SECG"],
+        "role": "Primary standards source for the secp256k1 field, curve, generator, "
+                "prime subgroup order, and cofactor parameters.",
+        "note": "Dated January 27, 2010; the official SECG site lists Version 2.0 as "
+                "the finalized SEC 2 specification.",
+    },
     {
         "id": "shoup1997",
         "title": "Lower Bounds for Discrete Logarithms and Related Problems",
@@ -105,6 +120,19 @@ SOURCES: list[dict] = [
         "aliases": ["Diem"],
         "role": "Asymptotic index-calculus results for ECDLP over extension fields (Gaudry–Diem–"
                 "Semaev), cited to bound the scope of the Semaev formalization.",
+        "note": None,
+    },
+    {
+        "id": "glv2001",
+        "title": "Faster Point Multiplication on Elliptic Curves with Efficient Endomorphisms",
+        "authors": ["Robert P. Gallant", "Robert J. Lambert", "Scott A. Vanstone"],
+        "year": 2001,
+        "venue": "CRYPTO 2001, LNCS 2139",
+        "url": "https://www.iacr.org/archive/crypto2001/21390189.pdf",
+        "doi": "10.1007/3-540-44647-8_11",
+        "aliases": ["Gallant", "GLV"],
+        "role": "Primary source for the GLV scalar decomposition and the efficient "
+                "endomorphism used by secp256k1.",
         "note": None,
     },
     {
@@ -217,13 +245,46 @@ SOURCES: list[dict] = [
         "note": "Discovered independently by Smart, Satoh–Araki, and Semaev; cited here as "
                 "Smart/SSSA.",
     },
+    {
+        "id": "shor1994",
+        "title": "Algorithms for Quantum Computation: Discrete Logarithms and Factoring",
+        "authors": ["Peter W. Shor"],
+        "year": 1994,
+        "venue": "35th Annual Symposium on Foundations of Computer Science",
+        "url": "https://doi.org/10.1109/SFCS.1994.365700",
+        "doi": "10.1109/SFCS.1994.365700",
+        "aliases": ["Shor"],
+        "role": "Foundational polynomial-time quantum route for discrete logarithms; "
+                "kept separate from the classical threat model.",
+        "note": None,
+    },
+    {
+        "id": "luo2026",
+        "title": "Quantum Algorithm for Elliptic Curve Discrete Logarithms with "
+                 "Space-Efficient Point Addition",
+        "authors": ["Han Luo", "Ziyi Yang", "Jingquan Luo", "Ziruo Wang",
+                    "Yuexin Su", "Xiaoming Sun", "Lvzhou Li", "Tongyang Li"],
+        "year": 2026,
+        "venue": "arXiv:2607.13816",
+        "url": "https://arxiv.org/abs/2607.13816",
+        "doi": None,
+        "aliases": ["Luo"],
+        "role": "Current tracked logical-resource estimate for a quantum ECDLP "
+                "implementation over a 256-bit prime-field curve.",
+        "note": "Reports 835 logical qubits and 2^30.63 Toffoli gates. This is an "
+                "algorithmic logical-resource estimate, not evidence of available "
+                "fault-tolerant hardware.",
+    },
 ]
 
 
 def scan_docs() -> list[Path]:
     out = []
     for p in sorted(ROOT.rglob("*.md")):
-        if any(part in EXCLUDE_DIR_PARTS for part in p.relative_to(ROOT).parts):
+        relative = p.relative_to(ROOT)
+        if any(part in EXCLUDE_DIR_PARTS for part in relative.parts):
+            continue
+        if relative.as_posix() in EXCLUDE_FILES:
             continue
         out.append(p)
     return out
@@ -245,7 +306,8 @@ def compute_where_used(sources: list[dict]) -> dict[str, list[str]]:
         hits = []
         for p, text in texts.items():
             if any(pat.search(text) for pat in pats):
-                hits.append(str(p.relative_to(ROOT)))
+                # Registry paths are repository identifiers, not host paths.
+                hits.append(p.relative_to(ROOT).as_posix())
         where[src["id"]] = sorted(hits)
     return where
 

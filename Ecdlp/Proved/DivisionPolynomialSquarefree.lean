@@ -92,6 +92,58 @@ theorem secp256k1_isCoprime_Ψ₃_derivative :
   rw [key, e6, e3, e0]
   simp
 
+/-! ## `n = 4`: `secp256k1.preΨ₄` is coprime to its derivative -/
+
+/-- `(preΨ₄)′ = 12X⁵ + 840X²` — the derivative of the concrete primitive-4-division
+polynomial `preΨ₄ = 2X⁶ + 280X³ − 784`. -/
+private lemma secp256k1_preΨ₄_derivative :
+    derivative secp256k1.preΨ₄
+      = 12 * X ^ 5 + 840 * X ^ 2 := by
+  rw [secp256k1_preΨ₄]
+  simp only [derivative_add, derivative_sub, derivative_mul, derivative_ofNat,
+    derivative_C, derivative_X_pow, derivative_X, Nat.cast_ofNat, map_ofNat, Nat.reduceSub,
+    zero_mul, mul_zero, zero_add, add_zero, sub_zero, mul_one]
+  ring
+
+/-- Bézout cofactor coefficients (extended-Euclid over `𝔽_p`): `u = u4_3·X³ + u4_0`
+(exponents `≡ 0 mod 3`) and `v = v4_4·X⁴ + v4_1·X` (exponents `≡ 1 mod 3`), with
+`u·preΨ₄ + v·(preΨ₄)′ = 1`. -/
+private def u4_3 : ZMod Secp256k1.p :=
+  11932346038556848923038934480551236428068688794757576075751117448228889638126
+private def u4_0 : ZMod Secp256k1.p :=
+  68382318006221171532032354667120537418448983291060690242689874229160447006352
+private def v4_4 : ZMod Secp256k1.p :=
+  36608638739345923654017172589470763213078546756087258667194008427931463284200
+private def v4_1 : ZMod Secp256k1.p :=
+  3781695532221494540635018627299362573817113066838916128398762743014659283022
+
+/-- **`preΨ₄` (the primitive-4-division polynomial) is squarefree, by certificate: it is
+coprime to its own derivative** (B4 at `n = 4`). The type is exactly
+`IsCoprime preΨ₄ (derivative preΨ₄)` over `𝔽_p`. Explicit Bézout certificate over `𝔽_p`; the
+even-index companion to the odd `n = 3,5,7` squarefreeness. (Downstream, not here: with
+`deg preΨ₄ = 6` this feeds a `𝔽̄_p` count of distinct primitive-4-torsion `x`-coordinates.) -/
+theorem secp256k1_isCoprime_preΨ₄_derivative :
+    IsCoprime (secp256k1.preΨ₄) (derivative secp256k1.preΨ₄) := by
+  refine ⟨C u4_3 * X ^ 3 + C u4_0,
+    C v4_4 * X ^ 4 + C v4_1 * X ^ 1, ?_⟩
+  rw [secp256k1_preΨ₄_derivative, secp256k1_preΨ₄]
+  have e0 : (- 784 * u4_0 : ZMod Secp256k1.p) = 1 := by native_decide
+  have e3 : (- 784 * u4_3 + 280 * u4_0 + 840 * v4_1 : ZMod Secp256k1.p) = 0 := by native_decide
+  have e6 : (280 * u4_3 + 2 * u4_0 + 840 * v4_4 + 12 * v4_1 : ZMod Secp256k1.p) = 0 := by
+    native_decide
+  have e9 : (2 * u4_3 + 12 * v4_4 : ZMod Secp256k1.p) = 0 := by native_decide
+  have key : (C u4_3 * X ^ 3 + C u4_0)
+        * (2 * X ^ 6 + 280 * X ^ 3 - 784)
+      + (C v4_4 * X ^ 4 + C v4_1 * X ^ 1)
+        * (12 * X ^ 5 + 840 * X ^ 2)
+      = C (- 784 * u4_0)
+        + C (- 784 * u4_3 + 280 * u4_0 + 840 * v4_1) * X ^ 3
+        + C (280 * u4_3 + 2 * u4_0 + 840 * v4_4 + 12 * v4_1) * X ^ 6
+        + C (2 * u4_3 + 12 * v4_4) * X ^ 9 := by
+    simp only [map_add, map_sub, map_mul, map_neg, map_ofNat]; ring
+  rw [key, e0, e3, e6, e9]
+  simp
+
 /-! ## `n = 5`: `secp256k1.preΨ' 5` is coprime to its derivative -/
 
 /-- `(preΨ' 5)′ = 60X¹¹ + 23940X⁸ − 70560X⁵ − 1646400X²` — the derivative of the

@@ -2,16 +2,16 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `292 ledger rows / ~253 distinct kernel-verified
-results` (≈39 of the 279 rows are alternate-form or `supporting:` restatements of the
-same underlying fact — e.g. the `ZMod`/ring forms of the GLV eigenvalue, or the
-concrete-`⟨G⟩` instantiations of the abstract protocol suite — so they do
-not add new content). **0 `sorry`, 0 `admit`, 0 open obligations, 0 custom axioms.**
+**Scope of the verified body.** `296 ledger rows / ~257 distinct kernel-verified
+results`. A row may group several supporting declarations; the exact expansion is
+generated in `data/result_registry.json`. The built surface has **0 `sorry`, 0
+`admit`, and 0 custom axioms**. Open target stems are explicitly outside the built
+surface and are counted in `repo/FORMAL_SUBSTRATE.json`.
 
 This document states *precisely* what "verified" rests on, which results extend the
 trusted computing base (TCB) via the Lean compiler, and what CI actually enforces
 versus merely documents. It is the catalogue referenced by the axiom-audit note in
-`VERIFIED.md` and by `Ecdlp/AxiomAudit.lean`.
+`VERIFIED.md` and by the generated `Ecdlp/LedgerAxiomAudit.lean`.
 
 ---
 
@@ -174,10 +174,10 @@ high-stakes fact, and is the reason the trade-off in Section 4 is acceptable.
 (Note: the ~22 internal recursive Pratt sub-lemmas are *not* counted as separate ledger
 results — see the retired "128" figure in `VERIFIED.md`.)
 
-**Count.** Approximately **33 load-bearing results depend on `Lean.ofReduceBool`**
-(buckets (b) + (c) combined, including the two primality theorems) — the disclosed
-compiler-trusted set. The large majority of the ledger is pure-kernel (bucket (a)); for
-the current ledger total see **`STATUS.md`** / `data/stats.json`.
+**Count.** The generated full-ledger axiom audit prints the exact compiler-trusted set
+for every CI run; `scripts/check_axioms.py` reports the count and fails on any
+unregistered or disallowed dependency. The large majority of the ledger is pure-kernel
+(bucket (a)); live ledger totals remain in **`STATUS.md`** / `data/stats.json`.
 
 ---
 
@@ -188,18 +188,18 @@ Distinguishing *machine-enforced* (a red build blocks merge) from *documentation
 
 | Step (ci.yml) | What it does | Enforced? |
 |---|---|---|
-| `Check count consistency (docs)` — `scripts/check_counts.py` | Fails if any **retired** headline count string ("128 theorems verified", "~99 named", …) reappears in the narrative docs, and asserts the canonical strings `"210 ledger rows"` and `"~177 distinct"` are present in `VERIFIED.md`. | **MACHINE-ENFORCED** (substring scan; build-breaking). Note: it pins the *wording*, not the actual theorem count — it cannot detect a genuinely miscounted ledger, only drift back to a retired phrasing. |<!-- count-check: ignore (this row documents the gate and quotes retired strings as examples) -->
+| `Check count consistency (docs)` — `scripts/check_counts.py` | Parses the canonical ledger/stats surfaces, rejects retired headline strings, and checks that generated/current counts agree. | **MACHINE-ENFORCED** (build-breaking), complemented by `gen_stats.py --check` and the generated-artifact fixpoint gate. |
 | `Ensure no incomplete proofs remain` | `grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/` — fails if `sorry`/`admit` text appears in any **built** `.lean` file. `Ecdlp/Targets/` (open stems) is excluded by design. | **MACHINE-ENFORCED**, with the documented scope limit that it is a *text* grep over built files and deliberately skips `Targets/`. |
 | `Ensure no built file imports an open target stem` | `grep` for `import Ecdlp.Targets` outside `Targets/`. Closes the hole where a built file could pull a `sorry`-bearing stem into the build graph (since `sorry` is only a warning). | **MACHINE-ENFORCED.** This is the guard that makes the previous grep sound. |
 | `Fetch prebuilt Mathlib cache` + `Build and verify ALL proofs` — `lake build` | The **kernel** re-checks every built proof term. A `sorry` that reached the build graph, or any type error, fails here. | **MACHINE-ENFORCED.** This is the core verification: a green `lake build` means the kernel accepted every built theorem. |
-| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/AxiomAudit.lean` → `scripts/check_axioms.py` | Runs `#print axioms` on the headline results and fails if any depends on `sorryAx`, `Lean.trustCompiler`, `Lean.guardMsgsAx`, or **any axiom outside** `{propext, Classical.choice, Quot.sound, Lean.ofReduceBool}`. Also reports which audited results use `native_decide`. The checker also fails closed if the audit file does not elaborate (unknown name / Lean error). | **MACHINE-ENFORCED** — this is what upgrades "no custom axioms" from a claim to a checked property, and what surfaces every `Lean.ofReduceBool` dependency. **Caveat:** it audits only the *explicitly listed* theorems in `AxiomAudit.lean` (a representative headline set), not the entire ledger; a custom axiom introduced in an un-listed theorem would not be caught by this gate (though it would still need to pass `lake build`). |
+| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 296 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
 | `Typecheck open target stems (non-blocking)` | `lake env lean` over `Ecdlp/Targets/*.lean`; `continue-on-error: true`. | **DOCUMENTATION/INFO ONLY.** A stem failing to typecheck emits a warning, never blocks. |
 | `Featherless API smoke test`, `Prover target attempt`, report upload | All `continue-on-error: true` and skipped on PRs. | **DOCUMENTATION/INFO ONLY.** Prover orchestration; cannot affect the verification verdict. |
 
 **Net guarantee:** a green `main` machine-guarantees that (i) every built theorem is
 kernel-accepted with no `sorry`, (ii) no built file imports an open stem, and (iii) the
-audited headline results depend only on the allowed trusted base — i.e. no custom
-axioms, and every compiler-trusted (`native_decide`) result is disclosed. The
+all named declarations referenced by the ledger depend only on the allowed trusted
+base — i.e. no custom axioms, and every compiler-trusted (`native_decide`) result is disclosed. The
 count-consistency and stem-typecheck steps are doc-hygiene, not correctness guarantees.
 
 ---
@@ -211,10 +211,10 @@ count-consistency and stem-typecheck steps are doc-hygiene, not correctness guar
   The honest claim is: **no custom axioms, no `sorryAx`** — machine-enforced by the
   axiom-audit gate. It is *not* a claim of axiom-free foundations.
 
-- **~33 load-bearing 256-bit facts are `native_decide` and therefore compiler-trusted.**
-  These extend the TCB beyond the kernel to include the Lean compiler/runtime, via
+- **The concrete compiler-trusted set is emitted by every axiom-audit CI run.**
+  These declarations extend the TCB beyond the kernel to include the Lean compiler/runtime, via
   `Lean.ofReduceBool`. This means CLAUDE.md's invariant "the Lean kernel is the only
-  judge of correctness" is, strictly, **not true for these ~33 rows** — the compiler is
+  judge of correctness" is, strictly, **not true for those declarations** — the compiler is
   also a judge. This is **`archive/docs/REVIEW_DOSSIER.md` finding 9** ("`native_decide` enlarges the
   TCB beyond the kernel"; severity LOW), whose verdict is *ACCEPTABLE trade-off,
   honestly fixable*: the mitigation is correct where it matters most — the primality of

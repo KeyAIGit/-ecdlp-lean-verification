@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "purpose": "External works cited across the substrate, with provenance (where_used) computed from the hand-authored docs. Companion to result_registry.json (theorem-name provenance).",
   "scan_scope": "**/*.md excluding .git, .lake, archive, data, node_modules, platform",
-  "source_count": 13,
+  "source_count": 17,
   "sources": [
     {
       "id": "diem2011",
@@ -103,6 +103,91 @@
         "PUBLISHABLE_UNITS.md",
         "experiments/README.md",
         "experiments/p0_glv_semaev/README.md"
+      ]
+    },
+    {
+      "id": "glv2001",
+      "title": "Faster Point Multiplication on Elliptic Curves with Efficient Endomorphisms",
+      "authors": [
+        "Robert P. Gallant",
+        "Robert J. Lambert",
+        "Scott A. Vanstone"
+      ],
+      "year": 2001,
+      "venue": "CRYPTO 2001, LNCS 2139",
+      "url": "https://www.iacr.org/archive/crypto2001/21390189.pdf",
+      "doi": "10.1007/3-540-44647-8_11",
+      "aliases": [
+        "Gallant",
+        "GLV"
+      ],
+      "role": "Primary source for the GLV scalar decomposition and the efficient endomorphism used by secp256k1.",
+      "note": null,
+      "where_used": [
+        "ABSTRACT_SCOPE.md",
+        "AGENTS.md",
+        "BARRIERS.md",
+        "COVERAGE.md",
+        "PUBLISHABLE_UNITS.md",
+        "README.md",
+        "REPOSITORY_ARCHITECTURE.md",
+        "ROADMAP.md",
+        "STATUS.md",
+        "TRUST_REPORT.md",
+        "VERIFIED.md",
+        "domains/p256/corpus.md",
+        "experiments/README.md",
+        "experiments/p0_glv_semaev/README.md",
+        "experiments/p0_glv_semaev/RESULTS.md",
+        "experiments/p1_petit/README.md",
+        "experiments/p1_petit/RESULTS.md",
+        "experiments/p1_petit_m3/README.md",
+        "experiments/p1_petit_m3/RESULTS.md",
+        "experiments/p2_ward_eds/RESULTS.md",
+        "experiments/p3_sm_system/README.md",
+        "experiments/p3_sm_system/RESULTS.md",
+        "experiments/p4_petit/README.md",
+        "experiments/p4_petit/RESULTS.md",
+        "notes/CM_EISENSTEIN.md",
+        "notes/FABLE_DELEGATION_REPORT.md",
+        "notes/FOUNDATION_ROADMAP.md",
+        "notes/GLV_EIGENVALUE.md",
+        "notes/GLV_FORMALIZATION.md",
+        "notes/GLV_HOMOMORPHISM.md",
+        "notes/GLV_LAMBDA.md",
+        "notes/INDEX.md",
+        "notes/POINT_COUNTING_KEYSTONE.md",
+        "notes/RESEARCH_MAP.md",
+        "notes/SEPARABILITY_ROUTES.md",
+        "notes/reviews/FBL_PURE_CORPUS.md",
+        "notes/reviews/GEOMETRIC_TORSION_AUDIT.md"
+      ]
+    },
+    {
+      "id": "luo2026",
+      "title": "Quantum Algorithm for Elliptic Curve Discrete Logarithms with Space-Efficient Point Addition",
+      "authors": [
+        "Han Luo",
+        "Ziyi Yang",
+        "Jingquan Luo",
+        "Ziruo Wang",
+        "Yuexin Su",
+        "Xiaoming Sun",
+        "Lvzhou Li",
+        "Tongyang Li"
+      ],
+      "year": 2026,
+      "venue": "arXiv:2607.13816",
+      "url": "https://arxiv.org/abs/2607.13816",
+      "doi": null,
+      "aliases": [
+        "Luo"
+      ],
+      "role": "Current tracked logical-resource estimate for a quantum ECDLP implementation over a 256-bit prime-field curve.",
+      "note": "Reports 835 logical qubits and 2^30.63 Toffoli gates. This is an algorithmic logical-resource estimate, not evidence of available fault-tolerant hardware.",
+      "where_used": [
+        "REPOSITORY_ARCHITECTURE.md",
+        "notes/SECURITY_SCOPE.md"
       ]
     },
     {
@@ -284,6 +369,28 @@
       ]
     },
     {
+      "id": "sec2_v2",
+      "title": "SEC 2: Recommended Elliptic Curve Domain Parameters, Version 2.0",
+      "authors": [
+        "Certicom Research"
+      ],
+      "year": 2010,
+      "venue": "Standards for Efficient Cryptography (SEC 2), Version 2.0",
+      "url": "https://www.secg.org/sec2-v2.pdf",
+      "doi": null,
+      "aliases": [
+        "SEC 2",
+        "SECG"
+      ],
+      "role": "Primary standards source for the secp256k1 field, curve, generator, prime subgroup order, and cofactor parameters.",
+      "note": "Dated January 27, 2010; the official SECG site lists Version 2.0 as the finalized SEC 2 specification.",
+      "where_used": [
+        "REPOSITORY_ARCHITECTURE.md",
+        "VERIFIED.md",
+        "domains/p256/corpus.md"
+      ]
+    },
+    {
       "id": "semaev2004",
       "title": "Summation polynomials and the discrete logarithm problem on elliptic curves",
       "authors": [
@@ -324,8 +431,35 @@
         "notes/HYPOTHESIS_EXPLORER.md",
         "notes/RESEARCH_MAP.md",
         "notes/UPSTREAM_SCAN.md",
-        "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
-        "tasks/NEXT.md"
+        "notes/reviews/GEOMETRIC_TORSION_AUDIT.md"
+      ]
+    },
+    {
+      "id": "shor1994",
+      "title": "Algorithms for Quantum Computation: Discrete Logarithms and Factoring",
+      "authors": [
+        "Peter W. Shor"
+      ],
+      "year": 1994,
+      "venue": "35th Annual Symposium on Foundations of Computer Science",
+      "url": "https://doi.org/10.1109/SFCS.1994.365700",
+      "doi": "10.1109/SFCS.1994.365700",
+      "aliases": [
+        "Shor"
+      ],
+      "role": "Foundational polynomial-time quantum route for discrete logarithms; kept separate from the classical threat model.",
+      "note": null,
+      "where_used": [
+        "AGENTS.md",
+        "AUTONOMY.md",
+        "BARRIERS.md",
+        "PUBLISHABLE_UNITS.md",
+        "README.md",
+        "REPOSITORY_ARCHITECTURE.md",
+        "VERIFIED.md",
+        "notes/ENGINE.md",
+        "notes/RESEARCH_MAP.md",
+        "notes/SECURITY_SCOPE.md"
       ]
     },
     {

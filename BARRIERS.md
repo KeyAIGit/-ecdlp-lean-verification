@@ -13,11 +13,11 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~253 distinct results / 292 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~257 distinct results / 296 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
-| **Partial: curve / polynomial depth** | ~33 | `EllipticCurve` (+Isogeny), `MvPolynomial` — Mathlib has the base, not the ECDLP constructions |
+| **Partial: curve / polynomial depth** | ~33 | `EllipticCurve`, `DivisionPolynomial`, `MvPolynomial` — Mathlib has prerequisites, not isogeny/pairing/ECDLP constructions |
 | **Informal / meta** | ~133 | survey/commentary; not a formal statement by nature |
 | **Unassigned** | ~174 | needs human triage before a Lean area can be chosen |
 
@@ -32,13 +32,16 @@ group-theory zone and are the realised part of "Tractable now":
 - `order_dvd_card` (Lagrange), `cofactor_card_mul_index` (`#E = n·h` abstractly),
   `orderOf_eq_card_of_prime` (prime order ⇒ generator, no small subgroup),
   `cube_root_of_eigenvalue` (root of `x²+x+1` ⇒ `x³=1`) — Mathlib.
-- **Distinct-prime torsion x-loci are disjoint** (no-go certificate family). For `y²=x³+7`,
-  the `x`-coordinates of the `ℓ`- and `ℓ'`-torsion (`ℓ≠ℓ'` prime) never coincide, via
-  `gcd(ψ_ℓ, ψ_ℓ') = 1` with an explicit resultant + Bézout certificate. Done for `E[2]⊥E[3]`
-  (`Res = −3⁶·7⁴`) and `E[5]⊥E[7]` (`Res = 2¹⁹²·3¹⁴⁴·7⁹⁶`); in both the resultant's prime
-  support equals the bad-reduction primes `{2,3,7}` of the curve — the only primes where the
-  loci can collide on reduction. Sympy-certified (`scripts/certs/`), kernel-promotion pending
-  (sibling of `Ecdlp/Proved/CoprimePsi2Psi3.lean`).
+- **Distinct-prime torsion x-loci are disjoint** (no-go certificate family, **kernel-verified**).
+  For `y²=x³+7`, the `x`-coordinates of the `ℓ`- and `ℓ'`-torsion (`ℓ≠ℓ'` prime) never coincide,
+  via `gcd(ψ_ℓ, ψ_ℓ') = 1` with an explicit resultant + Bézout certificate. The **entire pairwise
+  `{2,3,5,7}` family is now proved** in `Ecdlp/Proved/CoprimePsi{2Psi3,2Psi5,2Psi7,3Psi5,3Psi7,5Psi7}.lean`,
+  together with the full `preΨ₄ ⊥ {2,3,5,7}` set (`CoprimePsi{2PrePsi4,3PrePsi4,4Psi5,4Psi7}.lean`) —
+  giving **full mutual disjointness of the `{2,3,4,5,7}`-torsion `x`-loci**. Each is an `IsCoprime`
+  theorem discharged by a CAS extended-Euclid Bézout certificate over `𝔽_p` (`native_decide` residue
+  equations); e.g. `E[5]⊥E[7]` (`Res = 2¹⁹²·3¹⁴⁴·7⁹⁶`, `CoprimePsi5Psi7.lean`). In every case the
+  resultant's prime support equals the bad-reduction primes `{2,3,7}` of the curve — the only primes
+  where the loci can collide on reduction. Certificates in `scripts/certs/torsion_disjoint_*.py`.
 
 ### Foundation formalized: the generic-group `Ω(√p)`/`Θ(√n)` results
 Previously listed under B1 as blocked-by-missing-cost-model, the **Shoup/Nechaev
@@ -182,8 +185,9 @@ exact `Θ` statements.
   Petit construction, or any asymptotic advantage/no-advantage result. The
   `O(|F|^{m-1}·solve)` loops are **not** subexponential
   index-calculus algorithms. So the real question — whether invariant-coordinate *relation
-  generation* changes the prime-field asymptotics — stays **open** and `HYP_GLV_SEMAEV_001`
-  stays **ACTIVE**. No result here is a step toward breaking secp256k1; equality-replay alone
+  generation* changes the prime-field asymptotics — stays mathematically **open**, while
+  `HYP_GLV_SEMAEV_001` is operationally **PARKED** by the decision substrate. No result here
+  is a step toward breaking secp256k1; equality-replay alone
   cannot establish a complexity no-go. Per-run manifests + independent validators live under
   each `experiments/*/` directory. External Gröbner validation and sharper formulations are
   prerequisites before promoting this line to a publishable complexity barrier.
@@ -196,7 +200,8 @@ exact `Θ` statements.
   `Res_X(S₃(x₁,x₂,X), S₃(x₃,x₄,X))`, and stating its degree in `x₁` needs `S₄` reconstructed as a
   *polynomial in `x₁`* (coefficients over `F[x₁]`) plus a resultant-degree-in-a-parameter lemma —
   a real construction, not a quick corollary. Recorded here as the honest next frontier.
-- **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
+- **Weil pairing / isogeny depth** (no elliptic-isogeny module in the audited
+  pinned/current Mathlib trees) — blocks
   *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib. **This is
   the one place the Weil pairing touches secp256k1, and its security-relevant consequence is
   already closed here without the pairing:** MOV/FR would transfer the ECDLP into `𝔽_{p^k}^×`
@@ -394,7 +399,8 @@ to verify. Correctly excluded.
 An automated multi-agent scan of mathlib4 (master + open PRs + Zulip) — see
 `notes/UPSTREAM_SCAN.md` — confirms the barrier map above against the live upstream, and
 sharpens it: the **generic scaffolding is already upstream** (Weierstrass group law in three
-models, division polynomials `ψₙ/φₙ/ωₙ`, rank-1 `normEDS`/`IsEllSequence`, `ZLattice`/Minkowski,
+models, division-polynomial `preΨ`/`ΨSq`/`Φ` infrastructure (but no general
+point bridge or bivariate `ωₙ`), rank-1 `normEDS`/`IsEllSequence`, `ZLattice`/Minkowski,
 `MvPolynomial`+resultants — all free by import on the pinned v4.31), while the
 **cryptographically load-bearing superstructure is a green field**, absent from master, every
 surfaced PR, and wider-GitHub Lean search:
