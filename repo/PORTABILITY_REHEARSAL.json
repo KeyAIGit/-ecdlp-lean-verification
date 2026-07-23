@@ -1,0 +1,698 @@
+{
+  "schema_version": "1.0",
+  "id": "KEYAI-PORTABILITY-001",
+  "task_id": "TASK-011",
+  "status": "completed",
+  "stage": "pre_pilot_technical_rehearsal",
+  "purpose": "Test whether KeyAI can represent an unfamiliar public Lean repository through a thin declarative boundary while holding the verifier fixed and changing the domain and repository structure.",
+  "research_question": "Is the current KeyAI substrate portable enough to support meaningful external discovery, or is it still an ECDLP-specific repository system?",
+  "evidence_boundary": {
+    "class": "internal_technical_rehearsal",
+    "external_participant": false,
+    "customer_evidence": false,
+    "external_pilot_evidence": false,
+    "unlocks_task_012": false,
+    "may_change_customer_hypothesis_status": false,
+    "statement": "This rehearsal may establish technical portability or expose technical blockers. It cannot establish user pain, workflow value, retention, willingness to pay, or external pilot completion."
+  },
+  "controlled_variables": {
+    "held_constant": [
+      "Lean 4 as the verifier family",
+      "read-only public source access",
+      "pinned source revision",
+      "source-level inventory semantics",
+      "no candidate research execution"
+    ],
+    "changed": [
+      "mathematical domain",
+      "repository ownership",
+      "module and build layout",
+      "project conventions"
+    ],
+    "deferred": [
+      "a verifier other than Lean",
+      "private repository intake",
+      "hosted multi-project workspaces",
+      "authentication and billing",
+      "external workflow-value validation"
+    ]
+  },
+  "authority": {
+    "allowed": [
+      "Score public Lean repositories against the fixed selection rubric.",
+      "Clone one selected and one reserve public repository at immutable commits.",
+      "Run the selected repository's documented dependency, cache, build, and test commands in a disposable local checkout under an explicit reviewed-public-source trust boundary.",
+      "Read and hash tracked files, parse source-level imports and declaration headings, and record explicit trust signals.",
+      "Write KeyAI-side manifests, snapshots, compatibility evidence, tests, and architecture updates.",
+      "Refactor only the smallest KeyAI boundary justified by observed portability failures."
+    ],
+    "prohibited": [
+      "Modify, commit to, fork for publication, open an issue in, or contact maintainers of the inspected repository.",
+      "Treat repository metadata or a successful build as customer or external pilot evidence.",
+      "Insert this rehearsal into repo/PILOT_PROTOCOL.json evidence_log.",
+      "Unlock TASK-012 or change CH-001 or CH-002 status from rehearsal evidence.",
+      "Run a new cryptanalytic, secp256k1, or other research hypothesis.",
+      "Build hosted product infrastructure, authentication, billing, collaboration, or a second verifier adapter.",
+      "Hide unsupported files, parser limitations, build failures, or project-specific code behind a successful summary."
+    ],
+    "source_checkout_policy": "The canonical inspection checkout must be clean, remain byte-for-byte unchanged, and match the full selected commit SHA before and after every run. Declared build effects are confined to a separate disposable checkout.",
+    "license_policy": "Record the repository license and license file. Commit only KeyAI-authored metadata, hashes, summaries, and source-level identifiers needed for reproducibility; do not vendor the inspected repository.",
+    "secrets_policy": "Use only reviewed public source data. The compiled probe passes a fixed environment allowlist with no credential-like variables and uses disposable HOME/TEMP paths. This host does not provide OS-enforced filesystem isolation, and project-controlled lake env output is not independently authenticated, so arbitrary untrusted repository execution remains prohibited and both conditions fail the BUILD gate."
+  },
+  "selection_rubric": {
+    "required": [
+      "Public standalone Lean 4 repository",
+      "Clearly non-ECDLP and non-cryptanalytic domain",
+      "Recognized open-source license with a repository license file",
+      "Full immutable commit SHA",
+      "Pinned Lean toolchain",
+      "Documented build command",
+      "Substantive multi-module source rather than a tutorial or toy",
+      "No sensitive or private data requirement"
+    ],
+    "scored_dimensions": [
+      {
+        "id": "domain_contrast",
+        "weight": 25,
+        "definition": "Meaningfully different mathematical or software domain while Lean remains fixed."
+      },
+      {
+        "id": "structural_stress",
+        "weight": 20,
+        "definition": "Exercises imports, namespaces, generated/config files, CI, and nontrivial module layout."
+      },
+      {
+        "id": "build_reproducibility",
+        "weight": 20,
+        "definition": "Pinned toolchain and documented commands can be reproduced at the selected commit."
+      },
+      {
+        "id": "provenance_clarity",
+        "weight": 15,
+        "definition": "License, ownership, source roots, and project intent are explicit."
+      },
+      {
+        "id": "independence",
+        "weight": 10,
+        "definition": "The project was not designed around KeyAI and is not maintained by this repository owner."
+      },
+      {
+        "id": "bounded_cost",
+        "weight": 10,
+        "definition": "The checkout and build are large enough to be meaningful but bounded for one rehearsal."
+      }
+    ],
+    "candidate_count_target": {
+      "minimum": 5,
+      "maximum": 8
+    },
+    "candidates": [
+      {
+        "id": "CAND-CEDAR-SPEC",
+        "repository": "https://github.com/cedar-policy/cedar-spec",
+        "commit_sha": "3f093947b8ae789e9497772815c3a37309ea5566",
+        "license_spdx": "Apache-2.0",
+        "license_file": "LICENSE",
+        "lean_toolchain": "leanprover/lean4:v4.31.0",
+        "build_command": "cd cedar-lean && lake -R -Kenv=dev update && lake build Cedar SymCC && lake lint",
+        "activity_signal": "Selected commit authored 2026-07-23; repository CI documents Lean build, lint, tests, FFI, protobuf, and documentation jobs.",
+        "approximate_scale": "828 tracked files; 351 tracked Lean files in a nested Lean project inside a Rust/Lean/protobuf/FFI repository.",
+        "required_criteria_met": true,
+        "scores": {
+          "domain_contrast": 5,
+          "structural_stress": 5,
+          "build_reproducibility": 5,
+          "provenance_clarity": 5,
+          "independence": 5,
+          "bounded_cost": 4
+        },
+        "weighted_score": 98.0,
+        "selection_notes": "Best controlled stress test: executable policy semantics and proofs, nested project root, multiple Lean libraries, CI lint, symbolic links, and non-Lean infrastructure without requiring the DRT/FFI build."
+      },
+      {
+        "id": "CAND-PHYSLIB",
+        "repository": "https://github.com/leanprover-community/physlib",
+        "commit_sha": "c48433678e8fb6306ebcd48453300c8e16058a62",
+        "license_spdx": "Apache-2.0",
+        "license_file": "LICENSE",
+        "lean_toolchain": "leanprover/lean4:v4.32.0",
+        "build_command": "lake exe cache get && lake build",
+        "activity_signal": "Selected commit authored 2026-07-23; active community repository with build and linter workflows.",
+        "approximate_scale": "754 tracked files; 676 tracked Lean files across Physlib, PhyslibAlpha, and QuantumInfo.",
+        "required_criteria_met": true,
+        "scores": {
+          "domain_contrast": 5,
+          "structural_stress": 4,
+          "build_reproducibility": 5,
+          "provenance_clarity": 5,
+          "independence": 5,
+          "bounded_cost": 3
+        },
+        "weighted_score": 92.0,
+        "selection_notes": "Strong reserve for a large Mathlib-based scientific library; lower first-rehearsal value because its conventional single-root layout stresses less repository integration while its cached dependency surface is larger."
+      },
+      {
+        "id": "CAND-FORMAL-CONJECTURES",
+        "repository": "https://github.com/google-deepmind/formal-conjectures",
+        "commit_sha": "e751934294a381afd2d5fc1124c5953c8e25f9fa",
+        "license_spdx": "Apache-2.0",
+        "license_file": "LICENSE",
+        "lean_toolchain": "leanprover/lean4:v4.27.0",
+        "build_command": "lake exe cache get && lake build",
+        "activity_signal": "Pinned default-branch commit authored 2026-07-23; contributing guide documents the complete cached build.",
+        "approximate_scale": "1,097 tracked files; 1,024 tracked Lean files.",
+        "required_criteria_met": true,
+        "scores": {
+          "domain_contrast": 5,
+          "structural_stress": 3,
+          "build_reproducibility": 5,
+          "provenance_clarity": 5,
+          "independence": 5,
+          "bounded_cost": 2
+        },
+        "weighted_score": 86.0,
+        "selection_notes": "Excellent corpus-scale test, but the large statement-oriented Mathlib surface is less diagnostic of a thin repository adapter than Cedar's mixed executable/proof layout."
+      },
+      {
+        "id": "CAND-LEAN4LEAN",
+        "repository": "https://github.com/digama0/lean4lean",
+        "commit_sha": "8865b155abbf68d3a827fb3568bf6839780163c2",
+        "license_spdx": "Apache-2.0",
+        "license_file": "LICENSE",
+        "lean_toolchain": "leanprover/lean4:v4.29.0",
+        "build_command": "lake build",
+        "activity_signal": "Pinned default-branch commit authored 2026-07-06; README documents independent library, executable, theory, and verification targets.",
+        "approximate_scale": "92 tracked files; 83 tracked Lean files.",
+        "required_criteria_met": true,
+        "scores": {
+          "domain_contrast": 5,
+          "structural_stress": 4,
+          "build_reproducibility": 4,
+          "provenance_clarity": 5,
+          "independence": 5,
+          "bounded_cost": 4
+        },
+        "weighted_score": 90.0,
+        "selection_notes": "A compact and deep metatheory test, but it changes both repository conventions and trust-level subject matter, making first-failure attribution less clean."
+      },
+      {
+        "id": "CAND-LEAN-MLIR",
+        "repository": "https://github.com/opencompl/lean-mlir",
+        "commit_sha": "4a58a772162b809f3d7a1b0bf98d2437698392d8",
+        "license_spdx": "Apache-2.0",
+        "license_file": "LICENSE",
+        "lean_toolchain": "leanprover/lean4:nightly-2025-12-01",
+        "build_command": "lake exe cache get && lake build",
+        "activity_signal": "Pinned default-branch commit authored 2026-07-20; root README documents the cached build.",
+        "approximate_scale": "12,685 tracked files; 9,449 tracked Lean files across several nested projects and toolchains.",
+        "required_criteria_met": true,
+        "scores": {
+          "domain_contrast": 5,
+          "structural_stress": 5,
+          "build_reproducibility": 3,
+          "provenance_clarity": 5,
+          "independence": 5,
+          "bounded_cost": 1
+        },
+        "weighted_score": 84.0,
+        "selection_notes": "Maximum structural stress, but multiple nested toolchains and a very large tree would make the first rehearsal expensive and blur thin-adapter failures with monorepo policy."
+      },
+      {
+        "id": "CAND-CARLESON",
+        "repository": "https://github.com/fpvandoorn/carleson",
+        "commit_sha": "74ef907d6bdb60797b88655bc16e3032fb835fdc",
+        "license_spdx": "Apache-2.0",
+        "license_file": "LICENSE",
+        "lean_toolchain": "leanprover/lean4:v4.32.0",
+        "build_command": "lake exe cache get! && lake build",
+        "activity_signal": "Pinned default-branch commit authored 2026-07-23; README documents complete local verification and expected axiom output.",
+        "approximate_scale": "172 tracked files; 120 tracked Lean files plus a linked mathematical blueprint.",
+        "required_criteria_met": true,
+        "scores": {
+          "domain_contrast": 5,
+          "structural_stress": 3,
+          "build_reproducibility": 5,
+          "provenance_clarity": 5,
+          "independence": 5,
+          "bounded_cost": 4
+        },
+        "weighted_score": 90.0,
+        "selection_notes": "Strong proof-corpus candidate with explicit trust guidance, but its conventional Mathlib project layout exercises fewer repository-boundary assumptions."
+      },
+      {
+        "id": "CAND-SCILEAN",
+        "repository": "https://github.com/lecopivo/SciLean",
+        "commit_sha": "95f8119a2884e9c41f82136523bd5568ea7075c5",
+        "license_spdx": "Apache-2.0",
+        "license_file": "LICENSE",
+        "lean_toolchain": "leanprover/lean4:v4.28.0-rc1",
+        "build_command": "lake exe cache get && lake build",
+        "activity_signal": "Pinned default-branch commit authored 2026-02-18; README documents OpenBLAS prerequisites and the build.",
+        "approximate_scale": "605 tracked files; 568 tracked Lean files with native numerical dependencies.",
+        "required_criteria_met": true,
+        "scores": {
+          "domain_contrast": 5,
+          "structural_stress": 5,
+          "build_reproducibility": 1,
+          "provenance_clarity": 5,
+          "independence": 5,
+          "bounded_cost": 2
+        },
+        "weighted_score": 78.0,
+        "selection_notes": "Valuable future native-dependency test, but the repository explicitly says Windows is not officially supported, so this host would confound adapter and environment failures."
+      },
+      {
+        "id": "CAND-PFR",
+        "repository": "https://github.com/teorth/pfr",
+        "commit_sha": "a177b2e4abe4b31c8024b9afebe646bf6bb8f91b",
+        "license_spdx": "Apache-2.0",
+        "license_file": "LICENSE",
+        "lean_toolchain": "leanprover/lean4:v4.33.0-rc1",
+        "build_command": "lake exe cache get && lake build",
+        "activity_signal": "Pinned default-branch commit authored 2026-07-16; README documents the cached Lean build.",
+        "approximate_scale": "121 tracked files; 72 tracked Lean files plus a blueprint.",
+        "required_criteria_met": true,
+        "scores": {
+          "domain_contrast": 5,
+          "structural_stress": 2,
+          "build_reproducibility": 5,
+          "provenance_clarity": 5,
+          "independence": 5,
+          "bounded_cost": 5
+        },
+        "weighted_score": 88.0,
+        "selection_notes": "Highly bounded and reproducible, but too close to a conventional single-library Mathlib project to expose the architecture assumptions this rehearsal is intended to test."
+      }
+    ],
+    "selected_candidate_id": "CAND-CEDAR-SPEC",
+    "reserve_candidate_id": "CAND-PHYSLIB"
+  },
+  "selected_source": {
+    "candidate_id": "CAND-CEDAR-SPEC",
+    "repository": "https://github.com/cedar-policy/cedar-spec",
+    "commit_sha": "3f093947b8ae789e9497772815c3a37309ea5566",
+    "tree_sha": "9ec0e7ea90d98241935620711bf9568c169ef8b7",
+    "license_spdx": "Apache-2.0",
+    "license_file": "LICENSE",
+    "license_sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
+    "toolchain_file": "cedar-lean/lean-toolchain",
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "build_command": "cd cedar-lean && lake -R -Kenv=dev update && lake build Cedar SymCC && lake lint",
+    "adapter": {
+      "module_roots": [
+        {
+          "path": "cedar-lean",
+          "module_prefix": ""
+        }
+      ],
+      "entrypoints": [
+        "Cedar",
+        "Cedar.SymCC",
+        "CedarFFI",
+        "CedarProto",
+        "Cli.Main",
+        "DiffTest",
+        "Protobuf",
+        "SymCC",
+        "SymTest",
+        "UnitTest"
+      ],
+      "owned_module_prefixes": [
+        "Cedar",
+        "CedarFFI",
+        "CedarProto",
+        "Cli",
+        "DiffTest",
+        "Protobuf",
+        "SymCC",
+        "SymTest",
+        "UnitTest"
+      ],
+      "explicit_exclusions": []
+    },
+    "baseline_adapter": {
+      "project_root": "cedar-lean",
+      "compiled_entrypoints": [
+        "Cedar",
+        "SymCC"
+      ],
+      "allowed_workspace_changes": [
+        "cedar-lean/lake-manifest.json"
+      ],
+      "resolved_dependency_revisions": {
+        "leanprover-community/batteries": "fa08db58b30eb033edcdab331bba000827f9f785",
+        "leanprover/doc-gen4": "0bc516c1b9db83658d6475c40d9b1ed71219b921",
+        "leanprover/leansqlite": "0be4df908d1a8e75b58961041e2b4973692623df",
+        "leanprover/lean4-cli": "92564e5770e4d09f2d86dfbf8ada1e9c715b384c",
+        "fgdorais/lean4-unicode-basic": "a2e430a4c9d3ad24078b8581fe0162fc5b0c9a6c",
+        "dupuisf/BibtexQuery": "5d31b64fb703c5d77f6ef4d1fb958f9bdf1ea539",
+        "acmepjz/md4lean": "6a3fb240133bcb7e1a066fdc784b3fdc304e3fc5"
+      },
+      "documented_workspace_effect": {
+        "path": "cedar-lean/lake-manifest.json",
+        "canonical_git_blob_sha256": "60bb72ecf8014c3b3ea5bb9f8f3cd73633374430a31fc52a75912a163c51a986",
+        "resolved_worktree_sha256": "de4da87c83d920b3a13241f5cbf67d4bf46953769b398e9f0bb733939aaef51f",
+        "reason": "The env=dev branch adds documentation dependencies in the disposable build workspace. No canonical source or KeyAI-owned external source copy was changed."
+      },
+      "lean_num_threads": 1,
+      "execution_profile": {
+        "source_trust": "reviewed_public_source",
+        "baseline_environment_policy": "inherited_host_environment",
+        "compiled_probe_environment_policy": "fixed_allowlist",
+        "compiled_probe_launcher": "project_lake_env",
+        "compiled_probe_output_authentication": "not_independent_of_project_launcher",
+        "canonical_checkout": "read_only_git_object_inspection",
+        "build_checkout": "disposable_writable_workspace",
+        "network_isolation": "not_os_enforced",
+        "filesystem_isolation": "not_os_enforced"
+      }
+    }
+  },
+  "compiled_probe_policy": {
+    "allowed_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "allowed_axiom_provenance": {
+      "Classical.choice": {
+        "kind": "axiom",
+        "module": "Init.Prelude",
+        "private": false
+      },
+      "Quot.sound": {
+        "kind": "axiom",
+        "module": "Init.Core",
+        "private": false
+      },
+      "propext": {
+        "kind": "axiom",
+        "module": "Init.Core",
+        "private": false
+      }
+    },
+    "forbidden_axioms": [
+      "sorryAx"
+    ],
+    "accepted_axiom_groups": [
+      {
+        "id": "lean-native-decide-generated",
+        "trust_class": "compiler_generated_native_decide",
+        "axioms": [
+          "_private.Cedar.Data.Int64.0.Int64.toInt_neg_of_not_ge_zero._native.native_decide.ax_1_2",
+          "_private.Cedar.Data.Int64.0.Int64.toInt_nonneg_of_ge_zero._native.native_decide.ax_1_1",
+          "_private.Cedar.Thm.SymCC.Data.Ext.0.Cedar.Thm.msPerDay_eq._native.native_decide.ax_1_1",
+          "_private.Cedar.Thm.SymCC.Data.Ext.0.Cedar.Thm.msPerDay_toInt._native.native_decide.ax_1_1",
+          "_private.Cedar.Thm.SymCC.Data.Ext.0.Cedar.Thm.toDate_eq_smod._native.native_decide.ax_1_6",
+          "_private.Cedar.Thm.SymCC.Data.Ext.0.Cedar.Thm.toDate_eq_smod._native.native_decide.ax_1_8",
+          "_private.Cedar.Thm.SymCC.Data.Ext.0.Cedar.Thm.toInt_div_msPerDay._native.native_decide.ax_1_1",
+          "_private.Cedar.Thm.SymCC.Data.Ext.0.Cedar.Thm.toInt_div_msPerDay._native.native_decide.ax_1_3",
+          "_private.Cedar.Thm.SymCC.Data.Ext.0.Cedar.Thm.toInt_div_msPerDay._native.native_decide.ax_1_6"
+        ],
+        "rationale": "Lean 4.31 materializes these exact native_decide results at the pinned commit as private generated axioms whose trust rests on the native compiler. Exact names and Lean-environment provenance are required; a repository-wide wildcard is not accepted."
+      }
+    ],
+    "unexpected_axioms_fail": true
+  },
+  "baseline": {
+    "status": "passed",
+    "performed_on": "2026-07-23",
+    "environment": "Windows x86_64, 5828.95 MiB physical memory, elan 4.2.3, Lean 4.31.0, Lake 5.0.0; LEAN_NUM_THREADS=1; canonical LF checkout semantics for upstream lint.",
+    "commands": [
+      "cd cedar-lean && lake -R -Kenv=dev update",
+      "cd cedar-lean && LEAN_NUM_THREADS=1 lake build Cedar SymCC",
+      "cd cedar-lean && LEAN_NUM_THREADS=1 lake lint",
+      "python scripts/lean_compiled_probe.py --source <disposable-built-checkout>"
+    ],
+    "result": "Passed with explicit host constraints: the 571-job Cedar/SymCC build and canonical-LF lint succeeded; Lean's actual 273-module closure matched the lexical closure, all 3,423 source-public headings resolved inside 12,296 public compiled constants, and the exact axiom policy passed.",
+    "source_clean_before": true,
+    "source_clean_after": true,
+    "evidence_files": [
+      "rehearsals/keyai-portability-001/baseline.json",
+      "rehearsals/keyai-portability-001/compiled-probe.json"
+    ]
+  },
+  "adapter_contract": {
+    "input": "A clean checkout at the selected full commit SHA plus one declarative source adapter embedded in selected_source.",
+    "output": "A deterministic KeyAI-authored source snapshot plus a separate compiled-environment probe for the selected build closure. The source snapshot inventories every tracked file; the compiled probe resolves public declarations and reports transitive axiom dependencies.",
+    "invariants": [
+      "No KeyAI command writes the canonical inspection checkout; build and compiled-probe work occurs only in a disposable workspace.",
+      "Every tracked source path receives exactly one explicit classification.",
+      "Every in-scope Lean file maps to exactly one module.",
+      "Files outside configured module roots remain visible as lean_out_of_scope.",
+      "Unknown project semantics remain unknown and are never converted into claims, tasks, decisions, or verified results.",
+      "Build evidence remains separate from source-level observations.",
+      "Compiled declaration and axiom claims come from the pinned Lean environment, never from the lexical source parser alone.",
+      "Project-launched compiled evidence cannot support BUILD or arbitrary untrusted intake until the launcher, module search path, loaded artifacts, and output channel are independently controlled.",
+      "The snapshot is deterministic and contains no current timestamps, absolute paths, usernames, credentials, or machine-specific checkout paths.",
+      "The generic implementation contains no branch on repository owner, repository name, project name, or mathematical domain."
+    ],
+    "forbidden_architecture": [
+      "Project-specific generator fork",
+      "Copied external source tree",
+      "Per-project conditional branches in the generic inspector",
+      "Synthetic verified ledger or task queue",
+      "Network dependency in the ordinary KeyAI CI gate",
+      "Automatic public-site publication of rehearsal results"
+    ]
+  },
+  "metrics": [
+    {
+      "id": "tracked-file-classification",
+      "target": "100% of git-tracked files receive one classification",
+      "required_for_build": true,
+      "result": "pass",
+      "evidence": [
+        "rehearsals/keyai-portability-001/snapshot.json"
+      ]
+    },
+    {
+      "id": "lean-module-coverage",
+      "target": "100% of configured in-scope Lean files map to one module; out-of-scope Lean files are listed",
+      "required_for_build": true,
+      "result": "pass",
+      "evidence": [
+        "rehearsals/keyai-portability-001/snapshot.json"
+      ]
+    },
+    {
+      "id": "deterministic-snapshot",
+      "target": "Two clean runs at the same commit produce identical snapshot SHA-256 values",
+      "required_for_build": true,
+      "result": "pass",
+      "evidence": [
+        "rehearsals/keyai-portability-001/snapshot.json"
+      ]
+    },
+    {
+      "id": "source-worktree-drift",
+      "target": "Zero changes in the canonical inspection checkout before and after every run; only declared upstream update effects may appear in disposable build workspaces",
+      "required_for_build": true,
+      "result": "pass",
+      "evidence": [
+        "rehearsals/keyai-portability-001/baseline.json"
+      ]
+    },
+    {
+      "id": "project-specific-core-branches",
+      "target": "Zero repository-, owner-, project-, or domain-name conditionals in the generic inspector",
+      "required_for_build": true,
+      "result": "pass",
+      "evidence": [
+        "scripts/lean_portability.py",
+        "scripts/lean_compiled_probe.py"
+      ]
+    },
+    {
+      "id": "silent-unsupported-loss",
+      "target": "100% tracked-file classification, zero generator-reported unsupported Lean files, and explicit parser limitations; this metric does not claim lexical completeness for every Lean construct",
+      "required_for_build": true,
+      "result": "pass",
+      "evidence": [
+        "rehearsals/keyai-portability-001/snapshot.json",
+        "rehearsals/keyai-portability-001/compiled-probe.json"
+      ]
+    },
+    {
+      "id": "baseline-build",
+      "target": "The selected pinned source completes its documented baseline build, or the exact external blocker is recorded",
+      "required_for_build": true,
+      "result": "pass",
+      "evidence": [
+        "rehearsals/keyai-portability-001/baseline.json",
+        "rehearsals/keyai-portability-001/compiled-probe.json"
+      ]
+    },
+    {
+      "id": "keyai-non-regression",
+      "target": "All existing KeyAI Python, generated-fixpoint, repository, and Lean CI gates remain green",
+      "required_for_build": true,
+      "result": "pass",
+      "evidence": [
+        "notes/reviews/PORTABILITY_REHEARSAL_001.md",
+        ".github/workflows/ci.yml"
+      ]
+    },
+    {
+      "id": "compiled-declaration-trust",
+      "target": "For this reviewed public source, the project-launched Lean probe enumerates every public constant in the Cedar/SymCC build closure; every source-inventoried public heading resolves; no sorryAx or unexpected custom axiom is present; exact compiler-trust dependencies and provenance are enumerated. Independent launcher/output authenticity is a separate required gate.",
+      "required_for_build": true,
+      "result": "pass",
+      "evidence": [
+        "rehearsals/keyai-portability-001/compiled-probe.json"
+      ]
+    },
+    {
+      "id": "external-execution-isolation",
+      "target": "Before arbitrary untrusted intake, external Lean execution has OS-enforced filesystem and network isolation in addition to an environment allowlist and disposable workspace",
+      "required_for_build": true,
+      "result": "fail",
+      "evidence": [
+        "notes/reviews/PORTABILITY_REHEARSAL_001.md"
+      ]
+    },
+    {
+      "id": "compiled-evidence-authenticity",
+      "target": "Before arbitrary untrusted intake, the trusted Lean launcher, module search path, loaded artifacts, and probe output channel are controlled independently of the inspected project",
+      "required_for_build": true,
+      "result": "fail",
+      "evidence": [
+        "notes/reviews/PORTABILITY_REHEARSAL_001.md"
+      ]
+    },
+    {
+      "id": "manual-generator-edits",
+      "target": "Zero edits to the generic inspector or generator between the first and second snapshot run",
+      "required_for_build": true,
+      "result": "pass",
+      "evidence": [
+        "rehearsals/keyai-portability-001/snapshot.json"
+      ]
+    }
+  ],
+  "decision_rules": {
+    "build": [
+      "The pinned baseline build succeeds.",
+      "Every required metric passes.",
+      "All project-specific variation is declarative.",
+      "The result is useful as a technical demonstration without implying customer validation."
+    ],
+    "change": [
+      "The generic core remains plausible, but one or more bounded adapter, provenance, or execution-boundary gaps prevent a build disposition.",
+      "Every gap has an exact owner, smallest next test, stop condition, and no public product claim."
+    ],
+    "stop": [
+      "The source requires project-specific generator logic or modification of the inspected repository.",
+      "The snapshot would materially misrepresent the source or verifier state.",
+      "The required architecture exceeds a thin Lean adapter and would amount to speculative platform construction."
+    ],
+    "precedence": "Stop conditions override build. Build requires every required metric to pass; otherwise choose change or stop.",
+    "task_012_rule": "No rehearsal disposition unlocks TASK-012. Only the latest valid completed external CH-001 discovery disposition in repo/PILOT_PROTOCOL.json may do so.",
+    "change_plan": {
+      "owner": "architecture_validation",
+      "gaps": [
+        {
+          "metric_id": "external-execution-isolation",
+          "owner": "architecture_validation",
+          "smallest_next_test": "Run one bounded hostile fixture in the proposed runner that attempts host-secret reads, source and path-escape writes, process spawning, network access, and timeout or output-limit exhaustion.",
+          "stop_condition": "Stop portability expansion if any hostile action escapes containment or if containment requires project-specific execution logic."
+        },
+        {
+          "metric_id": "compiled-evidence-authenticity",
+          "owner": "architecture_validation",
+          "smallest_next_test": "Run one hostile fixture through a trusted absolute Lean launcher with a controlled module search path and loaded-artifact binding; the fixture must attempt both forged KEYAI output and probe-module shadowing.",
+          "stop_condition": "Stop portability expansion if the trusted runner cannot reject forged output and shadowed probe modules without project-specific logic or modification of the inspected repository."
+        }
+      ],
+      "scope_guard": "Do not unlock TASK-012, publish a product claim, or start an ECDLP hypothesis from this technical rehearsal."
+    }
+  },
+  "artifacts": {
+    "snapshot": "rehearsals/keyai-portability-001/snapshot.json",
+    "compiled_probe": "rehearsals/keyai-portability-001/compiled-probe.json",
+    "baseline_evidence": "rehearsals/keyai-portability-001/baseline.json",
+    "report": "notes/reviews/PORTABILITY_REHEARSAL_001.md"
+  },
+  "runs": [
+    {
+      "id": "RUN-SNAPSHOT-01",
+      "performed_on": "2026-07-23",
+      "mode": "write",
+      "command": "python scripts/lean_portability.py --source <canonical-checkout>",
+      "source_commit_sha": "3f093947b8ae789e9497772815c3a37309ea5566",
+      "source_tree_sha": "9ec0e7ea90d98241935620711bf9568c169ef8b7",
+      "source_status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot_sha256": "a96d1f1a13508d0165f9463e79cd92333ac9f140a4942fec447f7206894585fb",
+      "generator_sha256": "67d98e28e62fea8b2a2e9b5d0be4e50af1c9825ba3504809e33a8fcae06acb21",
+      "source_clean_before": true,
+      "source_clean_after": true
+    },
+    {
+      "id": "RUN-SNAPSHOT-02",
+      "performed_on": "2026-07-23",
+      "mode": "check",
+      "command": "python scripts/lean_portability.py --source <canonical-checkout> --check",
+      "source_commit_sha": "3f093947b8ae789e9497772815c3a37309ea5566",
+      "source_tree_sha": "9ec0e7ea90d98241935620711bf9568c169ef8b7",
+      "source_status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot_sha256": "a96d1f1a13508d0165f9463e79cd92333ac9f140a4942fec447f7206894585fb",
+      "generator_sha256": "67d98e28e62fea8b2a2e9b5d0be4e50af1c9825ba3504809e33a8fcae06acb21",
+      "source_clean_before": true,
+      "source_clean_after": true
+    }
+  ],
+  "compiled_runs": [
+    {
+      "id": "RUN-COMPILED-01",
+      "performed_on": "2026-07-23",
+      "mode": "write",
+      "command": "python scripts/lean_compiled_probe.py --source <disposable-built-checkout>",
+      "source_commit_sha": "3f093947b8ae789e9497772815c3a37309ea5566",
+      "source_tree_sha": "9ec0e7ea90d98241935620711bf9568c169ef8b7",
+      "source_status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot_sha256": "a96d1f1a13508d0165f9463e79cd92333ac9f140a4942fec447f7206894585fb",
+      "probe_sha256": "633707c75a16e412eb82f53126392d46dcd697497a133ff8524459fa2baf0729",
+      "generator_sha256": "4be6454dc4ee7b22d9758497ae91597d573c83ab70e162eef586fa46b921d38e",
+      "compiled_artifact_manifest_sha256": "18fe92cac750ac8b6490fb99b47c884071a9b3d50bf12152eb450cac2709d289",
+      "lake_launcher_sha256": "175089915efc623126a1560ed517cd52ec2d4d09f2adc1c10f22f56568fed5ad",
+      "elan_home_source": "derived_from_lake_launcher",
+      "observed_workspace_changes": [
+        "cedar-lean/lake-manifest.json"
+      ],
+      "canonical_source_clean_before": true,
+      "canonical_source_clean_after": true
+    },
+    {
+      "id": "RUN-COMPILED-02",
+      "performed_on": "2026-07-23",
+      "mode": "check",
+      "command": "python scripts/lean_compiled_probe.py --source <disposable-built-checkout> --check",
+      "source_commit_sha": "3f093947b8ae789e9497772815c3a37309ea5566",
+      "source_tree_sha": "9ec0e7ea90d98241935620711bf9568c169ef8b7",
+      "source_status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot_sha256": "a96d1f1a13508d0165f9463e79cd92333ac9f140a4942fec447f7206894585fb",
+      "probe_sha256": "633707c75a16e412eb82f53126392d46dcd697497a133ff8524459fa2baf0729",
+      "generator_sha256": "4be6454dc4ee7b22d9758497ae91597d573c83ab70e162eef586fa46b921d38e",
+      "compiled_artifact_manifest_sha256": "18fe92cac750ac8b6490fb99b47c884071a9b3d50bf12152eb450cac2709d289",
+      "lake_launcher_sha256": "175089915efc623126a1560ed517cd52ec2d4d09f2adc1c10f22f56568fed5ad",
+      "elan_home_source": "derived_from_lake_launcher",
+      "observed_workspace_changes": [
+        "cedar-lean/lake-manifest.json"
+      ],
+      "canonical_source_clean_before": true,
+      "canonical_source_clean_after": true
+    }
+  ],
+  "decision": {
+    "status": "completed",
+    "disposition": "change",
+    "performed_on": "2026-07-23",
+    "summary": "The thin declarative Lean boundary passed source, baseline, compiled, determinism, adversarial, and KeyAI non-regression checks, but BUILD remains blocked by the two required execution-boundary failures: no OS-enforced isolation and no launcher/output authenticity independent of the inspected project.",
+    "evidence_files": [
+      "rehearsals/keyai-portability-001/snapshot.json",
+      "rehearsals/keyai-portability-001/compiled-probe.json",
+      "rehearsals/keyai-portability-001/baseline.json",
+      "notes/reviews/PORTABILITY_REHEARSAL_001.md"
+    ]
+  }
+}

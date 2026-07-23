@@ -267,6 +267,51 @@ classes:
     risks:
       - Measurements are evidence, never proofs or verified ECDLP claims.
 
+  portability_rehearsal_control:
+    description: >
+      Canonical pre-pilot portability contract, execution record, and review
+      packet. These are hand-reviewed internal technical controls, never
+      customer discovery or external pilot evidence.
+    paths:
+      - repo/PORTABILITY_REHEARSAL.json
+      - rehearsals/keyai-portability-001/baseline.json
+      - notes/reviews/PORTABILITY_REHEARSAL_001.md
+    owner: architecture_validation
+    hand_edit: true
+    generated: false
+    gates:
+      - scripts/check_portability_rehearsal.py
+      - pinned external baseline outside ordinary KeyAI CI
+    risks:
+      - Execution records are attestations and must preserve negative attempts.
+      - Internal rehearsal evidence must not enter external pilot or public surfaces.
+
+  portability_rehearsal_generated:
+    description: >
+      Deterministic generated source inventory and compiled-environment trust
+      probe for the pinned rehearsal source.
+    paths:
+      - rehearsals/keyai-portability-001/snapshot.json
+      - rehearsals/keyai-portability-001/compiled-probe.json
+    owner: architecture_validation
+    hand_edit: false
+    generated: true
+    generators:
+      - scripts/lean_portability.py
+      - scripts/lean_compiled_probe.py
+    gates:
+      - scripts/check_portability_rehearsal.py
+      - scripts/test_lean_portability.py
+      - scripts/test_lean_compiled_probe.py
+      - scripts/test_check_portability_rehearsal.py
+      - pinned external baseline outside ordinary KeyAI CI
+    risks:
+      - Source-level inventory must not be presented as compiled proof evidence.
+      - Internal rehearsal evidence must not enter the external pilot evidence log.
+      - External source code must not be vendored or modified.
+      - Compiler-trust dependencies must remain explicit.
+      - Project-launched compiled output is not independently authenticated until the trusted-runner gap is closed.
+
 allowed_overlap_paths:
   - index.html
   - dashboard.html
@@ -275,6 +320,7 @@ allowed_overlap_paths:
   - Ecdlp/LedgerAxiomAudit.lean
   - experiments/HYPOTHESES.yaml
   - notes/SECURITY_SCOPE.md
+  - notes/reviews/PORTABILITY_REHEARSAL_001.md
 
 cleanup_candidates:
   - path: archive/

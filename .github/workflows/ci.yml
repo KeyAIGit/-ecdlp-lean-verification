@@ -107,6 +107,20 @@ jobs:
       - name: Check domain registry
         run: python3 scripts/check_domains.py
 
+      # Pre-pilot technical rehearsal gate. CI validates the committed contract,
+      # evidence digests, and generic adapter fixtures without cloning or modifying
+      # the pinned external repository. Re-running the external baseline remains an
+      # explicit, networked rehearsal command.
+      - name: Check portability rehearsal contract and evidence
+        run: python3 scripts/check_portability_rehearsal.py --require-final
+
+      - name: Test generic Lean portability adapters
+        run: >-
+          python3 -m unittest
+          scripts.test_lean_portability
+          scripts.test_lean_compiled_probe
+          scripts.test_check_portability_rehearsal
+
       # Prover-loop registry hygiene: every OPEN target must have a stem on disk, else the
       # loop silently no-ops it. Foreign files (queue.json) are ignored.
       - name: Check prover target registry
