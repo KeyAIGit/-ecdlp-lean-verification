@@ -92,6 +92,9 @@ jobs:
       - name: Test canonical ledger parser
         run: python3 scripts/test_ledger_utils.py
 
+      - name: Test axiom-output parser
+        run: python3 scripts/test_check_axioms.py
+
       # Provenance gate: every theorem name cited in VERIFIED.md must resolve to an actual
       # declaration in the built Lean source (Ecdlp/ minus Targets/) — catches ledger drift
       # from a renamed/removed theorem, deriving the registry from source not a hand number.

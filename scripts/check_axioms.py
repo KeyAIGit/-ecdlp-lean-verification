@@ -35,6 +35,21 @@ def is_native_decide(ax: str) -> bool:
     return ax in NATIVE_DECIDE_EXACT or ".native_decide.ax" in ax or "_native.native_decide" in ax
 
 
+def parse_audit_output(text: str) -> tuple[list[tuple[str, str]], list[str]]:
+    """Parse Lean output while preserving apostrophes inside identifiers."""
+    blocks = re.findall(
+        r"^'(.+)' depends on axioms: \[([^\]]*)\]",
+        text,
+        flags=re.MULTILINE,
+    )
+    nodep = re.findall(
+        r"^'(.+)' does not depend on any axioms$",
+        text,
+        flags=re.MULTILINE,
+    )
+    return blocks, nodep
+
+
 def main(argv: list[str]) -> int:
     if len(argv) not in {2, 3}:
         print("usage: check_axioms.py <axiom_audit.txt> [result_registry.json]",
@@ -53,8 +68,7 @@ def main(argv: list[str]) -> int:
     #   'foo' depends on axioms: [a, b, c]
     # or
     #   'foo' does not depend on any axioms
-    blocks = re.findall(r"'([^']+)' depends on axioms: \[([^\]]*)\]", text)
-    nodep = re.findall(r"'([^']+)' does not depend on any axioms", text)
+    blocks, nodep = parse_audit_output(text)
 
     if not blocks and not nodep:
         print("AXIOM AUDIT FAILED: no `#print axioms` output found — did the audit run?\n"
