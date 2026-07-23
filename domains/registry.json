@@ -19,6 +19,7 @@
         "ontology": "Ecdlp/Ontology.lean",
         "verifier": "lean-kernel"
       },
+      "corpus_manifest": "domains/ecdlp/corpus_manifest.json",
       "metrics_source": "data/stats.json",
       "frontier_source": "data/frontier_map.json",
       "site": "dashboard.html",
