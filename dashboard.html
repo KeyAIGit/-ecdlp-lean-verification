@@ -61,7 +61,7 @@
       <button type="button" role="tab" id="tab-routes" aria-controls="panel-routes" aria-selected="false" tabindex="-1" data-tab="routes">Routes</button>
       <button type="button" role="tab" id="tab-formal" aria-controls="panel-formal" aria-selected="false" tabindex="-1" data-tab="formal">Formal substrate</button>
       <button type="button" role="tab" id="tab-evidence" aria-controls="panel-evidence" aria-selected="false" tabindex="-1" data-tab="evidence">Evidence</button>
-      <button type="button" role="tab" id="tab-activity" aria-controls="panel-activity" aria-selected="false" tabindex="-1" data-tab="activity">Activity</button>
+      <button type="button" role="tab" id="tab-activity" aria-controls="panel-activity" aria-selected="false" tabindex="-1" data-tab="activity">Queue</button>
     </div>
   </div>
 
@@ -87,17 +87,8 @@
   <div class="task-row__top"><div><h4>TASK-008 · Maintain evidence-gated candidate intake</h4>
     <p>Decision `RS-2026-07-22-001` selected no current route. Future progress must enter through new mathematical evidence, not by silently reviving the last experiment or expanding a convenient formal library.</p></div><span class="status status--blue">Active</span></div>
 </article><article class="task-row">
-  <div class="task-row__top"><div><h4>TASK-009 · Implement only a newly selected foundation</h4>
-    <p>Missing Mathlib infrastructure is valuable only when it resolves a concrete uncertainty in a route that already passes the proposal gate.</p></div><span class="status status--blocked">Blocked</span></div>
-</article><article class="task-row">
-  <div class="task-row__top"><div><h4>TASK-010 · Periodic independent adversarial audit</h4>
-    <p>An independent reviewer can still find architecture, scope, or deletion risks that internal gates do not model.</p></div><span class="status status--parked">Parked</span></div>
-</article><article class="task-row">
   <div class="task-row__top"><div><h4>TASK-011 · Validate the external product pilot</h4>
     <p>The secp256k1 repository proves that the research-state loop can work in one owner-operated environment. It does not prove that another team has the same pain, can use the contracts, or will return. Product work should now reduce that uncertainty instead of adding speculative platform features.</p></div><span class="status status--blue">Active</span></div>
-</article><article class="task-row">
-  <div class="task-row__top"><div><h4>TASK-012 · Build configurable intake after a pilot contract</h4>
-    <p>A hosted or multi-project platform is justified only after a real team exposes the minimum adapter boundary. Building it earlier would replace evidence with architecture.</p></div><span class="status status--blocked">Blocked</span></div>
 </article></div>
         </aside>
       </div>
@@ -393,10 +384,25 @@
     </section>
 
     <section class="tab-panel" role="tabpanel" id="panel-activity" aria-labelledby="tab-activity" data-tab-panel="activity" hidden>
-      <div class="panel-heading"><div><h2>Recent repository activity</h2>
-        <p>Build milestones are informative history; canonical status still comes from the registries above.</p></div>
-        <a class="button" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commits/main">Full commit feed</a></div>
-      <ul class="activity-list"><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/cb3d788"><code>cb3d788</code></a><span>feat: establish KeyAI product model and verification workspace (#237)</span></li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/e892800"><code>e892800</code></a><span>chore(docs): resync derived artifacts from sources [skip ci]</span></li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/bbff1d3"><code>bbff1d3</code></a><span>Add repository-wide ECDLP decision substrate (#236)</span></li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/cb791cc"><code>cb791cc</code></a><span>chore(docs): resync derived artifacts from sources [skip ci]</span></li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/cdcb64e"><code>cdcb64e</code></a><span>docs(N7): honest caveat — cofactor generator not turn-key for hard steps (#233)</span></li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/9414cd3"><code>9414cd3</code></a><span>chore(docs): resync derived artifacts from sources [skip ci]</span></li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/2ea35a9"><code>2ea35a9</code></a><span>certs: pin the CORE-II +companion identity (exact, numerically certified) (#232)</span></li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/6e86adc"><code>6e86adc</code></a><span>chore(docs): resync derived artifacts from sources [skip ci]</span></li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/7a07e28"><code>7a07e28</code></a><span>certs: EDS linear_combination cofactor generator (unblocks N7 algebra-wall grind) (#231)</span></li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/4a15aa8"><code>4a15aa8</code></a><span>chore(docs): resync derived artifacts from sources [skip ci]</span></li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/13b8c57"><code>13b8c57</code></a><span>docs(NEXT): refresh N7 progress log through #229 (#230)</span></li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/296e844"><code>296e844</code></a><span>N7 stem: close the odd-step secant x-collision branch (sorry 9→8) (#229)</span></li></ul>
+      <div class="panel-heading"><div><h2>Work queue</h2>
+        <p>Every active, blocked, or parked item is generated from a bounded task contract with an exit condition.</p></div>
+        <a class="button" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/NEXT.md">Open canonical queue</a></div>
+      <div class="surface"><div class="surface__body"><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-008 · Maintain evidence-gated candidate intake</h4>
+    <p>Decision `RS-2026-07-22-001` selected no current route. Future progress must enter through new mathematical evidence, not by silently reviving the last experiment or expanding a convenient formal library.</p></div><span class="status status--blue">Active</span></div>
+</article><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-009 · Implement only a newly selected foundation</h4>
+    <p>Missing Mathlib infrastructure is valuable only when it resolves a concrete uncertainty in a route that already passes the proposal gate.</p></div><span class="status status--blocked">Blocked</span></div>
+</article><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-010 · Periodic independent adversarial audit</h4>
+    <p>An independent reviewer can still find architecture, scope, or deletion risks that internal gates do not model.</p></div><span class="status status--parked">Parked</span></div>
+</article><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-011 · Validate the external product pilot</h4>
+    <p>The secp256k1 repository proves that the research-state loop can work in one owner-operated environment. It does not prove that another team has the same pain, can use the contracts, or will return. Product work should now reduce that uncertainty instead of adding speculative platform features.</p></div><span class="status status--blue">Active</span></div>
+</article><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-012 · Build configurable intake after a pilot contract</h4>
+    <p>A hosted or multi-project platform is justified only after a real team exposes the minimum adapter boundary. Building it earlier would replace evidence with architecture.</p></div><span class="status status--blocked">Blocked</span></div>
+</article></div></div>
     </section>
   </div>
 </main>

@@ -5,7 +5,6 @@ from __future__ import annotations
 import html
 import json
 import re
-import subprocess
 from collections import Counter
 from pathlib import Path
 
@@ -96,29 +95,6 @@ def status_badge(status: str, label: str | None = None) -> str:
         else direct_status or "gray"
     )
     return f'<span class="status status--{esc(css_status)}">{esc(label or default_label)}</span>'
-
-
-def git_log(limit: int = 12) -> list[tuple[str, str]]:
-    command = ["git", "log", "--format=%h\t%s", f"-{limit}", "HEAD"]
-    try:
-        result = subprocess.run(
-            command,
-            cwd=ROOT,
-            check=True,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            timeout=20,
-        )
-    except (OSError, subprocess.SubprocessError):
-        return []
-    rows: list[tuple[str, str]] = []
-    for line in result.stdout.splitlines():
-        if "\t" in line:
-            commit, subject = line.split("\t", 1)
-            rows.append((commit, subject))
-    return rows
 
 
 def parse_tasks() -> list[dict[str, str]]:
@@ -443,13 +419,20 @@ def build_dashboard(
     selection = decisions["route_selection"]
     routes = decisions["routes"]
     distribution_html, legend_html = route_distribution(routes)
-    task_html = "".join(
-        f"""<article class="task-row">
+    task_rows = [
+        (
+            task,
+            f"""<article class="task-row">
   <div class="task-row__top"><div><h4>{esc(task["id"])} · {esc(task["title"])}</h4>
     <p>{esc(task["why"])}</p></div>{task_status_badge(task["status"])}</div>
-</article>"""
+</article>""",
+        )
         for task in tasks
-    )
+    ]
+    task_html = "".join(row for _task, row in task_rows)
+    active_task_html = "".join(
+        row for task, row in task_rows if task["status"] == "active"
+    ) or '<p class="empty-state">No task contract is currently active.</p>'
     route_rows = "".join(
         f"""<tr>
   <td><strong>{esc(route["title"])}</strong><small>{esc(route["id"])}</small></td>
@@ -478,12 +461,6 @@ def build_dashboard(
 </tr>"""
         for blocker in formal["blockers"]
     )
-    commits = git_log()
-    activity_html = "".join(
-        f'<li><a href="{REPO}/commit/{esc(commit)}"><code>{esc(commit)}</code></a>'
-        f'<span>{esc(subject)}</span></li>'
-        for commit, subject in commits
-    ) or "<li><code>n/a</code><span>Git history unavailable in this build environment.</span></li>"
     decision_reasons = "".join(f"<li>{esc(item)}</li>" for item in selection["rationale"])
     triggers = "".join(f"<li>{esc(item)}</li>" for item in selection["reconsideration_triggers"])
     phase_policy = decisions["phase_policy"]
@@ -562,7 +539,7 @@ def build_dashboard(
       <button type="button" role="tab" id="tab-routes" aria-controls="panel-routes" aria-selected="false" tabindex="-1" data-tab="routes">Routes</button>
       <button type="button" role="tab" id="tab-formal" aria-controls="panel-formal" aria-selected="false" tabindex="-1" data-tab="formal">Formal substrate</button>
       <button type="button" role="tab" id="tab-evidence" aria-controls="panel-evidence" aria-selected="false" tabindex="-1" data-tab="evidence">Evidence</button>
-      <button type="button" role="tab" id="tab-activity" aria-controls="panel-activity" aria-selected="false" tabindex="-1" data-tab="activity">Activity</button>
+      <button type="button" role="tab" id="tab-activity" aria-controls="panel-activity" aria-selected="false" tabindex="-1" data-tab="activity">Queue</button>
     </div>
   </div>
 
@@ -584,7 +561,7 @@ def build_dashboard(
         <aside class="surface">
           <div class="surface__head"><div><h3>Active queue</h3><p>{active_count} active of {len(tasks)} task contracts</p></div>
             <a href="{REPO}/blob/main/tasks/NEXT.md">Open source</a></div>
-          <div class="surface__body">{task_html}</div>
+          <div class="surface__body">{active_task_html}</div>
         </aside>
       </div>
     </section>
@@ -643,10 +620,10 @@ def build_dashboard(
     </section>
 
     <section class="tab-panel" role="tabpanel" id="panel-activity" aria-labelledby="tab-activity" data-tab-panel="activity" hidden>
-      <div class="panel-heading"><div><h2>Recent repository activity</h2>
-        <p>Build milestones are informative history; canonical status still comes from the registries above.</p></div>
-        <a class="button" href="{REPO}/commits/main">Full commit feed</a></div>
-      <ul class="activity-list">{activity_html}</ul>
+      <div class="panel-heading"><div><h2>Work queue</h2>
+        <p>Every active, blocked, or parked item is generated from a bounded task contract with an exit condition.</p></div>
+        <a class="button" href="{REPO}/blob/main/tasks/NEXT.md">Open canonical queue</a></div>
+      <div class="surface"><div class="surface__body">{task_html}</div></div>
     </section>
   </div>
 </main>
