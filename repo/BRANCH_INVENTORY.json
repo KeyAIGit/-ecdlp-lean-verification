@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "snapshot": {
-    "captured_at": "2026-07-22T22:38:30-07:00",
+    "captured_at": "2026-07-22T22:39:54-07:00",
     "remote": "origin",
     "base_ref": "origin/main",
     "base_sha": "cb791cc8f6cfb213fce261a4e1f9a0f74278ac86",
@@ -40,14 +40,14 @@
     },
     {
       "name": "agent/ecdlp-decision-substrate",
-      "tip": "f1e06373ed72781e88bd7b5895f05aa8b76e9dd7",
+      "tip": "2e17cde9348029cd259089912f3f7352843132c1",
       "tip_date": "2026-07-22",
       "behind_main": 0,
-      "ahead_main": 25,
+      "ahead_main": 26,
       "merged_by_ancestry": false,
       "disposition": "active_integration",
       "based_on_branch": "agent/formal-substrate-closure",
-      "pull_request": null,
+      "pull_request": 236,
       "delete_now": false,
       "next_action": "keep unmerged, open one draft PR, await CI, and request one final Claude/Opus adversarial review only at program freeze"
     },
