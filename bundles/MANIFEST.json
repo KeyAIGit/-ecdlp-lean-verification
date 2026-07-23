@@ -67,7 +67,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 7937
+        "bytes": 8089
       },
       {
         "path": "VERIFIED.md",
@@ -135,7 +135,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 7937
+        "bytes": 8089
       },
       {
         "path": "VERIFIED.md",
@@ -177,7 +177,7 @@
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 8925
+        "bytes": 9181
       },
       {
         "path": "PUBLISHABLE_UNITS.md",

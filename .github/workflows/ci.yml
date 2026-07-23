@@ -89,6 +89,9 @@ jobs:
       - name: Check workflow automation inventory
         run: python3 scripts/check_automation_inventory.py
 
+      - name: Check remote branch inventory snapshot
+        run: python3 scripts/check_branch_inventory.py
+
       - name: Test canonical ledger parser
         run: python3 scripts/test_ledger_utils.py
 

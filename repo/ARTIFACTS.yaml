@@ -164,6 +164,8 @@ classes:
       - repo/CLEANUP_PLAN.md
       - repo/FORMAL_SUBSTRATE.json
       - repo/AUTOMATION_INVENTORY.json
+      - repo/BRANCH_INVENTORY.json
+      - repo/FINAL_REVIEW_PACKET.md
       - bundles/README.md
       - domains/
     owner: operations

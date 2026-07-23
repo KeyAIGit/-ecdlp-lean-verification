@@ -11,6 +11,8 @@ For a small-context start, read `STATUS.md` first, then `tasks/NEXT.md`; load
 frontier interpretation, or publication planning. Before moving, deleting, or
 reclassifying files, read `REPOSITORY_ARCHITECTURE.md`, `repo/ARTIFACTS.yaml`,
 and `repo/FORMAL_SUBSTRATE.json`.
+The final repository-wide review contract for draft PR #235 is
+`repo/FINAL_REVIEW_PACKET.md`; review does not grant merge or branch-deletion authority.
 
 ## What this project actually is (read this first)
 A **machine-checked formalization** of the mathematics of ECDLP / elliptic-curve

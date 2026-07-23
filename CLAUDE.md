@@ -5,6 +5,8 @@ is guidance for automated/assisted runs. The authoritative protocol lives in `AG
 For whole-repository ownership, generated artifacts, and cleanup boundaries, read
 `REPOSITORY_ARCHITECTURE.md`, `repo/ARTIFACTS.yaml`, and
 `repo/FORMAL_SUBSTRATE.json` before moving or deleting files.
+For the final repository-wide review of draft PR #235, follow
+`repo/FINAL_REVIEW_PACKET.md`; do not merge or delete branches from that review.
 
 ## The one invariant
 **A green build means every built theorem is fully proved.** The Lean kernel is the

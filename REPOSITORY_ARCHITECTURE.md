@@ -11,6 +11,10 @@ Machine-readable companions:
 - `repo/FORMAL_SUBSTRATE.json` maps result families, critical dependencies, blockers,
   release disposition, and open targets.
 - `repo/AUTOMATION_INVENTORY.json` classifies every workflow.
+- `repo/BRANCH_INVENTORY.json` records the dated, non-destructive remote-branch
+  snapshot; ancestry alone never authorizes deletion.
+- `repo/FINAL_REVIEW_PACKET.md` is the single final adversarial-review contract
+  for the repository-wide integration PR.
 
 Their checks live under `scripts/check_*inventory.py`,
 `scripts/check_formal_substrate.py`, and `scripts/check_repo_artifacts.py`.
