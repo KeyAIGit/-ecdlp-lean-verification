@@ -5,13 +5,15 @@
 > `archive/platform/` (platform-ci retired), superseded strategy/review docs → `archive/docs/`.
 > This plan is kept as the decision record; remaining candidates live in `repo/ARTIFACTS.yaml`.
 
-This plan is deliberately conservative. The current branch classifies the repo;
-it does not delete, rename, or move risky files. The next cleanup PR should only
-act after Claude or human review confirms the classification.
+This plan is deliberately conservative. Routine project and merge authority
+does not authorize bulk deletion, irreversible history rewriting, or provenance
+removal. A cleanup change requires an inventory, reference scan, smallest
+reversible action, documented restore path, and explicit owner confirmation
+before irreversible deletion.
 
 ## Goals
 
-- Make the repo easier for Claude, Codex, and humans to navigate.
+- Make the repo easier for AI agents, reviewers, and maintainers to navigate.
 - Preserve mathematical provenance and Lean correctness.
 - Reduce stale duplicate truth without hiding research history.
 - Separate current product surface from exploratory trace.
@@ -22,7 +24,7 @@ act after Claude or human review confirms the classification.
 - No movement of `Ecdlp/Proved/` modules.
 - No rewrite of the vendored corpus CSV.
 - No bulk archive of `notes/ward/` or `scratch/`.
-- No dashboard rewrite beyond separately reviewed generator work.
+- No destructive cleanup bundled with proof, product, or site work.
 
 ## Phase 0: Architecture Baseline
 
@@ -33,12 +35,12 @@ Deliverables:
 - `REPOSITORY_ARCHITECTURE.md`
 - `repo/ARTIFACTS.yaml`
 - `repo/CLEANUP_PLAN.md`
-- `CLAUDE_REVIEW_PACKET.md`
+- `repo/FINAL_REVIEW_PACKET.md` as frozen historical review provenance
 - small orientation links from `README.md` and `AGENTS.md`
 
 Exit criteria:
 
-- Claude can review the whole repo architecture without guessing which files
+- Any reviewer can inspect the whole repo architecture without guessing which files
   are canonical, generated, scratch, or archival.
 - No destructive change is required to validate this phase.
 
@@ -59,17 +61,18 @@ Risks:
 - YAML parsing adds a dependency if done carelessly. The current validator uses
   a tiny stdlib parser for the subset of YAML shape used by the manifest.
 
-## Phase 2: Dashboard And Site Sync Health
+## Phase 2: Product Site And Sync Health
 
-Proposed follow-up PR.
+Status: implemented on `agent/keyai-product-mvp`; complete after green merge.
 
 Actions:
 
-1. Make `scripts/build_dashboard.py` robust across Windows and Linux.
-2. Add a visible Sync Health block to `dashboard.html`.
-3. Ensure `index.html` counters are updated only by a clear sync path.
-4. Extend `scripts/check_status_consistency.py` only where values are actually
-   machine-readable.
+1. Generate all three public pages from canonical sources through
+   `scripts/site_generator.py`.
+2. Keep `scripts/build_dashboard.py` as the compatibility entry point.
+3. Add a visible Sync Health view to `dashboard.html`.
+4. Gate product rhetoric and current-vs-future capability through
+   `repo/PRODUCT_MODEL.json` and `scripts/check_product_model.py`.
 
 Risks:
 
@@ -78,9 +81,9 @@ Risks:
 
 ## Phase 3: Archive Experimental Trace
 
-Proposed follow-up PR after review.
+Status: executed in tranche 1 and retained here as the movement record.
 
-Candidate areas:
+Historical candidates:
 
 | Path | Proposed action | Why not delete immediately |
 |---|---|---|
@@ -129,9 +132,9 @@ Risks:
 - Renaming Lean modules is high-friction and can obscure review history. Do it
   only for real proof-maintenance value.
 
-## Claude Gate
+## Destructive Cleanup Gate
 
-Before any archive/delete PR, ask Claude:
+Before any archive/delete PR, record answers to:
 
 1. What evidence shows this file or directory is inactive?
 2. What future proof/research path could still need it?

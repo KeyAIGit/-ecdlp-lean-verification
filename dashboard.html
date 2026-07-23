@@ -1,475 +1,418 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ECDLP environment — a verified substrate for a strong AI</title>
-<meta name="description" content="A machine-checked, machine-navigable Lean 4 + Mathlib environment for ECDLP/secp256k1 — kernel-verified core, a queryable frontier map, and a no-go map of missing foundations. Built by KeyAI.">
-<meta property="og:title" content="ECDLP environment — verified substrate for a strong AI">
-<meta property="og:description" content="296 kernel-verified results · 100.0% of the ECDLP corpus mapped · honest about the barriers.">
-<meta property="og:image" content="assets/logo-wordmark.png">
-<meta name="theme-color" content="#001a3f">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<style>
-@font-face {font-family:"Baloo 2";font-style:normal;font-weight:500 800;font-display:swap;
-  src:url("fonts/Baloo2-Variable.woff2") format("woff2");}
-@font-face {font-family:"Nunito";font-style:normal;font-weight:400 900;font-display:swap;
-  src:url("fonts/Nunito-Variable.woff2") format("woff2");}
-:root{
-  --navy:#001a3f; --navy2:#052858; --blue:#1d85ff; --blue-dark:#0f66d1;
-  --tint:#e3ebf6; --tint2:#f4f8fc; --ink:#000000; --gray:#687480; --mut:#94a4b4;
-  --white:#ffffff; --line:#dbe6f3;
-  --good:#0ca30c; --warning:#fab219; --critical:#d03b3b;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:76px}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--white);color:var(--ink);
-  font-family:Nunito,-apple-system,Segoe UI,Roboto,sans-serif;font-size:15px;line-height:1.55}
-h1,h2,h3,.disp{font-family:"Baloo 2",Nunito,sans-serif;font-weight:700}
-a{color:var(--blue);text-decoration:none}
-:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-.skip{position:absolute;left:-9999px;top:0;background:var(--blue);color:#fff;padding:10px 16px;
-  border-radius:0 0 8px 0;z-index:200}
-.skip:focus{left:0}
-
-/* ---- sticky glass nav ---- */
-.topnav{position:sticky;top:0;z-index:100;background:rgba(0,26,63,.82);
-  backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);
-  border-bottom:1px solid rgba(255,255,255,.08)}
-.scrollprog{position:absolute;left:0;bottom:-1px;height:2px;width:0;
-  background:linear-gradient(90deg,var(--blue),#7db0ff);transform-origin:left;
-  transition:width .08s linear;box-shadow:0 0 8px rgba(29,133,255,.6)}
-.topnav .in{max-width:1080px;margin:0 auto;padding:0 24px;height:60px;display:flex;
-  align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:9px;flex-shrink:0}
-.brand img{height:22px;width:auto;display:block}
-.brand span{font-family:"Baloo 2";font-weight:700;color:rgba(255,255,255,.72);
-  font-size:14px;white-space:nowrap;letter-spacing:.01em}
-.navlinks{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
-.navlinks::-webkit-scrollbar{display:none}
-.navlinks a{color:#b9cbe8;font-size:13px;font-weight:700;padding:8px 12px;border-radius:7px;
-  white-space:nowrap;transition:background .15s,color .15s}
-.navlinks a:hover{background:rgba(255,255,255,.08);color:#fff}
-.navlinks a.active{background:var(--blue);color:#fff}
-
-/* ---- hero ---- */
-.hero{background:radial-gradient(120% 140% at 15% 0%,var(--navy2) 0%,var(--navy) 55%);
-  color:#fff;padding:52px 0 40px;position:relative;overflow:hidden}
-.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;pointer-events:none}
-.orb1{width:420px;height:420px;background:radial-gradient(circle,#2f8dfe,transparent 70%);
-  top:-160px;right:-100px}
-.orb2{width:280px;height:280px;background:radial-gradient(circle,#0f66d1,transparent 70%);
-  bottom:-140px;left:10%}
-.hero::after{content:"λ";position:absolute;right:-30px;top:-50px;font-family:"Baloo 2";
-  font-size:320px;font-weight:800;color:#fff;opacity:.045;line-height:1;pointer-events:none}
-.herotop{display:flex;align-items:center;gap:12px;margin-bottom:26px}
-.herotop img{height:40px;width:auto;filter:drop-shadow(0 2px 10px rgba(29,133,255,.35))}
-.herotop .word{font-family:"Baloo 2";font-weight:700;font-size:15px;color:#8fbcff;
-  letter-spacing:.03em;text-transform:uppercase}
-.hero h1{font-size:clamp(28px,4.4vw,40px);line-height:1.12;margin:0 0 12px;max-width:700px;
-  position:relative}
-.hero .sub{color:#7fb4ff;font-weight:700;font-size:15px;margin:0 0 6px;max-width:640px}
-.stamp{color:#93a8c9;font-size:12px;margin:0 0 18px}
-.stamp code{background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px;color:#bcd4f5}
-.honest{background:rgba(255,255,255,.06);border-left:3px solid var(--blue);padding:12px 16px;
-  border-radius:8px;color:#d7e4f7;font-size:13.5px;max-width:760px;position:relative}
-
-/* ---- metric cards (stat tiles) ---- */
-.cardband{padding:26px 0 6px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.card{background:#fff;border:1px solid var(--line);border-top:3px solid var(--blue);
-  border-radius:10px;padding:16px;box-shadow:0 1px 2px rgba(15,40,80,.04)}
-.cval{font-family:"Baloo 2";font-weight:800;font-size:26px;color:var(--navy);display:inline}
-.cunit{font-family:"Baloo 2";font-weight:700;font-size:15px;color:var(--blue);margin-left:2px}
-.clab{color:var(--gray);font-size:12px;margin-top:4px;font-weight:700}
-.csub{color:var(--mut);font-size:11px;margin-top:4px}
-
-/* ---- sync health ---- */
-.healthgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
-.health{background:#fff;border:1px solid var(--line);border-left:4px solid var(--good);
-  border-radius:8px;padding:12px 13px;box-shadow:0 1px 2px rgba(15,40,80,.04)}
-.health.bad{border-left-color:var(--critical)}
-.hstate{font-family:"Baloo 2";font-weight:800;font-size:12px;color:var(--good)}
-.health.bad .hstate{color:var(--critical)}
-.hname{font-weight:800;color:var(--navy);font-size:13px;margin-top:2px}
-.hval{color:var(--gray);font-size:12px;margin-top:4px}
-.hsrc{color:var(--mut);font-size:10.5px;margin-top:6px;font-family:ui-monospace,Menlo,monospace}
-
-/* ---- section rhythm ---- */
-section{padding:36px 0;scroll-margin-top:70px}
-section.tint{background:var(--tint2)}
-h2{font-size:20px;margin:0 0 16px;color:var(--ink);display:flex;align-items:center;gap:10px}
-h2 .accent{color:var(--blue)}
-h2 .secnum{font-family:"Baloo 2";font-size:12px;color:var(--blue);background:var(--tint);
-  border-radius:999px;padding:3px 10px;font-weight:700}
-.lede{color:var(--gray);font-size:14px;margin:-8px 0 18px;max-width:640px}
-
-/* ---- reveal-on-scroll ---- */
-.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
-.reveal.in{opacity:1;transform:translateY(0)}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
-
-/* ---- nav grid ---- */
-.navsection{margin-bottom:26px}
-.navsection h3{font-family:"Baloo 2";font-weight:700;font-size:14px;color:var(--navy);
-  margin:0 0 12px;padding-left:10px;border-left:4px solid var(--blue)}
-.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
-.navcard{display:block;background:#fff;border:1px solid var(--line);border-top:3px solid var(--blue);
-  border-radius:8px;padding:11px 13px;transition:transform .15s,box-shadow .15s}
-.navcard:hover,.navcard:focus-visible{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,40,80,.12)}
-.navname{color:var(--navy);font-weight:800;font-size:13.5px}
-.navpath{color:var(--mut);font-size:10.5px;font-family:ui-monospace,Menlo,monospace;margin:2px 0}
-.navdesc{color:var(--gray);font-size:12px;margin-top:3px;line-height:1.4}
-
-/* ---- CSS-only tooltip (keyboard + mouse) ---- */
-[data-tip]{position:relative;cursor:pointer}
-[data-tip]::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 9px);
-  transform:translateX(-50%) translateY(4px);background:var(--navy);color:#fff;font-size:11.5px;
-  font-weight:600;line-height:1.4;padding:8px 11px;border-radius:8px;width:max-content;max-width:280px;
-  white-space:normal;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;
-  box-shadow:0 8px 20px rgba(0,10,30,.25);z-index:20}
-[data-tip]:hover::after,[data-tip]:focus-visible::after{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ---- frontier status bar (part-to-whole, status semantics) ---- */
-.bar{display:flex;height:26px;border-radius:7px;border:1px solid var(--line);
-  background:#fff}
-/* no overflow:hidden here — each segment carries its own corner radius (first/last
-   children below), so the track clips correctly without cutting off hover tooltips
-   that pop up above a segment. */
-.seg{height:100%;border-right:2px solid #fff}
-.seg:last-child{border-right:none}
-.seg:first-child{border-radius:6px 0 0 6px}
-.seg:last-child{border-radius:0 6px 6px 0}
-.legend{margin-top:12px;font-size:12.5px;color:var(--gray);display:flex;flex-wrap:wrap;gap:14px}
-.lg{white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
-.lg i{display:inline-block;width:11px;height:11px;border-radius:3px}
-.lg b{color:var(--navy)}
-
-/* ---- foundations bars (sequential single-hue magnitude) ---- */
-.frow{display:flex;align-items:center;gap:12px;margin:9px 0;font-size:13px}
-.fname{width:150px;color:var(--navy);font-weight:700;text-transform:capitalize;flex-shrink:0}
-.fbarwrap{flex:1;background:var(--tint);border-radius:12px;height:20px;
-  display:flex;align-items:center}
-/* no overflow:hidden — the fill's own border-radius handles its shape without
-   clipping the hover/focus tooltip that pops up above the bar. */
-.fbar{height:12px;margin-left:2px;border-radius:0 6px 6px 0;
-  background:linear-gradient(90deg,var(--blue),var(--blue-dark));min-width:6px}
-.fn{width:30px;text-align:right;color:var(--navy);font-weight:800;font-family:"Baloo 2";flex-shrink:0}
-
-/* ---- table-view twin (accessibility) ---- */
-.tview{margin-top:14px;font-size:12.5px}
-.tview summary{cursor:pointer;color:var(--blue-dark);font-weight:700;list-style:none;
-  display:inline-flex;align-items:center;gap:5px}
-.tview summary::-webkit-details-marker{display:none}
-.tview summary::before{content:"▸";transition:transform .15s}
-.tview[open] summary::before{transform:rotate(90deg)}
-.tview table{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}
-.tview th,.tview td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line)}
-.tview th{color:var(--gray);font-weight:700}
-.tview td i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
-
-.grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:22px}
-@media(max-width:760px){.grid2{grid-template-columns:1fr}}
-
-/* ---- completeness meter ---- */
-.meterwrap{display:flex;align-items:center;gap:18px;background:#fff;border:1px solid var(--line);
-  border-top:3px solid var(--blue);border-radius:10px;padding:16px 18px}
-.meter-ring{flex-shrink:0}
-.meter-ring circle{fill:none;stroke-width:10}
-.meter-track{stroke:var(--tint)}
-.meter-fill{stroke:var(--blue);stroke-linecap:round;transition:stroke-dashoffset 1.1s cubic-bezier(.4,0,.2,1)}
-@media (prefers-reduced-motion:reduce){.meter-fill{transition:none}}
-.meter-label{font-family:"Baloo 2";font-size:15px;font-weight:800;fill:var(--navy)}
-
-/* ---- tracks & layers ---- */
-.track{background:#fff;border:1px solid var(--line);border-top:3px solid var(--blue);
-  border-radius:10px;padding:14px 16px;margin-bottom:12px}
-.track h3{font-family:"Baloo 2";font-size:14px;margin:0 0 9px;color:var(--navy)}
-.track ul{margin:0;padding:0;list-style:none}
-.track li{font-size:12.5px;color:var(--gray);margin:6px 0}
-.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle;
-  flex-shrink:0}
-.layer{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);
-  border-radius:8px;padding:11px 14px;margin:8px 0;font-size:13px;color:var(--gray);
-  display:flex;align-items:center;gap:12px}
-.lnum{font-family:"Baloo 2";font-weight:800;color:var(--blue);background:var(--tint);
-  border-radius:8px;padding:4px 9px;font-size:12px;flex-shrink:0}
-.layer b{color:var(--navy);font-family:"Baloo 2";font-size:13.5px}
-.ldesc{color:var(--gray)}
-
-/* ---- commits ---- */
-.commits{list-style:none;padding:0;margin:0}
-.commits li{padding:7px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--gray)}
-.commits code{background:var(--tint);padding:1px 6px;border-radius:4px;color:var(--blue-dark);font-weight:700}
-
-/* ---- domain portfolio (Phase-1 platform surface) ---- */
-.domaingrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.dcard{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);
-  border-radius:12px;padding:16px 17px;box-shadow:0 1px 2px rgba(15,40,80,.04)}
-.dcard--live{border-top:3px solid var(--good)}
-.dcard--planned{border-top:3px solid var(--blue)}
-.dcard--exploratory{border-top:3px solid var(--mut)}
-.dhead{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.dbadge{display:inline-flex;align-items:center;gap:5px;font-family:"Baloo 2";font-weight:800;
-  font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:var(--c);
-  background:color-mix(in srgb,var(--c) 12%,#fff);padding:3px 9px;border-radius:999px}
-.ddot{width:7px;height:7px;border-radius:50%}
-.did{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--mut)}
-.dtitle{font-family:"Baloo 2";font-weight:800;font-size:17px;color:var(--navy);margin-top:10px}
-.dline{color:var(--gray);font-size:12.5px;margin-top:4px;line-height:1.45}
-.dmetric{font-family:"Baloo 2";font-weight:800;color:var(--navy);font-size:15px;margin-top:11px;
-  font-variant-numeric:tabular-nums}
-.dmetric span{font-weight:700;font-size:11px;color:var(--blue)}
-.dmetric--empty{color:var(--mut);font-family:Nunito;font-weight:700;font-size:12px}
-.dnote{color:var(--mut);font-size:11.5px;margin-top:10px;line-height:1.5;flex:1}
-.dcta{margin-top:12px;font-family:"Baloo 2";font-weight:800;font-size:12.5px;color:var(--blue)}
-.dcard--planned .dcta,.dcard--exploratory .dcta{color:var(--mut);pointer-events:none}
-
-/* ---- Research OS pipeline (the layer chain / spine) ---- */
-.pipeline{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px}
-.pgcard{flex:1 1 150px;min-width:150px;display:flex;flex-direction:column;
-  background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 14px;
-  color:var(--ink);box-shadow:0 1px 2px rgba(15,40,80,.04);
-  transition:transform .15s,box-shadow .15s,border-color .15s}
-.pgcard:hover,.pgcard:focus-visible{transform:translateY(-3px);border-color:var(--blue);
-  box-shadow:0 8px 20px rgba(15,40,80,.10)}
-.pgcard--here{background:linear-gradient(180deg,#f4f8fc,#fff);border-color:var(--blue);
-  border-top:3px solid var(--blue)}
-.pgeyebrow{display:flex;align-items:center;gap:6px;font-family:"Baloo 2";font-weight:800;
-  font-size:12px;color:var(--navy);letter-spacing:.02em;text-transform:uppercase}
-.pgstep{display:inline-grid;place-items:center;width:19px;height:19px;border-radius:6px;
-  background:var(--tint);color:var(--blue-dark);font-size:10px;font-weight:800}
-.pgcard--here .pgstep{background:var(--blue);color:#fff}
-.pgval{font-family:"Baloo 2";font-weight:800;font-size:23px;color:var(--navy);
-  margin-top:8px;line-height:1;font-variant-numeric:tabular-nums}
-.pgunit{font-size:12px;font-weight:700;color:var(--blue);margin-left:3px}
-.pgrole{color:var(--gray);font-size:12px;margin-top:6px;line-height:1.4;flex:1}
-.pgsrc{color:var(--mut);font-size:10px;margin-top:8px;font-family:ui-monospace,Menlo,monospace;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pgarrow{align-self:center;color:var(--blue);font-weight:800;font-size:17px;
-  flex:0 0 auto;opacity:.55}
-@media (max-width:720px){.pgarrow{transform:rotate(90deg);width:100%;text-align:center}}
-
-/* ---- footer ---- */
-footer{background:var(--navy);color:#93a8c9;padding:32px 0}
-.footwrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-.footbrand{display:flex;align-items:center;gap:10px}
-.footbrand img{height:22px}
-.foottext{font-size:12px;color:#7591b8}
-.links{display:flex;gap:20px;flex-wrap:wrap}
-.links a{font-size:13px;font-weight:700;color:#bcd4f5}
-.links a:hover{color:#fff}
-</style></head><body>
-
-<a class="skip" href="#main">Skip to content</a>
-
-<nav class="topnav"><div class="in">
-  <a class="brand" href="#top"><img src="assets/logo-wordmark.png" alt="keyAI" height="22">
-    <span>· ECDLP env</span></a>
-  <div class="navlinks" id="scrollspy">
-    <a href="#metrics">Overview</a>
-    <a href="#pipeline">Pipeline</a>
-    <a href="#domains">Domains</a>
-    <a href="#sync">Sync</a>
-    <a href="#navigate">Docs</a>
-    <a href="#frontier">Frontier</a>
-    <a href="#tracks">Tracks</a>
-    <a href="#commits">Activity</a>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KeyAI Workspace | secp256k1 reference environment</title>
+  <meta name="description" content="The live KeyAI operator workspace for the secp256k1 ECDLP reference environment: decision routes, formal state, evidence, tasks, and trust boundaries.">
+  <meta property="og:title" content="KeyAI Workspace | secp256k1 reference environment">
+  <meta property="og:description" content="The live KeyAI operator workspace for the secp256k1 ECDLP reference environment: decision routes, formal state, evidence, tasks, and trust boundaries.">
+  <meta property="og:image" content="assets/logo-wordmark.png">
+  <meta name="theme-color" content="#f7f8f6">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/site.css?v=20260722-1">
+</head>
+<body data-page="workspace">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="shell site-header__inner">
+    <a class="brand-link" href="index.html" aria-label="KeyAI home">
+      <img src="assets/logo-wordmark.png" alt="KeyAI" width="116" height="44">
+    </a>
+    <nav class="primary-nav" aria-label="Primary navigation">
+      <a data-nav-page="product" href="index.html">Product</a>
+      <a data-nav-page="workspace" href="dashboard.html">Workspace</a>
+      <a data-nav-page="routes" href="explore.html">Route map</a>
+      <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/STATUS.md">Status</a>
+      <a class="nav-cta" href="https://github.com/KeyAIGit/-ecdlp-lean-verification">GitHub</a>
+    </nav>
   </div>
-  <div class="scrollprog" id="scrollprog"></div>
-</div></nav>
-
-<div class="hero" id="top"><div class="wrap">
-  <div class="orb orb1"></div><div class="orb orb2"></div>
-  <div class="herotop"><img src="assets/logo-wordmark.png" alt="keyAI"></div>
-  <h1>Verified environment for<br>a strong AI</h1>
-  <p class="sub">corpus → frontier → hypotheses → tasks → proofs → truth graph → site → papers</p>
-  <p class="stamp">snapshot 296 ledger rows / ~257 distinct · regenerate: <code>python3 scripts/build_dashboard.py</code></p>
-  <div class="honest">Honest boundary: this maximizes a future reasoner's leverage and rigorously maps the frontier — it does <b>not</b> solve ECDLP, and the barriers below may be permanent.</div>
-</div></div>
-
+</header>
 <main id="main">
-<div class="cardband wrap" id="metrics"><div class="cards"><div class="card reveal"><div class="cval" data-count="296">0</div><div class="cunit">~257 distinct</div><div class="clab">Verified results</div><div class="csub">0 sorry · no custom axioms</div></div><div class="card reveal"><div class="cval" data-count="100.0">0</div><div class="cunit">%</div><div class="clab">Frontier mapped</div><div class="csub">486 corpus claims</div></div><div class="card reveal"><div class="cval" data-count="235">0</div><div class="cunit">claims</div><div class="clab">Foundations blocking</div><div class="csub">each = a research-grade gap</div></div><div class="card reveal"><div class="cval">~10–15%</div><div class="clab">Honest substantive</div><div class="csub">rest = verified engineering</div></div></div></div>
+  <section class="workspace-mast">
+    <div class="shell">
+      <p class="breadcrumb">Reference workspace / secp256k1 ECDLP</p>
+      <div class="workspace-title">
+        <div><h1>secp256k1 research state</h1>
+          <p>One operator view for the current decision, formal substrate, evidence, active work,
+            and generated trust checks.</p></div>
+        <div class="snapshot">Canonical snapshot
+          <code>snapshot 296 ledger rows / ~257 distinct</code></div>
+      </div>
+      <div class="boundary-notice"><strong>Scope boundary.</strong>
+        The environment maps and verifies the research boundary. It does not solve the plain secp256k1 discrete logarithm problem.
+        Monitoring means new evidence can reopen a route; it does not mean impossibility was proved.</div>
+      <div class="workspace-metrics">
+        <div class="workspace-metric"><div class="workspace-metric__value">296</div><div class="workspace-metric__label">ledger rows</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">~257</div><div class="workspace-metric__label">distinct results</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">164</div><div class="workspace-metric__label">proved modules</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">486</div><div class="workspace-metric__label">corpus claims</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">17</div><div class="workspace-metric__label">routes evaluated</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">0</div><div class="workspace-metric__label">routes selected</div></div>
+      </div>
+    </div>
+  </section>
 
-<section class="wrap" id="pipeline">
-<h2><span class="secnum">01</span>The Research OS <span class="accent">pipeline</span></h2>
-<p class="lede">One route, walked end to end: the 486-claim corpus is triaged into a frontier, open directions become hypotheses, hypotheses become active tasks, tasks become kernel-verified proofs, proofs become a queryable truth graph, and the whole thing surfaces here and (where the scope is honest) as papers. Every count below is pulled live from its own source artifact — click any stage to open it.</p>
-<div class="pipeline reveal"><a class="pgcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/KG_CLAIM_FORMALIZATION_v1.csv" target="_blank" rel="noopener"><div class="pgeyebrow"><span class="pgstep">01</span>Corpus</div><div class="pgval">486<span class="pgunit">claims</span></div><div class="pgrole">atomic ECDLP claims, the raw material to triage</div><div class="pgsrc">data/KG_CLAIM_FORMALIZATION_v1.csv</div></a><div class="pgarrow" aria-hidden="true">→</div><a class="pgcard" href="#frontier"><div class="pgeyebrow"><span class="pgstep">02</span>Frontier</div><div class="pgval">100.0<span class="pgunit">%</span></div><div class="pgrole">each claim given a status — 11 verified, 2 tractable, 193 blocked</div><div class="pgsrc">data/frontier_map.json</div></a><div class="pgarrow" aria-hidden="true">→</div><a class="pgcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/experiments/HYPOTHESES.yaml" target="_blank" rel="noopener"><div class="pgeyebrow"><span class="pgstep">03</span>Hypotheses</div><div class="pgval">0<span class="pgunit">active</span></div><div class="pgrole">testable directions with evidence and exit criteria</div><div class="pgsrc">experiments/HYPOTHESES.yaml</div></a><div class="pgarrow" aria-hidden="true">→</div><a class="pgcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/NEXT.md" target="_blank" rel="noopener"><div class="pgeyebrow"><span class="pgstep">04</span>Tasks</div><div class="pgval">3<span class="pgunit">active</span></div><div class="pgrole">the small-context work queue, 3–7 contracts at a time</div><div class="pgsrc">tasks/NEXT.md</div></a><div class="pgarrow" aria-hidden="true">→</div><a class="pgcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/VERIFIED.md" target="_blank" rel="noopener"><div class="pgeyebrow"><span class="pgstep">05</span>Proofs</div><div class="pgval">296<span class="pgunit">rows</span></div><div class="pgrole">kernel-verified ledger rows (~257 distinct), 0 sorry</div><div class="pgsrc">VERIFIED.md</div></a><div class="pgarrow" aria-hidden="true">→</div><a class="pgcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/knowledge_graph.json" target="_blank" rel="noopener"><div class="pgeyebrow"><span class="pgstep">06</span>Truth graph</div><div class="pgval">296<span class="pgunit">nodes</span></div><div class="pgrole">queryable theorem / dependency / barrier graph</div><div class="pgsrc">data/knowledge_graph.json</div></a><div class="pgarrow" aria-hidden="true">→</div><a class="pgcard pgcard--here" href="#top"><div class="pgeyebrow"><span class="pgstep">07</span>Site</div><div class="pgval">live</div><div class="pgrole">this dashboard — the public, walkable surface (you are here)</div><div class="pgsrc">dashboard.html</div></a><div class="pgarrow" aria-hidden="true">→</div><a class="pgcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/PUBLISHABLE_UNITS.md" target="_blank" rel="noopener"><div class="pgeyebrow"><span class="pgstep">08</span>Papers</div><div class="pgval">3<span class="pgunit">units</span></div><div class="pgrole">standalone publishable narratives with honest scope</div><div class="pgsrc">PUBLISHABLE_UNITS.md</div></a></div>
-</section>
-
-<section class="wrap" id="domains">
-<h2><span class="secnum">02</span>Domain <span class="accent">portfolio</span></h2>
-<p class="lede">The pipeline is instance-agnostic. secp256k1/ECDLP is case #1 — live and kernel-verified; the rest reserve space honestly (no borrowed numbers, enforced by <code>scripts/check_domains.py</code>). Adding a domain means editing only its slot files + one registry entry — see <code>domains/README.md</code>.</p>
-<div class="domaingrid"><div class="dcard dcard--live reveal"><div class="dhead"><span class="dbadge" style="--c:#0ca30c"><i class="ddot" style="background:#0ca30c"></i>live</span><span class="did">ecdlp-secp256k1</span></div><div class="dtitle">ECDLP / secp256k1</div><div class="dline">Discrete-log hardness boundary for the Bitcoin/Ethereum curve, kernel-verified.</div><div class="dmetric">296<span> verified rows</span> · <span>100.0% frontier</span></div><div class="dnote">The reference instance. Everything the pipeline does, it does here first.</div><a class="dcta" href="dashboard.html">open the pipeline →</a></div><div class="dcard dcard--live reveal"><div class="dhead"><span class="dbadge" style="--c:#0ca30c"><i class="ddot" style="background:#0ca30c"></i>live</span><span class="did">p256-nist</span></div><div class="dtitle">NIST P-256 / secp256r1</div><div class="dline">The other dominant prime-field curve (TLS, passports). Same EC machinery, no CM/GLV.</div><div class="dmetric">11<span> verified rows</span> · <span>curve + p &amp; n prime</span></div><div class="dnote">LIVE (second real instance). Kernel-verified: both primes p and n (Pratt certificates, same generator as secp256k1), the unconditional EllipticCurve instance, the base point, and the j≠0/no-GLV structural contrast. Also kernel-verified since: generator order = n (weak keystone), embedding degree (MOV-resistance), non-anomalous trace (SSSA-resistance), and the generic-group Ω(√n) bound (curve-agnostic — the same `generic_dlog_query_bound`, stated for any prime, applies to P-256's n with no new proof). All nine starter-corpus rungs are now verified (domains/p256/corpus.md); the remaining gap is P-256's own strong keystone #E=n — secp256k1's was closed by a curve-specific certificate (CurveCardinalityExact.lean) that exploits j=0 structure P-256 lacks, so P-256 still needs Hasse or a new certificate route. Proves the pipeline is curve-agnostic — Phase-1 exit criterion met on verified facts.</div><a class="dcta" href="dashboard.html#domains">open the pipeline →</a></div><div class="dcard dcard--live reveal"><div class="dhead"><span class="dbadge" style="--c:#0ca30c"><i class="ddot" style="background:#0ca30c"></i>live</span><span class="did">number-theory-elementary</span></div><div class="dtitle">Elementary number theory (non-ECC portability instance)</div><div class="dline">First NON-elliptic-curve domain: primality / Mersenne / Carmichael facts, same kernel verifier — proof the engine is not ECC-only.</div><div class="dmetric dmetric--empty">no results yet — reserved (slots open)</div><div class="dnote">LIVE (first non-ECC instance). Kernel-verified in the separate `ResearchOS` lake library (a second build target alongside `Ecdlp`): 2017 prime, the Mersenne prime M₁₃=8191, and 561 (smallest Carmichael number) composite with its Korselt factorization 3·11·17. All `norm_num`, so they stay inside the standard axiom base (no `native_decide`); audited by `Ecdlp/AxiomAudit.lean`. Deliberately minimal — a proof of pipeline portability to an unrelated subject, not a number-theory research program. metrics_source is null (this domain does not feed the ECDLP headline count, which stays frozen).</div><a class="dcta" href="#domains">reserved</a></div><div class="dcard dcard--planned reveal"><div class="dhead"><span class="dbadge" style="--c:#1d85ff"><i class="ddot" style="background:#1d85ff"></i>planned</span><span class="did">curve25519</span></div><div class="dtitle">Curve25519 / Ed25519</div><div class="dline">The widely deployed twisted-Edwards curve (SSH, Signal, TLS 1.3).</div><div class="dmetric dmetric--empty">no results yet — reserved (corpus · ontology)</div><div class="dnote">Twisted Edwards form needs its own ontology, but the corpus/frontier/proof/site pipeline is unchanged. Reserved.</div><a class="dcta" href="#domains">reserved</a></div><div class="dcard dcard--exploratory reveal"><div class="dhead"><span class="dbadge" style="--c:#94a3b8"><i class="ddot" style="background:#94a3b8"></i>exploratory</span><span class="did">lattice-lwe</span></div><div class="dtitle">Lattice / LWE post-quantum hardness</div><div class="dline">The post-quantum successor problem — a stress-test that the OS is not ECC-only.</div><div class="dmetric dmetric--empty">no results yet — reserved (corpus · ontology)</div><div class="dnote">Deliberately different: needs lattice-reduction / worst-case-to-average-case foundations largely absent from Mathlib, so the verifier slot is open. Listed to reserve the direction honestly, not to imply progress.</div><a class="dcta" href="#domains">reserved</a></div><div class="dcard dcard--exploratory reveal"><div class="dhead"><span class="dbadge" style="--c:#94a3b8"><i class="ddot" style="background:#94a3b8"></i>exploratory</span><span class="did">bsd-elliptic-curves</span></div><div class="dtitle">Birch–Swinnerton-Dyer (elliptic-curve ranks / L-functions)</div><div class="dline">A Millennium-Prize conjecture on the SAME objects (elliptic curves) — a problem of a different order, not a parameter swap.</div><div class="dmetric dmetric--empty">no results yet — reserved (corpus · ontology)</div><div class="dnote">Shows the OS targets deep research, not only curve variants. Almost entirely blocked by missing Mathlib foundations (L-functions of elliptic curves, Tate–Shafarevich group, modularity), so its real near-term contribution would be an honest barrier map, not proofs. Reserved as a first-class exploratory direction.</div><a class="dcta" href="#domains">reserved</a></div></div>
-</section>
-
-<section class="tint" id="sync"><div class="wrap">
-<h2><span class="secnum">03</span>Sync Health</h2>
-<p class="lede">The public surface is tied back to canonical machine sources and checked by CI gates.</p>
-<div class="healthgrid"><div class="health ok reveal"><div class="hstate">OK</div><div class="hname">Canonical counts</div><div class="hval">296 ledger rows / ~257 distinct</div><div class="hsrc">data/stats.json + STATUS.md</div></div><div class="health ok reveal"><div class="hstate">OK</div><div class="hname">Frontier map</div><div class="hval">486 corpus claims classified</div><div class="hsrc">data/frontier_map.json</div></div><div class="health ok reveal"><div class="hstate">OK</div><div class="hname">Knowledge graph</div><div class="hval">296 graph theorem nodes</div><div class="hsrc">data/knowledge_graph.json</div></div><div class="health ok reveal"><div class="hstate">OK</div><div class="hname">Artifact manifest</div><div class="hval">canonical/generated/scratch/archive classes present</div><div class="hsrc">repo/ARTIFACTS.yaml + scripts/check_repo_artifacts.py</div></div><div class="health ok reveal"><div class="hstate">OK</div><div class="hname">Active work</div><div class="hval">task queue and hypothesis registry present</div><div class="hsrc">tasks/NEXT.md + experiments/HYPOTHESES.yaml</div></div></div>
-</div></section>
-
-<section class="wrap" id="navigate">
-<h2><span class="secnum">04</span>Navigate the <span class="accent">environment</span></h2>
-<p class="lede">Every doc, dataset, and script in the repo, auto-discovered and grouped by purpose.</p>
-<div class="navsection reveal"><h3>Start here</h3><div class="navgrid"><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/README.md"><div class="navname">README.md</div><div class="navpath">README.md</div><div class="navdesc">Project overview, layout, build instructions</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/AGENTS.md"><div class="navname">AGENTS.md</div><div class="navpath">AGENTS.md</div><div class="navdesc">Orientation for any Claude instance — read this first</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/ROADMAP.md"><div class="navname">ROADMAP.md</div><div class="navpath">ROADMAP.md</div><div class="navdesc">The one strategy document: position, north star, structure, program</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/CLAUDE.md"><div class="navname">CLAUDE.md</div><div class="navpath">CLAUDE.md</div><div class="navdesc">Working conventions for automated/assisted runs</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/SETUP.md"><div class="navname">SETUP.md</div><div class="navpath">SETUP.md</div><div class="navdesc">Minimal build command</div></a></div></div><div class="navsection reveal"><h3>Research OS &amp; architecture</h3><div class="navgrid"><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/STATUS.md"><div class="navname">STATUS.md</div><div class="navpath">STATUS.md</div><div class="navdesc">Canonical generated snapshot: live counts, corpus status, and bottleneck</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/NEXT.md"><div class="navname">NEXT.md</div><div class="navpath">tasks/NEXT.md</div><div class="navdesc">Small-context active task queue</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/experiments/HYPOTHESES.yaml"><div class="navname">HYPOTHESES.yaml</div><div class="navpath">experiments/HYPOTHESES.yaml</div><div class="navdesc">Hypothesis registry with evidence and exit criteria</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/REPOSITORY_ARCHITECTURE.md"><div class="navname">REPOSITORY_ARCHITECTURE.md</div><div class="navpath">REPOSITORY_ARCHITECTURE.md</div><div class="navdesc">Whole-repo map: canonical, generated, public, scratch, archive</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ARTIFACTS.yaml"><div class="navname">ARTIFACTS.yaml</div><div class="navpath">repo/ARTIFACTS.yaml</div><div class="navdesc">Machine-readable artifact classification manifest</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/CLEANUP_PLAN.md"><div class="navname">CLEANUP_PLAN.md</div><div class="navpath">repo/CLEANUP_PLAN.md</div><div class="navdesc">Cleanup plan: classify, review, then move/delete (tranche 1 executed)</div></a></div></div><div class="navsection reveal"><h3>The ledger &amp; proofs</h3><div class="navgrid"><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/VERIFIED.md"><div class="navname">VERIFIED.md</div><div class="navpath">VERIFIED.md</div><div class="navdesc">The canonical ledger of kernel-verified results</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/tree/main/Ecdlp/Proved"><div class="navname">Ecdlp/Proved/</div><div class="navpath">Ecdlp/Proved/</div><div class="navdesc">Lean sources for promoted verified results</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/tree/main/Ecdlp/Targets"><div class="navname">Ecdlp/Targets/</div><div class="navpath">Ecdlp/Targets/</div><div class="navdesc">Excluded conjecture stems: explicitly open, blocked, or deferred</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/LedgerAxiomAudit.lean"><div class="navname">LedgerAxiomAudit.lean</div><div class="navpath">Ecdlp/LedgerAxiomAudit.lean</div><div class="navdesc">Generated #print axioms audit for the complete verified ledger</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/TRUST_REPORT.md"><div class="navname">TRUST_REPORT.md</div><div class="navpath">TRUST_REPORT.md</div><div class="navdesc">Trust boundary: pure-kernel vs native_decide (compiler-trust) classification</div></a></div></div><div class="navsection reveal"><h3>Honesty &amp; independent review</h3><div class="navgrid"><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/COVERAGE.md"><div class="navname">COVERAGE.md</div><div class="navpath">COVERAGE.md</div><div class="navdesc">Honest 3-denominator coverage benchmark (regenerate: coverage_report.py)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/BARRIERS.md"><div class="navname">BARRIERS.md</div><div class="navpath">BARRIERS.md</div><div class="navdesc">The no-go map — what's blocked, and by which missing foundation</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/ABSTRACT_SCOPE.md"><div class="navname">ABSTRACT_SCOPE.md</div><div class="navpath">ABSTRACT_SCOPE.md</div><div class="navdesc">Honest scope of the DL-crypto library (abstract algebra + concrete instantiation)</div></a></div></div><div class="navsection reveal"><h3>Frontier &amp; data (machine-readable)</h3><div class="navgrid"><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/frontier_map.json"><div class="navname">frontier_map.json</div><div class="navpath">data/frontier_map.json</div><div class="navdesc">The queryable frontier map — status + blocking foundation per claim</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/knowledge_graph.json"><div class="navname">knowledge_graph.json</div><div class="navpath">data/knowledge_graph.json</div><div class="navdesc">Machine-readable theorem graph (deps, areas, barriers)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/knowledge_graph.md"><div class="navname">knowledge_graph.md</div><div class="navpath">data/knowledge_graph.md</div><div class="navdesc">Rendered knowledge graph</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/KG_CLAIM_FORMALIZATION_v1.csv"><div class="navname">KG_CLAIM_FORMALIZATION_v1.csv</div><div class="navpath">data/KG_CLAIM_FORMALIZATION_v1.csv</div><div class="navdesc">The 486-claim corpus (read-only source)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/README.md"><div class="navname">README.md</div><div class="navpath">data/README.md</div><div class="navdesc">Corpus provenance</div></a></div></div><div class="navsection reveal"><h3>Deep-dive notes (foundations &amp; strategy)</h3><div class="navgrid"><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/PRIVATE_AREA_DESIGN.md"><div class="navname">PRIVATE_AREA_DESIGN.md</div><div class="navpath">notes/PRIVATE_AREA_DESIGN.md</div><div class="navdesc">Public/private split design: a login-gated research area (Cloudflare Access), what goes private</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/FOUNDATIONS.md"><div class="navname">FOUNDATIONS.md</div><div class="navpath">notes/FOUNDATIONS.md</div><div class="navdesc">The deep-foundations roadmap toward the Weil pairing</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/GLV_LAMBDA.md"><div class="navname">GLV_LAMBDA.md</div><div class="navpath">notes/GLV_LAMBDA.md</div><div class="navdesc">GLV [λ]-eigenvalue bottleneck + the reachable cube-relation substitute</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/GLV_HOMOMORPHISM.md"><div class="navname">GLV_HOMOMORPHISM.md</div><div class="navpath">notes/GLV_HOMOMORPHISM.md</div><div class="navdesc">How the GLV homomorphism reduces to one slope identity</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/FOUNDATION_ROADMAP.md"><div class="navname">FOUNDATION_ROADMAP.md</div><div class="navpath">notes/FOUNDATION_ROADMAP.md</div><div class="navdesc">Corpus → missing-object leverage map</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/ARCHITECTURE.md"><div class="navname">ARCHITECTURE.md</div><div class="navpath">notes/ARCHITECTURE.md</div><div class="navdesc">System architecture (mermaid diagram)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/AGENT_ORCHESTRATION.md"><div class="navname">AGENT_ORCHESTRATION.md</div><div class="navpath">notes/AGENT_ORCHESTRATION.md</div><div class="navdesc">Agent/orchestration map</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/KNOWLEDGE_GRAPH.md"><div class="navname">KNOWLEDGE_GRAPH.md</div><div class="navpath">notes/KNOWLEDGE_GRAPH.md</div><div class="navdesc">Knowledge-graph design notes</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/PRIMALITY.md"><div class="navname">PRIMALITY.md</div><div class="navpath">notes/PRIMALITY.md</div><div class="navdesc">Pratt primality certificate notes</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/SERVER_CONNECT.md"><div class="navname">SERVER_CONNECT.md</div><div class="navpath">notes/SERVER_CONNECT.md</div><div class="navdesc">No-SSH server bootstrap (Hetzner Console)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/SERVER_RUNBOOK.md"><div class="navname">SERVER_RUNBOOK.md</div><div class="navpath">notes/SERVER_RUNBOOK.md</div><div class="navdesc">Server operational runbook</div></a></div></div><div class="navsection reveal"><h3>Engine &amp; scripts</h3><div class="navgrid"><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/build_dashboard.py"><div class="navname">build_dashboard.py</div><div class="navpath">scripts/build_dashboard.py</div><div class="navdesc">Regenerates this page</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/build_frontier_map.py"><div class="navname">build_frontier_map.py</div><div class="navpath">scripts/build_frontier_map.py</div><div class="navdesc">Regenerates/queries data/frontier_map.json</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/build_knowledge_graph.py"><div class="navname">build_knowledge_graph.py</div><div class="navpath">scripts/build_knowledge_graph.py</div><div class="navdesc">Regenerates the knowledge graph</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/coverage_report.py"><div class="navname">coverage_report.py</div><div class="navpath">scripts/coverage_report.py</div><div class="navdesc">Regenerates COVERAGE.md</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_axioms.py"><div class="navname">check_axioms.py</div><div class="navpath">scripts/check_axioms.py</div><div class="navdesc">CI: axiom-audit checker (no sorryAx, no custom axioms)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_counts.py"><div class="navname">check_counts.py</div><div class="navpath">scripts/check_counts.py</div><div class="navdesc">CI: count-consistency checker (no retired headline numbers)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/generator.py"><div class="navname">generator.py</div><div class="navpath">scripts/generator.py</div><div class="navdesc">Layer-3: corpus → open target stems</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/prover_loop.py"><div class="navname">prover_loop.py</div><div class="navpath">scripts/prover_loop.py</div><div class="navdesc">Layer-2: autonomous prover loop (Tier-0 + model tiers)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/prover_target_attempt.py"><div class="navname">prover_target_attempt.py</div><div class="navpath">scripts/prover_target_attempt.py</div><div class="navdesc">Single-target prover attempt harness</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/prover_smoke_test.py"><div class="navname">prover_smoke_test.py</div><div class="navpath">scripts/prover_smoke_test.py</div><div class="navdesc">Smoke test for the prover harness</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/pratt_certificate.py"><div class="navname">pratt_certificate.py</div><div class="navpath">scripts/pratt_certificate.py</div><div class="navdesc">Generates Pratt primality certificates</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/frontier_generator.py"><div class="navname">frontier_generator.py</div><div class="navpath">scripts/frontier_generator.py</div><div class="navdesc">Frontier-expander target generator</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/foundation_map.py"><div class="navname">foundation_map.py</div><div class="navpath">scripts/foundation_map.py</div><div class="navdesc">Foundation leverage-map builder</div></a></div></div><div class="navsection reveal"><h3>Other (auto-discovered)</h3><div class="navgrid"><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/AUTONOMY.md"><div class="navname">AUTONOMY.md</div><div class="navpath">AUTONOMY.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/PUBLISHABLE_UNITS.md"><div class="navname">PUBLISHABLE_UNITS.md</div><div class="navpath">PUBLISHABLE_UNITS.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/B1_COPRIMALITY_PLAN.md"><div class="navname">B1_COPRIMALITY_PLAN.md</div><div class="navpath">notes/B1_COPRIMALITY_PLAN.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/B1_TRACTABILITY_MAP.md"><div class="navname">B1_TRACTABILITY_MAP.md</div><div class="navpath">notes/B1_TRACTABILITY_MAP.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/CM_EISENSTEIN.md"><div class="navname">CM_EISENSTEIN.md</div><div class="navpath">notes/CM_EISENSTEIN.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/DIVISION_POLY_TORSION_MAP.md"><div class="navname">DIVISION_POLY_TORSION_MAP.md</div><div class="navpath">notes/DIVISION_POLY_TORSION_MAP.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/DIVISION_RESULTANT_SCOPE.md"><div class="navname">DIVISION_RESULTANT_SCOPE.md</div><div class="navpath">notes/DIVISION_RESULTANT_SCOPE.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/ENGINE.md"><div class="navname">ENGINE.md</div><div class="navpath">notes/ENGINE.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/EXECUTION_SECURITY.md"><div class="navname">EXECUTION_SECURITY.md</div><div class="navpath">notes/EXECUTION_SECURITY.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/FABLE_DELEGATION_REPORT.md"><div class="navname">FABLE_DELEGATION_REPORT.md</div><div class="navpath">notes/FABLE_DELEGATION_REPORT.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/GLV_EIGENVALUE.md"><div class="navname">GLV_EIGENVALUE.md</div><div class="navpath">notes/GLV_EIGENVALUE.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/GLV_FORMALIZATION.md"><div class="navname">GLV_FORMALIZATION.md</div><div class="navpath">notes/GLV_FORMALIZATION.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/HASSE_RECON.md"><div class="navname">HASSE_RECON.md</div><div class="navpath">notes/HASSE_RECON.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/HYPOTHESIS_EXPLORER.md"><div class="navname">HYPOTHESIS_EXPLORER.md</div><div class="navpath">notes/HYPOTHESIS_EXPLORER.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/INDEX.md"><div class="navname">INDEX.md</div><div class="navpath">notes/INDEX.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/L4_WARD_INDUCTION.md"><div class="navname">L4_WARD_INDUCTION.md</div><div class="navpath">notes/L4_WARD_INDUCTION.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/MANUS_TASK.md"><div class="navname">MANUS_TASK.md</div><div class="navpath">notes/MANUS_TASK.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/N7_EVEN_X_DOUBLING_ANALYSIS.md"><div class="navname">N7_EVEN_X_DOUBLING_ANALYSIS.md</div><div class="navpath">notes/N7_EVEN_X_DOUBLING_ANALYSIS.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/N7_EVEN_X_REDUCTION.md"><div class="navname">N7_EVEN_X_REDUCTION.md</div><div class="navpath">notes/N7_EVEN_X_REDUCTION.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/N7_UNIFORM_BLOCKER.md"><div class="navname">N7_UNIFORM_BLOCKER.md</div><div class="navpath">notes/N7_UNIFORM_BLOCKER.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/POINT_COUNTING_KEYSTONE.md"><div class="navname">POINT_COUNTING_KEYSTONE.md</div><div class="navpath">notes/POINT_COUNTING_KEYSTONE.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/RESEARCH_MAP.md"><div class="navname">RESEARCH_MAP.md</div><div class="navpath">notes/RESEARCH_MAP.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/SECURITY_SCOPE.md"><div class="navname">SECURITY_SCOPE.md</div><div class="navpath">notes/SECURITY_SCOPE.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/SEPARABILITY_ROUTES.md"><div class="navname">SEPARABILITY_ROUTES.md</div><div class="navpath">notes/SEPARABILITY_ROUTES.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/UPSTREAM_13155.md"><div class="navname">UPSTREAM_13155.md</div><div class="navpath">notes/UPSTREAM_13155.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/UPSTREAM_SCAN.md"><div class="navname">UPSTREAM_SCAN.md</div><div class="navpath">notes/UPSTREAM_SCAN.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/WEIL_LADDER.md"><div class="navname">WEIL_LADDER.md</div><div class="navpath">notes/WEIL_LADDER.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/attack_registry.json"><div class="navname">attack_registry.json</div><div class="navpath">data/attack_registry.json</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/corpus_coverage_overrides.json"><div class="navname">corpus_coverage_overrides.json</div><div class="navpath">data/corpus_coverage_overrides.json</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/corpus_reclassify.json"><div class="navname">corpus_reclassify.json</div><div class="navpath">data/corpus_reclassify.json</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/corpus_triage.json"><div class="navname">corpus_triage.json</div><div class="navpath">data/corpus_triage.json</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/result_registry.json"><div class="navname">result_registry.json</div><div class="navpath">data/result_registry.json</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/source_registry.json"><div class="navname">source_registry.json</div><div class="navpath">data/source_registry.json</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/stats.json"><div class="navname">stats.json</div><div class="navpath">data/stats.json</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/research_decisions.md"><div class="navname">research_decisions.md</div><div class="navpath">data/research_decisions.md</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/agent_day.py"><div class="navname">agent_day.py</div><div class="navpath">scripts/agent_day.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/agent_prove.py"><div class="navname">agent_prove.py</div><div class="navpath">scripts/agent_prove.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/autonomous_discover.py"><div class="navname">autonomous_discover.py</div><div class="navpath">scripts/autonomous_discover.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/build_ecdlp_decision_view.py"><div class="navname">build_ecdlp_decision_view.py</div><div class="navpath">scripts/build_ecdlp_decision_view.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/certify.py"><div class="navname">certify.py</div><div class="navpath">scripts/certify.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_automation_inventory.py"><div class="navname">check_automation_inventory.py</div><div class="navpath">scripts/check_automation_inventory.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_branch_inventory.py"><div class="navname">check_branch_inventory.py</div><div class="navpath">scripts/check_branch_inventory.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_domains.py"><div class="navname">check_domains.py</div><div class="navpath">scripts/check_domains.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_ecdlp_decision_substrate.py"><div class="navname">check_ecdlp_decision_substrate.py</div><div class="navpath">scripts/check_ecdlp_decision_substrate.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_formal_substrate.py"><div class="navname">check_formal_substrate.py</div><div class="navpath">scripts/check_formal_substrate.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_generated_fixpoint.py"><div class="navname">check_generated_fixpoint.py</div><div class="navpath">scripts/check_generated_fixpoint.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_repo_artifacts.py"><div class="navname">check_repo_artifacts.py</div><div class="navpath">scripts/check_repo_artifacts.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_semantic_drift.py"><div class="navname">check_semantic_drift.py</div><div class="navpath">scripts/check_semantic_drift.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_status_consistency.py"><div class="navname">check_status_consistency.py</div><div class="navpath">scripts/check_status_consistency.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_targets.py"><div class="navname">check_targets.py</div><div class="navpath">scripts/check_targets.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/explore_pipeline.py"><div class="navname">explore_pipeline.py</div><div class="navpath">scripts/explore_pipeline.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/export_agent_bundle.py"><div class="navname">export_agent_bundle.py</div><div class="navpath">scripts/export_agent_bundle.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/gen_axiom_audit.py"><div class="navname">gen_axiom_audit.py</div><div class="navpath">scripts/gen_axiom_audit.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/gen_result_registry.py"><div class="navname">gen_result_registry.py</div><div class="navpath">scripts/gen_result_registry.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/gen_source_registry.py"><div class="navname">gen_source_registry.py</div><div class="navpath">scripts/gen_source_registry.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/gen_stats.py"><div class="navname">gen_stats.py</div><div class="navpath">scripts/gen_stats.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/gen_status.py"><div class="navname">gen_status.py</div><div class="navpath">scripts/gen_status.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/hypothesis_explorer.py"><div class="navname">hypothesis_explorer.py</div><div class="navpath">scripts/hypothesis_explorer.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/kimi_agent_prover.py"><div class="navname">kimi_agent_prover.py</div><div class="navpath">scripts/kimi_agent_prover.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/kimi_repo_study.py"><div class="navname">kimi_repo_study.py</div><div class="navpath">scripts/kimi_repo_study.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/ledger_utils.py"><div class="navname">ledger_utils.py</div><div class="navpath">scripts/ledger_utils.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/promote_candidate.py"><div class="navname">promote_candidate.py</div><div class="navpath">scripts/promote_candidate.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/test_check_axioms.py"><div class="navname">test_check_axioms.py</div><div class="navpath">scripts/test_check_axioms.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/test_check_counts.py"><div class="navname">test_check_counts.py</div><div class="navpath">scripts/test_check_counts.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a><a class="navcard" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/test_ledger_utils.py"><div class="navname">test_ledger_utils.py</div><div class="navpath">scripts/test_ledger_utils.py</div><div class="navdesc">not yet categorized (auto-discovered so it stays visible)</div></a></div></div>
-</section>
-
-<section class="tint" id="frontier"><div class="wrap">
-<h2><span class="secnum">05</span>Frontier map — 486 corpus claims</h2>
-<p class="lede">Every claim's status is fixed, reserved, and never guessed — see the table view for the exact rule behind each color.</p>
-<div class="grid2">
-<div class="reveal">
-  <div class="bar"><div class="seg" tabindex="0" style="width:2.26%;background:#0ca30c" data-tip="verified: 11 claims (2.3%) — kernel-checked"></div><div class="seg" tabindex="0" style="width:0.41%;background:#1d85ff" data-tip="tractable: 2 claims (0.4%) — reachable, no new foundation"></div><div class="seg" tabindex="0" style="width:11.32%;background:#fab219" data-tip="partial: 55 claims (11.3%) — some progress possible"></div><div class="seg" tabindex="0" style="width:39.71%;background:#d03b3b" data-tip="blocked: 193 claims (39.7%) — needs a missing foundation"></div><div class="seg" tabindex="0" style="width:46.30%;background:#94a3b8" data-tip="informal: 225 claims (46.3%) — not a formal statement by nature"></div></div>
-  <div class="legend"><span class="lg"><i style="background:#0ca30c"></i>verified <b>11</b></span> <span class="lg"><i style="background:#1d85ff"></i>tractable <b>2</b></span> <span class="lg"><i style="background:#fab219"></i>partial <b>55</b></span> <span class="lg"><i style="background:#d03b3b"></i>blocked <b>193</b></span> <span class="lg"><i style="background:#94a3b8"></i>informal <b>225</b></span></div>
-  <details class="tview"><summary>Table view</summary><table><thead><tr><th>Status</th><th>Claims</th><th>Share</th><th>Meaning</th></tr></thead><tbody><tr><td><i style="background:#0ca30c"></i>verified</td><td>11</td><td>2.3%</td><td>kernel-checked</td></tr><tr><td><i style="background:#1d85ff"></i>tractable</td><td>2</td><td>0.4%</td><td>reachable, no new foundation</td></tr><tr><td><i style="background:#fab219"></i>partial</td><td>55</td><td>11.3%</td><td>some progress possible</td></tr><tr><td><i style="background:#d03b3b"></i>blocked</td><td>193</td><td>39.7%</td><td>needs a missing foundation</td></tr><tr><td><i style="background:#94a3b8"></i>informal</td><td>225</td><td>46.3%</td><td>not a formal statement by nature</td></tr></tbody></table></details>
-</div>
-<div class="meterwrap reveal">
-  <svg class="meter-ring" width="96" height="96" viewBox="0 0 96 96">
-    <circle class="meter-track" cx="48" cy="48" r="40"></circle>
-    <circle class="meter-fill" id="meterFill" cx="48" cy="48" r="40"
-      stroke-dasharray="251.2" stroke-dashoffset="251.2"
-      data-target="100.0" transform="rotate(-90 48 48)"></circle>
-    <text x="48" y="54" text-anchor="middle" class="meter-label" id="meterLabel">0%</text>
-  </svg>
-  <div><b style="color:var(--navy);font-family:'Baloo 2'">Frontier completeness</b><br>
-  <span style="color:var(--gray);font-size:13px">every claim assigned a status + (if blocked) a named missing foundation</span></div>
-</div>
-</div>
-</div></section>
-
-<section><div class="wrap">
-<div class="grid2">
-<div class="reveal">
-  <h2><span class="secnum">06</span>Blocked by missing foundation</h2>
-  <div class="frow"><div class="fname">semaev polynomials</div><div class="fbarwrap"><div class="fbar" tabindex="0" style="width:100.0%" data-tip="semaev_polynomials: 57 claims — MvPolynomial exists but not the elliptic summation polynomials Sₙ (index calculus over extension fields). (leverage: medium, effort: weeks-months)"></div></div><div class="fn">57</div></div><div class="frow"><div class="fname">cost model</div><div class="fbarwrap"><div class="fbar" tabindex="0" style="width:82.5%" data-tip="cost_model: 47 claims — No group-operation / oracle-query cost model, so exact Θ running times (index calculus, distinguished points) can't be stated. The generic Ω(√p) core was formalized by sidestepping this. (leverage: medium, effort: weeks-months)"></div></div><div class="fn">47</div></div><div class="frow"><div class="fname">curve depth</div><div class="fbarwrap"><div class="fbar" tabindex="0" style="width:68.4%" data-tip="curve_depth: 39 claims — Mathlib has EllipticCurve + group law, but not the deeper ECDLP constructions (higher division polynomials, torsion structure E[n]≅(ℤ/n)², isogeny depth). Partly tractable — the active Track-B DAG. (leverage: medium, effort: weeks each rung)"></div></div><div class="fn">39</div></div><div class="frow"><div class="fname">quantum cost</div><div class="fbarwrap"><div class="fbar" tabindex="0" style="width:63.2%" data-tip="quantum_cost: 36 claims — No quantum circuit cost model (Shor-style resource estimates). Out of scope for Mathlib. (leverage: low (out of scope), effort: n/a)"></div></div><div class="fn">36</div></div><div class="frow"><div class="fname">lattice reduction</div><div class="fbarwrap"><div class="fbar" tabindex="0" style="width:45.6%" data-tip="lattice_reduction: 26 claims — No LLL/BKZ/CVP. Blocks HNP / biased-nonce ECDSA attack formalizations. (leverage: medium, effort: months)"></div></div><div class="fn">26</div></div><div class="frow"><div class="fname">elliptic nets</div><div class="fbarwrap"><div class="fbar" tabindex="0" style="width:26.3%" data-tip="elliptic_nets: 15 claims — Only rank-1 normEDS / IsEllSequence exists (+ a stalled net-relation PR). General multi-index (rank≥2) elliptic nets, net polynomials over arbitrary fields, and Stange's reconstruction / Laurent-property theory are absent — gating elliptic-net index calculus and net-based point relations. (leverage: low, effort: months (research-grade))"></div></div><div class="fn">15</div></div><div class="frow"><div class="fname">weil pairing</div><div class="fbarwrap"><div class="fbar" tabindex="0" style="width:15.8%" data-tip="weil_pairing: 9 claims — No Weil/Tate pairing eₙ. Needs divisors, function fields, Miller's algorithm. Gates the MOV/Frey-Rück transfer reduction itself. (leverage: highest, effort: months (research-grade))"></div></div><div class="fn">9</div></div><div class="frow"><div class="fname">heights</div><div class="fbarwrap"><div class="fbar" tabindex="0" style="width:10.5%" data-tip="heights: 6 claims — No canonical (Néron–Tate) height, Mordell–Weil lattice, or point-lifting to characteristic 0. Blocks the xedni-calculus / height-bound relation claims (all negative-result / heuristic in nature). (leverage: low, effort: months)"></div></div><div class="fn">6</div></div><div class="frow"><div class="fname">point counting</div><div class="fbarwrap"><div class="fbar" tabindex="0" style="width:0.0%" data-tip="point_counting: 0 claims — No Schoof / point-counting; #E(𝔽_p)=n cannot be computed (native_decide can't enumerate 2^256 points). Gates the GLV [λ]-eigenvalue claim and the ℤ/n-module structure needed to instantiate the protocol algebra. (leverage: high, effort: months (research-grade))"></div></div><div class="fn">0</div></div>
-  <details class="tview"><summary>Table view</summary><table><thead><tr><th>Foundation</th><th>Claims blocked</th><th>Leverage</th><th>Effort</th><th>Gap</th></tr></thead><tbody><tr><td>semaev polynomials</td><td>57</td><td>medium</td><td>weeks-months</td><td>MvPolynomial exists but not the elliptic summation polynomials Sₙ (index calculus over extension fields).</td></tr><tr><td>cost model</td><td>47</td><td>medium</td><td>weeks-months</td><td>No group-operation / oracle-query cost model, so exact Θ running times (index calculus, distinguished points) can't be stated. The generic Ω(√p) core was formalized by sidestepping this.</td></tr><tr><td>curve depth</td><td>39</td><td>medium</td><td>weeks each rung</td><td>Mathlib has EllipticCurve + group law, but not the deeper ECDLP constructions (higher division polynomials, torsion structure E[n]≅(ℤ/n)², isogeny depth). Partly tractable — the active Track-B DAG.</td></tr><tr><td>quantum cost</td><td>36</td><td>low (out of scope)</td><td>n/a</td><td>No quantum circuit cost model (Shor-style resource estimates). Out of scope for Mathlib.</td></tr><tr><td>lattice reduction</td><td>26</td><td>medium</td><td>months</td><td>No LLL/BKZ/CVP. Blocks HNP / biased-nonce ECDSA attack formalizations.</td></tr><tr><td>elliptic nets</td><td>15</td><td>low</td><td>months (research-grade)</td><td>Only rank-1 normEDS / IsEllSequence exists (+ a stalled net-relation PR). General multi-index (rank≥2) elliptic nets, net polynomials over arbitrary fields, and Stange's reconstruction / Laurent-property theory are absent — gating elliptic-net index calculus and net-based point relations.</td></tr><tr><td>weil pairing</td><td>9</td><td>highest</td><td>months (research-grade)</td><td>No Weil/Tate pairing eₙ. Needs divisors, function fields, Miller's algorithm. Gates the MOV/Frey-Rück transfer reduction itself.</td></tr><tr><td>heights</td><td>6</td><td>low</td><td>months</td><td>No canonical (Néron–Tate) height, Mordell–Weil lattice, or point-lifting to characteristic 0. Blocks the xedni-calculus / height-bound relation claims (all negative-result / heuristic in nature).</td></tr><tr><td>point counting</td><td>0</td><td>high</td><td>months (research-grade)</td><td>No Schoof / point-counting; #E(𝔽_p)=n cannot be computed (native_decide can't enumerate 2^256 points). Gates the GLV [λ]-eigenvalue claim and the ℤ/n-module structure needed to instantiate the protocol algebra.</td></tr></tbody></table></details>
-</div>
-<div class="reveal">
-  <h2><span class="secnum">07</span>Environment layers</h2>
-  <div class="layer reveal"><span class="lnum">L1</span><div><b>Verified core</b><br><span class="ldesc">kernel-checked theorems (absolute trust)</span></div><span class="dot" style="background:#0ca30c"></span></div><div class="layer reveal"><span class="lnum">L2</span><div><b>Frontier map</b><br><span class="ldesc">what's open/blocked &amp; by which missing foundation</span></div><span class="dot" style="background:#fab219"></span></div><div class="layer reveal"><span class="lnum">L3</span><div><b>Navigable structure</b><br><span class="ldesc">machine-readable graph + queryable data</span></div><span class="dot" style="background:#0ca30c"></span></div><div class="layer reveal"><span class="lnum">L4</span><div><b>Formalized objects</b><br><span class="ldesc">GLV (cube-root + torsion-preserving), torsion, division polys</span></div><span class="dot" style="background:#fab219"></span></div><div class="layer reveal"><span class="lnum">L5</span><div><b>Engine</b><br><span class="ldesc">AI+kernel pipeline; self-extensible substrate</span></div><span class="dot" style="background:#94a3b8"></span></div>
-</div>
-</div>
-</div></section>
-
-<section class="tint" id="tracks"><div class="wrap">
-<h2><span class="secnum">08</span>Tracks &amp; checkpoints</h2><div class="track reveal"><h3>A — Frontier map (machine-actionable)</h3><ul><li><i class="dot" style="background:#0ca30c"></i>A1 frontier_map.json + query</li><li><i class="dot" style="background:#fab219"></i>A2 status+foundation for every claim (79.8%)</li><li><i class="dot" style="background:#94a3b8"></i>A3 per-foundation unlock lists</li></ul></div><div class="track reveal"><h3>B — Depth (verified foundations, DAG)</h3><ul><li><i class="dot" style="background:#0ca30c"></i>GLV object: equation→hom→cube-root→torsion-preserving</li><li><i class="dot" style="background:#0ca30c"></i>E[n] group object bridged</li><li><i class="dot" style="background:#94a3b8"></i>next rung → E[n]≅(ℤ/n)² (blocked by point-counting)</li></ul></div><div class="track reveal"><h3>C — Engine &amp; extensibility</h3><ul><li><i class="dot" style="background:#0ca30c"></i>CI trust gates (no-sorry, axiom audit, count/import)</li><li><i class="dot" style="background:#0ca30c"></i>generator + prover loop</li><li><i class="dot" style="background:#94a3b8"></i>warm server node (idle — needs PAT)</li></ul></div>
-</div></section>
-
-<section id="commits"><div class="wrap">
-<h2><span class="secnum">09</span>Recent build milestones</h2><ul class="commits"><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/bbff1d3"><code>bbff1d3</code></a> Add repository-wide ECDLP decision substrate (#236)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/cb791cc"><code>cb791cc</code></a> chore(docs): resync derived artifacts from sources [skip ci]</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/cdcb64e"><code>cdcb64e</code></a> docs(N7): honest caveat — cofactor generator not turn-key for hard steps (#233)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/9414cd3"><code>9414cd3</code></a> chore(docs): resync derived artifacts from sources [skip ci]</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/2ea35a9"><code>2ea35a9</code></a> certs: pin the CORE-II +companion identity (exact, numerically certified) (#232)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/6e86adc"><code>6e86adc</code></a> chore(docs): resync derived artifacts from sources [skip ci]</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/7a07e28"><code>7a07e28</code></a> certs: EDS linear_combination cofactor generator (unblocks N7 algebra-wall grind) (#231)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/4a15aa8"><code>4a15aa8</code></a> chore(docs): resync derived artifacts from sources [skip ci]</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/13b8c57"><code>13b8c57</code></a> docs(NEXT): refresh N7 progress log through #229 (#230)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/296e844"><code>296e844</code></a> N7 stem: close the odd-step secant x-collision branch (sorry 9→8) (#229)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/ba089d8"><code>ba089d8</code></a> N7 stem: thread source-denominator hypotheses into odd_x/odd_y walls (#228)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/9def0e0"><code>9def0e0</code></a> chore(docs): resync derived artifacts from sources [skip ci]</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/1cdcd1f"><code>1cdcd1f</code></a> N7 keystone: point-evaluated ΨSq/Φ ↔ ψ/φ bridge (#227)</li><li><a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commit/1a31753"><code>1a31753</code></a> N7 stem: restate the three under-hypothesized walls soundly (#226)</li></ul>
-</div></section>
-</main>
-
-<footer><div class="wrap footwrap">
-  <div class="footbrand"><img src="assets/logo-wordmark.png" alt="keyAI"></div>
-  <div class="links">
-    <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/actions">CI status (Actions)</a>
-    <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commits/main">Commit feed</a>
-    <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification">Repository</a>
+  <div class="tabbar-wrap">
+    <div class="shell tabbar" role="tablist" aria-label="Workspace views" data-tabs>
+      <button type="button" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true" data-tab="overview">Overview</button>
+      <button type="button" role="tab" id="tab-routes" aria-controls="panel-routes" aria-selected="false" tabindex="-1" data-tab="routes">Routes</button>
+      <button type="button" role="tab" id="tab-formal" aria-controls="panel-formal" aria-selected="false" tabindex="-1" data-tab="formal">Formal substrate</button>
+      <button type="button" role="tab" id="tab-evidence" aria-controls="panel-evidence" aria-selected="false" tabindex="-1" data-tab="evidence">Evidence</button>
+      <button type="button" role="tab" id="tab-activity" aria-controls="panel-activity" aria-selected="false" tabindex="-1" data-tab="activity">Activity</button>
+    </div>
   </div>
-  <div class="foottext">© 2026 KeyAI · verified knowledge environment, not a product page</div>
-</div></footer>
 
-<script>
-(function(){
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  <div class="shell workspace-body">
+    <section class="tab-panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" data-tab-panel="overview">
+      <div class="panel-heading"><div><h2>Current operating state</h2>
+        <p>The decision layer controls what work is justified; proof volume does not select an attack route.</p></div>
+        <span class="status status--blue">Reference deployment</span></div>
+      <article class="decision-band">
+        <div class="decision-band__state"><span>RS-2026-07-22-001</span><strong>Select none</strong></div>
+        <div class="decision-band__copy"><h3>No experiment is currently authorized.</h3>
+          <p>No audited route currently satisfies every proposal-level requirement for a new experiment against the primary plain single-target secp256k1 objective.</p></div>
+      </article>
+      <div class="layout-two">
+        <article class="surface">
+          <div class="surface__head"><div><h3>Why this decision</h3><p>Canonical rationale, not a claim of impossibility</p></div></div>
+          <div class="surface__body"><ul class="plain-list"><li>The generic lower bound and generic algorithms are guardrails or baselines, not non-generic attack mechanisms.</li><li>GLV supplies a verified constant-factor structure; Pohlig-Hellman, low-degree pairing transfer, anomalous lifting, and extension-field descent fail target-specific applicability screens.</li><li>The open prime-field algebraic, GLV-Semaev, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge.</li><li>Multi-target, interval, leakage, implementation, and quantum routes change the input or computational threat model and therefore cannot be promoted as a classical plain-input result.</li><li>Building conditional Mathlib foundations now would increase theorem volume without a demonstrated reduction in uncertainty about the exact target.</li></ul></div>
+        </article>
+        <aside class="surface">
+          <div class="surface__head"><div><h3>Active queue</h3><p>2 active of 5 task contracts</p></div>
+            <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/NEXT.md">Open source</a></div>
+          <div class="surface__body"><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-008 · Maintain evidence-gated candidate intake</h4>
+    <p>Decision `RS-2026-07-22-001` selected no current route. Future progress must enter through new mathematical evidence, not by silently reviving the last experiment or expanding a convenient formal library.</p></div><span class="status status--blue">Active</span></div>
+</article><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-009 · Implement only a newly selected foundation</h4>
+    <p>Missing Mathlib infrastructure is valuable only when it resolves a concrete uncertainty in a route that already passes the proposal gate.</p></div><span class="status status--blocked">Blocked</span></div>
+</article><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-010 · Periodic independent adversarial audit</h4>
+    <p>An independent reviewer can still find architecture, scope, or deletion risks that internal gates do not model.</p></div><span class="status status--parked">Parked</span></div>
+</article><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-011 · Validate the external product pilot</h4>
+    <p>The secp256k1 repository proves that the research-state loop can work in one owner-operated environment. It does not prove that another team has the same pain, can use the contracts, or will return. Product work should now reduce that uncertainty instead of adding speculative platform features.</p></div><span class="status status--blue">Active</span></div>
+</article><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-012 · Build configurable intake after a pilot contract</h4>
+    <p>A hosted or multi-project platform is justified only after a real team exposes the minimum adapter boundary. Building it earlier would replace evidence with architecture.</p></div><span class="status status--blocked">Blocked</span></div>
+</article></div>
+        </aside>
+      </div>
+    </section>
 
-  // scroll-progress bar on the sticky nav — a quiet wayfinding cue on a long page.
-  var prog = document.getElementById('scrollprog');
-  if (prog) {
-    var ticking = false;
-    function paint() {
-      var h = document.documentElement;
-      var max = h.scrollHeight - h.clientHeight;
-      prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-      ticking = false;
-    }
-    window.addEventListener('scroll', function(){
-      if (!ticking) { ticking = true; requestAnimationFrame(paint); }
-    }, {passive:true});
-    paint();
-  }
+    <section class="tab-panel" role="tabpanel" id="panel-routes" aria-labelledby="tab-routes" data-tab-panel="routes" hidden>
+      <div class="panel-heading"><div><h2>Route portfolio</h2>
+        <p>All routes are bound to an exact threat model, evidence gate, stop condition, and next action.</p></div>
+        <a class="button" href="explore.html">Open detailed route map</a></div>
+      <div class="surface" style="margin-bottom:22px">
+        <div class="surface__head"><div><h3>Disposition distribution</h3><p>17 canonical routes</p></div></div>
+        <div class="surface__body"><div class="distribution"><span class="distribution__segment segment--guardrail" style="width:5.882%" title="Guardrail: 1"></span><span class="distribution__segment segment--baseline" style="width:5.882%" title="Baseline: 1"></span><span class="distribution__segment segment--constant_factor_only" style="width:5.882%" title="Constant factor: 1"></span><span class="distribution__segment segment--ruled_out_for_target" style="width:23.529%" title="Ruled out for target: 4"></span><span class="distribution__segment segment--open_parked" style="width:23.529%" title="Open, parked: 4"></span><span class="distribution__segment segment--monitor" style="width:5.882%" title="Monitor: 1"></span><span class="distribution__segment segment--conditional_only" style="width:11.765%" title="Conditional inputs: 2"></span><span class="distribution__segment segment--separate_threat_model" style="width:17.647%" title="Separate threat model: 3"></span></div><div class="legend-list"><span class="legend-item"><i class="segment--guardrail"></i>Guardrail <strong>1</strong></span><span class="legend-item"><i class="segment--baseline"></i>Baseline <strong>1</strong></span><span class="legend-item"><i class="segment--constant_factor_only"></i>Constant factor <strong>1</strong></span><span class="legend-item"><i class="segment--ruled_out_for_target"></i>Ruled out for target <strong>4</strong></span><span class="legend-item"><i class="segment--open_parked"></i>Open, parked <strong>4</strong></span><span class="legend-item"><i class="segment--monitor"></i>Monitor <strong>1</strong></span><span class="legend-item"><i class="segment--conditional_only"></i>Conditional inputs <strong>2</strong></span><span class="legend-item"><i class="segment--separate_threat_model"></i>Separate threat model <strong>3</strong></span></div></div>
+      </div>
+      <div class="table-wrap"><table class="data-table">
+        <thead><tr><th>Route</th><th>Disposition</th><th>Threat model</th><th>Priority</th><th>Next action</th></tr></thead>
+        <tbody><tr>
+  <td><strong>Generic-group lower bound</strong><small>R-GENERIC-LOWER-BOUND</small></td>
+  <td><span class="status status--guardrail">Guardrail</span></td>
+  <td>classical-generic</td>
+  <td>P0</td>
+  <td>Retain as a mandatory comparison and scope guard; no new experiment.</td>
+</tr><tr>
+  <td><strong>Baby-step giant-step and Pollard rho</strong><small>R-GENERIC-BASELINE</small></td>
+  <td><span class="status status--baseline">Baseline</span></td>
+  <td>classical-single-target-plain, classical-generic</td>
+  <td>P0</td>
+  <td>Use as the benchmark comparator in the evaluation harness.</td>
+</tr><tr>
+  <td><strong>GLV endomorphism acceleration</strong><small>R-GLV</small></td>
+  <td><span class="status status--constant_factor_only">Constant factor</span></td>
+  <td>classical-single-target-plain</td>
+  <td>P0</td>
+  <td>Keep as target structure available to a selected route; do not treat it as a standalone attack.</td>
+</tr><tr>
+  <td><strong>Pohlig-Hellman subgroup reduction</strong><small>R-POHLIG-HELLMAN</small></td>
+  <td><span class="status status--ruled_out_for_target">Ruled out for target</span></td>
+  <td>classical-single-target-plain</td>
+  <td>P0</td>
+  <td>Retain as a machine-checked elimination certificate.</td>
+</tr><tr>
+  <td><strong>MOV, Frey-Ruck, and Tate/Weil pairing transfer</strong><small>R-PAIRING-TRANSFER</small></td>
+  <td><span class="status status--ruled_out_for_target">Ruled out for target</span></td>
+  <td>classical-single-target-plain</td>
+  <td>P0</td>
+  <td>Keep the target-specific exclusion; defer a full pairing library unless a new route needs it.</td>
+</tr><tr>
+  <td><strong>Smart, Satoh-Araki, and Semaev anomalous-curve lifting</strong><small>R-ANOMALOUS-PADIC</small></td>
+  <td><span class="status status--ruled_out_for_target">Ruled out for target</span></td>
+  <td>classical-single-target-plain</td>
+  <td>P0</td>
+  <td>Retain the formal exclusion; do not build an elliptic formal-group stack for this target now.</td>
+</tr><tr>
+  <td><strong>Weil descent and GHS-style transfer</strong><small>R-WEIL-DESCENT</small></td>
+  <td><span class="status status--ruled_out_for_target">Ruled out for target</span></td>
+  <td>classical-single-target-plain</td>
+  <td>P1</td>
+  <td>Document as a target-applicability exclusion; no formal stack now.</td>
+</tr><tr>
+  <td><strong>Prime-field index calculus</strong><small>R-PRIME-FIELD-INDEX-CALCULUS</small></td>
+  <td><span class="status status--open_parked">Open, parked</span></td>
+  <td>classical-single-target-plain</td>
+  <td>P1</td>
+  <td>Preserve evidence and prerequisites; wait for explicit route selection before any new experiment.</td>
+</tr><tr>
+  <td><strong>GLV-symmetrized Semaev systems</strong><small>R-GLV-SEMAEV</small></td>
+  <td><span class="status status--open_parked">Open, parked</span></td>
+  <td>classical-single-target-plain</td>
+  <td>P1</td>
+  <td>Keep HYP_GLV_SEMAEV_001 parked until route selection explicitly promotes it.</td>
+</tr><tr>
+  <td><strong>Petit-style composed rational maps</strong><small>R-PETIT-COMPOSED-MAPS</small></td>
+  <td><span class="status status--open_parked">Open, parked</span></td>
+  <td>classical-single-target-plain</td>
+  <td>P2</td>
+  <td>Park until the source specification and route-selection gate justify implementation.</td>
+</tr><tr>
+  <td><strong>Elliptic divisibility sequences and division-polynomial re-encodings</strong><small>R-EDS-DIVISION-POLYNOMIAL</small></td>
+  <td><span class="status status--open_parked">Open, parked</span></td>
+  <td>classical-single-target-plain</td>
+  <td>P2</td>
+  <td>Keep HYP_WARD_EDS_001 parked; finish no additional point-division bridge unless a selected route needs it.</td>
+</tr><tr>
+  <td><strong>Isogeny, endomorphism-ring, and Frobenius transfer</strong><small>R-ISOGENY-ENDOMORPHISM-TRANSFER</small></td>
+  <td><span class="status status--monitor">Monitor</span></td>
+  <td>classical-single-target-plain</td>
+  <td>P3</td>
+  <td>Monitor literature and reuse GLV facts; no build now.</td>
+</tr><tr>
+  <td><strong>Multi-target and reusable-precomputation tradeoffs</strong><small>R-MULTI-TARGET-PRECOMPUTATION</small></td>
+  <td><span class="status status--conditional_only">Conditional inputs</span></td>
+  <td>classical-conditioned</td>
+  <td>P1</td>
+  <td>Represent in the evaluation contract; no experiment in this phase.</td>
+</tr><tr>
+  <td><strong>Interval DLP, partial-key knowledge, and auxiliary-power algorithms</strong><small>R-INTERVAL-AUXILIARY-INPUT</small></td>
+  <td><span class="status status--conditional_only">Conditional inputs</span></td>
+  <td>classical-conditioned</td>
+  <td>P2</td>
+  <td>Keep as a scope category for future protocol or leakage analyses.</td>
+</tr><tr>
+  <td><strong>Hidden-number and lattice attacks on biased or reused ECDSA nonces</strong><small>R-HNP-NONCE-LEAKAGE</small></td>
+  <td><span class="status status--separate_threat_model">Separate threat model</span></td>
+  <td>implementation-leakage</td>
+  <td>P1</td>
+  <td>Preserve as a separate security track; no lattice foundation build for the primary objective now.</td>
+</tr><tr>
+  <td><strong>Invalid-curve, twist, fault, and side-channel routes</strong><small>R-PROTOCOL-FAULT-SIDECHANNEL</small></td>
+  <td><span class="status status--separate_threat_model">Separate threat model</span></td>
+  <td>implementation-leakage</td>
+  <td>P1</td>
+  <td>Record scope; do not expand the Lean substrate until a concrete implementation-verification goal exists.</td>
+</tr><tr>
+  <td><strong>Fault-tolerant quantum ECDLP</strong><small>R-QUANTUM-SHOR</small></td>
+  <td><span class="status status--separate_threat_model">Separate threat model</span></td>
+  <td>fault-tolerant-quantum</td>
+  <td>P1</td>
+  <td>Update the registry estimate and monitor primary literature; do not build a quantum Lean stack now.</td>
+</tr></tbody>
+      </table></div>
+    </section>
 
-  // scroll-reveal — generous rootMargin so a fast flick-scroll can't skip an
-  // element past the observer's check unseen, PLUS a hard failsafe timeout: this
-  // page's content (docs, data) must never stay permanently invisible just because
-  // an animation didn't fire.
-  var els = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && !reduced) {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, {threshold:.01, rootMargin:'200px 0px 200px 0px'});
-    els.forEach(function(el){ io.observe(el); });
-    setTimeout(function(){ els.forEach(function(el){ el.classList.add('in'); }); }, 2500);
-  } else {
-    els.forEach(function(el){ el.classList.add('in'); });
-  }
+    <section class="tab-panel" role="tabpanel" id="panel-formal" aria-labelledby="tab-formal" data-tab-panel="formal" hidden>
+      <div class="panel-heading"><div><h2>Formal substrate</h2>
+        <p>11 of 17 critical nodes are closed. Blocked nodes retain exact resume conditions.</p></div>
+        <a class="button" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/FORMAL_SUBSTRATE.json">Open canonical map</a></div>
+      <div class="table-wrap" style="margin-bottom:28px"><table class="data-table">
+        <thead><tr><th>Critical node</th><th>Status</th><th>Depends on</th><th>Blocker</th><th>Evidence</th></tr></thead>
+        <tbody><tr>
+  <td><strong>Canonical counts, registries, generated views, and active queue</strong><small>truth-layer</small></td>
+  <td><span class="status status--closed">Closed</span></td>
+  <td>none</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/STATUS.md">STATUS.md</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/NEXT.md">tasks/NEXT.md</a></td>
+</tr><tr>
+  <td><strong>secp256k1 field and subgroup parameters</strong><small>secp-parameters</small></td>
+  <td><span class="status status--closed">Closed</span></td>
+  <td>none</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/Secp256k1PrimeP.lean">Ecdlp/Proved/Secp256k1PrimeP.lean</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/Secp256k1PrimeN.lean">Ecdlp/Proved/Secp256k1PrimeN.lean</a></td>
+</tr><tr>
+  <td><strong>Exact rational-point cardinality and full cyclic group</strong><small>secp-rational-group</small></td>
+  <td><span class="status status--closed">Closed</span></td>
+  <td>secp-parameters</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/CurveCardinalityExact.lean">Ecdlp/Proved/CurveCardinalityExact.lean</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/CurveFullGroup.lean">Ecdlp/Proved/CurveFullGroup.lean</a></td>
+</tr><tr>
+  <td><strong>Fixed-transcript generic-group collision core</strong><small>generic-security-core</small></td>
+  <td><span class="status status--closed">Closed</span></td>
+  <td>secp-rational-group</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/GenericGroupBound.lean">Ecdlp/Proved/GenericGroupBound.lean</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/SECURITY_SCOPE.md">notes/SECURITY_SCOPE.md</a></td>
+</tr><tr>
+  <td><strong>Abstract protocol algebra and concrete curve instantiation</strong><small>protocol-soundness</small></td>
+  <td><span class="status status--closed">Closed</span></td>
+  <td>secp-rational-group</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/ProtocolInstantiation.lean">Ecdlp/Proved/ProtocolInstantiation.lean</a></td>
+</tr><tr>
+  <td><strong>GLV automorphism on the full rational point group</strong><small>glv-rational-scope</small></td>
+  <td><span class="status status--closed">Closed</span></td>
+  <td>secp-rational-group</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/GlvSubgroupEigenvalue.lean">Ecdlp/Proved/GlvSubgroupEigenvalue.lean</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/SECURITY_SCOPE.md">notes/SECURITY_SCOPE.md</a></td>
+</tr><tr>
+  <td><strong>Semaev S3/S4 formal foundations</strong><small>semaev-foundations</small></td>
+  <td><span class="status status--closed">Closed</span></td>
+  <td>secp-rational-group</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/SemaevThree.lean">Ecdlp/Proved/SemaevThree.lean</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/SemaevFour.lean">Ecdlp/Proved/SemaevFour.lean</a></td>
+</tr><tr>
+  <td><strong>Division-polynomial, EDS, degree, and coprimality substrate</strong><small>division-polynomial-foundations</small></td>
+  <td><span class="status status--closed">Closed</span></td>
+  <td>secp-parameters</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/DivisionPolynomialCoprime.lean">Ecdlp/Proved/DivisionPolynomialCoprime.lean</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/NormEDSConsecutiveZeros.lean">Ecdlp/Proved/NormEDSConsecutiveZeros.lean</a></td>
+</tr><tr>
+  <td><strong>Closed E[n] structure for n in {2,3,5,7} and fixed multiplication rungs through 5</strong><small>small-torsion-family</small></td>
+  <td><span class="status status--closed">Closed</span></td>
+  <td>division-polynomial-foundations</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/TwoTorsionStructure.lean">Ecdlp/Proved/TwoTorsionStructure.lean</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/SevenTorsionStructure.lean">Ecdlp/Proved/SevenTorsionStructure.lean</a></td>
+</tr><tr>
+  <td><strong>Coprime and distinct torsion loci</strong><small>torsion-loci</small></td>
+  <td><span class="status status--closed">Closed</span></td>
+  <td>division-polynomial-foundations</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/TwoTorsionCount.lean">Ecdlp/Proved/TwoTorsionCount.lean</a></td>
+</tr><tr>
+  <td><strong>Weil divisor, Miller function, and reachable evaluation layer</strong><small>weil-w1-w3</small></td>
+  <td><span class="status status--closed">Closed</span></td>
+  <td>small-torsion-family</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/WeilMillerEval.lean">Ecdlp/Proved/WeilMillerEval.lean</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/WEIL_LADDER.md">notes/WEIL_LADDER.md</a></td>
+</tr><tr>
+  <td><strong>Uniform point-level multiplication coordinate formula</strong><small>n7-uniform</small></td>
+  <td><span class="status status--blocked">Blocked</span></td>
+  <td>division-polynomial-foundations, small-torsion-family</td>
+  <td>blocker-point-division-map, blocker-n7-certificates</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Targets/n7_uniform_carrier_induction.lean">Ecdlp/Targets/n7_uniform_carrier_induction.lean</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/targets/n7_uniform_secp256k1_x.json">targets/n7_uniform_secp256k1_x.json</a></td>
+</tr><tr>
+  <td><strong>Uniform separability and geometric n-torsion count</strong><small>n10-uniform-separability</small></td>
+  <td><span class="status status--blocked">Blocked</span></td>
+  <td>division-polynomial-foundations</td>
+  <td>blocker-uniform-separability</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/SEPARABILITY_ROUTES.md">notes/SEPARABILITY_ROUTES.md</a></td>
+</tr><tr>
+  <td><strong>General E[n] structure over the algebraic closure</strong><small>general-n-torsion</small></td>
+  <td><span class="status status--blocked">Blocked</span></td>
+  <td>n7-uniform, n10-uniform-separability</td>
+  <td>blocker-point-division-map, blocker-uniform-separability</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/DIVISION_POLY_TORSION_MAP.md">notes/DIVISION_POLY_TORSION_MAP.md</a></td>
+</tr><tr>
+  <td><strong>Weil reciprocity and the bilinear non-degenerate pairing</strong><small>weil-w4-w5</small></td>
+  <td><span class="status status--blocked">Blocked</span></td>
+  <td>weil-w1-w3, general-n-torsion</td>
+  <td>blocker-weil-reciprocity</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/notes/WEIL_LADDER.md">notes/WEIL_LADDER.md</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/BARRIERS.md">BARRIERS.md</a></td>
+</tr><tr>
+  <td><strong>P-256 exact rational-point cardinality</strong><small>p256-exact-cardinality</small></td>
+  <td><span class="status status--out_of_release">Outside release</span></td>
+  <td>secp-parameters</td>
+  <td>blocker-p256-cardinality</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/P256Cardinality.lean">Ecdlp/Proved/P256Cardinality.lean</a></td>
+</tr><tr>
+  <td><strong>New cryptanalytic hypothesis testing</strong><small>experimental-hypotheses</small></td>
+  <td><span class="status status--parked">Parked</span></td>
+  <td>truth-layer</td>
+  <td>none</td>
+  <td><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/experiments/HYPOTHESES.yaml">experiments/HYPOTHESES.yaml</a></td>
+</tr></tbody>
+      </table></div>
+      <div class="panel-heading"><div><h2>Accepted blockers</h2>
+        <p>Missing foundations are recorded, but do not authorize work without a selected route.</p></div></div>
+      <div class="table-wrap"><table class="data-table">
+        <thead><tr><th>Blocker</th><th>What is missing</th><th>Resume condition</th></tr></thead>
+        <tbody><tr>
+  <td><strong>No uniform Point-to-division-polynomial multiplication map</strong><small>upstream-foundation</small></td>
+  <td>Mathlib exposes the polynomial identities but not the theorem connecting [n]P to the phi/psi coordinate formulas for all n.</td>
+  <td>An upstream multiplication-coordinate theorem lands, or a reviewed in-repo induction closes the torsion bridge.</td>
+</tr><tr>
+  <td><strong>Four N7 algebra walls need large checked elimination certificates</strong><small>proof-engineering</small></td>
+  <td>The statements are machine-elaborated and numerically/symbolically validated, but checked cofactors for the degree-heavy identities are not yet authored.</td>
+  <td>A reproducible certificate generator emits Lean-checkable cofactors for all four algebra walls.</td>
+</tr><tr>
+  <td><strong>Uniform separability of multiplication-by-n is not available</strong><small>missing-theory</small></td>
+  <td>Small n is closed, while the general prime-to-characteristic counting and differential argument remains absent.</td>
+  <td>A checked [n]*omega=n omega or equivalent general separability theorem is available.</td>
+</tr><tr>
+  <td><strong>Weil reciprocity and divisor-degree machinery are missing</strong><small>upstream-foundation</small></td>
+  <td>The reachable W1-W3 evaluation substrate is closed; W4 reciprocity is required before the pairing can be assembled.</td>
+  <td>Mathlib or this repository gains the needed divisor/tame-symbol reciprocity layer.</td>
+</tr><tr>
+  <td><strong>P-256 exact cardinality needs a general point-counting/Hasse route</strong><small>out-of-scope-foundation</small></td>
+  <td>Only n divides the P-256 group cardinality is proved; the secp256k1 j=0 certificate does not transfer.</td>
+  <td>A reviewed Hasse/Schoof or curve-specific exact-cardinality proof becomes available.</td>
+</tr></tbody>
+      </table></div>
+    </section>
 
-  // count-up stat tiles — same fast-scroll safety net as .reveal: generous
-  // rootMargin plus a hard failsafe, so a value never gets stuck at its initial 0.
-  document.querySelectorAll('.cval[data-count]').forEach(function(el){
-    var target = parseFloat(el.getAttribute('data-count'));
-    if (reduced || !('IntersectionObserver' in window)) { el.textContent = target; return; }
-    var done = false;
-    function run() {
-      if (done) return;
-      done = true; obs.unobserve(el);
-      var start = null, dur = 900;
-      function step(ts) {
-        if (!start) start = ts;
-        var p = Math.min((ts - start) / dur, 1);
-        var eased = 1 - Math.pow(1 - p, 3);
-        var val = target * eased;
-        el.textContent = (target % 1 !== 0) ? val.toFixed(1) : Math.round(val);
-        if (p < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    }
-    var obs = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if (e.isIntersecting) run(); });
-    }, {threshold:.01, rootMargin:'200px 0px 200px 0px'});
-    obs.observe(el);
-    setTimeout(run, 2500);
-  });
+    <section class="tab-panel" role="tabpanel" id="panel-evidence" aria-labelledby="tab-evidence" data-tab-panel="evidence" hidden>
+      <div class="panel-heading"><div><h2>Sync Health</h2>
+        <p>The public and agent-facing views resolve back to canonical machine sources and their gates.</p></div></div>
+      <div class="layout-two" style="margin-bottom:30px"><article class="surface">
+  <div class="surface__head"><div><h3>Canonical counts</h3><p>296 ledger rows / ~257 distinct</p></div><span class="status status--closed">OK</span></div>
+  <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/stats.json">data/stats.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_status_consistency.py">scripts/check_status_consistency.py</a></div>
+</article><article class="surface">
+  <div class="surface__head"><div><h3>Decision state</h3><p>17 routes evaluated / 0 selected</p></div><span class="status status--closed">OK</span></div>
+  <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ECDLP_DECISION_SUBSTRATE.json">repo/ECDLP_DECISION_SUBSTRATE.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_ecdlp_decision_substrate.py">scripts/check_ecdlp_decision_substrate.py</a></div>
+</article><article class="surface">
+  <div class="surface__head"><div><h3>Generated closure</h3><p>296 theorem nodes in the knowledge graph</p></div><span class="status status--closed">OK</span></div>
+  <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ARTIFACTS.yaml">repo/ARTIFACTS.yaml</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_repo_artifacts.py">scripts/check_repo_artifacts.py</a></div>
+</article><article class="surface">
+  <div class="surface__head"><div><h3>Product boundary</h3><p>Reference deployment</p></div><span class="status status--blue">OK</span></div>
+  <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/PRODUCT_MODEL.json">repo/PRODUCT_MODEL.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_product_model.py">scripts/check_product_model.py</a></div>
+</article></div>
+      <div class="layout-two">
+        <article class="surface">
+          <div class="surface__head"><div><h3>Reconsideration triggers</h3><p>What can legitimately reopen route selection</p></div></div>
+          <div class="surface__body"><ul class="plain-list"><li>A primary source or reproducible proposal identifies an exact non-generic mechanism for the plain target and supplies a theoretical full-cost argument.</li><li>New verified target structure invalidates an existing applicability or stop-condition decision.</li><li>A deliberately approved project objective changes the threat model to conditioned inputs, implementation leakage, or fault-tolerant quantum computation.</li></ul></div>
+        </article>
+        <article class="surface">
+          <div class="surface__head"><div><h3>Operating policy</h3><p>monitored-candidate-intake</p></div></div>
+          <div class="surface__body">
+            <ul class="compact-list">
+              <li><strong>Experiments authorized</strong><span>false</span></li>
+              <li><strong>Selected route</strong><span>none</span></li>
+              <li><strong>Merge rule</strong><span>The owner delegated merge authority on 2026-07-22. Merge only from a clean branch after required CI is green, the diff has a documented scope and rollback path, and no unresolved blocking finding is known.</span></li>
+              <li><strong>Product claim policy</strong><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/PRODUCT_MODEL.json">repo/PRODUCT_MODEL.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_product_model.py">scripts/check_product_model.py</a></li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
 
-  // completeness meter — same pattern.
-  var fill = document.getElementById('meterFill'), label = document.getElementById('meterLabel');
-  if (fill) {
-    var circumference = 251.2, target = parseFloat(fill.getAttribute('data-target'));
-    var done = false;
-    var trigger = function() {
-      if (done) return;
-      done = true;
-      var offset = circumference - (target/100)*circumference;
-      fill.style.strokeDashoffset = reduced ? offset : circumference;
-      if (!reduced) requestAnimationFrame(function(){ fill.style.strokeDashoffset = offset; });
-      var start=null, dur=1100;
-      function step(ts){ if(!start) start=ts; var p=Math.min((ts-start)/dur,1);
-        label.textContent = Math.round(target*(reduced?1:p)) + '%'; if(p<1 && !reduced) requestAnimationFrame(step); }
-      requestAnimationFrame(step);
-    };
-    if ('IntersectionObserver' in window) {
-      var mio = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){ if (e.isIntersecting) { trigger(); mio.unobserve(fill); } });
-      }, {threshold:.01, rootMargin:'200px 0px 200px 0px'});
-      mio.observe(fill);
-      setTimeout(trigger, 2500);
-    } else { trigger(); }
-  }
-
-  // scrollspy
-  var links = document.querySelectorAll('#scrollspy a');
-  var sections = Array.prototype.map.call(links, function(a){ return document.querySelector(a.getAttribute('href')); });
-  function onScroll(){
-    var pos = window.scrollY + 90;
-    var active = 0;
-    sections.forEach(function(sec, i){ if (sec && sec.offsetTop <= pos) active = i; });
-    links.forEach(function(a,i){ a.classList.toggle('active', i===active); });
-  }
-  document.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
-})();
-</script>
-</body></html>
+    <section class="tab-panel" role="tabpanel" id="panel-activity" aria-labelledby="tab-activity" data-tab-panel="activity" hidden>
+      <div class="panel-heading"><div><h2>Recent repository activity</h2>
+        <p>Build milestones are informative history; canonical status still comes from the registries above.</p></div>
+        <a class="button" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/commits/main">Full commit feed</a></div>
+      <ul class="activity-list"><li><code>n/a</code><span>Git history unavailable in this build environment.</span></li></ul>
+    </section>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="shell site-footer__inner">
+    <img src="assets/logo-wordmark.png" alt="KeyAI" width="100" height="38">
+    <p>verification workspace for AI research. Current stage: Reference deployment.
+      Lean is the current exact verifier; product and customer claims remain evidence-gated.</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="dashboard.html">Reference workspace</a>
+      <a href="explore.html">Decision routes</a>
+      <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/PRODUCT_MODEL.json">Product model</a>
+      <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification">Repository</a>
+    </nav>
+  </div>
+</footer>
+<script src="assets/site.js?v=20260722-1"></script>
+</body>
+</html>

@@ -34,6 +34,7 @@ def main() -> int:
     frontier = read_json("data/frontier_map.json")
     graph = read_json("data/knowledge_graph.json")
     decisions = read_json("repo/ECDLP_DECISION_SUBSTRATE.json")
+    product = read_json("repo/PRODUCT_MODEL.json")
     status = read_text("STATUS.md")
     index = read_text("index.html")
     dashboard = read_text("dashboard.html")
@@ -75,30 +76,81 @@ def main() -> int:
         check(f"| {name} | **{value}**" in status,
               f"STATUS.md corpus row for {name!r} does not match frontier_map")
 
-    check(f'data-to="{ledger_rows}"' in index,
-          "index.html ledger counter does not match data/stats.json")
-    check(f'data-to="{distinct}"' in index,
-          "index.html distinct-results counter does not match data/stats.json")
-    check(f'data-to="{ledger_rows}">{ledger_rows}</div><div class="l">ledger rows' in index,
-          "index.html must expose the ledger count as visible static text")
     check(
-        f'data-to="{distinct}" data-pre="~">~{distinct}</div><div class="l">distinct results' in index,
-        "index.html must expose the distinct-result count as visible static text",
+        f"**Category:** {product.get('category')}." in status,
+        "STATUS.md must expose the canonical product category",
+    )
+    check(
+        f"**Current stage:** {product.get('current_stage', {}).get('label')}." in status,
+        "STATUS.md must expose the canonical product stage",
+    )
+    check(
+        product.get("mvp", {}).get("definition") in status,
+        "STATUS.md must expose the canonical MVP boundary",
+    )
+
+    check(
+        f'data-metric="ledger-rows">{ledger_rows}</div>' in index,
+        "index.html ledger counter does not match data/stats.json",
+    )
+    check(
+        f'data-metric="distinct-results">~{distinct}</div>' in index,
+        "index.html distinct-results counter does not match data/stats.json",
     )
     check(f"snapshot {ledger_rows} ledger rows / ~{distinct} distinct" in dashboard,
           "dashboard.html snapshot stamp does not match data/stats.json")
-    # explore.html (3D map) KPI counters — generated + gated (ROADMAP §7.7; formerly an
-    # ungated public surface with a stale '228 ledger rows' that escaped every check).
-    check(f'<div class="n">{ledger_rows}</div><div class="l">ledger rows</div>' in explore,
-          "explore.html ledger-rows KPI does not match data/stats.json "
-          "(regenerate: python3 scripts/build_dashboard.py)")
-    check(f'<div class="n">{proved_modules}</div><div class="l">proved modules</div>' in explore,
-          "explore.html proved-modules KPI does not match data/stats.json "
-          "(regenerate: python3 scripts/build_dashboard.py)")
+    check(
+        f'data-metric="ledger-rows">{ledger_rows}</span>' in explore,
+        "explore.html ledger counter does not match data/stats.json",
+    )
     check("Sync Health" in dashboard,
           "dashboard.html must expose a Sync Health section")
     check("repo/ARTIFACTS.yaml" in dashboard and "scripts/check_repo_artifacts.py" in dashboard,
           "dashboard.html Sync Health must link the artifact manifest to its gate")
+    check(
+        product.get("category") in index
+        and product.get("category") in dashboard
+        and product.get("category") in explore,
+        "all public surfaces must expose the canonical product category",
+    )
+    check(
+        product.get("current_stage", {}).get("label") in index
+        and product.get("current_stage", {}).get("label") in dashboard,
+        "index and dashboard must expose the canonical product stage",
+    )
+    check(
+        "repo/PRODUCT_MODEL.json" in index
+        and "repo/PRODUCT_MODEL.json" in dashboard
+        and "repo/PRODUCT_MODEL.json" in explore,
+        "all public surfaces must link the canonical product model",
+    )
+    check(
+        all("assets/site.css" in page and "assets/site.js" in page
+            for page in (index, dashboard, explore)),
+        "all public surfaces must use the shared site assets",
+    )
+    public_site = (index + dashboard + explore).lower()
+    for retired_claim in ("autonomous engine", "verified environment for a strong ai"):
+        check(
+            retired_claim not in public_site,
+            f"public site contains retired product claim: {retired_claim!r}",
+        )
+    route_count = len(decisions.get("routes", []))
+    check(
+        f"{route_count} canonical routes" in dashboard,
+        "dashboard route count must match the decision substrate",
+    )
+    check(
+        f"data-route-count>{route_count} routes" in explore,
+        "explore route count must match the decision substrate",
+    )
+    check(
+        route_selection.get("decision_id") in dashboard
+        and route_selection.get("decision_id") in explore
+        and "Select none" in dashboard
+        and "Select none" in explore,
+        "dashboard and explore must expose the canonical select-none decision",
+    )
 
     graph_counts = graph.get("counts", {})
     check(isinstance(graph_counts.get("theorems"), int) and graph_counts["theorems"] > 0,

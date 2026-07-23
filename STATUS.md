@@ -1,7 +1,8 @@
 # STATUS — canonical snapshot
 
 > **Generated** by `scripts/gen_status.py` from `data/stats.json`,
-> `data/frontier_map.json`, and `repo/ECDLP_DECISION_SUBSTRATE.json`.
+> `data/frontier_map.json`, `repo/PRODUCT_MODEL.json`, and
+> `repo/ECDLP_DECISION_SUBSTRATE.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -14,6 +15,16 @@
 | custom axioms | **0** | axiom-audit gate |
 
 Toolchain: Lean 4 + Mathlib v4.31.0.
+
+## Product state
+- **Category:** verification workspace for AI research.
+- **Current stage:** Reference deployment. The repository demonstrates the full research-state loop on one difficult domain, but it is not yet a self-serve hosted product.
+- **Reference deployment:** this secp256k1 repository demonstrates the research-state loop on one
+  difficult domain; it is evidence for the product design, not a claim of a hosted multi-project
+  product or an ECDLP break.
+- **MVP boundary:** A non-owner research team can connect a second project, obtain a trustworthy initial map, run one candidate through its verifier, and understand the resulting decision without editing KeyAI's generator code.
+- **Customer evidence:** 2 customer hypotheses are recorded and all are
+  currently unvalidated. The project is not YC-ready until the external-pilot loop is evidenced.
 
 ## Corpus coverage (the 486-claim map)
 The 486 corpus claims (`data/KG_CLAIM_FORMALIZATION_v1.csv`) are a *different* denominator from the
@@ -31,8 +42,9 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 | **total** | **486** | frontier completeness 100.0% |
 
 ## What is true right now (honest)
-- This is a **verified substrate** for ECDLP / secp256k1 research. It does **not** solve ECDLP on
-  secp256k1, and claims no shortcut.
+- KeyAI is a **verification workspace for AI research**. This repository is its public
+  **verified substrate** and reference deployment for ECDLP / secp256k1 research. It does **not**
+  solve ECDLP on secp256k1, and claims no shortcut.
 - The generic-group `Ω(√n)` bound (formalized here) constrains only **black-box** algorithms; it
   says nothing about non-generic attacks on this concrete curve, whose hardness is an **open
   conjecture**, not a theorem.
@@ -68,6 +80,10 @@ when new evidence satisfies a recorded reconsideration trigger and the proposal 
 The active queue is `tasks/NEXT.md`. Keep it short (3-7 task contracts) so a
 small-context agent can start work without rereading the whole repository.
 
+The product authority is `repo/PRODUCT_MODEL.json`; `scripts/check_product_model.py` enforces its
+claim boundary. Public surfaces must distinguish current capabilities, the reference deployment,
+customer hypotheses, and future product direction.
+
 The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view is generated.
 The candidate-neutral validation contract lives in `experiments/framework/`. Neither file
 authorizes an experiment by itself.
@@ -79,7 +95,8 @@ The drift gate is `scripts/check_status_consistency.py`. Run it whenever stats,
 frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 
 ## Where to go deeper
-`README.md` (the front door) · `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
+`README.md` (the front door) · `repo/PRODUCT_MODEL.json` (product and MVP authority) ·
+`repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
 `tasks/NEXT.md` (active queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
 standalone results) · `ROADMAP.md` (strategy & program) · `VERIFIED.md` (ledger) ·

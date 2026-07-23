@@ -82,7 +82,8 @@ Regenerates `data/knowledge_graph.{json,md}` from the ledger so the asset stays 
 for a future automated reasoner (the north star). `--check` mode fails CI on drift.
 
 ## What is deliberately NOT automated
-- **Merge to `main`.** Promotions land on `claude/admiring-darwin-uouep1`; a human merges.
+- **Unreviewed merge to `main`.** Promotion automation opens a PR; a delegated maintainer
+  evaluates its evidence and green CI before merging. The workflow never auto-merges its own output.
 - **The Featherless model tiers.** Plan currently blocks API access (HTTP 403
   `upgrade_required`); the Tier-0 tactic ladder + the agent drafters cover the search for now.
 - **The rented server.** At 4 GB it OOMs on `import Mathlib`; not cost-effective yet. The

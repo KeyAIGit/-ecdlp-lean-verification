@@ -1,0 +1,209 @@
+{
+  "schema_version": "1.0",
+  "name": "KeyAI",
+  "category": "verification workspace for AI research",
+  "one_liner": "KeyAI turns model-generated research into evidence-linked, machine-checked assets.",
+  "problem": {
+    "statement": "Research agents can generate claims, proofs, experiments, and code faster than a team can establish what is true, why a decision was made, and what should happen next.",
+    "failure_modes": [
+      "A plausible claim is repeated without a source or verifier result.",
+      "A failed route is rediscovered because its scope and stop condition were not retained.",
+      "Generated views drift from the canonical research state.",
+      "A proof checker validates syntax while the surrounding claim, assumptions, or threat model still overstate the result.",
+      "A new agent spends most of its context reconstructing project state."
+    ]
+  },
+  "product": {
+    "promise": "Give a research team one inspectable state for claims, evidence, decisions, tasks, candidate outputs, verifier results, and provenance.",
+    "wedge": "Long-horizon formal-mathematics projects that use Lean and multiple human or AI contributors.",
+    "long_term_direction": "A verifier-aware control plane for high-assurance AI research across domains.",
+    "system_of_record": [
+      "claims and their sources",
+      "route and scope decisions",
+      "active tasks and stop conditions",
+      "candidate artifacts and independent validation",
+      "verified results and trust boundaries",
+      "generated public and agent-facing views"
+    ]
+  },
+  "workflow": [
+    {
+      "id": "ingest",
+      "label": "Ingest",
+      "outcome": "Pin the corpus, sources, target, and verifier contract."
+    },
+    {
+      "id": "structure",
+      "label": "Structure",
+      "outcome": "Convert material into claims, dependencies, barriers, and threat models."
+    },
+    {
+      "id": "decide",
+      "label": "Decide",
+      "outcome": "Select, park, or reject routes under explicit evidence gates."
+    },
+    {
+      "id": "execute",
+      "label": "Execute",
+      "outcome": "Give a human or model one bounded task with a falsifiable exit condition."
+    },
+    {
+      "id": "verify",
+      "label": "Verify",
+      "outcome": "Run the declared verifier and an independent result validator where needed."
+    },
+    {
+      "id": "retain",
+      "label": "Retain",
+      "outcome": "Promote accepted results and preserve negative evidence, provenance, and rollback."
+    }
+  ],
+  "customer_hypotheses": [
+    {
+      "id": "CH-001",
+      "user": "Technical lead of an AI-for-mathematics or formalization team",
+      "pain": "The team has theorem provers and coding agents, but no durable control plane for a multi-week research program.",
+      "job": "Know which claims are verified, which routes are worth model time, and why the next task is justified.",
+      "status": "unvalidated"
+    },
+    {
+      "id": "CH-002",
+      "user": "Formal-methods team evaluating AI-generated artifacts",
+      "pain": "A successful checker run does not by itself preserve source scope, assumptions, semantic faithfulness, or decision history.",
+      "job": "Review candidate outputs with a complete evidence and trust trail.",
+      "status": "unvalidated"
+    }
+  ],
+  "reference_environment": {
+    "id": "ecdlp-secp256k1",
+    "label": "secp256k1 ECDLP",
+    "role": "Public reference deployment and product-design test case",
+    "decision_source": "repo/ECDLP_DECISION_SUBSTRATE.json",
+    "formal_source": "repo/FORMAL_SUBSTRATE.json",
+    "stats_source": "data/stats.json",
+    "frontier_source": "data/frontier_map.json",
+    "result_source": "data/result_registry.json",
+    "task_source": "tasks/NEXT.md",
+    "boundary": "The environment maps and verifies the research boundary. It does not solve the plain secp256k1 discrete logarithm problem."
+  },
+  "current_stage": {
+    "id": "reference-deployment",
+    "label": "Reference deployment",
+    "summary": "The repository demonstrates the full research-state loop on one difficult domain, but it is not yet a self-serve hosted product.",
+    "capabilities_now": [
+      {
+        "id": "verified-ledger",
+        "label": "Kernel-checked result ledger",
+        "evidence": [
+          "VERIFIED.md",
+          "data/result_registry.json",
+          "Ecdlp/LedgerAxiomAudit.lean"
+        ]
+      },
+      {
+        "id": "decision-substrate",
+        "label": "Evidence-gated route decisions",
+        "evidence": [
+          "repo/ECDLP_DECISION_SUBSTRATE.json",
+          "data/attack_registry.json"
+        ]
+      },
+      {
+        "id": "candidate-contract",
+        "label": "Reproducible candidate and independent validation contract",
+        "evidence": [
+          "experiments/framework/candidate_run.schema.json",
+          "experiments/framework/ec_oracle.py"
+        ]
+      },
+      {
+        "id": "research-memory",
+        "label": "Tasks, hypotheses, graph, provenance, and generated views",
+        "evidence": [
+          "tasks/NEXT.md",
+          "experiments/HYPOTHESES.yaml",
+          "data/knowledge_graph.json",
+          "repo/ARTIFACTS.yaml"
+        ]
+      }
+    ],
+    "not_yet": [
+      "Self-serve repository or corpus import",
+      "Hosted multi-project workspaces",
+      "Authentication, collaboration, and organization controls",
+      "A verifier adapter beyond the current repository contracts",
+      "Validated external users, retention, or willingness to pay"
+    ]
+  },
+  "mvp": {
+    "definition": "A non-owner research team can connect a second project, obtain a trustworthy initial map, run one candidate through its verifier, and understand the resulting decision without editing KeyAI's generator code.",
+    "required_capabilities": [
+      "Repository or corpus intake with a pinned source manifest",
+      "A configurable claim, task, evidence, and verifier adapter contract",
+      "A workspace view generated from those contracts",
+      "Candidate submission and verifier-result capture",
+      "Decision history, trust boundary, export, and rollback",
+      "One external pilot completed by a non-owner"
+    ],
+    "exit_metrics": [
+      {
+        "id": "orientation-time",
+        "target": "A new collaborator identifies current state, blockers, and next action in 10 minutes or less."
+      },
+      {
+        "id": "provenance-completeness",
+        "target": "Every promoted result links to its source, task, verifier result, and trust boundary."
+      },
+      {
+        "id": "state-drift",
+        "target": "Zero stale generated or public artifacts after a canonical state change."
+      },
+      {
+        "id": "external-pilot",
+        "target": "At least one external team completes the core loop and returns for a second session."
+      }
+    ],
+    "yc_readiness": "Not ready today. Apply after the external-pilot loop is real and user behavior, retention, and the narrow buyer are evidenced rather than inferred."
+  },
+  "competitive_position": {
+    "not_a": [
+      "foundation model",
+      "general autonomous mathematician",
+      "replacement for Lean or Mathlib",
+      "claim that secp256k1 has been broken"
+    ],
+    "distinction": "Proof agents attempt individual proofs. KeyAI preserves and governs the research program around those attempts: what was asked, what evidence applies, what the verifier accepted, what failed, and what should be tried next.",
+    "model_policy": "Model-agnostic at the research-state boundary; current integrations remain repository tools, not a hosted product claim.",
+    "verifier_policy": "Lean is the current exact verifier. Additional verifier adapters are a future product capability, not a current claim."
+  },
+  "public_claim_policy": {
+    "required": [
+      "Separate current capability, reference deployment, product hypothesis, and future direction.",
+      "State that the secp256k1 environment does not solve the plain ECDLP target.",
+      "Distinguish kernel acceptance from semantic faithfulness and from cryptanalytic success.",
+      "Expose canonical counts as visible static text without requiring JavaScript.",
+      "Link product statements to inspectable repository evidence."
+    ],
+    "forbidden": [
+      "Describe the current system as a finished autonomous research engine.",
+      "Present unvalidated customer hypotheses as users or traction.",
+      "Present a formal identity, toy experiment, or constant-factor result as a secp256k1 break.",
+      "Describe planned multi-project, collaboration, or verifier-adapter features as live.",
+      "Use proof volume alone as evidence of product-market fit."
+    ]
+  },
+  "site_surfaces": [
+    {
+      "path": "index.html",
+      "role": "Product thesis, current stage, reference evidence, and MVP boundary"
+    },
+    {
+      "path": "dashboard.html",
+      "role": "Operator workspace for the live secp256k1 reference environment"
+    },
+    {
+      "path": "explore.html",
+      "role": "Canonical route and decision explorer generated from the ECDLP decision substrate"
+    }
+  ]
+}

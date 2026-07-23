@@ -6,7 +6,9 @@
 > them was itself a defect. From here on: **one strategy file**. Live numbers stay in
 > `STATUS.md`; the active queue stays in `tasks/NEXT.md`; this file is direction and
 > structure only. Exact route and foundation decisions live in
-> `repo/ECDLP_DECISION_SUBSTRATE.json`.
+> `repo/ECDLP_DECISION_SUBSTRATE.json`. Product category, current capability,
+> customer hypotheses, public rhetoric, and MVP exit criteria live in
+> `repo/PRODUCT_MODEL.json`.
 
 ## 1. Position — what this repository actually is (auditor's honest read)
 
@@ -39,9 +41,15 @@ the earlier "complete v0 as designed" ladder is **retracted**: completing an
 oversized shape preserves the disease. The correct move is consolidation — make
 drift structurally impossible by having fewer places where truth can drift.
 
-## 2. North star (single, long-term)
+## 2. Dual North Star
 
-**A decision-capable, kernel-verified research substrate that a future strong
+**Product north star:** KeyAI is the verification workspace around AI research
+agents. It turns claims, evidence, route decisions, bounded tasks, candidate
+artifacts, verifier outcomes, negative results, and provenance into one durable
+research state. The current secp256k1 repository is the public reference
+deployment, not proof of a finished hosted platform or customer demand.
+
+**Research north star:** a decision-capable, kernel-verified substrate that a future strong
 reasoner can use to evaluate every serious route toward the exact plain
 single-target secp256k1 ECDLP, reject false shortcuts, and verify any genuine
 progress end to end.** Recovering the discrete logarithm is the long-term
@@ -57,8 +65,9 @@ external channels:
 2. **Mathlib upstreaming** — the general lemmas (coprimality/common-root bridge,
    division-polynomial facts, `normEDS` work) contributed upstream; this is the
    strongest form of external verification and the most durable artifact.
-3. **The engine as a method** — the pipeline demonstrated on ≥2 unrelated domains,
-   documented well enough that a third party could plug in a new corpus + verifier.
+3. **The workspace as a product method** — the reference environment is
+   documented and generated well enough that an external team can test the same
+   research-state loop on a second project without editing KeyAI's generator code.
 
 **Explicit non-goals:** claiming a break or a path to one without satisfying the
 decision substrate's evidence gates; confusing toy measurements, constant
@@ -79,7 +88,9 @@ platform ahead of evidence; investor-facing document growth.
    for recurring drift is removing the duplicate surface, not adding a checker.
 4. **Archive, never silently delete.** History moves to `archive/` in-tree (and git
    history keeps everything). Reviving anything is one `git mv` away.
-5. **Human merges to `main`; agents work on branches and draft PRs.** (Unchanged.)
+5. **Delegated, reversible integration.** Agents work on scoped branches. The
+   delegated operator may merge after required CI is green, the diff is clean,
+   scope is documented, and rollback is explicit.
 
 ## 4. Repository structure — target state and rationale
 
@@ -149,8 +160,19 @@ Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` 
 - Publication and upstreaming consume the reviewed state; they do not race the
   research loop.
 
+**Product phase — reference deployment to external pilot:**
+
+- Generate `index.html`, `dashboard.html`, and `explore.html` from canonical
+  stats, decision, formal, task, and product sources.
+- Validate `CH-001` and `CH-002` with a non-owner team before building hosted
+  multi-project infrastructure.
+- Treat a second external project completing the full workflow and returning
+  for another session as the MVP gate. Authentication, billing, and additional
+  verifier adapters wait for observed pilot needs.
+
 **Long term, only on evidence:** add domains or hosted verification when a
-concrete consumer exists. The archived platform waits until then.
+concrete consumer exists. The archived platform remains provenance, not a
+template that must be revived.
 
 ## 6. Standing decision rights (compressed from the old charter)
 
@@ -196,8 +218,8 @@ structural cleanup of tranche 1. Remaining, in order:
    `blocked` (25, a genuine math statement needing a missing foundation) or
    `informal` (70, prose/heuristic/attack-assessment); `data/corpus_triage.json`,
    applied only to the unassigned gap; frontier completeness now 100%.)
-7. ~~`explore.html`: fold its hardcoded data into the dashboard generator or retire
-   it — it must not remain an ungated public surface.~~ (done: folded — its two KPI
-   counters are stamped from `data/stats.json` by `build_dashboard.py`
-   (`sync_explore_html`) and gated by `check_status_consistency.py`; the stale
-   hardcoded KPI that escaped every gate is now regenerated + drift-checked.)
+7. ~~`explore.html`: fold its hardcoded data into the site generator or retire
+   it — it must not remain an ungated public surface.~~ (done: it is now a
+   canonical route explorer generated in full from
+   `repo/ECDLP_DECISION_SUBSTRATE.json`; live metrics and product rhetoric are
+   gated by `check_status_consistency.py` and `check_product_model.py`.)

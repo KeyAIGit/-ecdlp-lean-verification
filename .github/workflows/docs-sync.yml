@@ -30,7 +30,7 @@ name: Docs sync
 #     repo/ECDLP_DECISION_SUBSTRATE.md         (build_ecdlp_decision_view.py)
 #     bundles/MANIFEST.json                    (export_agent_bundle.py)
 #   SITE  (git-log-derived; committed on main, not PR-gated):
-#     dashboard.html, index.html, explore.html (build_dashboard.py)
+#     dashboard.html, index.html, explore.html (build_dashboard.py -> site_generator.py)
 
 on:
   push:
@@ -58,6 +58,8 @@ on:
       - 'notes/FOUNDATIONS.md'
       - 'dashboard.html'
       - 'index.html'
+      - 'explore.html'
+      - 'assets/**'
   pull_request:
     paths:
       - 'README.md'
@@ -82,6 +84,8 @@ on:
       - 'notes/FOUNDATIONS.md'
       - 'dashboard.html'
       - 'index.html'
+      - 'explore.html'
+      - 'assets/**'
   workflow_dispatch:
 
 permissions:
@@ -155,6 +159,8 @@ jobs:
         run: python3 scripts/check_counts.py
       - name: Research OS consistency gate
         run: python3 scripts/check_status_consistency.py
+      - name: Product model and public-claim gate
+        run: python3 scripts/check_product_model.py
       - name: Formal-substrate architecture gate
         run: python3 scripts/check_formal_substrate.py
       - name: ECDLP decision-substrate gate

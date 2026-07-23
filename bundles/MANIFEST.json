@@ -11,7 +11,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 5232
+        "bytes": 6534
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -20,10 +20,16 @@
         "bytes": 55074
       },
       {
+        "path": "repo/PRODUCT_MODEL.json",
+        "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
+        "exists": true,
+        "bytes": 9059
+      },
+      {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 5307
+        "bytes": 8400
       },
       {
         "path": "data/stats.json",
@@ -43,7 +49,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 5232
+        "bytes": 6534
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -52,10 +58,16 @@
         "bytes": 55074
       },
       {
+        "path": "repo/PRODUCT_MODEL.json",
+        "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
+        "exists": true,
+        "bytes": 9059
+      },
+      {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 5307
+        "bytes": 8400
       },
       {
         "path": "data/stats.json",
@@ -73,13 +85,13 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 9329
+        "bytes": 9677
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 8345
+        "bytes": 8822
       },
       {
         "path": "VERIFIED.md",
@@ -117,7 +129,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 5232
+        "bytes": 6534
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -126,10 +138,16 @@
         "bytes": 55074
       },
       {
+        "path": "repo/PRODUCT_MODEL.json",
+        "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
+        "exists": true,
+        "bytes": 9059
+      },
+      {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 5307
+        "bytes": 8400
       },
       {
         "path": "data/stats.json",
@@ -147,13 +165,13 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 9329
+        "bytes": 9677
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 8345
+        "bytes": 8822
       },
       {
         "path": "VERIFIED.md",
@@ -189,13 +207,13 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 472544
+        "bytes": 472565
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 11665
+        "bytes": 12874
       },
       {
         "path": "PUBLISHABLE_UNITS.md",

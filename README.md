@@ -2,15 +2,16 @@
 
 ![Verified theorems](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/KeyAIGit/-ecdlp-lean-verification/main/badges/theorems.json)
 
-A **kernel-verified Lean 4 + Mathlib library** about the secp256k1 elliptic curve and
-the boundary of the classical attacks on its discrete-log problem (ECDLP), grown by a
-propose-and-judge engine (models propose, the Lean kernel judges, only truth survives).
-It is a *verified research substrate* plus an honest no-go map of what is provable now
-vs blocked — **not** a solution to any hard problem.
+KeyAI is a **verification workspace for AI research**. This repository is its public
+reference deployment: a kernel-verified Lean 4 + Mathlib library about the secp256k1
+elliptic curve, an evidence-gated map of classical ECDLP routes, and the provenance
+contracts around both. It is a *verified research substrate* and an honest no-go map —
+**not** a solution to any hard problem and not yet a self-serve hosted product.
 
 This file is the front door for humans and low-context agents alike. Strategy lives in
 `ROADMAP.md`; live numbers live in `STATUS.md`; exact attack-route decisions live in
-`repo/ECDLP_DECISION_SUBSTRATE.json`; agents start at `AGENTS.md`.
+`repo/ECDLP_DECISION_SUBSTRATE.json`; product category, current-vs-future capability,
+and the MVP evidence gate live in `repo/PRODUCT_MODEL.json`; agents start at `AGENTS.md`.
 
 ## The one invariant (never violate)
 
@@ -45,9 +46,9 @@ New evidence enters through the candidate-neutral contract in
 - The protocol library is **verified protocol algebra** (algebraic identities, now also
   instantiated on the concrete curve group) — **not** proven security of any deployed
   protocol: no adversary, no hash/random oracle, no probability model.
-- The autonomous engine is dispatch-only (crons removed in a security audit); external
-  model-provers were attempted with **0 accepted** — real progress is the tactic ladder
-  + human/assistant formalization. Never present the engine as having produced the proofs.
+- Legacy dispatch automation is bounded and produced **0 accepted** external-model
+  proofs. Real progress came from the tactic ladder plus human/assistant formalization.
+  Never present the repository as a finished autonomous research engine.
 - Never claim more than the kernel verifies. When unsure, state the limit plainly.
 
 ## Highlights (for a Lean / formal-methods reader)
@@ -104,6 +105,8 @@ concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofRed
 | `REPOSITORY_ARCHITECTURE.md` + `repo/ARTIFACTS.yaml` | exhaustive whole-repo ownership map |
 | `repo/FORMAL_SUBSTRATE.json` | machine-readable result families, critical path, blockers, and release boundary |
 | `repo/ECDLP_DECISION_SUBSTRATE.json` | exact target, threat models, route dispositions, evidence gates, and foundation priority |
+| `repo/PRODUCT_MODEL.json` | product category, current stage, public claim boundary, and MVP evidence gate |
+| `scripts/site_generator.py` | generates the product site, operator workspace, and canonical route explorer |
 | `experiments/framework/` | candidate-neutral run contract and independent toy-curve output validator; no hypothesis authorization |
 | `experiments/` · `domains/` · `notes/` (`notes/INDEX.md`) | validated experiments, domain registry, curated research memory |
 | `archive/` | frozen history: superseded docs, raw traces, the undeployed platform scaffold |
@@ -116,14 +119,14 @@ Toolchain pinned in `lean-toolchain` (Lean v4.31.0); Mathlib rev pinned in `lake
 CI is the verifier of record: build + no-sorry gate + axiom audit + consistency gates
 (counts are recounted from the ledger table, so prose cannot silently drift). See `SETUP.md`.
 
-## The engine (honest)
+## Legacy proving automation (honest)
 
-The scaffolded loop — discover → attempt → draft PR — is
+The scaffolded loop — discover → attempt → scoped PR — is
 `.github/workflows/autonomous-engine.yml`, **dispatch-only**. The zero-cost tactic ladder
 plus human-in-loop promotion is what has landed every proof; the free Featherless prover
 tier is dead from CI (Cloudflare bot-block of GitHub runners, verified 2026-07-15) and
 external model-provers stand at 0 accepted. `notes/ENGINE.md` documents how the loop
-works, its safety model (draft-only, kernel-judged twice, budget-capped), and exactly
+works, its safety model (branch-isolated, kernel-judged twice, budget-capped), and exactly
 what it does vs does not do autonomously. The prover-tier protocol and promotion rules
 live in `AGENTS.md`.
 

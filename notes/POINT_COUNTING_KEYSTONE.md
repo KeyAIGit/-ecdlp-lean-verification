@@ -81,6 +81,10 @@ route. The claim is precise: N5-scalar is the *smallest missing piece*, it is
 > target; at merge time the target must be reconciled per the standard lifecycle
 > (status → verified, stem consumed). The adversarial audit of #172 lives in
 > `notes/reviews/GEOMETRIC_TORSION_AUDIT.md`.
+>
+> **SUPERSEDED (2026-07-18):** the work was split, reviewed, reconciled, and landed on
+> `main` through PRs #179–#186; commit `404c99a` closes the structure family. The paragraph
+> above is retained as provenance for the state at the time of the audit, not as current status.
 
 The single arithmetic-geometry fact that the whole "instantiate the crypto at the
 *real* secp256k1 group" story hangs on is the curve cardinality

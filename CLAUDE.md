@@ -43,7 +43,8 @@ The no-`sorry` gate in `.github/workflows/ci.yml` scans `*.lean` under `Ecdlp/`
 Targets → Proved only when Lean accepts the proof. Then: add the import to
 `Ecdlp.lean`, append a row to `VERIFIED.md`, set the `targets/*.json` status to
 `verified`. The promotion bot (`prove.yml`, Stage B) commits this via a **PR**, not
-a direct push to `main`; a human merges.
+a direct push to `main`; a delegated maintainer merges only after the independent
+gates pass and the rollback point is recorded.
 
 ## Hard rules
 - No secrets in the repo. External model keys live **only** as GitHub Actions secrets —

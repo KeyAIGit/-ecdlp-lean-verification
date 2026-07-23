@@ -16,7 +16,7 @@
   },
   "release": {
     "id": "formal-substrate-closure",
-    "merge_policy": "draft-review-only",
+    "merge_policy": "owner-delegated-green-ci-with-rollback",
     "closure_rule": "Every required critical node is either closed or blocked_accepted with a precise blocker, evidence, and resume condition.",
     "required_nodes": [
       "truth-layer",
