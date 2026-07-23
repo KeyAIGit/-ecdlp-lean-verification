@@ -16,6 +16,7 @@ The canonical machine-readable instance is `domains/ecdlp/corpus_manifest.json`.
 6. Missing primaries stay visible and blocked rather than being silently replaced by secondary summaries.
 7. Literature intake does not authorize experiments. A proposal still has to pass `repo/ECDLP_DECISION_SUBSTRATE.json`.
 8. Negative evidence, parked routes, and stop conditions are retained so another agent does not repeat the same work without a new premise.
+9. When publisher and revised-preprint records disagree, both observations are retained, one version is explicitly preferred for current claims, and the reason is machine-readable.
 
 ## Agent workflow
 
