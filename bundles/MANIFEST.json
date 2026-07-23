@@ -11,13 +11,19 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4827
+        "bytes": 5232
+      },
+      {
+        "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
+        "reason": "exact target, route dispositions, evidence gates, and foundation priority",
+        "exists": true,
+        "bytes": 54762
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 5801
+        "bytes": 5165
       },
       {
         "path": "data/stats.json",
@@ -37,13 +43,19 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4827
+        "bytes": 5232
+      },
+      {
+        "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
+        "reason": "exact target, route dispositions, evidence gates, and foundation priority",
+        "exists": true,
+        "bytes": 54762
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 5801
+        "bytes": 5165
       },
       {
         "path": "data/stats.json",
@@ -61,13 +73,13 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 8359
+        "bytes": 9329
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 8089
+        "bytes": 8341
       },
       {
         "path": "VERIFIED.md",
@@ -79,13 +91,13 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 35490
+        "bytes": 35680
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
         "reason": "precise scope of the generic-hardness claim (not unconditional)",
         "exists": true,
-        "bytes": 6124
+        "bytes": 6416
       },
       {
         "path": "notes/FOUNDATIONS.md",
@@ -97,7 +109,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 19016
+        "bytes": 21331
       }
     ],
     "large": [
@@ -105,13 +117,19 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 4827
+        "bytes": 5232
+      },
+      {
+        "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
+        "reason": "exact target, route dispositions, evidence gates, and foundation priority",
+        "exists": true,
+        "bytes": 54762
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 5801
+        "bytes": 5165
       },
       {
         "path": "data/stats.json",
@@ -129,13 +147,13 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 8359
+        "bytes": 9329
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 8089
+        "bytes": 8341
       },
       {
         "path": "VERIFIED.md",
@@ -147,13 +165,13 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 35490
+        "bytes": 35680
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
         "reason": "precise scope of the generic-hardness claim (not unconditional)",
         "exists": true,
-        "bytes": 6124
+        "bytes": 6416
       },
       {
         "path": "notes/FOUNDATIONS.md",
@@ -165,19 +183,19 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 19016
+        "bytes": 21331
       },
       {
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 405898
+        "bytes": 472232
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 9181
+        "bytes": 11433
       },
       {
         "path": "PUBLISHABLE_UNITS.md",

@@ -7,135 +7,109 @@ durable notes linked from `STATUS.md`.
 Canonical start order:
 
 1. Read `STATUS.md`.
-2. Read this file.
-3. Load `repo/FORMAL_SUBSTRATE.json` for dependency and release decisions.
-4. Load `experiments/HYPOTHESES.yaml` only for hypothesis or publication work.
+2. Read `repo/ECDLP_DECISION_SUBSTRATE.json`.
+3. Read this file.
+4. Load `repo/FORMAL_SUBSTRATE.json` for Lean dependency and release decisions.
+5. Load `experiments/HYPOTHESES.yaml` only when a task explicitly names a
+   hypothesis.
 
-If prose conflicts with `STATUS.md` or a generated registry, the generated
-artifact wins and the prose must be corrected in the same PR. No task in this
-queue authorizes a merge.
+The three maps have different owners: `data/frontier_map.json` classifies the
+claim corpus, `repo/FORMAL_SUBSTRATE.json` maps the Lean release frontier, and
+`repo/ECDLP_DECISION_SUBSTRATE.json` decides route applicability and project
+priority for the exact secp256k1 objective. A missing Mathlib foundation does
+not authorize work by itself.
+
+If prose conflicts with a canonical or generated registry, correct the prose in
+the same branch. No task in this queue authorizes an experiment run, a merge, or
+piecemeal Claude review.
 
 ## Active Tasks
 
-### TASK-001 - Close the formal-substrate map
+### TASK-008 - Maintain evidence-gated candidate intake
 
-Kind: data | ops | theorem
-Hypothesis: `H1_RESEARCH_OS_TRUTH_LAYER`
-Why it matters: The repository needs one machine-readable answer to what is
-proved, what depends on what, and what blocks the release boundary.
+Status: active
+Kind: research | data | ops
+Hypothesis: none; intake evaluates proposals before hypothesis promotion
+Why it matters: Decision `RS-2026-07-22-001` selected no current route. Future
+progress must enter through new mathematical evidence, not by silently reviving
+the last experiment or expanding a convenient formal library.
 Inputs:
-- `VERIFIED.md`
-- `data/result_registry.json`
-- `BARRIERS.md`
-- `Ecdlp/Targets/`
-- `targets/`
+- new primary literature, author artifacts, or a concrete candidate proposal
+- `repo/ECDLP_DECISION_SUBSTRATE.json`
+- `data/attack_registry.json`
+- `experiments/framework/`
 Expected output:
-- `repo/FORMAL_SUBSTRATE.json` with exhaustive theorem-family coverage,
-  critical-path nodes, dependencies, blockers, and release disposition.
-- A knowledge graph with semantic `member_of`, `supports`, `depends_on`,
-  and `blocked_by` edges in addition to file imports.
+- A dated evidence delta tied to one declared route and threat model.
+- A pass/fail result for every proposal-level acceptance requirement.
+- Either no disposition change, or a proposed new route-selection decision with
+  an exact reconsideration trigger.
 Exit criteria:
-- Every ledger row belongs to exactly one substrate family.
-- Every critical node has resolvable dependencies, evidence, and status.
-- The substrate checker and graph regeneration are green.
+- New evidence is source-pinned, scope-qualified, and cross-linked.
+- Conditioned, leakage, quantum, and plain-input claims remain distinct.
+- No hypothesis or conditional foundation changes state inside intake alone.
 Files allowed to edit:
-- `repo/FORMAL_SUBSTRATE.json`
-- `scripts/check_formal_substrate.py`
-- `scripts/build_knowledge_graph.py`
-- generated graph artifacts and directly stale architecture prose
+- canonical evidence/decision registries and their generators
+- directly stale architecture, status, and source prose
+- candidate records under `experiments/framework/`
 Files that must be regenerated:
-- `data/knowledge_graph.json`
-- `data/knowledge_graph.md`
+- every derived artifact named by `repo/ARTIFACTS.yaml`
 How to verify:
-- `python3 scripts/check_formal_substrate.py`
-- `python3 scripts/build_knowledge_graph.py --check`
+- `python scripts/check_ecdlp_decision_substrate.py`
+- the full repository gate battery
 
-### TASK-002 - Make ledger trust coverage exhaustive
+### TASK-009 - Implement only a newly selected foundation
 
-Kind: theorem | data | ops
-Hypothesis: `H1_RESEARCH_OS_TRUTH_LAYER`
-Why it matters: Headline trust claims should cover every canonical ledger row,
-not a hand-selected audit subset or incidental prose citations.
+Status: blocked_on_new_route_selection
+Kind: theorem | experiment | ops
+Hypothesis: exactly one future hypothesis named by the new decision
+Why it matters: Missing Mathlib infrastructure is valuable only when it resolves
+a concrete uncertainty in a route that already passes the proposal gate.
 Inputs:
-- `VERIFIED.md`
-- built Lean declarations under `Ecdlp/` and `ResearchOS/`
-- `Ecdlp/AxiomAudit.lean`
-- `TRUST_REPORT.md`
+- a dated route-selection decision superseding `RS-2026-07-22-001`
+- one promoted route and matching hypothesis
+- one minimal foundation contract with a falsifiable exit criterion
 Expected output:
-- A result registry that resolves each ledger cell to exact declarations,
-  explicitly recording grouped rows and anonymous-instance evidence.
-- A generated full-ledger axiom audit, with documented exemptions only where a
-  ledger cell is not itself a named declaration.
+- The smallest formal or computational bridge needed for the selected route's
+  next decision.
+- Independent validation and full cost/provenance records where computation is
+  involved.
+- A route disposition update whether the result is positive or negative.
 Exit criteria:
-- Ledger resolution and audit coverage are both 100%.
-- Built modules remain at zero `sorry` and zero custom axioms.
-- Pure-kernel versus `Lean.ofReduceBool` trust is reported without overclaim.
+- The selected work answers its named uncertainty without claiming more.
+- All unrelated foundations and hypotheses remain parked.
+- Lean-facing results pass kernel, axiom, and no-`sorry` gates.
 Files allowed to edit:
-- `scripts/gen_result_registry.py`
-- `scripts/gen_axiom_audit.py`
-- `Ecdlp/LedgerAxiomAudit.lean`
-- `TRUST_REPORT.md`
-- generated result-registry artifacts
+- only the paths declared by the future promoted task contract
+Files that must be regenerated:
+- every derived artifact affected by that contract
 How to verify:
-- `python3 scripts/gen_result_registry.py --check`
-- `python3 scripts/gen_axiom_audit.py --check`
-- `lake env lean Ecdlp/LedgerAxiomAudit.lean`
+- route-specific checks plus the full repository gate battery
 
-### TASK-003 - Resolve or freeze the N7 uniform frontier
+### TASK-010 - Final whole-program Claude/Opus review
 
-Kind: theorem | research
-Hypothesis: none; this is an existing formal frontier
-Why it matters: N7 uniform is the first unresolved geometric bridge on the
-general-`n` torsion path. Its lifecycle must end in a proof or an exact blocker,
-not an indefinitely active stem.
+Status: blocked_on_program_freeze_and_opus_availability
+Kind: review | ops
+Hypothesis: none
+Why it matters: The user requested one adversarial review of the integrated
+program, not repeated review after each tranche.
 Inputs:
-- `Ecdlp/Targets/n7_uniform_carrier_induction.lean`
-- `Ecdlp/Targets/n7_uniform_secp256k1_x.lean`
-- `targets/n7_uniform_secp256k1_x.json`
-- `notes/N7_EVEN_X_DOUBLING_ANALYSIS.md`
+- the final unmerged architecture branch
+- all green local gates and GitHub CI
+- a review packet covering architecture, formal trust, route decisions,
+  experiment provenance, generated artifacts, and residual risks
 Expected output:
-- A bounded proof pass over the seven carrier obligations.
-- Either a promoted sorry-free theorem, or a machine-readable blocker naming
-  the missing upstream torsion bridge and the four certificate-heavy walls.
+- One Claude/Opus adversarial review with severity-ranked findings.
+- A disposition for every finding and a final merge recommendation.
 Exit criteria:
-- No false or weakened statement is promoted.
-- Open-stem counts and target status agree with the substrate manifest.
-- A non-closing pass records attempted routes and a precise resume condition.
+- Review happens only after the program state is frozen for evaluation.
+- Actionable findings are resolved or explicitly accepted with rationale.
+- Merge remains a separate human decision.
 Files allowed to edit:
-- the two N7 target stems and their target metadata
-- `Ecdlp/Proved/` and `Ecdlp.lean` only on a complete proof
-- N7 barrier/analysis notes
+- the final review packet and files needed to resolve accepted findings
+Files that must be regenerated:
+- all derived artifacts touched by accepted findings
 How to verify:
-- `python3 scripts/check_targets.py`
-- `lake env lean Ecdlp/Targets/n7_uniform_carrier_induction.lean`
-
-### TASK-004 - Normalize operations and prepare final adversarial review
-
-Kind: ops | publication
-Hypothesis: `H6_PUBLICATION_BOUNDARY_TRACK`
-Why it matters: Claude should receive one coherent whole-repository review
-surface after implementation, with no merge and no need for repeated user checks.
-Inputs:
-- all generated artifacts and checks
-- remote branch/workflow inventory
-- `repo/ARTIFACTS.yaml`
-- the completed contracts above
-Expected output:
-- Exhaustive artifact classification and generated-file fixpoint gate.
-- Branch and workflow inventories with keep/park/delete-after-review decisions.
-- One final Claude adversarial review packet tied to one draft PR.
-Exit criteria:
-- The full local gate battery passes on Windows and Linux CI.
-- The review packet distinguishes facts, generated views, open targets, and
-  deferred experiments.
-- The PR remains draft and unmerged.
-Files allowed to edit:
-- `repo/`, `scripts/`, `.github/workflows/`, architecture/publication docs
-- generated artifacts produced by those scripts
-How to verify:
-- `python3 scripts/check_repo_artifacts.py`
-- `python3 scripts/check_generated_fixpoint.py --check`
-- all checks listed in the final review packet
+- rerun local and GitHub gates after the final finding-resolution pass
 
 ## Task Contract Template
 
@@ -143,6 +117,7 @@ How to verify:
 # TASK
 
 ID:
+Status:
 Kind: theorem | experiment | data | site | publication | ops | agent
 Hypothesis:
 Why it matters:

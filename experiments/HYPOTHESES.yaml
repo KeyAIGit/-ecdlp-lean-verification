@@ -1,4 +1,4 @@
-version: 1
+version: 2
 canonical_source: STATUS.md
 task_queue: tasks/NEXT.md
 purpose: >
@@ -14,7 +14,8 @@ hypotheses:
   - id: H1_RESEARCH_OS_TRUTH_LAYER
     title: "The highest-ROI next step is hardening the Research OS truth layer"
     direction: "platform"
-    status: "active"
+    status: "closed"
+    resolution: "The canonical status, result/source registries, artifact map, formal substrate, and exhaustive consistency gates are landed."
     owner: "ops"
     why_it_matters: >
       The verified substrate is already valuable, but agents and public readers
@@ -54,7 +55,8 @@ hypotheses:
   - id: H3_GENERIC_SECURITY_SCOPE
     title: "The generic hardness story is strongest when its scope stays narrow"
     direction: "formalization"
-    status: "active"
+    status: "closed"
+    resolution: "The generic-model boundary is explicit in the security scope and is a mandatory guardrail in the ECDLP decision substrate."
     owner: "security-scope"
     why_it_matters: >
       The generic lower bound is a real formal contribution, but it must not be
@@ -90,9 +92,8 @@ hypotheses:
   - id: H5_SEMAEV_WINDOW
     title: "Any plausible subgeneric route should leave experimental evidence in algebraic relation generation"
     direction: "experiment"
-    status: "parked"
-    resume_after: "repo/FORMAL_SUBSTRATE.json passes its checker and the final architecture PR is reviewed."
-    park_reason: "Superseded by HYP_GLV_SEMAEV_001; new experiments are deferred during substrate closure."
+    status: "closed"
+    resolution: "Superseded by HYP_GLV_SEMAEV_001; its useful evidence and exit criteria are retained there."
     owner: "experiments"
     why_it_matters: >
       Semaev/Groebner work can produce useful negative evidence even if no attack
@@ -111,8 +112,8 @@ hypotheses:
     title: "The verified boundary map is publishable even without a subgeneric attack"
     direction: "publication"
     status: "parked"
-    resume_after: "The formal-substrate map and exhaustive ledger trust audit are complete."
-    park_reason: "Publication packaging should consume the final map, not race it."
+    resume_after: "The ECDLP decision substrate, benchmark-oracle foundation, route-selection disposition, and one final whole-program adversarial review are complete."
+    park_reason: "Publication packaging should consume the final decision state, not race the remaining foundation work."
     owner: "publication"
     why_it_matters: >
       The strongest near-term output is a precise map of what is proved, blocked,
@@ -126,12 +127,38 @@ hypotheses:
     exit_criteria:
       - "A reviewer can audit the outline without reading the whole repo."
 
+  - id: H7_ECDLP_DECISION_SUBSTRATE
+    title: "Route selection should follow exact applicability and information gain"
+    direction: "data"
+    status: "closed"
+    resolution: "The checked decision layer and neutral evaluator are complete; RS-2026-07-22-001 evaluated all 17 routes, selected none, and left falsifiable reconsideration triggers."
+    owner: "research-os"
+    why_it_matters: >
+      The formal substrate and attack registry are necessary but answer
+      different questions. A future reasoner needs a canonical decision layer
+      that fixes the target problem, separates threat models, rejects hidden
+      assumptions, and builds only foundations required by a viable route.
+    evidence_for:
+      - "The repository already has machine-readable formal results, attack evidence, and reproducible experimental traces."
+      - "The previous claim-count foundation ranking can prioritize large formal gaps that do not improve the exact secp256k1 decision."
+      - "Several live notes drifted from the canonical parked experiment status."
+    evidence_against:
+      - "A decision map can itself become stale unless cross-registry identity, generated views, tasks, and hypothesis authorization are mechanically checked."
+    tests:
+      - "Build and check repo/ECDLP_DECISION_SUBSTRATE.json."
+      - "Generate its human-readable view."
+      - "Build a candidate-neutral benchmark/oracle contract without running a parked hypothesis."
+    exit_criteria:
+      - "Every route and foundation has a checked disposition and resume condition."
+      - "No experiment can become active without an explicit route-selection task."
+      - "The knowledge graph exposes the decision layer without conflating it with corpus or formal-release maps."
+
   - id: HYP_GLV_SEMAEV_001
     title: "GLV-symmetrized Semaev index calculus over prime-field j=0 curves"
     direction: "experiment"
     status: "parked"
-    resume_after: "The formal-substrate map is complete and TASK-001 through TASK-003 have final dispositions."
-    park_reason: "Hypothesis testing is intentionally deferred while the verified substrate is normalized."
+    resume_after: "A future dated decision supersedes RS-2026-07-22-001, selects R-GLV-SEMAEV, and promotes this hypothesis through TASK-009."
+    park_reason: "The mathematical question remains open, but the completed route-selection pass found no exact mechanism and full-cost argument that clears the proposal gate."
     resolution: "partial negative: m=2 orbit-enumeration baseline is constant-factor only"
     result: >
       PARTIAL MEASUREMENT (experiments/p0_glv_semaev/RESULTS.md): direct enumeration of m=2
@@ -178,10 +205,10 @@ hypotheses:
     tests:
       - "Build a family of toy j=0 curves E_b/F_p (p = 1 mod 3, large prime subgroup); experiments/p0_glv_semaev/toy_curves.py."
       - "COMPLETED PARTIAL: enumerate m=2 pair sums for (1) plain x keys, (2) GLV-orbit keys, and (3) u=x^3 keys; result is constant-factor only in this lookup model."
-      - "COMPLETED PARTIAL (P1, experiments/p1_petit/): the m=2 relation step is now done by SOLVING Semaev's S3 quadratic per factor-base x-coordinate (Tonelli-Shanks root-solve of S3(x_i,X,x_R)=0), i.e. O(|F|) field-solves per target rather than the O(|F|^2) pair enumeration of P0. Every reported relation is re-verified by actual EC addition; the measured spurious-root rate is 0 across 16/20/24-bit toy curves (seed=1), the direct empirical signature of Semaev's S3 iff-theorem, and an independent brute-force EC enumeration confirms the solver is complete and sound. At matched effective factor-base size the GLV / u=x^3 orbit closure again yields only a CONSTANT factor (~3x storage reduction), consistent with P0. HONEST SCOPE: this measures only the 2-term S3 solve-and-confirm step; it does NOT test m>=3 Semaev systems, degree of regularity, Groebner-basis cost, or a faithful Petit composed-rational-map construction, and draws NO asymptotic or advantage/no-advantage conclusion. Hypothesis remains ACTIVE."
-      - "COMPLETED PARTIAL (P1-m3, experiments/p1_petit_m3/): solves S4(x_i,x_j,X,x_R)=Res_Y(S3(x_i,x_j,Y),S3(X,x_R,Y)) for unordered pairs of distinct factor-base indices. The S4-independent brute-force path agrees on the tested distinct-index relation set, with zero reported spurious roots. Repeated-index decompositions are excluded from both paths, and both reuse confirm_relation3, so this is not a separately implemented EC oracle. This is a toy O(|F|^2 * deg4) solve, not an asymptotic result. Hypothesis remains ACTIVE."
-      - "COMPLETED PARTIAL (P3, experiments/p3_sm_system/): builds and Groebner-solves the explicit finite-set presentation {S_{m+1}=0, f_F(X_i)=0}, where f_F=prod_{a in F}(X-a) has degree |F| by construction. For m=2 a custom graded Macaulay proxy returned 2|F|+1 on |F|=4,6,8,10,12 and two toy-prime sizes. Its two-empty-degree stopping rule has not been externally checked with Singular/Sage/msolve or justified by a Hilbert-series theorem; therefore this is an observed proxy pattern, not an exact or p-independent degree-of-regularity law. The tested coupled U=X^3 auxiliary-variable presentation produced larger/slower matrices, but does not rule out nonredundant invariant formulations. Relation sets replay against independent brute-force EC arithmetic. Hypothesis remains ACTIVE."
-      - "COMPLETED PARTIAL (P4, experiments/p4_petit/): tests one six-variable composed-polynomial-map presentation at m=2, |F|=4 using P3's unvalidated proxy. The proxy returned 7 versus 9 while the observed Macaulay matrix and time were much larger; the relation set replayed against independently rebuilt brute-force EC data. This is descriptive evidence about one toy presentation, not faithful Petit and not a general composed-map or complexity no-go. Hypothesis remains ACTIVE."
+      - "COMPLETED PARTIAL (P1, experiments/p1_petit/): the m=2 relation step is now done by SOLVING Semaev's S3 quadratic per factor-base x-coordinate (Tonelli-Shanks root-solve of S3(x_i,X,x_R)=0), i.e. O(|F|) field-solves per target rather than the O(|F|^2) pair enumeration of P0. Every reported relation is re-verified by actual EC addition; the measured spurious-root rate is 0 across 16/20/24-bit toy curves (seed=1), the direct empirical signature of Semaev's S3 iff-theorem, and an independent brute-force EC enumeration confirms the solver is complete and sound. At matched effective factor-base size the GLV / u=x^3 orbit closure again yields only a CONSTANT factor (~3x storage reduction), consistent with P0. HONEST SCOPE: this measures only the 2-term S3 solve-and-confirm step; it does NOT test m>=3 Semaev systems, degree of regularity, Groebner-basis cost, or a faithful Petit composed-rational-map construction, and draws NO asymptotic or advantage/no-advantage conclusion. The question remains open; execution is PARKED."
+      - "COMPLETED PARTIAL (P1-m3, experiments/p1_petit_m3/): solves S4(x_i,x_j,X,x_R)=Res_Y(S3(x_i,x_j,Y),S3(X,x_R,Y)) for unordered pairs of distinct factor-base indices. The S4-independent brute-force path agrees on the tested distinct-index relation set, with zero reported spurious roots. Repeated-index decompositions are excluded from both paths, and both reuse confirm_relation3, so this is not a separately implemented EC oracle. This is a toy O(|F|^2 * deg4) solve, not an asymptotic result. The question remains open; execution is PARKED."
+      - "COMPLETED PARTIAL (P3, experiments/p3_sm_system/): builds and Groebner-solves the explicit finite-set presentation {S_{m+1}=0, f_F(X_i)=0}, where f_F=prod_{a in F}(X-a) has degree |F| by construction. For m=2 a custom graded Macaulay proxy returned 2|F|+1 on |F|=4,6,8,10,12 and two toy-prime sizes. Its two-empty-degree stopping rule has not been externally checked with Singular/Sage/msolve or justified by a Hilbert-series theorem; therefore this is an observed proxy pattern, not an exact or p-independent degree-of-regularity law. The tested coupled U=X^3 auxiliary-variable presentation produced larger/slower matrices, but does not rule out nonredundant invariant formulations. Relation sets replay against independent brute-force EC arithmetic. The question remains open; execution is PARKED."
+      - "COMPLETED PARTIAL (P4, experiments/p4_petit/): tests one six-variable composed-polynomial-map presentation at m=2, |F|=4 using P3's unvalidated proxy. The proxy returned 7 versus 9 while the observed Macaulay matrix and time were much larger; the relation set replayed against independently rebuilt brute-force EC data. This is descriptive evidence about one toy presentation, not faithful Petit and not a general composed-map or complexity no-go. The question remains open; execution is PARKED."
       - "REMAINING: reach the m>=3 solving degree (needs a faster GF(p) Groebner/F4 or msolve/Sage, not pure-Python Macaulay), and construct/solve m>=4 (S_5) systems; measure real memory peaks at those degrees."
       - "REMAINING: construct and solve the actual S_m polynomial systems (m>=3) in plain and invariant coordinates without enumerating all EC pair sums."
       - "REMAINING: implement a faithful Petit composed low-degree rational-map construction; integer low-bit filtering is not an F_p-linear subspace or a substitute for that construction."
@@ -196,8 +223,8 @@ hypotheses:
     title: "Ward elliptic divisibility sequences as a structural probe of torsion/apparition on prime-field toy curves"
     direction: "experiment"
     status: "parked"
-    resume_after: "The formal-substrate map is complete and a new experiment is explicitly promoted into tasks/NEXT.md."
-    park_reason: "The numerical confirmation is complete; no further experiment is authorized in this phase."
+    resume_after: "A future dated decision supersedes RS-2026-07-22-001, selects R-EDS-DIVISION-POLYNOMIAL, and promotes this hypothesis through TASK-009."
+    park_reason: "The numerical confirmation is complete; the route has no identified non-reencoding mechanism and no further experiment is authorized."
     owner: "experiments"
     prior_art: "experiments/p2_ward_eds/README.md"
     result: >

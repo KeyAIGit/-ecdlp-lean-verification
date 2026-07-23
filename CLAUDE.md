@@ -4,9 +4,12 @@ Machine-checked layer for the ECDLP knowledge graph (Lean 4 + Mathlib). This fil
 is guidance for automated/assisted runs. The authoritative protocol lives in `AGENTS.md` (§Prover-loop protocol).
 For whole-repository ownership, generated artifacts, and cleanup boundaries, read
 `REPOSITORY_ARCHITECTURE.md`, `repo/ARTIFACTS.yaml`, and
-`repo/FORMAL_SUBSTRATE.json` before moving or deleting files.
-For the final repository-wide review of draft PR #235, follow
-`repo/FINAL_REVIEW_PACKET.md`; do not merge or delete branches from that review.
+`repo/FORMAL_SUBSTRATE.json` before moving or deleting files. Read
+`repo/ECDLP_DECISION_SUBSTRATE.json` before selecting research work or proposing
+a missing foundation. Its current dated decision selects no route; do not infer
+an active target from an old note, an open theorem, or a missing Mathlib module.
+`repo/FINAL_REVIEW_PACKET.md` is frozen to draft PR #235; do not reuse it as the
+final review packet for this branch, and do not merge or delete branches from it.
 
 ## The one invariant
 **A green build means every built theorem is fully proved.** The Lean kernel is the

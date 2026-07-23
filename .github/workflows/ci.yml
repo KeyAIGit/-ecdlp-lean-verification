@@ -81,6 +81,15 @@ jobs:
       - name: Check formal-substrate architecture
         run: python3 scripts/check_formal_substrate.py
 
+      - name: Check ECDLP decision substrate
+        run: python3 scripts/check_ecdlp_decision_substrate.py
+
+      - name: Check generated ECDLP decision view
+        run: python3 scripts/build_ecdlp_decision_view.py --check
+
+      - name: Test candidate-evaluation framework
+        run: python3 experiments/framework/test_framework.py
+
       # Repo architecture gate: keep the manifest/review packet honest before
       # any cleanup PR can rely on them.
       - name: Check repository artifact manifest
@@ -109,7 +118,8 @@ jobs:
 
       # Provenance gate (literature side): every external work the docs cite (Shoup, Nechaev,
       # Semaev, Gaudry, Diem, FGHR, Petit, Pollard, Pohlig–Hellman, Schoof, Frey–Rück, MOV,
-      # Smart) must have a registry entry, and its recorded where_used must match the current
+      # Smart, SEC 2, GLV, Shor, Luo) must have a registry entry, and its recorded where_used
+      # must match the current
       # docs — catches a citation added/moved without updating the bibliography provenance.
       - name: Check source registry (docs ↔ bibliography provenance)
         run: python3 scripts/gen_source_registry.py --check

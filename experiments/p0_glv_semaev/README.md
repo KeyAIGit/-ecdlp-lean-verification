@@ -7,8 +7,10 @@ experiment-ledger machinery — **not** as an expected break of secp256k1. Break
 low-odds lottery ticket, not the goal; a rigorous negative result is a real, publishable output.
 
 **Current status:** `RESULTS.md` contains a partial negative result for direct `m=2`
-pair enumeration and GLV-orbit dictionary keys. It does not yet test the central
-degree-of-regularity / Gröbner-solving claim below. The main hypothesis remains active.
+pair enumeration and GLV-orbit dictionary keys. It does not test the central
+degree-of-regularity / Gröbner-solving claim below. The question remains open, but the
+hypothesis remains parked after repository decision `RS-2026-07-22-001`
+selected no route.
 
 ## The idea (one paragraph)
 

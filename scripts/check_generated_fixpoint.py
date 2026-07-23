@@ -21,6 +21,7 @@ GENERATORS = [
     ["scripts/coverage_report.py"],
     ["scripts/gen_status.py"],
     ["scripts/gen_source_registry.py"],
+    ["scripts/build_ecdlp_decision_view.py"],
     ["scripts/export_agent_bundle.py", "--manifest"],
     ["scripts/build_dashboard.py"],
 ]
@@ -36,6 +37,7 @@ PURE_ARTIFACTS = [
     "COVERAGE.md",
     "STATUS.md",
     "data/source_registry.json",
+    "repo/ECDLP_DECISION_SUBSTRATE.md",
     "bundles/MANIFEST.json",
 ]
 

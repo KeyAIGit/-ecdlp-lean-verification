@@ -106,6 +106,7 @@ classes:
       - bundles/MANIFEST.json
       - data/result_registry.json
       - data/source_registry.json
+      - repo/ECDLP_DECISION_SUBSTRATE.md
       - Ecdlp/LedgerAxiomAudit.lean
     owner: generators
     hand_edit: false
@@ -120,6 +121,7 @@ classes:
       - scripts/export_agent_bundle.py
       - scripts/gen_result_registry.py
       - scripts/gen_source_registry.py
+      - scripts/build_ecdlp_decision_view.py
       - scripts/gen_axiom_audit.py
     gates:
       - scripts/check_status_consistency.py
@@ -127,6 +129,7 @@ classes:
       - scripts/check_repo_artifacts.py
       - scripts/export_agent_bundle.py --check
       - scripts/gen_result_registry.py --check
+      - scripts/build_ecdlp_decision_view.py --check
     risks:
       - Hand edits create invisible drift unless encoded in generators.
 
@@ -163,6 +166,7 @@ classes:
       - repo/ARTIFACTS.yaml
       - repo/CLEANUP_PLAN.md
       - repo/FORMAL_SUBSTRATE.json
+      - repo/ECDLP_DECISION_SUBSTRATE.json
       - repo/AUTOMATION_INVENTORY.json
       - repo/BRANCH_INVENTORY.json
       - repo/FINAL_REVIEW_PACKET.md
@@ -175,6 +179,7 @@ classes:
       - scripts/check_status_consistency.py
       - scripts/check_repo_artifacts.py
       - scripts/check_automation_inventory.py
+      - scripts/check_ecdlp_decision_substrate.py
       - scripts/check_domains.py
       - adversarial Claude review
     risks:

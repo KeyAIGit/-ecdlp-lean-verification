@@ -1,5 +1,11 @@
 # Foundation roadmap — turning the corpus into a prioritized target map
 
+> **Scope correction (2026-07-22).** This is a corpus-leverage map: its counts
+> say how many corpus claims a foundation touches. It is not the active
+> secp256k1 attack-work priority. `repo/ECDLP_DECISION_SUBSTRATE.json` now owns
+> that decision and may defer a high-count foundation when no viable route
+> needs it.
+
 **Correction to an earlier claim.** I previously called the 486-claim corpus "thin"
 because few claims are *directly* auto-provable. That framing was wrong. The corpus is
 not thin as knowledge — it is a high-quality **priority map for foundation building**.
@@ -22,7 +28,7 @@ more than one object). Counts are leverage, not exactness.
 | 2 | **p-adic log / formal group** | 30 | Smart/SSSA anomalous attack neighborhood | high |
 | 3 | **Elliptic nets / EDS** (Stange) | 24 | net polynomials, vanishing ↔ point relations | high |
 | 4 | **Semaev summation polynomials** | 19 | elliptic index calculus | high |
-| 5 | **Isogeny / endomorphism theory** | 10 | GLV `λ`, Frobenius, char-poly action | medium–high (parts exist) |
+| 5 | **Isogeny / endomorphism theory** | 10 | GLV `λ`, Frobenius, char-poly action | medium–high (curve prerequisites exist; no general elliptic-isogeny module was found) |
 | 6 | **Point counting / `#E` structure** | 4 | Hasse / Schoof / group structure | high |
 | 7 | **Divisor / function field** | 8 | prerequisite for #1, #3 | high |
 | — | **no missing object (formalizable now)** | ~227* | generic-group, arithmetic, order/Lagrange, secp256k1 numerics | low — harvest now |
@@ -39,8 +45,9 @@ This is the server-daemon + frontier-generator backlog: generic group/arithmetic
 order/Lagrange, secp256k1 numeric facts, the torsion-lattice. Mechanically gradable and
 mostly tactic-closable.
 
-**Medium term (weeks — isogeny/endomorphism, rank 5):** parts already exist in Mathlib
-(`WeierstrassCurve`, division polynomials we already use). Formalizing the GLV `λ`-action
+**Medium term in the historical corpus schedule (weeks — isogeny/endomorphism, rank 5):**
+curve and division-polynomial prerequisites exist in Mathlib, but the audited
+pinned/current trees contain no general elliptic-isogeny module. Formalizing the GLV `λ`-action
 (`glv-*` claims, 10) and the trace/anomalous *scope* facts is the most tractable deep
 direction and connects to proved work (`CubeRoot.lean`, `TraceOfFrobenius.lean`).
 
@@ -60,9 +67,10 @@ precisely that it ranks *which definitions to build first* by how many real clai
 one releases.
 
 ## Status / next
-- This map is the corrected, honest reading of the corpus.
-- Near-term backlog (formalizable-now) is being fed to the server daemon via
-  `scripts/frontier_generator.py`.
-- The medium-term GLV/anomalous-scope targets are the right first deep push (tractable,
-  connect to proved nodes). `smart-trace-one-scope-001` is already proved
-  (`Ecdlp/Proved/AnomalousScope.lean`).
+- This remains the corrected reading of corpus leverage.
+- It does not authorize the server daemon, an experiment, or a foundation port.
+- Current work comes from `tasks/NEXT.md`; route and foundation priority comes
+  from `repo/ECDLP_DECISION_SUBSTRATE.json`.
+- The historical GLV/anomalous-scope targets are already represented in the
+  formal substrate; `smart-trace-one-scope-001` is proved in
+  `Ecdlp/Proved/AnomalousScope.lean`.

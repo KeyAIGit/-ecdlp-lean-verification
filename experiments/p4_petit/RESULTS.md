@@ -154,7 +154,7 @@ set**. In this run, composition *without* the product structure (`single_aux_com
 the proxy number (`9`, not below 9). This is a partial negative for the tested presentation.
 It **does NOT establish** any asymptotic advantage or barrier, and
 it is **not** a faithful reproduction of Petit's method. Hypothesis
-`HYP_GLV_SEMAEV_001` stays **ACTIVE**.
+`HYP_GLV_SEMAEV_001` is **PARKED**.
 
 ## Reproduce
 

@@ -7,7 +7,13 @@ retraction noted in `p0_glv_semaev/`) is **measure what the code actually does, 
 it independently before reporting**. Every experiment ships its own brute-force / replay
 validator, and no experiment here touches the Lean ledger or the headline theorem count.
 
-## The GLV–Semaev line (`HYP_GLV_SEMAEV_001`, status: ACTIVE)
+The only current implementation work under `experiments/` is the
+candidate-neutral validation infrastructure in `experiments/framework/`. It
+runs deterministic fixtures, not a cryptanalytic hypothesis. A real candidate
+record is rejected until `repo/ECDLP_DECISION_SUBSTRATE.json` explicitly
+authorizes its route.
+
+## The GLV–Semaev line (`HYP_GLV_SEMAEV_001`, status: PARKED)
 
 The hypothesis: for `j=0` curves `E_b: y²=x³+b` over `p≡1 (mod 3)`, does closing a Semaev
 factor base under the order-3 GLV automorphism orbit (`x ↦ βx`, invariant `u=x³`) change
@@ -31,8 +37,10 @@ prime-field factor-base encoding, a nonredundant invariant-coordinate formulatio
 `m ≥ 3` full solving degree, `m ≥ 4` systems, or non-toy primes. None draws an
 asymptotic or advantage/no-advantage conclusion. The `O(\|F\|^{m-1}·solve)` loops are **not**
 subexponential index-calculus algorithms. So the real question — whether invariant-coordinate
-*relation generation* changes the prime-field asymptotics — remains **open**, and
-`HYP_GLV_SEMAEV_001` stays **ACTIVE**. No result here is a step toward breaking secp256k1.
+*relation generation* changes the prime-field asymptotics — remains **open**, while
+`HYP_GLV_SEMAEV_001` is **PARKED** after route decision
+`RS-2026-07-22-001` selected no route. No result here is a
+step toward breaking secp256k1.
 
 ## Conventions
 - Toy curves come from `p0_glv_semaev/toy_curves.py` (`find_toy_curve(bits, seed, require_cofactor_one=True)`); only **cofactor-1** (prime-order) curves are used.

@@ -93,5 +93,5 @@ measured **0**, and an independent brute-force cross-check confirms completeness
 soundness. Within this step, the GLV/`u = x³` orbit structure again buys only a **constant
 factor** (≈3× storage at matched effective size), consistent with P0. This does **not**
 address the open, decisive parts of `HYP_GLV_SEMAEV_001` (higher-arity systems, degree of
-regularity, Gröbner cost, Petit maps), so the hypothesis **stays active** and no Lean
-formalization is triggered.
+regularity, Gröbner cost, Petit maps), so the question remains open while the hypothesis
+is **parked** and no Lean formalization is triggered.

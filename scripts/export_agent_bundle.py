@@ -36,6 +36,8 @@ ROOT = Path(__file__).resolve().parent.parent
 # Keep this the ONLY place tiers are defined; AGENTS.md mirrors it in prose.
 _SMALL = [
     ("STATUS.md", "canonical live snapshot — counts, active goal, bottleneck; wins over prose"),
+    ("repo/ECDLP_DECISION_SUBSTRATE.json",
+     "exact target, route dispositions, evidence gates, and foundation priority"),
     ("tasks/NEXT.md", "the 3-7 active task contracts with exit criteria — where to start"),
     ("data/stats.json", "machine-readable headline counts (ledger rows / distinct / modules)"),
     ("data/frontier_map.json", "per-claim frontier status: verified / tractable / blocked / informal"),
@@ -74,6 +76,7 @@ is a **verified research asset**, not an attempt to break secp256k1.
 
 Ground rules:
 - `STATUS.md` is the canonical live snapshot. If prose anywhere conflicts with it, STATUS wins.
+- `repo/ECDLP_DECISION_SUBSTRATE.json` owns route applicability and foundation priority.
 - Never weaken a proof, add a `sorry`/`admit`, or add an axiom to make anything pass.
 - Pick work from `tasks/NEXT.md`; each task has explicit exit criteria.
 

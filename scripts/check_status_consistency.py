@@ -33,6 +33,7 @@ def main() -> int:
     stats = read_json("data/stats.json")
     frontier = read_json("data/frontier_map.json")
     graph = read_json("data/knowledge_graph.json")
+    decisions = read_json("repo/ECDLP_DECISION_SUBSTRATE.json")
     status = read_text("STATUS.md")
     index = read_text("index.html")
     dashboard = read_text("dashboard.html")
@@ -48,6 +49,7 @@ def main() -> int:
     corpus_claims = frontier.get("meta", {}).get("corpus_claims")
     frontier_rows = frontier.get("meta", {}).get("verified_ledger_rows")
     status_summary = frontier.get("status_summary", {})
+    route_selection = decisions.get("route_selection", {})
 
     check(isinstance(ledger_rows, int) and ledger_rows > 0,
           "data/stats.json must expose a positive integer ledger_rows")
@@ -107,8 +109,34 @@ def main() -> int:
           "data/knowledge_graph.json must expose the exhaustive eight-family partition")
     check(graph_counts.get("critical_nodes", 0) > 0,
           "data/knowledge_graph.json must expose formal critical-path nodes")
+    check(graph_counts.get("attack_routes") == 17,
+          "data/knowledge_graph.json must expose all 17 decision routes")
+    check(graph_counts.get("decision_foundations") == 11,
+          "data/knowledge_graph.json must expose all 11 decision foundations")
+    check(graph.get("schema_version") == "3.0",
+          "data/knowledge_graph.json must use decision-aware schema 3.0")
+    check(
+        graph.get("decision_substrate", {}).get("route_selection") == route_selection,
+        "knowledge graph route selection must match ECDLP_DECISION_SUBSTRATE.json",
+    )
+    check(
+        route_selection.get("decision_id") in status,
+        "STATUS.md must expose the current route-selection decision",
+    )
     edge_types = graph_counts.get("by_edge_type", {})
-    for edge_type in ("imports", "member_of", "supports", "depends_on", "blocked_by"):
+    for edge_type in (
+        "imports",
+        "member_of",
+        "supports",
+        "depends_on",
+        "blocked_by",
+        "evaluated_under",
+        "detailed_by",
+        "requires_foundation",
+        "decision_grounded_in",
+        "governs_hypothesis",
+        "extends_frontier",
+    ):
         check(edge_types.get(edge_type, 0) > 0,
               f"knowledge graph is missing semantic edge type {edge_type!r}")
     check(graph.get("invariant", "").lower().find("lean kernel") >= 0,

@@ -5,7 +5,8 @@
 > `archive/docs/`). Those five files held four different north stars; drift between
 > them was itself a defect. From here on: **one strategy file**. Live numbers stay in
 > `STATUS.md`; the active queue stays in `tasks/NEXT.md`; this file is direction and
-> structure only.
+> structure only. Exact route and foundation decisions live in
+> `repo/ECDLP_DECISION_SUBSTRATE.json`.
 
 ## 1. Position — what this repository actually is (auditor's honest read)
 
@@ -40,9 +41,15 @@ drift structurally impossible by having fewer places where truth can drift.
 
 ## 2. North star (single, long-term)
 
-**A kernel-verified formal library of elliptic-curve / discrete-log cryptography,
-grown by a propose-and-judge engine, packaged honestly.** Value flows through three
-external channels, in priority order:
+**A decision-capable, kernel-verified research substrate that a future strong
+reasoner can use to evaluate every serious route toward the exact plain
+single-target secp256k1 ECDLP, reject false shortcuts, and verify any genuine
+progress end to end.** Recovering the discrete logarithm is the long-term
+research objective; the repository makes no assumption that a classical
+subgeneric route exists.
+
+The formal library remains the durable core. Value also flows through three
+external channels:
 
 1. **Publications** — the three standalone units in `PUBLISHABLE_UNITS.md`
    (generic-group `Θ(√n)` core; Pratt certificates + the `#E = n` certificate;
@@ -53,17 +60,19 @@ external channels, in priority order:
 3. **The engine as a method** — the pipeline demonstrated on ≥2 unrelated domains,
    documented well enough that a third party could plug in a new corpus + verifier.
 
-**Explicit non-goals (unchanged, permanent):** breaking secp256k1 or claiming any
-path to it (the moonshot framing of the old charter is retired — the honest odds
-statement lives in `BARRIERS.md` / `notes/SECURITY_SCOPE.md`); building a
-multi-tenant SaaS platform ahead of evidence; investor-facing document growth.
+**Explicit non-goals:** claiming a break or a path to one without satisfying the
+decision substrate's evidence gates; confusing toy measurements, constant
+factors, implementation leakage, conditioned inputs, or quantum resource
+estimates with a classical plain-input break; building a multi-tenant SaaS
+platform ahead of evidence; investor-facing document growth.
 
 ## 3. Operating principles
 
 1. **The kernel is the only judge of mathematics.** Green build = all proved. Never
    `sorry`/`admit`/axioms. (Unchanged, non-negotiable.)
 2. **One place per fact.** Counts: `VERIFIED.md` table → generators → everything
-   else. Strategy: this file. Queue: `tasks/NEXT.md`. Scope/trust wording:
+   else. Strategy: this file. Route decisions:
+   `repo/ECDLP_DECISION_SUBSTRATE.json`. Queue: `tasks/NEXT.md`. Scope/trust wording:
    `TRUST_REPORT.md` + `ABSTRACT_SCOPE.md` + `notes/SECURITY_SCOPE.md`. A new prose
    document must displace an old one, not join it.
 3. **Structure over gates.** Gates stay (they caught real drift), but the first fix
@@ -101,43 +110,52 @@ Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` 
 
 ## 5. Program
 
-**Near (finish v0.1 — a trust release, weeks):**
-- Tranche-2 consolidation above; then a README rewrite that states v0.1 plainly.
-- Engine hygiene: root `Ecdlp.lean` covered by the no-sorry gate; the per-push
-  prover attempt removed from `ci.yml` (it re-proved a solved target on every push;
-  the standalone dispatch workflow remains); target lifecycle unified (queue entries
-  must have registry JSONs; promotion nulls dead `stem_file` pointers).
-- **Featherless verdict, empirical (2026-07-15 smoke run):** with the key set as a
-  repo secret, every model call from a GitHub Actions runner fails with
-  `HTTP 403: error code 1010` — a Cloudflare bot-block of the runner's signature,
-  not a key problem. **The Featherless tier is dead from CI.** Resolution: the
-  per-push attempt is already removed from `ci.yml`; the dispatch workflows and
-  scripts stay (they may work from the warm server, whose IP is not a GitHub
-  runner); prose must not present the tier as operational. The honest record
-  stands: 0 model-prover proofs accepted to date; the tactic ladder +
-  human/Claude loop is what lands theorems.
-- Tag `v0.1` when: gates green, no known-false statement in canonical docs,
-  structure = the table above.
+**Current phase — monitored candidate intake:**
 
-**Mid (the mathematics, months — the real work):**
-- **E[n] geometric torsion structure** `E[n] ≅ (ℤ/n)²` — extension-field points;
-  the genuine Mathlib gap feeding the Weil pairing.
-- **Weil ladder W4/W5** — reciprocity, then bilinear non-degenerate `eₙ`.
-- **P-256 `#E = n`** — no `j = 0` shortcut; Hasse or a new certificate route.
-- **Upstream candidates** to Mathlib: common-root/coprimality bridge, explicit
-  division-polynomial forms, `IsEllSequence` work.
-- Publication unit 1 (generic-group core) drafted to submission quality.
+1. Decision `RS-2026-07-22-001` evaluated all 17 registered routes and selected
+   none. This is an evidence decision, not a claim that the ECDLP has no future
+   solution.
+2. Maintain the exact objective, threat models, route dispositions, promotion
+   gates, stop conditions, and reconsideration triggers in
+   `repo/ECDLP_DECISION_SUBSTRATE.json`.
+3. Keep `data/attack_registry.json` as the detailed evidence encyclopedia and
+   `repo/FORMAL_SUBSTRATE.json` as the Lean release map. Never collapse their
+   distinct meanings into one priority number.
+4. Route any new primary evidence or concrete proposal through
+   `experiments/framework/`: explicit online/offline cost, provenance hashes,
+   route/threat-model binding, and independent output validation. Intake alone
+   does not activate a parked hypothesis.
 
-**Long (only on evidence):**
-- A fourth domain (Curve25519 ontology) when a concrete consumer exists.
-- Hosted verification / platform: **go/no-go criterion** — an external user actually
-  asking to submit claims against the pipeline. Until then the archived scaffold
-  waits; login-and-database work is cheap to restart and expensive to maintain idle.
+**Selected-foundation phase — only after a superseding route decision:**
+
+- Build the smallest theorem or tool stack needed by the selected route's next
+  falsifiable decision. Missing Mathlib objects are inputs to that decision, not
+  an automatic backlog.
+- Promote exactly one hypothesis only when its proposal satisfies the common
+  acceptance gate. Keep all competing routes parked so costs and evidence stay
+  attributable.
+- Move a positive mathematical mechanism into Lean only after independent
+  computational validation; preserve rigorous negative boundaries as first-class
+  results.
+
+**Final integration and review:**
+
+- Regenerate all views, pass the full Python/Lean/CI gate battery, and prepare
+  one whole-program adversarial review packet for Claude/Opus.
+- Do not merge before that final review. Destructive archive or branch cleanup
+  remains a separate post-review decision.
+- Publication and upstreaming consume the reviewed state; they do not race the
+  research loop.
+
+**Long term, only on evidence:** add domains or hosted verification when a
+concrete consumer exists. The archived platform waits until then.
 
 ## 6. Standing decision rights (compressed from the old charter)
 
-Agents decide autonomously: which theorem/rung next, formalization routes, doc/gate
-maintenance, branch commits + draft PRs, retries. Humans decide: merges to `main`,
+Agents decide autonomously within the active task and decision-substrate
+constraints: formalization routes, doc/gate maintenance, branch commits, and
+retries. A new theorem/rung or experiment requires an explicit selected route.
+Humans decide: merges to `main`,
 anything public-facing (site, publications, external posts), positioning changes,
 spend beyond an agreed budget, and any security-relevant finding (freeze + escalate
 before any external mention). Honesty rules are absolute: never overclaim, state

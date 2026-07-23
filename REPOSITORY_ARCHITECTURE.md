@@ -10,14 +10,19 @@ Machine-readable companions:
 - `repo/ARTIFACTS.yaml` classifies every repository file by ownership and edit policy.
 - `repo/FORMAL_SUBSTRATE.json` maps result families, critical dependencies, blockers,
   release disposition, and open targets.
+- `repo/ECDLP_DECISION_SUBSTRATE.json` decides which attack routes apply to the
+  exact secp256k1 objective, what evidence would promote them, and which missing
+  foundations are worth building now.
 - `repo/AUTOMATION_INVENTORY.json` classifies every workflow.
 - `repo/BRANCH_INVENTORY.json` records the dated, non-destructive remote-branch
   snapshot; ancestry alone never authorizes deletion.
-- `repo/FINAL_REVIEW_PACKET.md` is the single final adversarial-review contract
-  for the repository-wide integration PR.
+- `repo/FINAL_REVIEW_PACKET.md` is the frozen adversarial-review contract for
+  draft PR #235. It is historical input, not the final packet for this branch;
+  `TASK-010` owns the eventual whole-program review.
 
 Their checks live under `scripts/check_*inventory.py`,
-`scripts/check_formal_substrate.py`, and `scripts/check_repo_artifacts.py`.
+`scripts/check_formal_substrate.py`, `scripts/check_ecdlp_decision_substrate.py`,
+and `scripts/check_repo_artifacts.py`.
 
 ## Operating Principle
 
@@ -42,6 +47,7 @@ publication reviewers. Each audience needs a stable route through the repo.
 | Kernel-verified proof surface | Machine-checked theorems and imports | `Ecdlp.lean`, `Ecdlp/`, `Ecdlp/Proved/`, `lakefile.toml`, `lean-toolchain`, `lake-manifest.json` | Edit only with Lean build/no-sorry/axiom gates. Do not move proved files without updating imports and `VERIFIED.md`. |
 | Open proof targets | Candidate statements and target metadata | `Ecdlp/Targets/`, `targets/` | Open conjectures live here, not in `Ecdlp/Proved/`. Target JSON should track target stems. |
 | Canonical corpus and overlays | Read-only claim corpus plus curated coverage overrides | `data/KG_CLAIM_FORMALIZATION_v1.csv`, `data/corpus_coverage_overrides.json`, `data/claim_traceability.jsonl` | Treat the corpus as vendored input. Curated overlays may be edited with review. |
+| ECDLP decision layer | Target-specific route applicability, evidence gates, and foundation priority | `repo/ECDLP_DECISION_SUBSTRATE.json` | The JSON is canonical. Its Markdown view is generated. A missing Mathlib module is not automatically a project priority. |
 | Verified ledger and trust boundary | Human-auditable theorem ledger and scope statements | `VERIFIED.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `BARRIERS.md`, `COVERAGE.md` | Keep counts delegated to `STATUS.md`/`data/stats.json`; keep scope wording adversarially honest. |
 | Generated machine views | Derived stats, registries, graphs, audits, badges, and snapshots | `data/stats.json`, `data/{result_registry,source_registry,knowledge_graph}.json`, `Ecdlp/LedgerAxiomAudit.lean`, `badges/theorems.json`, `STATUS.md` | Do not hand-edit. Change generators and regenerate. |
 | Public surfaces | Static site, dashboard, and 3D map | `index.html`, `dashboard.html`, `explore.html`, `assets/`, `fonts/`, `CNAME` | Canonical counters must remain useful without JavaScript and pass sync checks. |
@@ -59,10 +65,13 @@ publication reviewers. Each audience needs a stable route through the repo.
 | What is actually proved? | `Ecdlp/Proved/*.lean` plus `VERIFIED.md` | `data/knowledge_graph.json`, `data/knowledge_graph.md` |
 | Which exact declarations does each ledger row cite? | `data/result_registry.json` | `Ecdlp/LedgerAxiomAudit.lean` |
 | What is the formal critical path and release boundary? | `repo/FORMAL_SUBSTRATE.json` | semantic edges in `data/knowledge_graph.json` |
+| Which route should be pursued for the exact secp256k1 objective? | `repo/ECDLP_DECISION_SUBSTRATE.json` | `repo/ECDLP_DECISION_SUBSTRATE.md`, decision edges in `data/knowledge_graph.json` |
+| What detailed evidence exists for each attack family? | `data/attack_registry.json` | `notes/RESEARCH_MAP.md` |
 | What corpus claims exist? | `data/KG_CLAIM_FORMALIZATION_v1.csv` | `data/frontier_map.json`, `targets/*.json` |
 | Which corpus claims are verified/partial/blocked/etc.? | `data/frontier_map.json` plus `data/corpus_coverage_overrides.json` | `STATUS.md`, `COVERAGE.md`, dashboard |
 | What is safe to claim publicly? | `STATUS.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `notes/SECURITY_SCOPE.md` | `README.md`, `PUBLISHABLE_UNITS.md` |
 | What should an agent work on next? | `tasks/NEXT.md` | `experiments/HYPOTHESES.yaml`, `AGENTS.md`, `ROADMAP.md` |
+| What must any future candidate report and pass? | `experiments/framework/candidate_run.schema.json` plus `candidate_contract.py` | deterministic positive/negative fixtures and independent `ec_oracle.py` validation |
 | What should be archived or deleted? | `repo/CLEANUP_PLAN.md` after review | `repo/ARTIFACTS.yaml`, Claude review comments |
 
 ## Generated Artifact Rules
@@ -76,6 +85,7 @@ possible:
 | `STATUS.md` | `scripts/gen_status.py` |
 | `data/frontier_map.json` | `scripts/build_frontier_map.py` |
 | `data/knowledge_graph.json`, `data/knowledge_graph.md` | `scripts/build_knowledge_graph.py` |
+| `repo/ECDLP_DECISION_SUBSTRATE.md` | `scripts/build_ecdlp_decision_view.py` |
 | `data/result_registry.json` | `scripts/gen_result_registry.py` |
 | `Ecdlp/LedgerAxiomAudit.lean` | `scripts/gen_axiom_audit.py` |
 | `COVERAGE.md` | `scripts/coverage_report.py` |
@@ -83,11 +93,30 @@ possible:
 | obvious cross-surface drift | `scripts/check_status_consistency.py`, `scripts/check_counts.py` |
 | repository artifact classification | `scripts/check_repo_artifacts.py` |
 | formal dependency/release map | `scripts/check_formal_substrate.py` |
+| ECDLP route and foundation decisions | `scripts/check_ecdlp_decision_substrate.py` |
 | generated-artifact closure | `scripts/check_generated_fixpoint.py --check` |
 
 If a generated artifact must be hand-edited in an emergency, the follow-up PR
 should either encode the change in the generator or mark the artifact as
 hand-maintained in `repo/ARTIFACTS.yaml`.
+
+## Three Research Maps
+
+The repository deliberately has three related but non-interchangeable maps:
+
+1. `data/frontier_map.json` classifies the imported claim corpus. Its priority
+   numbers describe corpus coverage, not attack value.
+2. `repo/FORMAL_SUBSTRATE.json` records the release-facing Lean dependency
+   frontier. A blocked theorem can be valuable library work without being the
+   next cryptanalytic priority.
+3. `repo/ECDLP_DECISION_SUBSTRATE.json` owns the project decision for the exact
+   plain single-target secp256k1 problem. It may defer a large formal gap when
+   the route's prerequisite is false or no candidate needs the theorem.
+
+The target parameters come from SEC 2. The GLV structure is traced to Gallant,
+Lambert, and Vanstone. The quantum boundary starts with Shor and currently
+tracks the 2026 logical-resource estimate by Luo et al.; that estimate is not a
+claim that suitable fault-tolerant hardware exists.
 
 ## Cleanup Policy
 
@@ -98,7 +127,8 @@ Cleanup should follow this sequence:
 
 1. Classify each area as canonical, generated, curated note, operational,
    experimental trace, scratch, static asset, or archive candidate.
-2. Ask Claude for adversarial review of misclassifications and deletion risks.
+2. Include misclassifications and deletion risks in the one final whole-program
+   Claude/Opus review.
 3. Move/archive only files with clear provenance and no import/site references.
 4. Run generator checks and Lean/CI gates after every movement that touches
    imports, generated views, links, or public surfaces.

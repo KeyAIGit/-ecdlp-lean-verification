@@ -17,7 +17,7 @@ base. This is a living document; counts are for the v1 corpus.
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
-| **Partial: curve / polynomial depth** | ~33 | `EllipticCurve` (+Isogeny), `MvPolynomial` — Mathlib has the base, not the ECDLP constructions |
+| **Partial: curve / polynomial depth** | ~33 | `EllipticCurve`, `DivisionPolynomial`, `MvPolynomial` — Mathlib has prerequisites, not isogeny/pairing/ECDLP constructions |
 | **Informal / meta** | ~133 | survey/commentary; not a formal statement by nature |
 | **Unassigned** | ~174 | needs human triage before a Lean area can be chosen |
 
@@ -185,8 +185,9 @@ exact `Θ` statements.
   Petit construction, or any asymptotic advantage/no-advantage result. The
   `O(|F|^{m-1}·solve)` loops are **not** subexponential
   index-calculus algorithms. So the real question — whether invariant-coordinate *relation
-  generation* changes the prime-field asymptotics — stays **open** and `HYP_GLV_SEMAEV_001`
-  stays **ACTIVE**. No result here is a step toward breaking secp256k1; equality-replay alone
+  generation* changes the prime-field asymptotics — stays mathematically **open**, while
+  `HYP_GLV_SEMAEV_001` is operationally **PARKED** by the decision substrate. No result here
+  is a step toward breaking secp256k1; equality-replay alone
   cannot establish a complexity no-go. Per-run manifests + independent validators live under
   each `experiments/*/` directory. External Gröbner validation and sharper formulations are
   prerequisites before promoting this line to a publishable complexity barrier.
@@ -199,7 +200,8 @@ exact `Θ` statements.
   `Res_X(S₃(x₁,x₂,X), S₃(x₃,x₄,X))`, and stating its degree in `x₁` needs `S₄` reconstructed as a
   *polynomial in `x₁`* (coefficients over `F[x₁]`) plus a resultant-degree-in-a-parameter lemma —
   a real construction, not a quick corollary. Recorded here as the honest next frontier.
-- **Weil pairing / isogeny depth** (`EllipticCurve.Isogeny`, partial) — blocks
+- **Weil pairing / isogeny depth** (no elliptic-isogeny module in the audited
+  pinned/current Mathlib trees) — blocks
   *formalizing the MOV/FR transfer reduction itself*; the pairing is not in Mathlib. **This is
   the one place the Weil pairing touches secp256k1, and its security-relevant consequence is
   already closed here without the pairing:** MOV/FR would transfer the ECDLP into `𝔽_{p^k}^×`
@@ -397,7 +399,8 @@ to verify. Correctly excluded.
 An automated multi-agent scan of mathlib4 (master + open PRs + Zulip) — see
 `notes/UPSTREAM_SCAN.md` — confirms the barrier map above against the live upstream, and
 sharpens it: the **generic scaffolding is already upstream** (Weierstrass group law in three
-models, division polynomials `ψₙ/φₙ/ωₙ`, rank-1 `normEDS`/`IsEllSequence`, `ZLattice`/Minkowski,
+models, division-polynomial `preΨ`/`ΨSq`/`Φ` infrastructure (but no general
+point bridge or bivariate `ωₙ`), rank-1 `normEDS`/`IsEllSequence`, `ZLattice`/Minkowski,
 `MvPolynomial`+resultants — all free by import on the pinned v4.31), while the
 **cryptographically load-bearing superstructure is a green field**, absent from master, every
 surfaced PR, and wider-GitHub Lean search:

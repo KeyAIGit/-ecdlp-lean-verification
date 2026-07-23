@@ -37,6 +37,8 @@ from ledger_utils import parse_ledger as parse_verified_ledger
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "knowledge_graph.json"
 SUBSTRATE = ROOT / "repo" / "FORMAL_SUBSTRATE.json"
+DECISION_SUBSTRATE = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
+ATTACK_REGISTRY = ROOT / "data" / "attack_registry.json"
 
 
 def parse_ledger() -> list[dict]:
@@ -149,8 +151,9 @@ BARRIERS = [
         "missing_foundation": "Weil pairing on EllipticCurve, isogeny machinery",
         "blocks": "MOV/FR transfer reductions to finite-field DLP",
         "affected_claims_estimate": 15,
-        "mathlib_area": "EllipticCurve.Isogeny (partial)",
-        "partial_progress": "Mathlib has the curve and isogeny base, not the pairing.",
+        "mathlib_area": "EllipticCurve and DivisionPolynomial (partial prerequisites)",
+        "partial_progress": "Mathlib has curve and division-polynomial prerequisites; "
+        "the audited pinned/current trees have no elliptic-isogeny or pairing module.",
     },
     {
         "id": "B3-point-counting",
@@ -260,6 +263,8 @@ def build() -> dict:
     ledger = parse_ledger()
     imports = parse_imports()
     substrate = json.loads(SUBSTRATE.read_text(encoding="utf-8"))
+    decisions = json.loads(DECISION_SUBSTRATE.read_text(encoding="utf-8"))
+    attack_registry = json.loads(ATTACK_REGISTRY.read_text(encoding="utf-8"))
     family_by_area = {family["area"]: family["id"] for family in substrate["families"]}
     built_modules = set(imports.get("Ecdlp", []))  # what Ecdlp.lean gates
     depth_cache: dict[str, int] = {}
@@ -343,17 +348,68 @@ def build() -> dict:
                 {"from": node_id, "to": blocker, "type": "blocked_by"}
             )
 
+    # The decision layer answers which routes apply to the exact target and what
+    # work they require. It is intentionally separate from formal release edges.
+    for route in decisions["routes"]:
+        route_id = route["id"]
+        for threat_model in route["threat_models"]:
+            edges.append(
+                {
+                    "from": route_id,
+                    "to": threat_model,
+                    "type": "evaluated_under",
+                }
+            )
+        for attack_id in route["attack_registry_ids"]:
+            edges.append(
+                {"from": route_id, "to": attack_id, "type": "detailed_by"}
+            )
+        for foundation_id in route["foundation_ids"]:
+            edges.append(
+                {
+                    "from": route_id,
+                    "to": foundation_id,
+                    "type": "requires_foundation",
+                }
+            )
+        for formal_node_id in route["formal_node_ids"]:
+            edges.append(
+                {
+                    "from": route_id,
+                    "to": formal_node_id,
+                    "type": "decision_grounded_in",
+                }
+            )
+        for hypothesis_id in route.get("hypothesis_ids", []):
+            edges.append(
+                {
+                    "from": route_id,
+                    "to": hypothesis_id,
+                    "type": "governs_hypothesis",
+                }
+            )
+    for foundation in decisions["foundations"]:
+        for formal_node_id in foundation["formal_node_ids"]:
+            edges.append(
+                {
+                    "from": foundation["id"],
+                    "to": formal_node_id,
+                    "type": "extends_frontier",
+                }
+            )
+
     method_hist = Counter(t["method"] for t in theorems)
     edge_hist = Counter(edge["type"] for edge in edges)
 
     return {
-        "schema_version": "2.0",
+        "schema_version": "3.0",
         "name": "ECDLP verified knowledge graph",
         "purpose": "A machine-readable, navigable index of the machine-checked "
         "(Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the "
         "ECDLP landscape for secp256k1: verified ledger rows, their declaration "
         "and import dependencies, the corpus "
-        "claims they verify, and the formalization barriers that bound them. "
+        "claims they verify, the formalization barriers that bound them, and "
+        "the target-specific route/foundation decisions. "
         "Built for a future automated reasoner to load the known-and-verified "
         "frontier without re-deriving it.",
         "invariant": "Every ledger row resolves to declarations accepted by the Lean "
@@ -365,6 +421,9 @@ def build() -> dict:
             "barriers": len(BARRIERS),
             "families": len(substrate["families"]),
             "critical_nodes": len(substrate["critical_nodes"]),
+            "attack_routes": len(decisions["routes"]),
+            "decision_foundations": len(decisions["foundations"]),
+            "attack_registry_objects": len(attack_registry["attacks"]),
             "edges": len(edges),
             "by_edge_type": dict(edge_hist.most_common()),
             "by_method": dict(method_hist.most_common()),
@@ -379,6 +438,24 @@ def build() -> dict:
             "blockers": substrate["blockers"],
             "critical_nodes": substrate["critical_nodes"],
             "open_targets": substrate["open_targets"],
+        },
+        "decision_substrate": {
+            "source": "repo/ECDLP_DECISION_SUBSTRATE.json",
+            "attack_evidence_source": "data/attack_registry.json",
+            "target_problem": decisions["target_problem"],
+            "threat_models": decisions["threat_models"],
+            "phase_policy": decisions["phase_policy"],
+            "route_selection": decisions["route_selection"],
+            "routes": decisions["routes"],
+            "foundations": decisions["foundations"],
+            "attack_registry_index": [
+                {
+                    "id": attack["id"],
+                    "family": attack["family"],
+                    "verdict_class": attack["verdict_class"],
+                }
+                for attack in attack_registry["attacks"]
+            ],
         },
         "corpus": parse_corpus(),
         "edges": edges,
@@ -404,7 +481,10 @@ def render_markdown(graph: dict) -> str:
     lines.append("")
     lines.append(
         f"**{c['ledger_rows']} ledger-row nodes** · **{c['families']} result families** · "
-        f"**{c['critical_nodes']} critical nodes** · **{c['edges']} edges**"
+        f"**{c['critical_nodes']} critical nodes** · "
+        f"**{c['attack_routes']} attack routes** · "
+        f"**{c['decision_foundations']} decision foundations** · "
+        f"**{c['edges']} edges**"
     )
     lines.append("")
     lines.append(
@@ -420,6 +500,56 @@ def render_markdown(graph: dict) -> str:
     lines.append("")
     lines.append("By edge type: "
                  + ", ".join(f"{k} ({v})" for k, v in c["by_edge_type"].items()))
+    lines.append("")
+
+    decisions = graph["decision_substrate"]
+    phase = decisions["phase_policy"]
+    selection = decisions["route_selection"]
+    lines.append("## secp256k1 route decisions")
+    lines.append("")
+    lines.append(
+        "This target-specific layer is generated from "
+        "`repo/ECDLP_DECISION_SUBSTRATE.json`. It does not replace the attack "
+        "evidence registry or the formal release map."
+    )
+    lines.append("")
+    lines.append(
+        f"Phase: **{phase['phase']}**. Experiments authorized: "
+        f"**{str(phase['experiments_authorized']).lower()}**. Selected route: "
+        f"**{phase['selected_attack_route'] or 'none'}**."
+    )
+    lines.append("")
+    lines.append(
+        f"Selection **{selection['decision_id']}** "
+        f"(`{selection['performed_on']}`): **{selection['decision']}**. "
+        f"{selection['gate_result']}"
+    )
+    lines.append("")
+    lines.append("| priority | route | status | threat models | foundations |")
+    lines.append("|---:|---|---|---|---|")
+    for route in sorted(
+        decisions["routes"], key=lambda item: (item["priority"], item["id"])
+    ):
+        threat_models = ", ".join(f"`{item}`" for item in route["threat_models"])
+        foundations = ", ".join(f"`{item}`" for item in route["foundation_ids"])
+        lines.append(
+            f"| {route['priority']} | **{route['id']}**: {route['title']} | "
+            f"`{route['status']}` | {threat_models} | {foundations} |"
+        )
+    lines.append("")
+    lines.append("### Foundation portfolio")
+    lines.append("")
+    lines.append("| priority | foundation | decision | status | build now |")
+    lines.append("|---:|---|---|---|---:|")
+    for foundation in sorted(
+        decisions["foundations"], key=lambda item: (item["priority"], item["id"])
+    ):
+        lines.append(
+            f"| {foundation['priority']} | **{foundation['id']}**: "
+            f"{foundation['title']} | `{foundation['decision']}` | "
+            f"`{foundation['implementation_status']}` | "
+            f"{str(foundation['build_now']).lower()} |"
+        )
     lines.append("")
 
     substrate = graph["formal_substrate"]

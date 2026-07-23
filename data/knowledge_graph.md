@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every ledger row below cites kernel-checked declarations (no `sorry`, no custom axioms).
 
-**296 ledger-row nodes** · **8 result families** · **17 critical nodes** · **833 edges**
+**296 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **950 edges**
 
 > A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline counts; `data/result_registry.json` owns declaration-level resolution.
 
@@ -10,7 +10,51 @@ By proof method: Mathlib (106), Mathlib + native_decide (31), native_decide (20)
 
 By research area: curve-torsion (152), primality (54), generic-hardness (29), other (26), protocol-soundness (23), attack-resistance (6), reduction (5), params (1)
 
-By edge type: imports (478), member_of (296), supports (21), depends_on (18), frontier_of (13), blocked_by (7)
+By edge type: imports (478), member_of (296), requires_foundation (41), decision_grounded_in (25), supports (21), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), blocked_by (7), governs_hypothesis (3)
+
+## secp256k1 route decisions
+
+This target-specific layer is generated from `repo/ECDLP_DECISION_SUBSTRATE.json`. It does not replace the attack evidence registry or the formal release map.
+
+Phase: **monitored-candidate-intake**. Experiments authorized: **false**. Selected route: **none**.
+
+Selection **RS-2026-07-22-001** (`2026-07-22`): **select_none**. No audited route currently satisfies every proposal-level requirement for a new experiment against the primary plain single-target secp256k1 objective.
+
+| priority | route | status | threat models | foundations |
+|---:|---|---|---|---|
+| P0 | **R-ANOMALOUS-PADIC**: Smart, Satoh-Araki, and Semaev anomalous-curve lifting | `ruled_out_for_target` | `classical-single-target-plain` | `F-EVALUATION-CONTRACT`, `F-PADIC-FORMAL-GROUP` |
+| P0 | **R-GENERIC-BASELINE**: Baby-step giant-step and Pollard rho | `baseline` | `classical-single-target-plain`, `classical-generic` | `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`, `F-FORMAL-COST-MODEL` |
+| P0 | **R-GENERIC-LOWER-BOUND**: Generic-group lower bound | `guardrail` | `classical-generic` | `F-EVALUATION-CONTRACT`, `F-FORMAL-COST-MODEL` |
+| P0 | **R-GLV**: GLV endomorphism acceleration | `constant_factor_only` | `classical-single-target-plain` | `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE` |
+| P0 | **R-PAIRING-TRANSFER**: MOV, Frey-Ruck, and Tate/Weil pairing transfer | `ruled_out_for_target` | `classical-single-target-plain` | `F-EVALUATION-CONTRACT`, `F-WEIL-PAIRING-STACK` |
+| P0 | **R-POHLIG-HELLMAN**: Pohlig-Hellman subgroup reduction | `ruled_out_for_target` | `classical-single-target-plain` | `F-EVALUATION-CONTRACT` |
+| P1 | **R-GLV-SEMAEV**: GLV-symmetrized Semaev systems | `open_parked` | `classical-single-target-plain` | `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`, `F-FORMAL-COST-MODEL`, `F-SEMAEV-ELIMINATION` |
+| P1 | **R-HNP-NONCE-LEAKAGE**: Hidden-number and lattice attacks on biased or reused ECDSA nonces | `separate_threat_model` | `implementation-leakage` | `F-EVALUATION-CONTRACT`, `F-LATTICE-HNP` |
+| P1 | **R-MULTI-TARGET-PRECOMPUTATION**: Multi-target and reusable-precomputation tradeoffs | `conditional_only` | `classical-conditioned` | `F-EVALUATION-CONTRACT`, `F-FORMAL-COST-MODEL` |
+| P1 | **R-PRIME-FIELD-INDEX-CALCULUS**: Prime-field index calculus | `open_parked` | `classical-single-target-plain` | `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`, `F-FORMAL-COST-MODEL`, `F-SEMAEV-ELIMINATION` |
+| P1 | **R-PROTOCOL-FAULT-SIDECHANNEL**: Invalid-curve, twist, fault, and side-channel routes | `separate_threat_model` | `implementation-leakage` | `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE` |
+| P1 | **R-QUANTUM-SHOR**: Fault-tolerant quantum ECDLP | `separate_threat_model` | `fault-tolerant-quantum` | `F-EVALUATION-CONTRACT`, `F-QUANTUM-CIRCUIT-MODEL` |
+| P1 | **R-WEIL-DESCENT**: Weil descent and GHS-style transfer | `ruled_out_for_target` | `classical-single-target-plain` | `F-EVALUATION-CONTRACT` |
+| P2 | **R-EDS-DIVISION-POLYNOMIAL**: Elliptic divisibility sequences and division-polynomial re-encodings | `open_parked` | `classical-single-target-plain` | `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`, `F-POINT-DIVISION-BRIDGE`, `F-UNIFORM-TORSION-SEPARABILITY` |
+| P2 | **R-INTERVAL-AUXILIARY-INPUT**: Interval DLP, partial-key knowledge, and auxiliary-power algorithms | `conditional_only` | `classical-conditioned` | `F-EVALUATION-CONTRACT`, `F-FORMAL-COST-MODEL` |
+| P2 | **R-PETIT-COMPOSED-MAPS**: Petit-style composed rational maps | `open_parked` | `classical-single-target-plain` | `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`, `F-FORMAL-COST-MODEL`, `F-SEMAEV-ELIMINATION` |
+| P3 | **R-ISOGENY-ENDOMORPHISM-TRANSFER**: Isogeny, endomorphism-ring, and Frobenius transfer | `monitor` | `classical-single-target-plain` | `F-EVALUATION-CONTRACT`, `F-ISOGENY-STACK` |
+
+### Foundation portfolio
+
+| priority | foundation | decision | status | build now |
+|---:|---|---|---|---:|
+| P0 | **F-BENCHMARK-ORACLE**: Independent benchmark oracle and reproducibility manifest | `build_now` | `complete` | true |
+| P0 | **F-EVALUATION-CONTRACT**: Threat-model, applicability, and evidence contract | `build_now` | `complete` | true |
+| P1 | **F-FORMAL-COST-MODEL**: Formal oracle and resource cost model | `build_if_selected` | `partial` | false |
+| P1 | **F-SEMAEV-ELIMINATION**: General Semaev elimination and polynomial-system complexity stack | `build_if_selected` | `partial` | false |
+| P2 | **F-POINT-DIVISION-BRIDGE**: Uniform point scalar-multiplication to division-polynomial bridge | `retain_frontier` | `partial` | false |
+| P2 | **F-UNIFORM-TORSION-SEPARABILITY**: Uniform separability and general n-torsion structure | `retain_frontier` | `partial` | false |
+| P3 | **F-ISOGENY-STACK**: Elliptic isogeny and endomorphism-ring stack | `monitor_only` | `partial` | false |
+| P3 | **F-LATTICE-HNP**: Lattice reduction and hidden-number problem stack | `monitor_only` | `not_started` | false |
+| P3 | **F-PADIC-FORMAL-GROUP**: p-adic elliptic formal-group and lifting stack | `monitor_only` | `not_started` | false |
+| P3 | **F-QUANTUM-CIRCUIT-MODEL**: Fault-tolerant quantum circuit and resource model | `monitor_only` | `not_started` | false |
+| P3 | **F-WEIL-PAIRING-STACK**: Weil reciprocity and pairing construction | `retain_frontier` | `partial` | false |
 
 ## Formal substrate critical path
 
@@ -424,7 +468,7 @@ Each barrier is a foundation Mathlib lacks. The *frontier* lists verified ledger
 
 - **Missing:** Weil pairing on EllipticCurve, isogeny machinery
 - **Blocks:** MOV/FR transfer reductions to finite-field DLP
-- **Partial progress:** Mathlib has the curve and isogeny base, not the pairing.
+- **Partial progress:** Mathlib has curve and division-polynomial prerequisites; the audited pinned/current trees have no elliptic-isogeny or pairing module.
 - **Verified frontier:** `secp256k1_j_eq_zero`, `secp256k1_embedding_degree_gt_100`, `secp256k1_trace_ordinary_nonanomalous`, `secp256k1_Ψ₂Sq`, `secp256k1_Ψ₂Sq_root_of_two_torsion`
 
 ### B3-point-counting — Concrete point count #E(F_p) = n not kernel-computable

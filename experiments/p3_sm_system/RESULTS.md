@@ -168,8 +168,8 @@ VALIDATION: PASS
 For this explicit finite-set presentation on the tested toy instances, the custom proxy returned
 `2|F|+1`; the tested coupled `u=x³` presentation used larger matrices and more time. These are
 reproducible partial-negative measurements, not an exact degree-of-regularity law or a general
-GLV/Semaev complexity no-go. Hypothesis stays **ACTIVE**; external GB validation, nonredundant
-invariant formulations, m≥3 full solving degree, and faithful Petit remain open.
+GLV/Semaev complexity no-go. The hypothesis is **PARKED**; external GB validation,
+nonredundant invariant formulations, m≥3 full solving degree, and faithful Petit remain open.
 
 ## Reproduce
 

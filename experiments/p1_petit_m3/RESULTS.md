@@ -53,7 +53,7 @@ path reuses `confirm_relation3`, so this is not a separately implemented EC orac
   claim is made.
 - **No asymptotic, complexity, or advantage/no-advantage conclusion** is drawn; the table is raw
   measured counts at fixed small sizes.
-- No statement about secp256k1. `HYP_GLV_SEMAEV_001` remains **ACTIVE**.
+- No statement about secp256k1. `HYP_GLV_SEMAEV_001` is **PARKED**.
 
 ## Reproduce
 `python3 run.py` (writes `runs/*.json` with provenance) then `python3 validate.py` (must print

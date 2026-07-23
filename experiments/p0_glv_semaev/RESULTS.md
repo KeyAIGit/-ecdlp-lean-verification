@@ -205,7 +205,7 @@ From the hypothesis registry / README §"Decision criteria":
   degree of regularity, Gröbner matrices, time, memory and complete precomputation;
   implement a faithful Petit construction rather than an integer-bit filter.
 
-### **RECOMMENDED STATUS: ACTIVE, WITH A PARTIAL NEGATIVE RESULT.**
+### **CURRENT STATUS: PARKED, WITH A PARTIAL NEGATIVE RESULT.**
 
 The reported equalities are real and EC-verified. That validates the equality replay
 harness, not a prime-field ECDLP complexity conclusion. No Lean formalization is

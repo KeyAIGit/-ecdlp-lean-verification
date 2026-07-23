@@ -5,6 +5,7 @@ The single source of operational truth for any reader (human or AI, large or sma
 Every number here is pulled live from the machine sources, never hand-typed, so it cannot drift:
   - data/stats.json          (ledger_rows, distinct_results, proved_modules, sorry, axioms)
   - data/frontier_map.json   (corpus status_summary, completeness)
+  - repo/ECDLP_DECISION_SUBSTRATE.json (phase, routes, foundation decisions)
 Other summary docs should link to STATUS.md rather than duplicate counts.
 
 Run: python3 scripts/gen_status.py   (also run by the docs-sync workflow on every ledger change)
@@ -17,22 +18,30 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 STATS = ROOT / "data" / "stats.json"
 FM = ROOT / "data" / "frontier_map.json"
+DECISIONS = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
 OUT = ROOT / "STATUS.md"
 
 
 def main() -> int:
     s = json.loads(STATS.read_text(encoding="utf-8"))
     fm = json.loads(FM.read_text(encoding="utf-8"))
+    decisions = json.loads(DECISIONS.read_text(encoding="utf-8"))
     ss = fm["status_summary"]
     meta = fm["meta"]
     total = meta.get("corpus_claims", sum(ss.values()))
+    phase = decisions["phase_policy"]
+    selection = decisions["route_selection"]
+    routes = decisions["routes"]
+    foundations = decisions["foundations"]
+    build_now = [item for item in foundations if item["build_now"]]
 
     def g(k, d=0):
         return s.get(k, d)
 
     md = f"""# STATUS — canonical snapshot
 
-> **Generated** by `scripts/gen_status.py` from `data/stats.json` + `data/frontier_map.json`.
+> **Generated** by `scripts/gen_status.py` from `data/stats.json`,
+> `data/frontier_map.json`, and `repo/ECDLP_DECISION_SUBSTRATE.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -81,20 +90,27 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
   **tactic ladder + human-in-loop** (external model-provers attempted, 0 accepted).
 
 ## Main current bottleneck
-The former bottleneck — point counting **`#E(𝔽_p) = n`**, the strong keystone — is **proved**
-(without Hasse or Schoof, via a curve-specific certificate: `n ∣ #E` and `#E ≤ 2p+1 < 3n` pin
-`#E ∈ {{n, 2n}}`, and `E[2] = {{O}}` excludes `2n`; `CurveCardinalityExact.lean`, 2026-07-13). With it, `E(𝔽_p) = ⟨G⟩` (cofactor 1), the
-point group is cyclic, and the GLV eigenvalue + `Module (ℤ/n)` structure + instantiated protocol
-algebra all hold **unconditionally on the full group**. The honest next bottlenecks:
-- the **geometric torsion structure** `E[n] ≅ (ℤ/n)²` (points over field extensions — a genuine
-  Mathlib gap, feeds the Weil pairing);
-- the **Weil ladder W4/W5** (reciprocity, then a bilinear non-degenerate `eₙ`);
-- a general **Hasse bound** in Mathlib — the secp256k1 certificate exploits `j = 0` structure, so
-  **P-256's `#E = n` is still open** and needs Hasse or its own certificate route.
+The current bottleneck is **a missing proposal-level non-generic mechanism, not theorem
+volume**. Decision `{selection['decision_id']}` evaluated all **{len(routes)} attack routes** and
+selected **none**: no audited route currently clears the common gate for the exact plain
+single-target objective. The map contains **{len(foundations)} foundation decisions**,
+experiments authorized = **{str(phase['experiments_authorized']).lower()}**, selected route =
+**{phase['selected_attack_route'] or 'none'}**.
+
+The completed `build_now` foundations are {", ".join(f"`{item['id']}`" for item in build_now)}.
+They make future candidates comparable and independently checkable; they do not test a parked
+hypothesis. The formal gaps `E[n] ≅ (ℤ/n)²`, Weil reciprocity/pairing, general point-division
+bridges, p-adic formal groups, lattice reduction, isogenies, and quantum circuits remain mapped,
+but none is automatically next merely because Mathlib lacks it. Route selection reopens only
+when new evidence satisfies a recorded reconsideration trigger and the proposal gate.
 
 ## Active work protocol
 The active queue is `tasks/NEXT.md`. Keep it short (3-7 task contracts) so a
 small-context agent can start work without rereading the whole repository.
+
+The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view is generated.
+The candidate-neutral validation contract lives in `experiments/framework/`. Neither file
+authorizes an experiment by itself.
 
 The hypothesis registry is `experiments/HYPOTHESES.yaml`. It records testable
 directions, evidence, and exit criteria; it is not a theorem ledger.
@@ -103,12 +119,14 @@ The drift gate is `scripts/check_status_consistency.py`. Run it whenever stats,
 frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 
 ## Where to go deeper
-`README.md` (the front door) · `tasks/NEXT.md` (active queue) ·
+`README.md` (the front door) · `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
+`tasks/NEXT.md` (active queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
 standalone results) · `ROADMAP.md` (strategy & program) · `VERIFIED.md` (ledger) ·
 `BARRIERS.md` (no-go map) · `notes/FOUNDATIONS.md` (Weil/Semaev ladder) ·
 `notes/POINT_COUNTING_KEYSTONE.md` (the `#E=n` keystone) · `TRUST_REPORT.md` (trust boundary) ·
-`data/frontier_map.json` (queryable per-claim status).
+`data/frontier_map.json` (queryable per-claim status) ·
+`experiments/framework/README.md` (candidate-evaluation contract).
 """
     OUT.write_text(md, encoding="utf-8")
     print(f"wrote {OUT.relative_to(ROOT)} — {g('ledger_rows')} rows / ~{g('distinct_results')} "
