@@ -1,0 +1,247 @@
+{
+  "schema_version": "1.0",
+  "id": "KEYAI-PILOT-001",
+  "task_id": "TASK-011",
+  "status": "recruiting",
+  "stage": "discovery",
+  "evidence_state": "No external pilot session has been completed or recorded.",
+  "primary_hypothesis_id": "CH-001",
+  "secondary_hypothesis_ids": [
+    "CH-002"
+  ],
+  "purpose": "Determine whether a non-owner formal-research lead has the repeated research-state problem KeyAI targets, can orient in the reference environment, and can define a bounded adapter test worth building under TASK-012.",
+  "target_participant": {
+    "roles": [
+      "Technical lead of an AI-for-mathematics or formalization team",
+      "Formal-methods researcher reviewing AI-generated artifacts",
+      "Maintainer of a multi-week Lean project with human and AI contributors"
+    ],
+    "required_signals": [
+      "The team has a real, repeated workflow involving claims, evidence, tasks, and verifier results.",
+      "At least two people or agents contribute across more than one session.",
+      "The participant can provide a public or sanitized summary for qualification.",
+      "The participant can attend one observed onboarding session and make an explicit build, change, stop, or pending decision."
+    ],
+    "out_of_scope": [
+      "Requests to solve a cryptographic key or recover a secret.",
+      "A one-off proof request with no durable research-state problem.",
+      "A public intake that requires secrets, credentials, private keys, internal architecture, or confidential workflow details.",
+      "A request for a finished hosted, authenticated, multi-project product."
+    ]
+  },
+  "privacy_and_safety": {
+    "public_intake": "The GitHub intake is public and collects qualification signals only. Detailed workflow mapping is never required in a public issue.",
+    "authorization_attestation": "Any cryptographic instance must be synthetic, a published challenge, or owned and explicitly authorized by the participant. The pilot does not accept requests involving live funds, accounts, third-party assets, or key recovery.",
+    "collection_policy": "Record only the minimum sanitized facts needed for the product decision. Do not commit raw private interview notes or participant contact details.",
+    "retention_policy": "The repository retains only participant-approved sanitized summaries and decision evidence. Observational evidence is labeled observational and is not presented as machine verification.",
+    "incident_response": "If sensitive material is posted, stop the intake, hide or remove the exposed content through repository moderation, tell the participant to rotate any affected secret, and record only a sanitized incident disposition.",
+    "task_authority": "TASK-011 authorizes qualification, observation, and workflow mapping only. It does not authorize executing a new research or cryptanalytic candidate.",
+    "experiment_gate": "A second-project execution requires TASK-012 authorization. Any secp256k1 or ECDLP experiment additionally requires a superseding route-selection decision, a selected route, and a promoted task and hypothesis with success and stop conditions.",
+    "prohibited_inputs": [
+      "private keys or seed phrases",
+      "credentials or access tokens",
+      "personal data",
+      "confidential repositories or unpublished material without permission",
+      "internal workflow or architecture details not approved for public disclosure",
+      "live-funds, account-recovery, or third-party cryptographic targets"
+    ],
+    "reference_boundary": "The secp256k1 reference environment maps and verifies a research boundary. It does not solve the plain secp256k1 discrete logarithm problem."
+  },
+  "session_plan": [
+    {
+      "id": "qualify",
+      "label": "Qualify",
+      "minutes": 15,
+      "objective": "Confirm the primary user, repeated workflow, authorization basis, sanitized boundary, and decision owner.",
+      "evidence_to_capture": [
+        "role and team shape",
+        "high-level tool and handoff pattern",
+        "one sanitized repeated failure category",
+        "authorization basis for any cryptographic material"
+      ],
+      "exit_gate": "Proceed only when the pain is repeated, the qualification summary is safe to retain, and a discovery disposition can be made."
+    },
+    {
+      "id": "orient",
+      "label": "Orient",
+      "minutes": 15,
+      "objective": "Observe the participant using the current secp256k1 workspace without a guided tour.",
+      "evidence_to_capture": [
+        "time to state the current decision",
+        "time to identify the main blocker",
+        "time to identify the active next action",
+        "questions, wrong turns, and unclear labels"
+      ],
+      "exit_gate": "Record whether the participant can explain current state, blocker, and next action in 10 minutes or less. Treat this as a usability diagnostic, not product-value validation."
+    },
+    {
+      "id": "map-workflow",
+      "label": "Map workflow",
+      "minutes": 20,
+      "objective": "Map one sanitized real workflow into ingest, structure, decide, execute, verify, and retain without executing a candidate.",
+      "evidence_to_capture": [
+        "current source of truth",
+        "claim and evidence units",
+        "verifier contract",
+        "decision and rollback points",
+        "where context or provenance is lost"
+      ],
+      "exit_gate": "The participant identifies a repeated failure and the smallest adapter boundary that could test it under TASK-012."
+    },
+    {
+      "id": "disposition",
+      "label": "Set disposition",
+      "minutes": 10,
+      "objective": "Choose build, change, stop, or pending and record the narrowest justified next step.",
+      "evidence_to_capture": [
+        "explicit build, change, stop, or pending decision",
+        "minimum adapter boundary when build is selected",
+        "missing evidence when pending is selected",
+        "reasons not to continue"
+      ],
+      "exit_gate": "A discovery decision is recorded without treating interest, scheduling, or orientation success as retention or MVP validation."
+    }
+  ],
+  "measurements": [
+    {
+      "id": "orientation-time",
+      "kind": "usability_diagnostic",
+      "operational_definition": "Elapsed observed time until the participant correctly states current decision, main blocker, and active next action.",
+      "target": "10 minutes or less",
+      "evidence_source": "Timestamped observer notes"
+    },
+    {
+      "id": "repeated-pain",
+      "kind": "primary",
+      "operational_definition": "The participant names a failure that recurs across sessions or contributors and describes its present workaround.",
+      "target": "One specific repeated workflow with a concrete consequence",
+      "evidence_source": "Participant wording and workflow map"
+    },
+    {
+      "id": "workflow-fit",
+      "kind": "primary",
+      "operational_definition": "A sanitized real workflow maps to the six-stage product loop and exposes a smallest adapter boundary without executing a candidate.",
+      "target": "One bounded adapter contract or an explicit reason the loop does not fit",
+      "evidence_source": "Sanitized workflow map and discovery disposition"
+    },
+    {
+      "id": "discovery-disposition",
+      "kind": "primary",
+      "operational_definition": "The project lead records exactly one build, change, stop, or pending outcome under the priority rules.",
+      "target": "One dated disposition linked to CH-001",
+      "evidence_source": "Participant-approved sanitized decision record"
+    },
+    {
+      "id": "second-session",
+      "kind": "mvp_outcome",
+      "operational_definition": "The same team returns for an observed second-project session; a promise or scheduled date alone is not completion.",
+      "target": "One completed return session under TASK-012; not required to close TASK-011 discovery",
+      "evidence_source": "Dated TASK-012 session record"
+    },
+    {
+      "id": "provenance-completeness",
+      "kind": "guardrail",
+      "operational_definition": "Every promoted pilot artifact links to source, task, decision, trust classification, and the applicable verifier or validation method. Observational evidence is labeled observational.",
+      "target": "100 percent",
+      "evidence_source": "Pilot evidence record"
+    },
+    {
+      "id": "generator-edits",
+      "kind": "mvp_diagnostic",
+      "operational_definition": "Number of KeyAI generator-code edits required to represent the second project.",
+      "target": "Zero for the MVP; discover the expected boundary in TASK-011 and measure it only in TASK-012",
+      "evidence_source": "TASK-012 change log"
+    },
+    {
+      "id": "public-data-safety",
+      "kind": "guardrail",
+      "operational_definition": "Secrets, credentials, private keys, personal data, or confidential material placed in the public intake or evidence log.",
+      "target": "Zero",
+      "evidence_source": "Intake and evidence review"
+    }
+  ],
+  "decision_rules": {
+    "build": [
+      "The participant demonstrates the repeated research-state pain.",
+      "The sanitized workflow maps to the product loop and exposes a minimum adapter boundary.",
+      "The participant authorizes a bounded TASK-012 test; no execution is performed in TASK-011."
+    ],
+    "change": [
+      "The pain is real but the current workspace or language blocks orientation.",
+      "The workflow maps to the product loop but requires a narrower user, verifier, or artifact contract.",
+      "A specific product or trust-boundary change is required before an adapter test can be justified."
+    ],
+    "stop": [
+      "The problem is a one-off proof request rather than durable research-state coordination.",
+      "The request involves unauthorized cryptographic targets, live funds, secrets, or unsafe data handling.",
+      "No repeated pain or workflow fit is identified."
+    ],
+    "pending": [
+      "The participant appears relevant but the available evidence is insufficient or cannot yet be sanitized.",
+      "A decision owner, authorization basis, or bounded workflow map is still missing.",
+      "Pending does not unlock TASK-012 and is not evidence of retention."
+    ],
+    "priority": "Apply stop for safety or authorization failure; otherwise pending for insufficient evidence; otherwise change when a concrete revision is required; select build only when every build condition is recorded.",
+    "minimum_evidence": "One observed discovery session, one explicit build/change/stop/pending disposition for CH-001, and no customer or retention claim beyond the recorded behavior."
+  },
+  "mvp_validation": {
+    "owner_task": "TASK-012",
+    "validated_when": [
+      "A non-owner completes ingest, structure, decide, execute, verify, and retain on a second project.",
+      "The same team returns for a completed follow-up session.",
+      "Every promoted artifact satisfies provenance, trust-classification, and applicable-verifier requirements."
+    ],
+    "not_validated_by": [
+      "stated interest",
+      "a scheduled session",
+      "orientation success",
+      "a TASK-011 build disposition"
+    ]
+  },
+  "evidence_log_schema": {
+    "required_fields": [
+      "id",
+      "sequence",
+      "case_id",
+      "task_id",
+      "hypothesis_id",
+      "external",
+      "stage",
+      "status",
+      "performed_on",
+      "disposition",
+      "public_summary",
+      "evidence_files"
+    ],
+    "stages": [
+      "qualification",
+      "discovery",
+      "second_project",
+      "return"
+    ],
+    "statuses": [
+      "scheduled",
+      "completed",
+      "cancelled"
+    ],
+    "record_constraints": [
+      "Every record id is unique.",
+      "Every sequence is a unique positive integer; records are stored in sequence order and performed_on dates never move backward.",
+      "Every case_id is an opaque repository-safe identifier that links discovery, second-project, and return evidence without storing participant identity.",
+      "Discovery records belong to TASK-011; second_project and return records belong to TASK-012.",
+      "Every record has a non-empty participant-approved public summary.",
+      "Every completed record links at least one existing sanitized regular file inside this repository."
+    ],
+    "evidence_state_policy": "When no completed external evidence record exists, use the exact no-session state. Otherwise name the latest record id, sequence, date, case_id, task_id, stage, hypothesis, and disposition when applicable.",
+    "primary_hypothesis_lifecycle": {
+      "unvalidated": "No completed external CH-001 discovery record exists.",
+      "testing": "The latest completed external CH-001 discovery disposition is build or change.",
+      "rejected": "The latest completed external CH-001 discovery disposition is stop.",
+      "supported": "The latest CH-001 discovery disposition is build and the same opaque case completes an ordered TASK-012 second_project and return sequence."
+    },
+    "completed_discovery_definition": "Count only an external CH-001 record with stage discovery, status completed, disposition build, change, or stop, a non-empty public summary, and at least one existing sanitized evidence file.",
+    "task_012_unlock_definition": "Only the latest completed external CH-001 discovery disposition may control TASK-012, and it unlocks only when that latest disposition is build. A later change, stop, or pending disposition relocks TASK-012.",
+    "completed_external_pilot_definition": "Count only an ordered external CH-001 TASK-012 second_project record for the same opaque case as the latest build discovery, with status completed, a non-empty public summary, and at least one existing sanitized repository evidence file. Qualification, discovery, scheduling, and cancellation never count as completed pilots."
+  },
+  "evidence_log": []
+}

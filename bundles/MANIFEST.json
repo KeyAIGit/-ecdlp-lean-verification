@@ -11,7 +11,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 6534
+        "bytes": 6870
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -23,13 +23,19 @@
         "path": "repo/PRODUCT_MODEL.json",
         "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
         "exists": true,
-        "bytes": 9059
+        "bytes": 9976
+      },
+      {
+        "path": "repo/PILOT_PROTOCOL.json",
+        "reason": "TASK-011 discovery contract, safety boundary, evidence schema, and disposition gate",
+        "exists": true,
+        "bytes": 13855
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 8400
+        "bytes": 8946
       },
       {
         "path": "data/stats.json",
@@ -49,7 +55,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 6534
+        "bytes": 6870
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -61,13 +67,19 @@
         "path": "repo/PRODUCT_MODEL.json",
         "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
         "exists": true,
-        "bytes": 9059
+        "bytes": 9976
+      },
+      {
+        "path": "repo/PILOT_PROTOCOL.json",
+        "reason": "TASK-011 discovery contract, safety boundary, evidence schema, and disposition gate",
+        "exists": true,
+        "bytes": 13855
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 8400
+        "bytes": 8946
       },
       {
         "path": "data/stats.json",
@@ -91,7 +103,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 8822
+        "bytes": 9100
       },
       {
         "path": "VERIFIED.md",
@@ -129,7 +141,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 6534
+        "bytes": 6870
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -141,13 +153,19 @@
         "path": "repo/PRODUCT_MODEL.json",
         "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
         "exists": true,
-        "bytes": 9059
+        "bytes": 9976
+      },
+      {
+        "path": "repo/PILOT_PROTOCOL.json",
+        "reason": "TASK-011 discovery contract, safety boundary, evidence schema, and disposition gate",
+        "exists": true,
+        "bytes": 13855
       },
       {
         "path": "tasks/NEXT.md",
         "reason": "the 3-7 active task contracts with exit criteria — where to start",
         "exists": true,
-        "bytes": 8400
+        "bytes": 8946
       },
       {
         "path": "data/stats.json",
@@ -171,7 +189,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 8822
+        "bytes": 9100
       },
       {
         "path": "VERIFIED.md",
@@ -213,7 +231,7 @@
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 12874
+        "bytes": 13538
       },
       {
         "path": "PUBLISHABLE_UNITS.md",

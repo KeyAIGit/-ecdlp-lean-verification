@@ -15,6 +15,8 @@ Machine-readable companions:
   foundations are worth building now.
 - `repo/PRODUCT_MODEL.json` owns the product category, current-vs-future
   capability boundary, public rhetoric, customer hypotheses, and MVP exit gate.
+- `repo/PILOT_PROTOCOL.json` owns TASK-011 qualification, safety, measurements,
+  evidence schema, and the discovery disposition that may unlock TASK-012.
 - `repo/AUTOMATION_INVENTORY.json` classifies every workflow.
 - `repo/BRANCH_INVENTORY.json` records the dated, non-destructive remote-branch
   snapshot; ancestry alone never authorizes deletion.
@@ -37,8 +39,9 @@ change should preserve three invariants:
    snapshot for live counts.
 3. Cleanup happens by classification first, then review, then movement or
    deletion in a separate PR.
-4. Product claims resolve to `repo/PRODUCT_MODEL.json`; a reference deployment
-   is never presented as a validated hosted product or as customer traction.
+4. Product claims resolve to `repo/PRODUCT_MODEL.json`, while pilot evidence and
+   disposition resolve to `repo/PILOT_PROTOCOL.json`; a reference deployment is
+   never presented as a validated hosted product or as customer traction.
 
 This matters because the project has several audiences at once: Lean reviewers,
 cryptography readers, small-context agents, public-site visitors, and future
@@ -52,10 +55,10 @@ publication reviewers. Each audience needs a stable route through the repo.
 | Open proof targets | Candidate statements and target metadata | `Ecdlp/Targets/`, `targets/` | Open conjectures live here, not in `Ecdlp/Proved/`. Target JSON should track target stems. |
 | Canonical corpus and overlays | Read-only claim corpus plus curated coverage overrides | `data/KG_CLAIM_FORMALIZATION_v1.csv`, `data/corpus_coverage_overrides.json`, `data/claim_traceability.jsonl` | Treat the corpus as vendored input. Curated overlays may be edited with review. |
 | ECDLP decision layer | Target-specific route applicability, evidence gates, and foundation priority | `repo/ECDLP_DECISION_SUBSTRATE.json` | The JSON is canonical. Its Markdown view is generated. A missing Mathlib module is not automatically a project priority. |
-| Product decision layer | Product category, reference-deployment boundary, customer hypotheses, and MVP evidence | `repo/PRODUCT_MODEL.json` | The JSON is canonical. Public surfaces are generated from it; planned features and unvalidated users remain explicit. |
+| Product and pilot decision layer | Product category, reference-deployment boundary, customer hypotheses, discovery evidence, safety, and MVP gates | `repo/PRODUCT_MODEL.json`, `repo/PILOT_PROTOCOL.json` | Both JSON contracts are canonical. Public surfaces are generated from them; planned features and unvalidated users remain explicit. |
 | Verified ledger and trust boundary | Human-auditable theorem ledger and scope statements | `VERIFIED.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `BARRIERS.md`, `COVERAGE.md` | Keep counts delegated to `STATUS.md`/`data/stats.json`; keep scope wording adversarially honest. |
 | Generated machine views | Derived stats, registries, graphs, audits, badges, and snapshots | `data/stats.json`, `data/{result_registry,source_registry,knowledge_graph}.json`, `Ecdlp/LedgerAxiomAudit.lean`, `badges/theorems.json`, `STATUS.md` | Do not hand-edit. Change generators and regenerate. |
-| Public surfaces | Product thesis, operator workspace, and route explorer | `index.html`, `dashboard.html`, `explore.html`, `assets/`, `fonts/`, `CNAME` | Generate all three pages through `scripts/site_generator.py`; canonical counters must remain useful without JavaScript. |
+| Public surfaces | Product thesis, operator workspace, route explorer, and external-pilot contract | `index.html`, `dashboard.html`, `explore.html`, `pilot.html`, `assets/`, `fonts/`, `CNAME` | Generate all four pages through `scripts/site_generator.py`; canonical counters must remain useful without JavaScript. |
 | Research OS control plane | Active tasks, hypotheses, formal architecture, automation, and agent orientation | `AGENTS.md`, `CLAUDE.md`, `ROADMAP.md`, `tasks/NEXT.md`, `experiments/HYPOTHESES.yaml`, `REPOSITORY_ARCHITECTURE.md`, `repo/` | Keep short, current, and executable by low-context agents. |
 | Reproducible experiments | Non-kernel scripts, manifests, and measured evidence | `experiments/` | Measurements are evidence, never proofs. Parked hypotheses authorize no new runs. |
 | Automation and scripts | CI, generators, checks, autonomous loops, server helpers | `.github/workflows/`, `scripts/`, `requirements.txt`, `prompts/` | Prefer explicit gates over narrative promises. Scripts that generate committed artifacts must document outputs. |
@@ -71,7 +74,8 @@ publication reviewers. Each audience needs a stable route through the repo.
 | Which exact declarations does each ledger row cite? | `data/result_registry.json` | `Ecdlp/LedgerAxiomAudit.lean` |
 | What is the formal critical path and release boundary? | `repo/FORMAL_SUBSTRATE.json` | semantic edges in `data/knowledge_graph.json` |
 | Which route should be pursued for the exact secp256k1 objective? | `repo/ECDLP_DECISION_SUBSTRATE.json` | `repo/ECDLP_DECISION_SUBSTRATE.md`, decision edges in `data/knowledge_graph.json` |
-| What product exists now, for whom, and what qualifies as MVP? | `repo/PRODUCT_MODEL.json` | `index.html`, `dashboard.html`, `explore.html`, `tasks/NEXT.md` |
+| What product exists now, for whom, and what qualifies as MVP? | `repo/PRODUCT_MODEL.json` | `index.html`, `dashboard.html`, `explore.html`, `pilot.html`, `tasks/NEXT.md` |
+| What may TASK-011 collect, what evidence closes discovery, and what may unlock TASK-012? | `repo/PILOT_PROTOCOL.json` | `.github/ISSUE_TEMPLATE/keyai-pilot.yml`, `pilot.html`, `STATUS.md` |
 | What detailed evidence exists for each attack family? | `data/attack_registry.json` | `notes/RESEARCH_MAP.md` |
 | What corpus claims exist? | `data/KG_CLAIM_FORMALIZATION_v1.csv` | `data/frontier_map.json`, `targets/*.json` |
 | Which corpus claims are verified/partial/blocked/etc.? | `data/frontier_map.json` plus `data/corpus_coverage_overrides.json` | `STATUS.md`, `COVERAGE.md`, dashboard |
@@ -95,7 +99,7 @@ possible:
 | `data/result_registry.json` | `scripts/gen_result_registry.py` |
 | `Ecdlp/LedgerAxiomAudit.lean` | `scripts/gen_axiom_audit.py` |
 | `COVERAGE.md` | `scripts/coverage_report.py` |
-| `index.html`, `dashboard.html`, `explore.html` | `scripts/build_dashboard.py` compatibility entry point → `scripts/site_generator.py` |
+| `index.html`, `dashboard.html`, `explore.html`, `pilot.html` | `scripts/build_dashboard.py` compatibility entry point → `scripts/site_generator.py` |
 | obvious cross-surface drift | `scripts/check_status_consistency.py`, `scripts/check_counts.py` |
 | repository artifact classification | `scripts/check_repo_artifacts.py` |
 | formal dependency/release map | `scripts/check_formal_substrate.py` |
@@ -109,7 +113,7 @@ hand-maintained in `repo/ARTIFACTS.yaml`.
 
 ## Research And Product Maps
 
-The repository deliberately has three related but non-interchangeable maps:
+The repository deliberately has four related but non-interchangeable maps:
 
 1. `data/frontier_map.json` classifies the imported claim corpus. Its priority
    numbers describe corpus coverage, not attack value.
@@ -120,8 +124,9 @@ The repository deliberately has three related but non-interchangeable maps:
    plain single-target secp256k1 problem. It may defer a large formal gap when
    the route's prerequisite is false or no candidate needs the theorem.
 4. `repo/PRODUCT_MODEL.json` is orthogonal to those mathematical maps. It
-   decides what KeyAI is as a product, what the reference repository proves
-   about that product, and what still requires an external pilot.
+   decides what KeyAI is as a product and what the reference repository proves
+   about that product. `repo/PILOT_PROTOCOL.json` owns the bounded external
+   discovery contract and evidence required before product implementation expands.
 
 The target parameters come from SEC 2. The GLV structure is traced to Gallant,
 Lambert, and Vanstone. The quantum boundary starts with Shor and currently

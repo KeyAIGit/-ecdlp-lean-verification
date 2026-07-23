@@ -3,10 +3,6 @@ name: Prover target attempt
 # Rerun target attempt: 2026-06-21T20:55Z
 
 on:
-  push:
-    paths:
-      - '.github/workflows/prover-target-attempt.yml'
-      - 'scripts/prover_target_attempt.py'
   workflow_dispatch:
     inputs:
       target:

@@ -1,0 +1,98 @@
+name: KeyAI external pilot
+description: Apply to test KeyAI on one public or sanitized formal-research workflow.
+title: "[Pilot] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public and collects qualification signals only. Do not include private keys, seed phrases, credentials, personal data, internal architecture, confidential repositories, or unpublished material.
+
+        Detailed workflow mapping is not required here. The pilot is not a key-recovery service and does not claim that secp256k1 has been solved. If sensitive material is posted, the intake stops while maintainers hide or remove the content and the participant rotates any affected secret.
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Public boundary
+      description: Confirm the intake is safe to publish.
+      options:
+        - label: I will share only public or sanitized information.
+          required: true
+        - label: This request does not include a private key, credential, seed phrase, or confidential dataset.
+          required: true
+        - label: Any cryptographic instance is synthetic, a published challenge, or owned and explicitly authorized by me; it does not protect live funds, accounts, or third-party assets.
+          required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Your role
+      options:
+        - Technical lead
+        - Formal-methods researcher
+        - Lean project maintainer
+        - Research engineer
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: workflow_shape
+    attributes:
+      label: Workflow shape
+      description: Choose the closest public description.
+      options:
+        - Multi-week formalization project
+        - AI-generated proof or code review
+        - Research route and experiment coordination
+        - Evidence and provenance review
+        - Other repeated formal-research workflow
+    validations:
+      required: true
+  - type: dropdown
+    id: failure_category
+    attributes:
+      label: Repeated failure category
+      options:
+        - A failed route is rediscovered
+        - Evidence loses its source or scope
+        - A verifier result is detached from the claim
+        - A new contributor reconstructs project state
+        - Decisions and rollback reasons are lost
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: verifier
+    attributes:
+      label: Current acceptance mechanism
+      options:
+        - Lean
+        - Another proof assistant
+        - Tests or reproducible computation
+        - Human review
+        - Mixed or not yet explicit
+    validations:
+      required: true
+  - type: textarea
+    id: public_summary
+    attributes:
+      label: Sanitized public summary
+      description: In 2-4 sentences, describe only the repeated consequence and current workaround. Do not name private systems, repositories, people, or internal architecture.
+      placeholder: Our team repeats a multi-session verification workflow. The current workaround is a manually maintained document that loses decision history between contributors.
+    validations:
+      required: true
+  - type: input
+    id: project
+    attributes:
+      label: Public or sanitized project link
+      description: Optional. Link only to material already approved for public disclosure.
+      placeholder: https://github.com/...
+    validations:
+      required: false
+  - type: checkboxes
+    id: sessions
+    attributes:
+      label: Observed sessions
+      description: The pilot requires behavior, not only stated interest.
+      options:
+        - label: I can join one observed onboarding session.
+          required: true
+        - label: I can make an explicit build/change/stop/pending discovery decision after that session.
+          required: true

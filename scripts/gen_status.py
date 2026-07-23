@@ -6,6 +6,7 @@ Every number here is pulled live from the machine sources, never hand-typed, so 
   - data/stats.json          (ledger_rows, distinct_results, proved_modules, sorry, axioms)
   - data/frontier_map.json   (corpus status_summary, completeness)
   - repo/PRODUCT_MODEL.json  (product category, stage, capability boundary)
+  - repo/PILOT_PROTOCOL.json (external-pilot status and evidence state)
   - repo/ECDLP_DECISION_SUBSTRATE.json (phase, routes, foundation decisions)
 Other summary docs should link to STATUS.md rather than duplicate counts.
 
@@ -21,6 +22,7 @@ STATS = ROOT / "data" / "stats.json"
 FM = ROOT / "data" / "frontier_map.json"
 DECISIONS = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
 PRODUCT = ROOT / "repo" / "PRODUCT_MODEL.json"
+PILOT = ROOT / "repo" / "PILOT_PROTOCOL.json"
 OUT = ROOT / "STATUS.md"
 
 
@@ -29,6 +31,7 @@ def main() -> int:
     fm = json.loads(FM.read_text(encoding="utf-8"))
     decisions = json.loads(DECISIONS.read_text(encoding="utf-8"))
     product = json.loads(PRODUCT.read_text(encoding="utf-8"))
+    pilot = json.loads(PILOT.read_text(encoding="utf-8"))
     ss = fm["status_summary"]
     meta = fm["meta"]
     total = meta.get("corpus_claims", sum(ss.values()))
@@ -39,6 +42,15 @@ def main() -> int:
     build_now = [item for item in foundations if item["build_now"]]
     product_stage = product["current_stage"]
     customer_hypotheses = product["customer_hypotheses"]
+    hypothesis_status_counts = {
+        status: sum(item["status"] == status for item in customer_hypotheses)
+        for status in ("unvalidated", "testing", "supported", "rejected")
+    }
+    hypothesis_status_summary = ", ".join(
+        f"{count} {status}"
+        for status, count in hypothesis_status_counts.items()
+        if count
+    )
 
     def g(k, d=0):
         return s.get(k, d)
@@ -47,7 +59,7 @@ def main() -> int:
 
 > **Generated** by `scripts/gen_status.py` from `data/stats.json`,
 > `data/frontier_map.json`, `repo/PRODUCT_MODEL.json`, and
-> `repo/ECDLP_DECISION_SUBSTRATE.json`.
+> `repo/PILOT_PROTOCOL.json`, and `repo/ECDLP_DECISION_SUBSTRATE.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -68,8 +80,10 @@ Toolchain: {g('toolchain', 'Lean 4 + Mathlib (see lakefile.toml)')}.
   difficult domain; it is evidence for the product design, not a claim of a hosted multi-project
   product or an ECDLP break.
 - **MVP boundary:** {product['mvp']['definition']}
-- **Customer evidence:** {len(customer_hypotheses)} customer hypotheses are recorded and all are
-  currently unvalidated. The project is not YC-ready until the external-pilot loop is evidenced.
+- **External pilot:** {pilot['id']} is **{pilot['status']}**. {pilot['evidence_state']}
+- **Customer evidence:** {len(customer_hypotheses)} customer hypotheses are recorded:
+  {hypothesis_status_summary}. Status changes require dated evidence.
+- **Accelerator boundary:** {product['mvp']['yc_readiness']}
 
 ## Corpus coverage (the 486-claim map)
 The 486 corpus claims (`data/KG_CLAIM_FORMALIZATION_v1.csv`) are a *different* denominator from the

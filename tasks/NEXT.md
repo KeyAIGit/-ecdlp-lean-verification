@@ -117,34 +117,42 @@ How to verify:
 
 Status: active
 Kind: product | research | ops
-Hypothesis: `CH-001` and `CH-002` in `repo/PRODUCT_MODEL.json`
-Why it matters: The secp256k1 repository proves that the research-state loop can
-work in one owner-operated environment. It does not prove that another team has
+Hypothesis: primary `CH-001`; secondary exploratory lens `CH-002` in `repo/PRODUCT_MODEL.json`
+Why it matters: The secp256k1 repository demonstrates an owner-operated
+implementation of the research-state loop. It does not establish that another team has
 the same pain, can use the contracts, or will return. Product work should now
 reduce that uncertainty instead of adding speculative platform features.
 Inputs:
 - `repo/PRODUCT_MODEL.json`
+- `repo/PILOT_PROTOCOL.json`
 - the generated public workspace and route explorer
 - one candidate external Lean/formalization team or repository
 Expected output:
+- A canonical, versioned pilot protocol with qualification, observation,
+  measurement, safety, and build/change/stop/pending rules.
 - A dated pilot brief naming the user, existing workflow, failure points, and
   narrow project boundary.
 - One observed onboarding session using the current reference environment.
-- A go/change/stop decision for `CH-001` and `CH-002`.
+- One build/change/stop/pending discovery disposition for `CH-001`; any
+  observation about `CH-002` remains separately labeled exploratory.
 Exit criteria:
 - A non-owner can identify current state, blockers, and next action in ten
-  minutes or less.
+  minutes or less, recorded as a usability diagnostic rather than product-value proof.
 - The user names a repeated workflow painful enough to test on a second project.
+- The smallest adapter boundary is recorded without executing a candidate.
 - No customer, retention, or willingness-to-pay claim is published without
   direct evidence.
 Files allowed to edit:
 - `repo/PRODUCT_MODEL.json`
+- `repo/PILOT_PROTOCOL.json`
+- `.github/ISSUE_TEMPLATE/keyai-pilot.yml`
 - product research notes linked from that model
 - public site generators and directly affected checks
 Files that must be regenerated:
 - `index.html`
 - `dashboard.html`
 - `explore.html`
+- `pilot.html`
 How to verify:
 - `python scripts/check_product_model.py`
 - `python scripts/build_dashboard.py`
@@ -153,14 +161,14 @@ How to verify:
 
 ### TASK-012 - Build configurable intake after a pilot contract
 
-Status: blocked_on_external_pilot_contract
+Status: blocked_on_task_011_build_disposition
 Kind: product | data | ops
-Hypothesis: exactly one validated customer hypothesis from `TASK-011`
+Hypothesis: a `build` discovery disposition for primary hypothesis `CH-001`
 Why it matters: A hosted or multi-project platform is justified only after a
 real team exposes the minimum adapter boundary. Building it earlier would
 replace evidence with architecture.
 Inputs:
-- a completed `TASK-011` pilot decision
+- a completed `TASK-011` discovery record with a `build` disposition
 - one external repository/corpus with permission to use it
 - a minimal claim, evidence, task, and verifier-adapter contract
 Expected output:

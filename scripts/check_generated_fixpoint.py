@@ -41,7 +41,7 @@ PURE_ARTIFACTS = [
     "bundles/MANIFEST.json",
 ]
 
-SITE_ARTIFACTS = ["dashboard.html", "index.html", "explore.html"]
+SITE_ARTIFACTS = ["dashboard.html", "index.html", "explore.html", "pilot.html"]
 ALL_ARTIFACTS = PURE_ARTIFACTS + SITE_ARTIFACTS
 
 
@@ -110,28 +110,19 @@ def main() -> int:
             print(f"generated-fixpoint check FAILED: {exc}", file=sys.stderr)
             return 1
 
-    stale = changed(
-        {path: initial[path] for path in PURE_ARTIFACTS},
-        {path: first[path] for path in PURE_ARTIFACTS},
-    )
+    stale = changed(initial, first)
     non_idempotent = changed(first, second)
     if (args.check and stale) or non_idempotent:
         print("generated-fixpoint check FAILED:", file=sys.stderr)
         for path in stale if args.check else []:
-            print(f"- stale pure artifact: {path}", file=sys.stderr)
+            print(f"- stale generated artifact: {path}", file=sys.stderr)
         for path in non_idempotent:
             print(f"- changes again on second generator pass: {path}", file=sys.stderr)
         return 1
 
-    site_refresh = changed(
-        {path: initial[path] for path in SITE_ARTIFACTS},
-        {path: first[path] for path in SITE_ARTIFACTS},
-    )
     print(
         "generated-fixpoint check OK: "
-        f"{len(PURE_ARTIFACTS)} pure artifacts fresh; "
-        f"{len(ALL_ARTIFACTS)} artifacts stable after one pass"
-        + (f"; site refresh candidates: {', '.join(site_refresh)}" if site_refresh else "")
+        f"{len(ALL_ARTIFACTS)} generated artifacts fresh and stable after one pass"
     )
     return 0
 

@@ -77,31 +77,69 @@
       var centerY = height * 0.5;
       var radiusX = Math.max(100, width * 0.37);
       var radiusY = Math.max(150, height * 0.36);
-      var line = css("--line-strong");
+      var line = css("--navy-line");
       var paper = css("--paper");
       var ink = css("--ink");
 
+      context.globalAlpha = 0.22 * reveal;
+      context.strokeStyle = line;
       context.lineWidth = 1;
-      routes.forEach(function (route, index) {
+      for (var gridX = 0; gridX < width; gridX += 72) {
+        context.beginPath();
+        context.moveTo(gridX, 0);
+        context.lineTo(gridX, height);
+        context.stroke();
+      }
+      for (var gridY = 0; gridY < height; gridY += 72) {
+        context.beginPath();
+        context.moveTo(0, gridY);
+        context.lineTo(width, gridY);
+        context.stroke();
+      }
+
+      context.globalAlpha = 0.5 * reveal;
+      context.beginPath();
+      context.ellipse(centerX, centerY, radiusX * 0.72, radiusY * 0.72, 0, 0, Math.PI * 2);
+      context.stroke();
+      context.beginPath();
+      context.ellipse(centerX, centerY, radiusX * 0.93, radiusY * 0.93, 0, 0, Math.PI * 2);
+      context.stroke();
+
+      var points = routes.map(function (route, index) {
         var seed = hash(route.id || String(index));
         var angle = (index / routes.length) * Math.PI * 2 + ((seed % 100) / 100) * 0.34;
         var ring = 0.62 + (((seed >>> 8) % 32) / 100);
         var x = centerX + Math.cos(angle) * radiusX * ring;
         var y = centerY + Math.sin(angle) * radiusY * ring;
-        var endX = centerX + (x - centerX) * reveal;
-        var endY = centerY + (y - centerY) * reveal;
+        return {
+          route: route,
+          x: centerX + (x - centerX) * reveal,
+          y: centerY + (y - centerY) * reveal
+        };
+      });
 
+      context.globalAlpha = 0.22 * reveal;
+      context.strokeStyle = line;
+      points.forEach(function (point, index) {
+        var next = points[(index + 1) % points.length];
+        context.beginPath();
+        context.moveTo(point.x, point.y);
+        context.lineTo(next.x, next.y);
+        context.stroke();
+      });
+
+      points.forEach(function (point, index) {
         context.globalAlpha = 0.42 * reveal;
         context.strokeStyle = line;
         context.beginPath();
         context.moveTo(centerX, centerY);
-        context.lineTo(endX, endY);
+        context.lineTo(point.x, point.y);
         context.stroke();
 
         context.globalAlpha = reveal;
-        context.fillStyle = statusColor(route.status);
+        context.fillStyle = statusColor(point.route.status);
         context.beginPath();
-        context.arc(endX, endY, index < 2 ? 7 : 5, 0, Math.PI * 2);
+        context.arc(point.x, point.y, index < 2 ? 7 : 5, 0, Math.PI * 2);
         context.fill();
         context.lineWidth = 3;
         context.strokeStyle = paper;
