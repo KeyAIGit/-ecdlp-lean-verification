@@ -69,23 +69,27 @@ than) the original `NormEDSSomos4` development.
 ## Tooling update (2026-07-21): cofactor generation is unblocked in-container
 
 Part (a) above — "machine-generating the ~4 cofactor bundles exceeded the sandbox compute
-budget" — no longer holds. `sympy` (1.14.0) is available in-container and
-`scripts/certs/eds_cofactor_gen.py` generates Lean-ready cofactor bundles:
+budget" — is now split into a fast path and a tracked path. With `sympy` 1.14.0,
+`scripts/certs/eds_cofactor_gen.py` provides:
 
 - `solve_cofactors(goal, hyps, gens)` runs multivariate division (`sympy.reduced`) of the
   step goal by the **original** hypothesis list (recurrences + IH + somos4 instances), with the
   doubled-index `W(2M±i)` variables ordered first so the triangular recurrences eliminate them.
   When the remainder is 0 the returned quotients are exactly the cofactors a Lean
   `linear_combination (norm := ring1) …` cites — no Groebner-basis change-of-variables needed.
+- `solve_cofactors_via_ideal(goal, hyps, gens)` uses SymPy's module-backed
+  `Ideal.in_terms_of_generators`. It performs the Groebner/syzygy lift while tracking every
+  operation back to the **original** hypothesis list, closing the reduced-vs-basis provenance gap.
+- `clear_cofactor_denominators` exports the exact integer identity
+  `D·goal = Σ Qᵢ·hypᵢ`; any scalar cancellation remains explicit in Lean.
 - `self_test()` validates the encoding + solver end-to-end: it reproduces the proven
-  `somos4_odd_step` bundle (residual 0) **and** re-derives a valid bundle from scratch
-  (`python3 scripts/certs/eds_cofactor_gen.py` → `self_test OK`).
+  `somos4_odd_step` bundle (residual 0) and re-derives valid original-generator bundles through
+  both paths (`python3 scripts/certs/eds_cofactor_gen.py` → `self_test OK`).
 
-Residual is now purely (b): set up the CORE-I/CORE-II even/odd step goals + hypothesis lists,
-run `solve_cofactors`, transcribe the four bundles + the two finite base cases into the Lean
-step lemmas, assemble the two `normEDSRec'` inductions (porting the `somos4_dom` skeleton), and
-kernel-judge via `n7-stem-check` / `build`. The kernel remains the sole judge — a generated
-bundle is trusted only once `lake` accepts it.
+Residual: encode the CORE-I/CORE-II even/odd step ideals, run the fast reducer and then the
+tracked lift when needed, independently replay the emitted integer identity, and stage the
+result into Lean-sized intermediate lemmas. The four large bundles and two finite base cases
+still need kernel acceptance; a generated bundle is not a proof until `lake` accepts it.
 
 ## CORE-II residual pinned (2026-07-21): the exact "+companion" identity
 
@@ -118,12 +122,9 @@ plain multivariate division:
 - CORE-II "+companion" even-step: 33-term residual.
 
 These residuals are an artifact of `reduced()` being order-dependent and incomplete for a
-non-Groebner divisor set — **not** proof the identity is outside the ideal. But they mean the
-Lean-ready cofactor bundle for these steps needs a stronger extraction than a single `reduced`
-call: a Groebner basis of the M-window ideal **with change-of-basis tracking** back to the
-original hypotheses (the reduced-vs-original-generator gap), or a degree-bounded linear solve
-(dense ansatz is combinatorially infeasible at the required ~degree 6 over ~12 vars). This is
-almost certainly how the original `NormEDSSomos4` cofactors were produced, and is the real
-remaining cost — consistent with this note's "larger than the original NormEDSSomos4 development"
-estimate. The generator's `self_test` (somos4) remains a valid, working reference; the CORE /
-companion steps are the harder cases it does not yet dispatch automatically.
+non-Groebner divisor set — **not** proof the identity is outside the ideal. The
+change-of-basis API gap is now closed by `solve_cofactors_via_ideal`, but the computational and
+Lean-normalization costs remain: the measured hard certificates have degree 28–34 and roughly
+1,400–2,500 terms per cofactor. The next bounded experiment is therefore the 33-term
+`+companion` residual, followed by the smaller odd branch of `DΨ`; success requires exact replay
+and kernel acceptance, not merely successful ideal membership.

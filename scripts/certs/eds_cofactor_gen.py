@@ -18,10 +18,12 @@ judge — a generated bundle is only trusted once `lake`/`n7-stem-check` accepts
 
 1. `self_test()` — reproduces the KNOWN `somos4_odd_step` bundle and checks the
    residual is exactly 0, validating the free-sequence encoding and the solver.
-2. `solve_cofactors(goal, hyps, gens, max_deg)` — an ansatz linear-solve that
-   returns cofactors **against the original hypotheses** (Lean-ready, unlike a
-   raw Groebner reduction which is against the basis), or None if no bundle of
-   the given degree budget exists.
+2. `solve_cofactors(goal, hyps, gens)` — a fast triangular reducer against the
+   original hypotheses.
+3. `solve_cofactors_via_ideal(goal, hyps, gens)` — a complete ideal-membership
+   lift that tracks the Groebner calculation back to the original hypotheses.
+4. `clear_cofactor_denominators(...)` — turns rational cofactors into an exact
+   integer certificate `D * goal = Σ Qᵢ * hypothesisᵢ`.
 
 Usage: `python3 scripts/certs/eds_cofactor_gen.py` runs the self-test.
 Downstream (subsequent grind cycles): import `solve_cofactors`, feed the CORE-I /
@@ -51,8 +53,59 @@ def solve_cofactors(goal, hyps, gens, order='lex'):
     return Q
 
 
+def solve_cofactors_via_ideal(goal, hyps, gens, order='lex'):
+    """Lift an ideal-membership proof back to the original hypotheses.
+
+    Unlike ``sympy.reduced``, this uses SymPy's module-backed ideal machinery.
+    ``in_terms_of_generators`` tracks every Groebner/syzygy operation, so the
+    returned list has one cofactor for each input hypothesis. ``None`` means
+    that ``goal`` is not in the generated ideal.
+    """
+    ring = sp.QQ.old_poly_ring(*gens, order=order)
+    generators = [ring.convert(hyp) for hyp in hyps]
+    ideal = ring.ideal(*generators)
+    try:
+        lifted = ideal.in_terms_of_generators(ring.convert(goal))
+    except ValueError:
+        return None
+
+    cofactors = [sp.expand(ring.to_sympy(q)) for q in lifted]
+    assert len(cofactors) == len(hyps)
+    assert sp.expand(goal - sum(q * h for q, h in zip(cofactors, hyps))) == 0
+    return cofactors
+
+
+def clear_cofactor_denominators(goal, hyps, cofactors, gens):
+    """Return ``(D, Q)`` with ``D * goal = Σ Qᵢ * hypsᵢ`` over ``ZZ``.
+
+    N7 certificates are solved over ``QQ`` for performance, but Lean consumes
+    ring identities over arbitrary commutative rings. Clearing every rational
+    cofactor denominator makes the required scalar multiplier explicit instead
+    of silently assuming division is valid in the target ring.
+    """
+    if len(hyps) != len(cofactors):
+        raise ValueError("one cofactor is required for each hypothesis")
+
+    multiplier = sp.Integer(1)
+    for cofactor in cofactors:
+        poly = sp.Poly(cofactor, *gens, domain=sp.QQ)
+        for coefficient in poly.coeffs():
+            multiplier = sp.ilcm(multiplier, sp.denom(coefficient))
+
+    integer_cofactors = [sp.expand(multiplier * q) for q in cofactors]
+    for cofactor in integer_cofactors:
+        sp.Poly(cofactor, *gens, domain=sp.ZZ)
+
+    assert multiplier > 0
+    assert sp.expand(
+        multiplier * goal
+        - sum(q * h for q, h in zip(integer_cofactors, hyps))
+    ) == 0
+    return int(multiplier), integer_cofactors
+
+
 def self_test():
-    """Reproduce + re-solve the proven somos4_odd_step bundle."""
+    """Reproduce and independently lift the proven Somos-4 odd-step bundle."""
     b, c = sp.symbols('b c')
     Wm2, Wm1, W0, W1, W2, W3 = sp.symbols('Wm2 Wm1 W0 W1 W2 W3')
     D2M_m1, D2M, D2M_p1, D2M_p2, D2M_p3 = sp.symbols('D2M_m1 D2M D2M_p1 D2M_p2 D2M_p3')
@@ -80,8 +133,34 @@ def self_test():
     Q = solve_cofactors(goal, hyps, gens)
     assert Q is not None, "solver failed to find a bundle"
     assert sp.expand(goal - sum(q * h for q, h in zip(Q, hyps))) == 0
-    print("self_test OK: known bundle residual 0; solver reproduced a valid bundle "
-          f"({sum(1 for q in Q if q != 0)}/{len(Q)} nonzero cofactors).")
+
+    # 3) the tracked ideal lift must recover cofactors against the same original
+    #    hypotheses, even when one-pass triangular division is insufficient.
+    lifted = solve_cofactors_via_ideal(goal, hyps, gens)
+    assert lifted is not None, "tracked ideal lift failed to find a bundle"
+    assert sp.expand(goal - sum(q * h for q, h in zip(lifted, hyps))) == 0
+    multiplier, integer_cofactors = clear_cofactor_denominators(
+        goal, hyps, lifted, gens
+    )
+    assert sp.expand(
+        multiplier * goal
+        - sum(q * h for q, h in zip(integer_cofactors, hyps))
+    ) == 0
+
+    # 4) denominator clearing is explicit and independently regression-tested.
+    tx = sp.symbols('tx')
+    toy_multiplier, toy_cofactors = clear_cofactor_denominators(
+        tx, [2 * tx], [sp.Rational(1, 2)], [tx]
+    )
+    assert toy_multiplier == 2
+    assert toy_cofactors == [1]
+
+    print(
+        "self_test OK: known bundle residual 0; triangular and tracked-ideal "
+        "solvers reproduced valid original-generator certificates "
+        f"({sum(1 for q in lifted if q != 0)}/{len(lifted)} nonzero lifted "
+        f"cofactors, denominator multiplier {multiplier})."
+    )
 
 
 if __name__ == '__main__':
