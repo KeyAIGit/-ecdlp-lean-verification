@@ -37,9 +37,7 @@ theorem nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion
       (hcardB.trans (by norm_num))
   let d : A →+ A := nsmulAddMonoidHom 2
   have hker : d.ker = B := by
-    ext a
-    change (2 : ℕ) • a = 0 ↔ (2 : ℕ) • a = 0
-    rfl
+    simpa [d, B] using (torsionBy_eq_ker_nsmul (A := A) 2).symm
   have hrangeCard : Nat.card d.range = 4 := by
     have hmul : Nat.card d.ker * Nat.card d.range = Nat.card A := by
       simpa only [AddSubgroup.index_ker] using d.ker.card_mul_index
@@ -105,10 +103,10 @@ theorem nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion
     change eTwo (delta y) = (0, 1)
     rw [hdeltaY]
     simpa [v]
-  have huTwo : (2 : ℕ) • (u : A) = 0 :=
-    AddSubgroup.torsionBy.nsmul u
-  have hvTwo : (2 : ℕ) • (v : A) = 0 :=
-    AddSubgroup.torsionBy.nsmul v
+  have huTwo : (2 : ℕ) • (u : A) = 0 := by
+    simpa using congrArg (fun b : B => (b : A)) (AddSubgroup.torsionBy.nsmul u)
+  have hvTwo : (2 : ℕ) • (v : A) = 0 := by
+    simpa using congrArg (fun b : B => (b : A)) (AddSubgroup.torsionBy.nsmul v)
   have hdeltaU : delta (u : A) = 0 := by
     apply Subtype.ext
     simpa [delta, d] using huTwo
@@ -121,7 +119,7 @@ theorem nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion
   have hqv : q (v : A) = 0 := by
     change eTwo (delta (v : A)) = 0
     rw [hdeltaV, map_zero]
-  have hthreeModTwo : (3 : ZMod 2) = 1 := by decide
+  have hthreeModTwo : (3 : ZMod 2) = 1 := by norm_num
   let zx : ZMod 4 →+ A :=
     ZMod.lift 4
       ⟨zmultiplesHom A x, by
