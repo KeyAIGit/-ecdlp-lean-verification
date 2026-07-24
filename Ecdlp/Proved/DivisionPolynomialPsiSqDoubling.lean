@@ -2,7 +2,7 @@ import Ecdlp.Proved.PrePsiSomos4
 import Ecdlp.Proved.PrePsiPlusCompanion
 
 /-!
-# Candidate: the `ΨSq` half of the N7 even-x wall
+# The `ΨSq` polynomial doubling identity for secp256k1
 
 This seed replaces the incomplete recursive parity expansion in
 `scripts/seeds/n7_even_x_psisq.lean`.  For
@@ -20,7 +20,7 @@ The plus-companion theorem supplies `U + V`, while Somos-4 supplies
 `U * V`.  After those two substitutions, each parity branch is a small
 ring identity using the concrete secp256k1 parameters.
 
-This file is an isolated candidate.  It is not imported by `Ecdlp.lean`.
+The result is a polynomial identity; its pointwise evaluation is exposed separately below.
 -/
 
 open Polynomial WeierstrassCurve
@@ -32,7 +32,7 @@ variable [Fact (Nat.Prime Secp256k1.p)]
 /-- Polynomial doubling identity needed for the denominator half of
 `N7Uniform.even_x_algebra`.  Evaluation at any `x` gives the wall's
 `ΨSq(2k)` identity. -/
-theorem n7_even_x_ΨSq_companion_candidate (m : ℤ) :
+theorem secp256k1_ΨSq_two_mul (m : ℤ) :
     secp256k1.ΨSq (2 * m) =
       4 * secp256k1.ΨSq m *
         (secp256k1.Φ m ^ 3 + 7 * secp256k1.ΨSq m ^ 3) := by
@@ -114,5 +114,13 @@ theorem n7_even_x_ΨSq_companion_candidate (m : ℤ) :
   rw [hS (2 * m), if_pos h2m, hdouble, hF m, hS m]
   dsimp [U, V, T] at hcore ⊢
   linear_combination P m ^ 2 * hcore
+
+/-- Pointwise evaluation of the secp256k1 `ΨSq` doubling identity. -/
+theorem secp256k1_ΨSq_two_mul_eval (m : ℤ) (x : ZMod Secp256k1.p) :
+    (secp256k1.ΨSq (2 * m)).eval x =
+      4 * (secp256k1.ΨSq m).eval x *
+        ((secp256k1.Φ m).eval x ^ 3 + 7 * (secp256k1.ΨSq m).eval x ^ 3) := by
+  have h := congrArg (Polynomial.eval x) (secp256k1_ΨSq_two_mul m)
+  simpa only [eval_mul, eval_add, eval_pow, eval_ofNat] using h
 
 end Ecdlp.Curve

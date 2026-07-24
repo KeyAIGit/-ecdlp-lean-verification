@@ -2,7 +2,7 @@ import Ecdlp.Proved.PrePsiSomos4
 import Ecdlp.Proved.PrePsiPlusCompanion
 
 /-!
-# Candidate: the `Φ` half of the N7 even-x wall
+# The `Φ` polynomial doubling identity for secp256k1
 
 For
 
@@ -17,7 +17,7 @@ recurrences give a finite formula for
 plus-companion identity and Somos-4.  The remaining two parity branches are
 ring identities using the concrete secp256k1 parameters.
 
-This file is an isolated candidate.  It is not imported by `Ecdlp.lean`.
+The result is a polynomial identity; its pointwise evaluation is exposed separately below.
 -/
 
 open Polynomial WeierstrassCurve
@@ -29,7 +29,7 @@ variable [Fact (Nat.Prime Secp256k1.p)]
 /-- Polynomial doubling identity needed for the numerator half of
 `N7Uniform.even_x_algebra`.  Evaluation at any `x` gives the wall's
 `Φ(2k)` identity. -/
-theorem n7_even_x_Φ_companion_candidate (m : ℤ) :
+theorem secp256k1_Φ_two_mul (m : ℤ) :
     secp256k1.Φ (2 * m) =
       secp256k1.Φ m ^ 4
         - 56 * secp256k1.Φ m * secp256k1.ΨSq m ^ 3 := by
@@ -159,5 +159,13 @@ theorem n7_even_x_Φ_companion_candidate (m : ℤ) :
   simp only [mul_one]
   dsimp [T] at hcore ⊢
   exact hcore
+
+/-- Pointwise evaluation of the secp256k1 `Φ` doubling identity. -/
+theorem secp256k1_Φ_two_mul_eval (m : ℤ) (x : ZMod Secp256k1.p) :
+    (secp256k1.Φ (2 * m)).eval x =
+      (secp256k1.Φ m).eval x ^ 4
+        - 56 * (secp256k1.Φ m).eval x * (secp256k1.ΨSq m).eval x ^ 3 := by
+  have h := congrArg (Polynomial.eval x) (secp256k1_Φ_two_mul m)
+  simpa only [eval_sub, eval_mul, eval_pow, eval_ofNat] using h
 
 end Ecdlp.Curve

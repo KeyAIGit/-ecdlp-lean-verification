@@ -52,6 +52,8 @@ jobs:
             Ecdlp.Proved.DivisionPolynomialPointBridge \
             Ecdlp.Proved.PrePsiSomos4 \
             Ecdlp.Proved.PrePsiPlusCompanion \
+            Ecdlp.Proved.DivisionPolynomialPsiSqDoubling \
+            Ecdlp.Proved.DivisionPolynomialPhiDoubling \
             Ecdlp.Proved.NsmulCoordsBaseOne \
             Ecdlp.Proved.NsmulCoordsBaseTwo \
             Ecdlp.Proved.OmegaRecurrenceAnchors \
