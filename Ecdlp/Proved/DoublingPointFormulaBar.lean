@@ -14,6 +14,7 @@ secp256k1 to `AlgebraicClosure (ZMod Secp256k1.p)`.
 namespace Ecdlp.Curve
 
 open Polynomial WeierstrassCurve.Affine
+open scoped Classical
 
 private noncomputable abbrev φK :
     ZMod Secp256k1.p →+* AlgebraicClosure (ZMod Secp256k1.p) :=
