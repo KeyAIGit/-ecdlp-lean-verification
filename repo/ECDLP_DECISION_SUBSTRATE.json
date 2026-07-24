@@ -1071,9 +1071,9 @@
         "n10-uniform-separability",
         "general-n-torsion"
       ],
-      "mathlib_status": "Project-specific low-n results exist; the uniform theorem chain remains blocked in repo/FORMAL_SUBSTRATE.json.",
+      "mathlib_status": "Project-specific exact closure results now cover n in {2,3,4,5,7}, with n=4 the first composite profile; the uniform theorem chain remains blocked in repo/FORMAL_SUBSTRATE.json.",
       "deliverable": "General theorems only when they discharge a selected route's applicability or correctness gate.",
-      "resume_condition": "A selected route needs uniform n rather than the already closed concrete small-prime family."
+      "resume_condition": "A selected route needs uniform n rather than the already closed concrete low-index family."
     },
     {
       "id": "F-WEIL-PAIRING-STACK",

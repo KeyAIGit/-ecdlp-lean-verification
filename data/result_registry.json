@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 296,
-  "ledger_reference_count": 467,
-  "ledger_named_declarations": 442,
+  "ledger_rows": 297,
+  "ledger_reference_count": 474,
+  "ledger_named_declarations": 449,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 728,
-  "distinct_qualified_names": 728,
-  "verified_md_citations": 442,
+  "declaration_count": 735,
+  "distinct_qualified_names": 735,
+  "verified_md_citations": 449,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -117,13 +117,19 @@
     "Ecdlp.Curve.secp256k1Bar_five_nsmul_eq_zero_iff",
     "Ecdlp.Curve.secp256k1Bar_five_torsion_ncard",
     "Ecdlp.Curve.secp256k1Bar_five_torsion_structure",
+    "Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff",
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_card",
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard",
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_structure",
     "Ecdlp.Curve.secp256k1Bar_seven_nsmul_eq_zero_iff",
     "Ecdlp.Curve.secp256k1Bar_seven_torsion_ncard",
     "Ecdlp.Curve.secp256k1Bar_seven_torsion_structure",
     "Ecdlp.Curve.secp256k1Bar_three_nsmul_eq_zero_iff",
     "Ecdlp.Curve.secp256k1Bar_three_torsion_ncard",
     "Ecdlp.Curve.secp256k1Bar_three_torsion_structure",
+    "Ecdlp.Curve.secp256k1Bar_torsionBy_four_card",
     "Ecdlp.Curve.secp256k1Bar_torsionBy_three_card",
+    "Ecdlp.Curve.secp256k1Bar_two_nsmul_coords",
     "Ecdlp.Curve.secp256k1Bar_two_nsmul_eq_zero_iff",
     "Ecdlp.Curve.secp256k1Bar_two_torsion_ncard",
     "Ecdlp.Curve.secp256k1Bar_two_torsion_structure",
@@ -452,6 +458,7 @@
     "Ecdlp.Semaev.secp256k1_semaev_three_tangent",
     "Ecdlp.Targets.glv_eigenvalue_zmod",
     "Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd",
+    "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
     "Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq",
     "Ecdlp.Torsion.torsionBy_dvd_le",
     "Ecdlp.Torsion.torsionBy_eq_ker_nsmul",
@@ -4836,7 +4843,7 @@
     },
     {
       "id": "ledger-200",
-      "claim": "Exact distinct-root counts of `ψₙ` over `𝔽̄_p`: `4/6/12/24` for `n=3/4/5/7` (`secp256k1_Ψ₃_roots_card_bar` + `preΨ₄`/`preΨ₅`/`preΨ₇` (=`6`/`12`/`24`), with `…_roots_nodup_bar` (`.Nodup`) and `…_separable` (`Separable ψₙ`): `((ψₙ).map φ).roots.card` over `𝔽̄_p`, `φ:𝔽_p→𝔽̄_p` the base change — the separability/root-count layer, from squarefreeness + `IsAlgClosed.splits` + `splits_iff_card_roots`. For odd `n` the count is `(n−1)/2`; the even `n=4` gives `6` = the primitive-4-torsion `x`-coordinates (`(#E[4]−#E[2])/2`). A statement purely about `ψₙ` and its roots in `𝔽̄_p`; the `#E[n]` consequence is deferred to the structure assembly)",
+      "claim": "Exact distinct-root counts of `ψₙ` over `𝔽̄_p`: `4/6/12/24` for `n=3/4/5/7` (`secp256k1_Ψ₃_roots_card_bar` + `preΨ₄`/`preΨ₅`/`preΨ₇` (=`6`/`12`/`24`), with `…_roots_nodup_bar` (`.Nodup`) and `…_separable` (`Separable ψₙ`): `((ψₙ).map φ).roots.card` over `𝔽̄_p`, `φ:𝔽_p→𝔽̄_p` the base change — the separability/root-count layer, from squarefreeness + `IsAlgClosed.splits` + `splits_iff_card_roots`. For odd `n` the count is `(n−1)/2`; the even `n=4` gives `6` = the primitive-4-torsion `x`-coordinates (`(#E[4]−#E[2])/2`). This row is purely about polynomial roots; its `n=4` closure consequence is now consumed by `FourTorsionStructure.lean`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Ψ₃_roots_card_bar`, `secp256k1_preΨ₄_roots_card_bar`",
       "declared_files": [
         "Ecdlp/Proved/DivisionPolynomialSeparable.lean"
@@ -4984,7 +4991,7 @@
     },
     {
       "id": "ledger-207",
-      "claim": "Point-level 4-torsion bridge `4•P = 0 ⟺ ψ₄(P)=0` (`secp256k1_four_nsmul_eq_zero_iff`: for a nonzero affine `P=(x,y)` on secp256k1, `4•P=0` iff the 4-division polynomial vanishes — the even-index member of the `{2,3,5,7}` torsion-bridge family. Runs by doubling-of-doubling: `4•P=2•(2•P)`, so `4•P=0 ⟺ Y(2•P)=0` (2-torsion of the double, via `secp256k1_two_nsmul_eq_zero_iff`), and the landed doubling `y`-coordinate `Y(2•P)=ω₂/(2y)³` (`secp256k1_two_nsmul_coords`) gives `Y(2•P)=0 ⟺ ω₂(x)=0 ⟺ ψ₄(P)=4y·ω₂=0`, with `ω₂=x⁶+140x³−392`. The `n=4` non-degeneracy leaf of the uniform carrier. Inherits `Lean.ofReduceBool` from the `2≠0` fact (`native_decide`); no new axioms)",
+      "claim": "Point-level 4-torsion bridge `4•P = 0 ⟺ ψ₄(P)=0` (`secp256k1_four_nsmul_eq_zero_iff`: for a nonzero affine `P=(x,y)` on secp256k1, `4•P=0` iff the 4-division polynomial vanishes — the composite even-index extension of the prime-index `{2,3,5,7}` torsion-bridge family. Runs by doubling-of-doubling: `4•P=2•(2•P)`, so `4•P=0 ⟺ Y(2•P)=0` (2-torsion of the double, via `secp256k1_two_nsmul_eq_zero_iff`), and the landed doubling `y`-coordinate `Y(2•P)=ω₂/(2y)³` (`secp256k1_two_nsmul_coords`) gives `Y(2•P)=0 ⟺ ω₂(x)=0 ⟺ ψ₄(P)=4y·ω₂=0`, with `ω₂=x⁶+140x³−392`. The `n=4` non-degeneracy leaf of the uniform carrier. Inherits `Lean.ofReduceBool` from the `2≠0` fact (`native_decide`); no new axioms)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_four_nsmul_eq_zero_iff`",
       "declared_files": [
         "Ecdlp/Proved/FourTorsionBridge.lean"
@@ -5638,7 +5645,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/FourTorsionCount.lean",
-          "line": 51
+          "line": 52
         }
       ]
     },
@@ -7447,7 +7454,7 @@
     },
     {
       "id": "ledger-289",
-      "claim": "#E[2](𝔽̄_p) = 4` and `E[2] ≅ (ℤ/2)` — N13 at `n = 2`, completing the family to `n ∈ {2,3,5,7}` (`secp256k1Bar_two_torsion_structure` + the closure characterization `secp256k1Bar_two_nsmul_eq_zero_iff`: `2•P = O ⟺ y = 0`. Structurally the `n = 2` N13 instance — no multiplication formula: `2•P = O ⟺ P = −P ⟺ y = negY = −y ⟺ y = 0` (`char ≠ 2`), and `y = 0` on the curve forces `x³+7 = 0`. So `E[2] = {O} ∪ {(x,0) : X³+7-root}`, an explicit 4-element finset (no `±y` split — `y = 0` is forced), `1 + 3 = 4 = 2`; N10(iii) at prime 2 classifies. The even companion of the odd family)",
+      "claim": "#E[2](𝔽̄_p) = 4` and `E[2] ≅ (ℤ/2)` — N13 at `n = 2`, completing the small-prime subfamily `n ∈ {2,3,5,7}` (`secp256k1Bar_two_torsion_structure` + the closure characterization `secp256k1Bar_two_nsmul_eq_zero_iff`: `2•P = O ⟺ y = 0`. Structurally the `n = 2` N13 instance — no multiplication formula: `2•P = O ⟺ P = −P ⟺ y = negY = −y ⟺ y = 0` (`char ≠ 2`), and `y = 0` on the curve forces `x³+7 = 0`. So `E[2] = {O} ∪ {(x,0) : X³+7-root}`, an explicit 4-element finset (no `±y` split — `y = 0` is forced), `1 + 3 = 4 = 2`; N10(iii) at prime 2 classifies. The even companion of the odd family)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1Bar_two_torsion_structure`, `secp256k1Bar_two_nsmul_eq_zero_iff`, `secp256k1Bar_two_torsion_ncard`",
       "declared_files": [
         "Ecdlp/Proved/TwoTorsionStructure.lean"
@@ -7483,6 +7490,77 @@
     },
     {
       "id": "ledger-290",
+      "claim": "#E[4](𝔽̄_p) = 16` and `E[4] ≅ (ℤ/4)` — N13 at `n = 4`, the first composite torsion-structure case (`secp256k1Bar_four_torsion_structure`: the closure doubling formula supplies `secp256k1Bar_two_nsmul_coords`; the new bridge gives `4•P=0 ⟺ ψ₄(P)=0`; the explicit split `E[4]=E[2] ⊔ P₄` counts `4 + 6·2 = 16`; the internal two-torsion is identified with ambient `E[2]`, hence has card 4; and `nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion` classifies the resulting finite abelian group. The result is existence of an additive equivalence, not a canonical basis. Honest scope: concrete `n=4` only; the uniform composite-`n` theorem remains open)",
+      "theorem_cell": "`Ecdlp.Curve.secp256k1Bar_two_nsmul_coords`, `Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff`, `Ecdlp.Curve.secp256k1Bar_four_torsion_ncard`, `Ecdlp.Curve.secp256k1Bar_four_torsion_card`, `Ecdlp.Curve.secp256k1Bar_torsionBy_four_card`, `Ecdlp.Curve.secp256k1Bar_four_torsion_structure`, `Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion`",
+      "declared_files": [
+        "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+        "Ecdlp/Proved/FourTorsionBridgeBar.lean",
+        "Ecdlp/Proved/FourTorsionStructure.lean",
+        "Ecdlp/Proved/FourTorsionClassification.lean"
+      ],
+      "method": "closure doubling + division-polynomial bridge + separability/coprimality + finite-set card algebra + composite-order classification",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_two_nsmul_coords",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_two_nsmul_coords",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+          "line": 116
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionBridgeBar.lean",
+          "line": 55
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+          "line": 386
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_four_torsion_card",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_four_torsion_card",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+          "line": 412
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_torsionBy_four_card",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_torsionBy_four_card",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+          "line": 418
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_four_torsion_structure",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_four_torsion_structure",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+          "line": 481
+        },
+        {
+          "cited": "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
+          "canonical_name": "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionClassification.lean",
+          "line": 18
+        }
+      ]
+    },
+    {
+      "id": "ledger-291",
       "claim": "W3 evaluation layer completed at the fraction level — `evalFracAt` + the Miller-representative nonvanishing (`evalFracAt h a b := evalAt h a / evalAt h b` with the representation-independence core `evalFracAt_well_defined` (cross-multiplication `a₁b₂ = a₂b₁` + nonvanishing denominators ⟹ equal values — transported through the ring hom `evalAt`, no domain instance needed), Miller-loop multiplicativity `evalFracAt_mul`, unit facts (`evalAt_unit_ne_zero`: coordinate-ring units never vanish at rational points; `evalFracAt_unit_mul`), and the bridge to the localization layer `evalRatAt_eq_evalFracAt` (an `a/b` presentation of a rational function regular at `P` evaluates identically under the residue map). Plus the secp256k1 Miller-layer theorem `secp256k1_miller_eval_scaling`: the W2 Miller-function representative ambiguity is a globally nonvanishing unit factor at every rational point — the well-definedness seed for the eventual `eₙ`. Honest scope: extracting an `a/b` presentation from an abstract `FunctionField` element is the documented next rung; curve-agnostic sections PR-able)",
       "theorem_cell": "`Ecdlp.Weil.evalFracAt_well_defined`, `evalFracAt_mul`, `evalAt_unit_ne_zero`, `evalRatAt_eq_evalFracAt`, `secp256k1_miller_eval_scaling`",
       "declared_files": [
@@ -7534,7 +7612,7 @@
       ]
     },
     {
-      "id": "ledger-291",
+      "id": "ledger-292",
       "claim": "Function-field `a/b` extraction — every rational function is a quotient of regular functions (`functionField_exists_num_den`: every `f` in the curve's function field (`FractionRing F[E]`, definitionally) equals `algebraMap a / algebraMap b` with `b ≠ 0` — via `IsLocalization.surj` on the nonZeroDivisors localization; with the division-free form (`functionField_exists_mul_num_den`), cross-multiplication faithfulness of two presentations (`functionField_num_den_cross`), nonzero-numerator (`functionField_num_ne_zero`), the weld to `evalFracAt` (`evalFracAt_num_den_well_defined`: presentations regular at `P` evaluate equally), and the Miller instantiation `secp256k1_miller_function_num_den` (the W2 generator `f_P` = an explicit quotient `↑a/↑b`, and the fractional ideal is generated by that quotient). Honest scope: the extraction controls `b ≠ 0` but not *where* `b` vanishes — choosing a presentation with `b(P) ≠ 0` for `f` regular at `P` is the documented next rung, then `f_P(D_Q)` and W4)",
       "theorem_cell": "`Ecdlp.Weil.functionField_exists_num_den`, `functionField_num_den_cross`, `evalFracAt_num_den_well_defined`, `secp256k1_miller_function_num_den`",
       "declared_files": [
@@ -7578,7 +7656,7 @@
       ]
     },
     {
-      "id": "ledger-292",
+      "id": "ledger-293",
       "claim": "W3 closed at the function-field level — `RegularAt` and evaluation of abstract elements (`FunctionFieldRegular.lean`: the `RegularAt` predicate (`∃ a b, evalAt b ≠ 0 ∧ f = a/b`), the unique value `evalReg` with its defining lemmas, and the two-way bridge to the localization: an element of `Localization.AtPrime (XYIdeal P)` maps to a `RegularAt` function (via `IsLocalization.surj` + `evalAt_ker` rewriting `b ∉ XYIdeal ⟺ evalAt b ≠ 0`), and conversely a regular presentation determines a localization element (`IsLocalization.mk'`), with the payoff weld `evalRatAt = evalReg` on the overlap. With this, every abstract function-field element regular at `P` has a well-defined value at `P` — the W3 evaluation half is closed end-to-end (`evalAt → evalRatAt → evalFracAt → a/b extraction → RegularAt`); next: `f_P(D_Q)` divisor evaluation and W4 reciprocity)",
       "theorem_cell": "`Ecdlp.Weil.RegularAt`, `evalReg`, `evalRatAt_eq_evalReg` (+ 14 supporting)",
       "declared_files": [
@@ -7734,7 +7812,7 @@
       ]
     },
     {
-      "id": "ledger-293",
+      "id": "ledger-294",
       "claim": "Weil ladder W3e-1 — divisor evaluation `f((Q)−(O))` is multiplicative in the function (`divEval_mul`: for `f, g` regular at both `Q` and `O`, `divEval (f·g) = divEval f · divEval g`, where `divEval f := evalReg f Q / evalReg f O` is the value of `f` at the degree-0 divisor `(Q)−(O)`; via the pointwise multiplicativity `evalReg_mul` — `evalReg (f·g) = evalReg f · evalReg g` at a point, from `evalReg_eq` + `evalFracAt_mul`. The homomorphism property that makes `f_P(D_Q)` a map `E → μₙ` in the Weil pairing; first evaluation-half rung of `notes/WEIL_LADDER.md`)",
       "theorem_cell": "`Ecdlp.Weil.divEval_mul`, `evalReg_mul`",
       "declared_files": [
@@ -7762,7 +7840,7 @@
       ]
     },
     {
-      "id": "ledger-294",
+      "id": "ledger-295",
       "claim": "Weil ladder W3e-2 — how the Miller representative enters `divEval`, and conditional representative-independence (`divEval_smul_unit`: for `g = u·f` with `u` a unit of `F[E]` and `f, g` regular at `Q, O`, `divEval g = (u(Q)/u(O)) · divEval f` — the entire dependence of `divEval` on the choice of Miller function is the single ratio `u(Q)/u(O)`, from the pointwise `evalReg_smul_unit` = `evalReg (u·f) = u(P)·evalReg f` via `evalFracAt_unit_mul`; and `divEval_smul_unit_eq`: if additionally `u(Q) = u(O)` the ratio is `1`, so `divEval g = divEval f`. secp256k1 forms `secp256k1_divEval_miller_rep_scaling`/`_indep` apply this to the `secp256k1_miller_function_unique` ambiguity. Honest scope: unconditional independence needs `u(Q)=u(O)`, i.e. that units of `F[E]` are constants — absent from Mathlib v4.31, carried as an explicit hypothesis, not proved)",
       "theorem_cell": "`Ecdlp.Weil.divEval_smul_unit`, `divEval_smul_unit_eq`, `evalReg_smul_unit`",
       "declared_files": [
@@ -7798,7 +7876,7 @@
       ]
     },
     {
-      "id": "ledger-295",
+      "id": "ledger-296",
       "claim": "Weil ladder W3e-3 — the raw pairing value's domain (support-disjointness bridge) + the `divEval` unit law (`secp256k1_miller_jointly_regular`: a Miller function `f` for `(P,n)` has a fixed presentation `a/b`, and at any two points `A, B` where the single denominator `b` does not vanish — i.e. `A, B` off `supp(div f)` — `f` is regular at both, the joint-regularity hypothesis `divEval hA hB` consumes, from one geometric condition; and `divEval_one`/`evalReg_one`: `divEval 1 ((A)−(B)) = 1`, which with `divEval_mul` makes `divEval` a monoid hom on the functions regular at both points. Closes the reachable W3-evaluation scaffolding. Honest scope: this packages the raw value's domain + algebra; it does not assemble `eₙ(P,Q)` — that needs Weil reciprocity, the frozen W4 no-go, since the base point `O ∈ supp(div f_P)`)",
       "theorem_cell": "`Ecdlp.Weil.secp256k1_miller_jointly_regular`, `divEval_one`",
       "declared_files": [
@@ -8569,6 +8647,34 @@
       "file": "Ecdlp/Proved/FiveTorsionStructure.lean",
       "line": 391
     },
+    "Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff": {
+      "name": "secp256k1Bar_four_nsmul_eq_zero_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionBridgeBar.lean",
+      "line": 55
+    },
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_card": {
+      "name": "secp256k1Bar_four_torsion_card",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 412
+    },
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard": {
+      "name": "secp256k1Bar_four_torsion_ncard",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 386
+    },
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_structure": {
+      "name": "secp256k1Bar_four_torsion_structure",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 481
+    },
     "Ecdlp.Curve.secp256k1Bar_isCoprime_Φ_ΨSq": {
       "name": "secp256k1Bar_isCoprime_Φ_ΨSq",
       "namespace": "Ecdlp.Curve",
@@ -8716,6 +8822,13 @@
       "file": "Ecdlp/Proved/FiveTorsionStructure.lean",
       "line": 374
     },
+    "Ecdlp.Curve.secp256k1Bar_torsionBy_four_card": {
+      "name": "secp256k1Bar_torsionBy_four_card",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 418
+    },
     "Ecdlp.Curve.secp256k1Bar_torsionBy_seven_card": {
       "name": "secp256k1Bar_torsionBy_seven_card",
       "namespace": "Ecdlp.Curve",
@@ -8736,6 +8849,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/TwoTorsionStructure.lean",
       "line": 283
+    },
+    "Ecdlp.Curve.secp256k1Bar_two_nsmul_coords": {
+      "name": "secp256k1Bar_two_nsmul_coords",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+      "line": 116
     },
     "Ecdlp.Curve.secp256k1Bar_two_nsmul_eq_zero_iff": {
       "name": "secp256k1Bar_two_nsmul_eq_zero_iff",
@@ -9141,7 +9261,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FourTorsionCount.lean",
-      "line": 51
+      "line": 52
     },
     "Ecdlp.Curve.secp256k1_frobenius_norm": {
       "name": "secp256k1_frobenius_norm",
@@ -12040,6 +12160,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/Torsion.lean",
       "line": 39
+    },
+    "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion": {
+      "name": "nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionClassification.lean",
+      "line": 18
     },
     "Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq": {
       "name": "nonempty_addEquiv_zmod_prod_of_card_eq_sq",

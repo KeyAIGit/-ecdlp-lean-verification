@@ -4,21 +4,21 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 296,
-    "ledger_rows": 296,
+    "theorems": 297,
+    "ledger_rows": 297,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
     "attack_routes": 17,
     "decision_foundations": 11,
     "attack_registry_objects": 14,
-    "edges": 950,
+    "edges": 972,
     "by_edge_type": {
-      "imports": 478,
-      "member_of": 296,
+      "imports": 496,
+      "member_of": 297,
       "requires_foundation": 41,
       "decision_grounded_in": 25,
-      "supports": 21,
+      "supports": 24,
       "depends_on": 18,
       "evaluated_under": 18,
       "detailed_by": 15,
@@ -144,6 +144,7 @@
       "landed `x(4P)` + `y(2P)`/`y(3P)` formulas + Mathlib `ψ_even`/`ψ_four": 1,
       "Mathlib (`Separable`, `Separable.map`, `IsAlgClosed.splits`, `nodup_roots`) + Bézout native_decide": 1,
       "closure 2-torsion (`y=0`) + `CubicSeparable` roots + N10(iii)": 1,
+      "closure doubling + division-polynomial bridge + separability/coprimality + finite-set card algebra + composite-order classification": 1,
       "evalAt`/`evalRatAt` layer + `secp256k1_miller_function_unique` (W2)": 1,
       "IsLocalization.surj`/`IsFractionRing.injective` (source-verified) + `evalFracAt` layer + W2": 1,
       "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer": 1,
@@ -153,7 +154,7 @@
     },
     "by_area": {
       "curve-torsion": 152,
-      "primality": 54,
+      "primality": 55,
       "generic-hardness": 29,
       "other": 26,
       "protocol-soundness": 23,
@@ -4179,7 +4180,7 @@
       "files": [
         "Ecdlp/Proved/DivisionPolynomialSeparable.lean"
       ],
-      "claim": "Exact distinct-root counts of `ψₙ` over `𝔽̄_p`: `4/6/12/24` for `n=3/4/5/7` (`secp256k1_Ψ₃_roots_card_bar` + `preΨ₄`/`preΨ₅`/`preΨ₇` (=`6`/`12`/`24`), with `…_roots_nodup_bar` (`.Nodup`) and `…_separable` (`Separable ψₙ`): `((ψₙ).map φ).roots.card` over `𝔽̄_p`, `φ:𝔽_p→𝔽̄_p` the base change — the separability/root-count layer, from squarefreeness + `IsAlgClosed.splits` + `splits_iff_card_roots`. For odd `n` the count is `(n−1)/2`; the even `n=4` gives `6` = the primitive-4-torsion `x`-coordinates (`(#E[4]−#E[2])/2`). A statement purely about `ψₙ` and its roots in `𝔽̄_p`; the `#E[n]` consequence is deferred to the structure assembly)",
+      "claim": "Exact distinct-root counts of `ψₙ` over `𝔽̄_p`: `4/6/12/24` for `n=3/4/5/7` (`secp256k1_Ψ₃_roots_card_bar` + `preΨ₄`/`preΨ₅`/`preΨ₇` (=`6`/`12`/`24`), with `…_roots_nodup_bar` (`.Nodup`) and `…_separable` (`Separable ψₙ`): `((ψₙ).map φ).roots.card` over `𝔽̄_p`, `φ:𝔽_p→𝔽̄_p` the base change — the separability/root-count layer, from squarefreeness + `IsAlgClosed.splits` + `splits_iff_card_roots`. For odd `n` the count is `(n−1)/2`; the even `n=4` gives `6` = the primitive-4-torsion `x`-coordinates (`(#E[4]−#E[2])/2`). This row is purely about polynomial roots; its `n=4` closure consequence is now consumed by `FourTorsionStructure.lean`)",
       "method": "Mathlib (`Separable.map`, `IsAlgClosed.splits`, `splits_iff_card_roots`, `nodup_roots`)",
       "status": "proved",
       "area": "curve-torsion",
@@ -4319,11 +4320,11 @@
       "files": [
         "Ecdlp/Proved/FourTorsionBridge.lean"
       ],
-      "claim": "Point-level 4-torsion bridge `4•P = 0 ⟺ ψ₄(P)=0` (`secp256k1_four_nsmul_eq_zero_iff`: for a nonzero affine `P=(x,y)` on secp256k1, `4•P=0` iff the 4-division polynomial vanishes — the even-index member of the `{2,3,5,7}` torsion-bridge family. Runs by doubling-of-doubling: `4•P=2•(2•P)`, so `4•P=0 ⟺ Y(2•P)=0` (2-torsion of the double, via `secp256k1_two_nsmul_eq_zero_iff`), and the landed doubling `y`-coordinate `Y(2•P)=ω₂/(2y)³` (`secp256k1_two_nsmul_coords`) gives `Y(2•P)=0 ⟺ ω₂(x)=0 ⟺ ψ₄(P)=4y·ω₂=0`, with `ω₂=x⁶+140x³−392`. The `n=4` non-degeneracy leaf of the uniform carrier. Inherits `Lean.ofReduceBool` from the `2≠0` fact (`native_decide`); no new axioms)",
+      "claim": "Point-level 4-torsion bridge `4•P = 0 ⟺ ψ₄(P)=0` (`secp256k1_four_nsmul_eq_zero_iff`: for a nonzero affine `P=(x,y)` on secp256k1, `4•P=0` iff the 4-division polynomial vanishes — the composite even-index extension of the prime-index `{2,3,5,7}` torsion-bridge family. Runs by doubling-of-doubling: `4•P=2•(2•P)`, so `4•P=0 ⟺ Y(2•P)=0` (2-torsion of the double, via `secp256k1_two_nsmul_eq_zero_iff`), and the landed doubling `y`-coordinate `Y(2•P)=ω₂/(2y)³` (`secp256k1_two_nsmul_coords`) gives `Y(2•P)=0 ⟺ ω₂(x)=0 ⟺ ψ₄(P)=4y·ω₂=0`, with `ω₂=x⁶+140x³−392`. The `n=4` non-degeneracy leaf of the uniform carrier. Inherits `Lean.ofReduceBool` from the `2≠0` fact (`native_decide`); no new axioms)",
       "method": "Mathlib (`Affine.Point` group law, `two_nsmul`/`add_nsmul`) + `secp256k1_two_nsmul_coords`/`secp256k1_two_nsmul_eq_zero_iff",
       "status": "proved",
-      "area": "curve-torsion",
-      "family_id": "family-curve-torsion",
+      "area": "primality",
+      "family_id": "family-primality",
       "dependency_depth": 7,
       "gated": true
     },
@@ -5971,7 +5972,7 @@
       "files": [
         "Ecdlp/Proved/TwoTorsionStructure.lean"
       ],
-      "claim": "#E[2](𝔽̄_p) = 4` and `E[2] ≅ (ℤ/2)` — N13 at `n = 2`, completing the family to `n ∈ {2,3,5,7}` (`secp256k1Bar_two_torsion_structure` + the closure characterization `secp256k1Bar_two_nsmul_eq_zero_iff`: `2•P = O ⟺ y = 0`. Structurally the `n = 2` N13 instance — no multiplication formula: `2•P = O ⟺ P = −P ⟺ y = negY = −y ⟺ y = 0` (`char ≠ 2`), and `y = 0` on the curve forces `x³+7 = 0`. So `E[2] = {O} ∪ {(x,0) : X³+7-root}`, an explicit 4-element finset (no `±y` split — `y = 0` is forced), `1 + 3 = 4 = 2`; N10(iii) at prime 2 classifies. The even companion of the odd family)",
+      "claim": "#E[2](𝔽̄_p) = 4` and `E[2] ≅ (ℤ/2)` — N13 at `n = 2`, completing the small-prime subfamily `n ∈ {2,3,5,7}` (`secp256k1Bar_two_torsion_structure` + the closure characterization `secp256k1Bar_two_nsmul_eq_zero_iff`: `2•P = O ⟺ y = 0`. Structurally the `n = 2` N13 instance — no multiplication formula: `2•P = O ⟺ P = −P ⟺ y = negY = −y ⟺ y = 0` (`char ≠ 2`), and `y = 0` on the curve forces `x³+7 = 0`. So `E[2] = {O} ∪ {(x,0) : X³+7-root}`, an explicit 4-element finset (no `±y` split — `y = 0` is forced), `1 + 3 = 4 = 2`; N10(iii) at prime 2 classifies. The even companion of the odd family)",
       "method": "closure 2-torsion (`y=0`) + `CubicSeparable` roots + N10(iii)",
       "status": "proved",
       "area": "primality",
@@ -5981,6 +5982,32 @@
     },
     {
       "id": "thm-290",
+      "name": "Ecdlp.Curve.secp256k1Bar_two_nsmul_coords`, `Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff`, `Ecdlp.Curve.secp256k1Bar_four_torsion_ncard`, `Ecdlp.Curve.secp256k1Bar_four_torsion_card`, `Ecdlp.Curve.secp256k1Bar_torsionBy_four_card`, `Ecdlp.Curve.secp256k1Bar_four_torsion_structure`, `Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
+      "short_name": "secp256k1Bar_two_nsmul_coords`,",
+      "module": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "modules": [
+        "Ecdlp.Proved.DoublingPointFormulaBar",
+        "Ecdlp.Proved.FourTorsionBridgeBar",
+        "Ecdlp.Proved.FourTorsionStructure",
+        "Ecdlp.Proved.FourTorsionClassification"
+      ],
+      "file": "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+      "files": [
+        "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+        "Ecdlp/Proved/FourTorsionBridgeBar.lean",
+        "Ecdlp/Proved/FourTorsionStructure.lean",
+        "Ecdlp/Proved/FourTorsionClassification.lean"
+      ],
+      "claim": "#E[4](𝔽̄_p) = 16` and `E[4] ≅ (ℤ/4)` — N13 at `n = 4`, the first composite torsion-structure case (`secp256k1Bar_four_torsion_structure`: the closure doubling formula supplies `secp256k1Bar_two_nsmul_coords`; the new bridge gives `4•P=0 ⟺ ψ₄(P)=0`; the explicit split `E[4]=E[2] ⊔ P₄` counts `4 + 6·2 = 16`; the internal two-torsion is identified with ambient `E[2]`, hence has card 4; and `nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion` classifies the resulting finite abelian group. The result is existence of an additive equivalence, not a canonical basis. Honest scope: concrete `n=4` only; the uniform composite-`n` theorem remains open)",
+      "method": "closure doubling + division-polynomial bridge + separability/coprimality + finite-set card algebra + composite-order classification",
+      "status": "proved",
+      "area": "curve-torsion",
+      "family_id": "family-curve-torsion",
+      "dependency_depth": 9,
+      "gated": true
+    },
+    {
+      "id": "thm-291",
       "name": "Ecdlp.Weil.evalFracAt_well_defined`, `evalFracAt_mul`, `evalAt_unit_ne_zero`, `evalRatAt_eq_evalFracAt`, `secp256k1_miller_eval_scaling",
       "short_name": "evalFracAt_well_defined`,",
       "module": "Ecdlp.Proved.FunctionFieldEval",
@@ -6000,7 +6027,7 @@
       "gated": true
     },
     {
-      "id": "thm-291",
+      "id": "thm-292",
       "name": "Ecdlp.Weil.functionField_exists_num_den`, `functionField_num_den_cross`, `evalFracAt_num_den_well_defined`, `secp256k1_miller_function_num_den",
       "short_name": "functionField_exists_num_den`,",
       "module": "Ecdlp.Proved.FunctionFieldRepr",
@@ -6020,7 +6047,7 @@
       "gated": true
     },
     {
-      "id": "thm-292",
+      "id": "thm-293",
       "name": "Ecdlp.Weil.RegularAt`, `evalReg`, `evalRatAt_eq_evalReg` (+ 14 supporting)",
       "short_name": "RegularAt`,",
       "module": "Ecdlp.Proved.FunctionFieldRegular",
@@ -6040,7 +6067,7 @@
       "gated": true
     },
     {
-      "id": "thm-293",
+      "id": "thm-294",
       "name": "Ecdlp.Weil.divEval_mul`, `evalReg_mul",
       "short_name": "divEval_mul`,",
       "module": "Ecdlp.Proved.WeilDivisorEval",
@@ -6060,7 +6087,7 @@
       "gated": true
     },
     {
-      "id": "thm-294",
+      "id": "thm-295",
       "name": "Ecdlp.Weil.divEval_smul_unit`, `divEval_smul_unit_eq`, `evalReg_smul_unit",
       "short_name": "divEval_smul_unit`,",
       "module": "Ecdlp.Proved.WeilDivisorRepIndep",
@@ -6080,7 +6107,7 @@
       "gated": true
     },
     {
-      "id": "thm-295",
+      "id": "thm-296",
       "name": "Ecdlp.Weil.secp256k1_miller_jointly_regular`, `divEval_one",
       "short_name": "secp256k1_miller_jointly_regular`,",
       "module": "Ecdlp.Proved.WeilMillerEval",
@@ -6446,7 +6473,7 @@
       },
       {
         "id": "small-torsion-family",
-        "title": "Closed E[n] structure for n in {2,3,5,7} and fixed multiplication rungs through 5",
+        "title": "Exact closure E[n] structure for n in {2,3,4,5,7}, including the first composite case n=4",
         "status": "closed",
         "release_disposition": "closed",
         "family_ids": [
@@ -6458,10 +6485,17 @@
         "blocker_ids": [],
         "anchors": [
           "Ecdlp.Curve.secp256k1Bar_two_torsion_structure",
+          "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard",
+          "Ecdlp.Curve.secp256k1Bar_four_torsion_structure",
+          "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
           "Ecdlp.Curve.secp256k1Bar_seven_torsion_structure"
         ],
         "evidence_files": [
           "Ecdlp/Proved/TwoTorsionStructure.lean",
+          "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+          "Ecdlp/Proved/FourTorsionBridgeBar.lean",
+          "Ecdlp/Proved/FourTorsionClassification.lean",
+          "Ecdlp/Proved/FourTorsionStructure.lean",
           "Ecdlp/Proved/SevenTorsionStructure.lean"
         ]
       },
@@ -7621,9 +7655,9 @@
           "n10-uniform-separability",
           "general-n-torsion"
         ],
-        "mathlib_status": "Project-specific low-n results exist; the uniform theorem chain remains blocked in repo/FORMAL_SUBSTRATE.json.",
+        "mathlib_status": "Project-specific exact closure results now cover n in {2,3,4,5,7}, with n=4 the first composite profile; the uniform theorem chain remains blocked in repo/FORMAL_SUBSTRATE.json.",
         "deliverable": "General theorems only when they discharge a selected route's applicability or correctness gate.",
-        "resume_condition": "A selected route needs uniform n rather than the already closed concrete small-prime family."
+        "resume_condition": "A selected route needs uniform n rather than the already closed concrete low-index family."
       },
       {
         "id": "F-WEIL-PAIRING-STACK",
@@ -8203,6 +8237,21 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "to": "Ecdlp.Proved.MultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "to": "Ecdlp.Proved.MultiplicationYFormula",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.EcdsaMalleability",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
@@ -8353,6 +8402,26 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "to": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "to": "Ecdlp.Proved.TwoTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "to": "Ecdlp.Proved.FiveTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionClassification",
+      "to": "Ecdlp.Proved.TorsionStructure",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.FourTorsionCount",
       "to": "Ecdlp.Proved.FourTorsionBridge",
       "type": "imports"
@@ -8375,6 +8444,41 @@
     {
       "from": "Ecdlp.Proved.FourTorsionCount",
       "to": "Ecdlp.Proved.TwoTorsionCount",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.CoprimePsi2PrePsi4",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionResultantTransport",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.TwoTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.FourTorsionClassification",
       "type": "imports"
     },
     {
@@ -9639,6 +9743,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FourTorsionClassification",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
       "type": "imports"
     },
@@ -10124,6 +10233,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.MultiplicationYTripleFormula",
       "type": "imports"
     },
@@ -10185,6 +10299,16 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.FourTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FourTorsionStructure",
       "type": "imports"
     },
     {
@@ -11299,7 +11423,7 @@
     },
     {
       "from": "thm-207",
-      "to": "family-curve-torsion",
+      "to": "family-primality",
       "type": "member_of"
     },
     {
@@ -11724,12 +11848,12 @@
     },
     {
       "from": "thm-292",
-      "to": "family-primality",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {
       "from": "thm-293",
-      "to": "family-other",
+      "to": "family-primality",
       "type": "member_of"
     },
     {
@@ -11739,6 +11863,11 @@
     },
     {
       "from": "thm-295",
+      "to": "family-other",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-296",
       "to": "family-curve-torsion",
       "type": "member_of"
     },
@@ -11845,6 +11974,24 @@
       "anchor": "Ecdlp.Curve.secp256k1Bar_two_torsion_structure"
     },
     {
+      "from": "thm-290",
+      "to": "small-torsion-family",
+      "type": "supports",
+      "anchor": "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard"
+    },
+    {
+      "from": "thm-290",
+      "to": "small-torsion-family",
+      "type": "supports",
+      "anchor": "Ecdlp.Curve.secp256k1Bar_four_torsion_structure"
+    },
+    {
+      "from": "thm-290",
+      "to": "small-torsion-family",
+      "type": "supports",
+      "anchor": "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion"
+    },
+    {
       "from": "thm-285",
       "to": "small-torsion-family",
       "type": "supports",
@@ -11867,7 +12014,7 @@
       "type": "depends_on"
     },
     {
-      "from": "thm-295",
+      "from": "thm-296",
       "to": "weil-w1-w3",
       "type": "supports",
       "anchor": "Ecdlp.Weil.secp256k1_miller_jointly_regular"
@@ -11946,7 +12093,7 @@
       "type": "blocked_by"
     },
     {
-      "from": "thm-293",
+      "from": "thm-294",
       "to": "weil-w4-w5",
       "type": "supports",
       "anchor": "Ecdlp.Weil.divEval_mul"

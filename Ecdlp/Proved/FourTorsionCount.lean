@@ -26,18 +26,19 @@ Finiteness of every point set is free from the global `Finite W.Point` instance
 (`AffinePointFinite.lean`). Reuses the public `px`/`py` projections and the `≤2`-per-`x` curve-fiber
 argument of `TorsionPointCount.lean`. No new `native_decide` beyond the `2 ≠ 0` fact.
 
-## Closure companion (future work — not formalized here)
+## Closure companion
 
-This is the `𝔽_p`-rational *upper* bound. The exact closure count `#E[4](𝔽̄_p) = 16` and the
-structure `E[4] ≅ (ℤ/4)²` — the composite-index analogue of the landed prime family
-`secp256k1Bar_{2,3,5,7}_torsion_structure` — are **not** in the built base. Two prerequisites are
-missing, both larger than a template port:
-  * a closure 4-torsion bridge `secp256k1Bar_four_nsmul_eq_zero_iff`. Unlike the odd bridges, the
-    `n=4` route is doubling-of-doubling, so it needs the doubling `y`-coordinate formula over `𝔽̄_p`
-    (`secp256k1Bar_two_nsmul_coords`) — a port of `DoublingPointFormula.lean` that does not yet exist;
-  * a composite-order classification: a finite abelian group `A` with `4 • A = 0`, `#A = 16`,
-    `#A[2] = 4` is `(ℤ/4)²`. This is **not** the elementary-abelian `N10(iii)` used for the primes,
-    which classifies exponent-`ℓ` groups only.
+This file still proves only the `𝔽_p`-rational upper bound `#E[4](𝔽_p) ≤ 16`.
+The exact closure result `#E[4](𝔽̄_p) = 16` and the additive equivalence
+`E[4](𝔽̄_p) ≃ (ℤ/4)²` are now proved in `FourTorsionStructure.lean`.
+Its two formerly missing prerequisites are also in the built base:
+  * `FourTorsionBridgeBar.lean` supplies the closure bridge
+    `secp256k1Bar_four_nsmul_eq_zero_iff`, using the closure doubling coordinates;
+  * `FourTorsionClassification.lean` classifies a finite abelian group killed by four
+    from `#A = 16` and `#A[2] = 4`.
+
+The concrete `n=4` result is the first composite-index extension of the small-prime
+torsion-structure family. It does not establish a uniform theorem for composite `n`.
 -/
 
 namespace Ecdlp.Curve

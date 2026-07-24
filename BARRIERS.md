@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~257 distinct results / 296 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~258 distinct results / 297 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -234,7 +234,7 @@ exact `Θ` statements.
     **not** decompose into small independent rungs. **Note on the fast-feedback lever:** the live
     `server-run.yml` bridge (~5 s single-file `lake env lean`) speeds *verification* but not the
     *authoring* of this missing theory, so it does not change the scale. Recorded as the precise
-    wall; the `#E[n]=n²` structure is already landed for `n ∈ {2,3,5,7}` without it.
+    wall; the `#E[n]=n²` structure is already landed for `n ∈ {2,3,4,5,7}` without it.
     - **Substrate progress against step (i), and where the wall now sits (2026-07-18).** Two
       curve-generic substrate bricks landed: the coordinate-ring translation `φₙ·ΨSqₙ = Φₙ·ψₙ²`
       (`MultiplicationXCoordinateRing.lean`) and the doubling divisibility `ψₙ ∣ ψ₂ₙ`

@@ -308,7 +308,7 @@
     },
     {
       "id": "small-torsion-family",
-      "title": "Closed E[n] structure for n in {2,3,5,7} and fixed multiplication rungs through 5",
+      "title": "Exact closure E[n] structure for n in {2,3,4,5,7}, including the first composite case n=4",
       "status": "closed",
       "release_disposition": "closed",
       "family_ids": [
@@ -320,10 +320,17 @@
       "blocker_ids": [],
       "anchors": [
         "Ecdlp.Curve.secp256k1Bar_two_torsion_structure",
+        "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard",
+        "Ecdlp.Curve.secp256k1Bar_four_torsion_structure",
+        "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
         "Ecdlp.Curve.secp256k1Bar_seven_torsion_structure"
       ],
       "evidence_files": [
         "Ecdlp/Proved/TwoTorsionStructure.lean",
+        "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+        "Ecdlp/Proved/FourTorsionBridgeBar.lean",
+        "Ecdlp/Proved/FourTorsionClassification.lean",
+        "Ecdlp/Proved/FourTorsionStructure.lean",
         "Ecdlp/Proved/SevenTorsionStructure.lean"
       ]
     },
