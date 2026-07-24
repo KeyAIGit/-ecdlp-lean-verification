@@ -41,6 +41,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.mk_ψ_sq
 #print axioms Ecdlp.Curve.normEDS_consecutive_eq_zero_of_eval_eq_zero
 #print axioms Ecdlp.Curve.p_mod_four
+#print axioms Ecdlp.Curve.preNormEDS_sq_plus_companion
 #print axioms Ecdlp.Curve.px
 #print axioms Ecdlp.Curve.py
 #print axioms Ecdlp.Curve.quad_x_core
@@ -173,6 +174,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1_point_group_equiv_exists
 #print axioms Ecdlp.Curve.secp256k1_point_group_no_proper_subgroup
 #print axioms Ecdlp.Curve.secp256k1_point_isAddCyclic
+#print axioms Ecdlp.Curve.secp256k1_preΨ_plus_companion
 #print axioms Ecdlp.Curve.secp256k1_preΨ₁₁_natDegree
 #print axioms Ecdlp.Curve.secp256k1_preΨ₁₁_ne_zero
 #print axioms Ecdlp.Curve.secp256k1_preΨ₁₁_roots_card_le
