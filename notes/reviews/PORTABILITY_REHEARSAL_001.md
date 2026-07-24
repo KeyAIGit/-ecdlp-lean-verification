@@ -377,9 +377,15 @@ executing the external repository.
 
 Branch: `agent/task-011-portability-rehearsal`
 
+Pull request:
+[#241](https://github.com/KeyAIGit/-ecdlp-lean-verification/pull/241)
+
+Base: `main` at `8f281fb680923d7d9d12db8a0d7173a9a5cc290c`, including the
+versioned literature corpus from PR #240.
+
 Merge policy: the latest branch head must pass the repository's GitHub Actions
-workflow. The pull-request URL is bound in the first metadata commit after PR
-creation.
+workflow. GitHub's PR and workflow records are canonical for the final head,
+green run, and squash-merge commit.
 
 ## Adversarial review packet
 
