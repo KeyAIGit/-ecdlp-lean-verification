@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 728,
-  "distinct_qualified_names": 728,
+  "declaration_count": 729,
+  "distinct_qualified_names": 729,
   "verified_md_citations": 442,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -12040,6 +12040,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/Torsion.lean",
       "line": 39
+    },
+    "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion": {
+      "name": "nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionClassification.lean",
+      "line": 18
     },
     "Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq": {
       "name": "nonempty_addEquiv_zmod_prod_of_card_eq_sq",
