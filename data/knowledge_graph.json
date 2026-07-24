@@ -12,9 +12,9 @@
     "attack_routes": 17,
     "decision_foundations": 11,
     "attack_registry_objects": 14,
-    "edges": 952,
+    "edges": 960,
     "by_edge_type": {
-      "imports": 480,
+      "imports": 488,
       "member_of": 296,
       "requires_foundation": 41,
       "decision_grounded_in": 25,
@@ -8203,6 +8203,21 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "to": "Ecdlp.Proved.MultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "to": "Ecdlp.Proved.MultiplicationYFormula",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.EcdsaMalleability",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
@@ -8350,6 +8365,21 @@
     {
       "from": "Ecdlp.Proved.FourTorsionBridge",
       "to": "Ecdlp.Proved.FiveTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "to": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "to": "Ecdlp.Proved.TwoTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "to": "Ecdlp.Proved.FiveTorsionBridgeBar",
       "type": "imports"
     },
     {
@@ -10134,6 +10164,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.MultiplicationYTripleFormula",
       "type": "imports"
     },
@@ -10195,6 +10230,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.FourTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FourTorsionBridgeBar",
       "type": "imports"
     },
     {
