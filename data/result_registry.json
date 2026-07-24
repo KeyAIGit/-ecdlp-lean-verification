@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 296,
-  "ledger_reference_count": 467,
-  "ledger_named_declarations": 442,
+  "ledger_rows": 297,
+  "ledger_reference_count": 471,
+  "ledger_named_declarations": 446,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 728,
-  "distinct_qualified_names": 728,
-  "verified_md_citations": 442,
+  "declaration_count": 734,
+  "distinct_qualified_names": 734,
+  "verified_md_citations": 446,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -149,6 +149,7 @@
     "Ecdlp.Curve.secp256k1_c₄_eq_zero",
     "Ecdlp.Curve.secp256k1_c₆",
     "Ecdlp.Curve.secp256k1_c₆_ne_zero",
+    "Ecdlp.Curve.secp256k1_den_ne_zero_of_x_eq_div",
     "Ecdlp.Curve.secp256k1_dh_agree",
     "Ecdlp.Curve.secp256k1_dlogEquiv",
     "Ecdlp.Curve.secp256k1_dlogHom",
@@ -268,6 +269,7 @@
     "Ecdlp.Curve.secp256k1_psi5_evalEval",
     "Ecdlp.Curve.secp256k1_psi6_evalEval",
     "Ecdlp.Curve.secp256k1_psi7_evalEval",
+    "Ecdlp.Curve.secp256k1_psiSq_ne_zero_of_x_eq_div",
     "Ecdlp.Curve.secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄",
     "Ecdlp.Curve.secp256k1_quadruple_y",
     "Ecdlp.Curve.secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅",
@@ -275,6 +277,7 @@
     "Ecdlp.Curve.secp256k1_scalar_num_generators",
     "Ecdlp.Curve.secp256k1_schnorr_batch_verify",
     "Ecdlp.Curve.secp256k1_schnorr_verify",
+    "Ecdlp.Curve.secp256k1_seven_not_isSquare",
     "Ecdlp.Curve.secp256k1_seven_nsmul_eq_zero_iff",
     "Ecdlp.Curve.secp256k1_seven_torsion_card_le",
     "Ecdlp.Curve.secp256k1_seven_torsion_ncard_le",
@@ -310,6 +313,7 @@
     "Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff",
     "Ecdlp.Curve.secp256k1_two_torsion_ncard_le",
     "Ecdlp.Curve.secp256k1_two_torsion_x_card_le",
+    "Ecdlp.Curve.secp256k1_x_ne_zero",
     "Ecdlp.Curve.secp256k1_zmultiples_le_torsionBy",
     "Ecdlp.Curve.secp256k1_Δ_ne_zero",
     "Ecdlp.Curve.secp256k1_Φ_monic",
@@ -7824,6 +7828,50 @@
           "line": 58
         }
       ]
+    },
+    {
+      "id": "ledger-296",
+      "claim": "7` is a quadratic non-residue mod `p` ⟹ no affine point has `x = 0`, which forces divided coordinate certificates to have nonzero denominators (`secp256k1_seven_not_isSquare`: `¬ IsSquare (7 : ZMod p)` — `p ≡ 1 (mod 7)` and `p ≡ 3 (mod 4)`, so reciprocity gives `(7|p) = −(p|7) = −1`; Euler's criterion against the closed `native_decide` witness `7^(p/2) ≠ 1`. Hence `secp256k1_x_ne_zero`: substituting `x = 0` into `y = x³ + 7` would exhibit `7` as a square, so no affine point of secp256k1 has `x`-coordinate `0`. The consequence turns Lean's junk-value convention `a/0 = 0` from a nuisance into a tool: a coordinate certificate in *divided* form `X = a/b` normally says nothing when `b = 0` (`a/0 = 0` makes it vacuously true), but here `b = 0` would collapse it to `X = 0`, which no affine point admits — so `secp256k1_den_ne_zero_of_x_eq_div` yields `b ≠ 0` from the divided form alone, and `secp256k1_psiSq_ne_zero_of_x_eq_div` specializes it to `X = Φₘ(x)/ΨSqₘ(x) ⟹ ΨSqₘ(x) ≠ 0` for every index `m : ℤ`. This is exactly the non-degeneracy hypothesis the N7-uniform carrier induction needs at each step, obtained without the torsion bridge `n•P = O ⟺ ψₙ(P) = 0` — breaking the circularity in which that hypothesis was derived from the still-open, upstream-gated bridge. The numerator is never inspected, so it applies to any divided-form certificate)",
+      "theorem_cell": "`Ecdlp.Curve.secp256k1_seven_not_isSquare`, `secp256k1_x_ne_zero`, `secp256k1_den_ne_zero_of_x_eq_div`, `secp256k1_psiSq_ne_zero_of_x_eq_div`",
+      "declared_files": [
+        "Ecdlp/Proved/SevenNonResidue.lean"
+      ],
+      "method": "ZMod.euler_criterion` + quadratic reciprocity + native_decide witness",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.Curve.secp256k1_seven_not_isSquare",
+          "canonical_name": "Ecdlp.Curve.secp256k1_seven_not_isSquare",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SevenNonResidue.lean",
+          "line": 63
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1_x_ne_zero",
+          "canonical_name": "Ecdlp.Curve.secp256k1_x_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SevenNonResidue.lean",
+          "line": 70
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1_den_ne_zero_of_x_eq_div",
+          "canonical_name": "Ecdlp.Curve.secp256k1_den_ne_zero_of_x_eq_div",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SevenNonResidue.lean",
+          "line": 84
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1_psiSq_ne_zero_of_x_eq_div",
+          "canonical_name": "Ecdlp.Curve.secp256k1_psiSq_ne_zero_of_x_eq_div",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SevenNonResidue.lean",
+          "line": 97
+        }
+      ]
     }
   ],
   "declarations": {
@@ -8989,6 +9037,13 @@
       "file": "Ecdlp/Proved/Invariants.lean",
       "line": 28
     },
+    "Ecdlp.Curve.secp256k1_den_ne_zero_of_x_eq_div": {
+      "name": "secp256k1_den_ne_zero_of_x_eq_div",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SevenNonResidue.lean",
+      "line": 84
+    },
     "Ecdlp.Curve.secp256k1_dh_agree": {
       "name": "secp256k1_dh_agree",
       "namespace": "Ecdlp.Curve",
@@ -9997,6 +10052,13 @@
       "file": "Ecdlp/Proved/SevenTorsionBridge.lean",
       "line": 22
     },
+    "Ecdlp.Curve.secp256k1_psiSq_ne_zero_of_x_eq_div": {
+      "name": "secp256k1_psiSq_ne_zero_of_x_eq_div",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SevenNonResidue.lean",
+      "line": 97
+    },
     "Ecdlp.Curve.secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄": {
       "name": "secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄",
       "namespace": "Ecdlp.Curve",
@@ -10060,12 +10122,33 @@
       "file": "Ecdlp/Proved/SecantAddX.lean",
       "line": 26
     },
+    "Ecdlp.Curve.secp256k1_seven_ne_zero": {
+      "name": "secp256k1_seven_ne_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SevenNonResidue.lean",
+      "line": 51
+    },
+    "Ecdlp.Curve.secp256k1_seven_not_isSquare": {
+      "name": "secp256k1_seven_not_isSquare",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SevenNonResidue.lean",
+      "line": 63
+    },
     "Ecdlp.Curve.secp256k1_seven_nsmul_eq_zero_iff": {
       "name": "secp256k1_seven_nsmul_eq_zero_iff",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/SevenTorsionBridge.lean",
       "line": 91
+    },
+    "Ecdlp.Curve.secp256k1_seven_pow_ne_one": {
+      "name": "secp256k1_seven_pow_ne_one",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SevenNonResidue.lean",
+      "line": 57
     },
     "Ecdlp.Curve.secp256k1_seven_torsion_card_le": {
       "name": "secp256k1_seven_torsion_card_le",
@@ -10318,6 +10401,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomialDegree.lean",
       "line": 34
+    },
+    "Ecdlp.Curve.secp256k1_x_ne_zero": {
+      "name": "secp256k1_x_ne_zero",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SevenNonResidue.lean",
+      "line": 70
     },
     "Ecdlp.Curve.secp256k1_zmultiples_le_torsionBy": {
       "name": "secp256k1_zmultiples_le_torsionBy",

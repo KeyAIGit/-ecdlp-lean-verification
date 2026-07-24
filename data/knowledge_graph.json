@@ -4,18 +4,18 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 296,
-    "ledger_rows": 296,
+    "theorems": 297,
+    "ledger_rows": 297,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
     "attack_routes": 17,
     "decision_foundations": 11,
     "attack_registry_objects": 14,
-    "edges": 950,
+    "edges": 954,
     "by_edge_type": {
-      "imports": 478,
-      "member_of": 296,
+      "imports": 481,
+      "member_of": 297,
       "requires_foundation": 41,
       "decision_grounded_in": 25,
       "supports": 21,
@@ -149,10 +149,11 @@
       "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer": 1,
       "evalReg`/`evalFracAt` layer (`FunctionFieldRegular.lean`) + field algebra": 1,
       "evalReg`/`divEval` layer + `evalFracAt_unit_mul` + field algebra": 1,
-      "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer": 1
+      "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer": 1,
+      "ZMod.euler_criterion` + quadratic reciprocity + native_decide witness": 1
     },
     "by_area": {
-      "curve-torsion": 152,
+      "curve-torsion": 153,
       "primality": 54,
       "generic-hardness": 29,
       "other": 26,
@@ -6098,6 +6099,26 @@
       "family_id": "family-curve-torsion",
       "dependency_depth": 8,
       "gated": true
+    },
+    {
+      "id": "thm-296",
+      "name": "Ecdlp.Curve.secp256k1_seven_not_isSquare`, `secp256k1_x_ne_zero`, `secp256k1_den_ne_zero_of_x_eq_div`, `secp256k1_psiSq_ne_zero_of_x_eq_div",
+      "short_name": "secp256k1_seven_not_isSquare`,",
+      "module": "Ecdlp.Proved.SevenNonResidue",
+      "modules": [
+        "Ecdlp.Proved.SevenNonResidue"
+      ],
+      "file": "Ecdlp/Proved/SevenNonResidue.lean",
+      "files": [
+        "Ecdlp/Proved/SevenNonResidue.lean"
+      ],
+      "claim": "7` is a quadratic non-residue mod `p` ⟹ no affine point has `x = 0`, which forces divided coordinate certificates to have nonzero denominators (`secp256k1_seven_not_isSquare`: `¬ IsSquare (7 : ZMod p)` — `p ≡ 1 (mod 7)` and `p ≡ 3 (mod 4)`, so reciprocity gives `(7|p) = −(p|7) = −1`; Euler's criterion against the closed `native_decide` witness `7^(p/2) ≠ 1`. Hence `secp256k1_x_ne_zero`: substituting `x = 0` into `y = x³ + 7` would exhibit `7` as a square, so no affine point of secp256k1 has `x`-coordinate `0`. The consequence turns Lean's junk-value convention `a/0 = 0` from a nuisance into a tool: a coordinate certificate in *divided* form `X = a/b` normally says nothing when `b = 0` (`a/0 = 0` makes it vacuously true), but here `b = 0` would collapse it to `X = 0`, which no affine point admits — so `secp256k1_den_ne_zero_of_x_eq_div` yields `b ≠ 0` from the divided form alone, and `secp256k1_psiSq_ne_zero_of_x_eq_div` specializes it to `X = Φₘ(x)/ΨSqₘ(x) ⟹ ΨSqₘ(x) ≠ 0` for every index `m : ℤ`. This is exactly the non-degeneracy hypothesis the N7-uniform carrier induction needs at each step, obtained without the torsion bridge `n•P = O ⟺ ψₙ(P) = 0` — breaking the circularity in which that hypothesis was derived from the still-open, upstream-gated bridge. The numerator is never inspected, so it applies to any divided-form certificate)",
+      "method": "ZMod.euler_criterion` + quadratic reciprocity + native_decide witness",
+      "status": "proved",
+      "area": "curve-torsion",
+      "family_id": "family-curve-torsion",
+      "dependency_depth": 9,
+      "gated": true
     }
   ],
   "barriers": [
@@ -9038,6 +9059,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.SevenNonResidue",
+      "to": "Ecdlp.Proved.Secp256k1PrimeP",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenNonResidue",
+      "to": "Ecdlp.Proved.TorsionPointCount",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.SevenTorsion",
       "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
@@ -10195,6 +10226,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.CompressedDivisionPoly",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.SevenNonResidue",
       "type": "imports"
     },
     {
@@ -11739,6 +11775,11 @@
     },
     {
       "from": "thm-295",
+      "to": "family-curve-torsion",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-296",
       "to": "family-curve-torsion",
       "type": "member_of"
     },
