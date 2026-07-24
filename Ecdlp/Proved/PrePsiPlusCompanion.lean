@@ -105,13 +105,13 @@ theorem preNormEDS_sq_plus_companion {A : Type*} [CommRing A] [IsDomain A]
     have p1 : ¬ Even (m + 1) := by rw [Int.even_iff]; omega
     have pm1 : ¬ Even (m - 1) := by rw [Int.even_iff]; omega
     rw [if_pos p2, if_neg pm1, if_neg p1, if_pos pm2, if_pos hm] at hinv
-    simp only [mul_one, one_mul, one_pow] at hinv
+    simp only [mul_one] at hinv
 
     rw [if_pos hm]
     apply mul_left_cancel₀ ha
     apply mul_left_cancel₀ hc
     apply hinj
-    simp only [map_add, map_sub, map_mul, map_pow, map_ofNat, map_one]
+    simp only [map_add, map_sub, map_mul, map_pow, map_ofNat]
     rw [← hb2]
     linear_combination hinv
 
@@ -122,21 +122,22 @@ theorem preNormEDS_sq_plus_companion {A : Type*} [CommRing A] [IsDomain A]
     have p1 : Even (m + 1) := Int.even_iff.mpr (by omega)
     have pm1 : Even (m - 1) := Int.even_iff.mpr (by omega)
     rw [if_neg p2, if_pos pm1, if_pos p1, if_neg pm2, if_neg pm0] at hinv
-    simp only [mul_one, one_mul, one_pow] at hinv
+    simp only [mul_one] at hinv
 
     rw [if_neg pm0]
     apply mul_left_cancel₀ (pow_ne_zero 2 ha)
     apply mul_left_cancel₀ hc
     apply hinj
-    simp only [map_add, map_sub, map_mul, map_pow, map_ofNat, map_one]
+    simp only [map_add, map_sub, map_mul, map_pow, map_ofNat]
     rw [← hb2]
     linear_combination b * hinv
 
 /-- The secp256k1 parameters satisfy the invariant's specialization equation. -/
 private theorem secp256k1_preΨ_plus_companion_parameter :
     secp256k1.preΨ₄ + secp256k1.Ψ₂Sq ^ 2 =
-      6 * X ^ 2 * secp256k1.Ψ₃ := by
+  6 * X ^ 2 * secp256k1.Ψ₃ := by
   rw [secp256k1_preΨ₄, secp256k1_Ψ₂Sq, secp256k1_Ψ₃]
+  simp only [map_ofNat]
   ring
 
 /-- The plus-companion relation for the secp256k1 pre-division polynomials. -/
