@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0",
+  "rehearsal_id": "KEYAI-PORTABILITY-001",
+  "task_id": "TASK-011",
+  "evidence_class": "internal_technical_rehearsal",
+  "external_evidence": false,
+  "unlocks_task_012": false,
+  "performed_on": "2026-07-23",
+  "source": {
+    "repository": "https://github.com/cedar-policy/cedar-spec",
+    "commit_sha": "3f093947b8ae789e9497772815c3a37309ea5566",
+    "tree_sha": "9ec0e7ea90d98241935620711bf9568c169ef8b7",
+    "canonical_checkout_clean_before": true,
+    "canonical_checkout_clean_after": true,
+    "canonical_snapshot_sha256": "a96d1f1a13508d0165f9463e79cd92333ac9f140a4942fec447f7206894585fb"
+  },
+  "environment": {
+    "platform": "windows-x86_64",
+    "os_version": "10.0.26200",
+    "physical_memory_mib": 5828.95,
+    "elan_version": "elan 4.2.3 (b6cec7e10 2026-06-08)",
+    "lean_version": "Lean (version 4.31.0, x86_64-w64-windows-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "lake_version": "Lake version 5.0.0-src+68218e8 (Lean version 4.31.0)",
+    "resource_constraint": "LEAN_NUM_THREADS=1 is required on this 5.7 GiB host; unconstrained Lake parallelism exhausted memory."
+  },
+  "execution_boundary": {
+    "source_trust": "reviewed_public_source",
+    "baseline_environment_policy": "inherited_host_environment",
+    "compiled_probe_environment_policy": "fixed_allowlist",
+    "compiled_probe_launcher": "project_lake_env",
+    "compiled_probe_output_authentication": "not_independent_of_project_launcher",
+    "canonical_checkout": "read_only_git_object_inspection",
+    "build_checkout": "disposable_writable_workspace",
+    "network_isolation": "not_os_enforced",
+    "filesystem_isolation": "not_os_enforced"
+  },
+  "dependency_resolution": {
+    "command": "cd cedar-lean && lake -R -Kenv=dev update",
+    "exit_code": 0,
+    "resolved_revisions": {
+      "leanprover-community/batteries": "fa08db58b30eb033edcdab331bba000827f9f785",
+      "leanprover/doc-gen4": "0bc516c1b9db83658d6475c40d9b1ed71219b921",
+      "leanprover/leansqlite": "0be4df908d1a8e75b58961041e2b4973692623df",
+      "leanprover/lean4-cli": "92564e5770e4d09f2d86dfbf8ada1e9c715b384c",
+      "fgdorais/lean4-unicode-basic": "a2e430a4c9d3ad24078b8581fe0162fc5b0c9a6c",
+      "dupuisf/BibtexQuery": "5d31b64fb703c5d77f6ef4d1fb958f9bdf1ea539",
+      "acmepjz/md4lean": "6a3fb240133bcb7e1a066fdc784b3fdc304e3fc5"
+    },
+    "documented_workspace_effect": {
+      "path": "cedar-lean/lake-manifest.json",
+      "canonical_git_blob_sha256": "60bb72ecf8014c3b3ea5bb9f8f3cd73633374430a31fc52a75912a163c51a986",
+      "resolved_worktree_sha256": "de4da87c83d920b3a13241f5cbf67d4bf46953769b398e9f0bb733939aaef51f",
+      "reason": "The env=dev branch adds documentation dependencies in the disposable build workspace. No canonical source or KeyAI-owned external source copy was changed."
+    }
+  },
+  "build_attempts": [
+    {
+      "id": "BUILD-DEFAULT-PARALLELISM",
+      "command": "cd cedar-lean && lake build Cedar SymCC",
+      "environment_overrides": {},
+      "exit_code": 1,
+      "classification": "host_resource_exhaustion",
+      "observations": [
+        "Lean processes reported std::bad_alloc.",
+        "Concurrent processes emitted secondary failures while reading existing standard-library olean.private files.",
+        "The referenced standard-library files were present and readable after the failed attempt."
+      ],
+      "disposition": "Not a project or adapter failure; retry once with the Lean runtime's documented thread limit."
+    },
+    {
+      "id": "BUILD-BOUNDED-PARALLELISM",
+      "command": "cd cedar-lean && LEAN_NUM_THREADS=1 lake build Cedar SymCC",
+      "environment_overrides": {
+        "LEAN_NUM_THREADS": "1"
+      },
+      "exit_code": 0,
+      "result": "Build completed successfully (571 jobs).",
+      "classification": "pass"
+    }
+  ],
+  "lint_attempts": [
+    {
+      "id": "LINT-WINDOWS-CRLF",
+      "command": "cd cedar-lean && LEAN_NUM_THREADS=1 lake lint",
+      "checkout_policy": "Windows default line-ending conversion",
+      "exit_code": 1,
+      "missing_import_diagnostics": 119,
+      "other_diagnostics": 0,
+      "classification": "upstream_platform_assumption",
+      "cause": "The upstream lint driver removes exact strings ending in LF. A CRLF checkout therefore reports every present import as missing."
+    },
+    {
+      "id": "LINT-CANONICAL-LF",
+      "command": "cd cedar-lean && LEAN_NUM_THREADS=1 lake lint",
+      "checkout_policy": "core.autocrlf=false, matching committed Git blobs and upstream Linux CI",
+      "exit_code": 0,
+      "classification": "pass"
+    }
+  ],
+  "compiled_probe": {
+    "artifact": "rehearsals/keyai-portability-001/compiled-probe.json",
+    "probe_sha256": "633707c75a16e412eb82f53126392d46dcd697497a133ff8524459fa2baf0729",
+    "generator_sha256": "4be6454dc4ee7b22d9758497ae91597d573c83ab70e162eef586fa46b921d38e",
+    "compiled_closure_modules": 273,
+    "lexical_closure_modules": 273,
+    "source_public_declarations_in_compiled_closure": 3423,
+    "found_public_declarations": 12296,
+    "missing_public_declarations": 0,
+    "compiled_artifact_manifest_sha256": "18fe92cac750ac8b6490fb99b47c884071a9b3d50bf12152eb450cac2709d289",
+    "lake_launcher_sha256": "175089915efc623126a1560ed517cd52ec2d4d09f2adc1c10f22f56568fed5ad",
+    "elan_home_source": "derived_from_lake_launcher",
+    "compiled_probe_launcher": "project_lake_env",
+    "compiled_probe_output_authentication": "not_independent_of_project_launcher",
+    "forbidden_axioms": [],
+    "unexpected_axioms": [],
+    "invalid_allowed_axiom_provenance": [],
+    "compiler_generated_native_decide_axioms": 9,
+    "policy_pass": true
+  },
+  "result": {
+    "status": "passed",
+    "statement": "The pinned Cedar and SymCC proof targets build, the upstream import-completeness lint passes under canonical LF checkout semantics, and every source-inventoried public declaration in the compiled closure resolves in Lean with no sorryAx or unexpected custom axiom.",
+    "constraints": [
+      "Use LEAN_NUM_THREADS=1 on this memory-constrained host.",
+      "Use canonical LF checkout semantics for the upstream lint driver.",
+      "Treat native_decide-generated private axioms as explicit compiler-trust dependencies, not kernel-only evidence.",
+      "The documented baseline inherited the host environment and executed reviewed public source; arbitrary untrusted intake remains prohibited until OS-enforced filesystem and network isolation exists.",
+      "The compiled probe was launched through the inspected project's lake env, so its output channel is not independently authenticated; a trusted absolute Lean launcher, controlled module search path, loaded-artifact binding, and hostile shadow/output fixture are required before arbitrary untrusted intake."
+    ]
+  },
+  "evidence_sha256": "c4123214595e9b783e107aedb7acf9d5f561402ac0f082df8778c406a6bcbeb9"
+}
