@@ -12,9 +12,9 @@
     "attack_routes": 17,
     "decision_foundations": 11,
     "attack_registry_objects": 14,
-    "edges": 960,
+    "edges": 968,
     "by_edge_type": {
-      "imports": 488,
+      "imports": 496,
       "member_of": 296,
       "requires_foundation": 41,
       "decision_grounded_in": 25,
@@ -8413,6 +8413,41 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.CoprimePsi2PrePsi4",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionResultantTransport",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.TwoTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.FourTorsionClassification",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.FrobeniusCM",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -10235,6 +10270,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FourTorsionStructure",
       "type": "imports"
     },
     {

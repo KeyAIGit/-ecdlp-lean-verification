@@ -170,5 +170,6 @@ import Ecdlp.Proved.QuadrupleMultiplicationYFormula
 import Ecdlp.Proved.NsmulCoordsBaseFour
 import Ecdlp.Proved.FourTorsionBridge
 import Ecdlp.Proved.FourTorsionBridgeBar
+import Ecdlp.Proved.FourTorsionStructure
 import Ecdlp.Proved.FourTorsionCount
 import Ecdlp.Proved.CompressedDivisionPoly

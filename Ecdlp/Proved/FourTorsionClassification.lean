@@ -124,7 +124,10 @@ theorem nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion
   have hthreeModTwo : (3 : ZMod 2) = 1 := by
     calc
       (3 : ZMod 2) = 1 + (2 : ZMod 2) := by ring
-      _ = 1 := by rw [ZMod.natCast_self, add_zero]
+      _ = 1 := by
+        have htwo : (2 : ZMod 2) = 0 :=
+          CharP.ofNat_eq_zero' (R := ZMod 2) 2 2 dvd_rfl
+        rw [htwo, add_zero]
   let zx : ZMod 4 →+ A :=
     ZMod.lift 4
       ⟨zmultiplesHom A x, by

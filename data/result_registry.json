@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 731,
-  "distinct_qualified_names": 731,
+  "declaration_count": 735,
+  "distinct_qualified_names": 735,
   "verified_md_citations": 442,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -8576,6 +8576,27 @@
       "file": "Ecdlp/Proved/FourTorsionBridgeBar.lean",
       "line": 55
     },
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_card": {
+      "name": "secp256k1Bar_four_torsion_card",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 410
+    },
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard": {
+      "name": "secp256k1Bar_four_torsion_ncard",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 384
+    },
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_structure": {
+      "name": "secp256k1Bar_four_torsion_structure",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 478
+    },
     "Ecdlp.Curve.secp256k1Bar_isCoprime_Φ_ΨSq": {
       "name": "secp256k1Bar_isCoprime_Φ_ΨSq",
       "namespace": "Ecdlp.Curve",
@@ -8722,6 +8743,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FiveTorsionStructure.lean",
       "line": 374
+    },
+    "Ecdlp.Curve.secp256k1Bar_torsionBy_four_card": {
+      "name": "secp256k1Bar_torsionBy_four_card",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 416
     },
     "Ecdlp.Curve.secp256k1Bar_torsionBy_seven_card": {
       "name": "secp256k1Bar_torsionBy_seven_card",
