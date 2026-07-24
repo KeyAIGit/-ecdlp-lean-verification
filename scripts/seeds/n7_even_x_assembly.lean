@@ -53,7 +53,7 @@ theorem even_x_algebra (k : ℕ) (Xk Yk sk : ZMod Secp256k1.p)
     have hslope' := hslope
     rw [hY] at hslope'
     have h3Xsq : (3 : ZMod Secp256k1.p) * Xk ^ 2 = 0 := by
-      linear_combination hslope'
+      simpa only [mul_zero] using hslope'.symm
     have hXsq : Xk ^ 2 = 0 :=
       (mul_eq_zero.mp h3Xsq).resolve_left h3
     have hX : Xk = 0 :=
