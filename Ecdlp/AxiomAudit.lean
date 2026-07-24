@@ -244,10 +244,17 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms ResearchOS.NumberTheory.prime_10007
 #print axioms ResearchOS.NumberTheory.prime_10009
 
--- geometric torsion structure family: E[n](𝔽̄_p) ≅ (ℤ/n)² for n ∈ {2,3,5,7} (closure), via
--- closure bridge + exact root count + ±y pairing + N10(iii); the ψₙ↔E[n] critical path N13@n
+-- geometric torsion structure family: E[n](𝔽̄_p) ≅ (ℤ/n)² for n ∈ {2,3,4,5,7}.
+-- The prime cases use N10(iii); n=4 is the first composite profile and additionally uses
+-- #E[4][2]=4 plus the dedicated finite-abelian classification.
 #print axioms Ecdlp.Curve.secp256k1Bar_two_torsion_structure
 #print axioms Ecdlp.Curve.secp256k1Bar_three_torsion_structure
+#print axioms Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion
+#print axioms Ecdlp.Curve.secp256k1Bar_two_nsmul_coords
+#print axioms Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff
+#print axioms Ecdlp.Curve.secp256k1Bar_four_torsion_ncard
+#print axioms Ecdlp.Curve.secp256k1Bar_torsionBy_four_card
+#print axioms Ecdlp.Curve.secp256k1Bar_four_torsion_structure
 #print axioms Ecdlp.Curve.secp256k1Bar_five_torsion_structure
 #print axioms Ecdlp.Curve.secp256k1Bar_seven_torsion_structure
 
@@ -310,7 +317,8 @@ sample that should surface `Lean.ofReduceBool`). `#print axioms` prints each dep
 #print axioms Ecdlp.Curve.secp256k1_quadruple_y
 
 -- N7 non-degeneracy leaf: the n=4 division-polynomial torsion bridge 4•P=0 ⟺ ψ₄(P)=0
--- (fills the even-index gap in the {2,3,5,7} family; inherits Lean.ofReduceBool from the 2≠0 fact)
+-- (the composite n=4 extension of the prime-index bridge family; inherits Lean.ofReduceBool
+-- from the 2≠0 fact)
 #print axioms Ecdlp.Curve.secp256k1_four_nsmul_eq_zero_iff
 
 -- Compressed division polynomials (FBL-PURE-008, Kimi K3-drafted): the cube-covariance

@@ -17,7 +17,7 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 55074
+        "bytes": 55139
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -61,7 +61,7 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 55074
+        "bytes": 55139
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -109,13 +109,13 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 148718
+        "bytes": 150117
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 35680
+        "bytes": 35682
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -147,7 +147,7 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 55074
+        "bytes": 55139
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -195,13 +195,13 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 148718
+        "bytes": 150117
       },
       {
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 35680
+        "bytes": 35682
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -225,7 +225,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 474963
+        "bytes": 478260
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
