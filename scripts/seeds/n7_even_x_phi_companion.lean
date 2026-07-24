@@ -154,7 +154,8 @@ theorem n7_even_x_Φ_companion_candidate (m : ℤ) :
 
   have h2m : Even (2 * m) := ⟨m, by ring⟩
   change F (2 * m) = F m ^ 4 - 56 * F m * S m ^ 3
-  rw [hF (2 * m), hS (2 * m), if_pos h2m, hdouble, hF m, hS m]
+  rw [hF (2 * m), hS (2 * m), hdouble, hF m, hS m]
+  simp only [if_pos h2m]
   dsimp [T] at hcore ⊢
   exact hcore
 
