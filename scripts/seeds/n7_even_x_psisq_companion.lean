@@ -76,7 +76,8 @@ theorem n7_even_x_ΨSq_companion_candidate (m : ℤ) :
         ring
       _ = ((if Even m then 1 else B ^ 2) * T - C * P m ^ 2) * T ^ 2 := by
         rw [hsomos]
-        rfl
+        dsimp [T]
+        ring
 
   have hdifference :
       (U - V) ^ 2 = (U + V) ^ 2 - 4 * (U * V) := by
@@ -101,10 +102,10 @@ theorem n7_even_x_ΨSq_companion_candidate (m : ℤ) :
             + 7 * (P m ^ 2 * (if Even m then B else 1)) ^ 3) := by
     rw [hdifference, hplus, hproduct]
     by_cases hm : Even m
-    · simp only [hm, if_pos]
+    · simp only [hm, ↓reduceIte]
       rw [hB, hC]
       ring
-    · simp only [hm, if_neg]
+    · simp only [hm, ↓reduceIte]
       rw [hB, hC]
       ring
 
