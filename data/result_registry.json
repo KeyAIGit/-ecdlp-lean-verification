@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 728,
-  "distinct_qualified_names": 728,
+  "declaration_count": 732,
+  "distinct_qualified_names": 732,
   "verified_md_citations": 442,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -8464,6 +8464,13 @@
       "file": "Ecdlp/Proved/EcdsaMalleability.lean",
       "line": 54
     },
+    "Ecdlp.Curve.preNormEDS_sq_plus_companion": {
+      "name": "preNormEDS_sq_plus_companion",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PrePsiPlusCompanion.lean",
+      "line": 37
+    },
     "Ecdlp.Curve.preNormEDS_sq_somos4": {
       "name": "preNormEDS_sq_somos4",
       "namespace": "Ecdlp.Curve",
@@ -9709,6 +9716,13 @@
       "kind": "instance",
       "file": "Ecdlp/Proved/CurveFullGroup.lean",
       "line": 46
+    },
+    "Ecdlp.Curve.secp256k1_preΨ_plus_companion": {
+      "name": "secp256k1_preΨ_plus_companion",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PrePsiPlusCompanion.lean",
+      "line": 143
     },
     "Ecdlp.Curve.secp256k1_preΨ_somos4": {
       "name": "secp256k1_preΨ_somos4",
@@ -12874,12 +12888,26 @@
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
       "line": 335
     },
+    "net_eq_zero_of_oddRec_evenRec": {
+      "name": "net_eq_zero_of_oddRec_evenRec",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 541
+    },
     "normEDS_isEllSequence": {
       "name": "normEDS_isEllSequence",
       "namespace": "",
       "kind": "theorem",
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
-      "line": 555
+      "line": 562
+    },
+    "normEDS_net_eq_zero": {
+      "name": "normEDS_net_eq_zero",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
+      "line": 598
     },
     "of": {
       "name": "of",
@@ -12893,7 +12921,7 @@
       "namespace": "",
       "kind": "theorem",
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
-      "line": 543
+      "line": 550
     },
     "on": {
       "name": "on",
