@@ -71,7 +71,9 @@ theorem n7_even_x_Φ_companion_candidate (m : ℤ) :
   have hsomos :
       P (m + 2) * P (m - 2) =
         (if Even m then 1 else B ^ 2) * T - C * P m ^ 2 := by
-    simpa only [P, B, C, T] using secp256k1_preΨ_somos4 m
+    have h := secp256k1_preΨ_somos4 m
+    dsimp [P, B, C, T] at h ⊢
+    linear_combination h
 
   have hplus :
       U + V =
@@ -107,7 +109,7 @@ theorem n7_even_x_Φ_companion_candidate (m : ℤ) :
         obtain ⟨r, hr⟩ := hm
         obtain ⟨s, hs⟩ := h
         omega
-      simp only [hm, hm1, if_pos, if_neg]
+      simp only [hm, hm1, ↓reduceIte]
       dsimp [U, V, T]
       ring
     · have hm1 : Even (m - 1) := by
@@ -115,7 +117,7 @@ theorem n7_even_x_Φ_companion_candidate (m : ℤ) :
         · exact absurd he hm
         · obtain ⟨r, hr⟩ := ho
           exact ⟨r, by omega⟩
-      simp only [hm, hm1, if_pos, if_neg]
+      simp only [hm, hm1, ↓reduceIte]
       dsimp [U, V, T]
       ring
 
@@ -136,23 +138,23 @@ theorem n7_even_x_Φ_companion_candidate (m : ℤ) :
         =
       (X * (P m ^ 2 * (if Even m then B else 1))
             - T * (if Even m then 1 else B)) ^ 4
-        - 56
+          - 56
             * (X * (P m ^ 2 * (if Even m then B else 1))
                 - T * (if Even m then 1 else B))
-            * (P m ^ 2 * (if Even m then B else 1)) ^ 3 := by
+             * (P m ^ 2 * (if Even m then B else 1)) ^ 3 := by
+    rw [show (P m * (U - V)) ^ 2 = P m ^ 2 * (U - V) ^ 2 by ring]
     rw [hoddProduct, hsomos, hdifference, hplus, hproduct]
     by_cases hm : Even m
-    · simp only [hm, if_pos]
+    · simp only [hm, ↓reduceIte]
       rw [hB, hC]
       ring
-    · simp only [hm, if_neg]
+    · simp only [hm, ↓reduceIte]
       rw [hB, hC]
       ring
 
   have h2m : Even (2 * m) := ⟨m, by ring⟩
   change F (2 * m) = F m ^ 4 - 56 * F m * S m ^ 3
   rw [hF (2 * m), hS (2 * m), if_pos h2m, hdouble, hF m, hS m]
-  simp only [mul_one]
   dsimp [T] at hcore ⊢
   exact hcore
 
