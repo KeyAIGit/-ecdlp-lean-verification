@@ -128,7 +128,7 @@ theorem preNormEDS_sq_plus_companion {A : Type*} [CommRing A] [IsDomain A]
     apply mul_left_cancel₀ (pow_ne_zero 2 ha)
     apply mul_left_cancel₀ hc
     apply hinj
-    simp only [map_add, map_sub, map_mul, map_pow, map_ofNat]
+    simp only [map_add, map_sub, map_mul, map_pow, map_ofNat, map_one]
     rw [← hb2]
     linear_combination b * hinv
 
