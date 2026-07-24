@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every ledger row below cites kernel-checked declarations (no `sorry`, no custom axioms).
 
-**296 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **950 edges**
+**296 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **952 edges**
 
 > A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline counts; `data/result_registry.json` owns declaration-level resolution.
 
@@ -10,7 +10,7 @@ By proof method: Mathlib (106), Mathlib + native_decide (31), native_decide (20)
 
 By research area: curve-torsion (152), primality (54), generic-hardness (29), other (26), protocol-soundness (23), attack-resistance (6), reduction (5), params (1)
 
-By edge type: imports (478), member_of (296), requires_foundation (41), decision_grounded_in (25), supports (21), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), blocked_by (7), governs_hypothesis (3)
+By edge type: imports (480), member_of (296), requires_foundation (41), decision_grounded_in (25), supports (21), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), blocked_by (7), governs_hypothesis (3)
 
 ## secp256k1 route decisions
 
