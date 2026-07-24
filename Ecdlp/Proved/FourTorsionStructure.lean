@@ -284,7 +284,9 @@ private theorem primitive_four_torsion_set_eq :
   constructor
   · intro hP
     rcases P with _ | ⟨x, y, h⟩
-    · exact (hP.2 (by simp)).elim
+    · have hzero : (2 : ℕ) • (0 : secp256k1Bar.toAffine.Point) = 0 :=
+        nsmul_zero 2
+      exact (hP.2 hzero).elim
     · have hy : y ≠ 0 := fun hy0 =>
         hP.2 ((secp256k1Bar_two_nsmul_eq_zero_iff x y h).mpr hy0)
       have hψ :
@@ -446,7 +448,8 @@ private noncomputable def fourTwoTorsionEquiv : BarFourTwoTorsion ≃ BarTwoTors
       have h := congrArg
         (fun b : BarFourTwoTorsion => (b.1.1 : BarPoint))
         (AddSubgroup.torsionBy.nsmul a)
-      simpa using h)⟩
+      change (2 : ℕ) • (a.1.1 : BarPoint) = 0 at h
+      exact h)⟩
   invFun q := by
     have h2 : (2 : ℕ) • (q.1 : BarPoint) = 0 := by
       have h := congrArg

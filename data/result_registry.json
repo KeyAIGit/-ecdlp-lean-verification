@@ -8581,21 +8581,21 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FourTorsionStructure.lean",
-      "line": 410
+      "line": 412
     },
     "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard": {
       "name": "secp256k1Bar_four_torsion_ncard",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FourTorsionStructure.lean",
-      "line": 384
+      "line": 386
     },
     "Ecdlp.Curve.secp256k1Bar_four_torsion_structure": {
       "name": "secp256k1Bar_four_torsion_structure",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FourTorsionStructure.lean",
-      "line": 478
+      "line": 481
     },
     "Ecdlp.Curve.secp256k1Bar_isCoprime_Φ_ΨSq": {
       "name": "secp256k1Bar_isCoprime_Φ_ΨSq",
@@ -8749,7 +8749,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FourTorsionStructure.lean",
-      "line": 416
+      "line": 418
     },
     "Ecdlp.Curve.secp256k1Bar_torsionBy_seven_card": {
       "name": "secp256k1Bar_torsionBy_seven_card",
