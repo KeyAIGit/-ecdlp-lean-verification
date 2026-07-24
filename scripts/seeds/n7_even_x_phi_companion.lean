@@ -156,6 +156,7 @@ theorem n7_even_x_Φ_companion_candidate (m : ℤ) :
   change F (2 * m) = F m ^ 4 - 56 * F m * S m ^ 3
   rw [hF (2 * m), hS (2 * m), hdouble, hF m, hS m]
   simp only [if_pos h2m]
+  simp only [mul_one]
   dsimp [T] at hcore ⊢
   exact hcore
 
