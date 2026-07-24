@@ -1,0 +1,204 @@
+version: 1
+purpose: >-
+  Candidate records for the decision layer. Two kinds live here, and the
+  distinction is load-bearing.
+
+  HISTORICAL records (preregistered: false) describe experiments this project
+  already ran. They carry a resolution and reopening conditions, but deliberately
+  carry NO likelihoods and NO prior. Those experiments predate pre-registration, so
+  any likelihood written here would be invented after seeing the result — precisely
+  the failure the layer exists to prevent. They are therefore excluded from the
+  calibration score. This is itself a finding: the existing record cannot calibrate
+  anything. Calibration starts with the first genuinely pre-registered run.
+
+  PROPOSED records (preregistered: true, status: proposed_requires_ratification)
+  are candidates for future work. Their priors and likelihoods are the proposer's
+  subjective commitments, stated before any run. They are drafts pending the
+  owner's ratification — the numbers below are argued, not authoritative, and the
+  owner should overwrite them rather than inherit them.
+
+canonical_sources:
+  - repo/ECDLP_DECISION_SUBSTRATE.json   # routes, threat models, gates
+  - experiments/HYPOTHESES.yaml          # hypothesis registry
+  - experiments/p*/RESULTS.md            # the measured record
+
+candidates:
+
+  # ----------------------------------------------------------------------
+  # HISTORICAL — resolved before pre-registration existed.
+  # Reopening conditions are quoted/condensed from each experiment's own
+  # "What this does NOT establish" section, not invented here.
+  # ----------------------------------------------------------------------
+
+  - id: HIST-P0-GLV-SEMAEV-ORBIT-LOOKUP
+    title: "P0 — finite-orbit pair enumeration under GLV symmetry"
+    threat_models: [classical-single-target-plain]
+    preregistered: false
+    source: experiments/p0_glv_semaev/RESULTS.md
+    resolution: bounded_negative
+    scope: >-
+      Closes the finite-orbit pair-lookup sub-hypothesis only. Building the
+      dictionary itself costs what the lookup saves; no time bound T(p) is
+      established and the statement does not extrapolate.
+    reopening_conditions:
+      - "A construction where the orbit dictionary is amortised across many
+         relations rather than rebuilt, with the build cost counted."
+      - "An invariant formulation whose gain is not bounded by orbit size after
+         complete relation-generation and recovery costs are counted."
+
+  - id: HIST-P1-SEMAEV-S3-SOLVING
+    title: "P1 — Semaev S3 relation solving (not enumeration)"
+    threat_models: [classical-single-target-plain]
+    preregistered: false
+    source: experiments/p1_petit/RESULTS.md
+    resolution: inconclusive
+    scope: >-
+      Raw measurement only. The writeup explicitly declines to draw any asymptotic
+      or advantage/no-advantage conclusion from the one derived column.
+    reopening_conditions:
+      - "Measurements at enough sizes to fit a growth law rather than a single
+         derived column."
+
+  - id: HIST-P2-WARD-EDS
+    title: "P2 — Ward EDS rank of apparition and torsion zero set"
+    threat_models: [classical-single-target-plain]
+    preregistered: false
+    source: experiments/p2_ward_eds/RESULTS.md
+    resolution: bounded_negative
+    scope: >-
+      Confirms the known psi_n-torsion equivalence numerically and gives no
+      EDS-based ECDLP handle. Computing rho(P) requires scanning n up to ord(P) or
+      already knowing the group structure — Theta(ord(P)) work, the same order as
+      the DLP it would need to solve. The O(log n) term evaluates W_n at a GIVEN n;
+      it does not find the first zero cheaply.
+    reopening_conditions:
+      - "A method that locates the first zero of the EDS in time sublinear in
+         ord(P), rather than evaluating W_n at a supplied n."
+      - "An EDS formulation that is a lifting or descent rather than a structural
+         probe."
+
+  - id: HIST-P3-SM-SYSTEM
+    title: "P3 — S_m system degree of regularity, plain vs invariant"
+    threat_models: [classical-single-target-plain]
+    preregistered: false
+    source: experiments/p3_sm_system/RESULTS.md
+    resolution: bounded_negative
+    scope: >-
+      d_reg fits are DESCRIPTIVE-ONLY over |F| in 4..12, not proven growth laws.
+      The data shows no stable sub-generic exponent. The coupled u=x^3 presentation
+      is not a speedup on these instances: its proxy number is lower but its
+      matrices and wall time are larger.
+    reopening_conditions:
+      - "A nonredundant quotient or elimination formulation — explicitly NOT ruled
+         out by this experiment, which tested only the coupled u=x^3 presentation."
+      - "m=3 measured beyond the capped lower bound, i.e. a full graded reduction to
+         the solving degree (Macaulay bound ~25-28), which the pure-Python engine
+         could not reach."
+
+  - id: HIST-P4-PETIT-COMPOSED
+    title: "P4 — composed low-degree map as factor base (Petit approximation)"
+    threat_models: [classical-single-target-plain]
+    preregistered: false
+    source: experiments/p4_petit/RESULTS.md
+    resolution: bounded_negative
+    scope: >-
+      An APPROXIMATION of Petit (prime field, no Weil descent, polynomial rather
+      than rational map): it demonstrates the mechanism but is not the structural
+      object Petit uses. Composition alone does not lower the degree; the product
+      structure does not lower the degree number either, it only enlarges the ring.
+      Any drop in the d_reg number is paid for in a 3m-variable ring, larger Macaulay
+      matrices and larger wall time.
+    reopening_conditions:
+      - "The actual Petit construction over an extension field with Weil descent and
+         a rational composed map, rather than this prime-field approximation."
+
+  # ----------------------------------------------------------------------
+  # PROPOSED — pre-registered, awaiting owner ratification.
+  # ----------------------------------------------------------------------
+
+  - id: PRE-GLV-SEMAEV-INVARIANT-SLOPE
+    title: "Does the invariant S_m system have a lower d_reg growth slope than plain?"
+    status: proposed_requires_ratification
+    preregistered: true
+    threat_models: [classical-single-target-plain]
+    hypothesis_ids: [HYP_GLV_SEMAEV_001]
+    route_ids: [R-GLV-SEMAEV]
+    scale: "toy prime fields, |F| in 4..14; no secp256k1 instance is touched"
+    baseline: "the plain (non-invariant) S_m presentation measured on the same instances"
+    budget: "pure-Python Groebner, <= 8 CPU-hours total, single machine"
+    stop_condition: >-
+      Stop when |F| = 14 is reached, or when a single instance exceeds 45 minutes,
+      whichever comes first. Do not extend the range to chase a trend.
+    prediction: >-
+      Fit d_reg against |F| for both presentations at >= 3 sizes. The invariant
+      system is credited only if its fitted slope is lower than the plain slope by
+      more than the spread across repeated runs. A lower intercept with equal slope
+      is a constant factor and counts as bounded_negative, not as support.
+    cost_units: 3
+    prior_live: 0.03
+    prior_rationale: >-
+      Low, and deliberately so. P0 closed the orbit-lookup window, P3 found no
+      stable sub-generic exponent and showed the coupled u=x^3 presentation is
+      slower in wall time, and P4 found composition alone does not lower the degree.
+      The substrate itself rates the route constant-factor-evidence-only. What keeps
+      the prior above zero is that P3 explicitly did NOT rule out a nonredundant
+      quotient or elimination formulation, which is exactly what this measures.
+    likelihoods:
+      supported:          {live: 0.55, dead: 0.03}
+      inconclusive:       {live: 0.25, dead: 0.27}
+      bounded_negative:   {live: 0.15, dead: 0.60}
+      resource_exhausted: {live: 0.05, dead: 0.10}
+
+  - id: PRE-WARD-EDS-APPARITION-FOLLOWUP
+    title: "Can the EDS rank of apparition be located faster than scanning?"
+    status: proposed_requires_ratification
+    preregistered: true
+    threat_models: [classical-single-target-plain]
+    hypothesis_ids: [HYP_WARD_EDS_001]
+    route_ids: [R-EDS-DIVISION-POLYNOMIAL]
+    scale: "toy curves over small prime fields, ord(P) <= 10^4"
+    baseline: "naive scan for the first zero, which is Theta(ord(P))"
+    budget: "<= 2 CPU-hours"
+    stop_condition: "Stop at ord(P) = 10^4 or 30 minutes per instance."
+    prediction: >-
+      Measure operations to locate the first zero of W_n versus the naive scan. The
+      candidate is credited only if the measured count grows strictly slower than
+      linearly in ord(P) across >= 3 sizes.
+    cost_units: 2
+    prior_live: 0.01
+    prior_rationale: >-
+      Very low. P2 already established the structural obstruction directly: locating
+      rho(P) is Theta(ord(P)) work — the same order as the DLP it would solve — and
+      the cheap O(log n) evaluation answers a different question (W_n at a supplied
+      n). This candidate is included mainly to check that the layer ranks a
+      known-obstructed follow-up below a live one rather than rewarding activity.
+    likelihoods:
+      supported:          {live: 0.30, dead: 0.10}
+      inconclusive:       {live: 0.45, dead: 0.50}
+      bounded_negative:   {live: 0.20, dead: 0.35}
+      resource_exhausted: {live: 0.05, dead: 0.05}
+
+  - id: PRE-MULTITARGET-PRECOMP-PROBE
+    title: "Batch precomputation amortised across many targets"
+    status: proposed_requires_ratification
+    preregistered: true
+    threat_models: [classical-conditioned]
+    route_ids: [R-MULTI-TARGET-PRECOMPUTATION]
+    scale: "toy fields"
+    baseline: "single-target generic"
+    budget: "<= 1 CPU-hour"
+    stop_condition: "one pass"
+    prediction: "amortised per-target cost below single-target generic"
+    cost_units: 1
+    prior_live: 0.20
+    prior_rationale: >-
+      Included ON PURPOSE as a live example of the threat-model gate. The prior is
+      high and the cost is low, so a scoring scheme that blended admissibility into
+      the score would rank this near the top. It must instead be shelved before
+      scoring: it changes the input model, so no result it produces is a statement
+      about plain single-target secp256k1. Shelving is not a judgement on its merit.
+    likelihoods:
+      supported:          {live: 0.60, dead: 0.05}
+      inconclusive:       {live: 0.20, dead: 0.25}
+      bounded_negative:   {live: 0.15, dead: 0.60}
+      resource_exhausted: {live: 0.05, dead: 0.10}

@@ -63,6 +63,9 @@ jobs:
       - name: Check repository artifact manifest
         run: python3 scripts/check_repo_artifacts.py
 
+      - name: Check decision layer (gates, ranking, retrospective validation)
+        run: python3 scripts/check_engine.py
+
       - name: Check workflow automation inventory
         run: python3 scripts/check_automation_inventory.py
 

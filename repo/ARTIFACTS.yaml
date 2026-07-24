@@ -267,6 +267,31 @@ classes:
     risks:
       - Measurements are evidence, never proofs or verified ECDLP claims.
 
+  decision_layer:
+    description: >
+      Candidate admissibility gates, expected-information-gain ranking, and the
+      retrospective validation that holds them to the project's own recorded route
+      dispositions. A decision aid, not a discovery mechanism: it selects and
+      refuses work, and never asserts a mathematical result.
+    paths:
+      - engine/
+    owner: research_selection
+    hand_edit: true
+    generated: false
+    gates:
+      - scripts/check_engine.py
+      - engine/test_engine.py
+    risks:
+      - >
+        A selector that is never retrospectively validated silently drifts from the
+        decisions it claims to encode; R0/R1a/R1/R2 are gated for that reason.
+      - >
+        Priors and likelihoods are subjective commitments, not measurements. They
+        require owner ratification before any run is authorized.
+      - >
+        Nothing here authorizes an experiment. phase_policy in
+        repo/ECDLP_DECISION_SUBSTRATE.json remains the sole authority.
+
   portability_rehearsal_control:
     description: >
       Canonical pre-pilot portability contract, execution record, and review
