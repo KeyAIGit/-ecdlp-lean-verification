@@ -29,6 +29,7 @@ from prover_target_attempt import TARGETS, WORK_FILE, close_namespace_if_needed
 ROOT = Path(__file__).resolve().parent.parent
 REPORT_FILE = Path("kimi-agent-report.md")
 SUCCESS_FILE = Path("kimi-agent-success.lean")
+LEAN_OUTPUT_FILE = Path("kimi-agent-lean-output.txt")
 
 MAX_TOOL_OUTPUT = 6000       # chars of any tool result fed back to Kimi
 LEAN_TIMEOUT = 900           # N7's expanded `ring` under a raised maxHeartbeats can run long
@@ -96,13 +97,18 @@ def tool_run_lean(target, proof_body: str) -> tuple[bool, str]:
                               text=True, stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT, timeout=LEAN_TIMEOUT)
     except subprocess.TimeoutExpired:
-        return False, "lake env lean timed out (240s)."
-    low = proc.stdout.lower()
+        LEAN_OUTPUT_FILE.write_text(
+            f"lake env lean timed out ({LEAN_TIMEOUT}s).\n", encoding="utf-8"
+        )
+        return False, f"lake env lean timed out ({LEAN_TIMEOUT}s)."
+    full_output = proc.stdout or "(no output)"
+    LEAN_OUTPUT_FILE.write_text(full_output, encoding="utf-8")
+    low = full_output.lower()
     # ok ONLY if the kernel fully accepts it: exit 0, no error, and NO sorry/admit (which are just
     # warnings — 'declaration uses sorry' — so an error-only check would pass a stubbed proof).
     ok = (proc.returncode == 0 and "error" not in low
           and "sorry" not in low and "declaration uses" not in low)
-    return ok, (proc.stdout or "(no output)")[-MAX_TOOL_OUTPUT:]
+    return ok, full_output[-MAX_TOOL_OUTPUT:]
 
 
 TOOLS = [
@@ -176,7 +182,7 @@ def main() -> int:
         if ok:
             SUCCESS_FILE.write_text(WORK_FILE.read_text(encoding="utf-8"), encoding="utf-8")
             print("\nSUCCESS: kernel accepts the seed candidate.", flush=True)
-        return 0
+        return 0 if ok else 1
 
     key = os.environ.get("KIMI_API_KEY", "").strip()
     if not key:

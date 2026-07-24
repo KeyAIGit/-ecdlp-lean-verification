@@ -43,8 +43,12 @@ jobs:
 
       - name: Install elan (Lean toolchain manager)
         run: |
-          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
-            | sh -s -- -y --default-toolchain none
+          set -euo pipefail
+          curl --retry 5 --retry-all-errors --retry-delay 2 -fsSL \
+            https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          test -x "$HOME/.elan/bin/lake"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
       - name: Fetch prebuilt Mathlib cache
@@ -95,6 +99,7 @@ jobs:
           name: kimi-agent-prover-report
           path: |
             kimi-agent-report.md
+            kimi-agent-lean-output.txt
             kimi-agent-success.lean
             ProverTargetAttempt.lean
           if-no-files-found: ignore
