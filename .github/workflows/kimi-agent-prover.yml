@@ -27,6 +27,14 @@ on:
         description: Just compile scripts/seeds/<target>.lean on the kernel (no model, no API)
         required: false
         default: 'false'
+      candidate_patch:
+        description: Apply and kernel-check a committed proof patch without modifying the proof base
+        required: false
+        default: none
+        type: choice
+        options:
+          - none
+          - normeds_net_eq_zero
 
 permissions:
   contents: read
@@ -54,7 +62,28 @@ jobs:
       - name: Fetch prebuilt Mathlib cache
         run: lake exe cache get
 
+      - name: Apply candidate proof patch
+        if: inputs.candidate_patch != 'none'
+        env:
+          INPUT_CANDIDATE_PATCH: ${{ inputs.candidate_patch }}
+        run: |
+          set -euo pipefail
+          case "$INPUT_CANDIDATE_PATCH" in
+            normeds_net_eq_zero)
+              PATCH="scripts/seeds/patches/normeds_net_eq_zero.patch"
+              TARGET="Ecdlp/Proved/NormEDSIsElliptic.lean"
+              ;;
+            *)
+              echo "::error::Unknown candidate patch: $INPUT_CANDIDATE_PATCH"
+              exit 1
+              ;;
+          esac
+          git apply --check "$PATCH"
+          git apply "$PATCH"
+          echo "CANDIDATE_TARGET=$TARGET" >> "$GITHUB_ENV"
+
       - name: Build the Ecdlp modules the targets import (so run_lean's imports resolve)
+        if: inputs.candidate_patch == 'none'
         run: |
           lake build \
             Ecdlp.Proved.NormEDSSomos4 \
@@ -64,9 +93,17 @@ jobs:
             Ecdlp.Proved.OddTorsionBound
 
       - name: Install Python deps
+        if: inputs.candidate_patch == 'none'
         run: pip install --quiet openai
 
+      - name: Kernel-check candidate proof patch
+        if: inputs.candidate_patch != 'none'
+        run: |
+          set -o pipefail
+          lake env lean "$CANDIDATE_TARGET" 2>&1 | tee candidate-patch-lean-output.txt
+
       - name: Run Kimi agent-prover
+        if: inputs.candidate_patch == 'none'
         env:
           KIMI_API_KEY: ${{ secrets.KIMI_API_KEY }}
           KIMI_BASE_URL: ${{ secrets.KIMI_BASE_URL }}
@@ -102,4 +139,5 @@ jobs:
             kimi-agent-lean-output.txt
             kimi-agent-success.lean
             ProverTargetAttempt.lean
+            candidate-patch-lean-output.txt
           if-no-files-found: ignore
