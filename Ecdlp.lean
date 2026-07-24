@@ -169,3 +169,4 @@ import Ecdlp.Proved.NsmulCoordsBaseFour
 import Ecdlp.Proved.FourTorsionBridge
 import Ecdlp.Proved.FourTorsionCount
 import Ecdlp.Proved.CompressedDivisionPoly
+import Ecdlp.Proved.SevenNonResidue
