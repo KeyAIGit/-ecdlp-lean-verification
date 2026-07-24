@@ -39,15 +39,15 @@
           <p>One operator view for the current decision, formal substrate, evidence, active work,
             and generated trust checks.</p></div>
         <div class="snapshot">Canonical snapshot
-          <code>snapshot 297 ledger rows / ~258 distinct</code></div>
+          <code>snapshot 299 ledger rows / ~260 distinct</code></div>
       </div>
       <div class="boundary-notice"><strong>Scope boundary.</strong>
         The environment maps and verifies the research boundary. It does not solve the plain secp256k1 discrete logarithm problem.
         Monitoring means new evidence can reopen a route; it does not mean impossibility was proved.</div>
       <div class="workspace-metrics">
-        <div class="workspace-metric"><div class="workspace-metric__value">297</div><div class="workspace-metric__label">ledger rows</div></div>
-        <div class="workspace-metric"><div class="workspace-metric__value">~258</div><div class="workspace-metric__label">distinct results</div></div>
-        <div class="workspace-metric"><div class="workspace-metric__value">165</div><div class="workspace-metric__label">proved modules</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">299</div><div class="workspace-metric__label">ledger rows</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">~260</div><div class="workspace-metric__label">distinct results</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">168</div><div class="workspace-metric__label">proved modules</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">486</div><div class="workspace-metric__label">corpus claims</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">17</div><div class="workspace-metric__label">routes evaluated</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">0</div><div class="workspace-metric__label">routes selected</div></div>
@@ -329,9 +329,9 @@
   <td>Mathlib exposes the polynomial identities but not the theorem connecting [n]P to the phi/psi coordinate formulas for all n.</td>
   <td>An upstream multiplication-coordinate theorem lands, or a reviewed in-repo induction closes the torsion bridge.</td>
 </tr><tr>
-  <td><strong>Four N7 algebra walls need large checked elimination certificates</strong><small>proof-engineering</small></td>
-  <td>The statements are machine-elaborated and numerically/symbolically validated, but checked cofactors for the degree-heavy identities are not yet authored.</td>
-  <td>A reproducible certificate generator emits Lean-checkable cofactors for all four algebra walls.</td>
+  <td><strong>Three N7 algebra walls remain after the even-x closure</strong><small>proof-engineering</small></td>
+  <td>The even x-coordinate wall is kernel-checked. The odd x-coordinate and the even/odd y-coordinate identities remain machine-elaborated open obligations.</td>
+  <td>A reviewed derivation closes at least one of odd-x, even-y, or odd-y without weakening the carrier hypotheses.</td>
 </tr><tr>
   <td><strong>Uniform separability of multiplication-by-n is not available</strong><small>missing-theory</small></td>
   <td>Small n is closed, while the general prime-to-characteristic counting and differential argument remains absent.</td>
@@ -352,13 +352,13 @@
       <div class="panel-heading"><div><h2>Sync Health</h2>
         <p>The public and agent-facing views resolve back to canonical machine sources and their gates.</p></div></div>
       <div class="layout-two" style="margin-bottom:30px"><article class="surface">
-  <div class="surface__head"><div><h3>Canonical counts</h3><p>297 ledger rows / ~258 distinct</p></div><span class="status status--closed">OK</span></div>
+  <div class="surface__head"><div><h3>Canonical counts</h3><p>299 ledger rows / ~260 distinct</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/stats.json">data/stats.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_status_consistency.py">scripts/check_status_consistency.py</a></div>
 </article><article class="surface">
   <div class="surface__head"><div><h3>Decision state</h3><p>17 routes evaluated / 0 selected</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ECDLP_DECISION_SUBSTRATE.json">repo/ECDLP_DECISION_SUBSTRATE.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_ecdlp_decision_substrate.py">scripts/check_ecdlp_decision_substrate.py</a></div>
 </article><article class="surface">
-  <div class="surface__head"><div><h3>Generated closure</h3><p>297 theorem nodes in the knowledge graph</p></div><span class="status status--closed">OK</span></div>
+  <div class="surface__head"><div><h3>Generated closure</h3><p>299 theorem nodes in the knowledge graph</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ARTIFACTS.yaml">repo/ARTIFACTS.yaml</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_repo_artifacts.py">scripts/check_repo_artifacts.py</a></div>
 </article><article class="surface">
   <div class="surface__head"><div><h3>Product boundary</h3><p>Reference deployment</p></div><span class="status status--blue">OK</span></div>

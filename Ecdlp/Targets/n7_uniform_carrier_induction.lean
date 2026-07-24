@@ -35,16 +35,11 @@ Fully closed (no `sorry`):
 * `secp256k1_nsmul_coords`      — the capstone: `normEDSRec'` assembly, index-correct
   (even `2*(m+3)` via `k=m+3`; odd `2*(m+2)+1` via `k=m+2, k+1=m+3`), `sorry`-free modulo walls.
 
-Named residual walls (adversarial ultracode audit, 2026-07-19 — honest current factoring):
-* `even_x_algebra` — **reduced** to two univariate division-polynomial *doubling* identities
-  `ΨSq(2k).eval x = 4B(A³+7B³)` and `Φ(2k).eval x = A⁴−56AB³` (with `A=Φ(k).eval x`, `B=ΨSq(k).eval x`);
-  everything else (addX unfold, slope-square elimination `sk²·4(Xk³+7)=9Xk⁴`, `B≠0` denominator,
-  final `linear_combination B⁴·hsk`) is closed, and the two identities are **true** (checked
-  `k=1..5` via the eval bridge). But a deeper audit (2026-07-19) found they are **NOT a finite
-  certificate**: substituting `normEDS_even/odd` + Somos-4 leaves a remainder depending on
-  `w(k±2)²` individually, and pinning those cascades outward unboundedly (`w(k+4), w(k+6), …`).
-  Closing them needs a **strong induction on `k`** over the elliptic net (the `NormEDSSomos4.lean`
-  technique, ~200 lines) — a real EDS sub-development, not a `ring`/`linear_combination` fill.
+Named wall status (adversarial audit updated 2026-07-24):
+* `even_x_algebra` — **CLOSED (2026-07-24)** in `N7EvenXAlgebra.lean`. The two polynomial
+  doubling identities for `ΨSq(2k)` and `Φ(2k)` are finite consequences of the landed
+  plus-companion and Somos-4 identities; their pointwise forms combine with tangent geometry and
+  denominator non-vanishing. No strong induction or Gröbner certificate is needed for this wall.
 * `odd_x_algebra`, `even_y_algebra`, `odd_y_algebra` — **all restated soundly (2026-07-21).**
   Previously UNDER-HYPOTHESIZED: they quantified `Yk`(,`Yk1`) with only the curve equation, leaving
   the y-sign free, so flipping only `Yk ↦ −Yk` gave a different valid input (`(−kP)+(k+1)P = P`) with
@@ -89,6 +84,7 @@ import Ecdlp.Proved.NsmulCoordsBaseFour
 import Ecdlp.Proved.TripleMultiplicationFormula
 import Ecdlp.Proved.MultiplicationYTripleFormula
 import Ecdlp.Proved.FiveTorsionBridge
+import Ecdlp.Proved.N7EvenXAlgebra
 
 namespace Ecdlp.Curve.N7Uniform
 
@@ -354,17 +350,7 @@ theorem psiSq_ne_zero_of_nsmul_some {n : ℕ} {X Y : ZMod Secp256k1.p}
 
 /-! ## The per-step rational-identity walls (isolated) -/
 
-/-- **Even x-wall.** Tangent-doubling: the group-law `x`-coordinate of `2•(k•P)` equals the
-canonical ratio at index `2k`. `needs`: `φ_ψ_diff secp256k1 k k` + `ψₖ ∣ ψ₂ₖ`
-(`DivisionPolynomialDoubling`), transported to `evalEval`-at-`P` scalars, plus `ΨSqₖ(x) ≠ 0`. -/
-theorem even_x_algebra (k : ℕ) (Xk Yk sk : ZMod Secp256k1.p)
-    (hXk : Xk = (secp256k1.Φ (k : ℤ)).eval x / (secp256k1.ΨSq (k : ℤ)).eval x)
-    (hden : (secp256k1.ΨSq (k : ℤ)).eval x ≠ 0)
-    (hslope : sk * (2 * Yk) = 3 * Xk ^ 2)
-    (hcurvek : Yk ^ 2 = Xk ^ 3 + 7) :
-    secp256k1.toAffine.addX Xk Xk sk
-      = (secp256k1.Φ ((2 * k : ℕ) : ℤ)).eval x / (secp256k1.ΨSq ((2 * k : ℕ) : ℤ)).eval x := by
-  sorry
+/- `even_x_algebra` is imported from `Ecdlp.Proved.N7EvenXAlgebra`. -/
 
 /-- **Odd x-wall = point-transported `φ_ψ_diff`.** Secant addition (`k•P + (k+1)•P`): the group-law
 `x`-coordinate equals the canonical ratio at index `2k+1`. The cleared identity is the Silverman

@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~258 distinct results / 297 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~260 distinct results / 299 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -335,6 +335,15 @@ exact `Θ` statements.
       this). That is a **single multi-cycle refactor of the induction**, not a mergeable single-cycle
       brick; per-`n` formulas beyond `n=4` are ledger inflation and are not to be minted. Alternative:
       port the mul-by-`n`/torsion machinery if upstream PR #13782 lands.
+    - **Current N7 status (2026-07-24; supersedes the earlier even-x estimates above).**
+      `even_x_algebra` is now kernel-checked in `N7EvenXAlgebra.lean`, built from the polynomial
+      identities in `DivisionPolynomialPsiSqDoubling.lean` and
+      `DivisionPolynomialPhiDoubling.lean`. The missing finite input was the landed
+      plus-companion identity: together with Somos-4 it supplies `(U+V)` and `UV`, so
+      `(U−V)²=(U+V)²−4UV` closes the doubling formulas without strong induction or Gröbner
+      cofactors. The carrier stem now has **six** bare `sorry`s: the uniform torsion bridge,
+      `odd_x_algebra`, `even_y_algebra`, `odd_y_algebra`, and two odd-step torsion branches.
+      See `notes/N7_EVEN_X_REDUCTION.md` and `notes/N7_UNIFORM_BLOCKER.md`.
   - **Weil reciprocity `f(div g) = g(div f)` (ladder rung W4-1) — frozen no-go
     (2026-07-18).** The evaluation half of the Weil pairing is landed at the
     function-field level (W3e-1 divisor evaluation, W3e-2 representative-scaling),

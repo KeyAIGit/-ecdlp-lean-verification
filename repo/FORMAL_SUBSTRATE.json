@@ -100,13 +100,13 @@
     {
       "id": "blocker-n7-certificates",
       "kind": "proof-engineering",
-      "title": "Four N7 algebra walls need large checked elimination certificates",
-      "description": "The statements are machine-elaborated and numerically/symbolically validated, but checked cofactors for the degree-heavy identities are not yet authored.",
+      "title": "Three N7 algebra walls remain after the even-x closure",
+      "description": "The even x-coordinate wall is kernel-checked. The odd x-coordinate and the even/odd y-coordinate identities remain machine-elaborated open obligations.",
       "evidence_files": [
-        "notes/N7_EVEN_X_DOUBLING_ANALYSIS.md",
+        "notes/N7_EVEN_X_REDUCTION.md",
         "Ecdlp/Targets/n7_uniform_carrier_induction.lean"
       ],
-      "resume_condition": "A reproducible certificate generator emits Lean-checkable cofactors for all four algebra walls."
+      "resume_condition": "A reviewed derivation closes at least one of odd-x, even-y, or odd-y without weakening the carrier hypotheses."
     },
     {
       "id": "blocker-uniform-separability",
@@ -510,7 +510,7 @@
       "stems": [
         {
           "file": "Ecdlp/Targets/n7_uniform_carrier_induction.lean",
-          "expected_sorry": 7
+          "expected_sorry": 6
         },
         {
           "file": "Ecdlp/Targets/n7_uniform_secp256k1_x.lean",

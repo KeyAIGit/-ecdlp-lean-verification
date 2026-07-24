@@ -10,6 +10,7 @@ CI elaborates it standalone and validates the output with
 `scripts/check_axioms.py`.
 -/
 
+#print axioms Ecdlp.Curve.N7Uniform.even_x_algebra
 #print axioms Ecdlp.Curve.Q5
 #print axioms Ecdlp.Curve.Q5_eval
 #print axioms Ecdlp.Curve.Q5_natDegree_le
@@ -247,10 +248,14 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1_zmultiples_le_torsionBy
 #print axioms Ecdlp.Curve.secp256k1_Δ_ne_zero
 #print axioms Ecdlp.Curve.secp256k1_Φ_monic
+#print axioms Ecdlp.Curve.secp256k1_Φ_two_mul
+#print axioms Ecdlp.Curve.secp256k1_Φ_two_mul_eval
 #print axioms Ecdlp.Curve.secp256k1_Φ₂
 #print axioms Ecdlp.Curve.secp256k1_Φ₃
 #print axioms Ecdlp.Curve.secp256k1_Φ₃_eval
 #print axioms Ecdlp.Curve.secp256k1_ΨSq_natDegree_lt_Φ
+#print axioms Ecdlp.Curve.secp256k1_ΨSq_two_mul
+#print axioms Ecdlp.Curve.secp256k1_ΨSq_two_mul_eval
 #print axioms Ecdlp.Curve.secp256k1_ΨSq₃
 #print axioms Ecdlp.Curve.secp256k1_ΨSq₃_eval
 #print axioms Ecdlp.Curve.secp256k1_Ψ₂Sq

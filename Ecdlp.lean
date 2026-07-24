@@ -161,6 +161,9 @@ import Ecdlp.Proved.DivisionPolynomialPointBridge
 import Ecdlp.Proved.DivisionPolynomialPointDoubling
 import Ecdlp.Proved.PrePsiSomos4
 import Ecdlp.Proved.PrePsiPlusCompanion
+import Ecdlp.Proved.DivisionPolynomialPsiSqDoubling
+import Ecdlp.Proved.DivisionPolynomialPhiDoubling
+import Ecdlp.Proved.N7EvenXAlgebra
 import Ecdlp.Proved.SecantAddX
 import Ecdlp.Proved.OmegaRecurrenceAnchors
 import Ecdlp.Proved.NsmulCoordsBaseOne

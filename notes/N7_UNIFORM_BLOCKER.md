@@ -1,71 +1,70 @@
 # N7 uniform blocker record
 
-Status: **blocked, accepted at the formal-substrate release boundary**
+Status: **blocked, with one named wall closed**
 
-Last bounded pass: **2026-07-22**
+Last bounded pass: **2026-07-24**
 
-This record distinguishes a verified fixed-`n` substrate from the still-open
-uniform theorem. It does not claim that N7 is proved.
+This record distinguishes the verified fixed-index and even-step substrate from
+the still-open uniform theorem. It does not claim that N7 is proved.
+
+## Closed in this pass
+
+`Ecdlp.Curve.N7Uniform.even_x_algebra` is now a built theorem in
+`Ecdlp/Proved/N7EvenXAlgebra.lean`. Its two division-polynomial doubling inputs
+are built in:
+
+- `Ecdlp/Proved/DivisionPolynomialPsiSqDoubling.lean`
+- `Ecdlp/Proved/DivisionPolynomialPhiDoubling.lean`
+
+The standalone kernel run is recorded at
+<https://github.com/KeyAIGit/-ecdlp-lean-verification/actions/runs/30119285017>.
+The proof uses no `sorry`, no custom axiom, and no generated elimination
+certificate.
 
 ## Residual obligations
 
-`Ecdlp/Targets/n7_uniform_carrier_induction.lean` elaborates with seven bare
-`sorry` obligations:
+`Ecdlp/Targets/n7_uniform_carrier_induction.lean` now contains six bare `sorry`
+obligations:
 
 | obligation | class | blocker |
 |---|---|---|
-| `nsmul_eq_zero_iff_psi_evalEval_zero` | conceptual bridge | no uniform Point-to-`ψₙ` multiplication theorem |
-| `even_x_algebra` | symbolic certificate | degree-heavy doubling/elimination certificate |
-| `odd_x_algebra` | symbolic certificate | the same cross-index `ψ` reduction |
-| `even_y_algebra` | symbolic certificate | omega-free doubling certificate |
-| `odd_y_algebra` | symbolic certificate | omega-free secant certificate |
-| `odd_step_group`: `k • P = O` branch | downstream torsion branch | uniform Point-to-`ψₙ` bridge |
-| `odd_step_group`: `(k+1) • P = O` branch | downstream torsion branch | uniform Point-to-`ψₙ` bridge |
+| `nsmul_eq_zero_iff_psi_evalEval_zero` | conceptual bridge | no uniform Point-to-division-polynomial multiplication theorem |
+| `odd_x_algebra` | coupled scalar identity | consecutive-multiple y-coupling plus cross-index division-polynomial algebra |
+| `even_y_algebra` | coupled scalar identity | omega-free tangent y-coordinate relation |
+| `odd_y_algebra` | coupled scalar identity | omega-free secant y-coordinate relation |
+| `odd_step_group`: `k * P = O` branch | downstream torsion branch | uniform Point-to-division-polynomial bridge |
+| `odd_step_group`: `(k+1) * P = O` branch | downstream torsion branch | uniform Point-to-division-polynomial bridge |
 
-`Ecdlp/Targets/n7_uniform_secp256k1_x.lean` contains one additional wrapper
-`sorry`; it consumes the carrier theorem and is not an eighth independent
-mathematical wall.
+`Ecdlp/Targets/n7_uniform_secp256k1_x.lean` contains one wrapper `sorry`; it
+consumes the carrier theorem and is not a seventh independent mathematical wall.
 
-## Bounded pass evidence
+## Why the earlier plan changed
 
-The following committed, independently executable CAS checks passed with
-`CERT_OK` under SymPy 1.14:
+The earlier reduction treated `PsiSq(2k)` and `Phi(2k)` as requiring a strong
+`normEDSRec'` induction or large Groebner cofactors. The landed
+plus-companion identity exposes the missing finite information:
 
-- `scripts/certs/division_doubling_secp.py`: exact doubling identities for
-  `ΨSq(2k)` and `Φ(2k)`, `k=1..8`, plus a finite-field spot check.
-- `scripts/certs/eval_bridge_check.py`: even/odd evaluation-bridge identities.
-- `scripts/certs/triple_mult_formula_check.py`: the fixed `n=3` formula.
-- `scripts/certs/quad_mult_formula_check.py`: the fixed `n=4` formula and
-  checked cofactors.
-- `scripts/certs/quint_mult_formula_check.py`: the fixed `n=5` formula and
-  checked cofactors.
+```text
+(U - V)^2 = (U + V)^2 - 4UV.
+```
 
-These tests validate landed leaves and candidate identities. They do not create
-Lean proof terms and do not imply the all-`n` induction.
-
-The broader four-wall point-level test described in
-`notes/N7_EVEN_X_DOUBLING_ANALYSIS.md` was run in an earlier scratch session,
-but its `odd_wall_verify.py` script was not committed. It is therefore
-historical supporting evidence, not a reproducible release gate.
+The plus-companion theorem supplies `U+V`, while Somos-4 supplies `UV`. This
+turns both doubling identities into finite parity-specific ring proofs. See
+`notes/N7_EVEN_X_REDUCTION.md`.
 
 ## Upstream state
 
-[Mathlib PR #13782](https://github.com/leanprover-community/mathlib4/pull/13782),
-"ZSMul formula in terms of division polynomials", is still open and unmerged.
-At this pass it is reported non-mergeable and still depends on open PRs #13057,
-#13155, and #13847. Its intended theorem is exactly the upstream foundation that
-would remove the conceptual bridge wall.
+Mathlib PR #13782, "ZSMul formula in terms of division polynomials", is the
+relevant upstream route for the conceptual bridge. Until a usable theorem is
+available in the pinned toolchain, the in-repo carrier induction remains the
+independent route.
 
 ## Decision
 
-No statement was weakened, no axiom was added, and no target was promoted. The
-target registry status is `blocked`, not `todo`; the active paid prover queue
-remains empty.
+No statement was weakened and no open theorem was promoted. The target remains
+`blocked` because the uniform result is incomplete, but the blocker count and
+proof DAG now reflect real progress.
 
-Resume only when at least one condition holds:
-
-1. Mathlib lands a usable uniform multiplication-coordinate theorem.
-2. A reproducible generator emits Lean-checkable certificates for all four
-   algebra walls.
-3. A new proof decomposition removes one named blocker and passes standalone
-   stem elaboration before promotion.
+The next bounded pass should attack exactly one of `odd_x_algebra`,
+`even_y_algebra`, or `odd_y_algebra`. Work on the uniform bridge can proceed
+independently and should be integrated only after kernel verification.

@@ -54,6 +54,7 @@ jobs:
             Ecdlp.Proved.PrePsiPlusCompanion \
             Ecdlp.Proved.DivisionPolynomialPsiSqDoubling \
             Ecdlp.Proved.DivisionPolynomialPhiDoubling \
+            Ecdlp.Proved.N7EvenXAlgebra \
             Ecdlp.Proved.NsmulCoordsBaseOne \
             Ecdlp.Proved.NsmulCoordsBaseTwo \
             Ecdlp.Proved.OmegaRecurrenceAnchors \

@@ -1,6 +1,8 @@
 import Ecdlp.Proved.DivisionPolynomialPsiSqDoubling
 import Ecdlp.Proved.DivisionPolynomialPhiDoubling
 
+/-! # N7 even-step x-coordinate assembly for secp256k1 -/
+
 namespace Ecdlp.Curve.N7Uniform
 
 open Polynomial WeierstrassCurve WeierstrassCurve.Affine
