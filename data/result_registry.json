@@ -8749,7 +8749,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/DoublingPointFormulaBar.lean",
-      "line": 115
+      "line": 116
     },
     "Ecdlp.Curve.secp256k1Bar_two_nsmul_eq_zero_iff": {
       "name": "secp256k1Bar_two_nsmul_eq_zero_iff",
