@@ -81,6 +81,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1_c₄_eq_zero
 #print axioms Ecdlp.Curve.secp256k1_c₆
 #print axioms Ecdlp.Curve.secp256k1_c₆_ne_zero
+#print axioms Ecdlp.Curve.secp256k1_den_ne_zero_of_x_eq_div
 #print axioms Ecdlp.Curve.secp256k1_dh_agree
 #print axioms Ecdlp.Curve.secp256k1_dlogEquiv
 #print axioms Ecdlp.Curve.secp256k1_dlogHom
@@ -200,6 +201,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1_psi5_evalEval
 #print axioms Ecdlp.Curve.secp256k1_psi6_evalEval
 #print axioms Ecdlp.Curve.secp256k1_psi7_evalEval
+#print axioms Ecdlp.Curve.secp256k1_psiSq_ne_zero_of_x_eq_div
 #print axioms Ecdlp.Curve.secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄
 #print axioms Ecdlp.Curve.secp256k1_quadruple_y
 #print axioms Ecdlp.Curve.secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅
@@ -207,6 +209,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1_scalar_num_generators
 #print axioms Ecdlp.Curve.secp256k1_schnorr_batch_verify
 #print axioms Ecdlp.Curve.secp256k1_schnorr_verify
+#print axioms Ecdlp.Curve.secp256k1_seven_not_isSquare
 #print axioms Ecdlp.Curve.secp256k1_seven_nsmul_eq_zero_iff
 #print axioms Ecdlp.Curve.secp256k1_seven_torsion_card_le
 #print axioms Ecdlp.Curve.secp256k1_seven_torsion_ncard_le
@@ -242,6 +245,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff
 #print axioms Ecdlp.Curve.secp256k1_two_torsion_ncard_le
 #print axioms Ecdlp.Curve.secp256k1_two_torsion_x_card_le
+#print axioms Ecdlp.Curve.secp256k1_x_ne_zero
 #print axioms Ecdlp.Curve.secp256k1_zmultiples_le_torsionBy
 #print axioms Ecdlp.Curve.secp256k1_Δ_ne_zero
 #print axioms Ecdlp.Curve.secp256k1_Φ_monic
