@@ -179,7 +179,7 @@ hypotheses:
       fixed-nonzero-target scalar covariance, while r=0 is exceptional.
       An independent standard-library validator reconstructs S4 from the
       quadratic Sylvester determinant and replays all 108 actions. This is a
-      PROVED symbolic classification and a BOUNDED NEGATIVE for independent
+      CERTIFICATE-VERIFIED symbolic classification and a BOUNDED NEGATIVE for independent
       u_i=x_i^3 quotienting and its fixed-target scaling premise. It is not a
       geometric zero-variety automorphism classification, a Groebner/F4 lower
       bound, a faithful Petit no-go, an attack run, or an ECDLP claim. The

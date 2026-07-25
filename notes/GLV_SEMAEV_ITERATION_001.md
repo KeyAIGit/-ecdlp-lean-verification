@@ -73,12 +73,20 @@ GitHub Actions run 30142661986
 ```
 
 The cited run accepted the module in the repository's full `lake build` and
-built-source no-`sorry` scan. The current closure change registers the theorem
-package in `VERIFIED.md` and adds its declarations to the generated exhaustive
-axiom audit; that expanded audit is pending this closure commit's PR CI and will
-be bound by a follow-up provenance record. The symbolic stabilizer
-classification remains certificate-backed rather than being overstated as a
-kernel theorem.
+built-source no-`sorry` scan.
+
+Ledger closure acceptance:
+
+```text
+closure commit 9b77dd109306fa677fed5feab7bef830049e0c55
+GitHub Actions run 30143606761
+job 89641332798
+```
+
+That later run accepted the `VERIFIED.md` registration and the generated
+exhaustive axiom audit containing all eight new declarations. The symbolic
+stabilizer classification remains certificate-backed rather than being
+overstated as a kernel theorem.
 
 The coefficient witnesses also make an arbitrary scalar exhaustive. A
 coefficient-one anchor forces any proportionality scalar to be a power of

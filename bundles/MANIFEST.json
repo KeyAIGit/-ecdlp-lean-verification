@@ -17,7 +17,7 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 62246
+        "bytes": 62512
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -85,7 +85,7 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 62246
+        "bytes": 62512
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -145,7 +145,7 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 10926
+        "bytes": 11015
       },
       {
         "path": "AGENTS.md",
@@ -181,7 +181,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 24575
+        "bytes": 24589
       },
       {
         "path": "experiments/engine/README.md",
@@ -249,7 +249,7 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 62246
+        "bytes": 62512
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -309,7 +309,7 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 10926
+        "bytes": 11015
       },
       {
         "path": "AGENTS.md",
@@ -345,7 +345,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 24575
+        "bytes": 24589
       },
       {
         "path": "experiments/engine/README.md",
@@ -405,7 +405,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 531178
+        "bytes": 531454
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

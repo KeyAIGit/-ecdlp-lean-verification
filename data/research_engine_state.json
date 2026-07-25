@@ -3,8 +3,8 @@
   "engine_id": "ecdlp-research-engine-v0",
   "source_hashes": {
     "policy_sha256": "77499c92fdaac8e30ad15ba06ba723aaadf255b25e95cb596b6caea63cd90c58",
-    "decision_substrate_sha256": "28b2ac37d0273364637b229f6c6718a05ae7977fda4c160ed14c17bfc23d3bf5",
-    "hypotheses_sha256": "97836c79a413520b51d9b4067b55c95bca736b2f71e8eacb420f00fda050662b",
+    "decision_substrate_sha256": "2089c85a62a3515f611590ac0dc5d5bf7b914cc6b27f251f16487dac1ab252a3",
+    "hypotheses_sha256": "9c451945940efc36dae517d31e291e18c87ac415d58440e7443b8fc32d66acaf",
     "outcome_events_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
     "historical_baseline_anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
   },

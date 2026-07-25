@@ -6805,7 +6805,12 @@
         "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
       },
       "ledger_acceptance": {
-        "status": "pending_closure_ci"
+        "status": "accepted",
+        "commit": "9b77dd109306fa677fed5feab7bef830049e0c55",
+        "workflow_run": 30143606761,
+        "job": 89641332798,
+        "lean": "v4.31.0",
+        "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
       },
       "evaluated_route_ids": [
         "R-GENERIC-LOWER-BOUND",
@@ -6828,7 +6833,7 @@
       ],
       "gate_result": "Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube and generic fixed-target scaling premises are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.",
       "rationale": [
-        "RS-2026-07-22-001 correctly selected zero routes for promotion and remains the governing negative promotion assessment.",
+        "RS-2026-07-22-001 is historical after supersession; this current decision explicitly carries forward its zero-promotion assessment.",
         "The owner selected the exact S3/S4 coordinatewise C3 stabilizer and fixed-target consequence as the sole current structural uncertainty because it can resolve the premise of the naive GLV-Semaev quotient without an attack run.",
         "Exact symbolic certificates and narrowly scoped Lean covariance theorems can reduce this uncertainty while preserving the parked experiment status and every P0-P4 result.",
         "A diagonal-only result is a bounded no-go for independent u_i=x_i^3 quotienting, not a lower bound for Groebner/F4, faithful Petit, or the whole R-GLV-SEMAEV route.",
@@ -7206,7 +7211,7 @@
           "The quotient retains enough information to recover valid relations."
         ],
         "known_cost": "Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.",
-        "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance; a generic fixed nonzero target has only the identity covariance. The standard-library replay reconstructs S4 independently from the Sylvester determinant. The narrow covariance and point-group transport source package passed the full Lean build and built-source no-sorry scan in workflow run 30142661986. Its current VERIFIED.md registration and expanded exhaustive axiom audit remain pending closure CI; earlier P0-P4 evidence is retained unchanged.",
+        "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance; a generic fixed nonzero target has only the identity covariance. The standard-library replay reconstructs S4 independently from the Sylvester determinant. The narrow covariance and point-group transport source package passed the full Lean build and built-source no-sorry scan in workflow run 30142661986. Its VERIFIED.md registration and expanded exhaustive axiom audit passed workflow run 30143606761 at closure commit 9b77dd109306fa677fed5feab7bef830049e0c55; earlier P0-P4 evidence is retained unchanged.",
         "success_gate": "Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.",
         "stop_condition": "The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.",
         "next_action": "Keep GLV-SEMAEV-ITER-001 closed without a solver run. Accept only a materially different phase-preserving mechanism with an exact recovery map, orbit tags, excluded components, a falsifiable full-cost prediction, and an independent validator through TASK-008 before any new decision.",

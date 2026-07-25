@@ -348,10 +348,18 @@ def validate() -> list[str]:
                     f"route_selection.kernel_acceptance.{field} must be {expected!r}"
                 )
     ledger_acceptance = selection.get("ledger_acceptance")
-    if ledger_acceptance != {"status": "pending_closure_ci"}:
+    expected_ledger_acceptance = {
+        "status": "accepted",
+        "commit": "9b77dd109306fa677fed5feab7bef830049e0c55",
+        "workflow_run": 30143606761,
+        "job": 89641332798,
+        "lean": "v4.31.0",
+        "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    }
+    if ledger_acceptance != expected_ledger_acceptance:
         problems.append(
-            "route_selection.ledger_acceptance must record pending_closure_ci "
-            "until the expanded ledger axiom audit passes"
+            "route_selection.ledger_acceptance must match the accepted closure "
+            "commit and expanded ledger axiom-audit run"
         )
     for field in (
         "gate_result",

@@ -32,10 +32,12 @@ Do not quote a count from any
 other doc — prose may be stale; if in doubt, cite STATUS.md. Machine-readable:
 `data/stats.json` · badge endpoint `badges/theorems.json`.
 
-**Current research decision.** `RS-2026-07-24-001` supersedes the prior
-select-none decision only for the now-completed `GLV-SEMAEV-ITER-001`; it
-selected one route for bounded symbolic and Lean structural work while
-promoting **zero** routes and authorizing **zero** experiments. Exact symbolic
+**Current research decision.** `RS-2026-07-24-001` is current and supersedes
+`RS-2026-07-22-001`, while explicitly carrying forward its zero-promotion
+assessment. Its only positive selection was the now-completed
+`GLV-SEMAEV-ITER-001`: one route received bounded symbolic and Lean structural
+work while **zero** routes were promoted and **zero** experiments authorized.
+Exact symbolic
 replay shows that only the diagonal `C3` action survives among the enumerated
 coordinatewise scalar covariances of `S3` and `S4`; at a generic fixed nonzero
 target, only identity remains a scalar covariance. The separate kernel-accepted

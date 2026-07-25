@@ -31,7 +31,7 @@ Iteration: **GLV-SEMAEV-ITER-001**. Hypothesis: **HYP_GLV_SEMAEV_001**. Task: **
 
 Rationale:
 
-- RS-2026-07-22-001 correctly selected zero routes for promotion and remains the governing negative promotion assessment.
+- RS-2026-07-22-001 is historical after supersession; this current decision explicitly carries forward its zero-promotion assessment.
 - The owner selected the exact S3/S4 coordinatewise C3 stabilizer and fixed-target consequence as the sole current structural uncertainty because it can resolve the premise of the naive GLV-Semaev quotient without an attack run.
 - Exact symbolic certificates and narrowly scoped Lean covariance theorems can reduce this uncertainty while preserving the parked experiment status and every P0-P4 result.
 - A diagonal-only result is a bounded no-go for independent u_i=x_i^3 quotienting, not a lower bound for Groebner/F4, faithful Petit, or the whole R-GLV-SEMAEV route.
@@ -164,7 +164,7 @@ Reopen selection only when:
 
 - **Applicability:** direct to the j=0 target structure, but only constant-factor evidence exists
 - **Known cost:** Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.
-- **Evidence:** GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance; a generic fixed nonzero target has only the identity covariance. The standard-library replay reconstructs S4 independently from the Sylvester determinant. The narrow covariance and point-group transport source package passed the full Lean build and built-source no-sorry scan in workflow run 30142661986. Its current VERIFIED.md registration and expanded exhaustive axiom audit remain pending closure CI; earlier P0-P4 evidence is retained unchanged.
+- **Evidence:** GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance; a generic fixed nonzero target has only the identity covariance. The standard-library replay reconstructs S4 independently from the Sylvester determinant. The narrow covariance and point-group transport source package passed the full Lean build and built-source no-sorry scan in workflow run 30142661986. Its VERIFIED.md registration and expanded exhaustive axiom audit passed workflow run 30143606761 at closure commit 9b77dd109306fa677fed5feab7bef830049e0c55; earlier P0-P4 evidence is retained unchanged.
 - **Promotion gate:** Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.
 - **Stop condition:** The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.
 - **Anti-overclaim:** The diagonal-only classification closes the independent coordinatewise-cube quotient and its generic fixed-target scaling premise, not faithful Petit, all geometric zero-variety automorphisms, Groebner/F4 complexity, or the whole GLV-Semaev route. It is not an ECDLP or secp256k1 break.
