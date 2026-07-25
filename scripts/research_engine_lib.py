@@ -8,7 +8,6 @@ import hashlib
 import json
 import math
 import re
-import subprocess
 import sys
 from collections import Counter, defaultdict
 from datetime import date
@@ -21,6 +20,12 @@ from hypothesis_generation_lib import (
     REVIEWS_DIR,
     build_generation_state,
     load_json_records as load_hypothesis_generation_records,
+)
+from scientific_provenance import (
+    git_commit_exists,
+    git_file_bytes,
+    scientific_source_commit_allowed,
+    validation_problems as scientific_provenance_problems,
 )
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -410,32 +415,6 @@ def sha256_json(value: Any) -> str:
     return hashlib.sha256(canonical_json(value).encode("ascii")).hexdigest()
 
 
-def git_commit_exists(commit: str) -> bool:
-    if not isinstance(commit, str) or not COMMIT_ID.fullmatch(commit):
-        return False
-    result = subprocess.run(
-        ["git", "cat-file", "-e", f"{commit}^{{commit}}"],
-        cwd=ROOT,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        check=False,
-    )
-    return result.returncode == 0
-
-
-def git_file_bytes(commit: str, relative: str) -> bytes | None:
-    if not git_commit_exists(commit):
-        return None
-    result = subprocess.run(
-        ["git", "show", f"{commit}:{relative}"],
-        cwd=ROOT,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.DEVNULL,
-        check=False,
-    )
-    return result.stdout if result.returncode == 0 else None
-
-
 def git_json(commit: str, relative: str) -> dict[str, Any] | None:
     payload = git_file_bytes(commit, relative)
     if payload is None:
@@ -701,8 +680,11 @@ def validate_engine_run_manifest(
     source_commit = manifest.get("source_commit")
     if source_commit != event.get("provenance", {}).get("source_commit"):
         problems.append(f"{label}: source_commit differs from outcome event")
-    if not git_commit_exists(source_commit):
-        problems.append(f"{label}: source_commit does not resolve to a Git commit")
+    if not scientific_source_commit_allowed(source_commit):
+        problems.append(
+            f"{label}: source_commit is not reproducible from protected main "
+            "or a registered immutable evidence ref"
+        )
     expected_candidate_hash = sha256_json(candidate)
     if manifest.get("candidate_policy_sha256") != expected_candidate_hash:
         problems.append(f"{label}: candidate_policy_sha256 is stale or incorrect")
@@ -3017,9 +2999,10 @@ def validate_outcome(
         if source_kind == "native_engine_run":
             if commit == "0" * 40:
                 problems.append(f"{label}: native event needs a real source commit")
-            elif not git_commit_exists(commit):
+            elif not scientific_source_commit_allowed(commit):
                 problems.append(
-                    f"{label}: native source_commit does not resolve to a Git commit"
+                    f"{label}: native source_commit is not reproducible from "
+                    "protected main or a registered immutable evidence ref"
                 )
             manifest_path = repo_file(run_manifest)
             if manifest_path is None:
@@ -3844,6 +3827,7 @@ def validate_historical_scope_guards(
 
 def validate_all() -> tuple[list[str], dict[str, Any]]:
     problems: list[str] = []
+    problems.extend(scientific_provenance_problems())
     policy = load_json(POLICY_PATH)
     decisions = load_json(DECISION_PATH)
     hypotheses = parse_hypotheses()

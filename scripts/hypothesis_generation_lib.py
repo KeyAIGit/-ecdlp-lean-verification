@@ -11,11 +11,15 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-import subprocess
 from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
 from typing import Any
+
+from scientific_provenance import (
+    git_file_bytes,
+    scientific_source_commit_allowed,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 GENERATION_POLICY_PATH = ROOT / "repo" / "HYPOTHESIS_GENERATION_V0.json"
@@ -345,32 +349,6 @@ def _valid_date(value: Any) -> bool:
         return date.fromisoformat(value).isoformat() == value
     except ValueError:
         return False
-
-
-def _git_commit_exists(commit: Any) -> bool:
-    if not isinstance(commit, str) or COMMIT_ID.fullmatch(commit) is None:
-        return False
-    result = subprocess.run(
-        ["git", "cat-file", "-e", f"{commit}^{{commit}}"],
-        cwd=ROOT,
-        check=False,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    return result.returncode == 0
-
-
-def git_file_bytes(commit: str, relative: str) -> bytes | None:
-    if not _git_commit_exists(commit):
-        return None
-    result = subprocess.run(
-        ["git", "show", f"{commit}:{relative}"],
-        cwd=ROOT,
-        check=False,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.DEVNULL,
-    )
-    return result.stdout if result.returncode == 0 else None
 
 
 def git_file_sha256(commit: str, relative: str) -> str | None:
@@ -1222,8 +1200,13 @@ def validate_proposals(
             ):
                 if not _nonempty_text(provenance.get(field)):
                     problems.append(f"{label}: {field} must be nonempty")
-            if not _git_commit_exists(provenance.get("source_commit")):
-                problems.append(f"{label}: source_commit does not resolve")
+            if not scientific_source_commit_allowed(
+                provenance.get("source_commit")
+            ):
+                problems.append(
+                    f"{label}: source_commit is not reproducible from "
+                    "protected main or a registered immutable evidence ref"
+                )
             if not isinstance(
                 provenance.get("prompt_sha256"), str
             ) or HASH_ID.fullmatch(provenance["prompt_sha256"]) is None:

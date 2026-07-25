@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -55,6 +56,7 @@ from research_engine_lib import (
     validate_historical_outcome_baseline,
     validate_retrospective,
 )
+from scientific_provenance import scientific_source_commit_allowed
 
 
 class ResearchEngineTests(unittest.TestCase):
@@ -92,7 +94,7 @@ class ResearchEngineTests(unittest.TestCase):
             "Character-graded syzygy sparsity persists after target tags and "
             "all relative GLV phases are retained in the relation ideal."
         )
-        source_commit = "68e9ff36a5c07c842dc9fbbeec3c3da7a02896ca"
+        source_commit = "fed55d84675fd96e5f40204b9f5f49baa8c01172"
         evidence_inputs = seed["evidence_inputs"][:2]
         source_id = seed["route_source_ids"][0]
         proposal = {
@@ -331,6 +333,64 @@ class ResearchEngineTests(unittest.TestCase):
         }
         proposal["mechanism_signature"] = mechanism_signature(proposal)
         return proposal
+
+    def test_deleted_pre_squash_source_commit_is_not_reproducible(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="engine-provenance-") as tmp:
+            root = Path(tmp)
+
+            def git(*args: str) -> str:
+                result = subprocess.run(
+                    ["git", *args],
+                    cwd=root,
+                    check=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                )
+                return result.stdout.strip()
+
+            git("init", "-q", "-b", "main")
+            git("config", "user.name", "Research Engine Test")
+            git("config", "user.email", "engine-test@example.invalid")
+            (root / "fixture.txt").write_text("baseline\n", encoding="utf-8")
+            git("add", "fixture.txt")
+            git("commit", "-q", "-m", "baseline")
+            git("switch", "-q", "-c", "source-branch")
+            (root / "fixture.txt").write_text("proposal\n", encoding="utf-8")
+            git("commit", "-q", "-am", "branch-only source")
+            branch_only = git("rev-parse", "HEAD")
+            git("switch", "-q", "main")
+            (root / "fixture.txt").write_text("proposal\n", encoding="utf-8")
+            git("commit", "-q", "-am", "squash merge")
+            protected_main = git("rev-parse", "HEAD")
+            git("branch", "-D", "source-branch")
+            self.assertEqual(
+                0,
+                subprocess.run(
+                    ["git", "cat-file", "-e", f"{branch_only}^{{commit}}"],
+                    cwd=root,
+                    check=False,
+                ).returncode,
+            )
+            policy = {
+                "schema_version": "0.1",
+                "protected_main": {
+                    "ref": "refs/heads/main",
+                    "commit": protected_main,
+                    "recorded_on": "2026-07-25",
+                },
+                "immutable_evidence_refs": [],
+            }
+            self.assertFalse(
+                scientific_source_commit_allowed(
+                    branch_only, policy, root=root
+                )
+            )
+            self.assertTrue(
+                scientific_source_commit_allowed(
+                    protected_main, policy, root=root
+                )
+            )
 
     def generation_reviews(self, proposal: dict) -> list[tuple[Path, dict]]:
         roles = self.generation_policy["quality_gate"][
