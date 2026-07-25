@@ -9,10 +9,22 @@ CODE_RE = re.compile(r"`([^`]+)`")
 
 
 def strip_md(value: str) -> str:
+    """Strip markdown emphasis/code fences from a ledger cell.
+
+    Deliberately does NOT remove the superscripts `¹`/`²`. Those are *status-cell*
+    footnote markers (`proved¹`, `proved²`), and removing them here silently deleted
+    every `²` from mathematical prose in the claim/method cells — turning `n²` into
+    `n`, `(ℤ/n)²` into `(ℤ/n)`, and `β²` into `β` throughout the generated knowledge
+    graph and result registry. Use `strip_status` for status cells instead.
+    """
     value = value.strip().replace("**", "")
     value = value.strip("`")
-    value = value.replace("¹", "").replace("²", "")
     return value.strip()
+
+
+def strip_status(value: str) -> str:
+    """Normalize a status cell, dropping the `¹`/`²` footnote markers it may carry."""
+    return strip_md(value).replace("¹", "").replace("²", "")
 
 
 def extract_files(root: Path, cell: str) -> list[str]:
@@ -107,7 +119,7 @@ def parse_ledger(root: Path) -> list[dict]:
                 "files": extract_files(root, files),
                 "name_patterns": extract_name_patterns(names),
                 "method": strip_md(method),
-                "status": strip_md(status),
+                "status": strip_status(status),
             }
         )
     return rows

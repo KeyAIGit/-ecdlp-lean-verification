@@ -111,9 +111,10 @@
   "execution_gates": {
     "exploration": {
       "policy_source": "repo/RESEARCH_ENGINE_V0.json",
-      "authorized": true,
-      "scope": "At most three dependency-ordered toy or validator-calibration candidates under fixed time, memory, field-size, baseline, stop-condition, and independent-validation requirements.",
+      "authorized": false,
+      "scope": "Research Engine v0 retains a bounded-exploration capability, but RS-2026-07-24-001 authorizes no hypothesis run during GLV-SEMAEV-ITER-001.",
       "cannot_do": [
+        "execute a candidate or parameter sweep during GLV-SEMAEV-ITER-001",
         "target secp256k1 directly",
         "change the declared threat model",
         "claim an asymptotic improvement",
@@ -121,30 +122,56 @@
         "discard a negative, inconclusive, or resource-exhausted outcome"
       ]
     },
+    "structural": {
+      "policy_source": "RS-2026-07-24-001 in this file",
+      "authorized": false,
+      "status": "completed",
+      "kind": "non_experiment",
+      "authorizes_experiment": false,
+      "promotes_route": false,
+      "decision_id": "RS-2026-07-24-001",
+      "iteration_id": "GLV-SEMAEV-ITER-001",
+      "selected_route_ids": [
+        "R-GLV-SEMAEV"
+      ],
+      "hypothesis_id": "HYP_GLV_SEMAEV_001",
+      "task_id": "TASK-009",
+      "foundation_ids": [
+        "F-SEMAEV-ELIMINATION"
+      ],
+      "scope": "Completed exact symbolic classification and independent replay of the coordinatewise C3 actions on S3 and S4, plus the smallest kernel-checked covariance and point-group transport package.",
+      "cannot_do": [
+        "activate an experiment hypothesis",
+        "run general msolve, Sage, F4, or parameter sweeps",
+        "target a secp256k1 discrete logarithm",
+        "claim an asymptotic relation-generation improvement",
+        "promote R-GLV-SEMAEV or F-SEMAEV-ELIMINATION",
+        "open work on an unrelated attack route"
+      ]
+    },
     "promotion": {
       "policy_source": "this file and repo/RESEARCH_ENGINE_V0.json",
       "authorized": false,
       "scope": "Route promotion, exact-target work, expensive scaling, and public complexity claims remain closed.",
-      "reopen_via": "A dated decision that supersedes RS-2026-07-22-001 and promotes the same route and hypothesis in the decision substrate and ECDLP research queue."
+      "reopen_via": "A future dated decision that supersedes RS-2026-07-24-001 and promotes the same route and hypothesis in the decision substrate and ECDLP research queue."
     }
   },
   "phase_policy": {
     "phase": "research-engine-v0",
     "experiments_authorized": false,
-    "bounded_exploration_authorized": true,
+    "bounded_exploration_authorized": false,
     "promotion_experiments_authorized": false,
     "selected_attack_route": null,
     "allowed_work": [
-      "Ingest new primary literature or a concrete candidate proposal and evaluate it against the common gate.",
-      "Maintain canonical registries, generated views, and independent validation infrastructure.",
-      "Close narrow formal scope statements that materially change a route disposition.",
-      "Execute only the dependency-ordered toy or validator-calibration sequence selected by Research Engine v0 under its fixed budgets and stop conditions.",
-      "Retain every terminal exploration outcome, including bounded negatives, inconclusive runs, and resource exhaustion."
+      "Maintain and independently replay the completed GLV-SEMAEV-ITER-001 certificates and kernel-checked theorem package.",
+      "Accept new primary evidence or a materially different exact mechanism through TASK-008 proposal intake without authorizing execution.",
+      "Prepare optional independent adversarial review at a stable checkpoint without treating review as route promotion.",
+      "Maintain canonical provenance and regenerate affected views without changing the recorded claim boundary."
     ],
     "forbidden_work": [
-      "Start an experiment outside the selected bounded-exploration sequence or exceed its declared resource budget.",
-      "Run exact-target secp256k1 work, expensive scaling, or a promotion experiment without a superseding route-selection decision.",
-      "Build a missing Mathlib foundation merely because it is absent or mathematically interesting.",
+      "Run any hypothesis experiment, general solver sweep, exact-target secp256k1 work, expensive scaling, or promotion experiment.",
+      "Resume GLV-SEMAEV-ITER-001 or activate another route without a new dated decision.",
+      "Treat an unreviewed proposal as authorization for a solver run or formalization campaign.",
       "Treat a constant-factor result, structural identity, or toy measurement as a subgeneric attack.",
       "Delete or rewrite provenance-bearing assets without an inventory, reference scan, and documented restore path."
     ],
@@ -152,10 +179,37 @@
     "merge_rule": "The owner delegated merge authority on 2026-07-22. Merge only from a clean branch after required CI is green, the diff has a documented scope and rollback path, and no unresolved blocking finding is known."
   },
   "route_selection": {
-    "decision_id": "RS-2026-07-22-001",
-    "performed_on": "2026-07-22",
-    "decision": "select_none",
-    "selected_route_ids": [],
+    "decision_id": "RS-2026-07-24-001",
+    "performed_on": "2026-07-24",
+    "completed_on": "2026-07-24",
+    "supersedes": "RS-2026-07-22-001",
+    "decision": "select_one_bounded_structural",
+    "selection_scope": "bounded_structural_non_experiment",
+    "iteration_id": "GLV-SEMAEV-ITER-001",
+    "selected_route_ids": [
+      "R-GLV-SEMAEV"
+    ],
+    "promoted_route_ids": [],
+    "hypothesis_id": "HYP_GLV_SEMAEV_001",
+    "task_id": "TASK-009",
+    "foundation_ids": [
+      "F-SEMAEV-ELIMINATION"
+    ],
+    "outcome": "diagonal_only_bounded_negative",
+    "kernel_acceptance": {
+      "commit": "1bba09ff1d8682187365996d9b190044aea333f9",
+      "workflow_run": 30142661986,
+      "lean": "v4.31.0",
+      "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+    },
+    "ledger_acceptance": {
+      "status": "accepted",
+      "commit": "9b77dd109306fa677fed5feab7bef830049e0c55",
+      "workflow_run": 30143606761,
+      "job": 89641332798,
+      "lean": "v4.31.0",
+      "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+    },
     "evaluated_route_ids": [
       "R-GENERIC-LOWER-BOUND",
       "R-GENERIC-BASELINE",
@@ -175,25 +229,25 @@
       "R-PROTOCOL-FAULT-SIDECHANNEL",
       "R-QUANTUM-SHOR"
     ],
-    "gate_result": "No audited route currently satisfies every proposal-level requirement for a new experiment against the primary plain single-target secp256k1 objective.",
+    "gate_result": "Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube premise and every nonzero affine fixed-target coordinate-scaling premise are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.",
     "rationale": [
-      "The generic lower bound and generic algorithms are guardrails or baselines, not non-generic attack mechanisms.",
-      "GLV supplies a verified constant-factor structure; Pohlig-Hellman, low-degree pairing transfer, anomalous lifting, and extension-field descent fail target-specific applicability screens.",
-      "The open prime-field algebraic, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge. For GLV-Semaev specifically, the proposed coordinatewise-cube quotient is now closed because it quotients by C3^m rather than the diagonal C3 action and loses relative phase.",
-      "Multi-target, interval, leakage, implementation, and quantum routes change the input or computational threat model and therefore cannot be promoted as a classical plain-input result.",
-      "Building conditional Mathlib foundations now would increase theorem volume without a demonstrated reduction in uncertainty about the exact target."
+      "RS-2026-07-22-001 is historical after supersession; this current decision explicitly carries forward its zero-promotion assessment.",
+      "The owner selected the exact S3/S4 coordinatewise C3 stabilizer and fixed-target consequence as the sole current structural uncertainty because it can resolve the premise of the naive GLV-Semaev quotient without an attack run.",
+      "Exact symbolic certificates and narrowly scoped Lean covariance theorems can reduce this uncertainty while preserving the parked experiment status and every P0-P4 result.",
+      "A diagonal-only result is a bounded no-go for independent u_i=x_i^3 quotienting, not a lower bound for Groebner/F4, faithful Petit, or the whole R-GLV-SEMAEV route.",
+      "A larger stabilizer would still require an exact quotient, recovery map, orbit tags, excluded components, cost prediction, and a later decision before any externally validated solver experiment."
     ],
     "reconsideration_triggers": [
-      "A primary source or reproducible proposal identifies an exact non-generic mechanism for the plain target and supplies a theoretical full-cost argument.",
-      "New verified target structure invalidates an existing applicability or stop-condition decision.",
-      "A deliberately approved project objective changes the threat model to conditioned inputs, implementation leakage, or fault-tolerant quantum computation."
+      "A materially different phase-preserving quotient, birational construction, or relation mechanism supplies exact fixed-target semantics, recovery, orbit tags, excluded components, and a falsifiable full-cost prediction.",
+      "An independently replayable counter-certificate or proof identifies an error in the frozen S3/S4 formulas, resultant construction, assumptions, or coordinatewise C3 classification.",
+      "A formal cost theorem combines the finite target orbit with a new mechanism and proves a nonconstant full-pipeline gain rather than attributing asymptotic value to orbit size alone."
     ],
     "operational_effects": [
-      "All cryptanalytic hypotheses remain parked at the promotion level.",
-      "No conditional formal foundation is promoted.",
-      "Candidate intake and evidence maintenance continue through the neutral evaluation contract.",
-      "Research Engine v0 may select at most three bounded toy or validator-calibration explorations; their outcomes cannot promote a route automatically.",
-      "Independent adversarial review remains useful when another reviewer is available, but is not a merge prerequisite."
+      "TASK-009 and GLV-SEMAEV-ITER-001 are completed with the diagonal-only bounded result.",
+      "HYP_GLV_SEMAEV_001 remains parked as an experiment; its non-experimental structural lane is completed.",
+      "selected_attack_route remains null, promoted_route_ids remains empty, and every route-level authorized_experiment flag remains false.",
+      "No general msolve, Sage, F4, parameter sweep, exact-target run, or unrelated route search is authorized.",
+      "All P0-P4 evidence and prior append-only research decisions are retained; TASK-008 proposal intake is the current central ECDLP queue."
     ]
   },
   "upstream_snapshot": {
@@ -588,7 +642,10 @@
       "source_ids": [
         "semaev2004",
         "gaudry2009",
-        "diem2011"
+        "diem2011",
+        "petit_kosters_messeng2016",
+        "amadori_pintore_sala2018",
+        "fhjrv2014"
       ],
       "anti_overclaim": "Solving selected toy systems or proving Semaev identities does not establish a practical or asymptotic ECDLP improvement."
     },
@@ -609,11 +666,25 @@
         "The quotient retains enough information to recover valid relations."
       ],
       "known_cost": "Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.",
-      "current_evidence": "Lean verifies the GLV and Semaev structural ingredients. Existing experiments retain narrow lookup and toy-presentation measurements; experiments/glv_diagonal_obstruction independently replays the exact finite phase-loss witness. The general invariant-ring argument is documented but not kernel-checked.",
+      "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance. Certificate 2142e8d66a8422768b609e42f5ce09377d5f93609941139fc9fc4e5abe4dfe59 gives every rejected S3/S4 pair a coefficient +1 witness over Z[b], making the polynomial classification uniform across characteristics whenever a primitive cube root exists. Fixed-target certificate 9db5e0375421659f9abb905c12ae77232ef9957867f7194baaf548d45a1f091d proves that every nonzero affine target has only identity coordinate-scaling covariance in characteristic outside {2,3}; the r=0 slice has exactly the diagonal C3 stabilizer, with a pure-b witness for every rejected pair. Standard-library validators independently reconstruct S4 from the Sylvester determinant and replay both classifications. This is algorithmic path and artifact independence, not established source-author independence. The 14-theorem covariance and point-group transport module has Git-blob SHA-256 2940166077cbb1de3840d31fc2e829c96c90549bc49466250f8f548225d99e73 and passed the full Lean build, built-source no-sorry scan, and exhaustive axiom audit in workflow run 30163027316 at content head be7a4d8e7da94b33ef74b0c146d732314b293827; earlier P0-P4 evidence is retained unchanged.",
       "success_gate": "Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.",
       "stop_condition": "The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.",
-      "next_action": "Keep HYP_GLV_SEMAEV_001 closed until a new mechanism-bearing proposal passes the Research Engine intake gate.",
+      "next_action": "Keep GLV-SEMAEV-ITER-001 closed without a solver run. Accept only a materially different phase-preserving mechanism with an exact recovery map, orbit tags, excluded components, a falsifiable full-cost prediction, and an independent validator through TASK-008 before any new decision.",
       "authorized_experiment": false,
+      "structural_lane": {
+        "status": "completed",
+        "decision_id": "RS-2026-07-24-001",
+        "iteration_id": "GLV-SEMAEV-ITER-001",
+        "route_id": "R-GLV-SEMAEV",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "task_id": "TASK-009",
+        "foundation_ids": [
+          "F-SEMAEV-ELIMINATION"
+        ],
+        "scope": "Exact S3/S4 covariance and stabilizer classification, every nonzero affine fixed-target coordinate-scaling classification plus the r=0 exception, target transport, and the smallest completed Lean theorem package only.",
+        "promotes_route": false,
+        "authorizes_experiment": false
+      },
       "hypothesis_ids": [
         "HYP_GLV_SEMAEV_001"
       ],
@@ -630,19 +701,36 @@
       ],
       "lean_anchors": [
         "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples",
-        "Ecdlp.Semaev.secp256k1_point_decomposition_semaev"
+        "Ecdlp.Semaev.secp256k1_point_decomposition_semaev",
+        "Ecdlp.Semaev.S₃_diagonal_cube_covariance",
+        "Ecdlp.Semaev.S₄_diagonal_cube_invariant",
+        "Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff"
       ],
       "evidence_files": [
+        "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+        "experiments/glv_diagonal_obstruction/artifact.json",
+        "experiments/glv_semaev_symmetry/certificate.json",
+        "experiments/glv_semaev_symmetry/fixed_target_certificate.json",
         "experiments/p0_glv_semaev/RESULTS.md",
+        "experiments/p1_petit/RESULTS.md",
+        "experiments/p1_petit_m3/RESULTS.md",
         "experiments/p3_sm_system/RESULTS.md",
-        "experiments/p4_petit/RESULTS.md"
+        "experiments/p4_petit/RESULTS.md",
+        "notes/GLV_SEMAEV_ITERATION_001.md"
       ],
       "source_ids": [
         "glv2001",
         "semaev2004",
-        "fghr2014"
+        "fghr2014",
+        "fhjrv2014",
+        "gebregiyorgis2016_thesis",
+        "sturmfels2008",
+        "duursma_gaudry_morain1999",
+        "tsakou_ionica2021",
+        "petit_kosters_messeng2016",
+        "kudo_yokota_takahashi_yasuda2018"
       ],
-      "anti_overclaim": "The mathematical question remains open while execution is parked; prior toy results are partial negative evidence, not an active attack."
+      "anti_overclaim": "The diagonal-only classification closes the independent coordinatewise-cube quotient and its every-nonzero-affine fixed-target coordinate-scaling premise, not faithful Petit, all geometric zero-variety automorphisms, Groebner/F4 complexity, or the whole GLV-Semaev route. It is not an ECDLP or secp256k1 break."
     },
     {
       "id": "R-PETIT-COMPOSED-MAPS",
@@ -655,16 +743,16 @@
       ],
       "status": "open_parked",
       "priority": "P2",
-      "applicability": "unresolved because the repository has not implemented a faithful construction",
+      "applicability": "source-grounded but target applicability remains unresolved: PKC 2016 specifies a p-1-smooth construction and an auxiliary-isogeny construction, neither with a validated secp256k1 full-cost bridge",
       "assumptions": [
         "A correctly specified low-degree rational map yields a useful factor-base or relation system.",
         "Composition, solving, and recovery costs improve the full attack."
       ],
       "known_cost": "No reliable project estimate; the existing six-variable toy presentation is explicitly non-faithful and descriptive.",
-      "current_evidence": "The current experiment is useful only as a negative control for one toy presentation.",
+      "current_evidence": "The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-isogeny realizations. It explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. Historical P4 did not implement either construction and remains only an inconclusive negative control; it is not evidence against the faithful route.",
       "success_gate": "First reproduce the exact construction from a verified primary source, then compare it under the common evaluation contract.",
       "stop_condition": "Reject low-bit filters, redundant auxiliary variables, or presentation-only degree changes as substitutes for the cited construction.",
-      "next_action": "Park until the source specification and route-selection gate justify implementation.",
+      "next_action": "Keep the route parked while proposal intake separates the two source mechanisms. First perform an exact target-applicability screen for the p-1-smooth construction. Treat the auxiliary-isogeny construction as a genuinely open mechanism only after it supplies exact recovery semantics and a falsifiable prediction for a dedicated generalized-root solver; do not authorize an undirected solver sweep.",
       "authorized_experiment": false,
       "hypothesis_ids": [
         "HYP_GLV_SEMAEV_001"
@@ -685,7 +773,8 @@
         "experiments/p4_petit/RESULTS.md"
       ],
       "source_ids": [
-        "petit_ecdlp_largechar"
+        "petit_kosters_messeng2016",
+        "amadori_pintore_sala2018"
       ],
       "anti_overclaim": "The existing P4 experiment is not a faithful Petit implementation and cannot support a claim about the original method."
     },
@@ -1065,7 +1154,18 @@
       ],
       "mathlib_status": "Mathlib has multivariate polynomials and division/reduction infrastructure, but the audit found no Semaev family, Buchberger/F4 solver, degree-of-regularity theory, or Macaulay complexity stack.",
       "deliverable": "Only the minimal theorem chain required by a selected exact relation system: semantics, elimination soundness, recovery, and a justified cost bridge.",
-      "resume_condition": "One of the dependent routes is selected with a materially new exact system, explicit fixed-target semantics, and a plausible complexity mechanism beyond finite-orbit compression."
+      "resume_condition": "One of the dependent routes is selected with a materially new exact system, explicit fixed-target semantics, and a plausible complexity mechanism beyond finite-orbit compression.",
+      "structural_lane": {
+        "status": "completed_bounded_slice",
+        "decision_id": "RS-2026-07-24-001",
+        "iteration_id": "GLV-SEMAEV-ITER-001",
+        "route_id": "R-GLV-SEMAEV",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "task_id": "TASK-009",
+        "scope": "Only exact S3/S4 covariance identities and the smallest fixed-target consequence needed to decide the naive quotient premise.",
+        "promotes_foundation": false,
+        "build_now": false
+      }
     },
     {
       "id": "F-POINT-DIVISION-BRIDGE",
@@ -1189,15 +1289,15 @@
     }
   ],
   "next_phase_gate": {
-    "current_mode": "bounded_exploration_promotion_closed",
+    "current_mode": "proposal_intake_promotion_closed",
     "reopen_requirements": [
-      "Bind the proposal to exactly one route and one declared threat model.",
-      "Supply new evidence matching at least one route-selection reconsideration trigger.",
-      "Pass every common acceptance requirement and all success-level-specific requirements at proposal level.",
-      "Name only the minimal conditional foundation needed for the next falsifiable decision.",
-      "Promote the same route and hypothesis in the decision substrate, tasks/ECDLP_RESEARCH.md, and experiments/HYPOTHESES.yaml."
+      "Supply a materially different phase-preserving quotient, birational construction, or other exact mechanism; the independent coordinatewise-cube premise is closed.",
+      "Specify fixed-target behavior, recovery map, orbit tags, excluded components, and a falsifiable full-cost prediction.",
+      "Provide an independent raw-artifact validator before requesting any solver experiment.",
+      "Require a new dated decision before any hypothesis experiment, general solver sweep, route promotion, or exact-target work.",
+      "For any later promotion, pass every common acceptance requirement and bind the same route, hypothesis, task, mechanism, validator, and cost theorem."
     ],
-    "decision": "RS-2026-07-22-001 still selects zero promoted routes. Research Engine v0 permits only bounded exploration; this is not a route promotion or a claim that any current mechanism improves ECDLP complexity.",
+    "decision": "RS-2026-07-24-001 completed GLV-SEMAEV-ITER-001 with a diagonal-only bounded result. R-GLV-SEMAEV remains open_parked, zero routes are promoted, zero experiments are authorized, and TASK-008 proposal intake is the current central ECDLP queue.",
     "final_review": "Independent adversarial review is requested when another qualified reviewer is available. It is an additional audit, not a merge prerequisite; required CI, explicit scope, rollback safety, and the owner's standing authorization govern merges."
   }
 }

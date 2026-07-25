@@ -219,6 +219,8 @@ def main() -> int:
             f"public site contains retired product claim: {retired_claim!r}",
         )
     route_count = len(decisions.get("routes", []))
+    selected_structural = route_selection.get("selected_route_ids", [])
+    promoted_routes = route_selection.get("promoted_route_ids", [])
     selected_explorations = engine.get("counts", {}).get("selected_explorations")
     check(
         f"{route_count} canonical routes" in dashboard,
@@ -231,18 +233,20 @@ def main() -> int:
     check(
         route_selection.get("decision_id") in dashboard
         and route_selection.get("decision_id") in explore
-        and "Select none" in dashboard
-        and "Select none" in explore,
-        "dashboard and explore must expose the canonical select-none decision",
+        and "Structural selection" in dashboard
+        and "Structural selection" in explore,
+        "dashboard and explore must expose the canonical structural decision",
     )
     check(
         f"{selected_explorations} experiments selected" in index
         and f"{selected_explorations} selected;" in dashboard
-        and f"{selected_explorations} bounded toy explorations" in explore,
+        and f"{len(selected_structural)} structural route completed" in explore
+        and f"{len(promoted_routes)} promoted" in explore
+        and "0 experiments authorized" in explore,
         "public reference views must expose the selected bounded exploration count",
     )
     check(
-        "No experiment currently clears the scientific gate." in dashboard
+        "The bounded structural question is resolved; no experiment is authorized." in dashboard
         and "No run authorized" in dashboard
         and "repo/RESEARCH_ENGINE_V0.json" in dashboard
         and "Promotion experiments" in dashboard,
@@ -260,8 +264,16 @@ def main() -> int:
           "data/knowledge_graph.json must expose formal critical-path nodes")
     check(graph_counts.get("attack_routes") == 17,
           "data/knowledge_graph.json must expose all 17 decision routes")
-    check(graph_counts.get("decision_foundations") == 11,
-          "data/knowledge_graph.json must expose all 11 decision foundations")
+    check(
+        graph_counts.get("decision_foundations")
+        == len(decisions.get("foundations", [])),
+        "data/knowledge_graph.json foundation count must match the decision substrate",
+    )
+    check(
+        graph_counts.get("selected_structural_routes") == len(selected_structural)
+        and graph_counts.get("promoted_routes") == len(promoted_routes),
+        "knowledge graph structural and promotion counts must match route selection",
+    )
     check(
         graph_counts.get("research_engine_candidates")
         == engine.get("counts", {}).get("candidate_proposals"),
@@ -293,14 +305,19 @@ def main() -> int:
     )
     check(
         engine.get("gate_status", {}).get("exploration_authorized")
-        == decisions.get("phase_policy", {}).get("bounded_exploration_authorized")
         == True
+        and decisions.get("phase_policy", {}).get(
+            "bounded_exploration_authorized"
+        )
+        == False
         and engine.get("gate_status", {}).get("promotion_authorized")
         == decisions.get("phase_policy", {}).get(
             "promotion_experiments_authorized"
         )
         == False,
-        "Research Engine and decision substrate must agree on both execution gates",
+        "the Engine must retain exploration capability while the current "
+        "structural decision authorizes no experiment and both layers keep "
+        "promotion closed",
     )
     check(
         route_selection.get("decision_id") in status,

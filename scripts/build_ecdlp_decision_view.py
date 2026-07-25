@@ -47,6 +47,8 @@ def render(data: dict, sources: dict[str, dict]) -> str:
     target = data["target_problem"]
     policy = data["phase_policy"]
     selection = data["route_selection"]
+    selected_structural = selection.get("selected_route_ids", [])
+    promoted = selection.get("promoted_route_ids", [])
     lines = [
         "# secp256k1 ECDLP decision substrate",
         "",
@@ -62,6 +64,10 @@ def render(data: dict, sources: dict[str, dict]) -> str:
         f"experiments authorized: "
         f"**{str(policy['promotion_experiments_authorized']).lower()}**. "
         f"Selected promoted route: **{policy['selected_attack_route'] or 'none'}**.",
+        "",
+        f"Bounded structural routes recorded by the decision: **{len(selected_structural)}** "
+        f"({refs(selected_structural)}). Promoted routes: **{len(promoted)}** "
+        f"({refs(promoted)}).",
         "",
         "The formal-result map, attack encyclopedia, and this decision layer are "
         "deliberately distinct:",
@@ -79,6 +85,10 @@ def render(data: dict, sources: dict[str, dict]) -> str:
             f"`{selection['performed_on']}`: **{selection['decision']}**.",
             "",
             selection["gate_result"],
+            "",
+            f"Iteration: **{selection.get('iteration_id', 'none')}**. "
+            f"Hypothesis: **{selection.get('hypothesis_id', 'none')}**. "
+            f"Task: **{selection.get('task_id', 'none')}**.",
             "",
             "Rationale:",
             "",
@@ -139,6 +149,15 @@ def render(data: dict, sources: dict[str, dict]) -> str:
                 f"- **Repository evidence:** {refs(route['evidence_files'])}",
             ]
         )
+        if route.get("structural_lane"):
+            work = route["structural_lane"]
+            lines.extend(
+                [
+                    f"- **Structural iteration:** `{work['iteration_id']}`",
+                    f"- **Structural scope:** {work['scope']}",
+                    f"- **Structural status:** `{work['status']}`",
+                ]
+            )
         source_items = [
             source_link(source_id, sources) for source_id in route["source_ids"]
         ]

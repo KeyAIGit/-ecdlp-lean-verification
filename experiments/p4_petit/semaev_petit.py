@@ -10,7 +10,7 @@ for a RAW x-coordinate factor base ``F`` the m=2 Semaev system
 degree) exactly ``2|F| + 1``, driven by the fact that the factor base's ONLY
 defining polynomial ``f_F(X) = prod_{a in F}(X - a)`` has degree ``|F|``.
 
-Petit's idea (Petit et al., prime-field ECDLP; Weil-descent / composed maps) is to
+Petit's idea (Petit et al., prime-field ECDLP; composed rational maps) is to
 choose the factor base NOT as a raw point set but as the IMAGE/FIBRE of a COMPOSED
 LOW-DEGREE (rational) map, so that the factor base is cut out by LOWER-degree
 equations in auxiliary variables -- which could, in principle, lower the degree of
@@ -21,13 +21,14 @@ of regularity BELOW the raw ``2|F| + 1`` of P3, or not?
 
 FAITHFULNESS (read this; it is the honest scope -- see RESULTS.md, rule 1)
 --------------------------------------------------------------------------
-This is NOT literally Petit's prime-field algorithm. Petit/Weil-descent get their
-low-degree factor-base description from a genuine field/structure (e.g. a subfield or
-an F_2-linear subspace under Weil restriction). Over a PRIME field there is no Weil
-descent, so we build the closest HONEST approximation the task requests: a factor base
-that really is the image of a COMPOSED low-degree polynomial map from auxiliary
-variables, and whose defining SYSTEM has lower per-equation degree than the raw
-degree-|F| polynomial. Two composed maps are built and measured:
+This is NOT literally the Petit--Kosters--Messeng prime-field algorithm. Their
+factor base is defined directly over F_p by L(x)=0, where L is composed from
+low-degree rational maps obtained from a smooth subgroup of F_p^* or an auxiliary
+elliptic curve and an isogeny. P4 implements neither source construction, its
+preprocessing, nor its recovery semantics. It instead builds a toy factor base that
+really is the image of a COMPOSED low-degree polynomial map from auxiliary variables,
+and whose defining SYSTEM has lower per-equation degree than the raw degree-|F|
+polynomial. Two composed maps are built and measured:
 
   (A) product_2aux  -- X = rho(sigma(t1, t2)),  sigma(t1,t2) = t1 + kappa*t2   (deg 1),
       rho(s) = s^2 + c  (deg 2).  A GENUINELY COMPOSED map (linear form then square)

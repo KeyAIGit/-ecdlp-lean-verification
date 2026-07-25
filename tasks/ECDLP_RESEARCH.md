@@ -109,31 +109,62 @@ How to verify:
 - `python scripts/check_research_engine.py`
 - the full repository gate battery
 
-### TASK-009 - Implement only a newly selected promotion foundation
+### TASK-009 - Resolve the bounded GLV-Semaev structural uncertainty
 
-Status: blocked_on_promotion_decision
-Kind: theorem | experiment | ops
-Hypothesis: exactly one future hypothesis named by a dated promotion decision
-Why it matters: Missing formal infrastructure is valuable only when it resolves
-a concrete uncertainty in a route that has passed promotion review.
+Status: completed_bounded_structural
+Structural lane: completed
+Decision: RS-2026-07-24-001
+Iteration: GLV-SEMAEV-ITER-001
+Route: R-GLV-SEMAEV
+Hypothesis: HYP_GLV_SEMAEV_001
+Foundation: F-SEMAEV-ELIMINATION
+Kind: theorem | research | data | ops
+Why it matters: The exact coordinatewise C3 action on S3 and S4 decides whether
+the naive invariant quotient has the symmetry it claims. This bounded
+structural uncertainty is now resolved; it was not route promotion or an
+experiment hypothesis run.
 Inputs:
-- a dated route-selection decision
-- one promoted route and matching hypothesis
-- one minimal foundation contract with a falsifiable exit criterion
+- `RS-2026-07-24-001`
+- the exact resultant definition of S4 and existing S3/S4 and GLV modules
+- the retained P0-P4 evidence without reinterpretation or deletion
+- deterministic symbolic certificates and an independent replay path
 Expected output:
-- The smallest formal or computational bridge needed for the selected route.
-- Independent validation and full cost/provenance records.
-- A route disposition update whether the result is positive or negative.
+- The full finite classification of coordinatewise C3 semi-invariant actions
+  on S3 and S4, with polynomial equality kept distinct from zero-variety
+  equality.
+- The fixed-target transport law and the point-group GLV relation bijection.
+- Only completed covariance identities in the smallest kernel-checkable Lean
+  package; any impractical stabilizer classification remains outside the
+  verified ledger with its exact blocker.
+- A dated bounded result: diagonal-only no-go, exact larger quotient, or the
+  smallest unresolved lemma.
 Exit criteria:
-- The work answers only its named uncertainty.
-- Unrelated foundations and hypotheses remain parked.
+- The work answers only `GLV-SEMAEV-ITER-001`.
+- `HYP_GLV_SEMAEV_001` remains parked as an experiment and its completed
+  structural lane records no promotion.
+- Every other route, hypothesis, and conditional foundation remains outside
+  the structural lane.
+- Promotion and exact-target work remain disabled.
+- No general msolve, Sage, F4, parameter sweep, or secp256k1 discrete-log run
+  is authorized.
 - Lean results pass kernel, axiom, and no-`sorry` gates.
 Files allowed to edit:
-- only paths declared by the future promoted task
+- `experiments/glv_semaev_symmetry/`
+- `Ecdlp/Proved/GlvSemaevSymmetry.lean`
+- `Ecdlp.lean`
+- `VERIFIED.md`
+- `notes/GLV_SEMAEV_ITERATION_001.md`
+- the canonical governance paths bound to this decision
+- directly affected generated views, but only after source work is complete
 Files that must be regenerated:
 - every affected derived artifact
 How to verify:
-- route-specific checks plus the full repository gate battery
+- independent symbolic certificate replay
+- `lake build`
+- no-`sorry` and axiom audit
+- `python scripts/check_ecdlp_decision_substrate.py`
+- status consistency and affected experiment/framework tests
+- the full repository gate battery
 
 ### TASK-010 - Independent adversarial audit at a stable checkpoint
 

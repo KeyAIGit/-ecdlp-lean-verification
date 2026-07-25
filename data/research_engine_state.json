@@ -3,14 +3,17 @@
   "engine_id": "ecdlp-research-engine-v0",
   "source_hashes": {
     "policy_sha256": "77499c92fdaac8e30ad15ba06ba723aaadf255b25e95cb596b6caea63cd90c58",
-    "decision_substrate_sha256": "3946a5d00a63947ae66b13208ecb7aac8e9478e8521ab7bd2b118f6d5fde99b2",
-    "hypotheses_sha256": "9e6988c6290a740537f92d003a3e99e6a940bca18272ccd75b2663524d97337e",
+    "decision_substrate_sha256": "5481fe4b32b75f0913e2f3e8bb4e1a836f6014d552efc69b41a112598c69275a",
+    "hypotheses_sha256": "0a9a3c94fd5dfa871525fba50ac2360c1a8824a159fe240922cf869bbdd6646d",
     "outcome_events_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
     "historical_baseline_anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
   },
   "gate_status": {
     "exploration_authorized": true,
     "promotion_authorized": false,
+    "current_decision_experiment_authorized": false,
+    "current_decision_bounded_exploration_authorized": false,
+    "structural_work_authorized": false,
     "exploration_limits": {
       "max_field_bits": 24,
       "max_wall_time_seconds": 21600,

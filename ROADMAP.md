@@ -124,24 +124,25 @@ Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` 
 
 ## 5. Program
 
-**Current phase — Research Engine v0 bounded exploration:**
+**Current phase — proposal intake after the GLV-Semaev structural result:**
 
-1. Decision `RS-2026-07-22-001` evaluated all 17 registered routes and selected
-   none. This is an evidence decision, not a claim that the ECDLP has no future
-   solution.
+1. Decision `RS-2026-07-24-001` completed the non-experimental
+   `GLV-SEMAEV-ITER-001` on `R-GLV-SEMAEV`. It found only the diagonal `C3`
+   covariance, promoted zero routes, and authorized zero experiments.
 2. Maintain the exact objective, threat models, route dispositions, promotion
    gates, stop conditions, and reconsideration triggers in
    `repo/ECDLP_DECISION_SUBSTRATE.json`.
-3. `repo/RESEARCH_ENGINE_V0.json` authorizes a separate exploration gate for at
-   most three dependency-ordered, budget-capped toy candidates. The current
-   selector returns zero: three proposals remain at mechanism/validator intake.
+3. `repo/RESEARCH_ENGINE_V0.json` retains the separate exploration capability,
+   but proposal-intake mode keeps execution paused. The selector returns zero
+   and no solver, parameter sweep, or toy hypothesis run is authorized.
    Its generated state is `data/research_engine_state.json`; all terminal
    outcomes are review-anchored append-only events, and empirical support is not relabelled
    as proof.
 4. Keep `data/attack_registry.json` as the detailed evidence encyclopedia and
    `repo/FORMAL_SUBSTRATE.json` as the Lean release map. Never collapse their
    distinct meanings into one priority number.
-5. Route any new primary evidence or concrete proposal through
+5. `TASK-008` owns the current central queue. Route any new primary evidence or
+   concrete proposal through
    `experiments/framework/`: explicit online/offline cost, provenance hashes,
    route/threat-model binding, source-commit-bound raw-artifact validation, and
    deterministic terminal classification. Intake alone does not bypass the
@@ -149,17 +150,18 @@ Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` 
 6. Keep KeyAI product validation in `tasks/KEYAI_PRODUCT.md` with its own KPIs.
    Site traffic, pilot work, and portability never count as ECDLP progress.
 
-**Selected-foundation phase — only after a superseding route decision:**
+**Current structural result and next gate:**
 
-- Build the smallest theorem or tool stack needed by the selected route's next
-  falsifiable decision. Missing Mathlib objects are inputs to that decision, not
-  an automatic backlog.
-- Promote exactly one hypothesis only when its proposal satisfies the common
-  acceptance gate. Keep all competing routes parked so costs and evidence stay
-  attributable.
-- Move a positive mathematical mechanism into Lean only after independent
-  computational validation; preserve rigorous negative boundaries as first-class
-  results.
+- Exact symbolic replay leaves only the diagonal `C3` covariance for `S3` and
+  `S4`; every nonzero affine target in the stated characteristics has no
+  nonidentity coordinate-scaling covariance, while the zero slice has exactly
+  the diagonal `C3`.
+- Record the naive independent-cube quotient and its fixed-target scaling
+  premise as bounded negatives. Do not generalize this to faithful Petit,
+  all geometric zero-variety automorphisms, or Groebner/F4 complexity.
+- The next experiment gate opens only for a materially different
+  phase-preserving mechanism with exact recovery, orbit tags, excluded
+  components, a falsifiable cost prediction, and an independent validator.
 
 **Integration and review:**
 

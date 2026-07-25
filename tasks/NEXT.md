@@ -20,7 +20,13 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: `TASK-013` in `tasks/ECDLP_RESEARCH.md`.
+Current central task: `TASK-008` in `tasks/ECDLP_RESEARCH.md`.
+
+Most recent completed bounded structural binding:
+`RS-2026-07-24-001` / `GLV-SEMAEV-ITER-001` / `R-GLV-SEMAEV` /
+`HYP_GLV_SEMAEV_001` / `TASK-009`.
+Only the diagonal `C3` covariance survived. No experiment hypothesis or attack
+route is promoted; new work enters through proposal intake.
 
 Architecture sources: `repo/FORMAL_SUBSTRATE.json`,
 `repo/RESEARCH_ENGINE_V0.json`, and `repo/ARTIFACTS.yaml`.

@@ -153,7 +153,7 @@ def parse_tasks() -> list[dict[str, str]]:
 
 
 def task_status_badge(status: str) -> str:
-    if status == "active":
+    if status.startswith("active"):
         return status_badge("blue", "Active")
     if status.startswith("blocked"):
         return status_badge("blocked", "Blocked")
@@ -232,6 +232,8 @@ def build_index(
     engine: dict,
 ) -> str:
     selection = decisions["route_selection"]
+    selected_structural = selection.get("selected_route_ids", [])
+    promoted_routes = selection.get("promoted_route_ids", [])
     routes = decisions["routes"]
     current_stage = product["current_stage"]
     mvp = product["mvp"]
@@ -294,7 +296,7 @@ def build_index(
       </div>
       <div class="hero__signal" aria-label="Current reference decision">
         <span>Live decision graph</span>
-        <strong>{len(routes)} routes evaluated / {len(selection["selected_route_ids"])} promoted</strong>
+        <strong>{len(routes)} evaluated / {len(selected_structural)} structural completed / {len(promoted_routes)} promoted</strong>
         <span>{engine["counts"]["selected_explorations"]} experiments selected</span>
         <code>{esc(selection["decision_id"])}</code>
       </div>
@@ -484,6 +486,8 @@ def build_dashboard(
     tasks: list[dict[str, str]],
 ) -> str:
     selection = decisions["route_selection"]
+    selected_structural = selection.get("selected_route_ids", [])
+    promoted_routes = selection.get("promoted_route_ids", [])
     routes = decisions["routes"]
     distribution_html, legend_html = route_distribution(routes)
     task_rows = [
@@ -499,7 +503,7 @@ def build_dashboard(
     ]
     task_html = "".join(row for _task, row in task_rows)
     active_task_html = "".join(
-        row for task, row in task_rows if task["status"] == "active"
+        row for task, row in task_rows if task["status"].startswith("active")
     ) or '<p class="empty-state">No task contract is currently active.</p>'
     route_rows = "".join(
         f"""<tr>
@@ -586,7 +590,8 @@ def build_dashboard(
         ),
         (
             "Decision state",
-            f'{len(routes)} routes evaluated / {len(selection["selected_route_ids"])} promoted',
+            f"{len(selected_structural)} structural route completed / "
+            f"{len(promoted_routes)} promoted / 0 experiments authorized",
             ["repo/ECDLP_DECISION_SUBSTRATE.json", "scripts/check_ecdlp_decision_substrate.py"],
             "closed",
         ),
@@ -664,10 +669,10 @@ def build_dashboard(
         <p>The decision layer controls what work is justified; proof volume does not select an attack route.</p></div>
         {status_badge("blue", product["current_stage"]["label"])}</div>
       <article class="decision-band">
-        <div class="decision-band__state"><span>{esc(selection["decision_id"])}</span><strong>Select none</strong></div>
-        <div class="decision-band__copy"><h3>No experiment currently clears the scientific gate.</h3>
-          <p>{esc(selection["gate_result"])} Bounded exploration remains available in policy, but
-            no toy run is authorized and promotion remains closed.</p></div>
+        <div class="decision-band__state"><span>{esc(selection["decision_id"])}</span><strong>Structural selection</strong></div>
+        <div class="decision-band__copy"><h3>The bounded structural question is resolved; no experiment is authorized.</h3>
+          <p>{esc(selection["gate_result"])} Proposal intake remains open, while toy runs,
+            direct secp256k1 work, and promotion remain closed.</p></div>
       </article>
       <div class="panel-heading"><div><h2>Research Engine v0 queue</h2>
         <p>{engine_counts["selected_explorations"]} selected;
@@ -732,7 +737,9 @@ def build_dashboard(
           <div class="surface__head"><div><h3>Operating policy</h3><p>{esc(phase_policy["phase"])}</p></div></div>
           <div class="surface__body">
             <ul class="compact-list">
-              <li><strong>Bounded exploration</strong><span>{str(engine_gates["exploration_authorized"]).lower()}</span></li>
+              <li><strong>Engine exploration capability</strong><span>{str(engine_gates["exploration_authorized"]).lower()}</span></li>
+              <li><strong>Current experiment authorization</strong><span>{str(phase_policy["experiments_authorized"]).lower()}</span></li>
+              <li><strong>Structural routes</strong><span>{esc(", ".join(selected_structural) or "none")}</span></li>
               <li><strong>Promotion experiments</strong><span>{str(engine_gates["promotion_authorized"]).lower()}</span></li>
               <li><strong>Promoted route</strong><span>{esc(phase_policy["selected_attack_route"] or "none")}</span></li>
               <li><strong>Merge rule</strong><span>{esc(phase_policy["merge_rule"])}</span></li>
@@ -760,6 +767,8 @@ def build_dashboard(
 def build_explore(product: dict, stats: dict, decisions: dict, engine: dict) -> str:
     routes = decisions["routes"]
     selection = decisions["route_selection"]
+    selected_structural = selection.get("selected_route_ids", [])
+    promoted_routes = selection.get("promoted_route_ids", [])
     counts = Counter(route["status"] for route in routes)
     filter_buttons = [
         f'<li><button class="filter-button" type="button" aria-pressed="true" data-route-filter="all">'
@@ -826,9 +835,9 @@ def build_explore(product: dict, stats: dict, decisions: dict, engine: dict) -> 
         <h1>secp256k1 ECDLP route map</h1>
         <p>Every route is generated from <code>repo/ECDLP_DECISION_SUBSTRATE.json</code>.
           Search by mechanism, scope, evidence, or next action.</p></div>
-      <aside class="decision-inline"><strong>{esc(selection["decision_id"])} · Select none</strong>
-        <span>{engine["counts"]["selected_explorations"]} bounded toy explorations are selected;
-          promotion and direct secp256k1 work remain closed.</span></aside>
+      <aside class="decision-inline"><strong>{esc(selection["decision_id"])} · Structural selection</strong>
+        <span>{len(selected_structural)} structural route completed; {len(promoted_routes)} promoted;
+          0 experiments authorized.</span></aside>
     </div>
   </section>
 

@@ -6,7 +6,9 @@
 
 Given P in E(F_p), P != O, Q in <P>, Q = [k]P, **Recover k modulo ord(P). The primary target fixes P to a generator of the prime-order secp256k1 group, so ord(P) = n.**
 
-Current phase: **research-engine-v0**. Bounded exploration authorized: **true**. Promotion experiments authorized: **false**. Selected promoted route: **none**.
+Current phase: **research-engine-v0**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Selected promoted route: **none**.
+
+Bounded structural routes recorded by the decision: **1** (`R-GLV-SEMAEV`). Promoted routes: **0** (-).
 
 The formal-result map, attack encyclopedia, and this decision layer are deliberately distinct:
 
@@ -21,22 +23,24 @@ The formal-result map, attack encyclopedia, and this decision layer are delibera
 
 ## Current route selection
 
-Decision **RS-2026-07-22-001** on `2026-07-22`: **select_none**.
+Decision **RS-2026-07-24-001** on `2026-07-24`: **select_one_bounded_structural**.
 
-No audited route currently satisfies every proposal-level requirement for a new experiment against the primary plain single-target secp256k1 objective.
+Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube premise and every nonzero affine fixed-target coordinate-scaling premise are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.
+
+Iteration: **GLV-SEMAEV-ITER-001**. Hypothesis: **HYP_GLV_SEMAEV_001**. Task: **TASK-009**.
 
 Rationale:
 
-- The generic lower bound and generic algorithms are guardrails or baselines, not non-generic attack mechanisms.
-- GLV supplies a verified constant-factor structure; Pohlig-Hellman, low-degree pairing transfer, anomalous lifting, and extension-field descent fail target-specific applicability screens.
-- The open prime-field algebraic, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge. For GLV-Semaev specifically, the proposed coordinatewise-cube quotient is now closed because it quotients by C3^m rather than the diagonal C3 action and loses relative phase.
-- Multi-target, interval, leakage, implementation, and quantum routes change the input or computational threat model and therefore cannot be promoted as a classical plain-input result.
-- Building conditional Mathlib foundations now would increase theorem volume without a demonstrated reduction in uncertainty about the exact target.
+- RS-2026-07-22-001 is historical after supersession; this current decision explicitly carries forward its zero-promotion assessment.
+- The owner selected the exact S3/S4 coordinatewise C3 stabilizer and fixed-target consequence as the sole current structural uncertainty because it can resolve the premise of the naive GLV-Semaev quotient without an attack run.
+- Exact symbolic certificates and narrowly scoped Lean covariance theorems can reduce this uncertainty while preserving the parked experiment status and every P0-P4 result.
+- A diagonal-only result is a bounded no-go for independent u_i=x_i^3 quotienting, not a lower bound for Groebner/F4, faithful Petit, or the whole R-GLV-SEMAEV route.
+- A larger stabilizer would still require an exact quotient, recovery map, orbit tags, excluded components, cost prediction, and a later decision before any externally validated solver experiment.
 
 Reopen selection only when:
-- A primary source or reproducible proposal identifies an exact non-generic mechanism for the plain target and supplies a theoretical full-cost argument.
-- New verified target structure invalidates an existing applicability or stop-condition decision.
-- A deliberately approved project objective changes the threat model to conditioned inputs, implementation leakage, or fault-tolerant quantum computation.
+- A materially different phase-preserving quotient, birational construction, or relation mechanism supplies exact fixed-target semantics, recovery, orbit tags, excluded components, and a falsifiable full-cost prediction.
+- An independently replayable counter-certificate or proof identifies an error in the frozen S3/S4 formulas, resultant construction, assumptions, or coordinatewise C3 classification.
+- A formal cost theorem combines the finite target orbit with a new mechanism and proves a nonconstant full-pipeline gain rather than attributing asymptotic value to orbit size alone.
 
 ## Threat models
 
@@ -58,7 +62,7 @@ Reopen selection only when:
 | P0 | **R-GLV**: GLV endomorphism acceleration | `constant_factor_only` | `classical-single-target-plain` | Keep as target structure available to a selected route; do not treat it as a standalone attack. |
 | P0 | **R-PAIRING-TRANSFER**: MOV, Frey-Ruck, and Tate/Weil pairing transfer | `ruled_out_for_target` | `classical-single-target-plain` | Keep the target-specific exclusion; defer a full pairing library unless a new route needs it. |
 | P0 | **R-POHLIG-HELLMAN**: Pohlig-Hellman subgroup reduction | `ruled_out_for_target` | `classical-single-target-plain` | Retain as a machine-checked elimination certificate. |
-| P1 | **R-GLV-SEMAEV**: GLV-symmetrized Semaev systems | `open_parked` | `classical-single-target-plain` | Keep HYP_GLV_SEMAEV_001 closed until a new mechanism-bearing proposal passes the Research Engine intake gate. |
+| P1 | **R-GLV-SEMAEV**: GLV-symmetrized Semaev systems | `open_parked` | `classical-single-target-plain` | Keep GLV-SEMAEV-ITER-001 closed without a solver run. Accept only a materially different phase-preserving mechanism with an exact recovery map, orbit tags, excluded components, a falsifiable full-cost prediction, and an independent validator through TASK-008 before any new decision. |
 | P1 | **R-HNP-NONCE-LEAKAGE**: Hidden-number and lattice attacks on biased or reused ECDSA nonces | `separate_threat_model` | `implementation-leakage` | Preserve as a separate security track; no lattice foundation build for the primary objective now. |
 | P1 | **R-MULTI-TARGET-PRECOMPUTATION**: Multi-target and reusable-precomputation tradeoffs | `conditional_only` | `classical-conditioned` | Represent in the evaluation contract; no experiment in this phase. |
 | P1 | **R-PRIME-FIELD-INDEX-CALCULUS**: Prime-field index calculus | `open_parked` | `classical-single-target-plain` | Preserve evidence and prerequisites; wait for explicit route selection before any new experiment. |
@@ -67,7 +71,7 @@ Reopen selection only when:
 | P1 | **R-WEIL-DESCENT**: Weil descent and GHS-style transfer | `ruled_out_for_target` | `classical-single-target-plain` | Document as a target-applicability exclusion; no formal stack now. |
 | P2 | **R-EDS-DIVISION-POLYNOMIAL**: Elliptic divisibility sequences and division-polynomial re-encodings | `open_parked` | `classical-single-target-plain` | Keep HYP_WARD_EDS_001 parked; finish no additional point-division bridge unless a selected route needs it. |
 | P2 | **R-INTERVAL-AUXILIARY-INPUT**: Interval DLP, partial-key knowledge, and auxiliary-power algorithms | `conditional_only` | `classical-conditioned` | Keep as a scope category for future protocol or leakage analyses. |
-| P2 | **R-PETIT-COMPOSED-MAPS**: Petit-style composed rational maps | `open_parked` | `classical-single-target-plain` | Park until the source specification and route-selection gate justify implementation. |
+| P2 | **R-PETIT-COMPOSED-MAPS**: Petit-style composed rational maps | `open_parked` | `classical-single-target-plain` | Keep the route parked while proposal intake separates the two source mechanisms. First perform an exact target-applicability screen for the p-1-smooth construction. Treat the auxiliary-isogeny construction as a genuinely open mechanism only after it supplies exact recovery semantics and a falsifiable prediction for a dedicated generalized-root solver; do not authorize an undirected solver sweep. |
 | P3 | **R-ISOGENY-ENDOMORPHISM-TRANSFER**: Isogeny, endomorphism-ring, and Frobenius transfer | `monitor` | `classical-single-target-plain` | Monitor literature and reuse GLV facts; no build now. |
 
 ## Route evidence
@@ -160,15 +164,18 @@ Reopen selection only when:
 
 - **Applicability:** direct to the j=0 target structure, but only constant-factor evidence exists
 - **Known cost:** Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.
-- **Evidence:** Lean verifies the GLV and Semaev structural ingredients. Existing experiments retain narrow lookup and toy-presentation measurements; experiments/glv_diagonal_obstruction independently replays the exact finite phase-loss witness. The general invariant-ring argument is documented but not kernel-checked.
+- **Evidence:** GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance. Certificate 2142e8d66a8422768b609e42f5ce09377d5f93609941139fc9fc4e5abe4dfe59 gives every rejected S3/S4 pair a coefficient +1 witness over Z[b], making the polynomial classification uniform across characteristics whenever a primitive cube root exists. Fixed-target certificate 9db5e0375421659f9abb905c12ae77232ef9957867f7194baaf548d45a1f091d proves that every nonzero affine target has only identity coordinate-scaling covariance in characteristic outside {2,3}; the r=0 slice has exactly the diagonal C3 stabilizer, with a pure-b witness for every rejected pair. Standard-library validators independently reconstruct S4 from the Sylvester determinant and replay both classifications. This is algorithmic path and artifact independence, not established source-author independence. The 14-theorem covariance and point-group transport module has Git-blob SHA-256 2940166077cbb1de3840d31fc2e829c96c90549bc49466250f8f548225d99e73 and passed the full Lean build, built-source no-sorry scan, and exhaustive axiom audit in workflow run 30163027316 at content head be7a4d8e7da94b33ef74b0c146d732314b293827; earlier P0-P4 evidence is retained unchanged.
 - **Promotion gate:** Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.
 - **Stop condition:** The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.
-- **Anti-overclaim:** The mathematical question remains open while execution is parked; prior toy results are partial negative evidence, not an active attack.
+- **Anti-overclaim:** The diagonal-only classification closes the independent coordinatewise-cube quotient and its every-nonzero-affine fixed-target coordinate-scaling premise, not faithful Petit, all geometric zero-variety automorphisms, Groebner/F4 complexity, or the whole GLV-Semaev route. It is not an ECDLP or secp256k1 break.
 - **Foundations:** `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`, `F-FORMAL-COST-MODEL`, `F-SEMAEV-ELIMINATION`
 - **Formal nodes:** `glv-rational-scope`, `semaev-foundations`, `experimental-hypotheses`
-- **Lean anchors:** `Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples`, `Ecdlp.Semaev.secp256k1_point_decomposition_semaev`
-- **Repository evidence:** `experiments/p0_glv_semaev/RESULTS.md`, `experiments/p3_sm_system/RESULTS.md`, `experiments/p4_petit/RESULTS.md`
-- **Primary sources:** [glv2001: Faster Point Multiplication on Elliptic Curves with Efficient Endomorphisms](https://www.iacr.org/archive/crypto2001/21390189.pdf), [semaev2004: Summation polynomials and the discrete logarithm problem on elliptic curves](https://eprint.iacr.org/2004/031), [fghr2014: Using symmetries in the index calculus for elliptic curves discrete logarithm](https://eprint.iacr.org/2012/199)
+- **Lean anchors:** `Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples`, `Ecdlp.Semaev.secp256k1_point_decomposition_semaev`, `Ecdlp.Semaev.S₃_diagonal_cube_covariance`, `Ecdlp.Semaev.S₄_diagonal_cube_invariant`, `Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff`
+- **Repository evidence:** `Ecdlp/Proved/GlvSemaevSymmetry.lean`, `experiments/glv_diagonal_obstruction/artifact.json`, `experiments/glv_semaev_symmetry/certificate.json`, `experiments/glv_semaev_symmetry/fixed_target_certificate.json`, `experiments/p0_glv_semaev/RESULTS.md`, `experiments/p1_petit/RESULTS.md`, `experiments/p1_petit_m3/RESULTS.md`, `experiments/p3_sm_system/RESULTS.md`, `experiments/p4_petit/RESULTS.md`, `notes/GLV_SEMAEV_ITERATION_001.md`
+- **Structural iteration:** `GLV-SEMAEV-ITER-001`
+- **Structural scope:** Exact S3/S4 covariance and stabilizer classification, every nonzero affine fixed-target coordinate-scaling classification plus the r=0 exception, target transport, and the smallest completed Lean theorem package only.
+- **Structural status:** `completed`
+- **Primary sources:** [glv2001: Faster Point Multiplication on Elliptic Curves with Efficient Endomorphisms](https://www.iacr.org/archive/crypto2001/21390189.pdf), [semaev2004: Summation polynomials and the discrete logarithm problem on elliptic curves](https://eprint.iacr.org/2004/031), [fghr2014: Using symmetries in the index calculus for elliptic curves discrete logarithm](https://eprint.iacr.org/2012/199), [fhjrv2014: Symmetrized Summation Polynomials: Using Small Order Torsion Points to Speed Up Elliptic Curve Index Calculus](https://www.iacr.org/archive/eurocrypt2014/84410158/84410158.pdf), [gebregiyorgis2016_thesis: Algorithms for the Elliptic Curve Discrete Logarithm and the Approximate Common Divisor Problem](https://www.math.auckland.ac.nz/~sgal018/Shishay.pdf), [sturmfels2008: Algorithms in Invariant Theory](https://link.springer.com/book/10.1007/978-3-211-77417-5), [duursma_gaudry_morain1999: Speeding up the Discrete Log Computation on Curves with Automorphisms](https://link.springer.com/chapter/10.1007/978-3-540-48000-6_10), [tsakou_ionica2021: Index calculus attacks on hyperelliptic Jacobians with efficient endomorphisms](https://eprint.iacr.org/2021/721), [petit_kosters_messeng2016: Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over Prime Fields](https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf), [kudo_yokota_takahashi_yasuda2018: Acceleration of Index Calculus for Solving ECDLP over Prime Fields and Its Limitation](https://link.springer.com/chapter/10.1007/978-3-030-00434-7_19)
 
 ### R-HNP-NONCE-LEAKAGE: Hidden-number and lattice attacks on biased or reused ECDSA nonces
 
@@ -210,7 +217,7 @@ Reopen selection only when:
 - **Formal nodes:** `semaev-foundations`, `experimental-hypotheses`
 - **Lean anchors:** `Ecdlp.Semaev.S₃_eq_zero_iff`, `Ecdlp.Semaev.S₄_eq_zero_of_common_root`
 - **Repository evidence:** `Ecdlp/Proved/SemaevThree.lean`, `Ecdlp/Proved/SemaevFour.lean`, `experiments/p1_petit_m3/RESULTS.md`
-- **Primary sources:** [semaev2004: Summation polynomials and the discrete logarithm problem on elliptic curves](https://eprint.iacr.org/2004/031), [gaudry2009: Index calculus for abelian varieties of small dimension and the elliptic curve discrete logarithm problem](https://doi.org/10.1016/j.jsc.2008.08.005), [diem2011: On the discrete logarithm problem in elliptic curves](https://doi.org/10.1112/S0010437X10005075)
+- **Primary sources:** [semaev2004: Summation polynomials and the discrete logarithm problem on elliptic curves](https://eprint.iacr.org/2004/031), [gaudry2009: Index calculus for abelian varieties of small dimension and the elliptic curve discrete logarithm problem](https://doi.org/10.1016/j.jsc.2008.08.005), [diem2011: On the discrete logarithm problem in elliptic curves](https://doi.org/10.1112/S0010437X10005075), [petit_kosters_messeng2016: Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over Prime Fields](https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf), [amadori_pintore_sala2018: On the Discrete Logarithm Problem for Prime-Field Elliptic Curves](https://eprint.iacr.org/2017/609), [fhjrv2014: Symmetrized Summation Polynomials: Using Small Order Torsion Points to Speed Up Elliptic Curve Index Calculus](https://www.iacr.org/archive/eurocrypt2014/84410158/84410158.pdf)
 
 ### R-PROTOCOL-FAULT-SIDECHANNEL: Invalid-curve, twist, fault, and side-channel routes
 
@@ -284,9 +291,9 @@ Reopen selection only when:
 
 ### R-PETIT-COMPOSED-MAPS: Petit-style composed rational maps
 
-- **Applicability:** unresolved because the repository has not implemented a faithful construction
+- **Applicability:** source-grounded but target applicability remains unresolved: PKC 2016 specifies a p-1-smooth construction and an auxiliary-isogeny construction, neither with a validated secp256k1 full-cost bridge
 - **Known cost:** No reliable project estimate; the existing six-variable toy presentation is explicitly non-faithful and descriptive.
-- **Evidence:** The current experiment is useful only as a negative control for one toy presentation.
+- **Evidence:** The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-isogeny realizations. It explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. Historical P4 did not implement either construction and remains only an inconclusive negative control; it is not evidence against the faithful route.
 - **Promotion gate:** First reproduce the exact construction from a verified primary source, then compare it under the common evaluation contract.
 - **Stop condition:** Reject low-bit filters, redundant auxiliary variables, or presentation-only degree changes as substitutes for the cited construction.
 - **Anti-overclaim:** The existing P4 experiment is not a faithful Petit implementation and cannot support a claim about the original method.
@@ -294,7 +301,7 @@ Reopen selection only when:
 - **Formal nodes:** `semaev-foundations`, `experimental-hypotheses`
 - **Lean anchors:** -
 - **Repository evidence:** `experiments/p4_petit/README.md`, `experiments/p4_petit/RESULTS.md`
-- **Primary sources:** `petit_ecdlp_largechar: Faster Algorithms for the ECDLP in the Large Characteristic Case (title as cited in the repo)`
+- **Primary sources:** [petit_kosters_messeng2016: Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over Prime Fields](https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf), [amadori_pintore_sala2018: On the Discrete Logarithm Problem for Prime-Field Elliptic Curves](https://eprint.iacr.org/2017/609)
 
 ### R-ISOGENY-ENDOMORPHISM-TRANSFER: Isogeny, endomorphism-ring, and Frobenius transfer
 
@@ -345,12 +352,12 @@ The tracked 2026 quantum update (`luo2026`) reports **835 logical qubits** and *
 
 ## Promotion and review
 
-- Bind the proposal to exactly one route and one declared threat model.
-- Supply new evidence matching at least one route-selection reconsideration trigger.
-- Pass every common acceptance requirement and all success-level-specific requirements at proposal level.
-- Name only the minimal conditional foundation needed for the next falsifiable decision.
-- Promote the same route and hypothesis in the decision substrate, tasks/ECDLP_RESEARCH.md, and experiments/HYPOTHESES.yaml.
+- Supply a materially different phase-preserving quotient, birational construction, or other exact mechanism; the independent coordinatewise-cube premise is closed.
+- Specify fixed-target behavior, recovery map, orbit tags, excluded components, and a falsifiable full-cost prediction.
+- Provide an independent raw-artifact validator before requesting any solver experiment.
+- Require a new dated decision before any hypothesis experiment, general solver sweep, route promotion, or exact-target work.
+- For any later promotion, pass every common acceptance requirement and bind the same route, hypothesis, task, mechanism, validator, and cost theorem.
 
-**Route selection:** RS-2026-07-22-001 still selects zero promoted routes. Research Engine v0 permits only bounded exploration; this is not a route promotion or a claim that any current mechanism improves ECDLP complexity.
+**Route selection:** RS-2026-07-24-001 completed GLV-SEMAEV-ITER-001 with a diagonal-only bounded result. R-GLV-SEMAEV remains open_parked, zero routes are promoted, zero experiments are authorized, and TASK-008 proposal intake is the current central ECDLP queue.
 
 **Final review:** Independent adversarial review is requested when another qualified reviewer is available. It is an additional audit, not a merge prerequisite; required CI, explicit scope, rollback safety, and the owner's standing authorization govern merges.

@@ -32,13 +32,22 @@ Do not quote a count from any
 other doc — prose may be stale; if in doubt, cite STATUS.md. Machine-readable:
 `data/stats.json` · badge endpoint `badges/theorems.json`.
 
-**Current research decision.** `RS-2026-07-22-001` evaluated all 17 registered
-routes and selected none: no audited proposal currently clears the common gate
-for the exact plain single-target objective. Research Engine v0 keeps bounded
-exploration available but currently selects **zero** experiments: the calibration
-candidate lacks a raw-artifact validator, and the quotient/scaling candidates lack
-an exact mechanism and independent validators. No route is promoted, exact-target
-work remains forbidden, and no asymptotic claim follows. New evidence enters
+**Current research decision.** `RS-2026-07-24-001` is current and supersedes
+`RS-2026-07-22-001`, while explicitly carrying forward its zero-promotion
+assessment. Its only positive selection was the now-completed
+`GLV-SEMAEV-ITER-001`: one route received bounded symbolic and Lean structural
+work while **zero** routes were promoted and **zero** experiments authorized.
+Exact symbolic
+replay shows that only the diagonal `C3` action survives among the enumerated
+coordinatewise scalar covariances of `S3` and `S4`; at every nonzero affine
+target in the stated characteristics, only identity remains a coordinate-scaling
+covariance, while the zero slice has exactly the diagonal `C3`. The separate kernel-accepted
+package proves the positive diagonal covariance and point-relation transport
+identities, not the exhaustive stabilizer classification. This is a bounded
+negative for the naive independent `u_i=x_i^3` quotient, not a Groebner lower
+bound or an ECDLP result.
+The route remains parked, exact-target work remains forbidden, and no
+asymptotic claim follows. New evidence enters
 through the candidate-neutral contract in `experiments/framework/`,
 source-commit-bound raw-artifact replay, engine-derived outcome classification,
 review-anchored events in `experiments/engine/outcomes/`, and explicit reconsideration

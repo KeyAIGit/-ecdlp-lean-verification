@@ -63,6 +63,8 @@ def main() -> int:
     total = meta.get("corpus_claims", sum(ss.values()))
     phase = decisions["phase_policy"]
     selection = decisions["route_selection"]
+    selected_structural = selection.get("selected_route_ids", [])
+    promoted_routes = selection.get("promoted_route_ids", [])
     routes = decisions["routes"]
     foundations = decisions["foundations"]
     build_now = [item for item in foundations if item["build_now"]]
@@ -158,16 +160,20 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 ## Main current bottleneck
 The current bottleneck is **a missing proposal-level non-generic mechanism, not theorem
 volume**. Decision `{selection['decision_id']}` evaluated all **{len(routes)} attack routes** and
-selected **none**: no audited route currently clears the common gate for the exact plain
-single-target objective. The map contains **{len(foundations)} foundation decisions**,
+recorded **{len(selected_structural)} route in completed bounded structural work**
+({", ".join(f"`{item}`" for item in selected_structural) or "none"}), while promoting
+**{len(promoted_routes)} routes**. The completed work resolved one exact S3/S4 symmetry and
+fixed-target uncertainty; it was not an attack experiment or a route promotion. The map contains
+**{len(foundations)} foundation decisions**,
 bounded exploration authorized = **{str(phase['bounded_exploration_authorized']).lower()}**,
 promotion experiments authorized =
-**{str(phase['promotion_experiments_authorized']).lower()}**, selected route =
+**{str(phase['promotion_experiments_authorized']).lower()}**, selected attack route =
 **{phase['selected_attack_route'] or 'none'}**.
 
-The completed `build_now` foundations are {", ".join(f"`{item['id']}`" for item in build_now)}.
-They make future candidates comparable and independently checkable; they do not test a parked
-hypothesis. The formal gaps `E[n] ≅ (ℤ/n)²`, Weil reciprocity/pairing, general point-division
+The `build_now` foundations are {", ".join(f"`{item['id']}`" for item in build_now)}.
+They make future candidates comparable and independently checkable; the completed structural
+work did not activate a parked experiment hypothesis. The formal gaps `E[n] ≅ (ℤ/n)²`,
+Weil reciprocity/pairing, general point-division
 bridges, p-adic formal groups, lattice reduction, isogenies, and quantum circuits remain mapped,
 but none is automatically next merely because Mathlib lacks it. Route selection reopens only
 when new evidence satisfies a recorded reconsideration trigger and the proposal gate.
@@ -181,12 +187,13 @@ no-reopen guard matched four frozen cases; this is not predictive EIG calibratio
 calibration currently contains **{engine['calibration']['scored_native_outcomes']} native
 outcomes**. {engine_queue_summary}
 
-The exploration gate is **{str(engine_gates['exploration_authorized']).lower()}** and the promotion
-gate is **{str(engine_gates['promotion_authorized']).lower()}**. Any future selection permits only
-preregistered toy-curve work within its fixed budgets and dependency order. It does not
-promote `R-GLV-SEMAEV`, authorize direct secp256k1 work, or support an asymptotic claim. Every
-terminal run must append an outcome in `experiments/engine/outcomes/` and regenerate the engine
-state.
+The Engine's bounded-exploration capability is
+**{str(engine_gates['exploration_authorized']).lower()}**, while the current decision's experiment
+authorization is **{str(phase['experiments_authorized']).lower()}** and the promotion gate is
+**{str(engine_gates['promotion_authorized']).lower()}**. `GLV-SEMAEV-ITER-001` is complete; its
+certificates and kernel-checked identities authorize no hypothesis run. `TASK-008` proposal
+intake is current, and any later experiment needs a new dated decision plus the normal fixed
+budgets, dependency order, and retained terminal outcome.
 
 ## Active work protocol
 `tasks/NEXT.md` is the queue router. ECDLP research is owned by
