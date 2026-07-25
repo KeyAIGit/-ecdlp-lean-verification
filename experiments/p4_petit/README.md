@@ -13,13 +13,14 @@ and the composed-map relation-system builders.
 
 ## Faithfulness (read this first)
 
-This is **NOT** literally Petit's prime-field algorithm. Petit / Weil-descent obtain a
-low-degree factor-base description from a genuine field structure (a subfield, or an
-`F_2`-linear subspace under Weil restriction). Over a **prime field there is no Weil
-descent**, so P4 builds the closest *honest approximation* the task requests: a factor
-base that really is the image of a **composed low-degree polynomial map** from auxiliary
-variables, whose defining **system** has lower per-equation degree than the raw
-degree-`|F|` polynomial `f_F`. Two composed maps are measured:
+This is **NOT** literally the Petit–Kosters–Messeng prime-field algorithm. Their
+construction works directly over a prime field: it defines the factor-base
+x-coordinates by `L(x)=0`, where `L` is a composition of low-degree rational maps
+obtained from either a smooth subgroup of `F_p^*` or an auxiliary elliptic curve and an
+isogeny. P4 implements neither source construction, its preprocessing, nor its recovery
+semantics. It instead measures a toy **composed low-degree polynomial map** from
+auxiliary variables, whose defining **system** has lower per-equation degree than the
+raw degree-`|F|` polynomial `f_F`. Two composed maps are measured:
 
 - **`product_2aux`** — `X = ρ(σ(t1,t2))`, `σ(t1,t2) = t1 + κ·t2` (degree 1), `ρ(s) = s² + c`
   (degree 2): a genuinely composed map of **two** auxiliary variables. Factor base
@@ -33,8 +34,9 @@ degree-`|F|` polynomial `f_F`. Two composed maps are measured:
   the high degree is **relocated**, not removed. This is the honest contrast showing that
   composition *alone* (without the product structure) does not lower the defining degree.
 
-**What is NOT done:** no Weil restriction / subfield factor base (impossible over a prime
-field); no true rational map with denominators; no `m ≥ 3` degree of regularity (already
+**What is NOT done:** no faithful PKC 2016 `L`, smooth-subgroup or auxiliary-isogeny
+construction, preprocessing, or recovery map; no true rational map with denominators;
+no `m ≥ 3` degree of regularity (already
 intractable in P3); no non-toy primes. No asymptotic / advantage / no-go-proof conclusion
 is drawn; every fit is descriptive-only.
 

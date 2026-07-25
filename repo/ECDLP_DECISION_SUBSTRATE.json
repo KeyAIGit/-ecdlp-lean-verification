@@ -643,7 +643,9 @@
         "semaev2004",
         "gaudry2009",
         "diem2011",
-        "petit_kosters_messeng2016"
+        "petit_kosters_messeng2016",
+        "amadori_pintore_sala2018",
+        "fhjrv2014"
       ],
       "anti_overclaim": "Solving selected toy systems or proving Semaev identities does not establish a practical or asymptotic ECDLP improvement."
     },
@@ -664,7 +666,7 @@
         "The quotient retains enough information to recover valid relations."
       ],
       "known_cost": "Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.",
-      "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance. Certificate 2142e8d66a8422768b609e42f5ce09377d5f93609941139fc9fc4e5abe4dfe59 gives every rejected S3/S4 pair a coefficient +/-1 witness over Z[b], making the polynomial classification uniform across characteristics whenever a primitive cube root exists. Fixed-target certificate 9db5e0375421659f9abb905c12ae77232ef9957867f7194baaf548d45a1f091d proves that every nonzero affine target has only identity coordinate-scaling covariance in characteristic outside {2,3}; the r=0 slice has exactly the diagonal C3 stabilizer, with a pure-b witness for every rejected pair. Standard-library validators independently reconstruct S4 from the Sylvester determinant and replay both classifications. This is algorithmic path and artifact independence, not established source-author independence. The narrow covariance and point-group transport source package passed the full Lean build and built-source no-sorry scan in workflow run 30142661986. Its VERIFIED.md registration and expanded exhaustive axiom audit passed workflow run 30143606761 at closure commit 9b77dd109306fa677fed5feab7bef830049e0c55; earlier P0-P4 evidence is retained unchanged.",
+      "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance. Certificate 2142e8d66a8422768b609e42f5ce09377d5f93609941139fc9fc4e5abe4dfe59 gives every rejected S3/S4 pair a coefficient +1 witness over Z[b], making the polynomial classification uniform across characteristics whenever a primitive cube root exists. Fixed-target certificate 9db5e0375421659f9abb905c12ae77232ef9957867f7194baaf548d45a1f091d proves that every nonzero affine target has only identity coordinate-scaling covariance in characteristic outside {2,3}; the r=0 slice has exactly the diagonal C3 stabilizer, with a pure-b witness for every rejected pair. Standard-library validators independently reconstruct S4 from the Sylvester determinant and replay both classifications. This is algorithmic path and artifact independence, not established source-author independence. The 14-theorem covariance and point-group transport module has Git-blob SHA-256 2940166077cbb1de3840d31fc2e829c96c90549bc49466250f8f548225d99e73 and passed the full Lean build, built-source no-sorry scan, and exhaustive axiom audit in workflow run 30163027316 at content head be7a4d8e7da94b33ef74b0c146d732314b293827; earlier P0-P4 evidence is retained unchanged.",
       "success_gate": "Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.",
       "stop_condition": "The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.",
       "next_action": "Keep GLV-SEMAEV-ITER-001 closed without a solver run. Accept only a materially different phase-preserving mechanism with an exact recovery map, orbit tags, excluded components, a falsifiable full-cost prediction, and an independent validator through TASK-008 before any new decision.",
@@ -720,6 +722,7 @@
         "glv2001",
         "semaev2004",
         "fghr2014",
+        "fhjrv2014",
         "gebregiyorgis2016_thesis",
         "sturmfels2008",
         "duursma_gaudry_morain1999",
@@ -770,7 +773,8 @@
         "experiments/p4_petit/RESULTS.md"
       ],
       "source_ids": [
-        "petit_kosters_messeng2016"
+        "petit_kosters_messeng2016",
+        "amadori_pintore_sala2018"
       ],
       "anti_overclaim": "The existing P4 experiment is not a faithful Petit implementation and cannot support a claim about the original method."
     },

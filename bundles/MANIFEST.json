@@ -17,7 +17,7 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 64446
+        "bytes": 64569
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -85,7 +85,7 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 64446
+        "bytes": 64569
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -249,7 +249,7 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 64446
+        "bytes": 64569
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -405,7 +405,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 535218
+        "bytes": 535349
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

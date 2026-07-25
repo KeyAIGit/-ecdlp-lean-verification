@@ -14,12 +14,15 @@ reported proxy against P3's raw result at matched `|F|`.
 
 ## 1. Faithfulness to real Petit — read this first (honesty rule 1)
 
-**This is NOT Petit's prime-field algorithm; it is a toy composed-polynomial-map analogue.**
-Petit / Weil-descent obtain a low-degree factor-base description from genuine field
-structure (a subfield, or an `F_2`-linear subspace under Weil restriction). P4 instead builds a factor base
-that really is the image of a **composed low-degree polynomial map** from auxiliary
-variables, whose defining **system** has lower per-equation degree than the raw
-degree-`|F|` polynomial `f_F(X) = ∏_{a∈F}(X−a)`.
+**This is NOT the Petit–Kosters–Messeng prime-field algorithm; it is a toy
+composed-polynomial-map analogue.** The source construction works directly over
+`F_p`: it defines factor-base x-coordinates by `L(x)=0`, with `L` composed from
+low-degree rational maps obtained from a smooth subgroup of `F_p^*` or from an
+auxiliary elliptic curve and an isogeny. P4 implements neither construction,
+their preprocessing, nor their recovery semantics. It instead builds a factor
+base that really is the image of a **composed low-degree polynomial map** from
+auxiliary variables, whose defining **system** has lower per-equation degree
+than the raw degree-`|F|` polynomial `f_F(X) = ∏_{a∈F}(X−a)`.
 
 Two composed maps are measured (definitions in `semaev_petit.py`):
 
@@ -35,8 +38,9 @@ Two composed maps are measured (definitions in `semaev_petit.py`):
   high degree is **RELOCATED to `g`, not removed.** This is the honest contrast showing
   that composition *alone* (without the product structure) does not lower the degree.
 
-**What is explicitly NOT done:** no faithful Petit/Weil-descent construction; no true
-rational map with denominators; no `m ≥ 3` degree of
+**What is explicitly NOT done:** no faithful PKC 2016 `L`, smooth-subgroup or
+auxiliary-isogeny construction, preprocessing, or recovery map; no true rational
+map with denominators; no `m ≥ 3` degree of
 regularity (already intractable in P3); no non-toy primes; the `product_2aux` composition
 is degree 2, not a monomial substitution `u=x³` (that P3 already did) — but it is **not**
 the structural object real Petit uses.

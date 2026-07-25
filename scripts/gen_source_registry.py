@@ -151,6 +151,22 @@ SOURCES: list[dict] = [
         "note": None,
     },
     {
+        "id": "fhjrv2014",
+        "title": "Symmetrized Summation Polynomials: Using Small Order Torsion Points to "
+                 "Speed Up Elliptic Curve Index Calculus",
+        "authors": ["Jean-Charles Faugère", "Louise Huot", "Antoine Joux",
+                    "Guénaël Renault", "Vanessa Vitse"],
+        "year": 2014,
+        "venue": "EUROCRYPT 2014, LNCS 8441, pp. 40–57",
+        "url": "https://www.iacr.org/archive/eurocrypt2014/84410158/84410158.pdf",
+        "doi": "10.1007/978-3-642-55220-5_3",
+        "aliases": ["Symmetrized Summation Polynomials", "Vitse"],
+        "role": "Primary source for torsion-translation symmetries whose coordinatewise "
+                "relation-preserving subgroup grows with the number of free relation variables.",
+        "note": "The official IACR archival PDF was inspected. Its torsion-translation "
+                "mechanism is distinct from the diagonal scalar GLV action.",
+    },
+    {
         "id": "gebregiyorgis2016_thesis",
         "title": "Algorithms for the Elliptic Curve Discrete Logarithm and the Approximate "
                  "Common Divisor Problem",
@@ -226,6 +242,20 @@ SOURCES: list[dict] = [
                 "invariant-coordinate, or fixed-target symmetry claim; its relevance is the "
                 "faithful composed-map factor-base construction, not overlap with the bounded "
                 "GLV-SEMAEV-ITER-001 stabilizer result.",
+    },
+    {
+        "id": "amadori_pintore_sala2018",
+        "title": "On the Discrete Logarithm Problem for Prime-Field Elliptic Curves",
+        "authors": ["Alessandro Amadori", "Federico Pintore", "Massimiliano Sala"],
+        "year": 2018,
+        "venue": "Finite Fields and Their Applications 51, pp. 168–182",
+        "url": "https://eprint.iacr.org/2017/609",
+        "doi": "10.1016/j.ffa.2018.01.009",
+        "aliases": ["Amadori"],
+        "role": "Primary source for a one-Gröbner-basis prime-field index-calculus variant "
+                "and an independent description of the faithful Petit factor base L(x)=0.",
+        "note": "The open IACR manuscript and publication metadata were inspected. It is "
+                "prior art for proposal design, not evidence that P4 implemented the method.",
     },
     {
         "id": "kudo_yokota_takahashi_yasuda2018",

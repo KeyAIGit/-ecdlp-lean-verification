@@ -2,8 +2,29 @@
   "schemaVersion": 1,
   "purpose": "External works cited across the substrate, with provenance (where_used) computed from the hand-authored docs. Companion to result_registry.json (theorem-name provenance).",
   "scan_scope": "**/*.md excluding .git, .lake, archive, data, node_modules, platform",
-  "source_count": 23,
+  "source_count": 25,
   "sources": [
+    {
+      "id": "amadori_pintore_sala2018",
+      "title": "On the Discrete Logarithm Problem for Prime-Field Elliptic Curves",
+      "authors": [
+        "Alessandro Amadori",
+        "Federico Pintore",
+        "Massimiliano Sala"
+      ],
+      "year": 2018,
+      "venue": "Finite Fields and Their Applications 51, pp. 168–182",
+      "url": "https://eprint.iacr.org/2017/609",
+      "doi": "10.1016/j.ffa.2018.01.009",
+      "aliases": [
+        "Amadori"
+      ],
+      "role": "Primary source for a one-Gröbner-basis prime-field index-calculus variant and an independent description of the faithful Petit factor base L(x)=0.",
+      "note": "The open IACR manuscript and publication metadata were inspected. It is prior art for proposal design, not evidence that P4 implemented the method.",
+      "where_used": [
+        "notes/GLV_SEMAEV_ITERATION_001.md"
+      ]
+    },
     {
       "id": "diem2011",
       "title": "On the discrete logarithm problem in elliptic curves",
@@ -71,6 +92,30 @@
       "where_used": [
         "experiments/README.md",
         "experiments/p0_glv_semaev/README.md",
+        "notes/GLV_SEMAEV_ITERATION_001.md"
+      ]
+    },
+    {
+      "id": "fhjrv2014",
+      "title": "Symmetrized Summation Polynomials: Using Small Order Torsion Points to Speed Up Elliptic Curve Index Calculus",
+      "authors": [
+        "Jean-Charles Faugère",
+        "Louise Huot",
+        "Antoine Joux",
+        "Guénaël Renault",
+        "Vanessa Vitse"
+      ],
+      "year": 2014,
+      "venue": "EUROCRYPT 2014, LNCS 8441, pp. 40–57",
+      "url": "https://www.iacr.org/archive/eurocrypt2014/84410158/84410158.pdf",
+      "doi": "10.1007/978-3-642-55220-5_3",
+      "aliases": [
+        "Symmetrized Summation Polynomials",
+        "Vitse"
+      ],
+      "role": "Primary source for torsion-translation symmetries whose coordinatewise relation-preserving subgroup grows with the number of free relation variables.",
+      "note": "The official IACR archival PDF was inspected. Its torsion-translation mechanism is distinct from the diagonal scalar GLV action.",
+      "where_used": [
         "notes/GLV_SEMAEV_ITERATION_001.md"
       ]
     },
@@ -361,6 +406,8 @@
       "role": "Primary specification for composed low-degree rational-map factor bases and prime-field Semaev relation systems; required provenance for any faithful R-PETIT-COMPOSED-MAPS implementation.",
       "note": "An open official IACR archival PDF exists. The earlier repository statement that this source was unavailable or only paywalled was incorrect. A full-text construction and term review found no GLV, automorphism, endomorphism, invariant-coordinate, or fixed-target symmetry claim; its relevance is the faithful composed-map factor-base construction, not overlap with the bounded GLV-SEMAEV-ITER-001 stabilizer result.",
       "where_used": [
+        "experiments/p4_petit/README.md",
+        "experiments/p4_petit/RESULTS.md",
         "notes/GLV_SEMAEV_ITERATION_001.md"
       ]
     },

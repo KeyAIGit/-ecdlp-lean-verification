@@ -366,7 +366,7 @@
         "(No dedicated Weil-descent/GHS no-go theorem exists in the repo — confirmed by grep; resistance rests on prime-field structure + a documented, non-machine-checked argument.)"
       ],
       "experimental_evidence": [
-        "experiments/p4_petit/ (RESULTS.md, HYP_GLV_SEMAEV_001): over a prime field there is 'no Weil descent / F_p-linear-subspace factor base to imitate', so P4 is a COMPOSED-map APPROXIMATION, not faithful GHS/Petit; measured no net advantage (d_reg number 7<9 but ~100x larger matrix, ~4300x slower). Honestly NOT a faithful Weil-descent attack."
+        "experiments/p4_petit/ is not a GHS/Weil-descent experiment and does not implement either PKC 2016 prime-field construction. Its invented composed-map presentation measured no net advantage (d_reg number 7<9 but ~100x larger matrix, ~4300x slower)."
       ],
       "kill_criterion": "Targets composite-degree extension fields (F_{2^n} smooth n; F_{q^n}, n>1). secp256k1 over prime F_p is structurally immune, but the immunity is asserted from secp256k1_p_prime + a structural argument, NOT a dedicated Lean no-go. It would 'fail' only if the base field were non-prime, which secp256k1_p_prime forecloses.",
       "open_escape_routes": [
@@ -474,7 +474,7 @@
         }
       ],
       "asymptotic_complexity": "No subexponential algorithm known over F_p; best proven is generic Theta(sqrt n) ~ 2^128. Extension-field index calculus (Gaudry-Diem-Semaev) is subexponential but needs Weil restriction, absent over a prime field.",
-      "memory": "BSGS Theta(sqrt n) ~2^128; rho O(1) with distinguished points. A working index calculus would need factor-base storage + sparse linear algebra, but no F_p instantiation exists (hypothetical).",
+      "memory": "BSGS Theta(sqrt n) ~2^128; rho O(1) with distinguished points. Prime-field proposals by Petit–Kosters–Messeng and Amadori–Pintore–Sala require factor-base storage, polynomial solving, and sparse linear algebra, but no audited subgeneric secp256k1 instantiation exists.",
       "secp256k1_constants": "p = 2^256-2^32-977; n prime, cofactor 1 (#E=n); extension degree 1, no proper subfield, no Weil restriction target.",
       "lean_evidence": [
         "Ecdlp.GenericGroup.generic_dlog_query_bound (Ecdlp/Proved/GenericGroupBound.lean)",
@@ -490,7 +490,7 @@
       "kill_criterion": "A relation-generation subroutine yielding decomposable F_p relations at amortized o(sqrt n) with a full-rank Z/n system; producing one would settle the open prime-field ECDLP hardness conjecture. Not observed.",
       "open_escape_routes": [
         "OPEN: m>=3 solving degree with an external Groebner engine (msolve/Sage/F4) at non-toy primes — pure-Python reached only a capped lower bound (>15) for m=3",
-        "OPEN: a genuinely faithful Weil-descent/Petit factor base over a prime field (believed impossible, unproven)",
+        "OPEN: target-applicability and full-cost evaluation of faithful prime-field factor bases such as the two PKC 2016 constructions; these do not require Weil descent",
         "OPEN: all measurements are 16/20/24-bit toy curves; behaviour at cryptographic p untested"
       ],
       "verdict": "NO known advantage over generic Theta(sqrt n); whether any subexponential prime-field index calculus exists is an OPEN CONJECTURE. Does not break secp256k1.",
@@ -639,11 +639,11 @@
       "family": "index-calculus / petit-large-characteristic",
       "layer": "experiments-scaling",
       "verdict_class": "open-zone",
-      "one_line": "Petit's large-characteristic approach uses a factor base defined by a composed low-degree (rational) map so the relation system has low per-equation degree; over a prime field there is no Weil restriction, so no faithful F_p-linear-subspace base exists — only an explicitly-labelled approximation can be measured. No Lean evidence (honestly empty).",
+      "one_line": "Petit–Kosters–Messeng define a prime-field factor base by L(x)=0, with L composed from low-degree rational maps obtained from a smooth subgroup of F_p^* or an auxiliary elliptic curve and an isogeny. Historical P4 implements neither source construction and remains only an explicitly-labelled toy approximation. No Lean evidence (honestly empty).",
       "required_properties": [
         "a factor base with a composed low-degree defining system (lower than raw f_F of degree |F|)",
         "the lowered per-equation degree must translate to lower ACTUAL relation-generation cost, not just a lower d_reg number",
-        "ideally a faithful Weil-descent / F_p-linear-subspace base (Petit's real object)"
+        "a faithful source construction, including preprocessing, denominators, exceptional fibers, and recovery"
       ],
       "secp256k1_status": [
         {
@@ -652,9 +652,9 @@
           "evidence": "P4 experiments/p4_petit/RESULTS.md: product_2aux X=(t1+kappa*t2)^2+c, defining degree ~sqrt(|F|) — explicitly-labelled APPROXIMATION, not faithful Petit"
         },
         {
-          "property": "faithful Weil-descent / F_p-linear-subspace factor base",
-          "status": "fails (structural)",
-          "evidence": "P4 section 1 + BARRIERS.md B3: over a prime field there is NO Weil descent, so no F_p-linear-subspace factor base exists to imitate; P4 is honestly not the real construction"
+          "property": "faithful prime-field factor base L(x)=0",
+          "status": "unimplemented / target applicability unresolved",
+          "evidence": "Petit–Kosters–Messeng, PKC 2016, Sections 2.1–2.3 and 3.1: L is composed from low-degree rational maps using either a smooth subgroup of F_p^* or an auxiliary elliptic curve plus isogeny. P4 implements neither construction."
         },
         {
           "property": "low per-equation degree lowers actual cost",
@@ -669,7 +669,7 @@
       ],
       "asymptotic_complexity": "P4 d_reg measured only at |F|=4, m=2 (toy). Composed map lowers the d_reg NUMBER but not cost: larger ring, larger matrices, larger time, same variety — same negative pattern as P3's u=x^3. No asymptotic claim drawn.",
       "memory": "P4 composed-map Macaulay matrices ~100x larger than raw (10758x5005 vs 108x78) at the same quotient dimension.",
-      "secp256k1_constants": "No Weil restriction on F_p (p = 2^256-2^32-977); extension degree 1, no proper subfield — Petit's genuine construction has no target here.",
+      "secp256k1_constants": "p = 2^256-2^32-977 and the extension degree is 1. Absence of Weil descent does not exclude the PKC 2016 prime-field constructions; their p-1 smoothness and auxiliary-isogeny prerequisites require separate target-property screens.",
       "lean_evidence": [],
       "experimental_evidence": [
         "P4 (experiments/p4_petit): product_2aux d_reg 7 vs raw 9 but ~4300x slower; single_aux_composed d_reg 9 (no drop); 80 targets / 32 relations, composed-map == raw baseline == brute-force EC, spurious=0, VALIDATION PASS",
@@ -677,13 +677,13 @@
       ],
       "kill_criterion": "A prime-field composed/rational-map factor base whose lower defining degree yields lower ACTUAL relation-generation cost (smaller matrices AND wall time) at growing |F| and p — not observed; P4 shows the opposite (larger ring, ~4300x slower).",
       "open_escape_routes": [
-        "OPEN: a genuinely faithful Petit composed low-degree rational-map construction (with denominators) — P4 is an approximation only",
+        "OPEN: separately screen and reproduce the p-1-smooth and auxiliary-isogeny constructions from PKC 2016, including denominators, preprocessing, and recovery — P4 is not either construction",
         "OPEN: whether ANY prime-field factor-base construction can beat the raw degree-|F| f_F in actual cost (believed no, unproven)",
         "OPEN: d_reg at |F|>4 with an external engine; non-toy primes"
       ],
-      "verdict": "PARTIAL NEGATIVE at toy scale and NOT faithful Petit (no prime-field Weil descent exists to imitate); no net advantage over the raw factor base. Not a break.",
-      "blocked_on": "semaev_polynomials depth; a faithful Petit/Weil-descent construction (believed impossible over F_p, unproven); external GB engine; cost_model. No Lean formalization of Petit/Weil-descent exists.",
-      "disclosure": "P4 is an explicitly-labelled APPROXIMATION to Petit, NOT the real construction; d_reg measured only at |F|=4, m=2, toy primes. No break; no Lean evidence exists for this family (honestly empty)."
+      "verdict": "PARTIAL NEGATIVE at toy scale for P4's invented presentation, which is NOT a faithful PKC 2016 construction; no conclusion about either source mechanism or a net prime-field advantage. Not a break.",
+      "blocked_on": "exact target-applicability screens for the two PKC 2016 constructions; faithful preprocessing and recovery semantics; external GB engine; cost_model. No Lean formalization of the source construction exists.",
+      "disclosure": "P4 is an explicitly-labelled toy composed-map presentation, NOT the PKC 2016 construction; d_reg measured only at |F|=4, m=2, toy primes. It is not evidence against the faithful route. No break; no Lean evidence exists for this family (honestly empty)."
     },
     {
       "id": "multi-target-precomputation",

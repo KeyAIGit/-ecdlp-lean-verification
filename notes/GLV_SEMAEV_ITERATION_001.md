@@ -69,33 +69,23 @@ Kernel package source acceptance:
 
 ```text
 Ecdlp/Proved/GlvSemaevSymmetry.lean
-SHA-256 01e5dc77ca59585298e4f3e427c0df4441f7138331611cd0e7390c85e216a3a9
+Git-blob SHA-256 2940166077cbb1de3840d31fc2e829c96c90549bc49466250f8f548225d99e73
 Lean 4.31.0
 Mathlib v4.31.0 / fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-accepted commit 1bba09ff1d8682187365996d9b190044aea333f9
-GitHub Actions run 30142661986
+accepted content head be7a4d8e7da94b33ef74b0c146d732314b293827
+GitHub Actions run 30163027316
 ```
 
-The cited run accepted the module in the repository's full `lake build` and
-built-source no-`sorry` scan.
-
-Ledger closure acceptance:
-
-```text
-closure commit 9b77dd109306fa677fed5feab7bef830049e0c55
-GitHub Actions run 30143606761
-job 89641332798
-```
-
-That later run accepted the `VERIFIED.md` registration and the generated
-exhaustive axiom audit containing all eight new declarations. The symbolic
-stabilizer classification remains certificate-backed rather than being
-overstated as a kernel theorem.
+The cited run accepted the exact content-addressed module in the repository's
+full `lake build`, built-source no-`sorry` scan, and generated exhaustive axiom
+audit containing all 14 public declarations. The branch was later rebased
+without changing this module blob. The symbolic stabilizer classification
+remains certificate-backed rather than being overstated as a kernel theorem.
 
 The coefficient witnesses also make an arbitrary scalar exhaustive. A
 coefficient-one anchor forces any proportionality scalar to be a power of
-`beta`. The certificate now gives every rejected action/character pair an
-x-monomial with coefficient exactly `+1` or `-1` over `Z[b]`; these
+`beta`. The generated certificate gives every rejected action/character pair an
+x-monomial with coefficient `+1` over `Z[b]`; these
 obstructions survive every field characteristic. A compact characteristic
 outside `{2,3}` derivation can also use the `S3` component
 `-4*b*(x1+x2+x3)` to force all three exponents to equal the character. For
@@ -307,6 +297,17 @@ the fixed-target obstruction are **already in print**:
   group*. The diagonal scalar `C3` is **not** one for `m >= 2` — a scalar `zeta*I_m` has all `m`
   eigenvalues `!= 1`, whereas a pseudo-reflection has exactly one. Prop. 2 must therefore **not**
   be applied here, and no numerical cost ceiling derived from it appears in this note.
+- **J.-C. Faugère, L. Huot, A. Joux, G. Renault, V. Vitse**, *Symmetrized Summation
+  Polynomials: Using Small Order Torsion Points to Speed Up Elliptic Curve Index Calculus*,
+  EUROCRYPT 2014, LNCS 8441:40–57, **§§1 and 3**, DOI
+  `10.1007/978-3-642-55220-5_3`. This is the decisive comparison for the cost argument:
+  translation by a rational order-`m` torsion point may be applied independently to the
+  free coordinates subject to `sum k_i = 0 mod m`. For rational 2-torsion this gives an
+  even-weight subgroup of order `2^(n-1)`, which grows with the number of relation
+  variables. The GLV scalar action is different: it is sum-compatible only on the
+  diagonal, whose order remains three. Fixed order of a curve symmetry alone therefore
+  proves no constant-factor ceiling; the relation-preserving coordinatewise action is
+  the relevant object.
 
 **Defensible contribution.** Specialization of the classification to the multiplicative `j = 0`
 case over a prime field, its exact certification (including the characteristic-uniform witness),
@@ -327,6 +328,12 @@ remaining source below lacks a claim-level comparison:
   Semaev relation system and an explicit statement that its asymptotic complexity remains open.
   It therefore does not overlap the bounded stabilizer result, but it is required provenance for
   any future `R-PETIT-COMPOSED-MAPS` proposal.
+- **A. Amadori, F. Pintore, M. Sala**, *On the Discrete Logarithm Problem for
+  Prime-Field Elliptic Curves*, Finite Fields and Their Applications 51:168–182, 2018,
+  **§§2.2–3**, DOI `10.1016/j.ffa.2018.01.009` (IACR ePrint 2017/609). It independently
+  describes the faithful Petit factor base `L(x)=0` over a prime field and proposes a
+  separate one-Gröbner-basis variant. It is prior art for prime-field proposal design,
+  not evidence that P4 implemented either construction.
 - **M. Kudo, Y. Yokota, Y. Takahashi, M. Yasuda**, *Acceleration of Index Calculus for Solving
   ECDLP over Prime Fields and Its Limitation*, CANS 2018, LNCS 11124:377–393,
   DOI `10.1007/978-3-030-00434-7_19` — the Springer metadata and abstract are available, but no
@@ -339,8 +346,9 @@ Absence of a result from this repository is explicitly **not** evidence of novel
 ## Claim boundary
 
 No discrete logarithm was recovered. No secp256k1 attack was executed. No
-subgeneric or practical complexity result was established. No claim is made that a finite symmetry
-group cannot change a Gröbner solving degree — that inference would be unsound, since FGHR obtain
-an exponential gain from the *finite* group `D_n` whose order grows with `n`. This iteration
+subgeneric or practical complexity result was established. No claim is made that a fixed-order
+curve symmetry cannot change a Gröbner solving degree. The torsion-translation construction above
+shows why that inference is unsound: one order-two point induces a relation-preserving
+coordinatewise subgroup of order `2^(n-1)`. This iteration
 improves the verified research memory by closing one precise false quotient
 premise and preserving the remaining route boundary.
