@@ -137,6 +137,7 @@
         "VERIFIED.md",
         "domains/p256/corpus.md",
         "experiments/README.md",
+        "experiments/glv_diagonal_obstruction/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
         "experiments/p1_petit/README.md",
@@ -160,7 +161,8 @@
         "notes/RESEARCH_MAP.md",
         "notes/SEPARABILITY_ROUTES.md",
         "notes/reviews/FBL_PURE_CORPUS.md",
-        "notes/reviews/GEOMETRIC_TORSION_AUDIT.md"
+        "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
+        "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md"
       ]
     },
     {
@@ -415,6 +417,7 @@
         "STATUS.md",
         "VERIFIED.md",
         "experiments/README.md",
+        "experiments/glv_diagonal_obstruction/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
         "experiments/p1_petit/README.md",
@@ -431,7 +434,8 @@
         "notes/HYPOTHESIS_EXPLORER.md",
         "notes/RESEARCH_MAP.md",
         "notes/UPSTREAM_SCAN.md",
-        "notes/reviews/GEOMETRIC_TORSION_AUDIT.md"
+        "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
+        "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md"
       ]
     },
     {

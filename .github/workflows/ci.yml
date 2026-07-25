@@ -19,6 +19,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Research Engine outcomes bind evidence to prior source commits.
+          # A shallow checkout makes valid provenance look nonexistent.
+          fetch-depth: 0
 
       # Cheap doc gate: fail on count drift (the headline count regressed 3x).
       - name: Check count consistency (docs)
@@ -51,6 +55,20 @@ jobs:
 
       - name: Check ECDLP decision substrate
         run: python3 scripts/check_ecdlp_decision_substrate.py
+
+      - name: Check generated Research Engine state
+        run: python3 scripts/build_research_engine_state.py --check
+
+      - name: Check Research Engine v0
+        run: python3 scripts/check_research_engine.py
+
+      - name: Test Research Engine v0
+        run: python3 scripts/test_research_engine.py
+
+      - name: Replay GLV diagonal-action obstruction certificate
+        run: |
+          python3 experiments/glv_diagonal_obstruction/generate.py --check
+          python3 experiments/glv_diagonal_obstruction/validate.py
 
       - name: Check generated ECDLP decision view
         run: python3 scripts/build_ecdlp_decision_view.py --check

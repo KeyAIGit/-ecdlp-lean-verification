@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -15,6 +16,8 @@ except ImportError:
 
 HEX_64 = re.compile(r"^[0-9a-f]{64}$")
 HEX_40 = re.compile(r"^[0-9a-f]{40}$")
+ROOT = Path(__file__).resolve().parents[2]
+SECP256K1_P = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F
 REQUIRED_TOP_LEVEL = {
     "schema_version",
     "record_kind",
@@ -36,6 +39,7 @@ REQUIRED_COST_METRICS = {
 REQUIRED_FIELDS = {
     "candidate": {
         "id",
+        "authorization_class",
         "route_id",
         "hypothesis_id",
         "implementation",
@@ -180,6 +184,32 @@ def _route_index(decisions: dict) -> dict[str, dict]:
     return {route["id"]: route for route in decisions["routes"]}
 
 
+def _git_commit_exists(commit: str) -> bool:
+    if not HEX_40.fullmatch(commit):
+        return False
+    result = subprocess.run(
+        ["git", "cat-file", "-e", f"{commit}^{{commit}}"],
+        cwd=ROOT,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+    return result.returncode == 0
+
+
+def _git_path_exists(commit: str, relative: str) -> bool:
+    if not _git_commit_exists(commit):
+        return False
+    result = subprocess.run(
+        ["git", "cat-file", "-e", f"{commit}:{relative}"],
+        cwd=ROOT,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+    return result.returncode == 0
+
+
 def _validate_hash(
     actual: object, expected: str, name: str, errors: list[str]
 ) -> None:
@@ -189,7 +219,13 @@ def _validate_hash(
         errors.append(f"{name} does not match the canonical payload")
 
 
-def validate_record(record: dict, decisions: dict) -> list[str]:
+def validate_record(
+    record: dict,
+    decisions: dict,
+    engine_policy: dict | None = None,
+    engine_state: dict | None = None,
+    authorized_candidate_ids: set[str] | None = None,
+) -> list[str]:
     errors: list[str] = []
     _check_exact_keys(record, REQUIRED_TOP_LEVEL, "record", errors)
     if record.get("schema_version") != 1:
@@ -224,11 +260,18 @@ def validate_record(record: dict, decisions: dict) -> list[str]:
     route = routes.get(route_id)
     if route is None:
         errors.append(f"candidate.route_id is unknown: {route_id!r}")
-    elif kind == "candidate_run" and not route.get("authorized_experiment"):
-        errors.append(f"route {route_id} does not authorize a candidate run")
 
     candidate_id = candidate.get("id")
     _check_nonempty_text(candidate_id, "candidate.id", errors)
+    authorization_class = candidate.get("authorization_class")
+    if authorization_class not in {"fixture", "exploration", "promotion"}:
+        errors.append(
+            "candidate.authorization_class must be fixture, exploration, or promotion"
+        )
+    if kind == "framework_fixture" and authorization_class != "fixture":
+        errors.append("framework fixtures require authorization_class=fixture")
+    if kind == "candidate_run" and authorization_class == "fixture":
+        errors.append("candidate runs cannot use authorization_class=fixture")
     if kind == "framework_fixture" and not str(candidate_id).startswith("fixture-"):
         errors.append("framework fixture candidate ids must start with fixture-")
     _check_nonempty_text(route_id, "candidate.route_id", errors)
@@ -242,13 +285,89 @@ def validate_record(record: dict, decisions: dict) -> list[str]:
             errors.append(
                 f"candidate.hypothesis_id {hypothesis_id!r} is not bound to route {route_id}"
             )
+    engine_candidate: dict[str, Any] | None = None
+    if kind == "candidate_run" and authorization_class == "promotion":
+        if engine_policy is None:
+            engine_policy, _ = load_engine(ROOT)
+        if engine_policy.get("gates", {}).get("promotion", {}).get(
+            "authorized"
+        ) is not True:
+            errors.append("Research Engine promotion gate is closed")
+        if decisions.get("execution_gates", {}).get("promotion", {}).get(
+            "authorized"
+        ) is not True:
+            errors.append("decision-substrate promotion gate is closed")
+        if decisions.get("phase_policy", {}).get(
+            "promotion_experiments_authorized"
+        ) is not True:
+            errors.append("phase policy does not authorize promotion experiments")
+        if route is not None and not route.get("authorized_experiment"):
+            errors.append(f"route {route_id} does not authorize a promotion run")
+    if kind == "candidate_run" and authorization_class == "exploration":
+        if engine_policy is None or engine_state is None:
+            engine_policy, engine_state = load_engine(ROOT)
+        policy_candidates = {
+            item["id"]: item for item in engine_policy.get("candidate_proposals", [])
+        }
+        engine_candidate = policy_candidates.get(candidate_id)
+        if engine_policy.get("gates", {}).get("exploration", {}).get(
+            "authorized"
+        ) is not True:
+            errors.append("Research Engine exploration gate is closed")
+        if engine_policy.get("gates", {}).get("promotion", {}).get(
+            "authorized"
+        ) is not False:
+            errors.append("Research Engine promotion gate must remain closed")
+        if authorized_candidate_ids is None:
+            queue = engine_state.get("execution_queue", {})
+            authorized_candidate_ids = set(queue.get("ready_candidate_ids", [])) | set(
+                queue.get("terminal_candidate_ids", [])
+            )
+        if candidate_id not in authorized_candidate_ids:
+            errors.append(
+                f"candidate {candidate_id} is not ready or terminal in the "
+                "Research Engine execution queue"
+            )
+        if engine_candidate is None:
+            errors.append(f"candidate {candidate_id} is unknown to Research Engine")
+        else:
+            if engine_candidate.get("authorization") != "exploration":
+                errors.append(
+                    f"candidate {candidate_id} is not exploration-authorized"
+                )
+            if route_id != engine_candidate.get("route_id"):
+                errors.append("candidate route differs from Research Engine policy")
+            if hypothesis_id != engine_candidate.get("hypothesis_id"):
+                errors.append(
+                    "candidate hypothesis differs from Research Engine policy"
+                )
     _check_nonempty_text(candidate.get("implementation"), "candidate.implementation", errors)
     commit = candidate.get("code_commit")
     if not isinstance(commit, str) or not HEX_40.fullmatch(commit):
         errors.append("candidate.code_commit must be a lowercase 40-hex commit")
     elif kind == "candidate_run" and commit == "0" * 40:
         errors.append("candidate runs must reference a real code commit")
-    _check_nonempty_text(candidate.get("entrypoint"), "candidate.entrypoint", errors)
+    elif kind == "candidate_run" and not _git_commit_exists(commit):
+        errors.append("candidate.code_commit does not resolve to a repository commit")
+    entrypoint = candidate.get("entrypoint")
+    _check_nonempty_text(entrypoint, "candidate.entrypoint", errors)
+    if kind == "candidate_run" and isinstance(entrypoint, str) and entrypoint:
+        entrypoint_path = (ROOT / entrypoint).resolve()
+        try:
+            entrypoint_path.relative_to(ROOT.resolve())
+        except ValueError:
+            errors.append("candidate.entrypoint must stay inside the repository")
+        else:
+            if not entrypoint_path.is_file():
+                errors.append("candidate.entrypoint does not exist")
+            elif (
+                isinstance(commit, str)
+                and HEX_40.fullmatch(commit)
+                and not _git_path_exists(commit, entrypoint)
+            ):
+                errors.append(
+                    "candidate.entrypoint does not exist at candidate.code_commit"
+                )
 
     threat_models = {model["id"] for model in decisions["threat_models"]}
     threat_model = target.get("threat_model")
@@ -299,6 +418,44 @@ def validate_record(record: dict, decisions: dict) -> list[str]:
         if target.get("scalar_interval") is not None:
             errors.append("plain threat model forbids a scalar interval promise")
 
+    registered_curve: dict[str, Any] | None = None
+    if kind == "candidate_run" and authorization_class == "exploration":
+        preregistration = (engine_candidate or {}).get("preregistration", {})
+        registered_curve = next(
+            (
+                item
+                for item in preregistration.get("curves", [])
+                if item.get("id") == curve_id
+            ),
+            None,
+        )
+        if registered_curve is None:
+            errors.append(
+                "target.curve_id is not frozen in the candidate preregistration"
+            )
+        else:
+            for target_field, registered_field in (
+                ("field_p", "field_p"),
+                ("curve_a", "curve_a"),
+                ("curve_b", "curve_b"),
+                ("base_point", "base_point"),
+                ("base_order", "base_order"),
+            ):
+                if target.get(target_field) != registered_curve.get(registered_field):
+                    errors.append(
+                        f"target.{target_field} differs from the preregistered curve"
+                    )
+        field_p = target.get("field_p")
+        if isinstance(field_p, int) and not isinstance(field_p, bool):
+            if field_p == SECP256K1_P:
+                errors.append("exploration runs cannot target secp256k1")
+            max_bits = min(
+                engine_policy["gates"]["exploration"]["limits"]["max_field_bits"],
+                (engine_candidate or {}).get("scope", {}).get("max_field_bits", -1),
+            )
+            if field_p.bit_length() > max_bits:
+                errors.append("exploration target exceeds its field-size budget")
+
     online = _require_mapping(cost, "online", errors, "cost")
     offline = _require_mapping(cost, "offline", errors, "cost")
     _check_nonnegative_metrics(online, "cost.online", errors)
@@ -329,6 +486,29 @@ def validate_record(record: dict, decisions: dict) -> list[str]:
         errors.append("non-reusable work must use amortization_target_count=1")
     if threat_model == "classical-single-target-plain" and reusable:
         errors.append("plain threat model forbids reusable precomputation")
+    if kind == "candidate_run" and authorization_class == "exploration":
+        candidate_budget = (engine_candidate or {}).get("budget", {})
+        total_wall_time = sum(
+            metric.get("wall_time_seconds", 0)
+            for metric in (online, offline)
+            if isinstance(metric, dict)
+        )
+        peak_memory = max(
+            (
+                metric.get("peak_memory_bytes", 0)
+                for metric in (online, offline)
+                if isinstance(metric, dict)
+            ),
+            default=0,
+        )
+        for name, actual in (
+            ("wall_time_seconds", total_wall_time),
+            ("peak_memory_bytes", peak_memory),
+            ("parallel_workers", workers),
+        ):
+            limit = candidate_budget.get(name, -1)
+            if isinstance(actual, (int, float)) and actual > limit:
+                errors.append(f"exploration run exceeds candidate {name} budget")
 
     _check_nonempty_text(environment.get("python"), "environment.python", errors)
     _check_nonempty_text(environment.get("platform"), "environment.platform", errors)
@@ -343,6 +523,19 @@ def validate_record(record: dict, decisions: dict) -> list[str]:
         errors.append(
             "environment.tool_versions must map nonempty tool names to nonempty versions"
         )
+    elif kind == "candidate_run" and authorization_class == "exploration":
+        required_versions = (
+            (engine_candidate or {})
+            .get("preregistration", {})
+            .get("solver", {})
+            .get("versions", {})
+        )
+        for tool, required_version in required_versions.items():
+            if tool_versions.get(tool) != required_version:
+                errors.append(
+                    f"environment.tool_versions.{tool} must equal preregistered "
+                    f"version {required_version}"
+                )
 
     if validation.get("validator_id") != "framework.ec_oracle.v1":
         errors.append("validation.validator_id must be framework.ec_oracle.v1")
@@ -419,6 +612,20 @@ def validate_record(record: dict, decisions: dict) -> list[str]:
     for name in ("secp256k1_break", "disclosure_gate_acknowledged"):
         if not isinstance(claims.get(name), bool):
             errors.append(f"claims.{name} must be boolean")
+    if kind == "candidate_run" and authorization_class == "exploration":
+        if claims.get("secp256k1_break") is not False:
+            errors.append("exploration runs must set claims.secp256k1_break=false")
+        if claims.get("asymptotic_claim") is not None:
+            errors.append("exploration runs cannot make an asymptotic claim")
+        if success_level not in {"scope-only", "constant-factor"}:
+            errors.append(
+                "exploration runs are limited to scope-only or constant-factor claims"
+            )
+        preregistered_seeds = (
+            (engine_candidate or {}).get("preregistration", {}).get("seeds", [])
+        )
+        if provenance.get("seed") not in preregistered_seeds:
+            errors.append("provenance.seed is not preregistered for this candidate")
 
     if candidate and target and result and environment and provenance:
         _validate_hash(
@@ -482,3 +689,13 @@ def load_decisions(root: Path) -> dict:
             encoding="utf-8"
         )
     )
+
+
+def load_engine(root: Path) -> tuple[dict, dict]:
+    policy = json.loads(
+        (root / "repo" / "RESEARCH_ENGINE_V0.json").read_text(encoding="utf-8")
+    )
+    state = json.loads(
+        (root / "data" / "research_engine_state.json").read_text(encoding="utf-8")
+    )
+    return policy, state

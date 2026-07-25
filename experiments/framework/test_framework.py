@@ -11,6 +11,7 @@ from candidate_contract import (
     REQUIRED_TOP_LEVEL,
     canonical_hash,
     load_decisions,
+    load_engine,
     load_record,
     record_payload,
     validate_record,
@@ -26,10 +27,55 @@ class FrameworkTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.decisions = load_decisions(ROOT)
+        cls.engine_policy, cls.engine_state = load_engine(ROOT)
 
     def test_valid_fixture(self) -> None:
         record = load_record(FIXTURES / "valid.json")
         self.assertEqual([], validate_record(record, self.decisions))
+
+    def test_exploration_fixture_requires_an_explicit_ready_queue(self) -> None:
+        record = load_record(FIXTURES / "valid_exploration.json")
+        canonical_errors = validate_record(record, self.decisions)
+        self.assertTrue(
+            any("is not ready or terminal" in error for error in canonical_errors),
+            msg=canonical_errors,
+        )
+        self.assertTrue(
+            any("is not exploration-authorized" in error for error in canonical_errors),
+            msg=canonical_errors,
+        )
+
+        synthetic_policy = copy.deepcopy(self.engine_policy)
+        candidate = next(
+            item
+            for item in synthetic_policy["candidate_proposals"]
+            if item["id"] == record["candidate"]["id"]
+        )
+        candidate["authorization"] = "exploration"
+        candidate["preregistration"] = {
+            "seeds": [record["provenance"]["seed"]],
+            "curves": [
+                {
+                    "id": record["target"]["curve_id"],
+                    "field_p": record["target"]["field_p"],
+                    "curve_a": record["target"]["curve_a"],
+                    "curve_b": record["target"]["curve_b"],
+                    "base_point": record["target"]["base_point"],
+                    "base_order": record["target"]["base_order"],
+                    "cofactor": 1,
+                }
+            ],
+        }
+        self.assertEqual(
+            [],
+            validate_record(
+                record,
+                self.decisions,
+                synthetic_policy,
+                self.engine_state,
+                {record["candidate"]["id"]},
+            ),
+        )
 
     def test_invalid_fixtures_fail_for_the_intended_reason(self) -> None:
         cases = {
@@ -57,11 +103,71 @@ class FrameworkTests(unittest.TestCase):
     def test_real_run_is_rejected_until_route_selection(self) -> None:
         record = copy.deepcopy(load_record(FIXTURES / "valid.json"))
         record["record_kind"] = "candidate_run"
+        record["candidate"]["authorization_class"] = "promotion"
+        record["candidate"][
+            "code_commit"
+        ] = "1a1b5ddba7e9a6e3d40f189892e83529f5bc6616"
+        record["candidate"]["entrypoint"] = "experiments/framework/test_framework.py"
         record["provenance"]["record_sha256"] = canonical_hash(record_payload(record))
         errors = validate_record(record, self.decisions)
         self.assertIn(
-            "route R-GENERIC-BASELINE does not authorize a candidate run", errors
+            "route R-GENERIC-BASELINE does not authorize a promotion run", errors
         )
+        self.assertIn("Research Engine promotion gate is closed", errors)
+        self.assertIn("decision-substrate promotion gate is closed", errors)
+
+    def test_route_flag_cannot_bypass_global_promotion_gates(self) -> None:
+        decisions = copy.deepcopy(self.decisions)
+        route = next(
+            item
+            for item in decisions["routes"]
+            if item["id"] == "R-GENERIC-BASELINE"
+        )
+        route["authorized_experiment"] = True
+        record = copy.deepcopy(load_record(FIXTURES / "valid.json"))
+        record["record_kind"] = "candidate_run"
+        record["candidate"]["authorization_class"] = "promotion"
+        record["candidate"][
+            "code_commit"
+        ] = "1a1b5ddba7e9a6e3d40f189892e83529f5bc6616"
+        record["candidate"]["entrypoint"] = "experiments/framework/test_framework.py"
+        record["provenance"]["record_sha256"] = canonical_hash(
+            record_payload(record)
+        )
+        errors = validate_record(record, decisions)
+        self.assertIn("Research Engine promotion gate is closed", errors)
+        self.assertIn("decision-substrate promotion gate is closed", errors)
+        self.assertIn(
+            "phase policy does not authorize promotion experiments", errors
+        )
+
+    def test_waiting_exploration_cannot_bypass_the_queue(self) -> None:
+        record = copy.deepcopy(load_record(FIXTURES / "valid_exploration.json"))
+        record["candidate"]["id"] = "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT"
+        record["provenance"]["record_sha256"] = canonical_hash(record_payload(record))
+        errors = validate_record(record, self.decisions)
+        self.assertTrue(
+            any("is not ready or terminal" in error for error in errors),
+            msg=errors,
+        )
+
+    def test_exploration_rejects_unregistered_curve_and_fake_commit(self) -> None:
+        record = copy.deepcopy(load_record(FIXTURES / "valid_exploration.json"))
+        record["candidate"]["code_commit"] = "a" * 40
+        record["target"]["curve_id"] = "secp256k1"
+        record["target"][
+            "field_p"
+        ] = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F
+        record["provenance"]["input_sha256"] = canonical_hash(record["target"])
+        record["provenance"]["record_sha256"] = canonical_hash(record_payload(record))
+        errors = validate_record(record, self.decisions)
+        self.assertIn(
+            "candidate.code_commit does not resolve to a repository commit", errors
+        )
+        self.assertIn(
+            "target.curve_id is not frozen in the candidate preregistration", errors
+        )
+        self.assertIn("exploration runs cannot target secp256k1", errors)
 
     def test_oracle_known_multiples(self) -> None:
         curve = Curve(17, 0, 7)

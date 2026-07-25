@@ -1,0 +1,791 @@
+{
+  "schema_version": "0.1",
+  "engine_id": "ecdlp-research-engine-v0",
+  "status": "implementation",
+  "purpose": "Turn the existing ECDLP evidence and decision control plane into a bounded selection and memory loop that admits, ranks, validates, and retains preregistered falsifiable exploration without weakening the promotion gate.",
+  "target_contract": {
+    "primary_threat_model": "classical-single-target-plain",
+    "selection_rule": "A candidate outside the primary threat model is rejected before any information-gain or cost score is computed.",
+    "claim_boundary": "Exploration may reduce uncertainty about a mechanism on bounded toy instances; it cannot by itself establish an asymptotic improvement or a secp256k1 break."
+  },
+  "canonical_ownership": {
+    "policy_and_candidate_queue": "repo/RESEARCH_ENGINE_V0.json",
+    "hypothesis_registry": "experiments/HYPOTHESES.yaml",
+    "historical_and_new_outcomes": "experiments/engine/outcomes/",
+    "native_run_envelopes": "experiments/engine/runs/",
+    "candidate_run_contract": "experiments/framework/candidate_run.schema.json",
+    "generated_engine_state": "data/research_engine_state.json",
+    "route_decisions": "repo/ECDLP_DECISION_SUBSTRATE.json",
+    "attack_evidence": "data/attack_registry.json",
+    "formal_results": "data/result_registry.json"
+  },
+  "queue_separation": {
+    "ecdlp_research": {
+      "source": "tasks/ECDLP_RESEARCH.md",
+      "objective": "Reduce uncertainty about the plain single-target secp256k1 ECDLP boundary without changing the threat model.",
+      "kpis": [
+        "mechanism-bearing uncertainties resolved",
+        "bounded explorations independently validated",
+        "negative results retained with reopening conditions",
+        "false promotion rate",
+        "cost per material uncertainty reduction"
+      ]
+    },
+    "keyai_product": {
+      "source": "tasks/KEYAI_PRODUCT.md",
+      "objective": "Validate whether external formal-research teams need and can use the KeyAI control plane.",
+      "kpis": [
+        "external orientation time",
+        "provenance completeness",
+        "state drift",
+        "completed external pilot loops",
+        "return sessions and willingness-to-pay evidence"
+      ]
+    },
+    "anti_conflation_rules": [
+      "Product traffic, site work, pilots, and portability rehearsals never count as ECDLP progress.",
+      "Lean theorem volume never counts as cryptanalytic progress without a route-level uncertainty it resolves.",
+      "Toy measurements never count as secp256k1 progress without a mechanism and scaling bridge.",
+      "ECDLP experiments never count as product validation."
+    ]
+  },
+  "gap_taxonomy": [
+    {
+      "id": "literature_not_ingested",
+      "ordinal": 1,
+      "definition": "Relevant work exists but is not yet represented in the evidence graph.",
+      "research_window": false
+    },
+    {
+      "id": "known_not_formalized",
+      "ordinal": 2,
+      "definition": "The mathematical result is known, but the repository has not formalized it.",
+      "research_window": false
+    },
+    {
+      "id": "formalization_infrastructure_blocked",
+      "ordinal": 3,
+      "definition": "Formalization is blocked by missing prover or library infrastructure.",
+      "research_window": false
+    },
+    {
+      "id": "genuinely_open_question",
+      "ordinal": 4,
+      "definition": "The mathematical question is open, but no exact complexity-changing mechanism is specified.",
+      "research_window": false
+    },
+    {
+      "id": "mechanism_bearing_open_window",
+      "ordinal": 5,
+      "definition": "An open question has an exact mechanism, a falsifiable prediction, and a plausible path to changing the ECDLP cost model.",
+      "research_window": true
+    }
+  ],
+  "outcome_taxonomy": [
+    {
+      "id": "proved",
+      "definition": "A formal statement was accepted by its declared proof kernel or deterministic logical verifier. Positive toy measurements are never labelled proved."
+    },
+    {
+      "id": "supported",
+      "definition": "A preregistered native positive empirical prediction survived the tested scope, raw-artifact recomputation, and reviewed source independence. This is not a proof, asymptotic result, route promotion, or secp256k1 claim."
+    },
+    {
+      "id": "historical_structural_confirmation",
+      "definition": "A migrated historical observation confirms a known structural identity in its recorded scope, but was not preregistered as a native Engine prediction. It is excluded from calibration, dependency unlocking, and route-review triggers."
+    },
+    {
+      "id": "falsified",
+      "definition": "A preregistered prediction failed under the declared scope and independent validation."
+    },
+    {
+      "id": "bounded_negative",
+      "definition": "The tested mechanism produced no claimed advantage in a bounded scope; this is not a general impossibility result."
+    },
+    {
+      "id": "inapplicable",
+      "definition": "The route or result changes the target, threat model, input promises, or required structure and therefore does not answer the declared question."
+    },
+    {
+      "id": "inconclusive",
+      "definition": "The run completed but did not distinguish the competing explanations or its decisive measurement was not independently validated."
+    },
+    {
+      "id": "resource_exhausted",
+      "definition": "The preregistered resource bound was reached before the prediction could be evaluated."
+    }
+  ],
+  "gates": {
+    "exploration": {
+      "authorized": true,
+      "scope": "Bounded toy-curve or verifier-calibration work only.",
+      "max_selected_per_cycle": 3,
+      "limits": {
+        "max_field_bits": 24,
+        "max_wall_time_seconds": 21600,
+        "max_peak_memory_bytes": 8589934592,
+        "max_parallel_workers": 8
+      },
+      "required": [
+        "an exact mechanism or a named validator prerequisite for a mechanism-bearing candidate",
+        "a falsifiable prediction",
+        "a matched baseline",
+        "a fixed compute and memory budget",
+        "a preregistered stop condition",
+        "an independent validator for the decisive claim",
+        "a source-commit-bound pure validator that recomputes the decisive classification from raw artifacts under python-pure-json-v3 capability restrictions",
+        "an exhaustive preregistered instance-outcome taxonomy and deterministic aggregate precedence, so the terminal label is engine-derived rather than researcher-selected",
+        "toy-only target scope",
+        "a prohibition on secp256k1-break and asymptotic claims",
+        "an outcome event retained for every terminal result"
+      ],
+      "hard_rejections": [
+        "changes_threat_model",
+        "hidden_or_unpriced_precomputation",
+        "missing_exact_mechanism",
+        "missing_falsifiable_prediction",
+        "missing_independent_validator",
+        "targets_secp256k1_directly",
+        "no_new_premise_after_resolution"
+      ]
+    },
+    "promotion": {
+      "authorized": false,
+      "scope": "Route promotion, expensive scaling, exact-target work, or a public complexity claim.",
+      "required": [
+        "exact non-generic mechanism",
+        "plain single-target threat-model match",
+        "full online, offline, memory, parallelism, and amortization cost model",
+        "scaling evidence across multiple sizes",
+        "no hidden preprocessing or conditioned inputs",
+        "independent reproduction",
+        "dated route-selection decision",
+        "matching task and hypothesis promotion",
+        "disclosure review before any credible exact-target operational work"
+      ]
+    }
+  },
+  "selection_value": {
+    "admissibility": "Hard gates are boolean and evaluated before ranking; a failed gate cannot be compensated by a score.",
+    "information_gain_formula": "H(prior_live) - sum_o P(o) * H(P(live | o)), in bits",
+    "priority_formula": "expected_information_gain_bits / normalized_budget_cost",
+    "normalized_budget_cost": "wall_time/max_wall_time + peak_memory/max_peak_memory + parallel_workers/max_parallel_workers",
+    "commitment": "Each selected candidate freezes a latent question, prior, rationale, and P(outcome | live/dead) before its first native run.",
+    "calibration": "Brier scores begin with native preregistered outcomes. Historical migrations are excluded because assigning probabilities after seeing their results would be post hoc.",
+    "tie_breakers": [
+      "higher expected information gain",
+      "lower normalized budget cost",
+      "lexicographically smaller candidate id"
+    ]
+  },
+  "hypothesis_normalization": [
+    {
+      "id": "H1_RESEARCH_OS_TRUTH_LAYER",
+      "direction": "platform",
+      "source_status": "closed",
+      "normalized_outcome": "proved",
+      "verifier_scope": "Repository consistency and generated-artifact gates.",
+      "engine_state": "retained_foundation",
+      "route_ids": [],
+      "rationale": "The scoped operational claim is accepted by deterministic repository gates.",
+      "reopening_condition": "A consistency regression or an unowned canonical surface appears."
+    },
+    {
+      "id": "H2_GLV_SUBGROUP_VS_WHOLE_GROUP",
+      "direction": "formalization",
+      "source_status": "closed",
+      "normalized_outcome": "proved",
+      "verifier_scope": "Lean anchors plus scope-consistency gates.",
+      "engine_state": "retained_guardrail",
+      "route_ids": [
+        "R-GLV"
+      ],
+      "rationale": "The subgroup and whole-group claims are separated at the exact proved scope.",
+      "reopening_condition": "A new theorem changes the whole-group or subgroup boundary."
+    },
+    {
+      "id": "H3_GENERIC_SECURITY_SCOPE",
+      "direction": "formalization",
+      "source_status": "closed",
+      "normalized_outcome": "proved",
+      "verifier_scope": "Lean generic-model results plus public-scope checks.",
+      "engine_state": "retained_guardrail",
+      "route_ids": [
+        "R-GENERIC-LOWER-BOUND",
+        "R-GENERIC-BASELINE"
+      ],
+      "rationale": "The generic-model boundary is explicit and mechanically protected from unconditional overclaim.",
+      "reopening_condition": "A stronger adaptive generic theorem or a scope regression is introduced."
+    },
+    {
+      "id": "H4_FRONTIER_TRACEABILITY",
+      "direction": "data",
+      "source_status": "closed",
+      "normalized_outcome": "proved",
+      "verifier_scope": "Generated count and status-consistency gates.",
+      "engine_state": "retained_foundation",
+      "route_ids": [],
+      "rationale": "Corpus and theorem denominators are separated in canonical views.",
+      "reopening_condition": "A public or machine-readable view conflates the denominators."
+    },
+    {
+      "id": "H5_SEMAEV_WINDOW",
+      "direction": "experiment",
+      "source_status": "closed",
+      "normalized_outcome": "inconclusive",
+      "verifier_scope": "Registry normalization.",
+      "engine_state": "superseded",
+      "route_ids": [
+        "R-GLV-SEMAEV"
+      ],
+      "rationale": "The lifecycle record is superseded and is not an independent scientific outcome; its unresolved content is retained by HYP_GLV_SEMAEV_001.",
+      "reopening_condition": "Never reopen this id; create or update a non-superseded hypothesis instead."
+    },
+    {
+      "id": "H6_PUBLICATION_BOUNDARY_TRACK",
+      "direction": "publication",
+      "source_status": "parked",
+      "normalized_outcome": "inconclusive",
+      "verifier_scope": "No final publication artifact has been independently reviewed.",
+      "engine_state": "parked_nonresearch",
+      "route_ids": [],
+      "rationale": "Publication packaging is valuable but does not reduce cryptanalytic uncertainty.",
+      "reopening_condition": "A stable engine checkpoint and independent review packet are available."
+    },
+    {
+      "id": "H7_ECDLP_DECISION_SUBSTRATE",
+      "direction": "data",
+      "source_status": "closed",
+      "normalized_outcome": "proved",
+      "verifier_scope": "Decision-substrate validator and cross-registry gates.",
+      "engine_state": "retained_foundation",
+      "route_ids": [],
+      "rationale": "The existing control plane is accepted; Research Engine v0 extends rather than replaces it.",
+      "reopening_condition": "A route, hypothesis, or experiment can bypass the declared gates."
+    },
+    {
+      "id": "HYP_GLV_SEMAEV_001",
+      "direction": "experiment",
+      "source_status": "parked",
+      "normalized_outcome": "inconclusive",
+      "verifier_scope": "P0-P4 retain scoped historical measurements. The new finite certificate independently replays the coordinatewise-cube over-quotient obstruction; the general algebra is not kernel-checked.",
+      "engine_state": "closed_until_new_mechanism",
+      "route_ids": [
+        "R-GLV-SEMAEV",
+        "R-PETIT-COMPOSED-MAPS"
+      ],
+      "rationale": "The proposed u_i=X_i^3 construction quotients by C3^m rather than the diagonal C3 action and loses relative phase. The correct finite orbit offers only fixed-cardinality compression; no replacement complexity-changing mechanism is currently specified.",
+      "reopening_condition": "A new candidate supplies a materially different exact mechanism, handles the fixed-target fiber explicitly, predicts a growth-relevant effect beyond orbit cardinality, and includes an independent raw-artifact validator."
+    },
+    {
+      "id": "HYP_WARD_EDS_001",
+      "direction": "experiment",
+      "source_status": "parked",
+      "normalized_outcome": "inconclusive",
+      "verifier_scope": "Toy-curve EDS torsion identities independently replayed with elliptic-curve arithmetic; no attack-advantage prediction was tested.",
+      "engine_state": "closed_until_new_mechanism",
+      "route_ids": [
+        "R-EDS-DIVISION-POLYNOMIAL"
+      ],
+      "rationale": "The bounded run supports the known torsion identity. It neither tests nor supplies a non-reencoding DLP mechanism, so the broader research hypothesis remains inconclusive and closed at intake.",
+      "reopening_condition": "A proposal specifies a new operation on EDS data with a justified cost below finding the discrete logarithm directly."
+    }
+  ],
+  "candidate_proposals": [
+    {
+      "id": "RE0-001-EXTERNAL-SOLVER-CALIBRATION",
+      "title": "Retain external-solver calibration as technical debt, not a research candidate",
+      "route_id": "R-GLV-SEMAEV",
+      "hypothesis_id": "HYP_GLV_SEMAEV_001",
+      "kind": "validator_prerequisite",
+      "gap_class": "formalization_infrastructure_blocked",
+      "downstream_research_window": null,
+      "mechanism": "An external F4/Groebner replay could calibrate the historical P3 proxy, but its only declared downstream coordinatewise-cube candidate is now closed by an exact algebraic obstruction.",
+      "prediction": "No standalone scientific prediction remains. Reintroduce this calibration only when a materially new mechanism names the proxy metric as a decision-critical dependency.",
+      "baseline": "The committed P3 plain and redundant U=X^3 systems remain historical evidence with their existing validator boundary.",
+      "stop_condition": "Do not spend exploration budget calibrating an orphaned proxy. Preserve the frozen draft and reopen under a new candidate id only for a live downstream mechanism.",
+      "validator": "Not implemented. This remains explicit engineering debt and cannot produce or unlock a scientific outcome.",
+      "scope": {
+        "curve_family": "cofactor-1 toy j=0 curves",
+        "max_field_bits": 21,
+        "forbidden_targets": [
+          "secp256k1"
+        ],
+        "threat_model": "classical-single-target-plain"
+      },
+      "budget": {
+        "wall_time_seconds": 7200,
+        "peak_memory_bytes": 4294967296,
+        "parallel_workers": 2
+      },
+      "preregistration": {},
+      "evidence_inputs": [
+        "experiments/p3_sm_system/README.md",
+        "experiments/p3_sm_system/RESULTS.md",
+        "experiments/glv_diagonal_obstruction/README.md"
+      ],
+      "dependencies": [],
+      "dependency_requirements": {},
+      "information_model": {},
+      "hard_rejections": {
+        "changes_threat_model": false,
+        "hidden_or_unpriced_precomputation": false,
+        "missing_exact_mechanism": false,
+        "missing_falsifiable_prediction": false,
+        "missing_independent_validator": true,
+        "targets_secp256k1_directly": false,
+        "no_new_premise_after_resolution": true
+      },
+      "authorization": "none",
+      "result_updates": {}
+    },
+    {
+      "id": "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT",
+      "title": "Close the coordinatewise-cube quotient premise",
+      "route_id": "R-GLV-SEMAEV",
+      "hypothesis_id": "HYP_GLV_SEMAEV_001",
+      "kind": "mechanism_probe",
+      "gap_class": "known_not_formalized",
+      "downstream_research_window": null,
+      "mechanism": "The relevant GLV action on relation variables is diagonal C3. Its polynomial invariant ring is the third Veronese subring, generated by all total-degree-three monomials. The proposed coordinates u_i=X_i^3 instead quotient by C3^m and generically merge 3^(m-1) distinct diagonal orbits, losing relative phase.",
+      "prediction": "Resolved without an attack run: at m=2 the coordinatewise same-cube condition contains exactly three diagonal-action graphs on the free locus. The frozen F_1009 witness records 483 pairs on one graph and 1449 same-cube pairs.",
+      "baseline": "Compare the exact diagonal C3 quotient with the larger coordinatewise C3^m quotient, including target-fiber behavior.",
+      "stop_condition": "Closed for this premise. Do not relabel coordinatewise cubes as the diagonal quotient or infer a scaling gain from fixed orbit size.",
+      "validator": "experiments/glv_diagonal_obstruction/validate.py independently recomputes the raw finite witness and toric exponent identities. The general invariant-ring statement is documented, not a Lean kernel theorem.",
+      "scope": {
+        "curve_family": "toy j=0 curve E: y^2=x^3+11 over F_1009",
+        "max_field_bits": 10,
+        "forbidden_targets": [
+          "secp256k1"
+        ],
+        "threat_model": "classical-single-target-plain"
+      },
+      "budget": {
+        "wall_time_seconds": 60,
+        "peak_memory_bytes": 67108864,
+        "parallel_workers": 1
+      },
+      "preregistration": {},
+      "evidence_inputs": [
+        "experiments/glv_diagonal_obstruction/README.md",
+        "experiments/glv_diagonal_obstruction/artifact.json",
+        "experiments/glv_diagonal_obstruction/artifact.sha256",
+        "experiments/glv_diagonal_obstruction/validate.py"
+      ],
+      "dependencies": [
+        "RE0-001-EXTERNAL-SOLVER-CALIBRATION"
+      ],
+      "dependency_requirements": {
+        "RE0-001-EXTERNAL-SOLVER-CALIBRATION": [
+          "supported"
+        ]
+      },
+      "information_model": {},
+      "hard_rejections": {
+        "changes_threat_model": false,
+        "hidden_or_unpriced_precomputation": false,
+        "missing_exact_mechanism": false,
+        "missing_falsifiable_prediction": false,
+        "missing_independent_validator": true,
+        "targets_secp256k1_directly": false,
+        "no_new_premise_after_resolution": true
+      },
+      "authorization": "none",
+      "result_updates": {}
+    },
+    {
+      "id": "RE0-003-M3-INVARIANT-F4-SCALING",
+      "title": "Close scaling of the invalid coordinatewise quotient",
+      "route_id": "R-GLV-SEMAEV",
+      "hypothesis_id": "HYP_GLV_SEMAEV_001",
+      "kind": "scaling_probe",
+      "gap_class": "known_not_formalized",
+      "downstream_research_window": null,
+      "mechanism": "The dependent m=3 proposal has no valid quotient to scale. Coordinatewise cubes over-quotient by a factor of 3^(m-1), while the actual diagonal symmetry has fixed order 3. This rules out the declared orbit-compression premise, not every possible algebraic or Groebner mechanism.",
+      "prediction": "Withdrawn before execution. A fixed finite orbit cannot by itself supply a size-dependent compression factor; any future scaling candidate must introduce and justify a different mechanism.",
+      "baseline": "The historical P1-m3 and P3 measurements remain scoped evidence; they are not promoted into a general Groebner no-go.",
+      "stop_condition": "Do not execute the frozen m=3 draft. Reopen under a new id only with an exact fixed-target construction, recovery map, growth-relevant prediction, and independent raw-artifact validator.",
+      "validator": "The finite diagonal obstruction is independently replayable. No validator exists for a replacement m=3 mechanism because none has been specified.",
+      "scope": {
+        "curve_family": "cofactor-1 toy j=0 curves",
+        "max_field_bits": 20,
+        "forbidden_targets": [
+          "secp256k1"
+        ],
+        "threat_model": "classical-single-target-plain"
+      },
+      "budget": {
+        "wall_time_seconds": 21600,
+        "peak_memory_bytes": 8589934592,
+        "parallel_workers": 4
+      },
+      "preregistration": {},
+      "evidence_inputs": [
+        "experiments/glv_diagonal_obstruction/README.md",
+        "experiments/p1_petit_m3/RESULTS.md",
+        "experiments/p3_sm_system/RESULTS.md"
+      ],
+      "dependencies": [
+        "RE0-001-EXTERNAL-SOLVER-CALIBRATION",
+        "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT"
+      ],
+      "dependency_requirements": {
+        "RE0-001-EXTERNAL-SOLVER-CALIBRATION": [
+          "supported"
+        ],
+        "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT": [
+          "supported"
+        ]
+      },
+      "information_model": {},
+      "hard_rejections": {
+        "changes_threat_model": false,
+        "hidden_or_unpriced_precomputation": false,
+        "missing_exact_mechanism": false,
+        "missing_falsifiable_prediction": false,
+        "missing_independent_validator": true,
+        "targets_secp256k1_directly": false,
+        "no_new_premise_after_resolution": true
+      },
+      "authorization": "none",
+      "result_updates": {}
+    },
+    {
+      "id": "RE0-X01-WARD-EDS-ZERO-SEARCH",
+      "title": "Search EDS zeros for a discrete logarithm",
+      "route_id": "R-EDS-DIVISION-POLYNOMIAL",
+      "hypothesis_id": "HYP_WARD_EDS_001",
+      "kind": "rejected_example",
+      "gap_class": "genuinely_open_question",
+      "downstream_research_window": null,
+      "mechanism": "No operation cheaper than finding the discrete logarithm is specified.",
+      "prediction": "None beyond the already known torsion equivalence.",
+      "baseline": "Generic scalar search.",
+      "stop_condition": "Reject before execution.",
+      "validator": "Existing EC replay.",
+      "scope": {
+        "curve_family": "toy curves",
+        "max_field_bits": 20,
+        "forbidden_targets": [
+          "secp256k1"
+        ],
+        "threat_model": "classical-single-target-plain"
+      },
+      "budget": {
+        "wall_time_seconds": 3600,
+        "peak_memory_bytes": 1073741824,
+        "parallel_workers": 1
+      },
+      "preregistration": {},
+      "evidence_inputs": [
+        "experiments/p2_ward_eds/RESULTS.md"
+      ],
+      "dependencies": [],
+      "dependency_requirements": {},
+      "information_model": {},
+      "hard_rejections": {
+        "changes_threat_model": false,
+        "hidden_or_unpriced_precomputation": false,
+        "missing_exact_mechanism": true,
+        "missing_falsifiable_prediction": true,
+        "missing_independent_validator": false,
+        "targets_secp256k1_directly": false,
+        "no_new_premise_after_resolution": true
+      },
+      "authorization": "none",
+      "result_updates": {}
+    },
+    {
+      "id": "RE0-X02-DIRECT-SECP256K1-PROBE",
+      "title": "Run an unscaled candidate directly on secp256k1",
+      "route_id": "R-GLV-SEMAEV",
+      "hypothesis_id": "HYP_GLV_SEMAEV_001",
+      "kind": "rejected_example",
+      "gap_class": "genuinely_open_question",
+      "downstream_research_window": null,
+      "mechanism": "No validated toy scaling bridge is supplied.",
+      "prediction": "Unspecified.",
+      "baseline": "Generic algorithms.",
+      "stop_condition": "Reject before execution.",
+      "validator": "Unspecified.",
+      "scope": {
+        "curve_family": "secp256k1",
+        "max_field_bits": 256,
+        "forbidden_targets": [],
+        "threat_model": "classical-single-target-plain"
+      },
+      "budget": {
+        "wall_time_seconds": 21600,
+        "peak_memory_bytes": 8589934592,
+        "parallel_workers": 8
+      },
+      "preregistration": {},
+      "evidence_inputs": [
+        "repo/ECDLP_DECISION_SUBSTRATE.json"
+      ],
+      "dependencies": [],
+      "dependency_requirements": {},
+      "information_model": {},
+      "hard_rejections": {
+        "changes_threat_model": false,
+        "hidden_or_unpriced_precomputation": false,
+        "missing_exact_mechanism": true,
+        "missing_falsifiable_prediction": true,
+        "missing_independent_validator": true,
+        "targets_secp256k1_directly": true,
+        "no_new_premise_after_resolution": false
+      },
+      "authorization": "none",
+      "result_updates": {}
+    },
+    {
+      "id": "RE0-X03-MULTI-TARGET-PRECOMPUTATION-CANARY",
+      "title": "Amortize reusable precomputation across many targets",
+      "route_id": "R-MULTI-TARGET-PRECOMPUTATION",
+      "hypothesis_id": "H3_GENERIC_SECURITY_SCOPE",
+      "kind": "rejected_example",
+      "gap_class": "genuinely_open_question",
+      "downstream_research_window": null,
+      "mechanism": "Build target-independent tables once and amortize them across a large batch of related ECDLP targets.",
+      "prediction": "Per-target online work drops sharply when the offline table and target batch are excluded from the plain single-target cost.",
+      "baseline": "One arbitrary plain target with all preprocessing, memory, and amortization charged.",
+      "stop_condition": "Reject before scoring because the proposal changes the declared threat model and hides reusable preprocessing from the target cost.",
+      "validator": "Mechanical comparison against the canonical primary threat model.",
+      "scope": {
+        "curve_family": "conditioned multi-target toy curves",
+        "max_field_bits": 16,
+        "forbidden_targets": [
+          "secp256k1"
+        ],
+        "threat_model": "classical-conditioned"
+      },
+      "budget": {
+        "wall_time_seconds": 60,
+        "peak_memory_bytes": 16777216,
+        "parallel_workers": 1
+      },
+      "preregistration": {},
+      "evidence_inputs": [
+        "data/attack_registry.json",
+        "repo/ECDLP_DECISION_SUBSTRATE.json"
+      ],
+      "dependencies": [],
+      "dependency_requirements": {},
+      "information_model": {
+        "latent_question": "Would reusable multi-target preprocessing produce a strong measured gain under its own conditioned model?",
+        "prior_live": 0.99,
+        "prior_rationale": "This deliberately attractive, low-cost canary exists to prove that threat-model admissibility dominates ranking.",
+        "likelihoods": {
+          "proved": {
+            "live": 0.0,
+            "dead": 0.0
+          },
+          "supported": {
+            "live": 0.8,
+            "dead": 0.05
+          },
+          "falsified": {
+            "live": 0.02,
+            "dead": 0.55
+          },
+          "bounded_negative": {
+            "live": 0.05,
+            "dead": 0.2
+          },
+          "inapplicable": {
+            "live": 0.1,
+            "dead": 0.1
+          },
+          "inconclusive": {
+            "live": 0.02,
+            "dead": 0.05
+          },
+          "resource_exhausted": {
+            "live": 0.01,
+            "dead": 0.05
+          }
+        }
+      },
+      "hard_rejections": {
+        "changes_threat_model": true,
+        "hidden_or_unpriced_precomputation": true,
+        "missing_exact_mechanism": false,
+        "missing_falsifiable_prediction": false,
+        "missing_independent_validator": false,
+        "targets_secp256k1_directly": false,
+        "no_new_premise_after_resolution": false
+      },
+      "authorization": "none",
+      "result_updates": {}
+    }
+  ],
+  "retrospective_cases": [
+    {
+      "id": "RET-P0-PAIR-ENUMERATION",
+      "outcome_event_id": "REO-2026-07-24-001",
+      "candidate_id": "HIST-P0-GLV-PAIR-ENUMERATION",
+      "hypothesis_id": "HYP_GLV_SEMAEV_001",
+      "route_id": "R-GLV-SEMAEV",
+      "event_sha256": "84365a0a320ebb1336262737b4faf05fc4f9bc3dc4b454694c65480aecc0094d",
+      "known_outcome": "bounded_negative",
+      "hard_rejections": {
+        "changes_threat_model": false,
+        "hidden_or_unpriced_precomputation": false,
+        "missing_exact_mechanism": false,
+        "missing_falsifiable_prediction": false,
+        "missing_independent_validator": false,
+        "targets_secp256k1_directly": false,
+        "no_new_premise_after_resolution": true
+      },
+      "expected_selector_disposition": "hard_rejected"
+    },
+    {
+      "id": "RET-P2-WARD-EDS",
+      "outcome_event_id": "REO-2026-07-24-004",
+      "candidate_id": "HIST-P2-WARD-EDS",
+      "hypothesis_id": "HYP_WARD_EDS_001",
+      "route_id": "R-EDS-DIVISION-POLYNOMIAL",
+      "event_sha256": "9d78eef8a81fda21eff44ef4341fa2b003f5682d9875361419d768504a3fb609",
+      "known_outcome": "historical_structural_confirmation",
+      "hard_rejections": {
+        "changes_threat_model": false,
+        "hidden_or_unpriced_precomputation": false,
+        "missing_exact_mechanism": true,
+        "missing_falsifiable_prediction": false,
+        "missing_independent_validator": false,
+        "targets_secp256k1_directly": false,
+        "no_new_premise_after_resolution": true
+      },
+      "expected_selector_disposition": "hard_rejected"
+    },
+    {
+      "id": "RET-P3-M3-PROXY",
+      "outcome_event_id": "REO-2026-07-24-005",
+      "candidate_id": "HIST-P3-M2-MACAULAY-PROXY",
+      "hypothesis_id": "HYP_GLV_SEMAEV_001",
+      "route_id": "R-GLV-SEMAEV",
+      "event_sha256": "09247b072dfeb56bf44a236d3a2b6c70862dba0acc67bb5145a8a64888e11589",
+      "known_outcome": "inconclusive",
+      "hard_rejections": {
+        "changes_threat_model": false,
+        "hidden_or_unpriced_precomputation": false,
+        "missing_exact_mechanism": false,
+        "missing_falsifiable_prediction": false,
+        "missing_independent_validator": true,
+        "targets_secp256k1_directly": false,
+        "no_new_premise_after_resolution": true
+      },
+      "expected_selector_disposition": "hard_rejected"
+    },
+    {
+      "id": "RET-P4-COMPOSED-APPROXIMATION",
+      "outcome_event_id": "REO-2026-07-24-007",
+      "candidate_id": "HIST-P4-COMPOSED-MAP-APPROXIMATION",
+      "hypothesis_id": "HYP_GLV_SEMAEV_001",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "event_sha256": "001aa40051ce18ac1b3ceb8861513651561f0ad49e3f010a70c76add0e2226b6",
+      "known_outcome": "inconclusive",
+      "hard_rejections": {
+        "changes_threat_model": false,
+        "hidden_or_unpriced_precomputation": false,
+        "missing_exact_mechanism": true,
+        "missing_falsifiable_prediction": false,
+        "missing_independent_validator": false,
+        "targets_secp256k1_directly": false,
+        "no_new_premise_after_resolution": true
+      },
+      "expected_selector_disposition": "hard_rejected"
+    }
+  ],
+  "retrospective_method": {
+    "method": "event_bound_no_reopen_gate",
+    "claim": "The current admissibility gates reject reopening four retained historical cases without a materially new premise, while binding each case to its actual outcome event.",
+    "limitation": "Historical runs predate preregistered priors and likelihoods. They test false reopening only and are excluded from predictive calibration; calibration starts with the first native Engine outcome."
+  },
+  "historical_outcome_baseline": {
+    "status": "review_anchored_v0",
+    "anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
+    "events": [
+      {
+        "event_id": "REO-2026-07-24-001",
+        "event_sha256": "84365a0a320ebb1336262737b4faf05fc4f9bc3dc4b454694c65480aecc0094d"
+      },
+      {
+        "event_id": "REO-2026-07-24-002",
+        "event_sha256": "01e140f7e28ee1b7e476e89aa686e79fc170c7e7084facd50b4312ccb9989eeb"
+      },
+      {
+        "event_id": "REO-2026-07-24-003",
+        "event_sha256": "8dac127ce2f8128cff603231081d47e2a4bc11a32409bc87cf9f5add309ce2a1"
+      },
+      {
+        "event_id": "REO-2026-07-24-004",
+        "event_sha256": "9d78eef8a81fda21eff44ef4341fa2b003f5682d9875361419d768504a3fb609"
+      },
+      {
+        "event_id": "REO-2026-07-24-005",
+        "event_sha256": "09247b072dfeb56bf44a236d3a2b6c70862dba0acc67bb5145a8a64888e11589"
+      },
+      {
+        "event_id": "REO-2026-07-24-006",
+        "event_sha256": "3ef46d8f1bd57ca757c8ec3b85636d7f5e94d7e516486410f0076d527efda872"
+      },
+      {
+        "event_id": "REO-2026-07-24-007",
+        "event_sha256": "001aa40051ce18ac1b3ceb8861513651561f0ad49e3f010a70c76add0e2226b6"
+      },
+      {
+        "event_id": "REO-2026-07-24-008",
+        "event_sha256": "68faf15bcdaadc02812caf577f9065cacdbdcf1f3f0ce650e17a46703a823875"
+      }
+    ]
+  },
+  "historical_scope_guards": [
+    {
+      "event_id": "REO-2026-07-24-001",
+      "event_sha256": "84365a0a320ebb1336262737b4faf05fc4f9bc3dc4b454694c65480aecc0094d",
+      "outcome": "bounded_negative",
+      "curve_family": "cofactor-1 toy j=0 curves",
+      "field_bits": [
+        16,
+        20
+      ],
+      "forbidden_field_bits": [
+        24
+      ]
+    },
+    {
+      "event_id": "REO-2026-07-24-008",
+      "event_sha256": "68faf15bcdaadc02812caf577f9065cacdbdcf1f3f0ce650e17a46703a823875",
+      "outcome": "inapplicable",
+      "curve_family": "ambient-group toy j=0 curve with cofactor 3",
+      "field_bits": [
+        24
+      ],
+      "forbidden_field_bits": [
+        16,
+        20
+      ]
+    }
+  ],
+  "feedback_contract": {
+    "append_only_input": "experiments/engine/outcomes/",
+    "generated_updates": [
+      "candidate terminal state",
+      "normalized hypothesis evidence summary",
+      "effective route evidence disposition",
+      "reopening-condition status",
+      "next selector queue",
+      "knowledge-graph engine nodes and edges"
+    ],
+    "promotion_boundary": "Generated evidence may close, park, or reopen exploration candidates. It may not promote a route, authorize exact-target work, or make a public complexity claim without a dated decision-substrate change.",
+    "required_after_every_terminal_run": [
+      "write one review-anchored outcome event",
+      "bind a native outcome to a hashed run envelope, full candidate policy, exact preregistration matrix prefix, candidate-run manifest, and per-instance result/validation records with validator code hashes",
+      "regenerate data/research_engine_state.json",
+      "run the engine and decision validators",
+      "regenerate the knowledge graph and public views",
+      "retain negative, inconclusive, and resource-exhausted results"
+    ]
+  }
+}

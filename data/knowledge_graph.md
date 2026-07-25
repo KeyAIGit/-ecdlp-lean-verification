@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every ledger row below cites kernel-checked declarations (no `sorry`, no custom axioms).
 
-**296 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **950 edges**
+**296 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **0 bounded explorations selected** · **8 retained outcomes** · **989 edges**
 
 > A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline counts; `data/result_registry.json` owns declaration-level resolution.
 
@@ -10,13 +10,13 @@ By proof method: Mathlib (106), Mathlib + native_decide (31), native_decide (20)
 
 By research area: curve-torsion (152), primality (54), generic-hardness (29), other (26), protocol-soundness (23), attack-resistance (6), reduction (5), params (1)
 
-By edge type: imports (478), member_of (296), requires_foundation (41), decision_grounded_in (25), supports (21), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), blocked_by (7), governs_hypothesis (3)
+By edge type: imports (478), member_of (296), requires_foundation (41), decision_grounded_in (25), supports (21), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), records_outcome_for (8), updates_hypothesis (8), records_route_evidence (8), blocked_by (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (3), depends_on_candidate (3)
 
 ## secp256k1 route decisions
 
 This target-specific layer is generated from `repo/ECDLP_DECISION_SUBSTRATE.json`. It does not replace the attack evidence registry or the formal release map.
 
-Phase: **monitored-candidate-intake**. Experiments authorized: **false**. Selected route: **none**.
+Phase: **research-engine-v0**. Bounded exploration authorized: **true**. Promotion experiments authorized: **false**. Selected route: **none**.
 
 Selection **RS-2026-07-22-001** (`2026-07-22`): **select_none**. No audited route currently satisfies every proposal-level requirement for a new experiment against the primary plain single-target secp256k1 objective.
 
@@ -55,6 +55,22 @@ Selection **RS-2026-07-22-001** (`2026-07-22`): **select_none**. No audited rout
 | P3 | **F-PADIC-FORMAL-GROUP**: p-adic elliptic formal-group and lifting stack | `monitor_only` | `not_started` | false |
 | P3 | **F-QUANTUM-CIRCUIT-MODEL**: Fault-tolerant quantum circuit and resource model | `monitor_only` | `not_started` | false |
 | P3 | **F-WEIL-PAIRING-STACK**: Weil reciprocity and pairing construction | `retain_frontier` | `partial` | false |
+
+## Research Engine v0
+
+The engine may schedule cheap, preregistered toy-curve exploration within the declared budget. It cannot promote a route, authorize exact-target work, or support a secp256k1 complexity claim.
+
+Exploration gate: **true**. Promotion gate: **false**. Historical no-reopen guard: **true**. Predictive EIG calibration outcomes: **0**.
+
+| order | candidate | kind | EIG (bits) | bits / budget cost | execution state |
+|---:|---|---|---:|---:|---|
+| - | **none** | - | - | - | `no candidate cleared mechanism and validator gates` |
+
+Blocked intake candidates: **0**. Intake is retained research memory, not permission to execute.
+
+Retained outcomes: `proved`=0, `supported`=0, `historical_structural_confirmation`=1, `falsified`=0, `bounded_negative`=2, `inapplicable`=1, `inconclusive`=3, `resource_exhausted`=1.
+
+> Promotion boundary: Generated evidence may close, park, or reopen exploration candidates. It may not promote a route, authorize exact-target work, or make a public complexity claim without a dated decision-substrate change.
 
 ## Formal substrate critical path
 

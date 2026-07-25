@@ -153,6 +153,15 @@ exact `Θ` statements.
   measurement, not a Lean theorem**. The replay checks establish relation-set agreement in their
   stated scopes; they do not validate complexity estimates or every solver component.
 
+  A later exact scoped analysis closes the specific coordinatewise quotient premise.
+  Simultaneous GLV relations carry a diagonal `C3` action, whereas `u_i=x_i^3`
+  is the invariant map for `C3^m` and generically merges `3^(m-1)` diagonal
+  orbits. The frozen certificate in `experiments/glv_diagonal_obstruction/`
+  records 483 pairs on one diagonal-action graph versus 1449 coordinatewise
+  same-cube pairs over `F_1009`; its independent validator exhaustively
+  reconstructs the raw sets. This is an algebraic obstruction to that
+  presentation, not a Semaev attack run or a universal Groebner lower bound.
+
   - **P0** (`experiments/p0_glv_semaev/`, m=2, lookup model): enumerate pair sums `P_i±P_j`,
     hash x-coords; the hit rate `≈ c·B_eff²/p` (16/20/24-bit toy curves; every counted equality
     re-verified by an actual `ec_add`). GLV closure gives `B_eff=3·B`, `u=x³` raises the constant
@@ -172,7 +181,9 @@ exact `Θ` statements.
     cross-checked with Singular/Sage/`msolve` or justified by a Hilbert-series theorem, so this
     is an observed proxy pattern, not an exact or p-independent degree-of-regularity law. The
     coupled `U=X³` auxiliary-variable presentation was ~15–20× larger and ~80× slower on the
-    tested instances; this does not rule out nonredundant invariant/elimination formulations.
+    tested instances. The later diagonal-action analysis rules out treating
+    coordinatewise cubes as the exact quotient, but does not rule out a
+    materially different rational or elimination mechanism.
   - **P4** (`experiments/p4_petit/`, m=2): tests one six-variable composed-polynomial-map
     presentation at `|F|=4`. The proxy number was 7 versus 9, while the observed matrix and time
     were ~100× and ~4300× larger. This is useful descriptive data for that presentation, but it
@@ -181,11 +192,12 @@ exact `Θ` statements.
   **What the line establishes (measured):** the tested toy formulations provide reproducible
   partial negatives, and their relation sets replay against EC arithmetic in the stated scopes.
   **What it does not establish (open):** an exact/general degree-of-regularity law, the best
-  prime-field factor-base encoding, a nonredundant invariant-coordinate formulation, a faithful
+  prime-field factor-base encoding, a materially different phase-preserving formulation, a faithful
   Petit construction, or any asymptotic advantage/no-advantage result. The
   `O(|F|^{m-1}·solve)` loops are **not** subexponential
   index-calculus algorithms. So the real question — whether invariant-coordinate *relation
-  generation* changes the prime-field asymptotics — stays mathematically **open**, while
+  generation* can change the prime-field asymptotics by a mechanism other than fixed orbit
+  compression stays mathematically **open**, while
   `HYP_GLV_SEMAEV_001` is operationally **PARKED** by the decision substrate. No result here
   is a step toward breaking secp256k1; equality-replay alone
   cannot establish a complexity no-go. Per-run manifests + independent validators live under

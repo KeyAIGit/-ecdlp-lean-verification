@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/site.css?v=20260723-2">
+  <link rel="stylesheet" href="assets/site.css?v=20260724-1">
 </head>
 <body data-page="routes">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -38,7 +38,8 @@
         <p>Every route is generated from <code>repo/ECDLP_DECISION_SUBSTRATE.json</code>.
           Search by mechanism, scope, evidence, or next action.</p></div>
       <aside class="decision-inline"><strong>RS-2026-07-22-001 · Select none</strong>
-        <span>No audited route currently satisfies every proposal-level requirement for a new experiment against the primary plain single-target secp256k1 objective.</span></aside>
+        <span>0 bounded toy explorations are selected;
+          promotion and direct secp256k1 work remain closed.</span></aside>
     </div>
   </section>
 
@@ -201,7 +202,7 @@
     <section class="route-detail route-detail--wide"><h3>Evidence files</h3><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/SemaevThree.lean">Ecdlp/Proved/SemaevThree.lean</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/Ecdlp/Proved/SemaevFour.lean">Ecdlp/Proved/SemaevFour.lean</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/experiments/p1_petit_m3/RESULTS.md">experiments/p1_petit_m3/RESULTS.md</a></section>
   </div>
 </details><details class="route-card" data-route-status="open_parked"
-  data-route-searchable="R-GLV-SEMAEV GLV-symmetrized Semaev systems open_parked classical-single-target-plain direct to the j=0 target structure, but only constant-factor evidence exists Lean verifies the GLV and Semaev structural ingredients. Existing experiments close only narrow lookup and toy-presentation windows. Keep HYP_GLV_SEMAEV_001 parked until route selection explicitly promotes it.">
+  data-route-searchable="R-GLV-SEMAEV GLV-symmetrized Semaev systems open_parked classical-single-target-plain direct to the j=0 target structure, but only constant-factor evidence exists Lean verifies the GLV and Semaev structural ingredients. Existing experiments retain narrow lookup and toy-presentation measurements; experiments/glv_diagonal_obstruction independently replays the exact finite phase-loss witness. The general invariant-ring argument is documented but not kernel-checked. Keep HYP_GLV_SEMAEV_001 closed until a new mechanism-bearing proposal passes the Research Engine intake gate.">
   <summary>
     <div class="route-title"><strong>GLV-symmetrized Semaev systems</strong><code>R-GLV-SEMAEV</code></div>
     <div><span class="status status--open_parked">Open, parked</span></div>
@@ -210,12 +211,12 @@
   </summary>
   <div class="route-card__body">
     <section class="route-detail"><h3>Applicability</h3><p>direct to the j=0 target structure, but only constant-factor evidence exists</p></section>
-    <section class="route-detail"><h3>Known cost</h3><p>Measured finite-orbit reductions are constant-factor; the relevant higher-degree invariant-system cost is unresolved.</p></section>
-    <section class="route-detail"><h3>Current evidence</h3><p>Lean verifies the GLV and Semaev structural ingredients. Existing experiments close only narrow lookup and toy-presentation windows.</p></section>
+    <section class="route-detail"><h3>Known cost</h3><p>Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.</p></section>
+    <section class="route-detail"><h3>Current evidence</h3><p>Lean verifies the GLV and Semaev structural ingredients. Existing experiments retain narrow lookup and toy-presentation measurements; experiments/glv_diagonal_obstruction independently replays the exact finite phase-loss witness. The general invariant-ring argument is documented but not kernel-checked.</p></section>
     <section class="route-detail"><h3>Assumptions</h3><p>Invariant coordinates reduce relation-generation complexity or solving degree, not only factor-base storage.; The quotient retains enough information to recover valid relations.</p></section>
-    <section class="route-detail"><h3>Success gate</h3><p>Exhibit a nonredundant invariant S_m system and a theoretical reason for a lower asymptotic solving exponent, then validate it independently.</p></section>
-    <section class="route-detail"><h3>Stop condition</h3><p>Stop if the gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.</p></section>
-    <section class="route-detail route-detail--wide"><h3>Next action</h3><p>Keep HYP_GLV_SEMAEV_001 parked until route selection explicitly promotes it.</p></section>
+    <section class="route-detail"><h3>Success gate</h3><p>Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.</p></section>
+    <section class="route-detail"><h3>Stop condition</h3><p>The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.</p></section>
+    <section class="route-detail route-detail--wide"><h3>Next action</h3><p>Keep HYP_GLV_SEMAEV_001 closed until a new mechanism-bearing proposal passes the Research Engine intake gate.</p></section>
     <section class="route-detail route-detail--wide"><h3>Evidence files</h3><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/experiments/p0_glv_semaev/RESULTS.md">experiments/p0_glv_semaev/RESULTS.md</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/experiments/p3_sm_system/RESULTS.md">experiments/p3_sm_system/RESULTS.md</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/experiments/p4_petit/RESULTS.md">experiments/p4_petit/RESULTS.md</a></section>
   </div>
 </details><details class="route-card" data-route-status="open_parked"
@@ -382,6 +383,6 @@
     </nav>
   </div>
 </footer>
-<script src="assets/site.js?v=20260723-2"></script>
+<script src="assets/site.js?v=20260724-1"></script>
 </body>
 </html>

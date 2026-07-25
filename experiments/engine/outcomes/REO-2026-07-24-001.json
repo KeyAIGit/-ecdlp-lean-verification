@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "event_id": "REO-2026-07-24-001",
+  "recorded_on": "2026-07-24",
+  "candidate_id": "HIST-P0-GLV-PAIR-ENUMERATION",
+  "hypothesis_id": "HYP_GLV_SEMAEV_001",
+  "route_id": "R-GLV-SEMAEV",
+  "outcome": "bounded_negative",
+  "scope": {
+    "target_kind": "toy",
+    "curve_family": "cofactor-1 toy j=0 curves",
+    "field_bits": [
+      16,
+      20
+    ],
+    "threat_model": "classical-single-target-plain",
+    "claim_boundary": "Direct m=2 pair-enumeration lookup only; no Semaev-system solving-degree or asymptotic claim."
+  },
+  "summary": "On the cofactor-1 16-bit and 20-bit curves, plain, GLV-orbit, and u=x^3 lookup variants followed the same B^2/p yield law; the measured GLV effect was a fixed constant rather than an exponent change.",
+  "evidence_files": [
+    "experiments/p0_glv_semaev/README.md",
+    "experiments/p0_glv_semaev/RESULTS.md",
+    "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_plain-core_76456051aa21.json",
+    "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_glv-base_bc9066a58ada.json",
+    "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_invariant-u_95decc4378f5.json"
+  ],
+  "validation": {
+    "status": "passed",
+    "independence": {
+      "path": "verified_distinct",
+      "artifact": "fresh_cross_check",
+      "source": "shared_components",
+      "source_review_id": null
+    },
+    "decisive_claim_validated": true,
+    "evidence_files": [
+      "experiments/p0_glv_semaev/validate_run.py"
+    ]
+  },
+  "budget": {
+    "status": "historical_not_recorded",
+    "wall_time_seconds": null,
+    "peak_memory_bytes": null,
+    "parallel_workers": null
+  },
+  "stop_condition": {
+    "triggered": true,
+    "statement": "The tested finite GLV orbit changed constants only in the lookup model."
+  },
+  "residual_uncertainty": [
+    "Nonredundant invariant-coordinate polynomial systems were not tested.",
+    "No solving-degree or m>=3 scaling conclusion follows.",
+    "The legacy 24-bit ambient-group rows are classified separately because that curve has cofactor 3."
+  ],
+  "reopening_condition": "Specify a nonredundant invariant mechanism that acts before relation enumeration and predicts a measurable solving-cost change.",
+  "provenance": {
+    "source_kind": "historical_migration",
+    "source_commit": "1a1b5ddba7e9a6e3d40f189892e83529f5bc6616",
+    "migration_note": "Normalized from the cofactor-1 16-bit and 20-bit P0 rows without changing their original files.",
+    "run_manifest": null,
+    "run_manifest_sha256": null
+  }
+}

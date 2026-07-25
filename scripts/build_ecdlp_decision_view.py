@@ -57,9 +57,11 @@ def render(data: dict, sources: dict[str, dict]) -> str:
         "",
         f"Given {', '.join(target['inputs'])}, **{target['output']}**",
         "",
-        f"Current phase: **{policy['phase']}**. Experiments authorized: "
-        f"**{str(policy['experiments_authorized']).lower()}**. Selected route: "
-        f"**{policy['selected_attack_route'] or 'none'}**.",
+        f"Current phase: **{policy['phase']}**. Bounded exploration authorized: "
+        f"**{str(policy['bounded_exploration_authorized']).lower()}**. Promotion "
+        f"experiments authorized: "
+        f"**{str(policy['promotion_experiments_authorized']).lower()}**. "
+        f"Selected promoted route: **{policy['selected_attack_route'] or 'none'}**.",
         "",
         "The formal-result map, attack encyclopedia, and this decision layer are "
         "deliberately distinct:",

@@ -58,6 +58,7 @@ def main() -> int:
     frontier = read_json("data/frontier_map.json")
     graph = read_json("data/knowledge_graph.json")
     decisions = read_json("repo/ECDLP_DECISION_SUBSTRATE.json")
+    engine = read_json("data/research_engine_state.json")
     product = read_json("repo/PRODUCT_MODEL.json")
     pilot_protocol = read_json("repo/PILOT_PROTOCOL.json")
     status = read_text("STATUS.md")
@@ -66,6 +67,8 @@ def main() -> int:
     explore = read_text("explore.html")
     pilot = read_text("pilot.html")
     tasks = read_text("tasks/NEXT.md")
+    research_tasks = read_text("tasks/ECDLP_RESEARCH.md")
+    product_tasks = read_text("tasks/KEYAI_PRODUCT.md")
     hypotheses = read_text("experiments/HYPOTHESES.yaml")
     autonomy = read_text("AUTONOMY.md")
     agents = read_text("AGENTS.md")
@@ -144,8 +147,11 @@ def main() -> int:
     check("Sync Health" in dashboard,
           "dashboard.html must expose a Sync Health section")
     check(
-        "Work queue" in dashboard and "tasks/NEXT.md" in dashboard,
-        "dashboard must expose the canonical bounded task queue",
+        "Work queues" in dashboard
+        and "tasks/NEXT.md" in dashboard
+        and "tasks/ECDLP_RESEARCH.md" in dashboard
+        and "tasks/KEYAI_PRODUCT.md" in dashboard,
+        "dashboard must expose the queue router and both owning queues",
     )
     check("repo/ARTIFACTS.yaml" in dashboard and "scripts/check_repo_artifacts.py" in dashboard,
           "dashboard.html Sync Health must link the artifact manifest to its gate")
@@ -213,6 +219,7 @@ def main() -> int:
             f"public site contains retired product claim: {retired_claim!r}",
         )
     route_count = len(decisions.get("routes", []))
+    selected_explorations = engine.get("counts", {}).get("selected_explorations")
     check(
         f"{route_count} canonical routes" in dashboard,
         "dashboard route count must match the decision substrate",
@@ -228,6 +235,19 @@ def main() -> int:
         and "Select none" in explore,
         "dashboard and explore must expose the canonical select-none decision",
     )
+    check(
+        f"{selected_explorations} experiments selected" in index
+        and f"{selected_explorations} selected;" in dashboard
+        and f"{selected_explorations} bounded toy explorations" in explore,
+        "public reference views must expose the selected bounded exploration count",
+    )
+    check(
+        "No experiment currently clears the scientific gate." in dashboard
+        and "No run authorized" in dashboard
+        and "repo/RESEARCH_ENGINE_V0.json" in dashboard
+        and "Promotion experiments" in dashboard,
+        "dashboard must distinguish the exploration and promotion gates",
+    )
 
     graph_counts = graph.get("counts", {})
     check(isinstance(graph_counts.get("theorems"), int) and graph_counts["theorems"] > 0,
@@ -242,11 +262,45 @@ def main() -> int:
           "data/knowledge_graph.json must expose all 17 decision routes")
     check(graph_counts.get("decision_foundations") == 11,
           "data/knowledge_graph.json must expose all 11 decision foundations")
-    check(graph.get("schema_version") == "3.0",
-          "data/knowledge_graph.json must use decision-aware schema 3.0")
+    check(
+        graph_counts.get("research_engine_candidates")
+        == engine.get("counts", {}).get("candidate_proposals"),
+        "knowledge graph candidate count must match research_engine_state.json",
+    )
+    check(
+        graph_counts.get("research_engine_outcomes")
+        == engine.get("counts", {}).get("outcome_events"),
+        "knowledge graph outcome count must match research_engine_state.json",
+    )
+    check(
+        graph_counts.get("selected_explorations")
+        == engine.get("counts", {}).get("selected_explorations"),
+        "knowledge graph selected exploration count must match research_engine_state.json",
+    )
+    check(graph.get("schema_version") == "4.0",
+          "data/knowledge_graph.json must use Research Engine-aware schema 4.0")
     check(
         graph.get("decision_substrate", {}).get("route_selection") == route_selection,
         "knowledge graph route selection must match ECDLP_DECISION_SUBSTRATE.json",
+    )
+    graph_engine = graph.get("research_engine", {})
+    check(
+        graph_engine.get("gate_status") == engine.get("gate_status")
+        and graph_engine.get("selected_sequence") == engine.get("selected_sequence")
+        and graph_engine.get("execution_queue") == engine.get("execution_queue")
+        and graph_engine.get("outcome_events") == engine.get("outcome_events"),
+        "knowledge graph Research Engine view must match generated engine state",
+    )
+    check(
+        engine.get("gate_status", {}).get("exploration_authorized")
+        == decisions.get("phase_policy", {}).get("bounded_exploration_authorized")
+        == True
+        and engine.get("gate_status", {}).get("promotion_authorized")
+        == decisions.get("phase_policy", {}).get(
+            "promotion_experiments_authorized"
+        )
+        == False,
+        "Research Engine and decision substrate must agree on both execution gates",
     )
     check(
         route_selection.get("decision_id") in status,
@@ -265,20 +319,33 @@ def main() -> int:
         "decision_grounded_in",
         "governs_hypothesis",
         "extends_frontier",
+        "tests_hypothesis",
+        "explores_route",
+        "depends_on_candidate",
+        "records_outcome_for",
+        "updates_hypothesis",
+        "records_route_evidence",
     ):
         check(edge_types.get(edge_type, 0) > 0,
               f"knowledge graph is missing semantic edge type {edge_type!r}")
     check(graph.get("invariant", "").lower().find("lean kernel") >= 0,
           "data/knowledge_graph.json invariant should mention the Lean kernel")
 
-    check("Task Contract Template" in tasks,
+    check("Task contract template" in tasks,
           "tasks/NEXT.md must include the task contract template")
-    check(3 <= len(re.findall(r"^### TASK-", tasks, flags=re.MULTILINE)) <= 7,
-          "tasks/NEXT.md must keep 3-7 active tasks")
+    all_task_text = research_tasks + "\n" + product_tasks
+    check(3 <= len(re.findall(r"^### TASK-", all_task_text, flags=re.MULTILINE)) <= 7,
+          "the two owning queues must keep 3-7 active task contracts in total")
+    check(
+        "tasks/ECDLP_RESEARCH.md" in tasks
+        and "tasks/KEYAI_PRODUCT.md" in tasks
+        and "Product work never counts as ECDLP progress" in tasks,
+        "tasks/NEXT.md must route to separate research and product queues",
+    )
     check("canonical_source: STATUS.md" in hypotheses,
           "experiments/HYPOTHESES.yaml must point at STATUS.md")
-    check("task_queue: tasks/NEXT.md" in hypotheses,
-          "experiments/HYPOTHESES.yaml must point at tasks/NEXT.md")
+    check("task_queue: tasks/ECDLP_RESEARCH.md" in hypotheses,
+          "experiments/HYPOTHESES.yaml must point at the ECDLP research queue")
     check(len(re.findall(r"^  - id: H", hypotheses, flags=re.MULTILINE)) >= 3,
           "experiments/HYPOTHESES.yaml must define at least three hypotheses")
     check('status: "parked"' in hypotheses and "resume_after:" in hypotheses,
@@ -333,11 +400,14 @@ def main() -> int:
     )
     task_012_match = re.search(
         r"^### TASK-012\b.*?^Status:\s*([^\n]+)",
-        tasks,
+        product_tasks,
         flags=re.MULTILINE | re.DOTALL,
     )
     task_012_status = task_012_match.group(1).strip() if task_012_match else None
-    check(task_012_match is not None, "tasks/NEXT.md must retain a TASK-012 contract")
+    check(
+        task_012_match is not None,
+        "tasks/KEYAI_PRODUCT.md must retain a TASK-012 contract",
+    )
     if task_012_unlocked(pilot_protocol):
         check(
             task_012_status in {"active", "done", "completed"},
@@ -347,7 +417,8 @@ def main() -> int:
     else:
         check(
             task_012_status == "blocked_on_task_011_build_disposition"
-            and "completed `TASK-011` discovery record with a `build` disposition" in tasks,
+            and "completed `TASK-011` discovery record with a `build` disposition"
+            in product_tasks,
             "TASK-012 must remain explicitly blocked unless the latest primary "
             "discovery disposition is build",
         )

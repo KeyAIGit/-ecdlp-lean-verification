@@ -1,0 +1,361 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.org/schemas/research-engine-outcome-v1.json",
+  "title": "KeyAI Research Engine outcome event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "recorded_on",
+    "candidate_id",
+    "hypothesis_id",
+    "route_id",
+    "outcome",
+    "scope",
+    "summary",
+    "evidence_files",
+    "validation",
+    "budget",
+    "stop_condition",
+    "residual_uncertainty",
+    "reopening_condition",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^REO-[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{3}$"
+    },
+    "recorded_on": {
+      "type": "string",
+      "format": "date"
+    },
+    "candidate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "hypothesis_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "route_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outcome": {
+      "enum": [
+        "proved",
+        "supported",
+        "historical_structural_confirmation",
+        "falsified",
+        "bounded_negative",
+        "inapplicable",
+        "inconclusive",
+        "resource_exhausted"
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_kind",
+        "curve_family",
+        "field_bits",
+        "threat_model",
+        "claim_boundary"
+      ],
+      "properties": {
+        "target_kind": {
+          "enum": [
+            "toy",
+            "validator_calibration",
+            "formal",
+            "operational"
+          ]
+        },
+        "curve_family": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field_bits": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "integer",
+                "minimum": 2
+              }
+            }
+          ]
+        },
+        "threat_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_boundary": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "independence",
+        "decisive_claim_validated",
+        "evidence_files"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "passed",
+            "partial",
+            "failed",
+            "not_available"
+          ]
+        },
+        "independence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "artifact",
+            "source",
+            "source_review_id"
+          ],
+          "properties": {
+            "path": {
+              "enum": [
+                "verified_distinct",
+                "not_verified"
+              ]
+            },
+            "artifact": {
+              "enum": [
+                "raw_recomputed",
+                "fresh_cross_check",
+                "producer_summary_only",
+                "not_verified"
+              ]
+            },
+            "source": {
+              "enum": [
+                "reviewed_independent",
+                "shared_components",
+                "not_reviewed"
+              ]
+            },
+            "source_review_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "decisive_claim_validated": {
+          "type": "boolean"
+        },
+        "evidence_files": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "wall_time_seconds",
+        "peak_memory_bytes",
+        "parallel_workers"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "within_budget",
+            "limit_reached",
+            "historical_not_recorded"
+          ]
+        },
+        "wall_time_seconds": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "number",
+              "minimum": 0
+            }
+          ]
+        },
+        "peak_memory_bytes": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "integer",
+              "minimum": 0
+            }
+          ]
+        },
+        "parallel_workers": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "integer",
+              "minimum": 1
+            }
+          ]
+        }
+      }
+    },
+    "stop_condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "triggered",
+        "statement"
+      ],
+      "properties": {
+        "triggered": {
+          "type": "boolean"
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "residual_uncertainty": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "reopening_condition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_kind",
+        "source_commit",
+        "migration_note",
+        "run_manifest",
+        "run_manifest_sha256"
+      ],
+      "properties": {
+        "source_kind": {
+          "enum": [
+            "historical_migration",
+            "native_engine_run"
+          ]
+        },
+        "source_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "migration_note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "run_manifest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "run_manifest_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "supported"
+          }
+        },
+        "required": [
+          "outcome"
+        ]
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "source_kind": {
+                "const": "native_engine_run"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "historical_structural_confirmation"
+          }
+        },
+        "required": [
+          "outcome"
+        ]
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "source_kind": {
+                "const": "historical_migration"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

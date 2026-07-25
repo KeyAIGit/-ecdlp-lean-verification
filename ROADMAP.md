@@ -4,9 +4,10 @@
 > `DIRECTOR_CHARTER.md`, and `notes/V0_COMPLETION_PLAN.md` (all preserved under
 > `archive/docs/`). Those five files held four different north stars; drift between
 > them was itself a defect. From here on: **one strategy file**. Live numbers stay in
-> `STATUS.md`; the active queue stays in `tasks/NEXT.md`; this file is direction and
-> structure only. Exact route and foundation decisions live in
-> `repo/ECDLP_DECISION_SUBSTRATE.json`. Product category, current capability,
+> `STATUS.md`; `tasks/NEXT.md` routes to separate ECDLP research and KeyAI product
+> queues; this file is direction and structure only. Exact route and foundation
+> decisions live in `repo/ECDLP_DECISION_SUBSTRATE.json`; bounded exploration policy
+> lives in `repo/RESEARCH_ENGINE_V0.json`. Product category, current capability,
 > customer hypotheses, public rhetoric, and MVP exit criteria live in
 > `repo/PRODUCT_MODEL.json`.
 
@@ -81,7 +82,9 @@ platform ahead of evidence; investor-facing document growth.
    `sorry`/`admit`/axioms. (Unchanged, non-negotiable.)
 2. **One place per fact.** Counts: `VERIFIED.md` table → generators → everything
    else. Strategy: this file. Route decisions:
-   `repo/ECDLP_DECISION_SUBSTRATE.json`. Queue: `tasks/NEXT.md`. Scope/trust wording:
+   `repo/ECDLP_DECISION_SUBSTRATE.json`. Exploration:
+   `repo/RESEARCH_ENGINE_V0.json`. Queue routing: `tasks/NEXT.md`; ownership:
+   `tasks/ECDLP_RESEARCH.md` and `tasks/KEYAI_PRODUCT.md`. Scope/trust wording:
    `TRUST_REPORT.md` + `ABSTRACT_SCOPE.md` + `notes/SECURITY_SCOPE.md`. A new prose
    document must displace an old one, not join it.
 3. **Structure over gates.** Gates stay (they caught real drift), but the first fix
@@ -121,7 +124,7 @@ Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` 
 
 ## 5. Program
 
-**Current phase — monitored candidate intake:**
+**Current phase — Research Engine v0 bounded exploration:**
 
 1. Decision `RS-2026-07-22-001` evaluated all 17 registered routes and selected
    none. This is an evidence decision, not a claim that the ECDLP has no future
@@ -129,13 +132,22 @@ Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` 
 2. Maintain the exact objective, threat models, route dispositions, promotion
    gates, stop conditions, and reconsideration triggers in
    `repo/ECDLP_DECISION_SUBSTRATE.json`.
-3. Keep `data/attack_registry.json` as the detailed evidence encyclopedia and
+3. `repo/RESEARCH_ENGINE_V0.json` authorizes a separate exploration gate for at
+   most three dependency-ordered, budget-capped toy candidates. The current
+   selector returns zero: three proposals remain at mechanism/validator intake.
+   Its generated state is `data/research_engine_state.json`; all terminal
+   outcomes are review-anchored append-only events, and empirical support is not relabelled
+   as proof.
+4. Keep `data/attack_registry.json` as the detailed evidence encyclopedia and
    `repo/FORMAL_SUBSTRATE.json` as the Lean release map. Never collapse their
    distinct meanings into one priority number.
-4. Route any new primary evidence or concrete proposal through
+5. Route any new primary evidence or concrete proposal through
    `experiments/framework/`: explicit online/offline cost, provenance hashes,
-   route/threat-model binding, and independent output validation. Intake alone
-   does not activate a parked hypothesis.
+   route/threat-model binding, source-commit-bound raw-artifact validation, and
+   deterministic terminal classification. Intake alone does not bypass the
+   selected sequence or authorize promotion.
+6. Keep KeyAI product validation in `tasks/KEYAI_PRODUCT.md` with its own KPIs.
+   Site traffic, pilot work, and portability never count as ECDLP progress.
 
 **Selected-foundation phase — only after a superseding route decision:**
 

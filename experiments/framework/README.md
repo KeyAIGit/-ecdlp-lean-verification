@@ -11,7 +11,11 @@ the acceptance gate in `repo/ECDLP_DECISION_SUBSTRATE.json`.
 express:
 
 - route and threat-model identifiers resolve against the decision substrate;
-- a real `candidate_run` is rejected unless its route explicitly authorizes it;
+- promotion runs remain bound to route authorization, while exploration runs
+  are bound to the Research Engine gate and current dependency-resolved queue;
+- exploration records must use an exact preregistered curve, seed, solver
+  version, real Git commit, existing entrypoint, fixed budget, and non-promotional
+  claim level;
 - plain single-target records cannot hide auxiliary inputs, interval promises,
   multiple targets, or reusable precomputation;
 - online and offline work, memory, parallelism, amortization, and success
@@ -25,7 +29,10 @@ express:
 - the validator cannot claim independence while sharing decisive logic;
 - subgeneric and practical claims require stronger fields and disclosure scope.
 
-`framework_fixture` records exist only to test the gate. The v1 oracle is
+`framework_fixture` records exist only to test the gate.
+`fixtures/valid_exploration.json` is also only a contract regression record; it
+is deliberately absent from the outcome ledger and is not scientific evidence.
+The v1 oracle is
 deliberately limited to at most 32-bit prime fields, checks the exact base-point
 order, requires `toy-*` curves, cannot claim a secp256k1 break, and does not
 authorize a hypothesis run. A future exact-target validator must bind to the

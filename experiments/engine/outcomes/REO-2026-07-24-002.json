@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "event_id": "REO-2026-07-24-002",
+  "recorded_on": "2026-07-24",
+  "candidate_id": "HIST-P1-SEMAEV-S3-SOLVE",
+  "hypothesis_id": "HYP_GLV_SEMAEV_001",
+  "route_id": "R-GLV-SEMAEV",
+  "outcome": "bounded_negative",
+  "scope": {
+    "target_kind": "toy",
+    "curve_family": "cofactor-1 toy j=0 curves",
+    "field_bits": [
+      16,
+      20,
+      24
+    ],
+    "threat_model": "classical-single-target-plain",
+    "claim_boundary": "m=2 S3 root solving and relation-set equality only."
+  },
+  "summary": "Solving S3 reproduced the independently enumerated m=2 relation set with zero reported spurious roots, while GLV orbit closure again changed storage by a constant factor only.",
+  "evidence_files": [
+    "experiments/p1_petit/README.md",
+    "experiments/p1_petit/RESULTS.md",
+    "experiments/p1_petit/runs/HYP_GLV_SEMAEV_001_p1-semaev-solve_a7d1cbfe1597.json"
+  ],
+  "validation": {
+    "status": "passed",
+    "independence": {
+      "path": "verified_distinct",
+      "artifact": "fresh_cross_check",
+      "source": "shared_components",
+      "source_review_id": null
+    },
+    "decisive_claim_validated": true,
+    "evidence_files": [
+      "experiments/p1_petit/validate.py"
+    ]
+  },
+  "budget": {
+    "status": "historical_not_recorded",
+    "wall_time_seconds": null,
+    "peak_memory_bytes": null,
+    "parallel_workers": null
+  },
+  "stop_condition": {
+    "triggered": true,
+    "statement": "The m=2 solve-and-confirm rung produced no beyond-constant GLV effect."
+  },
+  "residual_uncertainty": [
+    "m>=3 multivariate solving cost was not resolved.",
+    "No invariant quotient or asymptotic mechanism was tested."
+  ],
+  "reopening_condition": "Move only to a preregistered multivariate or nonredundant invariant mechanism with an independent solver.",
+  "provenance": {
+    "source_kind": "historical_migration",
+    "source_commit": "1a1b5ddba7e9a6e3d40f189892e83529f5bc6616",
+    "migration_note": "Normalized from the P1 artifact set.",
+    "run_manifest": null,
+    "run_manifest_sha256": null
+  }
+}

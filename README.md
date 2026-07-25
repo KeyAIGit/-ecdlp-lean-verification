@@ -10,8 +10,9 @@ contracts around both. It is a *verified research substrate* and an honest no-go
 
 This file is the front door for humans and low-context agents alike. Strategy lives in
 `ROADMAP.md`; live numbers live in `STATUS.md`; exact attack-route decisions live in
-`repo/ECDLP_DECISION_SUBSTRATE.json`; product category, current-vs-future capability,
-and the MVP evidence gate live in `repo/PRODUCT_MODEL.json`; agents start at `AGENTS.md`.
+`repo/ECDLP_DECISION_SUBSTRATE.json`; bounded exploration policy lives in
+`repo/RESEARCH_ENGINE_V0.json`; product category, current-vs-future capability, and the
+MVP evidence gate live in `repo/PRODUCT_MODEL.json`; agents start at `AGENTS.md`.
 
 ## The one invariant (never violate)
 
@@ -26,16 +27,22 @@ intentionally never built or imported, so the invariant holds.
 modules, `sorry` = 0, custom axioms = 0, corpus coverage). It is produced by
 `scripts/gen_status.py` from `data/stats.json` (which **recounts the `VERIFIED.md`
 ledger table mechanically**), `data/frontier_map.json`, and the ECDLP decision substrate.
+Research Engine gate and outcome counts come from `data/research_engine_state.json`.
 Do not quote a count from any
 other doc — prose may be stale; if in doubt, cite STATUS.md. Machine-readable:
 `data/stats.json` · badge endpoint `badges/theorems.json`.
 
 **Current research decision.** `RS-2026-07-22-001` evaluated all 17 registered
 routes and selected none: no audited proposal currently clears the common gate
-for the exact plain single-target objective. This parks experiments and
-conditional foundation work; it does not claim that no future route can work.
-New evidence enters through the candidate-neutral contract in
-`experiments/framework/` and explicit reconsideration triggers.
+for the exact plain single-target objective. Research Engine v0 keeps bounded
+exploration available but currently selects **zero** experiments: the calibration
+candidate lacks a raw-artifact validator, and the quotient/scaling candidates lack
+an exact mechanism and independent validators. No route is promoted, exact-target
+work remains forbidden, and no asymptotic claim follows. New evidence enters
+through the candidate-neutral contract in `experiments/framework/`,
+source-commit-bound raw-artifact replay, engine-derived outcome classification,
+review-anchored events in `experiments/engine/outcomes/`, and explicit reconsideration
+triggers. A positive toy result is `supported`, never `proved`.
 
 ## What NOT to claim
 
@@ -48,7 +55,8 @@ New evidence enters through the candidate-neutral contract in
   protocol: no adversary, no hash/random oracle, no probability model.
 - Legacy dispatch automation is bounded and produced **0 accepted** external-model
   proofs. Real progress came from the tactic ladder plus human/assistant formalization.
-  Never present the repository as a finished autonomous research engine.
+  Research Engine v0 is a bounded selector and memory feedback loop, not a finished
+  autonomous discovery system.
 - Never claim more than the kernel verifies. When unsure, state the limit plainly.
 
 ## Highlights (for a Lean / formal-methods reader)
@@ -101,13 +109,14 @@ concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofRed
 | `STATUS.md` · `data/` | generated truth layer: stats, frontier map, knowledge graph, registries |
 | `BARRIERS.md` · `TRUST_REPORT.md` · `ABSTRACT_SCOPE.md` | the no-go map and the exact trust/scope boundaries |
 | `ROADMAP.md` | the one strategy document (position, north star, program) |
-| `AGENTS.md` · `CLAUDE.md` · `tasks/NEXT.md` | agent orientation, conventions, active queue |
+| `AGENTS.md` · `CLAUDE.md` · `tasks/` | agent orientation, conventions, queue router, separate research/product queues |
 | `REPOSITORY_ARCHITECTURE.md` + `repo/ARTIFACTS.yaml` | exhaustive whole-repo ownership map |
 | `repo/FORMAL_SUBSTRATE.json` | machine-readable result families, critical path, blockers, and release boundary |
 | `repo/ECDLP_DECISION_SUBSTRATE.json` | exact target, threat models, route dispositions, evidence gates, and foundation priority |
+| `repo/RESEARCH_ENGINE_V0.json` · `data/research_engine_state.json` | bounded selector policy and generated exploration/outcome state |
 | `repo/PRODUCT_MODEL.json` | product category, current stage, public claim boundary, and MVP evidence gate |
 | `scripts/site_generator.py` | generates the product site, operator workspace, and canonical route explorer |
-| `experiments/framework/` | candidate-neutral run contract and independent toy-curve output validator; no hypothesis authorization |
+| `experiments/framework/` · `experiments/engine/` | candidate-neutral validation plus append-only Research Engine outcomes |
 | `experiments/` · `domains/` · `notes/` (`notes/INDEX.md`) | validated experiments, domain registry, curated research memory |
 | `archive/` | frozen history: superseded docs, raw traces, the undeployed platform scaffold |
 
@@ -141,7 +150,9 @@ not authorship. License and the final author list are set by the maintainer.
 ## Where to go deeper
 
 `STATUS.md` (canonical snapshot) · `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
+`repo/RESEARCH_ENGINE_V0.json` (bounded exploration policy) ·
+`data/research_engine_state.json` (generated engine state) ·
 `ROADMAP.md` (strategy & program) · `VERIFIED.md`
 (the ledger) · `BARRIERS.md` (the no-go map) · `TRUST_REPORT.md` (what "verified" rests
 on) · `PUBLISHABLE_UNITS.md` (the 3 standalone results) · `notes/INDEX.md` (research
-memory) · `SETUP.md` (build + CI + regen) · `tasks/NEXT.md` (active queue).
+memory) · `SETUP.md` (build + CI + regen) · `tasks/NEXT.md` (queue router).

@@ -3,13 +3,14 @@
 This file governs an **on-demand autonomous cycle** that advances this repository
 without a human in the loop for each step. A maintainer or external Codex scheduler
 explicitly dispatches each cycle; the repository itself has no recurring scheduler.
-Each cycle reads this charter plus `STATUS.md` and `tasks/NEXT.md`, then does one
+Each cycle reads this charter plus `STATUS.md` and the queue router `tasks/NEXT.md`, then does one
 well-scoped unit of productive work and stops. Secret-bearing GitHub workflows remain
 manual-only until the isolation gate in `notes/EXECUTION_SECURITY.md` is satisfied.
 
 It does **not** replace the domain protocol. Authority order:
 `CLAUDE.md` (conventions) → `AGENTS.md` (prover-loop protocol) → this file (loop
-governance) → `tasks/NEXT.md` (live queue) → `STATUS.md` (canonical machine snapshot).
+governance) → `tasks/NEXT.md` (queue router) → the owning research or product queue →
+`STATUS.md` (canonical machine snapshot).
 If prose conflicts, `STATUS.md` wins on numbers; `AGENTS.md` wins on method; this file
 wins on *when to act alone vs. escalate*.
 
@@ -45,7 +46,8 @@ only judge; CI is how the kernel votes here.
    `main` and land only on green CI. Never act on another repository merely because the
    same account owns it.
 3. **Advance one decision, with independent work in parallel.** Take the
-   highest-priority actionable item from `tasks/NEXT.md`. Fan out only bounded,
+   highest-priority actionable item from the owning queue selected by `tasks/NEXT.md`.
+   Fan out only bounded,
    non-overlapping side work such as product review, formal-scope review, cryptographic
    threat-model review, frontend QA, or CI diagnosis. Runtime agent instances are
    temporary; the role contracts below are persistent. The project lead re-reviews every
@@ -55,8 +57,8 @@ only judge; CI is how the kernel votes here.
    derived artifacts; run the full gate battery **and** a hard conflict-marker scan as a
    *separate* step (never chain `git add && commit` past a marker scan); commit → push →
    PR → merge on green CI (build + docs-sync).
-5. **Bookkeep.** Update `tasks/NEXT.md` (mark done, add the next), keep `STATUS.md`
-   canonical, keep the queue 3–7 items.
+5. **Bookkeep.** Update the owning queue and its router if needed, keep `STATUS.md`
+   canonical, and keep the two queues at 3–7 active contracts in total.
 6. **Report only if it matters.** Message the user (in Russian) only for: a milestone
    landed, a decision that is genuinely theirs, or a blocker. Otherwise end the cycle in
    silence.
@@ -88,11 +90,12 @@ proof and does not override the Lean kernel, measured pilot behavior, or the rou
 ## Hypothesis unlock rule
 
 No new cryptanalytic experiment or formal-foundation build starts merely because an
-agent proposes it. New hypothesis testing begins only after
-`repo/ECDLP_DECISION_SUBSTRATE.json` records a superseding dated decision that selects a
-route, names the exact uncertainty to reduce, and defines success and stop conditions.
-Until then, candidate intake may collect new evidence under `TASK-008`, while parked
-hypotheses remain research memory rather than an active queue.
+agent proposes it. `repo/RESEARCH_ENGINE_V0.json` may authorize only a preregistered,
+budget-capped toy exploration selected by its deterministic gate and dependency order.
+Every terminal run appends a review-anchored outcome event and remains evidence, not route
+promotion. Promotion, direct secp256k1 work, expensive scaling, or a new formal-foundation
+build still requires a dated change to `repo/ECDLP_DECISION_SUBSTRATE.json` that selects
+the route, names the exact uncertainty, and defines success and stop conditions.
 
 ## Inviolable rails (apply every cycle, no exceptions)
 
@@ -201,21 +204,23 @@ round trip. Closing that gap is where a ~10× lives. The levers, split by who ca
 - Model availability changes. Roles, evidence contracts, canonical sources, and gates
   must not depend on one provider or model name.
 
-## Priority ladder (the standing plan; `tasks/NEXT.md` holds the live detail)
+## Priority ladder (the standing plan; `tasks/NEXT.md` routes to the live detail)
 
 1. **Health of `main`** — the invariant and the gate battery, always first.
 2. **Reconcile orphaned parallel PRs** onto main (honest, CI-green, overclaim-stripped).
-3. **External product pilot (`TASK-011`)** — recruit and observe a non-owner, preserve
-   the public/sanitized boundary, and record behavior before changing hypothesis status.
-4. **Pilot disposition** — make the explicit build/change/stop/pending decision and update product
-   claims only to the level supported by direct evidence.
-5. **Configurable intake (`TASK-012`)** — begin only if the pilot identifies the
-   smallest real adapter contract; do not build speculative platform breadth.
-6. **Evidence-gated candidate intake (`TASK-008`)** — accept new primary evidence or a
+3. **Research Engine v0 (`TASK-013`)** — run only the selected bounded sequence in
+   dependency order, independently validate it, retain every outcome, and keep promotion closed.
+4. **Evidence-gated candidate intake (`TASK-008`)** — accept new primary evidence or a
    complete proposal without treating intake as route authorization.
-7. **Formal or experimental work** — begin only after a superseding route decision
-   selects the work and names its falsifiable gate. Otherwise maintain the mapped
-   substrate, provenance, generated views, and rollback safety.
+5. **External product pilot (`TASK-011`)** — recruit and observe a non-owner, preserve
+   the public/sanitized boundary, and record behavior before changing hypothesis status.
+6. **Pilot disposition** — make the explicit build/change/stop/pending decision and update product
+   claims only to the level supported by direct evidence.
+7. **Configurable intake (`TASK-012`)** — begin only if the pilot identifies the
+   smallest real adapter contract; do not build speculative platform breadth.
+8. **Promotion work (`TASK-009`)** — begin only after a superseding route decision
+   selects it and names its falsifiable gate. Otherwise maintain the mapped substrate,
+   provenance, generated views, and rollback safety.
 
 Deep, honest, kernel-checked progress on one rung beats broad shallow additions. When a
 rung is genuinely blocked upstream (Mathlib gap), record the no-go and move down the

@@ -38,11 +38,17 @@ _SMALL = [
     ("STATUS.md", "canonical live snapshot — counts, active goal, bottleneck; wins over prose"),
     ("repo/ECDLP_DECISION_SUBSTRATE.json",
      "exact target, route dispositions, evidence gates, and foundation priority"),
+    ("repo/RESEARCH_ENGINE_V0.json",
+     "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary"),
+    ("data/research_engine_state.json",
+     "generated dual-gate state, selected sequence, and retained outcome summaries"),
     ("repo/PRODUCT_MODEL.json",
      "product category, current-vs-future boundary, public claims, and MVP evidence gate"),
     ("repo/PILOT_PROTOCOL.json",
      "TASK-011 discovery contract, safety boundary, evidence schema, and disposition gate"),
-    ("tasks/NEXT.md", "the 3-7 active task contracts with exit criteria — where to start"),
+    ("tasks/NEXT.md", "router for the separate ECDLP research and KeyAI product queues"),
+    ("tasks/ECDLP_RESEARCH.md", "bounded ECDLP research contracts and exit criteria"),
+    ("tasks/KEYAI_PRODUCT.md", "product-validation contracts and separate product KPIs"),
     ("data/stats.json", "machine-readable headline counts (ledger rows / distinct / modules)"),
     ("data/frontier_map.json", "per-claim frontier status: verified / tractable / blocked / informal"),
 ]
@@ -54,13 +60,41 @@ _MEDIUM_EXTRA = [
     ("notes/SECURITY_SCOPE.md", "precise scope of the generic-hardness claim (not unconditional)"),
     ("notes/FOUNDATIONS.md", "the Weil/Semaev foundation ladder and its open rungs"),
     ("experiments/HYPOTHESES.yaml", "testable directions with evidence and exit criteria"),
+    ("experiments/engine/README.md", "Research Engine event lifecycle and regeneration contract"),
+    ("experiments/engine/outcome.schema.json", "strict terminal-outcome event schema"),
+    ("experiments/engine/run.schema.json", "native run envelope and frozen matrix binding"),
+    ("experiments/engine/instance_result.schema.json", "per-instance result and artifact binding"),
+    ("experiments/engine/instance_validation.schema.json",
+     "independent per-instance validation and recomputed outcome classification"),
+    ("experiments/engine/validator_request.schema.json",
+     "sanitized replay input without claimed value, terminal outcome, or result digest"),
+    ("experiments/engine/validator_output.schema.json",
+     "strict machine-readable output from pure validator replay"),
+    ("experiments/engine/validators/README.md",
+     "scientific-validator boundary and current no-validator status"),
+    ("experiments/framework/fixtures/pure_engine_validator.py",
+     "protocol regression fixture; explicitly not scientific evidence"),
+]
+def outcome_reason(path: Path) -> str:
+    event = json.loads(path.read_text(encoding="utf-8"))
+    source_kind = event.get("provenance", {}).get("source_kind")
+    if source_kind == "historical_migration":
+        return "digest-pinned historical outcome retained by Research Engine v0"
+    if source_kind == "native_engine_run":
+        return "source-commit-bound native outcome retained by Research Engine v0"
+    return "Research Engine outcome with an invalid or unknown provenance kind"
+
+
+_OUTCOME_FILES = [
+    (path.relative_to(ROOT).as_posix(), outcome_reason(path))
+    for path in sorted((ROOT / "experiments" / "engine" / "outcomes").glob("*.json"))
 ]
 _LARGE_EXTRA = [
     ("data/knowledge_graph.json", "full machine-readable theorem/dependency/barrier graph"),
     ("REPOSITORY_ARCHITECTURE.md", "whole-repo map: canonical / generated / scratch / archive"),
     ("PUBLISHABLE_UNITS.md", "the standalone publishable narratives with honest scope"),
     ("TRUST_REPORT.md", "the trust boundary: what native_decide adds to the TCB"),
-]
+] + _OUTCOME_FILES
 
 TIERS: dict[str, list[tuple[str, str]]] = {
     "small": _SMALL,
@@ -82,10 +116,11 @@ to break secp256k1 or a claim that the hosted product is complete.
 Ground rules:
 - `STATUS.md` is the canonical live snapshot. If prose anywhere conflicts with it, STATUS wins.
 - `repo/ECDLP_DECISION_SUBSTRATE.json` owns route applicability and foundation priority.
+- `repo/RESEARCH_ENGINE_V0.json` owns bounded exploration; generated evidence cannot promote a route.
 - `repo/PRODUCT_MODEL.json` owns product rhetoric, current capability, and MVP boundaries.
 - `repo/PILOT_PROTOCOL.json` owns TASK-011 discovery, safety, evidence, and disposition.
 - Never weaken a proof, add a `sorry`/`admit`, or add an axiom to make anything pass.
-- Pick work from `tasks/NEXT.md`; each task has explicit exit criteria.
+- Use `tasks/NEXT.md` to route work to the owning research or product queue.
 
 The files below are inlined in full, in load order for this tier.
 """

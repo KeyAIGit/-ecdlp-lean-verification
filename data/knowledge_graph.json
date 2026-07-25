@@ -1,7 +1,7 @@
 {
-  "schema_version": "3.0",
+  "schema_version": "4.0",
   "name": "ECDLP verified knowledge graph",
-  "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
+  "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
     "theorems": 296,
@@ -12,7 +12,11 @@
     "attack_routes": 17,
     "decision_foundations": 11,
     "attack_registry_objects": 14,
-    "edges": 950,
+    "research_engine_candidates": 6,
+    "research_engine_intake_candidates": 0,
+    "research_engine_outcomes": 8,
+    "selected_explorations": 0,
+    "edges": 989,
     "by_edge_type": {
       "imports": 478,
       "member_of": 296,
@@ -24,8 +28,14 @@
       "detailed_by": 15,
       "extends_frontier": 15,
       "frontier_of": 13,
+      "records_outcome_for": 8,
+      "updates_hypothesis": 8,
+      "records_route_evidence": 8,
       "blocked_by": 7,
-      "governs_hypothesis": 3
+      "tests_hypothesis": 6,
+      "explores_route": 6,
+      "governs_hypothesis": 3,
+      "depends_on_candidate": 3
     },
     "by_method": {
       "Mathlib": 106,
@@ -6722,21 +6732,26 @@
       }
     ],
     "phase_policy": {
-      "phase": "monitored-candidate-intake",
+      "phase": "research-engine-v0",
       "experiments_authorized": false,
+      "bounded_exploration_authorized": true,
+      "promotion_experiments_authorized": false,
       "selected_attack_route": null,
       "allowed_work": [
         "Ingest new primary literature or a concrete candidate proposal and evaluate it against the common gate.",
         "Maintain canonical registries, generated views, and independent validation infrastructure.",
-        "Close narrow formal scope statements that materially change a route disposition."
+        "Close narrow formal scope statements that materially change a route disposition.",
+        "Execute only the dependency-ordered toy or validator-calibration sequence selected by Research Engine v0 under its fixed budgets and stop conditions.",
+        "Retain every terminal exploration outcome, including bounded negatives, inconclusive runs, and resource exhaustion."
       ],
       "forbidden_work": [
-        "Start or resume a cryptanalytic experiment without a new explicit route-selection decision and matching task/hypothesis promotion.",
+        "Start an experiment outside the selected bounded-exploration sequence or exceed its declared resource budget.",
+        "Run exact-target secp256k1 work, expensive scaling, or a promotion experiment without a superseding route-selection decision.",
         "Build a missing Mathlib foundation merely because it is absent or mathematically interesting.",
         "Treat a constant-factor result, structural identity, or toy measurement as a subgeneric attack.",
         "Delete or rewrite provenance-bearing assets without an inventory, reference scan, and documented restore path."
       ],
-      "promotion_rule": "A future dated decision may promote at most one parked route only after new evidence satisfies the acceptance gate at proposal level and tasks/NEXT.md plus experiments/HYPOTHESES.yaml explicitly authorize the same work.",
+      "promotion_rule": "A future dated decision may promote at most one parked route only after new evidence satisfies the acceptance gate at proposal level and tasks/ECDLP_RESEARCH.md plus experiments/HYPOTHESES.yaml explicitly authorize the same work.",
       "merge_rule": "The owner delegated merge authority on 2026-07-22. Merge only from a clean branch after required CI is green, the diff has a documented scope and rollback path, and no unresolved blocking finding is known."
     },
     "route_selection": {
@@ -6767,7 +6782,7 @@
       "rationale": [
         "The generic lower bound and generic algorithms are guardrails or baselines, not non-generic attack mechanisms.",
         "GLV supplies a verified constant-factor structure; Pohlig-Hellman, low-degree pairing transfer, anomalous lifting, and extension-field descent fail target-specific applicability screens.",
-        "The open prime-field algebraic, GLV-Semaev, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge.",
+        "The open prime-field algebraic, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge. For GLV-Semaev specifically, the proposed coordinatewise-cube quotient is now closed because it quotients by C3^m rather than the diagonal C3 action and loses relative phase.",
         "Multi-target, interval, leakage, implementation, and quantum routes change the input or computational threat model and therefore cannot be promoted as a classical plain-input result.",
         "Building conditional Mathlib foundations now would increase theorem volume without a demonstrated reduction in uncertainty about the exact target."
       ],
@@ -6777,9 +6792,10 @@
         "A deliberately approved project objective changes the threat model to conditioned inputs, implementation leakage, or fault-tolerant quantum computation."
       ],
       "operational_effects": [
-        "All cryptanalytic hypotheses remain parked.",
+        "All cryptanalytic hypotheses remain parked at the promotion level.",
         "No conditional formal foundation is promoted.",
         "Candidate intake and evidence maintenance continue through the neutral evaluation contract.",
+        "Research Engine v0 may select at most three bounded toy or validator-calibration explorations; their outcomes cannot promote a route automatically.",
         "Independent adversarial review remains useful when another reviewer is available, but is not a merge prerequisite."
       ]
     },
@@ -7141,11 +7157,11 @@
           "Invariant coordinates reduce relation-generation complexity or solving degree, not only factor-base storage.",
           "The quotient retains enough information to recover valid relations."
         ],
-        "known_cost": "Measured finite-orbit reductions are constant-factor; the relevant higher-degree invariant-system cost is unresolved.",
-        "current_evidence": "Lean verifies the GLV and Semaev structural ingredients. Existing experiments close only narrow lookup and toy-presentation windows.",
-        "success_gate": "Exhibit a nonredundant invariant S_m system and a theoretical reason for a lower asymptotic solving exponent, then validate it independently.",
-        "stop_condition": "Stop if the gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.",
-        "next_action": "Keep HYP_GLV_SEMAEV_001 parked until route selection explicitly promotes it.",
+        "known_cost": "Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.",
+        "current_evidence": "Lean verifies the GLV and Semaev structural ingredients. Existing experiments retain narrow lookup and toy-presentation measurements; experiments/glv_diagonal_obstruction independently replays the exact finite phase-loss witness. The general invariant-ring argument is documented but not kernel-checked.",
+        "success_gate": "Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.",
+        "stop_condition": "The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.",
+        "next_action": "Keep HYP_GLV_SEMAEV_001 closed until a new mechanism-bearing proposal passes the Research Engine intake gate.",
         "authorized_experiment": false,
         "hypothesis_ids": [
           "HYP_GLV_SEMAEV_001"
@@ -7587,7 +7603,7 @@
         ],
         "mathlib_status": "Mathlib has multivariate polynomials and division/reduction infrastructure, but the audit found no Semaev family, Buchberger/F4 solver, degree-of-regularity theory, or Macaulay complexity stack.",
         "deliverable": "Only the minimal theorem chain required by a selected exact relation system: semantics, elimination soundness, recovery, and a justified cost bridge.",
-        "resume_condition": "One of the dependent routes is selected with an exact nonredundant system and a plausible complexity mechanism."
+        "resume_condition": "One of the dependent routes is selected with a materially new exact system, explicit fixed-target semantics, and a plausible complexity mechanism beyond finite-orbit compression."
       },
       {
         "id": "F-POINT-DIVISION-BRIDGE",
@@ -7759,7 +7775,7 @@
       {
         "id": "IC-3-glv-symmetry-factor-base",
         "family": "index-calculus / glv-symmetry",
-        "verdict_class": "open-zone"
+        "verdict_class": "scoped-negative"
       },
       {
         "id": "IC-4-petit-composed-map",
@@ -7782,6 +7798,1109 @@
         "verdict_class": "blocked-foundation"
       }
     ]
+  },
+  "research_engine": {
+    "policy_source": "repo/RESEARCH_ENGINE_V0.json",
+    "state_source": "data/research_engine_state.json",
+    "outcome_event_source": "experiments/engine/outcomes/",
+    "gate_status": {
+      "exploration_authorized": true,
+      "promotion_authorized": false,
+      "exploration_limits": {
+        "max_field_bits": 24,
+        "max_wall_time_seconds": 21600,
+        "max_peak_memory_bytes": 8589934592,
+        "max_parallel_workers": 8
+      },
+      "promotion_boundary": "Generated evidence may close, park, or reopen exploration candidates. It may not promote a route, authorize exact-target work, or make a public complexity claim without a dated decision-substrate change."
+    },
+    "queue_separation": {
+      "ecdlp_research": {
+        "source": "tasks/ECDLP_RESEARCH.md",
+        "objective": "Reduce uncertainty about the plain single-target secp256k1 ECDLP boundary without changing the threat model.",
+        "kpis": [
+          "mechanism-bearing uncertainties resolved",
+          "bounded explorations independently validated",
+          "negative results retained with reopening conditions",
+          "false promotion rate",
+          "cost per material uncertainty reduction"
+        ]
+      },
+      "keyai_product": {
+        "source": "tasks/KEYAI_PRODUCT.md",
+        "objective": "Validate whether external formal-research teams need and can use the KeyAI control plane.",
+        "kpis": [
+          "external orientation time",
+          "provenance completeness",
+          "state drift",
+          "completed external pilot loops",
+          "return sessions and willingness-to-pay evidence"
+        ]
+      },
+      "anti_conflation_rules": [
+        "Product traffic, site work, pilots, and portability rehearsals never count as ECDLP progress.",
+        "Lean theorem volume never counts as cryptanalytic progress without a route-level uncertainty it resolves.",
+        "Toy measurements never count as secp256k1 progress without a mechanism and scaling bridge.",
+        "ECDLP experiments never count as product validation."
+      ]
+    },
+    "counts": {
+      "normalized_hypotheses": 9,
+      "outcome_events": 8,
+      "candidate_proposals": 6,
+      "intake_candidates": 0,
+      "authorized_exploration_candidates": 0,
+      "closed_candidates": 6,
+      "selected_explorations": 0,
+      "ready_explorations": 0,
+      "terminal_native_outcomes": 0,
+      "blocked_selected_explorations": 0,
+      "hard_rejected_candidates": 6,
+      "outcomes_by_source": {
+        "historical_migration": 8,
+        "native_engine_run": 0
+      },
+      "outcomes_by_taxonomy": {
+        "proved": 0,
+        "supported": 0,
+        "historical_structural_confirmation": 1,
+        "falsified": 0,
+        "bounded_negative": 2,
+        "inapplicable": 1,
+        "inconclusive": 3,
+        "resource_exhausted": 1
+      }
+    },
+    "selected_sequence": [],
+    "execution_queue": {
+      "ready_candidate_ids": [],
+      "awaiting_dependency_candidate_ids": [],
+      "awaiting_validator_candidate_ids": [],
+      "blocked_candidate_ids": [],
+      "terminal_candidate_ids": []
+    },
+    "hard_rejected_candidates": [
+      {
+        "candidate_id": "RE0-001-EXTERNAL-SOLVER-CALIBRATION",
+        "title": "Retain external-solver calibration as technical debt, not a research candidate",
+        "authorization": "none",
+        "disposition": "closed",
+        "reasons": [
+          "missing_independent_validator",
+          "no_new_premise_after_resolution"
+        ]
+      },
+      {
+        "candidate_id": "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT",
+        "title": "Close the coordinatewise-cube quotient premise",
+        "authorization": "none",
+        "disposition": "closed",
+        "reasons": [
+          "missing_independent_validator",
+          "no_new_premise_after_resolution"
+        ]
+      },
+      {
+        "candidate_id": "RE0-003-M3-INVARIANT-F4-SCALING",
+        "title": "Close scaling of the invalid coordinatewise quotient",
+        "authorization": "none",
+        "disposition": "closed",
+        "reasons": [
+          "missing_independent_validator",
+          "no_new_premise_after_resolution"
+        ]
+      },
+      {
+        "candidate_id": "RE0-X01-WARD-EDS-ZERO-SEARCH",
+        "title": "Search EDS zeros for a discrete logarithm",
+        "authorization": "none",
+        "disposition": "closed",
+        "reasons": [
+          "missing_exact_mechanism",
+          "missing_falsifiable_prediction",
+          "missing_independent_validator",
+          "no_new_premise_after_resolution"
+        ]
+      },
+      {
+        "candidate_id": "RE0-X02-DIRECT-SECP256K1-PROBE",
+        "title": "Run an unscaled candidate directly on secp256k1",
+        "authorization": "none",
+        "disposition": "closed",
+        "reasons": [
+          "missing_exact_mechanism",
+          "missing_falsifiable_prediction",
+          "missing_independent_validator",
+          "targets_secp256k1_directly"
+        ]
+      },
+      {
+        "candidate_id": "RE0-X03-MULTI-TARGET-PRECOMPUTATION-CANARY",
+        "title": "Amortize reusable precomputation across many targets",
+        "authorization": "none",
+        "disposition": "closed",
+        "reasons": [
+          "changes_threat_model",
+          "hidden_or_unpriced_precomputation",
+          "missing_independent_validator"
+        ]
+      }
+    ],
+    "retrospective_validation": {
+      "passed": true,
+      "method": {
+        "method": "event_bound_no_reopen_gate",
+        "claim": "The current admissibility gates reject reopening four retained historical cases without a materially new premise, while binding each case to its actual outcome event.",
+        "limitation": "Historical runs predate preregistered priors and likelihoods. They test false reopening only and are excluded from predictive calibration; calibration starts with the first native Engine outcome."
+      },
+      "cases": [
+        {
+          "case_id": "RET-P0-PAIR-ENUMERATION",
+          "outcome_event_id": "REO-2026-07-24-001",
+          "known_outcome": "bounded_negative",
+          "observed_outcome": "bounded_negative",
+          "evidence_matches": true,
+          "rejection_reasons": [
+            "no_new_premise_after_resolution"
+          ],
+          "expected": "hard_rejected",
+          "observed": "hard_rejected",
+          "passed": true
+        },
+        {
+          "case_id": "RET-P2-WARD-EDS",
+          "outcome_event_id": "REO-2026-07-24-004",
+          "known_outcome": "historical_structural_confirmation",
+          "observed_outcome": "historical_structural_confirmation",
+          "evidence_matches": true,
+          "rejection_reasons": [
+            "missing_exact_mechanism",
+            "no_new_premise_after_resolution"
+          ],
+          "expected": "hard_rejected",
+          "observed": "hard_rejected",
+          "passed": true
+        },
+        {
+          "case_id": "RET-P3-M3-PROXY",
+          "outcome_event_id": "REO-2026-07-24-005",
+          "known_outcome": "inconclusive",
+          "observed_outcome": "inconclusive",
+          "evidence_matches": true,
+          "rejection_reasons": [
+            "missing_independent_validator",
+            "no_new_premise_after_resolution"
+          ],
+          "expected": "hard_rejected",
+          "observed": "hard_rejected",
+          "passed": true
+        },
+        {
+          "case_id": "RET-P4-COMPOSED-APPROXIMATION",
+          "outcome_event_id": "REO-2026-07-24-007",
+          "known_outcome": "inconclusive",
+          "observed_outcome": "inconclusive",
+          "evidence_matches": true,
+          "rejection_reasons": [
+            "missing_exact_mechanism",
+            "no_new_premise_after_resolution"
+          ],
+          "expected": "hard_rejected",
+          "observed": "hard_rejected",
+          "passed": true
+        }
+      ]
+    },
+    "calibration": {
+      "historical_outcomes_excluded": 8,
+      "scored_native_outcomes": 0,
+      "mean_brier_score": null,
+      "records": [],
+      "note": "Historical migrations are excluded because their priors and likelihoods were not frozen before observation."
+    },
+    "normalized_hypotheses": [
+      {
+        "id": "H1_RESEARCH_OS_TRUTH_LAYER",
+        "direction": "platform",
+        "source_status": "closed",
+        "normalized_outcome": "proved",
+        "verifier_scope": "Repository consistency and generated-artifact gates.",
+        "engine_state": "retained_foundation",
+        "route_ids": [],
+        "rationale": "The scoped operational claim is accepted by deterministic repository gates.",
+        "reopening_condition": "A consistency regression or an unowned canonical surface appears.",
+        "outcome_event_count": 0,
+        "outcome_counts": {},
+        "outcome_event_ids": []
+      },
+      {
+        "id": "H2_GLV_SUBGROUP_VS_WHOLE_GROUP",
+        "direction": "formalization",
+        "source_status": "closed",
+        "normalized_outcome": "proved",
+        "verifier_scope": "Lean anchors plus scope-consistency gates.",
+        "engine_state": "retained_guardrail",
+        "route_ids": [
+          "R-GLV"
+        ],
+        "rationale": "The subgroup and whole-group claims are separated at the exact proved scope.",
+        "reopening_condition": "A new theorem changes the whole-group or subgroup boundary.",
+        "outcome_event_count": 0,
+        "outcome_counts": {},
+        "outcome_event_ids": []
+      },
+      {
+        "id": "H3_GENERIC_SECURITY_SCOPE",
+        "direction": "formalization",
+        "source_status": "closed",
+        "normalized_outcome": "proved",
+        "verifier_scope": "Lean generic-model results plus public-scope checks.",
+        "engine_state": "retained_guardrail",
+        "route_ids": [
+          "R-GENERIC-LOWER-BOUND",
+          "R-GENERIC-BASELINE"
+        ],
+        "rationale": "The generic-model boundary is explicit and mechanically protected from unconditional overclaim.",
+        "reopening_condition": "A stronger adaptive generic theorem or a scope regression is introduced.",
+        "outcome_event_count": 0,
+        "outcome_counts": {},
+        "outcome_event_ids": []
+      },
+      {
+        "id": "H4_FRONTIER_TRACEABILITY",
+        "direction": "data",
+        "source_status": "closed",
+        "normalized_outcome": "proved",
+        "verifier_scope": "Generated count and status-consistency gates.",
+        "engine_state": "retained_foundation",
+        "route_ids": [],
+        "rationale": "Corpus and theorem denominators are separated in canonical views.",
+        "reopening_condition": "A public or machine-readable view conflates the denominators.",
+        "outcome_event_count": 0,
+        "outcome_counts": {},
+        "outcome_event_ids": []
+      },
+      {
+        "id": "H5_SEMAEV_WINDOW",
+        "direction": "experiment",
+        "source_status": "closed",
+        "normalized_outcome": "inconclusive",
+        "verifier_scope": "Registry normalization.",
+        "engine_state": "superseded",
+        "route_ids": [
+          "R-GLV-SEMAEV"
+        ],
+        "rationale": "The lifecycle record is superseded and is not an independent scientific outcome; its unresolved content is retained by HYP_GLV_SEMAEV_001.",
+        "reopening_condition": "Never reopen this id; create or update a non-superseded hypothesis instead.",
+        "outcome_event_count": 0,
+        "outcome_counts": {},
+        "outcome_event_ids": []
+      },
+      {
+        "id": "H6_PUBLICATION_BOUNDARY_TRACK",
+        "direction": "publication",
+        "source_status": "parked",
+        "normalized_outcome": "inconclusive",
+        "verifier_scope": "No final publication artifact has been independently reviewed.",
+        "engine_state": "parked_nonresearch",
+        "route_ids": [],
+        "rationale": "Publication packaging is valuable but does not reduce cryptanalytic uncertainty.",
+        "reopening_condition": "A stable engine checkpoint and independent review packet are available.",
+        "outcome_event_count": 0,
+        "outcome_counts": {},
+        "outcome_event_ids": []
+      },
+      {
+        "id": "H7_ECDLP_DECISION_SUBSTRATE",
+        "direction": "data",
+        "source_status": "closed",
+        "normalized_outcome": "proved",
+        "verifier_scope": "Decision-substrate validator and cross-registry gates.",
+        "engine_state": "retained_foundation",
+        "route_ids": [],
+        "rationale": "The existing control plane is accepted; Research Engine v0 extends rather than replaces it.",
+        "reopening_condition": "A route, hypothesis, or experiment can bypass the declared gates.",
+        "outcome_event_count": 0,
+        "outcome_counts": {},
+        "outcome_event_ids": []
+      },
+      {
+        "id": "HYP_GLV_SEMAEV_001",
+        "direction": "experiment",
+        "source_status": "parked",
+        "normalized_outcome": "inconclusive",
+        "verifier_scope": "P0-P4 retain scoped historical measurements. The new finite certificate independently replays the coordinatewise-cube over-quotient obstruction; the general algebra is not kernel-checked.",
+        "engine_state": "closed_until_new_mechanism",
+        "route_ids": [
+          "R-GLV-SEMAEV",
+          "R-PETIT-COMPOSED-MAPS"
+        ],
+        "rationale": "The proposed u_i=X_i^3 construction quotients by C3^m rather than the diagonal C3 action and loses relative phase. The correct finite orbit offers only fixed-cardinality compression; no replacement complexity-changing mechanism is currently specified.",
+        "reopening_condition": "A new candidate supplies a materially different exact mechanism, handles the fixed-target fiber explicitly, predicts a growth-relevant effect beyond orbit cardinality, and includes an independent raw-artifact validator.",
+        "outcome_event_count": 7,
+        "outcome_counts": {
+          "bounded_negative": 2,
+          "inapplicable": 1,
+          "inconclusive": 3,
+          "resource_exhausted": 1
+        },
+        "outcome_event_ids": [
+          "REO-2026-07-24-001",
+          "REO-2026-07-24-002",
+          "REO-2026-07-24-003",
+          "REO-2026-07-24-005",
+          "REO-2026-07-24-006",
+          "REO-2026-07-24-007",
+          "REO-2026-07-24-008"
+        ]
+      },
+      {
+        "id": "HYP_WARD_EDS_001",
+        "direction": "experiment",
+        "source_status": "parked",
+        "normalized_outcome": "inconclusive",
+        "verifier_scope": "Toy-curve EDS torsion identities independently replayed with elliptic-curve arithmetic; no attack-advantage prediction was tested.",
+        "engine_state": "closed_until_new_mechanism",
+        "route_ids": [
+          "R-EDS-DIVISION-POLYNOMIAL"
+        ],
+        "rationale": "The bounded run supports the known torsion identity. It neither tests nor supplies a non-reencoding DLP mechanism, so the broader research hypothesis remains inconclusive and closed at intake.",
+        "reopening_condition": "A proposal specifies a new operation on EDS data with a justified cost below finding the discrete logarithm directly.",
+        "outcome_event_count": 1,
+        "outcome_counts": {
+          "historical_structural_confirmation": 1
+        },
+        "outcome_event_ids": [
+          "REO-2026-07-24-004"
+        ]
+      }
+    ],
+    "outcome_events": [
+      {
+        "event_id": "REO-2026-07-24-001",
+        "candidate_id": "HIST-P0-GLV-PAIR-ENUMERATION",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "bounded_negative",
+        "source_kind": "historical_migration",
+        "claim_boundary": "Direct m=2 pair-enumeration lookup only; no Semaev-system solving-degree or asymptotic claim.",
+        "evidence_files": [
+          "experiments/p0_glv_semaev/README.md",
+          "experiments/p0_glv_semaev/RESULTS.md",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_plain-core_76456051aa21.json",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_glv-base_bc9066a58ada.json",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_invariant-u_95decc4378f5.json"
+        ],
+        "reopening_condition": "Specify a nonredundant invariant mechanism that acts before relation enumeration and predicts a measurable solving-cost change.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-002",
+        "candidate_id": "HIST-P1-SEMAEV-S3-SOLVE",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "bounded_negative",
+        "source_kind": "historical_migration",
+        "claim_boundary": "m=2 S3 root solving and relation-set equality only.",
+        "evidence_files": [
+          "experiments/p1_petit/README.md",
+          "experiments/p1_petit/RESULTS.md",
+          "experiments/p1_petit/runs/HYP_GLV_SEMAEV_001_p1-semaev-solve_a7d1cbfe1597.json"
+        ],
+        "reopening_condition": "Move only to a preregistered multivariate or nonredundant invariant mechanism with an independent solver.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-003",
+        "candidate_id": "HIST-P1M3-SEMAEV-S4-SOLVE",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "inconclusive",
+        "source_kind": "historical_migration",
+        "claim_boundary": "Distinct-index m=3 S4 relation solving; repeated indices and full multivariate solving degree excluded.",
+        "evidence_files": [
+          "experiments/p1_petit_m3/README.md",
+          "experiments/p1_petit_m3/RESULTS.md",
+          "experiments/p1_petit_m3/runs/HYP_GLV_SEMAEV_001_p1m3-semaev4-solve_8e905324cf82.json"
+        ],
+        "reopening_condition": "Use separately implemented decisive validation and measure a full multivariate system under a fixed budget.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-004",
+        "candidate_id": "HIST-P2-WARD-EDS",
+        "hypothesis_id": "HYP_WARD_EDS_001",
+        "route_id": "R-EDS-DIVISION-POLYNOMIAL",
+        "outcome": "historical_structural_confirmation",
+        "source_kind": "historical_migration",
+        "claim_boundary": "Ward EDS rank of apparition and zero-set measurements only.",
+        "evidence_files": [
+          "experiments/p2_ward_eds/README.md",
+          "experiments/p2_ward_eds/RESULTS.md",
+          "experiments/p2_ward_eds/runs/HYP_WARD_EDS_001_p2-ward-eds_8e49acba3c19.json"
+        ],
+        "reopening_condition": "Require a new EDS operation with an explicit complexity argument below finding the logarithm directly.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-005",
+        "candidate_id": "HIST-P3-M2-MACAULAY-PROXY",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "inconclusive",
+        "source_kind": "historical_migration",
+        "claim_boundary": "m=2 custom graded Macaulay proxy and matched relation sets.",
+        "evidence_files": [
+          "experiments/p3_sm_system/README.md",
+          "experiments/p3_sm_system/RESULTS.md",
+          "experiments/p3_sm_system/runs/HYP_GLV_SEMAEV_001_p3-sm-system_fa4fed78efc9.json"
+        ],
+        "reopening_condition": "Run the exact matched ideals through an independent F4/Groebner engine before using the proxy in route selection.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-006",
+        "candidate_id": "HIST-P3-M3-MACAULAY-PROXY",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "resource_exhausted",
+        "source_kind": "historical_migration",
+        "claim_boundary": "m=3 custom Macaulay proxy under the historical pure-Python implementation.",
+        "evidence_files": [
+          "experiments/p3_sm_system/README.md",
+          "experiments/p3_sm_system/RESULTS.md"
+        ],
+        "reopening_condition": "Use an independently validated external solver under an explicit time and memory budget; do not retry the same pure-Python path.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-007",
+        "candidate_id": "HIST-P4-COMPOSED-MAP-APPROXIMATION",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "outcome": "inconclusive",
+        "source_kind": "historical_migration",
+        "claim_boundary": "One m=2, |F|=4 composed low-degree-map approximation; not a faithful Petit construction.",
+        "evidence_files": [
+          "experiments/p4_petit/README.md",
+          "experiments/p4_petit/RESULTS.md",
+          "experiments/p4_petit/runs/HYP_GLV_SEMAEV_001_p4-petit-factorbase_bd3ad7a34ae8.json"
+        ],
+        "reopening_condition": "Supply a mathematically faithful prime-field mechanism and an independently validated decisive solver metric.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-008",
+        "candidate_id": "HIST-P0-GLV-PAIR-ENUMERATION-24BIT-AMBIENT",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "inapplicable",
+        "source_kind": "historical_migration",
+        "claim_boundary": "Ambient-group relation-yield sanity check only; this is not a prime-order subgroup index-calculus result.",
+        "evidence_files": [
+          "experiments/p0_glv_semaev/README.md",
+          "experiments/p0_glv_semaev/RESULTS.md",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_plain-core_76456051aa21.json",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_glv-base_bc9066a58ada.json",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_invariant-u_95decc4378f5.json"
+        ],
+        "reopening_condition": "Run a separately preregistered cofactor-1 or subgroup-only 24-bit experiment with every factor-base point proven to lie in the target subgroup.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      }
+    ],
+    "historical_outcomes": [
+      {
+        "event_id": "REO-2026-07-24-001",
+        "candidate_id": "HIST-P0-GLV-PAIR-ENUMERATION",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "bounded_negative",
+        "source_kind": "historical_migration",
+        "claim_boundary": "Direct m=2 pair-enumeration lookup only; no Semaev-system solving-degree or asymptotic claim.",
+        "evidence_files": [
+          "experiments/p0_glv_semaev/README.md",
+          "experiments/p0_glv_semaev/RESULTS.md",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_plain-core_76456051aa21.json",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_glv-base_bc9066a58ada.json",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_invariant-u_95decc4378f5.json"
+        ],
+        "reopening_condition": "Specify a nonredundant invariant mechanism that acts before relation enumeration and predicts a measurable solving-cost change.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-002",
+        "candidate_id": "HIST-P1-SEMAEV-S3-SOLVE",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "bounded_negative",
+        "source_kind": "historical_migration",
+        "claim_boundary": "m=2 S3 root solving and relation-set equality only.",
+        "evidence_files": [
+          "experiments/p1_petit/README.md",
+          "experiments/p1_petit/RESULTS.md",
+          "experiments/p1_petit/runs/HYP_GLV_SEMAEV_001_p1-semaev-solve_a7d1cbfe1597.json"
+        ],
+        "reopening_condition": "Move only to a preregistered multivariate or nonredundant invariant mechanism with an independent solver.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-003",
+        "candidate_id": "HIST-P1M3-SEMAEV-S4-SOLVE",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "inconclusive",
+        "source_kind": "historical_migration",
+        "claim_boundary": "Distinct-index m=3 S4 relation solving; repeated indices and full multivariate solving degree excluded.",
+        "evidence_files": [
+          "experiments/p1_petit_m3/README.md",
+          "experiments/p1_petit_m3/RESULTS.md",
+          "experiments/p1_petit_m3/runs/HYP_GLV_SEMAEV_001_p1m3-semaev4-solve_8e905324cf82.json"
+        ],
+        "reopening_condition": "Use separately implemented decisive validation and measure a full multivariate system under a fixed budget.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-004",
+        "candidate_id": "HIST-P2-WARD-EDS",
+        "hypothesis_id": "HYP_WARD_EDS_001",
+        "route_id": "R-EDS-DIVISION-POLYNOMIAL",
+        "outcome": "historical_structural_confirmation",
+        "source_kind": "historical_migration",
+        "claim_boundary": "Ward EDS rank of apparition and zero-set measurements only.",
+        "evidence_files": [
+          "experiments/p2_ward_eds/README.md",
+          "experiments/p2_ward_eds/RESULTS.md",
+          "experiments/p2_ward_eds/runs/HYP_WARD_EDS_001_p2-ward-eds_8e49acba3c19.json"
+        ],
+        "reopening_condition": "Require a new EDS operation with an explicit complexity argument below finding the logarithm directly.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-005",
+        "candidate_id": "HIST-P3-M2-MACAULAY-PROXY",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "inconclusive",
+        "source_kind": "historical_migration",
+        "claim_boundary": "m=2 custom graded Macaulay proxy and matched relation sets.",
+        "evidence_files": [
+          "experiments/p3_sm_system/README.md",
+          "experiments/p3_sm_system/RESULTS.md",
+          "experiments/p3_sm_system/runs/HYP_GLV_SEMAEV_001_p3-sm-system_fa4fed78efc9.json"
+        ],
+        "reopening_condition": "Run the exact matched ideals through an independent F4/Groebner engine before using the proxy in route selection.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-006",
+        "candidate_id": "HIST-P3-M3-MACAULAY-PROXY",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "resource_exhausted",
+        "source_kind": "historical_migration",
+        "claim_boundary": "m=3 custom Macaulay proxy under the historical pure-Python implementation.",
+        "evidence_files": [
+          "experiments/p3_sm_system/README.md",
+          "experiments/p3_sm_system/RESULTS.md"
+        ],
+        "reopening_condition": "Use an independently validated external solver under an explicit time and memory budget; do not retry the same pure-Python path.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-007",
+        "candidate_id": "HIST-P4-COMPOSED-MAP-APPROXIMATION",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "outcome": "inconclusive",
+        "source_kind": "historical_migration",
+        "claim_boundary": "One m=2, |F|=4 composed low-degree-map approximation; not a faithful Petit construction.",
+        "evidence_files": [
+          "experiments/p4_petit/README.md",
+          "experiments/p4_petit/RESULTS.md",
+          "experiments/p4_petit/runs/HYP_GLV_SEMAEV_001_p4-petit-factorbase_bd3ad7a34ae8.json"
+        ],
+        "reopening_condition": "Supply a mathematically faithful prime-field mechanism and an independently validated decisive solver metric.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-24-008",
+        "candidate_id": "HIST-P0-GLV-PAIR-ENUMERATION-24BIT-AMBIENT",
+        "hypothesis_id": "HYP_GLV_SEMAEV_001",
+        "route_id": "R-GLV-SEMAEV",
+        "outcome": "inapplicable",
+        "source_kind": "historical_migration",
+        "claim_boundary": "Ambient-group relation-yield sanity check only; this is not a prime-order subgroup index-calculus result.",
+        "evidence_files": [
+          "experiments/p0_glv_semaev/README.md",
+          "experiments/p0_glv_semaev/RESULTS.md",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_plain-core_76456051aa21.json",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_glv-base_bc9066a58ada.json",
+          "experiments/p0_glv_semaev/runs/HYP_GLV_SEMAEV_001_invariant-u_95decc4378f5.json"
+        ],
+        "reopening_condition": "Run a separately preregistered cofactor-1 or subgroup-only 24-bit experiment with every factor-base point proven to lie in the target subgroup.",
+        "decision_delta": {
+          "effect": "retained_history",
+          "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      }
+    ],
+    "native_outcomes": [],
+    "route_evidence_state": [
+      {
+        "route_id": "R-ANOMALOUS-PADIC",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-single-target-plain"
+          ],
+          "scope": "primary"
+        },
+        "decision_axis": {
+          "substrate_disposition": "ruled_out_for_target",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-EDS-DIVISION-POLYNOMIAL",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-single-target-plain"
+          ],
+          "scope": "primary"
+        },
+        "decision_axis": {
+          "substrate_disposition": "open_parked",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "historical_structural_confirmation_retained",
+          "outcome_counts": {
+            "historical_structural_confirmation": 1
+          }
+        },
+        "event_ids": [
+          "REO-2026-07-24-004"
+        ],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": [
+          "Require a new EDS operation with an explicit complexity argument below finding the logarithm directly."
+        ]
+      },
+      {
+        "route_id": "R-GENERIC-BASELINE",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-single-target-plain",
+            "classical-generic"
+          ],
+          "scope": "mixed_with_primary"
+        },
+        "decision_axis": {
+          "substrate_disposition": "baseline",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-GENERIC-LOWER-BOUND",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-generic"
+          ],
+          "scope": "separate"
+        },
+        "decision_axis": {
+          "substrate_disposition": "guardrail",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-GLV",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-single-target-plain"
+          ],
+          "scope": "primary"
+        },
+        "decision_axis": {
+          "substrate_disposition": "constant_factor_only",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-GLV-SEMAEV",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-single-target-plain"
+          ],
+          "scope": "primary"
+        },
+        "decision_axis": {
+          "substrate_disposition": "open_parked",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "open_with_scoped_uncertainty",
+          "outcome_counts": {
+            "bounded_negative": 2,
+            "inapplicable": 1,
+            "inconclusive": 2,
+            "resource_exhausted": 1
+          }
+        },
+        "event_ids": [
+          "REO-2026-07-24-001",
+          "REO-2026-07-24-002",
+          "REO-2026-07-24-003",
+          "REO-2026-07-24-005",
+          "REO-2026-07-24-006",
+          "REO-2026-07-24-008"
+        ],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": [
+          "Specify a nonredundant invariant mechanism that acts before relation enumeration and predicts a measurable solving-cost change.",
+          "Move only to a preregistered multivariate or nonredundant invariant mechanism with an independent solver.",
+          "Use separately implemented decisive validation and measure a full multivariate system under a fixed budget.",
+          "Run the exact matched ideals through an independent F4/Groebner engine before using the proxy in route selection.",
+          "Use an independently validated external solver under an explicit time and memory budget; do not retry the same pure-Python path.",
+          "Run a separately preregistered cofactor-1 or subgroup-only 24-bit experiment with every factor-base point proven to lie in the target subgroup."
+        ]
+      },
+      {
+        "route_id": "R-HNP-NONCE-LEAKAGE",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "implementation-leakage"
+          ],
+          "scope": "separate"
+        },
+        "decision_axis": {
+          "substrate_disposition": "separate_threat_model",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-INTERVAL-AUXILIARY-INPUT",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-conditioned"
+          ],
+          "scope": "separate"
+        },
+        "decision_axis": {
+          "substrate_disposition": "conditional_only",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-ISOGENY-ENDOMORPHISM-TRANSFER",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-single-target-plain"
+          ],
+          "scope": "primary"
+        },
+        "decision_axis": {
+          "substrate_disposition": "monitor",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-MULTI-TARGET-PRECOMPUTATION",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-conditioned"
+          ],
+          "scope": "separate"
+        },
+        "decision_axis": {
+          "substrate_disposition": "conditional_only",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-PAIRING-TRANSFER",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-single-target-plain"
+          ],
+          "scope": "primary"
+        },
+        "decision_axis": {
+          "substrate_disposition": "ruled_out_for_target",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-single-target-plain"
+          ],
+          "scope": "primary"
+        },
+        "decision_axis": {
+          "substrate_disposition": "open_parked",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "open_with_scoped_uncertainty",
+          "outcome_counts": {
+            "inconclusive": 1
+          }
+        },
+        "event_ids": [
+          "REO-2026-07-24-007"
+        ],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": [
+          "Supply a mathematically faithful prime-field mechanism and an independently validated decisive solver metric."
+        ]
+      },
+      {
+        "route_id": "R-POHLIG-HELLMAN",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-single-target-plain"
+          ],
+          "scope": "primary"
+        },
+        "decision_axis": {
+          "substrate_disposition": "ruled_out_for_target",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-PRIME-FIELD-INDEX-CALCULUS",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-single-target-plain"
+          ],
+          "scope": "primary"
+        },
+        "decision_axis": {
+          "substrate_disposition": "open_parked",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-PROTOCOL-FAULT-SIDECHANNEL",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "implementation-leakage"
+          ],
+          "scope": "separate"
+        },
+        "decision_axis": {
+          "substrate_disposition": "separate_threat_model",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-QUANTUM-SHOR",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "fault-tolerant-quantum"
+          ],
+          "scope": "separate"
+        },
+        "decision_axis": {
+          "substrate_disposition": "separate_threat_model",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      },
+      {
+        "route_id": "R-WEIL-DESCENT",
+        "threat_model_axis": {
+          "primary_model": "classical-single-target-plain",
+          "declared_models": [
+            "classical-single-target-plain"
+          ],
+          "scope": "primary"
+        },
+        "decision_axis": {
+          "substrate_disposition": "ruled_out_for_target",
+          "authorized_experiment": false
+        },
+        "evidence_axis": {
+          "engine_disposition": "no_engine_evidence",
+          "outcome_counts": {}
+        },
+        "event_ids": [],
+        "route_review_trigger_event_ids": [],
+        "reopening_conditions": []
+      }
+    ],
+    "feedback_contract": {
+      "append_only_input": "experiments/engine/outcomes/",
+      "generated_updates": [
+        "candidate terminal state",
+        "normalized hypothesis evidence summary",
+        "effective route evidence disposition",
+        "reopening-condition status",
+        "next selector queue",
+        "knowledge-graph engine nodes and edges"
+      ],
+      "promotion_boundary": "Generated evidence may close, park, or reopen exploration candidates. It may not promote a route, authorize exact-target work, or make a public complexity claim without a dated decision-substrate change.",
+      "required_after_every_terminal_run": [
+        "write one review-anchored outcome event",
+        "bind a native outcome to a hashed run envelope, full candidate policy, exact preregistration matrix prefix, candidate-run manifest, and per-instance result/validation records with validator code hashes",
+        "regenerate data/research_engine_state.json",
+        "run the engine and decision validators",
+        "regenerate the knowledge graph and public views",
+        "retain negative, inconclusive, and resource-exhausted results"
+      ]
+    }
   },
   "corpus": {
     "total_claims": 486,
@@ -12577,6 +13696,201 @@
       "from": "F-ISOGENY-STACK",
       "to": "glv-rational-scope",
       "type": "extends_frontier"
+    },
+    {
+      "from": "RE0-001-EXTERNAL-SOLVER-CALIBRATION",
+      "to": "HYP_GLV_SEMAEV_001",
+      "type": "tests_hypothesis"
+    },
+    {
+      "from": "RE0-001-EXTERNAL-SOLVER-CALIBRATION",
+      "to": "R-GLV-SEMAEV",
+      "type": "explores_route"
+    },
+    {
+      "from": "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT",
+      "to": "HYP_GLV_SEMAEV_001",
+      "type": "tests_hypothesis"
+    },
+    {
+      "from": "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT",
+      "to": "R-GLV-SEMAEV",
+      "type": "explores_route"
+    },
+    {
+      "from": "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT",
+      "to": "RE0-001-EXTERNAL-SOLVER-CALIBRATION",
+      "type": "depends_on_candidate"
+    },
+    {
+      "from": "RE0-003-M3-INVARIANT-F4-SCALING",
+      "to": "HYP_GLV_SEMAEV_001",
+      "type": "tests_hypothesis"
+    },
+    {
+      "from": "RE0-003-M3-INVARIANT-F4-SCALING",
+      "to": "R-GLV-SEMAEV",
+      "type": "explores_route"
+    },
+    {
+      "from": "RE0-003-M3-INVARIANT-F4-SCALING",
+      "to": "RE0-001-EXTERNAL-SOLVER-CALIBRATION",
+      "type": "depends_on_candidate"
+    },
+    {
+      "from": "RE0-003-M3-INVARIANT-F4-SCALING",
+      "to": "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT",
+      "type": "depends_on_candidate"
+    },
+    {
+      "from": "RE0-X01-WARD-EDS-ZERO-SEARCH",
+      "to": "HYP_WARD_EDS_001",
+      "type": "tests_hypothesis"
+    },
+    {
+      "from": "RE0-X01-WARD-EDS-ZERO-SEARCH",
+      "to": "R-EDS-DIVISION-POLYNOMIAL",
+      "type": "explores_route"
+    },
+    {
+      "from": "RE0-X02-DIRECT-SECP256K1-PROBE",
+      "to": "HYP_GLV_SEMAEV_001",
+      "type": "tests_hypothesis"
+    },
+    {
+      "from": "RE0-X02-DIRECT-SECP256K1-PROBE",
+      "to": "R-GLV-SEMAEV",
+      "type": "explores_route"
+    },
+    {
+      "from": "RE0-X03-MULTI-TARGET-PRECOMPUTATION-CANARY",
+      "to": "H3_GENERIC_SECURITY_SCOPE",
+      "type": "tests_hypothesis"
+    },
+    {
+      "from": "RE0-X03-MULTI-TARGET-PRECOMPUTATION-CANARY",
+      "to": "R-MULTI-TARGET-PRECOMPUTATION",
+      "type": "explores_route"
+    },
+    {
+      "from": "REO-2026-07-24-001",
+      "to": "HIST-P0-GLV-PAIR-ENUMERATION",
+      "type": "records_outcome_for"
+    },
+    {
+      "from": "REO-2026-07-24-001",
+      "to": "HYP_GLV_SEMAEV_001",
+      "type": "updates_hypothesis"
+    },
+    {
+      "from": "REO-2026-07-24-001",
+      "to": "R-GLV-SEMAEV",
+      "type": "records_route_evidence"
+    },
+    {
+      "from": "REO-2026-07-24-002",
+      "to": "HIST-P1-SEMAEV-S3-SOLVE",
+      "type": "records_outcome_for"
+    },
+    {
+      "from": "REO-2026-07-24-002",
+      "to": "HYP_GLV_SEMAEV_001",
+      "type": "updates_hypothesis"
+    },
+    {
+      "from": "REO-2026-07-24-002",
+      "to": "R-GLV-SEMAEV",
+      "type": "records_route_evidence"
+    },
+    {
+      "from": "REO-2026-07-24-003",
+      "to": "HIST-P1M3-SEMAEV-S4-SOLVE",
+      "type": "records_outcome_for"
+    },
+    {
+      "from": "REO-2026-07-24-003",
+      "to": "HYP_GLV_SEMAEV_001",
+      "type": "updates_hypothesis"
+    },
+    {
+      "from": "REO-2026-07-24-003",
+      "to": "R-GLV-SEMAEV",
+      "type": "records_route_evidence"
+    },
+    {
+      "from": "REO-2026-07-24-004",
+      "to": "HIST-P2-WARD-EDS",
+      "type": "records_outcome_for"
+    },
+    {
+      "from": "REO-2026-07-24-004",
+      "to": "HYP_WARD_EDS_001",
+      "type": "updates_hypothesis"
+    },
+    {
+      "from": "REO-2026-07-24-004",
+      "to": "R-EDS-DIVISION-POLYNOMIAL",
+      "type": "records_route_evidence"
+    },
+    {
+      "from": "REO-2026-07-24-005",
+      "to": "HIST-P3-M2-MACAULAY-PROXY",
+      "type": "records_outcome_for"
+    },
+    {
+      "from": "REO-2026-07-24-005",
+      "to": "HYP_GLV_SEMAEV_001",
+      "type": "updates_hypothesis"
+    },
+    {
+      "from": "REO-2026-07-24-005",
+      "to": "R-GLV-SEMAEV",
+      "type": "records_route_evidence"
+    },
+    {
+      "from": "REO-2026-07-24-006",
+      "to": "HIST-P3-M3-MACAULAY-PROXY",
+      "type": "records_outcome_for"
+    },
+    {
+      "from": "REO-2026-07-24-006",
+      "to": "HYP_GLV_SEMAEV_001",
+      "type": "updates_hypothesis"
+    },
+    {
+      "from": "REO-2026-07-24-006",
+      "to": "R-GLV-SEMAEV",
+      "type": "records_route_evidence"
+    },
+    {
+      "from": "REO-2026-07-24-007",
+      "to": "HIST-P4-COMPOSED-MAP-APPROXIMATION",
+      "type": "records_outcome_for"
+    },
+    {
+      "from": "REO-2026-07-24-007",
+      "to": "HYP_GLV_SEMAEV_001",
+      "type": "updates_hypothesis"
+    },
+    {
+      "from": "REO-2026-07-24-007",
+      "to": "R-PETIT-COMPOSED-MAPS",
+      "type": "records_route_evidence"
+    },
+    {
+      "from": "REO-2026-07-24-008",
+      "to": "HIST-P0-GLV-PAIR-ENUMERATION-24BIT-AMBIENT",
+      "type": "records_outcome_for"
+    },
+    {
+      "from": "REO-2026-07-24-008",
+      "to": "HYP_GLV_SEMAEV_001",
+      "type": "updates_hypothesis"
+    },
+    {
+      "from": "REO-2026-07-24-008",
+      "to": "R-GLV-SEMAEV",
+      "type": "records_route_evidence"
     }
   ]
 }

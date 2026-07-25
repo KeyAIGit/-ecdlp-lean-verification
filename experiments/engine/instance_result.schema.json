@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.example/schemas/research-engine-instance-result-v1.json",
+  "title": "Research Engine per-instance result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "result_id",
+    "run_id",
+    "candidate_id",
+    "source_commit",
+    "instance",
+    "status",
+    "decisive_measurement",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "result_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^RER-[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{3}$"
+    },
+    "candidate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "instance": {
+      "$ref": "#/$defs/instance"
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "resource_exhausted",
+        "inapplicable"
+      ]
+    },
+    "decisive_measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "enum": [
+            "supported",
+            "falsified",
+            "bounded_negative",
+            "inapplicable",
+            "inconclusive",
+            "resource_exhausted"
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    }
+  },
+  "$defs": {
+    "instance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "curve_id",
+        "m",
+        "factor_base_size",
+        "presentation",
+        "seed"
+      ],
+      "properties": {
+        "curve_id": {
+          "type": "string"
+        },
+        "m": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "factor_base_size": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "presentation": {
+          "type": "string"
+        },
+        "seed": {
+          "type": "integer"
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "role"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

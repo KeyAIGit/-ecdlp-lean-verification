@@ -2295,8 +2295,13 @@ h4 {
   }
 
   .workspace-title {
-    align-items: flex-start;
+    align-items: stretch;
     flex-direction: column;
+  }
+
+  .workspace-title > * {
+    min-width: 0;
+    width: 100%;
   }
 
   .workspace-title h1 {
