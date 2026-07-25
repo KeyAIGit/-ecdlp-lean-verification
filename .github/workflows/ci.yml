@@ -19,6 +19,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Research Engine outcomes bind evidence to prior source commits.
+          # A shallow checkout makes valid provenance look nonexistent.
+          fetch-depth: 0
 
       # Cheap doc gate: fail on count drift (the headline count regressed 3x).
       - name: Check count consistency (docs)

@@ -41,7 +41,7 @@ an exact mechanism and independent validators. No route is promoted, exact-targe
 work remains forbidden, and no asymptotic claim follows. New evidence enters
 through the candidate-neutral contract in `experiments/framework/`,
 source-commit-bound raw-artifact replay, engine-derived outcome classification,
-immutable events in `experiments/engine/outcomes/`, and explicit reconsideration
+review-anchored events in `experiments/engine/outcomes/`, and explicit reconsideration
 triggers. A positive toy result is `supported`, never `proved`.
 
 ## What NOT to claim

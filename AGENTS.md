@@ -84,7 +84,7 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
   `notes/SECURITY_SCOPE.md`, `notes/FOUNDATIONS.md`, `experiments/HYPOTHESES.yaml`,
   and the Research Engine event contract/schema.
 - **large** — adds `data/knowledge_graph.json`, `REPOSITORY_ARCHITECTURE.md`,
-  `PUBLISHABLE_UNITS.md`, `TRUST_REPORT.md`, and immutable outcome events.
+  `PUBLISHABLE_UNITS.md`, `TRUST_REPORT.md`, and review-anchored outcome events.
 
 Print a self-contained pack on demand with
 `python3 scripts/export_agent_bundle.py --tier <small|medium|large>` (packs are NOT

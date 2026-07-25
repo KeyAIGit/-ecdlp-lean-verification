@@ -1113,7 +1113,8 @@
     "limitation": "Historical runs predate preregistered priors and likelihoods. They test false reopening only and are excluded from predictive calibration; calibration starts with the first native Engine outcome."
   },
   "historical_outcome_baseline": {
-    "status": "immutable",
+    "status": "review_anchored_v0",
+    "anchor_sha256": "9ab7e0b0b367eee43308b1a1bfc036eb594037b40dde5d099b88b6bc1412d191",
     "events": [
       {
         "event_id": "REO-2026-07-24-001",
@@ -1189,7 +1190,7 @@
     ],
     "promotion_boundary": "Generated evidence may close, park, or reopen exploration candidates. It may not promote a route, authorize exact-target work, or make a public complexity claim without a dated decision-substrate change.",
     "required_after_every_terminal_run": [
-      "write one immutable outcome event",
+      "write one review-anchored outcome event",
       "bind a native outcome to a hashed run envelope, full candidate policy, exact preregistration matrix prefix, candidate-run manifest, and per-instance result/validation records with validator code hashes",
       "regenerate data/research_engine_state.json",
       "run the engine and decision validators",

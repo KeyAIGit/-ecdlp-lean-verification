@@ -2,10 +2,11 @@
   "schema_version": "0.1-generated",
   "engine_id": "ecdlp-research-engine-v0",
   "source_hashes": {
-    "policy_sha256": "f141610b6eeae481436d90a5172d503f054c69b72dcfcfbd3ac14f0f4b79d8c4",
+    "policy_sha256": "14e2a5eef68703a5128bb4dedcd0b805c95b6ac12dd0a0a1082f97f94ef09c57",
     "decision_substrate_sha256": "1876d7d8ada1faa3da6fc362192ebdcffd63b801831cf5b8bfc4f8120cff53e9",
-    "hypotheses_sha256": "6915b4ec6735f91d3b9a403fcde5d1380aba64e29c555f5f1e19fd3c2f79f276",
-    "outcome_events_sha256": "9ab7e0b0b367eee43308b1a1bfc036eb594037b40dde5d099b88b6bc1412d191"
+    "hypotheses_sha256": "f71689d6984b36ff1112a73944c5a890918d190ff17e61a5bd7a45ee40b0ff07",
+    "outcome_events_sha256": "9ab7e0b0b367eee43308b1a1bfc036eb594037b40dde5d099b88b6bc1412d191",
+    "historical_baseline_anchor_sha256": "9ab7e0b0b367eee43308b1a1bfc036eb594037b40dde5d099b88b6bc1412d191"
   },
   "gate_status": {
     "exploration_authorized": true,
@@ -120,6 +121,7 @@
       "reasons": [
         "missing_exact_mechanism",
         "missing_falsifiable_prediction",
+        "missing_independent_validator",
         "no_new_premise_after_resolution"
       ]
     },
@@ -142,7 +144,8 @@
       "disposition": "closed",
       "reasons": [
         "changes_threat_model",
-        "hidden_or_unpriced_precomputation"
+        "hidden_or_unpriced_precomputation",
+        "missing_independent_validator"
       ]
     }
   ],
@@ -1099,7 +1102,7 @@
     ],
     "promotion_boundary": "Generated evidence may close, park, or reopen exploration candidates. It may not promote a route, authorize exact-target work, or make a public complexity claim without a dated decision-substrate change.",
     "required_after_every_terminal_run": [
-      "write one immutable outcome event",
+      "write one review-anchored outcome event",
       "bind a native outcome to a hashed run envelope, full candidate policy, exact preregistration matrix prefix, candidate-run manifest, and per-instance result/validation records with validator code hashes",
       "regenerate data/research_engine_state.json",
       "run the engine and decision validators",

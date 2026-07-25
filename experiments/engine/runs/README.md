@@ -11,8 +11,9 @@ Only actual Research Engine runs belong here. A terminal outcome points to one
 - result artifacts and their hashes;
 - independently implemented validation artifacts and their hashes.
 
-Contract fixtures under `experiments/framework/fixtures/` are never admissible
-as native scientific evidence. A complete `proved`, `supported`, or
+Contract fixtures under `experiments/framework/fixtures/` are mechanically
+inadmissible as native scientific validators; accepted entrypoints must live
+under `experiments/engine/validators/`. A complete `proved`, `supported`, or
 `bounded_negative` outcome must execute the entire frozen matrix. Early
 stopping is retained as a strict matrix prefix and cannot be relabelled as a
 complete result.

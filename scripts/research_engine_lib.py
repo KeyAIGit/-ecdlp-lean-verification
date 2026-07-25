@@ -21,6 +21,7 @@ DECISION_PATH = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
 HYPOTHESES_PATH = ROOT / "experiments" / "HYPOTHESES.yaml"
 OUTCOMES_DIR = ROOT / "experiments" / "engine" / "outcomes"
 RUNS_DIR = ROOT / "experiments" / "engine" / "runs"
+SCIENTIFIC_VALIDATORS_DIR = ROOT / "experiments" / "engine" / "validators"
 STATE_PATH = ROOT / "data" / "research_engine_state.json"
 
 HARD_REJECTIONS = {
@@ -277,11 +278,16 @@ HISTORICAL_SCOPE_GUARD_FIELDS = {
     "field_bits",
     "forbidden_field_bits",
 }
-HISTORICAL_BASELINE_FIELDS = {"status", "events"}
+HISTORICAL_BASELINE_FIELDS = {"status", "anchor_sha256", "events"}
 HISTORICAL_BASELINE_EVENT_FIELDS = {"event_id", "event_sha256"}
 HISTORICAL_BASELINE_EVENT_IDS = {
     f"REO-2026-07-24-{index:03d}" for index in range(1, 9)
 }
+# This code anchor makes a historical relabel require an explicit validator-code
+# change, rather than a coordinated metadata edit to an event and its policy digest.
+V0_REVIEWED_HISTORICAL_ROOT_SHA256 = (
+    "9ab7e0b0b367eee43308b1a1bfc036eb594037b40dde5d099b88b6bc1412d191"
+)
 RETROSPECTIVE_CASE_IDS = {
     "RET-P0-PAIR-ENUMERATION",
     "RET-P2-WARD-EDS",
@@ -434,6 +440,18 @@ def repo_file(relative: Any) -> Path | None:
     except ValueError:
         return None
     return candidate if candidate.is_file() else None
+
+
+def scientific_validator_entrypoint(relative: Any) -> Path | None:
+    """Resolve only native scientific validators, never framework fixtures."""
+    candidate = repo_file(relative)
+    if candidate is None or candidate.suffix.lower() != ".py":
+        return None
+    try:
+        candidate.relative_to(SCIENTIFIC_VALIDATORS_DIR.resolve())
+    except ValueError:
+        return None
+    return candidate
 
 
 def content_sha256(payload: bytes) -> str:
@@ -964,7 +982,7 @@ def validate_engine_run_manifest(
                 f"{instance_label}: validator_entrypoint differs from "
                 "preregistration"
             )
-        validator_path = repo_file(validator_entrypoint)
+        validator_path = scientific_validator_entrypoint(validator_entrypoint)
         source_validator = (
             git_file_bytes(source_commit, validator_entrypoint)
             if _nonempty_text(validator_entrypoint)
@@ -1009,7 +1027,8 @@ def validate_engine_run_manifest(
         if not validator_path_matches_source:
             problems.append(
                 f"{instance_label}: replayed validator must be the exact "
-                "preregistered pure entrypoint from source_commit"
+                "preregistered pure entrypoint from source_commit under "
+                "experiments/engine/validators/"
             )
         if source_validator is not None:
             for validator_problem in validate_pure_validator_source(
@@ -1671,6 +1690,22 @@ def rejection_reasons(
         != primary_threat_model
     ):
         reasons.add("changes_threat_model")
+    validator = candidate.get("preregistration", {}).get(
+        "validator_contract", {}
+    )
+    validator_path = scientific_validator_entrypoint(
+        validator.get("entrypoint")
+    )
+    validator_digest = validator.get("entrypoint_sha256")
+    if (
+        validator.get("status") != "implemented"
+        or validator_path is None
+        or not isinstance(validator_digest, str)
+        or HASH_ID.fullmatch(validator_digest) is None
+        or file_sha256(validator_path) != validator_digest
+        or validate_pure_validator_source(validator_path.read_bytes())
+    ):
+        reasons.add("missing_independent_validator")
     return sorted(reasons)
 
 
@@ -2244,14 +2279,15 @@ def validate_policy(
                             "missing_independent_validator=true"
                         )
                 elif validator_status == "implemented":
-                    entrypoint_path = repo_file(entrypoint)
-                    if (
-                        entrypoint_path is None
-                        or entrypoint_path.suffix.lower() != ".py"
-                    ):
+                    entrypoint_path = scientific_validator_entrypoint(
+                        entrypoint
+                    )
+                    if entrypoint_path is None:
                         problems.append(
                             f"{candidate_id}: implemented validator entrypoint "
-                            "is missing"
+                            "must be a Python file under "
+                            "experiments/engine/validators/; framework fixtures "
+                            "are never scientific validators"
                         )
                     if (
                         not isinstance(entrypoint_sha256, str)
@@ -2621,8 +2657,18 @@ def validate_policy(
         problems,
     ):
         baseline = {}
-    if baseline.get("status") != "immutable":
-        problems.append("historical_outcome_baseline.status must be immutable")
+    if baseline.get("status") != "review_anchored_v0":
+        problems.append(
+            "historical_outcome_baseline.status must be review_anchored_v0"
+        )
+    if (
+        baseline.get("anchor_sha256")
+        != V0_REVIEWED_HISTORICAL_ROOT_SHA256
+    ):
+        problems.append(
+            "historical_outcome_baseline.anchor_sha256 must match the "
+            "validator-code v0 anchor"
+        )
     baseline_events = baseline.get("events")
     if not isinstance(baseline_events, list):
         problems.append("historical_outcome_baseline.events must be an array")
@@ -3475,10 +3521,11 @@ def build_state(
         "source_hashes": {
             "policy_sha256": sha256_json(policy),
             "decision_substrate_sha256": sha256_json(decisions),
-            "hypotheses_sha256": hashlib.sha256(
-                HYPOTHESES_PATH.read_bytes()
-            ).hexdigest(),
+            "hypotheses_sha256": file_sha256(HYPOTHESES_PATH),
             "outcome_events_sha256": sha256_json(event_values),
+            "historical_baseline_anchor_sha256": (
+                V0_REVIEWED_HISTORICAL_ROOT_SHA256
+            ),
         },
         "gate_status": {
             "exploration_authorized": policy["gates"]["exploration"]["authorized"],
@@ -3576,7 +3623,7 @@ def validate_historical_outcome_baseline(
     }
     if set(historical_events) != set(baseline_events):
         problems.append(
-            "historical outcome files must match the immutable v0 baseline; "
+            "historical outcome files must match the review-anchored v0 baseline; "
             f"missing={sorted(set(baseline_events) - set(historical_events))}, "
             f"extra={sorted(set(historical_events) - set(baseline_events))}"
         )
@@ -3586,6 +3633,21 @@ def validate_historical_outcome_baseline(
             continue
         if sha256_json(event) != baseline.get("event_sha256"):
             problems.append(f"historical outcome baseline {event_id}: digest changed")
+    if (
+        baseline_events
+        and set(historical_events) == HISTORICAL_BASELINE_EVENT_IDS
+        and sha256_json(
+            [
+                historical_events[event_id]
+                for event_id in sorted(HISTORICAL_BASELINE_EVENT_IDS)
+            ]
+        )
+        != V0_REVIEWED_HISTORICAL_ROOT_SHA256
+    ):
+        problems.append(
+            "historical outcome baseline: reviewed v0 root changed; "
+            "re-baselining requires an explicit validator-code anchor change"
+        )
     return problems
 
 

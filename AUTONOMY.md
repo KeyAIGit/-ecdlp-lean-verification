@@ -92,7 +92,7 @@ proof and does not override the Lean kernel, measured pilot behavior, or the rou
 No new cryptanalytic experiment or formal-foundation build starts merely because an
 agent proposes it. `repo/RESEARCH_ENGINE_V0.json` may authorize only a preregistered,
 budget-capped toy exploration selected by its deterministic gate and dependency order.
-Every terminal run appends an immutable outcome event and remains evidence, not route
+Every terminal run appends a review-anchored outcome event and remains evidence, not route
 promotion. Promotion, direct secp256k1 work, expensive scaling, or a new formal-foundation
 build still requires a dated change to `repo/ECDLP_DECISION_SUBSTRATE.json` that selects
 the route, names the exact uncertainty, and defines success and stop conditions.

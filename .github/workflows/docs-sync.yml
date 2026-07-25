@@ -122,6 +122,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Engine validators resolve frozen provenance commits.
+          fetch-depth: 0
 
       # ---- regenerate every derived artifact from its real source, in dependency order ----
       - name: Stats + badge (data/stats.json, badges/theorems.json)

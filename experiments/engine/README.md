@@ -19,8 +19,11 @@ secp256k1 break. The allowed terminal outcomes are:
 - `resource_exhausted`
 
 The eight migrated v0 outcomes are pinned by id and canonical JSON digest in
-`repo/RESEARCH_ENGINE_V0.json`. They cannot be deleted, relabelled, or rewritten
-without failing the Engine gate. New work appends native events instead.
+`repo/RESEARCH_ENGINE_V0.json`, then bound as one reviewed root in validator
+code. A coordinated event plus policy-metadata relabel therefore fails the
+Engine gate. An intentional re-baseline remains possible only through an
+explicit event, policy, and validator-code change visible in review. New work
+appends native events instead.
 
 A native run is accepted only when its candidate is in the selected portfolio,
 all dependency outcomes explicitly unlock it, its route/hypothesis/threat model
@@ -60,9 +63,11 @@ generated independently. Producer and validator entrypoints must be distinct,
 artifacts and code are source-commit-bound, and provenance is reviewable, but
 scientific independence of the artifact-generation path remains an explicit
 review obligation.
-Framework fixtures are never accepted as native evidence. No scientific
-validator is implemented in v0 yet; the three research candidates therefore
-remain at intake, and the current queue is honestly empty. Time, memory,
+Framework fixtures are never accepted as native evidence. Implemented
+scientific validators must live under `experiments/engine/validators/`; the
+selector derives `missing_independent_validator` for every other path. No
+scientific validator is implemented in v0 yet; the three research candidates
+therefore remain at intake, and the current queue is honestly empty. Time, memory,
 workers, and actual field bit length must remain inside both candidate and
 global exploration budgets. One candidate id has at most one native terminal
 event; reopening requires a new candidate id. The generated `execution_queue`

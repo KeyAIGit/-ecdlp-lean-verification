@@ -29,6 +29,17 @@ branch now takes the conservative disposition:
 - Ward EDS event `004` is `supported` only for the torsion identity;
 - partially validated event `007` is `inconclusive`.
 
+Additional adversarial hardening after the first security pass:
+
+- framework fixtures cannot satisfy a scientific validator gate by metadata
+  reassignment; policy validation, selection, and run replay accept implemented
+  validators only under `experiments/engine/validators/`;
+- the eight migrated outcomes are review-anchored by one root digest in
+  validator code, so changing an event and its policy digest together still
+  fails. This is deliberately described as review-anchored, not absolutely
+  immutable: an intentional re-baseline must change event, policy, and code in
+  the same reviewed diff.
+
 Treat these as proposed remediations to attack, not conclusions to endorse.
 Your highest-leverage contribution is now either an exact quotient
 specification or a precise obstruction, plus a validator/certificate design

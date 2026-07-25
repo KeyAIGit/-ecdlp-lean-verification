@@ -136,7 +136,7 @@ Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` 
    most three dependency-ordered, budget-capped toy candidates. The current
    selector returns zero: three proposals remain at mechanism/validator intake.
    Its generated state is `data/research_engine_state.json`; all terminal
-   outcomes are append-only events, and empirical support is never relabelled
+   outcomes are review-anchored append-only events, and empirical support is not relabelled
    as proof.
 4. Keep `data/attack_registry.json` as the detailed evidence encyclopedia and
    `repo/FORMAL_SUBSTRATE.json` as the Lean release map. Never collapse their

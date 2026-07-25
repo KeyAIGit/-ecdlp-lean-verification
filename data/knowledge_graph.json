@@ -7916,6 +7916,7 @@
         "reasons": [
           "missing_exact_mechanism",
           "missing_falsifiable_prediction",
+          "missing_independent_validator",
           "no_new_premise_after_resolution"
         ]
       },
@@ -7938,7 +7939,8 @@
         "disposition": "closed",
         "reasons": [
           "changes_threat_model",
-          "hidden_or_unpriced_precomputation"
+          "hidden_or_unpriced_precomputation",
+          "missing_independent_validator"
         ]
       }
     ],
@@ -8889,7 +8891,7 @@
       ],
       "promotion_boundary": "Generated evidence may close, park, or reopen exploration candidates. It may not promote a route, authorize exact-target work, or make a public complexity claim without a dated decision-substrate change.",
       "required_after_every_terminal_run": [
-        "write one immutable outcome event",
+        "write one review-anchored outcome event",
         "bind a native outcome to a hashed run envelope, full candidate policy, exact preregistration matrix prefix, candidate-run manifest, and per-instance result/validation records with validator code hashes",
         "regenerate data/research_engine_state.json",
         "run the engine and decision validators",

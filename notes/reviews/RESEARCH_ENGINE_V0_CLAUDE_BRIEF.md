@@ -18,7 +18,7 @@ Research Engine v0 turns the existing evidence/decision control plane into a
 bounded selection and memory loop:
 
 `preregistered candidate -> deterministic selection -> bounded toy run ->
-independent validation -> immutable outcome -> generated feedback`
+independent validation -> review-anchored outcome -> generated feedback`
 
 It does not generate new mathematical mechanisms autonomously.
 
@@ -55,7 +55,7 @@ of threat-model/decision/evidence axes, and per-outcome decision deltas.
 
 The parallel `engine/` tree is not a second source of truth and should not be
 merged beside this implementation. This branch retains the repository's
-existing canonical hypothesis, decision, experiment-framework, immutable-event,
+existing canonical hypothesis, decision, experiment-framework, review-anchored-event,
 run-envelope, generated-graph, and site surfaces. Review whether that
 consolidation preserved the useful model without importing a gate bypass or
 creating duplicate ownership.
@@ -107,7 +107,7 @@ Then inspect the generated graph, status, site, CI, and the full branch diff.
    may not promote a route.
 6. Every terminal outcome is retained, including negative, inconclusive, and
    resource-exhausted results.
-7. The eight migrated outcomes are an immutable digest baseline; native runs
+7. The eight migrated outcomes are a validator-code-anchored digest baseline; native runs
    append new events and cannot rewrite that baseline.
 8. Product work and ECDLP research have separate queues and KPIs.
 9. The 486-claim frontier is a classified selected corpus, not 40 years of

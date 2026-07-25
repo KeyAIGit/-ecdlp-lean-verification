@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import json
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -50,6 +51,27 @@ class ResearchEngineTests(unittest.TestCase):
         cls.decisions = load_json(DECISION_PATH)
         cls.hypotheses = parse_hypotheses()
         cls.outcomes = load_outcomes()
+        root = POLICY_PATH.parents[1]
+        validator_dir = root / "experiments" / "engine" / "validators"
+        fixture_payload = (
+            root
+            / "experiments"
+            / "framework"
+            / "fixtures"
+            / "pure_engine_validator.py"
+        ).read_bytes()
+        with tempfile.NamedTemporaryFile(
+            prefix=".protocol-regression-",
+            suffix=".py",
+            dir=validator_dir,
+            delete=False,
+        ) as handle:
+            handle.write(fixture_payload)
+            cls.test_validator_path = Path(handle.name)
+        cls.test_validator_relative = cls.test_validator_path.relative_to(
+            root
+        ).as_posix()
+        cls.addClassCleanup(cls.test_validator_path.unlink, missing_ok=True)
 
     def native_event(
         self,
@@ -115,15 +137,11 @@ class ResearchEngineTests(unittest.TestCase):
     def executable_policy(self) -> dict:
         """Build a scientific-claim-free policy used only for protocol tests."""
         policy = copy.deepcopy(self.policy)
-        fixture_relative = (
-            "experiments/framework/fixtures/pure_engine_validator.py"
-        )
-        fixture_path = POLICY_PATH.parents[1] / fixture_relative
         fixture_contract = {
             "status": "implemented",
             "protocol": VALIDATOR_PROTOCOL,
-            "entrypoint": fixture_relative,
-            "entrypoint_sha256": file_sha256(fixture_path),
+            "entrypoint": self.test_validator_relative,
+            "entrypoint_sha256": file_sha256(self.test_validator_path),
             "measurement_contract": {
                 "name": "fixture-instance-outcome",
                 "unit": "canonical-outcome",
@@ -200,6 +218,38 @@ class ResearchEngineTests(unittest.TestCase):
                 item["candidate_id"]
                 for item in select_candidates(reordered)["selected_sequence"]
             ],
+        )
+
+    def test_framework_fixture_cannot_clear_scientific_validator_gate(self) -> None:
+        policy = self.executable_policy()
+        candidate = policy["candidate_proposals"][0]
+        fixture_relative = (
+            "experiments/framework/fixtures/pure_engine_validator.py"
+        )
+        fixture_path = POLICY_PATH.parents[1] / fixture_relative
+        validator = candidate["preregistration"]["validator_contract"]
+        validator["entrypoint"] = fixture_relative
+        validator["entrypoint_sha256"] = file_sha256(fixture_path)
+
+        problems = validate_policy(
+            policy,
+            self.decisions,
+            self.hypotheses,
+        )
+        self.assertTrue(
+            any(
+                "framework fixtures are never scientific validators" in item
+                for item in problems
+            ),
+            msg=problems,
+        )
+        rejected = {
+            item["candidate_id"]: set(item["reasons"])
+            for item in select_candidates(policy)["hard_rejected"]
+        }
+        self.assertIn(
+            "missing_independent_validator",
+            rejected[candidate["id"]],
         )
 
     def test_status_distinguishes_selected_from_ready_ids(self) -> None:
@@ -405,6 +455,28 @@ class ResearchEngineTests(unittest.TestCase):
         problems = validate_historical_outcome_baseline(self.policy, outcomes)
         self.assertTrue(
             any("missing=['REO-2026-07-24-002']" in item for item in problems),
+            msg=problems,
+        )
+
+    def test_coordinated_metadata_relabel_cannot_move_reviewed_baseline(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        outcomes = [copy.deepcopy(event) for _, event in self.outcomes]
+        event = next(
+            item
+            for item in outcomes
+            if item["event_id"] == "REO-2026-07-24-002"
+        )
+        event["outcome"] = "inconclusive"
+        baseline = next(
+            item
+            for item in policy["historical_outcome_baseline"]["events"]
+            if item["event_id"] == event["event_id"]
+        )
+        baseline["event_sha256"] = sha256_json(event)
+
+        problems = validate_historical_outcome_baseline(policy, outcomes)
+        self.assertTrue(
+            any("reviewed v0 root changed" in item for item in problems),
             msg=problems,
         )
 
