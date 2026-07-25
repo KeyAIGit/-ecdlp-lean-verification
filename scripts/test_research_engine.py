@@ -24,6 +24,7 @@ from hypothesis_generation_lib import (
     premise_fingerprint,
     proposal_sha256,
 )
+from typed_evidence_lib import load_and_build as load_typed_evidence_state
 from research_engine_lib import (
     DECISION_PATH,
     INSTANCE_VALIDATION_FIELDS,
@@ -101,6 +102,8 @@ class ResearchEngineTests(unittest.TestCase):
             "schema_version": "0.1",
             "proposal_id": proposal_id,
             "seed_id": seed["seed_id"],
+            "cell_id": seed["cell_id"],
+            "typed_evidence_digest": seed["typed_evidence_digest"],
             "created_on": "2026-07-25",
             "proposer_id": "fixture-proposer",
             "route_id": seed["route_id"],
@@ -675,6 +678,25 @@ class ResearchEngineTests(unittest.TestCase):
             validate_policy(self.policy, self.decisions, self.hypotheses),
         )
         self.assertEqual(9, len(self.policy["hypothesis_normalization"]))
+
+    def test_legacy_candidate_gates_cannot_be_self_cleared(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        candidate = policy["candidate_proposals"][0]
+        candidate["hard_rejections"] = {
+            key: False for key in candidate["hard_rejections"]
+        }
+        policy["candidate_intake_contract"][
+            "legacy_candidate_set_sha256"
+        ] = sha256_json(policy["candidate_proposals"])
+        problems = validate_policy(policy, self.decisions, self.hypotheses)
+        self.assertTrue(
+            any("reviewed code anchor" in item for item in problems),
+            msg=problems,
+        )
+        self.assertTrue(
+            any("typed proposal compiler" in item for item in problems),
+            msg=problems,
+        )
 
     def test_selector_selects_nothing_before_scientific_gates_clear(self) -> None:
         selection = select_candidates(self.policy)
@@ -2227,11 +2249,11 @@ class ResearchEngineTests(unittest.TestCase):
         )
         self.assertTrue(queues["anti_conflation_rules"])
 
-    def test_hypothesis_generator_builds_three_non_executable_seeds(self) -> None:
+    def test_hypothesis_generator_builds_typed_non_executable_seeds(self) -> None:
         seeds = generate_seeds(
             self.generation_policy, self.decisions, self.policy
         )
-        self.assertEqual(3, len(seeds))
+        self.assertEqual(4, len(seeds))
         self.assertEqual(
             {
                 "R-GLV-SEMAEV",
@@ -2243,9 +2265,15 @@ class ResearchEngineTests(unittest.TestCase):
         self.assertTrue(
             all(seed["authorization"] == "none" for seed in seeds)
         )
-        self.assertTrue(
-            all(seed["status"] == "proposal_required" for seed in seeds)
+        self.assertEqual(
+            {
+                "proposal_required",
+                "desk_cost_bridge_required",
+                "property_resolution_required",
+            },
+            {seed["status"] for seed in seeds},
         )
+        self.assertTrue(all(seed["cell_id"].startswith("CELL-") for seed in seeds))
 
     def test_hypothesis_seed_generation_is_order_independent(self) -> None:
         reordered = copy.deepcopy(self.generation_policy)
@@ -2256,6 +2284,69 @@ class ResearchEngineTests(unittest.TestCase):
         )
         observed = generate_seeds(reordered, self.decisions, self.policy)
         self.assertEqual(expected, observed)
+
+    def test_decided_typed_cells_never_generate_seeds(self) -> None:
+        typed_problems, typed_state = load_typed_evidence_state()
+        self.assertEqual([], typed_problems)
+        seeds = generate_seeds(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            typed_state,
+        )
+        seeded_cells = {seed["cell_id"] for seed in seeds}
+        decided_cells = {
+            cell["cell_id"]
+            for cell in typed_state["cells"]
+            if cell["status"] in {
+                "decided_inapplicable",
+                "decided_closed",
+            }
+        }
+        self.assertTrue(seeded_cells.isdisjoint(decided_cells))
+
+    def test_violated_typed_property_fails_closed_before_generation(
+        self,
+    ) -> None:
+        typed_problems, typed_state = load_typed_evidence_state()
+        self.assertEqual([], typed_problems)
+        tampered = copy.deepcopy(typed_state)
+        cell = next(
+            item
+            for item in tampered["cells"]
+            if item["cell_id"] == "CELL-M-FHJRV-DIRECT-TWO-TORSION"
+        )
+        cell["seed_eligible"] = True
+        cell["status"] = "open"
+        seeds = generate_seeds(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            tampered,
+        )
+        self.assertNotIn(cell["cell_id"], {seed["cell_id"] for seed in seeds})
+
+    def test_proposal_cannot_change_typed_evidence_binding(self) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-015")
+        proposal["typed_evidence_digest"] = "f" * 64
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [(PROPOSALS_DIR / "HGP-FIXTURE-015.json", proposal)],
+            [],
+        )
+        self.assertEqual([], problems)
+        self.assertIn(
+            "typed_evidence_mismatch",
+            state["proposal_intake"][0]["blockers"],
+        )
+        self.assertEqual(
+            "hard_rejected", state["proposal_intake"][0]["disposition"]
+        )
 
     def test_complete_adversarial_packet_only_creates_non_authorized_draft(
         self,
@@ -2548,7 +2639,7 @@ class ResearchEngineTests(unittest.TestCase):
         )
         glv_uncertainty["compatibility_tags"] = ["deliberately-incompatible"]
         seeds = generate_seeds(policy, self.decisions, self.policy)
-        self.assertEqual(2, len(seeds))
+        self.assertEqual(3, len(seeds))
         self.assertNotIn("R-GLV-SEMAEV", {seed["route_id"] for seed in seeds})
 
     def test_near_duplicate_pair_is_visible_and_not_silently_accepted(

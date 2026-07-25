@@ -96,6 +96,7 @@ def main() -> int:
 > **Generated** by `scripts/gen_status.py` from `data/stats.json`,
 > `data/frontier_map.json`, `repo/PRODUCT_MODEL.json`, and
 > `repo/PILOT_PROTOCOL.json`, `repo/ECDLP_DECISION_SUBSTRATE.json`, and
+> `repo/ECDLP_TYPED_EVIDENCE_V0.json`, `data/typed_evidence_state.json`, and
 > `data/research_engine_state.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
@@ -185,7 +186,12 @@ The engine normalizes **{engine_counts['normalized_hypotheses']} hypotheses** an
 **{engine_counts['outcomes_by_source']['native_engine_run']} native**. Its historical
 no-reopen guard matched four frozen cases; this is not predictive EIG calibration. Predictive
 calibration currently contains **{engine['calibration']['scored_native_outcomes']} native
-outcomes**. The generation layer currently emits
+outcomes**. Before synthesis, the typed evidence layer materializes
+**{engine_counts['typed_evidence_cells']} mechanism/property cells**:
+**{engine_counts['typed_decided_cells']} decided at desk** and
+**{engine_counts['typed_seed_eligible_cells']} eligible to emit a bounded research question**.
+Its **{engine_counts['typed_desk_decisions']} desk decisions** are non-experimental and authorize
+nothing. The generation layer currently emits
 **{engine_counts['generated_hypothesis_seeds']} source-grounded seeds**, with
 **{engine_counts['submitted_hypothesis_proposals']} submitted proposals**,
 **{engine_counts['quality_cleared_hypothesis_proposals']} quality-cleared proposals**, and
@@ -213,7 +219,9 @@ customer hypotheses, and future product direction.
 
 The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view is generated.
 The engine policies are `repo/RESEARCH_ENGINE_V0.json` and
-`repo/HYPOTHESIS_GENERATION_V0.json`; their generated state is
+`repo/HYPOTHESIS_GENERATION_V0.json`; typed applicability is owned by
+`repo/ECDLP_TYPED_EVIDENCE_V0.json`, materialized in
+`data/typed_evidence_state.json`, and the combined generated state is
 `data/research_engine_state.json`. The candidate-neutral validation contract lives in
 `experiments/framework/`. No one file authorizes promotion by itself.
 
@@ -227,7 +235,9 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 `README.md` (the front door) · `repo/PRODUCT_MODEL.json` (product and MVP authority) ·
 `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
 `repo/RESEARCH_ENGINE_V0.json` (exploration policy and selector) ·
+`repo/ECDLP_TYPED_EVIDENCE_V0.json` (claim-level applicability screens) ·
 `repo/HYPOTHESIS_GENERATION_V0.json` (seed and proposal-quality policy) ·
+`data/typed_evidence_state.json` (materialized mechanism/property cells) ·
 `data/research_engine_state.json` (generated engine state) ·
 `tasks/NEXT.md` (queue router) · `tasks/ECDLP_RESEARCH.md` (research queue) ·
 `tasks/KEYAI_PRODUCT.md` (product queue) ·

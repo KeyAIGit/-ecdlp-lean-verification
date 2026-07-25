@@ -639,7 +639,7 @@
       "family": "index-calculus / petit-large-characteristic",
       "layer": "experiments-scaling",
       "verdict_class": "open-zone",
-      "one_line": "Petit–Kosters–Messeng define a prime-field factor base by L(x)=0, with L composed from low-degree rational maps obtained from a smooth subgroup of F_p^* or an auxiliary elliptic curve and an isogeny. Historical P4 implements neither source construction and remains only an explicitly-labelled toy approximation. No Lean evidence (honestly empty).",
+      "one_line": "Petit–Kosters–Messeng define a prime-field factor base by L(x)=0, with L composed from low-degree rational maps obtained from a smooth subgroup of F_p^* or from a separate auxiliary elliptic curve whose self-isogeny defines the root map. Historical P4 implements neither source construction and remains only an explicitly-labelled toy approximation. No Lean evidence (honestly empty).",
       "required_properties": [
         "a factor base with a composed low-degree defining system (lower than raw f_F of degree |F|)",
         "the lowered per-equation degree must translate to lower ACTUAL relation-generation cost, not just a lower d_reg number",
@@ -654,7 +654,7 @@
         {
           "property": "faithful prime-field factor base L(x)=0",
           "status": "unimplemented / target applicability unresolved",
-          "evidence": "Petit–Kosters–Messeng, PKC 2016, Sections 2.1–2.3 and 3.1: L is composed from low-degree rational maps using either a smooth subgroup of F_p^* or an auxiliary elliptic curve plus isogeny. P4 implements neither construction."
+          "evidence": "Petit–Kosters–Messeng, PKC 2016, Sections 2.1–3.5: L is composed from low-degree rational maps using either a smooth subgroup of F_p^* or a separate auxiliary elliptic curve whose self-isogeny defines the root map. The auxiliary curve need not be isogenous to secp256k1. P4 implements neither construction."
         },
         {
           "property": "low per-equation degree lowers actual cost",
@@ -669,7 +669,7 @@
       ],
       "asymptotic_complexity": "P4 d_reg measured only at |F|=4, m=2 (toy). Composed map lowers the d_reg NUMBER but not cost: larger ring, larger matrices, larger time, same variety — same negative pattern as P3's u=x^3. No asymptotic claim drawn.",
       "memory": "P4 composed-map Macaulay matrices ~100x larger than raw (10758x5005 vs 108x78) at the same quotient dimension.",
-      "secp256k1_constants": "p = 2^256-2^32-977 and the extension degree is 1. Absence of Weil descent does not exclude the PKC 2016 prime-field constructions; their p-1 smoothness and auxiliary-isogeny prerequisites require separate target-property screens.",
+      "secp256k1_constants": "p = 2^256-2^32-977 and the extension degree is 1. Absence of Weil descent does not exclude the PKC 2016 prime-field constructions; the p-1 smoothness condition and the separate auxiliary-curve/self-isogeny construction require distinct target-property and full-cost screens.",
       "lean_evidence": [],
       "experimental_evidence": [
         "P4 (experiments/p4_petit): product_2aux d_reg 7 vs raw 9 but ~4300x slower; single_aux_composed d_reg 9 (no drop); 80 targets / 32 relations, composed-map == raw baseline == brute-force EC, spurious=0, VALIDATION PASS",
@@ -677,7 +677,7 @@
       ],
       "kill_criterion": "A prime-field composed/rational-map factor base whose lower defining degree yields lower ACTUAL relation-generation cost (smaller matrices AND wall time) at growing |F| and p — not observed; P4 shows the opposite (larger ring, ~4300x slower).",
       "open_escape_routes": [
-        "OPEN: separately screen and reproduce the p-1-smooth and auxiliary-isogeny constructions from PKC 2016, including denominators, preprocessing, and recovery — P4 is not either construction",
+        "OPEN: separately screen and reproduce the p-1-smooth and auxiliary-curve/self-isogeny constructions from PKC 2016, including denominators, preprocessing, and recovery — P4 is not either construction",
         "OPEN: whether ANY prime-field factor-base construction can beat the raw degree-|F| f_F in actual cost (believed no, unproven)",
         "OPEN: d_reg at |F|>4 with an external engine; non-toy primes"
       ],
@@ -959,7 +959,7 @@
     }
   ],
   "cost_schema": {
-    "purpose": "The fields every ECDLP relation-generation hypothesis/experiment must carry so runs are comparable and no-go claims are auditable. Values are filled for the reproducible experiments P0-P4 where measured, and 'unmeasured' otherwise. HONESTY FLAGS: P3's degree_of_regularity for m>=3 is an UNVALIDATED pure-Python Macaulay-matrix proxy (capped lower bound only); P4 is NOT faithful Petit (a prime field affords no Weil restriction, so no F_p-linear-subspace base to imitate) - it is an explicitly-labelled composed-low-degree-map approximation.",
+    "purpose": "The fields every ECDLP relation-generation hypothesis/experiment must carry so runs are comparable and no-go claims are auditable. Values are filled for the reproducible experiments P0-P4 where measured, and 'unmeasured' otherwise. HONESTY FLAGS: P3's degree_of_regularity for m>=3 is an UNVALIDATED pure-Python Macaulay-matrix proxy (capped lower bound only); P4 is NOT faithful Petit because its invented composed map implements neither PKC 2016 source construction - it is an explicitly-labelled composed-low-degree-map approximation.",
     "fields": {
       "nvars": "number of unknowns in the relation system solved per relation (1 = univariate solve; m = plain S_{m+1} system; 2m or 3m = invariant/composed-map coupled system).",
       "equation_degree": "degree of the governing summation polynomial / defining equation (S3 = 2 per var; S4 <= 4; S_m = 2^(m-2); factor-base polynomial f_F = |F|).",
@@ -1029,7 +1029,7 @@
       "P4_petit_composed_map_m2": {
         "nvars": "3m = 6 (product_2aux: X=(t1+kappa*t2)^2+c); single_aux_composed X=r2(r1(t)) chained",
         "equation_degree": "product_2aux per-equation degree <= max(2,b0) ~ sqrt(|F|); single_aux g(t) degree ~|F| (degree only relocated)",
-        "degree_of_regularity": "product_2aux solving degree = 7 (BELOW raw 2|F|+1=9); single_aux = 9 capped (NOT below raw) - measured only at |F|=4, m=2; NOT faithful Petit (approximation, no Weil restriction over prime field)",
+        "degree_of_regularity": "product_2aux solving degree = 7 (BELOW raw 2|F|+1=9); single_aux = 9 capped (NOT below raw) - measured only at |F|=4, m=2; NOT faithful Petit (invented approximation implementing neither PKC 2016 source construction)",
         "factor_base_size": "|F|=4 for d_reg; |F|=9,6 for relation-yield block",
         "relation_probability": "0.000 random (birthday regime); all constructed targets recovered, spurious=0; independent gate 80 targets/32 relations, composed==raw==brute-force EC, VALIDATION PASS",
         "linear_algebra_cost": "Macaulay 10758x5005 vs raw 108x78 (~100x rows, ~64x cols); 619s vs 0.14s (~4300x slower), SAME quotient dimension (2), SAME variety",
@@ -1081,7 +1081,7 @@
     "WEAKEST BACKING (self-flagged, carried): TRANSFER-WEIL-DESCENT has NO dedicated Lean no-go theorem. 'Prime field => no Weil descent' rests on secp256k1_p_prime (Ecdlp/Proved/Secp256k1PrimeP.lean) PLUS a documented structural argument (BARRIERS.md B3, PUBLISHABLE_UNITS.md); the only in-source mentions of Weil restriction are docstrings in SemaevDegree.lean and PointDecomposition.lean, not theorems. Confirmed by grep: no Weil-descent/GHS no-go theorem exists in the repo.",
     "HONESTLY EMPTY: IC-4-petit-composed-map has an intentionally empty lean_evidence array - no Lean formalization of Petit or Weil descent exists in the repo (green-field upstream). This is honest, not a gap masked as a citation.",
     "EXPERIMENTAL CAVEAT (not Lean): P3's degree_of_regularity for m>=3 is an UNVALIDATED pure-Python Macaulay-matrix proxy (a capped lower bound >15); the full solving degree needs an external engine (msolve/Sage/F4). No asymptotic conclusion is drawn from it.",
-    "EXPERIMENTAL CAVEAT (not Lean): P4 is NOT faithful Petit - a prime field affords no Weil restriction, so there is no F_p-linear-subspace factor base to imitate; P4 is an explicitly-labelled composed-low-degree-map approximation, measured only at |F|=4, m=2, toy primes.",
+    "EXPERIMENTAL CAVEAT (not Lean): P4 is NOT faithful Petit because its invented composed map implements neither the p-1-smooth nor the auxiliary-curve/self-isogeny construction in PKC 2016; it is an explicitly-labelled composed-low-degree-map approximation, measured only at |F|=4, m=2, toy primes.",
     "SCOPE (not a fabrication): Ecdlp.GenericGroup.secp256k1_generic_security takes a [Fact (Nat.Prime Secp256k1.n)] instance (supplied by secp256k1_n_prime); the formalized core is the fixed-transcript affine-collision count, NOT the full adaptive Shoup/Nechaev oracle-query theorem (GenericGroupBound.lean docstring). Primality is a proved hypothesis, not an axiom.",
     "LINE-NUMBER PRECISION: every cited theorem identifier was grep-confirmed to resolve to its named file; individual line numbers were spot-checked (e.g. SemaevFour.lean:71/81/140, GlvAutomorphism.lean:31, CurveCardinalityExact.lean:172) but not exhaustively re-verified for every citation. Identifiers are real; a few cited line numbers may drift by a small amount.",
     "EXTERNAL (not a repo result): Luo et al. 2026 (arXiv:2607.13816) report a space-optimized secp256k1 circuit estimate of 835 logical qubits and 2^30.63 Toffoli gates. It supersedes their April 2026 preprint, remains an external logical-resource estimate, and does not establish available fault-tolerant hardware. Quantum resource claims are not machine-checked repo facts.",

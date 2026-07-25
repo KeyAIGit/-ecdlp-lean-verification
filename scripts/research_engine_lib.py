@@ -93,6 +93,14 @@ CANDIDATE_BUDGET_FIELDS = {
     "peak_memory_bytes",
     "parallel_workers",
 }
+CANDIDATE_INTAKE_CONTRACT_FIELDS = {
+    "legacy_candidate_set_status",
+    "legacy_candidate_set_sha256",
+    "authoritative_new_candidate_source",
+    "compiler_status",
+    "compiled_candidate_count",
+    "authorization_rule",
+}
 PREREGISTRATION_FIELDS = {
     "status",
     "solver",
@@ -306,6 +314,12 @@ HISTORICAL_BASELINE_EVENT_IDS = {
 # change, rather than a coordinated metadata edit to an event and its policy digest.
 V0_REVIEWED_HISTORICAL_ROOT_SHA256 = (
     "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
+)
+# The original six candidates are retained only as reviewed regression fixtures.
+# This code anchor prevents an author from editing their self-declared scientific
+# gates and updating the adjacent policy digest in the same metadata-only change.
+V0_REVIEWED_CANDIDATE_SET_SHA256 = (
+    "65f795672caddeab1a19073beaabfd31dcad55fc85e623dcacea0570fc49c182"
 )
 RETROSPECTIVE_CASE_IDS = {
     "RET-P0-PAIR-ENUMERATION",
@@ -1760,6 +1774,9 @@ def validate_policy(
         problems.append("policy.engine_id must be nonempty")
     ownership = policy.get("canonical_ownership", {})
     generation_ownership = {
+        "typed_evidence_policy": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
+        "typed_evidence_state": "data/typed_evidence_state.json",
+        "desk_decisions": "experiments/engine/desk_decisions/",
         "hypothesis_generation_policy": "repo/HYPOTHESIS_GENERATION_V0.json",
         "hypothesis_proposals": "experiments/engine/proposals/",
         "hypothesis_proposal_reviews": (
@@ -1907,6 +1924,53 @@ def validate_policy(
                 problems.append(f"{hypothesis_id}: {field} must be nonempty")
 
     candidates = policy.get("candidate_proposals", [])
+    candidate_intake = policy.get("candidate_intake_contract")
+    if _exact_keys(
+        candidate_intake,
+        CANDIDATE_INTAKE_CONTRACT_FIELDS,
+        "candidate_intake_contract",
+        problems,
+    ):
+        if (
+            candidate_intake.get("legacy_candidate_set_status")
+            != "frozen_non_executable_fixture"
+        ):
+            problems.append(
+                "candidate_intake_contract must freeze the legacy candidates "
+                "as non-executable fixtures"
+            )
+        if (
+            candidate_intake.get("legacy_candidate_set_sha256")
+            != V0_REVIEWED_CANDIDATE_SET_SHA256
+        ):
+            problems.append(
+                "candidate_intake_contract legacy digest differs from the "
+                "reviewed code anchor"
+            )
+        if sha256_json(candidates) != V0_REVIEWED_CANDIDATE_SET_SHA256:
+            problems.append(
+                "legacy candidate set changed; new candidates must enter through "
+                "the typed proposal compiler"
+            )
+        if (
+            candidate_intake.get("authoritative_new_candidate_source")
+            != "quality_cleared_hypothesis_proposals"
+        ):
+            problems.append(
+                "candidate_intake_contract must source new candidates from "
+                "quality-cleared proposals"
+            )
+        if (
+            candidate_intake.get("compiler_status") != "not_implemented"
+            or candidate_intake.get("compiled_candidate_count") != 0
+        ):
+            problems.append(
+                "candidate compiler is not implemented; compiled count must stay zero"
+            )
+        if not _nonempty_text(candidate_intake.get("authorization_rule")):
+            problems.append(
+                "candidate_intake_contract.authorization_rule must be nonempty"
+            )
     candidate_ids = [candidate.get("id") for candidate in candidates]
     if len(candidate_ids) != len(set(candidate_ids)) or None in candidate_ids:
         problems.append("candidate ids must be present and unique")
@@ -3645,6 +3709,9 @@ def build_state(
             "hypothesis_generation_policy_sha256": hypothesis_generation[
                 "source_hashes"
             ]["generation_policy_sha256"],
+            "typed_evidence_state_sha256": hypothesis_generation[
+                "source_hashes"
+            ]["typed_evidence_state_sha256"],
             "decision_substrate_sha256": sha256_json(decisions),
             "hypotheses_sha256": file_sha256(HYPOTHESES_PATH),
             "outcome_events_sha256": sha256_json(event_values),
@@ -3684,6 +3751,23 @@ def build_state(
             "retained_hypothesis_drafts": hypothesis_generation["counts"][
                 "retained_hypothesis_drafts"
             ],
+            "typed_evidence_cells": hypothesis_generation["counts"][
+                "typed_evidence_cells"
+            ],
+            "typed_seed_eligible_cells": hypothesis_generation["counts"][
+                "typed_seed_eligible_cells"
+            ],
+            "typed_desk_decisions": hypothesis_generation[
+                "typed_evidence"
+            ]["counts"].get("desk_decisions", 0),
+            "typed_decided_cells": (
+                hypothesis_generation["typed_evidence"]["counts"].get(
+                    "decided_inapplicable_cells", 0
+                )
+                + hypothesis_generation["typed_evidence"]["counts"].get(
+                    "decided_closed_cells", 0
+                )
+            ),
             "intake_candidates": sum(
                 candidate.get("authorization") == "intake"
                 for candidate in policy["candidate_proposals"]

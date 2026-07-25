@@ -11,14 +11,30 @@ events under `outcomes/`.
 `repo/HYPOTHESIS_GENERATION_V0.json` adds the proposal side of the loop:
 
 ```text
-evidence axes -> generated seed -> untrusted proposal -> five adversarial
-reviews -> quality-cleared draft -> existing candidate gate
+typed source/property/mechanism join
+    -> decided desk cell OR bounded seed
+    -> untrusted proposal
+    -> five adversarial reviews
+    -> quality-cleared non-executable draft
+    -> future deterministic candidate compiler
+    -> existing candidate gate
 ```
 
-The generator crosses only compatible target features, mechanism primitives,
-and unresolved cost-changing questions that share one route, the primary threat
-model, and an explicit compatibility tag. It currently emits three
-source-grounded questions. A seed is not evidence and never authorizes a run.
+`repo/ECDLP_TYPED_EVIDENCE_V0.json` is the canonical left half. Its generated
+view, `data/typed_evidence_state.json`, evaluates each mechanism's declared
+requirements against typed target properties, binds claim-level evidence and
+artifact hashes, attaches scoped barriers and a named cost quantity, and emits
+only unresolved cells. A violated property produces a scoped desk decision
+instead of an experiment. The generator cannot synthesize from a free route/tag
+cross product. A seed is not evidence and never authorizes a run.
+Full-text literature claims additionally bind a local record under
+`data/source_claim_extracts/`; CI checks the source id, URL, source-artifact
+hash, locator, paraphrase, and scope boundary against that record.
+
+Desk decisions live under `desk_decisions/`. They may record `inapplicable` or
+`closed` only for the exact cell scope and must preserve explicit reopening
+conditions. They do not fabricate run envelopes, close an attack family,
+promote a route, or enter predictive calibration.
 
 Model- or human-authored proposals live under `proposals/`. The Engine derives
 hard rejections rather than trusting proposer labels, recomputes premise
@@ -36,7 +52,11 @@ review is retained; it is never averaged into a score.
 Quality clearance does not prove truth or global novelty. It creates only a
 non-executable hypothesis draft. The normal candidate preregistration,
 independent validator, selector, and dated decision contracts remain mandatory.
-Zero retained drafts is an acceptable successful cycle.
+The six original v0 candidates are retained as a code-anchored, hash-frozen
+non-executable regression fixture. The compiler from a cleared proposal and
+typed cell into a candidate is not implemented, so neither a seed nor a cleared
+draft can currently enter execution. Zero retained drafts is an acceptable
+successful cycle.
 
 An outcome event records what a run actually established. It never overwrites a
 prior event, promotes a route, authorizes exact-target work, or claims a

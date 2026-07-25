@@ -58,6 +58,7 @@ def main() -> int:
     frontier = read_json("data/frontier_map.json")
     graph = read_json("data/knowledge_graph.json")
     decisions = read_json("repo/ECDLP_DECISION_SUBSTRATE.json")
+    typed_evidence = read_json("data/typed_evidence_state.json")
     engine = read_json("data/research_engine_state.json")
     product = read_json("repo/PRODUCT_MODEL.json")
     pilot_protocol = read_json("repo/PILOT_PROTOCOL.json")
@@ -225,6 +226,12 @@ def main() -> int:
     generated_hypothesis_seeds = engine.get("counts", {}).get(
         "generated_hypothesis_seeds"
     )
+    typed_evidence_cells = engine.get("counts", {}).get("typed_evidence_cells")
+    typed_decided_cells = engine.get("counts", {}).get("typed_decided_cells")
+    typed_seed_eligible_cells = engine.get("counts", {}).get(
+        "typed_seed_eligible_cells"
+    )
+    typed_desk_decisions = engine.get("counts", {}).get("typed_desk_decisions")
     check(
         f"{route_count} canonical routes" in dashboard,
         "dashboard route count must match the decision substrate",
@@ -258,8 +265,21 @@ def main() -> int:
     )
     check(
         f"**{generated_hypothesis_seeds} source-grounded seeds**" in status
-        and f"{generated_hypothesis_seeds} source-grounded seeds;" in dashboard,
+        and f"{generated_hypothesis_seeds} seed-eligible questions;" in dashboard,
         "status and dashboard must expose the generated hypothesis-seed count",
+    )
+    check(
+        f"**{typed_evidence_cells} mechanism/property cells**" in status
+        and f"**{typed_decided_cells} decided at desk**" in status
+        and f"**{typed_seed_eligible_cells} eligible to emit a bounded research question**"
+        in status
+        and f"**{typed_desk_decisions} desk decisions**" in status,
+        "STATUS.md must expose typed evidence and zero-cost desk-decision counts",
+    )
+    check(
+        f"{typed_evidence_cells} mechanism/property cells;" in dashboard
+        and f"{typed_decided_cells} decided at desk;" in dashboard,
+        "dashboard must expose typed evidence and desk-decision counts",
     )
 
     graph_counts = graph.get("counts", {})
@@ -294,6 +314,14 @@ def main() -> int:
         "knowledge graph generated-seed count must match research_engine_state.json",
     )
     check(
+        graph_counts.get("typed_evidence_cells") == typed_evidence_cells
+        and graph_counts.get("typed_decided_cells") == typed_decided_cells
+        and graph_counts.get("typed_seed_eligible_cells")
+        == typed_seed_eligible_cells
+        and graph_counts.get("typed_desk_decisions") == typed_desk_decisions,
+        "knowledge graph typed-evidence counts must match research_engine_state.json",
+    )
+    check(
         graph_counts.get("research_engine_outcomes")
         == engine.get("counts", {}).get("outcome_events"),
         "knowledge graph outcome count must match research_engine_state.json",
@@ -321,6 +349,26 @@ def main() -> int:
         graph_engine.get("hypothesis_generation")
         == engine.get("hypothesis_generation"),
         "knowledge graph hypothesis-generation view must match engine state",
+    )
+    graph_typed = graph.get("typed_evidence", {})
+    expected_cell_index = [
+        {
+            "cell_id": cell["cell_id"],
+            "mechanism_id": cell["mechanism_id"],
+            "route_id": cell["route_id"],
+            "status": cell["status"],
+            "cost_quantity_id": cell["cost_quantity_id"],
+            "requirement_results": cell["requirement_results"],
+            "seed_eligible": cell["seed_eligible"],
+            "evidence_digest": cell["evidence_digest"],
+            "authorization": cell["authorization"],
+        }
+        for cell in typed_evidence.get("cells", [])
+    ]
+    check(
+        graph_typed.get("counts") == typed_evidence.get("counts")
+        and graph_typed.get("cell_index") == expected_cell_index,
+        "knowledge graph typed-evidence view must match typed evidence state",
     )
     check(
         engine.get("gate_status", {}).get("exploration_authorized")

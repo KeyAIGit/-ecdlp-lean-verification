@@ -41,6 +41,7 @@ DECISION_SUBSTRATE = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
 ATTACK_REGISTRY = ROOT / "data" / "attack_registry.json"
 RESEARCH_ENGINE_POLICY = ROOT / "repo" / "RESEARCH_ENGINE_V0.json"
 RESEARCH_ENGINE_STATE = ROOT / "data" / "research_engine_state.json"
+TYPED_EVIDENCE_STATE = ROOT / "data" / "typed_evidence_state.json"
 
 
 def parse_ledger() -> list[dict]:
@@ -269,6 +270,7 @@ def build() -> dict:
     attack_registry = json.loads(ATTACK_REGISTRY.read_text(encoding="utf-8"))
     engine_policy = json.loads(RESEARCH_ENGINE_POLICY.read_text(encoding="utf-8"))
     engine = json.loads(RESEARCH_ENGINE_STATE.read_text(encoding="utf-8"))
+    typed_evidence = json.loads(TYPED_EVIDENCE_STATE.read_text(encoding="utf-8"))
     family_by_area = {family["area"]: family["id"] for family in substrate["families"]}
     built_modules = set(imports.get("Ecdlp", []))  # what Ecdlp.lean gates
     depth_cache: dict[str, int] = {}
@@ -402,6 +404,58 @@ def build() -> dict:
                 }
             )
 
+    # Typed evidence cells are the deterministic left half of hypothesis
+    # generation. They join mechanisms to target facts, source claims, barriers,
+    # and the cost quantity a useful mechanism would have to change.
+    for cell in typed_evidence["cells"]:
+        cell_id = cell["cell_id"]
+        edges.append(
+            {
+                "from": cell_id,
+                "to": cell["mechanism_id"],
+                "type": "instantiates_mechanism",
+            }
+        )
+        edges.append(
+            {
+                "from": cell_id,
+                "to": cell["route_id"],
+                "type": "evaluates_route",
+            }
+        )
+        edges.append(
+            {
+                "from": cell_id,
+                "to": cell["cost_quantity_id"],
+                "type": "must_change_cost_quantity",
+            }
+        )
+        for requirement in cell["requirement_results"]:
+            edges.append(
+                {
+                    "from": cell_id,
+                    "to": requirement["property_id"],
+                    "type": "requires_target_property",
+                    "verdict": requirement["verdict"],
+                }
+            )
+        for claim_id in cell["source_claim_ids"]:
+            edges.append(
+                {
+                    "from": cell_id,
+                    "to": claim_id,
+                    "type": "grounded_in_source_claim",
+                }
+            )
+        for barrier_id in cell["barrier_ids"]:
+            edges.append(
+                {
+                    "from": cell_id,
+                    "to": barrier_id,
+                    "type": "bounded_by_research_barrier",
+                }
+            )
+
     # Research Engine nodes connect candidate selection and retained outcomes to the
     # already classified route and hypothesis layers. The engine state remains
     # generated from the policy and append-only outcome events.
@@ -488,6 +542,15 @@ def build() -> dict:
             "quality_cleared_hypothesis_proposals": engine["counts"][
                 "quality_cleared_hypothesis_proposals"
             ],
+            "typed_evidence_cells": typed_evidence["counts"]["cells"],
+            "typed_decided_cells": (
+                typed_evidence["counts"]["decided_inapplicable_cells"]
+                + typed_evidence["counts"]["decided_closed_cells"]
+            ),
+            "typed_seed_eligible_cells": typed_evidence["counts"][
+                "seed_eligible_cells"
+            ],
+            "typed_desk_decisions": typed_evidence["counts"]["desk_decisions"],
             "research_engine_intake_candidates": engine["counts"][
                 "intake_candidates"
             ],
@@ -552,6 +615,37 @@ def build() -> dict:
             "hypothesis_generation": engine["hypothesis_generation"],
             "feedback_contract": engine["feedback_contract"],
         },
+        "typed_evidence": {
+            "state_source": "data/typed_evidence_state.json",
+            "policy_source": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
+            "counts": typed_evidence["counts"],
+            "source_hashes": typed_evidence["source_hashes"],
+            "trust_boundary": typed_evidence["trust_boundary"],
+            "cell_index": [
+                {
+                    "cell_id": cell["cell_id"],
+                    "mechanism_id": cell["mechanism_id"],
+                    "route_id": cell["route_id"],
+                    "status": cell["status"],
+                    "cost_quantity_id": cell["cost_quantity_id"],
+                    "requirement_results": cell["requirement_results"],
+                    "seed_eligible": cell["seed_eligible"],
+                    "evidence_digest": cell["evidence_digest"],
+                    "authorization": cell["authorization"],
+                }
+                for cell in typed_evidence["cells"]
+            ],
+            "desk_decision_index": [
+                {
+                    "decision_id": decision["decision_id"],
+                    "cell_id": decision["cell_id"],
+                    "classification": decision["classification"],
+                    "authorization": decision["authorization"],
+                }
+                for decision in typed_evidence["desk_decisions"]
+            ],
+            "authorization_boundary": typed_evidence["authorization_boundary"],
+        },
         "corpus": parse_corpus(),
         "edges": edges,
     }
@@ -581,6 +675,8 @@ def render_markdown(graph: dict) -> str:
         f"**{c['decision_foundations']} decision foundations** · "
         f"**{c['selected_structural_routes']} bounded structural route recorded** · "
         f"**{c['promoted_routes']} routes promoted** · "
+        f"**{c['typed_evidence_cells']} typed evidence cells** · "
+        f"**{c['typed_decided_cells']} desk-decided cells** · "
         f"**{c['generated_hypothesis_seeds']} generated hypothesis seeds** · "
         f"**{c['selected_explorations']} bounded explorations selected** · "
         f"**{c['research_engine_outcomes']} retained outcomes** · "
@@ -655,6 +751,32 @@ def render_markdown(graph: dict) -> str:
             f"{foundation['title']} | `{foundation['decision']}` | "
             f"`{foundation['implementation_status']}` | "
             f"{str(foundation['build_now']).lower()} |"
+        )
+    lines.append("")
+
+    typed = graph["typed_evidence"]
+    lines.append("## Typed evidence and hypothesis cells")
+    lines.append("")
+    lines.append(
+        "Cells are regenerated joins over mechanisms, target properties, source "
+        "claims, scoped barriers, and cost quantities. A decided cell cannot emit "
+        "a hypothesis seed, and no cell authorizes an experiment."
+    )
+    lines.append("")
+    lines.append(
+        "| cell | route | status | required property verdicts | cost quantity | seed eligible |"
+    )
+    lines.append("|---|---|---|---|---|---:|")
+    for cell in typed["cell_index"]:
+        verdicts = ", ".join(
+            f"`{item['property_id']}`={item['verdict']}"
+            for item in cell["requirement_results"]
+        )
+        lines.append(
+            f"| **{cell['cell_id']}** | `{cell['route_id']}` | "
+            f"`{cell['status']}` | {verdicts} | "
+            f"`{cell['cost_quantity_id']}` | "
+            f"{str(cell['seed_eligible']).lower()} |"
         )
     lines.append("")
 

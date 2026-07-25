@@ -27,17 +27,22 @@ model output remains untrusted; deterministic gates compile it into a candidate
 or retain its exact blockers.
 Inputs:
 - `repo/RESEARCH_ENGINE_V0.json`
+- `repo/ECDLP_TYPED_EVIDENCE_V0.json`
 - `repo/ECDLP_DECISION_SUBSTRATE.json`
 - `experiments/HYPOTHESES.yaml`
 - historical experiment artifacts under `experiments/`
 Expected output:
 - Separate exploration and promotion gates.
-- A source-grounded generator that intersects target features, mechanism
-  primitives, and unresolved cost-changing questions without treating
+- A typed evidence layer that joins claim-level sources, target properties,
+  mechanism requirements, scoped barriers, and cost quantities before any
+  creative synthesis.
+- A generator that emits seeds only from unresolved typed cells without treating
   combinatorial novelty as scientific novelty.
+- A zero-cost desk-decision path for scoped applicability and closure results,
+  separate from experiment outcomes and predictive calibration.
 - Digest-bound proposal and five-role adversarial-review contracts that can
   produce at most three non-executable hypothesis drafts per cycle.
-- Seven-outcome result taxonomy, with formal `proved` separated from empirical
+- Eight-outcome result taxonomy, with formal `proved` separated from empirical
   `supported`, and a five-class gap taxonomy.
 - All nine hypotheses and historical runs normalized without rewriting
   provenance.
@@ -52,6 +57,11 @@ Exit criteria:
 - Promotion and exact-target work remain disabled.
 - Generated seeds and drafts never authorize work; zero retained drafts is a
   valid cycle result.
+- The legacy candidate set is code-anchored and hash-frozen. It cannot be edited
+  into admissibility; new execution remains closed until a deterministic
+  compiler binds a typed cell to a quality-cleared proposal.
+- A desk decision cannot close a wider route, enter predictive calibration, or
+  authorize execution.
 - Exact known-premise duplicates, semantic re-encodings identified by review,
   threat-model drift, missing fixed-target semantics, missing recovery, hidden
   preprocessing, proxy-only metrics, and missing validator plans cannot clear.
@@ -74,6 +84,7 @@ Exit criteria:
 - All repository gates and generated-artifact checks pass.
 Files allowed to edit:
 - `repo/RESEARCH_ENGINE_V0.json`
+- `repo/ECDLP_TYPED_EVIDENCE_V0.json`
 - `repo/HYPOTHESIS_GENERATION_V0.json`
 - `repo/ECDLP_DECISION_SUBSTRATE.json`
 - `experiments/engine/`
@@ -82,9 +93,12 @@ Files allowed to edit:
 - task, generator, validator, graph, site, and CI files directly affected by
   the engine contract
 Files that must be regenerated:
+- `data/typed_evidence_state.json`
 - `data/research_engine_state.json`
 - every derived artifact named by `repo/ARTIFACTS.yaml`
 How to verify:
+- `python scripts/build_typed_evidence_state.py --check`
+- `python scripts/test_typed_evidence.py`
 - `python scripts/build_research_engine_state.py --check`
 - `python scripts/check_research_engine.py`
 - `python scripts/test_research_engine.py`

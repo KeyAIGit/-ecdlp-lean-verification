@@ -6,12 +6,15 @@
   "additionalProperties": false,
   "required": [
     "seed_id",
+    "cell_id",
+    "typed_evidence_digest",
     "route_id",
     "route_source_ids",
     "threat_model",
     "status",
     "authorization",
     "synthesis_rule",
+    "typed_cell",
     "target_feature",
     "mechanism_primitive",
     "unresolved_question",
@@ -25,6 +28,14 @@
     "seed_id": {
       "type": "string",
       "pattern": "^HGS-[A-F0-9]{12}$"
+    },
+    "cell_id": {
+      "type": "string",
+      "pattern": "^CELL-[A-Z0-9-]+$"
+    },
+    "typed_evidence_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
     },
     "route_id": {
       "type": "string",
@@ -43,7 +54,11 @@
       "const": "classical-single-target-plain"
     },
     "status": {
-      "const": "proposal_required"
+      "enum": [
+        "proposal_required",
+        "desk_cost_bridge_required",
+        "property_resolution_required"
+      ]
     },
     "authorization": {
       "const": "none"
@@ -64,7 +79,75 @@
           "const": "1.0"
         },
         "operator": {
-          "const": "shared_route_tag_intersection"
+          "const": "typed_open_cell"
+        }
+      }
+    },
+    "typed_cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mechanism_id",
+        "status",
+        "intake_mode",
+        "construction",
+        "relation_action",
+        "changed_quantity",
+        "cost_quantity",
+        "requirement_results",
+        "source_claim_ids",
+        "boundary"
+      ],
+      "properties": {
+        "mechanism_id": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "open",
+            "property_resolution_required"
+          ]
+        },
+        "intake_mode": {
+          "enum": [
+            "proposal",
+            "desk_cost_bridge",
+            "property_resolution"
+          ]
+        },
+        "construction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relation_action": {
+          "type": "string",
+          "minLength": 1
+        },
+        "changed_quantity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cost_quantity": {
+          "type": "object"
+        },
+        "requirement_results": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object"
+          }
+        },
+        "source_claim_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "boundary": {
+          "type": "string",
+          "minLength": 1
         }
       }
     },

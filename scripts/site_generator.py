@@ -581,22 +581,30 @@ def build_dashboard(
         else ""
     )
     generation = engine["hypothesis_generation"]
+    generation_status = {
+        "proposal_required": ("blue", "Proposal"),
+        "desk_cost_bridge_required": ("amber", "Desk cost"),
+        "property_resolution_required": ("amber", "Property resolution"),
+    }
     generation_seed_html = "".join(
         f"""<article class="task-row">
   <div class="task-row__top"><div><h4>{esc(seed["research_question"])}</h4>
-    <small>{esc(seed["seed_id"])} · {esc(seed["route_id"])}</small>
-    <p>{esc(seed["unresolved_question"]["boundary"])}</p></div>
-    {status_badge("blue", "Proposal required")}</div>
+    <small>{esc(seed["seed_id"])} · {esc(seed["cell_id"])} · {esc(seed["route_id"])}</small>
+    <p>{esc(seed["typed_cell"]["boundary"])}</p></div>
+    {status_badge(*generation_status[seed["status"]])}</div>
 </article>"""
         for seed in generation["generated_seeds"]
     )
+    typed_counts = generation["typed_evidence"]["counts"]
     generation_section = f"""
-      <div class="panel-heading"><div><h2>Generated research questions</h2>
-        <p>{generation["counts"]["generated_seeds"]} source-grounded seeds;
+      <div class="panel-heading"><div><h2>Typed research questions</h2>
+        <p>{typed_counts["cells"]} mechanism/property cells;
+          {typed_counts["decided_inapplicable_cells"] + typed_counts["decided_closed_cells"]} decided at desk;
+          {generation["counts"]["generated_seeds"]} seed-eligible questions;
           {generation["counts"]["submitted_proposals"]} submitted;
           {generation["counts"]["quality_cleared_proposals"]} quality-cleared.
-          Seeds and drafts are non-executable.</p></div>
-        <a href="{repo_url(product, 'repo/HYPOTHESIS_GENERATION_V0.json')}">Open policy</a></div>
+          Typed screens, seeds, and drafts authorize nothing.</p></div>
+        <a href="{repo_url(product, 'repo/ECDLP_TYPED_EVIDENCE_V0.json')}">Open evidence</a></div>
       <div class="surface" style="margin-bottom:22px"><div class="surface__body">{generation_seed_html}</div></div>"""
 
     health_cards = [
@@ -616,11 +624,13 @@ def build_dashboard(
         (
             "Research Engine gates",
             (
+                f'{engine_counts["typed_evidence_cells"]} typed cells / '
                 f'{engine_counts["generated_hypothesis_seeds"]} seeds / '
                 f'{engine_counts["selected_explorations"]} bounded experiments'
             ),
             [
                 "repo/RESEARCH_ENGINE_V0.json",
+                "repo/ECDLP_TYPED_EVIDENCE_V0.json",
                 "repo/HYPOTHESIS_GENERATION_V0.json",
                 "scripts/check_research_engine.py",
             ],
@@ -673,6 +683,7 @@ def build_dashboard(
         <div class="workspace-metric"><div class="workspace-metric__value">{stats["proved_modules"]}</div><div class="workspace-metric__label">proved modules</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">{frontier["meta"]["corpus_claims"]}</div><div class="workspace-metric__label">corpus claims</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">{len(routes)}</div><div class="workspace-metric__label">routes evaluated</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">{engine_counts["typed_evidence_cells"]}</div><div class="workspace-metric__label">typed cells</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">{engine_counts["generated_hypothesis_seeds"]}</div><div class="workspace-metric__label">generated seeds</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">{engine_counts["selected_explorations"]}</div><div class="workspace-metric__label">selected experiments</div></div>
       </div>

@@ -39,7 +39,7 @@ Two composed maps are measured (definitions in `semaev_petit.py`):
   that composition *alone* (without the product structure) does not lower the degree.
 
 **What is explicitly NOT done:** no faithful PKC 2016 `L`, smooth-subgroup or
-auxiliary-isogeny construction, preprocessing, or recovery map; no true rational
+auxiliary-curve/self-isogeny construction, preprocessing, or recovery map; no true rational
 map with denominators; no `m ≥ 3` degree of
 regularity (already intractable in P3); no non-toy primes; the `product_2aux` composition
 is degree 2, not a monomial substitution `u=x³` (that P3 already did) — but it is **not**

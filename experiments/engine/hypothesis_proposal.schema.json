@@ -8,6 +8,8 @@
     "schema_version",
     "proposal_id",
     "seed_id",
+    "cell_id",
+    "typed_evidence_digest",
     "created_on",
     "proposer_id",
     "route_id",
@@ -48,6 +50,14 @@
     "seed_id": {
       "type": "string",
       "pattern": "^HGS-[A-F0-9]{12}$"
+    },
+    "cell_id": {
+      "type": "string",
+      "pattern": "^CELL-[A-Z0-9-]+$"
+    },
+    "typed_evidence_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
     },
     "created_on": {
       "type": "string",

@@ -63,6 +63,7 @@ classes:
       - data/corpus_reclassify.json
       - data/claim_traceability.jsonl
       - data/attack_registry.json
+      - data/source_claim_extracts/
       - data/research_decisions.md
       - data/README.md
     owner: frontier
@@ -110,6 +111,7 @@ classes:
       - bundles/MANIFEST.json
       - data/result_registry.json
       - data/source_registry.json
+      - data/typed_evidence_state.json
       - data/research_engine_state.json
       - repo/ECDLP_DECISION_SUBSTRATE.md
       - Ecdlp/LedgerAxiomAudit.lean
@@ -127,6 +129,7 @@ classes:
       - scripts/export_agent_bundle.py
       - scripts/gen_result_registry.py
       - scripts/gen_source_registry.py
+      - scripts/build_typed_evidence_state.py
       - scripts/build_research_engine_state.py
       - scripts/build_ecdlp_decision_view.py
       - scripts/gen_axiom_audit.py
@@ -138,6 +141,8 @@ classes:
       - scripts/gen_result_registry.py --check
       - scripts/build_ecdlp_decision_view.py --check
       - scripts/build_research_engine_state.py --check
+      - scripts/build_typed_evidence_state.py --check
+      - scripts/test_typed_evidence.py
       - scripts/check_research_engine.py
       - scripts/check_product_model.py
     risks:
@@ -182,6 +187,7 @@ classes:
       - repo/ECDLP_DECISION_SUBSTRATE.json
       - repo/RESEARCH_ENGINE_V0.json
       - repo/HYPOTHESIS_GENERATION_V0.json
+      - repo/ECDLP_TYPED_EVIDENCE_V0.json
       - repo/PRODUCT_MODEL.json
       - repo/PILOT_PROTOCOL.json
       - repo/AUTOMATION_INVENTORY.json

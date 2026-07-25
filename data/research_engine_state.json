@@ -2,9 +2,10 @@
   "schema_version": "0.1-generated",
   "engine_id": "ecdlp-research-engine-v0",
   "source_hashes": {
-    "policy_sha256": "bd358c6b76fe84ff9f54fe14454e199b863a10a8f1a09f2f8f626c173e1a4308",
-    "hypothesis_generation_policy_sha256": "26a9cce0463753dc4ff8846277b289998f4d87bdd5cf4f3ea460acf12afe1842",
-    "decision_substrate_sha256": "412df9b1ff9d5ab1167bdb2cc5416ebe30d0973430ed022db15b640e5ff00673",
+    "policy_sha256": "d511124345031017d2148b2e4f1d44eccb16b038690b3690a14e7cd857ecb446",
+    "hypothesis_generation_policy_sha256": "1eebb447d08701ce8659cdac9a9b9c685410497f1adc135b8114f4124377fca8",
+    "typed_evidence_state_sha256": "292d1e4119d62ba5c1b33b50a02904b3084fa0755643ccb3c736a31afa1a4bb0",
+    "decision_substrate_sha256": "648df28d7dd27868efc7de6cc1a5466630f77f29fb0a072259c98e584deda5a0",
     "hypotheses_sha256": "0a9a3c94fd5dfa871525fba50ac2360c1a8824a159fe240922cf869bbdd6646d",
     "outcome_events_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
     "historical_baseline_anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
@@ -57,10 +58,14 @@
     "normalized_hypotheses": 9,
     "outcome_events": 8,
     "candidate_proposals": 6,
-    "generated_hypothesis_seeds": 3,
+    "generated_hypothesis_seeds": 4,
     "submitted_hypothesis_proposals": 0,
     "quality_cleared_hypothesis_proposals": 0,
     "retained_hypothesis_drafts": 0,
+    "typed_evidence_cells": 7,
+    "typed_seed_eligible_cells": 4,
+    "typed_desk_decisions": 3,
+    "typed_decided_cells": 3,
     "intake_candidates": 0,
     "authorized_exploration_candidates": 0,
     "closed_candidates": 6,
@@ -1104,7 +1109,8 @@
     "schema_version": "0.1-generated",
     "generator_id": "ecdlp-hypothesis-generation-v0",
     "source_hashes": {
-      "generation_policy_sha256": "26a9cce0463753dc4ff8846277b289998f4d87bdd5cf4f3ea460acf12afe1842",
+      "generation_policy_sha256": "1eebb447d08701ce8659cdac9a9b9c685410497f1adc135b8114f4124377fca8",
+      "typed_evidence_state_sha256": "292d1e4119d62ba5c1b33b50a02904b3084fa0755643ccb3c736a31afa1a4bb0",
       "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
@@ -1115,15 +1121,44 @@
       "authorization_boundary": "This layer never authorizes an experiment, promotes a route, targets secp256k1 directly, or makes an asymptotic claim."
     },
     "counts": {
-      "generated_seeds": 3,
+      "generated_seeds": 4,
       "submitted_proposals": 0,
       "adversarial_reviews": 0,
       "quality_cleared_proposals": 0,
-      "retained_hypothesis_drafts": 0
+      "retained_hypothesis_drafts": 0,
+      "typed_evidence_cells": 7,
+      "typed_seed_eligible_cells": 4
+    },
+    "typed_evidence": {
+      "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
+      "target_id": "secp256k1-classical-single-target-plain",
+      "counts": {
+        "source_claims": 12,
+        "target_properties": 5,
+        "mechanisms": 7,
+        "cells": 7,
+        "open_cells": 3,
+        "property_resolution_cells": 1,
+        "decided_inapplicable_cells": 2,
+        "decided_closed_cells": 1,
+        "seed_eligible_cells": 4,
+        "desk_decisions": 3
+      },
+      "source_hashes": {
+        "policy_sha256": "9718f32ce5b2ad330dc60ca05cc5cdfbe7dd0174e1619bb98a9b7fcf938fcf08",
+        "decision_substrate_sha256": "8d91a39f3d99b9fb2781d38c80b0d1c2c89954107370de995e99ca4987271bcb",
+        "source_registry_identity_sha256": "c6abca98bc0fa8d1c1f9a37e7d424df17aca524af14d5e854f6a9d16c79ce6e9",
+        "evidence_files_sha256": "fa99bed98766cc72e02db1efc6f945aad35a7ffd74e2e0cfb617379e68596270",
+        "desk_decisions_sha256": "ee50228216f0ff99023ab3d1c869732c3c10926a8707107caf9b9a49b9b3dd48"
+      },
+      "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
+      "authorization": "none"
     },
     "generated_seeds": [
       {
-        "seed_id": "HGS-93FEC3E4D246",
+        "seed_id": "HGS-4FCB1533C2F5",
+        "cell_id": "CELL-M-GLV-FAITHFUL-PHASE-QUOTIENT",
+        "typed_evidence_digest": "0741c407620cfc43414f8b252d6e06fa25647b715a9b8cc9d70a985fa9509a65",
         "route_id": "R-GLV-SEMAEV",
         "route_source_ids": [
           "duursma_gaudry_morain1999",
@@ -1141,9 +1176,51 @@
         "status": "proposal_required",
         "authorization": "none",
         "synthesis_rule": {
-          "id": "SYN-SHARED-ROUTE-TAG-001",
+          "id": "SYN-TYPED-OPEN-CELL-001",
           "version": "1.0",
-          "operator": "shared_route_tag_intersection"
+          "operator": "typed_open_cell"
+        },
+        "typed_cell": {
+          "mechanism_id": "M-GLV-FAITHFUL-PHASE-QUOTIENT",
+          "status": "open",
+          "intake_mode": "proposal",
+          "construction": "Use mixed diagonal invariants or explicit phase tags with a total recovery map instead of independent coordinate cubes.",
+          "relation_action": "The construction must preserve the exact fixed-target relation and distinguish all phase combinations merged by the naive quotient.",
+          "changed_quantity": "Unknown effect on solving degree, sparse support, mixed volume, recovery cost, or full relation cost.",
+          "cost_quantity": {
+            "id": "CQ-GLV-FAITHFUL-QUOTIENT-COST",
+            "label": "Faithful GLV phase-quotient solving cost",
+            "definition": "End-to-end relation-generation cost after retaining all relative GLV phase information, including quotient construction, recovery, excluded components, and solver work.",
+            "baseline": "Matched Semaev relation collection without the proposed quotient, with identical target, factor base, relation arity, and success criterion.",
+            "measurement": "Require an exact map and recovery algorithm, then compare preregistered scaling laws rather than one solver timing.",
+            "status": "missing",
+            "source_claim_ids": [
+              "SC-GLV-SEMAEV-COVARIANCE",
+              "SC-GLV-SEMAEV-CLASSIFICATION",
+              "SC-GLV-FIXED-TARGET-CLASSIFICATION"
+            ]
+          },
+          "requirement_results": [
+            {
+              "property_id": "TP-SECP-GLV-C3",
+              "property_status": "kernel_verified",
+              "operator": "eq",
+              "expected": true,
+              "actual": true,
+              "verdict": "satisfied",
+              "source_claim_ids": [
+                "SC-GLV-ENDOMORPHISM"
+              ],
+              "rationale": "A faithful GLV quotient requires the proved order-three action but must add a new premise beyond it."
+            }
+          ],
+          "source_claim_ids": [
+            "SC-GLV-ENDOMORPHISM",
+            "SC-GLV-FIXED-TARGET-CLASSIFICATION",
+            "SC-GLV-SEMAEV-CLASSIFICATION",
+            "SC-GLV-SEMAEV-COVARIANCE"
+          ],
+          "boundary": "An open cell is a question slot only; without an exact map and cost-changing bridge it is not a candidate and authorizes no computation."
         },
         "target_feature": {
           "id": "TF-J0-GLV-C3",
@@ -1163,14 +1240,14 @@
         "shared_compatibility_tags": [
           "glv-faithful-fixed-target"
         ],
-        "research_question": "Can a phase-preserving faithful quotient with recovery use the exact order-three GLV action on the j=0 curve to resolve whether a faithful GLV presentation changes solving cost rather than notation while preserving the plain fixed-target relation and changing an audited cost term?",
+        "research_question": "Can a phase-preserving faithful quotient with recovery use the exact order-three GLV action on the j=0 curve to resolve whether a faithful GLV presentation changes solving cost rather than notation while satisfying the typed cell requirements and changing the named audited cost quantity?",
         "evidence_inputs": [
           "Ecdlp/Proved/GlvEndomorphism.lean",
           "Ecdlp/Proved/SemaevFour.lean",
           "experiments/glv_diagonal_obstruction/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "93fec3e4d24667fa7e5382870c2cdf6614f5d673ea50db9110bc3b825ebd72a8",
+        "deduplication_key": "4fcb1533c2f5eb47efec45cab0704ea7f97907a6ef8d02330e523f11016a05e7",
         "proposal_packet": {
           "required_sections": [
             "new_premise",
@@ -1220,126 +1297,68 @@
             "seed_scope_mismatch",
             "semantic_reencoding_risk",
             "targets_secp256k1_directly",
-            "threat_model_drift"
+            "threat_model_drift",
+            "typed_evidence_mismatch",
+            "target_property_violated"
           ],
-          "instruction": "Return no proposal unless a genuinely new premise and exact mechanism can be stated. A renamed representation, missing recovery map, or constant batching observation fails."
+          "instruction": "Return no proposal unless a genuinely new premise, exact mechanism, recovery map, and cost-changing bridge can be stated. A renamed representation or finite batching observation fails."
         }
       },
       {
-        "seed_id": "HGS-C5CBE324B1D7",
-        "route_id": "R-PRIME-FIELD-INDEX-CALCULUS",
-        "route_source_ids": [
-          "amadori_pintore_sala2018",
-          "diem2011",
-          "fhjrv2014",
-          "gaudry2009",
-          "petit_kosters_messeng2016",
-          "semaev2004"
-        ],
-        "threat_model": "classical-single-target-plain",
-        "status": "proposal_required",
-        "authorization": "none",
-        "synthesis_rule": {
-          "id": "SYN-SHARED-ROUTE-TAG-001",
-          "version": "1.0",
-          "operator": "shared_route_tag_intersection"
-        },
-        "target_feature": {
-          "id": "TF-PRIME-FIELD-REPRESENTATION",
-          "statement": "The plain target exposes prime-field curve coordinates and arithmetic outside the generic-group oracle model, so a legitimate classical escape must identify exactly which representation information it consumes.",
-          "boundary": "Access to coordinates is only an opportunity surface. It is not evidence that relation generation, generalized root finding, or descent is cheaper than the square-root baseline."
-        },
-        "mechanism_primitive": {
-          "id": "MP-SEMAEV-RELATION-SAMPLING",
-          "statement": "Generate factor-base relations through exact Semaev systems while measuring relation probability, algebraic solving effort, recovery failures, linear algebra, and rejected components.",
-          "boundary": "Polynomial degree, matrix size, or one solver timing is only a proxy and cannot establish a subgeneric algorithm without an end-to-end cost bridge."
-        },
-        "unresolved_question": {
-          "id": "U-PRIME-FIELD-RELATION-EXPONENT",
-          "statement": "The repository lacks a source-grounded mechanism and cost theorem connecting prime-field summation-polynomial relation yield to total work below the Pollard-rho square-root baseline.",
-          "boundary": "Toy relations, proxy matrices, and informal asymptotics remain insufficient until the factor-base probability, solver, recovery, linear algebra, and precomputation terms are joined."
-        },
-        "shared_compatibility_tags": [
-          "prime-field-relation-generation"
-        ],
-        "research_question": "Can summation-polynomial relation sampling with complete costs use the explicit prime-field coordinate representation to resolve whether prime-field relation generation changes the square-root exponent while preserving the plain fixed-target relation and changing an audited cost term?",
-        "evidence_inputs": [
-          "BARRIERS.md",
-          "Ecdlp/Proved/GenericGroupBound.lean",
-          "Ecdlp/Proved/SemaevThree.lean",
-          "experiments/p3_sm_system/README.md",
-          "experiments/p3_sm_system/RESULTS.md",
-          "notes/SECURITY_SCOPE.md"
-        ],
-        "deduplication_key": "c5cbe324b1d791d964c6fafb64610be38264e5fbb6b0dbb25d4a2276e79a18c1",
-        "proposal_packet": {
-          "required_sections": [
-            "new_premise",
-            "premise_counterfactual",
-            "mechanism_signature",
-            "novelty_scope",
-            "nearest_prior_art",
-            "exact_mechanism",
-            "fixed_target_semantics",
-            "non_generic_information_source",
-            "null_model",
-            "competing_mechanism",
-            "cost_bridge",
-            "falsifiable_prediction",
-            "matched_baseline",
-            "stop_condition",
-            "outcome_matrix",
-            "independent_validator_plan",
-            "claim_boundary",
-            "evidence_manifest"
-          ],
-          "required_review_roles": [
-            "algebra",
-            "cryptanalysis_skeptic",
-            "prior_art",
-            "cost_model",
-            "validator_design"
-          ],
-          "hard_rejections": [
-            "adversarial_review_blocked",
-            "adversarial_review_incomplete",
-            "duplicate_or_reencoding",
-            "duplicate_mechanism_signature",
-            "hidden_or_unpriced_precomputation",
-            "missing_cost_changing_bridge",
-            "missing_exact_mechanism",
-            "missing_falsifiable_prediction",
-            "missing_fixed_target_semantics",
-            "missing_independent_validator_plan",
-            "missing_new_premise",
-            "missing_non_generic_information_source",
-            "missing_primary_source_comparison",
-            "missing_primary_source_anchor",
-            "novelty_scope_overclaimed",
-            "proxy_not_decisive",
-            "review_independence_unestablished",
-            "seed_scope_mismatch",
-            "semantic_reencoding_risk",
-            "targets_secp256k1_directly",
-            "threat_model_drift"
-          ],
-          "instruction": "Return no proposal unless a genuinely new premise and exact mechanism can be stated. A renamed representation, missing recovery map, or constant batching observation fails."
-        }
-      },
-      {
-        "seed_id": "HGS-DE3081BBEA0A",
+        "seed_id": "HGS-C626EAEBAF2E",
+        "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
+        "typed_evidence_digest": "e138476fcecf3a5c3468db3d04fcec6c59d08ec3badcaef24fcc2db27d18b4ac",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
           "petit_kosters_messeng2016"
         ],
         "threat_model": "classical-single-target-plain",
-        "status": "proposal_required",
+        "status": "property_resolution_required",
         "authorization": "none",
         "synthesis_rule": {
-          "id": "SYN-SHARED-ROUTE-TAG-001",
+          "id": "SYN-TYPED-OPEN-CELL-001",
           "version": "1.0",
-          "operator": "shared_route_tag_intersection"
+          "operator": "typed_open_cell"
+        },
+        "typed_cell": {
+          "mechanism_id": "M-PKC-AUXILIARY-CURVE",
+          "status": "property_resolution_required",
+          "intake_mode": "property_resolution",
+          "construction": "Find an auxiliary curve E0 over the same field whose order contains a B-smooth factor near p to the one-over-m scale; use the kernel self-isogeny on E0 to construct the composed root map L for target-curve factor-base coordinates.",
+          "relation_action": "The original target curve remains the relation group. The auxiliary self-isogeny defines only the root set and low-degree decomposition of L; all recovered x-values must still lift to valid target-curve points and relations.",
+          "changed_quantity": "Auxiliary-curve search, composed-map construction, generalized-root solving, recovery, and total relation-generation cost.",
+          "cost_quantity": {
+            "id": "CQ-PKC-GENERALIZED-ROOT-COST",
+            "label": "Generalized root-finding and recovery cost",
+            "definition": "Cost of solving the composed-map fiber constraints and recovering valid factor-base points without hidden discarded components.",
+            "baseline": "Direct factor-base membership and relation recovery at the same arity and effective factor-base size.",
+            "measurement": "Price all roots, spurious fibers, recovery failures, preprocessing, and independent relation validation as field size grows.",
+            "status": "partial",
+            "source_claim_ids": [
+              "SC-PKC-SMOOTH-SUBGROUP",
+              "SC-PKC-AUXILIARY-CURVE"
+            ]
+          },
+          "requirement_results": [
+            {
+              "property_id": "TP-SECP-PKC-AUXILIARY-CURVE",
+              "property_status": "unknown",
+              "operator": "eq",
+              "expected": true,
+              "actual": null,
+              "verdict": "unknown",
+              "source_claim_ids": [
+                "SC-PKC-AUXILIARY-CURVE"
+              ],
+              "rationale": "The construction cannot proceed until an explicit auxiliary-curve instance over the shared field is constructed and its complete cost is recorded."
+            }
+          ],
+          "source_claim_ids": [
+            "SC-PKC-AUXILIARY-CURVE",
+            "SC-PKC-SMOOTH-SUBGROUP"
+          ],
+          "boundary": "The first output is a bounded arithmetic construction or no-instance record plus a complete precomputation estimate, not an ECDLP experiment."
         },
         "target_feature": {
           "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
@@ -1359,7 +1378,7 @@
         "shared_compatibility_tags": [
           "petit-faithful-root-solving"
         ],
-        "research_question": "Can generalized root finding with explicit fiber recovery use the low-degree composed-map factor-base construction to resolve whether the composed-map generalized root problem scales better end to end while preserving the plain fixed-target relation and changing an audited cost term?",
+        "research_question": "Can this target-property cell be decided without an ECDLP run: Construct or rule out a fully priced auxiliary-curve instance over the secp256k1 base field under the exact PKC 2016 conditions. The answer must instantiate or refute the typed construction and price every named precomputation term.",
         "evidence_inputs": [
           "experiments/p1_petit/README.md",
           "experiments/p1_petit_m3/README.md",
@@ -1367,7 +1386,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "de3081bbea0a8fe228e2c62a7560f1ab32d03ed442148671267ff688f335361d",
+        "deduplication_key": "c626eaebaf2e2472e5a0167a5a246f33b40c820ed1f647bfc7ce9af841104c71",
         "proposal_packet": {
           "required_sections": [
             "new_premise",
@@ -1417,9 +1436,299 @@
             "seed_scope_mismatch",
             "semantic_reencoding_risk",
             "targets_secp256k1_directly",
-            "threat_model_drift"
+            "threat_model_drift",
+            "typed_evidence_mismatch",
+            "target_property_violated"
           ],
-          "instruction": "Return no proposal unless a genuinely new premise and exact mechanism can be stated. A renamed representation, missing recovery map, or constant batching observation fails."
+          "instruction": "Return a provenance-bound arithmetic construction, a scoped no-instance result, or the smallest exact blocker. Do not return an attack claim or experiment; unresolved conditions remain unknown."
+        }
+      },
+      {
+        "seed_id": "HGS-D624E998ADAE",
+        "cell_id": "CELL-M-PKC-SMOOTH-M14",
+        "typed_evidence_digest": "782d66ccb0e288aae648a13583043c11041a04a521dbc4585fbeb41002a02560",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "route_source_ids": [
+          "amadori_pintore_sala2018",
+          "petit_kosters_messeng2016"
+        ],
+        "threat_model": "classical-single-target-plain",
+        "status": "desk_cost_bridge_required",
+        "authorization": "none",
+        "synthesis_rule": {
+          "id": "SYN-TYPED-OPEN-CELL-001",
+          "version": "1.0",
+          "operator": "typed_open_cell"
+        },
+        "typed_cell": {
+          "mechanism_id": "M-PKC-SMOOTH-M14",
+          "status": "open",
+          "intake_mode": "desk_cost_bridge",
+          "construction": "Use the available smooth divisor 564522 of p-minus-one, which exceeds the exact arity-fourteen threshold 319558, and price the resulting relation system and recovery path.",
+          "relation_action": "The construction can satisfy the raw factor-base-size predicate only by moving to a much higher-arity Semaev relation.",
+          "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S15 system.",
+          "cost_quantity": {
+            "id": "CQ-SEMAEV-S15-SYSTEM-COST",
+            "label": "Semaev S15 system construction and solving cost",
+            "definition": "Total cost of constructing, representing, solving, and validating the relation system required by an arity-fourteen smooth-subgroup instantiation.",
+            "baseline": "The same success probability priced against generic square-root work and lower-arity prime-field relation pipelines.",
+            "measurement": "An exact symbolic size bound must precede any solver run; degree, monomial count, memory, and recovery are all included.",
+            "status": "missing",
+            "source_claim_ids": [
+              "SC-PKC-SMOOTH-SUBGROUP",
+              "SC-SEMAEV-RELATION-SEMANTICS"
+            ]
+          },
+          "requirement_results": [
+            {
+              "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+              "property_status": "kernel_derived",
+              "operator": "gte",
+              "expected": 319558,
+              "actual": 564522,
+              "verdict": "satisfied",
+              "source_claim_ids": [
+                "SC-SECP-PMINUS1-FACTORIZATION"
+              ],
+              "rationale": "The available small-factor product exceeds the exact ceiling of p to the one-fourteenth, so raw factor-base scale alone does not reject this arity."
+            }
+          ],
+          "source_claim_ids": [
+            "SC-PKC-SMOOTH-SUBGROUP",
+            "SC-SECP-PMINUS1-FACTORIZATION",
+            "SC-SEMAEV-RELATION-SEMANTICS"
+          ],
+          "boundary": "This open desk-cost cell does not justify an S15 solver run; an exact symbolic size and cost bound is required first."
+        },
+        "target_feature": {
+          "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
+          "statement": "Petit-style factor bases define x-coordinates through a low-degree composition, creating structured fibers whose relation yield and generalized root-solving cost can be measured independently.",
+          "boundary": "A smaller coordinate image or a successful toy solve is not a complexity improvement unless recovery, exceptional fibers, preprocessing, and total relation cost are all included."
+        },
+        "mechanism_primitive": {
+          "id": "MP-GENERALIZED-ROOT-RECOVERY",
+          "statement": "Exploit a composed rational map only through an algorithm that enumerates or samples valid fibers, recovers curve points, prices excluded components, and returns independently checkable relations.",
+          "boundary": "The construction remains a proposal primitive until its generalized root problem and all offline work are cheaper than the matched plain presentation at increasing toy sizes."
+        },
+        "unresolved_question": {
+          "id": "U-PETIT-GENERALIZED-ROOT-COST",
+          "statement": "The faithful Petit-style route has no validated algorithm showing that generalized root finding plus recovery and preprocessing beats the matched plain factor-base pipeline as field size grows.",
+          "boundary": "Approximate or nonfaithful variants and isolated toy wins do not answer the faithful generalized-root question."
+        },
+        "shared_compatibility_tags": [
+          "petit-faithful-root-solving"
+        ],
+        "research_question": "Can an exact desk derivation price Total construction, representation, solving, and recovery cost of the corresponding S15 system. against the declared baseline before any solver run?",
+        "evidence_inputs": [
+          "experiments/p1_petit/README.md",
+          "experiments/p1_petit_m3/README.md",
+          "experiments/p1_petit_m3/RESULTS.md",
+          "experiments/p4_petit/README.md",
+          "experiments/p4_petit/RESULTS.md"
+        ],
+        "deduplication_key": "d624e998adae4b88ed9ce61ed4399cc43d390562ebb61eff49aba64d3dc02615",
+        "proposal_packet": {
+          "required_sections": [
+            "new_premise",
+            "premise_counterfactual",
+            "mechanism_signature",
+            "novelty_scope",
+            "nearest_prior_art",
+            "exact_mechanism",
+            "fixed_target_semantics",
+            "non_generic_information_source",
+            "null_model",
+            "competing_mechanism",
+            "cost_bridge",
+            "falsifiable_prediction",
+            "matched_baseline",
+            "stop_condition",
+            "outcome_matrix",
+            "independent_validator_plan",
+            "claim_boundary",
+            "evidence_manifest"
+          ],
+          "required_review_roles": [
+            "algebra",
+            "cryptanalysis_skeptic",
+            "prior_art",
+            "cost_model",
+            "validator_design"
+          ],
+          "hard_rejections": [
+            "adversarial_review_blocked",
+            "adversarial_review_incomplete",
+            "duplicate_or_reencoding",
+            "duplicate_mechanism_signature",
+            "hidden_or_unpriced_precomputation",
+            "missing_cost_changing_bridge",
+            "missing_exact_mechanism",
+            "missing_falsifiable_prediction",
+            "missing_fixed_target_semantics",
+            "missing_independent_validator_plan",
+            "missing_new_premise",
+            "missing_non_generic_information_source",
+            "missing_primary_source_comparison",
+            "missing_primary_source_anchor",
+            "novelty_scope_overclaimed",
+            "proxy_not_decisive",
+            "review_independence_unestablished",
+            "seed_scope_mismatch",
+            "semantic_reencoding_risk",
+            "targets_secp256k1_directly",
+            "threat_model_drift",
+            "typed_evidence_mismatch",
+            "target_property_violated"
+          ],
+          "instruction": "Return an exact symbolic size and cost bridge or a scoped blocker. Do not request compute while the desk quantity is missing."
+        }
+      },
+      {
+        "seed_id": "HGS-A5D8C99AF5ED",
+        "cell_id": "CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND",
+        "typed_evidence_digest": "764c0f1f114727db542e4bed7a7187385d8daad7faa4aaf484f319716bd135cb",
+        "route_id": "R-PRIME-FIELD-INDEX-CALCULUS",
+        "route_source_ids": [
+          "amadori_pintore_sala2018",
+          "diem2011",
+          "fhjrv2014",
+          "gaudry2009",
+          "petit_kosters_messeng2016",
+          "sec2_v2",
+          "semaev2004"
+        ],
+        "threat_model": "classical-single-target-plain",
+        "status": "proposal_required",
+        "authorization": "none",
+        "synthesis_rule": {
+          "id": "SYN-TYPED-OPEN-CELL-001",
+          "version": "1.0",
+          "operator": "typed_open_cell"
+        },
+        "typed_cell": {
+          "mechanism_id": "M-PRIME-FIELD-SEMAEV-ENDTOEND",
+          "status": "open",
+          "intake_mode": "proposal",
+          "construction": "Specify factor base, relation system, sampling or solving procedure, recovery map, enough-relations criterion, and linear-algebra stage as one costed pipeline.",
+          "relation_action": "Every produced polynomial solution must recover to an independently validated point relation for the fixed target.",
+          "changed_quantity": "End-to-end exponent or another formally defined total-cost quantity relative to the generic square-root baseline.",
+          "cost_quantity": {
+            "id": "CQ-PRIME-FIELD-RELATION-TOTAL",
+            "label": "Total prime-field relation-generation cost",
+            "definition": "Online and offline cost of obtaining enough independently validated full relations, including factor-base construction, polynomial solving, recovery, and linear algebra.",
+            "baseline": "The generic square-root attack and the matched plain Semaev pipeline must both be priced under the same threat model.",
+            "measurement": "Record scaling across field sizes with matched baselines and retain every preprocessing, memory, parallelism, and amortization term.",
+            "status": "partial",
+            "source_claim_ids": [
+              "SC-PKC-SMOOTH-SUBGROUP",
+              "SC-SEMAEV-RELATION-SEMANTICS",
+              "SC-AMADORI-PRIME-FIELD-VARIANT"
+            ]
+          },
+          "requirement_results": [
+            {
+              "property_id": "TP-SECP-PRIME-FIELD-COORDINATES",
+              "property_status": "public_constant_recomputed",
+              "operator": "eq",
+              "expected": true,
+              "actual": true,
+              "verdict": "satisfied",
+              "source_claim_ids": [
+                "SC-SECP-PRIME-FIELD"
+              ],
+              "rationale": "The non-generic route consumes the public prime-field representation rather than only a black-box group oracle."
+            }
+          ],
+          "source_claim_ids": [
+            "SC-AMADORI-PRIME-FIELD-VARIANT",
+            "SC-PKC-SMOOTH-SUBGROUP",
+            "SC-SECP-PRIME-FIELD",
+            "SC-SEMAEV-RELATION-SEMANTICS"
+          ],
+          "boundary": "A prose idea, solver benchmark, or lower polynomial degree is not a mechanism-bearing proposal without the complete cost and recovery bridge."
+        },
+        "target_feature": {
+          "id": "TF-PRIME-FIELD-REPRESENTATION",
+          "statement": "The plain target exposes prime-field curve coordinates and arithmetic outside the generic-group oracle model, so a legitimate classical escape must identify exactly which representation information it consumes.",
+          "boundary": "Access to coordinates is only an opportunity surface. It is not evidence that relation generation, generalized root finding, or descent is cheaper than the square-root baseline."
+        },
+        "mechanism_primitive": {
+          "id": "MP-SEMAEV-RELATION-SAMPLING",
+          "statement": "Generate factor-base relations through exact Semaev systems while measuring relation probability, algebraic solving effort, recovery failures, linear algebra, and rejected components.",
+          "boundary": "Polynomial degree, matrix size, or one solver timing is only a proxy and cannot establish a subgeneric algorithm without an end-to-end cost bridge."
+        },
+        "unresolved_question": {
+          "id": "U-PRIME-FIELD-RELATION-EXPONENT",
+          "statement": "The repository lacks a source-grounded mechanism and cost theorem connecting prime-field summation-polynomial relation yield to total work below the Pollard-rho square-root baseline.",
+          "boundary": "Toy relations, proxy matrices, and informal asymptotics remain insufficient until the factor-base probability, solver, recovery, linear algebra, and precomputation terms are joined."
+        },
+        "shared_compatibility_tags": [
+          "prime-field-relation-generation"
+        ],
+        "research_question": "Can summation-polynomial relation sampling with complete costs use the explicit prime-field coordinate representation to resolve whether prime-field relation generation changes the square-root exponent while satisfying the typed cell requirements and changing the named audited cost quantity?",
+        "evidence_inputs": [
+          "BARRIERS.md",
+          "Ecdlp/Proved/GenericGroupBound.lean",
+          "Ecdlp/Proved/SemaevThree.lean",
+          "experiments/p3_sm_system/README.md",
+          "experiments/p3_sm_system/RESULTS.md",
+          "notes/SECURITY_SCOPE.md"
+        ],
+        "deduplication_key": "a5d8c99af5ed4c67eff4410b2ee695e6b305f9782bc1314b99ab7d8c6b0925be",
+        "proposal_packet": {
+          "required_sections": [
+            "new_premise",
+            "premise_counterfactual",
+            "mechanism_signature",
+            "novelty_scope",
+            "nearest_prior_art",
+            "exact_mechanism",
+            "fixed_target_semantics",
+            "non_generic_information_source",
+            "null_model",
+            "competing_mechanism",
+            "cost_bridge",
+            "falsifiable_prediction",
+            "matched_baseline",
+            "stop_condition",
+            "outcome_matrix",
+            "independent_validator_plan",
+            "claim_boundary",
+            "evidence_manifest"
+          ],
+          "required_review_roles": [
+            "algebra",
+            "cryptanalysis_skeptic",
+            "prior_art",
+            "cost_model",
+            "validator_design"
+          ],
+          "hard_rejections": [
+            "adversarial_review_blocked",
+            "adversarial_review_incomplete",
+            "duplicate_or_reencoding",
+            "duplicate_mechanism_signature",
+            "hidden_or_unpriced_precomputation",
+            "missing_cost_changing_bridge",
+            "missing_exact_mechanism",
+            "missing_falsifiable_prediction",
+            "missing_fixed_target_semantics",
+            "missing_independent_validator_plan",
+            "missing_new_premise",
+            "missing_non_generic_information_source",
+            "missing_primary_source_comparison",
+            "missing_primary_source_anchor",
+            "novelty_scope_overclaimed",
+            "proxy_not_decisive",
+            "review_independence_unestablished",
+            "seed_scope_mismatch",
+            "semantic_reencoding_risk",
+            "targets_secp256k1_directly",
+            "threat_model_drift",
+            "typed_evidence_mismatch",
+            "target_property_violated"
+          ],
+          "instruction": "Return no proposal unless a genuinely new premise, exact mechanism, recovery map, and cost-changing bridge can be stated. A renamed representation or finite batching observation fails."
         }
       }
     ],

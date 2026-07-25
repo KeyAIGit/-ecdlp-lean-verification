@@ -78,13 +78,16 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 `TIERS` in `scripts/export_agent_bundle.py`):
 - **small** — the live snapshot: `STATUS.md`,
   `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/RESEARCH_ENGINE_V0.json`,
+  `repo/ECDLP_TYPED_EVIDENCE_V0.json`,
   `repo/HYPOTHESIS_GENERATION_V0.json`,
-  `data/research_engine_state.json`, `repo/PRODUCT_MODEL.json`,
+  `data/typed_evidence_state.json`, `data/research_engine_state.json`,
+  `repo/PRODUCT_MODEL.json`,
   `repo/PILOT_PROTOCOL.json`, the queue router and both owning queues,
   `data/stats.json`, `data/frontier_map.json`.
 - **medium** — adds `README.md`, this file, `VERIFIED.md`, `BARRIERS.md`,
   `notes/SECURITY_SCOPE.md`, `notes/FOUNDATIONS.md`, `experiments/HYPOTHESES.yaml`,
-  and the Research Engine event contract/schema.
+  claim-level records under `data/source_claim_extracts/`, and the Research
+  Engine event contract/schema.
 - **large** — adds `data/knowledge_graph.json`, `REPOSITORY_ARCHITECTURE.md`,
   `PUBLISHABLE_UNITS.md`, `TRUST_REPORT.md`, and review-anchored outcome events.
 
@@ -110,8 +113,13 @@ branch from current `main`; preserve any unrelated local changes.
   outcome retention, independent validation, and feedback into generated state.
   Its bounded-exploration capability remains available in policy, but candidate
   execution stays paused in the current proposal-intake mode.
-- `TASK-013` also owns source-grounded seed generation and digest-bound
-  adversarial proposal review before deterministic selection.
+- `TASK-013` also owns typed-cell seed generation and digest-bound adversarial
+  proposal review before deterministic selection. Seeds must come from
+  regenerated mechanism/property cells, never a free-form route/tag cross
+  product.
+- Desk decisions may retire a scoped cell as `inapplicable` or `closed` without
+  fabricating an experiment run. They cannot close a wider route, promote a
+  hypothesis, or authorize execution.
 - Generated seeds and quality-cleared drafts are non-executable. Creative model
   output is untrusted; zero retained drafts is a valid cycle result.
 - `TASK-008` accepts new primary evidence or a concrete proposal and checks it

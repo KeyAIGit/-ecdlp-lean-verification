@@ -10,6 +10,9 @@
   },
   "canonical_ownership": {
     "policy_and_candidate_queue": "repo/RESEARCH_ENGINE_V0.json",
+    "typed_evidence_policy": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
+    "typed_evidence_state": "data/typed_evidence_state.json",
+    "desk_decisions": "experiments/engine/desk_decisions/",
     "hypothesis_generation_policy": "repo/HYPOTHESIS_GENERATION_V0.json",
     "hypothesis_proposals": "experiments/engine/proposals/",
     "hypothesis_proposal_reviews": "experiments/engine/proposal_reviews/",
@@ -21,6 +24,14 @@
     "route_decisions": "repo/ECDLP_DECISION_SUBSTRATE.json",
     "attack_evidence": "data/attack_registry.json",
     "formal_results": "data/result_registry.json"
+  },
+  "candidate_intake_contract": {
+    "legacy_candidate_set_status": "frozen_non_executable_fixture",
+    "legacy_candidate_set_sha256": "65f795672caddeab1a19073beaabfd31dcad55fc85e623dcacea0570fc49c182",
+    "authoritative_new_candidate_source": "quality_cleared_hypothesis_proposals",
+    "compiler_status": "not_implemented",
+    "compiled_candidate_count": 0,
+    "authorization_rule": "The frozen v0 candidates may not be edited into admissibility. A future executable candidate must be compiled deterministically from a typed evidence cell and a digest-bound, quality-cleared proposal; until that compiler exists, generated seeds and proposals authorize nothing."
   },
   "queue_separation": {
     "ecdlp_research": {

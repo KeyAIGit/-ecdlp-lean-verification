@@ -34,7 +34,7 @@ raw degree-`|F|` polynomial `f_F`. Two composed maps are measured:
   the high degree is **relocated**, not removed. This is the honest contrast showing that
   composition *alone* (without the product structure) does not lower the defining degree.
 
-**What is NOT done:** no faithful PKC 2016 `L`, smooth-subgroup or auxiliary-isogeny
+**What is NOT done:** no faithful PKC 2016 `L`, smooth-subgroup or auxiliary-curve/self-isogeny
 construction, preprocessing, or recovery map; no true rational map with denominators;
 no `m ≥ 3` degree of regularity (already
 intractable in P3); no non-toy primes. No asymptotic / advantage / no-go-proof conclusion

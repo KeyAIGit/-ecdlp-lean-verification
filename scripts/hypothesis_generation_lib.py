@@ -20,6 +20,11 @@ from scientific_provenance import (
     git_file_bytes,
     scientific_source_commit_allowed,
 )
+from typed_evidence_lib import (
+    POLICY_PATH as TYPED_EVIDENCE_POLICY_PATH,
+    STATE_PATH as TYPED_EVIDENCE_STATE_PATH,
+    load_and_build as load_typed_evidence_state,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 GENERATION_POLICY_PATH = ROOT / "repo" / "HYPOTHESIS_GENERATION_V0.json"
@@ -33,6 +38,7 @@ GENERATION_POLICY_FIELDS = {
     "purpose",
     "trust_boundary",
     "limits",
+    "typed_evidence_contract",
     "synthesis_rules",
     "lifecycle",
     "fingerprint_contract",
@@ -40,6 +46,13 @@ GENERATION_POLICY_FIELDS = {
     "quality_gate",
     "known_premises",
     "axes",
+}
+TYPED_EVIDENCE_CONTRACT_FIELDS = {
+    "policy_path",
+    "state_path",
+    "seedable_statuses",
+    "required_authorization",
+    "decision_rule",
 }
 SYNTHESIS_RULE_FIELDS = {
     "id",
@@ -109,6 +122,8 @@ PROPOSAL_FIELDS = {
     "schema_version",
     "proposal_id",
     "seed_id",
+    "cell_id",
+    "typed_evidence_digest",
     "created_on",
     "proposer_id",
     "route_id",
@@ -265,6 +280,8 @@ HYPOTHESIS_HARD_REJECTIONS = {
     "adversarial_review_incomplete",
     "adversarial_review_blocked",
     "review_independence_unestablished",
+    "typed_evidence_mismatch",
+    "target_property_violated",
 }
 
 PROPOSAL_ID = re.compile(r"^HGP-[A-Z0-9][A-Z0-9-]{4,80}$")
@@ -398,6 +415,7 @@ def validate_generation_policy(
     policy: dict[str, Any],
     decisions: dict[str, Any],
     engine_policy: dict[str, Any],
+    typed_evidence_state: dict[str, Any] | None = None,
 ) -> list[str]:
     problems: list[str] = []
     if not _exact_keys(
@@ -439,6 +457,33 @@ def validate_generation_policy(
         if limits.get("max_toy_field_bits", 99) > 24:
             problems.append("hypothesis generation toy scope may not exceed 24 bits")
 
+    typed_contract = policy.get("typed_evidence_contract")
+    if _exact_keys(
+        typed_contract,
+        TYPED_EVIDENCE_CONTRACT_FIELDS,
+        "typed_evidence_contract",
+        problems,
+    ):
+        expected_policy_path = TYPED_EVIDENCE_POLICY_PATH.relative_to(
+            ROOT
+        ).as_posix()
+        expected_state_path = TYPED_EVIDENCE_STATE_PATH.relative_to(
+            ROOT
+        ).as_posix()
+        if typed_contract.get("policy_path") != expected_policy_path:
+            problems.append("typed evidence policy path is not canonical")
+        if typed_contract.get("state_path") != expected_state_path:
+            problems.append("typed evidence state path is not canonical")
+        if set(typed_contract.get("seedable_statuses", [])) != {
+            "open",
+            "property_resolution_required",
+        }:
+            problems.append("typed evidence seedable statuses are not canonical")
+        if typed_contract.get("required_authorization") != "none":
+            problems.append("typed evidence cannot authorize generation work")
+        if not _substantive_text(typed_contract.get("decision_rule")):
+            problems.append("typed evidence decision rule must be substantive")
+
     synthesis_rules = policy.get("synthesis_rules")
     if not isinstance(synthesis_rules, list) or not synthesis_rules:
         problems.append("synthesis_rules must be a nonempty array")
@@ -451,7 +496,7 @@ def validate_generation_policy(
         synthesis_ids.append(rule.get("id"))
         if rule.get("version") != "1.0":
             problems.append(f"{label}.version must be 1.0")
-        if rule.get("operator") != "shared_route_tag_intersection":
+        if rule.get("operator") != "typed_open_cell":
             problems.append(f"{label}.operator is unsupported")
         if rule.get("axis_order") != [
             "target_features",
@@ -460,19 +505,22 @@ def validate_generation_policy(
         ]:
             problems.append(f"{label}.axis_order is not canonical")
         if set(rule.get("required_predicates", [])) != {
-            "active_inputs",
+            "typed_cell_seed_eligible",
+            "typed_cell_authorization_none",
             "primary_threat_model",
-            "shared_route",
-            "shared_compatibility_tag",
             "eligible_route_status",
+            "resolved_axis_bindings",
         }:
             problems.append(f"{label}.required_predicates is incomplete")
         if rule.get("seed_identity_fields") != [
+            "cell_id",
+            "typed_mechanism_id",
             "feature_id",
-            "mechanism_id",
+            "mechanism_primitive_id",
             "uncertainty_id",
             "route_id",
             "threat_model",
+            "evidence_digest",
             "synthesis_rule_id",
             "synthesis_rule_version",
         ]:
@@ -491,6 +539,7 @@ def validate_generation_policy(
     lifecycle = policy.get("lifecycle")
     if lifecycle != [
         "evidence_snapshot",
+        "typed_evidence_cell",
         "generated_seed",
         "untrusted_proposal",
         "blind_adversarial_review",
@@ -681,6 +730,85 @@ def validate_generation_policy(
         problems.append("known premise ids must be unique")
     if len(known_fingerprints) != len(set(known_fingerprints)):
         problems.append("known premise fingerprints must be unique")
+
+    if typed_evidence_state is not None:
+        cells = typed_evidence_state.get("cells")
+        if not isinstance(cells, list):
+            problems.append("typed evidence state cells must be an array")
+            cells = []
+        axis_index = {
+            item["id"]: item
+            for items in policy.get("axes", {}).values()
+            if isinstance(items, list)
+            for item in items
+            if isinstance(item, dict) and isinstance(item.get("id"), str)
+        }
+        route_index = {
+            route["id"]: route
+            for route in decisions.get("routes", [])
+            if isinstance(route, dict) and isinstance(route.get("id"), str)
+        }
+        seedable_statuses = set(
+            policy.get("typed_evidence_contract", {}).get(
+                "seedable_statuses", []
+            )
+        )
+        for index, cell in enumerate(cells):
+            label = f"typed_evidence.cells[{index}]"
+            if not isinstance(cell, dict):
+                problems.append(f"{label} must be an object")
+                continue
+            seed_eligible = cell.get("seed_eligible") is True
+            if seed_eligible and cell.get("status") not in seedable_statuses:
+                problems.append(f"{label} seed eligibility conflicts with status")
+            if seed_eligible and cell.get("authorization") != "none":
+                problems.append(f"{label} seed eligibility carries authorization")
+            if seed_eligible and any(
+                result.get("verdict") == "violated"
+                for result in cell.get("requirement_results", [])
+                if isinstance(result, dict)
+            ):
+                problems.append(f"{label} violated target property reached synthesis")
+            if not seed_eligible:
+                continue
+            route = route_index.get(cell.get("route_id"))
+            if route is None:
+                problems.append(f"{label}.route_id does not resolve")
+            elif route.get("status") not in set(
+                policy.get("compatibility_rule", {}).get(
+                    "eligible_route_statuses", []
+                )
+            ):
+                problems.append(f"{label} route is not eligible for generation")
+            if cell.get("threat_model") != primary_model:
+                problems.append(f"{label} differs from the primary threat model")
+            digest = cell.get("evidence_digest")
+            if not isinstance(digest, str) or HASH_ID.fullmatch(digest) is None:
+                problems.append(f"{label}.evidence_digest is invalid")
+            seed_axes = cell.get("seed_axes")
+            if not isinstance(seed_axes, dict):
+                problems.append(f"{label}.seed_axes must be an object")
+                continue
+            bound_axes = [
+                axis_index.get(seed_axes.get("target_feature_id")),
+                axis_index.get(seed_axes.get("mechanism_primitive_id")),
+                axis_index.get(seed_axes.get("uncertainty_id")),
+            ]
+            if any(item is None for item in bound_axes):
+                problems.append(f"{label}.seed_axes do not resolve")
+                continue
+            for axis in bound_axes:
+                if axis.get("status") != "active":
+                    problems.append(f"{label} binds a retired generation axis")
+                if cell.get("route_id") not in axis.get("route_ids", []):
+                    problems.append(f"{label} axis binding changes route")
+                if primary_model not in axis.get("threat_models", []):
+                    problems.append(f"{label} axis binding changes threat model")
+            common_tags = set(bound_axes[0].get("compatibility_tags", []))
+            for axis in bound_axes[1:]:
+                common_tags &= set(axis.get("compatibility_tags", []))
+            if not common_tags:
+                problems.append(f"{label} axis bindings lack a common tag")
     return problems
 
 
@@ -688,7 +816,12 @@ def generate_seeds(
     policy: dict[str, Any],
     decisions: dict[str, Any],
     engine_policy: dict[str, Any],
+    typed_evidence_state: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
+    if typed_evidence_state is None:
+        typed_problems, typed_evidence_state = load_typed_evidence_state()
+        if typed_problems:
+            return []
     primary = engine_policy["target_contract"]["primary_threat_model"]
     route_index = {route["id"]: route for route in decisions["routes"]}
     synthesis_rule = next(
@@ -700,112 +833,185 @@ def generate_seeds(
         policy["compatibility_rule"]["eligible_route_statuses"]
     )
     axes = policy["axes"]
+    feature_index = {
+        item["id"]: item for item in axes["target_features"]
+    }
+    mechanism_index = {
+        item["id"]: item for item in axes["mechanism_primitives"]
+    }
+    uncertainty_index = {
+        item["id"]: item for item in axes["unresolved_questions"]
+    }
+    seedable_statuses = set(
+        policy["typed_evidence_contract"]["seedable_statuses"]
+    )
     seeds: list[dict[str, Any]] = []
-    for feature in axes["target_features"]:
-        if feature["status"] != "active":
+    for cell in sorted(
+        typed_evidence_state.get("cells", []),
+        key=lambda item: item.get("cell_id", ""),
+    ):
+        if (
+            cell.get("seed_eligible") is not True
+            or cell.get("status") not in seedable_statuses
+            or cell.get("authorization") != "none"
+            or cell.get("threat_model") != primary
+            or any(
+                result.get("verdict") == "violated"
+                for result in cell.get("requirement_results", [])
+                if isinstance(result, dict)
+            )
+        ):
             continue
-        for mechanism in axes["mechanism_primitives"]:
-            if mechanism["status"] != "active":
-                continue
-            for uncertainty in axes["unresolved_questions"]:
-                if uncertainty["status"] != "active":
-                    continue
-                common_routes = (
-                    set(feature["route_ids"])
-                    & set(mechanism["route_ids"])
-                    & set(uncertainty["route_ids"])
-                )
-                common_models = (
-                    set(feature["threat_models"])
-                    & set(mechanism["threat_models"])
-                    & set(uncertainty["threat_models"])
-                )
-                common_tags = (
-                    set(feature["compatibility_tags"])
-                    & set(mechanism["compatibility_tags"])
-                    & set(uncertainty["compatibility_tags"])
-                )
-                if primary not in common_models or not common_tags:
-                    continue
-                for route_id in sorted(common_routes):
-                    route = route_index.get(route_id)
-                    if route is None or route.get("status") not in eligible_statuses:
-                        continue
-                    identity = {
-                        "feature_id": feature["id"],
-                        "mechanism_id": mechanism["id"],
-                        "uncertainty_id": uncertainty["id"],
-                        "route_id": route_id,
-                        "threat_model": primary,
-                        "synthesis_rule_id": synthesis_rule["id"],
-                        "synthesis_rule_version": synthesis_rule["version"],
-                    }
-                    seed_id = f"HGS-{sha256_json(identity)[:12].upper()}"
-                    evidence_inputs = sorted(
-                        set(feature["evidence_inputs"])
-                        | set(mechanism["evidence_inputs"])
-                        | set(uncertainty["evidence_inputs"])
-                    )
-                    seeds.append(
-                        {
-                            "seed_id": seed_id,
-                            "route_id": route_id,
-                            "route_source_ids": sorted(
-                                route.get("source_ids", [])
-                            ),
-                            "threat_model": primary,
-                            "status": "proposal_required",
-                            "authorization": "none",
-                            "synthesis_rule": {
-                                "id": synthesis_rule["id"],
-                                "version": synthesis_rule["version"],
-                                "operator": synthesis_rule["operator"],
-                            },
-                            "target_feature": {
-                                "id": feature["id"],
-                                "statement": feature["statement"],
-                                "boundary": feature["boundary"],
-                            },
-                            "mechanism_primitive": {
-                                "id": mechanism["id"],
-                                "statement": mechanism["statement"],
-                                "boundary": mechanism["boundary"],
-                            },
-                            "unresolved_question": {
-                                "id": uncertainty["id"],
-                                "statement": uncertainty["statement"],
-                                "boundary": uncertainty["boundary"],
-                            },
-                            "shared_compatibility_tags": sorted(common_tags),
-                            "research_question": (
-                                f"Can {mechanism['label']} use "
-                                f"{feature['label']} to resolve "
-                                f"{uncertainty['label']} while preserving the "
-                                "plain fixed-target relation and changing an "
-                                "audited cost term?"
-                            ),
-                            "evidence_inputs": evidence_inputs,
-                            "deduplication_key": sha256_json(identity),
-                            "proposal_packet": {
-                                "required_sections": policy["quality_gate"][
-                                    "required_sections"
-                                ],
-                                "required_review_roles": policy["quality_gate"][
-                                    "required_review_roles"
-                                ],
-                                "hard_rejections": policy["quality_gate"][
-                                    "hard_rejections"
-                                ],
-                                "instruction": (
-                                    "Return no proposal unless a genuinely new "
-                                    "premise and exact mechanism can be stated. "
-                                    "A renamed representation, missing recovery "
-                                    "map, or constant batching observation fails."
-                                ),
-                            },
-                        }
-                    )
-    return sorted(seeds, key=lambda item: item["seed_id"])
+        route_id = cell.get("route_id")
+        route = route_index.get(route_id)
+        if route is None or route.get("status") not in eligible_statuses:
+            continue
+        seed_axes = cell.get("seed_axes", {})
+        feature = feature_index.get(seed_axes.get("target_feature_id"))
+        mechanism = mechanism_index.get(
+            seed_axes.get("mechanism_primitive_id")
+        )
+        uncertainty = uncertainty_index.get(seed_axes.get("uncertainty_id"))
+        if any(
+            item is None for item in (feature, mechanism, uncertainty)
+        ):
+            continue
+        bound_axes = [feature, mechanism, uncertainty]
+        if any(item.get("status") != "active" for item in bound_axes):
+            continue
+        if any(route_id not in item.get("route_ids", []) for item in bound_axes):
+            continue
+        if any(primary not in item.get("threat_models", []) for item in bound_axes):
+            continue
+        common_tags = set(feature["compatibility_tags"])
+        common_tags &= set(mechanism["compatibility_tags"])
+        common_tags &= set(uncertainty["compatibility_tags"])
+        if not common_tags:
+            continue
+        identity = {
+            "cell_id": cell["cell_id"],
+            "typed_mechanism_id": cell["mechanism_id"],
+            "feature_id": feature["id"],
+            "mechanism_primitive_id": mechanism["id"],
+            "uncertainty_id": uncertainty["id"],
+            "route_id": route_id,
+            "threat_model": primary,
+            "evidence_digest": cell["evidence_digest"],
+            "synthesis_rule_id": synthesis_rule["id"],
+            "synthesis_rule_version": synthesis_rule["version"],
+        }
+        seed_id = f"HGS-{sha256_json(identity)[:12].upper()}"
+        evidence_inputs = sorted(
+            set(feature["evidence_inputs"])
+            | set(mechanism["evidence_inputs"])
+            | set(uncertainty["evidence_inputs"])
+        )
+        intake_mode = cell["intake_mode"]
+        if intake_mode == "property_resolution":
+            status = "property_resolution_required"
+            research_question = (
+                "Can this target-property cell be decided without an ECDLP run: "
+                f"{cell['scope']} The answer must instantiate or refute the "
+                "typed construction and price every named precomputation term."
+            )
+            instruction = (
+                "Return a provenance-bound arithmetic construction, a scoped "
+                "no-instance result, or the smallest exact blocker. Do not return "
+                "an attack claim or experiment; unresolved conditions remain unknown."
+            )
+        elif intake_mode == "desk_cost_bridge":
+            status = "desk_cost_bridge_required"
+            research_question = (
+                f"Can an exact desk derivation price {cell['changed_quantity']} "
+                "against the declared baseline before any solver run?"
+            )
+            instruction = (
+                "Return an exact symbolic size and cost bridge or a scoped "
+                "blocker. Do not request compute while the desk quantity is "
+                "missing."
+            )
+        else:
+            status = "proposal_required"
+            research_question = (
+                f"Can {mechanism['label']} use {feature['label']} to resolve "
+                f"{uncertainty['label']} while satisfying the typed cell "
+                "requirements and changing the named audited cost quantity?"
+            )
+            instruction = (
+                "Return no proposal unless a genuinely new premise, exact "
+                "mechanism, recovery map, and cost-changing bridge can be "
+                "stated. A renamed representation or finite batching "
+                "observation fails."
+            )
+        route_source_ids = sorted(
+            set(route.get("source_ids", []))
+            | {
+                source_id
+                for source_id in cell.get("source_ids", [])
+                if not source_id.startswith("repo:")
+            }
+        )
+        seeds.append(
+            {
+                "seed_id": seed_id,
+                "cell_id": cell["cell_id"],
+                "typed_evidence_digest": cell["evidence_digest"],
+                "route_id": route_id,
+                "route_source_ids": route_source_ids,
+                "threat_model": primary,
+                "status": status,
+                "authorization": "none",
+                "synthesis_rule": {
+                    "id": synthesis_rule["id"],
+                    "version": synthesis_rule["version"],
+                    "operator": synthesis_rule["operator"],
+                },
+                "typed_cell": {
+                    "mechanism_id": cell["mechanism_id"],
+                    "status": cell["status"],
+                    "intake_mode": intake_mode,
+                    "construction": cell["construction"],
+                    "relation_action": cell["relation_action"],
+                    "changed_quantity": cell["changed_quantity"],
+                    "cost_quantity": cell["cost_quantity"],
+                    "requirement_results": cell["requirement_results"],
+                    "source_claim_ids": cell["source_claim_ids"],
+                    "boundary": cell["boundary"],
+                },
+                "target_feature": {
+                    "id": feature["id"],
+                    "statement": feature["statement"],
+                    "boundary": feature["boundary"],
+                },
+                "mechanism_primitive": {
+                    "id": mechanism["id"],
+                    "statement": mechanism["statement"],
+                    "boundary": mechanism["boundary"],
+                },
+                "unresolved_question": {
+                    "id": uncertainty["id"],
+                    "statement": uncertainty["statement"],
+                    "boundary": uncertainty["boundary"],
+                },
+                "shared_compatibility_tags": sorted(common_tags),
+                "research_question": research_question,
+                "evidence_inputs": evidence_inputs,
+                "deduplication_key": sha256_json(identity),
+                "proposal_packet": {
+                    "required_sections": policy["quality_gate"][
+                        "required_sections"
+                    ],
+                    "required_review_roles": policy["quality_gate"][
+                        "required_review_roles"
+                    ],
+                    "hard_rejections": policy["quality_gate"][
+                        "hard_rejections"
+                    ],
+                    "instruction": instruction,
+                },
+            }
+        )
+    return sorted(seeds, key=lambda item: (item["cell_id"], item["seed_id"]))
 
 
 def _proposal_blockers(
@@ -821,6 +1027,24 @@ def _proposal_blockers(
         blockers.add("threat_model_drift")
     if proposal.get("route_id") != seed["route_id"]:
         blockers.add("seed_scope_mismatch")
+    if (
+        proposal.get("cell_id") != seed["cell_id"]
+        or proposal.get("typed_evidence_digest")
+        != seed["typed_evidence_digest"]
+    ):
+        blockers.add("typed_evidence_mismatch")
+    if (
+        seed.get("typed_cell", {}).get("status")
+        not in {"open", "property_resolution_required"}
+        or any(
+            result.get("verdict") == "violated"
+            for result in seed.get("typed_cell", {}).get(
+                "requirement_results", []
+            )
+            if isinstance(result, dict)
+        )
+    ):
+        blockers.add("target_property_violated")
 
     new_premise = proposal.get("new_premise")
     if not _substantive_text(new_premise) or not _substantive_text(
@@ -1012,6 +1236,16 @@ def validate_proposals(
         if seed is None:
             problems.append(f"{label}: seed_id does not resolve")
             continue
+        if not _nonempty_text(proposal.get("cell_id")):
+            problems.append(f"{label}: cell_id must be nonempty")
+        typed_digest = proposal.get("typed_evidence_digest")
+        if (
+            not isinstance(typed_digest, str)
+            or HASH_ID.fullmatch(typed_digest) is None
+        ):
+            problems.append(
+                f"{label}: typed_evidence_digest must be lowercase 64-hex"
+            )
         expected_fingerprint = (
             premise_fingerprint(proposal["new_premise"])
             if isinstance(proposal.get("new_premise"), str)
@@ -1351,9 +1585,25 @@ def build_generation_state(
     engine_policy: dict[str, Any],
     proposals: list[tuple[Path, dict[str, Any]]],
     reviews: list[tuple[Path, dict[str, Any]]],
+    typed_evidence_state: dict[str, Any] | None = None,
 ) -> tuple[list[str], dict[str, Any]]:
-    problems = validate_generation_policy(policy, decisions, engine_policy)
-    seeds = generate_seeds(policy, decisions, engine_policy)
+    typed_problems: list[str] = []
+    if typed_evidence_state is None:
+        typed_problems, typed_evidence_state = load_typed_evidence_state()
+    if typed_evidence_state is None:
+        typed_evidence_state = {"cells": [], "counts": {}}
+    problems = list(typed_problems)
+    problems.extend(
+        validate_generation_policy(
+            policy,
+            decisions,
+            engine_policy,
+            typed_evidence_state,
+        )
+    )
+    seeds = generate_seeds(
+        policy, decisions, engine_policy, typed_evidence_state
+    )
     if len(seeds) > policy.get("limits", {}).get("max_generated_seeds", 0):
         problems.append(
             "generated seed count exceeds max_generated_seeds; refine the "
@@ -1434,6 +1684,8 @@ def build_generation_state(
             "duplicate_mechanism_signature",
             "targets_secp256k1_directly",
             "adversarial_review_blocked",
+            "typed_evidence_mismatch",
+            "target_property_violated",
         }:
             disposition = "hard_rejected"
         else:
@@ -1442,6 +1694,7 @@ def build_generation_state(
             {
                 "proposal_id": proposal_id,
                 "seed_id": proposal["seed_id"],
+                "cell_id": proposal["cell_id"],
                 "route_id": proposal["route_id"],
                 "title": proposal["title"],
                 "proposal_sha256": proposal_sha256(proposal),
@@ -1472,6 +1725,10 @@ def build_generation_state(
                     f"HYP_DRAFT_{proposal_sha256(proposal)[:12].upper()}"
                 ),
                 "proposal_id": proposal_id,
+                "cell_id": proposal["cell_id"],
+                "typed_evidence_digest": proposal[
+                    "typed_evidence_digest"
+                ],
                 "route_id": proposal["route_id"],
                 "threat_model": proposal["threat_model"],
                 "statement": proposal["hypothesis_statement"],
@@ -1523,6 +1780,9 @@ def build_generation_state(
         "generator_id": policy["generator_id"],
         "source_hashes": {
             "generation_policy_sha256": sha256_json(policy),
+            "typed_evidence_state_sha256": sha256_json(
+                typed_evidence_state
+            ),
             "proposals_sha256": sha256_json(
                 [proposal for _, proposal in proposals]
             ),
@@ -1537,6 +1797,22 @@ def build_generation_state(
             "adversarial_reviews": len(reviews),
             "quality_cleared_proposals": len(cleared),
             "retained_hypothesis_drafts": len(hypothesis_drafts),
+            "typed_evidence_cells": typed_evidence_state.get(
+                "counts", {}
+            ).get("cells", 0),
+            "typed_seed_eligible_cells": typed_evidence_state.get(
+                "counts", {}
+            ).get("seed_eligible_cells", 0),
+        },
+        "typed_evidence": {
+            "evidence_id": typed_evidence_state.get("evidence_id"),
+            "target_id": typed_evidence_state.get("target_id"),
+            "counts": typed_evidence_state.get("counts", {}),
+            "source_hashes": typed_evidence_state.get("source_hashes", {}),
+            "authorization_boundary": typed_evidence_state.get(
+                "authorization_boundary", {}
+            ),
+            "authorization": "none",
         },
         "generated_seeds": seeds,
         "proposal_intake": proposal_states,

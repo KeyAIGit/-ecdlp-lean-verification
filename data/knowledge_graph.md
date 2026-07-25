@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every ledger row below cites kernel-checked declarations (no `sorry`, no custom axioms).
 
-**297 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **3 generated hypothesis seeds** · **0 bounded explorations selected** · **8 retained outcomes** · **998 edges**
+**297 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **7 typed evidence cells** · **3 desk-decided cells** · **4 generated hypothesis seeds** · **0 bounded explorations selected** · **8 retained outcomes** · **1054 edges**
 
 > A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline counts; `data/result_registry.json` owns declaration-level resolution.
 
@@ -10,7 +10,7 @@ By proof method: Mathlib (106), Mathlib + native_decide (31), native_decide (20)
 
 By research area: curve-torsion (152), primality (54), generic-hardness (29), other (26), protocol-soundness (23), attack-resistance (7), reduction (5), params (1)
 
-By edge type: imports (483), member_of (297), requires_foundation (41), decision_grounded_in (25), supports (24), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), records_outcome_for (8), updates_hypothesis (8), records_route_evidence (8), blocked_by (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (3), depends_on_candidate (3)
+By edge type: imports (483), member_of (297), requires_foundation (41), decision_grounded_in (25), grounded_in_source_claim (25), supports (24), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), records_outcome_for (8), updates_hypothesis (8), records_route_evidence (8), blocked_by (7), instantiates_mechanism (7), evaluates_route (7), must_change_cost_quantity (7), requires_target_property (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (3), bounded_by_research_barrier (3), depends_on_candidate (3)
 
 ## secp256k1 route decisions
 
@@ -55,6 +55,20 @@ Selection **RS-2026-07-24-001** (`2026-07-24`): **select_one_bounded_structural*
 | P3 | **F-PADIC-FORMAL-GROUP**: p-adic elliptic formal-group and lifting stack | `monitor_only` | `not_started` | false |
 | P3 | **F-QUANTUM-CIRCUIT-MODEL**: Fault-tolerant quantum circuit and resource model | `monitor_only` | `not_started` | false |
 | P3 | **F-WEIL-PAIRING-STACK**: Weil reciprocity and pairing construction | `retain_frontier` | `partial` | false |
+
+## Typed evidence and hypothesis cells
+
+Cells are regenerated joins over mechanisms, target properties, source claims, scoped barriers, and cost quantities. A decided cell cannot emit a hypothesis seed, and no cell authorizes an experiment.
+
+| cell | route | status | required property verdicts | cost quantity | seed eligible |
+|---|---|---|---|---|---:|
+| **CELL-M-FHJRV-DIRECT-TWO-TORSION** | `R-GLV-SEMAEV` | `decided_inapplicable` | `TP-SECP-DIRECT-TWO-TORSION`=violated | `CQ-RELATION-SYMMETRY-GROWTH` | false |
+| **CELL-M-GLV-FAITHFUL-PHASE-QUOTIENT** | `R-GLV-SEMAEV` | `open` | `TP-SECP-GLV-C3`=satisfied | `CQ-GLV-FAITHFUL-QUOTIENT-COST` | true |
+| **CELL-M-GLV-INDEPENDENT-CUBES** | `R-GLV-SEMAEV` | `decided_closed` | `TP-SECP-GLV-C3`=satisfied | `CQ-RELATION-SYMMETRY-GROWTH` | false |
+| **CELL-M-PKC-AUXILIARY-CURVE** | `R-PETIT-COMPOSED-MAPS` | `property_resolution_required` | `TP-SECP-PKC-AUXILIARY-CURVE`=unknown | `CQ-PKC-GENERALIZED-ROOT-COST` | true |
+| **CELL-M-PKC-SMOOTH-M14** | `R-PETIT-COMPOSED-MAPS` | `open` | `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=satisfied | `CQ-SEMAEV-S15-SYSTEM-COST` | true |
+| **CELL-M-PKC-SMOOTH-M4** | `R-PETIT-COMPOSED-MAPS` | `decided_inapplicable` | `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=violated | `CQ-PKC-GENERALIZED-ROOT-COST` | false |
+| **CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND** | `R-PRIME-FIELD-INDEX-CALCULUS` | `open` | `TP-SECP-PRIME-FIELD-COORDINATES`=satisfied | `CQ-PRIME-FIELD-RELATION-TOTAL` | true |
 
 ## Research Engine v0
 

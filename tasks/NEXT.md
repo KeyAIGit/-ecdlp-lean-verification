@@ -27,10 +27,13 @@ Most recent completed bounded structural binding:
 `HYP_GLV_SEMAEV_001` / `TASK-009`.
 Only the diagonal `C3` covariance survived. No experiment hypothesis or attack
 route is promoted; new work enters through proposal intake.
+Proposal intake begins with a regenerated typed mechanism/property cell. A
+desk-decided cell cannot emit a seed, and no generated seed or draft authorizes
+execution.
 
 Architecture sources: `repo/FORMAL_SUBSTRATE.json`,
-`repo/RESEARCH_ENGINE_V0.json`, `repo/HYPOTHESIS_GENERATION_V0.json`, and
-`repo/ARTIFACTS.yaml`.
+`repo/ECDLP_TYPED_EVIDENCE_V0.json`, `repo/RESEARCH_ENGINE_V0.json`,
+`repo/HYPOTHESIS_GENERATION_V0.json`, and `repo/ARTIFACTS.yaml`.
 
 ## Task contract template
 

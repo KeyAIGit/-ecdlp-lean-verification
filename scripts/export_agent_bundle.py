@@ -40,6 +40,10 @@ _SMALL = [
      "exact target, route dispositions, evidence gates, and foundation priority"),
     ("repo/RESEARCH_ENGINE_V0.json",
      "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary"),
+    ("repo/ECDLP_TYPED_EVIDENCE_V0.json",
+     "claim-level evidence, target properties, mechanism requirements, and scoped barriers"),
+    ("data/typed_evidence_state.json",
+     "materialized applicability cells and non-experimental desk decisions"),
     ("repo/HYPOTHESIS_GENERATION_V0.json",
      "source-grounded seed axes, proposal quality gates, and adversarial review contract"),
     ("data/research_engine_state.json",
@@ -53,6 +57,13 @@ _SMALL = [
     ("tasks/KEYAI_PRODUCT.md", "product-validation contracts and separate product KPIs"),
     ("data/stats.json", "machine-readable headline counts (ledger rows / distinct / modules)"),
     ("data/frontier_map.json", "per-claim frontier status: verified / tractable / blocked / informal"),
+]
+_SOURCE_CLAIM_EXTRACTS = [
+    (
+        path.relative_to(ROOT).as_posix(),
+        "claim-level primary-source extraction bound to the typed evidence layer",
+    )
+    for path in sorted((ROOT / "data" / "source_claim_extracts").glob("*.json"))
 ]
 _MEDIUM_EXTRA = [
     ("README.md", "the front door: what this is, what it does NOT claim"),
@@ -82,7 +93,7 @@ _MEDIUM_EXTRA = [
      "scientific-validator boundary and current no-validator status"),
     ("experiments/framework/fixtures/pure_engine_validator.py",
      "protocol regression fixture; explicitly not scientific evidence"),
-]
+] + _SOURCE_CLAIM_EXTRACTS
 def outcome_reason(path: Path) -> str:
     event = json.loads(path.read_text(encoding="utf-8"))
     source_kind = event.get("provenance", {}).get("source_kind")
@@ -125,6 +136,7 @@ Ground rules:
 - `STATUS.md` is the canonical live snapshot. If prose anywhere conflicts with it, STATUS wins.
 - `repo/ECDLP_DECISION_SUBSTRATE.json` owns route applicability and foundation priority.
 - `repo/RESEARCH_ENGINE_V0.json` owns bounded exploration; generated evidence cannot promote a route.
+- `repo/ECDLP_TYPED_EVIDENCE_V0.json` owns claim-level target-property and mechanism applicability screens.
 - `repo/HYPOTHESIS_GENERATION_V0.json` owns non-executable seed and proposal-quality compilation.
 - `repo/PRODUCT_MODEL.json` owns product rhetoric, current capability, and MVP boundaries.
 - `repo/PILOT_PROTOCOL.json` owns TASK-011 discovery, safety, evidence, and disposition.

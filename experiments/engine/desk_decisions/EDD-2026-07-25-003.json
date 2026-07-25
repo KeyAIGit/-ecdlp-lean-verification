@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.1",
+  "decision_id": "EDD-2026-07-25-003",
+  "decided_on": "2026-07-25",
+  "cell_id": "CELL-M-PKC-SMOOTH-M4",
+  "route_id": "R-PETIT-COMPOSED-MAPS",
+  "classification": "inapplicable",
+  "scope": "mechanism_instance_only",
+  "rationale": "At relation arity four the available small-factor divisor of p-minus-one is far below the approximately two-to-the-sixty-four factor-base scale; this decides only the m-equals-four instantiation.",
+  "evidence_claim_ids": [
+    "SC-PKC-SMOOTH-SUBGROUP",
+    "SC-SECP-PMINUS1-FACTORIZATION"
+  ],
+  "property_verdicts": [
+    {
+      "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+      "operator": "gte",
+      "expected": 18446744073709551616,
+      "actual": 564522,
+      "verdict": "violated"
+    }
+  ],
+  "route_effect": "none",
+  "authorization": "none",
+  "calibration": "excluded_nonexperimental",
+  "reopening_conditions": [
+    "A different arity or construction must receive its own typed applicability and total-cost analysis; the arity-four screen does not close the route."
+  ]
+}

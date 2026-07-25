@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.1",
+  "source_id": "fhjrv2014",
+  "source_title": "Symmetrized Summation Polynomials: Using Small Order Torsion Points to Speed up Elliptic Curve Index Calculus",
+  "source_url": "https://www.iacr.org/archive/eurocrypt2014/84410158/84410158.pdf",
+  "source_artifact_sha256": "43c86db3f1a7d33de35801f2de90f277359d065e8c3c28b25abe94106cf63779",
+  "acquired_on": "2026-07-25",
+  "review_status": "full_text_obtained",
+  "review_provenance": {
+    "method": "Independent review packet followed by direct primary-source confirmation.",
+    "source_independence": "not_established",
+    "boundary": "The record binds claim locations and paraphrases. It is not a proof of novelty or of the paper's heuristic complexity assumptions."
+  },
+  "claims": [
+    {
+      "claim_id": "SC-FHJRV-TORSION-ACTION",
+      "locator": {
+        "kind": "section",
+        "value": "Sections 1-2 and 4"
+      },
+      "paraphrase": "The paper constructs summation-polynomial symmetries from translation by rational small-order torsion. Coordinate translations whose torsion coefficients sum to zero preserve the point-decomposition relation, so the relation-preserving action can grow with the number of variables.",
+      "boundary": "The construction requires suitable rational torsion and equivariant morphisms; its direct applicability to secp256k1 is a separate target-property question."
+    }
+  ]
+}

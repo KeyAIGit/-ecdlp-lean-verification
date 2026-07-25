@@ -14,29 +14,42 @@
     "max_quality_cleared_per_cycle": 3,
     "max_toy_field_bits": 24
   },
+  "typed_evidence_contract": {
+    "policy_path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
+    "state_path": "data/typed_evidence_state.json",
+    "seedable_statuses": [
+      "open",
+      "property_resolution_required"
+    ],
+    "required_authorization": "none",
+    "decision_rule": "Only a materialized typed cell marked seed-eligible may enter synthesis; violated or closed cells are retained as scoped desk decisions and produce no creative prompt."
+  },
   "synthesis_rules": [
     {
-      "id": "SYN-SHARED-ROUTE-TAG-001",
+      "id": "SYN-TYPED-OPEN-CELL-001",
       "version": "1.0",
-      "operator": "shared_route_tag_intersection",
+      "operator": "typed_open_cell",
       "axis_order": [
         "target_features",
         "mechanism_primitives",
         "unresolved_questions"
       ],
       "required_predicates": [
-        "active_inputs",
+        "typed_cell_seed_eligible",
+        "typed_cell_authorization_none",
         "primary_threat_model",
-        "shared_route",
-        "shared_compatibility_tag",
-        "eligible_route_status"
+        "eligible_route_status",
+        "resolved_axis_bindings"
       ],
       "seed_identity_fields": [
+        "cell_id",
+        "typed_mechanism_id",
         "feature_id",
-        "mechanism_id",
+        "mechanism_primitive_id",
         "uncertainty_id",
         "route_id",
         "threat_model",
+        "evidence_digest",
         "synthesis_rule_id",
         "synthesis_rule_version"
       ],
@@ -45,6 +58,7 @@
   ],
   "lifecycle": [
     "evidence_snapshot",
+    "typed_evidence_cell",
     "generated_seed",
     "untrusted_proposal",
     "blind_adversarial_review",
@@ -129,7 +143,9 @@
       "seed_scope_mismatch",
       "semantic_reencoding_risk",
       "targets_secp256k1_directly",
-      "threat_model_drift"
+      "threat_model_drift",
+      "typed_evidence_mismatch",
+      "target_property_violated"
     ],
     "zero_retention_allowed": true,
     "overflow_rule": "If more than three proposals clear every quality gate, retain none automatically and require an explicit comparative portfolio decision; do not silently truncate or rank by model confidence."

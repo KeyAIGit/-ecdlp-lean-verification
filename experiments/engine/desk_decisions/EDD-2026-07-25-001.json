@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.1",
+  "decision_id": "EDD-2026-07-25-001",
+  "decided_on": "2026-07-25",
+  "cell_id": "CELL-M-GLV-INDEPENDENT-CUBES",
+  "route_id": "R-GLV-SEMAEV",
+  "classification": "bounded_negative",
+  "scope": "mechanism_only",
+  "rationale": "Exact symbolic replay shows that independent coordinate cubes erase relative phases not identified by the diagonal GLV action, so this quotient is not faithful to the fixed-target relation.",
+  "evidence_claim_ids": [
+    "SC-GLV-SEMAEV-CLASSIFICATION",
+    "SC-GLV-FIXED-TARGET-CLASSIFICATION"
+  ],
+  "property_verdicts": [
+    {
+      "property_id": "TP-SECP-GLV-C3",
+      "operator": "eq",
+      "expected": true,
+      "actual": true,
+      "verdict": "satisfied"
+    }
+  ],
+  "route_effect": "none",
+  "authorization": "none",
+  "calibration": "excluded_nonexperimental",
+  "reopening_conditions": [
+    "A different exact phase-preserving quotient with complete recovery and a cost-changing bridge may be submitted as a new mechanism."
+  ]
+}

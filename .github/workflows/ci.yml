@@ -56,6 +56,11 @@ jobs:
       - name: Check ECDLP decision substrate
         run: python3 scripts/check_ecdlp_decision_substrate.py
 
+      - name: Check typed evidence and desk decisions
+        run: |
+          python3 scripts/build_typed_evidence_state.py --check
+          python3 scripts/test_typed_evidence.py
+
       - name: Check generated Research Engine state
         run: python3 scripts/build_research_engine_state.py --check
 
