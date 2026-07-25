@@ -2,14 +2,14 @@
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
   "ledger_rows": 297,
-  "ledger_reference_count": 475,
-  "ledger_named_declarations": 450,
+  "ledger_reference_count": 481,
+  "ledger_named_declarations": 456,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
   "declaration_count": 742,
   "distinct_qualified_names": 742,
-  "verified_md_citations": 450,
+  "verified_md_citations": 456,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -441,14 +441,20 @@
     "Ecdlp.Semaev.S₄_common_root_of_eq_zero",
     "Ecdlp.Semaev.S₄_diagonal_cube_invariant",
     "Ecdlp.Semaev.S₄_eq_zero_of_common_root",
+    "Ecdlp.Semaev.S₄_glv_fibre_transport",
+    "Ecdlp.Semaev.S₄_glv_target_transport",
     "Ecdlp.Semaev.S₄_symm₁₂",
     "Ecdlp.Semaev.S₄_symm₃₄",
+    "Ecdlp.Semaev.glv_target_ne_self",
     "Ecdlp.Semaev.resultant_eq_zero_of_common_root",
     "Ecdlp.Semaev.secp256k1_S₃_glv_covariance",
     "Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff",
     "Ecdlp.Semaev.secp256k1_S₃poly_natDegree",
+    "Ecdlp.Semaev.secp256k1_S₄_glv_fibre_transport",
     "Ecdlp.Semaev.secp256k1_S₄_glv_invariant",
+    "Ecdlp.Semaev.secp256k1_S₄_glv_target_transport",
     "Ecdlp.Semaev.secp256k1_decomposition_completions_le_two",
+    "Ecdlp.Semaev.secp256k1_glv_fixed_target_moves",
     "Ecdlp.Semaev.secp256k1_point_decomposition_semaev",
     "Ecdlp.Semaev.secp256k1_point_decomposition_semaev_double",
     "Ecdlp.Semaev.secp256k1_semaev_four_common_root_of_eq_zero",
@@ -6270,8 +6276,8 @@
     },
     {
       "id": "ledger-248",
-      "claim": "GLV covariance of Semaev `S₃`/`S₄` and exact relation-set transport (`S₃_diagonal_cube_covariance` and `S₃_diagonal_cube_zero_iff`: over any commutative ring with `β³=1`, simultaneous scaling gives `S₃(βx₁,βx₂,βx₃)=β·S₃(x₁,x₂,x₃)` and preserves its zero condition; `S₄_diagonal_cube_invariant`: the exact fixed-size resultant satisfies `S₄(βx₁,βx₂,βx₃,βx₄)=S₄(x₁,x₂,x₃,x₄)`, including degenerate quadratic slices. The secp256k1 specializations instantiate these identities at the GLV cube root. Separately, `secp256k1_glv_list_sum_eq_iff` and its three-point form prove the additive-bijection law `ΣPᵢ=R ⟺ Σφ(Pᵢ)=φ(R)`. This is a diagonal covariance and finite target-transport theorem package, not a classification of all geometric zero-variety automorphisms, an asymptotic relation-generation gain, or an ECDLP attack)",
-      "theorem_cell": "`Ecdlp.Semaev.S₃_diagonal_cube_covariance`, `Ecdlp.Semaev.S₃_diagonal_cube_zero_iff`, `Ecdlp.Semaev.S₄_diagonal_cube_invariant`, `Ecdlp.Semaev.secp256k1_S₃_glv_covariance`, `Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff`, `Ecdlp.Semaev.secp256k1_S₄_glv_invariant`, `Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff`, `Ecdlp.Curve.secp256k1_glv_three_point_sum_eq_iff`",
+      "claim": "GLV covariance of Semaev `S₃`/`S₄` and exact relation-set transport (`S₃_diagonal_cube_covariance` and `S₃_diagonal_cube_zero_iff`: over any commutative ring with `β³=1`, simultaneous scaling gives `S₃(βx₁,βx₂,βx₃)=β·S₃(x₁,x₂,x₃)` and preserves its zero condition; `S₄_diagonal_cube_invariant`: the exact fixed-size resultant satisfies `S₄(βx₁,βx₂,βx₃,βx₄)=S₄(x₁,x₂,x₃,x₄)`, including degenerate quadratic slices. The secp256k1 specializations instantiate these identities at the GLV cube root. Separately, `secp256k1_glv_list_sum_eq_iff` and its three-point form prove the additive-bijection law `ΣPᵢ=R ⟺ Σφ(Pᵢ)=φ(R)`. Fixed-target layer: `S₄_glv_target_transport` gives the exact transport law `S₄(βx₁,βx₂,βx₃,x₄)=S₄(x₁,x₂,x₃,βx₄)`, and `S₄_glv_fibre_transport` gives the *fibre* direction — a solution at target `r` maps to one at `βr`, i.e. `R↦φ(R)` — derived from full diagonal invariance so the transport exponent cannot be misread as the fibre direction (`β` vs `β` is a real distinction). With `glv_target_ne_self` (`β≠1`, `r≠0` ⟹ `βr≠r`) and `secp256k1_glv_fixed_target_moves`, a nonidentity diagonal scaling provably transports the fixed-target relation problem instead of preserving it; `r≠0` is a hypothesis, not discharged, and the affine-target scope is explicit (a target at infinity has no `x`-coordinate). This is a diagonal covariance and finite target-transport theorem package, not a classification of all geometric zero-variety automorphisms, an asymptotic relation-generation gain, or an ECDLP attack. The *full coordinatewise stabilizer* classification is deliberately NOT claimed in Lean and remains certificate-backed (`experiments/glv_semaev_symmetry/fixed_target_certificate.json`, independently replayed); blocker: it needs `MvPolynomial` coefficient extraction over a 125-monomial support)",
+      "theorem_cell": "`Ecdlp.Semaev.S₃_diagonal_cube_covariance`, `Ecdlp.Semaev.S₃_diagonal_cube_zero_iff`, `Ecdlp.Semaev.S₄_diagonal_cube_invariant`, `Ecdlp.Semaev.secp256k1_S₃_glv_covariance`, `Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff`, `Ecdlp.Semaev.secp256k1_S₄_glv_invariant`, `Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff`, `Ecdlp.Curve.secp256k1_glv_three_point_sum_eq_iff`, `Ecdlp.Semaev.S₄_glv_target_transport`, `Ecdlp.Semaev.S₄_glv_fibre_transport`, `Ecdlp.Semaev.glv_target_ne_self`, `Ecdlp.Semaev.secp256k1_S₄_glv_target_transport`, `Ecdlp.Semaev.secp256k1_S₄_glv_fibre_transport`, `Ecdlp.Semaev.secp256k1_glv_fixed_target_moves`",
       "declared_files": [
         "Ecdlp/Proved/GlvSemaevSymmetry.lean"
       ],
@@ -6341,6 +6347,54 @@
           "kind": "theorem",
           "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
           "line": 384
+        },
+        {
+          "cited": "Ecdlp.Semaev.S₄_glv_target_transport",
+          "canonical_name": "Ecdlp.Semaev.S₄_glv_target_transport",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+          "line": 194
+        },
+        {
+          "cited": "Ecdlp.Semaev.S₄_glv_fibre_transport",
+          "canonical_name": "Ecdlp.Semaev.S₄_glv_fibre_transport",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+          "line": 235
+        },
+        {
+          "cited": "Ecdlp.Semaev.glv_target_ne_self",
+          "canonical_name": "Ecdlp.Semaev.glv_target_ne_self",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+          "line": 244
+        },
+        {
+          "cited": "Ecdlp.Semaev.secp256k1_S₄_glv_target_transport",
+          "canonical_name": "Ecdlp.Semaev.secp256k1_S₄_glv_target_transport",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+          "line": 320
+        },
+        {
+          "cited": "Ecdlp.Semaev.secp256k1_S₄_glv_fibre_transport",
+          "canonical_name": "Ecdlp.Semaev.secp256k1_S₄_glv_fibre_transport",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+          "line": 331
+        },
+        {
+          "cited": "Ecdlp.Semaev.secp256k1_glv_fixed_target_moves",
+          "canonical_name": "Ecdlp.Semaev.secp256k1_glv_fixed_target_moves",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+          "line": 350
         }
       ]
     },

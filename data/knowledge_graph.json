@@ -165,12 +165,12 @@
       "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer": 1
     },
     "by_area": {
-      "curve-torsion": 153,
+      "curve-torsion": 152,
       "primality": 54,
       "generic-hardness": 29,
       "other": 26,
       "protocol-soundness": 23,
-      "attack-resistance": 6,
+      "attack-resistance": 7,
       "reduction": 5,
       "params": 1
     }
@@ -5146,7 +5146,7 @@
     },
     {
       "id": "thm-248",
-      "name": "Ecdlp.Semaev.S₃_diagonal_cube_covariance`, `Ecdlp.Semaev.S₃_diagonal_cube_zero_iff`, `Ecdlp.Semaev.S₄_diagonal_cube_invariant`, `Ecdlp.Semaev.secp256k1_S₃_glv_covariance`, `Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff`, `Ecdlp.Semaev.secp256k1_S₄_glv_invariant`, `Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff`, `Ecdlp.Curve.secp256k1_glv_three_point_sum_eq_iff",
+      "name": "Ecdlp.Semaev.S₃_diagonal_cube_covariance`, `Ecdlp.Semaev.S₃_diagonal_cube_zero_iff`, `Ecdlp.Semaev.S₄_diagonal_cube_invariant`, `Ecdlp.Semaev.secp256k1_S₃_glv_covariance`, `Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff`, `Ecdlp.Semaev.secp256k1_S₄_glv_invariant`, `Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff`, `Ecdlp.Curve.secp256k1_glv_three_point_sum_eq_iff`, `Ecdlp.Semaev.S₄_glv_target_transport`, `Ecdlp.Semaev.S₄_glv_fibre_transport`, `Ecdlp.Semaev.glv_target_ne_self`, `Ecdlp.Semaev.secp256k1_S₄_glv_target_transport`, `Ecdlp.Semaev.secp256k1_S₄_glv_fibre_transport`, `Ecdlp.Semaev.secp256k1_glv_fixed_target_moves",
       "short_name": "S₃_diagonal_cube_covariance`,",
       "module": "Ecdlp.Proved.GlvSemaevSymmetry",
       "modules": [
@@ -5156,11 +5156,11 @@
       "files": [
         "Ecdlp/Proved/GlvSemaevSymmetry.lean"
       ],
-      "claim": "GLV covariance of Semaev `S₃`/`S₄` and exact relation-set transport (`S₃_diagonal_cube_covariance` and `S₃_diagonal_cube_zero_iff`: over any commutative ring with `β³=1`, simultaneous scaling gives `S₃(βx₁,βx₂,βx₃)=β·S₃(x₁,x₂,x₃)` and preserves its zero condition; `S₄_diagonal_cube_invariant`: the exact fixed-size resultant satisfies `S₄(βx₁,βx₂,βx₃,βx₄)=S₄(x₁,x₂,x₃,x₄)`, including degenerate quadratic slices. The secp256k1 specializations instantiate these identities at the GLV cube root. Separately, `secp256k1_glv_list_sum_eq_iff` and its three-point form prove the additive-bijection law `ΣPᵢ=R ⟺ Σφ(Pᵢ)=φ(R)`. This is a diagonal covariance and finite target-transport theorem package, not a classification of all geometric zero-variety automorphisms, an asymptotic relation-generation gain, or an ECDLP attack)",
+      "claim": "GLV covariance of Semaev `S₃`/`S₄` and exact relation-set transport (`S₃_diagonal_cube_covariance` and `S₃_diagonal_cube_zero_iff`: over any commutative ring with `β³=1`, simultaneous scaling gives `S₃(βx₁,βx₂,βx₃)=β·S₃(x₁,x₂,x₃)` and preserves its zero condition; `S₄_diagonal_cube_invariant`: the exact fixed-size resultant satisfies `S₄(βx₁,βx₂,βx₃,βx₄)=S₄(x₁,x₂,x₃,x₄)`, including degenerate quadratic slices. The secp256k1 specializations instantiate these identities at the GLV cube root. Separately, `secp256k1_glv_list_sum_eq_iff` and its three-point form prove the additive-bijection law `ΣPᵢ=R ⟺ Σφ(Pᵢ)=φ(R)`. Fixed-target layer: `S₄_glv_target_transport` gives the exact transport law `S₄(βx₁,βx₂,βx₃,x₄)=S₄(x₁,x₂,x₃,βx₄)`, and `S₄_glv_fibre_transport` gives the *fibre* direction — a solution at target `r` maps to one at `βr`, i.e. `R↦φ(R)` — derived from full diagonal invariance so the transport exponent cannot be misread as the fibre direction (`β` vs `β` is a real distinction). With `glv_target_ne_self` (`β≠1`, `r≠0` ⟹ `βr≠r`) and `secp256k1_glv_fixed_target_moves`, a nonidentity diagonal scaling provably transports the fixed-target relation problem instead of preserving it; `r≠0` is a hypothesis, not discharged, and the affine-target scope is explicit (a target at infinity has no `x`-coordinate). This is a diagonal covariance and finite target-transport theorem package, not a classification of all geometric zero-variety automorphisms, an asymptotic relation-generation gain, or an ECDLP attack. The *full coordinatewise stabilizer* classification is deliberately NOT claimed in Lean and remains certificate-backed (`experiments/glv_semaev_symmetry/fixed_target_certificate.json`, independently replayed); blocker: it needs `MvPolynomial` coefficient extraction over a 125-monomial support)",
       "method": "Mathlib + exact Sylvester resultant + existing GLV automorphism",
       "status": "proved",
-      "area": "curve-torsion",
-      "family_id": "family-curve-torsion",
+      "area": "attack-resistance",
+      "family_id": "family-attack-resistance",
       "dependency_depth": 6,
       "gated": true
     },
@@ -12738,7 +12738,7 @@
     },
     {
       "from": "thm-248",
-      "to": "family-curve-torsion",
+      "to": "family-attack-resistance",
       "type": "member_of"
     },
     {
