@@ -179,7 +179,7 @@
     "rationale": [
       "The generic lower bound and generic algorithms are guardrails or baselines, not non-generic attack mechanisms.",
       "GLV supplies a verified constant-factor structure; Pohlig-Hellman, low-degree pairing transfer, anomalous lifting, and extension-field descent fail target-specific applicability screens.",
-      "The open prime-field algebraic, GLV-Semaev, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge.",
+      "The open prime-field algebraic, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge. For GLV-Semaev specifically, the proposed coordinatewise-cube quotient is now closed because it quotients by C3^m rather than the diagonal C3 action and loses relative phase.",
       "Multi-target, interval, leakage, implementation, and quantum routes change the input or computational threat model and therefore cannot be promoted as a classical plain-input result.",
       "Building conditional Mathlib foundations now would increase theorem volume without a demonstrated reduction in uncertainty about the exact target."
     ],
@@ -608,11 +608,11 @@
         "Invariant coordinates reduce relation-generation complexity or solving degree, not only factor-base storage.",
         "The quotient retains enough information to recover valid relations."
       ],
-      "known_cost": "Measured finite-orbit reductions are constant-factor; the relevant higher-degree invariant-system cost is unresolved.",
-      "current_evidence": "Lean verifies the GLV and Semaev structural ingredients. Existing experiments close only narrow lookup and toy-presentation windows.",
-      "success_gate": "Exhibit a nonredundant invariant S_m system and a theoretical reason for a lower asymptotic solving exponent, then validate it independently.",
-      "stop_condition": "Stop if the gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.",
-      "next_action": "Keep HYP_GLV_SEMAEV_001 parked until route selection explicitly promotes it.",
+      "known_cost": "Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.",
+      "current_evidence": "Lean verifies the GLV and Semaev structural ingredients. Existing experiments retain narrow lookup and toy-presentation measurements; experiments/glv_diagonal_obstruction independently replays the exact finite phase-loss witness. The general invariant-ring argument is documented but not kernel-checked.",
+      "success_gate": "Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.",
+      "stop_condition": "The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.",
+      "next_action": "Keep HYP_GLV_SEMAEV_001 closed until a new mechanism-bearing proposal passes the Research Engine intake gate.",
       "authorized_experiment": false,
       "hypothesis_ids": [
         "HYP_GLV_SEMAEV_001"
@@ -1065,7 +1065,7 @@
       ],
       "mathlib_status": "Mathlib has multivariate polynomials and division/reduction infrastructure, but the audit found no Semaev family, Buchberger/F4 solver, degree-of-regularity theory, or Macaulay complexity stack.",
       "deliverable": "Only the minimal theorem chain required by a selected exact relation system: semantics, elimination soundness, recovery, and a justified cost bridge.",
-      "resume_condition": "One of the dependent routes is selected with an exact nonredundant system and a plausible complexity mechanism."
+      "resume_condition": "One of the dependent routes is selected with a materially new exact system, explicit fixed-target semantics, and a plausible complexity mechanism beyond finite-orbit compression."
     },
     {
       "id": "F-POINT-DIVISION-BRIDGE",

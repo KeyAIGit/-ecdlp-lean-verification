@@ -17,19 +17,19 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 57031
+        "bytes": 57735
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
         "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
         "exists": true,
-        "bytes": 49014
+        "bytes": 34963
       },
       {
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 42894
+        "bytes": 43415
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -85,19 +85,19 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 57031
+        "bytes": 57735
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
         "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
         "exists": true,
-        "bytes": 49014
+        "bytes": 34963
       },
       {
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 42894
+        "bytes": 43415
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -163,7 +163,7 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 35680
+        "bytes": 36461
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -181,19 +181,19 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 21521
+        "bytes": 22827
       },
       {
         "path": "experiments/engine/README.md",
         "reason": "Research Engine event lifecycle and regeneration contract",
         "exists": true,
-        "bytes": 4840
+        "bytes": 5486
       },
       {
         "path": "experiments/engine/outcome.schema.json",
         "reason": "strict terminal-outcome event schema",
         "exists": true,
-        "bytes": 5705
+        "bytes": 7546
       },
       {
         "path": "experiments/engine/run.schema.json",
@@ -249,19 +249,19 @@
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 57031
+        "bytes": 57735
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
         "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
         "exists": true,
-        "bytes": 49014
+        "bytes": 34963
       },
       {
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 42894
+        "bytes": 43415
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -327,7 +327,7 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 35680
+        "bytes": 36461
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -345,19 +345,19 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 21521
+        "bytes": 22827
       },
       {
         "path": "experiments/engine/README.md",
         "reason": "Research Engine event lifecycle and regeneration contract",
         "exists": true,
-        "bytes": 4840
+        "bytes": 5486
       },
       {
         "path": "experiments/engine/outcome.schema.json",
         "reason": "strict terminal-outcome event schema",
         "exists": true,
-        "bytes": 5705
+        "bytes": 7546
       },
       {
         "path": "experiments/engine/run.schema.json",
@@ -405,7 +405,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 523117
+        "bytes": 524352
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
@@ -429,49 +429,49 @@
         "path": "experiments/engine/outcomes/REO-2026-07-24-001.json",
         "reason": "digest-pinned historical outcome retained by Research Engine v0",
         "exists": true,
-        "bytes": 2366
+        "bytes": 2512
       },
       {
         "path": "experiments/engine/outcomes/REO-2026-07-24-002.json",
         "reason": "digest-pinned historical outcome retained by Research Engine v0",
         "exists": true,
-        "bytes": 1911
+        "bytes": 2057
       },
       {
         "path": "experiments/engine/outcomes/REO-2026-07-24-003.json",
         "reason": "digest-pinned historical outcome retained by Research Engine v0",
         "exists": true,
-        "bytes": 2156
+        "bytes": 2295
       },
       {
         "path": "experiments/engine/outcomes/REO-2026-07-24-004.json",
         "reason": "digest-pinned historical outcome retained by Research Engine v0",
         "exists": true,
-        "bytes": 1894
+        "bytes": 2088
       },
       {
         "path": "experiments/engine/outcomes/REO-2026-07-24-005.json",
         "reason": "digest-pinned historical outcome retained by Research Engine v0",
         "exists": true,
-        "bytes": 2071
+        "bytes": 2217
       },
       {
         "path": "experiments/engine/outcomes/REO-2026-07-24-006.json",
         "reason": "digest-pinned historical outcome retained by Research Engine v0",
         "exists": true,
-        "bytes": 1862
+        "bytes": 1992
       },
       {
         "path": "experiments/engine/outcomes/REO-2026-07-24-007.json",
         "reason": "digest-pinned historical outcome retained by Research Engine v0",
         "exists": true,
-        "bytes": 2096
+        "bytes": 2242
       },
       {
         "path": "experiments/engine/outcomes/REO-2026-07-24-008.json",
         "reason": "digest-pinned historical outcome retained by Research Engine v0",
         "exists": true,
-        "bytes": 2446
+        "bytes": 2592
       }
     ]
   }

@@ -50,6 +50,7 @@
       "enum": [
         "proved",
         "supported",
+        "historical_structural_confirmation",
         "falsified",
         "bounded_negative",
         "inapplicable",
@@ -122,7 +123,7 @@
       "additionalProperties": false,
       "required": [
         "status",
-        "independent",
+        "independence",
         "decisive_claim_validated",
         "evidence_files"
       ],
@@ -135,8 +136,44 @@
             "not_available"
           ]
         },
-        "independent": {
-          "type": "boolean"
+        "independence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "artifact",
+            "source",
+            "source_review_id"
+          ],
+          "properties": {
+            "path": {
+              "enum": [
+                "verified_distinct",
+                "not_verified"
+              ]
+            },
+            "artifact": {
+              "enum": [
+                "raw_recomputed",
+                "fresh_cross_check",
+                "producer_summary_only",
+                "not_verified"
+              ]
+            },
+            "source": {
+              "enum": [
+                "reviewed_independent",
+                "shared_components",
+                "not_reviewed"
+              ]
+            },
+            "source_review_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
         },
         "decisive_claim_validated": {
           "type": "boolean"
@@ -272,5 +309,53 @@
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "supported"
+          }
+        },
+        "required": [
+          "outcome"
+        ]
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "source_kind": {
+                "const": "native_engine_run"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "historical_structural_confirmation"
+          }
+        },
+        "required": [
+          "outcome"
+        ]
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "source_kind": {
+                "const": "historical_migration"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

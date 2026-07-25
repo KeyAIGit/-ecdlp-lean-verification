@@ -23,7 +23,12 @@
   ],
   "validation": {
     "status": "not_available",
-    "independent": false,
+    "independence": {
+      "path": "not_verified",
+      "artifact": "not_verified",
+      "source": "not_reviewed",
+      "source_review_id": null
+    },
     "decisive_claim_validated": false,
     "evidence_files": []
   },

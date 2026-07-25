@@ -5,7 +5,7 @@
   "candidate_id": "HIST-P2-WARD-EDS",
   "hypothesis_id": "HYP_WARD_EDS_001",
   "route_id": "R-EDS-DIVISION-POLYNOMIAL",
-  "outcome": "supported",
+  "outcome": "historical_structural_confirmation",
   "scope": {
     "target_kind": "toy",
     "curve_family": "cofactor-1 toy j=0 curves",
@@ -17,7 +17,7 @@
     "threat_model": "classical-single-target-plain",
     "claim_boundary": "Ward EDS rank of apparition and zero-set measurements only."
   },
-  "summary": "The measured rank of apparition equaled point order and the zero set matched order multiples, supporting the preregistered torsion identity only; no attack-advantage claim was tested.",
+  "summary": "The measured rank of apparition equaled point order and the zero set matched order multiples, confirming the known torsion identity in the recorded toy scope; no attack mechanism or advantage was tested.",
   "evidence_files": [
     "experiments/p2_ward_eds/README.md",
     "experiments/p2_ward_eds/RESULTS.md",
@@ -25,7 +25,12 @@
   ],
   "validation": {
     "status": "passed",
-    "independent": true,
+    "independence": {
+      "path": "verified_distinct",
+      "artifact": "fresh_cross_check",
+      "source": "shared_components",
+      "source_review_id": null
+    },
     "decisive_claim_validated": true,
     "evidence_files": [
       "experiments/p2_ward_eds/validate.py"
@@ -39,7 +44,7 @@
   },
   "stop_condition": {
     "triggered": true,
-    "statement": "The preregistered torsion identity was confirmed across the bounded toy matrix."
+    "statement": "The known torsion identity was confirmed across the bounded historical toy matrix."
   },
   "residual_uncertainty": [
     "A materially new non-reencoding operation on EDS data was not proposed."

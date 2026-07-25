@@ -52,6 +52,20 @@ class FrameworkTests(unittest.TestCase):
             if item["id"] == record["candidate"]["id"]
         )
         candidate["authorization"] = "exploration"
+        candidate["preregistration"] = {
+            "seeds": [record["provenance"]["seed"]],
+            "curves": [
+                {
+                    "id": record["target"]["curve_id"],
+                    "field_p": record["target"]["field_p"],
+                    "curve_a": record["target"]["curve_a"],
+                    "curve_b": record["target"]["curve_b"],
+                    "base_point": record["target"]["base_point"],
+                    "base_order": record["target"]["base_order"],
+                    "cofactor": 1,
+                }
+            ],
+        }
         self.assertEqual(
             [],
             validate_record(

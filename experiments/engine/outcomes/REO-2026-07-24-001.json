@@ -26,7 +26,12 @@
   ],
   "validation": {
     "status": "passed",
-    "independent": true,
+    "independence": {
+      "path": "verified_distinct",
+      "artifact": "fresh_cross_check",
+      "source": "shared_components",
+      "source_review_id": null
+    },
     "decisive_claim_validated": true,
     "evidence_files": [
       "experiments/p0_glv_semaev/validate_run.py"

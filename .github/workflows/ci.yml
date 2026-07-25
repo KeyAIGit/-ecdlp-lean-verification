@@ -65,6 +65,11 @@ jobs:
       - name: Test Research Engine v0
         run: python3 scripts/test_research_engine.py
 
+      - name: Replay GLV diagonal-action obstruction certificate
+        run: |
+          python3 experiments/glv_diagonal_obstruction/generate.py --check
+          python3 experiments/glv_diagonal_obstruction/validate.py
+
       - name: Check generated ECDLP decision view
         run: python3 scripts/build_ecdlp_decision_view.py --check
 

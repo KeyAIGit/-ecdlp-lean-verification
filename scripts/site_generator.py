@@ -675,7 +675,7 @@ def build_dashboard(
           never proved; threat-model scope, route decision, and evidence remain separate.</p></div>
         {status_badge("amber", "No run authorized")}</div>
       <div class="surface" style="margin-bottom:22px"><div class="surface__body">{engine_sequence_html}</div></div>
-      {engine_intake_section}
+{engine_intake_section}
       <div class="layout-two">
         <article class="surface">
           <div class="surface__head"><div><h3>Why this decision</h3><p>Canonical rationale, not a claim of impossibility</p></div></div>

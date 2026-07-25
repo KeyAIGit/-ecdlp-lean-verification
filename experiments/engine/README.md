@@ -12,6 +12,7 @@ secp256k1 break. The allowed terminal outcomes are:
 
 - `proved`
 - `supported`
+- `historical_structural_confirmation`
 - `falsified`
 - `bounded_negative`
 - `inapplicable`
@@ -24,6 +25,11 @@ code. A coordinated event plus policy-metadata relabel therefore fails the
 Engine gate. An intentional re-baseline remains possible only through an
 explicit event, policy, and validator-code change visible in review. New work
 appends native events instead.
+
+A historical structural confirmation records a source-scoped check of an
+already-known identity. It is not a preregistered positive prediction and can
+never unlock a dependency, enter predictive calibration, or trigger route
+review. Native `supported` remains reserved for a preregistered prediction.
 
 A native run is accepted only when its candidate is in the selected portfolio,
 all dependency outcomes explicitly unlock it, its route/hypothesis/threat model
@@ -58,16 +64,21 @@ the separately hashed output artifact and the producer record. Post-hoc metric
 substitution, outcome relabelling, current-checkout dependencies, and edited
 outer hashes are rejected.
 
-This capability boundary does not prove that an input JSON document was
-generated independently. Producer and validator entrypoints must be distinct,
-artifacts and code are source-commit-bound, and provenance is reviewable, but
-scientific independence of the artifact-generation path remains an explicit
-review obligation.
+Outcome events record independence on three separate axes. `path` says whether
+the validator path is mechanically distinct, `artifact` says whether raw data
+was recomputed or a fresh cross-check was performed, and `source` is an
+explicit review attestation about shared decisive logic. Distinct paths and
+hashes do not prove source independence. Native decisive outcomes require all
+three axes to clear; migrated history may retain weaker, explicitly labelled
+evidence without unlocking native work.
+
+The lower-level run-envelope schemas retain an `independent` boolean only as a
+path-separation check. It must not be read as artifact or source independence;
+the terminal outcome event carries the three-axis scientific claim.
 Framework fixtures are never accepted as native evidence. Implemented
 scientific validators must live under `experiments/engine/validators/`; the
 selector derives `missing_independent_validator` for every other path. No
-scientific validator is implemented in v0 yet; the three research candidates
-therefore remain at intake, and the current queue is honestly empty. Time, memory,
+scientific validator is implemented in v0 yet. Time, memory,
 workers, and actual field bit length must remain inside both candidate and
 global exploration budgets. One candidate id has at most one native terminal
 event; reopening requires a new candidate id. The generated `execution_queue`

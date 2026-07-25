@@ -24,7 +24,12 @@
   ],
   "validation": {
     "status": "partial",
-    "independent": true,
+    "independence": {
+      "path": "verified_distinct",
+      "artifact": "fresh_cross_check",
+      "source": "shared_components",
+      "source_review_id": null
+    },
     "decisive_claim_validated": false,
     "evidence_files": [
       "experiments/p3_sm_system/validate.py"

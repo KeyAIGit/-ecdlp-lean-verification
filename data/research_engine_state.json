@@ -2,11 +2,11 @@
   "schema_version": "0.1-generated",
   "engine_id": "ecdlp-research-engine-v0",
   "source_hashes": {
-    "policy_sha256": "14e2a5eef68703a5128bb4dedcd0b805c95b6ac12dd0a0a1082f97f94ef09c57",
-    "decision_substrate_sha256": "1876d7d8ada1faa3da6fc362192ebdcffd63b801831cf5b8bfc4f8120cff53e9",
-    "hypotheses_sha256": "f71689d6984b36ff1112a73944c5a890918d190ff17e61a5bd7a45ee40b0ff07",
-    "outcome_events_sha256": "9ab7e0b0b367eee43308b1a1bfc036eb594037b40dde5d099b88b6bc1412d191",
-    "historical_baseline_anchor_sha256": "9ab7e0b0b367eee43308b1a1bfc036eb594037b40dde5d099b88b6bc1412d191"
+    "policy_sha256": "77499c92fdaac8e30ad15ba06ba723aaadf255b25e95cb596b6caea63cd90c58",
+    "decision_substrate_sha256": "3946a5d00a63947ae66b13208ecb7aac8e9478e8521ab7bd2b118f6d5fde99b2",
+    "hypotheses_sha256": "9e6988c6290a740537f92d003a3e99e6a940bca18272ccd75b2663524d97337e",
+    "outcome_events_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
+    "historical_baseline_anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
   },
   "gate_status": {
     "exploration_authorized": true,
@@ -53,9 +53,9 @@
     "normalized_hypotheses": 9,
     "outcome_events": 8,
     "candidate_proposals": 6,
-    "intake_candidates": 3,
+    "intake_candidates": 0,
     "authorized_exploration_candidates": 0,
-    "closed_candidates": 3,
+    "closed_candidates": 6,
     "selected_explorations": 0,
     "ready_explorations": 0,
     "terminal_native_outcomes": 0,
@@ -67,7 +67,8 @@
     },
     "outcomes_by_taxonomy": {
       "proved": 0,
-      "supported": 1,
+      "supported": 0,
+      "historical_structural_confirmation": 1,
       "falsified": 0,
       "bounded_negative": 2,
       "inapplicable": 1,
@@ -86,31 +87,32 @@
   "hard_rejected_candidates": [
     {
       "candidate_id": "RE0-001-EXTERNAL-SOLVER-CALIBRATION",
-      "title": "Implement raw-artifact calibration of the P3 proxy against an independent F4/Groebner engine",
-      "authorization": "intake",
-      "disposition": "intake_blocked",
+      "title": "Retain external-solver calibration as technical debt, not a research candidate",
+      "authorization": "none",
+      "disposition": "closed",
       "reasons": [
-        "missing_independent_validator"
+        "missing_independent_validator",
+        "no_new_premise_after_resolution"
       ]
     },
     {
       "candidate_id": "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT",
-      "title": "Specify an exact nonredundant GLV-invariant quotient before testing it",
-      "authorization": "intake",
-      "disposition": "intake_blocked",
+      "title": "Close the coordinatewise-cube quotient premise",
+      "authorization": "none",
+      "disposition": "closed",
       "reasons": [
-        "missing_exact_mechanism",
-        "missing_independent_validator"
+        "missing_independent_validator",
+        "no_new_premise_after_resolution"
       ]
     },
     {
       "candidate_id": "RE0-003-M3-INVARIANT-F4-SCALING",
-      "title": "Park m=3 scaling until the invariant quotient is exactly specified and validated",
-      "authorization": "intake",
-      "disposition": "intake_blocked",
+      "title": "Close scaling of the invalid coordinatewise quotient",
+      "authorization": "none",
+      "disposition": "closed",
       "reasons": [
-        "missing_exact_mechanism",
-        "missing_independent_validator"
+        "missing_independent_validator",
+        "no_new_premise_after_resolution"
       ]
     },
     {
@@ -174,8 +176,8 @@
       {
         "case_id": "RET-P2-WARD-EDS",
         "outcome_event_id": "REO-2026-07-24-004",
-        "known_outcome": "supported",
-        "observed_outcome": "supported",
+        "known_outcome": "historical_structural_confirmation",
+        "observed_outcome": "historical_structural_confirmation",
         "evidence_matches": true,
         "rejection_reasons": [
           "missing_exact_mechanism",
@@ -333,14 +335,14 @@
       "direction": "experiment",
       "source_status": "parked",
       "normalized_outcome": "inconclusive",
-      "verifier_scope": "P0-P4 provide scoped measurements with mixed validator strength.",
-      "engine_state": "exploration_source",
+      "verifier_scope": "P0-P4 retain scoped historical measurements. The new finite certificate independently replays the coordinatewise-cube over-quotient obstruction; the general algebra is not kernel-checked.",
+      "engine_state": "closed_until_new_mechanism",
       "route_ids": [
         "R-GLV-SEMAEV",
         "R-PETIT-COMPOSED-MAPS"
       ],
-      "rationale": "Several bounded negatives are retained, while the nonredundant invariant-coordinate mechanism and scaling bridge remain unresolved.",
-      "reopening_condition": "A bounded proposal names a nonredundant invariant mechanism, matched baseline, and independent decisive validator.",
+      "rationale": "The proposed u_i=X_i^3 construction quotients by C3^m rather than the diagonal C3 action and loses relative phase. The correct finite orbit offers only fixed-cardinality compression; no replacement complexity-changing mechanism is currently specified.",
+      "reopening_condition": "A new candidate supplies a materially different exact mechanism, handles the fixed-target fiber explicitly, predicts a growth-relevant effect beyond orbit cardinality, and includes an independent raw-artifact validator.",
       "outcome_event_count": 7,
       "outcome_counts": {
         "bounded_negative": 2,
@@ -372,7 +374,7 @@
       "reopening_condition": "A proposal specifies a new operation on EDS data with a justified cost below finding the discrete logarithm directly.",
       "outcome_event_count": 1,
       "outcome_counts": {
-        "supported": 1
+        "historical_structural_confirmation": 1
       },
       "outcome_event_ids": [
         "REO-2026-07-24-004"
@@ -444,7 +446,7 @@
       "candidate_id": "HIST-P2-WARD-EDS",
       "hypothesis_id": "HYP_WARD_EDS_001",
       "route_id": "R-EDS-DIVISION-POLYNOMIAL",
-      "outcome": "supported",
+      "outcome": "historical_structural_confirmation",
       "source_kind": "historical_migration",
       "claim_boundary": "Ward EDS rank of apparition and zero-set measurements only.",
       "evidence_files": [
@@ -601,7 +603,7 @@
       "candidate_id": "HIST-P2-WARD-EDS",
       "hypothesis_id": "HYP_WARD_EDS_001",
       "route_id": "R-EDS-DIVISION-POLYNOMIAL",
-      "outcome": "supported",
+      "outcome": "historical_structural_confirmation",
       "source_kind": "historical_migration",
       "claim_boundary": "Ward EDS rank of apparition and zero-set measurements only.",
       "evidence_files": [
@@ -730,9 +732,9 @@
         "authorized_experiment": false
       },
       "evidence_axis": {
-        "engine_disposition": "supported_structural_evidence_retained",
+        "engine_disposition": "historical_structural_confirmation_retained",
         "outcome_counts": {
-          "supported": 1
+          "historical_structural_confirmation": 1
         }
       },
       "event_ids": [

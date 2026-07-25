@@ -88,7 +88,11 @@
     },
     {
       "id": "supported",
-      "definition": "A preregistered positive empirical prediction survived the tested scope and independent validation. This is not a proof, asymptotic result, route promotion, or secp256k1 claim."
+      "definition": "A preregistered native positive empirical prediction survived the tested scope, raw-artifact recomputation, and reviewed source independence. This is not a proof, asymptotic result, route promotion, or secp256k1 claim."
+    },
+    {
+      "id": "historical_structural_confirmation",
+      "definition": "A migrated historical observation confirms a known structural identity in its recorded scope, but was not preregistered as a native Engine prediction. It is excluded from calibration, dependency unlocking, and route-review triggers."
     },
     {
       "id": "falsified",
@@ -264,14 +268,14 @@
       "direction": "experiment",
       "source_status": "parked",
       "normalized_outcome": "inconclusive",
-      "verifier_scope": "P0-P4 provide scoped measurements with mixed validator strength.",
-      "engine_state": "exploration_source",
+      "verifier_scope": "P0-P4 retain scoped historical measurements. The new finite certificate independently replays the coordinatewise-cube over-quotient obstruction; the general algebra is not kernel-checked.",
+      "engine_state": "closed_until_new_mechanism",
       "route_ids": [
         "R-GLV-SEMAEV",
         "R-PETIT-COMPOSED-MAPS"
       ],
-      "rationale": "Several bounded negatives are retained, while the nonredundant invariant-coordinate mechanism and scaling bridge remain unresolved.",
-      "reopening_condition": "A bounded proposal names a nonredundant invariant mechanism, matched baseline, and independent decisive validator."
+      "rationale": "The proposed u_i=X_i^3 construction quotients by C3^m rather than the diagonal C3 action and loses relative phase. The correct finite orbit offers only fixed-cardinality compression; no replacement complexity-changing mechanism is currently specified.",
+      "reopening_condition": "A new candidate supplies a materially different exact mechanism, handles the fixed-target fiber explicitly, predicts a growth-relevant effect beyond orbit cardinality, and includes an independent raw-artifact validator."
     },
     {
       "id": "HYP_WARD_EDS_001",
@@ -290,17 +294,17 @@
   "candidate_proposals": [
     {
       "id": "RE0-001-EXTERNAL-SOLVER-CALIBRATION",
-      "title": "Implement raw-artifact calibration of the P3 proxy against an independent F4/Groebner engine",
+      "title": "Retain external-solver calibration as technical debt, not a research candidate",
       "route_id": "R-GLV-SEMAEV",
       "hypothesis_id": "HYP_GLV_SEMAEV_001",
       "kind": "validator_prerequisite",
       "gap_class": "formalization_infrastructure_blocked",
-      "downstream_research_window": "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT",
-      "mechanism": "Validator prerequisite only: independently reconstruct the matched ideal, Groebner basis diagnostics, relation witnesses, and proxy measurement from raw artifacts rather than trusting producer summary fields.",
-      "prediction": "For every completed matched instance, the external solver either confirms the proxy solving degree or produces a reproducible counterexample and corrected measurement.",
-      "baseline": "The committed P3 plain and redundant U=X^3 systems at m=2, then the smallest feasible m=3 instances.",
-      "stop_condition": "Stop after the first reproducible disagreement is minimized, or after all preregistered instances agree; do not expand field size.",
-      "validator": "Pending. It must recompute the decisive ideal, basis, proxy, and EC-relation facts from the four declared raw artifact roles; equality between two producer-supplied summary fields is insufficient.",
+      "downstream_research_window": null,
+      "mechanism": "An external F4/Groebner replay could calibrate the historical P3 proxy, but its only declared downstream coordinatewise-cube candidate is now closed by an exact algebraic obstruction.",
+      "prediction": "No standalone scientific prediction remains. Reintroduce this calibration only when a materially new mechanism names the proxy metric as a decision-critical dependency.",
+      "baseline": "The committed P3 plain and redundant U=X^3 systems remain historical evidence with their existing validator boundary.",
+      "stop_condition": "Do not spend exploration budget calibrating an orphaned proxy. Preserve the frozen draft and reopen under a new candidate id only for a live downstream mechanism.",
+      "validator": "Not implemented. This remains explicit engineering debt and cannot produce or unlock a scientific outcome.",
       "scope": {
         "curve_family": "cofactor-1 toy j=0 curves",
         "max_field_bits": 21,
@@ -314,178 +318,15 @@
         "peak_memory_bytes": 4294967296,
         "parallel_workers": 2
       },
-      "preregistration": {
-        "status": "draft",
-        "solver": {
-          "name": "SageMath/Singular",
-          "versions": {
-            "SageMath": "10.6",
-            "Singular": "4.4.1"
-          },
-          "algorithm": "Independent grevlex Groebner/F4-compatible computation with exported basis and matrix statistics"
-        },
-        "seeds": [
-          1
-        ],
-        "curves": [
-          {
-            "id": "toy-j0-16-p65539-b11",
-            "field_p": 65539,
-            "curve_a": 0,
-            "curve_b": 11,
-            "base_order": 65287,
-            "base_point": [
-              7825,
-              6727
-            ],
-            "cofactor": 1
-          },
-          {
-            "id": "toy-j0-20-p1048609-b29",
-            "field_p": 1048609,
-            "curve_a": 0,
-            "curve_b": 29,
-            "base_order": 1047379,
-            "base_point": [
-              578869,
-              477440
-            ],
-            "cofactor": 1
-          }
-        ],
-        "instances": [
-          {
-            "curve_id": "toy-j0-16-p65539-b11",
-            "m": 2,
-            "factor_base_sizes": [
-              4,
-              6,
-              8,
-              10,
-              12
-            ],
-            "presentations": [
-              "plain"
-            ]
-          },
-          {
-            "curve_id": "toy-j0-20-p1048609-b29",
-            "m": 2,
-            "factor_base_sizes": [
-              6,
-              10
-            ],
-            "presentations": [
-              "plain"
-            ]
-          },
-          {
-            "curve_id": "toy-j0-16-p65539-b11",
-            "m": 2,
-            "factor_base_sizes": [
-              3,
-              6
-            ],
-            "presentations": [
-              "redundant_u"
-            ]
-          },
-          {
-            "curve_id": "toy-j0-16-p65539-b11",
-            "m": 3,
-            "factor_base_sizes": [
-              5,
-              6
-            ],
-            "presentations": [
-              "plain"
-            ]
-          }
-        ],
-        "target_rule": "For each instance use the first two or three distinct lexicographic factor-base points with positive signs, sum them in the independently implemented EC oracle, and retain seed 1.",
-        "primary_metric": "Exact proxy-versus-external solving-degree agreement, with external maximum Macaulay matrix volume and relation-set equality retained as decisive diagnostics.",
-        "validator_contract": {
-          "status": "pending",
-          "protocol": "python-pure-json-v3",
-          "entrypoint": null,
-          "entrypoint_sha256": null,
-          "measurement_contract": {
-            "name": "external-solver-calibration-instance-outcome",
-            "unit": "canonical-outcome",
-            "value_type": "string",
-            "supported_value": "supported"
-          },
-          "outcome_classifier": {
-            "protocol": "exact-instance-outcome-v1",
-            "allowed_instance_outcomes": [
-              "supported",
-              "falsified",
-              "bounded_negative",
-              "inapplicable",
-              "inconclusive",
-              "resource_exhausted"
-            ],
-            "precedence": [
-              "inapplicable",
-              "falsified",
-              "bounded_negative",
-              "resource_exhausted",
-              "inconclusive",
-              "supported"
-            ]
-          },
-          "required_artifact_roles": [
-            "matched-ideal-generators",
-            "producer-proxy-trace",
-            "external-groebner-basis",
-            "ec-relation-witnesses"
-          ]
-        },
-        "success_rule": "Every completed matched ideal agrees exactly, or the first disagreement is minimized to a committed counterexample whose generators and EC relation set are independently replayed.",
-        "stop_rule": "Stop after the first minimized reproducible disagreement or after every listed instance completes; never add an unlisted field size, seed, curve, or presentation."
-      },
+      "preregistration": {},
       "evidence_inputs": [
         "experiments/p3_sm_system/README.md",
         "experiments/p3_sm_system/RESULTS.md",
-        "experiments/p3_sm_system/semaev_system.py"
+        "experiments/glv_diagonal_obstruction/README.md"
       ],
       "dependencies": [],
       "dependency_requirements": {},
-      "information_model": {
-        "latent_question": "Does the committed P3 proxy agree with an independent external Groebner engine on the frozen matched matrix?",
-        "prior_live": 0.65,
-        "prior_rationale": "Relation sets were independently replayed and the proxy pattern is stable on measured m=2 rows, but the stopping heuristic has never been externally calibrated and m=3 was capped.",
-        "likelihoods": {
-          "proved": {
-            "live": 0.0,
-            "dead": 0.0
-          },
-          "supported": {
-            "live": 0.65,
-            "dead": 0.05
-          },
-          "falsified": {
-            "live": 0.05,
-            "dead": 0.5
-          },
-          "bounded_negative": {
-            "live": 0.15,
-            "dead": 0.05
-          },
-          "inapplicable": {
-            "live": 0.02,
-            "dead": 0.05
-          },
-          "inconclusive": {
-            "live": 0.08,
-            "dead": 0.25
-          },
-          "resource_exhausted": {
-            "live": 0.05,
-            "dead": 0.1
-          }
-        }
-      },
+      "information_model": {},
       "hard_rejections": {
         "changes_threat_model": false,
         "hidden_or_unpriced_precomputation": false,
@@ -493,131 +334,43 @@
         "missing_falsifiable_prediction": false,
         "missing_independent_validator": true,
         "targets_secp256k1_directly": false,
-        "no_new_premise_after_resolution": false
+        "no_new_premise_after_resolution": true
       },
-      "authorization": "intake",
-      "result_updates": {
-        "proved": "Retain only a separately kernel-checked formal calibration theorem; a toy validator run cannot emit this outcome.",
-        "supported": "Mark the P3 proxy calibrated only for the matched instances and unlock the declared dependent probe.",
-        "falsified": "Replace the proxy-dependent evidence with the minimized counterexample and corrected metric.",
-        "bounded_negative": "Retain the scoped failure to obtain stable calibration and keep downstream candidates blocked.",
-        "inapplicable": "Close this calibration if the external engine cannot represent the same ideals.",
-        "inconclusive": "Keep downstream candidates blocked and record the unresolved solver discrepancy.",
-        "resource_exhausted": "Reduce instance size once; then retain the resource boundary and keep downstream candidates blocked."
-      }
+      "authorization": "none",
+      "result_updates": {}
     },
     {
       "id": "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT",
-      "title": "Specify an exact nonredundant GLV-invariant quotient before testing it",
+      "title": "Close the coordinatewise-cube quotient premise",
       "route_id": "R-GLV-SEMAEV",
       "hypothesis_id": "HYP_GLV_SEMAEV_001",
       "kind": "mechanism_probe",
-      "gap_class": "genuinely_open_question",
+      "gap_class": "known_not_formalized",
       "downstream_research_window": null,
-      "mechanism": "Unresolved concept only. A future packet must define the quotient map, generators and relations, saturation or localization choices, orbit and stabilizer treatment, inverse recovery map, and implementation hash before this becomes an exact mechanism.",
-      "prediction": "Not yet executable. After the exact quotient exists, a new frozen candidate may predict a reduction in a decisive elimination cost beyond the fixed orbit-size constant on matched toy sizes.",
-      "baseline": "Plain Semaev finite-set system and the existing redundant coupled U=X^3 presentation with identical relation sets.",
-      "stop_condition": "Remain at mechanism-development intake until every exact-construction field and an independent raw-artifact validator are present; no toy run is authorized.",
-      "validator": "Pending exact quotient specification. It must independently establish ideal equivalence, orbit coverage, recovery correctness, and EC relation equality from raw artifacts.",
+      "mechanism": "The relevant GLV action on relation variables is diagonal C3. Its polynomial invariant ring is the third Veronese subring, generated by all total-degree-three monomials. The proposed coordinates u_i=X_i^3 instead quotient by C3^m and generically merge 3^(m-1) distinct diagonal orbits, losing relative phase.",
+      "prediction": "Resolved without an attack run: at m=2 the coordinatewise same-cube condition contains exactly three diagonal-action graphs on the free locus. The frozen F_1009 witness records 483 pairs on one graph and 1449 same-cube pairs.",
+      "baseline": "Compare the exact diagonal C3 quotient with the larger coordinatewise C3^m quotient, including target-fiber behavior.",
+      "stop_condition": "Closed for this premise. Do not relabel coordinatewise cubes as the diagonal quotient or infer a scaling gain from fixed orbit size.",
+      "validator": "experiments/glv_diagonal_obstruction/validate.py independently recomputes the raw finite witness and toric exponent identities. The general invariant-ring statement is documented, not a Lean kernel theorem.",
       "scope": {
-        "curve_family": "cofactor-1 toy j=0 curves",
-        "max_field_bits": 20,
+        "curve_family": "toy j=0 curve E: y^2=x^3+11 over F_1009",
+        "max_field_bits": 10,
         "forbidden_targets": [
           "secp256k1"
         ],
         "threat_model": "classical-single-target-plain"
       },
       "budget": {
-        "wall_time_seconds": 10800,
-        "peak_memory_bytes": 4294967296,
-        "parallel_workers": 2
+        "wall_time_seconds": 60,
+        "peak_memory_bytes": 67108864,
+        "parallel_workers": 1
       },
-      "preregistration": {
-        "status": "draft",
-        "solver": {
-          "name": "SageMath/Singular",
-          "versions": {
-            "SageMath": "10.6",
-            "Singular": "4.4.1"
-          },
-          "algorithm": "Matched grevlex Groebner computation for plain, redundant-u, and quotient ideals"
-        },
-        "seeds": [
-          1
-        ],
-        "curves": [
-          {
-            "id": "toy-j0-16-p65539-b11",
-            "field_p": 65539,
-            "curve_a": 0,
-            "curve_b": 11,
-            "base_order": 65287,
-            "base_point": [
-              7825,
-              6727
-            ],
-            "cofactor": 1
-          }
-        ],
-        "instances": [
-          {
-            "curve_id": "toy-j0-16-p65539-b11",
-            "m": 2,
-            "factor_base_sizes": [
-              4,
-              6,
-              8
-            ],
-            "presentations": [
-              "plain",
-              "redundant_u",
-              "quotient"
-            ]
-          }
-        ],
-        "target_rule": "For each factor-base size use the first two distinct lexicographic factor-base points with positive signs, sum them in the independent EC oracle, and retain seed 1 across all three presentations.",
-        "primary_metric": "Maximum Macaulay matrix volume after exact relation-set and ideal-equivalence validation; solving degree is secondary.",
-        "validator_contract": {
-          "status": "pending",
-          "protocol": "python-pure-json-v3",
-          "entrypoint": null,
-          "entrypoint_sha256": null,
-          "measurement_contract": {
-            "name": "nonredundant-quotient-instance-outcome",
-            "unit": "canonical-outcome",
-            "value_type": "string",
-            "supported_value": "supported"
-          },
-          "outcome_classifier": {
-            "protocol": "exact-instance-outcome-v1",
-            "allowed_instance_outcomes": [
-              "supported",
-              "falsified",
-              "bounded_negative",
-              "inapplicable",
-              "inconclusive",
-              "resource_exhausted"
-            ],
-            "precedence": [
-              "inapplicable",
-              "falsified",
-              "bounded_negative",
-              "resource_exhausted",
-              "inconclusive",
-              "supported"
-            ]
-          },
-          "required_artifact_roles": [
-            "nonredundant-quotient-record"
-          ]
-        },
-        "success_rule": "Draft only: once the exact mechanism and validator exist, ideal and EC relation sets must match before any cost comparison is interpreted.",
-        "stop_rule": "Do not execute this draft. Replace it with a new frozen preregistration only after the exact quotient and independent validator clear their hard gates."
-      },
+      "preregistration": {},
       "evidence_inputs": [
-        "experiments/p3_sm_system/RESULTS.md",
-        "data/attack_registry.json",
-        "repo/ECDLP_DECISION_SUBSTRATE.json"
+        "experiments/glv_diagonal_obstruction/README.md",
+        "experiments/glv_diagonal_obstruction/artifact.json",
+        "experiments/glv_diagonal_obstruction/artifact.sha256",
+        "experiments/glv_diagonal_obstruction/validate.py"
       ],
       "dependencies": [
         "RE0-001-EXTERNAL-SOLVER-CALIBRATION"
@@ -627,74 +380,32 @@
           "supported"
         ]
       },
-      "information_model": {
-        "latent_question": "Does the nonredundant GLV-invariant quotient reduce the growth-relevant elimination cost beyond a fixed orbit-size constant?",
-        "prior_live": 0.08,
-        "prior_rationale": "Existing orbit and redundant-u experiments are negative or constant-factor-only, but they explicitly do not test the nonredundant quotient mechanism.",
-        "likelihoods": {
-          "proved": {
-            "live": 0.0,
-            "dead": 0.0
-          },
-          "supported": {
-            "live": 0.55,
-            "dead": 0.02
-          },
-          "falsified": {
-            "live": 0.05,
-            "dead": 0.35
-          },
-          "bounded_negative": {
-            "live": 0.1,
-            "dead": 0.4
-          },
-          "inapplicable": {
-            "live": 0.05,
-            "dead": 0.05
-          },
-          "inconclusive": {
-            "live": 0.15,
-            "dead": 0.13
-          },
-          "resource_exhausted": {
-            "live": 0.1,
-            "dead": 0.05
-          }
-        }
-      },
+      "information_model": {},
       "hard_rejections": {
         "changes_threat_model": false,
         "hidden_or_unpriced_precomputation": false,
-        "missing_exact_mechanism": true,
+        "missing_exact_mechanism": false,
         "missing_falsifiable_prediction": false,
         "missing_independent_validator": true,
         "targets_secp256k1_directly": false,
-        "no_new_premise_after_resolution": false
+        "no_new_premise_after_resolution": true
       },
-      "authorization": "intake",
-      "result_updates": {
-        "proved": "Retain only a separately kernel-checked theorem about the quotient; a toy measurement cannot emit this outcome.",
-        "supported": "Open a decision review only for the measured quotient mechanism; no asymptotic claim or promotion follows.",
-        "falsified": "Close this presentation and every dependent candidate until a materially new invariant mechanism is supplied.",
-        "bounded_negative": "Set the route evidence disposition to constant-factor-only for this presentation and retain a precise reopening condition.",
-        "inapplicable": "Record the algebraic mismatch and return the route to mechanism intake.",
-        "inconclusive": "Keep the route parked and narrow the unresolved decisive measurement.",
-        "resource_exhausted": "Retain the exact resource boundary and do not extrapolate."
-      }
+      "authorization": "none",
+      "result_updates": {}
     },
     {
       "id": "RE0-003-M3-INVARIANT-F4-SCALING",
-      "title": "Park m=3 scaling until the invariant quotient is exactly specified and validated",
+      "title": "Close scaling of the invalid coordinatewise quotient",
       "route_id": "R-GLV-SEMAEV",
       "hypothesis_id": "HYP_GLV_SEMAEV_001",
       "kind": "scaling_probe",
-      "gap_class": "genuinely_open_question",
+      "gap_class": "known_not_formalized",
       "downstream_research_window": null,
-      "mechanism": "Dependent concept only. No m=3 construction exists until RE0-002 supplies an exact quotient artifact and a validated recovery map that can be transported to the S4 system.",
-      "prediction": "Not yet executable. A future candidate may test a frozen quotient-to-plain cost trend only after the exact m=3 transport is specified.",
-      "baseline": "Externally validated plain m=3 S4 systems with matched relation sets and solver settings.",
-      "stop_condition": "Remain at intake while RE0-002 lacks an exact artifact or while an independent m=3 raw-artifact validator is absent.",
-      "validator": "Pending the exact m=3 transport. It must recompute the decisive F4/Groebner and EC-relation facts without sharing producer logic.",
+      "mechanism": "The dependent m=3 proposal has no valid quotient to scale. Coordinatewise cubes over-quotient by a factor of 3^(m-1), while the actual diagonal symmetry has fixed order 3. This rules out the declared orbit-compression premise, not every possible algebraic or Groebner mechanism.",
+      "prediction": "Withdrawn before execution. A fixed finite orbit cannot by itself supply a size-dependent compression factor; any future scaling candidate must introduce and justify a different mechanism.",
+      "baseline": "The historical P1-m3 and P3 measurements remain scoped evidence; they are not promoted into a general Groebner no-go.",
+      "stop_condition": "Do not execute the frozen m=3 draft. Reopen under a new id only with an exact fixed-target construction, recovery map, growth-relevant prediction, and independent raw-artifact validator.",
+      "validator": "The finite diagonal obstruction is independently replayable. No validator exists for a replacement m=3 mechanism because none has been specified.",
       "scope": {
         "curve_family": "cofactor-1 toy j=0 curves",
         "max_field_bits": 20,
@@ -708,88 +419,9 @@
         "peak_memory_bytes": 8589934592,
         "parallel_workers": 4
       },
-      "preregistration": {
-        "status": "draft",
-        "solver": {
-          "name": "SageMath/Singular",
-          "versions": {
-            "SageMath": "10.6",
-            "Singular": "4.4.1"
-          },
-          "algorithm": "Matched grevlex Groebner computation for externally calibrated plain and validated quotient S4 ideals"
-        },
-        "seeds": [
-          1
-        ],
-        "curves": [
-          {
-            "id": "toy-j0-16-p65539-b11",
-            "field_p": 65539,
-            "curve_a": 0,
-            "curve_b": 11,
-            "base_order": 65287,
-            "base_point": [
-              7825,
-              6727
-            ],
-            "cofactor": 1
-          }
-        ],
-        "instances": [
-          {
-            "curve_id": "toy-j0-16-p65539-b11",
-            "m": 3,
-            "factor_base_sizes": [
-              3,
-              6,
-              9
-            ],
-            "presentations": [
-              "plain",
-              "quotient"
-            ]
-          }
-        ],
-        "target_rule": "For each factor-base size use the first three distinct lexicographic factor-base points with positive signs, sum them in the independent EC oracle, and retain seed 1 for both presentations.",
-        "primary_metric": "Quotient-to-plain maximum Macaulay matrix-volume ratio, conditional on exact relation-set equality and independently replayed EC relations.",
-        "validator_contract": {
-          "status": "pending",
-          "protocol": "python-pure-json-v3",
-          "entrypoint": null,
-          "entrypoint_sha256": null,
-          "measurement_contract": {
-            "name": "m3-invariant-scaling-instance-outcome",
-            "unit": "canonical-outcome",
-            "value_type": "string",
-            "supported_value": "supported"
-          },
-          "outcome_classifier": {
-            "protocol": "exact-instance-outcome-v1",
-            "allowed_instance_outcomes": [
-              "supported",
-              "falsified",
-              "bounded_negative",
-              "inapplicable",
-              "inconclusive",
-              "resource_exhausted"
-            ],
-            "precedence": [
-              "inapplicable",
-              "falsified",
-              "bounded_negative",
-              "resource_exhausted",
-              "inconclusive",
-              "supported"
-            ]
-          },
-          "required_artifact_roles": [
-            "m3-invariant-scaling-record"
-          ]
-        },
-        "success_rule": "Draft only: a future frozen candidate must define the exact transport and an exhaustive classifier before interpreting any ratio trend.",
-        "stop_rule": "Do not execute this draft. A new frozen preregistration must supersede it after both mechanism and validator gates clear."
-      },
+      "preregistration": {},
       "evidence_inputs": [
+        "experiments/glv_diagonal_obstruction/README.md",
         "experiments/p1_petit_m3/RESULTS.md",
         "experiments/p3_sm_system/RESULTS.md"
       ],
@@ -805,60 +437,18 @@
           "supported"
         ]
       },
-      "information_model": {
-        "latent_question": "Conditional on RE0-002, does the validated quotient-to-plain matrix-volume ratio improve across the frozen m=3 sizes?",
-        "prior_live": 0.1,
-        "prior_rationale": "A positive m=2 quotient would justify the first multivariate check, but no current evidence supports transport of the mechanism to m=3.",
-        "likelihoods": {
-          "proved": {
-            "live": 0.0,
-            "dead": 0.0
-          },
-          "supported": {
-            "live": 0.5,
-            "dead": 0.02
-          },
-          "falsified": {
-            "live": 0.1,
-            "dead": 0.3
-          },
-          "bounded_negative": {
-            "live": 0.1,
-            "dead": 0.38
-          },
-          "inapplicable": {
-            "live": 0.03,
-            "dead": 0.05
-          },
-          "inconclusive": {
-            "live": 0.12,
-            "dead": 0.1
-          },
-          "resource_exhausted": {
-            "live": 0.15,
-            "dead": 0.15
-          }
-        }
-      },
+      "information_model": {},
       "hard_rejections": {
         "changes_threat_model": false,
         "hidden_or_unpriced_precomputation": false,
-        "missing_exact_mechanism": true,
+        "missing_exact_mechanism": false,
         "missing_falsifiable_prediction": false,
         "missing_independent_validator": true,
         "targets_secp256k1_directly": false,
-        "no_new_premise_after_resolution": false
+        "no_new_premise_after_resolution": true
       },
-      "authorization": "intake",
-      "result_updates": {
-        "proved": "Retain only a separately kernel-checked scaling theorem; a toy measurement cannot emit this outcome.",
-        "supported": "Require a separate scaling and full-cost promotion packet before changing the route decision.",
-        "falsified": "Close the measured scaling mechanism and all direct extensions without a new premise.",
-        "bounded_negative": "Retain the flat-ratio result and keep the route parked.",
-        "inapplicable": "Record why the m=2 mechanism did not transport to m=3.",
-        "inconclusive": "Keep the route parked with the remaining discriminating size or metric.",
-        "resource_exhausted": "Record exact matrices, time, and memory; no asymptotic inference is allowed."
-      }
+      "authorization": "none",
+      "result_updates": {}
     },
     {
       "id": "RE0-X01-WARD-EDS-ZERO-SEARCH",
@@ -1036,7 +626,7 @@
       "candidate_id": "HIST-P0-GLV-PAIR-ENUMERATION",
       "hypothesis_id": "HYP_GLV_SEMAEV_001",
       "route_id": "R-GLV-SEMAEV",
-      "event_sha256": "d05ec6b0216d66dc7aea0bd1e63a70c888ab05ddea79dbf6a748450b753da2dd",
+      "event_sha256": "84365a0a320ebb1336262737b4faf05fc4f9bc3dc4b454694c65480aecc0094d",
       "known_outcome": "bounded_negative",
       "hard_rejections": {
         "changes_threat_model": false,
@@ -1055,8 +645,8 @@
       "candidate_id": "HIST-P2-WARD-EDS",
       "hypothesis_id": "HYP_WARD_EDS_001",
       "route_id": "R-EDS-DIVISION-POLYNOMIAL",
-      "event_sha256": "5b512ef332021e50241f7396eb56794aab1a7f88b46ab07a8c437f138e224b42",
-      "known_outcome": "supported",
+      "event_sha256": "9d78eef8a81fda21eff44ef4341fa2b003f5682d9875361419d768504a3fb609",
+      "known_outcome": "historical_structural_confirmation",
       "hard_rejections": {
         "changes_threat_model": false,
         "hidden_or_unpriced_precomputation": false,
@@ -1074,7 +664,7 @@
       "candidate_id": "HIST-P3-M2-MACAULAY-PROXY",
       "hypothesis_id": "HYP_GLV_SEMAEV_001",
       "route_id": "R-GLV-SEMAEV",
-      "event_sha256": "87e893d42cc219090ee3fb79989b32b078ddb018a620ef411886cd822b82fe6f",
+      "event_sha256": "09247b072dfeb56bf44a236d3a2b6c70862dba0acc67bb5145a8a64888e11589",
       "known_outcome": "inconclusive",
       "hard_rejections": {
         "changes_threat_model": false,
@@ -1093,7 +683,7 @@
       "candidate_id": "HIST-P4-COMPOSED-MAP-APPROXIMATION",
       "hypothesis_id": "HYP_GLV_SEMAEV_001",
       "route_id": "R-PETIT-COMPOSED-MAPS",
-      "event_sha256": "2bb85013e537ee5b7861ab8616a73392efd939fdab5ec0bdca4963084b216c3e",
+      "event_sha256": "001aa40051ce18ac1b3ceb8861513651561f0ad49e3f010a70c76add0e2226b6",
       "known_outcome": "inconclusive",
       "hard_rejections": {
         "changes_threat_model": false,
@@ -1114,46 +704,46 @@
   },
   "historical_outcome_baseline": {
     "status": "review_anchored_v0",
-    "anchor_sha256": "9ab7e0b0b367eee43308b1a1bfc036eb594037b40dde5d099b88b6bc1412d191",
+    "anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
     "events": [
       {
         "event_id": "REO-2026-07-24-001",
-        "event_sha256": "d05ec6b0216d66dc7aea0bd1e63a70c888ab05ddea79dbf6a748450b753da2dd"
+        "event_sha256": "84365a0a320ebb1336262737b4faf05fc4f9bc3dc4b454694c65480aecc0094d"
       },
       {
         "event_id": "REO-2026-07-24-002",
-        "event_sha256": "eca9a42c76f19a8610a461aa0d77f38c8fa88fa04b76b872bbd38dc4dcebf304"
+        "event_sha256": "01e140f7e28ee1b7e476e89aa686e79fc170c7e7084facd50b4312ccb9989eeb"
       },
       {
         "event_id": "REO-2026-07-24-003",
-        "event_sha256": "4bb3830993cb1183aaf6d4cf22df5752d773f495634c07245f6f37ea19567ddf"
+        "event_sha256": "8dac127ce2f8128cff603231081d47e2a4bc11a32409bc87cf9f5add309ce2a1"
       },
       {
         "event_id": "REO-2026-07-24-004",
-        "event_sha256": "5b512ef332021e50241f7396eb56794aab1a7f88b46ab07a8c437f138e224b42"
+        "event_sha256": "9d78eef8a81fda21eff44ef4341fa2b003f5682d9875361419d768504a3fb609"
       },
       {
         "event_id": "REO-2026-07-24-005",
-        "event_sha256": "87e893d42cc219090ee3fb79989b32b078ddb018a620ef411886cd822b82fe6f"
+        "event_sha256": "09247b072dfeb56bf44a236d3a2b6c70862dba0acc67bb5145a8a64888e11589"
       },
       {
         "event_id": "REO-2026-07-24-006",
-        "event_sha256": "9be101f9f06350b2790123dd76ede443e19667deb796e52a30de25f46eba5c6e"
+        "event_sha256": "3ef46d8f1bd57ca757c8ec3b85636d7f5e94d7e516486410f0076d527efda872"
       },
       {
         "event_id": "REO-2026-07-24-007",
-        "event_sha256": "2bb85013e537ee5b7861ab8616a73392efd939fdab5ec0bdca4963084b216c3e"
+        "event_sha256": "001aa40051ce18ac1b3ceb8861513651561f0ad49e3f010a70c76add0e2226b6"
       },
       {
         "event_id": "REO-2026-07-24-008",
-        "event_sha256": "cbfa8f17eed61e5951c838d2ee82eec1ab706b02b8550f9f0bf72416819a504f"
+        "event_sha256": "68faf15bcdaadc02812caf577f9065cacdbdcf1f3f0ce650e17a46703a823875"
       }
     ]
   },
   "historical_scope_guards": [
     {
       "event_id": "REO-2026-07-24-001",
-      "event_sha256": "d05ec6b0216d66dc7aea0bd1e63a70c888ab05ddea79dbf6a748450b753da2dd",
+      "event_sha256": "84365a0a320ebb1336262737b4faf05fc4f9bc3dc4b454694c65480aecc0094d",
       "outcome": "bounded_negative",
       "curve_family": "cofactor-1 toy j=0 curves",
       "field_bits": [
@@ -1166,7 +756,7 @@
     },
     {
       "event_id": "REO-2026-07-24-008",
-      "event_sha256": "cbfa8f17eed61e5951c838d2ee82eec1ab706b02b8550f9f0bf72416819a504f",
+      "event_sha256": "68faf15bcdaadc02812caf577f9065cacdbdcf1f3f0ce650e17a46703a823875",
       "outcome": "inapplicable",
       "curve_family": "ambient-group toy j=0 curve with cofactor 3",
       "field_bits": [

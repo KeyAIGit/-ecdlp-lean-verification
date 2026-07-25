@@ -171,6 +171,10 @@ jobs:
         run: python3 scripts/check_research_engine.py
       - name: Research Engine v0 regression fixtures
         run: python3 scripts/test_research_engine.py
+      - name: GLV diagonal-action obstruction certificate
+        run: |
+          python3 experiments/glv_diagonal_obstruction/generate.py --check
+          python3 experiments/glv_diagonal_obstruction/validate.py
       - name: Candidate-evaluation framework tests
         run: python3 experiments/framework/test_framework.py
       - name: Repository artifact manifest gate

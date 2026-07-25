@@ -82,29 +82,11 @@
           never proved; threat-model scope, route decision, and evidence remain separate.</p></div>
         <span class="status status--amber">No run authorized</span></div>
       <div class="surface" style="margin-bottom:22px"><div class="surface__body"><div class="empty-state"><strong>No experiment clears every scientific gate.</strong><p>The queue remains empty until an exact mechanism and an independent raw-artifact validator are both available.</p></div></div></div>
-      <div class="panel-heading"><div><h2>Blocked research intake</h2>
-        <p>3 proposals are retained with explicit reopening
-        requirements; none is executable.</p></div></div>
-      <div class="surface" style="margin-bottom:22px"><div class="surface__body"><article class="task-row">
-  <div class="task-row__top"><div><h4>Implement raw-artifact calibration of the P3 proxy against an independent F4/Groebner engine</h4>
-    <small>RE0-001-EXTERNAL-SOLVER-CALIBRATION</small>
-    <p>missing independent validator</p></div>
-    <span class="status status--amber">Intake</span></div>
-</article><article class="task-row">
-  <div class="task-row__top"><div><h4>Specify an exact nonredundant GLV-invariant quotient before testing it</h4>
-    <small>RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT</small>
-    <p>missing exact mechanism; missing independent validator</p></div>
-    <span class="status status--amber">Intake</span></div>
-</article><article class="task-row">
-  <div class="task-row__top"><div><h4>Park m=3 scaling until the invariant quotient is exactly specified and validated</h4>
-    <small>RE0-003-M3-INVARIANT-F4-SCALING</small>
-    <p>missing exact mechanism; missing independent validator</p></div>
-    <span class="status status--amber">Intake</span></div>
-</article></div></div>
+
       <div class="layout-two">
         <article class="surface">
           <div class="surface__head"><div><h3>Why this decision</h3><p>Canonical rationale, not a claim of impossibility</p></div></div>
-          <div class="surface__body"><ul class="plain-list"><li>The generic lower bound and generic algorithms are guardrails or baselines, not non-generic attack mechanisms.</li><li>GLV supplies a verified constant-factor structure; Pohlig-Hellman, low-degree pairing transfer, anomalous lifting, and extension-field descent fail target-specific applicability screens.</li><li>The open prime-field algebraic, GLV-Semaev, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge.</li><li>Multi-target, interval, leakage, implementation, and quantum routes change the input or computational threat model and therefore cannot be promoted as a classical plain-input result.</li><li>Building conditional Mathlib foundations now would increase theorem volume without a demonstrated reduction in uncertainty about the exact target.</li></ul></div>
+          <div class="surface__body"><ul class="plain-list"><li>The generic lower bound and generic algorithms are guardrails or baselines, not non-generic attack mechanisms.</li><li>GLV supplies a verified constant-factor structure; Pohlig-Hellman, low-degree pairing transfer, anomalous lifting, and extension-field descent fail target-specific applicability screens.</li><li>The open prime-field algebraic, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge. For GLV-Semaev specifically, the proposed coordinatewise-cube quotient is now closed because it quotients by C3^m rather than the diagonal C3 action and loses relative phase.</li><li>Multi-target, interval, leakage, implementation, and quantum routes change the input or computational threat model and therefore cannot be promoted as a classical plain-input result.</li><li>Building conditional Mathlib foundations now would increase theorem volume without a demonstrated reduction in uncertainty about the exact target.</li></ul></div>
         </article>
         <aside class="surface">
           <div class="surface__head"><div><h3>Split work queues</h3><p>4 research / 2 product contracts</p></div>
@@ -189,7 +171,7 @@
   <td><span class="status status--open_parked">Open, parked</span></td>
   <td>classical-single-target-plain</td>
   <td>P1</td>
-  <td>Keep HYP_GLV_SEMAEV_001 parked until route selection explicitly promotes it.</td>
+  <td>Keep HYP_GLV_SEMAEV_001 closed until a new mechanism-bearing proposal passes the Research Engine intake gate.</td>
 </tr><tr>
   <td><strong>Petit-style composed rational maps</strong><small>R-PETIT-COMPOSED-MAPS</small></td>
   <td><span class="status status--open_parked">Open, parked</span></td>

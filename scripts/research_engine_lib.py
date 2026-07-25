@@ -155,9 +155,15 @@ SCOPE_FIELDS = {
 }
 VALIDATION_FIELDS = {
     "status",
-    "independent",
+    "independence",
     "decisive_claim_validated",
     "evidence_files",
+}
+INDEPENDENCE_FIELDS = {
+    "path",
+    "artifact",
+    "source",
+    "source_review_id",
 }
 BUDGET_FIELDS = {
     "status",
@@ -286,7 +292,7 @@ HISTORICAL_BASELINE_EVENT_IDS = {
 # This code anchor makes a historical relabel require an explicit validator-code
 # change, rather than a coordinated metadata edit to an event and its policy digest.
 V0_REVIEWED_HISTORICAL_ROOT_SHA256 = (
-    "9ab7e0b0b367eee43308b1a1bfc036eb594037b40dde5d099b88b6bc1412d191"
+    "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
 )
 RETROSPECTIVE_CASE_IDS = {
     "RET-P0-PAIR-ENUMERATION",
@@ -315,6 +321,8 @@ EMPIRICAL_OUTCOMES = {
     "inconclusive",
     "resource_exhausted",
 }
+PREDICTIVE_OUTCOMES = EMPIRICAL_OUTCOMES | {"proved"}
+HISTORICAL_ONLY_OUTCOMES = {"historical_structural_confirmation"}
 PURE_VALIDATOR_MAX_SOURCE_BYTES = 65_536
 PURE_VALIDATOR_MAX_ARTIFACT_BYTES = 4 * 1024 * 1024
 PURE_VALIDATOR_MAX_ARTIFACT_ROLES = 8
@@ -1819,16 +1827,11 @@ def validate_policy(
         problems.append("outcome taxonomy ids must be present and unique")
     if len(gap_ids) != len(set(gap_ids)) or None in gap_ids:
         problems.append("gap taxonomy ids must be present and unique")
-    if set(outcome_ids) != {
-        "proved",
-        "supported",
-        "falsified",
-        "bounded_negative",
-        "inapplicable",
-        "inconclusive",
-        "resource_exhausted",
-    }:
-        problems.append("outcome taxonomy must contain the seven canonical outcomes")
+    if set(outcome_ids) != PREDICTIVE_OUTCOMES | HISTORICAL_ONLY_OUTCOMES:
+        problems.append(
+            "outcome taxonomy must contain the seven predictive outcomes and "
+            "the historical-only structural-confirmation label"
+        )
     research_windows = {
         item["id"]
         for item in policy["gap_taxonomy"]
@@ -2342,11 +2345,12 @@ def validate_policy(
                     f"{candidate_id}.information_model.prior_live must be in (0,1)"
                 )
             likelihoods = information_model.get("likelihoods")
-            if not isinstance(likelihoods, dict) or set(likelihoods) != set(
-                outcome_ids
+            if not isinstance(likelihoods, dict) or set(likelihoods) != (
+                PREDICTIVE_OUTCOMES
             ):
                 problems.append(
-                    f"{candidate_id}: likelihoods must cover every outcome"
+                    f"{candidate_id}: likelihoods must cover exactly the seven "
+                    "native predictive outcomes"
                 )
                 likelihoods = {}
             for outcome, likelihood in likelihoods.items():
@@ -2439,11 +2443,11 @@ def validate_policy(
                 not isinstance(allowed_outcomes, list)
                 or not allowed_outcomes
                 or len(allowed_outcomes) != len(set(allowed_outcomes))
-                or not set(allowed_outcomes) <= set(outcome_ids)
+                or not set(allowed_outcomes) <= PREDICTIVE_OUTCOMES
             ):
                 problems.append(
                     f"{candidate_id}: dependency {dependency} must name a unique, "
-                    "nonempty set of canonical outcomes"
+                    "nonempty set of native predictive outcomes"
                 )
 
         reasons = (
@@ -2486,7 +2490,7 @@ def validate_policy(
             and (
                 result_updates == {}
                 or (
-                    set(result_updates) == set(outcome_ids)
+                    set(result_updates) == PREDICTIVE_OUTCOMES
                     and all(
                         _nonempty_text(value)
                         for value in result_updates.values()
@@ -2496,11 +2500,13 @@ def validate_policy(
         )
         if not result_updates_valid:
             problems.append(
-                f"{candidate_id}: result_updates must be empty or cover all outcomes"
+                f"{candidate_id}: result_updates must be empty or cover all "
+                "native predictive outcomes"
             )
         if authorization == "exploration" and result_updates == {}:
             problems.append(
-                f"{candidate_id}: exploration result_updates must cover all outcomes"
+                f"{candidate_id}: exploration result_updates must cover all "
+                "native predictive outcomes"
             )
         if authorization == "exploration":
             scope = candidate.get("scope", {})
@@ -2784,20 +2790,75 @@ def validate_outcome(
             "not_available",
         }:
             problems.append(f"{label}: invalid validation status")
-        for field in ("independent", "decisive_claim_validated"):
-            if not isinstance(validation.get(field), bool):
-                problems.append(f"{label}: validation.{field} must be boolean")
+        if not isinstance(validation.get("decisive_claim_validated"), bool):
+            problems.append(
+                f"{label}: validation.decisive_claim_validated must be boolean"
+            )
         _existing_files(
             validation.get("evidence_files"),
             f"{label}.validation.evidence_files",
             problems,
             allow_empty=True,
         )
-        if validation.get("decisive_claim_validated") and not validation.get(
-            "independent"
+        independence = validation.get("independence")
+        if _exact_keys(
+            independence,
+            INDEPENDENCE_FIELDS,
+            f"{label}.validation.independence",
+            problems,
+        ):
+            if independence.get("path") not in {
+                "verified_distinct",
+                "not_verified",
+            }:
+                problems.append(f"{label}: invalid validation independence path")
+            if independence.get("artifact") not in {
+                "raw_recomputed",
+                "fresh_cross_check",
+                "producer_summary_only",
+                "not_verified",
+            }:
+                problems.append(
+                    f"{label}: invalid validation independence artifact"
+                )
+            if independence.get("source") not in {
+                "reviewed_independent",
+                "shared_components",
+                "not_reviewed",
+            }:
+                problems.append(
+                    f"{label}: invalid validation independence source"
+                )
+            source_review_id = independence.get("source_review_id")
+            if source_review_id is not None and not _nonempty_text(
+                source_review_id
+            ):
+                problems.append(
+                    f"{label}: source_review_id must be null or nonempty"
+                )
+            if (
+                independence.get("source") == "reviewed_independent"
+                and not _nonempty_text(source_review_id)
+            ):
+                problems.append(
+                    f"{label}: reviewed source independence needs source_review_id"
+                )
+        else:
+            independence = {}
+        path_verified = independence.get("path") == "verified_distinct"
+        artifact_recomputed = independence.get("artifact") in {
+            "raw_recomputed",
+            "fresh_cross_check",
+        }
+        source_reviewed = (
+            independence.get("source") == "reviewed_independent"
+        )
+        if validation.get("decisive_claim_validated") and not (
+            path_verified and artifact_recomputed
         ):
             problems.append(
-                f"{label}: decisive validation must be independently implemented"
+                f"{label}: decisive validation requires a verified distinct path "
+                "and recomputed or fresh-cross-check artifact evidence"
             )
         if validation.get("decisive_claim_validated") and validation.get(
             "status"
@@ -2805,14 +2866,46 @@ def validate_outcome(
             problems.append(
                 f"{label}: decisive validation requires validation.status=passed"
             )
-        if event.get("outcome") in {"proved", "supported", "falsified"} and (
+        decisive_outcomes = {
+            "proved",
+            "supported",
+            "falsified",
+            "bounded_negative",
+            "inapplicable",
+            "historical_structural_confirmation",
+        }
+        if event.get("outcome") in decisive_outcomes and (
             validation.get("status") != "passed"
-            or not validation.get("independent")
+            or not path_verified
+            or not artifact_recomputed
             or not validation.get("decisive_claim_validated")
         ):
             problems.append(
-                f"{label}: {event.get('outcome')} requires passed, independent, "
-                "decisive validation"
+                f"{label}: {event.get('outcome')} requires passed, "
+                "path-distinct, artifact-recomputed, decisive validation"
+            )
+        source_kind = event.get("provenance", {}).get("source_kind")
+        if event.get("outcome") == "supported" and source_kind != (
+            "native_engine_run"
+        ):
+            problems.append(
+                f"{label}: supported is reserved for preregistered native runs"
+            )
+        if event.get("outcome") == "historical_structural_confirmation" and (
+            source_kind != "historical_migration"
+        ):
+            problems.append(
+                f"{label}: historical_structural_confirmation is reserved for "
+                "historical migrations"
+            )
+        if (
+            source_kind == "native_engine_run"
+            and event.get("outcome") in decisive_outcomes
+            and not source_reviewed
+        ):
+            problems.append(
+                f"{label}: native decisive outcome requires reviewed source "
+                "independence"
             )
 
     budget = event.get("budget")
@@ -2980,15 +3073,6 @@ def validate_outcome(
             if stop.get("triggered") is not True:
                 problems.append(
                     f"{label}: native terminal event must trigger its stop condition"
-                )
-            if event.get("outcome") == "bounded_negative" and (
-                validation.get("status") != "passed"
-                or not validation.get("independent")
-                or not validation.get("decisive_claim_validated")
-            ):
-                problems.append(
-                    f"{label}: native bounded_negative requires passed, independent, "
-                    "decisive validation"
                 )
     return problems
 
@@ -3456,6 +3540,8 @@ def build_state(
             engine_disposition = "bounded_negative_retained"
         elif outcomes_for_route["supported"]:
             engine_disposition = "supported_structural_evidence_retained"
+        elif outcomes_for_route["historical_structural_confirmation"]:
+            engine_disposition = "historical_structural_confirmation_retained"
         else:
             engine_disposition = "no_engine_evidence"
         declared_threat_models = route["threat_models"]

@@ -88,7 +88,7 @@ The engine normalizes **9 hypotheses** and retains
 **0 native**. Its historical
 no-reopen guard matched four frozen cases; this is not predictive EIG calibration. Predictive
 calibration currently contains **0 native
-outcomes**. Selected bounded explorations: **0** (none). Ready now: **0** (none). **3 candidates remain at intake** behind exact-mechanism or independent-validator hard gates.
+outcomes**. Selected bounded explorations: **0** (none). Ready now: **0** (none). **0 candidates remain at intake** behind exact-mechanism or independent-validator hard gates.
 
 The exploration gate is **true** and the promotion
 gate is **false**. Any future selection permits only

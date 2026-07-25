@@ -29,7 +29,7 @@ Rationale:
 
 - The generic lower bound and generic algorithms are guardrails or baselines, not non-generic attack mechanisms.
 - GLV supplies a verified constant-factor structure; Pohlig-Hellman, low-degree pairing transfer, anomalous lifting, and extension-field descent fail target-specific applicability screens.
-- The open prime-field algebraic, GLV-Semaev, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge.
+- The open prime-field algebraic, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge. For GLV-Semaev specifically, the proposed coordinatewise-cube quotient is now closed because it quotients by C3^m rather than the diagonal C3 action and loses relative phase.
 - Multi-target, interval, leakage, implementation, and quantum routes change the input or computational threat model and therefore cannot be promoted as a classical plain-input result.
 - Building conditional Mathlib foundations now would increase theorem volume without a demonstrated reduction in uncertainty about the exact target.
 
@@ -58,7 +58,7 @@ Reopen selection only when:
 | P0 | **R-GLV**: GLV endomorphism acceleration | `constant_factor_only` | `classical-single-target-plain` | Keep as target structure available to a selected route; do not treat it as a standalone attack. |
 | P0 | **R-PAIRING-TRANSFER**: MOV, Frey-Ruck, and Tate/Weil pairing transfer | `ruled_out_for_target` | `classical-single-target-plain` | Keep the target-specific exclusion; defer a full pairing library unless a new route needs it. |
 | P0 | **R-POHLIG-HELLMAN**: Pohlig-Hellman subgroup reduction | `ruled_out_for_target` | `classical-single-target-plain` | Retain as a machine-checked elimination certificate. |
-| P1 | **R-GLV-SEMAEV**: GLV-symmetrized Semaev systems | `open_parked` | `classical-single-target-plain` | Keep HYP_GLV_SEMAEV_001 parked until route selection explicitly promotes it. |
+| P1 | **R-GLV-SEMAEV**: GLV-symmetrized Semaev systems | `open_parked` | `classical-single-target-plain` | Keep HYP_GLV_SEMAEV_001 closed until a new mechanism-bearing proposal passes the Research Engine intake gate. |
 | P1 | **R-HNP-NONCE-LEAKAGE**: Hidden-number and lattice attacks on biased or reused ECDSA nonces | `separate_threat_model` | `implementation-leakage` | Preserve as a separate security track; no lattice foundation build for the primary objective now. |
 | P1 | **R-MULTI-TARGET-PRECOMPUTATION**: Multi-target and reusable-precomputation tradeoffs | `conditional_only` | `classical-conditioned` | Represent in the evaluation contract; no experiment in this phase. |
 | P1 | **R-PRIME-FIELD-INDEX-CALCULUS**: Prime-field index calculus | `open_parked` | `classical-single-target-plain` | Preserve evidence and prerequisites; wait for explicit route selection before any new experiment. |
@@ -159,10 +159,10 @@ Reopen selection only when:
 ### R-GLV-SEMAEV: GLV-symmetrized Semaev systems
 
 - **Applicability:** direct to the j=0 target structure, but only constant-factor evidence exists
-- **Known cost:** Measured finite-orbit reductions are constant-factor; the relevant higher-degree invariant-system cost is unresolved.
-- **Evidence:** Lean verifies the GLV and Semaev structural ingredients. Existing experiments close only narrow lookup and toy-presentation windows.
-- **Promotion gate:** Exhibit a nonredundant invariant S_m system and a theoretical reason for a lower asymptotic solving exponent, then validate it independently.
-- **Stop condition:** Stop if the gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.
+- **Known cost:** Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.
+- **Evidence:** Lean verifies the GLV and Semaev structural ingredients. Existing experiments retain narrow lookup and toy-presentation measurements; experiments/glv_diagonal_obstruction independently replays the exact finite phase-loss witness. The general invariant-ring argument is documented but not kernel-checked.
+- **Promotion gate:** Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.
+- **Stop condition:** The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.
 - **Anti-overclaim:** The mathematical question remains open while execution is parked; prior toy results are partial negative evidence, not an active attack.
 - **Foundations:** `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`, `F-FORMAL-COST-MODEL`, `F-SEMAEV-ELIMINATION`
 - **Formal nodes:** `glv-rational-scope`, `semaev-foundations`, `experimental-hypotheses`
@@ -317,7 +317,7 @@ Reopen selection only when:
 | P0 | **F-BENCHMARK-ORACLE**: Independent benchmark oracle and reproducibility manifest | `build_now` | `complete` | true | Build after the decision substrate checker is green. |
 | P0 | **F-EVALUATION-CONTRACT**: Threat-model, applicability, and evidence contract | `build_now` | `complete` | true | Already active in this branch. |
 | P1 | **F-FORMAL-COST-MODEL**: Formal oracle and resource cost model | `build_if_selected` | `partial` | false | A selected route has a concrete cost theorem whose ambiguity cannot be controlled by the non-kernel evaluation schema. |
-| P1 | **F-SEMAEV-ELIMINATION**: General Semaev elimination and polynomial-system complexity stack | `build_if_selected` | `partial` | false | One of the dependent routes is selected with an exact nonredundant system and a plausible complexity mechanism. |
+| P1 | **F-SEMAEV-ELIMINATION**: General Semaev elimination and polynomial-system complexity stack | `build_if_selected` | `partial` | false | One of the dependent routes is selected with a materially new exact system, explicit fixed-target semantics, and a plausible complexity mechanism beyond finite-orbit compression. |
 | P2 | **F-POINT-DIVISION-BRIDGE**: Uniform point scalar-multiplication to division-polynomial bridge | `retain_frontier` | `partial` | false | The EDS/division-polynomial route identifies an observable that is not merely a scalar-multiplication re-encoding. |
 | P2 | **F-UNIFORM-TORSION-SEPARABILITY**: Uniform separability and general n-torsion structure | `retain_frontier` | `partial` | false | A selected route needs uniform n rather than the already closed concrete small-prime family. |
 | P3 | **F-ISOGENY-STACK**: Elliptic isogeny and endomorphism-ring stack | `monitor_only` | `partial` | false | An explicit efficiently computable transfer to a demonstrably weaker DLP target is proposed. |

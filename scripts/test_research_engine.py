@@ -97,7 +97,12 @@ class ResearchEngineTests(unittest.TestCase):
                     else "toy"
                 ),
                 "curve_family": candidate["scope"]["curve_family"],
-                "field_bits": [17, 21],
+                "field_bits": sorted(
+                    {
+                        curve["field_p"].bit_length()
+                        for curve in candidate["preregistration"]["curves"]
+                    }
+                ),
                 "threat_model": candidate["scope"]["threat_model"],
                 "claim_boundary": "Synthetic regression fixture only.",
             },
@@ -105,7 +110,12 @@ class ResearchEngineTests(unittest.TestCase):
             "evidence_files": ["experiments/p3_sm_system/RESULTS.md"],
             "validation": {
                 "status": "passed",
-                "independent": True,
+                "independence": {
+                    "path": "verified_distinct",
+                    "artifact": "raw_recomputed",
+                    "source": "reviewed_independent",
+                    "source_review_id": "synthetic-regression-review",
+                },
                 "decisive_claim_validated": True,
                 "evidence_files": ["experiments/p3_sm_system/validate.py"],
             },
@@ -171,17 +181,112 @@ class ResearchEngineTests(unittest.TestCase):
                 "external-solver-calibration-record"
             ],
         }
+        fixture_preregistration = {
+            "status": "frozen",
+            "solver": {
+                "name": "Synthetic protocol solver",
+                "versions": {
+                    "SageMath": "10.6",
+                    "Singular": "4.4.1",
+                },
+                "algorithm": "Deterministic regression fixture only",
+            },
+            "seeds": [1],
+            "curves": [
+                {
+                    "id": "toy-j0-16-p65539-b11",
+                    "field_p": 65539,
+                    "curve_a": 0,
+                    "curve_b": 11,
+                    "base_order": 65287,
+                    "base_point": [7825, 6727],
+                    "cofactor": 1,
+                }
+            ],
+            "instances": [
+                {
+                    "curve_id": "toy-j0-16-p65539-b11",
+                    "m": 2,
+                    "factor_base_sizes": [4],
+                    "presentations": ["plain"],
+                }
+            ],
+            "target_rule": "Use the frozen synthetic fixture target.",
+            "primary_metric": "Exact canonical fixture outcome.",
+            "validator_contract": fixture_contract,
+            "success_rule": "The pure protocol fixture returns its frozen outcome.",
+            "stop_rule": "Stop after the one frozen fixture instance.",
+        }
+        fixture_information_model = {
+            "latent_question": "Does the synthetic protocol fixture pass?",
+            "prior_live": 0.5,
+            "prior_rationale": "Synthetic distribution for gate tests only.",
+            "likelihoods": {
+                "proved": {"live": 0.0, "dead": 0.0},
+                "supported": {"live": 0.55, "dead": 0.05},
+                "falsified": {"live": 0.05, "dead": 0.45},
+                "bounded_negative": {"live": 0.1, "dead": 0.25},
+                "inapplicable": {"live": 0.05, "dead": 0.05},
+                "inconclusive": {"live": 0.15, "dead": 0.15},
+                "resource_exhausted": {"live": 0.1, "dead": 0.05},
+            },
+        }
+        fixture_result_updates = {
+            outcome: "Synthetic protocol update only."
+            for outcome in (
+                "proved",
+                "supported",
+                "falsified",
+                "bounded_negative",
+                "inapplicable",
+                "inconclusive",
+                "resource_exhausted",
+            )
+        }
         for index, candidate in enumerate(policy["candidate_proposals"][:3]):
             candidate["authorization"] = "exploration"
-            candidate["preregistration"]["status"] = "frozen"
-            candidate["preregistration"]["validator_contract"] = copy.deepcopy(
-                fixture_contract
+            candidate["preregistration"] = copy.deepcopy(
+                fixture_preregistration
             )
+            candidate["information_model"] = copy.deepcopy(
+                fixture_information_model
+            )
+            candidate["result_updates"] = copy.deepcopy(
+                fixture_result_updates
+            )
+            candidate["scope"] = {
+                "curve_family": "cofactor-1 toy j=0 curves",
+                "max_field_bits": 21,
+                "forbidden_targets": ["secp256k1"],
+                "threat_model": "classical-single-target-plain",
+            }
             candidate["hard_rejections"] = {
                 key: False for key in candidate["hard_rejections"]
             }
-            if index > 0:
+            if index == 0:
+                candidate["downstream_research_window"] = (
+                    "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT"
+                )
+                candidate["dependencies"] = []
+                candidate["dependency_requirements"] = {}
+            elif index == 1:
                 candidate["gap_class"] = "mechanism_bearing_open_window"
+                candidate["dependencies"] = [
+                    "RE0-001-EXTERNAL-SOLVER-CALIBRATION"
+                ]
+                candidate["dependency_requirements"] = {
+                    "RE0-001-EXTERNAL-SOLVER-CALIBRATION": ["supported"]
+                }
+            else:
+                candidate["gap_class"] = "mechanism_bearing_open_window"
+                candidate["dependencies"] = [
+                    "RE0-001-EXTERNAL-SOLVER-CALIBRATION",
+                    "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT",
+                ]
+                candidate["dependency_requirements"] = {
+                    "RE0-001-EXTERNAL-SOLVER-CALIBRATION": ["supported"],
+                    "RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT": ["supported"],
+                }
         return policy
 
     def test_policy_covers_all_nine_hypotheses(self) -> None:
@@ -199,15 +304,24 @@ class ResearchEngineTests(unittest.TestCase):
             for item in selection["hard_rejected"]
         }
         self.assertEqual(
-            {"missing_independent_validator"},
+            {
+                "missing_independent_validator",
+                "no_new_premise_after_resolution",
+            },
             rejected["RE0-001-EXTERNAL-SOLVER-CALIBRATION"],
         )
         self.assertEqual(
-            {"missing_exact_mechanism", "missing_independent_validator"},
+            {
+                "missing_independent_validator",
+                "no_new_premise_after_resolution",
+            },
             rejected["RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT"],
         )
         self.assertEqual(
-            {"missing_exact_mechanism", "missing_independent_validator"},
+            {
+                "missing_independent_validator",
+                "no_new_premise_after_resolution",
+            },
             rejected["RE0-003-M3-INVARIANT-F4-SCALING"],
         )
         reordered = copy.deepcopy(self.policy)
@@ -345,7 +459,13 @@ class ResearchEngineTests(unittest.TestCase):
             1, state["counts"]["outcomes_by_taxonomy"]["resource_exhausted"]
         )
         self.assertEqual(1, state["counts"]["outcomes_by_taxonomy"]["inapplicable"])
-        self.assertEqual(1, state["counts"]["outcomes_by_taxonomy"]["supported"])
+        self.assertEqual(0, state["counts"]["outcomes_by_taxonomy"]["supported"])
+        self.assertEqual(
+            1,
+            state["counts"]["outcomes_by_taxonomy"][
+                "historical_structural_confirmation"
+            ],
+        )
         self.assertEqual(
             len(self.decisions["routes"]),
             state["route_axis_contract"]["route_count"],
@@ -373,9 +493,118 @@ class ResearchEngineTests(unittest.TestCase):
             if item["route_id"] == "R-EDS-DIVISION-POLYNOMIAL"
         )
         self.assertEqual(
-            "supported_structural_evidence_retained",
+            "historical_structural_confirmation_retained",
             ward["evidence_axis"]["engine_disposition"],
         )
+
+    def test_historical_supported_is_rejected(self) -> None:
+        path, source_event = next(
+            item
+            for item in self.outcomes
+            if item[1]["event_id"] == "REO-2026-07-24-004"
+        )
+        event = copy.deepcopy(source_event)
+        event["outcome"] = "supported"
+        problems = validate_outcome(
+            path,
+            event,
+            self.policy,
+            self.decisions,
+            self.hypotheses,
+        )
+        self.assertTrue(
+            any("supported is reserved for preregistered native runs" in item
+                for item in problems),
+            msg=problems,
+        )
+
+    def test_004_is_structural_confirmation_not_attack_evidence(self) -> None:
+        event = next(
+            event
+            for _, event in self.outcomes
+            if event["event_id"] == "REO-2026-07-24-004"
+        )
+        self.assertEqual(
+            "historical_structural_confirmation",
+            event["outcome"],
+        )
+        self.assertIn("known torsion identity", event["summary"])
+        self.assertIn("no attack mechanism", event["summary"])
+
+        state = build_state(
+            self.policy, self.decisions, self.hypotheses, self.outcomes
+        )
+        ward = next(
+            route
+            for route in state["route_evidence_state"]
+            if route["route_id"] == "R-EDS-DIVISION-POLYNOMIAL"
+        )
+        self.assertEqual([], ward["route_review_trigger_event_ids"])
+        self.assertEqual(
+            "historical_structural_confirmation_retained",
+            ward["evidence_axis"]["engine_disposition"],
+        )
+        self.assertEqual(0, state["calibration"]["scored_native_outcomes"])
+
+    def test_native_supported_requires_reviewed_source_independence(self) -> None:
+        policy = self.executable_policy()
+        event = self.native_event(
+            0,
+            "REO-2026-07-25-001",
+            "supported",
+            policy,
+        )
+        event["validation"]["independence"]["source"] = "shared_components"
+        event["validation"]["independence"]["source_review_id"] = None
+        problems = validate_outcome(
+            Path(f"{event['event_id']}.json"),
+            event,
+            policy,
+            self.decisions,
+            self.hypotheses,
+        )
+        self.assertTrue(
+            any("requires reviewed source independence" in item
+                for item in problems),
+            msg=problems,
+        )
+
+    def test_007_is_mechanically_forced_to_inconclusive(self) -> None:
+        path, source_event = next(
+            item
+            for item in self.outcomes
+            if item[1]["event_id"] == "REO-2026-07-24-007"
+        )
+        self.assertEqual(
+            [],
+            validate_outcome(
+                path,
+                source_event,
+                self.policy,
+                self.decisions,
+                self.hypotheses,
+            ),
+        )
+        for alternate in (
+            "proved",
+            "supported",
+            "historical_structural_confirmation",
+            "falsified",
+            "bounded_negative",
+            "inapplicable",
+            "resource_exhausted",
+        ):
+            with self.subTest(alternate=alternate):
+                event = copy.deepcopy(source_event)
+                event["outcome"] = alternate
+                problems = validate_outcome(
+                    path,
+                    event,
+                    self.policy,
+                    self.decisions,
+                    self.hypotheses,
+                )
+                self.assertNotEqual([], problems)
 
     def test_outcome_budget_rejects_zero_parallel_workers(self) -> None:
         path, source_event = self.outcomes[0]
@@ -517,7 +746,9 @@ class ResearchEngineTests(unittest.TestCase):
             expected_information_gain(0.1, independent),
             places=12,
         )
-        model = self.policy["candidate_proposals"][0]["information_model"]
+        model = self.executable_policy()["candidate_proposals"][0][
+            "information_model"
+        ]
         eig = expected_information_gain(
             model["prior_live"], model["likelihoods"]
         )
@@ -529,7 +760,7 @@ class ResearchEngineTests(unittest.TestCase):
         self.assertGreaterEqual(brier_score(marginal, "supported"), 0.0)
 
     def test_likelihoods_must_be_precommitted_distributions(self) -> None:
-        policy = copy.deepcopy(self.policy)
+        policy = self.executable_policy()
         candidate = policy["candidate_proposals"][0]
         candidate["information_model"]["likelihoods"]["supported"]["live"] += 0.1
         problems = validate_policy(policy, self.decisions, self.hypotheses)

@@ -25,7 +25,12 @@
   ],
   "validation": {
     "status": "partial",
-    "independent": false,
+    "independence": {
+      "path": "not_verified",
+      "artifact": "producer_summary_only",
+      "source": "not_reviewed",
+      "source_review_id": null
+    },
     "decisive_claim_validated": false,
     "evidence_files": [
       "experiments/p1_petit_m3/validate.py"

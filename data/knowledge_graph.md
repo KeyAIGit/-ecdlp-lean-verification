@@ -66,9 +66,9 @@ Exploration gate: **true**. Promotion gate: **false**. Historical no-reopen guar
 |---:|---|---|---:|---:|---|
 | - | **none** | - | - | - | `no candidate cleared mechanism and validator gates` |
 
-Blocked intake candidates: **3**. Intake is retained research memory, not permission to execute.
+Blocked intake candidates: **0**. Intake is retained research memory, not permission to execute.
 
-Retained outcomes: `proved`=0, `supported`=1, `falsified`=0, `bounded_negative`=2, `inapplicable`=1, `inconclusive`=3, `resource_exhausted`=1.
+Retained outcomes: `proved`=0, `supported`=0, `historical_structural_confirmation`=1, `falsified`=0, `bounded_negative`=2, `inapplicable`=1, `inconclusive`=3, `resource_exhausted`=1.
 
 > Promotion boundary: Generated evidence may close, park, or reopen exploration candidates. It may not promote a route, authorize exact-target work, or make a public complexity claim without a dated decision-substrate change.
 

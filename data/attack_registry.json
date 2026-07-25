@@ -569,12 +569,12 @@
       "id": "IC-3-glv-symmetry-factor-base",
       "family": "index-calculus / glv-symmetry",
       "layer": "experiments-scaling",
-      "verdict_class": "open-zone",
-      "one_line": "Close the Semaev factor base under the order-3 GLV automorphism phi(x,y)=(beta*x,y) (invariant u=x^3), or rewrite the S_m system in invariant coordinates, hoping to cut relation-generation cost / degree of regularity below a constant factor for the j=0 prime-field curve. Measured: constant ~3x only, no exponent change; HYP_GLV_SEMAEV_001 is PARKED.",
+      "verdict_class": "scoped-negative",
+      "one_line": "The declared coordinatewise quotient u_i=x_i^3 is closed: simultaneous GLV relations carry a diagonal C3 action, while coordinatewise cubes quotient by C3^m and lose relative phase. The broader route may reopen only with a materially different exact mechanism; HYP_GLV_SEMAEV_001 remains parked.",
       "required_properties": [
         "a genuine order-3 curve automorphism (CM, j=0)",
-        "a phi-invariant coordinate u=x^3 collapsing each 3-element orbit",
-        "invariant-coordinate rewriting must change the ASYMPTOTIC relation-generation cost, not merely factor-base storage"
+        "an exact quotient for the diagonal action, including target-fiber behavior and recovery",
+        "a mechanism beyond fixed finite-orbit compression that changes the ASYMPTOTIC relation-generation cost"
       ],
       "secp256k1_status": [
         {
@@ -589,8 +589,13 @@
         },
         {
           "property": "u=x^3 is phi-invariant since (beta*x)^3 = x^3",
-          "status": "satisfied (proved)",
-          "evidence": "Secp256k1.beta_is_cube_root (beta^3=1, Secp256k1Verified.lean:18) and secp256k1_beta_orderOf (order 3 in F_p, Secp256k1Order.lean)"
+          "status": "satisfied per coordinate, but insufficient as a tuple quotient",
+          "evidence": "Secp256k1.beta_is_cube_root and secp256k1_beta_orderOf prove the order-3 coordinate action. experiments/glv_diagonal_obstruction shows that applying x_i^3 independently quotients by C3^m rather than diagonal C3."
+        },
+        {
+          "property": "coordinatewise cubes preserve the relative diagonal GLV phase",
+          "status": "fails (exact scoped obstruction)",
+          "evidence": "experiments/glv_diagonal_obstruction/: on y^2=x^3+11 over F_1009, one diagonal-action graph has 483 ordered x-pairs while x_1^3=x_2^3 admits 1449; 966 pairs appear only after relative phase is forgotten. The independent validator exhaustively recomputes the raw sets."
         },
         {
           "property": "invariant coordinates change the ASYMPTOTIC relation-generation cost",
@@ -603,7 +608,7 @@
           "evidence": "P0/P1/P1-m3: orbit closure (orbit size 3) gives constant ~3x storage only, no exponent change; P0 yield law c*B_eff^2/p unchanged (~2.8x)"
         }
       ],
-      "asymptotic_complexity": "Orbit size 3 => at most ~3x factor-base storage = CONSTANT factor, no exponent change. Symmetry-adapted index calculus gives real gains over EXTENSION fields (Faugere-Gaudry-Huot-Renault) with no known prime-field transfer that changes the exponent.",
+      "asymptotic_complexity": "The diagonal symmetry group has fixed order 3, so orbit-cardinality compression alone is a CONSTANT factor. This does not prove a universal Groebner lower bound; any asymptotic claim needs a different algebraic mechanism, not the rejected coordinatewise quotient.",
       "memory": "Constant ~3x storage reduction (store N/3 orbit seeds); invariant-coordinate Groebner systems live in a 2m-variable ring, Macaulay matrices ~15-20x LARGER — net memory worse.",
       "secp256k1_constants": "beta order 3 in F_p, lambda order 3 in Z/n; orbit {x, beta*x, beta^2*x}, invariant u=x^3; p ≡ 1 (mod 3); smooth part of p-1 = 2*3*7*13441 (tiny).",
       "lean_evidence": [
@@ -614,19 +619,20 @@
         "Secp256k1.glv_lambda_eigenvalue, Secp256k1.beta_is_cube_root (Ecdlp/Secp256k1Verified.lean:10,18)"
       ],
       "experimental_evidence": [
+        "Exact scoped obstruction (experiments/glv_diagonal_obstruction): u_i=x_i^3 forgets relative C3 phase; frozen F_1009 witness and independent exhaustive validator PASS",
         "P0 (experiments/p0_glv_semaev): constant ~3x only, yield law c*B_eff^2/p, every equality re-verified by ec_add",
         "P1 / P1-m3: GLV/u=x^3 orbit closure = constant ~3x storage at matched effective size, spurious=0",
         "P3: u=x^3 lowers d_reg number but larger matrices / ~80x slower, SAME variety and EC-confirmed relation set — constant-factor re-description"
       ],
-      "kill_criterion": "HYP_GLV_SEMAEV_001 promotion gate: a stable T(p) = p^{1/2 - eps}, eps>0, with a theoretical scaling explanation. Observed: constant factor only, larger rings at lower d_reg number. PARKED pending explicit route selection; m>=3 tooling alone does not authorize work.",
+      "kill_criterion": "The coordinatewise-cube premise and its dependent m>=3 scaling draft are closed. A successor must provide an exact fixed-target construction and a growth-relevant mechanism beyond orbit size before solver scaling is authorized.",
       "open_escape_routes": [
-        "OPEN: m>=3 solving degree in invariant coordinates with an external Groebner/F4 engine (pure-Python intractable)",
-        "OPEN mathematical question: whether invariant-coordinate RELATION GENERATION (not factor-base size) changes prime-field asymptotics; HYP_GLV_SEMAEV_001 execution is PARKED",
-        "OPEN: non-toy primes; the deg S4 = 4 tower node not yet built"
+        "REOPEN ONLY WITH A NEW PREMISE: an exact diagonal or rational construction that preserves relative phase and specifies fixed-target behavior",
+        "OPEN mathematical boundary: a non-orbit algebraic mechanism could in principle affect Groebner complexity, but none is currently specified",
+        "FORMAL GAP: the general third-Veronese invariant-ring statement is documented but not yet kernel-checked"
       ],
-      "verdict": "PARTIAL NEGATIVE (constant ~3x only, no exponent change); HYP_GLV_SEMAEV_001 is PARKED - no advantage measured, while the asymptotic question remains open. Not a break.",
-      "blocked_on": "external Groebner engine for m>=3 invariant systems; non-toy primes; cost_model.",
-      "disclosure": "The GLV/CM structure is real and machine-checked, but orbit closure buys only a constant factor. NOT a step toward breaking secp256k1; equality-replay alone cannot establish a complexity no-go. The proved eigenvalue facts describe structure, not an attack."
+      "verdict": "SCOPED NEGATIVE: the proposed u_i=x_i^3 quotient is algebraically the wrong quotient for diagonal phase, and finite orbit compression is constant-factor only. This is not a universal complexity no-go and not a break.",
+      "blocked_on": "No materially new exact fixed-target mechanism with a growth-relevant prediction and independent raw-artifact validator.",
+      "disclosure": "The GLV/CM structure is real and machine-checked. The new certificate closes one proposed quotient premise; it is not a Semaev attack run, a universal Groebner no-go, or a step toward breaking secp256k1."
     },
     {
       "id": "IC-4-petit-composed-map",
