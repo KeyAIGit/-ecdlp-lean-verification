@@ -168,6 +168,89 @@ theorem S₄_diagonal_cube_invariant
     (-(2 * ((x₃ + x₄) * (x₃ * x₄) + 2 * b)))
     ((x₃ * x₄) ^ 2 - 4 * b * (x₃ + x₄)) hβ
 
+/-! ### Fixed-target transport
+
+The identities above scale *every* coordinate. The relation-generation subproblem instead fixes
+the target `x₄ = r` and scales only the factor-base coordinates. Two statements must be kept
+apart, because they point in opposite directions:
+
+* the **polynomial identity** `S₄(βx₁, βx₂, βx₃, r) = S₄(x₁, x₂, x₃, β²r)` — scaling the
+  coordinates by `β` is the same as scaling the target by `β⁻¹ = β²`;
+* the **induced map on solution fibres** `x ↦ βx`, which sends a solution at target `r` to a
+  solution at target `βr` — i.e. it transports the problem for `R` to the problem for `φ(R)`,
+  **not** `φ²(R)`.
+
+Reading the exponent of the first statement as the direction of the second is a genuine error;
+`S₄_glv_fibre_transport` below fixes the direction by deriving it from full diagonal invariance
+rather than from the transport identity.
+
+These theorems establish that a nonidentity diagonal scaling *moves* the target. They do **not**
+classify the full coordinatewise stabilizer of a fixed-target slice; that classification remains
+certificate-backed (see `experiments/glv_semaev_symmetry/`), and the blocker is recorded in the
+module docstring. -/
+
+/-- **Target transport.** Scaling only the three factor-base coordinates by `β` is exactly the
+same as scaling the target by `β²`. -/
+theorem S₄_glv_target_transport
+    (b β x₁ x₂ x₃ x₄ : F) (hβ : β ^ 3 = 1) :
+    S₄ 0 b (β * x₁) (β * x₂) (β * x₃) x₄
+      = S₄ 0 b x₁ x₂ x₃ (β ^ 2 * x₄) := by
+  rw [S₄_zero_a_explicit b (β * x₁) (β * x₂) (β * x₃) x₄,
+    S₄_zero_a_explicit b x₁ x₂ x₃ (β ^ 2 * x₄)]
+  -- first slice: the pair `(x₁, x₂)` is fully scaled, exactly as in the diagonal case
+  have h₂12 : (β * x₁ - β * x₂) ^ 2 = β ^ 2 * (x₁ - x₂) ^ 2 := by ring
+  have h₁12 :
+      -(2 * ((β * x₁ + β * x₂) * ((β * x₁) * (β * x₂)) + 2 * b))
+        = -(2 * ((x₁ + x₂) * (x₁ * x₂) + 2 * b)) := by
+    linear_combination (-2 * (x₁ + x₂) * (x₁ * x₂)) * hβ
+  have h₀12 :
+      ((β * x₁) * (β * x₂)) ^ 2 - 4 * b * (β * x₁ + β * x₂)
+        = β * ((x₁ * x₂) ^ 2 - 4 * b * (x₁ + x₂)) := by
+    linear_combination (β * (x₁ * x₂) ^ 2) * hβ
+  -- second slice: `x₃` is scaled but the target is not; the same `(β², 1, β)` weights appear
+  -- against the *transported* pair `(x₃, β²x₄)`
+  have h₂34 :
+      (β * x₃ - x₄) ^ 2 = β ^ 2 * (x₃ - β ^ 2 * x₄) ^ 2 := by
+    linear_combination (-(β ^ 3) * x₄ ^ 2 + 2 * β * x₃ * x₄ - x₄ ^ 2) * hβ
+  have h₁34 :
+      -(2 * ((β * x₃ + x₄) * ((β * x₃) * x₄) + 2 * b))
+        = -(2 * ((x₃ + β ^ 2 * x₄) * (x₃ * (β ^ 2 * x₄)) + 2 * b)) := by
+    linear_combination (2 * β * x₃ * x₄ ^ 2) * hβ
+  have h₀34 :
+      ((β * x₃) * x₄) ^ 2 - 4 * b * (β * x₃ + x₄)
+        = β * ((x₃ * (β ^ 2 * x₄)) ^ 2 - 4 * b * (x₃ + β ^ 2 * x₄)) := by
+    linear_combination (-(β ^ 2) * x₃ ^ 2 * x₄ ^ 2 + 4 * b * x₄) * hβ
+  rw [h₂12, h₁12, h₀12, h₂34, h₁34, h₀34]
+  exact quadraticResultant_weighted_invariant β
+    ((x₁ - x₂) ^ 2)
+    (-(2 * ((x₁ + x₂) * (x₁ * x₂) + 2 * b)))
+    ((x₁ * x₂) ^ 2 - 4 * b * (x₁ + x₂))
+    ((x₃ - β ^ 2 * x₄) ^ 2)
+    (-(2 * ((x₃ + β ^ 2 * x₄) * (x₃ * (β ^ 2 * x₄)) + 2 * b)))
+    ((x₃ * (β ^ 2 * x₄)) ^ 2 - 4 * b * (x₃ + β ^ 2 * x₄)) hβ
+
+/-- **Fibre transport, with the direction fixed.** A solution at target `r` maps to a solution at
+target `βr` — the problem for `R` is carried to the problem for `φ(R)`. Derived from full
+diagonal invariance, so the exponent of `S₄_glv_target_transport` cannot mislead here. -/
+theorem S₄_glv_fibre_transport
+    (b β x₁ x₂ x₃ r : F) (hβ : β ^ 3 = 1) :
+    S₄ 0 b x₁ x₂ x₃ r = 0
+      ↔ S₄ 0 b (β * x₁) (β * x₂) (β * x₃) (β * r) = 0 := by
+  rw [S₄_diagonal_cube_invariant b β x₁ x₂ x₃ r hβ]
+
+/-- A nonidentity scaling moves a nonzero target. Together with `S₄_glv_fibre_transport` this is
+the precise sense in which the diagonal GLV action **transports** the fixed-target relation
+problem instead of preserving it: the image fibre sits over `βr ≠ r`. -/
+theorem glv_target_ne_self {F : Type*} [CommRing F] [NoZeroDivisors F]
+    (β r : F) (hβ : β ≠ 1) (hr : r ≠ 0) :
+    β * r ≠ r := by
+  intro h
+  refine hβ ?_
+  have hfac : (β - 1) * r = 0 := by linear_combination h
+  rcases mul_eq_zero.mp hfac with h₁ | h₂
+  · linear_combination h₁
+  · exact absurd h₂ hr
+
 /-- The secp256k1 GLV field factor is a cube root of unity in its base field. -/
 private theorem secp256k1_beta_cube :
     (Secp256k1.beta : ZMod Secp256k1.p) ^ 3 = 1 := by
@@ -212,6 +295,63 @@ theorem secp256k1_S₄_glv_invariant
         ((Secp256k1.beta : ZMod Secp256k1.p) * x₄)
       = S₄ 0 7 x₁ x₂ x₃ x₄ :=
   S₄_diagonal_cube_invariant 7 _ x₁ x₂ x₃ x₄ secp256k1_beta_cube
+
+/-- The secp256k1 GLV factor is a *primitive* cube root: `β = 1` would force `3 = 0` in `𝔽_p`. -/
+private theorem secp256k1_beta_ne_one :
+    (Secp256k1.beta : ZMod Secp256k1.p) ≠ 1 := by
+  have hβeig : (Secp256k1.beta : ZMod Secp256k1.p) ^ 2
+      + (Secp256k1.beta : ZMod Secp256k1.p) + 1 = 0 := by
+    have h0 :
+        ((Secp256k1.beta ^ 2 + Secp256k1.beta + 1 : ℕ) :
+          ZMod Secp256k1.p) = 0 := by
+      rw [ZMod.natCast_eq_zero_iff]
+      exact Nat.dvd_of_mod_eq_zero Secp256k1.beta_field_eigenvalue
+    push_cast at h0
+    linear_combination h0
+  have h3 : (3 : ZMod Secp256k1.p) ≠ 0 := by
+    have h : ((3 : ℕ) : ZMod Secp256k1.p) ≠ 0 := by
+      rw [Ne, ZMod.natCast_eq_zero_iff]; native_decide
+    simpa using h
+  intro h1
+  exact h3 (by linear_combination hβeig - (Secp256k1.beta + 2 : ZMod Secp256k1.p) * h1)
+
+/-- Exact secp256k1 target transport: scaling the three factor-base coordinates by `β` is the
+same as scaling the target by `β²`. -/
+theorem secp256k1_S₄_glv_target_transport
+    (x₁ x₂ x₃ x₄ : ZMod Secp256k1.p) :
+    S₄ 0 7
+        ((Secp256k1.beta : ZMod Secp256k1.p) * x₁)
+        ((Secp256k1.beta : ZMod Secp256k1.p) * x₂)
+        ((Secp256k1.beta : ZMod Secp256k1.p) * x₃)
+        x₄
+      = S₄ 0 7 x₁ x₂ x₃ ((Secp256k1.beta : ZMod Secp256k1.p) ^ 2 * x₄) :=
+  S₄_glv_target_transport 7 _ x₁ x₂ x₃ x₄ secp256k1_beta_cube
+
+/-- Exact secp256k1 fibre transport, direction `r ↦ βr` (i.e. `R ↦ φ(R)`). -/
+theorem secp256k1_S₄_glv_fibre_transport
+    (x₁ x₂ x₃ r : ZMod Secp256k1.p) :
+    S₄ 0 7 x₁ x₂ x₃ r = 0
+      ↔ S₄ 0 7
+          ((Secp256k1.beta : ZMod Secp256k1.p) * x₁)
+          ((Secp256k1.beta : ZMod Secp256k1.p) * x₂)
+          ((Secp256k1.beta : ZMod Secp256k1.p) * x₃)
+          ((Secp256k1.beta : ZMod Secp256k1.p) * r) = 0 :=
+  S₄_glv_fibre_transport 7 _ x₁ x₂ x₃ r secp256k1_beta_cube
+
+/-- **The fixed-target scope statement for secp256k1.** For a nonzero target coordinate the
+diagonal GLV scaling carries the relation problem to a *different* target, `βr ≠ r`. Combined
+with `secp256k1_S₄_glv_fibre_transport`, the diagonal action transports the fixed-target problem
+rather than preserving it.
+
+Scope, stated exactly: `r` ranges over field elements, so this covers precisely the **affine**
+targets (a target at the point at infinity has no `x`-coordinate and is outside the statement).
+The hypothesis `r ≠ 0` is the `r = 0` exceptional locus of the certificate; whether that locus is
+inhabited on secp256k1 is a separate arithmetic question and is **not** settled here. -/
+theorem secp256k1_glv_fixed_target_moves
+    [Fact (Nat.Prime Secp256k1.p)]
+    (r : ZMod Secp256k1.p) (hr : r ≠ 0) :
+    (Secp256k1.beta : ZMod Secp256k1.p) * r ≠ r :=
+  glv_target_ne_self _ r secp256k1_beta_ne_one hr
 
 end Ecdlp.Semaev
 

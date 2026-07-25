@@ -75,6 +75,8 @@ jobs:
           python3 -m pip install -r experiments/glv_semaev_symmetry/requirements.txt
           python3 experiments/glv_semaev_symmetry/generate.py --check
           python3 experiments/glv_semaev_symmetry/validate.py
+          python3 experiments/glv_semaev_symmetry/generate_fixed_target.py --check
+          python3 experiments/glv_semaev_symmetry/validate_fixed_target.py
 
       - name: Check generated ECDLP decision view
         run: python3 scripts/build_ecdlp_decision_view.py --check

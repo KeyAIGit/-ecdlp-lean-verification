@@ -179,6 +179,8 @@ jobs:
         run: |
           python3 -m pip install -r experiments/glv_semaev_symmetry/requirements.txt
           python3 experiments/glv_semaev_symmetry/generate.py --check
+          python3 experiments/glv_semaev_symmetry/generate_fixed_target.py --check
+          python3 experiments/glv_semaev_symmetry/validate_fixed_target.py
           python3 experiments/glv_semaev_symmetry/validate.py
       - name: Candidate-evaluation framework tests
         run: python3 experiments/framework/test_framework.py

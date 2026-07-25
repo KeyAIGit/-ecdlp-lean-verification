@@ -49,7 +49,8 @@
       "note": null,
       "where_used": [
         "experiments/README.md",
-        "experiments/p0_glv_semaev/README.md"
+        "experiments/p0_glv_semaev/README.md",
+        "notes/GLV_SEMAEV_ITERATION_001.md"
       ]
     },
     {
@@ -102,7 +103,8 @@
         "BARRIERS.md",
         "PUBLISHABLE_UNITS.md",
         "experiments/README.md",
-        "experiments/p0_glv_semaev/README.md"
+        "experiments/p0_glv_semaev/README.md",
+        "notes/GLV_SEMAEV_ITERATION_001.md"
       ]
     },
     {
@@ -337,6 +339,7 @@
         "PUBLISHABLE_UNITS.md",
         "README.md",
         "VERIFIED.md",
+        "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]

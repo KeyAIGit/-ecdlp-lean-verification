@@ -1,0 +1,1099 @@
+{
+  "algebra": {
+    "assumptions": [
+      "beta is a primitive cube root of unity",
+      "b is nonzero",
+      "the field characteristic is neither 2 nor 3"
+    ],
+    "criterion": "F_r(beta^e . x) = c_e F_r(x) as a polynomial identity iff a -> <e,a> mod 3 is constant on supp(F_r); every coefficient outside the surviving class must vanish.",
+    "fixed_target_polynomial": "F_r(x1,x2,x3) = S4(x1,x2,x3,r) = Res_X(S3(x1,x2,X), S3(x3,r,X))",
+    "support_size": 125,
+    "universal_coefficient_ring": "Z[b,r]"
+  },
+  "certificate_id": "GLV-SEMAEV-ITER-001-FIXED-TARGET",
+  "commands": {
+    "generate": "python3 experiments/glv_semaev_symmetry/generate_fixed_target.py",
+    "generate_check": "python3 experiments/glv_semaev_symmetry/generate_fixed_target.py --check",
+    "independent_replay": "python3 experiments/glv_semaev_symmetry/validate_fixed_target.py"
+  },
+  "conclusions": {
+    "affine_scope": "r ranges over field elements and therefore over AFFINE targets only. A target at the point at infinity has no x-coordinate and is outside every statement here.",
+    "complexity": "No claim about Groebner complexity, solving degree, relation probability, memory, precomputation, or any end-to-end ECDLP cost.",
+    "exceptional_locus": "r = 0 is the unique exceptional target; there the stabilizer is the diagonal C3 with trivial multiplier.",
+    "fixed_target": "For char K not in {2,3}, b != 0 and EVERY r != 0, the coordinatewise C3 stabilizer of F_r is trivial. This is stronger than a generic-target statement: each (e, keep-class) pair carries a pure-r witness N*r^k, and the only prime dividing any minimal |N| is 2, which is already excluded.",
+    "secp256k1_inhabitation": "Whether the r = 0 locus is inhabited on a given curve is a separate arithmetic question (it needs a point (0,y) with y^2 = b) and is NOT settled by this certificate."
+  },
+  "fixed_target_witnesses": [
+    {
+      "exponents": [
+        0,
+        0,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        0,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        0,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        0,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        0,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        0,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 4,
+        "r_power": 2
+      }
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        0
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        1
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 0,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 1,
+      "witness": {
+        "integer_abs": 4,
+        "r_power": 2
+      }
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        2
+      ],
+      "forces": "r = 0 whenever char does not divide integer_abs",
+      "keep_class": 2,
+      "witness": {
+        "integer_abs": 1,
+        "r_power": 4
+      }
+    }
+  ],
+  "producer": {
+    "python_major_minor": "3.11",
+    "source_commit": "b2f289650804e007e720877560e04ee08425a0a4",
+    "source_sha256": "64994fbb054a6ac79b2d5bbbcde3c9b897ee659cc1cdb26c5c7fc8d710db7d20",
+    "sympy_version": "1.14.0"
+  },
+  "schema_version": 1,
+  "supersedes_scope": "Strengthens certificate.json's fixed_target_convention.generic_scope from a generic symbolic target to EVERY nonzero target, and certifies r = 0 as the complete exceptional locus.",
+  "witness_summary": {
+    "distinct_minimal_witness_integers": [
+      1,
+      4
+    ],
+    "excluded_characteristic_reasons": {
+      "2": "divides a minimal witness integer, so the r-forcing argument degenerates",
+      "3": "beta would not be a primitive cube root of unity"
+    },
+    "excluded_characteristics": [
+      2,
+      3
+    ],
+    "primes_dividing_some_witness_integer": [
+      2
+    ],
+    "rows": 78,
+    "rows_without_pure_r_witness": 0
+  },
+  "zero_slice": {
+    "role": "the complete exceptional locus of the fixed-target classification",
+    "stabilizer": [
+      {
+        "exponents": [
+          0,
+          0,
+          0
+        ],
+        "multiplier_beta_exponent": 0
+      },
+      {
+        "exponents": [
+          1,
+          1,
+          1
+        ],
+        "multiplier_beta_exponent": 0
+      },
+      {
+        "exponents": [
+          2,
+          2,
+          2
+        ],
+        "multiplier_beta_exponent": 0
+      }
+    ],
+    "target_value": 0
+  }
+}
