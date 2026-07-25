@@ -55,10 +55,12 @@ private theorem resultant_quadratic
     induction j using Fin.addCases with
     | left j =>
         fin_cases i <;> fin_cases j <;>
-          norm_num [f, g, Polynomial.sylvester, Fin.addCases, Fin.castAdd, Fin.addNat]
+          norm_num [f, g, Polynomial.sylvester, Fin.addCases, Fin.castAdd, Fin.castLE,
+            Fin.addNat, Polynomial.coeff_X]
     | right j =>
         fin_cases i <;> fin_cases j <;>
-          norm_num [f, g, Polynomial.sylvester, Fin.addCases, Fin.castAdd, Fin.addNat]
+          norm_num [f, g, Polynomial.sylvester, Fin.addCases, Fin.castAdd, Fin.castLE,
+            Fin.addNat, Polynomial.coeff_X]
   change f.resultant g 2 2 = quadraticResultant f₂ f₁ f₀ g₂ g₁ g₀
   rw [Polynomial.resultant, hsylvester, Matrix.det_succ_row_zero]
   simp [Fin.sum_univ_succ, Matrix.det_fin_three, quadraticResultant, Fin.succAbove]
@@ -76,14 +78,14 @@ private theorem S₄_zero_a_explicit
         ((x₃ - x₄) ^ 2)
         (-(2 * ((x₃ + x₄) * (x₃ * x₄) + 2 * b)))
         ((x₃ * x₄) ^ 2 - 4 * b * (x₃ + x₄)) := by
-  simp only [S₄, S₃poly, zero_add, add_zero, sub_zero]
-  exact resultant_quadratic
-    ((x₁ - x₂) ^ 2)
-    (-(2 * ((x₁ + x₂) * (x₁ * x₂) + 2 * b)))
-    ((x₁ * x₂) ^ 2 - 4 * b * (x₁ + x₂))
-    ((x₃ - x₄) ^ 2)
-    (-(2 * ((x₃ + x₄) * (x₃ * x₄) + 2 * b)))
-    ((x₃ * x₄) ^ 2 - 4 * b * (x₃ + x₄))
+  simpa only [S₄, S₃poly, add_zero, sub_zero] using
+    resultant_quadratic
+      ((x₁ - x₂) ^ 2)
+      (-(2 * ((x₁ + x₂) * (x₁ * x₂) + 2 * b)))
+      ((x₁ * x₂) ^ 2 - 4 * b * (x₁ + x₂))
+      ((x₃ - x₄) ^ 2)
+      (-(2 * ((x₃ + x₄) * (x₃ * x₄) + 2 * b)))
+      ((x₃ * x₄) ^ 2 - 4 * b * (x₃ + x₄))
 
 /-- The quadratic resultant is invariant when both coefficient triples receive
 the GLV weights `(β², 1, β)`. -/
