@@ -39,8 +39,9 @@ assessment. Its only positive selection was the now-completed
 work while **zero** routes were promoted and **zero** experiments authorized.
 Exact symbolic
 replay shows that only the diagonal `C3` action survives among the enumerated
-coordinatewise scalar covariances of `S3` and `S4`; at a generic fixed nonzero
-target, only identity remains a scalar covariance. The separate kernel-accepted
+coordinatewise scalar covariances of `S3` and `S4`; at every nonzero affine
+target in the stated characteristics, only identity remains a coordinate-scaling
+covariance, while the zero slice has exactly the diagonal `C3`. The separate kernel-accepted
 package proves the positive diagonal covariance and point-relation transport
 identities, not the exhaustive stabilizer classification. This is a bounded
 negative for the naive independent `u_i=x_i^3` quotient, not a Groebner lower

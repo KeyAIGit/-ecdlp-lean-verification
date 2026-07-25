@@ -138,7 +138,8 @@ def support_in_x(poly):
     for m, c in poly.items():
         key = (m[X1], m[X2], m[X3])
         rest = (m[B], m[R])
-        out.setdefault(key, {})[rest] = out.setdefault(key, {}).get(rest, 0) + c
+        coefficient = out.setdefault(key, {})
+        coefficient[rest] = coefficient.get(rest, 0) + c
     return {k: {m: c for m, c in v.items() if c} for k, v in out.items() if any(v.values())}
 
 
@@ -150,6 +151,16 @@ def pure_r_witness(coeff_br):
     if eb != 0 or er < 1:
         return None
     return (abs(c), er)
+
+
+def pure_b_witness(coeff_br):
+    """Return `(|N|, N, k)` when the coefficient is exactly `N*b^k`."""
+    if len(coeff_br) != 1:
+        return None
+    (eb, er), c = next(iter(coeff_br.items()))
+    if er != 0 or c == 0:
+        return None
+    return (abs(c), c, eb)
 
 
 def recompute():
@@ -184,15 +195,69 @@ def recompute():
 
     # r = 0 slice: substitute r -> 0 by discarding every monomial with positive r-degree
     zero_poly = {m: c for m, c in build_fixed_target().items() if m[R] == 0}
-    zsup = list(support_in_x(zero_poly).keys())
+    zsup = support_in_x(zero_poly)
     zstab = []
+    zrejected = []
     for e in product(range(3), repeat=3):
-        vals = {sum(ei * ai for ei, ai in zip(e, a)) % 3 for a in zsup}
-        if len(vals) == 1:
-            zstab.append({"exponents": list(e), "multiplier_beta_exponent": vals.pop()})
+        for c in range(3):
+            must = [
+                (monomial, coefficient)
+                for monomial, coefficient in zsup.items()
+                if sum(ei * ai for ei, ai in zip(e, monomial)) % 3 != c
+            ]
+            if not must:
+                zstab.append(
+                    {
+                        "exponents": list(e),
+                        "multiplier_beta_exponent": c,
+                    }
+                )
+                continue
+            witnesses = [
+                (witness, monomial)
+                for monomial, coefficient in must
+                if (witness := pure_b_witness(coefficient)) is not None
+            ]
+            best = min(witnesses, key=lambda item: (item[0], item[1])) \
+                if witnesses else None
+            zrejected.append(
+                {
+                    "exponents": list(e),
+                    "multiplier_beta_exponent": c,
+                    "witness": (
+                        {
+                            "integer_abs": best[0][0],
+                            "integer_coefficient": best[0][1],
+                            "b_power": best[0][2],
+                            "x_exponents": list(best[1]),
+                        }
+                        if best
+                        else None
+                    ),
+                }
+            )
+    zints = sorted(
+        {
+            row["witness"]["integer_abs"]
+            for row in zrejected
+            if row["witness"]
+        }
+    )
+    zprimes = sorted({q for n in zints for q in primes_of(n)})
 
     return {"support_size": len(sup), "rows": rows, "integers": ints,
-            "primes": primes, "zero_stabilizer": zstab}
+            "primes": primes, "zero_slice": {
+                "stabilizer": zstab,
+                "rejection_witnesses": zrejected,
+                "witness_summary": {
+                    "rejected_pairs": len(zrejected),
+                    "rows_without_pure_b_witness": sum(
+                        row["witness"] is None for row in zrejected
+                    ),
+                    "distinct_minimal_witness_integers": zints,
+                    "primes_dividing_some_witness_integer": zprimes,
+                },
+            }}
 
 
 def main() -> int:
@@ -211,6 +276,17 @@ def main() -> int:
         if want != got:
             fail(f"certificate sha256 mismatch: recorded {want}, recomputed {got}")
 
+    if cert.get("schema_version") != 2:
+        fail("unexpected fixed-target certificate schema")
+    if cert.get("certificate_id") != "GLV-SEMAEV-ITER-001-FIXED-TARGET":
+        fail("unexpected fixed-target certificate id")
+    expected_source_hashes = {
+        name: hashlib.sha256((HERE / name).read_bytes()).hexdigest()
+        for name in ("generate_fixed_target.py", "validate_fixed_target.py")
+    }
+    if cert.get("producer", {}).get("source_sha256") != expected_source_hashes:
+        fail("fixed-target replay source hashes do not match the certificate")
+
     alg = cert.get("algebra", {})
     if alg.get("support_size") != mine["support_size"]:
         fail(f"support size: certificate {alg.get('support_size')} vs replay {mine['support_size']}")
@@ -218,6 +294,14 @@ def main() -> int:
     claimed = {(tuple(row["exponents"]), row["keep_class"]): row
                for row in cert.get("fixed_target_witnesses", [])}
     replay = {(tuple(row["exponents"]), row["keep_class"]): row for row in mine["rows"]}
+    expected_fixed_rows = {
+        (e, c)
+        for e in product(range(3), repeat=3)
+        if any(e)
+        for c in range(3)
+    }
+    if set(replay) != expected_fixed_rows or len(mine["rows"]) != 78:
+        fail("fixed-target replay is not the complete 78-row nonidentity partition")
     if set(claimed) != set(replay):
         fail("the (e, keep-class) index sets differ between certificate and replay")
     for key, row in replay.items():
@@ -235,15 +319,44 @@ def main() -> int:
     if summary.get("primes_dividing_some_witness_integer") != mine["primes"]:
         fail(f"witness primes: certificate {summary.get('primes_dividing_some_witness_integer')} "
              f"vs replay {mine['primes']}")
-    if summary.get("excluded_characteristics") != sorted(set(mine["primes"]) | {3}):
+    all_witness_primes = sorted(
+        set(mine["primes"])
+        | set(
+            mine["zero_slice"]["witness_summary"][
+                "primes_dividing_some_witness_integer"
+            ]
+        )
+    )
+    if summary.get("excluded_characteristics") != sorted(set(all_witness_primes) | {3}):
         fail("excluded-characteristic set does not follow from the replayed witnesses")
     if summary.get("rows_without_pure_r_witness") != sum(
             1 for row in mine["rows"] if row["witness"] is None):
         fail("count of rows without a pure-r witness disagrees")
 
-    zclaim = cert.get("zero_slice", {}).get("stabilizer", [])
-    if sorted(map(json.dumps, zclaim, )) != sorted(map(json.dumps, mine["zero_stabilizer"])):
-        fail(f"r=0 slice stabilizer: certificate {zclaim} vs replay {mine['zero_stabilizer']}")
+    zclaim = cert.get("zero_slice", {})
+    for field in ("stabilizer", "rejection_witnesses", "witness_summary"):
+        if zclaim.get(field) != mine["zero_slice"][field]:
+            fail(
+                f"r=0 slice {field}: certificate and independent replay disagree"
+            )
+    expected_zero_valid = [
+        {
+            "exponents": [t, t, t],
+            "multiplier_beta_exponent": 0,
+        }
+        for t in range(3)
+    ]
+    zero_rows = {
+        (tuple(row["exponents"]), row["multiplier_beta_exponent"])
+        for row in (
+            mine["zero_slice"]["stabilizer"]
+            + mine["zero_slice"]["rejection_witnesses"]
+        )
+    }
+    if mine["zero_slice"]["stabilizer"] != expected_zero_valid:
+        fail("r=0 valid covariance set is not exactly the diagonal C3")
+    if len(zero_rows) != 81:
+        fail("r=0 valid and rejected rows do not form the complete 81-row partition")
 
     # the load-bearing derived conclusion, re-derived here rather than trusted
     if any(row["witness"] is None for row in mine["rows"]):
@@ -251,6 +364,12 @@ def main() -> int:
              "does not follow for every nonzero target")
     if 2 not in mine["primes"] or len(mine["primes"]) != 1:
         fail(f"expected the witness primes to be exactly [2]; replay gives {mine['primes']}")
+    if mine["zero_slice"]["witness_summary"]["rows_without_pure_b_witness"]:
+        fail("some rejected r=0 action/character pair lacks a pure-b witness")
+    if mine["zero_slice"]["witness_summary"][
+        "primes_dividing_some_witness_integer"
+    ] != [2]:
+        fail("the r=0 specialization witnesses introduce an unexpected prime")
 
     if FAILURES:
         print("FIXED-TARGET REPLAY FAILED:")
@@ -262,8 +381,10 @@ def main() -> int:
         "fixed-target replay OK: "
         f"support {mine['support_size']} monomials; {len(mine['rows'])} (e,class) rows all carry a "
         f"pure-r witness; witness integers {mine['integers']} (primes {mine['primes']}); "
-        f"excluded characteristics {sorted(set(mine['primes']) | {3})}; "
-        f"r=0 stabilizer has order {len(mine['zero_stabilizer'])}."
+        f"excluded characteristics {sorted(set(all_witness_primes) | {3})}; "
+        f"r=0 stabilizer has order {len(mine['zero_slice']['stabilizer'])} "
+        f"with {len(mine['zero_slice']['rejection_witnesses'])} "
+        "specialization-stable rejection witnesses."
     )
     return 0
 

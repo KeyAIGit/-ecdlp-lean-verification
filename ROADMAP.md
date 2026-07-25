@@ -153,7 +153,9 @@ Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` 
 **Current structural result and next gate:**
 
 - Exact symbolic replay leaves only the diagonal `C3` covariance for `S3` and
-  `S4`; a generic fixed nonzero target has no nonidentity scalar covariance.
+  `S4`; every nonzero affine target in the stated characteristics has no
+  nonidentity coordinate-scaling covariance, while the zero slice has exactly
+  the diagonal `C3`.
 - Record the naive independent-cube quotient and its fixed-target scaling
   premise as bounded negatives. Do not generalize this to faithful Petit,
   all geometric zero-variety automorphisms, or Groebner/F4 complexity.

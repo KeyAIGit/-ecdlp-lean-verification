@@ -39,7 +39,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import subprocess
 import sys
 from itertools import product
 from pathlib import Path
@@ -100,37 +99,134 @@ def classify_fixed_target(support):
             rows.append({"exponents": list(e), "keep_class": c,
                          "witness": {"integer_abs": n, "r_power": k},
                          "forces": "r = 0 whenever char does not divide integer_abs"})
+    indexed = {
+        (tuple(row["exponents"]), row["keep_class"])
+        for row in rows
+    }
+    expected = {
+        (e, c)
+        for e in product(range(3), repeat=3)
+        if any(e)
+        for c in range(3)
+    }
+    if indexed != expected or len(rows) != 78:
+        raise RuntimeError("fixed-target table is not the complete 78-row partition")
     return rows
 
 
-def zero_slice_stabilizer():
-    """The stabilizer of the `r = 0` slice, computed exhaustively."""
+def pure_b_witness(coeff):
+    """Return a nonzero monomial `N*b^k` witness as `(abs(N), N, k)`."""
+    p = sp.Poly(coeff, b)
+    if len(p.monoms()) != 1:
+        return None
+    (kb,), = p.monoms()
+    integer = int(p.coeffs()[0])
+    if integer == 0:
+        return None
+    return (abs(integer), integer, kb)
+
+
+def zero_slice_classification():
+    """Classify `r = 0` with specialization-stable pure-`b` witnesses."""
     s4 = sp.expand(sp.resultant(s3(x1, x2, X), s3(x3, 0, X), X))
     poly = sp.Poly(s4, *VARS)
-    sup = [m for m, c in zip(poly.monoms(), poly.coeffs()) if c != 0]
-    out = []
+    support = {
+        monomial: sp.expand(coefficient)
+        for monomial, coefficient in zip(poly.monoms(), poly.coeffs())
+        if coefficient != 0
+    }
+    valid = []
+    rejected = []
     for e in product(range(3), repeat=3):
-        vals = {sum(ei * ai for ei, ai in zip(e, a)) % 3 for a in sup}
-        if len(vals) == 1:
-            out.append({"exponents": list(e), "multiplier_beta_exponent": vals.pop()})
-    return out
+        for c in range(3):
+            must = [
+                (monomial, coefficient)
+                for monomial, coefficient in support.items()
+                if sum(ei * ai for ei, ai in zip(e, monomial)) % 3 != c
+            ]
+            if not must:
+                valid.append(
+                    {
+                        "exponents": list(e),
+                        "multiplier_beta_exponent": c,
+                    }
+                )
+                continue
+            witnesses = [
+                (witness, monomial)
+                for monomial, coefficient in must
+                if (witness := pure_b_witness(coefficient)) is not None
+            ]
+            best = min(witnesses, key=lambda item: (item[0], item[1])) \
+                if witnesses else None
+            rejected.append(
+                {
+                    "exponents": list(e),
+                    "multiplier_beta_exponent": c,
+                    "witness": (
+                        {
+                            "integer_abs": best[0][0],
+                            "integer_coefficient": best[0][1],
+                            "b_power": best[0][2],
+                            "x_exponents": list(best[1]),
+                        }
+                        if best
+                        else None
+                    ),
+                }
+            )
+    missing = [row for row in rejected if row["witness"] is None]
+    if missing:
+        raise RuntimeError(
+            f"{len(missing)} zero-slice rejection rows lack a pure-b witness"
+        )
+    integers = sorted(
+        {row["witness"]["integer_abs"] for row in rejected}
+    )
+    primes = sorted({q for integer in integers for q in sp.factorint(integer)})
+    expected_valid = [
+        {
+            "exponents": [t, t, t],
+            "multiplier_beta_exponent": 0,
+        }
+        for t in range(3)
+    ]
+    indexed = {
+        (tuple(row["exponents"]), row["multiplier_beta_exponent"])
+        for row in valid + rejected
+    }
+    if valid != expected_valid or len(indexed) != 81:
+        raise RuntimeError("zero-slice table is not the expected 81-row partition")
+    return {
+        "stabilizer": valid,
+        "rejection_witnesses": rejected,
+        "witness_summary": {
+            "rejected_pairs": len(rejected),
+            "rows_without_pure_b_witness": len(missing),
+            "distinct_minimal_witness_integers": integers,
+            "primes_dividing_some_witness_integer": primes,
+        },
+    }
 
 
 def build() -> dict:
     support = fixed_target_support()
     rows = classify_fixed_target(support)
+    zero_slice = zero_slice_classification()
 
     missing = [row for row in rows if row["witness"] is None]
     integers = sorted({row["witness"]["integer_abs"] for row in rows if row["witness"]})
-    primes = sorted({q for n in integers for q in sp.factorint(n)})
+    primes = sorted(
+        {q for n in integers for q in sp.factorint(n)}
+        | set(zero_slice["witness_summary"]["primes_dividing_some_witness_integer"])
+    )
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "certificate_id": "GLV-SEMAEV-ITER-001-FIXED-TARGET",
         "supersedes_scope": (
-            "Strengthens certificate.json's fixed_target_convention.generic_scope from a generic "
-            "symbolic target to EVERY nonzero target, and certifies r = 0 as the complete "
-            "exceptional locus."
+            "Strengthens certificate.json's fixed_target_convention.base_symbolic_scope "
+            "to EVERY nonzero target, and certifies r = 0 as the complete exceptional locus."
         ),
         "algebra": {
             "universal_coefficient_ring": "Z[b,r]",
@@ -160,7 +256,7 @@ def build() -> dict:
         },
         "zero_slice": {
             "target_value": 0,
-            "stabilizer": zero_slice_stabilizer(),
+            **zero_slice,
             "role": "the complete exceptional locus of the fixed-target classification",
         },
         "conclusions": {
@@ -172,7 +268,9 @@ def build() -> dict:
             ),
             "exceptional_locus": (
                 "r = 0 is the unique exceptional target; there the stabilizer is the diagonal C3 "
-                "with trivial multiplier."
+                "with trivial multiplier. Every rejected zero-slice action/character pair has a "
+                "pure-b witness N*b^k with N supported only at the already excluded prime 2, so "
+                "the exact stabilizer statement survives every permitted b specialization."
             ),
             "affine_scope": (
                 "r ranges over field elements and therefore over AFFINE targets only. A target at "
@@ -191,9 +289,13 @@ def build() -> dict:
         "producer": {
             "python_major_minor": f"{sys.version_info.major}.{sys.version_info.minor}",
             "sympy_version": sp.__version__,
-            "source_sha256": hashlib.sha256(
-                Path(__file__).read_bytes()).hexdigest(),
-            "source_commit": _git_head(),
+            "source_sha256": {
+                name: hashlib.sha256((HERE / name).read_bytes()).hexdigest()
+                for name in (
+                    "generate_fixed_target.py",
+                    "validate_fixed_target.py",
+                )
+            },
         },
         "commands": {
             "generate": "python3 experiments/glv_semaev_symmetry/generate_fixed_target.py",
@@ -201,14 +303,6 @@ def build() -> dict:
             "independent_replay": "python3 experiments/glv_semaev_symmetry/validate_fixed_target.py",
         },
     }
-
-
-def _git_head() -> str:
-    try:
-        return subprocess.run(["git", "rev-parse", "HEAD"], cwd=HERE,
-                              capture_output=True, text=True, check=True).stdout.strip()
-    except Exception:
-        return "unknown"
 
 
 def render(cert: dict) -> bytes:

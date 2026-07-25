@@ -52,13 +52,17 @@ SymPy 1.14.0 to:
 
 The independent validator imports neither SymPy nor the producer. It rebuilds
 `S3` using sparse integer polynomial arithmetic, constructs `S4` as the
-determinant of the quadratic Sylvester matrix, and replays all 108 actions.
+determinant of the quadratic Sylvester matrix, and replays all 108 actions plus
+the complete action/character witness partitions.
 
 Frozen certificate:
 
 ```text
 experiments/glv_semaev_symmetry/certificate.json
-SHA-256 cec55fc266d729b4cf02dfcb3c98433f056f68c487b14931343c8ac6cad99d31
+SHA-256 2142e8d66a8422768b609e42f5ce09377d5f93609941139fc9fc4e5abe4dfe59
+
+experiments/glv_semaev_symmetry/fixed_target_certificate.json
+SHA-256 9db5e0375421659f9abb905c12ae77232ef9957867f7194baaf548d45a1f091d
 ```
 
 Kernel package source acceptance:
@@ -90,8 +94,12 @@ overstated as a kernel theorem.
 
 The coefficient witnesses also make an arbitrary scalar exhaustive. A
 coefficient-one anchor forces any proportionality scalar to be a power of
-`beta`. For `S3`, the component `-4*b*(x1+x2+x3)` forces all three exponents
-to equal the character. For `S4`, the component
+`beta`. The certificate now gives every rejected action/character pair an
+x-monomial with coefficient exactly `+1` or `-1` over `Z[b]`; these
+obstructions survive every field characteristic. A compact characteristic
+outside `{2,3}` derivation can also use the `S3` component
+`-4*b*(x1+x2+x3)` to force all three exponents to equal the character. For
+`S4`, the component
 
 ```text
 64*b^3*((x1+x2)-(x3+x4))*((x3-x4)^2-(x1-x2)^2)
@@ -101,8 +109,12 @@ forces character zero and all four exponents to be equal.
 
 ## Exact result
 
-Assume a primitive cube root `beta`, nonzero `b`, and characteristic different
-from 2 and 3 for the exact elliptic stabilizer interpretation.
+For the polynomial classification, assume a field containing a primitive cube
+root `beta`. No characteristic or `b != 0` assumption is needed. In
+characteristic 3 that premise is empty because the only cube root of unity in
+a field is `1`. Interpreting the same formulas as a nonsingular short
+Weierstrass elliptic curve additionally assumes `b != 0` and characteristic
+outside `{2,3}`.
 
 ```text
 H3 = { ((t,t,t), beta^t) : t in Z/3Z }
@@ -122,9 +134,9 @@ S4(beta^t*x1, beta^t*x2, beta^t*x3, beta^t*x4)
 No other coordinatewise `C3` scaling is a scalar polynomial covariance in the
 symbolic primitive component or in the exact secp256k1 specialization.
 
-The positive identities need only `beta^3=1` in a commutative ring. The
-stronger assumptions above are needed for the exact primitive classification
-and the nonsingular elliptic-curve interpretation.
+The positive identities need only `beta^3=1` in a commutative ring. A primitive
+root in a field is needed for the exact stabilizer classification; the
+short-Weierstrass assumptions are needed only for its elliptic interpretation.
 
 ## Fixed target
 
@@ -160,8 +172,12 @@ witness* `N*r^k` with `k >= 1` and `|N|` in `{1,4}`; the only prime dividing any
 genericity hypothesis on `r` is needed.
 
 The slice `r=0` is preserved by the full diagonal `C3` (multiplier `1`) and is the **complete**
-exceptional locus: the certificate solves the vanishing conditions for `r` rather than assuming
-`r=0` is the only solution. Whether that locus is *inhabited* on a given curve is a separate
+exceptional locus in characteristic outside `{2,3}`: all 81 action/character pairs are partitioned
+into the three diagonal covariances and 78 rejections, each carrying a pure-`b` witness.
+Characteristic 2 is a real excluded case: the zero slice can degenerate and acquire a larger
+stabilizer. Characteristic 3 instead has no primitive cube root in a field. The certificate solves
+the vanishing conditions for `r` rather than assuming `r=0` is the only solution. Whether that
+locus is *inhabited* on a given curve is a separate
 arithmetic question — it needs a rational point `(0,y)` with `y^2 = b` — and is **not** settled
 here.
 
@@ -210,7 +226,7 @@ Outcome taxonomy:
 | Diagonal `S3` and `S4` laws | `proved` | Exact symbolic certificate and kernel-accepted Lean package |
 | Full coordinatewise semi-invariant classification | `proved` | Symbolic primitive component and exact secp256k1 specialization |
 | Independent `u_i=x_i^3` quotient | `bounded_negative` | It quotients by `C3^m`, not the diagonal `C3`, and loses relative phase |
-| Fixed-target scaling premise | `bounded_negative` | Nonidentity diagonal action transports a generic target instead of preserving it |
+| Fixed-target scaling premise | `bounded_negative` | For every nonzero affine target in characteristic outside `{2,3}`, nonidentity diagonal action transports the target instead of preserving it; the zero slice has exactly the diagonal `C3` |
 | Whole GLV-Semaev route | `open_parked` | No general Groebner lower bound or faithful Petit no-go was proved |
 
 This result does not imply that all geometric zero-variety automorphisms are
@@ -280,7 +296,7 @@ the fixed-target obstruction are **already in print**:
   `E_{0,b}` with `[rho_n](x,y) = (rho_p x, y)` — the exact map used here — was fully worked out
   for Pollard rho, giving a `sqrt(6)` speedup, in 1999.
 - **S. Tsakou, S. Ionica**, *Index calculus attacks on hyperelliptic Jacobians with efficient
-  endomorphisms*, Trans. Math. Cryptology 1(2):102–114, 2022, **Example 4**. The literal
+  endomorphisms*, Mathematical Cryptology 1(2):102–114, 2021, **Example 4**. The literal
   `phi(x,y) = (beta x, y)`, `beta^3 = 1`, on a `j = 0` curve is already used in index calculus —
   over `F_{q^2}`, and only to build factor-base equivalence classes.
 - **J.-C. Faugère, P. Gaudry, L. Huot, G. Renault**, *Using Symmetries in the Index Calculus for
@@ -297,16 +313,26 @@ case over a prime field, its exact certification (including the characteristic-u
 and its Lean formalization. **Not** the discovery of a new ECDLP attack, and not a new
 mathematical technique.
 
-**Unresolved novelty gates.** Two primary sources were not obtained and inspected, so no novelty
-claim is made against them:
+**Source-access correction and remaining novelty gate.** No novelty claim is made while the
+remaining source below lacks a claim-level comparison:
 
 - **C. Petit, M. Kosters, A. Messeng**, *Algebraic Approaches for the Elliptic Curve Discrete
-  Logarithm Problem over Prime Fields*, PKC 2016, LNCS 9615(II):3–18 — paywalled, no ePrint
-  located; any characterization of it here is second-hand.
+  Logarithm Problem over Prime Fields*, PKC 2016, LNCS 9615(II):3–18,
+  [official IACR archival PDF](https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf),
+  DOI `10.1007/978-3-662-49387-8_1`. The earlier statement that this source was unavailable or
+  only paywalled was false. A full-text term and construction review found no GLV,
+  automorphism, endomorphism, invariant-coordinate, or fixed-target symmetry claim. Its relevant
+  contribution is instead the faithful prime-field factor basis
+  `F={(x,y):L(x)=0}` with `L` composed from low-degree rational maps, together with the complete
+  Semaev relation system and an explicit statement that its asymptotic complexity remains open.
+  It therefore does not overlap the bounded stabilizer result, but it is required provenance for
+  any future `R-PETIT-COMPOSED-MAPS` proposal.
 - **M. Kudo, Y. Yokota, Y. Takahashi, M. Yasuda**, *Acceleration of Index Calculus for Solving
-  ECDLP over Prime Fields and Its Limitation*, CANS 2018, LNCS 11124:377–393 — closed access. Its
-  abstract states *"We also make use of symmetries of summation polynomials … discuss a limitation
-  of our acceleration"*, making it the **most likely overlap** with the fixed-target result.
+  ECDLP over Prime Fields and Its Limitation*, CANS 2018, LNCS 11124:377–393,
+  DOI `10.1007/978-3-030-00434-7_19` — the Springer metadata and abstract are available, but no
+  open primary manuscript was confirmed and the full paper was not inspected. Its abstract states
+  *"We also make use of symmetries of summation polynomials … discuss a limitation of our
+  acceleration"*, making it the **most likely overlap** with the fixed-target result.
 
 Absence of a result from this repository is explicitly **not** evidence of novelty.
 

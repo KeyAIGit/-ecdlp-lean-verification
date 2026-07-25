@@ -18,7 +18,7 @@ This target-specific layer is generated from `repo/ECDLP_DECISION_SUBSTRATE.json
 
 Phase: **research-engine-v0**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Structural routes: **R-GLV-SEMAEV**. Promoted routes: **none**. Selected attack route: **none**.
 
-Selection **RS-2026-07-24-001** (`2026-07-24`): **select_one_bounded_structural**. Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube and generic fixed-target scaling premises are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.
+Selection **RS-2026-07-24-001** (`2026-07-24`): **select_one_bounded_structural**. Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube premise and every nonzero affine fixed-target coordinate-scaling premise are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.
 
 | priority | route | status | threat models | foundations |
 |---:|---|---|---|---|

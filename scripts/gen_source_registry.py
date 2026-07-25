@@ -3,9 +3,10 @@
 
 `gen_result_registry.py` ties every theorem name cited in `VERIFIED.md` to an actual Lean
 declaration. This script does the complementary job for the *literature*: it catalogs each
-external result the docs invoke (Shoup, Nechaev, Semaev, Gaudry, Diem, Faugère–Gaudry–Huot–Renault,
-Petit, Pollard, Pohlig–Hellman, Schoof, Frey–Rück, Smart, Satoh–Araki, MOV) with a stable id,
-title, authors, year, venue, and a permanent link where one is confidently known — and records
+external result the docs invoke (Shoup, Nechaev, Semaev, Gaudry, Diem, GLV, invariant theory,
+automorphism-assisted index calculus, Petit-style prime-field methods, Pollard, Pohlig–Hellman,
+Schoof, Frey–Rück, Smart, Satoh–Araki, MOV) with a stable id, title, authors, year, venue, and a
+permanent link where one is confidently known — and records
 **where each work is cited** in the repository, computed by scanning the hand-authored docs.
 
 Why it is a gate, not just a file: provenance rots silently. If a new doc starts citing "Semaev"
@@ -150,6 +151,98 @@ SOURCES: list[dict] = [
         "note": None,
     },
     {
+        "id": "gebregiyorgis2016_thesis",
+        "title": "Algorithms for the Elliptic Curve Discrete Logarithm and the Approximate "
+                 "Common Divisor Problem",
+        "authors": ["Shishay Welay Gebregiyorgis"],
+        "year": 2016,
+        "venue": "PhD thesis, University of Auckland",
+        "url": "https://www.math.auckland.ac.nz/~sgal018/Shishay.pdf",
+        "doi": None,
+        "aliases": ["Gebregiyorgis"],
+        "role": "Closest prior treatment of a curve automorphism acting simultaneously on a "
+                "Semaev relation system, including target transport, invariant coordinates, "
+                "and negative polynomial-solving observations in characteristic 3.",
+        "note": "The primary thesis PDF is hosted on an official University of Auckland faculty "
+                "page. No DOI or canonical institutional-repository identifier was confirmed.",
+    },
+    {
+        "id": "sturmfels2008",
+        "title": "Algorithms in Invariant Theory",
+        "authors": ["Bernd Sturmfels"],
+        "year": 2008,
+        "venue": "2nd ed., Texts & Monographs in Symbolic Computation, Springer Vienna",
+        "url": "https://link.springer.com/book/10.1007/978-3-211-77417-5",
+        "doi": "10.1007/978-3-211-77417-5",
+        "aliases": ["Sturmfels"],
+        "role": "Textbook source for invariant rings of diagonal cyclic scalar actions, "
+                "Veronese subalgebras, and the generator count used in the GLV-Semaev analysis.",
+        "note": "The iteration note cites the second edition. The underlying proposition first "
+                "appeared in the 1993 edition; the metadata here is for the 2008 second edition.",
+    },
+    {
+        "id": "duursma_gaudry_morain1999",
+        "title": "Speeding up the Discrete Log Computation on Curves with Automorphisms",
+        "authors": ["Iwan Duursma", "Pierrick Gaudry", "François Morain"],
+        "year": 1999,
+        "venue": "ASIACRYPT 1999, LNCS 1716, pp. 103–121",
+        "url": "https://link.springer.com/chapter/10.1007/978-3-540-48000-6_10",
+        "doi": "10.1007/978-3-540-48000-6_10",
+        "aliases": ["Duursma"],
+        "role": "Primary prior art for exploiting curve automorphisms in Pollard rho, including "
+                "the order-6 automorphism group of j=0 curves and its constant-factor speedup.",
+        "note": None,
+    },
+    {
+        "id": "tsakou_ionica2021",
+        "title": "Index calculus attacks on hyperelliptic Jacobians with efficient endomorphisms",
+        "authors": ["Sulamithe Tsakou", "Sorina Ionica"],
+        "year": 2021,
+        "venue": "Mathematical Cryptology 1(2), pp. 102–114; IACR ePrint 2021/721",
+        "url": "https://eprint.iacr.org/2021/721",
+        "doi": None,
+        "aliases": ["Tsakou", "Ionica"],
+        "role": "Prior art for endomorphism-invariant factor bases and the literal j=0 map "
+                "phi(x,y)=(beta*x,y) in extension-field index calculus.",
+        "note": "The open IACR preprint is titled with 'Effective Endomorphisms'; the published "
+                "2021 journal version uses 'efficient endomorphisms'. No DOI was confirmed.",
+    },
+    {
+        "id": "petit_kosters_messeng2016",
+        "title": "Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over "
+                 "Prime Fields",
+        "authors": ["Christophe Petit", "Michiel Kosters", "Ange Messeng"],
+        "year": 2016,
+        "venue": "PKC 2016, Part II, LNCS 9615, pp. 3–18",
+        "url": "https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf",
+        "doi": "10.1007/978-3-662-49387-8_1",
+        "aliases": ["Petit–Kosters–Messeng", "Kosters", "Messeng"],
+        "role": "Primary specification for composed low-degree rational-map factor bases and "
+                "prime-field Semaev relation systems; required provenance for any faithful "
+                "R-PETIT-COMPOSED-MAPS implementation.",
+        "note": "An open official IACR archival PDF exists. The earlier repository statement that "
+                "this source was unavailable or only paywalled was incorrect. A full-text "
+                "construction and term review found no GLV, automorphism, endomorphism, "
+                "invariant-coordinate, or fixed-target symmetry claim; its relevance is the "
+                "faithful composed-map factor-base construction, not overlap with the bounded "
+                "GLV-SEMAEV-ITER-001 stabilizer result.",
+    },
+    {
+        "id": "kudo_yokota_takahashi_yasuda2018",
+        "title": "Acceleration of Index Calculus for Solving ECDLP over Prime Fields and Its "
+                 "Limitation",
+        "authors": ["Momonari Kudo", "Yuki Yokota", "Yasushi Takahashi", "Masaya Yasuda"],
+        "year": 2018,
+        "venue": "CANS 2018, LNCS 11124, pp. 377–393",
+        "url": "https://link.springer.com/chapter/10.1007/978-3-030-00434-7_19",
+        "doi": "10.1007/978-3-030-00434-7_19",
+        "aliases": ["Kudo"],
+        "role": "Prior art for hybrid Gröbner acceleration and summation-polynomial symmetries "
+                "in prime-field ECDLP index calculus, together with stated limitations.",
+        "note": "Springer metadata and abstract were verified. No open primary manuscript was "
+                "confirmed, and the full paper was not inspected in this iteration.",
+    },
+    {
         "id": "petit_ecdlp_largechar",
         "title": "Faster Algorithms for the ECDLP in the Large Characteristic Case (title as "
                  "cited in the repo)",
@@ -158,11 +251,13 @@ SOURCES: list[dict] = [
         "venue": None,
         "url": None,
         "doi": None,
-        "aliases": ["Petit"],
+        "aliases": ["Faster Algorithms for the ECDLP in the Large Characteristic Case"],
         "role": "Composed low-degree rational maps for prime-field relation generation — the "
                 "construction the P0 'petit' variant is explicitly NOT a faithful implementation of.",
-        "note": "Bibliographic details (exact year/venue/DOI) not independently verified; title "
-                "recorded as it appears in the repo prose. Do not cite externally without checking.",
+        "note": "Unverified legacy identity, retained separately from Petit–Kosters–Messeng 2016 "
+                "because the title does not match and equivalence was not established. The broad "
+                "alias 'Petit' was removed to prevent provenance conflation. Do not cite this "
+                "record externally without identifying the underlying work.",
     },
     {
         "id": "pollard1978",

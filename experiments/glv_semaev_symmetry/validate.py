@@ -354,7 +354,7 @@ def classify(name: str, polynomial: Polynomial, variable_names: list[str]):
         "exact_polynomial_symmetries": sum(
             entry["exact_polynomial_equality"] for entry in entries
         ),
-        "certified_generic_fixed_target_covariances": sum(
+        "certified_symbolic_target_covariances": sum(
             entry["fixed_target_class"]
             == "certified_scalar_covariance_at_fixed_target"
             for entry in entries
@@ -389,12 +389,115 @@ def classify(name: str, polynomial: Polynomial, variable_names: list[str]):
     }
 
 
+def characteristic_uniform_witnesses(
+    polynomial: Polynomial, variable_names: list[str]
+):
+    """Recompute the producer's characteristic-uniform unit witnesses."""
+    support: dict[tuple[int, ...], dict[int, int]] = {}
+    for powers, coefficient in polynomial.items():
+        b_power, *x_powers = powers
+        key = tuple(x_powers)
+        coefficient_in_b = support.setdefault(key, {})
+        coefficient_in_b[b_power] = (
+            coefficient_in_b.get(b_power, 0) + coefficient
+        )
+    support = {
+        powers: {
+            b_power: coefficient
+            for b_power, coefficient in coefficient_in_b.items()
+            if coefficient
+        }
+        for powers, coefficient_in_b in support.items()
+    }
+
+    valid = []
+    rejected = []
+    for exponents in itertools.product(range(3), repeat=len(variable_names)):
+        for character in range(3):
+            must_vanish = [
+                (powers, coefficient_in_b)
+                for powers, coefficient_in_b in support.items()
+                if sum(
+                    exponent * power
+                    for exponent, power in zip(exponents, powers)
+                )
+                % 3
+                != character
+            ]
+            if not must_vanish:
+                valid.append(
+                    {
+                        "exponents": list(exponents),
+                        "multiplier_beta_exponent": character,
+                    }
+                )
+                continue
+            units = [
+                (powers, coefficient_in_b[0])
+                for powers, coefficient_in_b in must_vanish
+                if coefficient_in_b in ({0: -1}, {0: 1})
+            ]
+            witness = min(units, key=lambda item: item[0]) if units else None
+            rejected.append(
+                {
+                    "exponents": list(exponents),
+                    "multiplier_beta_exponent": character,
+                    "witness": (
+                        {
+                            "x_exponents": list(witness[0]),
+                            "integer_coefficient": witness[1],
+                        }
+                        if witness
+                        else None
+                    ),
+                }
+            )
+    missing = [row for row in rejected if row["witness"] is None]
+    expected_valid = [
+        {
+            "exponents": [t] * len(variable_names),
+            "multiplier_beta_exponent": t if len(variable_names) == 3 else 0,
+        }
+        for t in range(3)
+    ]
+    indexed = {
+        (tuple(row["exponents"]), row["multiplier_beta_exponent"])
+        for row in valid + rejected
+    }
+    expected_rows = 3 ** len(variable_names) * 3
+    if valid != expected_valid:
+        fail(
+            f"unexpected valid covariance set for {len(variable_names)} variables"
+        )
+    if len(indexed) != expected_rows or len(valid) + len(rejected) != expected_rows:
+        fail(
+            f"action/character table is not a complete {expected_rows}-row partition"
+        )
+    return {
+        "valid_covariances": valid,
+        "rejection_witnesses": rejected,
+        "summary": {
+            "valid_pairs": len(valid),
+            "rejected_pairs": len(rejected),
+            "complete_partition_rows": len(indexed),
+            "rows_without_unit_witness": len(missing),
+            "witness_integer_coefficients": sorted(
+                {
+                    row["witness"]["integer_coefficient"]
+                    for row in rejected
+                    if row["witness"]
+                }
+            ),
+        },
+    }
+
+
 def file_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def validate_metadata(certificate: dict[str, object]) -> None:
-    if certificate.get("schema_version") != 2:
+    if certificate.get("schema_version") != 3:
         fail("unexpected schema version")
     if certificate.get("certificate_id") != "GLV-SEMAEV-ITER-001-SYMMETRY":
         fail("unexpected certificate id")
@@ -405,6 +508,16 @@ def validate_metadata(certificate: dict[str, object]) -> None:
         fail("unexpected primitive component")
     if algebra.get("curve_parameter") != "b remains symbolic":
         fail("curve parameter is not symbolic")
+    if algebra.get("polynomial_classification_assumptions") != [
+        "the coefficient domain is a field",
+        "beta is a primitive cube root of unity",
+    ]:
+        fail("polynomial classification assumptions are not exact")
+    if algebra.get("elliptic_interpretation_assumptions") != [
+        "b is nonzero",
+        "the field characteristic is neither 2 nor 3",
+    ]:
+        fail("elliptic interpretation assumptions are not exact")
     producer = certificate.get("producer", {})
     if producer.get("sympy_version") != "1.14.0":
         fail("producer did not pin SymPy 1.14.0")
@@ -456,6 +569,20 @@ def main() -> int:
         forcing_component_hash(s4, 3)
     ):
         fail("S4 coefficient-classification witness differs from replay")
+    uniform = witnesses.get("characteristic_uniform", {})
+    replayed_uniform = {
+        "S3": characteristic_uniform_witnesses(
+            s3, ["x1", "x2", "x3"]
+        ),
+        "S4": characteristic_uniform_witnesses(
+            s4, ["x1", "x2", "x3", "x4"]
+        ),
+    }
+    for name, replayed in replayed_uniform.items():
+        if uniform.get(name) != replayed:
+            fail(f"{name} characteristic-uniform witness table differs from replay")
+        if replayed["summary"]["rows_without_unit_witness"] != 0:
+            fail(f"{name} has a rejected action/character pair without a unit witness")
     counterexample = certificate.get("fixed_target_counterexample", {})
     replayed_counterexample = {
         "base_relation": evaluate(s4, 2, [1, 2, 3, 5], 13),

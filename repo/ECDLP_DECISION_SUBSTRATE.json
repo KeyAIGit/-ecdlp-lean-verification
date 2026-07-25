@@ -229,7 +229,7 @@
       "R-PROTOCOL-FAULT-SIDECHANNEL",
       "R-QUANTUM-SHOR"
     ],
-    "gate_result": "Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube and generic fixed-target scaling premises are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.",
+    "gate_result": "Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube premise and every nonzero affine fixed-target coordinate-scaling premise are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.",
     "rationale": [
       "RS-2026-07-22-001 is historical after supersession; this current decision explicitly carries forward its zero-promotion assessment.",
       "The owner selected the exact S3/S4 coordinatewise C3 stabilizer and fixed-target consequence as the sole current structural uncertainty because it can resolve the premise of the naive GLV-Semaev quotient without an attack run.",
@@ -642,7 +642,8 @@
       "source_ids": [
         "semaev2004",
         "gaudry2009",
-        "diem2011"
+        "diem2011",
+        "petit_kosters_messeng2016"
       ],
       "anti_overclaim": "Solving selected toy systems or proving Semaev identities does not establish a practical or asymptotic ECDLP improvement."
     },
@@ -663,7 +664,7 @@
         "The quotient retains enough information to recover valid relations."
       ],
       "known_cost": "Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.",
-      "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance; a generic fixed nonzero target has only the identity covariance. The standard-library replay reconstructs S4 independently from the Sylvester determinant. The narrow covariance and point-group transport source package passed the full Lean build and built-source no-sorry scan in workflow run 30142661986. Its VERIFIED.md registration and expanded exhaustive axiom audit passed workflow run 30143606761 at closure commit 9b77dd109306fa677fed5feab7bef830049e0c55; earlier P0-P4 evidence is retained unchanged.",
+      "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance. Certificate 2142e8d66a8422768b609e42f5ce09377d5f93609941139fc9fc4e5abe4dfe59 gives every rejected S3/S4 pair a coefficient +/-1 witness over Z[b], making the polynomial classification uniform across characteristics whenever a primitive cube root exists. Fixed-target certificate 9db5e0375421659f9abb905c12ae77232ef9957867f7194baaf548d45a1f091d proves that every nonzero affine target has only identity coordinate-scaling covariance in characteristic outside {2,3}; the r=0 slice has exactly the diagonal C3 stabilizer, with a pure-b witness for every rejected pair. Standard-library validators independently reconstruct S4 from the Sylvester determinant and replay both classifications. This is algorithmic path and artifact independence, not established source-author independence. The narrow covariance and point-group transport source package passed the full Lean build and built-source no-sorry scan in workflow run 30142661986. Its VERIFIED.md registration and expanded exhaustive axiom audit passed workflow run 30143606761 at closure commit 9b77dd109306fa677fed5feab7bef830049e0c55; earlier P0-P4 evidence is retained unchanged.",
       "success_gate": "Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.",
       "stop_condition": "The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.",
       "next_action": "Keep GLV-SEMAEV-ITER-001 closed without a solver run. Accept only a materially different phase-preserving mechanism with an exact recovery map, orbit tags, excluded components, a falsifiable full-cost prediction, and an independent validator through TASK-008 before any new decision.",
@@ -678,7 +679,7 @@
         "foundation_ids": [
           "F-SEMAEV-ELIMINATION"
         ],
-        "scope": "Exact S3/S4 covariance and stabilizer classification, fixed-target transport, and the smallest completed Lean theorem package only.",
+        "scope": "Exact S3/S4 covariance and stabilizer classification, every nonzero affine fixed-target coordinate-scaling classification plus the r=0 exception, target transport, and the smallest completed Lean theorem package only.",
         "promotes_route": false,
         "authorizes_experiment": false
       },
@@ -707,6 +708,7 @@
         "Ecdlp/Proved/GlvSemaevSymmetry.lean",
         "experiments/glv_diagonal_obstruction/artifact.json",
         "experiments/glv_semaev_symmetry/certificate.json",
+        "experiments/glv_semaev_symmetry/fixed_target_certificate.json",
         "experiments/p0_glv_semaev/RESULTS.md",
         "experiments/p1_petit/RESULTS.md",
         "experiments/p1_petit_m3/RESULTS.md",
@@ -717,9 +719,15 @@
       "source_ids": [
         "glv2001",
         "semaev2004",
-        "fghr2014"
+        "fghr2014",
+        "gebregiyorgis2016_thesis",
+        "sturmfels2008",
+        "duursma_gaudry_morain1999",
+        "tsakou_ionica2021",
+        "petit_kosters_messeng2016",
+        "kudo_yokota_takahashi_yasuda2018"
       ],
-      "anti_overclaim": "The diagonal-only classification closes the independent coordinatewise-cube quotient and its generic fixed-target scaling premise, not faithful Petit, all geometric zero-variety automorphisms, Groebner/F4 complexity, or the whole GLV-Semaev route. It is not an ECDLP or secp256k1 break."
+      "anti_overclaim": "The diagonal-only classification closes the independent coordinatewise-cube quotient and its every-nonzero-affine fixed-target coordinate-scaling premise, not faithful Petit, all geometric zero-variety automorphisms, Groebner/F4 complexity, or the whole GLV-Semaev route. It is not an ECDLP or secp256k1 break."
     },
     {
       "id": "R-PETIT-COMPOSED-MAPS",
@@ -732,16 +740,16 @@
       ],
       "status": "open_parked",
       "priority": "P2",
-      "applicability": "unresolved because the repository has not implemented a faithful construction",
+      "applicability": "source-grounded but target applicability remains unresolved: PKC 2016 specifies a p-1-smooth construction and an auxiliary-isogeny construction, neither with a validated secp256k1 full-cost bridge",
       "assumptions": [
         "A correctly specified low-degree rational map yields a useful factor-base or relation system.",
         "Composition, solving, and recovery costs improve the full attack."
       ],
       "known_cost": "No reliable project estimate; the existing six-variable toy presentation is explicitly non-faithful and descriptive.",
-      "current_evidence": "The current experiment is useful only as a negative control for one toy presentation.",
+      "current_evidence": "The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-isogeny realizations. It explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. Historical P4 did not implement either construction and remains only an inconclusive negative control; it is not evidence against the faithful route.",
       "success_gate": "First reproduce the exact construction from a verified primary source, then compare it under the common evaluation contract.",
       "stop_condition": "Reject low-bit filters, redundant auxiliary variables, or presentation-only degree changes as substitutes for the cited construction.",
-      "next_action": "Park until the source specification and route-selection gate justify implementation.",
+      "next_action": "Keep the route parked while proposal intake separates the two source mechanisms. First perform an exact target-applicability screen for the p-1-smooth construction. Treat the auxiliary-isogeny construction as a genuinely open mechanism only after it supplies exact recovery semantics and a falsifiable prediction for a dedicated generalized-root solver; do not authorize an undirected solver sweep.",
       "authorized_experiment": false,
       "hypothesis_ids": [
         "HYP_GLV_SEMAEV_001"
@@ -762,7 +770,7 @@
         "experiments/p4_petit/RESULTS.md"
       ],
       "source_ids": [
-        "petit_ecdlp_largechar"
+        "petit_kosters_messeng2016"
       ],
       "anti_overclaim": "The existing P4 experiment is not a faithful Petit implementation and cannot support a claim about the original method."
     },

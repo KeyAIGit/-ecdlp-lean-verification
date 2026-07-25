@@ -249,7 +249,7 @@ def classify_scalings(name, expression, variables):
         "exact_polynomial_symmetries": sum(
             entry["exact_polynomial_equality"] for entry in entries
         ),
-        "certified_generic_fixed_target_covariances": sum(
+        "certified_symbolic_target_covariances": sum(
             entry["fixed_target_class"]
             == "certified_scalar_covariance_at_fixed_target"
             for entry in entries
@@ -281,6 +281,103 @@ def classify_scalings(name, expression, variables):
         "primitive_base_sha256": digest(primitive_base_terms),
         "scalings": entries,
         "summary": summary,
+    }
+
+
+def characteristic_uniform_witnesses(expression, variables):
+    """Certify every rejected action/character pair with a unit coefficient.
+
+    A covariance by an arbitrary nonzero scalar is forced, by a coefficient-one
+    anchor, to use one of the three beta characters.  For each rejected
+    ``(exponents, character)`` pair we therefore record an x-monomial outside
+    that character class whose coefficient is exactly ``+1`` or ``-1`` in
+    ``Z[b]``.  Such a coefficient survives every field specialization.
+    """
+    polynomial = sympy.Poly(sympy.expand(expression), *variables)
+    support = {
+        tuple(int(power) for power in powers): sympy.expand(coefficient)
+        for powers, coefficient in polynomial.terms()
+        if coefficient != 0
+    }
+    valid = []
+    rejected = []
+    for exponents in itertools.product(range(3), repeat=len(variables)):
+        for character in range(3):
+            must_vanish = [
+                (powers, coefficient)
+                for powers, coefficient in support.items()
+                if sum(
+                    exponent * power
+                    for exponent, power in zip(exponents, powers)
+                )
+                % 3
+                != character
+            ]
+            if not must_vanish:
+                valid.append(
+                    {
+                        "exponents": list(exponents),
+                        "multiplier_beta_exponent": character,
+                    }
+                )
+                continue
+            units = [
+                (powers, int(coefficient))
+                for powers, coefficient in must_vanish
+                if coefficient in (sympy.Integer(-1), sympy.Integer(1))
+            ]
+            witness = min(units, key=lambda item: item[0]) if units else None
+            rejected.append(
+                {
+                    "exponents": list(exponents),
+                    "multiplier_beta_exponent": character,
+                    "witness": (
+                        {
+                            "x_exponents": list(witness[0]),
+                            "integer_coefficient": witness[1],
+                        }
+                        if witness
+                        else None
+                    ),
+                }
+            )
+    missing = [row for row in rejected if row["witness"] is None]
+    if missing:
+        raise RuntimeError(
+            f"{len(missing)} rejected action/character pairs lack a unit witness"
+        )
+    expected_valid = [
+        {
+            "exponents": [t] * len(variables),
+            "multiplier_beta_exponent": t if len(variables) == 3 else 0,
+        }
+        for t in range(3)
+    ]
+    indexed = {
+        (tuple(row["exponents"]), row["multiplier_beta_exponent"])
+        for row in valid + rejected
+    }
+    expected_rows = 3 ** len(variables) * 3
+    if valid != expected_valid:
+        raise RuntimeError(
+            f"unexpected valid covariance set for {len(variables)} variables"
+        )
+    if len(indexed) != expected_rows or len(valid) + len(rejected) != expected_rows:
+        raise RuntimeError(
+            f"action/character table is not a complete {expected_rows}-row partition"
+        )
+    return {
+        "valid_covariances": valid,
+        "rejection_witnesses": rejected,
+        "summary": {
+            "valid_pairs": len(valid),
+            "rejected_pairs": len(rejected),
+            "complete_partition_rows": len(indexed),
+            "rows_without_unit_witness": len(missing),
+            "witness_integer_coefficients": sorted(
+                {row["witness"]["integer_coefficient"] for row in rejected}
+            ),
+        },
     }
 
 
@@ -336,7 +433,7 @@ def build_certificate() -> dict[str, object]:
 
     tracked_sources = ("generate.py", "validate.py", "requirements.txt")
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "certificate_id": "GLV-SEMAEV-ITER-001-SYMMETRY",
         "claim_boundary": (
             "Exact symbolic classification of coordinatewise C3 scalings for "
@@ -362,15 +459,20 @@ def build_certificate() -> dict[str, object]:
                 "polynomial for exactly one k in {0,1,2}; a coefficient-one "
                 "anchor monomial makes these three candidates exhaustive"
             ),
-            "classification_assumptions": [
+            "polynomial_classification_assumptions": [
+                "the coefficient domain is a field",
                 "beta is a primitive cube root of unity",
+            ],
+            "elliptic_interpretation_assumptions": [
                 "b is nonzero",
                 "the field characteristic is neither 2 nor 3",
             ],
             "identity_assumptions": (
                 "The positive diagonal identities need only beta^3=1 in a "
-                "commutative ring; the stronger assumptions apply to the "
-                "exact stabilizer classification and elliptic interpretation."
+                "commutative ring. The exact polynomial stabilizer classification "
+                "uses a primitive cube root in a field. Interpreting y^2=x^3+b as "
+                "an elliptic curve additionally requires b nonzero and "
+                "characteristic different from 2 and 3."
             ),
         },
         "secp256k1_specialization": {
@@ -412,6 +514,20 @@ def build_certificate() -> dict[str, object]:
                     "b^3*x_i^2*x_j forces all four exponents equal."
                 ),
             },
+            "characteristic_uniform": {
+                "criterion": (
+                    "Every rejected (coordinate action, scalar character) pair has "
+                    "a must-vanish x-monomial with coefficient +1 or -1 in Z[b]. "
+                    "The obstruction therefore survives every field characteristic; "
+                    "in characteristic 3 the primitive-root field hypothesis is empty."
+                ),
+                "S3": characteristic_uniform_witnesses(
+                    exact_s3, (X1, X2, X3)
+                ),
+                "S4": characteristic_uniform_witnesses(
+                    exact_s4, (X1, X2, X3, X4)
+                ),
+            },
         },
         "fixed_target_counterexample": {
             "field": "F_13",
@@ -434,15 +550,16 @@ def build_certificate() -> dict[str, object]:
                 "S3(x1,x2,xT)=0 or S4(x1,x2,x3,xT)=0; xT also "
                 "represents -T because elliptic-curve negation preserves x"
             ),
-            "generic_scope": (
-                "The target is symbolic and non-special. A scaling is a "
-                "fixed-target scalar covariance only when its target exponent "
-                "is zero. The slice xT=0 is an explicit exception."
+            "base_symbolic_scope": (
+                "This base table treats a symbolic target. Its scope is superseded "
+                "by fixed_target_certificate.json, which proves the classification "
+                "for every nonzero affine target and isolates xT=0 as the complete "
+                "exceptional locus."
             ),
             "transport_scope": (
                 "A full diagonal scaling with nonzero target exponent "
                 "transports the target fiber to its GLV image; it does not "
-                "preserve one generic fixed target."
+                "preserve the same nonzero target."
             ),
         },
         "producer": {
@@ -476,8 +593,10 @@ def build_certificate() -> dict[str, object]:
                 "zero-variety automorphisms."
             ),
             "fixed_target": (
-                "Nonidentity diagonal tuples move a generic target and are "
-                "therefore target transports, not fixed-target symmetries."
+                "Nonidentity diagonal tuples move every nonzero target and are "
+                "therefore target transports, not fixed-target symmetries; the "
+                "complete target-value classification is in "
+                "fixed_target_certificate.json."
             ),
             "complexity": (
                 "The certificate makes no claim about Groebner complexity, "

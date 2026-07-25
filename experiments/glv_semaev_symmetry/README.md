@@ -40,17 +40,31 @@ Z[b,beta,x1,...]/(beta^3-1)
 and compared exactly with `beta^k*Sj` for each `k` in `{0,1,2}`.
 
 The final x-coordinate is designated as the target coordinate. A unit-scalar
-polynomial equality with target exponent zero preserves a generic fixed-target
-fiber. A full diagonal equality with a nonzero target exponent transports that
-fiber to the target's GLV image; it is not a symmetry of one generic fixed
-target. The special slice `xT=0` is fixed by diagonal scaling and is recorded
-separately from the generic statement.
+polynomial equality with target exponent zero preserves a fixed-target fiber.
+A full diagonal equality with a nonzero target exponent transports that fiber
+to the target's GLV image. The strengthened fixed-target certificate proves
+that no such nonidentity coordinate scaling preserves any nonzero affine
+target in characteristic outside `{2,3}`. The special slice `xT=0` has exactly
+the diagonal `C3` stabilizer.
 
 The producer first works in `Z[b,beta]/(beta^3-1)`, as requested, and then
 independently reduces the same tables in the primitive component
 `Z[b,beta]/(beta^2+beta+1)`. This prevents the `beta=1` component from hiding a
 primitive-root identity. It also checks every scaling after exact
 specialization to secp256k1's `p`, `b=7`, and GLV `beta`.
+
+Every rejected `S3` and `S4` covariance carries a deterministic monomial
+witness whose coefficient is exactly `+1` or `-1` in `Z[b]`. Consequently the
+polynomial classification is uniform across characteristics whenever a
+primitive cube root exists; it does not depend on a finite list of
+coefficient primes. The short-Weierstrass elliptic interpretation still
+assumes `b != 0` and characteristic outside `{2,3}`.
+
+For the zero-target slice, characteristic `2` is a genuine exception: its
+pure-`b` rejection witnesses have powers of `2` in their integer coefficients,
+and the stabilizer can enlarge after specialization. Characteristic `3` is
+excluded for a different reason: no field has a nontrivial primitive cube root
+there.
 
 For the elliptic GLV interpretation, `beta` is primitive, `b != 0`, and the
 field characteristic is neither 2 nor 3. These are the nondegeneracy
@@ -59,7 +73,7 @@ identities themselves need only `beta^3=1` in a commutative ring.
 
 ## Frozen result
 
-| Polynomial | Coordinatewise scalings | Primitive-root semi-invariants | Generic fixed-target scalar covariances | Rejected scalar covariances |
+| Polynomial | Coordinatewise scalings | Primitive-root semi-invariants | Fixed-target scalar covariances in the base table | Rejected scalar covariances |
 |---|---:|---:|---:|---:|
 | `S3` | 27 | 3 diagonal | 1 (identity) | 24 |
 | `S4` | 81 | 3 diagonal | 1 (identity) | 78 |
@@ -67,7 +81,7 @@ identities themselves need only `beta^3=1` in a commutative ring.
 For `S3`, diagonal exponents `0`, `1`, and `2` have unit characters
 `1`, `beta`, and `beta^2`, respectively. For resultant-defined `S4`, all three
 diagonal actions leave the polynomial exactly equal. In both cases the two
-nonidentity diagonal actions move the generic target fiber.
+nonidentity diagonal actions move a nonzero target fiber.
 
 For `F_r(x1,x2,x3) = S4(x1,x2,x3,r)`, the exact transport law is
 
@@ -76,8 +90,10 @@ F_r(beta^t*x1,beta^t*x2,beta^t*x3) = F_(beta^(-t)*r)(x1,x2,x3).
 ```
 
 Equivalently, diagonal scaling maps the fiber for `r` to the fiber for
-`beta^t*r`. It preserves a single generic target only for `t=0`; when `r=0`,
-the full diagonal `C3` preserves the slice.
+`beta^t*r`. The exact fixed-target certificate proves that every `r != 0`
+has only the identity coordinate-scaling covariance in characteristic outside
+`{2,3}`. When `r=0`, exactly the full diagonal `C3` preserves the slice; every
+other candidate is rejected by a specialization-stable pure-`b` witness.
 
 ## Independent replay
 
@@ -91,6 +107,8 @@ scaling hashes and classifications.
 python3 -m pip install -r experiments/glv_semaev_symmetry/requirements.txt
 python3 experiments/glv_semaev_symmetry/generate.py --check
 python3 experiments/glv_semaev_symmetry/validate.py
+python3 experiments/glv_semaev_symmetry/generate_fixed_target.py --check
+python3 experiments/glv_semaev_symmetry/validate_fixed_target.py
 ```
 
 To intentionally regenerate the frozen artifact:

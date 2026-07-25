@@ -1,13 +1,16 @@
 {
   "algebra": {
-    "classification_assumptions": [
-      "beta is a primitive cube root of unity",
+    "curve_family": "y^2=x^3+b",
+    "curve_parameter": "b remains symbolic",
+    "elliptic_interpretation_assumptions": [
       "b is nonzero",
       "the field characteristic is neither 2 nor 3"
     ],
-    "curve_family": "y^2=x^3+b",
-    "curve_parameter": "b remains symbolic",
-    "identity_assumptions": "The positive diagonal identities need only beta^3=1 in a commutative ring; the stronger assumptions apply to the exact stabilizer classification and elliptic interpretation.",
+    "identity_assumptions": "The positive diagonal identities need only beta^3=1 in a commutative ring. The exact polynomial stabilizer classification uses a primitive cube root in a field. Interpreting y^2=x^3+b as an elliptic curve additionally requires b nonzero and characteristic different from 2 and 3.",
+    "polynomial_classification_assumptions": [
+      "the coefficient domain is a field",
+      "beta is a primitive cube root of unity"
+    ],
     "primitive_component": "Z[b,beta]/(beta^2+beta+1)",
     "reduction_rule": "beta^k -> beta^(k mod 3)",
     "s3_formula": "(x1-x2)^2*x3^2-2*((x1+x2)*x1*x2+2*b)*x3+(x1*x2)^2-4*b*(x1+x2)",
@@ -28,6 +31,5658 @@
       "forcing_component_sha256": "4003be2448a1898e9ec41a7c1a9dfad40a5b91e94a33e860fb7a8d3e901fbaed",
       "implication": "When 2*b is nonzero, b^3*x_i^3 fixes character zero and b^3*x_i^2*x_j forces all four exponents equal."
     },
+    "characteristic_uniform": {
+      "S3": {
+        "rejection_witnesses": [
+          {
+            "exponents": [
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                2,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                2,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                2,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                2,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                0,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                2,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                2,
+                2,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                2,
+                2
+              ]
+            }
+          }
+        ],
+        "summary": {
+          "complete_partition_rows": 81,
+          "rejected_pairs": 78,
+          "rows_without_unit_witness": 0,
+          "valid_pairs": 3,
+          "witness_integer_coefficients": [
+            1
+          ]
+        },
+        "valid_covariances": [
+          {
+            "exponents": [
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2
+          }
+        ]
+      },
+      "S4": {
+        "rejection_witnesses": [
+          {
+            "exponents": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                4,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                4,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              0,
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                4,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                4,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              1,
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              0,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              1,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                0,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              0,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              1,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                0,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                4,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2,
+              0
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 0,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2,
+              1
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                4,
+                4,
+                4,
+                0
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 1,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 2,
+            "witness": {
+              "integer_coefficient": 1,
+              "x_exponents": [
+                0,
+                4,
+                4,
+                4
+              ]
+            }
+          }
+        ],
+        "summary": {
+          "complete_partition_rows": 243,
+          "rejected_pairs": 240,
+          "rows_without_unit_witness": 0,
+          "valid_pairs": 3,
+          "witness_integer_coefficients": [
+            1
+          ]
+        },
+        "valid_covariances": [
+          {
+            "exponents": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "multiplier_beta_exponent": 0
+          },
+          {
+            "exponents": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "multiplier_beta_exponent": 0
+          },
+          {
+            "exponents": [
+              2,
+              2,
+              2,
+              2
+            ],
+            "multiplier_beta_exponent": 0
+          }
+        ]
+      },
+      "criterion": "Every rejected (coordinate action, scalar character) pair has a must-vanish x-monomial with coefficient +1 or -1 in Z[b]. The obstruction therefore survives every field characteristic; in characteristic 3 the primitive-root field hypothesis is empty."
+    },
     "scalar_candidate_exhaustiveness": "Each base polynomial has a coefficient-one anchor monomial. After coordinate scaling its coefficient ratio is beta^k, so an arbitrary nonzero proportionality scalar must be one of 1, beta, beta^2."
   },
   "commands": {
@@ -37,14 +5692,14 @@
   },
   "conclusions": {
     "complexity": "The certificate makes no claim about Groebner complexity, relation probability, or asymptotic ECDLP cost.",
-    "fixed_target": "Nonidentity diagonal tuples move a generic target and are therefore target transports, not fixed-target symmetries.",
+    "fixed_target": "Nonidentity diagonal tuples move every nonzero target and are therefore target transports, not fixed-target symmetries; the complete target-value classification is in fixed_target_certificate.json.",
     "scope": "The tables classify H_k exactly: scalar polynomial covariance under coordinatewise C3 scaling. Failure of this test is not, by itself, a classification of all geometric zero-variety automorphisms."
   },
   "fixed_target_convention": {
-    "generic_scope": "The target is symbolic and non-special. A scaling is a fixed-target scalar covariance only when its target exponent is zero. The slice xT=0 is an explicit exception.",
+    "base_symbolic_scope": "This base table treats a symbolic target. Its scope is superseded by fixed_target_certificate.json, which proves the classification for every nonzero affine target and isolates xT=0 as the complete exceptional locus.",
     "relation_interpretation": "S3(x1,x2,xT)=0 or S4(x1,x2,x3,xT)=0; xT also represents -T because elliptic-curve negation preserves x",
     "target_variable": "the final x-coordinate in each polynomial",
-    "transport_scope": "A full diagonal scaling with nonzero target exponent transports the target fiber to its GLV image; it does not preserve one generic fixed target."
+    "transport_scope": "A full diagonal scaling with nonzero target exponent transports the target fiber to its GLV image; it does not preserve the same nonzero target."
   },
   "fixed_target_counterexample": {
     "base_coordinates": [
@@ -582,7 +6237,7 @@
         }
       ],
       "summary": {
-        "certified_generic_fixed_target_covariances": 1,
+        "certified_symbolic_target_covariances": 1,
         "diagonal_target_transports": 2,
         "exact_polynomial_symmetries": 1,
         "primitive_character_counts": {
@@ -4009,7 +9664,7 @@
         }
       ],
       "summary": {
-        "certified_generic_fixed_target_covariances": 1,
+        "certified_symbolic_target_covariances": 1,
         "diagonal_target_transports": 2,
         "exact_polynomial_symmetries": 3,
         "primitive_character_counts": {
@@ -4034,13 +9689,13 @@
   "producer": {
     "python_major_minor": "3.12",
     "source_sha256": {
-      "generate.py": "0a53c02a88d845330bd5dfe2fe80e20009efdd9bc523ee0b8319d86f6cd65733",
+      "generate.py": "92132016abeadd7becf66a65ab5c499bd5f6f013a4f6c8e521a04235aac7d267",
       "requirements.txt": "25f9f1fb1988b230147a1d3092d34e09c069eb7a6c6d6df46b3973b9f2d36efc",
-      "validate.py": "2dad5919d630a50677c21cf9f1b15faa92d8a5ea94dbc35826ce0e119a724103"
+      "validate.py": "9b96a420d4bf2c4fcf09c2a83fe54188415299daaf9c1ffc75e21db3d88f8a8d"
     },
     "sympy_version": "1.14.0"
   },
-  "schema_version": 2,
+  "schema_version": 3,
   "secp256k1_specialization": {
     "beta_hex": "0x7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee",
     "curve_b": 7,
