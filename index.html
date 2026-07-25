@@ -48,9 +48,9 @@
       </div>
       <div class="hero__signal" aria-label="Current reference decision">
         <span>Live decision graph</span>
-        <strong>17 routes evaluated / 0 promoted</strong>
+        <strong>17 evaluated / 1 structural / 0 promoted</strong>
         <span>0 experiments selected</span>
-        <code>RS-2026-07-22-001</code>
+        <code>RS-2026-07-24-001</code>
       </div>
     </div>
     <script type="application/json" id="route-visual-data">[{"id":"R-GENERIC-LOWER-BOUND","status":"guardrail"},{"id":"R-GENERIC-BASELINE","status":"baseline"},{"id":"R-GLV","status":"constant_factor_only"},{"id":"R-POHLIG-HELLMAN","status":"ruled_out_for_target"},{"id":"R-PAIRING-TRANSFER","status":"ruled_out_for_target"},{"id":"R-ANOMALOUS-PADIC","status":"ruled_out_for_target"},{"id":"R-WEIL-DESCENT","status":"ruled_out_for_target"},{"id":"R-PRIME-FIELD-INDEX-CALCULUS","status":"open_parked"},{"id":"R-GLV-SEMAEV","status":"open_parked"},{"id":"R-PETIT-COMPOSED-MAPS","status":"open_parked"},{"id":"R-EDS-DIVISION-POLYNOMIAL","status":"open_parked"},{"id":"R-ISOGENY-ENDOMORPHISM-TRANSFER","status":"monitor"},{"id":"R-MULTI-TARGET-PRECOMPUTATION","status":"conditional_only"},{"id":"R-INTERVAL-AUXILIARY-INPUT","status":"conditional_only"},{"id":"R-HNP-NONCE-LEAKAGE","status":"separate_threat_model"},{"id":"R-PROTOCOL-FAULT-SIDECHANNEL","status":"separate_threat_model"},{"id":"R-QUANTUM-SHOR","status":"separate_threat_model"}]</script>
@@ -165,14 +165,14 @@
       <div class="reference-grid">
         <article class="surface decision-summary">
           <div class="surface__head">
-            <div><h3>Current route decision</h3><p>RS-2026-07-22-001 · 2026-07-22</p></div>
+            <div><h3>Current route decision</h3><p>RS-2026-07-24-001 · 2026-07-24</p></div>
             <span class="status status--amber">Monitoring</span>
           </div>
           <div class="surface__body">
             <div class="decision-summary__code">SELECT_NONE</div>
             <h3>No current route clears the proposal gate.</h3>
-            <p>No audited route currently satisfies every proposal-level requirement for a new experiment against the primary plain single-target secp256k1 objective.</p>
-            <ul><li>The generic lower bound and generic algorithms are guardrails or baselines, not non-generic attack mechanisms.</li><li>GLV supplies a verified constant-factor structure; Pohlig-Hellman, low-degree pairing transfer, anomalous lifting, and extension-field descent fail target-specific applicability screens.</li><li>The open prime-field algebraic, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge. For GLV-Semaev specifically, the proposed coordinatewise-cube quotient is now closed because it quotients by C3^m rather than the diagonal C3 action and loses relative phase.</li></ul>
+            <p>Select R-GLV-SEMAEV exclusively for one bounded, non-experimental structural iteration. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.</p>
+            <ul><li>RS-2026-07-22-001 correctly selected zero routes for promotion and remains the governing negative promotion assessment.</li><li>The owner selected the exact S3/S4 coordinatewise C3 stabilizer and fixed-target consequence as the sole current structural uncertainty because it can resolve the premise of the naive GLV-Semaev quotient without an attack run.</li><li>Exact symbolic certificates and narrowly scoped Lean covariance theorems can reduce this uncertainty while preserving the parked experiment status and every P0-P4 result.</li></ul>
             <p><a href="explore.html">Inspect all 17 route dispositions</a></p>
           </div>
         </article>
@@ -180,7 +180,7 @@
           <div class="surface__head"><div><h3>Trust snapshot</h3><p>Current generated repository state</p></div></div>
           <div class="surface__body trust-list">
             <div class="trust-row"><div><strong>Lean ledger</strong><span>296 rows / ~257 distinct</span></div><span class="status status--closed">Checked</span></div>
-            <div class="trust-row"><div><strong>Built proof surface</strong><span>164 proved modules</span></div><span class="status status--closed">0 sorry</span></div>
+            <div class="trust-row"><div><strong>Built proof surface</strong><span>165 proved modules</span></div><span class="status status--closed">0 sorry</span></div>
             <div class="trust-row"><div><strong>Formal release map</strong><span>11 of 17 critical nodes closed</span></div><span class="status status--blue">Mapped</span></div>
             <div class="trust-row"><div><strong>Corpus frontier</strong><span>486 claims classified</span></div><span class="status status--blue">100.0%</span></div>
           </div>

@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every ledger row below cites kernel-checked declarations (no `sorry`, no custom axioms).
 
-**296 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **0 bounded explorations selected** · **8 retained outcomes** · **989 edges**
+**296 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 structural route selected** · **0 routes promoted** · **0 bounded explorations selected** · **8 retained outcomes** · **994 edges**
 
 > A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline counts; `data/result_registry.json` owns declaration-level resolution.
 
@@ -10,15 +10,15 @@ By proof method: Mathlib (106), Mathlib + native_decide (31), native_decide (20)
 
 By research area: curve-torsion (152), primality (54), generic-hardness (29), other (26), protocol-soundness (23), attack-resistance (6), reduction (5), params (1)
 
-By edge type: imports (478), member_of (296), requires_foundation (41), decision_grounded_in (25), supports (21), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), records_outcome_for (8), updates_hypothesis (8), records_route_evidence (8), blocked_by (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (3), depends_on_candidate (3)
+By edge type: imports (483), member_of (296), requires_foundation (41), decision_grounded_in (25), supports (21), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), records_outcome_for (8), updates_hypothesis (8), records_route_evidence (8), blocked_by (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (3), depends_on_candidate (3)
 
 ## secp256k1 route decisions
 
 This target-specific layer is generated from `repo/ECDLP_DECISION_SUBSTRATE.json`. It does not replace the attack evidence registry or the formal release map.
 
-Phase: **research-engine-v0**. Bounded exploration authorized: **true**. Promotion experiments authorized: **false**. Selected route: **none**.
+Phase: **research-engine-v0**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Structural routes: **R-GLV-SEMAEV**. Promoted routes: **none**. Selected attack route: **none**.
 
-Selection **RS-2026-07-22-001** (`2026-07-22`): **select_none**. No audited route currently satisfies every proposal-level requirement for a new experiment against the primary plain single-target secp256k1 objective.
+Selection **RS-2026-07-24-001** (`2026-07-24`): **select_one_bounded_structural**. Select R-GLV-SEMAEV exclusively for one bounded, non-experimental structural iteration. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.
 
 | priority | route | status | threat models | foundations |
 |---:|---|---|---|---|

@@ -487,6 +487,12 @@ def build() -> dict:
             ],
             "research_engine_outcomes": engine["counts"]["outcome_events"],
             "selected_explorations": engine["counts"]["selected_explorations"],
+            "selected_structural_routes": len(
+                decisions["route_selection"].get("selected_route_ids", [])
+            ),
+            "promoted_routes": len(
+                decisions["route_selection"].get("promoted_route_ids", [])
+            ),
             "edges": len(edges),
             "by_edge_type": dict(edge_hist.most_common()),
             "by_method": dict(method_hist.most_common()),
@@ -566,6 +572,8 @@ def render_markdown(graph: dict) -> str:
         f"**{c['critical_nodes']} critical nodes** · "
         f"**{c['attack_routes']} attack routes** · "
         f"**{c['decision_foundations']} decision foundations** · "
+        f"**{c['selected_structural_routes']} structural route selected** · "
+        f"**{c['promoted_routes']} routes promoted** · "
         f"**{c['selected_explorations']} bounded explorations selected** · "
         f"**{c['research_engine_outcomes']} retained outcomes** · "
         f"**{c['edges']} edges**"
@@ -601,8 +609,12 @@ def render_markdown(graph: dict) -> str:
         f"Phase: **{phase['phase']}**. Bounded exploration authorized: "
         f"**{str(phase['bounded_exploration_authorized']).lower()}**. "
         f"Promotion experiments authorized: "
-        f"**{str(phase['promotion_experiments_authorized']).lower()}**. Selected route: "
-        f"**{phase['selected_attack_route'] or 'none'}**."
+        f"**{str(phase['promotion_experiments_authorized']).lower()}**. "
+        f"Structural routes: "
+        f"**{', '.join(selection.get('selected_route_ids', [])) or 'none'}**. "
+        f"Promoted routes: "
+        f"**{', '.join(selection.get('promoted_route_ids', [])) or 'none'}**. "
+        f"Selected attack route: **{phase['selected_attack_route'] or 'none'}**."
     )
     lines.append("")
     lines.append(

@@ -138,6 +138,7 @@
         "domains/p256/corpus.md",
         "experiments/README.md",
         "experiments/glv_diagonal_obstruction/README.md",
+        "experiments/glv_semaev_symmetry/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
         "experiments/p1_petit/README.md",
@@ -156,13 +157,16 @@
         "notes/GLV_FORMALIZATION.md",
         "notes/GLV_HOMOMORPHISM.md",
         "notes/GLV_LAMBDA.md",
+        "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/INDEX.md",
         "notes/POINT_COUNTING_KEYSTONE.md",
         "notes/RESEARCH_MAP.md",
         "notes/SEPARABILITY_ROUTES.md",
         "notes/reviews/FBL_PURE_CORPUS.md",
         "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
-        "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md"
+        "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md",
+        "tasks/ECDLP_RESEARCH.md",
+        "tasks/NEXT.md"
       ]
     },
     {
@@ -271,6 +275,7 @@
       "where_used": [
         "BARRIERS.md",
         "PUBLISHABLE_UNITS.md",
+        "ROADMAP.md",
         "experiments/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
@@ -281,6 +286,7 @@
         "experiments/p3_sm_system/RESULTS.md",
         "experiments/p4_petit/README.md",
         "experiments/p4_petit/RESULTS.md",
+        "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/RESEARCH_MAP.md"
       ]
     },
@@ -418,6 +424,7 @@
         "VERIFIED.md",
         "experiments/README.md",
         "experiments/glv_diagonal_obstruction/README.md",
+        "experiments/glv_semaev_symmetry/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
         "experiments/p1_petit/README.md",
@@ -431,11 +438,13 @@
         "notes/ENGINE.md",
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
+        "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/HYPOTHESIS_EXPLORER.md",
         "notes/RESEARCH_MAP.md",
         "notes/UPSTREAM_SCAN.md",
         "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
-        "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md"
+        "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md",
+        "tasks/ECDLP_RESEARCH.md"
       ]
     },
     {

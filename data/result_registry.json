@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 728,
-  "distinct_qualified_names": 728,
+  "declaration_count": 736,
+  "distinct_qualified_names": 736,
   "verified_md_citations": 442,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -9311,6 +9311,13 @@
       "file": "Ecdlp/Proved/GlvCubeRelation.lean",
       "line": 34
     },
+    "Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff": {
+      "name": "secp256k1_glv_list_sum_eq_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+      "line": 220
+    },
     "Ecdlp.Curve.secp256k1_glv_preserves_dlog": {
       "name": "secp256k1_glv_preserves_dlog",
       "namespace": "Ecdlp.Curve",
@@ -9366,6 +9373,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/GlvSlopeTangent.lean",
       "line": 27
+    },
+    "Ecdlp.Curve.secp256k1_glv_three_point_sum_eq_iff": {
+      "name": "secp256k1_glv_three_point_sum_eq_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+      "line": 238
     },
     "Ecdlp.Curve.secp256k1_grp_card": {
       "name": "secp256k1_grp_card",
@@ -11817,6 +11831,20 @@
       "file": "Ecdlp/Proved/SemaevThree.lean",
       "line": 42
     },
+    "Ecdlp.Semaev.S₃_diagonal_cube_covariance": {
+      "name": "S₃_diagonal_cube_covariance",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+      "line": 99
+    },
+    "Ecdlp.Semaev.S₃_diagonal_cube_zero_iff": {
+      "name": "S₃_diagonal_cube_zero_iff",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+      "line": 111
+    },
     "Ecdlp.Semaev.S₃_eq_zero_iff": {
       "name": "S₃_eq_zero_iff",
       "namespace": "Ecdlp.Semaev",
@@ -11915,6 +11943,13 @@
       "file": "Ecdlp/Proved/SemaevFour.lean",
       "line": 140
     },
+    "Ecdlp.Semaev.S₄_diagonal_cube_invariant": {
+      "name": "S₄_diagonal_cube_invariant",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+      "line": 128
+    },
     "Ecdlp.Semaev.S₄_eq_zero_of_common_root": {
       "name": "S₄_eq_zero_of_common_root",
       "namespace": "Ecdlp.Semaev",
@@ -11950,12 +11985,33 @@
       "file": "Ecdlp/Proved/SemaevFour.lean",
       "line": 60
     },
+    "Ecdlp.Semaev.secp256k1_S₃_glv_covariance": {
+      "name": "secp256k1_S₃_glv_covariance",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+      "line": 180
+    },
+    "Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff": {
+      "name": "secp256k1_S₃_glv_zero_iff",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+      "line": 190
+    },
     "Ecdlp.Semaev.secp256k1_S₃poly_natDegree": {
       "name": "secp256k1_S₃poly_natDegree",
       "namespace": "Ecdlp.Semaev",
       "kind": "theorem",
       "file": "Ecdlp/Proved/SemaevDegree.lean",
       "line": 43
+    },
+    "Ecdlp.Semaev.secp256k1_S₄_glv_invariant": {
+      "name": "secp256k1_S₄_glv_invariant",
+      "namespace": "Ecdlp.Semaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+      "line": 200
     },
     "Ecdlp.Semaev.secp256k1_decomposition_completions_le_two": {
       "name": "secp256k1_decomposition_completions_le_two",

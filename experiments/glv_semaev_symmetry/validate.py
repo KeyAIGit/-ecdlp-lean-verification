@@ -16,6 +16,14 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CERTIFICATE_PATH = HERE / "certificate.json"
 DIGEST_PATH = HERE / "certificate.sha256"
+SECP256K1_P = int(
+    "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F", 16
+)
+SECP256K1_BETA = int(
+    "7AE96A2B657C07106E64479EAC3434E99CF0497512F58995C1396C28719501EE",
+    16,
+)
+SECP256K1_B = 7
 
 Polynomial = dict[tuple[int, ...], int]
 
@@ -205,36 +213,125 @@ def beta_shift(terms, amount):
     ]
 
 
+def primitive_component(terms):
+    accumulated: dict[tuple[int, ...], int] = {}
+    for coefficient, raw_powers in terms:
+        powers = tuple(raw_powers)
+        if powers[0] < 2:
+            accumulated[powers] = accumulated.get(powers, 0) + coefficient
+            continue
+        for beta_power in (0, 1):
+            key = (beta_power, *powers[1:])
+            accumulated[key] = accumulated.get(key, 0) - coefficient
+    return [
+        [coefficient, list(powers)]
+        for powers, coefficient in sorted(accumulated.items())
+        if coefficient
+    ]
+
+
+def specialize_terms(terms, field_prime, curve_b, beta):
+    accumulated: dict[tuple[int, ...], int] = {}
+    for coefficient, raw_powers in terms:
+        beta_power, b_power, *x_powers = raw_powers
+        value = (
+            coefficient
+            * pow(beta, beta_power, field_prime)
+            * pow(curve_b, b_power, field_prime)
+        ) % field_prime
+        key = tuple(x_powers)
+        accumulated[key] = (accumulated.get(key, 0) + value) % field_prime
+    return {
+        powers: coefficient
+        for powers, coefficient in accumulated.items()
+        if coefficient
+    }
+
+
+def scalar_multiple(left, right, field_prime):
+    support = set(left) | set(right)
+    anchor = next((powers for powers in sorted(support) if right.get(powers, 0)), None)
+    if anchor is None:
+        return None
+    scalar = (
+        left.get(anchor, 0)
+        * pow(right[anchor], -1, field_prime)
+    ) % field_prime
+    if scalar == 0:
+        return None
+    if all(
+        left.get(powers, 0) == scalar * right.get(powers, 0) % field_prime
+        for powers in support
+    ):
+        return scalar
+    return None
+
+
 def classify(name: str, polynomial: Polynomial, variable_names: list[str]):
     zero_exponents = (0,) * len(variable_names)
     base_terms = encode_scaled(polynomial, zero_exponents)
+    primitive_base_terms = primitive_component(base_terms)
+    secp256k1_base = specialize_terms(
+        base_terms, SECP256K1_P, SECP256K1_B, SECP256K1_BETA
+    )
     entries = []
     for exponents in itertools.product(range(3), repeat=len(variable_names)):
         transformed = encode_scaled(polynomial, exponents)
-        characters = [
+        universal_characters = [
             character
             for character in range(3)
             if transformed == beta_shift(base_terms, character)
         ]
-        if len(characters) > 1:
+        primitive_terms = primitive_component(transformed)
+        primitive_characters = [
+            character
+            for character in range(3)
+            if primitive_terms
+            == primitive_component(beta_shift(base_terms, character))
+        ]
+        if len(universal_characters) > 1 or len(primitive_characters) > 1:
             fail(f"{name} has ambiguous character at {exponents}")
-        character = characters[0] if characters else None
+        universal_character = (
+            universal_characters[0] if universal_characters else None
+        )
+        primitive_character = (
+            primitive_characters[0] if primitive_characters else None
+        )
+        secp256k1_transformed = specialize_terms(
+            transformed, SECP256K1_P, SECP256K1_B, SECP256K1_BETA
+        )
+        secp256k1_scalar = scalar_multiple(
+            secp256k1_transformed, secp256k1_base, SECP256K1_P
+        )
+        secp256k1_characters = [
+            character
+            for character in range(3)
+            if secp256k1_scalar
+            == pow(SECP256K1_BETA, character, SECP256K1_P)
+        ]
+        if secp256k1_scalar is not None and len(secp256k1_characters) != 1:
+            fail(f"{name} has an unexpected secp256k1 scalar at {exponents}")
+        secp256k1_character = (
+            secp256k1_characters[0] if secp256k1_characters else None
+        )
         target_exponent = exponents[-1]
         diagonal = len(set(exponents)) == 1
-        if character is not None and target_exponent == 0:
-            fixed_target_class = "preserves_generic_fixed_target_fiber"
-        elif character is not None:
-            fixed_target_class = "transports_target_fiber"
+        if primitive_character is not None and target_exponent == 0:
+            fixed_target_class = "certified_scalar_covariance_at_fixed_target"
+        elif primitive_character is not None:
+            fixed_target_class = "certified_target_fiber_transport"
         elif target_exponent == 0:
-            fixed_target_class = "does_not_preserve_fixed_target_fiber"
+            fixed_target_class = "no_certified_scalar_covariance_at_fixed_target"
         else:
-            fixed_target_class = "not_a_zero_set_symmetry"
+            fixed_target_class = "no_certified_scalar_covariance"
         entries.append(
             {
                 "exponents": list(exponents),
                 "transformed_sha256": digest(transformed),
-                "unit_scalar_character": character,
-                "exact_polynomial_equality": character == 0,
+                "universal_cube_root_character": universal_character,
+                "primitive_unit_scalar_character": primitive_character,
+                "secp256k1_unit_scalar_character": secp256k1_character,
+                "exact_polynomial_equality": primitive_character == 0,
                 "diagonal_action": diagonal,
                 "target_exponent": target_exponent,
                 "fixed_target_class": fixed_target_class,
@@ -242,29 +339,40 @@ def classify(name: str, polynomial: Polynomial, variable_names: list[str]):
         )
     summary = {
         "total_scalings": len(entries),
-        "unit_scalar_symmetries": sum(
-            entry["unit_scalar_character"] is not None for entry in entries
+        "universal_cube_root_semi_invariants": sum(
+            entry["universal_cube_root_character"] is not None
+            for entry in entries
+        ),
+        "primitive_root_semi_invariants": sum(
+            entry["primitive_unit_scalar_character"] is not None
+            for entry in entries
+        ),
+        "secp256k1_semi_invariants": sum(
+            entry["secp256k1_unit_scalar_character"] is not None
+            for entry in entries
         ),
         "exact_polynomial_symmetries": sum(
             entry["exact_polynomial_equality"] for entry in entries
         ),
-        "generic_fixed_target_symmetries": sum(
+        "certified_generic_fixed_target_covariances": sum(
             entry["fixed_target_class"]
-            == "preserves_generic_fixed_target_fiber"
+            == "certified_scalar_covariance_at_fixed_target"
             for entry in entries
         ),
         "diagonal_target_transports": sum(
             entry["diagonal_action"]
             and entry["target_exponent"] != 0
-            and entry["unit_scalar_character"] is not None
+            and entry["primitive_unit_scalar_character"] is not None
             for entry in entries
         ),
-        "rejected_scalings": sum(
-            entry["unit_scalar_character"] is None for entry in entries
+        "scalar_covariance_rejections": sum(
+            entry["primitive_unit_scalar_character"] is None
+            for entry in entries
         ),
-        "character_counts": {
+        "primitive_character_counts": {
             str(character): sum(
-                entry["unit_scalar_character"] == character for entry in entries
+                entry["primitive_unit_scalar_character"] == character
+                for entry in entries
             )
             for character in range(3)
         },
@@ -275,6 +383,7 @@ def classify(name: str, polynomial: Polynomial, variable_names: list[str]):
         "base_terms": base_terms,
         "base_sha256": digest(base_terms),
         "base_term_count": len(base_terms),
+        "primitive_base_sha256": digest(primitive_base_terms),
         "scalings": entries,
         "summary": summary,
     }
@@ -285,13 +394,15 @@ def file_sha256(path: Path) -> str:
 
 
 def validate_metadata(certificate: dict[str, object]) -> None:
-    if certificate.get("schema_version") != 1:
+    if certificate.get("schema_version") != 2:
         fail("unexpected schema version")
     if certificate.get("certificate_id") != "GLV-SEMAEV-ITER-001-SYMMETRY":
         fail("unexpected certificate id")
     algebra = certificate.get("algebra", {})
-    if algebra.get("coefficient_ring") != "Z[b,beta]/(beta^3-1)":
-        fail("unexpected coefficient ring")
+    if algebra.get("universal_coefficient_ring") != "Z[b,beta]/(beta^3-1)":
+        fail("unexpected universal coefficient ring")
+    if algebra.get("primitive_component") != "Z[b,beta]/(beta^2+beta+1)":
+        fail("unexpected primitive component")
     if algebra.get("curve_parameter") != "b remains symbolic":
         fail("curve parameter is not symbolic")
     producer = certificate.get("producer", {})
@@ -303,6 +414,25 @@ def validate_metadata(certificate: dict[str, object]) -> None:
     }
     if producer.get("source_sha256") != expected_sources:
         fail("source hashes do not match the committed replay sources")
+
+
+def forcing_component_hash(polynomial: Polynomial, b_power: int) -> str:
+    filtered = {
+        powers: coefficient
+        for powers, coefficient in polynomial.items()
+        if powers[0] == b_power
+    }
+    return digest(encode_scaled(filtered, (0,) * (len(next(iter(filtered))) - 1)))
+
+
+def evaluate(polynomial: Polynomial, curve_b: int, coordinates: list[int], prime: int) -> int:
+    total = 0
+    for powers, coefficient in polynomial.items():
+        value = coefficient * pow(curve_b, powers[0], prime)
+        for coordinate, exponent in zip(coordinates, powers[1:]):
+            value *= pow(coordinate, exponent, prime)
+        total = (total + value) % prime
+    return total
 
 
 def main() -> int:
@@ -317,6 +447,23 @@ def main() -> int:
 
     s3 = s3_polynomial(4, 1, 2, 3)
     s4 = build_s4()
+    witnesses = certificate.get("classification_witnesses", {})
+    if witnesses.get("S3", {}).get("forcing_component_sha256") != (
+        forcing_component_hash(s3, 1)
+    ):
+        fail("S3 coefficient-classification witness differs from replay")
+    if witnesses.get("S4", {}).get("forcing_component_sha256") != (
+        forcing_component_hash(s4, 3)
+    ):
+        fail("S4 coefficient-classification witness differs from replay")
+    counterexample = certificate.get("fixed_target_counterexample", {})
+    replayed_counterexample = {
+        "base_relation": evaluate(s4, 2, [1, 2, 3, 5], 13),
+        "scaled_inputs_fixed_target": evaluate(s4, 2, [3, 6, 9, 5], 13),
+        "scaled_inputs_scaled_target": evaluate(s4, 2, [3, 6, 9, 2], 13),
+    }
+    if counterexample.get("values") != replayed_counterexample:
+        fail("fixed-target counterexample differs from replay")
     expected = {
         "S3": classify("S3", s3, ["x1", "x2", "x3"]),
         "S4": classify("S4", s4, ["x1", "x2", "x3", "x4"]),

@@ -20,6 +20,14 @@ HERE = Path(__file__).resolve().parent
 CERTIFICATE_PATH = HERE / "certificate.json"
 DIGEST_PATH = HERE / "certificate.sha256"
 EXPECTED_SYMPY = "1.14.0"
+SECP256K1_P = int(
+    "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F", 16
+)
+SECP256K1_BETA = int(
+    "7AE96A2B657C07106E64479EAC3434E99CF0497512F58995C1396C28719501EE",
+    16,
+)
+SECP256K1_B = 7
 
 BETA, CURVE_B, X1, X2, X3, X4, Z = sympy.symbols(
     "beta b x1 x2 x3 x4 z"
@@ -79,12 +87,79 @@ def beta_shift(terms, amount):
     ]
 
 
+def primitive_component(terms):
+    """Reduce beta powers modulo beta^2 + beta + 1.
+
+    The beta^3-1 quotient retains both the trivial and primitive components.
+    This second normal form excludes beta=1 and prevents a false rejection of
+    an identity that holds only for a primitive cube root.
+    """
+    accumulated: dict[tuple[int, ...], int] = {}
+    for coefficient, raw_powers in terms:
+        powers = tuple(raw_powers)
+        if powers[0] < 2:
+            key = powers
+            accumulated[key] = accumulated.get(key, 0) + coefficient
+            continue
+        for beta_power in (0, 1):
+            key = (beta_power, *powers[1:])
+            accumulated[key] = accumulated.get(key, 0) - coefficient
+    return [
+        [coefficient, list(powers)]
+        for powers, coefficient in sorted(accumulated.items())
+        if coefficient
+    ]
+
+
+def specialize_terms(terms, field_prime, curve_b, beta):
+    """Evaluate beta and b, retaining a sparse polynomial in x variables."""
+    accumulated: dict[tuple[int, ...], int] = {}
+    for coefficient, raw_powers in terms:
+        beta_power, b_power, *x_powers = raw_powers
+        value = (
+            coefficient
+            * pow(beta, beta_power, field_prime)
+            * pow(curve_b, b_power, field_prime)
+        ) % field_prime
+        key = tuple(x_powers)
+        accumulated[key] = (accumulated.get(key, 0) + value) % field_prime
+    return {
+        powers: coefficient
+        for powers, coefficient in accumulated.items()
+        if coefficient
+    }
+
+
+def scalar_multiple(left, right, field_prime):
+    """Return the nonzero scalar c with left = c*right, if one exists."""
+    support = set(left) | set(right)
+    anchor = next((powers for powers in sorted(support) if right.get(powers, 0)), None)
+    if anchor is None:
+        return None
+    scalar = (
+        left.get(anchor, 0)
+        * pow(right[anchor], -1, field_prime)
+    ) % field_prime
+    if scalar == 0:
+        return None
+    if all(
+        left.get(powers, 0) == scalar * right.get(powers, 0) % field_prime
+        for powers in support
+    ):
+        return scalar
+    return None
+
+
 def source_hash(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def classify_scalings(name, expression, variables):
     base_terms = canonical_terms(expression, variables)
+    primitive_base_terms = primitive_component(base_terms)
+    secp256k1_base = specialize_terms(
+        base_terms, SECP256K1_P, SECP256K1_B, SECP256K1_BETA
+    )
     entries = []
     for exponents in itertools.product(range(3), repeat=len(variables)):
         substitutions = {
@@ -94,30 +169,63 @@ def classify_scalings(name, expression, variables):
         transformed_terms = canonical_terms(
             expression.xreplace(substitutions), variables
         )
-        characters = [
+        universal_characters = [
             character
             for character in range(3)
             if transformed_terms == beta_shift(base_terms, character)
         ]
-        if len(characters) > 1:
+        primitive_terms = primitive_component(transformed_terms)
+        primitive_characters = [
+            character
+            for character in range(3)
+            if primitive_terms
+            == primitive_component(beta_shift(base_terms, character))
+        ]
+        if len(universal_characters) > 1 or len(primitive_characters) > 1:
             raise RuntimeError(f"{name} has ambiguous beta character at {exponents}")
-        character = characters[0] if characters else None
+        universal_character = (
+            universal_characters[0] if universal_characters else None
+        )
+        primitive_character = (
+            primitive_characters[0] if primitive_characters else None
+        )
+        secp256k1_transformed = specialize_terms(
+            transformed_terms, SECP256K1_P, SECP256K1_B, SECP256K1_BETA
+        )
+        secp256k1_scalar = scalar_multiple(
+            secp256k1_transformed, secp256k1_base, SECP256K1_P
+        )
+        secp256k1_characters = [
+            character
+            for character in range(3)
+            if secp256k1_scalar
+            == pow(SECP256K1_BETA, character, SECP256K1_P)
+        ]
+        if secp256k1_scalar is not None and len(secp256k1_characters) != 1:
+            raise RuntimeError(
+                f"{name} has an unexpected secp256k1 scalar at {exponents}"
+            )
+        secp256k1_character = (
+            secp256k1_characters[0] if secp256k1_characters else None
+        )
         target_exponent = exponents[-1]
         diagonal = len(set(exponents)) == 1
-        if character is not None and target_exponent == 0:
-            fixed_target_class = "preserves_generic_fixed_target_fiber"
-        elif character is not None:
-            fixed_target_class = "transports_target_fiber"
+        if primitive_character is not None and target_exponent == 0:
+            fixed_target_class = "certified_scalar_covariance_at_fixed_target"
+        elif primitive_character is not None:
+            fixed_target_class = "certified_target_fiber_transport"
         elif target_exponent == 0:
-            fixed_target_class = "does_not_preserve_fixed_target_fiber"
+            fixed_target_class = "no_certified_scalar_covariance_at_fixed_target"
         else:
-            fixed_target_class = "not_a_zero_set_symmetry"
+            fixed_target_class = "no_certified_scalar_covariance"
         entries.append(
             {
                 "exponents": list(exponents),
                 "transformed_sha256": digest(transformed_terms),
-                "unit_scalar_character": character,
-                "exact_polynomial_equality": character == 0,
+                "universal_cube_root_character": universal_character,
+                "primitive_unit_scalar_character": primitive_character,
+                "secp256k1_unit_scalar_character": secp256k1_character,
+                "exact_polynomial_equality": primitive_character == 0,
                 "diagonal_action": diagonal,
                 "target_exponent": target_exponent,
                 "fixed_target_class": fixed_target_class,
@@ -126,29 +234,40 @@ def classify_scalings(name, expression, variables):
 
     summary = {
         "total_scalings": len(entries),
-        "unit_scalar_symmetries": sum(
-            entry["unit_scalar_character"] is not None for entry in entries
+        "universal_cube_root_semi_invariants": sum(
+            entry["universal_cube_root_character"] is not None
+            for entry in entries
+        ),
+        "primitive_root_semi_invariants": sum(
+            entry["primitive_unit_scalar_character"] is not None
+            for entry in entries
+        ),
+        "secp256k1_semi_invariants": sum(
+            entry["secp256k1_unit_scalar_character"] is not None
+            for entry in entries
         ),
         "exact_polynomial_symmetries": sum(
             entry["exact_polynomial_equality"] for entry in entries
         ),
-        "generic_fixed_target_symmetries": sum(
+        "certified_generic_fixed_target_covariances": sum(
             entry["fixed_target_class"]
-            == "preserves_generic_fixed_target_fiber"
+            == "certified_scalar_covariance_at_fixed_target"
             for entry in entries
         ),
         "diagonal_target_transports": sum(
             entry["diagonal_action"]
             and entry["target_exponent"] != 0
-            and entry["unit_scalar_character"] is not None
+            and entry["primitive_unit_scalar_character"] is not None
             for entry in entries
         ),
-        "rejected_scalings": sum(
-            entry["unit_scalar_character"] is None for entry in entries
+        "scalar_covariance_rejections": sum(
+            entry["primitive_unit_scalar_character"] is None
+            for entry in entries
         ),
-        "character_counts": {
+        "primitive_character_counts": {
             str(character): sum(
-                entry["unit_scalar_character"] == character for entry in entries
+                entry["primitive_unit_scalar_character"] == character
+                for entry in entries
             )
             for character in range(3)
         },
@@ -159,6 +278,7 @@ def classify_scalings(name, expression, variables):
         "base_terms": base_terms,
         "base_sha256": digest(base_terms),
         "base_term_count": len(base_terms),
+        "primitive_base_sha256": digest(primitive_base_terms),
         "scalings": entries,
         "summary": summary,
     }
@@ -174,10 +294,49 @@ def build_certificate() -> dict[str, object]:
     exact_s4 = sympy.expand(
         sympy.resultant(s3(X1, X2, Z), s3(X3, X4, Z), Z)
     )
+    s3_b_linear = sympy.expand(CURVE_B * exact_s3.coeff(CURVE_B, 1))
+    expected_s3_b_linear = -4 * CURVE_B * (X1 + X2 + X3)
+    if sympy.expand(s3_b_linear - expected_s3_b_linear) != 0:
+        raise RuntimeError("unexpected S3 b-linear coefficient witness")
+    s4_b_cubic = sympy.expand(CURVE_B**3 * exact_s4.coeff(CURVE_B, 3))
+    expected_s4_b_cubic = sympy.expand(
+        64
+        * CURVE_B**3
+        * ((X1 + X2) - (X3 + X4))
+        * ((X3 - X4) ** 2 - (X1 - X2) ** 2)
+    )
+    if sympy.expand(s4_b_cubic - expected_s4_b_cubic) != 0:
+        raise RuntimeError("unexpected S4 b-cubic coefficient witness")
+    fixed_target_values = {
+        "base_relation": int(
+            exact_s4.subs(
+                {CURVE_B: 2, X1: 1, X2: 2, X3: 3, X4: 5}
+            )
+        )
+        % 13,
+        "scaled_inputs_fixed_target": int(
+            exact_s4.subs(
+                {CURVE_B: 2, X1: 3, X2: 6, X3: 9, X4: 5}
+            )
+        )
+        % 13,
+        "scaled_inputs_scaled_target": int(
+            exact_s4.subs(
+                {CURVE_B: 2, X1: 3, X2: 6, X3: 9, X4: 2}
+            )
+        )
+        % 13,
+    }
+    if fixed_target_values != {
+        "base_relation": 0,
+        "scaled_inputs_fixed_target": 7,
+        "scaled_inputs_scaled_target": 0,
+    }:
+        raise RuntimeError("unexpected fixed-target transport witness")
 
     tracked_sources = ("generate.py", "validate.py", "requirements.txt")
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "certificate_id": "GLV-SEMAEV-ITER-001-SYMMETRY",
         "claim_boundary": (
             "Exact symbolic classification of coordinatewise C3 scalings for "
@@ -185,7 +344,8 @@ def build_certificate() -> dict[str, object]:
             "cost result, or a secp256k1 claim."
         ),
         "algebra": {
-            "coefficient_ring": "Z[b,beta]/(beta^3-1)",
+            "universal_coefficient_ring": "Z[b,beta]/(beta^3-1)",
+            "primitive_component": "Z[b,beta]/(beta^2+beta+1)",
             "curve_family": "y^2=x^3+b",
             "curve_parameter": "b remains symbolic",
             "s3_formula": (
@@ -199,7 +359,73 @@ def build_certificate() -> dict[str, object]:
             "reduction_rule": "beta^k -> beta^(k mod 3)",
             "unit_scalar_test": (
                 "transformed polynomial equals beta^k times the base "
-                "polynomial for exactly one k in {0,1,2}"
+                "polynomial for exactly one k in {0,1,2}; a coefficient-one "
+                "anchor monomial makes these three candidates exhaustive"
+            ),
+            "classification_assumptions": [
+                "beta is a primitive cube root of unity",
+                "b is nonzero",
+                "the field characteristic is neither 2 nor 3",
+            ],
+            "identity_assumptions": (
+                "The positive diagonal identities need only beta^3=1 in a "
+                "commutative ring; the stronger assumptions apply to the "
+                "exact stabilizer classification and elliptic interpretation."
+            ),
+        },
+        "secp256k1_specialization": {
+            "field_prime_hex": hex(SECP256K1_P),
+            "curve_b": SECP256K1_B,
+            "beta_hex": hex(SECP256K1_BETA),
+            "scope": (
+                "Every coordinatewise scaling is also checked for scalar "
+                "proportionality after exact specialization to F_p."
+            ),
+        },
+        "classification_witnesses": {
+            "scalar_candidate_exhaustiveness": (
+                "Each base polynomial has a coefficient-one anchor monomial. "
+                "After coordinate scaling its coefficient ratio is beta^k, so "
+                "an arbitrary nonzero proportionality scalar must be one of "
+                "1, beta, beta^2."
+            ),
+            "S3": {
+                "forcing_component": "-4*b*(x1+x2+x3)",
+                "forcing_component_sha256": digest(
+                    canonical_terms(s3_b_linear, (X1, X2, X3))
+                ),
+                "implication": (
+                    "When 4*b is nonzero, the three linear coefficients force "
+                    "e1=e2=e3=the scalar character."
+                ),
+            },
+            "S4": {
+                "forcing_component": (
+                    "64*b^3*((x1+x2)-(x3+x4))*"
+                    "((x3-x4)^2-(x1-x2)^2)"
+                ),
+                "forcing_component_sha256": digest(
+                    canonical_terms(s4_b_cubic, (X1, X2, X3, X4))
+                ),
+                "implication": (
+                    "When 2*b is nonzero, b^3*x_i^3 fixes character zero and "
+                    "b^3*x_i^2*x_j forces all four exponents equal."
+                ),
+            },
+        },
+        "fixed_target_counterexample": {
+            "field": "F_13",
+            "curve_b": 2,
+            "beta": 3,
+            "beta_cube_mod_13": pow(3, 3, 13),
+            "base_coordinates": [1, 2, 3, 5],
+            "scaled_inputs_fixed_target_coordinates": [3, 6, 9, 5],
+            "scaled_inputs_scaled_target_coordinates": [3, 6, 9, 2],
+            "values": fixed_target_values,
+            "interpretation": (
+                "Scaling the three relation variables does not preserve this "
+                "fixed nonzero target; scaling the target as well transports "
+                "the zero exactly."
             ),
         },
         "fixed_target_convention": {
@@ -210,7 +436,8 @@ def build_certificate() -> dict[str, object]:
             ),
             "generic_scope": (
                 "The target is symbolic and non-special. A scaling is a "
-                "fixed-target symmetry only when its target exponent is zero."
+                "fixed-target scalar covariance only when its target exponent "
+                "is zero. The slice xT=0 is an explicit exception."
             ),
             "transport_scope": (
                 "A full diagonal scaling with nonzero target exponent "
@@ -243,8 +470,10 @@ def build_certificate() -> dict[str, object]:
         },
         "conclusions": {
             "scope": (
-                "Only tuples classified by exact unit-scalar equality preserve "
-                "the corresponding symbolic zero set."
+                "The tables classify H_k exactly: scalar polynomial "
+                "covariance under coordinatewise C3 scaling. Failure of this "
+                "test is not, by itself, a classification of all geometric "
+                "zero-variety automorphisms."
             ),
             "fixed_target": (
                 "Nonidentity diagonal tuples move a generic target and are "

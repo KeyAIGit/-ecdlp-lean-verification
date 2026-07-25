@@ -175,6 +175,11 @@ jobs:
         run: |
           python3 experiments/glv_diagonal_obstruction/generate.py --check
           python3 experiments/glv_diagonal_obstruction/validate.py
+      - name: GLV-Semaev coordinate-scaling certificate
+        run: |
+          python3 -m pip install -r experiments/glv_semaev_symmetry/requirements.txt
+          python3 experiments/glv_semaev_symmetry/generate.py --check
+          python3 experiments/glv_semaev_symmetry/validate.py
       - name: Candidate-evaluation framework tests
         run: python3 experiments/framework/test_framework.py
       - name: Repository artifact manifest gate

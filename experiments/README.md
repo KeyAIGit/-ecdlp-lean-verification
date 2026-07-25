@@ -37,10 +37,12 @@ prime-field factor-base encoding, a nonredundant invariant-coordinate formulatio
 `m ≥ 3` full solving degree, `m ≥ 4` systems, or non-toy primes. None draws an
 asymptotic or advantage/no-advantage conclusion. The `O(\|F\|^{m-1}·solve)` loops are **not**
 subexponential index-calculus algorithms. So the real question — whether invariant-coordinate
-*relation generation* changes the prime-field asymptotics — remains **open**, while
-`HYP_GLV_SEMAEV_001` is **PARKED** after route decision
-`RS-2026-07-22-001` selected no route. No result here is a
-step toward breaking secp256k1.
+*relation generation* changes the prime-field asymptotics — remains **open**.
+`RS-2026-07-24-001` keeps `HYP_GLV_SEMAEV_001` **PARKED as an experiment** while
+authorizing only `GLV-SEMAEV-ITER-001`, a bounded structural lane. Its exact
+certificate leaves only the diagonal `C3` covariance and closes the independent
+`u_i=x_i^3` fixed-target premise. It does not authorize another P0-P4 run or
+constitute a step toward breaking secp256k1.
 
 ## Conventions
 - Toy curves come from `p0_glv_semaev/toy_curves.py` (`find_toy_curve(bits, seed, require_cofactor_one=True)`); only **cofactor-1** (prime-order) curves are used.

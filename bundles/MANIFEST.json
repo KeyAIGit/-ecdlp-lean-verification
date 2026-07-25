@@ -11,13 +11,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 8271
+        "bytes": 8452
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 57735
+        "bytes": 61133
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -29,7 +29,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 43415
+        "bytes": 43570
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -47,13 +47,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 1495
+        "bytes": 1684
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 7120
+        "bytes": 8413
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -79,13 +79,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 8271
+        "bytes": 8452
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 57735
+        "bytes": 61133
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -97,7 +97,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 43415
+        "bytes": 43570
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -115,13 +115,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 1495
+        "bytes": 1684
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 7120
+        "bytes": 8413
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -145,13 +145,13 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 10580
+        "bytes": 10662
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 9775
+        "bytes": 10071
       },
       {
         "path": "VERIFIED.md",
@@ -181,7 +181,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 22827
+        "bytes": 24395
       },
       {
         "path": "experiments/engine/README.md",
@@ -243,13 +243,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 8271
+        "bytes": 8452
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 57735
+        "bytes": 61133
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -261,7 +261,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 43415
+        "bytes": 43570
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -279,13 +279,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 1495
+        "bytes": 1684
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 7120
+        "bytes": 8413
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -309,13 +309,13 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 10580
+        "bytes": 10662
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 9775
+        "bytes": 10071
       },
       {
         "path": "VERIFIED.md",
@@ -345,7 +345,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 22827
+        "bytes": 24395
       },
       {
         "path": "experiments/engine/README.md",
@@ -405,7 +405,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 524352
+        "bytes": 527548
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

@@ -32,13 +32,14 @@ Do not quote a count from any
 other doc — prose may be stale; if in doubt, cite STATUS.md. Machine-readable:
 `data/stats.json` · badge endpoint `badges/theorems.json`.
 
-**Current research decision.** `RS-2026-07-22-001` evaluated all 17 registered
-routes and selected none: no audited proposal currently clears the common gate
-for the exact plain single-target objective. Research Engine v0 keeps bounded
-exploration available but currently selects **zero** experiments: the calibration
-candidate lacks a raw-artifact validator, and the quotient/scaling candidates lack
-an exact mechanism and independent validators. No route is promoted, exact-target
-work remains forbidden, and no asymptotic claim follows. New evidence enters
+**Current research decision.** `RS-2026-07-24-001` supersedes the prior
+select-none decision only for `GLV-SEMAEV-ITER-001`: one route is selected for
+bounded symbolic and Lean structural work, while **zero** routes are promoted and
+**zero** experiments are authorized. Exact replay shows that only the diagonal
+`C3` action survives for `S3` and `S4`; at a generic fixed nonzero target, only
+identity remains a scalar covariance. This is a bounded negative for the naive
+independent `u_i=x_i^3` quotient, not a Groebner lower bound or an ECDLP result.
+Exact-target work remains forbidden, and no asymptotic claim follows. New evidence enters
 through the candidate-neutral contract in `experiments/framework/`,
 source-commit-bound raw-artifact replay, engine-derived outcome classification,
 review-anchored events in `experiments/engine/outcomes/`, and explicit reconsideration

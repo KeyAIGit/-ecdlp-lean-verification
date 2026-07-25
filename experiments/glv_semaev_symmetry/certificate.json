@@ -1,15 +1,35 @@
 {
   "algebra": {
-    "coefficient_ring": "Z[b,beta]/(beta^3-1)",
+    "classification_assumptions": [
+      "beta is a primitive cube root of unity",
+      "b is nonzero",
+      "the field characteristic is neither 2 nor 3"
+    ],
     "curve_family": "y^2=x^3+b",
     "curve_parameter": "b remains symbolic",
+    "identity_assumptions": "The positive diagonal identities need only beta^3=1 in a commutative ring; the stronger assumptions apply to the exact stabilizer classification and elliptic interpretation.",
+    "primitive_component": "Z[b,beta]/(beta^2+beta+1)",
     "reduction_rule": "beta^k -> beta^(k mod 3)",
     "s3_formula": "(x1-x2)^2*x3^2-2*((x1+x2)*x1*x2+2*b)*x3+(x1*x2)^2-4*b*(x1+x2)",
     "s4_definition": "Resultant_z(S3(x1,x2,z),S3(x3,x4,z))",
-    "unit_scalar_test": "transformed polynomial equals beta^k times the base polynomial for exactly one k in {0,1,2}"
+    "unit_scalar_test": "transformed polynomial equals beta^k times the base polynomial for exactly one k in {0,1,2}; a coefficient-one anchor monomial makes these three candidates exhaustive",
+    "universal_coefficient_ring": "Z[b,beta]/(beta^3-1)"
   },
   "certificate_id": "GLV-SEMAEV-ITER-001-SYMMETRY",
   "claim_boundary": "Exact symbolic classification of coordinatewise C3 scalings for S3 and resultant-defined S4. It is not an ECDLP attack, a solving cost result, or a secp256k1 claim.",
+  "classification_witnesses": {
+    "S3": {
+      "forcing_component": "-4*b*(x1+x2+x3)",
+      "forcing_component_sha256": "a731b746c5da5a960111c8a906a54d96f489cdb8fb41e16603aff1c427320207",
+      "implication": "When 4*b is nonzero, the three linear coefficients force e1=e2=e3=the scalar character."
+    },
+    "S4": {
+      "forcing_component": "64*b^3*((x1+x2)-(x3+x4))*((x3-x4)^2-(x1-x2)^2)",
+      "forcing_component_sha256": "4003be2448a1898e9ec41a7c1a9dfad40a5b91e94a33e860fb7a8d3e901fbaed",
+      "implication": "When 2*b is nonzero, b^3*x_i^3 fixes character zero and b^3*x_i^2*x_j forces all four exponents equal."
+    },
+    "scalar_candidate_exhaustiveness": "Each base polynomial has a coefficient-one anchor monomial. After coordinate scaling its coefficient ratio is beta^k, so an arbitrary nonzero proportionality scalar must be one of 1, beta, beta^2."
+  },
   "commands": {
     "generate_check": "python3 experiments/glv_semaev_symmetry/generate.py --check",
     "independent_replay": "python3 experiments/glv_semaev_symmetry/validate.py",
@@ -18,13 +38,43 @@
   "conclusions": {
     "complexity": "The certificate makes no claim about Groebner complexity, relation probability, or asymptotic ECDLP cost.",
     "fixed_target": "Nonidentity diagonal tuples move a generic target and are therefore target transports, not fixed-target symmetries.",
-    "scope": "Only tuples classified by exact unit-scalar equality preserve the corresponding symbolic zero set."
+    "scope": "The tables classify H_k exactly: scalar polynomial covariance under coordinatewise C3 scaling. Failure of this test is not, by itself, a classification of all geometric zero-variety automorphisms."
   },
   "fixed_target_convention": {
-    "generic_scope": "The target is symbolic and non-special. A scaling is a fixed-target symmetry only when its target exponent is zero.",
+    "generic_scope": "The target is symbolic and non-special. A scaling is a fixed-target scalar covariance only when its target exponent is zero. The slice xT=0 is an explicit exception.",
     "relation_interpretation": "S3(x1,x2,xT)=0 or S4(x1,x2,x3,xT)=0; xT also represents -T because elliptic-curve negation preserves x",
     "target_variable": "the final x-coordinate in each polynomial",
     "transport_scope": "A full diagonal scaling with nonzero target exponent transports the target fiber to its GLV image; it does not preserve one generic fixed target."
+  },
+  "fixed_target_counterexample": {
+    "base_coordinates": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "beta": 3,
+    "beta_cube_mod_13": 1,
+    "curve_b": 2,
+    "field": "F_13",
+    "interpretation": "Scaling the three relation variables does not preserve this fixed nonzero target; scaling the target as well transports the zero exactly.",
+    "scaled_inputs_fixed_target_coordinates": [
+      3,
+      6,
+      9,
+      5
+    ],
+    "scaled_inputs_scaled_target_coordinates": [
+      3,
+      6,
+      9,
+      2
+    ],
+    "values": {
+      "base_relation": 0,
+      "scaled_inputs_fixed_target": 7,
+      "scaled_inputs_scaled_target": 0
+    }
   },
   "polynomials": {
     "S3": {
@@ -123,6 +173,7 @@
         ]
       ],
       "name": "S3",
+      "primitive_base_sha256": "76fad8fda488275e2425ba27e0ed6062d00a0dcdc79f4afe82e838cab42a8f8f",
       "scalings": [
         {
           "diagonal_action": true,
@@ -132,10 +183,12 @@
             0,
             0
           ],
-          "fixed_target_class": "preserves_generic_fixed_target_fiber",
+          "fixed_target_class": "certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": 0,
+          "secp256k1_unit_scalar_character": 0,
           "target_exponent": 0,
           "transformed_sha256": "76fad8fda488275e2425ba27e0ed6062d00a0dcdc79f4afe82e838cab42a8f8f",
-          "unit_scalar_character": 0
+          "universal_cube_root_character": 0
         },
         {
           "diagonal_action": false,
@@ -145,10 +198,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "b757affab6bf3d06f6169c5a8900109349cda025d583dadb7474dc364ebcd942",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -158,10 +213,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "7ccfd3b066e6bc0218bcc45f6ddc81492c36285c9cbfb4e4dfc1990b6d6b08d2",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -171,10 +228,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "302815c783468c7cd20dbf3ed7e16abe0800f662e717ff6872421e48f9c2d51d",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -184,10 +243,12 @@
             1,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "0d36d1400bac47902d7bd501a9cbe5c2eb44858f25124a814e89892175aab049",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -197,10 +258,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "1ff0e8ed7dbccb8b22f76db08321fe14a2fcf282dd834346d9f82ffe3957314d",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -210,10 +273,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "f70624eb25d489bcaf74c53298c028166c4aa06ba8c7018f53376515f63601ad",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -223,10 +288,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "8bb2c1bb86127304247ae09e488fbc2bd92e6a734c0f958d35023e18425d2eca",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -236,10 +303,12 @@
             2,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "58b4dd17c804ee94b2fb51349b9a78966986bfd590b2296672c975f1958fb5e1",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -249,10 +318,12 @@
             0,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "b0962ebec9ce247eb8d97ff8a45eceba4f34400493f72ff4b65c6e3e42ab1597",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -262,10 +333,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "ccd2e0573b8f78ca5591b986f1929fc6597e6479509619f70bdbffcd18ad65ff",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -275,10 +348,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "6a0f31e79249de192d55e67513f2066a88aa8e80b8f7b8d448ebdb2377f9a2a3",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -288,10 +363,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "3cd7972aef2a7c3bfcba8d3a321a996bfe5f5098ced164bdd37b294fa224dad4",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": true,
@@ -301,10 +378,12 @@
             1,
             1
           ],
-          "fixed_target_class": "transports_target_fiber",
+          "fixed_target_class": "certified_target_fiber_transport",
+          "primitive_unit_scalar_character": 1,
+          "secp256k1_unit_scalar_character": 1,
           "target_exponent": 1,
           "transformed_sha256": "f33d88a81dff64fb91de8cbea43d13c2e444addb4516b87be996db0534931937",
-          "unit_scalar_character": 1
+          "universal_cube_root_character": 1
         },
         {
           "diagonal_action": false,
@@ -314,10 +393,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "d44080147ec96d982954c3b95e185656b49e0cddb764d5d0a314a540cf33698b",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -327,10 +408,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "71e24cd10a25e259d45521e9a72def87d0a8a9c71ead49dac720fab354d3168c",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -340,10 +423,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "071618490749784abda0d2d76f02a50edf125450ea14e704211d7d8da75d3b15",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -353,10 +438,12 @@
             2,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "14e028f0d2a114f2f06833d40dd457177ba1c7974cc8f93a44807d49eb825c25",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -366,10 +453,12 @@
             0,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "439a2af297b3bc8c58d560b5c1b3eb9851a76b63488f39ab59ede803ff770c36",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -379,10 +468,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "53dfc48af0f11bebb82d1456245e39e6e662accf14c54c9a5a967c3d030ac6bf",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -392,10 +483,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "6cd0fea129b13aac2d8e6d72e2d3665505db726050c17de459d905ab31cefafa",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -405,10 +498,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "5f00172e34ed29830a7bcd7350e1358802727cc83da9712cd60ad05045f99497",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -418,10 +513,12 @@
             1,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "4b9e9c552d381ae438540dfca5aa185bcaf0ce2b2918363c048cba7a1d678e2c",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -431,10 +528,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "448a1b60028746b344605a3fecb1bb7dd762a93ba5d2875975147a2775454132",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -444,10 +543,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "56ab330f36bda710a6dfe2adb59626b460740ae5a03ee71a1644e8720a94dc8d",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -457,10 +558,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "148cc515d8b707d4ec0fc19f7c125a37f13be5eb67bbcadacada1c666f942f5f",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": true,
@@ -470,24 +573,28 @@
             2,
             2
           ],
-          "fixed_target_class": "transports_target_fiber",
+          "fixed_target_class": "certified_target_fiber_transport",
+          "primitive_unit_scalar_character": 2,
+          "secp256k1_unit_scalar_character": 2,
           "target_exponent": 2,
           "transformed_sha256": "7ae139d88bf65600b7cf343ddc829ec8f819e90d682d4477aa0affafb7734d3f",
-          "unit_scalar_character": 2
+          "universal_cube_root_character": 2
         }
       ],
       "summary": {
-        "character_counts": {
+        "certified_generic_fixed_target_covariances": 1,
+        "diagonal_target_transports": 2,
+        "exact_polynomial_symmetries": 1,
+        "primitive_character_counts": {
           "0": 1,
           "1": 1,
           "2": 1
         },
-        "diagonal_target_transports": 2,
-        "exact_polynomial_symmetries": 1,
-        "generic_fixed_target_symmetries": 1,
-        "rejected_scalings": 24,
+        "primitive_root_semi_invariants": 3,
+        "scalar_covariance_rejections": 24,
+        "secp256k1_semi_invariants": 3,
         "total_scalings": 27,
-        "unit_scalar_symmetries": 3
+        "universal_cube_root_semi_invariants": 3
       },
       "variables": [
         "x1",
@@ -2602,6 +2709,7 @@
         ]
       ],
       "name": "S4",
+      "primitive_base_sha256": "25aca961466742bbb7cf698ac45df6e190a7fc765187dbfcac445384133bf42d",
       "scalings": [
         {
           "diagonal_action": true,
@@ -2612,10 +2720,12 @@
             0,
             0
           ],
-          "fixed_target_class": "preserves_generic_fixed_target_fiber",
+          "fixed_target_class": "certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": 0,
+          "secp256k1_unit_scalar_character": 0,
           "target_exponent": 0,
           "transformed_sha256": "25aca961466742bbb7cf698ac45df6e190a7fc765187dbfcac445384133bf42d",
-          "unit_scalar_character": 0
+          "universal_cube_root_character": 0
         },
         {
           "diagonal_action": false,
@@ -2626,10 +2736,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "01bdd2844a3369fc278b6968d53bb8159479f7431f1ba66a8a358b92dba5cf44",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2640,10 +2752,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "d47200f3ae0fcb65681d100968fbf151c2c70e97f392942924a4a4d60b4c5af2",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2654,10 +2768,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "9ded6b7966d178e9cdd762ce46204a7b91dcdc55d9f28b11424b986cd5d41141",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2668,10 +2784,12 @@
             1,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "b5f49099997e50e07f1673b1638cf8eb02c77908d78b70e0233d348b90e06592",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2682,10 +2800,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "f2d228861a035f51023d6f33f5633a396dcf820da4fae0b130bedd45ffc3dd4d",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2696,10 +2816,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "50c739b4b3b27ce2e979e2c6a34a96a6b16c03120b82d4396f8213e967eaf62d",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2710,10 +2832,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "ab6636475f359c39021ef1ba7dd121f22bbfaf70a2abc00971120d76b6f73013",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2724,10 +2848,12 @@
             2,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "49595fb0fc72268e3dbd64113583d940b219bc2abfc30d10c274fafa31f34a73",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2738,10 +2864,12 @@
             0,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "9fde0a9da4d15ce0e7ca78f9e4e9c551306d6ac5f4a7575ed574aeba64a88bd2",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2752,10 +2880,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "976c36b0c2c09f77ee96eee6e3d437b56636c8206ba14bce321131de3a748811",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2766,10 +2896,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "ac08bc408a00c03a8320e74116f001b301d98b545b796915eecc408ae5f70485",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2780,10 +2912,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "aadef1da36e7b16e3d3a401821d1f90170a10d9fa2e8d7aaf630219aae0a9940",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2794,10 +2928,12 @@
             1,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "b1e47cd713658dd405312cc889b73d9955206b89d943589ea4b880d38192be4f",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2808,10 +2944,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "fa5898321d725a83bedc5055882c7dcc9162bcae5c654b39c553c4d9d1ce5cc7",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2822,10 +2960,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "100f58dbde262f4f98808deb6e8232026bbcab5db933288f1fcece90d8b74e2b",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2836,10 +2976,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "8138fc5d6bc44efb94b62a669d189baf3d1396dc4114dc3476fb5cf16f114f50",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2850,10 +2992,12 @@
             2,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "54b598b349f4bdea569d6d6020c17a61a1de198f1133c7418bcdbd795af6edc0",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2864,10 +3008,12 @@
             0,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "ec17d47c132da7a0aa78201451f9f68247077e14887b29c504c880200f3949aa",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2878,10 +3024,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "f627bcbd1caef134005e533e89fa41d3cc096f50cbbb7c05e375a4e502b93365",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2892,10 +3040,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "02b5e291efdde71d93e426d2ff2f3019f8fd074adba2086a7c42a0a9feb84332",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2906,10 +3056,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "7978c387cda9bf218bd546ee78b249b70188b3e8aa8e26969e3fdd397d979c54",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2920,10 +3072,12 @@
             1,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "44c109e0f1522e62cb6ec8950f9e53d316455004e56fb6f5b224d7a6f9defe23",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2934,10 +3088,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "4ed4e721714dea51ab19b01e32998d9bd750d179fc4e3d5cbce184b791394a92",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2948,10 +3104,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "1a52b57480d5da27b438db0f8a9028c2e5f2b83d7c463d399837efcb43d36e46",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2962,10 +3120,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "d563bc34046c3e6e38ec221973c74b08b8a8f1575080f350989167b84f2d9a91",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2976,10 +3136,12 @@
             2,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "90e448c42f1b0f5f4af170cfcf740f67ef20fbb57ca7fc0245b0c6b73944fa13",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -2990,10 +3152,12 @@
             0,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "90e448c42f1b0f5f4af170cfcf740f67ef20fbb57ca7fc0245b0c6b73944fa13",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3004,10 +3168,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "1a52b57480d5da27b438db0f8a9028c2e5f2b83d7c463d399837efcb43d36e46",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3018,10 +3184,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "d563bc34046c3e6e38ec221973c74b08b8a8f1575080f350989167b84f2d9a91",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3032,10 +3200,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "02b5e291efdde71d93e426d2ff2f3019f8fd074adba2086a7c42a0a9feb84332",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3046,10 +3216,12 @@
             1,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "ec17d47c132da7a0aa78201451f9f68247077e14887b29c504c880200f3949aa",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3060,10 +3232,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "f627bcbd1caef134005e533e89fa41d3cc096f50cbbb7c05e375a4e502b93365",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3074,10 +3248,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "4ed4e721714dea51ab19b01e32998d9bd750d179fc4e3d5cbce184b791394a92",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3088,10 +3264,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "7978c387cda9bf218bd546ee78b249b70188b3e8aa8e26969e3fdd397d979c54",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3102,10 +3280,12 @@
             2,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "44c109e0f1522e62cb6ec8950f9e53d316455004e56fb6f5b224d7a6f9defe23",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3116,10 +3296,12 @@
             0,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "49595fb0fc72268e3dbd64113583d940b219bc2abfc30d10c274fafa31f34a73",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3130,10 +3312,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "50c739b4b3b27ce2e979e2c6a34a96a6b16c03120b82d4396f8213e967eaf62d",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3144,10 +3328,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "ab6636475f359c39021ef1ba7dd121f22bbfaf70a2abc00971120d76b6f73013",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3158,10 +3344,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "d47200f3ae0fcb65681d100968fbf151c2c70e97f392942924a4a4d60b4c5af2",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": true,
@@ -3172,10 +3360,12 @@
             1,
             1
           ],
-          "fixed_target_class": "transports_target_fiber",
+          "fixed_target_class": "certified_target_fiber_transport",
+          "primitive_unit_scalar_character": 0,
+          "secp256k1_unit_scalar_character": 0,
           "target_exponent": 1,
           "transformed_sha256": "25aca961466742bbb7cf698ac45df6e190a7fc765187dbfcac445384133bf42d",
-          "unit_scalar_character": 0
+          "universal_cube_root_character": 0
         },
         {
           "diagonal_action": false,
@@ -3186,10 +3376,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "01bdd2844a3369fc278b6968d53bb8159479f7431f1ba66a8a358b92dba5cf44",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3200,10 +3392,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "f2d228861a035f51023d6f33f5633a396dcf820da4fae0b130bedd45ffc3dd4d",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3214,10 +3408,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "9ded6b7966d178e9cdd762ce46204a7b91dcdc55d9f28b11424b986cd5d41141",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3228,10 +3424,12 @@
             2,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "b5f49099997e50e07f1673b1638cf8eb02c77908d78b70e0233d348b90e06592",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3242,10 +3440,12 @@
             0,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "54b598b349f4bdea569d6d6020c17a61a1de198f1133c7418bcdbd795af6edc0",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3256,10 +3456,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "100f58dbde262f4f98808deb6e8232026bbcab5db933288f1fcece90d8b74e2b",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3270,10 +3472,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "8138fc5d6bc44efb94b62a669d189baf3d1396dc4114dc3476fb5cf16f114f50",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3284,10 +3488,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "ac08bc408a00c03a8320e74116f001b301d98b545b796915eecc408ae5f70485",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3298,10 +3504,12 @@
             1,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "9fde0a9da4d15ce0e7ca78f9e4e9c551306d6ac5f4a7575ed574aeba64a88bd2",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3312,10 +3520,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "976c36b0c2c09f77ee96eee6e3d437b56636c8206ba14bce321131de3a748811",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3326,10 +3536,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "fa5898321d725a83bedc5055882c7dcc9162bcae5c654b39c553c4d9d1ce5cc7",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3340,10 +3552,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "aadef1da36e7b16e3d3a401821d1f90170a10d9fa2e8d7aaf630219aae0a9940",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3354,10 +3568,12 @@
             2,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "b1e47cd713658dd405312cc889b73d9955206b89d943589ea4b880d38192be4f",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3368,10 +3584,12 @@
             0,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "b1e47cd713658dd405312cc889b73d9955206b89d943589ea4b880d38192be4f",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3382,10 +3600,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "fa5898321d725a83bedc5055882c7dcc9162bcae5c654b39c553c4d9d1ce5cc7",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3396,10 +3616,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "aadef1da36e7b16e3d3a401821d1f90170a10d9fa2e8d7aaf630219aae0a9940",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3410,10 +3632,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "8138fc5d6bc44efb94b62a669d189baf3d1396dc4114dc3476fb5cf16f114f50",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3424,10 +3648,12 @@
             1,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "54b598b349f4bdea569d6d6020c17a61a1de198f1133c7418bcdbd795af6edc0",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3438,10 +3664,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "100f58dbde262f4f98808deb6e8232026bbcab5db933288f1fcece90d8b74e2b",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3452,10 +3680,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "976c36b0c2c09f77ee96eee6e3d437b56636c8206ba14bce321131de3a748811",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3466,10 +3696,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "ac08bc408a00c03a8320e74116f001b301d98b545b796915eecc408ae5f70485",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3480,10 +3712,12 @@
             2,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "9fde0a9da4d15ce0e7ca78f9e4e9c551306d6ac5f4a7575ed574aeba64a88bd2",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3494,10 +3728,12 @@
             0,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "44c109e0f1522e62cb6ec8950f9e53d316455004e56fb6f5b224d7a6f9defe23",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3508,10 +3744,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "4ed4e721714dea51ab19b01e32998d9bd750d179fc4e3d5cbce184b791394a92",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3522,10 +3760,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "7978c387cda9bf218bd546ee78b249b70188b3e8aa8e26969e3fdd397d979c54",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3536,10 +3776,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "d563bc34046c3e6e38ec221973c74b08b8a8f1575080f350989167b84f2d9a91",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3550,10 +3792,12 @@
             1,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "90e448c42f1b0f5f4af170cfcf740f67ef20fbb57ca7fc0245b0c6b73944fa13",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3564,10 +3808,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "1a52b57480d5da27b438db0f8a9028c2e5f2b83d7c463d399837efcb43d36e46",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3578,10 +3824,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "f627bcbd1caef134005e533e89fa41d3cc096f50cbbb7c05e375a4e502b93365",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3592,10 +3840,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "02b5e291efdde71d93e426d2ff2f3019f8fd074adba2086a7c42a0a9feb84332",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3606,10 +3856,12 @@
             2,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "ec17d47c132da7a0aa78201451f9f68247077e14887b29c504c880200f3949aa",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3620,10 +3872,12 @@
             0,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "b5f49099997e50e07f1673b1638cf8eb02c77908d78b70e0233d348b90e06592",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3634,10 +3888,12 @@
             0,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "f2d228861a035f51023d6f33f5633a396dcf820da4fae0b130bedd45ffc3dd4d",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3648,10 +3904,12 @@
             0,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "9ded6b7966d178e9cdd762ce46204a7b91dcdc55d9f28b11424b986cd5d41141",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3662,10 +3920,12 @@
             1,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "ab6636475f359c39021ef1ba7dd121f22bbfaf70a2abc00971120d76b6f73013",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3676,10 +3936,12 @@
             1,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "49595fb0fc72268e3dbd64113583d940b219bc2abfc30d10c274fafa31f34a73",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3690,10 +3952,12 @@
             1,
             2
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 2,
           "transformed_sha256": "50c739b4b3b27ce2e979e2c6a34a96a6b16c03120b82d4396f8213e967eaf62d",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3704,10 +3968,12 @@
             2,
             0
           ],
-          "fixed_target_class": "does_not_preserve_fixed_target_fiber",
+          "fixed_target_class": "no_certified_scalar_covariance_at_fixed_target",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 0,
           "transformed_sha256": "01bdd2844a3369fc278b6968d53bb8159479f7431f1ba66a8a358b92dba5cf44",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": false,
@@ -3718,10 +3984,12 @@
             2,
             1
           ],
-          "fixed_target_class": "not_a_zero_set_symmetry",
+          "fixed_target_class": "no_certified_scalar_covariance",
+          "primitive_unit_scalar_character": null,
+          "secp256k1_unit_scalar_character": null,
           "target_exponent": 1,
           "transformed_sha256": "d47200f3ae0fcb65681d100968fbf151c2c70e97f392942924a4a4d60b4c5af2",
-          "unit_scalar_character": null
+          "universal_cube_root_character": null
         },
         {
           "diagonal_action": true,
@@ -3732,24 +4000,28 @@
             2,
             2
           ],
-          "fixed_target_class": "transports_target_fiber",
+          "fixed_target_class": "certified_target_fiber_transport",
+          "primitive_unit_scalar_character": 0,
+          "secp256k1_unit_scalar_character": 0,
           "target_exponent": 2,
           "transformed_sha256": "25aca961466742bbb7cf698ac45df6e190a7fc765187dbfcac445384133bf42d",
-          "unit_scalar_character": 0
+          "universal_cube_root_character": 0
         }
       ],
       "summary": {
-        "character_counts": {
+        "certified_generic_fixed_target_covariances": 1,
+        "diagonal_target_transports": 2,
+        "exact_polynomial_symmetries": 3,
+        "primitive_character_counts": {
           "0": 3,
           "1": 0,
           "2": 0
         },
-        "diagonal_target_transports": 2,
-        "exact_polynomial_symmetries": 3,
-        "generic_fixed_target_symmetries": 1,
-        "rejected_scalings": 78,
+        "primitive_root_semi_invariants": 3,
+        "scalar_covariance_rejections": 78,
+        "secp256k1_semi_invariants": 3,
         "total_scalings": 81,
-        "unit_scalar_symmetries": 3
+        "universal_cube_root_semi_invariants": 3
       },
       "variables": [
         "x1",
@@ -3762,11 +4034,17 @@
   "producer": {
     "python_major_minor": "3.12",
     "source_sha256": {
-      "generate.py": "67b5e5206892abb8e3936fc9aa7cd4a02c349367b92759a9a9fc7241c0efc186",
+      "generate.py": "0a53c02a88d845330bd5dfe2fe80e20009efdd9bc523ee0b8319d86f6cd65733",
       "requirements.txt": "25f9f1fb1988b230147a1d3092d34e09c069eb7a6c6d6df46b3973b9f2d36efc",
-      "validate.py": "12c7277108ad847dd404be697f3718df3fdd8177449e043d7b3f5255c4eee2f0"
+      "validate.py": "2dad5919d630a50677c21cf9f1b15faa92d8a5ea94dbc35826ce0e119a724103"
     },
     "sympy_version": "1.14.0"
   },
-  "schema_version": 1
+  "schema_version": 2,
+  "secp256k1_specialization": {
+    "beta_hex": "0x7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee",
+    "curve_b": 7,
+    "field_prime_hex": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f",
+    "scope": "Every coordinatewise scaling is also checked for scalar proportionality after exact specialization to F_p."
+  }
 }

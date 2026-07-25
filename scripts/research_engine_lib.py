@@ -1778,12 +1778,31 @@ def validate_policy(
         problems.append("Research Engine v0 promotion gate must remain closed")
     phase_policy = decisions.get("phase_policy", {})
     execution_gates = decisions.get("execution_gates", {})
-    if phase_policy.get("bounded_exploration_authorized") is not True:
-        problems.append("decision substrate must authorize bounded exploration")
+    structural_gate = execution_gates.get("structural", {})
+    structural_pause = (
+        structural_gate.get("authorized") is True
+        and structural_gate.get("kind") == "non_experiment"
+        and structural_gate.get("authorizes_experiment") is False
+    )
+    expected_current_exploration = False if structural_pause else True
+    if (
+        phase_policy.get("bounded_exploration_authorized")
+        is not expected_current_exploration
+    ):
+        problems.append(
+            "decision substrate current exploration authorization does not "
+            "match the active structural lane"
+        )
     if phase_policy.get("promotion_experiments_authorized") is not False:
         problems.append("decision substrate must keep promotion experiments closed")
-    if execution_gates.get("exploration", {}).get("authorized") is not True:
-        problems.append("decision execution gate must authorize exploration")
+    if (
+        execution_gates.get("exploration", {}).get("authorized")
+        is not expected_current_exploration
+    ):
+        problems.append(
+            "decision execution gate current authorization does not match "
+            "the active structural lane"
+        )
     if execution_gates.get("promotion", {}).get("authorized") is not False:
         problems.append("decision execution gate must keep promotion closed")
 
@@ -3616,6 +3635,15 @@ def build_state(
         "gate_status": {
             "exploration_authorized": policy["gates"]["exploration"]["authorized"],
             "promotion_authorized": policy["gates"]["promotion"]["authorized"],
+            "current_decision_experiment_authorized": decisions["phase_policy"][
+                "experiments_authorized"
+            ],
+            "current_decision_bounded_exploration_authorized": decisions[
+                "phase_policy"
+            ]["bounded_exploration_authorized"],
+            "structural_work_authorized": decisions.get(
+                "execution_gates", {}
+            ).get("structural", {}).get("authorized", False),
             "exploration_limits": policy["gates"]["exploration"]["limits"],
             "promotion_boundary": policy["feedback_contract"]["promotion_boundary"],
         },
