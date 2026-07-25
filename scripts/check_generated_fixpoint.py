@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import os
 import shutil
 import subprocess
 import sys
@@ -17,6 +18,7 @@ GENERATORS = [
     ["scripts/build_frontier_map.py"],
     ["scripts/gen_result_registry.py"],
     ["scripts/gen_axiom_audit.py"],
+    ["scripts/build_research_engine_state.py"],
     ["scripts/build_knowledge_graph.py"],
     ["scripts/coverage_report.py"],
     ["scripts/gen_status.py"],
@@ -32,6 +34,7 @@ PURE_ARTIFACTS = [
     "data/frontier_map.json",
     "data/result_registry.json",
     "Ecdlp/LedgerAxiomAudit.lean",
+    "data/research_engine_state.json",
     "data/knowledge_graph.json",
     "data/knowledge_graph.md",
     "COVERAGE.md",
@@ -68,11 +71,23 @@ def changed(before: dict[str, str], after: dict[str, str]) -> list[str]:
 
 
 def run_generators(root: Path) -> None:
-    env = dict(__import__("os").environ)
+    env = dict(os.environ)
     env["PYTHONIOENCODING"] = "utf-8"
+    python_paths = [str(root / "scripts")]
+    if env.get("PYTHONPATH"):
+        python_paths.append(env["PYTHONPATH"])
+    env["PYTHONPATH"] = os.pathsep.join(python_paths)
+    runner = (
+        "import runpy,sys;"
+        "path=sys.argv[1];"
+        "args=sys.argv[2:];"
+        "sys.path.insert(0,'scripts');"
+        "sys.argv=[path]+args;"
+        "runpy.run_path(path,run_name='__main__')"
+    )
     for args in GENERATORS:
         result = subprocess.run(
-            [sys.executable, *args],
+            [sys.executable, "-c", runner, *args],
             cwd=root,
             env=env,
             text=True,

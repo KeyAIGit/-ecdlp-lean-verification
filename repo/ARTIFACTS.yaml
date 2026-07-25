@@ -110,6 +110,7 @@ classes:
       - bundles/MANIFEST.json
       - data/result_registry.json
       - data/source_registry.json
+      - data/research_engine_state.json
       - repo/ECDLP_DECISION_SUBSTRATE.md
       - Ecdlp/LedgerAxiomAudit.lean
     owner: generators
@@ -126,6 +127,7 @@ classes:
       - scripts/export_agent_bundle.py
       - scripts/gen_result_registry.py
       - scripts/gen_source_registry.py
+      - scripts/build_research_engine_state.py
       - scripts/build_ecdlp_decision_view.py
       - scripts/gen_axiom_audit.py
     gates:
@@ -135,6 +137,8 @@ classes:
       - scripts/export_agent_bundle.py --check
       - scripts/gen_result_registry.py --check
       - scripts/build_ecdlp_decision_view.py --check
+      - scripts/build_research_engine_state.py --check
+      - scripts/check_research_engine.py
       - scripts/check_product_model.py
     risks:
       - Hand edits create invisible drift unless encoded in generators.
@@ -169,13 +173,14 @@ classes:
       - AUTONOMY.md
       - README.md
       - ROADMAP.md
-      - tasks/NEXT.md
+      - tasks/
       - experiments/HYPOTHESES.yaml
       - REPOSITORY_ARCHITECTURE.md
       - repo/ARTIFACTS.yaml
       - repo/CLEANUP_PLAN.md
       - repo/FORMAL_SUBSTRATE.json
       - repo/ECDLP_DECISION_SUBSTRATE.json
+      - repo/RESEARCH_ENGINE_V0.json
       - repo/PRODUCT_MODEL.json
       - repo/PILOT_PROTOCOL.json
       - repo/AUTOMATION_INVENTORY.json
@@ -191,6 +196,7 @@ classes:
       - scripts/check_repo_artifacts.py
       - scripts/check_automation_inventory.py
       - scripts/check_ecdlp_decision_substrate.py
+      - scripts/check_research_engine.py
       - scripts/check_product_model.py
       - scripts/check_domains.py
       - independent architecture review when available

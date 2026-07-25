@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.example/schemas/research-engine-validator-output-v3.json",
+  "title": "Research Engine replayed validator output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "validator_request_sha256",
+    "passed",
+    "recomputed_measurement"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "validator_request_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "passed": {
+      "const": true
+    },
+    "recomputed_measurement": {
+      "$ref": "#/$defs/measurement"
+    }
+  },
+  "$defs": {
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "enum": [
+            "supported",
+            "falsified",
+            "bounded_negative",
+            "inapplicable",
+            "inconclusive",
+            "resource_exhausted"
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

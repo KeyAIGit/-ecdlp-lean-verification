@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "event_id": "REO-2026-07-24-003",
+  "recorded_on": "2026-07-24",
+  "candidate_id": "HIST-P1M3-SEMAEV-S4-SOLVE",
+  "hypothesis_id": "HYP_GLV_SEMAEV_001",
+  "route_id": "R-GLV-SEMAEV",
+  "outcome": "inconclusive",
+  "scope": {
+    "target_kind": "toy",
+    "curve_family": "cofactor-1 toy j=0 curves",
+    "field_bits": [
+      16,
+      20,
+      24
+    ],
+    "threat_model": "classical-single-target-plain",
+    "claim_boundary": "Distinct-index m=3 S4 relation solving; repeated indices and full multivariate solving degree excluded."
+  },
+  "summary": "The S4 solver and brute-force path agreed on the tested distinct-index relation set, but the validation paths shared final relation-confirmation logic and the run did not measure the multivariate solving cost targeted by the hypothesis.",
+  "evidence_files": [
+    "experiments/p1_petit_m3/README.md",
+    "experiments/p1_petit_m3/RESULTS.md",
+    "experiments/p1_petit_m3/runs/HYP_GLV_SEMAEV_001_p1m3-semaev4-solve_8e905324cf82.json"
+  ],
+  "validation": {
+    "status": "partial",
+    "independent": false,
+    "decisive_claim_validated": false,
+    "evidence_files": [
+      "experiments/p1_petit_m3/validate.py"
+    ]
+  },
+  "budget": {
+    "status": "historical_not_recorded",
+    "wall_time_seconds": null,
+    "peak_memory_bytes": null,
+    "parallel_workers": null
+  },
+  "stop_condition": {
+    "triggered": false,
+    "statement": "The run validated a relation-solving rung but did not reach the decisive multivariate scaling question."
+  },
+  "residual_uncertainty": [
+    "Repeated-index decompositions remain outside this artifact.",
+    "The decisive degree-of-regularity and matrix-growth claims remain unvalidated."
+  ],
+  "reopening_condition": "Use separately implemented decisive validation and measure a full multivariate system under a fixed budget.",
+  "provenance": {
+    "source_kind": "historical_migration",
+    "source_commit": "1a1b5ddba7e9a6e3d40f189892e83529f5bc6616",
+    "migration_note": "Normalized conservatively because the historical validator shared confirm_relation3.",
+    "run_manifest": null,
+    "run_manifest_sha256": null
+  }
+}

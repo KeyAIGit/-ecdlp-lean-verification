@@ -2,7 +2,8 @@
 
 > **Generated** by `scripts/gen_status.py` from `data/stats.json`,
 > `data/frontier_map.json`, `repo/PRODUCT_MODEL.json`, and
-> `repo/PILOT_PROTOCOL.json`, and `repo/ECDLP_DECISION_SUBSTRATE.json`.
+> `repo/PILOT_PROTOCOL.json`, `repo/ECDLP_DECISION_SUBSTRATE.json`, and
+> `data/research_engine_state.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -68,7 +69,9 @@ The current bottleneck is **a missing proposal-level non-generic mechanism, not 
 volume**. Decision `RS-2026-07-22-001` evaluated all **17 attack routes** and
 selected **none**: no audited route currently clears the common gate for the exact plain
 single-target objective. The map contains **11 foundation decisions**,
-experiments authorized = **false**, selected route =
+bounded exploration authorized = **true**,
+promotion experiments authorized =
+**false**, selected route =
 **none**.
 
 The completed `build_now` foundations are `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`.
@@ -78,17 +81,36 @@ bridges, p-adic formal groups, lattice reduction, isogenies, and quantum circuit
 but none is automatically next merely because Mathlib lacks it. Route selection reopens only
 when new evidence satisfies a recorded reconsideration trigger and the proposal gate.
 
+## Research Engine v0
+The engine normalizes **9 hypotheses** and retains
+**8 outcome events**:
+**8 migrated historical** and
+**0 native**. Its historical
+no-reopen guard matched four frozen cases; this is not predictive EIG calibration. Predictive
+calibration currently contains **0 native
+outcomes**. Selected bounded explorations: **0** (none). Ready now: **0** (none). **3 candidates remain at intake** behind exact-mechanism or independent-validator hard gates.
+
+The exploration gate is **true** and the promotion
+gate is **false**. Any future selection permits only
+preregistered toy-curve work within its fixed budgets and dependency order. It does not
+promote `R-GLV-SEMAEV`, authorize direct secp256k1 work, or support an asymptotic claim. Every
+terminal run must append an outcome in `experiments/engine/outcomes/` and regenerate the engine
+state.
+
 ## Active work protocol
-The active queue is `tasks/NEXT.md`. Keep it short (3-7 task contracts) so a
-small-context agent can start work without rereading the whole repository.
+`tasks/NEXT.md` is the queue router. ECDLP research is owned by
+`tasks/ECDLP_RESEARCH.md`; product validation is owned by `tasks/KEYAI_PRODUCT.md`. Together they
+retain 3-7 active task contracts. Product traffic, site work, pilots, and portability never count
+as ECDLP progress.
 
 The product authority is `repo/PRODUCT_MODEL.json`; `scripts/check_product_model.py` enforces its
 claim boundary. Public surfaces must distinguish current capabilities, the reference deployment,
 customer hypotheses, and future product direction.
 
 The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view is generated.
-The candidate-neutral validation contract lives in `experiments/framework/`. Neither file
-authorizes an experiment by itself.
+The engine policy is `repo/RESEARCH_ENGINE_V0.json`; its generated state is
+`data/research_engine_state.json`. The candidate-neutral validation contract lives in
+`experiments/framework/`. No one file authorizes promotion by itself.
 
 The hypothesis registry is `experiments/HYPOTHESES.yaml`. It records testable
 directions, evidence, and exit criteria; it is not a theorem ledger.
@@ -99,7 +121,10 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 ## Where to go deeper
 `README.md` (the front door) · `repo/PRODUCT_MODEL.json` (product and MVP authority) ·
 `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
-`tasks/NEXT.md` (active queue) ·
+`repo/RESEARCH_ENGINE_V0.json` (exploration policy and selector) ·
+`data/research_engine_state.json` (generated engine state) ·
+`tasks/NEXT.md` (queue router) · `tasks/ECDLP_RESEARCH.md` (research queue) ·
+`tasks/KEYAI_PRODUCT.md` (product queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
 standalone results) · `ROADMAP.md` (strategy & program) · `VERIFIED.md` (ledger) ·
 `BARRIERS.md` (no-go map) · `notes/FOUNDATIONS.md` (Weil/Semaev ladder) ·

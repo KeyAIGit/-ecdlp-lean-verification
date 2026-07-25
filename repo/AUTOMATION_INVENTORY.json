@@ -3,7 +3,7 @@
   "policy": {
     "proof_authority": "Lean kernel and blocking CI only",
     "external_spend": "Manual dispatch or a paths-scoped integration self-test only; never scheduled",
-    "parked_experiments": "Decision RS-2026-07-22-001 selected no route. Hypothesis-generation workflows remain manual and must not run until a superseding decision selects one route and both tasks/NEXT.md and experiments/HYPOTHESES.yaml explicitly authorize it",
+    "experiment_gates": "Research Engine v0 authorizes only its dependency-ordered, budget-capped toy exploration sequence. Route promotion, exact-target work, paid hypothesis-generation workflows, and unregistered experiments remain parked until a dated promotion decision explicitly authorizes them",
     "merge": "No workflow in this inventory is authorized to merge the architecture branch"
   },
   "workflows": [
@@ -109,7 +109,7 @@
       "trigger_policy": "manual_only",
       "disposition": "park",
       "spends_external_budget": true,
-      "reason": "All experimental hypotheses remain parked after RS-2026-07-22-001 selected no route."
+      "reason": "This paid generative workflow is not the deterministic Research Engine v0 executor and cannot bypass its selected sequence, budgets, or promotion boundary."
     },
     {
       "file": ".github/workflows/hypothesis-explore.yml",
@@ -117,7 +117,7 @@
       "trigger_policy": "manual_only",
       "disposition": "park",
       "spends_external_budget": true,
-      "reason": "New hypothesis generation is deferred until new evidence triggers a superseding route-selection decision."
+      "reason": "Unbounded model-generated hypotheses remain outside Research Engine intake and selection; the current selected exploration queue is empty."
     },
     {
       "file": ".github/workflows/kimi-repo-study.yml",

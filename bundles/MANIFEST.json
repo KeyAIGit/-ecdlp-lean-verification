@@ -11,19 +11,31 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 6870
+        "bytes": 8271
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 55074
+        "bytes": 57031
+      },
+      {
+        "path": "repo/RESEARCH_ENGINE_V0.json",
+        "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
+        "exists": true,
+        "bytes": 48910
+      },
+      {
+        "path": "data/research_engine_state.json",
+        "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
+        "exists": true,
+        "bytes": 42697
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
         "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
         "exists": true,
-        "bytes": 9976
+        "bytes": 10448
       },
       {
         "path": "repo/PILOT_PROTOCOL.json",
@@ -33,9 +45,21 @@
       },
       {
         "path": "tasks/NEXT.md",
-        "reason": "the 3-7 active task contracts with exit criteria — where to start",
+        "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 8946
+        "bytes": 1495
+      },
+      {
+        "path": "tasks/ECDLP_RESEARCH.md",
+        "reason": "bounded ECDLP research contracts and exit criteria",
+        "exists": true,
+        "bytes": 7120
+      },
+      {
+        "path": "tasks/KEYAI_PRODUCT.md",
+        "reason": "product-validation contracts and separate product KPIs",
+        "exists": true,
+        "bytes": 3072
       },
       {
         "path": "data/stats.json",
@@ -55,19 +79,31 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 6870
+        "bytes": 8271
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 55074
+        "bytes": 57031
+      },
+      {
+        "path": "repo/RESEARCH_ENGINE_V0.json",
+        "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
+        "exists": true,
+        "bytes": 48910
+      },
+      {
+        "path": "data/research_engine_state.json",
+        "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
+        "exists": true,
+        "bytes": 42697
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
         "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
         "exists": true,
-        "bytes": 9976
+        "bytes": 10448
       },
       {
         "path": "repo/PILOT_PROTOCOL.json",
@@ -77,9 +113,21 @@
       },
       {
         "path": "tasks/NEXT.md",
-        "reason": "the 3-7 active task contracts with exit criteria — where to start",
+        "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 8946
+        "bytes": 1495
+      },
+      {
+        "path": "tasks/ECDLP_RESEARCH.md",
+        "reason": "bounded ECDLP research contracts and exit criteria",
+        "exists": true,
+        "bytes": 7120
+      },
+      {
+        "path": "tasks/KEYAI_PRODUCT.md",
+        "reason": "product-validation contracts and separate product KPIs",
+        "exists": true,
+        "bytes": 3072
       },
       {
         "path": "data/stats.json",
@@ -97,13 +145,13 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 9677
+        "bytes": 10574
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 9100
+        "bytes": 9769
       },
       {
         "path": "VERIFIED.md",
@@ -133,7 +181,61 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 21334
+        "bytes": 21521
+      },
+      {
+        "path": "experiments/engine/README.md",
+        "reason": "Research Engine event lifecycle and regeneration contract",
+        "exists": true,
+        "bytes": 4501
+      },
+      {
+        "path": "experiments/engine/outcome.schema.json",
+        "reason": "strict terminal-outcome event schema",
+        "exists": true,
+        "bytes": 5705
+      },
+      {
+        "path": "experiments/engine/run.schema.json",
+        "reason": "native run envelope and frozen matrix binding",
+        "exists": true,
+        "bytes": 4511
+      },
+      {
+        "path": "experiments/engine/instance_result.schema.json",
+        "reason": "per-instance result and artifact binding",
+        "exists": true,
+        "bytes": 2826
+      },
+      {
+        "path": "experiments/engine/instance_validation.schema.json",
+        "reason": "independent per-instance validation and recomputed outcome classification",
+        "exists": true,
+        "bytes": 3345
+      },
+      {
+        "path": "experiments/engine/validator_request.schema.json",
+        "reason": "sanitized replay input without claimed value, terminal outcome, or result digest",
+        "exists": true,
+        "bytes": 2550
+      },
+      {
+        "path": "experiments/engine/validator_output.schema.json",
+        "reason": "strict machine-readable output from pure validator replay",
+        "exists": true,
+        "bytes": 1270
+      },
+      {
+        "path": "experiments/engine/validators/README.md",
+        "reason": "scientific-validator boundary and current no-validator status",
+        "exists": true,
+        "bytes": 505
+      },
+      {
+        "path": "experiments/framework/fixtures/pure_engine_validator.py",
+        "reason": "protocol regression fixture; explicitly not scientific evidence",
+        "exists": true,
+        "bytes": 372
       }
     ],
     "large": [
@@ -141,19 +243,31 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 6870
+        "bytes": 8271
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 55074
+        "bytes": 57031
+      },
+      {
+        "path": "repo/RESEARCH_ENGINE_V0.json",
+        "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
+        "exists": true,
+        "bytes": 48910
+      },
+      {
+        "path": "data/research_engine_state.json",
+        "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
+        "exists": true,
+        "bytes": 42697
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
         "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
         "exists": true,
-        "bytes": 9976
+        "bytes": 10448
       },
       {
         "path": "repo/PILOT_PROTOCOL.json",
@@ -163,9 +277,21 @@
       },
       {
         "path": "tasks/NEXT.md",
-        "reason": "the 3-7 active task contracts with exit criteria — where to start",
+        "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 8946
+        "bytes": 1495
+      },
+      {
+        "path": "tasks/ECDLP_RESEARCH.md",
+        "reason": "bounded ECDLP research contracts and exit criteria",
+        "exists": true,
+        "bytes": 7120
+      },
+      {
+        "path": "tasks/KEYAI_PRODUCT.md",
+        "reason": "product-validation contracts and separate product KPIs",
+        "exists": true,
+        "bytes": 3072
       },
       {
         "path": "data/stats.json",
@@ -183,13 +309,13 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 9677
+        "bytes": 10574
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 9100
+        "bytes": 9769
       },
       {
         "path": "VERIFIED.md",
@@ -219,19 +345,73 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 21334
+        "bytes": 21521
+      },
+      {
+        "path": "experiments/engine/README.md",
+        "reason": "Research Engine event lifecycle and regeneration contract",
+        "exists": true,
+        "bytes": 4501
+      },
+      {
+        "path": "experiments/engine/outcome.schema.json",
+        "reason": "strict terminal-outcome event schema",
+        "exists": true,
+        "bytes": 5705
+      },
+      {
+        "path": "experiments/engine/run.schema.json",
+        "reason": "native run envelope and frozen matrix binding",
+        "exists": true,
+        "bytes": 4511
+      },
+      {
+        "path": "experiments/engine/instance_result.schema.json",
+        "reason": "per-instance result and artifact binding",
+        "exists": true,
+        "bytes": 2826
+      },
+      {
+        "path": "experiments/engine/instance_validation.schema.json",
+        "reason": "independent per-instance validation and recomputed outcome classification",
+        "exists": true,
+        "bytes": 3345
+      },
+      {
+        "path": "experiments/engine/validator_request.schema.json",
+        "reason": "sanitized replay input without claimed value, terminal outcome, or result digest",
+        "exists": true,
+        "bytes": 2550
+      },
+      {
+        "path": "experiments/engine/validator_output.schema.json",
+        "reason": "strict machine-readable output from pure validator replay",
+        "exists": true,
+        "bytes": 1270
+      },
+      {
+        "path": "experiments/engine/validators/README.md",
+        "reason": "scientific-validator boundary and current no-validator status",
+        "exists": true,
+        "bytes": 505
+      },
+      {
+        "path": "experiments/framework/fixtures/pure_engine_validator.py",
+        "reason": "protocol regression fixture; explicitly not scientific evidence",
+        "exists": true,
+        "bytes": 372
       },
       {
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 472565
+        "bytes": 523025
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 13538
+        "bytes": 15600
       },
       {
         "path": "PUBLISHABLE_UNITS.md",
@@ -244,6 +424,54 @@
         "reason": "the trust boundary: what native_decide adds to the TCB",
         "exists": true,
         "bytes": 17293
+      },
+      {
+        "path": "experiments/engine/outcomes/REO-2026-07-24-001.json",
+        "reason": "digest-pinned historical outcome retained by Research Engine v0",
+        "exists": true,
+        "bytes": 2366
+      },
+      {
+        "path": "experiments/engine/outcomes/REO-2026-07-24-002.json",
+        "reason": "digest-pinned historical outcome retained by Research Engine v0",
+        "exists": true,
+        "bytes": 1911
+      },
+      {
+        "path": "experiments/engine/outcomes/REO-2026-07-24-003.json",
+        "reason": "digest-pinned historical outcome retained by Research Engine v0",
+        "exists": true,
+        "bytes": 2156
+      },
+      {
+        "path": "experiments/engine/outcomes/REO-2026-07-24-004.json",
+        "reason": "digest-pinned historical outcome retained by Research Engine v0",
+        "exists": true,
+        "bytes": 1894
+      },
+      {
+        "path": "experiments/engine/outcomes/REO-2026-07-24-005.json",
+        "reason": "digest-pinned historical outcome retained by Research Engine v0",
+        "exists": true,
+        "bytes": 2071
+      },
+      {
+        "path": "experiments/engine/outcomes/REO-2026-07-24-006.json",
+        "reason": "digest-pinned historical outcome retained by Research Engine v0",
+        "exists": true,
+        "bytes": 1862
+      },
+      {
+        "path": "experiments/engine/outcomes/REO-2026-07-24-007.json",
+        "reason": "digest-pinned historical outcome retained by Research Engine v0",
+        "exists": true,
+        "bytes": 2096
+      },
+      {
+        "path": "experiments/engine/outcomes/REO-2026-07-24-008.json",
+        "reason": "digest-pinned historical outcome retained by Research Engine v0",
+        "exists": true,
+        "bytes": 2446
       }
     ]
   }

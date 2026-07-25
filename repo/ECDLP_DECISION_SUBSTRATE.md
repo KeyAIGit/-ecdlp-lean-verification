@@ -6,7 +6,7 @@
 
 Given P in E(F_p), P != O, Q in <P>, Q = [k]P, **Recover k modulo ord(P). The primary target fixes P to a generator of the prime-order secp256k1 group, so ord(P) = n.**
 
-Current phase: **monitored-candidate-intake**. Experiments authorized: **false**. Selected route: **none**.
+Current phase: **research-engine-v0**. Bounded exploration authorized: **true**. Promotion experiments authorized: **false**. Selected promoted route: **none**.
 
 The formal-result map, attack encyclopedia, and this decision layer are deliberately distinct:
 
@@ -14,8 +14,10 @@ The formal-result map, attack encyclopedia, and this decision layer are delibera
 - **formal_release_map:** `repo/FORMAL_SUBSTRATE.json`
 - **attack_evidence:** `data/attack_registry.json`
 - **research_decisions:** `repo/ECDLP_DECISION_SUBSTRATE.json`
-- **active_work:** `tasks/NEXT.md`
-- **experiment_authorization:** `experiments/HYPOTHESES.yaml`
+- **research_engine_policy:** `repo/RESEARCH_ENGINE_V0.json`
+- **research_engine_state:** `data/research_engine_state.json`
+- **active_work:** `tasks/ECDLP_RESEARCH.md`
+- **experiment_authorization:** `repo/RESEARCH_ENGINE_V0.json and experiments/HYPOTHESES.yaml`
 
 ## Current route selection
 
@@ -347,8 +349,8 @@ The tracked 2026 quantum update (`luo2026`) reports **835 logical qubits** and *
 - Supply new evidence matching at least one route-selection reconsideration trigger.
 - Pass every common acceptance requirement and all success-level-specific requirements at proposal level.
 - Name only the minimal conditional foundation needed for the next falsifiable decision.
-- Promote the same route and hypothesis in the decision substrate, tasks/NEXT.md, and experiments/HYPOTHESES.yaml.
+- Promote the same route and hypothesis in the decision substrate, tasks/ECDLP_RESEARCH.md, and experiments/HYPOTHESES.yaml.
 
-**Route selection:** RS-2026-07-22-001 selected zero routes. Monitoring is an active evidence policy, not a claim that no future route can work.
+**Route selection:** RS-2026-07-22-001 still selects zero promoted routes. Research Engine v0 permits only bounded exploration; this is not a route promotion or a claim that any current mechanism improves ECDLP complexity.
 
 **Final review:** Independent adversarial review is requested when another qualified reviewer is available. It is an additional audit, not a merge prerequisite; required CI, explicit scope, rollback safety, and the owner's standing authorization govern merges.

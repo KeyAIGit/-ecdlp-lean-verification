@@ -2,9 +2,9 @@
 """Validate the canonical secp256k1 ECDLP decision substrate.
 
 This gate checks cross-registry identity, evidence paths, route/foundation
-ownership, and the rule that no experiment is active before explicit route
-selection. It validates project decisions; it does not validate mathematical
-claims independently of their cited Lean or literature evidence.
+ownership, and the split between bounded exploration and promotion. It
+validates project decisions; it does not validate mathematical claims
+independently of their cited Lean or literature evidence.
 """
 from __future__ import annotations
 
@@ -20,7 +20,9 @@ FORMAL = ROOT / "repo" / "FORMAL_SUBSTRATE.json"
 RESULTS = ROOT / "data" / "result_registry.json"
 SOURCES = ROOT / "data" / "source_registry.json"
 HYPOTHESES = ROOT / "experiments" / "HYPOTHESES.yaml"
-TASKS = ROOT / "tasks" / "NEXT.md"
+TASKS = ROOT / "tasks" / "ECDLP_RESEARCH.md"
+ENGINE_POLICY = ROOT / "repo" / "RESEARCH_ENGINE_V0.json"
+ENGINE_STATE = ROOT / "data" / "research_engine_state.json"
 
 ROUTE_STATUSES = {
     "guardrail",
@@ -150,6 +152,8 @@ def validate() -> list[str]:
     formal_data = load_json(FORMAL)
     result_data = load_json(RESULTS)
     source_data = load_json(SOURCES)
+    engine_policy = load_json(ENGINE_POLICY)
+    engine_state = load_json(ENGINE_STATE)
 
     routes = data.get("routes", [])
     foundations = data.get("foundations", [])
@@ -169,12 +173,55 @@ def validate() -> list[str]:
         problems.append(
             "exactly classical-single-target-plain must be the primary threat model"
         )
-    if data["phase_policy"].get("phase") != "monitored-candidate-intake":
-        problems.append("the completed selection phase must be monitored-candidate-intake")
+    if data["phase_policy"].get("phase") != "research-engine-v0":
+        problems.append("the current phase must be research-engine-v0")
     if data["phase_policy"].get("experiments_authorized") is not False:
-        problems.append("this phase must keep experiments_authorized=false")
+        problems.append("legacy promotion flag experiments_authorized must remain false")
+    if data["phase_policy"].get("bounded_exploration_authorized") is not True:
+        problems.append("bounded exploration must be explicitly authorized")
+    if data["phase_policy"].get("promotion_experiments_authorized") is not False:
+        problems.append("promotion experiments must remain unauthorized")
     if data["phase_policy"].get("selected_attack_route") is not None:
         problems.append("the select-none decision must keep selected_attack_route=null")
+    execution_gates = data.get("execution_gates", {})
+    if execution_gates.get("exploration", {}).get("authorized") is not True:
+        problems.append("execution_gates.exploration must be authorized")
+    if execution_gates.get("promotion", {}).get("authorized") is not False:
+        problems.append("execution_gates.promotion must remain closed")
+    if execution_gates.get("exploration", {}).get("policy_source") != (
+        "repo/RESEARCH_ENGINE_V0.json"
+    ):
+        problems.append("exploration gate must point at RESEARCH_ENGINE_V0.json")
+    if engine_policy.get("gates", {}).get("exploration", {}).get(
+        "authorized"
+    ) is not True:
+        problems.append("Research Engine policy must authorize bounded exploration")
+    if engine_policy.get("gates", {}).get("promotion", {}).get(
+        "authorized"
+    ) is not False:
+        problems.append("Research Engine policy must keep promotion closed")
+    engine_gate_status = engine_state.get("gate_status", {})
+    if engine_gate_status.get("exploration_authorized") is not True:
+        problems.append("generated engine state must authorize bounded exploration")
+    if engine_gate_status.get("promotion_authorized") is not False:
+        problems.append("generated engine state must keep promotion closed")
+    if (
+        engine_policy.get("gates", {}).get("exploration", {}).get("authorized")
+        != execution_gates.get("exploration", {}).get("authorized")
+        or engine_policy.get("gates", {}).get("promotion", {}).get("authorized")
+        != execution_gates.get("promotion", {}).get("authorized")
+    ):
+        problems.append("Research Engine and decision execution gates disagree")
+    selected_count = engine_state.get("counts", {}).get("selected_explorations")
+    max_selected = engine_policy.get("gates", {}).get("exploration", {}).get(
+        "max_selected_per_cycle"
+    )
+    if (
+        not isinstance(selected_count, int)
+        or not isinstance(max_selected, int)
+        or selected_count > max_selected
+    ):
+        problems.append("generated selected sequence exceeds the exploration gate")
 
     selection = data.get("route_selection")
     if not isinstance(selection, dict):
@@ -223,9 +270,9 @@ def validate() -> list[str]:
         if not valid:
             problems.append(f"route_selection.{field} must be nonempty")
     next_gate = data.get("next_phase_gate", {})
-    if next_gate.get("current_mode") != "monitor_without_experiment":
+    if next_gate.get("current_mode") != "bounded_exploration_promotion_closed":
         problems.append(
-            "next_phase_gate.current_mode must be monitor_without_experiment"
+            "next_phase_gate.current_mode must be bounded_exploration_promotion_closed"
         )
     reopen = next_gate.get("reopen_requirements")
     if not isinstance(reopen, list) or not reopen:
@@ -253,7 +300,9 @@ def validate() -> list[str]:
         if not route["assumptions"]:
             problems.append(f"{route_id}: assumptions must not be empty")
         if route["authorized_experiment"]:
-            problems.append(f"{route_id}: experiments are not authorized in this phase")
+            problems.append(
+                f"{route_id}: route-level promotion experiments are not authorized"
+            )
         if not set(route["threat_models"]) <= threat_ids:
             unknown = set(route["threat_models"]) - threat_ids
             problems.append(f"{route_id}: unknown threat models {sorted(unknown)}")
@@ -358,7 +407,7 @@ def validate() -> list[str]:
     ]
     if active_experiments:
         problems.append(
-            "experiment hypotheses must not be active in this phase: "
+            "experiment hypotheses must remain parked at the promotion level: "
             + ", ".join(sorted(active_experiments))
         )
     for required_parked in ("HYP_GLV_SEMAEV_001", "HYP_WARD_EDS_001"):
@@ -380,18 +429,32 @@ def validate() -> list[str]:
         "experiments/framework/fixtures/invalid_self_validation.json",
         "experiments/framework/fixtures/invalid_wrong_output.json",
         "experiments/framework/fixtures/invalid_missing_provenance.json",
+        "repo/RESEARCH_ENGINE_V0.json",
+        "data/research_engine_state.json",
+        "experiments/engine/outcome.schema.json",
+        "experiments/engine/run.schema.json",
+        "experiments/engine/instance_result.schema.json",
+        "experiments/engine/instance_validation.schema.json",
+        "experiments/engine/validator_request.schema.json",
+        "experiments/engine/validator_output.schema.json",
+        "experiments/engine/runs/README.md",
+        "scripts/build_research_engine_state.py",
+        "scripts/check_research_engine.py",
+        "scripts/test_research_engine.py",
     )
     for relative in required_foundation_files:
         if not (ROOT / relative).is_file():
             problems.append(f"completed build-now foundation is missing {relative}")
 
     tasks_text = TASKS.read_text(encoding="utf-8")
-    for required_task in ("TASK-008", "TASK-009", "TASK-010"):
+    for required_task in ("TASK-008", "TASK-009", "TASK-010", "TASK-013"):
         if required_task not in tasks_text:
-            problems.append(f"tasks/NEXT.md must contain {required_task}")
+            problems.append(f"tasks/ECDLP_RESEARCH.md must contain {required_task}")
     for completed_task in ("TASK-005", "TASK-006", "TASK-007"):
         if re.search(rf"^### {completed_task}\b", tasks_text, flags=re.MULTILINE):
-            problems.append(f"tasks/NEXT.md must not retain completed {completed_task}")
+            problems.append(
+                f"tasks/ECDLP_RESEARCH.md must not retain completed {completed_task}"
+            )
     active_hypotheses = [
         hypothesis_id
         for hypothesis_id, fields in hypotheses.items()
@@ -400,10 +463,13 @@ def validate() -> list[str]:
     for hypothesis_id in active_hypotheses:
         if hypothesis_id not in tasks_text:
             problems.append(
-                f"active hypothesis {hypothesis_id} is not referenced by tasks/NEXT.md"
+                f"active hypothesis {hypothesis_id} is not referenced by "
+                "tasks/ECDLP_RESEARCH.md"
             )
-    if re.search(r"(?i)\b(run|resume|launch)\b.{0,40}\bexperiment", tasks_text):
-        problems.append("tasks/NEXT.md appears to authorize experiment execution")
+    if "Promotion and exact-target work remain disabled." not in tasks_text:
+        problems.append(
+            "tasks/ECDLP_RESEARCH.md must preserve the promotion boundary"
+        )
 
     for relative in STALE_STATUS_FILES:
         path = ROOT / relative
@@ -440,7 +506,7 @@ def main() -> int:
     print(
         "decision-substrate check OK: "
         f"{len(data['routes'])} routes, {len(data['foundations'])} foundations, "
-        "0 authorized experiments."
+        "bounded exploration enabled, 0 promotion experiments."
     )
     return 0
 

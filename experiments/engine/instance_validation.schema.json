@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.example/schemas/research-engine-instance-validation-v1.json",
+  "title": "Research Engine per-instance independent validation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "validation_id",
+    "run_id",
+    "candidate_id",
+    "source_commit",
+    "result_record",
+    "result_sha256",
+    "validator_entrypoint",
+    "validator_entrypoint_sha256",
+    "validator_protocol",
+    "validator_request",
+    "validator_request_sha256",
+    "validator_output",
+    "validator_output_sha256",
+    "independent",
+    "shares_decisive_logic",
+    "passed",
+    "recomputed_measurement",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "validation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^RER-[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{3}$"
+    },
+    "candidate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "result_record": {
+      "type": "string",
+      "minLength": 1
+    },
+    "result_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "validator_entrypoint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "validator_entrypoint_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "validator_protocol": {
+      "const": "python-pure-json-v3"
+    },
+    "validator_request": {
+      "type": "string",
+      "minLength": 1
+    },
+    "validator_request_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "validator_output": {
+      "type": "string",
+      "minLength": 1
+    },
+    "validator_output_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "independent": {
+      "const": true
+    },
+    "shares_decisive_logic": {
+      "const": false
+    },
+    "passed": {
+      "const": true
+    },
+    "recomputed_measurement": {
+      "$ref": "#/$defs/measurement"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    }
+  },
+  "$defs": {
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "enum": [
+            "supported",
+            "falsified",
+            "bounded_negative",
+            "inapplicable",
+            "inconclusive",
+            "resource_exhausted"
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "role"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

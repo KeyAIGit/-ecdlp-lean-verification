@@ -7,8 +7,10 @@
     "formal_release_map": "repo/FORMAL_SUBSTRATE.json",
     "attack_evidence": "data/attack_registry.json",
     "research_decisions": "repo/ECDLP_DECISION_SUBSTRATE.json",
-    "active_work": "tasks/NEXT.md",
-    "experiment_authorization": "experiments/HYPOTHESES.yaml"
+    "research_engine_policy": "repo/RESEARCH_ENGINE_V0.json",
+    "research_engine_state": "data/research_engine_state.json",
+    "active_work": "tasks/ECDLP_RESEARCH.md",
+    "experiment_authorization": "repo/RESEARCH_ENGINE_V0.json and experiments/HYPOTHESES.yaml"
   },
   "target_problem": {
     "curve": "secp256k1",
@@ -106,22 +108,47 @@
       "A disclosure and legal review before public operational details are released."
     ]
   },
+  "execution_gates": {
+    "exploration": {
+      "policy_source": "repo/RESEARCH_ENGINE_V0.json",
+      "authorized": true,
+      "scope": "At most three dependency-ordered toy or validator-calibration candidates under fixed time, memory, field-size, baseline, stop-condition, and independent-validation requirements.",
+      "cannot_do": [
+        "target secp256k1 directly",
+        "change the declared threat model",
+        "claim an asymptotic improvement",
+        "promote a route or conditional foundation",
+        "discard a negative, inconclusive, or resource-exhausted outcome"
+      ]
+    },
+    "promotion": {
+      "policy_source": "this file and repo/RESEARCH_ENGINE_V0.json",
+      "authorized": false,
+      "scope": "Route promotion, exact-target work, expensive scaling, and public complexity claims remain closed.",
+      "reopen_via": "A dated decision that supersedes RS-2026-07-22-001 and promotes the same route and hypothesis in the decision substrate and ECDLP research queue."
+    }
+  },
   "phase_policy": {
-    "phase": "monitored-candidate-intake",
+    "phase": "research-engine-v0",
     "experiments_authorized": false,
+    "bounded_exploration_authorized": true,
+    "promotion_experiments_authorized": false,
     "selected_attack_route": null,
     "allowed_work": [
       "Ingest new primary literature or a concrete candidate proposal and evaluate it against the common gate.",
       "Maintain canonical registries, generated views, and independent validation infrastructure.",
-      "Close narrow formal scope statements that materially change a route disposition."
+      "Close narrow formal scope statements that materially change a route disposition.",
+      "Execute only the dependency-ordered toy or validator-calibration sequence selected by Research Engine v0 under its fixed budgets and stop conditions.",
+      "Retain every terminal exploration outcome, including bounded negatives, inconclusive runs, and resource exhaustion."
     ],
     "forbidden_work": [
-      "Start or resume a cryptanalytic experiment without a new explicit route-selection decision and matching task/hypothesis promotion.",
+      "Start an experiment outside the selected bounded-exploration sequence or exceed its declared resource budget.",
+      "Run exact-target secp256k1 work, expensive scaling, or a promotion experiment without a superseding route-selection decision.",
       "Build a missing Mathlib foundation merely because it is absent or mathematically interesting.",
       "Treat a constant-factor result, structural identity, or toy measurement as a subgeneric attack.",
       "Delete or rewrite provenance-bearing assets without an inventory, reference scan, and documented restore path."
     ],
-    "promotion_rule": "A future dated decision may promote at most one parked route only after new evidence satisfies the acceptance gate at proposal level and tasks/NEXT.md plus experiments/HYPOTHESES.yaml explicitly authorize the same work.",
+    "promotion_rule": "A future dated decision may promote at most one parked route only after new evidence satisfies the acceptance gate at proposal level and tasks/ECDLP_RESEARCH.md plus experiments/HYPOTHESES.yaml explicitly authorize the same work.",
     "merge_rule": "The owner delegated merge authority on 2026-07-22. Merge only from a clean branch after required CI is green, the diff has a documented scope and rollback path, and no unresolved blocking finding is known."
   },
   "route_selection": {
@@ -162,9 +189,10 @@
       "A deliberately approved project objective changes the threat model to conditioned inputs, implementation leakage, or fault-tolerant quantum computation."
     ],
     "operational_effects": [
-      "All cryptanalytic hypotheses remain parked.",
+      "All cryptanalytic hypotheses remain parked at the promotion level.",
       "No conditional formal foundation is promoted.",
       "Candidate intake and evidence maintenance continue through the neutral evaluation contract.",
+      "Research Engine v0 may select at most three bounded toy or validator-calibration explorations; their outcomes cannot promote a route automatically.",
       "Independent adversarial review remains useful when another reviewer is available, but is not a merge prerequisite."
     ]
   },
@@ -1161,15 +1189,15 @@
     }
   ],
   "next_phase_gate": {
-    "current_mode": "monitor_without_experiment",
+    "current_mode": "bounded_exploration_promotion_closed",
     "reopen_requirements": [
       "Bind the proposal to exactly one route and one declared threat model.",
       "Supply new evidence matching at least one route-selection reconsideration trigger.",
       "Pass every common acceptance requirement and all success-level-specific requirements at proposal level.",
       "Name only the minimal conditional foundation needed for the next falsifiable decision.",
-      "Promote the same route and hypothesis in the decision substrate, tasks/NEXT.md, and experiments/HYPOTHESES.yaml."
+      "Promote the same route and hypothesis in the decision substrate, tasks/ECDLP_RESEARCH.md, and experiments/HYPOTHESES.yaml."
     ],
-    "decision": "RS-2026-07-22-001 selected zero routes. Monitoring is an active evidence policy, not a claim that no future route can work.",
+    "decision": "RS-2026-07-22-001 still selects zero promoted routes. Research Engine v0 permits only bounded exploration; this is not a route promotion or a claim that any current mechanism improves ECDLP complexity.",
     "final_review": "Independent adversarial review is requested when another qualified reviewer is available. It is an additional audit, not a merge prerequisite; required CI, explicit scope, rollback safety, and the owner's standing authorization govern merges."
   }
 }

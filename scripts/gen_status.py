@@ -8,6 +8,7 @@ Every number here is pulled live from the machine sources, never hand-typed, so 
   - repo/PRODUCT_MODEL.json  (product category, stage, capability boundary)
   - repo/PILOT_PROTOCOL.json (external-pilot status and evidence state)
   - repo/ECDLP_DECISION_SUBSTRATE.json (phase, routes, foundation decisions)
+  - data/research_engine_state.json (dual gates, selected explorations, outcomes)
 Other summary docs should link to STATUS.md rather than duplicate counts.
 
 Run: python3 scripts/gen_status.py   (also run by the docs-sync workflow on every ledger change)
@@ -23,7 +24,31 @@ FM = ROOT / "data" / "frontier_map.json"
 DECISIONS = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
 PRODUCT = ROOT / "repo" / "PRODUCT_MODEL.json"
 PILOT = ROOT / "repo" / "PILOT_PROTOCOL.json"
+ENGINE = ROOT / "data" / "research_engine_state.json"
 OUT = ROOT / "STATUS.md"
+
+
+def render_engine_queue_summary(
+    engine_counts: dict,
+    selected_sequence: list[dict],
+    ready_candidate_ids: list[str],
+) -> str:
+    selected_ids = [item["candidate_id"] for item in selected_sequence]
+    selected_text = ", ".join(f"`{item}`" for item in selected_ids) or "none"
+    ready_text = (
+        ", ".join(f"`{item}`" for item in ready_candidate_ids) or "none"
+    )
+    summary = (
+        f"Selected bounded explorations: "
+        f"**{engine_counts['selected_explorations']}** ({selected_text}). "
+        f"Ready now: **{engine_counts['ready_explorations']}** ({ready_text})."
+    )
+    if not selected_sequence:
+        summary += (
+            f" **{engine_counts['intake_candidates']} candidates remain at intake** "
+            "behind exact-mechanism or independent-validator hard gates."
+        )
+    return summary
 
 
 def main() -> int:
@@ -32,6 +57,7 @@ def main() -> int:
     decisions = json.loads(DECISIONS.read_text(encoding="utf-8"))
     product = json.loads(PRODUCT.read_text(encoding="utf-8"))
     pilot = json.loads(PILOT.read_text(encoding="utf-8"))
+    engine = json.loads(ENGINE.read_text(encoding="utf-8"))
     ss = fm["status_summary"]
     meta = fm["meta"]
     total = meta.get("corpus_claims", sum(ss.values()))
@@ -40,6 +66,14 @@ def main() -> int:
     routes = decisions["routes"]
     foundations = decisions["foundations"]
     build_now = [item for item in foundations if item["build_now"]]
+    engine_counts = engine["counts"]
+    engine_gates = engine["gate_status"]
+    selected_sequence = engine["selected_sequence"]
+    engine_queue_summary = render_engine_queue_summary(
+        engine_counts,
+        selected_sequence,
+        engine["execution_queue"]["ready_candidate_ids"],
+    )
     product_stage = product["current_stage"]
     customer_hypotheses = product["customer_hypotheses"]
     hypothesis_status_counts = {
@@ -59,7 +93,8 @@ def main() -> int:
 
 > **Generated** by `scripts/gen_status.py` from `data/stats.json`,
 > `data/frontier_map.json`, `repo/PRODUCT_MODEL.json`, and
-> `repo/PILOT_PROTOCOL.json`, and `repo/ECDLP_DECISION_SUBSTRATE.json`.
+> `repo/PILOT_PROTOCOL.json`, `repo/ECDLP_DECISION_SUBSTRATE.json`, and
+> `data/research_engine_state.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -125,7 +160,9 @@ The current bottleneck is **a missing proposal-level non-generic mechanism, not 
 volume**. Decision `{selection['decision_id']}` evaluated all **{len(routes)} attack routes** and
 selected **none**: no audited route currently clears the common gate for the exact plain
 single-target objective. The map contains **{len(foundations)} foundation decisions**,
-experiments authorized = **{str(phase['experiments_authorized']).lower()}**, selected route =
+bounded exploration authorized = **{str(phase['bounded_exploration_authorized']).lower()}**,
+promotion experiments authorized =
+**{str(phase['promotion_experiments_authorized']).lower()}**, selected route =
 **{phase['selected_attack_route'] or 'none'}**.
 
 The completed `build_now` foundations are {", ".join(f"`{item['id']}`" for item in build_now)}.
@@ -135,17 +172,36 @@ bridges, p-adic formal groups, lattice reduction, isogenies, and quantum circuit
 but none is automatically next merely because Mathlib lacks it. Route selection reopens only
 when new evidence satisfies a recorded reconsideration trigger and the proposal gate.
 
+## Research Engine v0
+The engine normalizes **{engine_counts['normalized_hypotheses']} hypotheses** and retains
+**{engine_counts['outcome_events']} outcome events**:
+**{engine_counts['outcomes_by_source']['historical_migration']} migrated historical** and
+**{engine_counts['outcomes_by_source']['native_engine_run']} native**. Its historical
+no-reopen guard matched four frozen cases; this is not predictive EIG calibration. Predictive
+calibration currently contains **{engine['calibration']['scored_native_outcomes']} native
+outcomes**. {engine_queue_summary}
+
+The exploration gate is **{str(engine_gates['exploration_authorized']).lower()}** and the promotion
+gate is **{str(engine_gates['promotion_authorized']).lower()}**. Any future selection permits only
+preregistered toy-curve work within its fixed budgets and dependency order. It does not
+promote `R-GLV-SEMAEV`, authorize direct secp256k1 work, or support an asymptotic claim. Every
+terminal run must append an outcome in `experiments/engine/outcomes/` and regenerate the engine
+state.
+
 ## Active work protocol
-The active queue is `tasks/NEXT.md`. Keep it short (3-7 task contracts) so a
-small-context agent can start work without rereading the whole repository.
+`tasks/NEXT.md` is the queue router. ECDLP research is owned by
+`tasks/ECDLP_RESEARCH.md`; product validation is owned by `tasks/KEYAI_PRODUCT.md`. Together they
+retain 3-7 active task contracts. Product traffic, site work, pilots, and portability never count
+as ECDLP progress.
 
 The product authority is `repo/PRODUCT_MODEL.json`; `scripts/check_product_model.py` enforces its
 claim boundary. Public surfaces must distinguish current capabilities, the reference deployment,
 customer hypotheses, and future product direction.
 
 The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view is generated.
-The candidate-neutral validation contract lives in `experiments/framework/`. Neither file
-authorizes an experiment by itself.
+The engine policy is `repo/RESEARCH_ENGINE_V0.json`; its generated state is
+`data/research_engine_state.json`. The candidate-neutral validation contract lives in
+`experiments/framework/`. No one file authorizes promotion by itself.
 
 The hypothesis registry is `experiments/HYPOTHESES.yaml`. It records testable
 directions, evidence, and exit criteria; it is not a theorem ledger.
@@ -156,7 +212,10 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 ## Where to go deeper
 `README.md` (the front door) · `repo/PRODUCT_MODEL.json` (product and MVP authority) ·
 `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
-`tasks/NEXT.md` (active queue) ·
+`repo/RESEARCH_ENGINE_V0.json` (exploration policy and selector) ·
+`data/research_engine_state.json` (generated engine state) ·
+`tasks/NEXT.md` (queue router) · `tasks/ECDLP_RESEARCH.md` (research queue) ·
+`tasks/KEYAI_PRODUCT.md` (product queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
 standalone results) · `ROADMAP.md` (strategy & program) · `VERIFIED.md` (ledger) ·
 `BARRIERS.md` (no-go map) · `notes/FOUNDATIONS.md` (Weil/Semaev ladder) ·

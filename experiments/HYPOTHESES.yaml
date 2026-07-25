@@ -1,6 +1,6 @@
 version: 2
 canonical_source: STATUS.md
-task_queue: tasks/NEXT.md
+task_queue: tasks/ECDLP_RESEARCH.md
 purpose: >
   Machine-readable hypothesis registry for the Research OS layer. These are not
   claims of success; they are testable directions with exit criteria so agents
@@ -27,10 +27,10 @@ hypotheses:
       - "Some drift has already been reduced by docs-sync and generated STATUS.md."
     tests:
       - "Add a consistency gate over stats, frontier, graph, status, site counters, tasks, and hypotheses."
-      - "Keep tasks/NEXT.md to 3-7 active tasks."
+      - "Keep tasks/ECDLP_RESEARCH.md to a bounded set of active research contracts."
     exit_criteria:
       - "scripts/check_status_consistency.py passes locally and in CI."
-      - "Small-context agents can start from STATUS.md and tasks/NEXT.md."
+      - "Small-context agents can start from STATUS.md, tasks/NEXT.md, and the owning subqueue."
 
   - id: H2_GLV_SUBGROUP_VS_WHOLE_GROUP
     title: "The GLV result must be stated at the exact proved scope"
@@ -157,6 +157,7 @@ hypotheses:
     title: "GLV-symmetrized Semaev index calculus over prime-field j=0 curves"
     direction: "experiment"
     status: "parked"
+    exploration_policy: "Only the dependency-ordered Research Engine v0 candidates may run; promotion remains parked."
     resume_after: "A future dated decision supersedes RS-2026-07-22-001, selects R-GLV-SEMAEV, and promotes this hypothesis through TASK-009."
     park_reason: "The mathematical question remains open, but the completed route-selection pass found no exact mechanism and full-cost argument that clears the proposal gate."
     resolution: "partial negative: m=2 orbit-enumeration baseline is constant-factor only"

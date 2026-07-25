@@ -52,6 +52,15 @@ jobs:
       - name: Check ECDLP decision substrate
         run: python3 scripts/check_ecdlp_decision_substrate.py
 
+      - name: Check generated Research Engine state
+        run: python3 scripts/build_research_engine_state.py --check
+
+      - name: Check Research Engine v0
+        run: python3 scripts/check_research_engine.py
+
+      - name: Test Research Engine v0
+        run: python3 scripts/test_research_engine.py
+
       - name: Check generated ECDLP decision view
         run: python3 scripts/build_ecdlp_decision_view.py --check
 

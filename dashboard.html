@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/site.css?v=20260723-2">
+  <link rel="stylesheet" href="assets/site.css?v=20260724-1">
 </head>
 <body data-page="workspace">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -50,7 +50,7 @@
         <div class="workspace-metric"><div class="workspace-metric__value">164</div><div class="workspace-metric__label">proved modules</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">486</div><div class="workspace-metric__label">corpus claims</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">17</div><div class="workspace-metric__label">routes evaluated</div></div>
-        <div class="workspace-metric"><div class="workspace-metric__value">0</div><div class="workspace-metric__label">routes selected</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">0</div><div class="workspace-metric__label">selected experiments</div></div>
       </div>
     </div>
   </section>
@@ -72,23 +72,55 @@
         <span class="status status--blue">Reference deployment</span></div>
       <article class="decision-band">
         <div class="decision-band__state"><span>RS-2026-07-22-001</span><strong>Select none</strong></div>
-        <div class="decision-band__copy"><h3>No experiment is currently authorized.</h3>
-          <p>No audited route currently satisfies every proposal-level requirement for a new experiment against the primary plain single-target secp256k1 objective.</p></div>
+        <div class="decision-band__copy"><h3>No experiment currently clears the scientific gate.</h3>
+          <p>No audited route currently satisfies every proposal-level requirement for a new experiment against the primary plain single-target secp256k1 objective. Bounded exploration remains available in policy, but
+            no toy run is authorized and promotion remains closed.</p></div>
       </article>
+      <div class="panel-heading"><div><h2>Research Engine v0 queue</h2>
+        <p>0 selected;
+          0 ready. Positive toy evidence is supported,
+          never proved; threat-model scope, route decision, and evidence remain separate.</p></div>
+        <span class="status status--amber">No run authorized</span></div>
+      <div class="surface" style="margin-bottom:22px"><div class="surface__body"><div class="empty-state"><strong>No experiment clears every scientific gate.</strong><p>The queue remains empty until an exact mechanism and an independent raw-artifact validator are both available.</p></div></div></div>
+      <div class="panel-heading"><div><h2>Blocked research intake</h2>
+        <p>3 proposals are retained with explicit reopening
+        requirements; none is executable.</p></div></div>
+      <div class="surface" style="margin-bottom:22px"><div class="surface__body"><article class="task-row">
+  <div class="task-row__top"><div><h4>Implement raw-artifact calibration of the P3 proxy against an independent F4/Groebner engine</h4>
+    <small>RE0-001-EXTERNAL-SOLVER-CALIBRATION</small>
+    <p>missing independent validator</p></div>
+    <span class="status status--amber">Intake</span></div>
+</article><article class="task-row">
+  <div class="task-row__top"><div><h4>Specify an exact nonredundant GLV-invariant quotient before testing it</h4>
+    <small>RE0-002-NONREDUNDANT-INVARIANT-QUOTIENT</small>
+    <p>missing exact mechanism; missing independent validator</p></div>
+    <span class="status status--amber">Intake</span></div>
+</article><article class="task-row">
+  <div class="task-row__top"><div><h4>Park m=3 scaling until the invariant quotient is exactly specified and validated</h4>
+    <small>RE0-003-M3-INVARIANT-F4-SCALING</small>
+    <p>missing exact mechanism; missing independent validator</p></div>
+    <span class="status status--amber">Intake</span></div>
+</article></div></div>
       <div class="layout-two">
         <article class="surface">
           <div class="surface__head"><div><h3>Why this decision</h3><p>Canonical rationale, not a claim of impossibility</p></div></div>
           <div class="surface__body"><ul class="plain-list"><li>The generic lower bound and generic algorithms are guardrails or baselines, not non-generic attack mechanisms.</li><li>GLV supplies a verified constant-factor structure; Pohlig-Hellman, low-degree pairing transfer, anomalous lifting, and extension-field descent fail target-specific applicability screens.</li><li>The open prime-field algebraic, GLV-Semaev, Petit-style, EDS/division-polynomial, and transfer directions do not yet provide an exact nonredundant mechanism plus a justified subgeneric cost bridge.</li><li>Multi-target, interval, leakage, implementation, and quantum routes change the input or computational threat model and therefore cannot be promoted as a classical plain-input result.</li><li>Building conditional Mathlib foundations now would increase theorem volume without a demonstrated reduction in uncertainty about the exact target.</li></ul></div>
         </article>
         <aside class="surface">
-          <div class="surface__head"><div><h3>Active queue</h3><p>2 active of 5 task contracts</p></div>
+          <div class="surface__head"><div><h3>Split work queues</h3><p>4 research / 2 product contracts</p></div>
             <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/NEXT.md">Open source</a></div>
           <div class="surface__body"><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-013 · Build and calibrate Research Engine v0</h4>
+    <small>ECDLP research</small>
+    <p>The repository needs a closed proposal -&gt; selection -&gt; bounded exploration -&gt; validation -&gt; retention loop without weakening the independent promotion gate. This task lands and validates that loop before any selected toy candidate runs.</p></div><span class="status status--blue">Active</span></div>
+</article><article class="task-row">
   <div class="task-row__top"><div><h4>TASK-008 · Maintain evidence-gated candidate intake</h4>
-    <p>Decision `RS-2026-07-22-001` selected no current route. Future progress must enter through new mathematical evidence, not by silently reviving the last experiment or expanding a convenient formal library.</p></div><span class="status status--blue">Active</span></div>
+    <small>ECDLP research</small>
+    <p>New progress must enter through source-pinned mathematical evidence or a concrete mechanism, not by silently reviving a parked route.</p></div><span class="status status--blue">Active</span></div>
 </article><article class="task-row">
   <div class="task-row__top"><div><h4>TASK-011 · Validate the external product pilot</h4>
-    <p>The secp256k1 repository demonstrates an owner-operated implementation of the research-state loop. It does not establish that another team has the same pain, can use the contracts, or will return. Product work should now reduce that uncertainty instead of adding speculative platform features.</p></div><span class="status status--blue">Active</span></div>
+    <small>KeyAI product</small>
+    <p>The secp256k1 repository demonstrates an owner-operated research-state loop. It does not establish that another team has the same pain, can use the contracts, or will return.</p></div><span class="status status--blue">Active</span></div>
 </article></div>
         </aside>
       </div>
@@ -355,8 +387,11 @@
   <div class="surface__head"><div><h3>Canonical counts</h3><p>296 ledger rows / ~257 distinct</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/stats.json">data/stats.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_status_consistency.py">scripts/check_status_consistency.py</a></div>
 </article><article class="surface">
-  <div class="surface__head"><div><h3>Decision state</h3><p>17 routes evaluated / 0 selected</p></div><span class="status status--closed">OK</span></div>
+  <div class="surface__head"><div><h3>Decision state</h3><p>17 routes evaluated / 0 promoted</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ECDLP_DECISION_SUBSTRATE.json">repo/ECDLP_DECISION_SUBSTRATE.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_ecdlp_decision_substrate.py">scripts/check_ecdlp_decision_substrate.py</a></div>
+</article><article class="surface">
+  <div class="surface__head"><div><h3>Research Engine gates</h3><p>0 bounded / 0 promotion experiments</p></div><span class="status status--blue">OK</span></div>
+  <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/RESEARCH_ENGINE_V0.json">repo/RESEARCH_ENGINE_V0.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_research_engine.py">scripts/check_research_engine.py</a></div>
 </article><article class="surface">
   <div class="surface__head"><div><h3>Generated closure</h3><p>296 theorem nodes in the knowledge graph</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ARTIFACTS.yaml">repo/ARTIFACTS.yaml</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_repo_artifacts.py">scripts/check_repo_artifacts.py</a></div>
@@ -370,11 +405,12 @@
           <div class="surface__body"><ul class="plain-list"><li>A primary source or reproducible proposal identifies an exact non-generic mechanism for the plain target and supplies a theoretical full-cost argument.</li><li>New verified target structure invalidates an existing applicability or stop-condition decision.</li><li>A deliberately approved project objective changes the threat model to conditioned inputs, implementation leakage, or fault-tolerant quantum computation.</li></ul></div>
         </article>
         <article class="surface">
-          <div class="surface__head"><div><h3>Operating policy</h3><p>monitored-candidate-intake</p></div></div>
+          <div class="surface__head"><div><h3>Operating policy</h3><p>research-engine-v0</p></div></div>
           <div class="surface__body">
             <ul class="compact-list">
-              <li><strong>Experiments authorized</strong><span>false</span></li>
-              <li><strong>Selected route</strong><span>none</span></li>
+              <li><strong>Bounded exploration</strong><span>true</span></li>
+              <li><strong>Promotion experiments</strong><span>false</span></li>
+              <li><strong>Promoted route</strong><span>none</span></li>
               <li><strong>Merge rule</strong><span>The owner delegated merge authority on 2026-07-22. Merge only from a clean branch after required CI is green, the diff has a documented scope and rollback path, and no unresolved blocking finding is known.</span></li>
               <li><strong>Product claim policy</strong><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/PRODUCT_MODEL.json">repo/PRODUCT_MODEL.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_product_model.py">scripts/check_product_model.py</a></li>
             </ul>
@@ -384,24 +420,36 @@
     </section>
 
     <section class="tab-panel" role="tabpanel" id="panel-activity" aria-labelledby="tab-activity" data-tab-panel="activity" hidden>
-      <div class="panel-heading"><div><h2>Work queue</h2>
-        <p>Every active, blocked, or parked item is generated from a bounded task contract with an exit condition.</p></div>
-        <a class="button" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/NEXT.md">Open canonical queue</a></div>
+      <div class="panel-heading"><div><h2>Work queues</h2>
+        <p>Research and product contracts have separate owners and KPIs; neither can count as progress in the other.</p></div>
+        <a class="button" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/NEXT.md">Open queue router</a></div>
+      <div class="source-list" style="margin-bottom:18px">
+        <a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/ECDLP_RESEARCH.md">tasks/ECDLP_RESEARCH.md</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/KEYAI_PRODUCT.md">tasks/KEYAI_PRODUCT.md</a>
+      </div>
       <div class="surface"><div class="surface__body"><article class="task-row">
+  <div class="task-row__top"><div><h4>TASK-013 · Build and calibrate Research Engine v0</h4>
+    <small>ECDLP research</small>
+    <p>The repository needs a closed proposal -&gt; selection -&gt; bounded exploration -&gt; validation -&gt; retention loop without weakening the independent promotion gate. This task lands and validates that loop before any selected toy candidate runs.</p></div><span class="status status--blue">Active</span></div>
+</article><article class="task-row">
   <div class="task-row__top"><div><h4>TASK-008 · Maintain evidence-gated candidate intake</h4>
-    <p>Decision `RS-2026-07-22-001` selected no current route. Future progress must enter through new mathematical evidence, not by silently reviving the last experiment or expanding a convenient formal library.</p></div><span class="status status--blue">Active</span></div>
+    <small>ECDLP research</small>
+    <p>New progress must enter through source-pinned mathematical evidence or a concrete mechanism, not by silently reviving a parked route.</p></div><span class="status status--blue">Active</span></div>
 </article><article class="task-row">
-  <div class="task-row__top"><div><h4>TASK-009 · Implement only a newly selected foundation</h4>
-    <p>Missing Mathlib infrastructure is valuable only when it resolves a concrete uncertainty in a route that already passes the proposal gate.</p></div><span class="status status--blocked">Blocked</span></div>
+  <div class="task-row__top"><div><h4>TASK-009 · Implement only a newly selected promotion foundation</h4>
+    <small>ECDLP research</small>
+    <p>Missing formal infrastructure is valuable only when it resolves a concrete uncertainty in a route that has passed promotion review.</p></div><span class="status status--blocked">Blocked</span></div>
 </article><article class="task-row">
-  <div class="task-row__top"><div><h4>TASK-010 · Periodic independent adversarial audit</h4>
-    <p>An independent reviewer can still find architecture, scope, or deletion risks that internal gates do not model.</p></div><span class="status status--parked">Parked</span></div>
+  <div class="task-row__top"><div><h4>TASK-010 · Independent adversarial audit at a stable checkpoint</h4>
+    <small>ECDLP research</small>
+    <p>An independent reviewer should attack the split gates, selector, candidate mechanisms, validation independence, and promotion boundary before Research Engine v0 is treated as stable.</p></div><span class="status status--gray">Active Review Preparation</span></div>
 </article><article class="task-row">
   <div class="task-row__top"><div><h4>TASK-011 · Validate the external product pilot</h4>
-    <p>The secp256k1 repository demonstrates an owner-operated implementation of the research-state loop. It does not establish that another team has the same pain, can use the contracts, or will return. Product work should now reduce that uncertainty instead of adding speculative platform features.</p></div><span class="status status--blue">Active</span></div>
+    <small>KeyAI product</small>
+    <p>The secp256k1 repository demonstrates an owner-operated research-state loop. It does not establish that another team has the same pain, can use the contracts, or will return.</p></div><span class="status status--blue">Active</span></div>
 </article><article class="task-row">
   <div class="task-row__top"><div><h4>TASK-012 · Build configurable intake after a pilot contract</h4>
-    <p>A hosted or multi-project platform is justified only after a real team exposes the minimum adapter boundary. Building it earlier would replace evidence with architecture.</p></div><span class="status status--blocked">Blocked</span></div>
+    <small>KeyAI product</small>
+    <p>A hosted or multi-project platform is justified only after a real team exposes the minimum adapter boundary.</p></div><span class="status status--blocked">Blocked</span></div>
 </article></div></div>
     </section>
   </div>
@@ -421,6 +469,6 @@
     </nav>
   </div>
 </footer>
-<script src="assets/site.js?v=20260723-2"></script>
+<script src="assets/site.js?v=20260724-1"></script>
 </body>
 </html>

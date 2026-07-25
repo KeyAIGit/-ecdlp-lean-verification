@@ -59,6 +59,12 @@
       "outcome": "Promote accepted results and preserve negative evidence, provenance, and rollback."
     }
   ],
+  "work_queues": {
+    "router": "tasks/NEXT.md",
+    "product": "tasks/KEYAI_PRODUCT.md",
+    "ecdlp_reference_research": "tasks/ECDLP_RESEARCH.md",
+    "boundary": "Product KPIs never count as ECDLP progress, and ECDLP proof or experiment output never counts as external product validation."
+  },
   "customer_hypotheses": [
     {
       "id": "CH-001",
@@ -86,7 +92,7 @@
     "stats_source": "data/stats.json",
     "frontier_source": "data/frontier_map.json",
     "result_source": "data/result_registry.json",
-    "task_source": "tasks/NEXT.md",
+    "task_source": "tasks/ECDLP_RESEARCH.md",
     "boundary": "The environment maps and verifies the research boundary. It does not solve the plain secp256k1 discrete logarithm problem."
   },
   "current_stage": {
@@ -124,9 +130,12 @@
         "label": "Tasks, hypotheses, graph, provenance, and generated views",
         "evidence": [
           "tasks/NEXT.md",
+          "tasks/ECDLP_RESEARCH.md",
+          "tasks/KEYAI_PRODUCT.md",
           "experiments/HYPOTHESES.yaml",
           "data/knowledge_graph.json",
-          "repo/ARTIFACTS.yaml"
+          "repo/ARTIFACTS.yaml",
+          "data/research_engine_state.json"
         ]
       }
     ],
@@ -171,6 +180,7 @@
   "pilot": {
     "id": "KEYAI-PILOT-001",
     "task_id": "TASK-011",
+    "task_source": "tasks/KEYAI_PRODUCT.md",
     "status": "recruiting",
     "protocol_source": "repo/PILOT_PROTOCOL.json",
     "public_surface": "pilot.html",

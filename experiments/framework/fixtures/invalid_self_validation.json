@@ -3,6 +3,7 @@
   "record_kind": "framework_fixture",
   "candidate": {
     "id": "fixture-contract-v1",
+    "authorization_class": "fixture",
     "route_id": "R-GENERIC-BASELINE",
     "hypothesis_id": null,
     "implementation": "deterministic fixture",
@@ -63,7 +64,7 @@
     "input_sha256": "a03ebd2c7299cb35d2ed782b7609617a8666a3b8c7981af96b37c88053027893",
     "output_sha256": "c9044a41b814af92095f23d48f0fcfdf3d1d00ee8d082ad26e58a8bfdb439fde",
     "environment_sha256": "d2673f75e64254a126454f07eeec2c53480de46275a9ce5dfcc8659cf55892e8",
-    "record_sha256": "8078f29b258b9bc756484c56abd89cc5ec2028b220621cc0bb2da353fb972342"
+    "record_sha256": "d30a8d3e57394d649abe7b766cf5048171c0a47f7b3651a443ff5a2a722ccbe1"
   },
   "validation": {
     "validator_id": "framework.ec_oracle.v1",

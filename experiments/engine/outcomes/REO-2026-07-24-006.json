@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "event_id": "REO-2026-07-24-006",
+  "recorded_on": "2026-07-24",
+  "candidate_id": "HIST-P3-M3-MACAULAY-PROXY",
+  "hypothesis_id": "HYP_GLV_SEMAEV_001",
+  "route_id": "R-GLV-SEMAEV",
+  "outcome": "resource_exhausted",
+  "scope": {
+    "target_kind": "toy",
+    "curve_family": "cofactor-1 toy j=0 curves",
+    "field_bits": [
+      16,
+      20
+    ],
+    "threat_model": "classical-single-target-plain",
+    "claim_boundary": "m=3 custom Macaulay proxy under the historical pure-Python implementation."
+  },
+  "summary": "The pure-Python graded reduction did not reach a validated full m=3 solving degree within its practical resource ceiling.",
+  "evidence_files": [
+    "experiments/p3_sm_system/README.md",
+    "experiments/p3_sm_system/RESULTS.md"
+  ],
+  "validation": {
+    "status": "not_available",
+    "independent": false,
+    "decisive_claim_validated": false,
+    "evidence_files": []
+  },
+  "budget": {
+    "status": "limit_reached",
+    "wall_time_seconds": null,
+    "peak_memory_bytes": null,
+    "parallel_workers": null
+  },
+  "stop_condition": {
+    "triggered": true,
+    "statement": "The historical implementation reached its practical compute limit before a full m=3 solving degree was obtained."
+  },
+  "residual_uncertainty": [
+    "The true m=3 solving degree.",
+    "The behavior under an optimized external F4 implementation."
+  ],
+  "reopening_condition": "Use an independently validated external solver under an explicit time and memory budget; do not retry the same pure-Python path.",
+  "provenance": {
+    "source_kind": "historical_migration",
+    "source_commit": "1a1b5ddba7e9a6e3d40f189892e83529f5bc6616",
+    "migration_note": "Separated from the P3 m=2 event so resource exhaustion is not hidden inside an inconclusive aggregate.",
+    "run_manifest": null,
+    "run_manifest_sha256": null
+  }
+}

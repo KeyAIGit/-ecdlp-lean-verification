@@ -39,6 +39,8 @@ OUT = ROOT / "data" / "knowledge_graph.json"
 SUBSTRATE = ROOT / "repo" / "FORMAL_SUBSTRATE.json"
 DECISION_SUBSTRATE = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
 ATTACK_REGISTRY = ROOT / "data" / "attack_registry.json"
+RESEARCH_ENGINE_POLICY = ROOT / "repo" / "RESEARCH_ENGINE_V0.json"
+RESEARCH_ENGINE_STATE = ROOT / "data" / "research_engine_state.json"
 
 
 def parse_ledger() -> list[dict]:
@@ -265,6 +267,8 @@ def build() -> dict:
     substrate = json.loads(SUBSTRATE.read_text(encoding="utf-8"))
     decisions = json.loads(DECISION_SUBSTRATE.read_text(encoding="utf-8"))
     attack_registry = json.loads(ATTACK_REGISTRY.read_text(encoding="utf-8"))
+    engine_policy = json.loads(RESEARCH_ENGINE_POLICY.read_text(encoding="utf-8"))
+    engine = json.loads(RESEARCH_ENGINE_STATE.read_text(encoding="utf-8"))
     family_by_area = {family["area"]: family["id"] for family in substrate["families"]}
     built_modules = set(imports.get("Ecdlp", []))  # what Ecdlp.lean gates
     depth_cache: dict[str, int] = {}
@@ -398,18 +402,71 @@ def build() -> dict:
                 }
             )
 
+    # Research Engine nodes connect candidate selection and retained outcomes to the
+    # already classified route and hypothesis layers. The engine state remains
+    # generated from the policy and append-only outcome events.
+    for candidate in engine_policy["candidate_proposals"]:
+        candidate_id = candidate["id"]
+        edges.append(
+            {
+                "from": candidate_id,
+                "to": candidate["hypothesis_id"],
+                "type": "tests_hypothesis",
+            }
+        )
+        edges.append(
+            {
+                "from": candidate_id,
+                "to": candidate["route_id"],
+                "type": "explores_route",
+            }
+        )
+        for dependency in candidate["dependencies"]:
+            edges.append(
+                {
+                    "from": candidate_id,
+                    "to": dependency,
+                    "type": "depends_on_candidate",
+                }
+            )
+    for outcome in engine["outcome_events"]:
+        event_id = outcome["event_id"]
+        edges.append(
+            {
+                "from": event_id,
+                "to": outcome["candidate_id"],
+                "type": "records_outcome_for",
+            }
+        )
+        edges.append(
+            {
+                "from": event_id,
+                "to": outcome["hypothesis_id"],
+                "type": "updates_hypothesis",
+            }
+        )
+        edges.append(
+            {
+                "from": event_id,
+                "to": outcome["route_id"],
+                "type": "records_route_evidence",
+            }
+        )
+
     method_hist = Counter(t["method"] for t in theorems)
     edge_hist = Counter(edge["type"] for edge in edges)
 
     return {
-        "schema_version": "3.0",
+        "schema_version": "4.0",
         "name": "ECDLP verified knowledge graph",
         "purpose": "A machine-readable, navigable index of the machine-checked "
         "(Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the "
         "ECDLP landscape for secp256k1: verified ledger rows, their declaration "
         "and import dependencies, the corpus "
         "claims they verify, the formalization barriers that bound them, and "
-        "the target-specific route/foundation decisions. "
+        "the target-specific route/foundation decisions. It also carries the "
+        "generated Research Engine v0 selection and retained outcome state, while "
+        "keeping bounded exploration distinct from route promotion. "
         "Built for a future automated reasoner to load the known-and-verified "
         "frontier without re-deriving it.",
         "invariant": "Every ledger row resolves to declarations accepted by the Lean "
@@ -424,6 +481,12 @@ def build() -> dict:
             "attack_routes": len(decisions["routes"]),
             "decision_foundations": len(decisions["foundations"]),
             "attack_registry_objects": len(attack_registry["attacks"]),
+            "research_engine_candidates": engine["counts"]["candidate_proposals"],
+            "research_engine_intake_candidates": engine["counts"][
+                "intake_candidates"
+            ],
+            "research_engine_outcomes": engine["counts"]["outcome_events"],
+            "selected_explorations": engine["counts"]["selected_explorations"],
             "edges": len(edges),
             "by_edge_type": dict(edge_hist.most_common()),
             "by_method": dict(method_hist.most_common()),
@@ -457,6 +520,25 @@ def build() -> dict:
                 for attack in attack_registry["attacks"]
             ],
         },
+        "research_engine": {
+            "policy_source": "repo/RESEARCH_ENGINE_V0.json",
+            "state_source": "data/research_engine_state.json",
+            "outcome_event_source": "experiments/engine/outcomes/",
+            "gate_status": engine["gate_status"],
+            "queue_separation": engine["queue_separation"],
+            "counts": engine["counts"],
+            "selected_sequence": engine["selected_sequence"],
+            "execution_queue": engine["execution_queue"],
+            "hard_rejected_candidates": engine["hard_rejected_candidates"],
+            "retrospective_validation": engine["retrospective_validation"],
+            "calibration": engine["calibration"],
+            "normalized_hypotheses": engine["normalized_hypotheses"],
+            "outcome_events": engine["outcome_events"],
+            "historical_outcomes": engine["historical_outcomes"],
+            "native_outcomes": engine["native_outcomes"],
+            "route_evidence_state": engine["route_evidence_state"],
+            "feedback_contract": engine["feedback_contract"],
+        },
         "corpus": parse_corpus(),
         "edges": edges,
     }
@@ -484,6 +566,8 @@ def render_markdown(graph: dict) -> str:
         f"**{c['critical_nodes']} critical nodes** · "
         f"**{c['attack_routes']} attack routes** · "
         f"**{c['decision_foundations']} decision foundations** · "
+        f"**{c['selected_explorations']} bounded explorations selected** · "
+        f"**{c['research_engine_outcomes']} retained outcomes** · "
         f"**{c['edges']} edges**"
     )
     lines.append("")
@@ -514,8 +598,10 @@ def render_markdown(graph: dict) -> str:
     )
     lines.append("")
     lines.append(
-        f"Phase: **{phase['phase']}**. Experiments authorized: "
-        f"**{str(phase['experiments_authorized']).lower()}**. Selected route: "
+        f"Phase: **{phase['phase']}**. Bounded exploration authorized: "
+        f"**{str(phase['bounded_exploration_authorized']).lower()}**. "
+        f"Promotion experiments authorized: "
+        f"**{str(phase['promotion_experiments_authorized']).lower()}**. Selected route: "
         f"**{phase['selected_attack_route'] or 'none'}**."
     )
     lines.append("")
@@ -550,6 +636,60 @@ def render_markdown(graph: dict) -> str:
             f"`{foundation['implementation_status']}` | "
             f"{str(foundation['build_now']).lower()} |"
         )
+    lines.append("")
+
+    engine = graph["research_engine"]
+    gates = engine["gate_status"]
+    lines.append("## Research Engine v0")
+    lines.append("")
+    lines.append(
+        "The engine may schedule cheap, preregistered toy-curve exploration within "
+        "the declared budget. It cannot promote a route, authorize exact-target "
+        "work, or support a secp256k1 complexity claim."
+    )
+    lines.append("")
+    lines.append(
+        f"Exploration gate: **{str(gates['exploration_authorized']).lower()}**. "
+        f"Promotion gate: **{str(gates['promotion_authorized']).lower()}**. "
+        "Historical no-reopen guard: "
+        f"**{str(engine['retrospective_validation']['passed']).lower()}**. "
+        "Predictive EIG calibration outcomes: "
+        f"**{engine['calibration']['scored_native_outcomes']}**."
+    )
+    lines.append("")
+    lines.append(
+        "| order | candidate | kind | EIG (bits) | bits / budget cost | execution state |"
+    )
+    lines.append("|---:|---|---|---:|---:|---|")
+    for candidate in engine["selected_sequence"]:
+        lines.append(
+            f"| {candidate['position']} | **{candidate['candidate_id']}**: "
+            f"{candidate['title']} | `{candidate['kind']}` | "
+            f"{candidate['expected_information_gain_bits']:.6g} | "
+            f"{candidate['priority_bits_per_cost']:.6g} | "
+            f"`{candidate['execution_state']}` |"
+        )
+    if not engine["selected_sequence"]:
+        lines.append(
+            "| - | **none** | - | - | - | "
+            "`no candidate cleared mechanism and validator gates` |"
+        )
+    lines.append("")
+    lines.append(
+        f"Blocked intake candidates: **{engine['counts']['intake_candidates']}**. "
+        "Intake is retained research memory, not permission to execute."
+    )
+    lines.append("")
+    outcomes = engine["counts"]["outcomes_by_taxonomy"]
+    lines.append(
+        "Retained outcomes: "
+        + ", ".join(f"`{name}`={count}" for name, count in outcomes.items())
+        + "."
+    )
+    lines.append("")
+    lines.append(
+        f"> Promotion boundary: {engine['feedback_contract']['promotion_boundary']}"
+    )
     lines.append("")
 
     substrate = graph["formal_substrate"]

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "record_kind": "candidate_run",
+  "candidate": {
+    "id": "RE0-001-EXTERNAL-SOLVER-CALIBRATION",
+    "authorization_class": "exploration",
+    "route_id": "R-GLV-SEMAEV",
+    "hypothesis_id": "HYP_GLV_SEMAEV_001",
+    "implementation": "Contract regression fixture only; not a scientific outcome.",
+    "code_commit": "1a1b5ddba7e9a6e3d40f189892e83529f5bc6616",
+    "entrypoint": "experiments/framework/test_framework.py"
+  },
+  "target": {
+    "curve_id": "toy-j0-16-p65539-b11",
+    "threat_model": "classical-single-target-plain",
+    "field_p": 65539,
+    "curve_a": 0,
+    "curve_b": 11,
+    "base_point": [
+      7825,
+      6727
+    ],
+    "target_point": [
+      52093,
+      49753
+    ],
+    "base_order": 65287,
+    "target_count": 1,
+    "auxiliary_inputs": [],
+    "scalar_interval": null
+  },
+  "result": {
+    "claimed_scalar": 5
+  },
+  "cost": {
+    "online": {
+      "wall_time_seconds": 10,
+      "group_operations": 5,
+      "field_operations": 0,
+      "peak_memory_bytes": 1024
+    },
+    "offline": {
+      "wall_time_seconds": 0,
+      "group_operations": 0,
+      "field_operations": 0,
+      "peak_memory_bytes": 0
+    },
+    "reusable_precomputation": false,
+    "amortization_target_count": 1,
+    "parallel_workers": 1,
+    "success_probability": 1.0
+  },
+  "environment": {
+    "python": "3.12 regression fixture",
+    "platform": "deterministic-regression",
+    "tool_versions": {
+      "SageMath": "10.6",
+      "Singular": "4.4.1"
+    }
+  },
+  "provenance": {
+    "seed": 1,
+    "command": [
+      "regression-fixture-only"
+    ],
+    "dirty_worktree": false,
+    "input_sha256": "9f8c78fefb8ca4f098480d746359ffff55705ae7db3597c1a064d60f34664aad",
+    "output_sha256": "c9044a41b814af92095f23d48f0fcfdf3d1d00ee8d082ad26e58a8bfdb439fde",
+    "environment_sha256": "9f3b0e00267e28a21f88a6812f66c18486bfcb8dcb06ec18a4da091fc680e6b2",
+    "record_sha256": "4056bbc01b690af0b696241fcd65550a50fe1b68d87f096da2ce353c18b25cef"
+  },
+  "validation": {
+    "validator_id": "framework.ec_oracle.v1",
+    "independent_implementation": true,
+    "shares_decisive_logic": false,
+    "passed": true,
+    "validator_output_sha256": "cd2ad8881c426b74550066f02a9c31d9ef8f413f556048d678d2f96ad7ee4214"
+  },
+  "claims": {
+    "success_level": "scope-only",
+    "asymptotic_claim": null,
+    "secp256k1_break": false,
+    "disclosure_gate_acknowledged": false
+  }
+}

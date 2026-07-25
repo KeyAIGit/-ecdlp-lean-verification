@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "event_id": "REO-2026-07-24-005",
+  "recorded_on": "2026-07-24",
+  "candidate_id": "HIST-P3-M2-MACAULAY-PROXY",
+  "hypothesis_id": "HYP_GLV_SEMAEV_001",
+  "route_id": "R-GLV-SEMAEV",
+  "outcome": "inconclusive",
+  "scope": {
+    "target_kind": "validator_calibration",
+    "curve_family": "cofactor-1 toy j=0 curves",
+    "field_bits": [
+      16,
+      20
+    ],
+    "threat_model": "classical-single-target-plain",
+    "claim_boundary": "m=2 custom graded Macaulay proxy and matched relation sets."
+  },
+  "summary": "The custom proxy returned a stable 2|F|+1 pattern and relation sets replayed correctly, but the decisive proxy stopping rule was not checked by an external Groebner engine or theorem.",
+  "evidence_files": [
+    "experiments/p3_sm_system/README.md",
+    "experiments/p3_sm_system/RESULTS.md",
+    "experiments/p3_sm_system/runs/HYP_GLV_SEMAEV_001_p3-sm-system_fa4fed78efc9.json"
+  ],
+  "validation": {
+    "status": "partial",
+    "independent": true,
+    "decisive_claim_validated": false,
+    "evidence_files": [
+      "experiments/p3_sm_system/validate.py"
+    ]
+  },
+  "budget": {
+    "status": "historical_not_recorded",
+    "wall_time_seconds": null,
+    "peak_memory_bytes": null,
+    "parallel_workers": null
+  },
+  "stop_condition": {
+    "triggered": false,
+    "statement": "Relation correctness was checked, but the decisive solving-degree proxy still needs independent calibration."
+  },
+  "residual_uncertainty": [
+    "Whether the proxy reports the true solving degree.",
+    "Whether a nonredundant invariant quotient changes matrix growth."
+  ],
+  "reopening_condition": "Run the exact matched ideals through an independent F4/Groebner engine before using the proxy in route selection.",
+  "provenance": {
+    "source_kind": "historical_migration",
+    "source_commit": "1a1b5ddba7e9a6e3d40f189892e83529f5bc6616",
+    "migration_note": "Classified inconclusive rather than negative because the decisive proxy is not independently validated.",
+    "run_manifest": null,
+    "run_manifest_sha256": null
+  }
+}

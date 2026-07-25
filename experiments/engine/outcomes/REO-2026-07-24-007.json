@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "event_id": "REO-2026-07-24-007",
+  "recorded_on": "2026-07-24",
+  "candidate_id": "HIST-P4-COMPOSED-MAP-APPROXIMATION",
+  "hypothesis_id": "HYP_GLV_SEMAEV_001",
+  "route_id": "R-PETIT-COMPOSED-MAPS",
+  "outcome": "inconclusive",
+  "scope": {
+    "target_kind": "toy",
+    "curve_family": "cofactor-1 toy j=0 curves",
+    "field_bits": [
+      16
+    ],
+    "threat_model": "classical-single-target-plain",
+    "claim_boundary": "One m=2, |F|=4 composed low-degree-map approximation; not a faithful Petit construction."
+  },
+  "summary": "The approximation lowered the proxy degree number but produced larger matrices and runtime; partial validation and a non-faithful construction leave the mechanism-level conclusion inconclusive.",
+  "evidence_files": [
+    "experiments/p4_petit/README.md",
+    "experiments/p4_petit/RESULTS.md",
+    "experiments/p4_petit/runs/HYP_GLV_SEMAEV_001_p4-petit-factorbase_bd3ad7a34ae8.json"
+  ],
+  "validation": {
+    "status": "partial",
+    "independent": true,
+    "decisive_claim_validated": false,
+    "evidence_files": [
+      "experiments/p4_petit/validate.py"
+    ]
+  },
+  "budget": {
+    "status": "historical_not_recorded",
+    "wall_time_seconds": null,
+    "peak_memory_bytes": null,
+    "parallel_workers": null
+  },
+  "stop_condition": {
+    "triggered": true,
+    "statement": "The measured presentation paid for a lower proxy degree with a substantially larger ring and matrices."
+  },
+  "residual_uncertainty": [
+    "The construction is not faithful Petit over a prime field.",
+    "No general composed-map or asymptotic no-go follows."
+  ],
+  "reopening_condition": "Supply a mathematically faithful prime-field mechanism and an independently validated decisive solver metric.",
+  "provenance": {
+    "source_kind": "historical_migration",
+    "source_commit": "1a1b5ddba7e9a6e3d40f189892e83529f5bc6616",
+    "migration_note": "Retains the measurement while classifying its partially validated, non-faithful mechanism-level conclusion as inconclusive.",
+    "run_manifest": null,
+    "run_manifest_sha256": null
+  }
+}

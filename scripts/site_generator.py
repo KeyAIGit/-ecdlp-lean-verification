@@ -11,7 +11,7 @@ from pathlib import Path
 from pilot_evidence import primary_dispositions, valid_second_projects
 
 ROOT = Path(__file__).resolve().parent.parent
-ASSET_VERSION = "20260723-2"
+ASSET_VERSION = "20260724-1"
 
 PRODUCT_PATH = ROOT / "repo" / "PRODUCT_MODEL.json"
 PILOT_PATH = ROOT / "repo" / "PILOT_PROTOCOL.json"
@@ -20,7 +20,9 @@ FORMAL_PATH = ROOT / "repo" / "FORMAL_SUBSTRATE.json"
 STATS_PATH = ROOT / "data" / "stats.json"
 FRONTIER_PATH = ROOT / "data" / "frontier_map.json"
 GRAPH_PATH = ROOT / "data" / "knowledge_graph.json"
-TASKS_PATH = ROOT / "tasks" / "NEXT.md"
+ENGINE_PATH = ROOT / "data" / "research_engine_state.json"
+RESEARCH_TASKS_PATH = ROOT / "tasks" / "ECDLP_RESEARCH.md"
+PRODUCT_TASKS_PATH = ROOT / "tasks" / "KEYAI_PRODUCT.md"
 
 INDEX_PATH = ROOT / "index.html"
 DASHBOARD_PATH = ROOT / "dashboard.html"
@@ -104,29 +106,49 @@ def status_badge(status: str, label: str | None = None) -> str:
     return f'<span class="status status--{esc(css_status)}">{esc(label or default_label)}</span>'
 
 
+def engine_execution_badge(state: str) -> str:
+    style, label = {
+        "ready": ("blue", "Ready"),
+        "conditional_on_prior_selected_outcomes": ("gray", "Dependency-gated"),
+        "awaiting_dependency_outcome": ("gray", "Dependency-gated"),
+        "awaiting_validator_implementation": ("amber", "Validator pending"),
+        "blocked_by_dependency_outcome": ("red", "Blocked"),
+        "terminal": ("green", "Terminal"),
+    }.get(state, ("gray", state))
+    return status_badge(style, label)
+
+
 def parse_tasks() -> list[dict[str, str]]:
-    text = TASKS_PATH.read_text(encoding="utf-8")
     pattern = re.compile(
         r"^### (TASK-\d+) - (.+?)\n\n"
         r"Status: ([^\n]+)\n"
         r"Kind: ([^\n]+)\n"
-        r"Hypothesis: ([^\n]+)\n"
+        r"Hypothesis: (.*?)\n"
         r"Why it matters: (.*?)(?=\nInputs:)",
         re.MULTILINE | re.DOTALL,
     )
     tasks = []
-    for match in pattern.finditer(text):
-        why = re.sub(r"\s+", " ", match.group(6)).strip()
-        tasks.append(
-            {
-                "id": match.group(1),
-                "title": match.group(2).strip(),
-                "status": match.group(3).strip(),
-                "kind": match.group(4).strip(),
-                "hypothesis": match.group(5).strip(),
-                "why": why,
-            }
-        )
+    queues = (
+        ("ECDLP research", "research", RESEARCH_TASKS_PATH),
+        ("KeyAI product", "product", PRODUCT_TASKS_PATH),
+    )
+    for queue_label, queue_id, path in queues:
+        text = path.read_text(encoding="utf-8")
+        for match in pattern.finditer(text):
+            why = re.sub(r"\s+", " ", match.group(6)).strip()
+            tasks.append(
+                {
+                    "id": match.group(1),
+                    "title": match.group(2).strip(),
+                    "status": match.group(3).strip(),
+                    "kind": match.group(4).strip(),
+                    "hypothesis": match.group(5).strip(),
+                    "why": why,
+                    "queue": queue_id,
+                    "queue_label": queue_label,
+                    "source": path.relative_to(ROOT).as_posix(),
+                }
+            )
     return tasks
 
 
@@ -207,6 +229,7 @@ def build_index(
     frontier: dict,
     decisions: dict,
     formal: dict,
+    engine: dict,
 ) -> str:
     selection = decisions["route_selection"]
     routes = decisions["routes"]
@@ -271,7 +294,8 @@ def build_index(
       </div>
       <div class="hero__signal" aria-label="Current reference decision">
         <span>Live decision graph</span>
-        <strong>{len(routes)} routes evaluated / {len(selection["selected_route_ids"])} selected</strong>
+        <strong>{len(routes)} routes evaluated / {len(selection["selected_route_ids"])} promoted</strong>
+        <span>{engine["counts"]["selected_explorations"]} experiments selected</span>
         <code>{esc(selection["decision_id"])}</code>
       </div>
     </div>
@@ -290,8 +314,8 @@ def build_index(
         <div class="live-metric__label">distinct results</div></div>
       <div class="live-metric"><div class="live-metric__value">{len(routes)}</div>
         <div class="live-metric__label">routes evaluated</div></div>
-      <div class="live-metric"><div class="live-metric__value">{len(selection["selected_route_ids"])}</div>
-        <div class="live-metric__label">routes selected</div></div>
+      <div class="live-metric"><div class="live-metric__value">{engine["counts"]["selected_explorations"]}</div>
+        <div class="live-metric__label">selected experiments</div></div>
     </div>
   </section>
 
@@ -456,6 +480,7 @@ def build_dashboard(
     decisions: dict,
     formal: dict,
     graph: dict,
+    engine: dict,
     tasks: list[dict[str, str]],
 ) -> str:
     selection = decisions["route_selection"]
@@ -466,6 +491,7 @@ def build_dashboard(
             task,
             f"""<article class="task-row">
   <div class="task-row__top"><div><h4>{esc(task["id"])} · {esc(task["title"])}</h4>
+    <small>{esc(task["queue_label"])}</small>
     <p>{esc(task["why"])}</p></div>{task_status_badge(task["status"])}</div>
 </article>""",
         )
@@ -507,8 +533,49 @@ def build_dashboard(
     triggers = "".join(f"<li>{esc(item)}</li>" for item in selection["reconsideration_triggers"])
     phase_policy = decisions["phase_policy"]
     graph_counts = graph["counts"]
-    active_count = sum(task["status"] == "active" for task in tasks)
+    engine_counts = engine["counts"]
+    engine_gates = engine["gate_status"]
+    research_task_count = sum(task["queue"] == "research" for task in tasks)
+    product_task_count = sum(task["queue"] == "product" for task in tasks)
     closed_count = sum(node["status"] == "closed" for node in formal["critical_nodes"])
+    engine_sequence_html = "".join(
+        f"""<article class="task-row">
+  <div class="task-row__top"><div><h4>{candidate["position"]:02d} · {esc(candidate["title"])}</h4>
+    <small>{esc(candidate["candidate_id"])} · {esc(candidate["kind"])}</small>
+    <p>{esc(candidate["stop_condition"])}</p></div>
+    {engine_execution_badge(candidate["execution_state"])}</div>
+</article>"""
+        for candidate in engine["selected_sequence"]
+    )
+    if not engine_sequence_html:
+        engine_sequence_html = (
+            '<div class="empty-state"><strong>No experiment clears every '
+            "scientific gate.</strong><p>The queue remains empty until an exact "
+            "mechanism and an independent raw-artifact validator are both "
+            "available.</p></div>"
+        )
+    intake_candidates = [
+        candidate
+        for candidate in engine["hard_rejected_candidates"]
+        if candidate.get("disposition") == "intake_blocked"
+    ]
+    engine_intake_html = "".join(
+        f"""<article class="task-row">
+  <div class="task-row__top"><div><h4>{esc(candidate["title"])}</h4>
+    <small>{esc(candidate["candidate_id"])}</small>
+    <p>{esc("; ".join(reason.replace("_", " ") for reason in candidate["reasons"]))}</p></div>
+    {status_badge("amber", "Intake")}</div>
+</article>"""
+        for candidate in intake_candidates
+    )
+    engine_intake_section = (
+        f"""<div class="panel-heading"><div><h2>Blocked research intake</h2>
+        <p>{len(intake_candidates)} proposals are retained with explicit reopening
+        requirements; none is executable.</p></div></div>
+      <div class="surface" style="margin-bottom:22px"><div class="surface__body">{engine_intake_html}</div></div>"""
+        if intake_candidates
+        else ""
+    )
 
     health_cards = [
         (
@@ -519,9 +586,15 @@ def build_dashboard(
         ),
         (
             "Decision state",
-            f'{len(routes)} routes evaluated / {len(selection["selected_route_ids"])} selected',
+            f'{len(routes)} routes evaluated / {len(selection["selected_route_ids"])} promoted',
             ["repo/ECDLP_DECISION_SUBSTRATE.json", "scripts/check_ecdlp_decision_substrate.py"],
             "closed",
+        ),
+        (
+            "Research Engine gates",
+            f'{engine_counts["selected_explorations"]} bounded / 0 promotion experiments',
+            ["repo/RESEARCH_ENGINE_V0.json", "scripts/check_research_engine.py"],
+            "blue",
         ),
         (
             "Generated closure",
@@ -570,7 +643,7 @@ def build_dashboard(
         <div class="workspace-metric"><div class="workspace-metric__value">{stats["proved_modules"]}</div><div class="workspace-metric__label">proved modules</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">{frontier["meta"]["corpus_claims"]}</div><div class="workspace-metric__label">corpus claims</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">{len(routes)}</div><div class="workspace-metric__label">routes evaluated</div></div>
-        <div class="workspace-metric"><div class="workspace-metric__value">{len(selection["selected_route_ids"])}</div><div class="workspace-metric__label">routes selected</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">{engine_counts["selected_explorations"]}</div><div class="workspace-metric__label">selected experiments</div></div>
       </div>
     </div>
   </section>
@@ -592,16 +665,24 @@ def build_dashboard(
         {status_badge("blue", product["current_stage"]["label"])}</div>
       <article class="decision-band">
         <div class="decision-band__state"><span>{esc(selection["decision_id"])}</span><strong>Select none</strong></div>
-        <div class="decision-band__copy"><h3>No experiment is currently authorized.</h3>
-          <p>{esc(selection["gate_result"])}</p></div>
+        <div class="decision-band__copy"><h3>No experiment currently clears the scientific gate.</h3>
+          <p>{esc(selection["gate_result"])} Bounded exploration remains available in policy, but
+            no toy run is authorized and promotion remains closed.</p></div>
       </article>
+      <div class="panel-heading"><div><h2>Research Engine v0 queue</h2>
+        <p>{engine_counts["selected_explorations"]} selected;
+          {engine_counts["ready_explorations"]} ready. Positive toy evidence is supported,
+          never proved; threat-model scope, route decision, and evidence remain separate.</p></div>
+        {status_badge("amber", "No run authorized")}</div>
+      <div class="surface" style="margin-bottom:22px"><div class="surface__body">{engine_sequence_html}</div></div>
+      {engine_intake_section}
       <div class="layout-two">
         <article class="surface">
           <div class="surface__head"><div><h3>Why this decision</h3><p>Canonical rationale, not a claim of impossibility</p></div></div>
           <div class="surface__body"><ul class="plain-list">{decision_reasons}</ul></div>
         </article>
         <aside class="surface">
-          <div class="surface__head"><div><h3>Active queue</h3><p>{active_count} active of {len(tasks)} task contracts</p></div>
+          <div class="surface__head"><div><h3>Split work queues</h3><p>{research_task_count} research / {product_task_count} product contracts</p></div>
             <a href="{repo_url(product, "tasks/NEXT.md")}">Open source</a></div>
           <div class="surface__body">{active_task_html}</div>
         </aside>
@@ -651,8 +732,9 @@ def build_dashboard(
           <div class="surface__head"><div><h3>Operating policy</h3><p>{esc(phase_policy["phase"])}</p></div></div>
           <div class="surface__body">
             <ul class="compact-list">
-              <li><strong>Experiments authorized</strong><span>{str(phase_policy["experiments_authorized"]).lower()}</span></li>
-              <li><strong>Selected route</strong><span>{esc(phase_policy["selected_attack_route"] or "none")}</span></li>
+              <li><strong>Bounded exploration</strong><span>{str(engine_gates["exploration_authorized"]).lower()}</span></li>
+              <li><strong>Promotion experiments</strong><span>{str(engine_gates["promotion_authorized"]).lower()}</span></li>
+              <li><strong>Promoted route</strong><span>{esc(phase_policy["selected_attack_route"] or "none")}</span></li>
               <li><strong>Merge rule</strong><span>{esc(phase_policy["merge_rule"])}</span></li>
               <li><strong>Product claim policy</strong>{evidence_links(product, ["repo/PRODUCT_MODEL.json", "scripts/check_product_model.py"])}</li>
             </ul>
@@ -662,9 +744,12 @@ def build_dashboard(
     </section>
 
     <section class="tab-panel" role="tabpanel" id="panel-activity" aria-labelledby="tab-activity" data-tab-panel="activity" hidden>
-      <div class="panel-heading"><div><h2>Work queue</h2>
-        <p>Every active, blocked, or parked item is generated from a bounded task contract with an exit condition.</p></div>
-        <a class="button" href="{repo_url(product, "tasks/NEXT.md")}">Open canonical queue</a></div>
+      <div class="panel-heading"><div><h2>Work queues</h2>
+        <p>Research and product contracts have separate owners and KPIs; neither can count as progress in the other.</p></div>
+        <a class="button" href="{repo_url(product, "tasks/NEXT.md")}">Open queue router</a></div>
+      <div class="source-list" style="margin-bottom:18px">
+        {evidence_links(product, ["tasks/ECDLP_RESEARCH.md", "tasks/KEYAI_PRODUCT.md"])}
+      </div>
       <div class="surface"><div class="surface__body">{task_html}</div></div>
     </section>
   </div>
@@ -672,7 +757,7 @@ def build_dashboard(
 {site_footer(product)}"""
 
 
-def build_explore(product: dict, stats: dict, decisions: dict) -> str:
+def build_explore(product: dict, stats: dict, decisions: dict, engine: dict) -> str:
     routes = decisions["routes"]
     selection = decisions["route_selection"]
     counts = Counter(route["status"] for route in routes)
@@ -742,7 +827,8 @@ def build_explore(product: dict, stats: dict, decisions: dict) -> str:
         <p>Every route is generated from <code>repo/ECDLP_DECISION_SUBSTRATE.json</code>.
           Search by mechanism, scope, evidence, or next action.</p></div>
       <aside class="decision-inline"><strong>{esc(selection["decision_id"])} · Select none</strong>
-        <span>{esc(selection["gate_result"])}</span></aside>
+        <span>{engine["counts"]["selected_explorations"]} bounded toy explorations are selected;
+          promotion and direct secp256k1 work remain closed.</span></aside>
     </div>
   </section>
 
@@ -956,11 +1042,14 @@ def main() -> int:
     decisions = load_json(DECISION_PATH)
     formal = load_json(FORMAL_PATH)
     graph = load_json(GRAPH_PATH)
+    engine = load_json(ENGINE_PATH)
     tasks = parse_tasks()
 
-    index = build_index(product, pilot, stats, frontier, decisions, formal)
-    dashboard = build_dashboard(product, stats, frontier, decisions, formal, graph, tasks)
-    explore = build_explore(product, stats, decisions)
+    index = build_index(product, pilot, stats, frontier, decisions, formal, engine)
+    dashboard = build_dashboard(
+        product, stats, frontier, decisions, formal, graph, engine, tasks
+    )
+    explore = build_explore(product, stats, decisions, engine)
     pilot_page = build_pilot(product, pilot)
     write_text(INDEX_PATH, index)
     write_text(DASHBOARD_PATH, dashboard)
@@ -973,6 +1062,7 @@ def main() -> int:
         f"{len(decisions['routes'])} decision routes, "
         f"{len(formal['critical_nodes'])} formal nodes, "
         f"{len(tasks)} task contracts, "
+        f"{engine['counts']['selected_explorations']} bounded explorations, "
         f"pilot {pilot['status']}"
     )
     return 0

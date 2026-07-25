@@ -60,6 +60,24 @@ def main() -> int:
         all(step.get("label") and step.get("outcome") for step in workflow),
         "every workflow step needs a label and outcome",
     )
+    queues = model.get("work_queues", {})
+    check(
+        queues.get("router") == "tasks/NEXT.md"
+        and queues.get("product") == "tasks/KEYAI_PRODUCT.md"
+        and queues.get("ecdlp_reference_research") == "tasks/ECDLP_RESEARCH.md",
+        "product and ECDLP work must use separate canonical queues",
+    )
+    for key in ("router", "product", "ecdlp_reference_research"):
+        path = queues.get(key)
+        check(
+            isinstance(path, str) and (ROOT / path).is_file(),
+            f"work_queues.{key} must point at an existing file",
+        )
+    check(
+        "never count as ECDLP progress" in queues.get("boundary", "")
+        and "never counts as external product validation" in queues.get("boundary", ""),
+        "work queue boundary must prevent product/research KPI conflation",
+    )
 
     hypotheses = model.get("customer_hypotheses", [])
     check(len(hypotheses) >= 2, "at least two customer hypotheses are required")
@@ -142,6 +160,10 @@ def main() -> int:
     check(
         pilot_model.get("protocol_source") == "repo/PILOT_PROTOCOL.json",
         "product model must point to the canonical pilot protocol",
+    )
+    check(
+        pilot_model.get("task_source") == "tasks/KEYAI_PRODUCT.md",
+        "the external pilot must use the product queue",
     )
     check(
         pilot_model.get("evidence_summary") == pilot.get("evidence_state"),
