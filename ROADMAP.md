@@ -124,24 +124,25 @@ Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` 
 
 ## 5. Program
 
-**Current phase — GLV-Semaev bounded structural iteration:**
+**Current phase — proposal intake after the GLV-Semaev structural result:**
 
-1. Decision `RS-2026-07-24-001` selects `R-GLV-SEMAEV` exclusively for
-   `GLV-SEMAEV-ITER-001`, a non-experimental symbolic and Lean investigation.
-   It promotes zero routes and authorizes zero experiments.
+1. Decision `RS-2026-07-24-001` completed the non-experimental
+   `GLV-SEMAEV-ITER-001` on `R-GLV-SEMAEV`. It found only the diagonal `C3`
+   covariance, promoted zero routes, and authorized zero experiments.
 2. Maintain the exact objective, threat models, route dispositions, promotion
    gates, stop conditions, and reconsideration triggers in
    `repo/ECDLP_DECISION_SUBSTRATE.json`.
 3. `repo/RESEARCH_ENGINE_V0.json` retains the separate exploration capability,
-   but the current structural decision pauses it. The selector returns zero and
-   no solver, parameter sweep, or toy hypothesis run is authorized.
+   but proposal-intake mode keeps execution paused. The selector returns zero
+   and no solver, parameter sweep, or toy hypothesis run is authorized.
    Its generated state is `data/research_engine_state.json`; all terminal
    outcomes are review-anchored append-only events, and empirical support is not relabelled
    as proof.
 4. Keep `data/attack_registry.json` as the detailed evidence encyclopedia and
    `repo/FORMAL_SUBSTRATE.json` as the Lean release map. Never collapse their
    distinct meanings into one priority number.
-5. Route any new primary evidence or concrete proposal through
+5. `TASK-008` owns the current central queue. Route any new primary evidence or
+   concrete proposal through
    `experiments/framework/`: explicit online/offline cost, provenance hashes,
    route/threat-model binding, source-commit-bound raw-artifact validation, and
    deterministic terminal classification. Intake alone does not bypass the

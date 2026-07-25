@@ -8,7 +8,7 @@ Given P in E(F_p), P != O, Q in <P>, Q = [k]P, **Recover k modulo ord(P). The pr
 
 Current phase: **research-engine-v0**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Selected promoted route: **none**.
 
-Bounded structural routes selected: **1** (`R-GLV-SEMAEV`). Promoted routes: **0** (-).
+Bounded structural routes recorded by the decision: **1** (`R-GLV-SEMAEV`). Promoted routes: **0** (-).
 
 The formal-result map, attack encyclopedia, and this decision layer are deliberately distinct:
 
@@ -25,7 +25,7 @@ The formal-result map, attack encyclopedia, and this decision layer are delibera
 
 Decision **RS-2026-07-24-001** on `2026-07-24`: **select_one_bounded_structural**.
 
-Select R-GLV-SEMAEV exclusively for one bounded, non-experimental structural iteration. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.
+Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube and generic fixed-target scaling premises are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.
 
 Iteration: **GLV-SEMAEV-ITER-001**. Hypothesis: **HYP_GLV_SEMAEV_001**. Task: **TASK-009**.
 
@@ -38,9 +38,9 @@ Rationale:
 - A larger stabilizer would still require an exact quotient, recovery map, orbit tags, excluded components, cost prediction, and a later decision before any externally validated solver experiment.
 
 Reopen selection only when:
-- The exact certificates establish only the diagonal C3 action, in which case record the bounded fixed-target quotient no-go and require a new mechanism before reopening experiments.
-- The exact certificates establish a larger stabilizer, in which case specify its quotient and recovery semantics before proposing one independently validated F4 experiment.
-- The classification remains unresolved, in which case record the smallest missing algebraic or Mathlib lemma and keep all experiments closed.
+- A materially different phase-preserving quotient, birational construction, or relation mechanism supplies exact fixed-target semantics, recovery, orbit tags, excluded components, and a falsifiable full-cost prediction.
+- An independently replayable counter-certificate or proof identifies an error in the frozen S3/S4 formulas, resultant construction, assumptions, or coordinatewise C3 classification.
+- A formal cost theorem combines the finite target orbit with a new mechanism and proves a nonconstant full-pipeline gain rather than attributing asymptotic value to orbit size alone.
 
 ## Threat models
 
@@ -62,7 +62,7 @@ Reopen selection only when:
 | P0 | **R-GLV**: GLV endomorphism acceleration | `constant_factor_only` | `classical-single-target-plain` | Keep as target structure available to a selected route; do not treat it as a standalone attack. |
 | P0 | **R-PAIRING-TRANSFER**: MOV, Frey-Ruck, and Tate/Weil pairing transfer | `ruled_out_for_target` | `classical-single-target-plain` | Keep the target-specific exclusion; defer a full pairing library unless a new route needs it. |
 | P0 | **R-POHLIG-HELLMAN**: Pohlig-Hellman subgroup reduction | `ruled_out_for_target` | `classical-single-target-plain` | Retain as a machine-checked elimination certificate. |
-| P1 | **R-GLV-SEMAEV**: GLV-symmetrized Semaev systems | `open_parked` | `classical-single-target-plain` | Finish kernel CI for the narrow covariance module, then close GLV-SEMAEV-ITER-001 without a solver run. Reopen experiments only for a materially different phase-preserving mechanism with an exact recovery map and full-cost prediction. |
+| P1 | **R-GLV-SEMAEV**: GLV-symmetrized Semaev systems | `open_parked` | `classical-single-target-plain` | Keep GLV-SEMAEV-ITER-001 closed without a solver run. Accept only a materially different phase-preserving mechanism with an exact recovery map, orbit tags, excluded components, a falsifiable full-cost prediction, and an independent validator through TASK-008 before any new decision. |
 | P1 | **R-HNP-NONCE-LEAKAGE**: Hidden-number and lattice attacks on biased or reused ECDSA nonces | `separate_threat_model` | `implementation-leakage` | Preserve as a separate security track; no lattice foundation build for the primary objective now. |
 | P1 | **R-MULTI-TARGET-PRECOMPUTATION**: Multi-target and reusable-precomputation tradeoffs | `conditional_only` | `classical-conditioned` | Represent in the evaluation contract; no experiment in this phase. |
 | P1 | **R-PRIME-FIELD-INDEX-CALCULUS**: Prime-field index calculus | `open_parked` | `classical-single-target-plain` | Preserve evidence and prerequisites; wait for explicit route selection before any new experiment. |
@@ -164,17 +164,17 @@ Reopen selection only when:
 
 - **Applicability:** direct to the j=0 target structure, but only constant-factor evidence exists
 - **Known cost:** Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.
-- **Evidence:** GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance; a generic fixed nonzero target has only the identity covariance. The standard-library replay reconstructs S4 independently from the Sylvester determinant. The narrow Lean covariance module is authored but remains outside the verified ledger until kernel CI accepts it. Earlier P0-P4 evidence is retained unchanged.
+- **Evidence:** GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance; a generic fixed nonzero target has only the identity covariance. The standard-library replay reconstructs S4 independently from the Sylvester determinant. The narrow covariance and point-group transport source package passed the full Lean build and built-source no-sorry scan in workflow run 30142661986. Its current VERIFIED.md registration and expanded exhaustive axiom audit remain pending closure CI; earlier P0-P4 evidence is retained unchanged.
 - **Promotion gate:** Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.
 - **Stop condition:** The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.
 - **Anti-overclaim:** The diagonal-only classification closes the independent coordinatewise-cube quotient and its generic fixed-target scaling premise, not faithful Petit, all geometric zero-variety automorphisms, Groebner/F4 complexity, or the whole GLV-Semaev route. It is not an ECDLP or secp256k1 break.
 - **Foundations:** `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`, `F-FORMAL-COST-MODEL`, `F-SEMAEV-ELIMINATION`
 - **Formal nodes:** `glv-rational-scope`, `semaev-foundations`, `experimental-hypotheses`
-- **Lean anchors:** `Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples`, `Ecdlp.Semaev.secp256k1_point_decomposition_semaev`
-- **Repository evidence:** `experiments/glv_diagonal_obstruction/artifact.json`, `experiments/glv_semaev_symmetry/certificate.json`, `experiments/p0_glv_semaev/RESULTS.md`, `experiments/p1_petit/RESULTS.md`, `experiments/p1_petit_m3/RESULTS.md`, `experiments/p3_sm_system/RESULTS.md`, `experiments/p4_petit/RESULTS.md`, `notes/GLV_SEMAEV_ITERATION_001.md`
+- **Lean anchors:** `Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples`, `Ecdlp.Semaev.secp256k1_point_decomposition_semaev`, `Ecdlp.Semaev.S₃_diagonal_cube_covariance`, `Ecdlp.Semaev.S₄_diagonal_cube_invariant`, `Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff`
+- **Repository evidence:** `Ecdlp/Proved/GlvSemaevSymmetry.lean`, `experiments/glv_diagonal_obstruction/artifact.json`, `experiments/glv_semaev_symmetry/certificate.json`, `experiments/p0_glv_semaev/RESULTS.md`, `experiments/p1_petit/RESULTS.md`, `experiments/p1_petit_m3/RESULTS.md`, `experiments/p3_sm_system/RESULTS.md`, `experiments/p4_petit/RESULTS.md`, `notes/GLV_SEMAEV_ITERATION_001.md`
 - **Structural iteration:** `GLV-SEMAEV-ITER-001`
 - **Structural scope:** Exact S3/S4 covariance and stabilizer classification, fixed-target transport, and the smallest completed Lean theorem package only.
-- **Structural status:** `active`
+- **Structural status:** `completed`
 - **Primary sources:** [glv2001: Faster Point Multiplication on Elliptic Curves with Efficient Endomorphisms](https://www.iacr.org/archive/crypto2001/21390189.pdf), [semaev2004: Summation polynomials and the discrete logarithm problem on elliptic curves](https://eprint.iacr.org/2004/031), [fghr2014: Using symmetries in the index calculus for elliptic curves discrete logarithm](https://eprint.iacr.org/2012/199)
 
 ### R-HNP-NONCE-LEAKAGE: Hidden-number and lattice attacks on biased or reused ECDSA nonces
@@ -352,11 +352,12 @@ The tracked 2026 quantum update (`luo2026`) reports **835 logical qubits** and *
 
 ## Promotion and review
 
-- Complete or explicitly block GLV-SEMAEV-ITER-001 with exact replayable evidence.
-- Record whether only the diagonal C3 action survives, a larger exact quotient survives, or one smallest lemma remains unresolved.
+- Supply a materially different phase-preserving quotient, birational construction, or other exact mechanism; the independent coordinatewise-cube premise is closed.
+- Specify fixed-target behavior, recovery map, orbit tags, excluded components, and a falsifiable full-cost prediction.
+- Provide an independent raw-artifact validator before requesting any solver experiment.
 - Require a new dated decision before any hypothesis experiment, general solver sweep, route promotion, or exact-target work.
 - For any later promotion, pass every common acceptance requirement and bind the same route, hypothesis, task, mechanism, validator, and cost theorem.
 
-**Route selection:** RS-2026-07-24-001 supersedes RS-2026-07-22-001 only for the bounded structural lane. It selects R-GLV-SEMAEV as the sole object of GLV-SEMAEV-ITER-001 while selecting zero promoted routes and authorizing zero experiments.
+**Route selection:** RS-2026-07-24-001 completed GLV-SEMAEV-ITER-001 with a diagonal-only bounded result. R-GLV-SEMAEV remains open_parked, zero routes are promoted, zero experiments are authorized, and TASK-008 proposal intake is the current central ECDLP queue.
 
 **Final review:** Independent adversarial review is requested when another qualified reviewer is available. It is an additional audit, not a merge prerequisite; required CI, explicit scope, rollback safety, and the owner's standing authorization govern merges.

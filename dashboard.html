@@ -39,14 +39,14 @@
           <p>One operator view for the current decision, formal substrate, evidence, active work,
             and generated trust checks.</p></div>
         <div class="snapshot">Canonical snapshot
-          <code>snapshot 296 ledger rows / ~257 distinct</code></div>
+          <code>snapshot 297 ledger rows / ~258 distinct</code></div>
       </div>
       <div class="boundary-notice"><strong>Scope boundary.</strong>
         The environment maps and verifies the research boundary. It does not solve the plain secp256k1 discrete logarithm problem.
         Monitoring means new evidence can reopen a route; it does not mean impossibility was proved.</div>
       <div class="workspace-metrics">
-        <div class="workspace-metric"><div class="workspace-metric__value">296</div><div class="workspace-metric__label">ledger rows</div></div>
-        <div class="workspace-metric"><div class="workspace-metric__value">~257</div><div class="workspace-metric__label">distinct results</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">297</div><div class="workspace-metric__label">ledger rows</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">~258</div><div class="workspace-metric__label">distinct results</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">165</div><div class="workspace-metric__label">proved modules</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">486</div><div class="workspace-metric__label">corpus claims</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">17</div><div class="workspace-metric__label">routes evaluated</div></div>
@@ -72,9 +72,9 @@
         <span class="status status--blue">Reference deployment</span></div>
       <article class="decision-band">
         <div class="decision-band__state"><span>RS-2026-07-24-001</span><strong>Structural selection</strong></div>
-        <div class="decision-band__copy"><h3>One structural question is active; no experiment is authorized.</h3>
-          <p>Select R-GLV-SEMAEV exclusively for one bounded, non-experimental structural iteration. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged. The symbolic and Lean package may proceed, while
-            toy runs, direct secp256k1 work, and promotion remain closed.</p></div>
+        <div class="decision-band__copy"><h3>The bounded structural question is resolved; no experiment is authorized.</h3>
+          <p>Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube and generic fixed-target scaling premises are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged. Proposal intake remains open, while toy runs,
+            direct secp256k1 work, and promotion remain closed.</p></div>
       </article>
       <div class="panel-heading"><div><h2>Research Engine v0 queue</h2>
         <p>0 selected;
@@ -102,8 +102,8 @@
 </article><article class="task-row">
   <div class="task-row__top"><div><h4>TASK-009 · Resolve the bounded GLV-Semaev structural uncertainty
 
-Status: active_bounded_structural
-Structural lane: active
+Status: completed_bounded_structural
+Structural lane: completed
 Decision: RS-2026-07-24-001
 Iteration: GLV-SEMAEV-ITER-001
 Route: R-GLV-SEMAEV
@@ -111,8 +111,8 @@ Hypothesis: HYP_GLV_SEMAEV_001
 Foundation: F-SEMAEV-ELIMINATION
 Kind: theorem | research | data | ops
 Why it matters: The exact coordinatewise C3 action on S3 and S4 decides whether
-the naive invariant quotient has the symmetry it claims. This is the sole
-active bounded structural uncertainty; it is not route promotion or an
+the naive invariant quotient has the symmetry it claims. This bounded
+structural uncertainty is now resolved; it was not route promotion or an
 experiment hypothesis run.
 Inputs:
 - `RS-2026-07-24-001`
@@ -131,8 +131,8 @@ Expected output:
   smallest unresolved lemma.
 Exit criteria:
 - The work answers only `GLV-SEMAEV-ITER-001`.
-- `HYP_GLV_SEMAEV_001` remains parked as an experiment while its structural
-  lane is active.
+- `HYP_GLV_SEMAEV_001` remains parked as an experiment and its completed
+  structural lane records no promotion.
 - Every other route, hypothesis, and conditional foundation remains outside
   the structural lane.
 - Promotion and exact-target work remain disabled.
@@ -232,7 +232,7 @@ How to verify:
   <td><span class="status status--open_parked">Open, parked</span></td>
   <td>classical-single-target-plain</td>
   <td>P1</td>
-  <td>Finish kernel CI for the narrow covariance module, then close GLV-SEMAEV-ITER-001 without a solver run. Reopen experiments only for a materially different phase-preserving mechanism with an exact recovery map and full-cost prediction.</td>
+  <td>Keep GLV-SEMAEV-ITER-001 closed without a solver run. Accept only a materially different phase-preserving mechanism with an exact recovery map, orbit tags, excluded components, a falsifiable full-cost prediction, and an independent validator through TASK-008 before any new decision.</td>
 </tr><tr>
   <td><strong>Petit-style composed rational maps</strong><small>R-PETIT-COMPOSED-MAPS</small></td>
   <td><span class="status status--open_parked">Open, parked</span></td>
@@ -427,16 +427,16 @@ How to verify:
       <div class="panel-heading"><div><h2>Sync Health</h2>
         <p>The public and agent-facing views resolve back to canonical machine sources and their gates.</p></div></div>
       <div class="layout-two" style="margin-bottom:30px"><article class="surface">
-  <div class="surface__head"><div><h3>Canonical counts</h3><p>296 ledger rows / ~257 distinct</p></div><span class="status status--closed">OK</span></div>
+  <div class="surface__head"><div><h3>Canonical counts</h3><p>297 ledger rows / ~258 distinct</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/stats.json">data/stats.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_status_consistency.py">scripts/check_status_consistency.py</a></div>
 </article><article class="surface">
-  <div class="surface__head"><div><h3>Decision state</h3><p>1 structural route selected / 0 promoted / 0 experiments authorized</p></div><span class="status status--closed">OK</span></div>
+  <div class="surface__head"><div><h3>Decision state</h3><p>1 structural route completed / 0 promoted / 0 experiments authorized</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ECDLP_DECISION_SUBSTRATE.json">repo/ECDLP_DECISION_SUBSTRATE.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_ecdlp_decision_substrate.py">scripts/check_ecdlp_decision_substrate.py</a></div>
 </article><article class="surface">
   <div class="surface__head"><div><h3>Research Engine gates</h3><p>0 bounded / 0 promotion experiments</p></div><span class="status status--blue">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/RESEARCH_ENGINE_V0.json">repo/RESEARCH_ENGINE_V0.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_research_engine.py">scripts/check_research_engine.py</a></div>
 </article><article class="surface">
-  <div class="surface__head"><div><h3>Generated closure</h3><p>296 theorem nodes in the knowledge graph</p></div><span class="status status--closed">OK</span></div>
+  <div class="surface__head"><div><h3>Generated closure</h3><p>297 theorem nodes in the knowledge graph</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ARTIFACTS.yaml">repo/ARTIFACTS.yaml</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_repo_artifacts.py">scripts/check_repo_artifacts.py</a></div>
 </article><article class="surface">
   <div class="surface__head"><div><h3>Product boundary</h3><p>Reference deployment</p></div><span class="status status--blue">OK</span></div>
@@ -445,7 +445,7 @@ How to verify:
       <div class="layout-two">
         <article class="surface">
           <div class="surface__head"><div><h3>Reconsideration triggers</h3><p>What can legitimately reopen route selection</p></div></div>
-          <div class="surface__body"><ul class="plain-list"><li>The exact certificates establish only the diagonal C3 action, in which case record the bounded fixed-target quotient no-go and require a new mechanism before reopening experiments.</li><li>The exact certificates establish a larger stabilizer, in which case specify its quotient and recovery semantics before proposing one independently validated F4 experiment.</li><li>The classification remains unresolved, in which case record the smallest missing algebraic or Mathlib lemma and keep all experiments closed.</li></ul></div>
+          <div class="surface__body"><ul class="plain-list"><li>A materially different phase-preserving quotient, birational construction, or relation mechanism supplies exact fixed-target semantics, recovery, orbit tags, excluded components, and a falsifiable full-cost prediction.</li><li>An independently replayable counter-certificate or proof identifies an error in the frozen S3/S4 formulas, resultant construction, assumptions, or coordinatewise C3 classification.</li><li>A formal cost theorem combines the finite target orbit with a new mechanism and proves a nonconstant full-pipeline gain rather than attributing asymptotic value to orbit size alone.</li></ul></div>
         </article>
         <article class="surface">
           <div class="surface__head"><div><h3>Operating policy</h3><p>research-engine-v0</p></div></div>
@@ -482,8 +482,8 @@ How to verify:
 </article><article class="task-row">
   <div class="task-row__top"><div><h4>TASK-009 · Resolve the bounded GLV-Semaev structural uncertainty
 
-Status: active_bounded_structural
-Structural lane: active
+Status: completed_bounded_structural
+Structural lane: completed
 Decision: RS-2026-07-24-001
 Iteration: GLV-SEMAEV-ITER-001
 Route: R-GLV-SEMAEV
@@ -491,8 +491,8 @@ Hypothesis: HYP_GLV_SEMAEV_001
 Foundation: F-SEMAEV-ELIMINATION
 Kind: theorem | research | data | ops
 Why it matters: The exact coordinatewise C3 action on S3 and S4 decides whether
-the naive invariant quotient has the symmetry it claims. This is the sole
-active bounded structural uncertainty; it is not route promotion or an
+the naive invariant quotient has the symmetry it claims. This bounded
+structural uncertainty is now resolved; it was not route promotion or an
 experiment hypothesis run.
 Inputs:
 - `RS-2026-07-24-001`
@@ -511,8 +511,8 @@ Expected output:
   smallest unresolved lemma.
 Exit criteria:
 - The work answers only `GLV-SEMAEV-ITER-001`.
-- `HYP_GLV_SEMAEV_001` remains parked as an experiment while its structural
-  lane is active.
+- `HYP_GLV_SEMAEV_001` remains parked as an experiment and its completed
+  structural lane records no promotion.
 - Every other route, hypothesis, and conditional foundation remains outside
   the structural lane.
 - Promotion and exact-target work remain disabled.

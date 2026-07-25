@@ -39,10 +39,12 @@ asymptotic or advantage/no-advantage conclusion. The `O(\|F\|^{m-1}·solve)` loo
 subexponential index-calculus algorithms. So the real question — whether invariant-coordinate
 *relation generation* changes the prime-field asymptotics — remains **open**.
 `RS-2026-07-24-001` keeps `HYP_GLV_SEMAEV_001` **PARKED as an experiment** while
-authorizing only `GLV-SEMAEV-ITER-001`, a bounded structural lane. Its exact
-certificate leaves only the diagonal `C3` covariance and closes the independent
-`u_i=x_i^3` fixed-target premise. It does not authorize another P0-P4 run or
-constitute a step toward breaking secp256k1.
+recording the completed `GLV-SEMAEV-ITER-001` bounded structural lane. Its exact
+certificate leaves only the diagonal `C3` among the enumerated scalar
+covariances and closes the independent `u_i=x_i^3` fixed-target premise. The
+separate kernel-accepted package proves the positive covariance and relation-set
+transport identities, not that exhaustive classification. This does not
+authorize another P0-P4 run or constitute a step toward breaking secp256k1.
 
 ## Conventions
 - Toy curves come from `p0_glv_semaev/toy_curves.py` (`find_toy_curve(bits, seed, require_cofactor_one=True)`); only **cofactor-1** (prime-order) curves are used.

@@ -61,6 +61,25 @@ experiments/glv_semaev_symmetry/certificate.json
 SHA-256 cec55fc266d729b4cf02dfcb3c98433f056f68c487b14931343c8ac6cad99d31
 ```
 
+Kernel package source acceptance:
+
+```text
+Ecdlp/Proved/GlvSemaevSymmetry.lean
+SHA-256 01e5dc77ca59585298e4f3e427c0df4441f7138331611cd0e7390c85e216a3a9
+Lean 4.31.0
+Mathlib v4.31.0 / fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+accepted commit 1bba09ff1d8682187365996d9b190044aea333f9
+GitHub Actions run 30142661986
+```
+
+The cited run accepted the module in the repository's full `lake build` and
+built-source no-`sorry` scan. The current closure change registers the theorem
+package in `VERIFIED.md` and adds its declarations to the generated exhaustive
+axiom audit; that expanded audit is pending this closure commit's PR CI and will
+be bound by a follow-up provenance record. The symbolic stabilizer
+classification remains certificate-backed rather than being overstated as a
+kernel theorem.
+
 The coefficient witnesses also make an arbitrary scalar exhaustive. A
 coefficient-one anchor forces any proportionality scalar to be a power of
 `beta`. For `S3`, the component `-4*b*(x1+x2+x3)` forces all three exponents
@@ -144,8 +163,9 @@ phi(P1) + ... + phi(Pm) = phi(R).
 This is a bijection between relation sets. Processing `R`, `phi(R)`, and
 `phi^2(R)` supplies at most three linked target fibers. On a GLV-closed factor
 base their rows can be orbit permutations rather than independent information.
-The orbit size is constant, so this fact alone cannot change an asymptotic
-relation-generation exponent.
+The orbit size is constant, so this result alone establishes no nonconstant
+reduction. Ruling out every nonlinear batching or amortization mechanism would
+require a separate formal full-cost theorem.
 
 `S4(...,xR)=0` is an x-coordinate relation and does not encode one fixed sign:
 `x(R)=x(-R)`. The point-group statement above is therefore recorded
@@ -157,7 +177,7 @@ Outcome taxonomy:
 
 | Item | Outcome | Scope |
 |---|---|---|
-| Diagonal `S3` and `S4` laws | `proved` | Exact symbolic certificate; Lean package pending kernel acceptance |
+| Diagonal `S3` and `S4` laws | `proved` | Exact symbolic certificate and kernel-accepted Lean package |
 | Full coordinatewise semi-invariant classification | `proved` | Symbolic primitive component and exact secp256k1 specialization |
 | Independent `u_i=x_i^3` quotient | `bounded_negative` | It quotients by `C3^m`, not the diagonal `C3`, and loses relative phase |
 | Fixed-target scaling premise | `bounded_negative` | Nonidentity diagonal action transports a generic target instead of preserving it |

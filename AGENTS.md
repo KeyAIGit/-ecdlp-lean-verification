@@ -97,24 +97,25 @@ local Mathlib source for exact API. 3. Push → CI (or local build). 4. On green
 branch from current `main`; preserve any unrelated local changes.
 
 ## Current work selection
-- Route decision `RS-2026-07-24-001` selects only `R-GLV-SEMAEV` for the
-  non-experimental structural iteration `GLV-SEMAEV-ITER-001`. It promotes no
-  route and authorizes no experiment, solver sweep, or direct secp256k1 work.
-- `TASK-009` owns the current central uncertainty: exact `S3`/`S4`
-  coordinatewise `C3` covariance, fixed-target transport, deterministic
-  certificate replay, and only the smallest kernel-accepted Lean package.
+- Route decision `RS-2026-07-24-001` completed the non-experimental
+  `GLV-SEMAEV-ITER-001` on `R-GLV-SEMAEV`. Only the diagonal `C3` covariance
+  survived; the route remains parked and no experiment, solver sweep, or
+  direct secp256k1 work is authorized.
+- `TASK-009` is completed with exact symbolic replay, fixed-target transport,
+  and a kernel-accepted Lean package. `TASK-008` proposal intake is the current
+  central ECDLP task.
 - `TASK-013` owns Research Engine v0: deterministic selection, historical
   outcome retention, independent validation, and feedback into generated state.
-  Its bounded-exploration capability remains available in policy but is paused
-  by the current structural decision.
+  Its bounded-exploration capability remains available in policy, but candidate
+  execution stays paused in the current proposal-intake mode.
 - `TASK-008` accepts new primary evidence or a concrete proposal and checks it
   against the common gate. Intake does not bypass the selected exploration
   sequence or authorize promotion by itself.
 - The division-polynomial, torsion, Weil, Semaev, cost-model, lattice, isogeny,
   p-adic, and quantum gaps remain mapped assets. None is an active target merely
   because it is deep or absent from Mathlib.
-- All hypotheses remain parked as experiments. The active structural lane does
-  not promote `HYP_GLV_SEMAEV_001` or the broader Semaev foundation.
+- All hypotheses remain parked as experiments. The completed structural lane
+  did not promote `HYP_GLV_SEMAEV_001` or the broader Semaev foundation.
 - `TASK-010` is a periodic independent adversarial audit. It remains parked
   until another qualified reviewer is available and is not a merge prerequisite.
 - `TASK-011` runs bounded external discovery and ends with a recorded

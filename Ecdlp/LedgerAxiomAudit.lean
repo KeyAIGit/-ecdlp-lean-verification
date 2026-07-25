@@ -125,6 +125,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1_glv_addX
 #print axioms Ecdlp.Curve.secp256k1_glv_addY
 #print axioms Ecdlp.Curve.secp256k1_glv_cube_relation
+#print axioms Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff
 #print axioms Ecdlp.Curve.secp256k1_glv_preserves_dlog
 #print axioms Ecdlp.Curve.secp256k1_glv_preserves_equation
 #print axioms Ecdlp.Curve.secp256k1_glv_preserves_nonsingular
@@ -133,6 +134,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1_glv_slope
 #print axioms Ecdlp.Curve.secp256k1_glv_slope_of_X_ne
 #print axioms Ecdlp.Curve.secp256k1_glv_slope_of_Y_ne
+#print axioms Ecdlp.Curve.secp256k1_glv_three_point_sum_eq_iff
 #print axioms Ecdlp.Curve.secp256k1_grp_card
 #print axioms Ecdlp.Curve.secp256k1_grp_eq_top
 #print axioms Ecdlp.Curve.secp256k1_grp_isAddCyclic
@@ -356,6 +358,8 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Schnorr.threshold_elgamal_combine
 #print axioms Ecdlp.Schnorr.threshold_schnorr_aggregate
 #print axioms Ecdlp.Secp256k1Schnorr.secp256k1_schnorr_extract
+#print axioms Ecdlp.Semaev.S₃_diagonal_cube_covariance
+#print axioms Ecdlp.Semaev.S₃_diagonal_cube_zero_iff
 #print axioms Ecdlp.Semaev.S₃_eq_zero_iff
 #print axioms Ecdlp.Semaev.S₃_eq_zero_of_chord
 #print axioms Ecdlp.Semaev.S₃_eq_zero_of_tangent
@@ -367,11 +371,15 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Semaev.S₄
 #print axioms Ecdlp.Semaev.S₄_block_swap
 #print axioms Ecdlp.Semaev.S₄_common_root_of_eq_zero
+#print axioms Ecdlp.Semaev.S₄_diagonal_cube_invariant
 #print axioms Ecdlp.Semaev.S₄_eq_zero_of_common_root
 #print axioms Ecdlp.Semaev.S₄_symm₁₂
 #print axioms Ecdlp.Semaev.S₄_symm₃₄
 #print axioms Ecdlp.Semaev.resultant_eq_zero_of_common_root
+#print axioms Ecdlp.Semaev.secp256k1_S₃_glv_covariance
+#print axioms Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff
 #print axioms Ecdlp.Semaev.secp256k1_S₃poly_natDegree
+#print axioms Ecdlp.Semaev.secp256k1_S₄_glv_invariant
 #print axioms Ecdlp.Semaev.secp256k1_decomposition_completions_le_two
 #print axioms Ecdlp.Semaev.secp256k1_point_decomposition_semaev
 #print axioms Ecdlp.Semaev.secp256k1_point_decomposition_semaev_double

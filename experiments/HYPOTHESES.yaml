@@ -157,15 +157,15 @@ hypotheses:
     title: "GLV-symmetrized Semaev index calculus over prime-field j=0 curves"
     direction: "experiment"
     status: "parked"
-    structural_lane: "active"
+    structural_lane: "completed"
     structural_decision_id: "RS-2026-07-24-001"
     structural_iteration_id: "GLV-SEMAEV-ITER-001"
     structural_route_id: "R-GLV-SEMAEV"
     structural_task_id: "TASK-009"
     structural_foundation_id: "F-SEMAEV-ELIMINATION"
-    structural_scope: "Exact symbolic S3/S4 C3-action classification, fixed-target transport, and only completed kernel-checkable covariance identities; this does not activate the experiment hypothesis."
-    exploration_policy: "No Research Engine candidate or parameter sweep is authorized during GLV-SEMAEV-ITER-001; all P0-P4 evidence remains retained."
-    resume_after: "A future dated decision supersedes RS-2026-07-24-001 after GLV-SEMAEV-ITER-001 records diagonal-only, a larger exact quotient, or the smallest unresolved lemma."
+    structural_scope: "Completed exact symbolic S3/S4 C3-action classification, fixed-target transport, and the kernel-checked covariance package; this did not activate the experiment hypothesis."
+    exploration_policy: "No Research Engine candidate or parameter sweep was authorized during GLV-SEMAEV-ITER-001; all P0-P4 evidence remains retained."
+    resume_after: "A future dated decision supersedes RS-2026-07-24-001 only after a materially different phase-preserving mechanism supplies exact recovery semantics, a falsifiable full-cost prediction, and an independent validator."
     park_reason: "The proposed u_i=x_i^3 construction is not the diagonal GLV quotient and loses relative phase. No replacement mechanism with a growth-relevant cost bridge is currently specified."
     resolution: "scoped obstruction: coordinatewise cubes quotient by C3^m, not diagonal C3; the declared quotient and dependent scaling premise are closed"
     result: >
@@ -183,8 +183,9 @@ hypotheses:
       u_i=x_i^3 quotienting and its fixed-target scaling premise. It is not a
       geometric zero-variety automorphism classification, a Groebner/F4 lower
       bound, a faithful Petit no-go, an attack run, or an ECDLP claim. The
-      narrow Lean covariance module is pending kernel CI and is not yet in the
-      verified ledger.
+      narrow covariance and point-group transport package is kernel-accepted
+      and registered in VERIFIED.md; the full stabilizer classification remains
+      an independently replayed symbolic certificate, not a Lean theorem.
 
       EXACT SCOPED OBSTRUCTION (experiments/glv_diagonal_obstruction/): the GLV
       automorphism acts diagonally on simultaneous relation variables. Its polynomial

@@ -278,11 +278,15 @@
       "blocker_ids": [],
       "anchors": [
         "Ecdlp.Semaev.S₃_eq_zero_iff",
-        "Ecdlp.Semaev.S₄_common_root_of_eq_zero"
+        "Ecdlp.Semaev.S₄_common_root_of_eq_zero",
+        "Ecdlp.Semaev.S₃_diagonal_cube_covariance",
+        "Ecdlp.Semaev.S₄_diagonal_cube_invariant",
+        "Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff"
       ],
       "evidence_files": [
         "Ecdlp/Proved/SemaevThree.lean",
-        "Ecdlp/Proved/SemaevFour.lean"
+        "Ecdlp/Proved/SemaevFour.lean",
+        "Ecdlp/Proved/GlvSemaevSymmetry.lean"
       ]
     },
     {

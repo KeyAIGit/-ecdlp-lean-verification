@@ -240,13 +240,13 @@ def main() -> int:
     check(
         f"{selected_explorations} experiments selected" in index
         and f"{selected_explorations} selected;" in dashboard
-        and f"{len(selected_structural)} structural route selected" in explore
+        and f"{len(selected_structural)} structural route completed" in explore
         and f"{len(promoted_routes)} promoted" in explore
         and "0 experiments authorized" in explore,
         "public reference views must expose the selected bounded exploration count",
     )
     check(
-        "One structural question is active; no experiment is authorized." in dashboard
+        "The bounded structural question is resolved; no experiment is authorized." in dashboard
         and "No run authorized" in dashboard
         and "repo/RESEARCH_ENGINE_V0.json" in dashboard
         and "Promotion experiments" in dashboard,

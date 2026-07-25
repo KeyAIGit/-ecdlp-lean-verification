@@ -296,7 +296,7 @@ def build_index(
       </div>
       <div class="hero__signal" aria-label="Current reference decision">
         <span>Live decision graph</span>
-        <strong>{len(routes)} evaluated / {len(selected_structural)} structural / {len(promoted_routes)} promoted</strong>
+        <strong>{len(routes)} evaluated / {len(selected_structural)} structural completed / {len(promoted_routes)} promoted</strong>
         <span>{engine["counts"]["selected_explorations"]} experiments selected</span>
         <code>{esc(selection["decision_id"])}</code>
       </div>
@@ -590,7 +590,7 @@ def build_dashboard(
         ),
         (
             "Decision state",
-            f"{len(selected_structural)} structural route selected / "
+            f"{len(selected_structural)} structural route completed / "
             f"{len(promoted_routes)} promoted / 0 experiments authorized",
             ["repo/ECDLP_DECISION_SUBSTRATE.json", "scripts/check_ecdlp_decision_substrate.py"],
             "closed",
@@ -670,9 +670,9 @@ def build_dashboard(
         {status_badge("blue", product["current_stage"]["label"])}</div>
       <article class="decision-band">
         <div class="decision-band__state"><span>{esc(selection["decision_id"])}</span><strong>Structural selection</strong></div>
-        <div class="decision-band__copy"><h3>One structural question is active; no experiment is authorized.</h3>
-          <p>{esc(selection["gate_result"])} The symbolic and Lean package may proceed, while
-            toy runs, direct secp256k1 work, and promotion remain closed.</p></div>
+        <div class="decision-band__copy"><h3>The bounded structural question is resolved; no experiment is authorized.</h3>
+          <p>{esc(selection["gate_result"])} Proposal intake remains open, while toy runs,
+            direct secp256k1 work, and promotion remain closed.</p></div>
       </article>
       <div class="panel-heading"><div><h2>Research Engine v0 queue</h2>
         <p>{engine_counts["selected_explorations"]} selected;
@@ -836,7 +836,7 @@ def build_explore(product: dict, stats: dict, decisions: dict, engine: dict) -> 
         <p>Every route is generated from <code>repo/ECDLP_DECISION_SUBSTRATE.json</code>.
           Search by mechanism, scope, evidence, or next action.</p></div>
       <aside class="decision-inline"><strong>{esc(selection["decision_id"])} · Structural selection</strong>
-        <span>{len(selected_structural)} structural route selected; {len(promoted_routes)} promoted;
+        <span>{len(selected_structural)} structural route completed; {len(promoted_routes)} promoted;
           0 experiments authorized.</span></aside>
     </div>
   </section>

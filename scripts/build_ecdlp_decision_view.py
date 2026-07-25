@@ -65,7 +65,7 @@ def render(data: dict, sources: dict[str, dict]) -> str:
         f"**{str(policy['promotion_experiments_authorized']).lower()}**. "
         f"Selected promoted route: **{policy['selected_attack_route'] or 'none'}**.",
         "",
-        f"Bounded structural routes selected: **{len(selected_structural)}** "
+        f"Bounded structural routes recorded by the decision: **{len(selected_structural)}** "
         f"({refs(selected_structural)}). Promoted routes: **{len(promoted)}** "
         f"({refs(promoted)}).",
         "",

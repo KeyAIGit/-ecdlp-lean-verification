@@ -572,7 +572,7 @@ def render_markdown(graph: dict) -> str:
         f"**{c['critical_nodes']} critical nodes** · "
         f"**{c['attack_routes']} attack routes** · "
         f"**{c['decision_foundations']} decision foundations** · "
-        f"**{c['selected_structural_routes']} structural route selected** · "
+        f"**{c['selected_structural_routes']} bounded structural route recorded** · "
         f"**{c['promoted_routes']} routes promoted** · "
         f"**{c['selected_explorations']} bounded explorations selected** · "
         f"**{c['research_engine_outcomes']} retained outcomes** · "

@@ -9,8 +9,8 @@
 ## Verified asset (the ledger)
 | metric | value | source |
 |---|---|---|
-| ledger rows | **296** | `VERIFIED.md` → `data/stats.json` |
-| distinct results | **~257** | `data/stats.json` |
+| ledger rows | **297** | `VERIFIED.md` → `data/stats.json` |
+| distinct results | **~258** | `data/stats.json` |
 | proved modules | **165** | `data/stats.json` |
 | `sorry` | **0** | axiom-audit + no-sorry gate |
 | custom axioms | **0** | axiom-audit gate |
@@ -67,10 +67,10 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 ## Main current bottleneck
 The current bottleneck is **a missing proposal-level non-generic mechanism, not theorem
 volume**. Decision `RS-2026-07-24-001` evaluated all **17 attack routes** and
-selected **1 route for bounded structural work**
+recorded **1 route in completed bounded structural work**
 (`R-GLV-SEMAEV`), while promoting
-**0 routes**. The selected work resolves one exact S3/S4 symmetry and
-fixed-target uncertainty; it is not an attack experiment or a route promotion. The map contains
+**0 routes**. The completed work resolved one exact S3/S4 symmetry and
+fixed-target uncertainty; it was not an attack experiment or a route promotion. The map contains
 **11 foundation decisions**,
 bounded exploration authorized = **false**,
 promotion experiments authorized =
@@ -78,8 +78,8 @@ promotion experiments authorized =
 **none**.
 
 The `build_now` foundations are `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`.
-They make future candidates comparable and independently checkable; structural work does not
-activate a parked experiment hypothesis. The formal gaps `E[n] ≅ (ℤ/n)²`,
+They make future candidates comparable and independently checkable; the completed structural
+work did not activate a parked experiment hypothesis. The formal gaps `E[n] ≅ (ℤ/n)²`,
 Weil reciprocity/pairing, general point-division
 bridges, p-adic formal groups, lattice reduction, isogenies, and quantum circuits remain mapped,
 but none is automatically next merely because Mathlib lacks it. Route selection reopens only
@@ -97,10 +97,10 @@ outcomes**. Selected bounded explorations: **0** (none). Ready now: **0** (none)
 The Engine's bounded-exploration capability is
 **true**, while the current decision's experiment
 authorization is **false** and the promotion gate is
-**false**. Thus `GLV-SEMAEV-ITER-001` may generate
-symbolic certificates and kernel-check narrow identities, but it may not execute a hypothesis
-run. Any later experiment needs a new dated decision and the normal fixed budgets, dependency
-order, and retained terminal outcome.
+**false**. `GLV-SEMAEV-ITER-001` is complete; its
+certificates and kernel-checked identities authorize no hypothesis run. `TASK-008` proposal
+intake is current, and any later experiment needs a new dated decision plus the normal fixed
+budgets, dependency order, and retained terminal outcome.
 
 ## Active work protocol
 `tasks/NEXT.md` is the queue router. ECDLP research is owned by

@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 296,
-    "ledger_rows": 296,
+    "theorems": 297,
+    "ledger_rows": 297,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -18,13 +18,13 @@
     "selected_explorations": 0,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 994,
+    "edges": 998,
     "by_edge_type": {
       "imports": 483,
-      "member_of": 296,
+      "member_of": 297,
       "requires_foundation": 41,
       "decision_grounded_in": 25,
-      "supports": 21,
+      "supports": 24,
       "depends_on": 18,
       "evaluated_under": 18,
       "detailed_by": 15,
@@ -123,6 +123,7 @@
       "Mathlib (`linear_combination`, `mul_eq_zero`)": 1,
       "Mathlib (`Polynomial.resultant`, `exists_mul_add_mul_eq_C_resultant`)": 1,
       "Mathlib (`exists_mul_add_mul_eq_C_resultant`)": 1,
+      "Mathlib + exact Sylvester resultant + existing GLV automorphism": 1,
       "Mathlib (`Polynomial.resultant_eq_prod_eval`)": 1,
       "Mathlib (`linear_combination` over `F[X]`)": 1,
       "Mathlib (`ring`)": 1,
@@ -164,7 +165,7 @@
       "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer": 1
     },
     "by_area": {
-      "curve-torsion": 152,
+      "curve-torsion": 153,
       "primality": 54,
       "generic-hardness": 29,
       "other": 26,
@@ -5145,6 +5146,26 @@
     },
     {
       "id": "thm-248",
+      "name": "Ecdlp.Semaev.S₃_diagonal_cube_covariance`, `Ecdlp.Semaev.S₃_diagonal_cube_zero_iff`, `Ecdlp.Semaev.S₄_diagonal_cube_invariant`, `Ecdlp.Semaev.secp256k1_S₃_glv_covariance`, `Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff`, `Ecdlp.Semaev.secp256k1_S₄_glv_invariant`, `Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff`, `Ecdlp.Curve.secp256k1_glv_three_point_sum_eq_iff",
+      "short_name": "S₃_diagonal_cube_covariance`,",
+      "module": "Ecdlp.Proved.GlvSemaevSymmetry",
+      "modules": [
+        "Ecdlp.Proved.GlvSemaevSymmetry"
+      ],
+      "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+      "files": [
+        "Ecdlp/Proved/GlvSemaevSymmetry.lean"
+      ],
+      "claim": "GLV covariance of Semaev `S₃`/`S₄` and exact relation-set transport (`S₃_diagonal_cube_covariance` and `S₃_diagonal_cube_zero_iff`: over any commutative ring with `β³=1`, simultaneous scaling gives `S₃(βx₁,βx₂,βx₃)=β·S₃(x₁,x₂,x₃)` and preserves its zero condition; `S₄_diagonal_cube_invariant`: the exact fixed-size resultant satisfies `S₄(βx₁,βx₂,βx₃,βx₄)=S₄(x₁,x₂,x₃,x₄)`, including degenerate quadratic slices. The secp256k1 specializations instantiate these identities at the GLV cube root. Separately, `secp256k1_glv_list_sum_eq_iff` and its three-point form prove the additive-bijection law `ΣPᵢ=R ⟺ Σφ(Pᵢ)=φ(R)`. This is a diagonal covariance and finite target-transport theorem package, not a classification of all geometric zero-variety automorphisms, an asymptotic relation-generation gain, or an ECDLP attack)",
+      "method": "Mathlib + exact Sylvester resultant + existing GLV automorphism",
+      "status": "proved",
+      "area": "curve-torsion",
+      "family_id": "family-curve-torsion",
+      "dependency_depth": 6,
+      "gated": true
+    },
+    {
+      "id": "thm-249",
       "name": "Ecdlp.Semaev.S₄_common_root_of_eq_zero`, `secp256k1_semaev_four_common_root_of_eq_zero",
       "short_name": "S₄_common_root_of_eq_zero`,",
       "module": "Ecdlp.Proved.SemaevFour",
@@ -5164,7 +5185,7 @@
       "gated": true
     },
     {
-      "id": "thm-249",
+      "id": "thm-250",
       "name": "Ecdlp.Semaev.S₃poly_master_factor",
       "short_name": "S₃poly_master_factor",
       "module": "Ecdlp.Proved.SemaevFour",
@@ -5184,7 +5205,7 @@
       "gated": true
     },
     {
-      "id": "thm-250",
+      "id": "thm-251",
       "name": "Ecdlp.Semaev.S₃_symm₁₂`, `S₃_symm₂₃",
       "short_name": "S₃_symm₁₂`,",
       "module": "Ecdlp.Proved.SemaevThree",
@@ -5204,7 +5225,7 @@
       "gated": true
     },
     {
-      "id": "thm-251",
+      "id": "thm-252",
       "name": "Ecdlp.Curve.secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq`, `secp256k1_Φ₂",
       "short_name": "secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq`,",
       "module": "Ecdlp.Proved.MultiplicationFormula",
@@ -5224,7 +5245,7 @@
       "gated": true
     },
     {
-      "id": "thm-252",
+      "id": "thm-253",
       "name": "Ecdlp.Curve.secp256k1_double_y_eq_ω₂",
       "short_name": "secp256k1_double_y_eq_ω₂",
       "module": "Ecdlp.Proved.MultiplicationYFormula",
@@ -5244,7 +5265,7 @@
       "gated": true
     },
     {
-      "id": "thm-253",
+      "id": "thm-254",
       "name": "Ecdlp.Curve.secp256k1_two_nsmul_coords",
       "short_name": "secp256k1_two_nsmul_coords",
       "module": "Ecdlp.Proved.DoublingPointFormula",
@@ -5264,7 +5285,7 @@
       "gated": true
     },
     {
-      "id": "thm-254",
+      "id": "thm-255",
       "name": "Ecdlp.Curve.secp256k1_triple_y_eq_ω₃",
       "short_name": "secp256k1_triple_y_eq_ω₃",
       "module": "Ecdlp.Proved.MultiplicationYTripleFormula",
@@ -5284,7 +5305,7 @@
       "gated": true
     },
     {
-      "id": "thm-255",
+      "id": "thm-256",
       "name": "Ecdlp.Curve.secp256k1_Φ₃`, `secp256k1_ΨSq₃`, `secp256k1_Φ₃_eval`, `secp256k1_ΨSq₃_eval",
       "short_name": "secp256k1_Φ₃`,",
       "module": "Ecdlp.Proved.TripleDivisionPolynomial",
@@ -5304,7 +5325,7 @@
       "gated": true
     },
     {
-      "id": "thm-256",
+      "id": "thm-257",
       "name": "Ecdlp.Curve.secp256k1_triple_x_eq_Φ₃_div_ΨSq₃",
       "short_name": "secp256k1_triple_x_eq_Φ₃_div_ΨSq₃",
       "module": "Ecdlp.Proved.TripleMultiplicationFormula",
@@ -5324,7 +5345,7 @@
       "gated": true
     },
     {
-      "id": "thm-257",
+      "id": "thm-258",
       "name": "Ecdlp.Weil.secp256k1_torsion_iff_principal",
       "short_name": "secp256k1_torsion_iff_principal",
       "module": "Ecdlp.Proved.WeilDivisorClass",
@@ -5344,7 +5365,7 @@
       "gated": true
     },
     {
-      "id": "thm-258",
+      "id": "thm-259",
       "name": "Ecdlp.Weil.secp256k1_miller_function_exists",
       "short_name": "secp256k1_miller_function_exists",
       "module": "Ecdlp.Proved.WeilDivisorClass",
@@ -5364,7 +5385,7 @@
       "gated": true
     },
     {
-      "id": "thm-259",
+      "id": "thm-260",
       "name": "Ecdlp.Weil.secp256k1_miller_function_unique",
       "short_name": "secp256k1_miller_function_unique",
       "module": "Ecdlp.Proved.WeilDivisorClass",
@@ -5384,7 +5405,7 @@
       "gated": true
     },
     {
-      "id": "thm-260",
+      "id": "thm-261",
       "name": "Ecdlp.Weil.evalAt`, `evalAt_surjective`, `evalAt_ker",
       "short_name": "evalAt`,",
       "module": "Ecdlp.Proved.PointEvaluation",
@@ -5404,7 +5425,7 @@
       "gated": true
     },
     {
-      "id": "thm-261",
+      "id": "thm-262",
       "name": "Ecdlp.Weil.xyIdeal_isMaximal",
       "short_name": "xyIdeal_isMaximal",
       "module": "Ecdlp.Proved.PointEvaluation",
@@ -5424,7 +5445,7 @@
       "gated": true
     },
     {
-      "id": "thm-262",
+      "id": "thm-263",
       "name": "Ecdlp.Weil.evalRatAt_algebraMap",
       "short_name": "evalRatAt_algebraMap",
       "module": "Ecdlp.Proved.EvalRatAtCompat",
@@ -5444,7 +5465,7 @@
       "gated": true
     },
     {
-      "id": "thm-263",
+      "id": "thm-264",
       "name": "Ecdlp.Weil.xyIdeal_ne_of_x_ne",
       "short_name": "xyIdeal_ne_of_x_ne",
       "module": "Ecdlp.Proved.PointSeparation",
@@ -5464,7 +5485,7 @@
       "gated": true
     },
     {
-      "id": "thm-264",
+      "id": "thm-265",
       "name": "Ecdlp.Weil.xyIdeal_ne_of_ne` (+ `xyIdeal_ne_of_y_ne`)",
       "short_name": "xyIdeal_ne_of_ne`",
       "module": "Ecdlp.Proved.PointSeparation",
@@ -5484,7 +5505,7 @@
       "gated": true
     },
     {
-      "id": "thm-265",
+      "id": "thm-266",
       "name": "Ecdlp.Weil.evalRatAt_eq_zero_iff",
       "short_name": "evalRatAt_eq_zero_iff",
       "module": "Ecdlp.Proved.EvalRatAtNonvanishing",
@@ -5504,7 +5525,7 @@
       "gated": true
     },
     {
-      "id": "thm-266",
+      "id": "thm-267",
       "name": "Ecdlp.Weil.evalRatAt_ne_zero_iff_isUnit",
       "short_name": "evalRatAt_ne_zero_iff_isUnit",
       "module": "Ecdlp.Proved.EvalRatAtNonvanishing",
@@ -5524,7 +5545,7 @@
       "gated": true
     },
     {
-      "id": "thm-267",
+      "id": "thm-268",
       "name": "Ecdlp.Weil.secp256k1_psi3_root_iff_class_torsion",
       "short_name": "secp256k1_psi3_root_iff_class_torsion",
       "module": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
@@ -5544,7 +5565,7 @@
       "gated": true
     },
     {
-      "id": "thm-268",
+      "id": "thm-269",
       "name": "Ecdlp.Weil.secp256k1_psi5_root_iff_class_torsion",
       "short_name": "secp256k1_psi5_root_iff_class_torsion",
       "module": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
@@ -5564,7 +5585,7 @@
       "gated": true
     },
     {
-      "id": "thm-269",
+      "id": "thm-270",
       "name": "Ecdlp.Weil.secp256k1_psi7_root_iff_class_torsion",
       "short_name": "secp256k1_psi7_root_iff_class_torsion",
       "module": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
@@ -5584,7 +5605,7 @@
       "gated": true
     },
     {
-      "id": "thm-270",
+      "id": "thm-271",
       "name": "Ecdlp.Curve.secp256k1_grp_nsmul_eq_zero` (+ the `Module (ZMod n) ↥⟨G⟩` instance, `secp256k1Gₙ`)",
       "short_name": "secp256k1_grp_nsmul_eq_zero`",
       "module": "Ecdlp.Proved.ProtocolInstantiation",
@@ -5604,7 +5625,7 @@
       "gated": true
     },
     {
-      "id": "thm-271",
+      "id": "thm-272",
       "name": "Ecdlp.Curve.secp256k1_dh_agree`, `secp256k1_schnorr_verify`, `secp256k1_taproot_tweak_verify`, `secp256k1_adaptor_complete",
       "short_name": "secp256k1_dh_agree`,",
       "module": "Ecdlp.Proved.ProtocolInstantiation",
@@ -5624,7 +5645,7 @@
       "gated": true
     },
     {
-      "id": "thm-272",
+      "id": "thm-273",
       "name": "Ecdlp.Curve.secp256k1_threshold_schnorr_aggregate`, `secp256k1_musig_key_aggregate`, `secp256k1_feldman_vss_verify`, `secp256k1_threshold_elgamal_combine`, `secp256k1_schnorr_batch_verify",
       "short_name": "secp256k1_threshold_schnorr_aggregate`,",
       "module": "Ecdlp.Proved.ProtocolInstantiation",
@@ -5644,7 +5665,7 @@
       "gated": true
     },
     {
-      "id": "thm-273",
+      "id": "thm-274",
       "name": "Ecdlp.Curve.secp256k1_grp_card`, `secp256k1_grp_isAddCyclic",
       "short_name": "secp256k1_grp_card`,",
       "module": "Ecdlp.Proved.SubgroupOrder",
@@ -5664,7 +5685,7 @@
       "gated": true
     },
     {
-      "id": "thm-274",
+      "id": "thm-275",
       "name": "Ecdlp.Curve.secp256k1_dlogEquiv` (+ `secp256k1_dlogHom`, `_injective`, `_surjective`, `secp256k1_gen_addOrderOf`)",
       "short_name": "secp256k1_dlogEquiv`",
       "module": "Ecdlp.Proved.SubgroupOrder",
@@ -5684,7 +5705,7 @@
       "gated": true
     },
     {
-      "id": "thm-275",
+      "id": "thm-276",
       "name": "WeierstrassCurve.Affine.instFinitePoint",
       "short_name": "instFinitePoint",
       "module": "Ecdlp.Proved.AffinePointFinite",
@@ -5704,7 +5725,7 @@
       "gated": true
     },
     {
-      "id": "thm-276",
+      "id": "thm-277",
       "name": "Ecdlp.Curve.instFiniteSecp256k1Point",
       "short_name": "instFiniteSecp256k1Point",
       "module": "Ecdlp.Proved.CurveCardinality",
@@ -5724,7 +5745,7 @@
       "gated": true
     },
     {
-      "id": "thm-277",
+      "id": "thm-278",
       "name": "Ecdlp.Curve.secp256k1_n_dvd_card_point",
       "short_name": "secp256k1_n_dvd_card_point",
       "module": "Ecdlp.Proved.CurveCardinality",
@@ -5744,7 +5765,7 @@
       "gated": true
     },
     {
-      "id": "thm-278",
+      "id": "thm-279",
       "name": "Ecdlp.Curve.secp256k1_card_point_eq_n`, `secp256k1_no_nonzero_two_torsion`, `secp256k1_card_point_le",
       "short_name": "secp256k1_card_point_eq_n`,",
       "module": "Ecdlp.Proved.CurveCardinalityExact",
@@ -5764,7 +5785,7 @@
       "gated": true
     },
     {
-      "id": "thm-279",
+      "id": "thm-280",
       "name": "Ecdlp.Curve.secp256k1_grp_eq_top`, `secp256k1_point_isAddCyclic`, `secp256k1_mem_zmultiples`, `secp256k1_glvHom_eq_zsmul_unconditional",
       "short_name": "secp256k1_grp_eq_top`,",
       "module": "Ecdlp.Proved.CurveFullGroup",
@@ -5784,7 +5805,7 @@
       "gated": true
     },
     {
-      "id": "thm-280",
+      "id": "thm-281",
       "name": "Ecdlp.Curve.secp256k1_pointGroupEquiv` (+ `secp256k1_point_group_equiv_exists`)",
       "short_name": "secp256k1_pointGroupEquiv`",
       "module": "Ecdlp.Proved.PointGroupEquiv",
@@ -5804,7 +5825,7 @@
       "gated": true
     },
     {
-      "id": "thm-281",
+      "id": "thm-282",
       "name": "Ecdlp.Curve.secp256k1_point_group_no_proper_subgroup`, `secp256k1_nonzero_point_generates",
       "short_name": "secp256k1_point_group_no_proper_subgroup`,",
       "module": "Ecdlp.Proved.PointGroupSimple",
@@ -5824,7 +5845,7 @@
       "gated": true
     },
     {
-      "id": "thm-282",
+      "id": "thm-283",
       "name": "Ecdlp.Curve.secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅`, `quint_x_core",
       "short_name": "secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅`,",
       "module": "Ecdlp.Proved.QuintupleMultiplicationFormula",
@@ -5844,7 +5865,7 @@
       "gated": true
     },
     {
-      "id": "thm-283",
+      "id": "thm-284",
       "name": "Ecdlp.Curve.secp256k1Bar_three_torsion_structure`, `secp256k1Bar_three_torsion_ncard`, `secp256k1Bar_torsionBy_three_card",
       "short_name": "secp256k1Bar_three_torsion_structure`,",
       "module": "Ecdlp.Proved.ThreeTorsionStructure",
@@ -5864,7 +5885,7 @@
       "gated": true
     },
     {
-      "id": "thm-284",
+      "id": "thm-285",
       "name": "Ecdlp.Curve.secp256k1Bar_five_torsion_structure`, `secp256k1Bar_five_nsmul_eq_zero_iff`, `secp256k1Bar_five_torsion_ncard",
       "short_name": "secp256k1Bar_five_torsion_structure`,",
       "module": "Ecdlp.Proved.FiveTorsionStructure",
@@ -5886,7 +5907,7 @@
       "gated": true
     },
     {
-      "id": "thm-285",
+      "id": "thm-286",
       "name": "Ecdlp.Curve.secp256k1Bar_seven_torsion_structure`, `secp256k1Bar_seven_nsmul_eq_zero_iff`, `secp256k1Bar_seven_torsion_ncard",
       "short_name": "secp256k1Bar_seven_torsion_structure`,",
       "module": "Ecdlp.Proved.SevenTorsionStructure",
@@ -5908,7 +5929,7 @@
       "gated": true
     },
     {
-      "id": "thm-286",
+      "id": "thm-287",
       "name": "Ecdlp.Curve.secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`, `quad_x_core",
       "short_name": "secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`,",
       "module": "Ecdlp.Proved.QuadrupleMultiplicationFormula",
@@ -5928,7 +5949,7 @@
       "gated": true
     },
     {
-      "id": "thm-287",
+      "id": "thm-288",
       "name": "Ecdlp.Curve.secp256k1_quadruple_y`, `quad_y_core`, `secp256k1_four_nsmul_coords_ωfree`, `secp256k1_omega_recurrence_four`, `secp256k1_psi6_evalEval",
       "short_name": "secp256k1_quadruple_y`,",
       "module": "Ecdlp.Proved.QuadrupleMultiplicationYFormula",
@@ -5952,7 +5973,7 @@
       "gated": true
     },
     {
-      "id": "thm-288",
+      "id": "thm-289",
       "name": "Ecdlp.Curve.secp256k1_cubic_separable`, `secp256k1_cubic_isCoprime_derivative`, `secp256k1_cubic_roots_card_bar`, `secp256k1_cubic_roots_nodup_bar",
       "short_name": "secp256k1_cubic_separable`,",
       "module": "Ecdlp.Proved.CubicSeparable",
@@ -5972,7 +5993,7 @@
       "gated": true
     },
     {
-      "id": "thm-289",
+      "id": "thm-290",
       "name": "Ecdlp.Curve.secp256k1Bar_two_torsion_structure`, `secp256k1Bar_two_nsmul_eq_zero_iff`, `secp256k1Bar_two_torsion_ncard",
       "short_name": "secp256k1Bar_two_torsion_structure`,",
       "module": "Ecdlp.Proved.TwoTorsionStructure",
@@ -5992,7 +6013,7 @@
       "gated": true
     },
     {
-      "id": "thm-290",
+      "id": "thm-291",
       "name": "Ecdlp.Weil.evalFracAt_well_defined`, `evalFracAt_mul`, `evalAt_unit_ne_zero`, `evalRatAt_eq_evalFracAt`, `secp256k1_miller_eval_scaling",
       "short_name": "evalFracAt_well_defined`,",
       "module": "Ecdlp.Proved.FunctionFieldEval",
@@ -6012,7 +6033,7 @@
       "gated": true
     },
     {
-      "id": "thm-291",
+      "id": "thm-292",
       "name": "Ecdlp.Weil.functionField_exists_num_den`, `functionField_num_den_cross`, `evalFracAt_num_den_well_defined`, `secp256k1_miller_function_num_den",
       "short_name": "functionField_exists_num_den`,",
       "module": "Ecdlp.Proved.FunctionFieldRepr",
@@ -6032,7 +6053,7 @@
       "gated": true
     },
     {
-      "id": "thm-292",
+      "id": "thm-293",
       "name": "Ecdlp.Weil.RegularAt`, `evalReg`, `evalRatAt_eq_evalReg` (+ 14 supporting)",
       "short_name": "RegularAt`,",
       "module": "Ecdlp.Proved.FunctionFieldRegular",
@@ -6052,7 +6073,7 @@
       "gated": true
     },
     {
-      "id": "thm-293",
+      "id": "thm-294",
       "name": "Ecdlp.Weil.divEval_mul`, `evalReg_mul",
       "short_name": "divEval_mul`,",
       "module": "Ecdlp.Proved.WeilDivisorEval",
@@ -6072,7 +6093,7 @@
       "gated": true
     },
     {
-      "id": "thm-294",
+      "id": "thm-295",
       "name": "Ecdlp.Weil.divEval_smul_unit`, `divEval_smul_unit_eq`, `evalReg_smul_unit",
       "short_name": "divEval_smul_unit`,",
       "module": "Ecdlp.Proved.WeilDivisorRepIndep",
@@ -6092,7 +6113,7 @@
       "gated": true
     },
     {
-      "id": "thm-295",
+      "id": "thm-296",
       "name": "Ecdlp.Weil.secp256k1_miller_jointly_regular`, `divEval_one",
       "short_name": "secp256k1_miller_jointly_regular`,",
       "module": "Ecdlp.Proved.WeilMillerEval",
@@ -6428,11 +6449,15 @@
         "blocker_ids": [],
         "anchors": [
           "Ecdlp.Semaev.S₃_eq_zero_iff",
-          "Ecdlp.Semaev.S₄_common_root_of_eq_zero"
+          "Ecdlp.Semaev.S₄_common_root_of_eq_zero",
+          "Ecdlp.Semaev.S₃_diagonal_cube_covariance",
+          "Ecdlp.Semaev.S₄_diagonal_cube_invariant",
+          "Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff"
         ],
         "evidence_files": [
           "Ecdlp/Proved/SemaevThree.lean",
-          "Ecdlp/Proved/SemaevFour.lean"
+          "Ecdlp/Proved/SemaevFour.lean",
+          "Ecdlp/Proved/GlvSemaevSymmetry.lean"
         ]
       },
       {
@@ -6740,15 +6765,15 @@
       "promotion_experiments_authorized": false,
       "selected_attack_route": null,
       "allowed_work": [
-        "Generate and independently replay exact symbolic certificates for the S3 and S4 coordinatewise C3 transformation laws named by GLV-SEMAEV-ITER-001.",
-        "Formalize only completed covariance identities and exact secp256k1 specializations that the Lean kernel accepts without sorry, admit, or custom axioms.",
-        "Record the fixed-target consequence, the precise bounded no-go or surviving quotient, and the smallest unresolved lemma without extrapolating to ECDLP complexity.",
-        "Maintain the canonical decision, task, hypothesis, provenance, and derived views required by this iteration."
+        "Maintain and independently replay the completed GLV-SEMAEV-ITER-001 certificates and kernel-checked theorem package.",
+        "Accept new primary evidence or a materially different exact mechanism through TASK-008 proposal intake without authorizing execution.",
+        "Prepare optional independent adversarial review at a stable checkpoint without treating review as route promotion.",
+        "Maintain canonical provenance and regenerate affected views without changing the recorded claim boundary."
       ],
       "forbidden_work": [
         "Run any hypothesis experiment, general solver sweep, exact-target secp256k1 work, expensive scaling, or promotion experiment.",
-        "Search for or activate an unrelated attack route during GLV-SEMAEV-ITER-001.",
-        "Build beyond the smallest S3/S4 covariance and fixed-target theorem package needed by TASK-009.",
+        "Resume GLV-SEMAEV-ITER-001 or activate another route without a new dated decision.",
+        "Treat an unreviewed proposal as authorization for a solver run or formalization campaign.",
         "Treat a constant-factor result, structural identity, or toy measurement as a subgeneric attack.",
         "Delete or rewrite provenance-bearing assets without an inventory, reference scan, and documented restore path."
       ],
@@ -6758,6 +6783,7 @@
     "route_selection": {
       "decision_id": "RS-2026-07-24-001",
       "performed_on": "2026-07-24",
+      "completed_on": "2026-07-24",
       "supersedes": "RS-2026-07-22-001",
       "decision": "select_one_bounded_structural",
       "selection_scope": "bounded_structural_non_experiment",
@@ -6771,6 +6797,16 @@
       "foundation_ids": [
         "F-SEMAEV-ELIMINATION"
       ],
+      "outcome": "diagonal_only_bounded_negative",
+      "kernel_acceptance": {
+        "commit": "1bba09ff1d8682187365996d9b190044aea333f9",
+        "workflow_run": 30142661986,
+        "lean": "v4.31.0",
+        "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+      },
+      "ledger_acceptance": {
+        "status": "pending_closure_ci"
+      },
       "evaluated_route_ids": [
         "R-GENERIC-LOWER-BOUND",
         "R-GENERIC-BASELINE",
@@ -6790,7 +6826,7 @@
         "R-PROTOCOL-FAULT-SIDECHANNEL",
         "R-QUANTUM-SHOR"
       ],
-      "gate_result": "Select R-GLV-SEMAEV exclusively for one bounded, non-experimental structural iteration. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.",
+      "gate_result": "Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube and generic fixed-target scaling premises are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.",
       "rationale": [
         "RS-2026-07-22-001 correctly selected zero routes for promotion and remains the governing negative promotion assessment.",
         "The owner selected the exact S3/S4 coordinatewise C3 stabilizer and fixed-target consequence as the sole current structural uncertainty because it can resolve the premise of the naive GLV-Semaev quotient without an attack run.",
@@ -6799,16 +6835,16 @@
         "A larger stabilizer would still require an exact quotient, recovery map, orbit tags, excluded components, cost prediction, and a later decision before any externally validated solver experiment."
       ],
       "reconsideration_triggers": [
-        "The exact certificates establish only the diagonal C3 action, in which case record the bounded fixed-target quotient no-go and require a new mechanism before reopening experiments.",
-        "The exact certificates establish a larger stabilizer, in which case specify its quotient and recovery semantics before proposing one independently validated F4 experiment.",
-        "The classification remains unresolved, in which case record the smallest missing algebraic or Mathlib lemma and keep all experiments closed."
+        "A materially different phase-preserving quotient, birational construction, or relation mechanism supplies exact fixed-target semantics, recovery, orbit tags, excluded components, and a falsifiable full-cost prediction.",
+        "An independently replayable counter-certificate or proof identifies an error in the frozen S3/S4 formulas, resultant construction, assumptions, or coordinatewise C3 classification.",
+        "A formal cost theorem combines the finite target orbit with a new mechanism and proves a nonconstant full-pipeline gain rather than attributing asymptotic value to orbit size alone."
       ],
       "operational_effects": [
-        "TASK-009 is the sole active bounded structural uncertainty and is bound to GLV-SEMAEV-ITER-001, R-GLV-SEMAEV, and HYP_GLV_SEMAEV_001.",
-        "HYP_GLV_SEMAEV_001 remains parked as an experiment; only its non-experimental structural lane is active.",
+        "TASK-009 and GLV-SEMAEV-ITER-001 are completed with the diagonal-only bounded result.",
+        "HYP_GLV_SEMAEV_001 remains parked as an experiment; its non-experimental structural lane is completed.",
         "selected_attack_route remains null, promoted_route_ids remains empty, and every route-level authorized_experiment flag remains false.",
         "No general msolve, Sage, F4, parameter sweep, exact-target run, or unrelated route search is authorized.",
-        "All P0-P4 evidence and prior append-only research decisions are retained."
+        "All P0-P4 evidence and prior append-only research decisions are retained; TASK-008 proposal intake is the current central ECDLP queue."
       ]
     },
     "routes": [
@@ -7170,13 +7206,13 @@
           "The quotient retains enough information to recover valid relations."
         ],
         "known_cost": "Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.",
-        "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance; a generic fixed nonzero target has only the identity covariance. The standard-library replay reconstructs S4 independently from the Sylvester determinant. The narrow Lean covariance module is authored but remains outside the verified ledger until kernel CI accepts it. Earlier P0-P4 evidence is retained unchanged.",
+        "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance; a generic fixed nonzero target has only the identity covariance. The standard-library replay reconstructs S4 independently from the Sylvester determinant. The narrow covariance and point-group transport source package passed the full Lean build and built-source no-sorry scan in workflow run 30142661986. Its current VERIFIED.md registration and expanded exhaustive axiom audit remain pending closure CI; earlier P0-P4 evidence is retained unchanged.",
         "success_gate": "Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.",
         "stop_condition": "The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.",
-        "next_action": "Finish kernel CI for the narrow covariance module, then close GLV-SEMAEV-ITER-001 without a solver run. Reopen experiments only for a materially different phase-preserving mechanism with an exact recovery map and full-cost prediction.",
+        "next_action": "Keep GLV-SEMAEV-ITER-001 closed without a solver run. Accept only a materially different phase-preserving mechanism with an exact recovery map, orbit tags, excluded components, a falsifiable full-cost prediction, and an independent validator through TASK-008 before any new decision.",
         "authorized_experiment": false,
         "structural_lane": {
-          "status": "active",
+          "status": "completed",
           "decision_id": "RS-2026-07-24-001",
           "iteration_id": "GLV-SEMAEV-ITER-001",
           "route_id": "R-GLV-SEMAEV",
@@ -7205,9 +7241,13 @@
         ],
         "lean_anchors": [
           "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples",
-          "Ecdlp.Semaev.secp256k1_point_decomposition_semaev"
+          "Ecdlp.Semaev.secp256k1_point_decomposition_semaev",
+          "Ecdlp.Semaev.S₃_diagonal_cube_covariance",
+          "Ecdlp.Semaev.S₄_diagonal_cube_invariant",
+          "Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff"
         ],
         "evidence_files": [
+          "Ecdlp/Proved/GlvSemaevSymmetry.lean",
           "experiments/glv_diagonal_obstruction/artifact.json",
           "experiments/glv_semaev_symmetry/certificate.json",
           "experiments/p0_glv_semaev/RESULTS.md",
@@ -7636,7 +7676,7 @@
         "deliverable": "Only the minimal theorem chain required by a selected exact relation system: semantics, elimination soundness, recovery, and a justified cost bridge.",
         "resume_condition": "One of the dependent routes is selected with a materially new exact system, explicit fixed-target semantics, and a plausible complexity mechanism beyond finite-orbit compression.",
         "structural_lane": {
-          "status": "active_bounded_slice",
+          "status": "completed_bounded_slice",
           "decision_id": "RS-2026-07-24-001",
           "iteration_id": "GLV-SEMAEV-ITER-001",
           "route_id": "R-GLV-SEMAEV",
@@ -7850,7 +7890,7 @@
       "promotion_authorized": false,
       "current_decision_experiment_authorized": false,
       "current_decision_bounded_exploration_authorized": false,
-      "structural_work_authorized": true,
+      "structural_work_authorized": false,
       "exploration_limits": {
         "max_field_bits": 24,
         "max_wall_time_seconds": 21600,
@@ -12693,7 +12733,7 @@
     },
     {
       "from": "thm-248",
-      "to": "family-other",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {
@@ -12708,7 +12748,7 @@
     },
     {
       "from": "thm-251",
-      "to": "family-curve-torsion",
+      "to": "family-other",
       "type": "member_of"
     },
     {
@@ -12763,12 +12803,12 @@
     },
     {
       "from": "thm-262",
-      "to": "family-primality",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {
       "from": "thm-263",
-      "to": "family-curve-torsion",
+      "to": "family-primality",
       "type": "member_of"
     },
     {
@@ -12778,7 +12818,7 @@
     },
     {
       "from": "thm-265",
-      "to": "family-other",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {
@@ -12788,7 +12828,7 @@
     },
     {
       "from": "thm-267",
-      "to": "family-curve-torsion",
+      "to": "family-other",
       "type": "member_of"
     },
     {
@@ -12808,7 +12848,7 @@
     },
     {
       "from": "thm-271",
-      "to": "family-protocol-soundness",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {
@@ -12818,7 +12858,7 @@
     },
     {
       "from": "thm-273",
-      "to": "family-other",
+      "to": "family-protocol-soundness",
       "type": "member_of"
     },
     {
@@ -12828,7 +12868,7 @@
     },
     {
       "from": "thm-275",
-      "to": "family-curve-torsion",
+      "to": "family-other",
       "type": "member_of"
     },
     {
@@ -12843,12 +12883,12 @@
     },
     {
       "from": "thm-278",
-      "to": "family-attack-resistance",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {
       "from": "thm-279",
-      "to": "family-curve-torsion",
+      "to": "family-attack-resistance",
       "type": "member_of"
     },
     {
@@ -12858,7 +12898,7 @@
     },
     {
       "from": "thm-281",
-      "to": "family-primality",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {
@@ -12873,12 +12913,12 @@
     },
     {
       "from": "thm-284",
-      "to": "family-curve-torsion",
+      "to": "family-primality",
       "type": "member_of"
     },
     {
       "from": "thm-285",
-      "to": "family-primality",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {
@@ -12903,7 +12943,7 @@
     },
     {
       "from": "thm-290",
-      "to": "family-curve-torsion",
+      "to": "family-primality",
       "type": "member_of"
     },
     {
@@ -12913,12 +12953,12 @@
     },
     {
       "from": "thm-292",
-      "to": "family-primality",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {
       "from": "thm-293",
-      "to": "family-other",
+      "to": "family-primality",
       "type": "member_of"
     },
     {
@@ -12928,6 +12968,11 @@
     },
     {
       "from": "thm-295",
+      "to": "family-other",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-296",
       "to": "family-curve-torsion",
       "type": "member_of"
     },
@@ -12944,13 +12989,13 @@
       "anchor": "Ecdlp.Primality.secp256k1_n_prime"
     },
     {
-      "from": "thm-278",
+      "from": "thm-279",
       "to": "secp-rational-group",
       "type": "supports",
       "anchor": "Ecdlp.Curve.secp256k1_card_point_eq_n"
     },
     {
-      "from": "thm-279",
+      "from": "thm-280",
       "to": "secp-rational-group",
       "type": "supports",
       "anchor": "Ecdlp.Curve.secp256k1_grp_eq_top"
@@ -12972,7 +13017,7 @@
       "type": "depends_on"
     },
     {
-      "from": "thm-271",
+      "from": "thm-272",
       "to": "protocol-soundness",
       "type": "supports",
       "anchor": "Ecdlp.Curve.secp256k1_dh_agree"
@@ -13000,10 +13045,28 @@
       "anchor": "Ecdlp.Semaev.S₃_eq_zero_iff"
     },
     {
-      "from": "thm-248",
+      "from": "thm-249",
       "to": "semaev-foundations",
       "type": "supports",
       "anchor": "Ecdlp.Semaev.S₄_common_root_of_eq_zero"
+    },
+    {
+      "from": "thm-248",
+      "to": "semaev-foundations",
+      "type": "supports",
+      "anchor": "Ecdlp.Semaev.S₃_diagonal_cube_covariance"
+    },
+    {
+      "from": "thm-248",
+      "to": "semaev-foundations",
+      "type": "supports",
+      "anchor": "Ecdlp.Semaev.S₄_diagonal_cube_invariant"
+    },
+    {
+      "from": "thm-248",
+      "to": "semaev-foundations",
+      "type": "supports",
+      "anchor": "Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff"
     },
     {
       "from": "semaev-foundations",
@@ -13028,13 +13091,13 @@
       "type": "depends_on"
     },
     {
-      "from": "thm-289",
+      "from": "thm-290",
       "to": "small-torsion-family",
       "type": "supports",
       "anchor": "Ecdlp.Curve.secp256k1Bar_two_torsion_structure"
     },
     {
-      "from": "thm-285",
+      "from": "thm-286",
       "to": "small-torsion-family",
       "type": "supports",
       "anchor": "Ecdlp.Curve.secp256k1Bar_seven_torsion_structure"
@@ -13056,7 +13119,7 @@
       "type": "depends_on"
     },
     {
-      "from": "thm-295",
+      "from": "thm-296",
       "to": "weil-w1-w3",
       "type": "supports",
       "anchor": "Ecdlp.Weil.secp256k1_miller_jointly_regular"
@@ -13135,7 +13198,7 @@
       "type": "blocked_by"
     },
     {
-      "from": "thm-293",
+      "from": "thm-294",
       "to": "weil-w4-w5",
       "type": "supports",
       "anchor": "Ecdlp.Weil.divEval_mul"

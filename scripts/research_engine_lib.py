@@ -1784,14 +1784,18 @@ def validate_policy(
         and structural_gate.get("kind") == "non_experiment"
         and structural_gate.get("authorizes_experiment") is False
     )
-    expected_current_exploration = False if structural_pause else True
+    proposal_intake_pause = (
+        decisions.get("next_phase_gate", {}).get("current_mode")
+        == "proposal_intake_promotion_closed"
+    )
+    expected_current_exploration = not (structural_pause or proposal_intake_pause)
     if (
         phase_policy.get("bounded_exploration_authorized")
         is not expected_current_exploration
     ):
         problems.append(
             "decision substrate current exploration authorization does not "
-            "match the active structural lane"
+            "match the current decision mode"
         )
     if phase_policy.get("promotion_experiments_authorized") is not False:
         problems.append("decision substrate must keep promotion experiments closed")
@@ -1801,7 +1805,7 @@ def validate_policy(
     ):
         problems.append(
             "decision execution gate current authorization does not match "
-            "the active structural lane"
+            "the current decision mode"
         )
     if execution_gates.get("promotion", {}).get("authorized") is not False:
         problems.append("decision execution gate must keep promotion closed")

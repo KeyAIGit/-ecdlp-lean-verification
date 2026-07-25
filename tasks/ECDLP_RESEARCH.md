@@ -111,8 +111,8 @@ How to verify:
 
 ### TASK-009 - Resolve the bounded GLV-Semaev structural uncertainty
 
-Status: active_bounded_structural
-Structural lane: active
+Status: completed_bounded_structural
+Structural lane: completed
 Decision: RS-2026-07-24-001
 Iteration: GLV-SEMAEV-ITER-001
 Route: R-GLV-SEMAEV
@@ -120,8 +120,8 @@ Hypothesis: HYP_GLV_SEMAEV_001
 Foundation: F-SEMAEV-ELIMINATION
 Kind: theorem | research | data | ops
 Why it matters: The exact coordinatewise C3 action on S3 and S4 decides whether
-the naive invariant quotient has the symmetry it claims. This is the sole
-active bounded structural uncertainty; it is not route promotion or an
+the naive invariant quotient has the symmetry it claims. This bounded
+structural uncertainty is now resolved; it was not route promotion or an
 experiment hypothesis run.
 Inputs:
 - `RS-2026-07-24-001`
@@ -140,8 +140,8 @@ Expected output:
   smallest unresolved lemma.
 Exit criteria:
 - The work answers only `GLV-SEMAEV-ITER-001`.
-- `HYP_GLV_SEMAEV_001` remains parked as an experiment while its structural
-  lane is active.
+- `HYP_GLV_SEMAEV_001` remains parked as an experiment and its completed
+  structural lane records no promotion.
 - Every other route, hypothesis, and conditional foundation remains outside
   the structural lane.
 - Promotion and exact-target work remain disabled.

@@ -124,7 +124,8 @@
     },
     "structural": {
       "policy_source": "RS-2026-07-24-001 in this file",
-      "authorized": true,
+      "authorized": false,
+      "status": "completed",
       "kind": "non_experiment",
       "authorizes_experiment": false,
       "promotes_route": false,
@@ -138,7 +139,7 @@
       "foundation_ids": [
         "F-SEMAEV-ELIMINATION"
       ],
-      "scope": "Exact symbolic classification and independent replay of the coordinatewise C3 actions on S3 and S4, plus only the smallest completed kernel-checkable covariance package.",
+      "scope": "Completed exact symbolic classification and independent replay of the coordinatewise C3 actions on S3 and S4, plus the smallest kernel-checked covariance and point-group transport package.",
       "cannot_do": [
         "activate an experiment hypothesis",
         "run general msolve, Sage, F4, or parameter sweeps",
@@ -162,15 +163,15 @@
     "promotion_experiments_authorized": false,
     "selected_attack_route": null,
     "allowed_work": [
-      "Generate and independently replay exact symbolic certificates for the S3 and S4 coordinatewise C3 transformation laws named by GLV-SEMAEV-ITER-001.",
-      "Formalize only completed covariance identities and exact secp256k1 specializations that the Lean kernel accepts without sorry, admit, or custom axioms.",
-      "Record the fixed-target consequence, the precise bounded no-go or surviving quotient, and the smallest unresolved lemma without extrapolating to ECDLP complexity.",
-      "Maintain the canonical decision, task, hypothesis, provenance, and derived views required by this iteration."
+      "Maintain and independently replay the completed GLV-SEMAEV-ITER-001 certificates and kernel-checked theorem package.",
+      "Accept new primary evidence or a materially different exact mechanism through TASK-008 proposal intake without authorizing execution.",
+      "Prepare optional independent adversarial review at a stable checkpoint without treating review as route promotion.",
+      "Maintain canonical provenance and regenerate affected views without changing the recorded claim boundary."
     ],
     "forbidden_work": [
       "Run any hypothesis experiment, general solver sweep, exact-target secp256k1 work, expensive scaling, or promotion experiment.",
-      "Search for or activate an unrelated attack route during GLV-SEMAEV-ITER-001.",
-      "Build beyond the smallest S3/S4 covariance and fixed-target theorem package needed by TASK-009.",
+      "Resume GLV-SEMAEV-ITER-001 or activate another route without a new dated decision.",
+      "Treat an unreviewed proposal as authorization for a solver run or formalization campaign.",
       "Treat a constant-factor result, structural identity, or toy measurement as a subgeneric attack.",
       "Delete or rewrite provenance-bearing assets without an inventory, reference scan, and documented restore path."
     ],
@@ -180,6 +181,7 @@
   "route_selection": {
     "decision_id": "RS-2026-07-24-001",
     "performed_on": "2026-07-24",
+    "completed_on": "2026-07-24",
     "supersedes": "RS-2026-07-22-001",
     "decision": "select_one_bounded_structural",
     "selection_scope": "bounded_structural_non_experiment",
@@ -193,6 +195,16 @@
     "foundation_ids": [
       "F-SEMAEV-ELIMINATION"
     ],
+    "outcome": "diagonal_only_bounded_negative",
+    "kernel_acceptance": {
+      "commit": "1bba09ff1d8682187365996d9b190044aea333f9",
+      "workflow_run": 30142661986,
+      "lean": "v4.31.0",
+      "mathlib": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+    },
+    "ledger_acceptance": {
+      "status": "pending_closure_ci"
+    },
     "evaluated_route_ids": [
       "R-GENERIC-LOWER-BOUND",
       "R-GENERIC-BASELINE",
@@ -212,7 +224,7 @@
       "R-PROTOCOL-FAULT-SIDECHANNEL",
       "R-QUANTUM-SHOR"
     ],
-    "gate_result": "Select R-GLV-SEMAEV exclusively for one bounded, non-experimental structural iteration. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.",
+    "gate_result": "Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube and generic fixed-target scaling premises are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.",
     "rationale": [
       "RS-2026-07-22-001 correctly selected zero routes for promotion and remains the governing negative promotion assessment.",
       "The owner selected the exact S3/S4 coordinatewise C3 stabilizer and fixed-target consequence as the sole current structural uncertainty because it can resolve the premise of the naive GLV-Semaev quotient without an attack run.",
@@ -221,16 +233,16 @@
       "A larger stabilizer would still require an exact quotient, recovery map, orbit tags, excluded components, cost prediction, and a later decision before any externally validated solver experiment."
     ],
     "reconsideration_triggers": [
-      "The exact certificates establish only the diagonal C3 action, in which case record the bounded fixed-target quotient no-go and require a new mechanism before reopening experiments.",
-      "The exact certificates establish a larger stabilizer, in which case specify its quotient and recovery semantics before proposing one independently validated F4 experiment.",
-      "The classification remains unresolved, in which case record the smallest missing algebraic or Mathlib lemma and keep all experiments closed."
+      "A materially different phase-preserving quotient, birational construction, or relation mechanism supplies exact fixed-target semantics, recovery, orbit tags, excluded components, and a falsifiable full-cost prediction.",
+      "An independently replayable counter-certificate or proof identifies an error in the frozen S3/S4 formulas, resultant construction, assumptions, or coordinatewise C3 classification.",
+      "A formal cost theorem combines the finite target orbit with a new mechanism and proves a nonconstant full-pipeline gain rather than attributing asymptotic value to orbit size alone."
     ],
     "operational_effects": [
-      "TASK-009 is the sole active bounded structural uncertainty and is bound to GLV-SEMAEV-ITER-001, R-GLV-SEMAEV, and HYP_GLV_SEMAEV_001.",
-      "HYP_GLV_SEMAEV_001 remains parked as an experiment; only its non-experimental structural lane is active.",
+      "TASK-009 and GLV-SEMAEV-ITER-001 are completed with the diagonal-only bounded result.",
+      "HYP_GLV_SEMAEV_001 remains parked as an experiment; its non-experimental structural lane is completed.",
       "selected_attack_route remains null, promoted_route_ids remains empty, and every route-level authorized_experiment flag remains false.",
       "No general msolve, Sage, F4, parameter sweep, exact-target run, or unrelated route search is authorized.",
-      "All P0-P4 evidence and prior append-only research decisions are retained."
+      "All P0-P4 evidence and prior append-only research decisions are retained; TASK-008 proposal intake is the current central ECDLP queue."
     ]
   },
   "upstream_snapshot": {
@@ -646,13 +658,13 @@
         "The quotient retains enough information to recover valid relations."
       ],
       "known_cost": "Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.",
-      "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance; a generic fixed nonzero target has only the identity covariance. The standard-library replay reconstructs S4 independently from the Sylvester determinant. The narrow Lean covariance module is authored but remains outside the verified ledger until kernel CI accepts it. Earlier P0-P4 evidence is retained unchanged.",
+      "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance; a generic fixed nonzero target has only the identity covariance. The standard-library replay reconstructs S4 independently from the Sylvester determinant. The narrow covariance and point-group transport source package passed the full Lean build and built-source no-sorry scan in workflow run 30142661986. Its current VERIFIED.md registration and expanded exhaustive axiom audit remain pending closure CI; earlier P0-P4 evidence is retained unchanged.",
       "success_gate": "Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.",
       "stop_condition": "The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.",
-      "next_action": "Finish kernel CI for the narrow covariance module, then close GLV-SEMAEV-ITER-001 without a solver run. Reopen experiments only for a materially different phase-preserving mechanism with an exact recovery map and full-cost prediction.",
+      "next_action": "Keep GLV-SEMAEV-ITER-001 closed without a solver run. Accept only a materially different phase-preserving mechanism with an exact recovery map, orbit tags, excluded components, a falsifiable full-cost prediction, and an independent validator through TASK-008 before any new decision.",
       "authorized_experiment": false,
       "structural_lane": {
-        "status": "active",
+        "status": "completed",
         "decision_id": "RS-2026-07-24-001",
         "iteration_id": "GLV-SEMAEV-ITER-001",
         "route_id": "R-GLV-SEMAEV",
@@ -681,9 +693,13 @@
       ],
       "lean_anchors": [
         "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples",
-        "Ecdlp.Semaev.secp256k1_point_decomposition_semaev"
+        "Ecdlp.Semaev.secp256k1_point_decomposition_semaev",
+        "Ecdlp.Semaev.S₃_diagonal_cube_covariance",
+        "Ecdlp.Semaev.S₄_diagonal_cube_invariant",
+        "Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff"
       ],
       "evidence_files": [
+        "Ecdlp/Proved/GlvSemaevSymmetry.lean",
         "experiments/glv_diagonal_obstruction/artifact.json",
         "experiments/glv_semaev_symmetry/certificate.json",
         "experiments/p0_glv_semaev/RESULTS.md",
@@ -1123,7 +1139,7 @@
       "deliverable": "Only the minimal theorem chain required by a selected exact relation system: semantics, elimination soundness, recovery, and a justified cost bridge.",
       "resume_condition": "One of the dependent routes is selected with a materially new exact system, explicit fixed-target semantics, and a plausible complexity mechanism beyond finite-orbit compression.",
       "structural_lane": {
-        "status": "active_bounded_slice",
+        "status": "completed_bounded_slice",
         "decision_id": "RS-2026-07-24-001",
         "iteration_id": "GLV-SEMAEV-ITER-001",
         "route_id": "R-GLV-SEMAEV",
@@ -1256,14 +1272,15 @@
     }
   ],
   "next_phase_gate": {
-    "current_mode": "bounded_structural_promotion_closed",
+    "current_mode": "proposal_intake_promotion_closed",
     "reopen_requirements": [
-      "Complete or explicitly block GLV-SEMAEV-ITER-001 with exact replayable evidence.",
-      "Record whether only the diagonal C3 action survives, a larger exact quotient survives, or one smallest lemma remains unresolved.",
+      "Supply a materially different phase-preserving quotient, birational construction, or other exact mechanism; the independent coordinatewise-cube premise is closed.",
+      "Specify fixed-target behavior, recovery map, orbit tags, excluded components, and a falsifiable full-cost prediction.",
+      "Provide an independent raw-artifact validator before requesting any solver experiment.",
       "Require a new dated decision before any hypothesis experiment, general solver sweep, route promotion, or exact-target work.",
       "For any later promotion, pass every common acceptance requirement and bind the same route, hypothesis, task, mechanism, validator, and cost theorem."
     ],
-    "decision": "RS-2026-07-24-001 supersedes RS-2026-07-22-001 only for the bounded structural lane. It selects R-GLV-SEMAEV as the sole object of GLV-SEMAEV-ITER-001 while selecting zero promoted routes and authorizing zero experiments.",
+    "decision": "RS-2026-07-24-001 completed GLV-SEMAEV-ITER-001 with a diagonal-only bounded result. R-GLV-SEMAEV remains open_parked, zero routes are promoted, zero experiments are authorized, and TASK-008 proposal intake is the current central ECDLP queue.",
     "final_review": "Independent adversarial review is requested when another qualified reviewer is available. It is an additional audit, not a merge prerequisite; required CI, explicit scope, rollback safety, and the owner's standing authorization govern merges."
   }
 }

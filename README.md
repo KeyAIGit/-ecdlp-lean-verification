@@ -33,13 +33,18 @@ other doc — prose may be stale; if in doubt, cite STATUS.md. Machine-readable:
 `data/stats.json` · badge endpoint `badges/theorems.json`.
 
 **Current research decision.** `RS-2026-07-24-001` supersedes the prior
-select-none decision only for `GLV-SEMAEV-ITER-001`: one route is selected for
-bounded symbolic and Lean structural work, while **zero** routes are promoted and
-**zero** experiments are authorized. Exact replay shows that only the diagonal
-`C3` action survives for `S3` and `S4`; at a generic fixed nonzero target, only
-identity remains a scalar covariance. This is a bounded negative for the naive
-independent `u_i=x_i^3` quotient, not a Groebner lower bound or an ECDLP result.
-Exact-target work remains forbidden, and no asymptotic claim follows. New evidence enters
+select-none decision only for the now-completed `GLV-SEMAEV-ITER-001`; it
+selected one route for bounded symbolic and Lean structural work while
+promoting **zero** routes and authorizing **zero** experiments. Exact symbolic
+replay shows that only the diagonal `C3` action survives among the enumerated
+coordinatewise scalar covariances of `S3` and `S4`; at a generic fixed nonzero
+target, only identity remains a scalar covariance. The separate kernel-accepted
+package proves the positive diagonal covariance and point-relation transport
+identities, not the exhaustive stabilizer classification. This is a bounded
+negative for the naive independent `u_i=x_i^3` quotient, not a Groebner lower
+bound or an ECDLP result.
+The route remains parked, exact-target work remains forbidden, and no
+asymptotic claim follows. New evidence enters
 through the candidate-neutral contract in `experiments/framework/`,
 source-commit-bound raw-artifact replay, engine-derived outcome classification,
 review-anchored events in `experiments/engine/outcomes/`, and explicit reconsideration
