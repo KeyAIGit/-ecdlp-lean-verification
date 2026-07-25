@@ -78,14 +78,13 @@ private theorem S₄_zero_a_explicit
         ((x₃ - x₄) ^ 2)
         (-(2 * ((x₃ + x₄) * (x₃ * x₄) + 2 * b)))
         ((x₃ * x₄) ^ 2 - 4 * b * (x₃ + x₄)) := by
-  simpa only [S₄, S₃poly, add_zero, sub_zero] using
-    resultant_quadratic
-      ((x₁ - x₂) ^ 2)
-      (-(2 * ((x₁ + x₂) * (x₁ * x₂) + 2 * b)))
-      ((x₁ * x₂) ^ 2 - 4 * b * (x₁ + x₂))
-      ((x₃ - x₄) ^ 2)
-      (-(2 * ((x₃ + x₄) * (x₃ * x₄) + 2 * b)))
-      ((x₃ * x₄) ^ 2 - 4 * b * (x₃ + x₄))
+  have hslice (u v : F) :
+      S₃poly 0 b u v =
+        C ((u - v) ^ 2) * X ^ 2
+          + C (-(2 * ((u + v) * (u * v) + 2 * b))) * X
+          + C ((u * v) ^ 2 - 4 * b * (u + v)) := by
+    simp only [S₃poly, add_zero, sub_zero]
+  rw [S₄, hslice x₁ x₂, hslice x₃ x₄, resultant_quadratic]
 
 /-- The quadratic resultant is invariant when both coefficient triples receive
 the GLV weights `(β², 1, β)`. -/
