@@ -307,7 +307,10 @@ the fixed-target obstruction are **already in print**:
   variables. The GLV scalar action is different: it is sum-compatible only on the
   diagonal, whose order remains three. Fixed order of a curve symmetry alone therefore
   proves no constant-factor ceiling; the relation-preserving coordinatewise action is
-  the relevant object.
+  the relevant object. The direct rational-2-torsion mechanism is unavailable on
+  secp256k1 over `F_p`: the kernel-checked theorem
+  `Ecdlp.Curve.secp256k1_no_nonzero_two_torsion` proves `E(F_p)[2] = {O}`. This
+  target-specific screen does not exclude auxiliary curves or extension fields.
 
 **Defensible contribution.** Specialization of the classification to the multiplicative `j = 0`
 case over a prime field, its exact certification (including the characteristic-uniform witness),
