@@ -52,12 +52,17 @@ private theorem resultant_quadratic
            g₂, g₁, f₂, f₁;
            0, g₂, 0, f₂] := by
     ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [f, g, Polynomial.sylvester]
+    induction j using Fin.addCases with
+    | left j =>
+        fin_cases i <;> fin_cases j <;>
+          norm_num [f, g, Polynomial.sylvester]
+    | right j =>
+        fin_cases i <;> fin_cases j <;>
+          norm_num [f, g, Polynomial.sylvester]
   change f.resultant g 2 2 = quadraticResultant f₂ f₁ f₀ g₂ g₁ g₀
   rw [Polynomial.resultant, hsylvester, Matrix.det_succ_row_zero]
-  simp [Matrix.det_fin_three, quadraticResultant]
-  ring
+  simp [Fin.sum_univ_succ, Matrix.det_fin_three, quadraticResultant]
+  ring_nf
 
 /-- The exact fixed-size resultant definition of `S₄` reduced to its six quadratic
 slice coefficients. -/
