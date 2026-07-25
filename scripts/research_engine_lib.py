@@ -15,6 +15,14 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from hypothesis_generation_lib import (
+    GENERATION_POLICY_PATH,
+    PROPOSALS_DIR,
+    REVIEWS_DIR,
+    build_generation_state,
+    load_json_records as load_hypothesis_generation_records,
+)
+
 ROOT = Path(__file__).resolve().parent.parent
 POLICY_PATH = ROOT / "repo" / "RESEARCH_ENGINE_V0.json"
 DECISION_PATH = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
@@ -1768,6 +1776,19 @@ def validate_policy(
         problems.append("policy.status is invalid")
     if not _nonempty_text(policy.get("engine_id")):
         problems.append("policy.engine_id must be nonempty")
+    ownership = policy.get("canonical_ownership", {})
+    generation_ownership = {
+        "hypothesis_generation_policy": "repo/HYPOTHESIS_GENERATION_V0.json",
+        "hypothesis_proposals": "experiments/engine/proposals/",
+        "hypothesis_proposal_reviews": (
+            "experiments/engine/proposal_reviews/"
+        ),
+    }
+    for field, expected in generation_ownership.items():
+        if ownership.get(field) != expected:
+            problems.append(
+                f"canonical_ownership.{field} must be {expected}"
+            )
 
     policy_gates = policy.get("gates", {})
     exploration_gate = policy_gates.get("exploration", {})
@@ -3496,7 +3517,16 @@ def build_state(
     decisions: dict[str, Any],
     hypotheses: dict[str, dict[str, str]],
     outcomes: list[tuple[Path, dict[str, Any]]],
+    hypothesis_generation: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    if hypothesis_generation is None:
+        _, hypothesis_generation = build_generation_state(
+            load_json(GENERATION_POLICY_PATH),
+            decisions,
+            policy,
+            load_hypothesis_generation_records(PROPOSALS_DIR),
+            load_hypothesis_generation_records(REVIEWS_DIR),
+        )
     event_values = [event for _, event in outcomes]
     selection = apply_execution_feedback(
         policy, select_candidates(policy), event_values
@@ -3629,6 +3659,9 @@ def build_state(
         "engine_id": policy["engine_id"],
         "source_hashes": {
             "policy_sha256": sha256_json(policy),
+            "hypothesis_generation_policy_sha256": hypothesis_generation[
+                "source_hashes"
+            ]["generation_policy_sha256"],
             "decision_substrate_sha256": sha256_json(decisions),
             "hypotheses_sha256": file_sha256(HYPOTHESES_PATH),
             "outcome_events_sha256": sha256_json(event_values),
@@ -3656,6 +3689,18 @@ def build_state(
             "normalized_hypotheses": len(normalized_hypotheses),
             "outcome_events": len(event_values),
             "candidate_proposals": len(policy["candidate_proposals"]),
+            "generated_hypothesis_seeds": hypothesis_generation["counts"][
+                "generated_seeds"
+            ],
+            "submitted_hypothesis_proposals": hypothesis_generation["counts"][
+                "submitted_proposals"
+            ],
+            "quality_cleared_hypothesis_proposals": hypothesis_generation[
+                "counts"
+            ]["quality_cleared_proposals"],
+            "retained_hypothesis_drafts": hypothesis_generation["counts"][
+                "retained_hypothesis_drafts"
+            ],
             "intake_candidates": sum(
                 candidate.get("authorization") == "intake"
                 for candidate in policy["candidate_proposals"]
@@ -3715,6 +3760,7 @@ def build_state(
             ),
             "route_count": len(route_states),
         },
+        "hypothesis_generation": hypothesis_generation,
         "feedback_contract": policy["feedback_contract"],
     }
 
@@ -3802,7 +3848,18 @@ def validate_all() -> tuple[list[str], dict[str, Any]]:
     decisions = load_json(DECISION_PATH)
     hypotheses = parse_hypotheses()
     outcomes = load_outcomes()
+    generation_policy = load_json(GENERATION_POLICY_PATH)
+    generation_proposals = load_hypothesis_generation_records(PROPOSALS_DIR)
+    generation_reviews = load_hypothesis_generation_records(REVIEWS_DIR)
     problems.extend(validate_policy(policy, decisions, hypotheses))
+    generation_problems, generation_state = build_generation_state(
+        generation_policy,
+        decisions,
+        policy,
+        generation_proposals,
+        generation_reviews,
+    )
+    problems.extend(generation_problems)
     event_ids: list[str] = []
     for path, event in outcomes:
         problems.extend(validate_outcome(path, event, policy, decisions, hypotheses))
@@ -3821,7 +3878,13 @@ def validate_all() -> tuple[list[str], dict[str, Any]]:
         )
     )
     problems.extend(validate_native_sequence(policy, decisions, outcomes))
-    state = build_state(policy, decisions, hypotheses, outcomes)
+    state = build_state(
+        policy,
+        decisions,
+        hypotheses,
+        outcomes,
+        generation_state,
+    )
     if not state["retrospective_validation"]["passed"]:
         problems.append("historical no-reopen validation failed")
     return problems, state

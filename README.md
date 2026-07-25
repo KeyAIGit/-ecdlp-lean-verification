@@ -27,7 +27,8 @@ intentionally never built or imported, so the invariant holds.
 modules, `sorry` = 0, custom axioms = 0, corpus coverage). It is produced by
 `scripts/gen_status.py` from `data/stats.json` (which **recounts the `VERIFIED.md`
 ledger table mechanically**), `data/frontier_map.json`, and the ECDLP decision substrate.
-Research Engine gate and outcome counts come from `data/research_engine_state.json`.
+Research Engine generation, gate, and outcome counts come from
+`data/research_engine_state.json`.
 Do not quote a count from any
 other doc — prose may be stale; if in doubt, cite STATUS.md. Machine-readable:
 `data/stats.json` · badge endpoint `badges/theorems.json`.
@@ -48,10 +49,14 @@ negative for the naive independent `u_i=x_i^3` quotient, not a Groebner lower
 bound or an ECDLP result.
 The route remains parked, exact-target work remains forbidden, and no
 asymptotic claim follows. New evidence enters
-through the candidate-neutral contract in `experiments/framework/`,
+through the digest-bound proposal/review contract in `experiments/engine/` and
+the candidate-neutral contract in `experiments/framework/`, with
 source-commit-bound raw-artifact replay, engine-derived outcome classification,
 review-anchored events in `experiments/engine/outcomes/`, and explicit reconsideration
-triggers. A positive toy result is `supported`, never `proved`.
+triggers. The generation layer
+currently creates three source-grounded research seeds, but none is a submitted
+or quality-cleared hypothesis. Creative output remains untrusted and non-executable.
+A positive toy result is `supported`, never `proved`.
 
 ## What NOT to claim
 
@@ -64,8 +69,9 @@ triggers. A positive toy result is `supported`, never `proved`.
   protocol: no adversary, no hash/random oracle, no probability model.
 - Legacy dispatch automation is bounded and produced **0 accepted** external-model
   proofs. Real progress came from the tactic ladder plus human/assistant formalization.
-  Research Engine v0 is a bounded selector and memory feedback loop, not a finished
-  autonomous discovery system.
+  Research Engine v0 now generates source-grounded questions and compiles
+  adversarially reviewed proposals, but its creative proposer is untrusted and
+  it is not a finished autonomous discovery system.
 - Never claim more than the kernel verifies. When unsure, state the limit plainly.
 
 ## Highlights (for a Lean / formal-methods reader)
@@ -122,10 +128,10 @@ concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofRed
 | `REPOSITORY_ARCHITECTURE.md` + `repo/ARTIFACTS.yaml` | exhaustive whole-repo ownership map |
 | `repo/FORMAL_SUBSTRATE.json` | machine-readable result families, critical path, blockers, and release boundary |
 | `repo/ECDLP_DECISION_SUBSTRATE.json` | exact target, threat models, route dispositions, evidence gates, and foundation priority |
-| `repo/RESEARCH_ENGINE_V0.json` · `data/research_engine_state.json` | bounded selector policy and generated exploration/outcome state |
+| `repo/RESEARCH_ENGINE_V0.json` · `repo/HYPOTHESIS_GENERATION_V0.json` · `data/research_engine_state.json` | bounded generation/selector policies and generated proposal, exploration, and outcome state |
 | `repo/PRODUCT_MODEL.json` | product category, current stage, public claim boundary, and MVP evidence gate |
 | `scripts/site_generator.py` | generates the product site, operator workspace, and canonical route explorer |
-| `experiments/framework/` · `experiments/engine/` | candidate-neutral validation plus append-only Research Engine outcomes |
+| `experiments/framework/` · `experiments/engine/` | candidate-neutral validation, generated-proposal intake, adversarial reviews, and append-only outcomes |
 | `experiments/` · `domains/` · `notes/` (`notes/INDEX.md`) | validated experiments, domain registry, curated research memory |
 | `archive/` | frozen history: superseded docs, raw traces, the undeployed platform scaffold |
 

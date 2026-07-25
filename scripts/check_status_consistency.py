@@ -222,6 +222,9 @@ def main() -> int:
     selected_structural = route_selection.get("selected_route_ids", [])
     promoted_routes = route_selection.get("promoted_route_ids", [])
     selected_explorations = engine.get("counts", {}).get("selected_explorations")
+    generated_hypothesis_seeds = engine.get("counts", {}).get(
+        "generated_hypothesis_seeds"
+    )
     check(
         f"{route_count} canonical routes" in dashboard,
         "dashboard route count must match the decision substrate",
@@ -249,8 +252,14 @@ def main() -> int:
         "The bounded structural question is resolved; no experiment is authorized." in dashboard
         and "No run authorized" in dashboard
         and "repo/RESEARCH_ENGINE_V0.json" in dashboard
+        and "repo/HYPOTHESIS_GENERATION_V0.json" in dashboard
         and "Promotion experiments" in dashboard,
         "dashboard must distinguish the exploration and promotion gates",
+    )
+    check(
+        f"**{generated_hypothesis_seeds} source-grounded seeds**" in status
+        and f"{generated_hypothesis_seeds} source-grounded seeds;" in dashboard,
+        "status and dashboard must expose the generated hypothesis-seed count",
     )
 
     graph_counts = graph.get("counts", {})
@@ -280,6 +289,11 @@ def main() -> int:
         "knowledge graph candidate count must match research_engine_state.json",
     )
     check(
+        graph_counts.get("generated_hypothesis_seeds")
+        == generated_hypothesis_seeds,
+        "knowledge graph generated-seed count must match research_engine_state.json",
+    )
+    check(
         graph_counts.get("research_engine_outcomes")
         == engine.get("counts", {}).get("outcome_events"),
         "knowledge graph outcome count must match research_engine_state.json",
@@ -302,6 +316,11 @@ def main() -> int:
         and graph_engine.get("execution_queue") == engine.get("execution_queue")
         and graph_engine.get("outcome_events") == engine.get("outcome_events"),
         "knowledge graph Research Engine view must match generated engine state",
+    )
+    check(
+        graph_engine.get("hypothesis_generation")
+        == engine.get("hypothesis_generation"),
+        "knowledge graph hypothesis-generation view must match engine state",
     )
     check(
         engine.get("gate_status", {}).get("exploration_authorized")

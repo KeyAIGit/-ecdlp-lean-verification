@@ -8,6 +8,7 @@
     "attack_evidence": "data/attack_registry.json",
     "research_decisions": "repo/ECDLP_DECISION_SUBSTRATE.json",
     "research_engine_policy": "repo/RESEARCH_ENGINE_V0.json",
+    "hypothesis_generation_policy": "repo/HYPOTHESIS_GENERATION_V0.json",
     "research_engine_state": "data/research_engine_state.json",
     "active_work": "tasks/ECDLP_RESEARCH.md",
     "experiment_authorization": "repo/RESEARCH_ENGINE_V0.json and experiments/HYPOTHESES.yaml"
@@ -164,6 +165,7 @@
     "selected_attack_route": null,
     "allowed_work": [
       "Maintain and independently replay the completed GLV-SEMAEV-ITER-001 certificates and kernel-checked theorem package.",
+      "Generate source-grounded non-executable research seeds and compile structured proposals through digest-bound adversarial review.",
       "Accept new primary evidence or a materially different exact mechanism through TASK-008 proposal intake without authorizing execution.",
       "Prepare optional independent adversarial review at a stable checkpoint without treating review as route promotion.",
       "Maintain canonical provenance and regenerate affected views without changing the recorded claim boundary."

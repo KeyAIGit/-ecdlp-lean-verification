@@ -2,7 +2,7 @@
   "schema_version": "0.1",
   "engine_id": "ecdlp-research-engine-v0",
   "status": "implementation",
-  "purpose": "Turn the existing ECDLP evidence and decision control plane into a bounded selection and memory loop that admits, ranks, validates, and retains preregistered falsifiable exploration without weakening the promotion gate.",
+  "purpose": "Turn the existing ECDLP evidence and decision control plane into a bounded generation, selection, and memory loop that creates source-grounded research seeds, adversarially compiles proposals, ranks admissible candidates, validates runs, and retains outcomes without weakening the promotion gate.",
   "target_contract": {
     "primary_threat_model": "classical-single-target-plain",
     "selection_rule": "A candidate outside the primary threat model is rejected before any information-gain or cost score is computed.",
@@ -10,6 +10,9 @@
   },
   "canonical_ownership": {
     "policy_and_candidate_queue": "repo/RESEARCH_ENGINE_V0.json",
+    "hypothesis_generation_policy": "repo/HYPOTHESIS_GENERATION_V0.json",
+    "hypothesis_proposals": "experiments/engine/proposals/",
+    "hypothesis_proposal_reviews": "experiments/engine/proposal_reviews/",
     "hypothesis_registry": "experiments/HYPOTHESES.yaml",
     "historical_and_new_outcomes": "experiments/engine/outcomes/",
     "native_run_envelopes": "experiments/engine/runs/",
@@ -170,7 +173,7 @@
     "information_gain_formula": "H(prior_live) - sum_o P(o) * H(P(live | o)), in bits",
     "priority_formula": "expected_information_gain_bits / normalized_budget_cost",
     "normalized_budget_cost": "wall_time/max_wall_time + peak_memory/max_peak_memory + parallel_workers/max_parallel_workers",
-    "commitment": "Each selected candidate freezes a latent question, prior, rationale, and P(outcome | live/dead) before its first native run.",
+    "commitment": "Each selected candidate freezes a latent question, prior, rationale, and P(outcome | live/dead) before its first native run. A generated proposer may not supply the final prior or likelihoods for its own candidate; those values require separate decision-owner review and later native calibration.",
     "calibration": "Brier scores begin with native preregistered outcomes. Historical migrations are excluded because assigning probabilities after seeing their results would be post hoc.",
     "tie_breakers": [
       "higher expected information gain",
@@ -771,6 +774,9 @@
   "feedback_contract": {
     "append_only_input": "experiments/engine/outcomes/",
     "generated_updates": [
+      "source-grounded hypothesis seed queue",
+      "digest-bound proposal and adversarial review state",
+      "quality-cleared non-executable hypothesis drafts",
       "candidate terminal state",
       "normalized hypothesis evidence summary",
       "effective route evidence disposition",

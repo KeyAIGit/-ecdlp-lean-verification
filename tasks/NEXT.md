@@ -29,7 +29,8 @@ Only the diagonal `C3` covariance survived. No experiment hypothesis or attack
 route is promoted; new work enters through proposal intake.
 
 Architecture sources: `repo/FORMAL_SUBSTRATE.json`,
-`repo/RESEARCH_ENGINE_V0.json`, and `repo/ARTIFACTS.yaml`.
+`repo/RESEARCH_ENGINE_V0.json`, `repo/HYPOTHESIS_GENERATION_V0.json`, and
+`repo/ARTIFACTS.yaml`.
 
 ## Task contract template
 

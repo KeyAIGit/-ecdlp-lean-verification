@@ -92,7 +92,13 @@ The engine normalizes **9 hypotheses** and retains
 **0 native**. Its historical
 no-reopen guard matched four frozen cases; this is not predictive EIG calibration. Predictive
 calibration currently contains **0 native
-outcomes**. Selected bounded explorations: **0** (none). Ready now: **0** (none). **0 candidates remain at intake** behind exact-mechanism or independent-validator hard gates.
+outcomes**. The generation layer currently emits
+**3 source-grounded seeds**, with
+**0 submitted proposals**,
+**0 quality-cleared proposals**, and
+**0 retained non-executable drafts**.
+Creative output is untrusted and zero retained drafts is a valid cycle result.
+Selected bounded explorations: **0** (none). Ready now: **0** (none). **0 candidates remain at intake** behind exact-mechanism or independent-validator hard gates.
 
 The Engine's bounded-exploration capability is
 **true**, while the current decision's experiment
@@ -113,7 +119,8 @@ claim boundary. Public surfaces must distinguish current capabilities, the refer
 customer hypotheses, and future product direction.
 
 The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view is generated.
-The engine policy is `repo/RESEARCH_ENGINE_V0.json`; its generated state is
+The engine policies are `repo/RESEARCH_ENGINE_V0.json` and
+`repo/HYPOTHESIS_GENERATION_V0.json`; their generated state is
 `data/research_engine_state.json`. The candidate-neutral validation contract lives in
 `experiments/framework/`. No one file authorizes promotion by itself.
 
@@ -127,6 +134,7 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 `README.md` (the front door) · `repo/PRODUCT_MODEL.json` (product and MVP authority) ·
 `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
 `repo/RESEARCH_ENGINE_V0.json` (exploration policy and selector) ·
+`repo/HYPOTHESIS_GENERATION_V0.json` (seed and proposal-quality policy) ·
 `data/research_engine_state.json` (generated engine state) ·
 `tasks/NEXT.md` (queue router) · `tasks/ECDLP_RESEARCH.md` (research queue) ·
 `tasks/KEYAI_PRODUCT.md` (product queue) ·

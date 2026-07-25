@@ -482,6 +482,12 @@ def build() -> dict:
             "decision_foundations": len(decisions["foundations"]),
             "attack_registry_objects": len(attack_registry["attacks"]),
             "research_engine_candidates": engine["counts"]["candidate_proposals"],
+            "generated_hypothesis_seeds": engine["counts"][
+                "generated_hypothesis_seeds"
+            ],
+            "quality_cleared_hypothesis_proposals": engine["counts"][
+                "quality_cleared_hypothesis_proposals"
+            ],
             "research_engine_intake_candidates": engine["counts"][
                 "intake_candidates"
             ],
@@ -543,6 +549,7 @@ def build() -> dict:
             "historical_outcomes": engine["historical_outcomes"],
             "native_outcomes": engine["native_outcomes"],
             "route_evidence_state": engine["route_evidence_state"],
+            "hypothesis_generation": engine["hypothesis_generation"],
             "feedback_contract": engine["feedback_contract"],
         },
         "corpus": parse_corpus(),
@@ -574,6 +581,7 @@ def render_markdown(graph: dict) -> str:
         f"**{c['decision_foundations']} decision foundations** · "
         f"**{c['selected_structural_routes']} bounded structural route recorded** · "
         f"**{c['promoted_routes']} routes promoted** · "
+        f"**{c['generated_hypothesis_seeds']} generated hypothesis seeds** · "
         f"**{c['selected_explorations']} bounded explorations selected** · "
         f"**{c['research_engine_outcomes']} retained outcomes** · "
         f"**{c['edges']} edges**"

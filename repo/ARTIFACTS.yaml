@@ -181,6 +181,7 @@ classes:
       - repo/FORMAL_SUBSTRATE.json
       - repo/ECDLP_DECISION_SUBSTRATE.json
       - repo/RESEARCH_ENGINE_V0.json
+      - repo/HYPOTHESIS_GENERATION_V0.json
       - repo/PRODUCT_MODEL.json
       - repo/PILOT_PROTOCOL.json
       - repo/AUTOMATION_INVENTORY.json

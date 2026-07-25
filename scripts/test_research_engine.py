@@ -10,6 +10,19 @@ from pathlib import Path
 from unittest.mock import patch
 
 from gen_status import render_engine_queue_summary
+from hypothesis_generation_lib import (
+    GENERATION_POLICY_PATH,
+    PROPOSAL_FIELDS,
+    PROPOSALS_DIR,
+    REVIEW_FIELDS,
+    REVIEWS_DIR,
+    build_generation_state,
+    generate_seeds,
+    git_file_sha256,
+    mechanism_signature,
+    premise_fingerprint,
+    proposal_sha256,
+)
 from research_engine_lib import (
     DECISION_PATH,
     INSTANCE_VALIDATION_FIELDS,
@@ -48,6 +61,7 @@ class ResearchEngineTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.policy = load_json(POLICY_PATH)
+        cls.generation_policy = load_json(GENERATION_POLICY_PATH)
         cls.decisions = load_json(DECISION_PATH)
         cls.hypotheses = parse_hypotheses()
         cls.outcomes = load_outcomes()
@@ -72,6 +86,312 @@ class ResearchEngineTests(unittest.TestCase):
             root
         ).as_posix()
         cls.addClassCleanup(cls.test_validator_path.unlink, missing_ok=True)
+
+    def generation_proposal(self, seed: dict, proposal_id: str) -> dict:
+        premise = (
+            "Character-graded syzygy sparsity persists after target tags and "
+            "all relative GLV phases are retained in the relation ideal."
+        )
+        source_commit = "68e9ff36a5c07c842dc9fbbeec3c3da7a02896ca"
+        evidence_inputs = seed["evidence_inputs"][:2]
+        source_id = seed["route_source_ids"][0]
+        proposal = {
+            "schema_version": "0.1",
+            "proposal_id": proposal_id,
+            "seed_id": seed["seed_id"],
+            "created_on": "2026-07-25",
+            "proposer_id": "fixture-proposer",
+            "route_id": seed["route_id"],
+            "threat_model": seed["threat_model"],
+            "title": "Digest-bound synthetic hypothesis-generation fixture",
+            "hypothesis_statement": (
+                "A faithful character-graded relation presentation reduces a "
+                "preregistered decisive cost metric on increasing toy fields."
+            ),
+            "new_premise": premise,
+            "premise_counterfactual": (
+                "Without graded sparsity beyond the known diagonal symmetry, "
+                "the presentation reduces to a faithful but cost-neutral "
+                "re-encoding and must lose to the plain baseline."
+            ),
+            "premise_fingerprint": premise_fingerprint(premise),
+            "mechanism_identity": {
+                "transformation_class": "character-graded-target-ideal",
+                "information_source_class": "explicit-j0-coordinate-action",
+                "target_semantics_class": "single-target-tag-preserving",
+                "recovery_class": "phase-tuple-point-sum-replay",
+                "changed_cost_term": "validated-f4-nonzeros-per-relation",
+                "precomputation_class": "fully-priced-target-independent",
+                "amortization_class": "none-single-target",
+            },
+            "mechanism_signature": "",
+            "novelty_scope": {
+                "new_to_repository": True,
+                "new_to_reviewed_corpus": True,
+                "global_novelty": "unverified",
+                "rationale": (
+                    "The exact tagged character presentation is absent from "
+                    "the reviewed repository corpus; global novelty is not claimed."
+                ),
+            },
+            "nearest_prior_art": [
+                {
+                    "source_id": source_id,
+                    "primary": True,
+                    "reference": "Repository GLV-Semaev obstruction baseline",
+                    "locator": "README section on faithful quotient boundaries",
+                    "overlap": (
+                        "Both study the exact GLV action on fixed-target "
+                        "Semaev relation systems."
+                    ),
+                    "difference": (
+                        "The fixture retains target tags and relative phases "
+                        "instead of quotienting every coordinate cube."
+                    ),
+                    "evidence_file": (
+                        evidence_inputs[0]
+                    ),
+                }
+            ],
+            "exact_mechanism": {
+                "map": (
+                    "Map each relation into a character-graded component while "
+                    "retaining an explicit diagonal-orbit tag."
+                ),
+                "domain": (
+                    "The complete fixed-target Semaev relation ideal over a "
+                    "cofactor-one toy j=0 curve."
+                ),
+                "codomain": (
+                    "A tagged direct sum of character components with all "
+                    "relative phases represented."
+                ),
+                "relation_semantics": (
+                    "Membership represents exactly the same point-sum relation "
+                    "as the source ideal."
+                ),
+                "fixed_target_semantics": (
+                    "The target-orbit tag is transported explicitly and never "
+                    "identified with the original fixed target."
+                ),
+                "exceptional_locus": (
+                    "Zero coordinates, singular fibers, and failed recovery "
+                    "components are enumerated and priced separately."
+                ),
+                "recovery_map": (
+                    "Recover the source phase tuple and verify the point sum "
+                    "using independent elliptic-curve arithmetic."
+                ),
+                "implementation_identity": (
+                    "The producer emits canonical tagged generators and a "
+                    "versioned transformation manifest."
+                ),
+            },
+            "non_generic_information_source": (
+                "The mechanism consumes explicit j=0 coordinate action and "
+                "character grading, information absent from a generic oracle."
+            ),
+            "null_model": (
+                "The same systems are solved after a bookkeeping-only tagged "
+                "change of basis, so any observed difference is constant noise "
+                "or implementation variance rather than mechanism evidence."
+            ),
+            "competing_mechanism": (
+                "A matched sparse elimination ordering on the plain Semaev "
+                "presentation may explain the same matrix reduction without "
+                "using GLV character structure."
+            ),
+            "cost_bridge": {
+                "baseline": (
+                    "Matched plain Semaev relation generation on identical toy "
+                    "curves, targets, seeds, and factor-base sizes."
+                ),
+                "changed_term": (
+                    "Total nonzero F4 matrix entries per independently validated "
+                    "recovered relation."
+                ),
+                "online_cost": (
+                    "Count field operations for solving, recovery, rejection, "
+                    "and target-tag verification."
+                ),
+                "offline_cost": (
+                    "Charge presentation construction and every reusable "
+                    "character decomposition."
+                ),
+                "memory_cost": (
+                    "Record peak matrix storage and retained relation artifacts "
+                    "for both presentations."
+                ),
+                "parallelism": (
+                    "Use the same worker count and report aggregate as well as "
+                    "critical-path work."
+                ),
+                "precomputation": (
+                    "All target-independent and target-dependent preprocessing "
+                    "is timed and included."
+                ),
+                "amortization_scope": (
+                    "No multi-target amortization is credited in the plain "
+                    "single-target comparison."
+                ),
+                "scaling_claim": (
+                    "The decisive ratio must improve across three increasing "
+                    "field sizes; one constant toy win is inconclusive."
+                ),
+            },
+            "falsifiable_prediction": (
+                "The tagged presentation lowers the decisive cost metric on "
+                "each of three increasing preregistered toy sizes."
+            ),
+            "matched_baseline": (
+                "The plain presentation uses the same curves, targets, seeds, "
+                "factor-base sizes, solver version, and resource limits."
+            ),
+            "stop_condition": (
+                "Stop and retain a bounded negative if any size loses exact "
+                "recovery or the cost ratio fails to improve."
+            ),
+            "outcome_matrix": {
+                "supported": (
+                    "Every preregistered size preserves recovery and improves "
+                    "the decisive ratio under the matched baseline."
+                ),
+                "falsified": (
+                    "The exact transformation or fixed-target relation fails "
+                    "on an independently checked instance."
+                ),
+                "bounded_negative": (
+                    "The mechanism is exact but the decisive ratio does not "
+                    "improve across the bounded size ladder."
+                ),
+                "inapplicable": (
+                    "The required character decomposition is absent on a "
+                    "preregistered curve family member."
+                ),
+                "inconclusive": (
+                    "Measurements pass validation but do not separate the "
+                    "mechanism from the matched baseline."
+                ),
+                "resource_exhausted": (
+                    "The frozen resource budget ends before every decisive "
+                    "instance receives a validated classification."
+                ),
+            },
+            "validator_plan": {
+                "decisive_claim": (
+                    "Recompute recovered relations and the full decisive cost "
+                    "ratio from raw producer artifacts."
+                ),
+                "raw_artifacts": (
+                    "Canonical systems, target tags, solver traces, recovered "
+                    "points, operation counts, and resource records."
+                ),
+                "independent_method": (
+                    "Use separately authored point arithmetic and sparse-matrix "
+                    "parsing without importing producer transformation code."
+                ),
+                "failure_labels": (
+                    "Classify exact failure as falsified, bounded_negative, "
+                    "inconclusive, inapplicable, or resource_exhausted."
+                ),
+            },
+            "toy_scope": {
+                "curve_family": "cofactor-one toy j=0 curves",
+                "max_field_bits": 20,
+                "forbidden_targets": ["secp256k1"],
+            },
+            "claim_boundary": (
+                "This toy structural test does not establish an asymptotic "
+                "speedup, an exact-target algorithm, or a secp256k1 break."
+            ),
+            "evidence_inputs": evidence_inputs,
+            "evidence_manifest": [
+                {
+                    "path": path,
+                    "sha256": git_file_sha256(source_commit, path),
+                    "relation": "bounds" if index == 0 else "supports",
+                    "locator": (
+                        "Repository-pinned route evidence used by the synthetic "
+                        "generation regression fixture."
+                    ),
+                    "source_id": source_id,
+                    "primary": index == 0,
+                }
+                for index, path in enumerate(evidence_inputs)
+            ],
+            "provenance": {
+                "generation_method": "model_assisted",
+                "generator": "synthetic-regression-fixture",
+                "generator_family": "codex-fixture",
+                "generator_version": "v0",
+                "session_id": f"proposal-session-{proposal_id}",
+                "source_commit": source_commit,
+                "prompt_sha256": "0" * 64,
+            },
+        }
+        proposal["mechanism_signature"] = mechanism_signature(proposal)
+        return proposal
+
+    def generation_reviews(self, proposal: dict) -> list[tuple[Path, dict]]:
+        roles = self.generation_policy["quality_gate"][
+            "required_review_roles"
+        ]
+        digest = proposal_sha256(proposal)
+        records = []
+        review_prefix = proposal["proposal_id"].removeprefix("HGP-")
+        for index, role in enumerate(roles, start=1):
+            records.append(
+                (
+                    REVIEWS_DIR / f"HGR-{review_prefix}-{index}.json",
+                    {
+                        "schema_version": "0.1",
+                        "review_id": f"HGR-{review_prefix}-{index}",
+                        "proposal_id": proposal["proposal_id"],
+                        "proposal_sha256": digest,
+                        "reviewed_on": "2026-07-25",
+                        "reviewer_id": f"fixture-reviewer-{index}",
+                        "reviewer_role": role,
+                        "source_independence": (
+                            "declared_independent"
+                            if role
+                            in self.generation_policy["quality_gate"][
+                                "required_independent_roles"
+                            ]
+                            else "shared_context"
+                        ),
+                        "reviewer_provenance": {
+                            "family": (
+                                "external-review-fixture"
+                                if role
+                                in self.generation_policy["quality_gate"][
+                                    "required_independent_roles"
+                                ]
+                                else (
+                                    "internal-review-fixture-a"
+                                    if index % 2
+                                    else "internal-review-fixture-b"
+                                )
+                            ),
+                            "version": "v0",
+                            "session_id": (
+                                f"review-session-{proposal['proposal_id']}-{index}"
+                            ),
+                            "prompt_sha256": f"{index}" * 64,
+                            "blind_to_other_reviews": True,
+                        },
+                        "verdict": "pass",
+                        "blocker_codes": [],
+                        "summary": (
+                            "Synthetic review confirms the fixture contains "
+                            "every field required for deterministic gate tests."
+                        ),
+                        "evidence_inputs": [
+                            "experiments/glv_diagonal_obstruction/README.md"
+                        ],
+                    },
+                )
+            )
+        return records
 
     def native_event(
         self,
@@ -1846,6 +2166,406 @@ class ResearchEngineTests(unittest.TestCase):
             queues["keyai_product"]["source"],
         )
         self.assertTrue(queues["anti_conflation_rules"])
+
+    def test_hypothesis_generator_builds_three_non_executable_seeds(self) -> None:
+        seeds = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )
+        self.assertEqual(3, len(seeds))
+        self.assertEqual(
+            {
+                "R-GLV-SEMAEV",
+                "R-PETIT-COMPOSED-MAPS",
+                "R-PRIME-FIELD-INDEX-CALCULUS",
+            },
+            {seed["route_id"] for seed in seeds},
+        )
+        self.assertTrue(
+            all(seed["authorization"] == "none" for seed in seeds)
+        )
+        self.assertTrue(
+            all(seed["status"] == "proposal_required" for seed in seeds)
+        )
+
+    def test_hypothesis_seed_generation_is_order_independent(self) -> None:
+        reordered = copy.deepcopy(self.generation_policy)
+        for axis in reordered["axes"].values():
+            axis.reverse()
+        expected = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )
+        observed = generate_seeds(reordered, self.decisions, self.policy)
+        self.assertEqual(expected, observed)
+
+    def test_complete_adversarial_packet_only_creates_non_authorized_draft(
+        self,
+    ) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-001")
+        proposal_records = [
+            (PROPOSALS_DIR / "HGP-FIXTURE-001.json", proposal)
+        ]
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            proposal_records,
+            self.generation_reviews(proposal),
+        )
+        self.assertEqual([], problems)
+        self.assertEqual(1, state["counts"]["quality_cleared_proposals"])
+        self.assertEqual(1, state["counts"]["retained_hypothesis_drafts"])
+        self.assertEqual(
+            "quality_cleared_not_authorized",
+            state["retained_hypothesis_drafts"][0]["status"],
+        )
+        self.assertEqual(
+            "none", state["proposal_intake"][0]["authorization"]
+        )
+
+    def test_known_premise_cannot_reopen_by_relabeling_itself(self) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-002")
+        premise = self.generation_policy["known_premises"][0]["basis"]
+        proposal["new_premise"] = premise
+        proposal["premise_fingerprint"] = premise_fingerprint(premise)
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [(PROPOSALS_DIR / "HGP-FIXTURE-002.json", proposal)],
+            self.generation_reviews(proposal),
+        )
+        self.assertEqual([], problems)
+        self.assertIn(
+            "duplicate_or_reencoding",
+            state["proposal_intake"][0]["blockers"],
+        )
+        self.assertEqual(
+            "hard_rejected", state["proposal_intake"][0]["disposition"]
+        )
+        self.assertEqual([], state["retained_hypothesis_drafts"])
+
+    def test_review_digest_invalidates_after_proposal_change(self) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-003")
+        reviews = self.generation_reviews(proposal)
+        proposal["title"] = "Changed after reviews were written"
+        problems, _ = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [(PROPOSALS_DIR / "HGP-FIXTURE-003.json", proposal)],
+            reviews,
+        )
+        self.assertTrue(
+            any("proposal_sha256 is stale" in problem for problem in problems)
+        )
+
+    def test_one_blocking_review_prevents_quality_clearance(self) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-004")
+        reviews = self.generation_reviews(proposal)
+        reviews[0][1]["verdict"] = "block"
+        reviews[0][1]["blocker_codes"] = ["missing_exact_mechanism"]
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [(PROPOSALS_DIR / "HGP-FIXTURE-004.json", proposal)],
+            reviews,
+        )
+        self.assertEqual([], problems)
+        self.assertIn(
+            "adversarial_review_blocked",
+            state["proposal_intake"][0]["blockers"],
+        )
+        self.assertEqual(
+            "hard_rejected", state["proposal_intake"][0]["disposition"]
+        )
+
+    def test_missing_review_role_is_never_averaged_away(self) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-005")
+        reviews = self.generation_reviews(proposal)[:-1]
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [(PROPOSALS_DIR / "HGP-FIXTURE-005.json", proposal)],
+            reviews,
+        )
+        self.assertEqual([], problems)
+        self.assertIn(
+            "adversarial_review_incomplete",
+            state["proposal_intake"][0]["blockers"],
+        )
+        self.assertEqual(
+            "needs_revision", state["proposal_intake"][0]["disposition"]
+        )
+
+    def test_duplicate_mechanism_signature_is_rejected_across_proposals(
+        self,
+    ) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        first = self.generation_proposal(seed, "HGP-FIXTURE-006")
+        second = self.generation_proposal(seed, "HGP-FIXTURE-007")
+        second["new_premise"] = (
+            "A differently worded premise leaves the exact same declared "
+            "algorithmic transformation and complete cost contract unchanged."
+        )
+        second["premise_fingerprint"] = premise_fingerprint(
+            second["new_premise"]
+        )
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [
+                (PROPOSALS_DIR / "HGP-FIXTURE-006.json", first),
+                (PROPOSALS_DIR / "HGP-FIXTURE-007.json", second),
+            ],
+            [],
+        )
+        self.assertEqual([], problems)
+        for proposal_state in state["proposal_intake"]:
+            self.assertIn(
+                "duplicate_mechanism_signature",
+                proposal_state["blockers"],
+            )
+            self.assertEqual("hard_rejected", proposal_state["disposition"])
+        self.assertEqual(
+            1, len(state["collision_groups"]["mechanism_signatures"])
+        )
+
+    def test_global_novelty_cannot_be_self_certified(self) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-008")
+        proposal["novelty_scope"][
+            "global_novelty"
+        ] = "verified_by_primary_review"
+        proposal["mechanism_signature"] = mechanism_signature(proposal)
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [(PROPOSALS_DIR / "HGP-FIXTURE-008.json", proposal)],
+            self.generation_reviews(proposal),
+        )
+        self.assertEqual([], problems)
+        self.assertIn(
+            "novelty_scope_overclaimed",
+            state["proposal_intake"][0]["blockers"],
+        )
+        self.assertEqual([], state["retained_hypothesis_drafts"])
+
+    def test_generation_schema_required_fields_match_manual_validator(
+        self,
+    ) -> None:
+        root = POLICY_PATH.parents[1]
+        proposal_schema = load_json(
+            root / "experiments" / "engine" / "hypothesis_proposal.schema.json"
+        )
+        review_schema = load_json(
+            root / "experiments" / "engine" / "hypothesis_review.schema.json"
+        )
+        seed_schema = load_json(
+            root / "experiments" / "engine" / "hypothesis_seed.schema.json"
+        )
+        self.assertEqual(PROPOSAL_FIELDS, set(proposal_schema["required"]))
+        self.assertEqual(REVIEW_FIELDS, set(review_schema["required"]))
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        self.assertEqual(set(seed), set(seed_schema["required"]))
+
+    def test_evidence_manifest_is_bound_to_source_commit(self) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-009")
+        proposal["evidence_manifest"][0]["sha256"] = "f" * 64
+        problems, _ = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [(PROPOSALS_DIR / "HGP-FIXTURE-009.json", proposal)],
+            [],
+        )
+        self.assertTrue(
+            any(
+                "evidence digest does not match source_commit" in problem
+                for problem in problems
+            )
+        )
+
+    def test_same_model_family_cannot_self_certify_independence(self) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-010")
+        reviews = self.generation_reviews(proposal)
+        for _, review in reviews:
+            review["reviewer_provenance"]["family"] = proposal["provenance"][
+                "generator_family"
+            ]
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [(PROPOSALS_DIR / "HGP-FIXTURE-010.json", proposal)],
+            reviews,
+        )
+        self.assertEqual([], problems)
+        self.assertIn(
+            "review_independence_unestablished",
+            state["proposal_intake"][0]["blockers"],
+        )
+        self.assertEqual([], state["retained_hypothesis_drafts"])
+
+    def test_proposer_cannot_review_its_own_proposal(self) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-013")
+        reviews = self.generation_reviews(proposal)
+        reviews[0][1]["reviewer_id"] = proposal["proposer_id"]
+        problems, _ = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [(PROPOSALS_DIR / "HGP-FIXTURE-013.json", proposal)],
+            reviews,
+        )
+        self.assertTrue(
+            any("proposer cannot review" in problem for problem in problems)
+        )
+
+    def test_missing_recovery_precomputation_and_target_semantics_block(
+        self,
+    ) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-014")
+        proposal["exact_mechanism"]["recovery_map"] = "TBD"
+        proposal["exact_mechanism"]["fixed_target_semantics"] = "unknown"
+        proposal["cost_bridge"]["precomputation"] = "not specified"
+        proposal["mechanism_signature"] = mechanism_signature(proposal)
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [(PROPOSALS_DIR / "HGP-FIXTURE-014.json", proposal)],
+            self.generation_reviews(proposal),
+        )
+        self.assertEqual([], problems)
+        blockers = state["proposal_intake"][0]["blockers"]
+        self.assertIn("missing_exact_mechanism", blockers)
+        self.assertIn("missing_fixed_target_semantics", blockers)
+        self.assertIn("hidden_or_unpriced_precomputation", blockers)
+
+    def test_incompatible_axis_does_not_generate_a_seed(self) -> None:
+        policy = copy.deepcopy(self.generation_policy)
+        glv_uncertainty = next(
+            item
+            for item in policy["axes"]["unresolved_questions"]
+            if item["id"] == "U-GLV-SOLVING-COST"
+        )
+        glv_uncertainty["compatibility_tags"] = ["deliberately-incompatible"]
+        seeds = generate_seeds(policy, self.decisions, self.policy)
+        self.assertEqual(2, len(seeds))
+        self.assertNotIn("R-GLV-SEMAEV", {seed["route_id"] for seed in seeds})
+
+    def test_near_duplicate_pair_is_visible_and_not_silently_accepted(
+        self,
+    ) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        first = self.generation_proposal(seed, "HGP-FIXTURE-011")
+        second = self.generation_proposal(seed, "HGP-FIXTURE-012")
+        second["new_premise"] = first["new_premise"].replace(
+            "persists", "remains"
+        )
+        second["premise_fingerprint"] = premise_fingerprint(
+            second["new_premise"]
+        )
+        second["mechanism_identity"][
+            "transformation_class"
+        ] = "character-graded-target-ideal-variant"
+        second["mechanism_signature"] = mechanism_signature(second)
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [
+                (PROPOSALS_DIR / "HGP-FIXTURE-011.json", first),
+                (PROPOSALS_DIR / "HGP-FIXTURE-012.json", second),
+            ],
+            [],
+        )
+        self.assertEqual([], problems)
+        self.assertEqual(
+            1, len(state["collision_groups"]["near_duplicate_pairs"])
+        )
+        self.assertTrue(
+            all(
+                "semantic_reencoding_risk" in item["blockers"]
+                for item in state["proposal_intake"]
+            )
+        )
+
+    def test_portfolio_overflow_retains_zero_drafts(self) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        distinct_premises = [
+            "A character grading creates stable sparse syzygies across the toy-size ladder.",
+            "A recovery-first elimination order removes exceptional fibers before matrix growth.",
+            "A target-tag decomposition separates relation validity from orbit bookkeeping costs.",
+            "A canonical fiber basis lowers independently replayed recovery work at each size.",
+        ]
+        proposal_records = []
+        review_records = []
+        for index, premise in enumerate(distinct_premises, start=20):
+            proposal_id = f"HGP-FIXTURE-{index}"
+            proposal = self.generation_proposal(seed, proposal_id)
+            proposal["new_premise"] = premise
+            proposal["premise_fingerprint"] = premise_fingerprint(premise)
+            proposal["mechanism_identity"][
+                "transformation_class"
+            ] = f"fixture-distinct-transform-{index}"
+            proposal["mechanism_signature"] = mechanism_signature(proposal)
+            proposal_records.append(
+                (PROPOSALS_DIR / f"{proposal_id}.json", proposal)
+            )
+            review_records.extend(self.generation_reviews(proposal))
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            proposal_records,
+            review_records,
+        )
+        self.assertEqual([], problems)
+        self.assertEqual(4, state["counts"]["quality_cleared_proposals"])
+        self.assertTrue(state["portfolio_overflow"]["triggered"])
+        self.assertEqual([], state["retained_hypothesis_drafts"])
 
 
 if __name__ == "__main__":

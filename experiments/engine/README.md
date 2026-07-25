@@ -6,6 +6,38 @@ exploration. The policy and candidate queue live in
 from that policy, `experiments/HYPOTHESES.yaml`, the decision substrate, and the
 events under `outcomes/`.
 
+## Hypothesis generation
+
+`repo/HYPOTHESIS_GENERATION_V0.json` adds the proposal side of the loop:
+
+```text
+evidence axes -> generated seed -> untrusted proposal -> five adversarial
+reviews -> quality-cleared draft -> existing candidate gate
+```
+
+The generator crosses only compatible target features, mechanism primitives,
+and unresolved cost-changing questions that share one route, the primary threat
+model, and an explicit compatibility tag. It currently emits three
+source-grounded questions. A seed is not evidence and never authorizes a run.
+
+Model- or human-authored proposals live under `proposals/`. The Engine derives
+hard rejections rather than trusting proposer labels, recomputes premise
+fingerprints, groups duplicate structured mechanism identities, flags lexical
+near-duplicates, rejects exact known-premise duplicates, requires a null model,
+a competing explanation, fixed-target semantics and a recovery map, prices
+preprocessing and amortization, and binds evidence hashes to the proposal's
+source commit. Reviews live under
+`proposal_reviews/` and cover algebra, cryptanalysis, prior art, cost, and
+validator design. The first round is blind, provenance records model family and
+session, and the independent roles cannot share the proposer family. This is
+still an attestation rather than proof of intellectual independence. A blocking
+review is retained; it is never averaged into a score.
+
+Quality clearance does not prove truth or global novelty. It creates only a
+non-executable hypothesis draft. The normal candidate preregistration,
+independent validator, selector, and dated decision contracts remain mandatory.
+Zero retained drafts is an acceptable successful cycle.
+
 An outcome event records what a run actually established. It never overwrites a
 prior event, promotes a route, authorizes exact-target work, or claims a
 secp256k1 break. The allowed terminal outcomes are:

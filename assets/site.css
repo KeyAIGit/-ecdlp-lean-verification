@@ -1045,6 +1045,10 @@ h4 {
   gap: 30px;
 }
 
+.workspace-title > * {
+  min-width: 0;
+}
+
 .workspace-title h1 {
   margin-bottom: 8px;
   font-size: 42px;
@@ -1068,6 +1072,7 @@ h4 {
   margin-top: 4px;
   color: var(--ink);
   font-size: 13px;
+  overflow-wrap: anywhere;
 }
 
 .boundary-notice {
@@ -1077,11 +1082,12 @@ h4 {
   border-left: 4px solid var(--amber);
   color: #5d430f;
   font-size: 14px;
+  overflow-wrap: anywhere;
 }
 
 .workspace-metrics {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   margin-top: 26px;
   background: rgba(255, 255, 255, 0.55);
   border-top: 1px solid var(--line-strong);
@@ -2087,14 +2093,14 @@ h4 {
   }
 
   .workspace-metrics {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .workspace-metric:nth-child(3) {
+  .workspace-metric:nth-child(4) {
     border-right: 0;
   }
 
-  .workspace-metric:nth-child(-n + 3) {
+  .workspace-metric:nth-child(-n + 4) {
     border-bottom: 1px solid var(--line);
   }
 
@@ -2493,7 +2499,7 @@ h4 {
   }
 
   .workspace-metric,
-  .workspace-metric:nth-child(3) {
+  .workspace-metric:nth-child(4) {
     border-right: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
   }
@@ -2502,7 +2508,7 @@ h4 {
     border-right: 0;
   }
 
-  .workspace-metric:nth-last-child(-n + 2) {
+  .workspace-metric:last-child {
     border-bottom: 0;
   }
 

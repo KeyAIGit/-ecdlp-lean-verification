@@ -40,6 +40,8 @@ _SMALL = [
      "exact target, route dispositions, evidence gates, and foundation priority"),
     ("repo/RESEARCH_ENGINE_V0.json",
      "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary"),
+    ("repo/HYPOTHESIS_GENERATION_V0.json",
+     "source-grounded seed axes, proposal quality gates, and adversarial review contract"),
     ("data/research_engine_state.json",
      "generated dual-gate state, selected sequence, and retained outcome summaries"),
     ("repo/PRODUCT_MODEL.json",
@@ -61,6 +63,12 @@ _MEDIUM_EXTRA = [
     ("notes/FOUNDATIONS.md", "the Weil/Semaev foundation ladder and its open rungs"),
     ("experiments/HYPOTHESES.yaml", "testable directions with evidence and exit criteria"),
     ("experiments/engine/README.md", "Research Engine event lifecycle and regeneration contract"),
+    ("experiments/engine/hypothesis_seed.schema.json",
+     "deterministic non-executable seed contract"),
+    ("experiments/engine/hypothesis_proposal.schema.json",
+     "structured untrusted proposal contract before candidate intake"),
+    ("experiments/engine/hypothesis_review.schema.json",
+     "digest-bound five-role adversarial review contract"),
     ("experiments/engine/outcome.schema.json", "strict terminal-outcome event schema"),
     ("experiments/engine/run.schema.json", "native run envelope and frozen matrix binding"),
     ("experiments/engine/instance_result.schema.json", "per-instance result and artifact binding"),
@@ -117,6 +125,7 @@ Ground rules:
 - `STATUS.md` is the canonical live snapshot. If prose anywhere conflicts with it, STATUS wins.
 - `repo/ECDLP_DECISION_SUBSTRATE.json` owns route applicability and foundation priority.
 - `repo/RESEARCH_ENGINE_V0.json` owns bounded exploration; generated evidence cannot promote a route.
+- `repo/HYPOTHESIS_GENERATION_V0.json` owns non-executable seed and proposal-quality compilation.
 - `repo/PRODUCT_MODEL.json` owns product rhetoric, current capability, and MVP boundaries.
 - `repo/PILOT_PROTOCOL.json` owns TASK-011 discovery, safety, evidence, and disposition.
 - Never weaken a proof, add a `sorry`/`admit`, or add an axiom to make anything pass.

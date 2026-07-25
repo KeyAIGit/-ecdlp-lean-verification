@@ -17,6 +17,7 @@ The formal-result map, attack encyclopedia, and this decision layer are delibera
 - **attack_evidence:** `data/attack_registry.json`
 - **research_decisions:** `repo/ECDLP_DECISION_SUBSTRATE.json`
 - **research_engine_policy:** `repo/RESEARCH_ENGINE_V0.json`
+- **hypothesis_generation_policy:** `repo/HYPOTHESIS_GENERATION_V0.json`
 - **research_engine_state:** `data/research_engine_state.json`
 - **active_work:** `tasks/ECDLP_RESEARCH.md`
 - **experiment_authorization:** `repo/RESEARCH_ENGINE_V0.json and experiments/HYPOTHESES.yaml`

@@ -20,10 +20,11 @@ Status: active
 Kind: research | data | experiment | ops
 Hypothesis: engine-level selection policy; bounded candidates remain tied to
 their named hypotheses
-Why it matters: The repository needs a closed proposal -> selection -> bounded
-exploration -> validation -> retention loop without weakening the independent
-promotion gate. This task lands and validates that loop before any selected toy
-candidate runs.
+Why it matters: The repository needs a closed evidence -> generation ->
+adversarial proposal review -> selection -> bounded exploration -> validation
+-> retention loop without weakening the independent promotion gate. Creative
+model output remains untrusted; deterministic gates compile it into a candidate
+or retain its exact blockers.
 Inputs:
 - `repo/RESEARCH_ENGINE_V0.json`
 - `repo/ECDLP_DECISION_SUBSTRATE.json`
@@ -31,6 +32,11 @@ Inputs:
 - historical experiment artifacts under `experiments/`
 Expected output:
 - Separate exploration and promotion gates.
+- A source-grounded generator that intersects target features, mechanism
+  primitives, and unresolved cost-changing questions without treating
+  combinatorial novelty as scientific novelty.
+- Digest-bound proposal and five-role adversarial-review contracts that can
+  produce at most three non-executable hypothesis drafts per cycle.
 - Seven-outcome result taxonomy, with formal `proved` separated from empirical
   `supported`, and a five-class gap taxonomy.
 - All nine hypotheses and historical runs normalized without rewriting
@@ -44,6 +50,11 @@ Expected output:
   state.
 Exit criteria:
 - Promotion and exact-target work remain disabled.
+- Generated seeds and drafts never authorize work; zero retained drafts is a
+  valid cycle result.
+- Exact known-premise duplicates, semantic re-encodings identified by review,
+  threat-model drift, missing fixed-target semantics, missing recovery, hidden
+  preprocessing, proxy-only metrics, and missing validator plans cannot clear.
 - Every selected exploration has a mechanism or named validator role,
   prediction, baseline, fixed budget, stop condition, and independent
   validator.
@@ -63,6 +74,7 @@ Exit criteria:
 - All repository gates and generated-artifact checks pass.
 Files allowed to edit:
 - `repo/RESEARCH_ENGINE_V0.json`
+- `repo/HYPOTHESIS_GENERATION_V0.json`
 - `repo/ECDLP_DECISION_SUBSTRATE.json`
 - `experiments/engine/`
 - `experiments/HYPOTHESES.yaml`
@@ -86,6 +98,9 @@ Kind: research | data | ops
 Hypothesis: none; intake evaluates proposals before hypothesis promotion
 Why it matters: New progress must enter through source-pinned mathematical
 evidence or a concrete mechanism, not by silently reviving a parked route.
+Generated research seeds reduce dependence on one agent noticing an
+intersection, while adversarial compilation prevents fluent text from becoming
+authorization.
 Inputs:
 - new primary literature, author artifacts, or a concrete candidate proposal
 - `repo/ECDLP_DECISION_SUBSTRATE.json`
@@ -93,6 +108,10 @@ Inputs:
 - `repo/RESEARCH_ENGINE_V0.json`
 Expected output:
 - A dated evidence delta tied to one route, threat model, and gap class.
+- A generated seed or structured proposal tied to one route, one primary threat
+  model, source anchors, a novel premise fingerprint, and an exact uncertainty.
+- Five digest-bound review dispositions when a proposal seeks quality
+  clearance.
 - A pass/fail result for the relevant exploration or promotion gate.
 - Either no disposition change or an explicit proposed decision delta.
 Exit criteria:

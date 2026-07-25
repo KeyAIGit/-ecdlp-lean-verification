@@ -135,7 +135,7 @@ jobs:
         run: python3 scripts/gen_result_registry.py
       - name: Full-ledger axiom audit
         run: python3 scripts/gen_axiom_audit.py
-      - name: Research Engine state (selection + retained outcomes)
+      - name: Research Engine state (generation + selection + retained outcomes)
         run: python3 scripts/build_research_engine_state.py
       - name: Knowledge graph (data/knowledge_graph.json + .md)
         run: python3 scripts/build_knowledge_graph.py

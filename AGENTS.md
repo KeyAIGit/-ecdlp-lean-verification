@@ -8,6 +8,7 @@ conventions: `CLAUDE.md`. **When an autonomous cycle is explicitly dispatched,
 delegated but bounded; the kernel/CI remains the sole judge).
 For a small-context start, read `STATUS.md`, then
 `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/RESEARCH_ENGINE_V0.json`,
+`repo/HYPOTHESIS_GENERATION_V0.json`,
 `data/research_engine_state.json`, `repo/PRODUCT_MODEL.json`,
 `repo/PILOT_PROTOCOL.json`, then use `tasks/NEXT.md` to choose
 `tasks/ECDLP_RESEARCH.md` or `tasks/KEYAI_PRODUCT.md`; load
@@ -77,6 +78,7 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 `TIERS` in `scripts/export_agent_bundle.py`):
 - **small** — the live snapshot: `STATUS.md`,
   `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/RESEARCH_ENGINE_V0.json`,
+  `repo/HYPOTHESIS_GENERATION_V0.json`,
   `data/research_engine_state.json`, `repo/PRODUCT_MODEL.json`,
   `repo/PILOT_PROTOCOL.json`, the queue router and both owning queues,
   `data/stats.json`, `data/frontier_map.json`.
@@ -108,6 +110,10 @@ branch from current `main`; preserve any unrelated local changes.
   outcome retention, independent validation, and feedback into generated state.
   Its bounded-exploration capability remains available in policy, but candidate
   execution stays paused in the current proposal-intake mode.
+- `TASK-013` also owns source-grounded seed generation and digest-bound
+  adversarial proposal review before deterministic selection.
+- Generated seeds and quality-cleared drafts are non-executable. Creative model
+  output is untrusted; zero retained drafts is a valid cycle result.
 - `TASK-008` accepts new primary evidence or a concrete proposal and checks it
   against the common gate. Intake does not bypass the selected exploration
   sequence or authorize promotion by itself.
