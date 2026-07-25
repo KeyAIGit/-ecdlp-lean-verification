@@ -55,10 +55,10 @@ private theorem resultant_quadratic
     induction j using Fin.addCases with
     | left j =>
         fin_cases i <;> fin_cases j <;>
-          norm_num [f, g, Polynomial.sylvester, Fin.addCases]
+          norm_num [f, g, Polynomial.sylvester, Fin.addCases, Fin.castAdd, Fin.addNat]
     | right j =>
         fin_cases i <;> fin_cases j <;>
-          norm_num [f, g, Polynomial.sylvester, Fin.addCases]
+          norm_num [f, g, Polynomial.sylvester, Fin.addCases, Fin.castAdd, Fin.addNat]
   change f.resultant g 2 2 = quadraticResultant f₂ f₁ f₀ g₂ g₁ g₀
   rw [Polynomial.resultant, hsylvester, Matrix.det_succ_row_zero]
   simp [Fin.sum_univ_succ, Matrix.det_fin_three, quadraticResultant, Fin.succAbove]
