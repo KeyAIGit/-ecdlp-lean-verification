@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.org/schemas/research-engine-v0.2/research-lane.json",
+  "title": "Research Engine v0.2 research lane",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "lane",
+    "target_kind",
+    "direct_target_property_computation",
+    "attack_execution",
+    "deliverable"
+  ],
+  "properties": {
+    "lane": {
+      "enum": [
+        "literature_applicability",
+        "structural",
+        "mechanism",
+        "validator",
+        "bounded_experiment",
+        "formalization"
+      ]
+    },
+    "target_kind": {
+      "enum": ["none", "public_parameters", "toy", "formal_model"]
+    },
+    "direct_target_property_computation": {"type": "boolean"},
+    "attack_execution": {"type": "boolean"},
+    "deliverable": {"type": "string", "minLength": 1},
+    "source_review_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_ids", "required_read_status"],
+      "properties": {
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "required_read_status": {
+          "enum": ["metadata", "abstract", "full_text", "primary_artifact"]
+        }
+      }
+    },
+    "structural_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement_id", "assurance_target", "scope"],
+      "properties": {
+        "statement_id": {"type": "string", "minLength": 1},
+        "assurance_target": {
+          "enum": [
+            "lean_kernel",
+            "certificate_replayed",
+            "independent_reproduction"
+          ]
+        },
+        "scope": {"type": "string", "minLength": 1}
+      }
+    },
+    "mechanism_goal": {"type": "string", "minLength": 1},
+    "validator_goal": {"type": "string", "minLength": 1},
+    "experiment_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_field_bits", "forbidden_targets"],
+      "properties": {
+        "max_field_bits": {"type": "integer", "minimum": 1, "maximum": 24},
+        "forbidden_targets": {
+          "type": "array",
+          "contains": {"const": "secp256k1"},
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "formalization_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kernel", "statement_id", "axiom_policy"],
+      "properties": {
+        "kernel": {"const": "lean4"},
+        "statement_id": {"type": "string", "minLength": 1},
+        "axiom_policy": {"const": "repository-audited-only"}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"direct_target_property_computation": {"const": true}}},
+      "then": {
+        "properties": {
+          "lane": {"enum": ["literature_applicability", "structural"]},
+          "attack_execution": {"const": false},
+          "target_kind": {"const": "public_parameters"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"lane": {"const": "literature_applicability"}}},
+      "then": {
+        "required": ["source_review_contract"],
+        "properties": {"attack_execution": {"const": false}}
+      }
+    },
+    {
+      "if": {"properties": {"lane": {"const": "structural"}}},
+      "then": {
+        "required": ["structural_contract"],
+        "properties": {"attack_execution": {"const": false}}
+      }
+    },
+    {
+      "if": {"properties": {"lane": {"const": "mechanism"}}},
+      "then": {
+        "required": ["mechanism_goal"],
+        "properties": {"attack_execution": {"const": false}}
+      }
+    },
+    {
+      "if": {"properties": {"lane": {"const": "validator"}}},
+      "then": {
+        "required": ["validator_goal"],
+        "properties": {"attack_execution": {"const": false}}
+      }
+    },
+    {
+      "if": {"properties": {"lane": {"const": "bounded_experiment"}}},
+      "then": {
+        "required": ["experiment_scope"],
+        "properties": {
+          "target_kind": {"const": "toy"},
+          "direct_target_property_computation": {"const": false},
+          "attack_execution": {"const": true}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"lane": {"const": "formalization"}}},
+      "then": {
+        "required": ["formalization_contract"],
+        "properties": {"attack_execution": {"const": false}}
+      }
+    }
+  ]
+}

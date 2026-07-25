@@ -1,0 +1,79 @@
+{
+  "schema_version": "0.2",
+  "lifecycle_id": "ecdlp-research-engine-lifecycle-v0",
+  "status": "implementation_non_executable",
+  "purpose": "Separate immutable candidate/version snapshots from append-only lifecycle state, keep recommendation distinct from authorization, and preserve frozen calibration inputs.",
+  "primary_threat_model": "classical-single-target-plain",
+  "states": [
+    "idea",
+    "screened",
+    "mechanism_specified",
+    "validator_ready",
+    "admissible",
+    "recommended",
+    "authorized",
+    "running",
+    "terminal",
+    "superseded"
+  ],
+  "transition_contract": {
+    "normal_path": [
+      "idea",
+      "screened",
+      "mechanism_specified",
+      "validator_ready",
+      "admissible",
+      "recommended",
+      "authorized",
+      "running",
+      "terminal"
+    ],
+    "superseded_from": [
+      "idea",
+      "screened",
+      "mechanism_specified",
+      "validator_ready",
+      "admissible",
+      "recommended",
+      "authorized"
+    ],
+    "desk_terminal_from": [
+      "screened",
+      "mechanism_specified",
+      "validator_ready",
+      "admissible"
+    ],
+    "engine_computed_states": ["admissible", "recommended"],
+    "owner_only_state": "authorized",
+    "authorization_rule": "Authorization requires a separate dated owner decision bound to the exact immutable candidate digest. A proposal, five reviews, admissibility, or recommendation is never authorization.",
+    "append_only": true
+  },
+  "research_lanes": [
+    "literature_applicability",
+    "structural",
+    "mechanism",
+    "validator",
+    "bounded_experiment",
+    "formalization"
+  ],
+  "calibration_contract": {
+    "frozen_identity": ["candidate_id", "candidate_version", "candidate_digest"],
+    "frozen_probability_source": "outcome_event.frozen_prediction",
+    "excluded_event_classes": ["structural", "historical_migration", "literature"],
+    "current_policy_may_reprice_history": false,
+    "uncalibrated_below_native_n": 5
+  },
+  "portfolio_contract": {
+    "algorithm": "exhaustive",
+    "maximum_candidates": 12,
+    "overflow_result": "coverage_artifact",
+    "objective": "maximum base-scenario expected information gain subject to declared budgets, dependencies, correlation caps, and diversity constraints",
+    "authorization_effect": "none"
+  },
+  "candidate_snapshots": [],
+  "lifecycle_events": [],
+  "owner_decisions": [],
+  "authorization_count": 0,
+  "route_promotion_count": 0,
+  "direct_target_experiment_count": 0
+}

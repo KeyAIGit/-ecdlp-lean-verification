@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.org/schemas/research-engine-v0.2/candidate-snapshot.json",
+  "title": "Immutable Research Engine v0.2 candidate snapshot",
+  "description": "Authorization is intentionally absent. A snapshot is immutable after its digest is bound.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "candidate_id",
+    "version",
+    "created_at",
+    "route_id",
+    "lane",
+    "threat_model",
+    "target_scope",
+    "source_commit",
+    "source_review_ids",
+    "dependencies",
+    "correlation_groups",
+    "diversity_tags",
+    "scoring_contract",
+    "snapshot_digest"
+  ],
+  "properties": {
+    "candidate_id": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]+$"},
+    "version": {"type": "integer", "minimum": 1},
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "route_id": {"type": "string", "minLength": 1},
+    "lane": {"$ref": "research_lane.schema.json"},
+    "threat_model": {"const": "classical-single-target-plain"},
+    "target_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "curve_family", "field_bits", "forbidden_targets"],
+      "properties": {
+        "kind": {"enum": ["none", "public_parameters", "toy", "formal_model"]},
+        "curve_family": {"type": "string", "minLength": 1},
+        "field_bits": {"type": ["integer", "null"], "minimum": 1},
+        "forbidden_targets": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "source_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "source_review_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "dependencies": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidate_id", "minimum_version", "accepted_outcomes"],
+        "properties": {
+          "candidate_id": {"type": "string", "minLength": 1},
+          "minimum_version": {"type": "integer", "minimum": 1},
+          "accepted_outcomes": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": ["proved", "confirmed", "supported", "completed"]
+            }
+          }
+        }
+      }
+    },
+    "correlation_groups": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "diversity_tags": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "mechanism_contract": {
+      "$ref": "mechanism_contract.schema.json"
+    },
+    "prediction_contract": {
+      "$ref": "prediction_contract.schema.json"
+    },
+    "cost_contract": {
+      "$ref": "cost_contract.schema.json"
+    },
+    "validator_contract": {
+      "$ref": "validator_contract.schema.json"
+    },
+    "scoring_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["elicitation_ids", "scenarios"],
+      "properties": {
+        "elicitation_ids": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "scenarios": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["low", "base", "high"],
+          "properties": {
+            "low": {"$ref": "#/$defs/scenario"},
+            "base": {"$ref": "#/$defs/scenario"},
+            "high": {"$ref": "#/$defs/scenario"}
+          }
+        }
+      }
+    },
+    "snapshot_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prior_live", "outcomes"],
+      "properties": {
+        "prior_live": {"type": "number", "minimum": 0, "maximum": 1},
+        "outcomes": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["outcome", "p_if_live", "p_if_dead"],
+            "properties": {
+              "outcome": {"type": "string", "minLength": 1},
+              "p_if_live": {"type": "number", "minimum": 0, "maximum": 1},
+              "p_if_dead": {"type": "number", "minimum": 0, "maximum": 1}
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"lane": {"properties": {"lane": {"const": "mechanism"}}}}
+      },
+      "then": {"required": ["mechanism_contract"]}
+    },
+    {
+      "if": {
+        "properties": {"lane": {"properties": {"lane": {"const": "validator"}}}}
+      },
+      "then": {"required": ["validator_contract"]}
+    },
+    {
+      "if": {
+        "properties": {
+          "lane": {"properties": {"lane": {"const": "bounded_experiment"}}}
+        }
+      },
+      "then": {
+        "required": [
+          "mechanism_contract",
+          "prediction_contract",
+          "cost_contract",
+          "validator_contract"
+        ]
+      }
+    }
+  ]
+}

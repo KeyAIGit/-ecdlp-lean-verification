@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.org/schemas/research-engine-v0.2/candidate-lifecycle.json",
+  "title": "Append-only Research Engine v0.2 candidate lifecycle event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "candidate_id",
+    "candidate_version",
+    "candidate_digest",
+    "occurred_at",
+    "from_state",
+    "to_state",
+    "actor_class",
+    "reason"
+  ],
+  "properties": {
+    "event_id": {"type": "string", "pattern": "^REL-[0-9]{4}-[0-9]{2}-[0-9]{2}-[A-Z0-9._-]+$"},
+    "candidate_id": {"type": "string", "minLength": 1},
+    "candidate_version": {"type": "integer", "minimum": 1},
+    "candidate_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "from_state": {
+      "enum": [
+        null,
+        "idea",
+        "screened",
+        "mechanism_specified",
+        "validator_ready",
+        "admissible",
+        "recommended",
+        "authorized",
+        "running",
+        "terminal",
+        "superseded"
+      ]
+    },
+    "to_state": {
+      "enum": [
+        "idea",
+        "screened",
+        "mechanism_specified",
+        "validator_ready",
+        "admissible",
+        "recommended",
+        "authorized",
+        "running",
+        "terminal",
+        "superseded"
+      ]
+    },
+    "actor_class": {"enum": ["engine", "owner", "runner", "migration"]},
+    "owner_decision_id": {"type": "string", "minLength": 1},
+    "outcome": {
+      "enum": [
+        "proved",
+        "confirmed",
+        "supported",
+        "falsified",
+        "bounded_negative",
+        "inapplicable",
+        "inconclusive",
+        "resource_exhausted",
+        "completed"
+      ]
+    },
+    "reason": {"type": "string", "minLength": 1}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"to_state": {"const": "authorized"}}},
+      "then": {
+        "required": ["owner_decision_id"],
+        "properties": {"actor_class": {"const": "owner"}}
+      }
+    },
+    {
+      "if": {"properties": {"to_state": {"const": "terminal"}}},
+      "then": {"required": ["outcome"]}
+    }
+  ]
+}

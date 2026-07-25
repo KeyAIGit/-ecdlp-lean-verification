@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.org/schemas/research-engine-v0.2/cost-contract.json",
+  "title": "Research Engine v0.2 full cost contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "online",
+    "offline",
+    "wall_time_hours",
+    "peak_memory_gb",
+    "storage_gb",
+    "workers",
+    "money_usd",
+    "implementation_hours",
+    "reviewer_hours",
+    "preprocessing",
+    "amortization",
+    "success_probability",
+    "shared_setup"
+  ],
+  "properties": {
+    "online": {"$ref": "#/$defs/compute"},
+    "offline": {"$ref": "#/$defs/compute"},
+    "wall_time_hours": {"type": "number", "minimum": 0},
+    "peak_memory_gb": {"type": "number", "minimum": 0},
+    "storage_gb": {"type": "number", "minimum": 0},
+    "workers": {"type": "integer", "minimum": 1},
+    "money_usd": {"type": "number", "minimum": 0},
+    "implementation_hours": {"type": "number", "minimum": 0},
+    "reviewer_hours": {"type": "number", "minimum": 0},
+    "preprocessing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["included_in_totals", "description"],
+      "properties": {
+        "included_in_totals": {"const": true},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "amortization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class", "target_count", "per_target_cost_included"],
+      "properties": {
+        "class": {
+          "enum": ["none_single_target", "fixed_batch", "multi_target", "reusable_setup"]
+        },
+        "target_count": {"type": "integer", "minimum": 1},
+        "per_target_cost_included": {"type": "boolean"}
+      }
+    },
+    "success_probability": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+    "shared_setup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["setup_id", "hours", "expected_reuse"],
+      "properties": {
+        "setup_id": {"type": ["string", "null"], "minLength": 1},
+        "hours": {"type": "number", "minimum": 0},
+        "expected_reuse": {"type": "integer", "minimum": 1}
+      }
+    }
+  },
+  "$defs": {
+    "compute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cpu_hours", "gpu_hours"],
+      "properties": {
+        "cpu_hours": {"type": "number", "minimum": 0},
+        "gpu_hours": {"type": "number", "minimum": 0}
+      }
+    }
+  }
+}
