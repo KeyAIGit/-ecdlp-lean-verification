@@ -9316,7 +9316,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
-      "line": 220
+      "line": 225
     },
     "Ecdlp.Curve.secp256k1_glv_preserves_dlog": {
       "name": "secp256k1_glv_preserves_dlog",
@@ -9379,7 +9379,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
-      "line": 238
+      "line": 243
     },
     "Ecdlp.Curve.secp256k1_grp_card": {
       "name": "secp256k1_grp_card",
@@ -11836,14 +11836,14 @@
       "namespace": "Ecdlp.Semaev",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
-      "line": 99
+      "line": 104
     },
     "Ecdlp.Semaev.S₃_diagonal_cube_zero_iff": {
       "name": "S₃_diagonal_cube_zero_iff",
       "namespace": "Ecdlp.Semaev",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
-      "line": 111
+      "line": 116
     },
     "Ecdlp.Semaev.S₃_eq_zero_iff": {
       "name": "S₃_eq_zero_iff",
@@ -11948,7 +11948,7 @@
       "namespace": "Ecdlp.Semaev",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
-      "line": 128
+      "line": 133
     },
     "Ecdlp.Semaev.S₄_eq_zero_of_common_root": {
       "name": "S₄_eq_zero_of_common_root",
@@ -11990,14 +11990,14 @@
       "namespace": "Ecdlp.Semaev",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
-      "line": 180
+      "line": 185
     },
     "Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff": {
       "name": "secp256k1_S₃_glv_zero_iff",
       "namespace": "Ecdlp.Semaev",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
-      "line": 190
+      "line": 195
     },
     "Ecdlp.Semaev.secp256k1_S₃poly_natDegree": {
       "name": "secp256k1_S₃poly_natDegree",
@@ -12011,7 +12011,7 @@
       "namespace": "Ecdlp.Semaev",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GlvSemaevSymmetry.lean",
-      "line": 200
+      "line": 205
     },
     "Ecdlp.Semaev.secp256k1_decomposition_completions_le_two": {
       "name": "secp256k1_decomposition_completions_le_two",
