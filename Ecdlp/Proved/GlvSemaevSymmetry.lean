@@ -55,13 +55,13 @@ private theorem resultant_quadratic
     induction j using Fin.addCases with
     | left j =>
         fin_cases i <;> fin_cases j <;>
-          norm_num [f, g, Polynomial.sylvester]
+          norm_num [f, g, Polynomial.sylvester, Fin.addCases]
     | right j =>
         fin_cases i <;> fin_cases j <;>
-          norm_num [f, g, Polynomial.sylvester]
+          norm_num [f, g, Polynomial.sylvester, Fin.addCases]
   change f.resultant g 2 2 = quadraticResultant f₂ f₁ f₀ g₂ g₁ g₀
   rw [Polynomial.resultant, hsylvester, Matrix.det_succ_row_zero]
-  simp [Fin.sum_univ_succ, Matrix.det_fin_three, quadraticResultant]
+  simp [Fin.sum_univ_succ, Matrix.det_fin_three, quadraticResultant, Fin.succAbove]
   ring_nf
 
 /-- The exact fixed-size resultant definition of `S₄` reduced to its six quadratic
