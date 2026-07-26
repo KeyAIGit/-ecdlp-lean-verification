@@ -75,6 +75,7 @@ git history and the GitHub Actions tab.
 | secp256k1 base point is non-identity (`G ≠ 0`, supporting `addOrderOf`) | `Ecdlp.Curve.secp256k1_generator_ne_zero` | Ecdlp/Proved/GeneratorOrder.lean | Mathlib | proved |
 | **secp256k1 field prime `p` is prime** (full Pratt certificate) | `Ecdlp.Primality.secp256k1_p_prime` | Ecdlp/Proved/Secp256k1PrimeP.lean | Mathlib + native_decide | proved |
 | **secp256k1 group order `n` is prime** (full Pratt certificate) | `Ecdlp.Primality.secp256k1_n_prime` | Ecdlp/Proved/Secp256k1PrimeN.lean | Mathlib + native_decide | proved |
+| **secp256k1 `p−1` smooth-divisor ceiling — a target-property screen fact** (`secp256k1_p_sub_one_factorization`: the complete prime factorization `p−1 = 2·3·7·13441·C` with `C` the 237-bit prime cofactor, reusing the Pratt node already established for `p`; `secp256k1_smooth_divisor_dvd_smooth_part`: **every 13441-smooth divisor of `p−1` divides `564522 = 2·3·7·13441 ≈ 2^19.11`**, since the remaining cofactor is prime and strictly larger, hence coprime to any such divisor; `secp256k1_smooth_divisor_le` gives the numeric ceiling `d ≤ 564522`. An exact arithmetic ceiling on the target, decidable in advance, used to screen published factor-base constructions that require `p−1` to carry a large smooth divisor — at zero experimental cost. **Not** an ECDLP statement, **not** a complexity bound, **not** a claim about any algorithm, and says nothing about the group order `n`, extension fields, or auxiliary curves. Inherits `Lean.ofReduceBool` from one closed `native_decide` identity) | `Ecdlp.Curve.secp256k1_p_sub_one_factorization`, `secp256k1_smooth_divisor_dvd_smooth_part`, `secp256k1_smooth_divisor_le`, `pMinusOneCofactor_prime`, `pMinusOneCofactor_no_small_prime_factor` | Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean | Mathlib + native_decide (reuses the `p` Pratt certificate) | proved |
 | **Pohlig–Hellman: projection to order-`d` subgroup** | `Ecdlp.PohligHellman.projection` | Ecdlp/Proved/PohligHellman.lean | Mathlib | proved |
 | **Pohlig–Hellman: component depends only on `x mod d`** | `Ecdlp.PohligHellman.component` | Ecdlp/Proved/PohligHellman.lean | Mathlib | proved |
 | **Pohlig–Hellman: CRT reconstruction** | `Ecdlp.PohligHellman.reconstruct` | Ecdlp/Proved/PohligHellman.lean | Mathlib | proved |
@@ -329,7 +330,7 @@ is Xu & Angdinata's. It is built and gated (the one-invariant holds), but delibe
 `isEllSequence_of_rec_one` (headline row above) remains this repo's own contribution.
 
 ### Canonical count (single source of truth — propagate this exact figure)
-**297 ledger rows / ~258 distinct kernel-verified results** (39 rows are alternate-form,
+**298 ledger rows / ~259 distinct kernel-verified results** (39 rows are alternate-form,
 `supporting:`, or instantiation restatements of the same fact, e.g. the `ZMod`/ring forms
 of the GLV eigenvalue, the operator form of the GLV cube relation, the Semaev `S₃` symmetry
 lemmas, and the concrete-`⟨G⟩` instantiations of the abstract protocol suite — the two
