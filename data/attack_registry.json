@@ -901,7 +901,7 @@
         "IC-4-petit-composed-map"
       ],
       "relation": "FRAMEWORK-TO-ENGINE",
-      "statement": "IC-1 is the general prime-field index-calculus framework; IC-2 (Semaev summation engine) is its algebraic core, refined by IC-3 (GLV invariant coordinates) and IC-4 (Petit composed map). All four share the SAME structural barrier: no Weil restriction over a prime field (BARRIERS.md B3), so the single high-degree Semaev equation cannot be split. This shared barrier is where the descent no-go (TRANSFER-WEIL-DESCENT) ends and the open zone begins."
+      "statement": "IC-1 is the general prime-field index-calculus framework; IC-2 is its Semaev algebraic core and IC-3 studies a GLV coordinate action. IC-4 is distinct: PKC 2016 gives native prime-field composed-map constructions that do not require Weil descent. Historical P4 implemented neither source construction. The missing faithful construction and full-cost bridge, not absence of Weil restriction, are IC-4's current blockers."
     },
     {
       "type": "open-boundary",
@@ -911,7 +911,7 @@
         "IC-2-semaev-summation-systems"
       ],
       "relation": "NO-GO-EDGE-MEETS-OPEN-ZONE",
-      "statement": "TRANSFER-WEIL-DESCENT's adjacent open zone IS the prime-field index-calculus question (IC-1/IC-2): whether some prime-field structure can substitute for the missing Weil restriction in a Semaev/Petit index calculus. HYP_GLV_SEMAEV_001 is PARKED; P0-P4 are partial negatives (constant ~3x only). This edge marks precisely where a machine-checked-by-construction no-go ends and unexplored territory begins."
+      "statement": "TRANSFER-WEIL-DESCENT's adjacent open zone is the prime-field index-calculus question (IC-1/IC-2): whether prime-field structure supports a different relation-generation mechanism. The target boundary is documented from the prime-field structure, not a dedicated Lean no-go. PKC 2016's native prime-field Petit constructions are separate from Weil descent and remain unimplemented by historical P4."
     },
     {
       "type": "weak-backing-flag",

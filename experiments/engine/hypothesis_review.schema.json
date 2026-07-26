@@ -66,6 +66,7 @@
         "family",
         "version",
         "session_id",
+        "context_sha256",
         "prompt_sha256",
         "blind_to_other_reviews"
       ],
@@ -81,6 +82,10 @@
         "session_id": {
           "type": "string",
           "minLength": 1
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
         },
         "prompt_sha256": {
           "type": "string",

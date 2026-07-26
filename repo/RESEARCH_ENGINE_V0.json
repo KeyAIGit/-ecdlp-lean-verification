@@ -12,6 +12,8 @@
     "policy_and_candidate_queue": "repo/RESEARCH_ENGINE_V0.json",
     "typed_evidence_policy": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
     "typed_evidence_state": "data/typed_evidence_state.json",
+    "research_claim_policy": "repo/RESEARCH_CLAIMS_V0.json",
+    "research_claim_state": "data/research_claim_state.json",
     "desk_decisions": "experiments/engine/desk_decisions/",
     "hypothesis_generation_policy": "repo/HYPOTHESIS_GENERATION_V0.json",
     "hypothesis_proposals": "experiments/engine/proposals/",
@@ -785,7 +787,7 @@
   "feedback_contract": {
     "append_only_input": "experiments/engine/outcomes/",
     "generated_updates": [
-      "source-grounded hypothesis seed queue",
+      "source-grounded non-executable proposal-seed queue",
       "digest-bound proposal and adversarial review state",
       "quality-cleared non-executable hypothesis drafts",
       "candidate terminal state",

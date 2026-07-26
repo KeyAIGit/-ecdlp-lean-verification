@@ -57,6 +57,9 @@ Exit criteria:
 - Promotion and exact-target work remain disabled.
 - Generated seeds and drafts never authorize work; zero retained drafts is a
   valid cycle result.
+- Quality-cleared drafts bind the exact proposal and five review digests.
+  Mechanism, validator, and bounded-experiment candidates must bind that
+  registered draft before lifecycle evaluation.
 - The legacy candidate set is code-anchored and hash-frozen. It cannot be edited
   into admissibility; new execution remains closed until a deterministic
   compiler binds a typed cell to a quality-cleared proposal.
@@ -64,10 +67,14 @@ Exit criteria:
   authorize execution.
 - Exact known-premise duplicates, semantic re-encodings identified by review,
   threat-model drift, missing fixed-target semantics, missing recovery, hidden
-  preprocessing, proxy-only metrics, and missing validator plans cannot clear.
+  preprocessing, proxy-only metrics, prose-only scientific packets, and
+  missing validator plans cannot clear.
 - Every selected exploration has a mechanism or named validator role,
   prediction, baseline, fixed budget, stop condition, and independent
   validator.
+- Validator path and artifact independence require registered verification;
+  source independence requires a third-party human attestation. A design-only
+  validator is never lifecycle-ready.
 - Every native matrix instance binds a hashed result to an independently
   recomputed classification from raw artifacts through a source-commit-bound
   pure validator. The allowed instance outcomes and exhaustive aggregate
@@ -201,25 +208,36 @@ How to verify:
 
 ### TASK-010 - Independent adversarial audit at a stable checkpoint
 
-Status: active_review_preparation
+Status: active_remediation_draft
 Kind: review | research | ops
 Hypothesis: none
-Why it matters: An independent reviewer should attack the split gates, selector,
-candidate mechanisms, validation independence, and promotion boundary before
-Research Engine v0 is treated as stable.
+Lifecycle: RESEARCH-ENGINE-V0.2-SANITATION-001
+Why it matters: The independent audit found reproducibility, lifecycle,
+calibration, semantic-drift, and authorization defects. This task repairs those
+findings before Research Engine v0.2 is treated as stable.
 Inputs:
-- a green Research Engine v0 branch
-- `notes/reviews/RESEARCH_ENGINE_V0_CLAUDE_BRIEF.md`
+- protected baseline `fed55d84675fd96e5f40204b9f5f49baa8c01172`
+- `notes/reviews/RESEARCH_ENGINE_V0_2_BASELINE_AUDIT.md`
+- `notes/reviews/RESEARCH_ENGINE_V0_2_ORACLE_INTAKE.md`
+- `notes/RESEARCH_ENGINE_V0_TO_V0_2.md`
+- `notes/reviews/PR246_DISPOSITION.md`
+- `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json`
+- `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`
 - policy, generated state, outcome events, and retrospective fixtures
 - architecture, formal trust, route decisions, and residual risks
 Expected output:
-- Severity-ranked findings with evidence.
-- A disposition for every finding.
-- A release or revision recommendation.
+- A repaired, reproducible Research Engine and non-executable generation plane.
+- Claim-level truth state, immutable candidate snapshots, and separate lifecycle.
+- Derived scientific contracts, scenario scoring, and exhaustive portfolio logic.
+- A release or revision recommendation backed by the required regression tests.
 Exit criteria:
 - Every blocking finding is resolved or explicitly accepted with rationale.
 - The review does not silently edit canonical state or promote a route.
 - All affected checks are rerun after finding resolution.
+- Eight historical outcome files and their review root remain byte-identical.
+- All 19 owner regression cases resolve to passing fault-injection tests.
+- Shadow intake is generated, non-executable, and retains zero authorization.
+- No experiment is authorized and no route is promoted.
 Files allowed to edit:
 - review packet and files required to resolve accepted findings
 Files that must be regenerated:

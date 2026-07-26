@@ -1,5 +1,10 @@
 # Claude adversarial review brief: Research Engine v0
 
+> **FROZEN HISTORICAL SNAPSHOT.** This brief describes a pre-merge branch and
+> is retained for provenance only. Current remediation is governed by
+> `RESEARCH-ENGINE-V0.2-SANITATION-001`, `TASK-010`, and
+> `notes/reviews/RESEARCH_ENGINE_V0_2_BASELINE_AUDIT.md`.
+
 ## Role
 
 Act as an independent adversarial research reviewer. Do not merge, rewrite the

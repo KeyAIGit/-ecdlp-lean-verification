@@ -20,7 +20,10 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: `TASK-008` in `tasks/ECDLP_RESEARCH.md`.
+Current central task: `TASK-010` in `tasks/ECDLP_RESEARCH.md`.
+
+`TASK-008` remains the parked proposal-intake lane. It does not become active
+while the v0.2 sanitation lifecycle is in remediation.
 
 Most recent completed bounded structural binding:
 `RS-2026-07-24-001` / `GLV-SEMAEV-ITER-001` / `R-GLV-SEMAEV` /
@@ -33,7 +36,9 @@ execution.
 
 Architecture sources: `repo/FORMAL_SUBSTRATE.json`,
 `repo/ECDLP_TYPED_EVIDENCE_V0.json`, `repo/RESEARCH_ENGINE_V0.json`,
-`repo/HYPOTHESIS_GENERATION_V0.json`, and `repo/ARTIFACTS.yaml`.
+`repo/RESEARCH_CLAIMS_V0.json`, `repo/HYPOTHESIS_GENERATION_V0.json`,
+`repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`,
+`repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json`, and `repo/ARTIFACTS.yaml`.
 
 ## Task contract template
 

@@ -23,8 +23,10 @@ from hypothesis_generation_lib import (
     mechanism_signature,
     premise_fingerprint,
     proposal_sha256,
+    sha256_json,
 )
 from typed_evidence_lib import load_and_build as load_typed_evidence_state
+from research_claims import load_and_build as load_research_claim_state
 from research_engine_lib import (
     DECISION_PATH,
     INSTANCE_VALIDATION_FIELDS,
@@ -130,6 +132,224 @@ class ResearchEngineTests(unittest.TestCase):
                 "amortization_class": "none-single-target",
             },
             "mechanism_signature": "",
+            "mechanism_contract": {
+                "source_objects": [
+                    "fixed-target tagged Semaev toy relations"
+                ],
+                "target_objects": [
+                    "recoverable character-graded relation records"
+                ],
+                "transformation": {
+                    "kind": "character_graded_target_ideal",
+                    "exact_map": (
+                        "(relation, relative phases, target tag) maps to the "
+                        "corresponding tagged character component"
+                    ),
+                    "domain": (
+                        "complete fixed-target relation tuples with every "
+                        "relative GLV phase retained"
+                    ),
+                    "codomain": (
+                        "tagged character components carrying a reversible "
+                        "phase tuple"
+                    ),
+                },
+                "fixed_target_semantics": {
+                    "target_slot": "the final relation coordinate",
+                    "target_action": (
+                        "the explicit target tag is preserved and replayed"
+                    ),
+                    "same_target_preserved": True,
+                },
+                "exceptional_locus": {
+                    "definition": (
+                        "zero coordinates, singular fibers, and failed "
+                        "recovery components"
+                    ),
+                    "treatment": "separately_recovered",
+                },
+                "orbit_stabilizer": {
+                    "acting_group": "diagonal C3 with retained relative phases",
+                    "stabilizer": (
+                        "the exact fixed-target stabilizer represented by tags"
+                    ),
+                    "orbit_size_law": (
+                        "computed per registered toy size; no asymptotic "
+                        "claim is inferred from group order"
+                    ),
+                },
+                "relation_semantics": {
+                    "source_relation": (
+                        "the source tuple satisfies the fixed-target point sum"
+                    ),
+                    "target_relation": (
+                        "the tagged component replays the same point sum"
+                    ),
+                    "equivalence_status": "specified_unproved",
+                },
+                "recovery_map": {
+                    "forward": (
+                        "retain relative phases and the target tag in the "
+                        "character component"
+                    ),
+                    "inverse": (
+                        "recover the phase tuple and replay independent "
+                        "elliptic-curve arithmetic"
+                    ),
+                    "excluded_components": [
+                        "singular fibers",
+                        "failed target-tag recovery",
+                    ],
+                    "spurious_solution_policy": (
+                        "reject every tuple whose recovered point sum fails"
+                    ),
+                },
+                "implementation_identity": {
+                    "implementation_path": (
+                        "planned/hypothesis-generation-fixture-producer.py"
+                    ),
+                    "sha256": "4" * 64,
+                },
+                "cost_changing_mechanism": {
+                    "quantity": (
+                        "validated F4 nonzero matrix entries per relation"
+                    ),
+                    "causal_bridge": (
+                        "character-graded sparsity reduces the registered "
+                        "elimination matrix while exact phase recovery remains"
+                    ),
+                    "growth_law": (
+                        "the matched ratio must improve over three increasing "
+                        "toy field sizes"
+                    ),
+                    "non_orbit_lever": (
+                        "graded syzygy sparsity rather than finite orbit size"
+                    ),
+                },
+                "source_ids": [source_id],
+            },
+            "prediction_contract": {
+                "metric": {
+                    "name": "validated_f4_nonzeros_per_relation",
+                    "unit": "matrix_nonzeros/relation",
+                    "recomputation": (
+                        "sum raw sparse-matrix entries and divide by "
+                        "independently recovered relations"
+                    ),
+                },
+                "matched_baseline": {
+                    "baseline_id": "plain-semaev-matched-toy-baseline",
+                    "implementation_digest": "5" * 64,
+                    "matching_variables": [
+                        "curve",
+                        "field_bits",
+                        "factor_base_size",
+                        "seed",
+                        "solver_version",
+                    ],
+                },
+                "tested_sizes": [8, 12, 16],
+                "expected_direction": "decrease",
+                "minimum_material_effect": 0.1,
+                "decision_threshold": {
+                    "operator": "le",
+                    "value": 0.9,
+                },
+                "stop_rule": {
+                    "condition": (
+                        "stop after all frozen sizes classify or after one "
+                        "exact recovery failure"
+                    ),
+                    "maximum_instances": 9,
+                },
+                "falsifying_outcomes": [
+                    "exact recovery fails",
+                    "the matched cost ratio does not improve",
+                ],
+            },
+            "cost_contract": {
+                "online": {"cpu_hours": 3, "gpu_hours": 0},
+                "offline": {"cpu_hours": 1, "gpu_hours": 0},
+                "wall_time_hours": 4,
+                "peak_memory_gb": 4,
+                "storage_gb": 2,
+                "workers": 1,
+                "money_usd": 10,
+                "implementation_hours": 8,
+                "reviewer_hours": 2,
+                "preprocessing": {
+                    "included_in_totals": True,
+                    "description": (
+                        "Presentation construction and every reusable "
+                        "decomposition are included."
+                    ),
+                },
+                "amortization": {
+                    "class": "none_single_target",
+                    "target_count": 1,
+                    "per_target_cost_included": True,
+                },
+                "success_probability": 0.25,
+                "shared_setup": {
+                    "setup_id": None,
+                    "hours": 0,
+                    "expected_reuse": 1,
+                },
+            },
+            "validator_contract": {
+                "status": "design_only_unverified",
+                "raw_artifact_format": {
+                    "media_type": "application/json",
+                    "schema_id": "planned-glv-tagged-relation-artifacts-v1",
+                },
+                "recomputed_decisive_claim": {
+                    "claim_id": "planned-tagged-cost-ratio",
+                    "procedure": (
+                        "recompute exact relation recovery and the cost ratio "
+                        "from primitive raw artifacts"
+                    ),
+                },
+                "implementation": {
+                    "path": (
+                        "planned/hypothesis-generation-fixture-validator.py"
+                    ),
+                    "sha256": "6" * 64,
+                },
+                "prohibited_producer_fields": [
+                    "claimed_outcome",
+                    "claimed_cost_ratio",
+                ],
+                "independence": {
+                    "path_independent": False,
+                    "artifact_independent": False,
+                    "source_independent": False,
+                    "producer_identity": "fixture-producer",
+                    "validator_identity": "planned-fixture-validator",
+                    "same_model": None,
+                    "same_session": None,
+                    "shared_context": None,
+                },
+                "independence_evidence": {
+                    "path": {
+                        "status": "planned",
+                        "evidence_id": None,
+                        "sha256": None,
+                    },
+                    "artifact": {
+                        "status": "planned",
+                        "evidence_id": None,
+                        "sha256": None,
+                    },
+                    "source": {
+                        "status": "planned",
+                        "evidence_id": None,
+                        "sha256": None,
+                    },
+                },
+                "source_review_requirements": [
+                    "one digest-bound human source-independence attestation"
+                ],
+            },
             "novelty_scope": {
                 "new_to_repository": True,
                 "new_to_reviewed_corpus": True,
@@ -330,6 +550,7 @@ class ResearchEngineTests(unittest.TestCase):
                 "generator_family": "codex-fixture",
                 "generator_version": "v0",
                 "session_id": f"proposal-session-{proposal_id}",
+                "context_sha256": "a" * 64,
                 "source_commit": source_commit,
                 "prompt_sha256": "0" * 64,
             },
@@ -439,6 +660,7 @@ class ResearchEngineTests(unittest.TestCase):
                             "session_id": (
                                 f"review-session-{proposal['proposal_id']}-{index}"
                             ),
+                            "context_sha256": f"{index + 5:x}" * 64,
                             "prompt_sha256": f"{index}" * 64,
                             "blind_to_other_reviews": True,
                         },
@@ -971,6 +1193,27 @@ class ResearchEngineTests(unittest.TestCase):
             msg=problems,
         )
 
+    def test_native_source_review_id_must_resolve(self) -> None:
+        policy = self.executable_policy()
+        event = self.native_event(
+            0,
+            "REO-2026-07-25-001",
+            "supported",
+            policy,
+        )
+        problems = validate_outcome(
+            Path(f"{event['event_id']}.json"),
+            event,
+            policy,
+            self.decisions,
+            self.hypotheses,
+            source_reviews={},
+        )
+        self.assertTrue(
+            any("source_review_id does not resolve" in item for item in problems),
+            msg=problems,
+        )
+
     def test_007_is_mechanically_forced_to_inconclusive(self) -> None:
         path, source_event = next(
             item
@@ -1437,6 +1680,13 @@ class ResearchEngineTests(unittest.TestCase):
 
     def test_ready_native_event_is_bound_to_validated_run_manifest(self) -> None:
         policy = self.executable_policy()
+        owner_decisions = copy.deepcopy(self.decisions)
+        owner_decisions["execution_gates"]["exploration"][
+            "authorized"
+        ] = True
+        owner_decisions["phase_policy"][
+            "bounded_exploration_authorized"
+        ] = True
         calibration = self.native_event(
             0, "REO-2026-07-25-001", "supported", policy
         )
@@ -1739,13 +1989,13 @@ class ResearchEngineTests(unittest.TestCase):
                     Path("REO-2026-07-25-001.json"),
                     calibration,
                     policy,
-                    self.decisions,
+                    owner_decisions,
                     self.hypotheses,
                 ),
             )
             without_commit_anchor = validate_native_sequence(
                 policy,
-                self.decisions,
+                owner_decisions,
                 [(Path("REO-2026-07-25-001.json"), calibration)],
             )
             self.assertTrue(
@@ -1761,7 +2011,7 @@ class ResearchEngineTests(unittest.TestCase):
                     [],
                     validate_native_sequence(
                         policy,
-                        self.decisions,
+                        owner_decisions,
                         [(Path("REO-2026-07-25-001.json"), calibration)],
                     ),
                 )
@@ -1769,7 +2019,7 @@ class ResearchEngineTests(unittest.TestCase):
                 relabelled["outcome"] = "bounded_negative"
                 relabelled_problems = validate_native_sequence(
                     policy,
-                    self.decisions,
+                    owner_decisions,
                     [(Path("REO-2026-07-25-001.json"), relabelled)],
                 )
             self.assertTrue(
@@ -2253,12 +2503,10 @@ class ResearchEngineTests(unittest.TestCase):
         seeds = generate_seeds(
             self.generation_policy, self.decisions, self.policy
         )
-        self.assertEqual(4, len(seeds))
+        self.assertEqual(2, len(seeds))
         self.assertEqual(
             {
-                "R-GLV-SEMAEV",
                 "R-PETIT-COMPOSED-MAPS",
-                "R-PRIME-FIELD-INDEX-CALCULUS",
             },
             {seed["route_id"] for seed in seeds},
         )
@@ -2267,7 +2515,6 @@ class ResearchEngineTests(unittest.TestCase):
         )
         self.assertEqual(
             {
-                "proposal_required",
                 "desk_cost_bridge_required",
                 "property_resolution_required",
             },
@@ -2284,6 +2531,32 @@ class ResearchEngineTests(unittest.TestCase):
         )
         observed = generate_seeds(reordered, self.decisions, self.policy)
         self.assertEqual(expected, observed)
+
+    def test_canonical_claim_change_invalidates_generated_seeds(self) -> None:
+        claim_problems, claim_state = load_research_claim_state()
+        self.assertEqual([], claim_problems)
+        expected = generate_seeds(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            claim_state=claim_state,
+        )
+        changed = copy.deepcopy(claim_state)
+        changed["claims"][0]["statement"] += " Changed canonical fixture."
+        observed = generate_seeds(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            claim_state=changed,
+        )
+        self.assertNotEqual(
+            [seed["seed_id"] for seed in expected],
+            [seed["seed_id"] for seed in observed],
+        )
+        self.assertNotEqual(
+            [seed["claim_state_digest"] for seed in expected],
+            [seed["claim_state_digest"] for seed in observed],
+        )
 
     def test_decided_typed_cells_never_generate_seeds(self) -> None:
         typed_problems, typed_state = load_typed_evidence_state()
@@ -2304,6 +2577,43 @@ class ResearchEngineTests(unittest.TestCase):
             }
         }
         self.assertTrue(seeded_cells.isdisjoint(decided_cells))
+
+    def test_seed_overflow_produces_coverage_artifact(self) -> None:
+        typed_problems, typed_state = load_typed_evidence_state()
+        self.assertEqual([], typed_problems)
+        template = next(
+            cell for cell in typed_state["cells"] if cell["seed_eligible"]
+        )
+        overflow_state = copy.deepcopy(typed_state)
+        overflow_state["cells"] = []
+        for index in range(13):
+            cell = copy.deepcopy(template)
+            cell["cell_id"] = f"CELL-OVERFLOW-{index:02d}"
+            cell["mechanism_id"] = f"M-OVERFLOW-{index:02d}"
+            cell["evidence_digest"] = f"{index + 1:064x}"
+            overflow_state["cells"].append(cell)
+        overflow_state["counts"] = {
+            **typed_state["counts"],
+            "cells": 13,
+            "seed_eligible_cells": 13,
+        }
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [],
+            [],
+            typed_evidence_state=overflow_state,
+        )
+        self.assertEqual([], problems)
+        self.assertEqual(13, state["seed_coverage"]["eligible_seed_count"])
+        self.assertTrue(state["seed_coverage"]["overflow_triggered"])
+        self.assertEqual(
+            "coverage_review_required_non_executable",
+            state["seed_coverage"]["disposition"],
+        )
+        self.assertEqual(13, len(state["seed_coverage"]["represented_cell_ids"]))
+        self.assertEqual(13, len(state["generated_seeds"]))
 
     def test_violated_typed_property_fails_closed_before_generation(
         self,
@@ -2368,10 +2678,29 @@ class ResearchEngineTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(1, state["counts"]["quality_cleared_proposals"])
         self.assertEqual(1, state["counts"]["retained_hypothesis_drafts"])
+        draft = state["retained_hypothesis_drafts"][0]
         self.assertEqual(
             "quality_cleared_not_authorized",
-            state["retained_hypothesis_drafts"][0]["status"],
+            draft["status"],
         )
+        self.assertEqual(proposal_sha256(proposal), draft["proposal_sha256"])
+        self.assertEqual(5, len(draft["review_artifacts"]))
+        self.assertEqual(
+            {
+                "algebra",
+                "cryptanalysis_skeptic",
+                "prior_art",
+                "cost_model",
+                "validator_design",
+            },
+            {
+                review["reviewer_role"]
+                for review in draft["review_artifacts"]
+            },
+        )
+        draft_payload = copy.deepcopy(draft)
+        draft_digest = draft_payload.pop("draft_sha256")
+        self.assertEqual(sha256_json(draft_payload), draft_digest)
         self.assertEqual(
             "none", state["proposal_intake"][0]["authorization"]
         )
@@ -2399,6 +2728,67 @@ class ResearchEngineTests(unittest.TestCase):
         self.assertEqual(
             "hard_rejected", state["proposal_intake"][0]["disposition"]
         )
+        self.assertEqual([], state["retained_hypothesis_drafts"])
+
+    def test_semantic_glv_reencoding_is_blocked_by_adversarial_review(
+        self,
+    ) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(
+            seed, "HGP-FIXTURE-SEMANTIC-GLV"
+        )
+        proposal["new_premise"] = (
+            "Represent every free coordinate only by its cubic-residue class "
+            "and identify all choices inside each class while retaining the "
+            "same fixed relation target."
+        )
+        proposal["premise_fingerprint"] = premise_fingerprint(
+            proposal["new_premise"]
+        )
+        proposal["mechanism_identity"].update(
+            {
+                "transformation_class": "coordinatewise-cubic-residue-classes",
+                "information_source_class": "glv-coordinate-orbits",
+                "target_semantics_class": "same-fixed-target",
+                "recovery_class": "discard-relative-phase",
+                "changed_cost_term": "coordinate-domain-size",
+                "precomputation_class": "none",
+                "amortization_class": "single-target",
+            }
+        )
+        proposal["mechanism_signature"] = mechanism_signature(proposal)
+        reviews = self.generation_reviews(proposal)
+        skeptic = next(
+            review
+            for _, review in reviews
+            if review["reviewer_role"] == "cryptanalysis_skeptic"
+        )
+        skeptic["verdict"] = "block"
+        skeptic["blocker_codes"] = ["semantic_reencoding_risk"]
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [
+                (
+                    PROPOSALS_DIR / "HGP-FIXTURE-SEMANTIC-GLV.json",
+                    proposal,
+                )
+            ],
+            reviews,
+        )
+        self.assertEqual([], problems)
+        intake = state["proposal_intake"][0]
+        self.assertNotEqual(
+            proposal["premise_fingerprint"],
+            premise_fingerprint(
+                self.generation_policy["known_premises"][0]["basis"]
+            ),
+        )
+        self.assertIn("adversarial_review_blocked", intake["blockers"])
+        self.assertEqual("hard_rejected", intake["disposition"])
         self.assertEqual([], state["retained_hypothesis_drafts"])
 
     def test_review_digest_invalidates_after_proposal_change(self) -> None:
@@ -2588,6 +2978,37 @@ class ResearchEngineTests(unittest.TestCase):
         )
         self.assertEqual([], state["retained_hypothesis_drafts"])
 
+    def test_shared_context_cannot_self_certify_independence(self) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(seed, "HGP-FIXTURE-CTX")
+        reviews = self.generation_reviews(proposal)
+        required_role = self.generation_policy["quality_gate"][
+            "required_independent_roles"
+        ][0]
+        review = next(
+            item
+            for _, item in reviews
+            if item["reviewer_role"] == required_role
+        )
+        review["reviewer_provenance"]["context_sha256"] = proposal[
+            "provenance"
+        ]["context_sha256"]
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [(PROPOSALS_DIR / "HGP-FIXTURE-CTX.json", proposal)],
+            reviews,
+        )
+        self.assertEqual([], problems)
+        self.assertIn(
+            "review_independence_unestablished",
+            state["proposal_intake"][0]["blockers"],
+        )
+        self.assertEqual([], state["retained_hypothesis_drafts"])
+
     def test_proposer_cannot_review_its_own_proposal(self) -> None:
         seed = generate_seeds(
             self.generation_policy, self.decisions, self.policy
@@ -2630,6 +3051,76 @@ class ResearchEngineTests(unittest.TestCase):
         self.assertIn("missing_fixed_target_semantics", blockers)
         self.assertIn("hidden_or_unpriced_precomputation", blockers)
 
+    def test_prose_only_packet_cannot_clear_structured_scientific_gates(
+        self,
+    ) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(
+            seed, "HGP-FIXTURE-STRUCTURED-GATES"
+        )
+        proposal["mechanism_contract"]["recovery_map"]["inverse"] = ""
+        proposal["prediction_contract"]["metric"]["recomputation"] = ""
+        proposal["cost_contract"]["online"]["cpu_hours"] = "unpriced"
+        proposal["validator_contract"]["independence"][
+            "path_independent"
+        ] = True
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [
+                (
+                    PROPOSALS_DIR
+                    / "HGP-FIXTURE-STRUCTURED-GATES.json",
+                    proposal,
+                )
+            ],
+            self.generation_reviews(proposal),
+        )
+        self.assertEqual([], problems)
+        blockers = state["proposal_intake"][0]["blockers"]
+        self.assertIn("missing_exact_mechanism", blockers)
+        self.assertIn("missing_falsifiable_prediction", blockers)
+        self.assertIn("missing_cost_changing_bridge", blockers)
+        self.assertIn("missing_independent_validator_plan", blockers)
+        self.assertEqual([], state["retained_hypothesis_drafts"])
+
+    def test_structured_scope_derives_threat_and_toy_ceiling_gates(
+        self,
+    ) -> None:
+        seed = generate_seeds(
+            self.generation_policy, self.decisions, self.policy
+        )[0]
+        proposal = self.generation_proposal(
+            seed, "HGP-FIXTURE-STRUCTURED-SCOPE"
+        )
+        proposal["cost_contract"]["amortization"] = {
+            "class": "multi_target",
+            "target_count": 16,
+            "per_target_cost_included": True,
+        }
+        proposal["prediction_contract"]["tested_sizes"] = [8, 16, 25]
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [
+                (
+                    PROPOSALS_DIR
+                    / "HGP-FIXTURE-STRUCTURED-SCOPE.json",
+                    proposal,
+                )
+            ],
+            self.generation_reviews(proposal),
+        )
+        self.assertEqual([], problems)
+        blockers = state["proposal_intake"][0]["blockers"]
+        self.assertIn("threat_model_drift", blockers)
+        self.assertIn("targets_secp256k1_directly", blockers)
+        self.assertEqual("hard_rejected", state["proposal_intake"][0]["disposition"])
+
     def test_incompatible_axis_does_not_generate_a_seed(self) -> None:
         policy = copy.deepcopy(self.generation_policy)
         glv_uncertainty = next(
@@ -2639,7 +3130,7 @@ class ResearchEngineTests(unittest.TestCase):
         )
         glv_uncertainty["compatibility_tags"] = ["deliberately-incompatible"]
         seeds = generate_seeds(policy, self.decisions, self.policy)
-        self.assertEqual(3, len(seeds))
+        self.assertEqual(2, len(seeds))
         self.assertNotIn("R-GLV-SEMAEV", {seed["route_id"] for seed in seeds})
 
     def test_near_duplicate_pair_is_visible_and_not_silently_accepted(

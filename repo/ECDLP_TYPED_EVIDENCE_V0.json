@@ -434,13 +434,13 @@
       "barrier_ids": [
         "B-GLV-FINITE-TARGET-BATCHING"
       ],
-      "intake_mode": "proposal",
+      "intake_mode": "none",
       "seed_axes": {
         "target_feature_id": "TF-J0-GLV-C3",
         "mechanism_primitive_id": "MP-FAITHFUL-PHASE-QUOTIENT",
         "uncertainty_id": "U-GLV-SOLVING-COST"
       },
-      "boundary": "An open cell is a question slot only; without an exact map and cost-changing bridge it is not a candidate and authorizes no computation."
+      "boundary": "This is a parked desired-property record, not a mechanism. It cannot emit a seed until a new claim supplies an exact map, recovery semantics, and cost-changing bridge."
     },
     {
       "id": "M-FHJRV-DIRECT-TWO-TORSION",
@@ -597,13 +597,13 @@
         }
       ],
       "barrier_ids": [],
-      "intake_mode": "proposal",
+      "intake_mode": "none",
       "seed_axes": {
         "target_feature_id": "TF-PRIME-FIELD-REPRESENTATION",
         "mechanism_primitive_id": "MP-SEMAEV-RELATION-SAMPLING",
         "uncertainty_id": "U-PRIME-FIELD-RELATION-EXPONENT"
       },
-      "boundary": "A prose idea, solver benchmark, or lower polynomial degree is not a mechanism-bearing proposal without the complete cost and recovery bridge."
+      "boundary": "This is a parked desired-property record, not a mechanism. A prose idea, solver benchmark, or lower polynomial degree cannot emit a seed without the complete cost and recovery bridge."
     }
   ]
 }

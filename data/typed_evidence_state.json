@@ -3,10 +3,10 @@
   "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
   "target_id": "secp256k1-classical-single-target-plain",
   "source_hashes": {
-    "policy_sha256": "9718f32ce5b2ad330dc60ca05cc5cdfbe7dd0174e1619bb98a9b7fcf938fcf08",
-    "decision_substrate_sha256": "8d91a39f3d99b9fb2781d38c80b0d1c2c89954107370de995e99ca4987271bcb",
-    "source_registry_identity_sha256": "c6abca98bc0fa8d1c1f9a37e7d424df17aca524af14d5e854f6a9d16c79ce6e9",
-    "evidence_files_sha256": "fa99bed98766cc72e02db1efc6f945aad35a7ffd74e2e0cfb617379e68596270",
+    "policy_sha256": "72ac969f4a549beb99fc365cf7b0dcbb07134bcbd9bbca3fdc1e0e336d4a862b",
+    "decision_substrate_sha256": "fe1f6d6a32b7c93ee69130ee3385598a316697277a01c517d5d65473f2d173d2",
+    "source_registry_identity_sha256": "153a606b72acb5e809da79c0f475dd50d5f24139ddfbdc696d6947ae6a86d106",
+    "evidence_files_sha256": "f0272dba84f7e78588ea4aab6cd1fbf3a813752d53bd62972b6c5e917ec002f9",
     "desk_decisions_sha256": "ee50228216f0ff99023ab3d1c869732c3c10926a8707107caf9b9a49b9b3dd48"
   },
   "trust_boundary": {
@@ -24,7 +24,7 @@
     "property_resolution_cells": 1,
     "decided_inapplicable_cells": 2,
     "decided_closed_cells": 1,
-    "seed_eligible_cells": 4,
+    "seed_eligible_cells": 2,
     "desk_decisions": 3
   },
   "source_claims": [
@@ -522,9 +522,9 @@
         "mechanism_primitive_id": "MP-FAITHFUL-PHASE-QUOTIENT",
         "uncertainty_id": "U-GLV-SOLVING-COST"
       },
-      "intake_mode": "proposal",
-      "seed_eligible": true,
-      "boundary": "An open cell is a question slot only; without an exact map and cost-changing bridge it is not a candidate and authorizes no computation.",
+      "intake_mode": "none",
+      "seed_eligible": false,
+      "boundary": "This is a parked desired-property record, not a mechanism. It cannot emit a seed until a new claim supplies an exact map, recovery semantics, and cost-changing bridge.",
       "authorization": "none"
     },
     {
@@ -850,9 +850,9 @@
         "mechanism_primitive_id": "MP-SEMAEV-RELATION-SAMPLING",
         "uncertainty_id": "U-PRIME-FIELD-RELATION-EXPONENT"
       },
-      "intake_mode": "proposal",
-      "seed_eligible": true,
-      "boundary": "A prose idea, solver benchmark, or lower polynomial degree is not a mechanism-bearing proposal without the complete cost and recovery bridge.",
+      "intake_mode": "none",
+      "seed_eligible": false,
+      "boundary": "This is a parked desired-property record, not a mechanism. A prose idea, solver benchmark, or lower polynomial degree cannot emit a seed without the complete cost and recovery bridge.",
       "authorization": "none"
     }
   ],

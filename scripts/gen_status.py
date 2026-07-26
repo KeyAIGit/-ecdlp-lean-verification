@@ -9,6 +9,8 @@ Every number here is pulled live from the machine sources, never hand-typed, so 
   - repo/PILOT_PROTOCOL.json (external-pilot status and evidence state)
   - repo/ECDLP_DECISION_SUBSTRATE.json (phase, routes, foundation decisions)
   - data/research_engine_state.json (dual gates, selected explorations, outcomes)
+  - data/research_engine_v02_state.json (immutable lifecycle and authorization)
+  - data/research_engine_shadow_intake.json (non-executable proposal stubs)
 Other summary docs should link to STATUS.md rather than duplicate counts.
 
 Run: python3 scripts/gen_status.py   (also run by the docs-sync workflow on every ledger change)
@@ -25,6 +27,8 @@ DECISIONS = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
 PRODUCT = ROOT / "repo" / "PRODUCT_MODEL.json"
 PILOT = ROOT / "repo" / "PILOT_PROTOCOL.json"
 ENGINE = ROOT / "data" / "research_engine_state.json"
+ENGINE_V02 = ROOT / "data" / "research_engine_v02_state.json"
+SHADOW_INTAKE = ROOT / "data" / "research_engine_shadow_intake.json"
 OUT = ROOT / "STATUS.md"
 
 
@@ -58,6 +62,8 @@ def main() -> int:
     product = json.loads(PRODUCT.read_text(encoding="utf-8"))
     pilot = json.loads(PILOT.read_text(encoding="utf-8"))
     engine = json.loads(ENGINE.read_text(encoding="utf-8"))
+    engine_v02 = json.loads(ENGINE_V02.read_text(encoding="utf-8"))
+    shadow_intake = json.loads(SHADOW_INTAKE.read_text(encoding="utf-8"))
     ss = fm["status_summary"]
     meta = fm["meta"]
     total = meta.get("corpus_claims", sum(ss.values()))
@@ -97,7 +103,8 @@ def main() -> int:
 > `data/frontier_map.json`, `repo/PRODUCT_MODEL.json`, and
 > `repo/PILOT_PROTOCOL.json`, `repo/ECDLP_DECISION_SUBSTRATE.json`, and
 > `repo/ECDLP_TYPED_EVIDENCE_V0.json`, `data/typed_evidence_state.json`, and
-> `data/research_engine_state.json`.
+> `data/research_engine_state.json`, `data/research_engine_v02_state.json`, and
+> `data/research_engine_shadow_intake.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -199,12 +206,30 @@ nothing. The generation layer currently emits
 Creative output is untrusted and zero retained drafts is a valid cycle result.
 {engine_queue_summary}
 
+## Research Engine v0.2 sanitation
+The v0.2 lifecycle currently contains
+**{engine_v02['engine']['input_candidate_count']} immutable candidate snapshots**,
+**{len(engine_v02['engine']['admissible'])} admissible**,
+**{len(engine_v02['engine']['recommended'])} recommended**, and
+**{engine_v02['authorization']['experiments']} authorized**. Recommendation cannot create
+authorization; authorization requires a separate dated owner decision bound to the exact
+candidate digest. The eight historical events are referenced without migration, with both their
+canonical review root and raw file bytes pinned.
+
+Shadow intake contains **{shadow_intake['counts']['proposal_stubs']} non-executable proposal
+stubs** and **{shadow_intake['counts']['parked_ideas']} parked desired-property record**.
+These are research questions, not hypotheses or candidates:
+**{shadow_intake['counts']['admissible']} admissible**,
+**{shadow_intake['counts']['recommended']} recommended**, and
+**{shadow_intake['counts']['authorized']} authorized**. Current sanitation work is `TASK-010`;
+`TASK-008` remains parked until this lifecycle is reviewed on a frozen commit.
+
 The Engine's bounded-exploration capability is
 **{str(engine_gates['exploration_authorized']).lower()}**, while the current decision's experiment
 authorization is **{str(phase['experiments_authorized']).lower()}** and the promotion gate is
 **{str(engine_gates['promotion_authorized']).lower()}**. `GLV-SEMAEV-ITER-001` is complete; its
 certificates and kernel-checked identities authorize no hypothesis run. `TASK-008` proposal
-intake is current, and any later experiment needs a new dated decision plus the normal fixed
+intake is parked during `TASK-010`, and any later experiment needs a new dated decision plus the normal fixed
 budgets, dependency order, and retained terminal outcome.
 
 ## Active work protocol
@@ -218,11 +243,14 @@ claim boundary. Public surfaces must distinguish current capabilities, the refer
 customer hypotheses, and future product direction.
 
 The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view is generated.
-The engine policies are `repo/RESEARCH_ENGINE_V0.json` and
-`repo/HYPOTHESIS_GENERATION_V0.json`; typed applicability is owned by
+The engine policies are `repo/RESEARCH_ENGINE_V0.json`,
+`repo/HYPOTHESIS_GENERATION_V0.json`, and
+`repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`; typed applicability is owned by
 `repo/ECDLP_TYPED_EVIDENCE_V0.json`, materialized in
 `data/typed_evidence_state.json`, and the combined generated state is
-`data/research_engine_state.json`. The candidate-neutral validation contract lives in
+`data/research_engine_state.json`. The v0.2 lifecycle and shadow intake are
+`data/research_engine_v02_state.json` and
+`data/research_engine_shadow_intake.json`. The candidate-neutral validation contract lives in
 `experiments/framework/`. No one file authorizes promotion by itself.
 
 The hypothesis registry is `experiments/HYPOTHESES.yaml`. It records testable
@@ -237,8 +265,12 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 `repo/RESEARCH_ENGINE_V0.json` (exploration policy and selector) ·
 `repo/ECDLP_TYPED_EVIDENCE_V0.json` (claim-level applicability screens) ·
 `repo/HYPOTHESIS_GENERATION_V0.json` (seed and proposal-quality policy) ·
+`repo/RESEARCH_ENGINE_LIFECYCLE_V0.json` (immutable candidate lifecycle) ·
+`repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json` (19 regression cases) ·
 `data/typed_evidence_state.json` (materialized mechanism/property cells) ·
 `data/research_engine_state.json` (generated engine state) ·
+`data/research_engine_v02_state.json` (generated lifecycle state) ·
+`data/research_engine_shadow_intake.json` (non-executable shadow queue) ·
 `tasks/NEXT.md` (queue router) · `tasks/ECDLP_RESEARCH.md` (research queue) ·
 `tasks/KEYAI_PRODUCT.md` (product queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3

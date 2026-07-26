@@ -52,7 +52,7 @@ class TypedEvidenceTests(unittest.TestCase):
                 "property_resolution_cells": 1,
                 "decided_inapplicable_cells": 2,
                 "decided_closed_cells": 1,
-                "seed_eligible_cells": 4,
+                "seed_eligible_cells": 2,
                 "desk_decisions": 3,
             },
             state["counts"],
@@ -134,6 +134,27 @@ class TypedEvidenceTests(unittest.TestCase):
             any("uses non-decisive source claims" in item for item in problems)
         )
 
+    def test_unread_source_registry_status_blocks_full_text_claim(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        claim = copy.deepcopy(
+            next(
+                item
+                for item in policy["source_claims"]
+                if item["id"] == "SC-AMADORI-PRIME-FIELD-VARIANT"
+            )
+        )
+        claim["id"] = "SC-KUDO-CONTRADICTION-FIXTURE"
+        claim["source_id"] = "kudo_yokota_takahashi_yasuda2018"
+        claim["read_status"] = "full_text_obtained"
+        policy["source_claims"].append(claim)
+        problems, _ = self.build(policy=policy)
+        self.assertTrue(
+            any(
+                "contradicts source registry full_text_unread" in item
+                for item in problems
+            )
+        )
+
     def test_false_target_property_blocks_only_the_bound_mechanism(self) -> None:
         problems, state = self.build()
         self.assertEqual([], problems)
@@ -148,6 +169,20 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual(
             "open",
             cells["CELL-M-GLV-FAITHFUL-PHASE-QUOTIENT"]["status"],
+        )
+        self.assertFalse(
+            cells["CELL-M-GLV-FAITHFUL-PHASE-QUOTIENT"]["seed_eligible"]
+        )
+
+    def test_desired_properties_are_not_treated_as_mechanisms(self) -> None:
+        problems, state = self.build()
+        self.assertEqual([], problems)
+        cells = {item["cell_id"]: item for item in state["cells"]}
+        self.assertFalse(
+            cells["CELL-M-GLV-FAITHFUL-PHASE-QUOTIENT"]["seed_eligible"]
+        )
+        self.assertFalse(
+            cells["CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND"]["seed_eligible"]
         )
 
     def test_m4_screen_does_not_close_the_m14_cost_cell(self) -> None:

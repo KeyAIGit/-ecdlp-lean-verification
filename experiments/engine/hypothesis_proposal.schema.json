@@ -21,6 +21,10 @@
     "premise_fingerprint",
     "mechanism_identity",
     "mechanism_signature",
+    "mechanism_contract",
+    "prediction_contract",
+    "cost_contract",
+    "validator_contract",
     "novelty_scope",
     "nearest_prior_art",
     "exact_mechanism",
@@ -140,6 +144,18 @@
           "pattern": "^[a-z0-9][a-z0-9._-]{2,80}$"
         }
       }
+    },
+    "mechanism_contract": {
+      "$ref": "mechanism_contract.schema.json"
+    },
+    "prediction_contract": {
+      "$ref": "prediction_contract.schema.json"
+    },
+    "cost_contract": {
+      "$ref": "cost_contract.schema.json"
+    },
+    "validator_contract": {
+      "$ref": "validator_contract.schema.json"
     },
     "novelty_scope": {
       "type": "object",
@@ -476,6 +492,7 @@
         "generator_family",
         "generator_version",
         "session_id",
+        "context_sha256",
         "source_commit",
         "prompt_sha256"
       ],
@@ -502,6 +519,10 @@
         "session_id": {
           "type": "string",
           "minLength": 1
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
         },
         "source_commit": {
           "type": "string",

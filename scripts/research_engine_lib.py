@@ -1776,6 +1776,8 @@ def validate_policy(
     generation_ownership = {
         "typed_evidence_policy": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "typed_evidence_state": "data/typed_evidence_state.json",
+        "research_claim_policy": "repo/RESEARCH_CLAIMS_V0.json",
+        "research_claim_state": "data/research_claim_state.json",
         "desk_decisions": "experiments/engine/desk_decisions/",
         "hypothesis_generation_policy": "repo/HYPOTHESIS_GENERATION_V0.json",
         "hypothesis_proposals": "experiments/engine/proposals/",
@@ -2799,6 +2801,7 @@ def validate_outcome(
     policy: dict[str, Any],
     decisions: dict[str, Any],
     hypotheses: dict[str, dict[str, str]],
+    source_reviews: dict[str, dict[str, Any]] | None = None,
 ) -> list[str]:
     problems: list[str] = []
     label = path.name
@@ -2933,6 +2936,27 @@ def validate_outcome(
                 problems.append(
                     f"{label}: reviewed source independence needs source_review_id"
                 )
+            if (
+                independence.get("source") == "reviewed_independent"
+                and _nonempty_text(source_review_id)
+                and source_reviews is not None
+            ):
+                source_review = source_reviews.get(str(source_review_id))
+                if source_review is None:
+                    problems.append(
+                        f"{label}: source_review_id does not resolve to a "
+                        "prior-art review"
+                    )
+                elif (
+                    source_review.get("reviewer_role") != "prior_art"
+                    or source_review.get("verdict") != "pass"
+                    or source_review.get("source_independence")
+                    != "declared_independent"
+                ):
+                    problems.append(
+                        f"{label}: source_review_id must reference a passing, "
+                        "independent prior-art review"
+                    )
         else:
             independence = {}
         path_verified = independence.get("path") == "verified_distinct"
@@ -3712,6 +3736,9 @@ def build_state(
             "typed_evidence_state_sha256": hypothesis_generation[
                 "source_hashes"
             ]["typed_evidence_state_sha256"],
+            "research_claim_state_sha256": hypothesis_generation[
+                "source_hashes"
+            ]["research_claim_state_sha256"],
             "decision_substrate_sha256": sha256_json(decisions),
             "hypotheses_sha256": file_sha256(HYPOTHESES_PATH),
             "outcome_events_sha256": sha256_json(event_values),
@@ -3928,9 +3955,25 @@ def validate_all() -> tuple[list[str], dict[str, Any]]:
         generation_reviews,
     )
     problems.extend(generation_problems)
+    source_reviews = {
+        review["review_id"]: review
+        for _, review in generation_reviews
+        if isinstance(review, dict)
+        and isinstance(review.get("review_id"), str)
+        and review.get("reviewer_role") == "prior_art"
+    }
     event_ids: list[str] = []
     for path, event in outcomes:
-        problems.extend(validate_outcome(path, event, policy, decisions, hypotheses))
+        problems.extend(
+            validate_outcome(
+                path,
+                event,
+                policy,
+                decisions,
+                hypotheses,
+                source_reviews,
+            )
+        )
         if isinstance(event, dict) and isinstance(event.get("event_id"), str):
             event_ids.append(event["event_id"])
     if len(event_ids) != len(set(event_ids)):

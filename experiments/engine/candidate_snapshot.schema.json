@@ -52,6 +52,60 @@
       "uniqueItems": true,
       "items": {"type": "string", "minLength": 1}
     },
+    "generation_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "draft_id",
+        "draft_sha256",
+        "proposal_id",
+        "proposal_sha256",
+        "source_commit",
+        "review_artifacts"
+      ],
+      "properties": {
+        "draft_id": {"type": "string", "minLength": 1},
+        "draft_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "proposal_id": {"type": "string", "minLength": 1},
+        "proposal_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "review_artifacts": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["review_id", "reviewer_role", "review_sha256"],
+            "properties": {
+              "review_id": {"type": "string", "minLength": 1},
+              "reviewer_role": {
+                "enum": [
+                  "algebra",
+                  "cryptanalysis_skeptic",
+                  "prior_art",
+                  "cost_model",
+                  "validator_design"
+                ]
+              },
+              "review_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
     "dependencies": {
       "type": "array",
       "uniqueItems": true,
@@ -150,13 +204,13 @@
       "if": {
         "properties": {"lane": {"properties": {"lane": {"const": "mechanism"}}}}
       },
-      "then": {"required": ["mechanism_contract"]}
+      "then": {"required": ["mechanism_contract", "generation_binding"]}
     },
     {
       "if": {
         "properties": {"lane": {"properties": {"lane": {"const": "validator"}}}}
       },
-      "then": {"required": ["validator_contract"]}
+      "then": {"required": ["validator_contract", "generation_binding"]}
     },
     {
       "if": {
@@ -169,7 +223,8 @@
           "mechanism_contract",
           "prediction_contract",
           "cost_contract",
-          "validator_contract"
+          "validator_contract",
+          "generation_binding"
         ]
       }
     }

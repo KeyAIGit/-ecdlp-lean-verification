@@ -16,6 +16,8 @@ import re
 from datetime import datetime
 from typing import Any, Iterable
 
+from scientific_provenance import scientific_source_commit_allowed
+
 
 PRIMARY_THREAT_MODEL = "classical-single-target-plain"
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -68,6 +70,14 @@ CALIBRATION_EXCLUDED_CLASSES = {
     "structural",
     "historical_migration",
     "literature",
+}
+
+GENERATION_REVIEW_ROLES = {
+    "algebra",
+    "cryptanalysis_skeptic",
+    "prior_art",
+    "cost_model",
+    "validator_design",
 }
 
 ADDITIVE_COSTS = (
@@ -128,10 +138,14 @@ def _is_iso_datetime(value: Any) -> bool:
     if not isinstance(value, str):
         return False
     try:
-        datetime.fromisoformat(value.replace("Z", "+00:00"))
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
     except ValueError:
         return False
-    return "T" in value
+    return (
+        "T" in value
+        and parsed.tzinfo is not None
+        and parsed.utcoffset() is not None
+    )
 
 
 def _require_keys(
@@ -511,19 +525,34 @@ def validate_cost_contract(contract: Any) -> list[str]:
     return sorted(set(problems))
 
 
-def validate_validator_contract(contract: Any) -> list[str]:
+def validate_validator_contract(
+    contract: Any,
+    *,
+    require_ready: bool = True,
+    evidence_registry: list[dict[str, Any]] | None = None,
+) -> list[str]:
     label = "validator_contract"
     required = (
+        "status",
         "raw_artifact_format",
         "recomputed_decisive_claim",
         "implementation",
         "prohibited_producer_fields",
         "independence",
+        "independence_evidence",
         "source_review_requirements",
     )
     problems = _require_keys(contract, required, label)
     if not isinstance(contract, dict):
         return problems
+    status = contract.get("status")
+    if status not in {
+        "design_only_unverified",
+        "ready_evidence_bound",
+    }:
+        problems.append(f"{label}.status: invalid")
+    if require_ready and status != "ready_evidence_bound":
+        problems.append(f"{label}.status: validator is not evidence-bound ready")
 
     artifact = contract.get("raw_artifact_format")
     problems += _require_keys(
@@ -582,16 +611,6 @@ def validate_validator_contract(contract: Any) -> list[str]:
         independence, independence_keys, f"{label}.independence"
     )
     if isinstance(independence, dict):
-        for key in (
-            "path_independent",
-            "artifact_independent",
-            "source_independent",
-        ):
-            if independence.get(key) is not True:
-                problems.append(f"{label}.independence.{key}: must be true")
-        for key in ("same_model", "same_session", "shared_context"):
-            if independence.get(key) is not False:
-                problems.append(f"{label}.independence.{key}: must be false")
         producer = independence.get("producer_identity")
         validator = independence.get("validator_identity")
         if not _is_nonempty_string(producer):
@@ -606,6 +625,128 @@ def validate_validator_contract(contract: Any) -> list[str]:
             problems.append(
                 f"{label}.independence: producer and validator identities match"
             )
+
+        if status == "ready_evidence_bound":
+            for key in (
+                "path_independent",
+                "artifact_independent",
+                "source_independent",
+            ):
+                if independence.get(key) is not True:
+                    problems.append(
+                        f"{label}.independence.{key}: must be true"
+                    )
+            for key in ("same_model", "same_session", "shared_context"):
+                if independence.get(key) is not False:
+                    problems.append(
+                        f"{label}.independence.{key}: must be false"
+                    )
+        elif status == "design_only_unverified":
+            for key in (
+                "path_independent",
+                "artifact_independent",
+                "source_independent",
+            ):
+                if independence.get(key) is not False:
+                    problems.append(
+                        f"{label}.independence.{key}: design may not claim independence"
+                    )
+            for key in ("same_model", "same_session", "shared_context"):
+                if independence.get(key) is not None:
+                    problems.append(
+                        f"{label}.independence.{key}: design status must remain unknown"
+                    )
+
+    axis_evidence = contract.get("independence_evidence")
+    problems += _require_keys(
+        axis_evidence,
+        ("path", "artifact", "source"),
+        f"{label}.independence_evidence",
+    )
+    registry_by_id = {
+        item.get("evidence_id"): item
+        for item in (evidence_registry or [])
+        if isinstance(item, dict)
+        and _is_nonempty_string(item.get("evidence_id"))
+    }
+    expected_assessment = {
+        "path": "verified",
+        "artifact": "verified",
+        "source": "human_attested",
+    }
+    if isinstance(axis_evidence, dict):
+        for axis in ("path", "artifact", "source"):
+            item = axis_evidence.get(axis)
+            item_label = f"{label}.independence_evidence.{axis}"
+            problems += _require_keys(
+                item,
+                ("status", "evidence_id", "sha256"),
+                item_label,
+            )
+            if not isinstance(item, dict):
+                continue
+            if status == "design_only_unverified":
+                if item.get("status") != "planned":
+                    problems.append(f"{item_label}.status: must be planned")
+                if item.get("evidence_id") is not None:
+                    problems.append(f"{item_label}.evidence_id: must be null")
+                if item.get("sha256") is not None:
+                    problems.append(f"{item_label}.sha256: must be null")
+                continue
+
+            assessment = expected_assessment[axis]
+            if item.get("status") != assessment:
+                problems.append(
+                    f"{item_label}.status: expected {assessment}"
+                )
+            evidence_id = item.get("evidence_id")
+            digest = item.get("sha256")
+            if not _is_nonempty_string(evidence_id):
+                problems.append(f"{item_label}.evidence_id: empty")
+                continue
+            if not _is_sha256(digest):
+                problems.append(f"{item_label}.sha256: invalid")
+                continue
+            registry_item = registry_by_id.get(evidence_id)
+            if registry_item is None:
+                problems.append(
+                    f"{item_label}: evidence_id is not registered"
+                )
+                continue
+            for key, expected in (
+                ("axis", axis),
+                ("assessment", assessment),
+                ("sha256", digest),
+            ):
+                if registry_item.get(key) != expected:
+                    problems.append(
+                        f"{item_label}: registry {key} does not match"
+                    )
+            if isinstance(independence, dict):
+                for key in (
+                    "producer_identity",
+                    "validator_identity",
+                    "same_model",
+                    "same_session",
+                    "shared_context",
+                ):
+                    if registry_item.get(key) != independence.get(key):
+                        problems.append(
+                            f"{item_label}: registry {key} does not match"
+                        )
+            if axis == "source":
+                attested_by = registry_item.get("attested_by")
+                if not _is_nonempty_string(attested_by):
+                    problems.append(
+                        f"{item_label}: human attester is missing"
+                    )
+                elif isinstance(independence, dict) and attested_by in {
+                    independence.get("producer_identity"),
+                    independence.get("validator_identity"),
+                }:
+                    problems.append(
+                        f"{item_label}: source attester is not independent"
+                    )
     return sorted(set(problems))
 
 
@@ -694,6 +835,97 @@ def validate_lane(lane: Any) -> list[str]:
                 )
     elif lane.get("attack_execution"):
         problems.append(f"{label}: attack execution only in bounded_experiment")
+    return sorted(set(problems))
+
+
+def validate_generation_binding(
+    binding: Any,
+    policy: dict[str, Any] | None,
+) -> list[str]:
+    label = "generation_binding"
+    required = (
+        "draft_id",
+        "draft_sha256",
+        "proposal_id",
+        "proposal_sha256",
+        "source_commit",
+        "review_artifacts",
+    )
+    problems = _require_keys(binding, required, label)
+    if not isinstance(binding, dict):
+        return problems
+    for key in ("draft_id", "proposal_id"):
+        if not _is_nonempty_string(binding.get(key)):
+            problems.append(f"{label}.{key}: empty")
+    for key in ("draft_sha256", "proposal_sha256"):
+        if not _is_sha256(binding.get(key)):
+            problems.append(f"{label}.{key}: invalid")
+    if (
+        not isinstance(binding.get("source_commit"), str)
+        or not COMMIT_RE.fullmatch(binding["source_commit"])
+    ):
+        problems.append(f"{label}.source_commit: invalid")
+
+    reviews = binding.get("review_artifacts")
+    roles: list[str] = []
+    review_ids: list[str] = []
+    if not isinstance(reviews, list) or len(reviews) != len(
+        GENERATION_REVIEW_ROLES
+    ):
+        problems.append(
+            f"{label}.review_artifacts: exactly five reviews required"
+        )
+    else:
+        for index, review in enumerate(reviews):
+            item_label = f"{label}.review_artifacts[{index}]"
+            problems += _require_keys(
+                review,
+                ("review_id", "reviewer_role", "review_sha256"),
+                item_label,
+            )
+            if not isinstance(review, dict):
+                continue
+            review_id = review.get("review_id")
+            role = review.get("reviewer_role")
+            if not _is_nonempty_string(review_id):
+                problems.append(f"{item_label}.review_id: empty")
+            else:
+                review_ids.append(review_id)
+            if role not in GENERATION_REVIEW_ROLES:
+                problems.append(f"{item_label}.reviewer_role: invalid")
+            else:
+                roles.append(role)
+            if not _is_sha256(review.get("review_sha256")):
+                problems.append(f"{item_label}.review_sha256: invalid")
+    if set(roles) != GENERATION_REVIEW_ROLES or len(roles) != len(set(roles)):
+        problems.append(f"{label}.review_artifacts: review roles incomplete")
+    if len(review_ids) != len(set(review_ids)):
+        problems.append(f"{label}.review_artifacts: duplicate review ids")
+
+    registry = (
+        policy.get("quality_cleared_draft_bindings", [])
+        if isinstance(policy, dict)
+        else []
+    )
+    registered = next(
+        (
+            item
+            for item in registry
+            if isinstance(item, dict)
+            and item.get("draft_id") == binding.get("draft_id")
+            and item.get("draft_sha256") == binding.get("draft_sha256")
+        ),
+        None,
+    )
+    if registered is None:
+        problems.append(f"{label}: draft is not quality-cleared")
+    else:
+        expected = {
+            key: registered.get(key)
+            for key in required
+        }
+        if expected != binding:
+            problems.append(f"{label}: registered draft binding mismatch")
     return sorted(set(problems))
 
 
@@ -790,6 +1022,10 @@ def validate_snapshot(
         snapshot["source_commit"]
     ):
         problems.append(f"{label}.source_commit: invalid")
+    elif not scientific_source_commit_allowed(snapshot["source_commit"]):
+        problems.append(
+            f"{label}.source_commit: not reproducible from protected provenance"
+        )
     if not _is_sha256(snapshot.get("snapshot_digest")):
         problems.append(f"{label}.snapshot_digest: invalid")
     elif snapshot_digest(snapshot) != snapshot["snapshot_digest"]:
@@ -805,6 +1041,15 @@ def validate_snapshot(
             target.get("forbidden_targets"),
             f"{label}.target_scope.forbidden_targets",
         )
+        if not _is_nonempty_string(target.get("curve_family")):
+            problems.append(f"{label}.target_scope.curve_family: invalid")
+        field_bits = target.get("field_bits")
+        if (
+            not isinstance(field_bits, int)
+            or isinstance(field_bits, bool)
+            or field_bits < 1
+        ):
+            problems.append(f"{label}.target_scope.field_bits: invalid")
         lane = snapshot.get("lane")
         if isinstance(lane, dict) and target.get("kind") != lane.get("target_kind"):
             problems.append(
@@ -818,6 +1063,26 @@ def validate_snapshot(
             problems.append(
                 f"{label}.target_scope: bounded experiment must forbid secp256k1"
             )
+        if (
+            isinstance(lane, dict)
+            and lane.get("lane") == "bounded_experiment"
+            and isinstance(field_bits, int)
+            and not isinstance(field_bits, bool)
+        ):
+            experiment_scope = lane.get("experiment_scope")
+            max_field_bits = (
+                experiment_scope.get("max_field_bits")
+                if isinstance(experiment_scope, dict)
+                else None
+            )
+            if field_bits > 24 or (
+                isinstance(max_field_bits, int)
+                and not isinstance(max_field_bits, bool)
+                and field_bits > max_field_bits
+            ):
+                problems.append(
+                    f"{label}.target_scope.field_bits: exceeds bounded lane ceiling"
+                )
 
     source_reviews = snapshot.get("source_review_ids")
     problems += _validate_string_list(
@@ -910,12 +1175,39 @@ def validate_snapshot(
         else None
     )
     if lane_id in {"mechanism", "bounded_experiment"}:
+        problems += validate_generation_binding(
+            snapshot.get("generation_binding"), policy
+        )
+        if (
+            isinstance(snapshot.get("generation_binding"), dict)
+            and snapshot["generation_binding"].get("source_commit")
+            != snapshot.get("source_commit")
+        ):
+            problems.append(
+                f"{label}.source_commit: generation binding mismatch"
+            )
         problems += validate_mechanism_contract(
             snapshot.get("mechanism_contract")
         )
     if lane_id == "validator":
+        problems += validate_generation_binding(
+            snapshot.get("generation_binding"), policy
+        )
+        if (
+            isinstance(snapshot.get("generation_binding"), dict)
+            and snapshot["generation_binding"].get("source_commit")
+            != snapshot.get("source_commit")
+        ):
+            problems.append(
+                f"{label}.source_commit: generation binding mismatch"
+            )
         problems += validate_validator_contract(
-            snapshot.get("validator_contract")
+            snapshot.get("validator_contract"),
+            evidence_registry=(
+                policy.get("validator_independence_evidence", [])
+                if isinstance(policy, dict)
+                else []
+            ),
         )
     if lane_id == "bounded_experiment":
         problems += validate_prediction_contract(
@@ -923,7 +1215,12 @@ def validate_snapshot(
         )
         problems += validate_cost_contract(snapshot.get("cost_contract"))
         problems += validate_validator_contract(
-            snapshot.get("validator_contract")
+            snapshot.get("validator_contract"),
+            evidence_registry=(
+                policy.get("validator_independence_evidence", [])
+                if isinstance(policy, dict)
+                else []
+            ),
         )
     return sorted(set(problems))
 
@@ -969,6 +1266,12 @@ def derive_gates(
     )
     if lane_id in {"mechanism", "bounded_experiment"} and mechanism_problems:
         gates.add("missing_exact_mechanism")
+    if lane_id in {"mechanism", "validator", "bounded_experiment"} and (
+        validate_generation_binding(
+            snapshot.get("generation_binding"), policy
+        )
+    ):
+        gates.add("missing_quality_cleared_generation_binding")
     prediction_problems = validate_prediction_contract(
         snapshot.get("prediction_contract")
     )
@@ -978,7 +1281,10 @@ def derive_gates(
     if lane_id == "bounded_experiment" and cost_problems:
         gates.add("missing_full_cost_contract")
     validator_problems = validate_validator_contract(
-        snapshot.get("validator_contract")
+        snapshot.get("validator_contract"),
+        evidence_registry=policy.get(
+            "validator_independence_evidence", []
+        ),
     )
     if lane_id in {"validator", "bounded_experiment"} and validator_problems:
         gates.add("missing_independent_validator")
@@ -996,9 +1302,15 @@ def derive_gates(
 def validate_owner_decisions(
     owner_decisions: list[dict[str, Any]],
     candidate_index: dict[tuple[str, int], dict[str, Any]],
+    authorized_owner_roles: Iterable[str] | None = None,
 ) -> list[str]:
     problems: list[str] = []
     seen: set[str] = set()
+    allowed_roles = (
+        set(authorized_owner_roles)
+        if authorized_owner_roles is not None
+        else None
+    )
     for index, decision in enumerate(owner_decisions):
         label = f"owner_decisions[{index}]"
         required = (
@@ -1025,8 +1337,11 @@ def validate_owner_decisions(
             problems.append(f"{label}.decision_type: invalid")
         if not _is_iso_datetime(decision.get("decided_at")):
             problems.append(f"{label}.decided_at: invalid")
-        if not _is_nonempty_string(decision.get("owner_role")):
+        owner_role = decision.get("owner_role")
+        if not _is_nonempty_string(owner_role):
             problems.append(f"{label}.owner_role: invalid")
+        elif allowed_roles is not None and owner_role not in allowed_roles:
+            problems.append(f"{label}.owner_role: not authorized by policy")
         if decision.get("status") not in {"approved", "denied", "revoked"}:
             problems.append(f"{label}.status: invalid")
         key = (decision.get("candidate_id"), decision.get("candidate_version"))
@@ -1035,6 +1350,19 @@ def validate_owner_decisions(
             problems.append(f"{label}: unknown candidate/version")
         elif candidate.get("snapshot_digest") != decision.get("candidate_digest"):
             problems.append(f"{label}.candidate_digest: mismatch")
+        elif _is_iso_datetime(decision.get("decided_at")) and _is_iso_datetime(
+            candidate.get("created_at")
+        ):
+            decided_at = datetime.fromisoformat(
+                decision["decided_at"].replace("Z", "+00:00")
+            )
+            created_at = datetime.fromisoformat(
+                candidate["created_at"].replace("Z", "+00:00")
+            )
+            if decided_at < created_at:
+                problems.append(
+                    f"{label}.decided_at: predates immutable candidate snapshot"
+                )
     return sorted(set(problems))
 
 
@@ -1042,8 +1370,18 @@ def validate_lifecycle_events(
     events: list[dict[str, Any]],
     candidate_index: dict[tuple[str, int], dict[str, Any]],
     owner_decisions: list[dict[str, Any]],
+    authorized_owner_roles: Iterable[str] | None = None,
 ) -> tuple[list[str], dict[tuple[str, int], str]]:
-    problems = validate_owner_decisions(owner_decisions, candidate_index)
+    problems = validate_owner_decisions(
+        owner_decisions,
+        candidate_index,
+        authorized_owner_roles,
+    )
+    allowed_roles = (
+        set(authorized_owner_roles)
+        if authorized_owner_roles is not None
+        else None
+    )
     decision_index = {
         decision.get("decision_id"): decision
         for decision in owner_decisions
@@ -1118,8 +1456,23 @@ def validate_lifecycle_events(
                 decision.get("status") != "approved"
                 or decision.get("candidate_digest")
                 != candidate.get("snapshot_digest")
+                or (
+                    allowed_roles is not None
+                    and decision.get("owner_role") not in allowed_roles
+                )
             ):
                 problems.append(f"{label}: owner decision does not authorize snapshot")
+            elif (
+                _is_iso_datetime(decision.get("decided_at"))
+                and _is_iso_datetime(occurred_at)
+                and datetime.fromisoformat(
+                    decision["decided_at"].replace("Z", "+00:00")
+                )
+                > datetime.fromisoformat(
+                    occurred_at.replace("Z", "+00:00")
+                )
+            ):
+                problems.append(f"{label}: authorization predates owner decision")
         if target == "running" and current != "authorized":
             problems.append(f"{label}: running requires authorization")
         if target == "terminal":
@@ -1241,15 +1594,9 @@ def normalized_cost(
 
 
 def _completed_dependencies(
-    candidates: list[dict[str, Any]],
     lifecycle_events: list[dict[str, Any]],
-    outcomes: list[dict[str, Any]],
 ) -> dict[str, list[tuple[int, str]]]:
     completed: dict[str, list[tuple[int, str]]] = {}
-    by_digest = {
-        candidate["snapshot_digest"]: candidate
-        for candidate in candidates
-    }
     for event in lifecycle_events:
         if event.get("to_state") != "terminal":
             continue
@@ -1258,18 +1605,6 @@ def _completed_dependencies(
             continue
         completed.setdefault(event["candidate_id"], []).append(
             (event["candidate_version"], outcome)
-        )
-    for event in outcomes:
-        if event.get("event_class") in CALIBRATION_EXCLUDED_CLASSES:
-            pass
-        outcome = event.get("outcome")
-        if outcome not in SUCCESSFUL_PREREQUISITE_OUTCOMES:
-            continue
-        candidate = by_digest.get(event.get("candidate_digest"))
-        if candidate is None:
-            continue
-        completed.setdefault(candidate["candidate_id"], []).append(
-            (candidate["version"], outcome)
         )
     return completed
 
@@ -1343,7 +1678,25 @@ def optimize_portfolio(
         }
 
     entries = sorted(entries, key=lambda item: item["candidate_id"])
-    ids = {entry["candidate_id"] for entry in entries}
+    candidate_ids = [entry["candidate_id"] for entry in entries]
+    ids = set(candidate_ids)
+    if len(ids) != len(candidate_ids):
+        duplicates = sorted(
+            candidate_id
+            for candidate_id in ids
+            if candidate_ids.count(candidate_id) > 1
+        )
+        return {
+            "status": "invalid_duplicate_candidate_ids",
+            "candidate_count": len(entries),
+            "duplicate_candidate_ids": duplicates,
+            "combination_count": 0,
+            "selected_ids": [],
+            "reason": (
+                "At most one active immutable version of a candidate may "
+                "enter one portfolio comparison."
+            ),
+        }
     max_selected = int(policy.get("max_selected_per_cycle", len(entries)))
     budgets = policy.get("portfolio_budget", {})
     correlation_caps = policy.get("correlation_max_per_group", {})
@@ -1365,12 +1718,7 @@ def optimize_portfolio(
             dependencies_ok = True
             for entry in subset:
                 for dependency in entry["snapshot"].get("dependencies", []):
-                    if dependency_satisfied(dependency, completed):
-                        continue
-                    if dependency["candidate_id"] not in subset_ids:
-                        dependencies_ok = False
-                        break
-                    if dependency["candidate_id"] not in ids:
+                    if not dependency_satisfied(dependency, completed):
                         dependencies_ok = False
                         break
                 if not dependencies_ok:
@@ -1457,7 +1805,16 @@ def build_calibration(
     scores: list[dict[str, Any]] = []
     excluded: dict[str, int] = {}
     rejected: list[str] = []
+    seen_event_ids: set[str] = set()
     for index, event in enumerate(outcomes):
+        event_id = event.get("event_id")
+        if not _is_nonempty_string(event_id):
+            rejected.append(f"outcomes[{index}]: invalid event_id")
+            continue
+        if event_id in seen_event_ids:
+            rejected.append(f"outcomes[{index}]: duplicate event_id {event_id}")
+            continue
+        seen_event_ids.add(event_id)
         event_class = event.get("event_class")
         if event_class in CALIBRATION_EXCLUDED_CLASSES:
             excluded[event_class] = excluded.get(event_class, 0) + 1
@@ -1486,7 +1843,7 @@ def build_calibration(
         brier = (prior - float(actual)) ** 2
         scores.append(
             {
-                "event_id": event.get("event_id"),
+                "event_id": event_id,
                 "candidate_digest": digest,
                 "frozen_prior_live": prior,
                 "actual_live": actual,
@@ -1583,12 +1940,16 @@ def run_engine(
             duplicate_keys.append(key)
         candidate_index[key] = candidate
 
+    authorized_owner_roles = policy.get(
+        "authorized_owner_roles", ["project_owner"]
+    )
     lifecycle_problems, states = validate_lifecycle_events(
-        lifecycle_events, candidate_index, owner_decisions
+        lifecycle_events,
+        candidate_index,
+        owner_decisions,
+        authorized_owner_roles,
     )
-    completed = _completed_dependencies(
-        candidates, lifecycle_events, outcomes
-    )
+    completed = _completed_dependencies(lifecycle_events)
     budgets = policy.get("portfolio_budget", {})
 
     summaries: list[dict[str, Any]] = []
@@ -1597,6 +1958,10 @@ def run_engine(
         key = (candidate.get("candidate_id"), candidate.get("version"))
         validation = validate_snapshot(candidate, policy)
         gates = derive_gates(candidate, policy)
+        if lifecycle_problems:
+            gates = sorted(set(gates) | {"invalid_lifecycle_state"})
+        if duplicate_keys:
+            gates = sorted(set(gates) | {"invalid_candidate_identity_set"})
         state = states.get(key, "idea")
         dependencies = candidate.get("dependencies", [])
         dependency_ready = all(
@@ -1671,6 +2036,10 @@ def run_engine(
         if base_portfolio["status"] == "compared"
         else []
     )
+    admissible_ids = sorted(
+        entry["candidate_id"] for entry in portfolio_entries
+    )
+    deferred = sorted(set(admissible_ids) - set(recommended))
     scenario_selections = {
         scenario: portfolio["selected_ids"]
         for scenario, portfolio in portfolios.items()
@@ -1687,30 +2056,100 @@ def run_engine(
         else "sensitive"
     )
 
-    valid_decisions = {
-        (
+    decision_id_counts: dict[str, int] = {}
+    for decision in owner_decisions:
+        decision_id = decision.get("decision_id")
+        if isinstance(decision_id, str):
+            decision_id_counts[decision_id] = (
+                decision_id_counts.get(decision_id, 0) + 1
+            )
+
+    latest_decisions: dict[
+        tuple[str, int, str], tuple[datetime, int, str]
+    ] = {}
+    allowed_owner_roles = set(authorized_owner_roles)
+    for decision_index, decision in enumerate(owner_decisions):
+        candidate_key = (
             decision.get("candidate_id"),
             decision.get("candidate_version"),
-            decision.get("candidate_digest"),
         )
-        for decision in owner_decisions
-        if decision.get("decision_type") == "owner_authorization"
-        and decision.get("status") == "approved"
-        and _is_iso_datetime(decision.get("decided_at"))
+        candidate = candidate_index.get(candidate_key)
+        decision_id = decision.get("decision_id")
+        decided_at = decision.get("decided_at")
+        if (
+            candidate is None
+            or not isinstance(decision_id, str)
+            or decision_id_counts.get(decision_id) != 1
+            or decision.get("decision_type") != "owner_authorization"
+            or decision.get("owner_role") not in allowed_owner_roles
+            or decision.get("status") not in {"approved", "denied", "revoked"}
+            or not _is_iso_datetime(decided_at)
+            or candidate.get("snapshot_digest")
+            != decision.get("candidate_digest")
+            or not _is_iso_datetime(candidate.get("created_at"))
+        ):
+            continue
+        decision_time = datetime.fromisoformat(
+            decided_at.replace("Z", "+00:00")
+        )
+        created_at = datetime.fromisoformat(
+            candidate["created_at"].replace("Z", "+00:00")
+        )
+        if decision_time < created_at:
+            continue
+        key = (
+            candidate["candidate_id"],
+            candidate["version"],
+            candidate["snapshot_digest"],
+        )
+        record = (decision_time, decision_index, decision["status"])
+        if key not in latest_decisions or record[:2] > latest_decisions[key][:2]:
+            latest_decisions[key] = record
+
+    valid_decisions = {
+        key
+        for key, (_, _, status) in latest_decisions.items()
+        if status == "approved"
     }
-    authorized: list[str] = []
-    for candidate_id in recommended:
-        candidate = next(
-            item
-            for item in candidates
-            if item["candidate_id"] == candidate_id
-        )
+    summary_index = {
+        (summary["candidate_id"], summary["version"]): summary
+        for summary in summaries
+    }
+    for key, state in states.items():
+        candidate = candidate_index[key]
         decision_key = (
             candidate["candidate_id"],
             candidate["version"],
             candidate["snapshot_digest"],
         )
-        if decision_key in valid_decisions:
+        if state in {"authorized", "running"} and decision_key not in valid_decisions:
+            lifecycle_problems.append(
+                f"{candidate['candidate_id']}@{candidate['version']}: "
+                "current authorized lifecycle state has no effective approved "
+                "owner decision"
+            )
+    lifecycle_problems = sorted(set(lifecycle_problems))
+
+    authorized: list[str] = []
+    for candidate in candidates:
+        candidate_id = candidate["candidate_id"]
+        summary = summary_index[(candidate_id, candidate["version"])]
+        decision_key = (
+            candidate["candidate_id"],
+            candidate["version"],
+            candidate["snapshot_digest"],
+        )
+        authorization_is_current = summary["current_state"] in {
+            "authorized",
+            "running",
+        }
+        if (
+            authorization_is_current
+            and decision_key in valid_decisions
+            and not summary["validation_problems"]
+            and not summary["gates"]
+            and not lifecycle_problems
+        ):
             authorized.append(candidate_id)
 
     calibration = build_calibration(
@@ -1735,10 +2174,28 @@ def run_engine(
             "scenario_selections": scenario_selections,
             "robustness_flag": portfolio_robustness,
         },
-        "admissible": sorted(
-            entry["candidate_id"] for entry in portfolio_entries
-        ),
+        "admissible": admissible_ids,
         "recommended": sorted(recommended),
+        "deferred": [
+            {
+                "candidate_id": candidate_id,
+                "candidate_digest": next(
+                    candidate["snapshot_digest"]
+                    for candidate in candidates
+                    if candidate["candidate_id"] == candidate_id
+                ),
+                "reason": (
+                    "quality_cleared_not_selected_in_current_portfolio"
+                    if base_portfolio["status"] == "compared"
+                    else "portfolio_coverage_overflow"
+                ),
+                "review_reuse_rule": (
+                    "A later cycle may reuse digest-bound clearance only while "
+                    "the immutable candidate digest is unchanged."
+                ),
+            }
+            for candidate_id in deferred
+        ],
         "authorized": sorted(authorized),
         "authorization_boundary": {
             "separate_owner_decision_required": true_value(),
@@ -1746,6 +2203,11 @@ def run_engine(
             "engine_authorizes": False,
         },
         "terminal_candidates_release_slots": True,
+        "selection_status": (
+            "zero_retention_success"
+            if not recommended
+            else "portfolio_recommendation_available"
+        ),
         "completed_prerequisites": {
             key: [
                 {"version": version, "outcome": outcome}
@@ -1780,6 +2242,7 @@ __all__ = [
     "sha256_json",
     "snapshot_digest",
     "validate_cost_contract",
+    "validate_generation_binding",
     "validate_lane",
     "validate_lifecycle_events",
     "validate_mechanism_contract",

@@ -1,13 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://keyai.org/schemas/hypothesis-seed-v0.1.json",
-  "title": "KeyAI generated hypothesis seed",
+  "title": "KeyAI non-executable research-question seed",
   "type": "object",
   "additionalProperties": false,
   "required": [
     "seed_id",
     "cell_id",
     "typed_evidence_digest",
+    "claim_state_digest",
     "route_id",
     "route_source_ids",
     "threat_model",
@@ -34,6 +35,10 @@
       "pattern": "^CELL-[A-Z0-9-]+$"
     },
     "typed_evidence_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "claim_state_digest": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
     },

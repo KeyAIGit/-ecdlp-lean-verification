@@ -20,6 +20,13 @@ from scientific_provenance import (
     git_file_bytes,
     scientific_source_commit_allowed,
 )
+from research_claims import load_and_build as load_research_claim_state
+from research_engine_v02 import (
+    validate_cost_contract,
+    validate_mechanism_contract,
+    validate_prediction_contract,
+    validate_validator_contract,
+)
 from typed_evidence_lib import (
     POLICY_PATH as TYPED_EVIDENCE_POLICY_PATH,
     STATE_PATH as TYPED_EVIDENCE_STATE_PATH,
@@ -135,6 +142,10 @@ PROPOSAL_FIELDS = {
     "premise_fingerprint",
     "mechanism_identity",
     "mechanism_signature",
+    "mechanism_contract",
+    "prediction_contract",
+    "cost_contract",
+    "validator_contract",
     "novelty_scope",
     "nearest_prior_art",
     "exact_mechanism",
@@ -223,6 +234,7 @@ PROPOSAL_PROVENANCE_FIELDS = {
     "generator_family",
     "generator_version",
     "session_id",
+    "context_sha256",
     "source_commit",
     "prompt_sha256",
 }
@@ -254,6 +266,7 @@ REVIEWER_PROVENANCE_FIELDS = {
     "family",
     "version",
     "session_id",
+    "context_sha256",
     "prompt_sha256",
     "blind_to_other_reviews",
 }
@@ -604,6 +617,10 @@ def validate_generation_policy(
             "new_premise",
             "premise_counterfactual",
             "mechanism_signature",
+            "mechanism_contract",
+            "prediction_contract",
+            "cost_contract",
+            "validator_contract",
             "novelty_scope",
             "nearest_prior_art",
             "exact_mechanism",
@@ -817,11 +834,17 @@ def generate_seeds(
     decisions: dict[str, Any],
     engine_policy: dict[str, Any],
     typed_evidence_state: dict[str, Any] | None = None,
+    claim_state: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     if typed_evidence_state is None:
         typed_problems, typed_evidence_state = load_typed_evidence_state()
         if typed_problems:
             return []
+    if claim_state is None:
+        claim_problems, claim_state = load_research_claim_state()
+        if claim_problems:
+            return []
+    claim_state_digest = sha256_json(claim_state)
     primary = engine_policy["target_contract"]["primary_threat_model"]
     route_index = {route["id"]: route for route in decisions["routes"]}
     synthesis_rule = next(
@@ -897,6 +920,7 @@ def generate_seeds(
             "route_id": route_id,
             "threat_model": primary,
             "evidence_digest": cell["evidence_digest"],
+            "claim_state_digest": claim_state_digest,
             "synthesis_rule_id": synthesis_rule["id"],
             "synthesis_rule_version": synthesis_rule["version"],
         }
@@ -956,6 +980,7 @@ def generate_seeds(
                 "seed_id": seed_id,
                 "cell_id": cell["cell_id"],
                 "typed_evidence_digest": cell["evidence_digest"],
+                "claim_state_digest": claim_state_digest,
                 "route_id": route_id,
                 "route_source_ids": route_source_ids,
                 "threat_model": primary,
@@ -1085,6 +1110,8 @@ def _proposal_blockers(
         blockers.add("missing_fixed_target_semantics")
     if not _substantive_text(proposal.get("non_generic_information_source")):
         blockers.add("missing_non_generic_information_source")
+    if validate_mechanism_contract(proposal.get("mechanism_contract")):
+        blockers.add("missing_exact_mechanism")
 
     cost = proposal.get("cost_bridge", {})
     if not isinstance(cost, dict) or any(
@@ -1094,8 +1121,29 @@ def _proposal_blockers(
         blockers.add("missing_cost_changing_bridge")
     if not _substantive_text(cost.get("precomputation")):
         blockers.add("hidden_or_unpriced_precomputation")
+    structured_cost = proposal.get("cost_contract")
+    if validate_cost_contract(structured_cost):
+        blockers.add("missing_cost_changing_bridge")
+    elif isinstance(structured_cost, dict):
+        preprocessing = structured_cost.get("preprocessing", {})
+        if (
+            not isinstance(preprocessing, dict)
+            or preprocessing.get("included_in_totals") is not True
+        ):
+            blockers.add("hidden_or_unpriced_precomputation")
+        amortization = structured_cost.get("amortization", {})
+        if (
+            not isinstance(amortization, dict)
+            or amortization.get("class") != "none_single_target"
+            or amortization.get("target_count") != 1
+            or amortization.get("per_target_cost_included") is not True
+        ):
+            blockers.add("threat_model_drift")
 
     if not _substantive_text(proposal.get("falsifiable_prediction")):
+        blockers.add("missing_falsifiable_prediction")
+    structured_prediction = proposal.get("prediction_contract")
+    if validate_prediction_contract(structured_prediction):
         blockers.add("missing_falsifiable_prediction")
     if not _substantive_text(proposal.get("null_model")) or not _substantive_text(
         proposal.get("competing_mechanism")
@@ -1123,6 +1171,11 @@ def _proposal_blockers(
     if not isinstance(validator, dict) or any(
         not _substantive_text(validator.get(field))
         for field in VALIDATOR_PLAN_FIELDS
+    ):
+        blockers.add("missing_independent_validator_plan")
+    if validate_validator_contract(
+        proposal.get("validator_contract"),
+        require_ready=False,
     ):
         blockers.add("missing_independent_validator_plan")
     outcome_matrix = proposal.get("outcome_matrix", {})
@@ -1153,6 +1206,19 @@ def _proposal_blockers(
         > policy["limits"]["max_toy_field_bits"]
     ):
         blockers.add("targets_secp256k1_directly")
+    if isinstance(structured_prediction, dict):
+        tested_sizes = structured_prediction.get("tested_sizes", [])
+        if (
+            not isinstance(tested_sizes, list)
+            or any(
+                not isinstance(size, int)
+                or isinstance(size, bool)
+                or size > policy["limits"]["max_toy_field_bits"]
+                or size > toy_scope.get("max_field_bits", -1)
+                for size in tested_sizes
+            )
+        ):
+            blockers.add("targets_secp256k1_directly")
     return blockers
 
 
@@ -1434,6 +1500,13 @@ def validate_proposals(
             ):
                 if not _nonempty_text(provenance.get(field)):
                     problems.append(f"{label}: {field} must be nonempty")
+            context_digest = provenance.get("context_sha256")
+            if not isinstance(context_digest, str) or HASH_ID.fullmatch(
+                context_digest
+            ) is None:
+                problems.append(
+                    f"{label}: context_sha256 must be lowercase 64-hex"
+                )
             if not scientific_source_commit_allowed(
                 provenance.get("source_commit")
             ):
@@ -1524,6 +1597,13 @@ def validate_reviews(
                     problems.append(
                         f"{label}.reviewer_provenance.{field} must be nonempty"
                     )
+            context_digest = reviewer_provenance.get("context_sha256")
+            if not isinstance(context_digest, str) or HASH_ID.fullmatch(
+                context_digest
+            ) is None:
+                problems.append(
+                    f"{label}.reviewer_provenance.context_sha256 is invalid"
+                )
             prompt_digest = reviewer_provenance.get("prompt_sha256")
             if not isinstance(prompt_digest, str) or HASH_ID.fullmatch(
                 prompt_digest
@@ -1586,13 +1666,19 @@ def build_generation_state(
     proposals: list[tuple[Path, dict[str, Any]]],
     reviews: list[tuple[Path, dict[str, Any]]],
     typed_evidence_state: dict[str, Any] | None = None,
+    claim_state: dict[str, Any] | None = None,
 ) -> tuple[list[str], dict[str, Any]]:
     typed_problems: list[str] = []
     if typed_evidence_state is None:
         typed_problems, typed_evidence_state = load_typed_evidence_state()
+    claim_problems: list[str] = []
+    if claim_state is None:
+        claim_problems, claim_state = load_research_claim_state()
     if typed_evidence_state is None:
         typed_evidence_state = {"cells": [], "counts": {}}
-    problems = list(typed_problems)
+    if claim_state is None:
+        claim_state = {"claims": [], "counts": {}}
+    problems = list(typed_problems) + list(claim_problems)
     problems.extend(
         validate_generation_policy(
             policy,
@@ -1602,13 +1688,16 @@ def build_generation_state(
         )
     )
     seeds = generate_seeds(
-        policy, decisions, engine_policy, typed_evidence_state
+        policy,
+        decisions,
+        engine_policy,
+        typed_evidence_state,
+        claim_state,
     )
-    if len(seeds) > policy.get("limits", {}).get("max_generated_seeds", 0):
-        problems.append(
-            "generated seed count exceeds max_generated_seeds; refine the "
-            "compatibility axes instead of silently truncating"
-        )
+    max_generated_seeds = policy.get("limits", {}).get(
+        "max_generated_seeds", 0
+    )
+    seed_overflow = len(seeds) > max_generated_seeds
     proposal_problems, blockers_by_proposal = validate_proposals(
         proposals, seeds, policy
     )
@@ -1638,6 +1727,10 @@ def build_generation_state(
         proposer_family = proposal.get("provenance", {}).get(
             "generator_family"
         )
+        proposer_session = proposal.get("provenance", {}).get("session_id")
+        proposer_context = proposal.get("provenance", {}).get(
+            "context_sha256"
+        )
         if set(role_index) != required_roles:
             blockers.add("adversarial_review_incomplete")
         for role in independent_roles:
@@ -1645,9 +1738,17 @@ def build_generation_state(
             reviewer_family = review.get("reviewer_provenance", {}).get(
                 "family"
             )
+            reviewer_session = review.get("reviewer_provenance", {}).get(
+                "session_id"
+            )
+            reviewer_context = review.get("reviewer_provenance", {}).get(
+                "context_sha256"
+            )
             if (
                 review.get("source_independence") != "declared_independent"
                 or reviewer_family == proposer_family
+                or reviewer_session == proposer_session
+                or reviewer_context == proposer_context
                 or review.get("reviewer_provenance", {}).get(
                     "blind_to_other_reviews"
                 )
@@ -1667,6 +1768,12 @@ def build_generation_state(
             for review in proposal_reviews
         }
         if proposal_reviews and len(reviewer_families) < 2:
+            blockers.add("review_independence_unestablished")
+        reviewer_contexts = [
+            review.get("reviewer_provenance", {}).get("context_sha256")
+            for review in proposal_reviews
+        ]
+        if len(reviewer_contexts) != len(set(reviewer_contexts)):
             blockers.add("review_independence_unestablished")
         for review in proposal_reviews:
             blockers.update(review.get("blocker_codes", []))
@@ -1719,28 +1826,57 @@ def build_generation_state(
     }
     for proposal_id in retained:
         proposal = proposal_index[proposal_id]
-        hypothesis_drafts.append(
+        proposal_digest = proposal_sha256(proposal)
+        review_artifacts = [
             {
-                "draft_id": (
-                    f"HYP_DRAFT_{proposal_sha256(proposal)[:12].upper()}"
-                ),
-                "proposal_id": proposal_id,
-                "cell_id": proposal["cell_id"],
-                "typed_evidence_digest": proposal[
-                    "typed_evidence_digest"
-                ],
-                "route_id": proposal["route_id"],
-                "threat_model": proposal["threat_model"],
-                "statement": proposal["hypothesis_statement"],
-                "new_premise": proposal["new_premise"],
-                "status": "quality_cleared_not_authorized",
-                "next_gate": (
-                    "Create a canonical hypothesis and complete the existing "
-                    "candidate preregistration, validator, and dated decision "
-                    "contracts. This generated draft authorizes nothing."
-                ),
+                "review_id": review["review_id"],
+                "reviewer_role": review["reviewer_role"],
+                "review_sha256": sha256_json(review),
             }
-        )
+            for review in sorted(
+                reviews_by_proposal.get(proposal_id, []),
+                key=lambda item: item["reviewer_role"],
+            )
+        ]
+        draft = {
+            "draft_id": (
+                f"HYP_DRAFT_{proposal_digest[:12].upper()}"
+            ),
+            "proposal_id": proposal_id,
+            "proposal_sha256": proposal_digest,
+            "source_commit": proposal["provenance"]["source_commit"],
+            "review_artifacts": review_artifacts,
+            "cell_id": proposal["cell_id"],
+            "typed_evidence_digest": proposal[
+                "typed_evidence_digest"
+            ],
+            "route_id": proposal["route_id"],
+            "threat_model": proposal["threat_model"],
+            "statement": proposal["hypothesis_statement"],
+            "new_premise": proposal["new_premise"],
+            "contract_digests": {
+                "mechanism_contract_sha256": sha256_json(
+                    proposal["mechanism_contract"]
+                ),
+                "prediction_contract_sha256": sha256_json(
+                    proposal["prediction_contract"]
+                ),
+                "cost_contract_sha256": sha256_json(
+                    proposal["cost_contract"]
+                ),
+                "validator_design_contract_sha256": sha256_json(
+                    proposal["validator_contract"]
+                ),
+            },
+            "status": "quality_cleared_not_authorized",
+            "next_gate": (
+                "Bind an immutable candidate snapshot to this exact draft, "
+                "complete evidence-bound validator independence, and obtain "
+                "a separate dated owner decision. This draft authorizes nothing."
+            ),
+        }
+        draft["draft_sha256"] = sha256_json(draft)
+        hypothesis_drafts.append(draft)
     premise_groups: dict[str, list[str]] = defaultdict(list)
     mechanism_groups: dict[str, list[str]] = defaultdict(list)
     proposal_values = [proposal for _, proposal in proposals]
@@ -1783,6 +1919,7 @@ def build_generation_state(
             "typed_evidence_state_sha256": sha256_json(
                 typed_evidence_state
             ),
+            "research_claim_state_sha256": sha256_json(claim_state),
             "proposals_sha256": sha256_json(
                 [proposal for _, proposal in proposals]
             ),
@@ -1813,6 +1950,35 @@ def build_generation_state(
                 "authorization_boundary", {}
             ),
             "authorization": "none",
+        },
+        "research_claims": {
+            "claim_model_id": claim_state.get("claim_model_id"),
+            "counts": claim_state.get("counts", {}),
+            "open_routes": claim_state.get("open_routes", []),
+            "authorization": claim_state.get("authorization", {}),
+            "state_sha256": sha256_json(claim_state),
+        },
+        "seed_coverage": {
+            "threshold": max_generated_seeds,
+            "eligible_seed_count": len(seeds),
+            "overflow_triggered": seed_overflow,
+            "represented_seed_ids": [
+                seed["seed_id"] for seed in seeds
+            ],
+            "represented_cell_ids": [
+                seed["cell_id"] for seed in seeds
+            ],
+            "disposition": (
+                "coverage_review_required_non_executable"
+                if seed_overflow
+                else "within_declared_coverage"
+            ),
+            "rule": (
+                "An overflow is materialized rather than hidden or treated as "
+                "a generation failure. Every seed remains non-executable; the "
+                "coverage artifact must be reviewed before a later cycle may "
+                "change the threshold or synthesis partition."
+            ),
         },
         "generated_seeds": seeds,
         "proposal_intake": proposal_states,

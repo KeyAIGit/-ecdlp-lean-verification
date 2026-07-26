@@ -25,7 +25,10 @@ name: Docs sync
 #     Ecdlp/LedgerAxiomAudit.lean              (gen_axiom_audit.py)
 #     data/source_registry.json                (gen_source_registry.py)
 #     data/typed_evidence_state.json           (build_typed_evidence_state.py)
+#     data/research_claim_state.json            (research_claims.py)
 #     data/research_engine_state.json          (build_research_engine_state.py)
+#     data/research_engine_v02_state.json      (build_research_engine_v02_state.py)
+#     data/research_engine_shadow_intake.json  (build_research_shadow_intake.py)
 #     repo/ECDLP_DECISION_SUBSTRATE.md         (build_ecdlp_decision_view.py)
 #     bundles/MANIFEST.json                    (export_agent_bundle.py)
 #     dashboard.html, index.html, explore.html, pilot.html (build_dashboard.py -> site_generator.py)
@@ -111,7 +114,10 @@ env:
     Ecdlp/LedgerAxiomAudit.lean
     data/source_registry.json
     data/typed_evidence_state.json
+    data/research_claim_state.json
     data/research_engine_state.json
+    data/research_engine_v02_state.json
+    data/research_engine_shadow_intake.json
     repo/ECDLP_DECISION_SUBSTRATE.md
     bundles/MANIFEST.json
     dashboard.html
@@ -137,18 +143,24 @@ jobs:
         run: python3 scripts/gen_result_registry.py
       - name: Full-ledger axiom audit
         run: python3 scripts/gen_axiom_audit.py
+      - name: Source registry (data/source_registry.json — cited works ↔ docs provenance)
+        run: python3 scripts/gen_source_registry.py
       - name: Typed evidence state (claims + properties + mechanism cells)
         run: python3 scripts/build_typed_evidence_state.py
+      - name: Claim-level research state
+        run: python3 scripts/research_claims.py
       - name: Research Engine state (generation + selection + retained outcomes)
         run: python3 scripts/build_research_engine_state.py
+      - name: Research Engine v0.2 lifecycle state
+        run: python3 scripts/build_research_engine_v02_state.py
+      - name: Research Engine shadow intake
+        run: python3 scripts/build_research_shadow_intake.py
       - name: Knowledge graph (data/knowledge_graph.json + .md)
         run: python3 scripts/build_knowledge_graph.py
       - name: Coverage report (COVERAGE.md)
         run: python3 scripts/coverage_report.py
       - name: Canonical snapshot (STATUS.md)
         run: python3 scripts/gen_status.py
-      - name: Source registry (data/source_registry.json — cited works ↔ docs provenance)
-        run: python3 scripts/gen_source_registry.py
       - name: ECDLP decision view (repo/ECDLP_DECISION_SUBSTRATE.md)
         run: python3 scripts/build_ecdlp_decision_view.py
       # Regenerated LAST: the manifest records byte sizes of the tier files above
@@ -177,8 +189,25 @@ jobs:
         run: |
           python3 scripts/build_typed_evidence_state.py --check
           python3 scripts/test_typed_evidence.py
+      - name: Claim-level truth-state gate
+        run: |
+          python3 scripts/research_claims.py --check
+          python3 scripts/test_research_claims.py
+      - name: Cross-registry scientific-semantic gate
+        run: |
+          python3 scripts/check_scientific_semantics.py
+          python3 scripts/test_scientific_semantics.py
       - name: Research Engine v0 regression fixtures
         run: python3 scripts/test_research_engine.py
+      - name: Research Engine v0.2 lifecycle and acceptance
+        run: |
+          python3 scripts/build_research_engine_v02_state.py --check
+          python3 scripts/test_research_engine_v02.py
+          python3 scripts/check_research_engine_v02_acceptance.py
+      - name: Research Engine shadow-intake gate
+        run: |
+          python3 scripts/build_research_shadow_intake.py --check
+          python3 scripts/test_research_shadow_intake.py
       - name: GLV diagonal-action obstruction certificate
         run: |
           python3 experiments/glv_diagonal_obstruction/generate.py --check
@@ -224,11 +253,14 @@ jobs:
           echo "::error::Derived artifacts are stale. Run ALL the generators locally (in this order) and commit the result:"
           echo "  python3 scripts/gen_stats.py && python3 scripts/build_frontier_map.py"
           echo "  python3 scripts/gen_result_registry.py && python3 scripts/gen_axiom_audit.py"
-          echo "  python3 scripts/build_typed_evidence_state.py"
+          echo "  python3 scripts/gen_source_registry.py"
+          echo "  python3 scripts/build_typed_evidence_state.py && python3 scripts/research_claims.py"
           echo "  python3 scripts/build_research_engine_state.py"
+          echo "  python3 scripts/build_research_engine_v02_state.py"
+          echo "  python3 scripts/build_research_shadow_intake.py"
           echo "  python3 scripts/build_knowledge_graph.py && python3 scripts/coverage_report.py"
           echo "  python3 scripts/gen_status.py"
-          echo "  python3 scripts/gen_source_registry.py && python3 scripts/build_ecdlp_decision_view.py"
+          echo "  python3 scripts/build_ecdlp_decision_view.py"
           echo "  python3 scripts/export_agent_bundle.py --manifest"
           echo "  python3 scripts/build_dashboard.py"
           git --no-pager diff -- $DERIVED_PURE

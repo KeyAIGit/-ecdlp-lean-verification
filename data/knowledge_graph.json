@@ -13,14 +13,17 @@
     "decision_foundations": 11,
     "attack_registry_objects": 14,
     "research_engine_candidates": 6,
-    "generated_hypothesis_seeds": 4,
+    "generated_hypothesis_seeds": 2,
     "quality_cleared_hypothesis_proposals": 0,
     "typed_evidence_cells": 7,
     "typed_decided_cells": 3,
-    "typed_seed_eligible_cells": 4,
+    "typed_seed_eligible_cells": 2,
     "typed_desk_decisions": 3,
     "research_engine_intake_candidates": 0,
     "research_engine_outcomes": 8,
+    "research_engine_v02_candidates": 0,
+    "shadow_proposal_stubs": 4,
+    "shadow_parked_ideas": 1,
     "selected_explorations": 0,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
@@ -6771,7 +6774,7 @@
       }
     ],
     "phase_policy": {
-      "phase": "research-engine-v0",
+      "phase": "research-engine-v0.2-sanitation",
       "experiments_authorized": false,
       "bounded_exploration_authorized": false,
       "promotion_experiments_authorized": false,
@@ -6779,8 +6782,8 @@
       "allowed_work": [
         "Maintain and independently replay the completed GLV-SEMAEV-ITER-001 certificates and kernel-checked theorem package.",
         "Generate source-grounded non-executable research seeds and compile structured proposals through digest-bound adversarial review.",
-        "Accept new primary evidence or a materially different exact mechanism through TASK-008 proposal intake without authorizing execution.",
-        "Prepare optional independent adversarial review at a stable checkpoint without treating review as route promotion.",
+        "Repair the Research Engine and generation-plane lifecycle under TASK-010 without authorizing execution.",
+        "Keep TASK-008 proposal intake parked until the sanitation lifecycle is resolved.",
         "Maintain canonical provenance and regenerate affected views without changing the recorded claim boundary."
       ],
       "forbidden_work": [
@@ -7963,12 +7966,12 @@
       "normalized_hypotheses": 9,
       "outcome_events": 8,
       "candidate_proposals": 6,
-      "generated_hypothesis_seeds": 4,
+      "generated_hypothesis_seeds": 2,
       "submitted_hypothesis_proposals": 0,
       "quality_cleared_hypothesis_proposals": 0,
       "retained_hypothesis_drafts": 0,
       "typed_evidence_cells": 7,
-      "typed_seed_eligible_cells": 4,
+      "typed_seed_eligible_cells": 2,
       "typed_desk_decisions": 3,
       "typed_decided_cells": 3,
       "intake_candidates": 0,
@@ -9008,8 +9011,9 @@
       "schema_version": "0.1-generated",
       "generator_id": "ecdlp-hypothesis-generation-v0",
       "source_hashes": {
-        "generation_policy_sha256": "1eebb447d08701ce8659cdac9a9b9c685410497f1adc135b8114f4124377fca8",
-        "typed_evidence_state_sha256": "292d1e4119d62ba5c1b33b50a02904b3084fa0755643ccb3c736a31afa1a4bb0",
+        "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
+        "typed_evidence_state_sha256": "707f33f106d1cf47df4fcc8223395c5f40dbb227a76ac354d417f0d707125a96",
+        "research_claim_state_sha256": "adaf51b57c274ed550fc287d07d30703a51a7d04ab3768f8df6a5a3c7a780892",
         "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
       },
@@ -9020,13 +9024,13 @@
         "authorization_boundary": "This layer never authorizes an experiment, promotes a route, targets secp256k1 directly, or makes an asymptotic claim."
       },
       "counts": {
-        "generated_seeds": 4,
+        "generated_seeds": 2,
         "submitted_proposals": 0,
         "adversarial_reviews": 0,
         "quality_cleared_proposals": 0,
         "retained_hypothesis_drafts": 0,
         "typed_evidence_cells": 7,
-        "typed_seed_eligible_cells": 4
+        "typed_seed_eligible_cells": 2
       },
       "typed_evidence": {
         "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
@@ -9040,173 +9044,64 @@
           "property_resolution_cells": 1,
           "decided_inapplicable_cells": 2,
           "decided_closed_cells": 1,
-          "seed_eligible_cells": 4,
+          "seed_eligible_cells": 2,
           "desk_decisions": 3
         },
         "source_hashes": {
-          "policy_sha256": "9718f32ce5b2ad330dc60ca05cc5cdfbe7dd0174e1619bb98a9b7fcf938fcf08",
-          "decision_substrate_sha256": "8d91a39f3d99b9fb2781d38c80b0d1c2c89954107370de995e99ca4987271bcb",
-          "source_registry_identity_sha256": "c6abca98bc0fa8d1c1f9a37e7d424df17aca524af14d5e854f6a9d16c79ce6e9",
-          "evidence_files_sha256": "fa99bed98766cc72e02db1efc6f945aad35a7ffd74e2e0cfb617379e68596270",
+          "policy_sha256": "72ac969f4a549beb99fc365cf7b0dcbb07134bcbd9bbca3fdc1e0e336d4a862b",
+          "decision_substrate_sha256": "fe1f6d6a32b7c93ee69130ee3385598a316697277a01c517d5d65473f2d173d2",
+          "source_registry_identity_sha256": "153a606b72acb5e809da79c0f475dd50d5f24139ddfbdc696d6947ae6a86d106",
+          "evidence_files_sha256": "f0272dba84f7e78588ea4aab6cd1fbf3a813752d53bd62972b6c5e917ec002f9",
           "desk_decisions_sha256": "ee50228216f0ff99023ab3d1c869732c3c10926a8707107caf9b9a49b9b3dd48"
         },
         "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
         "authorization": "none"
       },
+      "research_claims": {
+        "claim_model_id": "ECDLP-RESEARCH-CLAIMS-V0",
+        "counts": {
+          "routes_represented": 1,
+          "research_questions": 1,
+          "claims": 4,
+          "closed_child_claims": 1,
+          "inconclusive_claims": 1,
+          "confirmed_claims": 2,
+          "mechanism_variants": 3,
+          "proposal_seed_eligible_variants": 0,
+          "evidence_events": 8,
+          "calibration_eligible_events": 0
+        },
+        "open_routes": [
+          "R-GLV-SEMAEV"
+        ],
+        "authorization": {
+          "experiments": 0,
+          "route_promotions": 0,
+          "exact_target_runs": 0
+        },
+        "state_sha256": "adaf51b57c274ed550fc287d07d30703a51a7d04ab3768f8df6a5a3c7a780892"
+      },
+      "seed_coverage": {
+        "threshold": 12,
+        "eligible_seed_count": 2,
+        "overflow_triggered": false,
+        "represented_seed_ids": [
+          "HGS-643A1192FC75",
+          "HGS-D714973BF3ED"
+        ],
+        "represented_cell_ids": [
+          "CELL-M-PKC-AUXILIARY-CURVE",
+          "CELL-M-PKC-SMOOTH-M14"
+        ],
+        "disposition": "within_declared_coverage",
+        "rule": "An overflow is materialized rather than hidden or treated as a generation failure. Every seed remains non-executable; the coverage artifact must be reviewed before a later cycle may change the threshold or synthesis partition."
+      },
       "generated_seeds": [
         {
-          "seed_id": "HGS-4FCB1533C2F5",
-          "cell_id": "CELL-M-GLV-FAITHFUL-PHASE-QUOTIENT",
-          "typed_evidence_digest": "0741c407620cfc43414f8b252d6e06fa25647b715a9b8cc9d70a985fa9509a65",
-          "route_id": "R-GLV-SEMAEV",
-          "route_source_ids": [
-            "duursma_gaudry_morain1999",
-            "fghr2014",
-            "fhjrv2014",
-            "gebregiyorgis2016_thesis",
-            "glv2001",
-            "kudo_yokota_takahashi_yasuda2018",
-            "petit_kosters_messeng2016",
-            "semaev2004",
-            "sturmfels2008",
-            "tsakou_ionica2021"
-          ],
-          "threat_model": "classical-single-target-plain",
-          "status": "proposal_required",
-          "authorization": "none",
-          "synthesis_rule": {
-            "id": "SYN-TYPED-OPEN-CELL-001",
-            "version": "1.0",
-            "operator": "typed_open_cell"
-          },
-          "typed_cell": {
-            "mechanism_id": "M-GLV-FAITHFUL-PHASE-QUOTIENT",
-            "status": "open",
-            "intake_mode": "proposal",
-            "construction": "Use mixed diagonal invariants or explicit phase tags with a total recovery map instead of independent coordinate cubes.",
-            "relation_action": "The construction must preserve the exact fixed-target relation and distinguish all phase combinations merged by the naive quotient.",
-            "changed_quantity": "Unknown effect on solving degree, sparse support, mixed volume, recovery cost, or full relation cost.",
-            "cost_quantity": {
-              "id": "CQ-GLV-FAITHFUL-QUOTIENT-COST",
-              "label": "Faithful GLV phase-quotient solving cost",
-              "definition": "End-to-end relation-generation cost after retaining all relative GLV phase information, including quotient construction, recovery, excluded components, and solver work.",
-              "baseline": "Matched Semaev relation collection without the proposed quotient, with identical target, factor base, relation arity, and success criterion.",
-              "measurement": "Require an exact map and recovery algorithm, then compare preregistered scaling laws rather than one solver timing.",
-              "status": "missing",
-              "source_claim_ids": [
-                "SC-GLV-SEMAEV-COVARIANCE",
-                "SC-GLV-SEMAEV-CLASSIFICATION",
-                "SC-GLV-FIXED-TARGET-CLASSIFICATION"
-              ]
-            },
-            "requirement_results": [
-              {
-                "property_id": "TP-SECP-GLV-C3",
-                "property_status": "kernel_verified",
-                "operator": "eq",
-                "expected": true,
-                "actual": true,
-                "verdict": "satisfied",
-                "source_claim_ids": [
-                  "SC-GLV-ENDOMORPHISM"
-                ],
-                "rationale": "A faithful GLV quotient requires the proved order-three action but must add a new premise beyond it."
-              }
-            ],
-            "source_claim_ids": [
-              "SC-GLV-ENDOMORPHISM",
-              "SC-GLV-FIXED-TARGET-CLASSIFICATION",
-              "SC-GLV-SEMAEV-CLASSIFICATION",
-              "SC-GLV-SEMAEV-COVARIANCE"
-            ],
-            "boundary": "An open cell is a question slot only; without an exact map and cost-changing bridge it is not a candidate and authorizes no computation."
-          },
-          "target_feature": {
-            "id": "TF-J0-GLV-C3",
-            "statement": "secp256k1 has a kernel-checked order-three GLV endomorphism whose affine x-coordinate action is multiplication by a nontrivial cube root of unity.",
-            "boundary": "The order-three orbit gives a known constant-factor structure; by itself it neither preserves a fixed target nor changes an asymptotic exponent."
-          },
-          "mechanism_primitive": {
-            "id": "MP-FAITHFUL-PHASE-QUOTIENT",
-            "statement": "Use invariants or a birational presentation that preserves relative GLV phases, fixed-target relation semantics, exceptional components, and an explicit recovery map.",
-            "boundary": "Independent coordinate cubes are excluded. More variables or a toric invariant ring do not count as a gain without an audited reduction in total solving cost."
-          },
-          "unresolved_question": {
-            "id": "U-GLV-SOLVING-COST",
-            "statement": "No exact phase-preserving fixed-target presentation currently demonstrates a lower solving degree, relation cost, or total index-calculus exponent than the plain system.",
-            "boundary": "The closed independent-cube quotient may not be reopened without a new premise, and finite target batching alone is not an asymptotic bridge."
-          },
-          "shared_compatibility_tags": [
-            "glv-faithful-fixed-target"
-          ],
-          "research_question": "Can a phase-preserving faithful quotient with recovery use the exact order-three GLV action on the j=0 curve to resolve whether a faithful GLV presentation changes solving cost rather than notation while satisfying the typed cell requirements and changing the named audited cost quantity?",
-          "evidence_inputs": [
-            "Ecdlp/Proved/GlvEndomorphism.lean",
-            "Ecdlp/Proved/SemaevFour.lean",
-            "experiments/glv_diagonal_obstruction/README.md",
-            "experiments/p4_petit/RESULTS.md"
-          ],
-          "deduplication_key": "4fcb1533c2f5eb47efec45cab0704ea7f97907a6ef8d02330e523f11016a05e7",
-          "proposal_packet": {
-            "required_sections": [
-              "new_premise",
-              "premise_counterfactual",
-              "mechanism_signature",
-              "novelty_scope",
-              "nearest_prior_art",
-              "exact_mechanism",
-              "fixed_target_semantics",
-              "non_generic_information_source",
-              "null_model",
-              "competing_mechanism",
-              "cost_bridge",
-              "falsifiable_prediction",
-              "matched_baseline",
-              "stop_condition",
-              "outcome_matrix",
-              "independent_validator_plan",
-              "claim_boundary",
-              "evidence_manifest"
-            ],
-            "required_review_roles": [
-              "algebra",
-              "cryptanalysis_skeptic",
-              "prior_art",
-              "cost_model",
-              "validator_design"
-            ],
-            "hard_rejections": [
-              "adversarial_review_blocked",
-              "adversarial_review_incomplete",
-              "duplicate_or_reencoding",
-              "duplicate_mechanism_signature",
-              "hidden_or_unpriced_precomputation",
-              "missing_cost_changing_bridge",
-              "missing_exact_mechanism",
-              "missing_falsifiable_prediction",
-              "missing_fixed_target_semantics",
-              "missing_independent_validator_plan",
-              "missing_new_premise",
-              "missing_non_generic_information_source",
-              "missing_primary_source_comparison",
-              "missing_primary_source_anchor",
-              "novelty_scope_overclaimed",
-              "proxy_not_decisive",
-              "review_independence_unestablished",
-              "seed_scope_mismatch",
-              "semantic_reencoding_risk",
-              "targets_secp256k1_directly",
-              "threat_model_drift",
-              "typed_evidence_mismatch",
-              "target_property_violated"
-            ],
-            "instruction": "Return no proposal unless a genuinely new premise, exact mechanism, recovery map, and cost-changing bridge can be stated. A renamed representation or finite batching observation fails."
-          }
-        },
-        {
-          "seed_id": "HGS-C626EAEBAF2E",
+          "seed_id": "HGS-643A1192FC75",
           "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
           "typed_evidence_digest": "e138476fcecf3a5c3468db3d04fcec6c59d08ec3badcaef24fcc2db27d18b4ac",
+          "claim_state_digest": "adaf51b57c274ed550fc287d07d30703a51a7d04ab3768f8df6a5a3c7a780892",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9285,12 +9180,16 @@
             "experiments/p4_petit/README.md",
             "experiments/p4_petit/RESULTS.md"
           ],
-          "deduplication_key": "c626eaebaf2e2472e5a0167a5a246f33b40c820ed1f647bfc7ce9af841104c71",
+          "deduplication_key": "643a1192fc7534e4b0d27d19c01f9b478e206e2d6c0617f5a91ee0c4470e9462",
           "proposal_packet": {
             "required_sections": [
               "new_premise",
               "premise_counterfactual",
               "mechanism_signature",
+              "mechanism_contract",
+              "prediction_contract",
+              "cost_contract",
+              "validator_contract",
               "novelty_scope",
               "nearest_prior_art",
               "exact_mechanism",
@@ -9343,9 +9242,10 @@
           }
         },
         {
-          "seed_id": "HGS-D624E998ADAE",
+          "seed_id": "HGS-D714973BF3ED",
           "cell_id": "CELL-M-PKC-SMOOTH-M14",
           "typed_evidence_digest": "782d66ccb0e288aae648a13583043c11041a04a521dbc4585fbeb41002a02560",
+          "claim_state_digest": "adaf51b57c274ed550fc287d07d30703a51a7d04ab3768f8df6a5a3c7a780892",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9425,12 +9325,16 @@
             "experiments/p4_petit/README.md",
             "experiments/p4_petit/RESULTS.md"
           ],
-          "deduplication_key": "d624e998adae4b88ed9ce61ed4399cc43d390562ebb61eff49aba64d3dc02615",
+          "deduplication_key": "d714973bf3edd0597fe9e2bb9390f745f69ea356dbb1a6c04dceef40785024a1",
           "proposal_packet": {
             "required_sections": [
               "new_premise",
               "premise_counterfactual",
               "mechanism_signature",
+              "mechanism_contract",
+              "prediction_contract",
+              "cost_contract",
+              "validator_contract",
               "novelty_scope",
               "nearest_prior_art",
               "exact_mechanism",
@@ -9481,154 +9385,6 @@
             ],
             "instruction": "Return an exact symbolic size and cost bridge or a scoped blocker. Do not request compute while the desk quantity is missing."
           }
-        },
-        {
-          "seed_id": "HGS-A5D8C99AF5ED",
-          "cell_id": "CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND",
-          "typed_evidence_digest": "764c0f1f114727db542e4bed7a7187385d8daad7faa4aaf484f319716bd135cb",
-          "route_id": "R-PRIME-FIELD-INDEX-CALCULUS",
-          "route_source_ids": [
-            "amadori_pintore_sala2018",
-            "diem2011",
-            "fhjrv2014",
-            "gaudry2009",
-            "petit_kosters_messeng2016",
-            "sec2_v2",
-            "semaev2004"
-          ],
-          "threat_model": "classical-single-target-plain",
-          "status": "proposal_required",
-          "authorization": "none",
-          "synthesis_rule": {
-            "id": "SYN-TYPED-OPEN-CELL-001",
-            "version": "1.0",
-            "operator": "typed_open_cell"
-          },
-          "typed_cell": {
-            "mechanism_id": "M-PRIME-FIELD-SEMAEV-ENDTOEND",
-            "status": "open",
-            "intake_mode": "proposal",
-            "construction": "Specify factor base, relation system, sampling or solving procedure, recovery map, enough-relations criterion, and linear-algebra stage as one costed pipeline.",
-            "relation_action": "Every produced polynomial solution must recover to an independently validated point relation for the fixed target.",
-            "changed_quantity": "End-to-end exponent or another formally defined total-cost quantity relative to the generic square-root baseline.",
-            "cost_quantity": {
-              "id": "CQ-PRIME-FIELD-RELATION-TOTAL",
-              "label": "Total prime-field relation-generation cost",
-              "definition": "Online and offline cost of obtaining enough independently validated full relations, including factor-base construction, polynomial solving, recovery, and linear algebra.",
-              "baseline": "The generic square-root attack and the matched plain Semaev pipeline must both be priced under the same threat model.",
-              "measurement": "Record scaling across field sizes with matched baselines and retain every preprocessing, memory, parallelism, and amortization term.",
-              "status": "partial",
-              "source_claim_ids": [
-                "SC-PKC-SMOOTH-SUBGROUP",
-                "SC-SEMAEV-RELATION-SEMANTICS",
-                "SC-AMADORI-PRIME-FIELD-VARIANT"
-              ]
-            },
-            "requirement_results": [
-              {
-                "property_id": "TP-SECP-PRIME-FIELD-COORDINATES",
-                "property_status": "public_constant_recomputed",
-                "operator": "eq",
-                "expected": true,
-                "actual": true,
-                "verdict": "satisfied",
-                "source_claim_ids": [
-                  "SC-SECP-PRIME-FIELD"
-                ],
-                "rationale": "The non-generic route consumes the public prime-field representation rather than only a black-box group oracle."
-              }
-            ],
-            "source_claim_ids": [
-              "SC-AMADORI-PRIME-FIELD-VARIANT",
-              "SC-PKC-SMOOTH-SUBGROUP",
-              "SC-SECP-PRIME-FIELD",
-              "SC-SEMAEV-RELATION-SEMANTICS"
-            ],
-            "boundary": "A prose idea, solver benchmark, or lower polynomial degree is not a mechanism-bearing proposal without the complete cost and recovery bridge."
-          },
-          "target_feature": {
-            "id": "TF-PRIME-FIELD-REPRESENTATION",
-            "statement": "The plain target exposes prime-field curve coordinates and arithmetic outside the generic-group oracle model, so a legitimate classical escape must identify exactly which representation information it consumes.",
-            "boundary": "Access to coordinates is only an opportunity surface. It is not evidence that relation generation, generalized root finding, or descent is cheaper than the square-root baseline."
-          },
-          "mechanism_primitive": {
-            "id": "MP-SEMAEV-RELATION-SAMPLING",
-            "statement": "Generate factor-base relations through exact Semaev systems while measuring relation probability, algebraic solving effort, recovery failures, linear algebra, and rejected components.",
-            "boundary": "Polynomial degree, matrix size, or one solver timing is only a proxy and cannot establish a subgeneric algorithm without an end-to-end cost bridge."
-          },
-          "unresolved_question": {
-            "id": "U-PRIME-FIELD-RELATION-EXPONENT",
-            "statement": "The repository lacks a source-grounded mechanism and cost theorem connecting prime-field summation-polynomial relation yield to total work below the Pollard-rho square-root baseline.",
-            "boundary": "Toy relations, proxy matrices, and informal asymptotics remain insufficient until the factor-base probability, solver, recovery, linear algebra, and precomputation terms are joined."
-          },
-          "shared_compatibility_tags": [
-            "prime-field-relation-generation"
-          ],
-          "research_question": "Can summation-polynomial relation sampling with complete costs use the explicit prime-field coordinate representation to resolve whether prime-field relation generation changes the square-root exponent while satisfying the typed cell requirements and changing the named audited cost quantity?",
-          "evidence_inputs": [
-            "BARRIERS.md",
-            "Ecdlp/Proved/GenericGroupBound.lean",
-            "Ecdlp/Proved/SemaevThree.lean",
-            "experiments/p3_sm_system/README.md",
-            "experiments/p3_sm_system/RESULTS.md",
-            "notes/SECURITY_SCOPE.md"
-          ],
-          "deduplication_key": "a5d8c99af5ed4c67eff4410b2ee695e6b305f9782bc1314b99ab7d8c6b0925be",
-          "proposal_packet": {
-            "required_sections": [
-              "new_premise",
-              "premise_counterfactual",
-              "mechanism_signature",
-              "novelty_scope",
-              "nearest_prior_art",
-              "exact_mechanism",
-              "fixed_target_semantics",
-              "non_generic_information_source",
-              "null_model",
-              "competing_mechanism",
-              "cost_bridge",
-              "falsifiable_prediction",
-              "matched_baseline",
-              "stop_condition",
-              "outcome_matrix",
-              "independent_validator_plan",
-              "claim_boundary",
-              "evidence_manifest"
-            ],
-            "required_review_roles": [
-              "algebra",
-              "cryptanalysis_skeptic",
-              "prior_art",
-              "cost_model",
-              "validator_design"
-            ],
-            "hard_rejections": [
-              "adversarial_review_blocked",
-              "adversarial_review_incomplete",
-              "duplicate_or_reencoding",
-              "duplicate_mechanism_signature",
-              "hidden_or_unpriced_precomputation",
-              "missing_cost_changing_bridge",
-              "missing_exact_mechanism",
-              "missing_falsifiable_prediction",
-              "missing_fixed_target_semantics",
-              "missing_independent_validator_plan",
-              "missing_new_premise",
-              "missing_non_generic_information_source",
-              "missing_primary_source_comparison",
-              "missing_primary_source_anchor",
-              "novelty_scope_overclaimed",
-              "proxy_not_decisive",
-              "review_independence_unestablished",
-              "seed_scope_mismatch",
-              "semantic_reencoding_risk",
-              "targets_secp256k1_directly",
-              "threat_model_drift",
-              "typed_evidence_mismatch",
-              "target_property_violated"
-            ],
-            "instruction": "Return no proposal unless a genuinely new premise, exact mechanism, recovery map, and cost-changing bridge can be stated. A renamed representation or finite batching observation fails."
-          }
         }
       ],
       "proposal_intake": [],
@@ -9648,7 +9404,7 @@
     "feedback_contract": {
       "append_only_input": "experiments/engine/outcomes/",
       "generated_updates": [
-        "source-grounded hypothesis seed queue",
+        "source-grounded non-executable proposal-seed queue",
         "digest-bound proposal and adversarial review state",
         "quality-cleared non-executable hypothesis drafts",
         "candidate terminal state",
@@ -9669,6 +9425,367 @@
       ]
     }
   },
+  "research_engine_v02": {
+    "policy_source": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
+    "state_source": "data/research_engine_v02_state.json",
+    "status": "shadow_non_executing",
+    "historical_outcome_boundary": {
+      "event_count": 8,
+      "events": [
+        {
+          "event_id": "REO-2026-07-24-001",
+          "canonical_event_sha256": "84365a0a320ebb1336262737b4faf05fc4f9bc3dc4b454694c65480aecc0094d",
+          "raw_file_sha256": "04da083fdd540da92542d04bd8b436a4b81f653c5f2fe8f220186aed230b6f2f"
+        },
+        {
+          "event_id": "REO-2026-07-24-002",
+          "canonical_event_sha256": "01e140f7e28ee1b7e476e89aa686e79fc170c7e7084facd50b4312ccb9989eeb",
+          "raw_file_sha256": "47f03443503d078c069081b2c5645e617dede099fd57ae8b93f6cf8447eebed9"
+        },
+        {
+          "event_id": "REO-2026-07-24-003",
+          "canonical_event_sha256": "8dac127ce2f8128cff603231081d47e2a4bc11a32409bc87cf9f5add309ce2a1",
+          "raw_file_sha256": "a2e846d65df808c65b9ea3cecf8af0ce09d65b9b04c0184599f6cd00a10e2359"
+        },
+        {
+          "event_id": "REO-2026-07-24-004",
+          "canonical_event_sha256": "9d78eef8a81fda21eff44ef4341fa2b003f5682d9875361419d768504a3fb609",
+          "raw_file_sha256": "19b98cfe564a0fb07f081184af0e03504f0b36fe472c0681bff9e1598a7bea11"
+        },
+        {
+          "event_id": "REO-2026-07-24-005",
+          "canonical_event_sha256": "09247b072dfeb56bf44a236d3a2b6c70862dba0acc67bb5145a8a64888e11589",
+          "raw_file_sha256": "6fdc5b81828447b43f91ed6cd5c0480454eee266832046489a4d3076c8dd68e0"
+        },
+        {
+          "event_id": "REO-2026-07-24-006",
+          "canonical_event_sha256": "3ef46d8f1bd57ca757c8ec3b85636d7f5e94d7e516486410f0076d527efda872",
+          "raw_file_sha256": "1dd743cb8cc12ca46e1212dd14e389763d1bcdca867660e045f0e08c09bb25ed"
+        },
+        {
+          "event_id": "REO-2026-07-24-007",
+          "canonical_event_sha256": "001aa40051ce18ac1b3ceb8861513651561f0ad49e3f010a70c76add0e2226b6",
+          "raw_file_sha256": "e0e6916381f61884db2775caedb7d751443ec4bc117f76480a1915a3e8e21183"
+        },
+        {
+          "event_id": "REO-2026-07-24-008",
+          "canonical_event_sha256": "68faf15bcdaadc02812caf577f9065cacdbdcf1f3f0ce650e17a46703a823875",
+          "raw_file_sha256": "4be39c49f910c4a3c33c9f2e2b6956b437debf5269a1afcdcfa7a9e998d45e45"
+        }
+      ],
+      "migration": "referenced_not_rewritten",
+      "review_anchored_root_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
+      "raw_bytes_pinned": true,
+      "calibration_eligible": false
+    },
+    "engine": {
+      "schema_version": "0.2",
+      "engine_status": "evaluated_non_executing",
+      "input_candidate_count": 0,
+      "duplicate_candidate_versions": [],
+      "lifecycle_problems": [],
+      "candidates": [],
+      "rank_sensitivity": {},
+      "portfolio": {
+        "base": {
+          "status": "compared",
+          "scenario": "base",
+          "candidate_count": 0,
+          "combination_count": 1,
+          "combinations_considered": 1,
+          "feasible_combinations": 1,
+          "selected_ids": [],
+          "objective_eig_bits": 0,
+          "costs": {
+            "compute_hours": 0.0,
+            "storage_gb": 0.0,
+            "money_usd": 0.0,
+            "implementation_hours": 0.0,
+            "reviewer_hours": 0.0,
+            "wall_time_hours": 0.0,
+            "peak_memory_gb": 0.0,
+            "workers": 0.0,
+            "shared_setup_hours": 0.0
+          },
+          "diversity_tags": [],
+          "correlation_counts": {}
+        },
+        "scenarios": {
+          "low": {
+            "status": "compared",
+            "scenario": "low",
+            "candidate_count": 0,
+            "combination_count": 1,
+            "combinations_considered": 1,
+            "feasible_combinations": 1,
+            "selected_ids": [],
+            "objective_eig_bits": 0,
+            "costs": {
+              "compute_hours": 0.0,
+              "storage_gb": 0.0,
+              "money_usd": 0.0,
+              "implementation_hours": 0.0,
+              "reviewer_hours": 0.0,
+              "wall_time_hours": 0.0,
+              "peak_memory_gb": 0.0,
+              "workers": 0.0,
+              "shared_setup_hours": 0.0
+            },
+            "diversity_tags": [],
+            "correlation_counts": {}
+          },
+          "base": {
+            "status": "compared",
+            "scenario": "base",
+            "candidate_count": 0,
+            "combination_count": 1,
+            "combinations_considered": 1,
+            "feasible_combinations": 1,
+            "selected_ids": [],
+            "objective_eig_bits": 0,
+            "costs": {
+              "compute_hours": 0.0,
+              "storage_gb": 0.0,
+              "money_usd": 0.0,
+              "implementation_hours": 0.0,
+              "reviewer_hours": 0.0,
+              "wall_time_hours": 0.0,
+              "peak_memory_gb": 0.0,
+              "workers": 0.0,
+              "shared_setup_hours": 0.0
+            },
+            "diversity_tags": [],
+            "correlation_counts": {}
+          },
+          "high": {
+            "status": "compared",
+            "scenario": "high",
+            "candidate_count": 0,
+            "combination_count": 1,
+            "combinations_considered": 1,
+            "feasible_combinations": 1,
+            "selected_ids": [],
+            "objective_eig_bits": 0,
+            "costs": {
+              "compute_hours": 0.0,
+              "storage_gb": 0.0,
+              "money_usd": 0.0,
+              "implementation_hours": 0.0,
+              "reviewer_hours": 0.0,
+              "wall_time_hours": 0.0,
+              "peak_memory_gb": 0.0,
+              "workers": 0.0,
+              "shared_setup_hours": 0.0
+            },
+            "diversity_tags": [],
+            "correlation_counts": {}
+          }
+        },
+        "scenario_selections": {
+          "low": [],
+          "base": [],
+          "high": []
+        },
+        "robustness_flag": "stable"
+      },
+      "admissible": [],
+      "recommended": [],
+      "deferred": [],
+      "authorized": [],
+      "authorization_boundary": {
+        "separate_owner_decision_required": true,
+        "proposal_or_reviews_authorize": false,
+        "engine_authorizes": false
+      },
+      "terminal_candidates_release_slots": true,
+      "selection_status": "zero_retention_success",
+      "completed_prerequisites": {},
+      "calibration": {
+        "calibration_n": 0,
+        "status": "uncalibrated",
+        "minimum_native_n": 5,
+        "mean_brier": null,
+        "scores": [],
+        "excluded_event_classes": {},
+        "rejected_events": [],
+        "policy_independence": "Only outcome_event.frozen_prediction is read; current policy priors and likelihoods are ignored."
+      },
+      "route_promotions": [],
+      "direct_target_executions": []
+    },
+    "authorization": {
+      "experiments": 0,
+      "route_promotions": 0,
+      "exact_target_runs": 0
+    }
+  },
+  "research_shadow_intake": {
+    "state_source": "data/research_engine_shadow_intake.json",
+    "status": "shadow_non_executing",
+    "counts": {
+      "proposal_stubs": 4,
+      "parked_ideas": 1,
+      "admissible": 0,
+      "recommended": 0,
+      "authorized": 0,
+      "route_promotions": 0,
+      "exact_target_experiments": 0
+    },
+    "proposal_stubs": [
+      {
+        "stub_id": "RSI-2AD454D97023",
+        "stub_kind": "literature_full_text_ingestion",
+        "anchor_id": "kudo_yokota_takahashi_yasuda2018",
+        "route_id": null,
+        "lane": "literature_applicability",
+        "title": "Primary-source ingestion: Acceleration of Index Calculus for Solving ECDLP over Prime Fields and Its Limitation",
+        "purpose": "Obtain the primary full text and extract exact mechanism, limitations, assumptions, and claim-level anchors without inferring novelty from absence.",
+        "required_output": [
+          "primary artifact hash or a documented access failure",
+          "page, section, theorem, or algorithm anchors",
+          "exact mechanism and limitation extraction",
+          "read-status update only after full-text inspection"
+        ],
+        "evidence_refs": [
+          "https://link.springer.com/chapter/10.1007/978-3-030-00434-7_19",
+          "source:kudo_yokota_takahashi_yasuda2018"
+        ],
+        "lifecycle_state": "idea",
+        "scientific_identity": "research_question_seed",
+        "executable": false,
+        "admissible": false,
+        "recommended": false,
+        "authorized": false,
+        "route_promotion": false,
+        "exact_target_experiment": false,
+        "boundary": "This is a non-executable intake stub, not a hypothesis, candidate, route promotion, or experiment authorization."
+      },
+      {
+        "stub_id": "RSI-91B7A909E2BF",
+        "stub_kind": "desk_cost_contract",
+        "anchor_id": "CELL-M-PKC-SMOOTH-M14",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "lane": "mechanism",
+        "title": "Desk cost bridge: M-PKC-SMOOTH-M14",
+        "purpose": "Price the exact symbolic system before any solver run and compare it with matched generic and plain-relation baselines.",
+        "required_output": [
+          "degree and monomial-size bounds",
+          "online and offline compute",
+          "memory, storage, money, and reviewer effort",
+          "preprocessing, amortization, and recovery",
+          "a scoped stop decision with no solver execution"
+        ],
+        "evidence_refs": [
+          "Ecdlp/Proved/Secp256k1PrimeP.lean",
+          "Ecdlp/Proved/SemaevFour.lean",
+          "cell:CELL-M-PKC-SMOOTH-M14",
+          "data/source_claim_extracts/petit_kosters_messeng2016.json"
+        ],
+        "lifecycle_state": "idea",
+        "scientific_identity": "research_question_seed",
+        "executable": false,
+        "admissible": false,
+        "recommended": false,
+        "authorized": false,
+        "route_promotion": false,
+        "exact_target_experiment": false,
+        "boundary": "This is a non-executable intake stub, not a hypothesis, candidate, route promotion, or experiment authorization."
+      },
+      {
+        "stub_id": "RSI-C6924493AA26",
+        "stub_kind": "full_cost_contract",
+        "anchor_id": "CELL-M-PKC-AUXILIARY-CURVE",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "lane": "mechanism",
+        "title": "Full cost contract: Generalized root-finding and recovery cost",
+        "purpose": "Specify the faithful generalized-root and recovery pipeline as a separate full-cost obligation after, and not as a substitute for, applicability.",
+        "required_output": [
+          "source and target objects",
+          "generalized-root solver interface",
+          "recovery and spurious-fiber accounting",
+          "offline and online costs",
+          "matched end-to-end baseline and cost-changing bridge"
+        ],
+        "evidence_refs": [
+          "cell:CELL-M-PKC-AUXILIARY-CURVE",
+          "cost_quantity:CQ-PKC-GENERALIZED-ROOT-COST",
+          "data/source_claim_extracts/petit_kosters_messeng2016.json"
+        ],
+        "lifecycle_state": "idea",
+        "scientific_identity": "research_question_seed",
+        "executable": false,
+        "admissible": false,
+        "recommended": false,
+        "authorized": false,
+        "route_promotion": false,
+        "exact_target_experiment": false,
+        "boundary": "This is a non-executable intake stub, not a hypothesis, candidate, route promotion, or experiment authorization."
+      },
+      {
+        "stub_id": "RSI-F01A8A1FA604",
+        "stub_kind": "structural_applicability",
+        "anchor_id": "CELL-M-PKC-AUXILIARY-CURVE",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "lane": "structural",
+        "title": "Applicability resolution: M-PKC-AUXILIARY-CURVE",
+        "purpose": "Resolve the unknown target-property requirement with an exact construction or a scoped no-instance result. Do not run an ECDLP experiment.",
+        "required_output": [
+          "exact map, domain, codomain, kernel, and degree",
+          "target and fixed-target semantics",
+          "recovery map and exceptional components",
+          "complete preprocessing estimate",
+          "property verdict limited to this mechanism instance"
+        ],
+        "evidence_refs": [
+          "cell:CELL-M-PKC-AUXILIARY-CURVE",
+          "data/source_claim_extracts/petit_kosters_messeng2016.json"
+        ],
+        "lifecycle_state": "idea",
+        "scientific_identity": "research_question_seed",
+        "executable": false,
+        "admissible": false,
+        "recommended": false,
+        "authorized": false,
+        "route_promotion": false,
+        "exact_target_experiment": false,
+        "boundary": "This is a non-executable intake stub, not a hypothesis, candidate, route promotion, or experiment authorization."
+      }
+    ],
+    "parked_ideas": [
+      {
+        "parked_id": "PARKED-M-GLV-FAITHFUL-PHASE-QUOTIENT",
+        "cell_id": "CELL-M-GLV-FAITHFUL-PHASE-QUOTIENT",
+        "route_id": "R-GLV-SEMAEV",
+        "claim_id": "CLM-GLV-PHASE-PRESERVING-COST-BRIDGE",
+        "status": "desired_properties_only",
+        "seed_eligible": false,
+        "executable": false,
+        "authorized": false,
+        "missing_before_intake": [
+          "exact phase-preserving map",
+          "complete recovery semantics",
+          "exceptional-locus treatment",
+          "non-orbit cost-changing bridge"
+        ],
+        "boundary": "This is a parked desired-property record, not a mechanism. It cannot emit a seed until a new claim supplies an exact map, recovery semantics, and cost-changing bridge."
+      }
+    ],
+    "generation_contract": {
+      "inputs": [
+        "unread primary sources",
+        "typed property-resolution cells",
+        "typed missing cost bridges",
+        "inconclusive claims with desired properties only"
+      ],
+      "excluded_inputs": [
+        "closed child claims",
+        "decided-inapplicable cells",
+        "prose-only desired mechanisms",
+        "lexical duplicates"
+      ],
+      "rule": "A stub remains a non-executable research-question seed until an immutable exact mechanism snapshot and all required independent reviews exist."
+    }
+  },
   "typed_evidence": {
     "state_source": "data/typed_evidence_state.json",
     "policy_source": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
@@ -9681,14 +9798,14 @@
       "property_resolution_cells": 1,
       "decided_inapplicable_cells": 2,
       "decided_closed_cells": 1,
-      "seed_eligible_cells": 4,
+      "seed_eligible_cells": 2,
       "desk_decisions": 3
     },
     "source_hashes": {
-      "policy_sha256": "9718f32ce5b2ad330dc60ca05cc5cdfbe7dd0174e1619bb98a9b7fcf938fcf08",
-      "decision_substrate_sha256": "8d91a39f3d99b9fb2781d38c80b0d1c2c89954107370de995e99ca4987271bcb",
-      "source_registry_identity_sha256": "c6abca98bc0fa8d1c1f9a37e7d424df17aca524af14d5e854f6a9d16c79ce6e9",
-      "evidence_files_sha256": "fa99bed98766cc72e02db1efc6f945aad35a7ffd74e2e0cfb617379e68596270",
+      "policy_sha256": "72ac969f4a549beb99fc365cf7b0dcbb07134bcbd9bbca3fdc1e0e336d4a862b",
+      "decision_substrate_sha256": "fe1f6d6a32b7c93ee69130ee3385598a316697277a01c517d5d65473f2d173d2",
+      "source_registry_identity_sha256": "153a606b72acb5e809da79c0f475dd50d5f24139ddfbdc696d6947ae6a86d106",
+      "evidence_files_sha256": "f0272dba84f7e78588ea4aab6cd1fbf3a813752d53bd62972b6c5e917ec002f9",
       "desk_decisions_sha256": "ee50228216f0ff99023ab3d1c869732c3c10926a8707107caf9b9a49b9b3dd48"
     },
     "trust_boundary": {
@@ -9742,7 +9859,7 @@
             "rationale": "A faithful GLV quotient requires the proved order-three action but must add a new premise beyond it."
           }
         ],
-        "seed_eligible": true,
+        "seed_eligible": false,
         "evidence_digest": "0741c407620cfc43414f8b252d6e06fa25647b715a9b8cc9d70a985fa9509a65",
         "authorization": "none"
       },
@@ -9862,7 +9979,7 @@
             "rationale": "The non-generic route consumes the public prime-field representation rather than only a black-box group oracle."
           }
         ],
-        "seed_eligible": true,
+        "seed_eligible": false,
         "evidence_digest": "764c0f1f114727db542e4bed7a7187385d8daad7faa4aaf484f319716bd135cb",
         "authorization": "none"
       }

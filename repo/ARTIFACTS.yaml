@@ -112,7 +112,10 @@ classes:
       - data/result_registry.json
       - data/source_registry.json
       - data/typed_evidence_state.json
+      - data/research_claim_state.json
       - data/research_engine_state.json
+      - data/research_engine_v02_state.json
+      - data/research_engine_shadow_intake.json
       - repo/ECDLP_DECISION_SUBSTRATE.md
       - Ecdlp/LedgerAxiomAudit.lean
     owner: generators
@@ -130,7 +133,10 @@ classes:
       - scripts/gen_result_registry.py
       - scripts/gen_source_registry.py
       - scripts/build_typed_evidence_state.py
+      - scripts/research_claims.py
       - scripts/build_research_engine_state.py
+      - scripts/build_research_engine_v02_state.py
+      - scripts/build_research_shadow_intake.py
       - scripts/build_ecdlp_decision_view.py
       - scripts/gen_axiom_audit.py
     gates:
@@ -141,8 +147,14 @@ classes:
       - scripts/gen_result_registry.py --check
       - scripts/build_ecdlp_decision_view.py --check
       - scripts/build_research_engine_state.py --check
+      - scripts/build_research_engine_v02_state.py --check
+      - scripts/build_research_shadow_intake.py --check
       - scripts/build_typed_evidence_state.py --check
       - scripts/test_typed_evidence.py
+      - scripts/test_research_claims.py
+      - scripts/test_research_engine_v02.py
+      - scripts/test_research_shadow_intake.py
+      - scripts/check_research_engine_v02_acceptance.py
       - scripts/check_research_engine.py
       - scripts/check_product_model.py
     risks:
@@ -188,6 +200,10 @@ classes:
       - repo/RESEARCH_ENGINE_V0.json
       - repo/HYPOTHESIS_GENERATION_V0.json
       - repo/ECDLP_TYPED_EVIDENCE_V0.json
+      - repo/RESEARCH_CLAIMS_V0.json
+      - repo/RESEARCH_ENGINE_LIFECYCLE_V0.json
+      - repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json
+      - repo/SCIENTIFIC_PROVENANCE_V0.json
       - repo/PRODUCT_MODEL.json
       - repo/PILOT_PROTOCOL.json
       - repo/AUTOMATION_INVENTORY.json
@@ -204,6 +220,8 @@ classes:
       - scripts/check_automation_inventory.py
       - scripts/check_ecdlp_decision_substrate.py
       - scripts/check_research_engine.py
+      - scripts/check_research_engine_v02_acceptance.py
+      - scripts/check_scientific_semantics.py
       - scripts/check_product_model.py
       - scripts/check_domains.py
       - independent architecture review when available

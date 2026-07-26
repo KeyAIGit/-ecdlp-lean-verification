@@ -41,6 +41,8 @@ DECISION_SUBSTRATE = ROOT / "repo" / "ECDLP_DECISION_SUBSTRATE.json"
 ATTACK_REGISTRY = ROOT / "data" / "attack_registry.json"
 RESEARCH_ENGINE_POLICY = ROOT / "repo" / "RESEARCH_ENGINE_V0.json"
 RESEARCH_ENGINE_STATE = ROOT / "data" / "research_engine_state.json"
+RESEARCH_ENGINE_V02_STATE = ROOT / "data" / "research_engine_v02_state.json"
+RESEARCH_SHADOW_INTAKE = ROOT / "data" / "research_engine_shadow_intake.json"
 TYPED_EVIDENCE_STATE = ROOT / "data" / "typed_evidence_state.json"
 
 
@@ -270,6 +272,12 @@ def build() -> dict:
     attack_registry = json.loads(ATTACK_REGISTRY.read_text(encoding="utf-8"))
     engine_policy = json.loads(RESEARCH_ENGINE_POLICY.read_text(encoding="utf-8"))
     engine = json.loads(RESEARCH_ENGINE_STATE.read_text(encoding="utf-8"))
+    engine_v02 = json.loads(
+        RESEARCH_ENGINE_V02_STATE.read_text(encoding="utf-8")
+    )
+    shadow_intake = json.loads(
+        RESEARCH_SHADOW_INTAKE.read_text(encoding="utf-8")
+    )
     typed_evidence = json.loads(TYPED_EVIDENCE_STATE.read_text(encoding="utf-8"))
     family_by_area = {family["area"]: family["id"] for family in substrate["families"]}
     built_modules = set(imports.get("Ecdlp", []))  # what Ecdlp.lean gates
@@ -555,6 +563,13 @@ def build() -> dict:
                 "intake_candidates"
             ],
             "research_engine_outcomes": engine["counts"]["outcome_events"],
+            "research_engine_v02_candidates": engine_v02["engine"][
+                "input_candidate_count"
+            ],
+            "shadow_proposal_stubs": shadow_intake["counts"][
+                "proposal_stubs"
+            ],
+            "shadow_parked_ideas": shadow_intake["counts"]["parked_ideas"],
             "selected_explorations": engine["counts"]["selected_explorations"],
             "selected_structural_routes": len(
                 decisions["route_selection"].get("selected_route_ids", [])
@@ -614,6 +629,24 @@ def build() -> dict:
             "route_evidence_state": engine["route_evidence_state"],
             "hypothesis_generation": engine["hypothesis_generation"],
             "feedback_contract": engine["feedback_contract"],
+        },
+        "research_engine_v02": {
+            "policy_source": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
+            "state_source": "data/research_engine_v02_state.json",
+            "status": engine_v02["status"],
+            "historical_outcome_boundary": engine_v02[
+                "historical_outcome_boundary"
+            ],
+            "engine": engine_v02["engine"],
+            "authorization": engine_v02["authorization"],
+        },
+        "research_shadow_intake": {
+            "state_source": "data/research_engine_shadow_intake.json",
+            "status": shadow_intake["status"],
+            "counts": shadow_intake["counts"],
+            "proposal_stubs": shadow_intake["proposal_stubs"],
+            "parked_ideas": shadow_intake["parked_ideas"],
+            "generation_contract": shadow_intake["generation_contract"],
         },
         "typed_evidence": {
             "state_source": "data/typed_evidence_state.json",
@@ -677,7 +710,8 @@ def render_markdown(graph: dict) -> str:
         f"**{c['promoted_routes']} routes promoted** · "
         f"**{c['typed_evidence_cells']} typed evidence cells** · "
         f"**{c['typed_decided_cells']} desk-decided cells** · "
-        f"**{c['generated_hypothesis_seeds']} generated hypothesis seeds** · "
+        f"**{c['generated_hypothesis_seeds']} research-question seeds** · "
+        f"**{c['shadow_proposal_stubs']} shadow proposal stubs** · "
         f"**{c['selected_explorations']} bounded explorations selected** · "
         f"**{c['research_engine_outcomes']} retained outcomes** · "
         f"**{c['edges']} edges**"
@@ -760,7 +794,7 @@ def render_markdown(graph: dict) -> str:
     lines.append(
         "Cells are regenerated joins over mechanisms, target properties, source "
         "claims, scoped barriers, and cost quantities. A decided cell cannot emit "
-        "a hypothesis seed, and no cell authorizes an experiment."
+        "a non-executable proposal seed, and no cell authorizes an experiment."
     )
     lines.append("")
     lines.append(
@@ -831,6 +865,31 @@ def render_markdown(graph: dict) -> str:
     lines.append("")
     lines.append(
         f"> Promotion boundary: {engine['feedback_contract']['promotion_boundary']}"
+    )
+    lines.append("")
+
+    lifecycle = graph["research_engine_v02"]
+    shadow = graph["research_shadow_intake"]
+    lines.append("## Research Engine v0.2 shadow lifecycle")
+    lines.append("")
+    lines.append(
+        "v0.2 separates immutable candidate snapshots, mutable lifecycle state, "
+        "portfolio recommendation, and owner authorization. The current state is "
+        "non-executing."
+    )
+    lines.append("")
+    lines.append(
+        f"Lifecycle candidates: **{lifecycle['engine']['input_candidate_count']}**. "
+        f"Admissible: **{len(lifecycle['engine']['admissible'])}**. "
+        f"Recommended: **{len(lifecycle['engine']['recommended'])}**. "
+        f"Authorized: **{lifecycle['authorization']['experiments']}**. "
+        f"Shadow proposal stubs: **{shadow['counts']['proposal_stubs']}**. "
+        f"Parked desired-property ideas: **{shadow['counts']['parked_ideas']}**."
+    )
+    lines.append("")
+    lines.append(
+        "> Every shadow row is a research-question seed. It is not a hypothesis, "
+        "candidate, route promotion, or permission to execute."
     )
     lines.append("")
 

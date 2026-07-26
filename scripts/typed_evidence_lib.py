@@ -298,6 +298,11 @@ def validate_policy(
                 problems.append(f"trust_boundary.{field} must be substantive")
 
     allowed_sources = _source_ids(source_registry)
+    source_index = {
+        item["id"]: item
+        for item in source_registry.get("sources", [])
+        if isinstance(item, dict) and isinstance(item.get("id"), str)
+    }
     claims = policy.get("source_claims")
     if not isinstance(claims, list) or not claims:
         problems.append("source_claims must be a nonempty array")
@@ -334,6 +339,16 @@ def validate_policy(
             "unread",
         }:
             problems.append(f"{label}.read_status is invalid")
+        registered_source = source_index.get(source_id)
+        if (
+            isinstance(registered_source, dict)
+            and registered_source.get("full_text_status") == "full_text_unread"
+            and claim.get("read_status") == "full_text_obtained"
+        ):
+            problems.append(
+                f"{label}.read_status contradicts source registry "
+                "full_text_unread"
+            )
         for field in ("citation", "statement", "boundary"):
             if not _text(claim.get(field), 20):
                 problems.append(f"{label}.{field} must be substantive")
@@ -1018,6 +1033,7 @@ def build_state(
                 "venue",
                 "url",
                 "doi",
+                "full_text_status",
             )
         }
         for source in source_registry.get("sources", [])

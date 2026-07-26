@@ -6,7 +6,7 @@
 
 Given P in E(F_p), P != O, Q in <P>, Q = [k]P, **Recover k modulo ord(P). The primary target fixes P to a generator of the prime-order secp256k1 group, so ord(P) = n.**
 
-Current phase: **research-engine-v0**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Selected promoted route: **none**.
+Current phase: **research-engine-v0.2-sanitation**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Selected promoted route: **none**.
 
 Bounded structural routes recorded by the decision: **1** (`R-GLV-SEMAEV`). Promoted routes: **0** (-).
 
@@ -17,8 +17,14 @@ The formal-result map, attack encyclopedia, and this decision layer are delibera
 - **attack_evidence:** `data/attack_registry.json`
 - **research_decisions:** `repo/ECDLP_DECISION_SUBSTRATE.json`
 - **research_engine_policy:** `repo/RESEARCH_ENGINE_V0.json`
+- **research_claim_policy:** `repo/RESEARCH_CLAIMS_V0.json`
 - **hypothesis_generation_policy:** `repo/HYPOTHESIS_GENERATION_V0.json`
+- **candidate_lifecycle_policy:** `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`
+- **research_engine_acceptance:** `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json`
 - **research_engine_state:** `data/research_engine_state.json`
+- **research_claim_state:** `data/research_claim_state.json`
+- **candidate_lifecycle_state:** `data/research_engine_v02_state.json`
+- **shadow_intake_state:** `data/research_engine_shadow_intake.json`
 - **active_work:** `tasks/ECDLP_RESEARCH.md`
 - **experiment_authorization:** `repo/RESEARCH_ENGINE_V0.json and experiments/HYPOTHESES.yaml`
 

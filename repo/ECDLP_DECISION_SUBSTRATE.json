@@ -8,8 +8,14 @@
     "attack_evidence": "data/attack_registry.json",
     "research_decisions": "repo/ECDLP_DECISION_SUBSTRATE.json",
     "research_engine_policy": "repo/RESEARCH_ENGINE_V0.json",
+    "research_claim_policy": "repo/RESEARCH_CLAIMS_V0.json",
     "hypothesis_generation_policy": "repo/HYPOTHESIS_GENERATION_V0.json",
+    "candidate_lifecycle_policy": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
+    "research_engine_acceptance": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
     "research_engine_state": "data/research_engine_state.json",
+    "research_claim_state": "data/research_claim_state.json",
+    "candidate_lifecycle_state": "data/research_engine_v02_state.json",
+    "shadow_intake_state": "data/research_engine_shadow_intake.json",
     "active_work": "tasks/ECDLP_RESEARCH.md",
     "experiment_authorization": "repo/RESEARCH_ENGINE_V0.json and experiments/HYPOTHESES.yaml"
   },
@@ -158,7 +164,7 @@
     }
   },
   "phase_policy": {
-    "phase": "research-engine-v0",
+    "phase": "research-engine-v0.2-sanitation",
     "experiments_authorized": false,
     "bounded_exploration_authorized": false,
     "promotion_experiments_authorized": false,
@@ -166,8 +172,8 @@
     "allowed_work": [
       "Maintain and independently replay the completed GLV-SEMAEV-ITER-001 certificates and kernel-checked theorem package.",
       "Generate source-grounded non-executable research seeds and compile structured proposals through digest-bound adversarial review.",
-      "Accept new primary evidence or a materially different exact mechanism through TASK-008 proposal intake without authorizing execution.",
-      "Prepare optional independent adversarial review at a stable checkpoint without treating review as route promotion.",
+      "Repair the Research Engine and generation-plane lifecycle under TASK-010 without authorizing execution.",
+      "Keep TASK-008 proposal intake parked until the sanitation lifecycle is resolved.",
       "Maintain canonical provenance and regenerate affected views without changing the recorded claim boundary."
     ],
     "forbidden_work": [
@@ -251,6 +257,17 @@
       "No general msolve, Sage, F4, parameter sweep, exact-target run, or unrelated route search is authorized.",
       "All P0-P4 evidence and prior append-only research decisions are retained; TASK-008 proposal intake is the current central ECDLP queue."
     ]
+  },
+  "maintenance_cycle": {
+    "cycle_id": "RESEARCH-ENGINE-V0.2-SANITATION-001",
+    "task_id": "TASK-010",
+    "status": "active_remediation_draft",
+    "started_on": "2026-07-25",
+    "baseline_commit": "fed55d84675fd96e5f40204b9f5f49baa8c01172",
+    "scope": "Repair provenance reachability, canonical semantics, claim-level truth state, candidate lifecycle, derived contracts, scoring, portfolio selection, and non-executable shadow intake.",
+    "authorizes_experiment": false,
+    "promotes_route": false,
+    "historical_outcomes_mutable": false
   },
   "upstream_snapshot": {
     "audited_on": "2026-07-22",

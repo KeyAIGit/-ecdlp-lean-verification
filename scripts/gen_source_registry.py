@@ -163,6 +163,7 @@ SOURCES: list[dict] = [
         "aliases": ["Symmetrized Summation Polynomials", "Vitse"],
         "role": "Primary source for torsion-translation symmetries whose coordinatewise "
                 "relation-preserving subgroup grows with the number of free relation variables.",
+        "full_text_status": "full_text_inspected",
         "note": "The official IACR archival PDF was inspected. Its torsion-translation "
                 "mechanism is distinct from the diagonal scalar GLV action.",
     },
@@ -236,6 +237,7 @@ SOURCES: list[dict] = [
         "role": "Primary specification for composed low-degree rational-map factor bases and "
                 "prime-field Semaev relation systems; required provenance for any faithful "
                 "R-PETIT-COMPOSED-MAPS implementation.",
+        "full_text_status": "full_text_inspected",
         "note": "An open official IACR archival PDF exists. The earlier repository statement that "
                 "this source was unavailable or only paywalled was incorrect. A full-text "
                 "construction and term review found no GLV, automorphism, endomorphism, "
@@ -254,6 +256,7 @@ SOURCES: list[dict] = [
         "aliases": ["Amadori"],
         "role": "Primary source for a one-Gröbner-basis prime-field index-calculus variant "
                 "and an independent description of the faithful Petit factor base L(x)=0.",
+        "full_text_status": "full_text_inspected",
         "note": "The open IACR manuscript and publication metadata were inspected. It is "
                 "prior art for proposal design, not evidence that P4 implemented the method.",
     },
@@ -269,6 +272,7 @@ SOURCES: list[dict] = [
         "aliases": ["Kudo"],
         "role": "Prior art for hybrid Gröbner acceleration and summation-polynomial symmetries "
                 "in prime-field ECDLP index calculus, together with stated limitations.",
+        "full_text_status": "full_text_unread",
         "note": "Springer metadata and abstract were verified. No open primary manuscript was "
                 "confirmed, and the full paper was not inspected in this iteration.",
     },
@@ -441,9 +445,15 @@ def build_registry() -> dict:
     where = compute_where_used(SOURCES)
     entries = []
     for src in sorted(SOURCES, key=lambda s: s["id"]):
-        entries.append(src | {"where_used": where[src["id"]]})
+        entries.append(
+            src
+            | {
+                "full_text_status": src.get("full_text_status", "not_asserted"),
+                "where_used": where[src["id"]],
+            }
+        )
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "purpose": "External works cited across the substrate, with provenance (where_used) "
                    "computed from the hand-authored docs. Companion to result_registry.json "
                    "(theorem-name provenance).",
@@ -465,9 +475,18 @@ def main() -> int:
         problems.append("duplicate source ids in the bibliography")
     for entry in registry["sources"]:
         for field in ("id", "title", "authors", "year", "venue", "url", "doi", "aliases",
-                       "role", "note", "where_used"):
+                       "role", "note", "full_text_status", "where_used"):
             if field not in entry:
                 problems.append(f"{entry.get('id', '?')}: missing field '{field}'")
+        if entry.get("full_text_status") not in {
+            "full_text_inspected",
+            "full_text_unread",
+            "not_asserted",
+        }:
+            problems.append(
+                f"{entry.get('id', '?')}: invalid full_text_status "
+                f"{entry.get('full_text_status')!r}"
+            )
         if not entry["where_used"]:
             problems.append(f"{entry['id']}: cited by no scanned doc — orphan bibliography entry")
 

@@ -70,6 +70,17 @@ jobs:
       - name: Test Research Engine v0
         run: python3 scripts/test_research_engine.py
 
+      - name: Check Research Engine v0.2 lifecycle and acceptance
+        run: |
+          python3 scripts/build_research_engine_v02_state.py --check
+          python3 scripts/test_research_engine_v02.py
+          python3 scripts/check_research_engine_v02_acceptance.py
+
+      - name: Check non-executable shadow intake
+        run: |
+          python3 scripts/build_research_shadow_intake.py --check
+          python3 scripts/test_research_shadow_intake.py
+
       - name: Replay GLV diagonal-action obstruction certificate
         run: |
           python3 experiments/glv_diagonal_obstruction/generate.py --check
@@ -122,6 +133,16 @@ jobs:
       # docs — catches a citation added/moved without updating the bibliography provenance.
       - name: Check source registry (docs ↔ bibliography provenance)
         run: python3 scripts/gen_source_registry.py --check
+
+      - name: Check claim-level Research Engine truth state
+        run: |
+          python3 scripts/research_claims.py --check
+          python3 scripts/test_research_claims.py
+
+      - name: Check cross-registry scientific semantics
+        run: |
+          python3 scripts/check_scientific_semantics.py
+          python3 scripts/test_scientific_semantics.py
 
       # Agent-bundle gate: the committed context-tier routing table
       # (bundles/MANIFEST.json) must reference only files that exist and stay in

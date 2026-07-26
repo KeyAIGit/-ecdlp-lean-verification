@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every ledger row below cites kernel-checked declarations (no `sorry`, no custom axioms).
 
-**297 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **7 typed evidence cells** · **3 desk-decided cells** · **4 generated hypothesis seeds** · **0 bounded explorations selected** · **8 retained outcomes** · **1054 edges**
+**297 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **7 typed evidence cells** · **3 desk-decided cells** · **2 research-question seeds** · **4 shadow proposal stubs** · **0 bounded explorations selected** · **8 retained outcomes** · **1054 edges**
 
 > A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline counts; `data/result_registry.json` owns declaration-level resolution.
 
@@ -16,7 +16,7 @@ By edge type: imports (483), member_of (297), requires_foundation (41), decision
 
 This target-specific layer is generated from `repo/ECDLP_DECISION_SUBSTRATE.json`. It does not replace the attack evidence registry or the formal release map.
 
-Phase: **research-engine-v0**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Structural routes: **R-GLV-SEMAEV**. Promoted routes: **none**. Selected attack route: **none**.
+Phase: **research-engine-v0.2-sanitation**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Structural routes: **R-GLV-SEMAEV**. Promoted routes: **none**. Selected attack route: **none**.
 
 Selection **RS-2026-07-24-001** (`2026-07-24`): **select_one_bounded_structural**. Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube premise and every nonzero affine fixed-target coordinate-scaling premise are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.
 
@@ -58,17 +58,17 @@ Selection **RS-2026-07-24-001** (`2026-07-24`): **select_one_bounded_structural*
 
 ## Typed evidence and hypothesis cells
 
-Cells are regenerated joins over mechanisms, target properties, source claims, scoped barriers, and cost quantities. A decided cell cannot emit a hypothesis seed, and no cell authorizes an experiment.
+Cells are regenerated joins over mechanisms, target properties, source claims, scoped barriers, and cost quantities. A decided cell cannot emit a non-executable proposal seed, and no cell authorizes an experiment.
 
 | cell | route | status | required property verdicts | cost quantity | seed eligible |
 |---|---|---|---|---|---:|
 | **CELL-M-FHJRV-DIRECT-TWO-TORSION** | `R-GLV-SEMAEV` | `decided_inapplicable` | `TP-SECP-DIRECT-TWO-TORSION`=violated | `CQ-RELATION-SYMMETRY-GROWTH` | false |
-| **CELL-M-GLV-FAITHFUL-PHASE-QUOTIENT** | `R-GLV-SEMAEV` | `open` | `TP-SECP-GLV-C3`=satisfied | `CQ-GLV-FAITHFUL-QUOTIENT-COST` | true |
+| **CELL-M-GLV-FAITHFUL-PHASE-QUOTIENT** | `R-GLV-SEMAEV` | `open` | `TP-SECP-GLV-C3`=satisfied | `CQ-GLV-FAITHFUL-QUOTIENT-COST` | false |
 | **CELL-M-GLV-INDEPENDENT-CUBES** | `R-GLV-SEMAEV` | `decided_closed` | `TP-SECP-GLV-C3`=satisfied | `CQ-RELATION-SYMMETRY-GROWTH` | false |
 | **CELL-M-PKC-AUXILIARY-CURVE** | `R-PETIT-COMPOSED-MAPS` | `property_resolution_required` | `TP-SECP-PKC-AUXILIARY-CURVE`=unknown | `CQ-PKC-GENERALIZED-ROOT-COST` | true |
 | **CELL-M-PKC-SMOOTH-M14** | `R-PETIT-COMPOSED-MAPS` | `open` | `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=satisfied | `CQ-SEMAEV-S15-SYSTEM-COST` | true |
 | **CELL-M-PKC-SMOOTH-M4** | `R-PETIT-COMPOSED-MAPS` | `decided_inapplicable` | `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=violated | `CQ-PKC-GENERALIZED-ROOT-COST` | false |
-| **CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND** | `R-PRIME-FIELD-INDEX-CALCULUS` | `open` | `TP-SECP-PRIME-FIELD-COORDINATES`=satisfied | `CQ-PRIME-FIELD-RELATION-TOTAL` | true |
+| **CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND** | `R-PRIME-FIELD-INDEX-CALCULUS` | `open` | `TP-SECP-PRIME-FIELD-COORDINATES`=satisfied | `CQ-PRIME-FIELD-RELATION-TOTAL` | false |
 
 ## Research Engine v0
 
@@ -85,6 +85,14 @@ Blocked intake candidates: **0**. Intake is retained research memory, not permis
 Retained outcomes: `proved`=0, `supported`=0, `historical_structural_confirmation`=1, `falsified`=0, `bounded_negative`=2, `inapplicable`=1, `inconclusive`=3, `resource_exhausted`=1.
 
 > Promotion boundary: Generated evidence may close, park, or reopen exploration candidates. It may not promote a route, authorize exact-target work, or make a public complexity claim without a dated decision-substrate change.
+
+## Research Engine v0.2 shadow lifecycle
+
+v0.2 separates immutable candidate snapshots, mutable lifecycle state, portfolio recommendation, and owner authorization. The current state is non-executing.
+
+Lifecycle candidates: **0**. Admissible: **0**. Recommended: **0**. Authorized: **0**. Shadow proposal stubs: **4**. Parked desired-property ideas: **1**.
+
+> Every shadow row is a research-question seed. It is not a hypothesis, candidate, route promotion, or permission to execute.
 
 ## Formal substrate critical path
 
