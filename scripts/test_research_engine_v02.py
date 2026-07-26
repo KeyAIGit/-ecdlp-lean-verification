@@ -4,16 +4,21 @@
 from __future__ import annotations
 
 import copy
+import json
 import unittest
+from pathlib import Path
 
 from research_engine_v02 import (
     bind_snapshot,
     build_calibration,
+    build_recommendation_binding,
     cost_vector,
     derive_gates,
+    expected_information_gain,
     optimize_portfolio,
     run_engine,
     score_snapshot,
+    snapshot_digest,
     validate_owner_decisions,
     validate_snapshot,
 )
@@ -22,9 +27,51 @@ from build_research_engine_v02_state import (
     V0_REVIEWED_ROOT,
     historical_boundary,
 )
+from check_research_engine_v02_acceptance import source_binding_problems
+from research_contract_binding import scientific_contract_digests, sha256_json
 
 
-def generation_binding() -> dict:
+ROOT = Path(__file__).resolve().parent.parent
+DIGEST_ANCHOR_PATH = (
+    ROOT
+    / "experiments"
+    / "engine"
+    / "fixtures"
+    / "research_engine_v02_snapshot_digest_anchors.json"
+)
+
+
+def generation_binding(
+    mechanism: dict | None = None,
+    prediction: dict | None = None,
+    cost: dict | None = None,
+    validator: dict | None = None,
+    toy_scope: dict | None = None,
+) -> dict:
+    mechanism = mechanism or mechanism_contract()
+    prediction = prediction or prediction_contract()
+    cost = cost or cost_contract()
+    validator = validator or validator_contract()
+    toy_scope = toy_scope or {
+        "curve_family": "toy-j0-curves",
+        "max_field_bits": 16,
+        "forbidden_targets": ["secp256k1"],
+    }
+    contract_digests = scientific_contract_digests(
+        mechanism,
+        prediction,
+        cost,
+        validator,
+    )
+    binding_digest = sha256_json(
+        {
+            "cell_id": "CELL-FIXTURE",
+            "route_id": "R-FIXTURE",
+            "threat_model": "classical-single-target-plain",
+            "toy_scope": toy_scope,
+            "contract_digests": contract_digests,
+        }
+    )
     roles = (
         "algebra",
         "cryptanalysis_skeptic",
@@ -33,11 +80,19 @@ def generation_binding() -> dict:
         "validator_design",
     )
     return {
-        "draft_id": "HYP_DRAFT_FIXTUREV02",
-        "draft_sha256": "d" * 64,
-        "proposal_id": "HGP-FIXTURE-V02",
-        "proposal_sha256": "e" * 64,
+        "draft_id": f"HYP_DRAFT_FIXTURE_{binding_digest[:12].upper()}",
+        "draft_sha256": binding_digest,
+        "proposal_id": f"HGP-FIXTURE-{binding_digest[:12].upper()}",
+        "proposal_sha256": sha256_json(
+            {"proposal_binding": binding_digest}
+        ),
         "source_commit": "fed55d84675fd96e5f40204b9f5f49baa8c01172",
+        "cell_id": "CELL-FIXTURE",
+        "typed_evidence_digest": "f" * 64,
+        "toy_scope": toy_scope,
+        "route_id": "R-FIXTURE",
+        "threat_model": "classical-single-target-plain",
+        "contract_digests": contract_digests,
         "review_artifacts": [
             {
                 "review_id": f"HGR-FIXTURE-{index}",
@@ -49,7 +104,11 @@ def generation_binding() -> dict:
     }
 
 
-def policy(*, max_selected: int = 3) -> dict:
+def policy(
+    *,
+    max_selected: int = 3,
+    quality_bindings: list[dict] | None = None,
+) -> dict:
     return {
         "primary_threat_model": "classical-single-target-plain",
         "authorized_owner_roles": ["project_owner"],
@@ -92,7 +151,11 @@ def policy(*, max_selected: int = 3) -> dict:
                 "attested_by": "independent-human-reviewer",
             },
         ],
-        "quality_cleared_draft_bindings": [generation_binding()],
+        "quality_cleared_draft_bindings": (
+            quality_bindings
+            if quality_bindings is not None
+            else [generation_binding()]
+        ),
         "portfolio_max_candidates": 12,
         "max_selected_per_cycle": max_selected,
         "portfolio_budget": {
@@ -159,7 +222,7 @@ def mechanism_contract() -> dict:
         "relation_semantics": {
             "source_relation": "the raw tuple satisfies the toy relation",
             "target_relation": "the mapped tuple replays the same relation",
-            "equivalence_status": "specified_unproved"
+            "equivalence_status": "certificate_replayed"
         },
         "recovery_map": {
             "forward": "append the deterministic checksum",
@@ -302,11 +365,17 @@ def candidate(
     dependencies: list[dict] | None = None,
     curve_family: str = "toy-j0-curves"
 ) -> dict:
+    mechanism = mechanism_contract()
+    prediction = prediction_contract(q)
+    cost = cost_contract(money=money, compute=compute)
+    validator = validator_contract()
     raw = {
         "candidate_id": candidate_id,
         "version": version,
         "created_at": "2026-07-25T00:00:00Z",
         "route_id": "R-FIXTURE",
+        "cell_id": "CELL-FIXTURE",
+        "typed_evidence_digest": "f" * 64,
         "lane": {
             "lane": "bounded_experiment",
             "target_kind": "toy",
@@ -327,14 +396,24 @@ def candidate(
         },
         "source_commit": "fed55d84675fd96e5f40204b9f5f49baa8c01172",
         "source_review_ids": ["SR-INDEPENDENT-001"],
-        "generation_binding": generation_binding(),
+        "generation_binding": generation_binding(
+            mechanism,
+            prediction,
+            cost,
+            validator,
+            {
+                "curve_family": curve_family,
+                "max_field_bits": 16,
+                "forbidden_targets": ["secp256k1"],
+            },
+        ),
         "dependencies": dependencies or [],
         "correlation_groups": [],
         "diversity_tags": [f"tag-{candidate_id}"],
-        "mechanism_contract": mechanism_contract(),
-        "prediction_contract": prediction_contract(q),
-        "cost_contract": cost_contract(money=money, compute=compute),
-        "validator_contract": validator_contract(),
+        "mechanism_contract": mechanism,
+        "prediction_contract": prediction,
+        "cost_contract": cost,
+        "validator_contract": validator,
         "scoring_contract": {
             "elicitation_ids": [
                 f"ELICIT-{candidate_id}-A",
@@ -348,6 +427,20 @@ def candidate(
         }
     }
     return bind_snapshot(raw)
+
+
+def bind_as_quality_reviewed(snapshot: dict) -> tuple[dict, dict]:
+    rebound = copy.deepcopy(snapshot)
+    binding = generation_binding(
+        rebound["mechanism_contract"],
+        rebound["prediction_contract"],
+        rebound["cost_contract"],
+        rebound["validator_contract"],
+        rebound["generation_binding"]["toy_scope"],
+    )
+    rebound["generation_binding"] = binding
+    rebound = bind_snapshot(rebound)
+    return rebound, policy(quality_bindings=[binding])
 
 
 def lifecycle_to_validator_ready(snapshot: dict) -> list[dict]:
@@ -412,43 +505,103 @@ def owner_decision(
     }
 
 
-def lifecycle_to_authorized(snapshot: dict, decision_id: str) -> list[dict]:
+def lifecycle_to_authorized(
+    snapshot: dict,
+    decision_id: str,
+    *,
+    engine_policy: dict | None = None,
+) -> list[dict]:
+    engine_policy = engine_policy or policy()
     events = lifecycle_to_validator_ready(snapshot)
+    events.append(
+        {
+            "event_id": f"REL-2026-07-25-{snapshot['candidate_id']}-4",
+            "candidate_id": snapshot["candidate_id"],
+            "candidate_version": snapshot["version"],
+            "candidate_digest": snapshot["snapshot_digest"],
+            "occurred_at": "2026-07-25T00:04:00Z",
+            "from_state": "validator_ready",
+            "to_state": "admissible",
+            "actor_class": "engine",
+            "reason": "The fixture passed all derived gates.",
+        }
+    )
+    events.append(
+        {
+            "event_id": f"REL-2026-07-25-{snapshot['candidate_id']}-5",
+            "candidate_id": snapshot["candidate_id"],
+            "candidate_version": snapshot["version"],
+            "candidate_digest": snapshot["snapshot_digest"],
+            "occurred_at": "2026-07-25T00:05:00Z",
+            "from_state": "admissible",
+            "to_state": "recommended",
+            "actor_class": "engine",
+            "recommendation_binding": build_recommendation_binding(
+                engine_policy,
+                [snapshot],
+                events,
+                "2026-07-25T00:05:00Z",
+            ),
+            "reason": "The fixture entered the selected portfolio.",
+        }
+    )
+    events.append(
+        {
+            "event_id": f"REL-2026-07-25-{snapshot['candidate_id']}-6",
+            "candidate_id": snapshot["candidate_id"],
+            "candidate_version": snapshot["version"],
+            "candidate_digest": snapshot["snapshot_digest"],
+            "occurred_at": "2026-07-25T00:06:00Z",
+            "from_state": "recommended",
+            "to_state": "authorized",
+            "actor_class": "owner",
+            "owner_decision_id": decision_id,
+            "reason": "A dated owner decision authorized the frozen fixture.",
+        }
+    )
+    return events
+
+
+def lifecycle_to_terminal(
+    snapshot: dict,
+    decision_id: str,
+    outcome: str,
+    *,
+    engine_policy: dict | None = None,
+) -> list[dict]:
+    events = lifecycle_to_authorized(
+        snapshot,
+        decision_id,
+        engine_policy=engine_policy,
+    )
     events.extend(
         [
             {
-                "event_id": f"REL-2026-07-25-{snapshot['candidate_id']}-4",
+                "event_id": (
+                    f"REL-2026-07-25-{snapshot['candidate_id']}-7"
+                ),
                 "candidate_id": snapshot["candidate_id"],
                 "candidate_version": snapshot["version"],
                 "candidate_digest": snapshot["snapshot_digest"],
-                "occurred_at": "2026-07-25T00:04:00Z",
-                "from_state": "validator_ready",
-                "to_state": "admissible",
+                "occurred_at": "2026-07-25T00:07:00Z",
+                "from_state": "authorized",
+                "to_state": "running",
                 "actor_class": "engine",
-                "reason": "The fixture passed all derived gates.",
+                "reason": "The authorized regression fixture began execution.",
             },
             {
-                "event_id": f"REL-2026-07-25-{snapshot['candidate_id']}-5",
+                "event_id": (
+                    f"REL-2026-07-25-{snapshot['candidate_id']}-8"
+                ),
                 "candidate_id": snapshot["candidate_id"],
                 "candidate_version": snapshot["version"],
                 "candidate_digest": snapshot["snapshot_digest"],
-                "occurred_at": "2026-07-25T00:05:00Z",
-                "from_state": "admissible",
-                "to_state": "recommended",
+                "occurred_at": "2026-07-25T00:08:00Z",
+                "from_state": "running",
+                "to_state": "terminal",
                 "actor_class": "engine",
-                "reason": "The fixture entered the selected portfolio.",
-            },
-            {
-                "event_id": f"REL-2026-07-25-{snapshot['candidate_id']}-6",
-                "candidate_id": snapshot["candidate_id"],
-                "candidate_version": snapshot["version"],
-                "candidate_digest": snapshot["snapshot_digest"],
-                "occurred_at": "2026-07-25T00:06:00Z",
-                "from_state": "recommended",
-                "to_state": "authorized",
-                "actor_class": "owner",
-                "owner_decision_id": decision_id,
-                "reason": "A dated owner decision authorized the frozen fixture.",
+                "reason": "The regression fixture reached a terminal outcome.",
+                "outcome": outcome,
             },
         ]
     )
@@ -456,6 +609,30 @@ def lifecycle_to_authorized(snapshot: dict, decision_id: str) -> list[dict]:
 
 
 class ResearchEngineV02Tests(unittest.TestCase):
+    def test_snapshot_digest_matches_external_committed_anchors(self) -> None:
+        fixture = json.loads(DIGEST_ANCHOR_PATH.read_text(encoding="utf-8"))
+        expected = (
+            "8e91653cf90a1a2b104ee43a94ff5aa2aee91ed22d0c0e1c38d3f4b239a201dc",
+            "3eab7d538545b04b00d7b81c23fd55f537430020ca9e2138be2a8d0b637775eb",
+        )
+        anchors = fixture["anchors"]
+        self.assertEqual(
+            expected,
+            tuple(
+                anchor["expected_snapshot_sha256"] for anchor in anchors
+            ),
+        )
+        computed = tuple(
+            snapshot_digest(anchor["snapshot"]) for anchor in anchors
+        )
+        self.assertEqual(expected, computed)
+        self.assertNotEqual(computed[0], computed[1])
+        for anchor in anchors:
+            self.assertEqual(
+                anchor["expected_snapshot_sha256"],
+                bind_snapshot(anchor["snapshot"])["snapshot_digest"],
+            )
+
     def test_self_declared_validator_without_registered_evidence_is_rejected(
         self,
     ) -> None:
@@ -548,6 +725,172 @@ class ResearchEngineV02Tests(unittest.TestCase):
             derive_gates(snapshot, policy()),
         )
 
+    def test_post_review_contract_mutation_invalidates_generation_binding(
+        self,
+    ) -> None:
+        snapshot = candidate("POST-REVIEW-MUTATION")
+        snapshot["cost_contract"]["amortization"] = {
+            "class": "multi_target",
+            "target_count": 1000,
+            "per_target_cost_included": True,
+        }
+        snapshot = bind_snapshot(snapshot)
+        problems = validate_snapshot(snapshot, policy())
+        self.assertTrue(
+            any(
+                "cost_contract_sha256: reviewed contract digest mismatch"
+                in problem
+                for problem in problems
+            )
+        )
+        self.assertIn(
+            "missing_quality_cleared_generation_binding",
+            derive_gates(snapshot, policy()),
+        )
+
+    def test_reviewed_multi_target_cost_derives_threat_model_drift(
+        self,
+    ) -> None:
+        snapshot = candidate("MULTI-TARGET-LAUNDERING")
+        snapshot["cost_contract"]["offline"] = {
+            "cpu_hours": 10**6,
+            "gpu_hours": 0,
+        }
+        snapshot["cost_contract"]["amortization"] = {
+            "class": "multi_target",
+            "target_count": 10**6,
+            "per_target_cost_included": True,
+        }
+        snapshot, reviewed_policy = bind_as_quality_reviewed(snapshot)
+        self.assertEqual([], validate_snapshot(snapshot, reviewed_policy))
+        self.assertIn(
+            "changes_threat_model",
+            derive_gates(snapshot, reviewed_policy),
+        )
+        state = run_engine(
+            reviewed_policy,
+            [snapshot],
+            {
+                "lifecycle_events": lifecycle_to_validator_ready(snapshot),
+                "outcomes": [],
+            },
+            [],
+        )
+        self.assertEqual([], state["admissible"])
+        self.assertEqual([], state["recommended"])
+
+    def test_every_prediction_size_respects_reviewed_toy_ceiling(
+        self,
+    ) -> None:
+        snapshot = candidate("MATRIX-CEILING")
+        snapshot["prediction_contract"]["tested_sizes"] = [8, 16, 2048]
+        snapshot, reviewed_policy = bind_as_quality_reviewed(snapshot)
+        problems = validate_snapshot(snapshot, reviewed_policy)
+        self.assertTrue(
+            any("exceeds bounded lane ceiling" in problem for problem in problems)
+        )
+        gates = derive_gates(snapshot, reviewed_policy)
+        self.assertIn("toy_scope_exceeded", gates)
+        self.assertIn("invalid_candidate_snapshot", gates)
+
+    def test_schema_complete_unproved_prose_cannot_clear_mechanism_gate(
+        self,
+    ) -> None:
+        snapshot = candidate("SCHEMA-COMPLETE-PROSE")
+        mechanism = snapshot["mechanism_contract"]
+        mechanism["source_objects"] = ["x"]
+        mechanism["target_objects"] = ["x"]
+        mechanism["source_ids"] = ["x"]
+        for group, keys in {
+            "transformation": ("kind", "exact_map", "domain", "codomain"),
+            "fixed_target_semantics": ("target_slot", "target_action"),
+            "orbit_stabilizer": (
+                "acting_group",
+                "stabilizer",
+                "orbit_size_law",
+            ),
+            "relation_semantics": ("source_relation", "target_relation"),
+            "recovery_map": (
+                "forward",
+                "inverse",
+                "spurious_solution_policy",
+            ),
+            "cost_changing_mechanism": (
+                "quantity",
+                "causal_bridge",
+                "growth_law",
+                "non_orbit_lever",
+            ),
+        }.items():
+            for key in keys:
+                mechanism[group][key] = "x"
+        mechanism["exceptional_locus"]["definition"] = "x"
+        mechanism["relation_semantics"][
+            "equivalence_status"
+        ] = "specified_unproved"
+        snapshot, reviewed_policy = bind_as_quality_reviewed(snapshot)
+        self.assertIn(
+            "missing_exact_mechanism",
+            derive_gates(snapshot, reviewed_policy),
+        )
+
+    def test_candidate_route_cannot_drift_from_reviewed_draft(self) -> None:
+        snapshot = candidate("ROUTE-RETARGET")
+        snapshot["route_id"] = "R-OTHER"
+        snapshot = bind_snapshot(snapshot)
+        problems = validate_snapshot(snapshot, policy())
+        self.assertTrue(
+            any(
+                "route_id: generation binding mismatch" in problem
+                for problem in problems
+            )
+        )
+
+    def test_generated_lifecycle_state_binds_both_canonical_inputs(
+        self,
+    ) -> None:
+        lifecycle_state = json.loads(
+            (ROOT / "data" / "research_engine_v02_state.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        lifecycle_policy = json.loads(
+            (ROOT / "repo" / "RESEARCH_ENGINE_LIFECYCLE_V0.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        generation_state = json.loads(
+            (ROOT / "data" / "research_engine_state.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(
+            [],
+            source_binding_problems(
+                lifecycle_state,
+                lifecycle_policy,
+                generation_state,
+            ),
+        )
+        changed_policy = copy.deepcopy(lifecycle_policy)
+        changed_policy["max_selected_per_cycle"] += 1
+        self.assertTrue(
+            source_binding_problems(
+                lifecycle_state,
+                changed_policy,
+                generation_state,
+            )
+        )
+        changed_generation = copy.deepcopy(generation_state)
+        changed_generation["status"] = "fabricated-idempotent-output"
+        self.assertTrue(
+            source_binding_problems(
+                lifecycle_state,
+                lifecycle_policy,
+                changed_generation,
+            )
+        )
+
     def test_terminal_candidates_release_selection_slots(self) -> None:
         candidates = [candidate(name) for name in ("A", "B", "C", "D")]
         events = []
@@ -555,7 +898,12 @@ class ResearchEngineV02Tests(unittest.TestCase):
             events.extend(desk_complete(item))
         events.extend(lifecycle_to_validator_ready(candidates[3]))
         state = run_engine(
-            policy(max_selected=3),
+            policy(
+                max_selected=3,
+                quality_bindings=[
+                    item["generation_binding"] for item in candidates
+                ],
+            ),
             candidates,
             {"lifecycle_events": events, "outcomes": []},
             []
@@ -740,6 +1088,138 @@ class ResearchEngineV02Tests(unittest.TestCase):
             ),
         )
 
+    def test_unsuccessful_terminal_outcomes_do_not_unlock_dependency(
+        self,
+    ) -> None:
+        for outcome in ("falsified", "inconclusive"):
+            with self.subTest(outcome=outcome):
+                prerequisite = candidate(f"A-{outcome.upper()}")
+                dependent = candidate(
+                    f"B-{outcome.upper()}",
+                    dependencies=[
+                        {
+                            "candidate_id": prerequisite["candidate_id"],
+                            "minimum_version": 1,
+                            "accepted_outcomes": ["completed"],
+                        }
+                    ],
+                )
+                decision_id = f"OWNER-AUTH-{outcome.upper()}"
+                state = run_engine(
+                    policy(max_selected=1),
+                    [prerequisite, dependent],
+                    {
+                        "lifecycle_events": (
+                            lifecycle_to_terminal(
+                                prerequisite,
+                                decision_id,
+                                outcome,
+                                engine_policy=policy(max_selected=1),
+                            )
+                            + lifecycle_to_validator_ready(dependent)
+                        ),
+                        "outcomes": [],
+                    },
+                    [
+                        owner_decision(
+                            prerequisite,
+                            decision_id=decision_id,
+                        )
+                    ],
+                )
+                self.assertEqual([], state["lifecycle_problems"])
+                self.assertIn(
+                    "unsatisfied_dependency",
+                    next(
+                        item["gates"]
+                        for item in state["candidates"]
+                        if item["candidate_id"] == dependent["candidate_id"]
+                    ),
+                )
+
+    def test_successful_but_unaccepted_outcome_does_not_unlock_dependency(
+        self,
+    ) -> None:
+        prerequisite = candidate("A-SUPPORTED")
+        dependent = candidate(
+            "B-REQUIRES-COMPLETED",
+            dependencies=[
+                {
+                    "candidate_id": prerequisite["candidate_id"],
+                    "minimum_version": 1,
+                    "accepted_outcomes": ["completed"],
+                }
+            ],
+        )
+        decision_id = "OWNER-AUTH-SUPPORTED"
+        state = run_engine(
+            policy(max_selected=1),
+            [prerequisite, dependent],
+            {
+                "lifecycle_events": (
+                    lifecycle_to_terminal(
+                        prerequisite,
+                        decision_id,
+                        "supported",
+                        engine_policy=policy(max_selected=1),
+                    )
+                    + lifecycle_to_validator_ready(dependent)
+                ),
+                "outcomes": [],
+            },
+            [
+                owner_decision(
+                    prerequisite,
+                    decision_id=decision_id,
+                )
+            ],
+        )
+        self.assertEqual([], state["lifecycle_problems"])
+        self.assertIn(
+            "unsatisfied_dependency",
+            next(
+                item["gates"]
+                for item in state["candidates"]
+                if item["candidate_id"] == dependent["candidate_id"]
+            ),
+        )
+
+    def test_nonterminal_outcome_field_cannot_unlock_dependency(self) -> None:
+        prerequisite = candidate("A-NONTERMINAL")
+        dependent = candidate(
+            "B-NONTERMINAL",
+            dependencies=[
+                {
+                    "candidate_id": prerequisite["candidate_id"],
+                    "minimum_version": 1,
+                    "accepted_outcomes": ["completed"],
+                }
+            ],
+        )
+        prerequisite_events = lifecycle_to_validator_ready(prerequisite)[:2]
+        prerequisite_events[-1]["outcome"] = "completed"
+        state = run_engine(
+            policy(max_selected=1),
+            [prerequisite, dependent],
+            {
+                "lifecycle_events": (
+                    prerequisite_events
+                    + lifecycle_to_validator_ready(dependent)
+                ),
+                "outcomes": [],
+            },
+            [],
+        )
+        self.assertEqual([], state["lifecycle_problems"])
+        self.assertIn(
+            "unsatisfied_dependency",
+            next(
+                item["gates"]
+                for item in state["candidates"]
+                if item["candidate_id"] == dependent["candidate_id"]
+            ),
+        )
+
     def test_current_policy_cannot_rewrite_frozen_calibration(self) -> None:
         snapshot = candidate("A")
         outcome = {
@@ -872,6 +1352,96 @@ class ResearchEngineV02Tests(unittest.TestCase):
         self.assertEqual(["B", "C"], result["selected_ids"])
         self.assertEqual(16.0, result["objective_eig_bits"])
 
+    def test_eig_matches_external_numeric_anchor(self) -> None:
+        self.assertAlmostEqual(
+            0.2780719051126377,
+            expected_information_gain(scenario(0.8)),
+            places=15,
+        )
+
+    def test_shared_setup_is_charged_once_per_portfolio(self) -> None:
+        def entry(name: str) -> dict:
+            return {
+                "candidate_id": name,
+                "snapshot": {
+                    "dependencies": [],
+                    "correlation_groups": [],
+                    "diversity_tags": [name],
+                },
+                "score": {
+                    "eig_bits": {"low": 1.0, "base": 1.0, "high": 1.0}
+                },
+                "cost_vector": {
+                    "compute_hours": 0,
+                    "storage_gb": 0,
+                    "money_usd": 0,
+                    "implementation_hours": 0,
+                    "reviewer_hours": 0,
+                    "wall_time_hours": 1,
+                    "peak_memory_gb": 1,
+                    "workers": 1,
+                    "shared_setup_id": "SHARED-ALGEBRA-STACK",
+                    "shared_setup_hours": 6,
+                },
+            }
+
+        comparison_policy = policy(max_selected=2)
+        comparison_policy["portfolio_budget"]["shared_setup_hours"] = 6
+        result = optimize_portfolio(
+            [entry("A"), entry("B")],
+            comparison_policy,
+        )
+        self.assertEqual(["A", "B"], result["selected_ids"])
+        self.assertEqual(6.0, result["costs"]["shared_setup_hours"])
+
+    def test_peak_resources_use_maximum_not_sum(self) -> None:
+        def entry(
+            name: str,
+            wall_time: float,
+            memory: float,
+            workers: int,
+        ) -> dict:
+            return {
+                "candidate_id": name,
+                "snapshot": {
+                    "dependencies": [],
+                    "correlation_groups": [],
+                    "diversity_tags": [name],
+                },
+                "score": {
+                    "eig_bits": {"low": 1.0, "base": 1.0, "high": 1.0}
+                },
+                "cost_vector": {
+                    "compute_hours": 0,
+                    "storage_gb": 0,
+                    "money_usd": 0,
+                    "implementation_hours": 0,
+                    "reviewer_hours": 0,
+                    "wall_time_hours": wall_time,
+                    "peak_memory_gb": memory,
+                    "workers": workers,
+                    "shared_setup_id": None,
+                    "shared_setup_hours": 0,
+                },
+            }
+
+        comparison_policy = policy(max_selected=2)
+        comparison_policy["portfolio_budget"].update(
+            {
+                "wall_time_hours": 8,
+                "peak_memory_gb": 6,
+                "workers": 3,
+            }
+        )
+        result = optimize_portfolio(
+            [entry("A", 8, 6, 3), entry("B", 7, 5, 2)],
+            comparison_policy,
+        )
+        self.assertEqual(["A", "B"], result["selected_ids"])
+        self.assertEqual(8.0, result["costs"]["wall_time_hours"])
+        self.assertEqual(6.0, result["costs"]["peak_memory_gb"])
+        self.assertEqual(3.0, result["costs"]["workers"])
+
     def test_portfolio_rejects_two_active_versions_with_one_candidate_id(
         self,
     ) -> None:
@@ -904,7 +1474,12 @@ class ResearchEngineV02Tests(unittest.TestCase):
             for event in lifecycle_to_validator_ready(item)
         ]
         state = run_engine(
-            policy(max_selected=3),
+            policy(
+                max_selected=3,
+                quality_bindings=[
+                    item["generation_binding"] for item in candidates
+                ],
+            ),
             candidates,
             {"lifecycle_events": events, "outcomes": []},
             []
@@ -984,6 +1559,66 @@ class ResearchEngineV02Tests(unittest.TestCase):
         )
         self.assertEqual(["DECISION-ONLY"], state["recommended"])
         self.assertEqual([], state["authorized"])
+
+    def test_recommended_event_must_match_recomputed_portfolio(self) -> None:
+        low = candidate("LOW", q=0.55)
+        high = candidate("HIGH", q=0.95)
+        engine_policy = policy(
+            max_selected=1,
+            quality_bindings=[
+                low["generation_binding"],
+                high["generation_binding"],
+            ],
+        )
+        decision = owner_decision(low, decision_id="OWNER-FORGED-REC-001")
+        events = (
+            lifecycle_to_authorized(
+                low,
+                decision["decision_id"],
+                engine_policy=engine_policy,
+            )
+            + lifecycle_to_validator_ready(high)
+        )
+        recommended_event = next(
+            event
+            for event in events
+            if event.get("to_state") == "recommended"
+        )
+        recommended_event["recommendation_binding"] = (
+            build_recommendation_binding(
+                engine_policy,
+                [low],
+                events,
+                "2026-07-25T00:05:00Z",
+            )
+        )
+        expected = build_recommendation_binding(
+            engine_policy,
+            [low, high],
+            events,
+            "2026-07-25T00:05:00Z",
+        )
+        self.assertEqual(
+            ["HIGH"],
+            [
+                item["candidate_id"]
+                for item in expected["selected_snapshots"]
+            ],
+        )
+        state = run_engine(
+            engine_policy,
+            [low, high],
+            {"lifecycle_events": events, "outcomes": []},
+            [decision],
+        )
+        self.assertEqual([], state["authorized"])
+        self.assertTrue(
+            any(
+                "recomputed base portfolio" in problem
+                or "candidate was not selected" in problem
+                for problem in state["lifecycle_problems"]
+            )
+        )
 
     def test_authorized_state_remains_visible_after_recommendation_slot_release(
         self,

@@ -4,10 +4,28 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
+from research_claims import validate_and_build as validate_claim_policy
+
 ROOT = Path(__file__).resolve().parent.parent
+
+PETIT_WEIL_CONTRADICTIONS = (
+    re.compile(
+        r"faithful petit.{0,120}"
+        r"(?:fails|impossible|excluded|ruled out).{0,120}weil descent"
+    ),
+    re.compile(
+        r"weil descent.{0,120}"
+        r"(?:required|necessary).{0,120}faithful petit"
+    ),
+    re.compile(
+        r"absence of weil descent.{0,120}"
+        r"(?:excludes|rules out|makes.{0,40}impossible)"
+    ),
+)
 
 
 def load_json(relative: str) -> dict[str, Any]:
@@ -124,6 +142,14 @@ def validate_semantics(
         problems.append(
             "decision substrate contradicts faithful Petit/P4 semantics"
         )
+    petit_semantic_surface = f"{petit_assertions} {petit_route_text}"
+    if any(
+        pattern.search(petit_semantic_surface)
+        for pattern in PETIT_WEIL_CONTRADICTIONS
+    ):
+        problems.append(
+            "faithful Petit cannot be rejected by the absence of Weil descent"
+        )
     weil_route = routes.get("R-WEIL-DESCENT", {})
     if (
         weil_route.get("status") != "ruled_out_for_target"
@@ -210,8 +236,13 @@ def validate_semantics(
 
 
 def main() -> int:
-    problems = validate_semantics(
-        load_json("repo/ECDLP_DECISION_SUBSTRATE.json"),
+    decisions = load_json("repo/ECDLP_DECISION_SUBSTRATE.json")
+    claim_policy_problems, _ = validate_claim_policy(
+        load_json("repo/RESEARCH_CLAIMS_V0.json"),
+        decisions,
+    )
+    problems = claim_policy_problems + validate_semantics(
+        decisions,
         load_json("data/attack_registry.json"),
         load_json("data/source_registry.json"),
         load_json("data/typed_evidence_state.json"),
@@ -220,6 +251,7 @@ def main() -> int:
         load_json("data/research_engine_v02_state.json"),
         load_json("data/research_engine_shadow_intake.json"),
     )
+    problems = sorted(set(problems))
     if problems:
         print("scientific-semantic gate FAILED:")
         for problem in problems:

@@ -83,7 +83,7 @@
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
         "reason": "the 19 owner regression cases and their concrete fault-injection tests",
         "exists": true,
-        "bytes": 14473
+        "bytes": 17271
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -205,7 +205,7 @@
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
         "reason": "the 19 owner regression cases and their concrete fault-injection tests",
         "exists": true,
-        "bytes": 14473
+        "bytes": 17271
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -325,13 +325,13 @@
         "path": "experiments/engine/candidate_snapshot.schema.json",
         "reason": "immutable v0.2 candidate/version scientific identity",
         "exists": true,
-        "bytes": 6882
+        "bytes": 9060
       },
       {
         "path": "experiments/engine/candidate_lifecycle.schema.json",
         "reason": "append-only v0.2 candidate lifecycle transitions",
         "exists": true,
-        "bytes": 2169
+        "bytes": 3659
       },
       {
         "path": "experiments/engine/mechanism_contract.schema.json",
@@ -507,7 +507,7 @@
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
         "reason": "the 19 owner regression cases and their concrete fault-injection tests",
         "exists": true,
-        "bytes": 14473
+        "bytes": 17271
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -627,13 +627,13 @@
         "path": "experiments/engine/candidate_snapshot.schema.json",
         "reason": "immutable v0.2 candidate/version scientific identity",
         "exists": true,
-        "bytes": 6882
+        "bytes": 9060
       },
       {
         "path": "experiments/engine/candidate_lifecycle.schema.json",
         "reason": "append-only v0.2 candidate lifecycle transitions",
         "exists": true,
-        "bytes": 2169
+        "bytes": 3659
       },
       {
         "path": "experiments/engine/mechanism_contract.schema.json",

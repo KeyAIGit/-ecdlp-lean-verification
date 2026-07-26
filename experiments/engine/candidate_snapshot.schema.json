@@ -10,6 +10,8 @@
     "version",
     "created_at",
     "route_id",
+    "cell_id",
+    "typed_evidence_digest",
     "lane",
     "threat_model",
     "target_scope",
@@ -29,6 +31,11 @@
       "format": "date-time"
     },
     "route_id": {"type": "string", "minLength": 1},
+    "cell_id": {"type": "string", "minLength": 1},
+    "typed_evidence_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
     "lane": {"$ref": "research_lane.schema.json"},
     "threat_model": {"const": "classical-single-target-plain"},
     "target_scope": {
@@ -61,7 +68,13 @@
         "proposal_id",
         "proposal_sha256",
         "source_commit",
-        "review_artifacts"
+        "review_artifacts",
+        "cell_id",
+        "typed_evidence_digest",
+        "toy_scope",
+        "route_id",
+        "threat_model",
+        "contract_digests"
       ],
       "properties": {
         "draft_id": {"type": "string", "minLength": 1},
@@ -77,6 +90,64 @@
         "source_commit": {
           "type": "string",
           "pattern": "^[0-9a-f]{40}$"
+        },
+        "cell_id": {"type": "string", "minLength": 1},
+        "typed_evidence_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "toy_scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "curve_family",
+            "max_field_bits",
+            "forbidden_targets"
+          ],
+          "properties": {
+            "curve_family": {"type": "string", "minLength": 1},
+            "max_field_bits": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 24
+            },
+            "forbidden_targets": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "route_id": {"type": "string", "minLength": 1},
+        "threat_model": {"const": "classical-single-target-plain"},
+        "contract_digests": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mechanism_contract_sha256",
+            "prediction_contract_sha256",
+            "cost_contract_sha256",
+            "validator_design_contract_sha256"
+          ],
+          "properties": {
+            "mechanism_contract_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "prediction_contract_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "cost_contract_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "validator_design_contract_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
         },
         "review_artifacts": {
           "type": "array",

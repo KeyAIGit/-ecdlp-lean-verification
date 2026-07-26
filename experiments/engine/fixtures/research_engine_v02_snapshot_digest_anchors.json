@@ -1,0 +1,50 @@
+{
+  "schema_version": "research-engine-v0.2-snapshot-digest-anchor-v1",
+  "canonicalization": "UTF-8 JSON with sorted object keys, compact separators, one trailing LF, and the top-level snapshot_digest field omitted",
+  "external_computation": {
+    "runtime": "Node.js v22 bundled workspace runtime",
+    "implementation": "recursive key sort plus node:crypto SHA-256; no Research Engine module imported"
+  },
+  "anchors": [
+    {
+      "anchor_id": "DIGEST-ANCHOR-A",
+      "snapshot": {
+        "candidate_id": "DIGEST-ANCHOR-A",
+        "version": 1,
+        "nested": {
+          "alpha": [
+            1,
+            2,
+            3
+          ],
+          "enabled": true,
+          "label": "external-anchor"
+        },
+        "snapshot_digest": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expected_snapshot_sha256": "8e91653cf90a1a2b104ee43a94ff5aa2aee91ed22d0c0e1c38d3f4b239a201dc"
+    },
+    {
+      "anchor_id": "DIGEST-ANCHOR-B",
+      "snapshot": {
+        "candidate_id": "DIGEST-ANCHOR-B",
+        "version": 2,
+        "cost": {
+          "money_usd": 12.5,
+          "workers": 3
+        },
+        "dependencies": [
+          {
+            "candidate_id": "A",
+            "minimum_version": 1,
+            "accepted_outcomes": [
+              "completed"
+            ]
+          }
+        ],
+        "snapshot_digest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      "expected_snapshot_sha256": "3eab7d538545b04b00d7b81c23fd55f537430020ca9e2138be2a8d0b637775eb"
+    }
+  ]
+}
