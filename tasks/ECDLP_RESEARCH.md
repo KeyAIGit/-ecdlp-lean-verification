@@ -244,3 +244,141 @@ Files that must be regenerated:
 - all derived artifacts touched by accepted findings
 How to verify:
 - full local gates and GitHub CI
+
+## Queued scientific activation
+
+The Research Engine architecture is frozen after `TASK-010` unless a concrete
+blocking defect is demonstrated. The following tasks use the engine; they do
+not create v0.3 schemas. All proposal seeds remain non-executable. The
+conditional native phase of `TASK-014` requires a separate dated owner
+decision.
+
+### TASK-014 - Run the first post-v0.2 scientific activation cycle
+
+Status: queued_after_task_010
+Kind: literature | applicability | cost | data | theorem | structural | research
+Hypothesis: none during evidence closure; the desk phase owns
+`RQ-PKC-SMOOTH-ARITY-COST-001`, while the parallel structural workstream owns
+`RQ-GLV-CONNECTED-SYSTEM-RIGIDITY-001`
+Why it matters: A new prime-field Semaev/Petit proposal cannot be assessed
+honestly while a relevant lower-bound paper is absent, Kudo CANS 2018 remains
+full-text unread, and Amadori has contradictory read status between the source
+registry and typed evidence. After those gaps close, the published
+smooth-subgroup construction needs a full desk-cost screen before any solver
+or native experiment can be justified. In parallel, a narrow connected-system
+GLV theorem can prevent the completed local phase obstruction from returning
+under a tree-local rephrasing.
+Inputs:
+- Yokoyama, Yasuda, Takahashi, and Kogure, *Complexity bounds on
+  Semaev's naive index calculus method for ECDLP*, JMC 14 (2020),
+  DOI `10.1515/jmc-2019-0029`
+- Kudo, Yokota, Takahashi, and Yasuda, *Acceleration of Index Calculus
+  for Solving ECDLP over Prime Fields and Its Limitation*, CANS 2018
+- Amadori, Pintore, and Sala, *On the Discrete Logarithm Problem for
+  Prime-Field Elliptic Curves*
+- Petit, Kosters, and Messeng, PKC 2016
+- `data/source_registry.json`
+- `repo/ECDLP_TYPED_EVIDENCE_V0.json`
+- `CELL-M-PKC-SMOOTH-M14`
+- `EDD-2026-07-25-003`
+- exact secp256k1 public parameters
+- the matched plain Semaev baseline
+- historical P3/P4 evidence
+- `Ecdlp/Proved/GlvSemaevSymmetry.lean`
+- `experiments/glv_semaev_symmetry/`
+- `notes/GLV_SEMAEV_ITERATION_001.md`
+- the exact recursive `S3` presentations used by prime-field proposals
+Expected output:
+- Phase A, evidence closure:
+  - A claim-level Yokoyama source card with exact assumptions, theorem or
+    proposition anchors, bounded conclusion, and explicit exclusions for
+    structured factor bases.
+  - A lawfully obtained and hashed Kudo full text, or an explicit unresolved
+    acquisition record. No novelty claim is allowed while it remains unread.
+  - An Amadori claim extract with sections, algorithm, assumptions, recovery,
+    and cost model, or a downgrade of `full_text_inspected`.
+  - A comparison matrix for naive Semaev, Amadori, Kudo, both PKC 2016
+    constructions, P3, and P4.
+- Phase B, desk screen:
+  - Exact, reproducible values for arities `m = 10..20`, including the
+    source-validated factor-base threshold and relation-yield expression. The
+    expression `D^m / (m! p)` is review input, not canonical fact, until Phase
+    A anchors it to the source and its assumptions.
+  - Four representations: direct `S_(m+1)`, sequential `S3`, balanced `S3`,
+    and a source-faithful low-degree membership/addition-chain encoding.
+  - For each representation: variables, equations, multidegrees, monomial
+    support, recovery branches, exceptional components, conservative matrix
+    and memory bounds, relation count, sparse linear algebra, offline/online
+    work, and amortization.
+  - A producer and a separate small validator that recomputes decisive
+    arithmetic without importing producer conclusions.
+  - One scoped desk disposition: `bounded_negative`, `inapplicable`,
+    `inconclusive`, or `mechanism_specified_not_authorized`.
+- Workstream C, parallel GLV connected-system rigidity:
+  - A precise graph- or hypergraph-level statement for connected systems of
+    exact local `S3` constraints.
+  - A paper proof or a smallest counterexample, distinguishing polynomial
+    covariance, zero-variety preservation, target-fibre transport,
+    internal-variable phases, and exceptional components.
+  - Independent adversarial review before Lean work.
+  - If the statement survives, a narrow kernel-checked theorem package; if
+    not, a scoped negative or counterexample record.
+- Phase D, conditional native outcome:
+  - This phase remains blocked unless Phase B retains an exact cost-changing
+    mechanism, five digest-bound reviews and at least one external scientific
+    review exist, and a separate dated owner decision authorizes one frozen
+    toy candidate.
+  - If unlocked, retain one toy-only native result with a matched baseline,
+    fixed seeds and budgets, raw artifacts, two independent relation
+    validators, and an engine-derived terminal label.
+Exit criteria:
+- Every scientific statement resolves to a primary-source anchor and read
+  status.
+- The Yokoyama result is represented as a scoped conditional lower bound for
+  the naive class, not a no-go for Petit, Amadori, Kudo, or all structured
+  factor bases.
+- Amadori read status agrees across canonical and generated layers.
+- Every desk number is integer/rational or carries an explicit interval and
+  assumption; no decorative precision.
+- The desk comparison uses full cost and a matched plain single-target
+  baseline.
+- A negative result closes only the tested construction, arity, and
+  representation.
+- The GLV theorem is limited to coordinatewise scalar `C3` and connected
+  exact `S3` systems. It says nothing about arbitrary birational maps,
+  geometric automorphisms, solving degree, or all GLV-Semaev algorithms.
+- Certificate-backed exhaustiveness is not relabelled as a Lean theorem.
+- No Sage, msolve, F4, Groebner scaling sweep, or secp256k1 DLP run occurs.
+- Phase D remains blocked unless all explicit authorization prerequisites are
+  satisfied. If run later, `secp256k1` remains a forbidden target and the
+  outcome is retained even when negative or resource-exhausted.
+Files allowed to edit:
+- source and typed-evidence registries
+- literature/source-card records
+- a dated review note and comparison matrix
+- a dedicated desk-screen directory under `experiments/engine/`
+- a dedicated structural note or certificate directory
+- a narrowly scoped Lean module only after the statement and proof are stable
+- only after separate authorization, one candidate/run directory and its
+  independent validator
+- directly affected generators, tests, and generated views
+Files that must be regenerated:
+- all affected engine, source, typed-evidence, claim, graph, status, bundle,
+  and site views
+How to verify:
+- source-registry and typed-evidence checks
+- cross-registry semantic gate
+- independent arithmetic replay and formula/threshold fault injection
+- independent symbolic or finite-model counterexample search
+- adversarial mathematical review
+- certificate replay where used
+- `lake build`, no-`sorry`, and full axiom audit for any Lean promotion
+- decision-substrate and candidate-lifecycle checks
+- raw-artifact replay and external review if Phase D is ever authorized
+- generated-fixpoint and bundle checks
+- independent claim-anchor review
+
+Operational release criterion: v0.2 may be described as exercised as a
+research machine only after three native outcomes, at least one external
+scientific review, and at least one evidence-driven candidate decision change.
+This is an operational milestone, not evidence of an ECDLP breakthrough.

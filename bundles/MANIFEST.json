@@ -101,13 +101,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 2277
+        "bytes": 2799
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 11640
+        "bytes": 19041
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -223,13 +223,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 2277
+        "bytes": 2799
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 11640
+        "bytes": 19041
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -525,13 +525,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 2277
+        "bytes": 2799
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 11640
+        "bytes": 19041
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",

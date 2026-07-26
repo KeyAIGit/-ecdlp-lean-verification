@@ -118,37 +118,97 @@ def engine_execution_badge(state: str) -> str:
     return status_badge(style, label)
 
 
-def parse_tasks() -> list[dict[str, str]]:
-    pattern = re.compile(
-        r"^### (TASK-\d+) - (.+?)\n\n"
-        r"Status: ([^\n]+)\n"
-        r"Kind: ([^\n]+)\n"
-        r"Hypothesis: (.*?)\n"
-        r"Why it matters: (.*?)(?=\nInputs:)",
+TASK_BLOCK_RE = re.compile(
+    r"^### (TASK-\d+) - ([^\n]+)\n(?P<body>.*?)(?=^### TASK-\d+ - |\Z)",
+    re.MULTILINE | re.DOTALL,
+)
+TASK_FIELD_BOUNDARY_RE = r"(?=^[A-Z][A-Za-z0-9 _/-]*:\s|\Z)"
+
+
+def task_field(
+    body: str,
+    field: str,
+    *,
+    source: str,
+    task_id: str,
+    single_line: bool = False,
+) -> str:
+    value_pattern = r"([^\n]+)" if single_line else rf"(.*?){TASK_FIELD_BOUNDARY_RE}"
+    match = re.search(
+        rf"^{re.escape(field)}:\s*{value_pattern}",
+        body,
         re.MULTILINE | re.DOTALL,
     )
-    tasks = []
+    if match is None:
+        raise ValueError(f"{source}: {task_id} is missing required field {field!r}")
+    return re.sub(r"\s+", " ", match.group(1)).strip()
+
+
+def parse_task_text(
+    text: str,
+    *,
+    source: str,
+    queue_label: str,
+    queue_id: str,
+) -> list[dict[str, str]]:
+    tasks: list[dict[str, str]] = []
+    for match in TASK_BLOCK_RE.finditer(text):
+        task_id = match.group(1)
+        body = match.group("body")
+        tasks.append(
+            {
+                "id": task_id,
+                "title": match.group(2).strip(),
+                "status": task_field(
+                    body,
+                    "Status",
+                    source=source,
+                    task_id=task_id,
+                    single_line=True,
+                ),
+                "kind": task_field(
+                    body,
+                    "Kind",
+                    source=source,
+                    task_id=task_id,
+                    single_line=True,
+                ),
+                "hypothesis": task_field(
+                    body,
+                    "Hypothesis",
+                    source=source,
+                    task_id=task_id,
+                ),
+                "why": task_field(
+                    body,
+                    "Why it matters",
+                    source=source,
+                    task_id=task_id,
+                ),
+                "queue": queue_id,
+                "queue_label": queue_label,
+                "source": source,
+            }
+        )
+    return tasks
+
+
+def parse_tasks() -> list[dict[str, str]]:
+    tasks: list[dict[str, str]] = []
     queues = (
         ("ECDLP research", "research", RESEARCH_TASKS_PATH),
         ("KeyAI product", "product", PRODUCT_TASKS_PATH),
     )
     for queue_label, queue_id, path in queues:
-        text = path.read_text(encoding="utf-8")
-        for match in pattern.finditer(text):
-            why = re.sub(r"\s+", " ", match.group(6)).strip()
-            tasks.append(
-                {
-                    "id": match.group(1),
-                    "title": match.group(2).strip(),
-                    "status": match.group(3).strip(),
-                    "kind": match.group(4).strip(),
-                    "hypothesis": match.group(5).strip(),
-                    "why": why,
-                    "queue": queue_id,
-                    "queue_label": queue_label,
-                    "source": path.relative_to(ROOT).as_posix(),
-                }
+        source = path.relative_to(ROOT).as_posix()
+        tasks.extend(
+            parse_task_text(
+                path.read_text(encoding="utf-8"),
+                source=source,
+                queue_label=queue_label,
+                queue_id=queue_id,
             )
+        )
     return tasks
 
 

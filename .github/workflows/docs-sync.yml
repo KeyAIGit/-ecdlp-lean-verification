@@ -179,6 +179,8 @@ jobs:
         run: python3 scripts/check_product_model.py
       - name: Product-model evidence lifecycle fixtures
         run: python3 scripts/test_check_product_model.py
+      - name: Canonical task rendering fixtures
+        run: python3 scripts/test_site_generator.py
       - name: Formal-substrate architecture gate
         run: python3 scripts/check_formal_substrate.py
       - name: ECDLP decision-substrate gate
