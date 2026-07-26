@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from research_engine_v02 import run_engine, sha256_json
+from scientific_provenance import repository_text_sha256
 
 ROOT = Path(__file__).resolve().parent.parent
 POLICY_PATH = ROOT / "repo" / "RESEARCH_ENGINE_LIFECYCLE_V0.json"
@@ -23,28 +24,28 @@ V0_REVIEWED_ROOT = (
 )
 V0_RAW_FILE_SHA256 = {
     "REO-2026-07-24-001": (
-        "04da083fdd540da92542d04bd8b436a4b81f653c5f2fe8f220186aed230b6f2f"
+        "99945f8433418fa3b914f1f5ab490f9bfde894cbf20e933be08629fc6fd644c1"
     ),
     "REO-2026-07-24-002": (
-        "47f03443503d078c069081b2c5645e617dede099fd57ae8b93f6cf8447eebed9"
+        "7c142b411465b5fc05b4bb1b927d5690e6e8433f98df088c3c2d7d3f46d43253"
     ),
     "REO-2026-07-24-003": (
-        "a2e846d65df808c65b9ea3cecf8af0ce09d65b9b04c0184599f6cd00a10e2359"
+        "6119e3a9c659e4bf7741668208f725656d41e7986f17855bcbad6df41e2ba9d7"
     ),
     "REO-2026-07-24-004": (
-        "19b98cfe564a0fb07f081184af0e03504f0b36fe472c0681bff9e1598a7bea11"
+        "afc6735c13df57419bc31470ac618718e8bc8547db79765ddd6a0a29ac7735c4"
     ),
     "REO-2026-07-24-005": (
-        "6fdc5b81828447b43f91ed6cd5c0480454eee266832046489a4d3076c8dd68e0"
+        "89593856a08de2e37b82a7b3e1f029306f679e06f88e4da595ccaf820b75f06d"
     ),
     "REO-2026-07-24-006": (
-        "1dd743cb8cc12ca46e1212dd14e389763d1bcdca867660e045f0e08c09bb25ed"
+        "c3975b8d5dd8e56e8142f2e9b54000ebbeb29b2c26e05218c2ccebd832bc254c"
     ),
     "REO-2026-07-24-007": (
-        "e0e6916381f61884db2775caedb7d751443ec4bc117f76480a1915a3e8e21183"
+        "976357b1214e618ad3c9a7258bae287e17227382eba8f887249ab32b083bc03c"
     ),
     "REO-2026-07-24-008": (
-        "4be39c49f910c4a3c33c9f2e2b6956b437debf5269a1afcdcfa7a9e998d45e45"
+        "980523b85a2ef6672dead8e63a4f195d73834051c4c19c40cc520d5ee77712b1"
     ),
 }
 
@@ -72,7 +73,7 @@ def historical_boundary() -> tuple[list[dict[str, str]], str, str]:
         event_id = event.get("event_id")
         if not isinstance(event_id, str):
             event_id = path.stem
-        raw_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+        raw_sha256 = repository_text_sha256(path)
         events.append(event)
         file_records.append(
             {

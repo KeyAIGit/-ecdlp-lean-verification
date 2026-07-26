@@ -71,8 +71,9 @@ version-pinned reader. They are not rewritten to acquire v0.2 fields.
 
 - Canonical JSON review root:
   `d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3`.
-- Eight raw-file SHA-256 values are pinned independently by
-  `scripts/build_research_engine_v02_state.py`.
+- Eight raw repository-text SHA-256 values are pinned independently by
+  `scripts/build_research_engine_v02_state.py`. Checkout-only CRLF/LF
+  conversion is normalized before hashing; any other byte change still fails.
 - Historical migrations and structural evidence are excluded from Brier
   calibration.
 - Native calibration events are keyed by unique append-only `event_id`; a

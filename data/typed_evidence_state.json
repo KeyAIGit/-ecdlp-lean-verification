@@ -6,7 +6,7 @@
     "policy_sha256": "72ac969f4a549beb99fc365cf7b0dcbb07134bcbd9bbca3fdc1e0e336d4a862b",
     "decision_substrate_sha256": "fe1f6d6a32b7c93ee69130ee3385598a316697277a01c517d5d65473f2d173d2",
     "source_registry_identity_sha256": "153a606b72acb5e809da79c0f475dd50d5f24139ddfbdc696d6947ae6a86d106",
-    "evidence_files_sha256": "f0272dba84f7e78588ea4aab6cd1fbf3a813752d53bd62972b6c5e917ec002f9",
+    "evidence_files_sha256": "74e38d14d971b064d4d34bd098207ba6021d40d3f97e117640277cba7df4a34c",
     "desk_decisions_sha256": "ee50228216f0ff99023ab3d1c869732c3c10926a8707107caf9b9a49b9b3dd48"
   },
   "trust_boundary": {

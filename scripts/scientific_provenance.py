@@ -2,6 +2,7 @@
 """Shared reachability rules for Git-pinned scientific evidence."""
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import subprocess
@@ -11,6 +12,12 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 POLICY_PATH = ROOT / "repo" / "SCIENTIFIC_PROVENANCE_V0.json"
 COMMIT_ID = re.compile(r"[0-9a-f]{40}")
+
+
+def repository_text_sha256(path: Path) -> str:
+    """Hash canonical Git text bytes, independent of checkout EOL policy."""
+    payload = path.read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(payload).hexdigest()
 
 
 def load_policy(path: Path = POLICY_PATH) -> dict[str, Any]:

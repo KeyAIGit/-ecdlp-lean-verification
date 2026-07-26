@@ -59,7 +59,10 @@ from research_engine_lib import (
     validate_historical_outcome_baseline,
     validate_retrospective,
 )
-from scientific_provenance import scientific_source_commit_allowed
+from scientific_provenance import (
+    repository_text_sha256,
+    scientific_source_commit_allowed,
+)
 
 
 class ResearchEngineTests(unittest.TestCase):
@@ -91,6 +94,18 @@ class ResearchEngineTests(unittest.TestCase):
             root
         ).as_posix()
         cls.addClassCleanup(cls.test_validator_path.unlink, missing_ok=True)
+
+    def test_repository_text_hash_is_checkout_eol_independent(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            lf = root / "lf.txt"
+            crlf = root / "crlf.txt"
+            lf.write_bytes(b"first\nsecond\n")
+            crlf.write_bytes(b"first\r\nsecond\r\n")
+            self.assertEqual(
+                repository_text_sha256(lf),
+                repository_text_sha256(crlf),
+            )
 
     def generation_proposal(self, seed: dict, proposal_id: str) -> dict:
         premise = (

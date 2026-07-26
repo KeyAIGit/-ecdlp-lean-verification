@@ -15,6 +15,8 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from scientific_provenance import repository_text_sha256
+
 ROOT = Path(__file__).resolve().parent.parent
 POLICY_PATH = ROOT / "repo" / "ECDLP_TYPED_EVIDENCE_V0.json"
 STATE_PATH = ROOT / "data" / "typed_evidence_state.json"
@@ -1052,7 +1054,7 @@ def build_state(
             ),
             "evidence_files_sha256": sha256_json(
                 {
-                    claim["evidence_path"]: sha256_file(
+                    claim["evidence_path"]: repository_text_sha256(
                         ROOT / claim["evidence_path"]
                     )
                     for claim in policy["source_claims"]

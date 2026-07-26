@@ -299,6 +299,10 @@
     {
       "id": "RE02-ORACLE-CALIBRATION-EVENT-IDENTITY",
       "test_ref": "scripts/test_research_engine_v02.py::test_duplicate_outcome_event_is_not_double_counted"
+    },
+    {
+      "id": "RE02-ORACLE-CROSS-PLATFORM-EOL",
+      "test_ref": "scripts/test_research_engine.py::test_repository_text_hash_is_checkout_eol_independent"
     }
   ],
   "authorization_boundary": {

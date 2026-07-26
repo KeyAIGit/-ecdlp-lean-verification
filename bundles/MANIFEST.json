@@ -83,7 +83,7 @@
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
         "reason": "the 19 owner regression cases and their concrete fault-injection tests",
         "exists": true,
-        "bytes": 14307
+        "bytes": 14473
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -205,7 +205,7 @@
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
         "reason": "the 19 owner regression cases and their concrete fault-injection tests",
         "exists": true,
-        "bytes": 14307
+        "bytes": 14473
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -367,7 +367,7 @@
         "path": "notes/RESEARCH_ENGINE_V0_TO_V0_2.md",
         "reason": "migration boundary, preserved history, lifecycle semantics, and regeneration order",
         "exists": true,
-        "bytes": 6346
+        "bytes": 6457
       },
       {
         "path": "experiments/engine/outcome.schema.json",
@@ -507,7 +507,7 @@
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
         "reason": "the 19 owner regression cases and their concrete fault-injection tests",
         "exists": true,
-        "bytes": 14307
+        "bytes": 14473
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -669,7 +669,7 @@
         "path": "notes/RESEARCH_ENGINE_V0_TO_V0_2.md",
         "reason": "migration boundary, preserved history, lifecycle semantics, and regeneration order",
         "exists": true,
-        "bytes": 6346
+        "bytes": 6457
       },
       {
         "path": "experiments/engine/outcome.schema.json",
