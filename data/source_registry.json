@@ -22,7 +22,8 @@
       "role": "Primary source for a one-Gröbner-basis prime-field index-calculus variant and an independent description of the faithful Petit factor base L(x)=0.",
       "note": "The open IACR manuscript and publication metadata were inspected. It is prior art for proposal design, not evidence that P4 implemented the method.",
       "where_used": [
-        "notes/GLV_SEMAEV_ITERATION_001.md"
+        "notes/GLV_SEMAEV_ITERATION_001.md",
+        "notes/reviews/OPUS_TASK014_INDEPENDENT_HYPOTHESIS_AUDIT.md"
       ]
     },
     {
@@ -92,7 +93,8 @@
       "where_used": [
         "experiments/README.md",
         "experiments/p0_glv_semaev/README.md",
-        "notes/GLV_SEMAEV_ITERATION_001.md"
+        "notes/GLV_SEMAEV_ITERATION_001.md",
+        "notes/reviews/OPUS_TASK014_INDEPENDENT_HYPOTHESIS_AUDIT.md"
       ]
     },
     {
@@ -116,7 +118,8 @@
       "role": "Primary source for torsion-translation symmetries whose coordinatewise relation-preserving subgroup grows with the number of free relation variables.",
       "note": "The official IACR archival PDF was inspected. Its torsion-translation mechanism is distinct from the diagonal scalar GLV action.",
       "where_used": [
-        "notes/GLV_SEMAEV_ITERATION_001.md"
+        "notes/GLV_SEMAEV_ITERATION_001.md",
+        "notes/reviews/OPUS_TASK014_INDEPENDENT_HYPOTHESIS_AUDIT.md"
       ]
     },
     {
@@ -170,7 +173,8 @@
         "PUBLISHABLE_UNITS.md",
         "experiments/README.md",
         "experiments/p0_glv_semaev/README.md",
-        "notes/GLV_SEMAEV_ITERATION_001.md"
+        "notes/GLV_SEMAEV_ITERATION_001.md",
+        "notes/reviews/OPUS_TASK014_INDEPENDENT_HYPOTHESIS_AUDIT.md"
       ]
     },
     {
@@ -252,6 +256,7 @@
         "notes/reviews/FBL_PURE_CORPUS.md",
         "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
         "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md",
+        "notes/reviews/OPUS_TASK014_INDEPENDENT_HYPOTHESIS_AUDIT.md",
         "tasks/ECDLP_RESEARCH.md",
         "tasks/NEXT.md"
       ]
@@ -275,7 +280,8 @@
       "role": "Prior art for hybrid Gröbner acceleration and summation-polynomial symmetries in prime-field ECDLP index calculus, together with stated limitations.",
       "note": "Springer metadata and abstract were verified. No open primary manuscript was confirmed, and the full paper was not inspected in this iteration.",
       "where_used": [
-        "notes/GLV_SEMAEV_ITERATION_001.md"
+        "notes/GLV_SEMAEV_ITERATION_001.md",
+        "notes/reviews/OPUS_TASK014_INDEPENDENT_HYPOTHESIS_AUDIT.md"
       ]
     },
     {
@@ -302,7 +308,8 @@
       "note": "Reports 835 logical qubits and 2^30.63 Toffoli gates. This is an algorithmic logical-resource estimate, not evidence of available fault-tolerant hardware.",
       "where_used": [
         "REPOSITORY_ARCHITECTURE.md",
-        "notes/SECURITY_SCOPE.md"
+        "notes/SECURITY_SCOPE.md",
+        "notes/reviews/OPUS_TASK014_INDEPENDENT_HYPOTHESIS_AUDIT.md"
       ]
     },
     {
@@ -408,7 +415,8 @@
       "where_used": [
         "experiments/p4_petit/README.md",
         "experiments/p4_petit/RESULTS.md",
-        "notes/GLV_SEMAEV_ITERATION_001.md"
+        "notes/GLV_SEMAEV_ITERATION_001.md",
+        "notes/reviews/OPUS_TASK014_INDEPENDENT_HYPOTHESIS_AUDIT.md"
       ]
     },
     {
@@ -460,7 +468,8 @@
         "VERIFIED.md",
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/RESEARCH_MAP.md",
-        "notes/SECURITY_SCOPE.md"
+        "notes/SECURITY_SCOPE.md",
+        "notes/reviews/OPUS_TASK014_INDEPENDENT_HYPOTHESIS_AUDIT.md"
       ]
     },
     {
@@ -566,6 +575,7 @@
         "notes/UPSTREAM_SCAN.md",
         "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
         "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md",
+        "notes/reviews/OPUS_TASK014_INDEPENDENT_HYPOTHESIS_AUDIT.md",
         "tasks/ECDLP_RESEARCH.md"
       ]
     },
