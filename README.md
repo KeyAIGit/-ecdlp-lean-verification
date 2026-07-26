@@ -39,13 +39,16 @@ assessment. Its only positive selection was the now-completed
 work while **zero** routes were promoted and **zero** experiments authorized.
 Exact symbolic
 replay shows that only the diagonal `C3` action survives among the enumerated
-coordinatewise scalar covariances of `S3` and `S4`; at every nonzero affine
-target in the stated characteristics, only identity remains a coordinate-scaling
-covariance, while the zero slice has exactly the diagonal `C3`. The separate kernel-accepted
+coordinatewise scalar covariances of `S3` and `S4`. The complete fixed-target
+certificate is for `S4`: at every nonzero affine target in the stated
+characteristics, only identity remains a coordinate-scaling covariance, while
+the zero slice has exactly the diagonal `C3`. Lean separately proves that the
+zero slice contains no `F_p`-rational affine secp256k1 target. The separate kernel-checkable
 package proves the positive diagonal covariance and point-relation transport
 identities, not the exhaustive stabilizer classification. This is a bounded
 negative for the naive independent `u_i=x_i^3` quotient, not a Groebner lower
-bound or an ECDLP result.
+bound or an ECDLP result. The scope excludes infinity, extension-field targets,
+and non-scalar or birational automorphisms.
 The route remains parked, exact-target work remains forbidden, and no
 asymptotic claim follows. New evidence enters
 through the candidate-neutral contract in `experiments/framework/`,

@@ -3,6 +3,7 @@ import Ecdlp.Proved.CubeRoot
 import Ecdlp.Proved.GlvAutomorphism
 import Ecdlp.Proved.GlvMonoidHom
 import Ecdlp.Proved.SemaevFour
+import Ecdlp.Proved.SevenNonResidue
 
 /-!
 # GLV covariance of the third and fourth Semaev polynomials
@@ -15,8 +16,9 @@ following exact effect on the `a = 0` Semaev polynomials:
 
 The `S₄` theorem uses the exact `resultant _ _ 2 2` normalization from
 `SemaevFour.lean`, including degenerate quadratic slices. These identities establish
-the diagonal action only; they do not classify the full coordinatewise stabilizer and
-do not assert invariance of a generic fixed-target slice.
+the diagonal action only; they do not classify the full coordinatewise polynomial
+stabilizer. The fixed-target theorem and certificate discussion below is `S₄`-only;
+no fixed-target `S₃` classification is claimed.
 -/
 
 namespace Ecdlp.Semaev
@@ -185,9 +187,9 @@ Reading the exponent of the first statement as the direction of the second is a 
 rather than from the transport identity.
 
 These theorems establish that a nonidentity diagonal scaling *moves* the target. They do **not**
-classify the full coordinatewise stabilizer of a fixed-target slice; that classification remains
-certificate-backed (see `experiments/glv_semaev_symmetry/`), and the blocker is recorded in the
-module docstring. -/
+classify the full coordinatewise stabilizer of an `S₄` fixed-target slice; that
+classification remains certificate-backed (see `experiments/glv_semaev_symmetry/`), and the
+blocker is recorded in the module docstring. -/
 
 /-- **Target transport.** Scaling only the three factor-base coordinates by `β` is exactly the
 same as scaling the target by `β²`. -/
@@ -345,13 +347,29 @@ rather than preserving it.
 
 Scope, stated exactly: `r` ranges over field elements, so this covers precisely the **affine**
 targets (a target at the point at infinity has no `x`-coordinate and is outside the statement).
-The hypothesis `r ≠ 0` is the `r = 0` exceptional locus of the certificate; whether that locus is
-inhabited on secp256k1 is a separate arithmetic question and is **not** settled here. -/
+The hypothesis `r ≠ 0` is the `r = 0` exceptional locus of the certificate.
+`secp256k1_glv_affine_target_moves` below discharges it for every affine
+`𝔽_p`-rational secp256k1 target. -/
 theorem secp256k1_glv_fixed_target_moves
     [Fact (Nat.Prime Secp256k1.p)]
     (r : ZMod Secp256k1.p) (hr : r ≠ 0) :
     (Secp256k1.beta : ZMod Secp256k1.p) * r ≠ r :=
   glv_target_ne_self _ r secp256k1_beta_ne_one hr
+
+/-- Every affine secp256k1 target over the base field has nonzero `x`-coordinate,
+so the nonidentity diagonal GLV scaling moves it to a different target.
+
+This is an arithmetic corollary about the diagonal action. The exhaustive
+fixed-target `S₄` coordinate-scaling classification remains certificate-backed;
+this theorem does not cover the point at infinity, extension-field targets, or
+non-scalar and birational automorphisms. -/
+theorem secp256k1_glv_affine_target_moves
+    [Fact (Nat.Prime Secp256k1.p)]
+    {x y : ZMod Secp256k1.p}
+    (h : Ecdlp.Curve.secp256k1.toAffine.Nonsingular x y) :
+    (Secp256k1.beta : ZMod Secp256k1.p) * x ≠ x :=
+  secp256k1_glv_fixed_target_moves x
+    (Ecdlp.Curve.secp256k1_x_ne_zero h)
 
 end Ecdlp.Semaev
 
