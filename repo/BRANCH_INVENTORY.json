@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
   "snapshot": {
-    "captured_at": "2026-07-25T22:25:22-07:00",
+    "captured_at": "2026-07-26T01:13:30-07:00",
     "remote": "origin",
     "base_ref": "origin/main",
     "base_sha": "fed55d84675fd96e5f40204b9f5f49baa8c01172",
-    "real_remote_branch_count": 26,
-    "remote_names_sha256": "1e89e774644eb9555d078dfe8b04e1fca9695098bb95c772e83651ffa09f9562",
+    "real_remote_branch_count": 28,
+    "remote_names_sha256": "b145f0f9b02a262725b059f4a79024e8c49740170e3801e809512e7ad64b9d77",
     "comparison": "git rev-list --left-right --count <main-tip>...<branch-tip>",
     "recording_note": "Tips are a dated observation. The active branch necessarily advances when this snapshot is committed; the gate compares the remote name set, not mutable tips."
   },
@@ -16,7 +16,8 @@
     "delete_now": false,
     "active_integrations": [
       "agent/glv-semaev-affine-closeout",
-      "agent/research-engine-hypothesis-generation"
+      "agent/research-engine-hypothesis-generation",
+      "agent/research-engine-mutation-hardening"
     ],
     "superseded_drafts": [
       "agent/n7-certificate-generator",
@@ -25,9 +26,9 @@
     "cleanup_gate": "Content comparison, reference scan, restore path, and explicit owner approval are required before deletion or closure."
   },
   "groups": {
-    "active_integration": 2,
+    "active_integration": 3,
     "candidate_queue": 2,
-    "historical_unmerged": 19,
+    "historical_unmerged": 20,
     "keep_default": 1,
     "superseded_draft": 2
   },
@@ -111,10 +112,21 @@
     },
     {
       "name": "agent/research-engine-hypothesis-generation",
-      "tip": "7acd78fb263d640538e8f29aa6b63a4820fd20b6",
+      "tip": "79295c0919d9d7605721495ad6d1e7ed274bafba",
       "tip_date": "2026-07-25",
       "behind_main": 0,
-      "ahead_main": 1,
+      "ahead_main": 6,
+      "merged_by_ancestry": false,
+      "disposition": "active_integration",
+      "delete_now": false,
+      "next_action": "retain for the scoped draft integration; inventory does not authorize merge"
+    },
+    {
+      "name": "agent/research-engine-mutation-hardening",
+      "tip": "4c8ff4b1a43feb804a6c5d335b122beefced82a3",
+      "tip_date": "2026-07-26",
+      "behind_main": 0,
+      "ahead_main": 7,
       "merged_by_ancestry": false,
       "disposition": "active_integration",
       "delete_now": false,
@@ -246,6 +258,17 @@
       "tip": "b1bc926a2ec5eb18f5f9d596dd82f78f147f5720",
       "tip_date": "2026-07-24",
       "behind_main": 2,
+      "ahead_main": 1,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "retain pending a dedicated content and restore-path audit"
+    },
+    {
+      "name": "claude/screen-facts-pminus1-smoothness",
+      "tip": "6ced84a0246488b005aa3c279aacdfe2b6c776a0",
+      "tip_date": "2026-07-26",
+      "behind_main": 0,
       "ahead_main": 1,
       "merged_by_ancestry": false,
       "disposition": "historical_unmerged",
