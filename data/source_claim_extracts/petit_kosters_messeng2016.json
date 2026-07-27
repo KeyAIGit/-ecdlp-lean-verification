@@ -29,6 +29,15 @@
       },
       "paraphrase": "For an arbitrary base-field prime, the second construction searches for an auxiliary curve over the same field whose order contains a B-smooth factor of size approximately p^(1/m). A self-isogeny of that auxiliary curve defines the composed root map used for the original target curve's factor-base coordinates.",
       "boundary": "The auxiliary curve is not required to be related to the target curve beyond sharing the field. Its search cost, map construction, generalized-root solving, recovery, and total attack cost must all be priced."
+    },
+    {
+      "claim_id": "SC-PKC-RELATION-YIELD",
+      "locator": {
+        "kind": "section",
+        "value": "Section 3.2, published p. 10"
+      },
+      "paraphrase": "The paper estimates the expected number of decompositions per target as (deg L)^m divided by m! times p, charges relation collection by the reciprocal yield, and identifies (deg L)^m approximately m! times p as the balance point for its partial cost analysis.",
+      "boundary": "This is a heuristic expectation in the paper's unit-cost model. It does not bound T(E,m,L), prove independent relations, price recovery or preprocessing fully, or establish an advantage over Pollard rho."
     }
   ]
 }

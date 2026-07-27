@@ -9,6 +9,7 @@
   "rationale": "At relation arity four the available small-factor divisor of p-minus-one is far below the approximately two-to-the-sixty-four factor-base scale; this decides only the m-equals-four instantiation.",
   "evidence_claim_ids": [
     "SC-PKC-SMOOTH-SUBGROUP",
+    "SC-PKC-RELATION-YIELD",
     "SC-SECP-PMINUS1-FACTORIZATION"
   ],
   "property_verdicts": [
@@ -16,6 +17,13 @@
       "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
       "operator": "gte",
       "expected": 18446744073709551616,
+      "actual": 564522,
+      "verdict": "violated"
+    },
+    {
+      "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+      "operator": "gte",
+      "expected": 40829356287426834431,
       "actual": 564522,
       "verdict": "violated"
     }

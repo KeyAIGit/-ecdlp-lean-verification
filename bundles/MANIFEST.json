@@ -29,25 +29,25 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 31881
+        "bytes": 37298
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 46759
+        "bytes": 54020
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
         "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
         "exists": true,
-        "bytes": 10832
+        "bytes": 10802
       },
       {
         "path": "data/research_claim_state.json",
         "reason": "generated claim-level truth state and calibration-exclusion boundary",
         "exists": true,
-        "bytes": 10588
+        "bytes": 10558
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
@@ -59,7 +59,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 64639
+        "bytes": 65616
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -77,7 +77,7 @@
         "path": "data/research_engine_shadow_intake.json",
         "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
         "exists": true,
-        "bytes": 7241
+        "bytes": 7308
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
@@ -107,7 +107,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 19041
+        "bytes": 19525
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -151,25 +151,25 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 31881
+        "bytes": 37298
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 46759
+        "bytes": 54020
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
         "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
         "exists": true,
-        "bytes": 10832
+        "bytes": 10802
       },
       {
         "path": "data/research_claim_state.json",
         "reason": "generated claim-level truth state and calibration-exclusion boundary",
         "exists": true,
-        "bytes": 10588
+        "bytes": 10558
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
@@ -181,7 +181,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 64639
+        "bytes": 65616
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -199,7 +199,7 @@
         "path": "data/research_engine_shadow_intake.json",
         "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
         "exists": true,
-        "bytes": 7241
+        "bytes": 7308
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
@@ -229,7 +229,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 19041
+        "bytes": 19525
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -271,7 +271,7 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 36461
+        "bytes": 36636
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -289,7 +289,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 25217
+        "bytes": 25439
       },
       {
         "path": "experiments/engine/README.md",
@@ -418,6 +418,12 @@
         "bytes": 372
       },
       {
+        "path": "data/source_claim_extracts/amadori_pintore_sala2018.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 1755
+      },
+      {
         "path": "data/source_claim_extracts/fhjrv2014.json",
         "reason": "claim-level primary-source extraction bound to the typed evidence layer",
         "exists": true,
@@ -427,7 +433,13 @@
         "path": "data/source_claim_extracts/petit_kosters_messeng2016.json",
         "reason": "claim-level primary-source extraction bound to the typed evidence layer",
         "exists": true,
-        "bytes": 2105
+        "bytes": 2771
+      },
+      {
+        "path": "data/source_claim_extracts/yokoyama_yasuda_takahashi_kogure2020.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 1937
       }
     ],
     "large": [
@@ -453,25 +465,25 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 31881
+        "bytes": 37298
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 46759
+        "bytes": 54020
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
         "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
         "exists": true,
-        "bytes": 10832
+        "bytes": 10802
       },
       {
         "path": "data/research_claim_state.json",
         "reason": "generated claim-level truth state and calibration-exclusion boundary",
         "exists": true,
-        "bytes": 10588
+        "bytes": 10558
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
@@ -483,7 +495,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 64639
+        "bytes": 65616
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -501,7 +513,7 @@
         "path": "data/research_engine_shadow_intake.json",
         "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
         "exists": true,
-        "bytes": 7241
+        "bytes": 7308
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
@@ -531,7 +543,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 19041
+        "bytes": 19525
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -573,7 +585,7 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 36461
+        "bytes": 36636
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -591,7 +603,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 25217
+        "bytes": 25439
       },
       {
         "path": "experiments/engine/README.md",
@@ -720,6 +732,12 @@
         "bytes": 372
       },
       {
+        "path": "data/source_claim_extracts/amadori_pintore_sala2018.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 1755
+      },
+      {
         "path": "data/source_claim_extracts/fhjrv2014.json",
         "reason": "claim-level primary-source extraction bound to the typed evidence layer",
         "exists": true,
@@ -729,13 +747,19 @@
         "path": "data/source_claim_extracts/petit_kosters_messeng2016.json",
         "reason": "claim-level primary-source extraction bound to the typed evidence layer",
         "exists": true,
-        "bytes": 2105
+        "bytes": 2771
+      },
+      {
+        "path": "data/source_claim_extracts/yokoyama_yasuda_takahashi_kogure2020.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 1937
       },
       {
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 589150
+        "bytes": 593173
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

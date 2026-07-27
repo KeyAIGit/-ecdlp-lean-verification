@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.1",
+  "source_id": "amadori_pintore_sala2018",
+  "source_title": "On the Discrete Logarithm Problem for Prime-Field Elliptic Curves",
+  "source_url": "https://pure.tue.nl/ws/files/91158650/609.pdf",
+  "source_artifact_sha256": "fe8ccf5ad01470315f791b97d92978e9d1b16ae2dd1cc73492c78c12448c8e2c",
+  "acquired_on": "2026-07-26",
+  "review_status": "full_text_obtained",
+  "review_provenance": {
+    "method": "Direct inspection of the institutional accepted-manuscript PDF, with the mechanism, cost expression, assumptions, experiments, recovery, and conclusion checked against Sections 3-4.",
+    "source_independence": "not_established",
+    "boundary": "This extract anchors what the paper states. It does not validate the unproved comparison T approximately T-prime or turn the reported toy experiments into cryptographic-scale evidence."
+  },
+  "claims": [
+    {
+      "claim_id": "SC-AMADORI-PRIME-FIELD-VARIANT",
+      "locator": {
+        "kind": "section",
+        "value": "Section 3; Section 3.2, p. 10 unnumbered T approximately T-prime assumption; Section 4"
+      },
+      "paraphrase": "The algorithm builds a factor base from random points R=uP+vQ, then replaces repeated decomposition and the final sparse linear-algebra step by one summation-polynomial system whose recovered point relation gives a linear congruence for the discrete logarithm.",
+      "boundary": "The claimed improvement is relative to the Petit et al. pipeline for fixed m and growing p, conditional on the unproved approximation T(E,m,V) approximately T-prime(E,m,V). The paper explicitly does not claim work below p^(1/2), reports only 11-22-bit experiments with m in {3,4,5}, and leaves the single-system cost poorly understood."
+    }
+  ]
+}

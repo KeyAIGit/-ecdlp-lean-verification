@@ -61,7 +61,7 @@ class ResearchShadowIntakeTests(unittest.TestCase):
             by_anchor.setdefault(stub["anchor_id"], []).append(stub["stub_kind"])
         self.assertEqual(
             ["desk_cost_contract"],
-            by_anchor["CELL-M-PKC-SMOOTH-M14"],
+            by_anchor["CELL-M-PKC-SMOOTH-M16"],
         )
         self.assertEqual(
             ["full_cost_contract", "structural_applicability"],
