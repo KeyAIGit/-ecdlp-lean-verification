@@ -104,6 +104,12 @@ def load_config(path: Path) -> dict[str, Any]:
     recipe_ids = [item["id"] for item in config["recipes"]]
     if len(recipe_ids) != len(set(recipe_ids)) or not recipe_ids:
         raise ValueError("recipe ids must be unique and nonempty")
+    for recipe in config["recipes"]:
+        recipe_tasks = recipe.get("tasks", tasks)
+        if not recipe_tasks or any(task not in tasks for task in recipe_tasks):
+            raise ValueError(
+                f"recipe {recipe['id']} has tasks outside scientific_tasks"
+            )
     for round_config in config["rounds"]:
         for field in ("train_records", "validation_records", "survivors_per_task"):
             if int(round_config[field]) <= 0:
@@ -714,9 +720,16 @@ def run_automl(
 
     recipes = {item["id"]: item for item in config["recipes"]}
     active = {
-        task: list(recipes)
+        task: [
+            recipe_id
+            for recipe_id, recipe in recipes.items()
+            if task in recipe.get("tasks", config["scientific_tasks"])
+        ]
         for task in config["scientific_tasks"]
     }
+    if any(not recipe_ids for recipe_ids in active.values()):
+        missing = sorted(task for task, recipe_ids in active.items() if not recipe_ids)
+        raise ValueError(f"no eligible recipes for tasks: {missing}")
     all_entries: list[dict[str, Any]] = []
     round_summaries: list[dict[str, Any]] = []
     finalist_models: dict[str, Any] = {}

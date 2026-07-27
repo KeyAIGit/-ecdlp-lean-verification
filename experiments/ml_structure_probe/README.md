@@ -73,6 +73,13 @@ keep launching recipes after observing test.  Otherwise the test set would
 become another training set and the reported result would be optimistically
 biased.
 
+After the primary selection run, `automl_million_replica.json` freezes the
+winning recipe separately for each scalar task.  Those exact recipes are run
+against a second one-million-pair dataset whose synthetic seed was committed
+before generation.  No primary-test result changes the frozen recipes.
+`compare_runs.py` rejects equal dataset roots and recipe drift before producing
+the cross-seed report.
+
 ## Is one million pairs enough?
 
 It is enough for:
@@ -267,6 +274,32 @@ python automl.py \
   --config config/automl_million.json \
   --manifest artifacts/p0_million/dataset_manifest.json \
   --output-dir runs/p0_million_automl
+```
+
+Build the compact retained report:
+
+```text
+python build_report.py \
+  --manifest artifacts/p0_million/dataset_manifest.json \
+  --validation runs/p0_million_validation.json \
+  --probe runs/p0_million_probe.json \
+  --automl runs/p0_million_automl/automl_result.json \
+  --output-dir reports/p0_million
+```
+
+The fresh-seed replication uses `p0_million_replica.json` for generation and
+`automl_million_replica.json` for the frozen model run.  Run the same generator,
+validator, and linear-probe commands with the replica paths, then:
+
+```text
+python automl.py \
+  --config config/automl_million_replica.json \
+  --manifest artifacts/p0_million_replica/dataset_manifest.json \
+  --output-dir reports/p0_million_replica
+python compare_runs.py \
+  --primary reports/p0_million/automl_result.json \
+  --replica reports/p0_million_replica/automl_result.json \
+  --output-dir reports/p0_replication
 ```
 
 The raw dataset and model outputs are ignored by Git.  A clean source commit

@@ -53,6 +53,8 @@ Exit criteria:
   not.
 - The AutoML run records every attempted method and parameter set, and no
   scientific task uses test feedback for further tuning.
+- Primary AutoML finalists are frozen and replayed on a second independently
+  derived one-million-pair dataset before the retained P0 conclusion.
 - Any apparent scalar signal is labelled untrusted and creates no hypothesis,
   route promotion, or scientific outcome.
 - P0 makes no learnability, hardness, recovery, or asymptotic claim.
