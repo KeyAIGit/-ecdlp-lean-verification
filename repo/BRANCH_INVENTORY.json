@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
   "snapshot": {
-    "captured_at": "2026-07-27T18:49:28+09:00",
+    "captured_at": "2026-07-27T19:02:40+09:00",
     "remote": "origin",
     "base_ref": "origin/main",
     "base_sha": "8289430c3053db1eca52a01bc2a715901aa32df1",
-    "real_remote_branch_count": 26,
-    "remote_names_sha256": "45d77b5418cc66be2e0b1943ae9c1afd8a4f56c376c5491f4fe099b7bd0c78a4",
+    "real_remote_branch_count": 27,
+    "remote_names_sha256": "531a59101872748e0ffb6bbf74265f4f319528bef5b30d5754aab0134a6ca807",
     "comparison": "git rev-list --left-right --count <main-tip>...<branch-tip>",
     "recording_note": "Tips are a dated observation. The active branch necessarily advances when this snapshot is committed; the gate compares the remote name set, not mutable tips."
   },
@@ -23,7 +23,7 @@
   },
   "groups": {
     "candidate_queue": 2,
-    "historical_unmerged": 21,
+    "historical_unmerged": 22,
     "keep_default": 1,
     "superseded_draft": 2
   },
@@ -99,6 +99,17 @@
       "tip": "e5ae3a35f355e62cce0759e3f509f42167724633",
       "tip_date": "2026-07-22",
       "behind_main": 11,
+      "ahead_main": 1,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "retain pending a dedicated content and restore-path audit"
+    },
+    {
+      "name": "agent/task016-m16-semantics",
+      "tip": "fea78bf0c5a2c13ac83f56ce71c4271a23c67852",
+      "tip_date": "2026-07-27",
+      "behind_main": 0,
       "ahead_main": 1,
       "merged_by_ancestry": false,
       "disposition": "historical_unmerged",
