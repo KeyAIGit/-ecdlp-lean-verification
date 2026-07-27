@@ -4,9 +4,9 @@
   "source_hashes": {
     "policy_sha256": "04c74829a69d4380b25a1de83a120b41d20a3cde5687ee5ac812fad1ce36fc74",
     "hypothesis_generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-    "typed_evidence_state_sha256": "fee8d3d62bd5361aea74352d6c7a2dd170e4c12002d1b4dba4aef65e8f67b3c3",
-    "research_claim_state_sha256": "0e53d7f41f3aa2bcd61d91cee4946ed7f0e40549fcf8922fd8be66fdc0198ddb",
-    "decision_substrate_sha256": "74de3216488d4d0133fc97b5d6d25d83856e4dfb467e5c71f7e6324f26b672f7",
+    "typed_evidence_state_sha256": "a132de1fa15508a529436e3a3b07fd3ee7c56df143a1a1569287ee637021d3d5",
+    "research_claim_state_sha256": "c7463d4d9415dd4ce0b5820c0a3ba6cd1e3e5dbbf5fa79129334f72815538e76",
+    "decision_substrate_sha256": "df8eaa0f508644ecb92064e0f3d8046c19a495430fa5e602c84ac3eb1e40a65d",
     "hypotheses_sha256": "719eb78ba7a8e40101c14c92ac426a0028de9d7aa14e6ffc3735ecffa4615c5c",
     "outcome_events_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
     "historical_baseline_anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
@@ -1111,8 +1111,8 @@
     "generator_id": "ecdlp-hypothesis-generation-v0",
     "source_hashes": {
       "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-      "typed_evidence_state_sha256": "fee8d3d62bd5361aea74352d6c7a2dd170e4c12002d1b4dba4aef65e8f67b3c3",
-      "research_claim_state_sha256": "0e53d7f41f3aa2bcd61d91cee4946ed7f0e40549fcf8922fd8be66fdc0198ddb",
+      "typed_evidence_state_sha256": "a132de1fa15508a529436e3a3b07fd3ee7c56df143a1a1569287ee637021d3d5",
+      "research_claim_state_sha256": "c7463d4d9415dd4ce0b5820c0a3ba6cd1e3e5dbbf5fa79129334f72815538e76",
       "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
@@ -1135,7 +1135,7 @@
       "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
       "target_id": "secp256k1-classical-single-target-plain",
       "counts": {
-        "source_claims": 20,
+        "source_claims": 21,
         "target_properties": 5,
         "mechanisms": 7,
         "cells": 7,
@@ -1147,10 +1147,10 @@
         "desk_decisions": 3
       },
       "source_hashes": {
-        "policy_sha256": "3f0b8c95832ecf67205db0d0c01a01e81228d7466da2e0487a8b5f35e38f666b",
-        "decision_substrate_sha256": "3090f779764355b6ec333bc740c683175d7e2a7fcabce5793381133b14d1a7db",
+        "policy_sha256": "c73c111b8ace6da0ecac14b45d346ce691af61a844505a2ed27b0c469e275d82",
+        "decision_substrate_sha256": "d6106f5cd41fdd49421f9ba6c38e9c630a6823963a7de713f9d38dedc12365db",
         "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-        "evidence_files_sha256": "3640a5ad22a64ba0be65d019fbc8038a793bf3853cae751e989e515b1a984ac7",
+        "evidence_files_sha256": "06939b0965ad139ab03331a2d679c220855c2058fc65c1f64bf764e28356454e",
         "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
       },
       "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
@@ -1178,15 +1178,15 @@
         "route_promotions": 0,
         "exact_target_runs": 0
       },
-      "state_sha256": "0e53d7f41f3aa2bcd61d91cee4946ed7f0e40549fcf8922fd8be66fdc0198ddb"
+      "state_sha256": "c7463d4d9415dd4ce0b5820c0a3ba6cd1e3e5dbbf5fa79129334f72815538e76"
     },
     "seed_coverage": {
       "threshold": 12,
       "eligible_seed_count": 2,
       "overflow_triggered": false,
       "represented_seed_ids": [
-        "HGS-148D100BA7D6",
-        "HGS-56147CA8639C"
+        "HGS-8F8117445DE1",
+        "HGS-44E6487F3768"
       ],
       "represented_cell_ids": [
         "CELL-M-PKC-AUXILIARY-CURVE",
@@ -1197,10 +1197,10 @@
     },
     "generated_seeds": [
       {
-        "seed_id": "HGS-148D100BA7D6",
+        "seed_id": "HGS-8F8117445DE1",
         "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
         "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-        "claim_state_digest": "0e53d7f41f3aa2bcd61d91cee4946ed7f0e40549fcf8922fd8be66fdc0198ddb",
+        "claim_state_digest": "c7463d4d9415dd4ce0b5820c0a3ba6cd1e3e5dbbf5fa79129334f72815538e76",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1282,7 +1282,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "148d100ba7d6cca04b6f9bf6c0abc012c6fd53162a8595b685e73c5d63def441",
+        "deduplication_key": "8f8117445de1ee2d26a5e8355b510550aeb8e4ac59ad04fde9a51f69c6b60713",
         "proposal_packet": {
           "required_sections": [
             "new_premise",
@@ -1344,10 +1344,10 @@
         }
       },
       {
-        "seed_id": "HGS-56147CA8639C",
+        "seed_id": "HGS-44E6487F3768",
         "cell_id": "CELL-M-PKC-SMOOTH-M16",
-        "typed_evidence_digest": "ce24f057602f7db1a4927ad17495f77fcb66047d9649228e7dcf64571a57e9be",
-        "claim_state_digest": "0e53d7f41f3aa2bcd61d91cee4946ed7f0e40549fcf8922fd8be66fdc0198ddb",
+        "typed_evidence_digest": "b70e12885d46b1e6b3cb1f2a00df6a8e8b4f9e654685942b27cee8342b14cfbc",
+        "claim_state_digest": "c7463d4d9415dd4ce0b5820c0a3ba6cd1e3e5dbbf5fa79129334f72815538e76",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1367,7 +1367,7 @@
           "status": "open",
           "intake_mode": "desk_cost_bridge",
           "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
-          "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation whose representation and generalized-root cost remain unresolved.",
+          "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. TASK-016 fixes the conditional affine semantics and a finite recovery audit but shows that identity prefixes and extension-only fibers prevent an unconditional fixed-topology substitution; the complete projective recovery domain and generalized-root cost remain unresolved.",
           "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
           "cost_quantity": {
             "id": "CQ-SEMAEV-S17-SYSTEM-COST",
@@ -1380,6 +1380,7 @@
               "SC-PKC-SMOOTH-SUBGROUP",
               "SC-PKC-RELATION-YIELD",
               "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
+              "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
               "SC-SEMAEV-RELATION-SEMANTICS"
             ]
           },
@@ -1414,6 +1415,7 @@
             }
           ],
           "source_claim_ids": [
+            "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
             "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
             "SC-PKC-RELATION-YIELD",
             "SC-PKC-SMOOTH-SUBGROUP",
@@ -1422,7 +1424,7 @@
             "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
             "SC-SEMAEV-RELATION-SEMANTICS"
           ],
-          "boundary": "This open desk-cost cell has exact input-presentation and direct recovery ceilings but no complete cost bridge. The scoped blocker does not justify an S17 or recursive-system materialization, solver run, target computation, hypothesis retention, or route promotion."
+          "boundary": "This open desk-cost cell has exact input presentations, conditional affine semantics on the base-field-liftable nonidentity-prefix stratum, and a finite control recovery audit, but no complete projective exceptional-fiber or cost bridge. The scoped blocker does not justify an S17 or recursive-system materialization, solver run, target computation, hypothesis retention, or route promotion."
         },
         "target_feature": {
           "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
@@ -1450,7 +1452,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "56147ca8639c860c78595454b9d1b0332fddb9a6d29378d67481a1d6f507c9cb",
+        "deduplication_key": "44e6487f3768e0cfa773869cf960e3e43599e2b8219f40eb3c290ab388fa5af5",
         "proposal_packet": {
           "required_sections": [
             "new_premise",

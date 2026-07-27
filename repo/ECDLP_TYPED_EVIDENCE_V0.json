@@ -268,6 +268,22 @@
       "evidence_path": "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
     },
     {
+      "id": "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
+      "source_id": "repo:certificate",
+      "source_type": "certificate",
+      "citation": "Deterministic PKC smooth-subgroup M16 affine semantic-bridge and recovery certificate.",
+      "read_status": "certificate_replayed",
+      "url": null,
+      "artifact_sha256": "963eea60097807ae0aa66a5d881b0c34bf0497ade53ed4d37d38861a73887c19",
+      "locator": {
+        "kind": "certificate_field",
+        "value": "terminal_disposition.scientific_disposition"
+      },
+      "statement": "Exact replay proves the fixed labeled affine left-fold S3 bridge only on the base-field-liftable stratum with nonidentity prefix sums, gives structural counterexamples to an unconditional fixed-topology affine substitution at the registered arity and source degree, and records a deterministic recovery contract plus an exact finite sign, duplicate, permutation, and final group-recovery replay for the control witness. Its future GLV coefficient rule is bound to the proved subgroup eigenvalue and full-group membership theorems.",
+      "boundary": "The certificate returns a scoped blocker: it does not prove a global direct-S17 versus recursive equivalence, complete the projective or exceptional-fiber classification, replay a full GLV-normalized source relation, determine relation yield or rank, price solving or sparse linear algebra, evaluate S17, authorize an experiment, retain a hypothesis, or promote a route.",
+      "evidence_path": "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json"
+    },
+    {
       "id": "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND",
       "source_id": "yokoyama_yasuda_takahashi_kogure2020",
       "source_type": "primary_literature",
@@ -465,6 +481,7 @@
         "SC-PKC-SMOOTH-SUBGROUP",
         "SC-PKC-RELATION-YIELD",
         "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
+        "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
         "SC-SEMAEV-RELATION-SEMANTICS"
       ]
     }
@@ -513,12 +530,13 @@
       "id": "B-PKC-M16-COMPLETE-COST-BRIDGE",
       "route_id": "R-PETIT-COMPOSED-MAPS",
       "disposition": "open",
-      "exact_scope": "The M16 input presentations and direct sign-recovery ceiling are exact, but a complete cost bridge is blocked on full direct-versus-recursive semantics, usable base-field lifts, exceptional fibers, solving degree and fill-in, independent-relation rank, preprocessing, and sparse linear algebra.",
+      "exact_scope": "The M16 input presentations, conditional fixed-topology affine left-fold semantics on base-field-liftable nonidentity-prefix strata, and deterministic recovery checks are exact. The fixed labeled affine recursion is not globally complete across identity prefixes, extension-only fibers, and fixed-resultant degeneracies, while the complete cost bridge also lacks full direct-S17 semantics, relation yield and rank, solving degree and fill-in, preprocessing, and sparse linear algebra.",
       "source_claim_ids": [
-        "SC-PKC-M16-SYMBOLIC-DESK-RESULT"
+        "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
+        "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT"
       ],
       "reopening_conditions": [
-        "Provide an independently reviewed source-faithful ideal and recovery proof, determine the usable factor-base and relation-rank model, and combine proved solving and sparse-linear-algebra costs with a matched generic baseline."
+        "Provide an independently reviewed projective, identity-tagged, or constructible-locus recursion covering all exceptional fibers and base-field liftability, prove the complete direct-S17 projection and recovery semantics, determine the usable relation-rank model, and combine proved solving and sparse-linear-algebra costs with a matched generic baseline."
       ]
     }
   ],
@@ -673,7 +691,7 @@
       "status": "published",
       "scope": "Desk-cost analysis of the PKC 2016 smooth-subgroup construction at the first arity where the available divisor clears both the source's raw size condition and relation-yield balance.",
       "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
-      "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation whose representation and generalized-root cost remain unresolved.",
+      "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. TASK-016 fixes the conditional affine semantics and a finite recovery audit but shows that identity prefixes and extension-only fibers prevent an unconditional fixed-topology substitution; the complete projective recovery domain and generalized-root cost remain unresolved.",
       "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
       "cost_quantity_id": "CQ-SEMAEV-S17-SYSTEM-COST",
       "source_claim_ids": [
@@ -705,7 +723,7 @@
         "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",
         "uncertainty_id": "U-PETIT-GENERALIZED-ROOT-COST"
       },
-      "boundary": "This open desk-cost cell has exact input-presentation and direct recovery ceilings but no complete cost bridge. The scoped blocker does not justify an S17 or recursive-system materialization, solver run, target computation, hypothesis retention, or route promotion."
+      "boundary": "This open desk-cost cell has exact input presentations, conditional affine semantics on the base-field-liftable nonidentity-prefix stratum, and a finite control recovery audit, but no complete projective exceptional-fiber or cost bridge. The scoped blocker does not justify an S17 or recursive-system materialization, solver run, target computation, hypothesis retention, or route promotion."
     },
     {
       "id": "M-PKC-AUXILIARY-CURVE",

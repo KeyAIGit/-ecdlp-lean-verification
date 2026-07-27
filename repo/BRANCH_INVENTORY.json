@@ -1,10 +1,10 @@
 {
   "schema_version": 2,
   "snapshot": {
-    "captured_at": "2026-07-27T19:09:51+09:00",
+    "captured_at": "2026-07-27T19:15:12+09:00",
     "remote": "origin",
     "base_ref": "origin/main",
-    "base_sha": "8289430c3053db1eca52a01bc2a715901aa32df1",
+    "base_sha": "f1ff779ae92b6a1e658b7b7e00021a10f0b27cf1",
     "real_remote_branch_count": 27,
     "remote_names_sha256": "a3e35c5ec893201f41730aa0a21bb5afb2d3a83875897faeaaf4c28480c75034",
     "comparison": "git rev-list --left-right --count <main-tip>...<branch-tip>",
@@ -30,7 +30,7 @@
   "branches": [
     {
       "name": "main",
-      "tip": "8289430c3053db1eca52a01bc2a715901aa32df1",
+      "tip": "f1ff779ae92b6a1e658b7b7e00021a10f0b27cf1",
       "tip_date": "2026-07-27",
       "behind_main": 0,
       "ahead_main": 0,

@@ -168,11 +168,48 @@ class ScientificSemanticTests(unittest.TestCase):
             "M16 scoped blocker must leave the cell seed-eligible", problems
         )
         self.assertIn(
-            "M16 symbolic result must leave cost status partial", problems
+            "M16 semantic result must leave cost status partial", problems
         )
         self.assertIn(
-            "M16 symbolic result cannot authorize execution", problems
+            "M16 semantic result cannot authorize execution", problems
         )
+
+    def test_m16_semantic_certificate_cannot_be_detached(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim_id = "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT"
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["source_claim_ids"].remove(claim_id)
+        cell["cost_quantity"]["source_claim_ids"].remove(claim_id)
+        barrier = next(
+            item
+            for item in typed["barriers"]
+            if item["id"] == "B-PKC-M16-COMPLETE-COST-BRIDGE"
+        )
+        barrier["source_claim_ids"].remove(claim_id)
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == claim_id
+        )
+        claim["artifact_sha256"] = "0" * 64
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "M16 cell must retain its semantic bridge certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 cost quantity must retain its semantic bridge certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost barrier must retain its semantic bridge certificate",
+            problems,
+        )
+        self.assertIn("M16 semantic bridge artifact hash drifted", problems)
 
     def test_shadow_intake_cannot_authorize_or_activate_glv(self) -> None:
         shadow = copy.deepcopy(self.shadow)

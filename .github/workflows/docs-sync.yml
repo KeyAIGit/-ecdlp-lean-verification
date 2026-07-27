@@ -199,6 +199,11 @@ jobs:
         run: |
           python3 experiments/engine/pkc_smooth_m16_symbolic_desk/generate.py --check
           python3 experiments/engine/pkc_smooth_m16_symbolic_desk/validate.py
+      - name: PKC M16 semantic bridge certificate
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_semantic_bridge/generate.py --check
+          python3 experiments/engine/pkc_smooth_m16_semantic_bridge/validate.py
+          (cd experiments/engine/pkc_smooth_m16_semantic_bridge && sha256sum -c artifact.sha256)
       - name: Claim-level truth-state gate
         run: |
           python3 scripts/research_claims.py --check

@@ -57,6 +57,8 @@ def validate_semantics(
     attack_index = _index(attacks.get("attacks"))
     sources = _index(source_registry.get("sources"))
     cells = _index(typed_state.get("cells"), "cell_id")
+    typed_claims = _index(typed_state.get("source_claims"))
+    typed_barriers = _index(typed_state.get("barriers"))
     claims = _index(claim_state.get("claims"), "claim_id")
 
     glv_route = routes.get("R-GLV-SEMAEV", {})
@@ -106,7 +108,7 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 20,
+        "source_claims": 21,
         "cells": 7,
         "seed_eligible_cells": 2,
         "desk_decisions": 3,
@@ -122,17 +124,57 @@ def validate_semantics(
     if m16_cell.get("seed_eligible") is not True:
         problems.append("M16 scoped blocker must leave the cell seed-eligible")
     if m16_cell.get("cost_quantity_status") != "partial":
-        problems.append("M16 symbolic result must leave cost status partial")
+        problems.append("M16 semantic result must leave cost status partial")
     if m16_cell.get("barrier_ids") != [
         "B-PKC-M16-COMPLETE-COST-BRIDGE"
     ]:
         problems.append("M16 cell must retain its open complete-cost barrier")
-    if "SC-PKC-M16-SYMBOLIC-DESK-RESULT" not in m16_cell.get(
+    for claim_id, label in (
+        (
+            "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
+            "symbolic desk certificate",
+        ),
+        (
+            "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
+            "semantic bridge certificate",
+        ),
+    ):
+        if claim_id not in m16_cell.get("source_claim_ids", []):
+            problems.append(f"M16 cell must retain its {label}")
+    semantic_claim = typed_claims.get(
+        "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT", {}
+    )
+    if semantic_claim.get("read_status") != "certificate_replayed":
+        problems.append(
+            "M16 semantic bridge assurance must remain certificate_replayed"
+        )
+    if semantic_claim.get("artifact_sha256") != (
+        "963eea60097807ae0aa66a5d881b0c34bf0497ade53ed4d37d38861a73887c19"
+    ):
+        problems.append("M16 semantic bridge artifact hash drifted")
+    if semantic_claim.get("evidence_path") != (
+        "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json"
+    ):
+        problems.append("M16 semantic bridge evidence path drifted")
+    if "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT" not in m16_cell.get(
+        "cost_quantity", {}
+    ).get("source_claim_ids", []):
+        problems.append(
+            "M16 cost quantity must retain its semantic bridge certificate"
+        )
+    m16_barrier = typed_barriers.get(
+        "B-PKC-M16-COMPLETE-COST-BRIDGE", {}
+    )
+    if m16_barrier.get("disposition") != "open":
+        problems.append("M16 complete-cost barrier must remain open")
+    if "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT" not in m16_barrier.get(
         "source_claim_ids", []
     ):
-        problems.append("M16 cell must retain its symbolic desk certificate")
+        problems.append(
+            "M16 complete-cost barrier must retain its semantic bridge certificate"
+        )
     if m16_cell.get("authorization") != "none":
-        problems.append("M16 symbolic result cannot authorize execution")
+        problems.append("M16 semantic result cannot authorize execution")
     if any(
         decision.get("cell_id") == "CELL-M-PKC-SMOOTH-M16"
         for decision in typed_state.get("desk_decisions", [])
