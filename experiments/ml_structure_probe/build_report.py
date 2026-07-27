@@ -105,13 +105,19 @@ def build(
         },
         "artifact_hashes": {
             "dataset_manifest.json": manifest_sha256,
-            validation_path.name: sha256_file(validation_path),
-            probe_path.name: sha256_file(probe_path),
-            automl_path.name: sha256_file(automl_path),
+            "dataset_validation.json": sha256_file(validation_path),
+            "linear_probe_result.json": sha256_file(probe_path),
+            "automl_result.json": sha256_file(automl_path),
         },
         "scope": automl["scope"],
     }
     output_dir.mkdir(parents=True, exist_ok=True)
+    for source, retained_name in (
+        (manifest_path, "dataset_manifest.json"),
+        (validation_path, "dataset_validation.json"),
+        (probe_path, "linear_probe_result.json"),
+    ):
+        (output_dir / retained_name).write_bytes(source.read_bytes())
     (output_dir / "qualification_summary.json").write_text(
         json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )

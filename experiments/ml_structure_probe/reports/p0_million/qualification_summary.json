@@ -2,8 +2,8 @@
   "artifact_hashes": {
     "automl_result.json": "5f05d76cc10354162d16c0c056060f478413a0b016ff84e8d583a03bc2d93dba",
     "dataset_manifest.json": "def4ff99c54f4611436c39e91ab09aa65de3673562c7e6a6538e075193ef8812",
-    "p0_million_probe.json": "16c122298d7b2467b5aa5af028d7f4bb9628175d720715e61a9f3d4c64f5068f",
-    "p0_million_validation.json": "cf7aacb8fdaa65e2397efe87a949e191740697bc51edfa69e57b107f564cb837"
+    "dataset_validation.json": "cf7aacb8fdaa65e2397efe87a949e191740697bc51edfa69e57b107f564cb837",
+    "linear_probe_result.json": "16c122298d7b2467b5aa5af028d7f4bb9628175d720715e61a9f3d4c64f5068f"
   },
   "automl": {
     "controls": {
