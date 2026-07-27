@@ -25,6 +25,17 @@ Current central task: `TASK-010` in `tasks/ECDLP_RESEARCH.md`.
 `TASK-008` remains the parked proposal-intake lane. It does not become active
 while the v0.2 sanitation lifecycle is in remediation.
 
+After `TASK-010` passes its merge gate, the scientific activation order is:
+
+1. `TASK-014` closes the prime-field prior-art gaps and performs the exact PKC
+   smooth-subgroup desk screen.
+2. Its independent GLV connected-system workstream may run in parallel.
+3. Its native phase remains blocked behind the retained-mechanism gates and a
+   separate dated owner decision.
+
+These entries freeze further engine-schema expansion by default. They do not
+authorize a solver, a route promotion, or an exact-target computation.
+
 Most recent completed bounded structural binding:
 `RS-2026-07-24-001` / `GLV-SEMAEV-ITER-001` / `R-GLV-SEMAEV` /
 `HYP_GLV_SEMAEV_001` / `TASK-009`.

@@ -250,7 +250,7 @@ hypotheses:
       - "The prime-field obstruction is RELATION GENERATION, not factor-base size; symmetry does not obviously touch it."
       - "GLV orbit size 3 -> at most ~6x base reduction = constant factor, not an exponent change."
       - "The exact diagonal action is C3, while u_i=x_i^3 is the quotient by C3^m and loses relative phase (experiments/glv_diagonal_obstruction/)."
-      - "Smooth part of p-1 for secp256k1 is tiny (2*3*7*13441), so p-1-smoothness routes look weak (see P1)."
+      - "Exact replay with D=2*3*7*13441=564522 and p-1=D*Q, where Q is the 237-bit prime cofactor, shows that the known smooth divisor first satisfies both the raw p^(1/m) size condition and Petit's heuristic (m!*p)^(1/m) relation-yield balance at m=16, not m=14; this is an applicability fact for the direct smooth-subgroup construction, not a whole-route cost conclusion."
     tests:
       - "Build a family of toy j=0 curves E_b/F_p (p = 1 mod 3, large prime subgroup); experiments/p0_glv_semaev/toy_curves.py."
       - "COMPLETED PARTIAL: enumerate m=2 pair sums for (1) plain x keys, (2) GLV-orbit keys, and (3) u=x^3 keys; result is constant-factor only in this lookup model."

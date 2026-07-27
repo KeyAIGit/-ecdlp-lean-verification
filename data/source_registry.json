@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "purpose": "External works cited across the substrate, with provenance (where_used) computed from the hand-authored docs. Companion to result_registry.json (theorem-name provenance).",
   "scan_scope": "**/*.md excluding .git, .lake, archive, data, node_modules, platform",
-  "source_count": 25,
+  "source_count": 26,
   "sources": [
     {
       "id": "amadori_pintore_sala2018",
@@ -23,7 +23,9 @@
       "full_text_status": "full_text_inspected",
       "note": "The open IACR manuscript and publication metadata were inspected. It is prior art for proposal design, not evidence that P4 implemented the method.",
       "where_used": [
-        "notes/GLV_SEMAEV_ITERATION_001.md"
+        "notes/GLV_SEMAEV_ITERATION_001.md",
+        "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
+        "tasks/ECDLP_RESEARCH.md"
       ]
     },
     {
@@ -267,6 +269,7 @@
         "notes/reviews/PR246_DISPOSITION.md",
         "notes/reviews/RESEARCH_ENGINE_V0_2_BASELINE_AUDIT.md",
         "notes/reviews/RESEARCH_ENGINE_V0_2_ORACLE_INTAKE.md",
+        "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
         "tasks/ECDLP_RESEARCH.md",
         "tasks/NEXT.md"
       ]
@@ -294,7 +297,9 @@
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/RESEARCH_ENGINE_V0_TO_V0_2.md",
         "notes/reviews/RESEARCH_ENGINE_V0_2_BASELINE_AUDIT.md",
-        "notes/reviews/RESEARCH_ENGINE_V0_2_ORACLE_INTAKE.md"
+        "notes/reviews/RESEARCH_ENGINE_V0_2_ORACLE_INTAKE.md",
+        "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
+        "tasks/ECDLP_RESEARCH.md"
       ]
     },
     {
@@ -432,7 +437,9 @@
       "where_used": [
         "experiments/p4_petit/README.md",
         "experiments/p4_petit/RESULTS.md",
-        "notes/GLV_SEMAEV_ITERATION_001.md"
+        "notes/GLV_SEMAEV_ITERATION_001.md",
+        "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
+        "tasks/ECDLP_RESEARCH.md"
       ]
     },
     {
@@ -574,6 +581,7 @@
         "STATUS.md",
         "VERIFIED.md",
         "experiments/README.md",
+        "experiments/engine/pkc_smooth_desk_screen/README.md",
         "experiments/glv_diagonal_obstruction/README.md",
         "experiments/glv_semaev_symmetry/README.md",
         "experiments/p0_glv_semaev/README.md",
@@ -595,6 +603,7 @@
         "notes/UPSTREAM_SCAN.md",
         "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
         "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md",
+        "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
         "tasks/ECDLP_RESEARCH.md"
       ]
     },
@@ -727,6 +736,31 @@
       "full_text_status": "not_asserted",
       "where_used": [
         "notes/GLV_SEMAEV_ITERATION_001.md"
+      ]
+    },
+    {
+      "id": "yokoyama_yasuda_takahashi_kogure2020",
+      "title": "Complexity Bounds on Semaev's Naive Index Calculus Method for ECDLP",
+      "authors": [
+        "Kazuhiro Yokoyama",
+        "Masaya Yasuda",
+        "Yasushi Takahashi",
+        "Jun Kogure"
+      ],
+      "year": 2020,
+      "venue": "Journal of Mathematical Cryptology 14(1), pp. 460–485",
+      "url": "https://doi.org/10.1515/jmc-2019-0029",
+      "doi": "10.1515/jmc-2019-0029",
+      "aliases": [
+        "Yokoyama–Yasuda–Takahashi–Kogure",
+        "Yokoyama"
+      ],
+      "role": "Conditional lower-bound evidence for Gröbner-basis computation in Semaev's naive random-factor-base index calculus method.",
+      "full_text_status": "full_text_inspected",
+      "note": "The final 26-page publisher PDF was inspected from a preserved publisher snapshot. Proposition 9 depends on Assumption 7 and the explicitly non-rigorous transfer in Remark 8, and is scoped to the naive random-V ideal and algorithms using S-polynomials. It is not a no-go theorem for structured Petit, Amadori, or Kudo systems.",
+      "where_used": [
+        "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
+        "tasks/ECDLP_RESEARCH.md"
       ]
     }
   ]

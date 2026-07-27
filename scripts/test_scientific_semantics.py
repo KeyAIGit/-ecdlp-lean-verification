@@ -7,6 +7,7 @@ import copy
 import unittest
 
 from check_scientific_semantics import load_json, validate_semantics
+from research_claims import validate_and_build as validate_claim_policy
 
 
 class ScientificSemanticTests(unittest.TestCase):
@@ -43,11 +44,12 @@ class ScientificSemanticTests(unittest.TestCase):
             for item in attacks["attacks"]
             if item["id"] == "IC-4-petit-composed-map"
         )
-        petit["secp256k1_constants"] = (
+        petit["secp256k1_constants"] += (
+            " "
             "Faithful Petit fails structurally because Weil descent is absent."
         )
         self.assertTrue(
-            any("Weil-descent boundary" in item
+            any("cannot be rejected" in item
                 for item in self.validate(attacks=attacks))
         )
 
@@ -62,6 +64,24 @@ class ScientificSemanticTests(unittest.TestCase):
         self.assertIn(
             "R-GLV-SEMAEV must remain open_parked",
             self.validate(decisions=decisions),
+        )
+
+    def test_invalid_claim_disposition_fails_canonical_gate(self) -> None:
+        policy = load_json("repo/RESEARCH_CLAIMS_V0.json")
+        claim = next(
+            item
+            for item in policy["claims"]
+            if item["claim_id"]
+            == "CLM-GLV-INDEPENDENT-CUBES-FIXED-TARGET"
+        )
+        claim["claim_disposition"] = "totally_made_up_value"
+        problems, _ = validate_claim_policy(
+            policy,
+            copy.deepcopy(self.decisions),
+        )
+        self.assertTrue(
+            any("claim_disposition is invalid" in problem
+                for problem in problems)
         )
 
     def test_certificate_cannot_be_relabelled_as_lean(self) -> None:

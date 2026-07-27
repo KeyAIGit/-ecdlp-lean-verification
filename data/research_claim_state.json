@@ -3,7 +3,7 @@
   "claim_model_id": "ECDLP-RESEARCH-CLAIMS-V0",
   "status": "non_executable_truth_state",
   "source_hashes": {
-    "claim_policy_sha256": "a0d30cb25b7b350a7b99f2e941f7180d3a6babc151dde0ffab5ac23bb5f8b233",
+    "claim_policy_sha256": "0a4594677afd38a9fb0987fb5ccc1a3e2149f647d8cb11f58ec2acd5b01503ad",
     "decision_substrate_sha256": "fe1f6d6a32b7c93ee69130ee3385598a316697277a01c517d5d65473f2d173d2"
   },
   "counts": {
@@ -82,8 +82,7 @@
         "CEV-GLV-SEMAEV-INDEPENDENT-REPLAY",
         "REO-2026-07-24-001",
         "REO-2026-07-24-002",
-        "REO-2026-07-24-003",
-        "REO-2026-07-24-004"
+        "REO-2026-07-24-003"
       ],
       "assurance": [
         "certificate_replayed",

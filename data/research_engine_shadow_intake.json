@@ -3,9 +3,9 @@
   "state_id": "research-engine-shadow-intake-v0",
   "status": "shadow_non_executing",
   "source_hashes": {
-    "source_registry_sha256": "570b9ecc5f6f4ddb5af724f5a74fa13f97e05e410900177edf9f8be20c6c1b94",
-    "typed_evidence_state_sha256": "0cb233101d4d8b32cde2b79f754c0e5ee7696093d24bf0273b3e9da04e8372a7",
-    "research_claim_state_sha256": "adaf51b57c274ed550fc287d07d30703a51a7d04ab3768f8df6a5a3c7a780892"
+    "source_registry_sha256": "84b8589d2bf9e5bf5cd6378e4e87e835576394d52fb111d88aadba28a16cf85d",
+    "typed_evidence_state_sha256": "787b4beada1cc617dc1b40873b643abca052bc43d7ded47fb25a37bd7b0d3e1f",
+    "research_claim_state_sha256": "180b7b6c7c93b38f07ebd19d33047d5007df1cbc2174b18721ca2e1f5890e38b"
   },
   "counts": {
     "proposal_stubs": 4,
@@ -46,37 +46,6 @@
       "boundary": "This is a non-executable intake stub, not a hypothesis, candidate, route promotion, or experiment authorization."
     },
     {
-      "stub_id": "RSI-91B7A909E2BF",
-      "stub_kind": "desk_cost_contract",
-      "anchor_id": "CELL-M-PKC-SMOOTH-M14",
-      "route_id": "R-PETIT-COMPOSED-MAPS",
-      "lane": "mechanism",
-      "title": "Desk cost bridge: M-PKC-SMOOTH-M14",
-      "purpose": "Price the exact symbolic system before any solver run and compare it with matched generic and plain-relation baselines.",
-      "required_output": [
-        "degree and monomial-size bounds",
-        "online and offline compute",
-        "memory, storage, money, and reviewer effort",
-        "preprocessing, amortization, and recovery",
-        "a scoped stop decision with no solver execution"
-      ],
-      "evidence_refs": [
-        "Ecdlp/Proved/Secp256k1PrimeP.lean",
-        "Ecdlp/Proved/SemaevFour.lean",
-        "cell:CELL-M-PKC-SMOOTH-M14",
-        "data/source_claim_extracts/petit_kosters_messeng2016.json"
-      ],
-      "lifecycle_state": "idea",
-      "scientific_identity": "research_question_seed",
-      "executable": false,
-      "admissible": false,
-      "recommended": false,
-      "authorized": false,
-      "route_promotion": false,
-      "exact_target_experiment": false,
-      "boundary": "This is a non-executable intake stub, not a hypothesis, candidate, route promotion, or experiment authorization."
-    },
-    {
       "stub_id": "RSI-C6924493AA26",
       "stub_kind": "full_cost_contract",
       "anchor_id": "CELL-M-PKC-AUXILIARY-CURVE",
@@ -95,6 +64,38 @@
         "cell:CELL-M-PKC-AUXILIARY-CURVE",
         "cost_quantity:CQ-PKC-GENERALIZED-ROOT-COST",
         "data/source_claim_extracts/petit_kosters_messeng2016.json"
+      ],
+      "lifecycle_state": "idea",
+      "scientific_identity": "research_question_seed",
+      "executable": false,
+      "admissible": false,
+      "recommended": false,
+      "authorized": false,
+      "route_promotion": false,
+      "exact_target_experiment": false,
+      "boundary": "This is a non-executable intake stub, not a hypothesis, candidate, route promotion, or experiment authorization."
+    },
+    {
+      "stub_id": "RSI-D8BBA6340789",
+      "stub_kind": "desk_cost_contract",
+      "anchor_id": "CELL-M-PKC-SMOOTH-M16",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "lane": "mechanism",
+      "title": "Desk cost bridge: M-PKC-SMOOTH-M16",
+      "purpose": "Price the exact symbolic system before any solver run and compare it with matched generic and plain-relation baselines.",
+      "required_output": [
+        "degree and monomial-size bounds",
+        "online and offline compute",
+        "memory, storage, money, and reviewer effort",
+        "preprocessing, amortization, and recovery",
+        "a scoped stop decision with no solver execution"
+      ],
+      "evidence_refs": [
+        "Ecdlp/Proved/Secp256k1PrimeP.lean",
+        "Ecdlp/Proved/SemaevFour.lean",
+        "cell:CELL-M-PKC-SMOOTH-M16",
+        "data/source_claim_extracts/petit_kosters_messeng2016.json",
+        "experiments/engine/pkc_smooth_desk_screen/artifact.json"
       ],
       "lifecycle_state": "idea",
       "scientific_identity": "research_question_seed",

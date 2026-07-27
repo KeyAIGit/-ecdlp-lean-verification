@@ -20,6 +20,7 @@ from scientific_provenance import (
     git_file_bytes,
     scientific_source_commit_allowed,
 )
+from research_contract_binding import scientific_contract_digests
 from research_claims import load_and_build as load_research_claim_state
 from research_engine_v02 import (
     validate_cost_contract,
@@ -1850,24 +1851,17 @@ def build_generation_state(
             "typed_evidence_digest": proposal[
                 "typed_evidence_digest"
             ],
+            "toy_scope": proposal["toy_scope"],
             "route_id": proposal["route_id"],
             "threat_model": proposal["threat_model"],
             "statement": proposal["hypothesis_statement"],
             "new_premise": proposal["new_premise"],
-            "contract_digests": {
-                "mechanism_contract_sha256": sha256_json(
-                    proposal["mechanism_contract"]
-                ),
-                "prediction_contract_sha256": sha256_json(
-                    proposal["prediction_contract"]
-                ),
-                "cost_contract_sha256": sha256_json(
-                    proposal["cost_contract"]
-                ),
-                "validator_design_contract_sha256": sha256_json(
-                    proposal["validator_contract"]
-                ),
-            },
+            "contract_digests": scientific_contract_digests(
+                proposal["mechanism_contract"],
+                proposal["prediction_contract"],
+                proposal["cost_contract"],
+                proposal["validator_contract"],
+            ),
             "status": "quality_cleared_not_authorized",
             "next_gate": (
                 "Bind an immutable candidate snapshot to this exact draft, "

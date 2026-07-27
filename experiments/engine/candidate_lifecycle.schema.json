@@ -52,6 +52,53 @@
     },
     "actor_class": {"enum": ["engine", "owner", "runner", "migration"]},
     "owner_decision_id": {"type": "string", "minLength": 1},
+    "recommendation_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_digest",
+        "portfolio_status",
+        "selected_snapshots",
+        "selection_digest"
+      ],
+      "properties": {
+        "policy_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "portfolio_status": {
+          "enum": [
+            "compared",
+            "coverage_overflow",
+            "invalid_duplicate_candidate_ids"
+          ]
+        },
+        "selected_snapshots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidate_id",
+              "candidate_version",
+              "candidate_digest"
+            ],
+            "properties": {
+              "candidate_id": {"type": "string", "minLength": 1},
+              "candidate_version": {"type": "integer", "minimum": 1},
+              "candidate_digest": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        "selection_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
     "outcome": {
       "enum": [
         "proved",
@@ -68,6 +115,13 @@
     "reason": {"type": "string", "minLength": 1}
   },
   "allOf": [
+    {
+      "if": {"properties": {"to_state": {"const": "recommended"}}},
+      "then": {
+        "required": ["recommendation_binding"],
+        "properties": {"actor_class": {"const": "engine"}}
+      }
+    },
     {
       "if": {"properties": {"to_state": {"const": "authorized"}}},
       "then": {

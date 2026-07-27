@@ -12,6 +12,7 @@ import hashlib
 import json
 import re
 from datetime import date
+from math import factorial
 from pathlib import Path
 from typing import Any
 
@@ -169,7 +170,7 @@ SECP256K1_P = (
 )
 PKC_SMOOTH_ARITY = {
     "M-PKC-SMOOTH-M4": 4,
-    "M-PKC-SMOOTH-M14": 14,
+    "M-PKC-SMOOTH-M16": 16,
 }
 
 
@@ -526,6 +527,26 @@ def validate_policy(
                                             )
     if len(claim_ids) != len(set(claim_ids)):
         problems.append("source claim ids must be unique")
+    primary_claims_by_source: dict[str, list[dict[str, Any]]] = {}
+    for claim in claims:
+        if claim.get("source_type") == "primary_literature":
+            primary_claims_by_source.setdefault(claim.get("source_id"), []).append(
+                claim
+            )
+    for source_id, source_claims in primary_claims_by_source.items():
+        registered_source = source_index.get(source_id)
+        if (
+            isinstance(registered_source, dict)
+            and registered_source.get("full_text_status") == "full_text_inspected"
+            and not any(
+                claim.get("read_status") == "full_text_obtained"
+                for claim in source_claims
+            )
+        ):
+            problems.append(
+                f"source registry {source_id} is full_text_inspected but its "
+                "typed evidence has no full_text_obtained claim"
+            )
     claim_id_set = set(claim_ids)
 
     properties = policy.get("target_properties")
@@ -710,21 +731,35 @@ def validate_policy(
                 problems.append(f"{req_label}.operator is invalid")
             if not _text(requirement.get("rationale"), 12):
                 problems.append(f"{req_label}.rationale must be substantive")
-        if len(requirement_properties) != len(set(requirement_properties)):
+        if (
+            len(requirement_properties) != len(set(requirement_properties))
+            and mechanism_id not in PKC_SMOOTH_ARITY
+        ):
             problems.append(f"{label}.requires_all repeats a property")
-        if mechanism_id in PKC_SMOOTH_ARITY and len(requirements) == 1:
+        if mechanism_id in PKC_SMOOTH_ARITY:
             arity = PKC_SMOOTH_ARITY[mechanism_id]
-            expected_threshold = ceil_nth_root(SECP256K1_P, arity)
-            requirement = requirements[0]
+            expected_thresholds = {
+                ceil_nth_root(SECP256K1_P, arity),
+                ceil_nth_root(factorial(arity) * SECP256K1_P, arity),
+            }
+            observed_thresholds = {
+                requirement.get("expected")
+                for requirement in requirements
+                if requirement.get("property_id")
+                == "TP-SECP-PMINUS1-SMOOTH-DIVISOR"
+                and requirement.get("operator") == "gte"
+            }
             if (
-                requirement.get("property_id")
-                != "TP-SECP-PMINUS1-SMOOTH-DIVISOR"
-                or requirement.get("operator") != "gte"
-                or requirement.get("expected") != expected_threshold
+                len(requirements) != 2
+                or len(requirement_properties) != 2
+                or set(requirement_properties)
+                != {"TP-SECP-PMINUS1-SMOOTH-DIVISOR"}
+                or observed_thresholds != expected_thresholds
             ):
                 problems.append(
-                    f"{label} must use the recomputed ceil(p^(1/{arity})) "
-                    f"threshold {expected_threshold}"
+                    f"{label} must use both recomputed thresholds "
+                    f"ceil(p^(1/{arity})) and ceil(({arity}!*p)^(1/{arity})): "
+                    f"{sorted(expected_thresholds)}"
                 )
         seed_axes = mechanism.get("seed_axes")
         if _exact_keys(seed_axes, SEED_AXIS_FIELDS, f"{label}.seed_axes", problems):
@@ -932,25 +967,30 @@ def validate_desk_decisions(
         if not isinstance(verdicts, list) or not verdicts:
             problems.append(f"{label}.property_verdicts must be nonempty")
             verdicts = []
+        def verdict_key(value: dict[str, Any]) -> tuple[str, str, str]:
+            return (
+                value.get("property_id"),
+                value.get("operator"),
+                sha256_json(value.get("expected")),
+            )
+
         expected_verdicts = {
-            result["property_id"]: result
+            verdict_key(result): result
             for result in cell["requirement_results"]
         }
-        seen_properties: list[str] = []
+        seen_verdicts: list[tuple[str, str, str]] = []
         for index, verdict in enumerate(verdicts):
             verdict_label = f"{label}.property_verdicts[{index}]"
             if not _exact_keys(
                 verdict, PROPERTY_VERDICT_FIELDS, verdict_label, problems
             ):
                 continue
-            property_id = verdict.get("property_id")
-            seen_properties.append(property_id)
-            expected = expected_verdicts.get(property_id)
+            key = verdict_key(verdict)
+            seen_verdicts.append(key)
+            expected = expected_verdicts.get(key)
             if expected is None or any(
                 verdict.get(field) != expected.get(field)
                 for field in (
-                    "operator",
-                    "expected",
                     "actual",
                     "verdict",
                 )
@@ -958,8 +998,12 @@ def validate_desk_decisions(
                 problems.append(
                     f"{verdict_label} differs from the materialized cell"
                 )
-        if len(seen_properties) != len(set(seen_properties)):
-            problems.append(f"{label}.property_verdicts repeat a property")
+        if len(seen_verdicts) != len(set(seen_verdicts)):
+            problems.append(f"{label}.property_verdicts repeat a requirement")
+        if set(seen_verdicts) != set(expected_verdicts):
+            problems.append(
+                f"{label}.property_verdicts do not cover every cell requirement"
+            )
         if record.get("route_effect") != "none":
             problems.append(f"{label}.route_effect must remain none")
         if record.get("authorization") != "none":

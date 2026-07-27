@@ -153,6 +153,12 @@ def build() -> tuple[list[str], dict[str, Any]]:
             "proposal_sha256": draft.get("proposal_sha256"),
             "source_commit": draft.get("source_commit"),
             "review_artifacts": draft.get("review_artifacts"),
+            "cell_id": draft.get("cell_id"),
+            "typed_evidence_digest": draft.get("typed_evidence_digest"),
+            "toy_scope": draft.get("toy_scope"),
+            "route_id": draft.get("route_id"),
+            "threat_model": draft.get("threat_model"),
+            "contract_digests": draft.get("contract_digests"),
         }
         for draft in generation_state.get(
             "retained_hypothesis_drafts", []

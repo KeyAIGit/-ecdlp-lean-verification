@@ -301,6 +301,70 @@
       "test_ref": "scripts/test_research_engine_v02.py::test_duplicate_outcome_event_is_not_double_counted"
     },
     {
+      "id": "RE02-ORACLE-REVIEWED-CONTRACT-BINDING",
+      "test_ref": "scripts/test_research_engine_v02.py::test_post_review_contract_mutation_invalidates_generation_binding"
+    },
+    {
+      "id": "RE02-ORACLE-DERIVED-MULTI-TARGET-DRIFT",
+      "test_ref": "scripts/test_research_engine_v02.py::test_reviewed_multi_target_cost_derives_threat_model_drift"
+    },
+    {
+      "id": "RE02-ORACLE-MATRIX-CEILING-ALL-VALUES",
+      "test_ref": "scripts/test_research_engine_v02.py::test_every_prediction_size_respects_reviewed_toy_ceiling"
+    },
+    {
+      "id": "RE02-ORACLE-SCHEMA-COMPLETE-PROSE",
+      "test_ref": "scripts/test_research_engine_v02.py::test_schema_complete_unproved_prose_cannot_clear_mechanism_gate"
+    },
+    {
+      "id": "RE02-ORACLE-REVIEWED-ROUTE-BINDING",
+      "test_ref": "scripts/test_research_engine_v02.py::test_candidate_route_cannot_drift_from_reviewed_draft"
+    },
+    {
+      "id": "RE02-ORACLE-GENERATED-SOURCE-BINDING",
+      "test_ref": "scripts/test_research_engine_v02.py::test_generated_lifecycle_state_binds_both_canonical_inputs"
+    },
+    {
+      "id": "RE02-ORACLE-EXTERNAL-DIGEST-ANCHOR",
+      "test_ref": "scripts/test_research_engine_v02.py::test_snapshot_digest_matches_external_committed_anchors"
+    },
+    {
+      "id": "RE02-ORACLE-UNSUCCESSFUL-PREREQUISITE",
+      "test_ref": "scripts/test_research_engine_v02.py::test_unsuccessful_terminal_outcomes_do_not_unlock_dependency"
+    },
+    {
+      "id": "RE02-ORACLE-DEPENDENCY-OUTCOME-MATCH",
+      "test_ref": "scripts/test_research_engine_v02.py::test_successful_but_unaccepted_outcome_does_not_unlock_dependency"
+    },
+    {
+      "id": "RE02-ORACLE-NONTERMINAL-OUTCOME",
+      "test_ref": "scripts/test_research_engine_v02.py::test_nonterminal_outcome_field_cannot_unlock_dependency"
+    },
+    {
+      "id": "RE02-ORACLE-EIG-NUMERIC-ANCHOR",
+      "test_ref": "scripts/test_research_engine_v02.py::test_eig_matches_external_numeric_anchor"
+    },
+    {
+      "id": "RE02-ORACLE-SHARED-SETUP-DEDUPE",
+      "test_ref": "scripts/test_research_engine_v02.py::test_shared_setup_is_charged_once_per_portfolio"
+    },
+    {
+      "id": "RE02-ORACLE-PEAK-RESOURCE-ALGEBRA",
+      "test_ref": "scripts/test_research_engine_v02.py::test_peak_resources_use_maximum_not_sum"
+    },
+    {
+      "id": "RE02-ORACLE-CLAIM-ENUM-GATE",
+      "test_ref": "scripts/test_scientific_semantics.py::test_invalid_claim_disposition_fails_canonical_gate"
+    },
+    {
+      "id": "RE02-ORACLE-PETIT-CONTRADICTION-APPEND",
+      "test_ref": "scripts/test_scientific_semantics.py::test_petit_weil_contradiction_fails_gate"
+    },
+    {
+      "id": "RE02-ORACLE-RECOMMENDATION-REPLAY",
+      "test_ref": "scripts/test_research_engine_v02.py::test_recommended_event_must_match_recomputed_portfolio"
+    },
+    {
       "id": "RE02-ORACLE-CROSS-PLATFORM-EOL",
       "test_ref": "scripts/test_research_engine.py::test_repository_text_hash_is_checkout_eol_independent"
     }

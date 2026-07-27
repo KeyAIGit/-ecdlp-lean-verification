@@ -50,6 +50,9 @@ jobs:
       - name: Test product-model evidence lifecycle
         run: python3 scripts/test_check_product_model.py
 
+      - name: Test canonical task rendering
+        run: python3 scripts/test_site_generator.py
+
       - name: Check formal-substrate architecture
         run: python3 scripts/check_formal_substrate.py
 
@@ -60,6 +63,11 @@ jobs:
         run: |
           python3 scripts/build_typed_evidence_state.py --check
           python3 scripts/test_typed_evidence.py
+
+      - name: Replay PKC smooth-subgroup desk screen
+        run: |
+          python3 experiments/engine/pkc_smooth_desk_screen/generate.py --check
+          python3 experiments/engine/pkc_smooth_desk_screen/validate.py
 
       - name: Check generated Research Engine state
         run: python3 scripts/build_research_engine_state.py --check

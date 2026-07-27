@@ -1,0 +1,781 @@
+{
+  "artifact_id": "PKC-SMOOTH-DESK-SCREEN-001",
+  "assessment": {
+    "exact_scoped_bounded_negative_labels": [
+      {
+        "label": "condition_1_fails_for_fixed_D_and_m",
+        "m_values": [
+          10,
+          11,
+          12,
+          13
+        ],
+        "meaning": "D is strictly below ceil(p^(1/m))."
+      },
+      {
+        "label": "paper_balance_predicate_fails_for_fixed_D_and_m",
+        "m_values": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "meaning": "D^m is strictly below m! p, so the paper's exact yield rational is below one."
+      },
+      {
+        "B_max": 13440,
+        "coordinate_factor_base_cardinality_upper_bound": 42,
+        "label": "B_smooth_coordinate_root_bound",
+        "meaning": "For B <= 13440, a B-smooth divisor of p-1 divides 2*3*7=42."
+      }
+    ],
+    "overall_direct_mechanism_label": "inconclusive",
+    "reason": "The exact threshold and counting predicates do not determine solving degree, Macaulay size, recovery, relation independence, or total work."
+  },
+  "b_smooth_counting_bound": {
+    "B_max_inclusive": 13440,
+    "coordinate_factor_base_cardinality_upper_bound": 42,
+    "eligible_prime_factors_of_p_minus_one": [
+      2,
+      3,
+      7
+    ],
+    "largest_B_smooth_divisor_of_p_minus_one": 42,
+    "scope": "#F counts roots in the multiplicative subgroup/coset used as x-coordinate candidates. It does not assert that every root lifts to a usable curve point or an independent logarithm.",
+    "signed_curve_point_lifts_upper_bound_if_both_y_signs_are_counted": 84
+  },
+  "inputs": {
+    "D": 564522,
+    "m_max": 20,
+    "m_min": 10,
+    "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+    "p_formula": "2^256 - 2^32 - 977"
+  },
+  "kind": "deterministic_desk_arithmetic",
+  "linear_algebra_scope": {
+    "conditional_model": "If the full D-element coordinate root set supplies D active unknown logarithms, a full-column-rank solve needs at least D independent rows and D columns.",
+    "limitation": "The artifact does not establish usable factor-base cardinality, row independence, coefficient sparsity, rank, or storage cost."
+  },
+  "p_minus_one_factorization": {
+    "all_divisors_strictly_below_large_cofactor_given_prime_factorization": [
+      1,
+      2,
+      3,
+      6,
+      7,
+      14,
+      21,
+      42,
+      13441,
+      26882,
+      40323,
+      80646,
+      94087,
+      188174,
+      282261,
+      564522
+    ],
+    "identity": "p - 1 = 2 * 3 * 7 * 13441 * 205115282021455665897114700593932402728804164701536103180137503955397371",
+    "large_cofactor": "205115282021455665897114700593932402728804164701536103180137503955397371",
+    "large_cofactor_prime_status": "repository_Lean_certificate_not_replayed_here",
+    "small_factor_product_D": 564522,
+    "small_prime_factors": [
+      2,
+      3,
+      7,
+      13441
+    ]
+  },
+  "rows": [
+    {
+      "condition_1": {
+        "D_meets_threshold": false,
+        "exact_threshold_ceil_p_to_1_over_m": 50859009,
+        "scoped_label": "bounded_negative_condition_1_for_fixed_D_and_m"
+      },
+      "conditional_linear_algebra_minima": {
+        "independent_relation_rows_for_full_rank": 564522,
+        "matrix_unknown_columns": 564522,
+        "nominal_coordinate_factor_base_size": 564522,
+        "target_samples_ceiling_under_exact_paper_yield": "72162916885586190932780232068200"
+      },
+      "direct_semaev": {
+        "per_variable_degree": 512,
+        "polynomial": "S_11",
+        "total_degree": 5120
+      },
+      "m": 10,
+      "paper_balance_and_yield": {
+        "D_meets_balance_threshold": false,
+        "balance_threshold_ceil_m_factorial_p_to_1_over_m": 230326651,
+        "exact_yield_reduced": {
+          "denominator": "2894802230932904885589274625217197696331749616641014100986439600197720866791575",
+          "numerator": "22645696924941182407953031640655596093255686807834812"
+        },
+        "expected_trials_for_one_decomposition_ceiling_when_yield_below_one": "127830123335469992193006176",
+        "scoped_label": "bounded_negative_paper_balance_for_fixed_D_and_m",
+        "yield_below_one": true
+      },
+      "recursive_s3": {
+        "balanced": {
+          "equation_count": 9,
+          "internal_variable_count": 8,
+          "total_nonconstant_x_variables": 18
+        },
+        "sequential": {
+          "equation_count": 9,
+          "internal_variable_count": 8,
+          "total_nonconstant_x_variables": 18
+        }
+      },
+      "square_and_multiply_for_m_membership_constraints": {
+        "multiplication_gates_upper_bound": 270,
+        "nonsquare_multiplications_upper_bound": 80,
+        "squarings_upper_bound": 190
+      },
+      "unresolved": {
+        "actual_usable_factor_base_cardinality": null,
+        "exceptional_components": null,
+        "independent_relation_probability": null,
+        "macaulay_matrix_columns": null,
+        "macaulay_matrix_memory_bytes": null,
+        "macaulay_matrix_rows": null,
+        "recovery_branch_count": null,
+        "solving_degree": null,
+        "total_relation_generation_work": null
+      }
+    },
+    {
+      "condition_1": {
+        "D_meets_threshold": false,
+        "exact_threshold_ceil_p_to_1_over_m": 10134189,
+        "scoped_label": "bounded_negative_condition_1_for_fixed_D_and_m"
+      },
+      "conditional_linear_algebra_minima": {
+        "independent_relation_rows_for_full_rank": 564522,
+        "matrix_unknown_columns": 564522,
+        "nominal_coordinate_factor_base_size": 564522,
+        "target_samples_ceiling_under_exact_paper_yield": "1406131356690169914123067928"
+      },
+      "direct_semaev": {
+        "per_variable_degree": 1024,
+        "polynomial": "S_12",
+        "total_degree": 11264
+      },
+      "m": 11,
+      "paper_balance_and_yield": {
+        "D_meets_balance_threshold": false,
+        "balance_threshold_ceil_m_factorial_p_to_1_over_m": 49751153,
+        "exact_yield_reduced": {
+          "denominator": "31842824540261953741482020877389174659649245783051155110850835602174929534707325",
+          "numerator": "12783994119461646175302461327846178417756886828132523739864"
+        },
+        "expected_trials_for_one_decomposition_ceiling_when_yield_below_one": "2490835355734887062193",
+        "scoped_label": "bounded_negative_paper_balance_for_fixed_D_and_m",
+        "yield_below_one": true
+      },
+      "recursive_s3": {
+        "balanced": {
+          "equation_count": 10,
+          "internal_variable_count": 9,
+          "total_nonconstant_x_variables": 20
+        },
+        "sequential": {
+          "equation_count": 10,
+          "internal_variable_count": 9,
+          "total_nonconstant_x_variables": 20
+        }
+      },
+      "square_and_multiply_for_m_membership_constraints": {
+        "multiplication_gates_upper_bound": 297,
+        "nonsquare_multiplications_upper_bound": 88,
+        "squarings_upper_bound": 209
+      },
+      "unresolved": {
+        "actual_usable_factor_base_cardinality": null,
+        "exceptional_components": null,
+        "independent_relation_probability": null,
+        "macaulay_matrix_columns": null,
+        "macaulay_matrix_memory_bytes": null,
+        "macaulay_matrix_rows": null,
+        "recovery_branch_count": null,
+        "solving_degree": null,
+        "total_relation_generation_work": null
+      }
+    },
+    {
+      "condition_1": {
+        "D_meets_threshold": false,
+        "exact_threshold_ceil_p_to_1_over_m": 2642246,
+        "scoped_label": "bounded_negative_condition_1_for_fixed_D_and_m"
+      },
+      "conditional_linear_algebra_minima": {
+        "independent_relation_rows_for_full_rank": 564522,
+        "matrix_unknown_columns": 564522,
+        "nominal_coordinate_factor_base_size": 564522,
+        "target_samples_ceiling_under_exact_paper_yield": "29890024268818644746311"
+      },
+      "direct_semaev": {
+        "per_variable_degree": 2048,
+        "polynomial": "S_13",
+        "total_degree": 24576
+      },
+      "m": 12,
+      "paper_balance_and_yield": {
+        "D_meets_balance_threshold": false,
+        "balance_threshold_ceil_m_factorial_p_to_1_over_m": 13974448,
+        "exact_yield_reduced": {
+          "denominator": "31842824540261953741482020877389174659649245783051155110850835602174929534707325",
+          "numerator": "601403827358893951847841339476531694395746105499252380556292084"
+        },
+        "expected_trials_for_one_decomposition_ceiling_when_yield_below_one": "52947492336558442",
+        "scoped_label": "bounded_negative_paper_balance_for_fixed_D_and_m",
+        "yield_below_one": true
+      },
+      "recursive_s3": {
+        "balanced": {
+          "equation_count": 11,
+          "internal_variable_count": 10,
+          "total_nonconstant_x_variables": 22
+        },
+        "sequential": {
+          "equation_count": 11,
+          "internal_variable_count": 10,
+          "total_nonconstant_x_variables": 22
+        }
+      },
+      "square_and_multiply_for_m_membership_constraints": {
+        "multiplication_gates_upper_bound": 324,
+        "nonsquare_multiplications_upper_bound": 96,
+        "squarings_upper_bound": 228
+      },
+      "unresolved": {
+        "actual_usable_factor_base_cardinality": null,
+        "exceptional_components": null,
+        "independent_relation_probability": null,
+        "macaulay_matrix_columns": null,
+        "macaulay_matrix_memory_bytes": null,
+        "macaulay_matrix_rows": null,
+        "recovery_branch_count": null,
+        "solving_degree": null,
+        "total_relation_generation_work": null
+      }
+    },
+    {
+      "condition_1": {
+        "D_meets_threshold": false,
+        "exact_threshold_ceil_p_to_1_over_m": 847180,
+        "scoped_label": "bounded_negative_condition_1_for_fixed_D_and_m"
+      },
+      "conditional_linear_algebra_minima": {
+        "independent_relation_rows_for_full_rank": 564522,
+        "matrix_unknown_columns": 564522,
+        "nominal_coordinate_factor_base_size": 564522,
+        "target_samples_ceiling_under_exact_paper_yield": "688317400375259745"
+      },
+      "direct_semaev": {
+        "per_variable_degree": 4096,
+        "polynomial": "S_14",
+        "total_degree": 53248
+      },
+      "m": 13,
+      "paper_balance_and_yield": {
+        "D_meets_balance_threshold": false,
+        "balance_threshold_ceil_m_factorial_p_to_1_over_m": 4801551,
+        "exact_yield_reduced": {
+          "denominator": "413956719023405398639266271406059270575440195179665016441060862828274083951195225",
+          "numerator": "339505691428297531485047088643970625183675382968648952376399119843848"
+        },
+        "expected_trials_for_one_decomposition_ceiling_when_yield_below_one": "1219292428595",
+        "scoped_label": "bounded_negative_paper_balance_for_fixed_D_and_m",
+        "yield_below_one": true
+      },
+      "recursive_s3": {
+        "balanced": {
+          "equation_count": 12,
+          "internal_variable_count": 11,
+          "total_nonconstant_x_variables": 24
+        },
+        "sequential": {
+          "equation_count": 12,
+          "internal_variable_count": 11,
+          "total_nonconstant_x_variables": 24
+        }
+      },
+      "square_and_multiply_for_m_membership_constraints": {
+        "multiplication_gates_upper_bound": 351,
+        "nonsquare_multiplications_upper_bound": 104,
+        "squarings_upper_bound": 247
+      },
+      "unresolved": {
+        "actual_usable_factor_base_cardinality": null,
+        "exceptional_components": null,
+        "independent_relation_probability": null,
+        "macaulay_matrix_columns": null,
+        "macaulay_matrix_memory_bytes": null,
+        "macaulay_matrix_rows": null,
+        "recovery_branch_count": null,
+        "solving_degree": null,
+        "total_relation_generation_work": null
+      }
+    },
+    {
+      "condition_1": {
+        "D_meets_threshold": true,
+        "exact_threshold_ceil_p_to_1_over_m": 319558,
+        "scoped_label": "not_rejected_by_condition_1"
+      },
+      "conditional_linear_algebra_minima": {
+        "independent_relation_rows_for_full_rank": 564522,
+        "matrix_unknown_columns": 564522,
+        "nominal_coordinate_factor_base_size": 564522,
+        "target_samples_ceiling_under_exact_paper_yield": "17070094000329"
+      },
+      "direct_semaev": {
+        "per_variable_degree": 8192,
+        "polynomial": "S_15",
+        "total_degree": 114688
+      },
+      "m": 14,
+      "paper_balance_and_yield": {
+        "D_meets_balance_threshold": false,
+        "balance_threshold_ceil_m_factorial_p_to_1_over_m": 1931997,
+        "exact_yield_reduced": {
+          "denominator": "413956719023405398639266271406059270575440195179665016441060862828274083951195225",
+          "numerator": "13689887995463241362071553755390827519281342467444831706673541709463482904"
+        },
+        "expected_trials_for_one_decomposition_ceiling_when_yield_below_one": "30238138",
+        "scoped_label": "bounded_negative_paper_balance_for_fixed_D_and_m",
+        "yield_below_one": true
+      },
+      "recursive_s3": {
+        "balanced": {
+          "equation_count": 13,
+          "internal_variable_count": 12,
+          "total_nonconstant_x_variables": 26
+        },
+        "sequential": {
+          "equation_count": 13,
+          "internal_variable_count": 12,
+          "total_nonconstant_x_variables": 26
+        }
+      },
+      "square_and_multiply_for_m_membership_constraints": {
+        "multiplication_gates_upper_bound": 378,
+        "nonsquare_multiplications_upper_bound": 112,
+        "squarings_upper_bound": 266
+      },
+      "unresolved": {
+        "actual_usable_factor_base_cardinality": null,
+        "exceptional_components": null,
+        "independent_relation_probability": null,
+        "macaulay_matrix_columns": null,
+        "macaulay_matrix_memory_bytes": null,
+        "macaulay_matrix_rows": null,
+        "recovery_branch_count": null,
+        "solving_degree": null,
+        "total_relation_generation_work": null
+      }
+    },
+    {
+      "condition_1": {
+        "D_meets_threshold": true,
+        "exact_threshold_ceil_p_to_1_over_m": 137271,
+        "scoped_label": "not_rejected_by_condition_1"
+      },
+      "conditional_linear_algebra_minima": {
+        "independent_relation_rows_for_full_rank": 564522,
+        "matrix_unknown_columns": 564522,
+        "nominal_coordinate_factor_base_size": 564522,
+        "target_samples_ceiling_under_exact_paper_yield": "453572067"
+      },
+      "direct_semaev": {
+        "per_variable_degree": 16384,
+        "polynomial": "S_16",
+        "total_degree": 245760
+      },
+      "m": 15,
+      "paper_balance_and_yield": {
+        "D_meets_balance_threshold": false,
+        "balance_threshold_ceil_m_factorial_p_to_1_over_m": 881750,
+        "exact_yield_reduced": {
+          "denominator": "2069783595117026993196331357030296352877200975898325082205304314141370419755976125",
+          "numerator": "2576080983658299980066452556366913577613247337468963761571587037636581431977296"
+        },
+        "expected_trials_for_one_decomposition_ceiling_when_yield_below_one": "804",
+        "scoped_label": "bounded_negative_paper_balance_for_fixed_D_and_m",
+        "yield_below_one": true
+      },
+      "recursive_s3": {
+        "balanced": {
+          "equation_count": 14,
+          "internal_variable_count": 13,
+          "total_nonconstant_x_variables": 28
+        },
+        "sequential": {
+          "equation_count": 14,
+          "internal_variable_count": 13,
+          "total_nonconstant_x_variables": 28
+        }
+      },
+      "square_and_multiply_for_m_membership_constraints": {
+        "multiplication_gates_upper_bound": 405,
+        "nonsquare_multiplications_upper_bound": 120,
+        "squarings_upper_bound": 285
+      },
+      "unresolved": {
+        "actual_usable_factor_base_cardinality": null,
+        "exceptional_components": null,
+        "independent_relation_probability": null,
+        "macaulay_matrix_columns": null,
+        "macaulay_matrix_memory_bytes": null,
+        "macaulay_matrix_rows": null,
+        "recovery_branch_count": null,
+        "solving_degree": null,
+        "total_relation_generation_work": null
+      }
+    },
+    {
+      "condition_1": {
+        "D_meets_threshold": true,
+        "exact_threshold_ceil_p_to_1_over_m": 65536,
+        "scoped_label": "not_rejected_by_condition_1"
+      },
+      "conditional_linear_algebra_minima": {
+        "independent_relation_rows_for_full_rank": 564522,
+        "matrix_unknown_columns": 564522,
+        "nominal_coordinate_factor_base_size": 564522,
+        "target_samples_ceiling_under_exact_paper_yield": "12856"
+      },
+      "direct_semaev": {
+        "per_variable_degree": 32768,
+        "polynomial": "S_17",
+        "total_degree": 524288
+      },
+      "m": 16,
+      "paper_balance_and_yield": {
+        "D_meets_balance_threshold": true,
+        "balance_threshold_ceil_m_factorial_p_to_1_over_m": 445676,
+        "exact_yield_reduced": {
+          "denominator": "2069783595117026993196331357030296352877200975898325082205304314141370419755976125",
+          "numerator": "90890899316046926334192120626585174166336600840165897538119716103792388946417943282"
+        },
+        "expected_trials_for_one_decomposition_ceiling_when_yield_below_one": null,
+        "scoped_label": "not_rejected_by_paper_balance_predicate",
+        "yield_below_one": false
+      },
+      "recursive_s3": {
+        "balanced": {
+          "equation_count": 15,
+          "internal_variable_count": 14,
+          "total_nonconstant_x_variables": 30
+        },
+        "sequential": {
+          "equation_count": 15,
+          "internal_variable_count": 14,
+          "total_nonconstant_x_variables": 30
+        }
+      },
+      "square_and_multiply_for_m_membership_constraints": {
+        "multiplication_gates_upper_bound": 432,
+        "nonsquare_multiplications_upper_bound": 128,
+        "squarings_upper_bound": 304
+      },
+      "unresolved": {
+        "actual_usable_factor_base_cardinality": null,
+        "exceptional_components": null,
+        "independent_relation_probability": null,
+        "macaulay_matrix_columns": null,
+        "macaulay_matrix_memory_bytes": null,
+        "macaulay_matrix_rows": null,
+        "recovery_branch_count": null,
+        "solving_degree": null,
+        "total_relation_generation_work": null
+      }
+    },
+    {
+      "condition_1": {
+        "D_meets_threshold": true,
+        "exact_threshold_ceil_p_to_1_over_m": 34132,
+        "scoped_label": "not_rejected_by_condition_1"
+      },
+      "conditional_linear_algebra_minima": {
+        "independent_relation_rows_for_full_rank": 564522,
+        "matrix_unknown_columns": 564522,
+        "nominal_coordinate_factor_base_size": 564522,
+        "target_samples_ceiling_under_exact_paper_yield": "1"
+      },
+      "direct_semaev": {
+        "per_variable_degree": 65536,
+        "polynomial": "S_18",
+        "total_degree": 1114112
+      },
+      "m": 17,
+      "paper_balance_and_yield": {
+        "D_meets_balance_threshold": true,
+        "balance_threshold_ceil_m_factorial_p_to_1_over_m": 244965,
+        "exact_yield_reduced": {
+          "denominator": "35186321116989458884337633069515037998912416590271526397490173340403297135851594125",
+          "numerator": "51309912263693442948030804320361115690728670579492132810014418374345086992809750177441204"
+        },
+        "expected_trials_for_one_decomposition_ceiling_when_yield_below_one": null,
+        "scoped_label": "not_rejected_by_paper_balance_predicate",
+        "yield_below_one": false
+      },
+      "recursive_s3": {
+        "balanced": {
+          "equation_count": 16,
+          "internal_variable_count": 15,
+          "total_nonconstant_x_variables": 32
+        },
+        "sequential": {
+          "equation_count": 16,
+          "internal_variable_count": 15,
+          "total_nonconstant_x_variables": 32
+        }
+      },
+      "square_and_multiply_for_m_membership_constraints": {
+        "multiplication_gates_upper_bound": 459,
+        "nonsquare_multiplications_upper_bound": 136,
+        "squarings_upper_bound": 323
+      },
+      "unresolved": {
+        "actual_usable_factor_base_cardinality": null,
+        "exceptional_components": null,
+        "independent_relation_probability": null,
+        "macaulay_matrix_columns": null,
+        "macaulay_matrix_memory_bytes": null,
+        "macaulay_matrix_rows": null,
+        "recovery_branch_count": null,
+        "solving_degree": null,
+        "total_relation_generation_work": null
+      }
+    },
+    {
+      "condition_1": {
+        "D_meets_threshold": true,
+        "exact_threshold_ceil_p_to_1_over_m": 19113,
+        "scoped_label": "not_rejected_by_condition_1"
+      },
+      "conditional_linear_algebra_minima": {
+        "independent_relation_rows_for_full_rank": 564522,
+        "matrix_unknown_columns": 564522,
+        "nominal_coordinate_factor_base_size": 564522,
+        "target_samples_ceiling_under_exact_paper_yield": "1"
+      },
+      "direct_semaev": {
+        "per_variable_degree": 131072,
+        "polynomial": "S_19",
+        "total_degree": 2359296
+      },
+      "m": 18,
+      "paper_balance_and_yield": {
+        "D_meets_balance_threshold": true,
+        "balance_threshold_ceil_m_factorial_p_to_1_over_m": 144360,
+        "exact_yield_reduced": {
+          "denominator": "35186321116989458884337633069515037998912416590271526397490173340403297135851594125",
+          "numerator": "1609198571718041655550458095363272097331196142937558766565275527195668733297496988314970186916"
+        },
+        "expected_trials_for_one_decomposition_ceiling_when_yield_below_one": null,
+        "scoped_label": "not_rejected_by_paper_balance_predicate",
+        "yield_below_one": false
+      },
+      "recursive_s3": {
+        "balanced": {
+          "equation_count": 17,
+          "internal_variable_count": 16,
+          "total_nonconstant_x_variables": 34
+        },
+        "sequential": {
+          "equation_count": 17,
+          "internal_variable_count": 16,
+          "total_nonconstant_x_variables": 34
+        }
+      },
+      "square_and_multiply_for_m_membership_constraints": {
+        "multiplication_gates_upper_bound": 486,
+        "nonsquare_multiplications_upper_bound": 144,
+        "squarings_upper_bound": 342
+      },
+      "unresolved": {
+        "actual_usable_factor_base_cardinality": null,
+        "exceptional_components": null,
+        "independent_relation_probability": null,
+        "macaulay_matrix_columns": null,
+        "macaulay_matrix_memory_bytes": null,
+        "macaulay_matrix_rows": null,
+        "recovery_branch_count": null,
+        "solving_degree": null,
+        "total_relation_generation_work": null
+      }
+    },
+    {
+      "condition_1": {
+        "D_meets_threshold": true,
+        "exact_threshold_ceil_p_to_1_over_m": 11376,
+        "scoped_label": "not_rejected_by_condition_1"
+      },
+      "conditional_linear_algebra_minima": {
+        "independent_relation_rows_for_full_rank": 564522,
+        "matrix_unknown_columns": 564522,
+        "nominal_coordinate_factor_base_size": 564522,
+        "target_samples_ceiling_under_exact_paper_yield": "1"
+      },
+      "direct_semaev": {
+        "per_variable_degree": 262144,
+        "polynomial": "S_20",
+        "total_degree": 4980736
+      },
+      "m": 19,
+      "paper_balance_and_yield": {
+        "D_meets_balance_threshold": true,
+        "balance_threshold_ceil_m_factorial_p_to_1_over_m": 90199,
+        "exact_yield_reduced": {
+          "denominator": "668540101222799718802415028320785721979335915215159001552313293467662645581180288375",
+          "numerator": "908427996103412311474655704910665090929601509003396550018962471163553304658569594837543599858194152"
+        },
+        "expected_trials_for_one_decomposition_ceiling_when_yield_below_one": null,
+        "scoped_label": "not_rejected_by_paper_balance_predicate",
+        "yield_below_one": false
+      },
+      "recursive_s3": {
+        "balanced": {
+          "equation_count": 18,
+          "internal_variable_count": 17,
+          "total_nonconstant_x_variables": 36
+        },
+        "sequential": {
+          "equation_count": 18,
+          "internal_variable_count": 17,
+          "total_nonconstant_x_variables": 36
+        }
+      },
+      "square_and_multiply_for_m_membership_constraints": {
+        "multiplication_gates_upper_bound": 513,
+        "nonsquare_multiplications_upper_bound": 152,
+        "squarings_upper_bound": 361
+      },
+      "unresolved": {
+        "actual_usable_factor_base_cardinality": null,
+        "exceptional_components": null,
+        "independent_relation_probability": null,
+        "macaulay_matrix_columns": null,
+        "macaulay_matrix_memory_bytes": null,
+        "macaulay_matrix_rows": null,
+        "recovery_branch_count": null,
+        "solving_degree": null,
+        "total_relation_generation_work": null
+      }
+    },
+    {
+      "condition_1": {
+        "D_meets_threshold": true,
+        "exact_threshold_ceil_p_to_1_over_m": 7132,
+        "scoped_label": "not_rejected_by_condition_1"
+      },
+      "conditional_linear_algebra_minima": {
+        "independent_relation_rows_for_full_rank": 564522,
+        "matrix_unknown_columns": 564522,
+        "nominal_coordinate_factor_base_size": 564522,
+        "target_samples_ceiling_under_exact_paper_yield": "1"
+      },
+      "direct_semaev": {
+        "per_variable_degree": 524288,
+        "polynomial": "S_21",
+        "total_degree": 10485760
+      },
+      "m": 20,
+      "paper_balance_and_yield": {
+        "D_meets_balance_threshold": true,
+        "balance_threshold_ceil_m_factorial_p_to_1_over_m": 59223,
+        "exact_yield_reduced": {
+          "denominator": "3342700506113998594012075141603928609896679576075795007761566467338313227905901441875",
+          "numerator": "128206897304072631224573896961894619615440125766403856802451183036547859663116256204219947019786869768836"
+        },
+        "expected_trials_for_one_decomposition_ceiling_when_yield_below_one": null,
+        "scoped_label": "not_rejected_by_paper_balance_predicate",
+        "yield_below_one": false
+      },
+      "recursive_s3": {
+        "balanced": {
+          "equation_count": 19,
+          "internal_variable_count": 18,
+          "total_nonconstant_x_variables": 38
+        },
+        "sequential": {
+          "equation_count": 19,
+          "internal_variable_count": 18,
+          "total_nonconstant_x_variables": 38
+        }
+      },
+      "square_and_multiply_for_m_membership_constraints": {
+        "multiplication_gates_upper_bound": 540,
+        "nonsquare_multiplications_upper_bound": 160,
+        "squarings_upper_bound": 380
+      },
+      "unresolved": {
+        "actual_usable_factor_base_cardinality": null,
+        "exceptional_components": null,
+        "independent_relation_probability": null,
+        "macaulay_matrix_columns": null,
+        "macaulay_matrix_memory_bytes": null,
+        "macaulay_matrix_rows": null,
+        "recovery_branch_count": null,
+        "solving_degree": null,
+        "total_relation_generation_work": null
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": {
+    "excluded": [
+      "solver execution",
+      "toy-field experiments",
+      "exact-target relation search",
+      "solving-degree estimates",
+      "Macaulay-size estimates",
+      "recovery-cost estimates",
+      "ECDLP complexity or security claims"
+    ],
+    "included": [
+      "exact integer thresholds",
+      "exact rational yield arithmetic",
+      "degree-formula replay",
+      "recursive S3 representation counts",
+      "binary square-and-multiply gate upper bounds",
+      "conditional factor-base and linear-algebra counts"
+    ],
+    "threat_model": "classical_single_target_plain_secp256k1"
+  },
+  "source_scope": {
+    "direct_semaev_degrees": {
+      "formula": "For direct S_(m+1), degree 2^(m-1) in each variable and total degree m*2^(m-1).",
+      "scope": "Formula replay only; no S_(m+1) polynomial is materialized and no solving-degree consequence is inferred."
+    },
+    "p_and_factorization": {
+      "arithmetic_artifact_path": "experiments/engine/pkc_smooth_desk_screen/artifact.json",
+      "arithmetic_claim_id": "SC-SECP-PMINUS1-FACTORIZATION",
+      "large_cofactor_prime_claim_id": "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+      "repository_path": "Ecdlp/Proved/Secp256k1PrimeP.lean",
+      "scope": "The arithmetic certificate replays the exact product identity. Primality of the 237-bit cofactor remains a separate repository Lean theorem and is not reproved by this stdlib artifact."
+    },
+    "yield_and_balance": {
+      "claim_id": "SC-PKC-RELATION-YIELD",
+      "repository_path": "data/source_claim_extracts/petit_kosters_messeng2016.json",
+      "scope": "D^m/(m!p) is the paper's heuristic expected decomposition yield, not a theorem about independent relations or total cost."
+    }
+  },
+  "square_and_multiply_model": {
+    "algorithm": "left_to_right_binary_from_leading_one",
+    "binary_exponent": "10001001110100101010",
+    "bit_length": 20,
+    "exponent": 564522,
+    "multiplication_gates_upper_bound_per_membership_constraint": 27,
+    "nonsquare_multiplications_upper_bound_per_membership_constraint": 8,
+    "popcount": 9,
+    "scope": "An explicit standard square-and-multiply upper bound. It is not claimed to be a shortest addition chain or a solving-cost bound.",
+    "squarings_upper_bound_per_membership_constraint": 19
+  }
+}

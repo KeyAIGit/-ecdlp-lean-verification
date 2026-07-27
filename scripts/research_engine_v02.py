@@ -17,6 +17,7 @@ from datetime import datetime
 from typing import Any, Iterable
 
 from scientific_provenance import scientific_source_commit_allowed
+from research_contract_binding import scientific_contract_digests
 
 
 PRIMARY_THREAT_MODEL = "classical-single-target-plain"
@@ -180,7 +181,11 @@ def _validate_string_list(
     return problems
 
 
-def validate_mechanism_contract(contract: Any) -> list[str]:
+def validate_mechanism_contract(
+    contract: Any,
+    *,
+    require_assured: bool = False,
+) -> list[str]:
     label = "mechanism_contract"
     required = (
         "source_objects",
@@ -275,6 +280,14 @@ def validate_mechanism_contract(contract: Any) -> list[str]:
         }:
             problems.append(
                 f"{label}.relation_semantics.equivalence_status: invalid"
+            )
+        elif (
+            require_assured
+            and semantics.get("equivalence_status") == "specified_unproved"
+        ):
+            problems.append(
+                f"{label}.relation_semantics.equivalence_status: "
+                "unproved specification cannot clear the exact-mechanism gate"
             )
 
     recovery = contract.get("recovery_map")
@@ -494,7 +507,8 @@ def validate_cost_contract(contract: Any) -> list[str]:
         f"{label}.amortization",
     )
     if isinstance(amortization, dict):
-        if amortization.get("class") not in {
+        amortization_class = amortization.get("class")
+        if amortization_class not in {
             "none_single_target",
             "fixed_batch",
             "multi_target",
@@ -504,6 +518,16 @@ def validate_cost_contract(contract: Any) -> list[str]:
         count = amortization.get("target_count")
         if not isinstance(count, int) or isinstance(count, bool) or count < 1:
             problems.append(f"{label}.amortization.target_count: invalid")
+        elif amortization_class == "none_single_target" and count != 1:
+            problems.append(
+                f"{label}.amortization.target_count: "
+                "single-target work must use exactly one target"
+            )
+        elif amortization_class in {"fixed_batch", "multi_target"} and count < 2:
+            problems.append(
+                f"{label}.amortization.target_count: "
+                "batch or multi-target work requires at least two targets"
+            )
         if not isinstance(amortization.get("per_target_cost_included"), bool):
             problems.append(
                 f"{label}.amortization.per_target_cost_included: expected bool"
@@ -850,16 +874,65 @@ def validate_generation_binding(
         "proposal_sha256",
         "source_commit",
         "review_artifacts",
+        "cell_id",
+        "typed_evidence_digest",
+        "toy_scope",
+        "route_id",
+        "threat_model",
+        "contract_digests",
     )
     problems = _require_keys(binding, required, label)
     if not isinstance(binding, dict):
         return problems
-    for key in ("draft_id", "proposal_id"):
+    for key in ("draft_id", "proposal_id", "cell_id", "route_id"):
         if not _is_nonempty_string(binding.get(key)):
             problems.append(f"{label}.{key}: empty")
-    for key in ("draft_sha256", "proposal_sha256"):
+    for key in (
+        "draft_sha256",
+        "proposal_sha256",
+        "typed_evidence_digest",
+    ):
         if not _is_sha256(binding.get(key)):
             problems.append(f"{label}.{key}: invalid")
+    if binding.get("threat_model") != PRIMARY_THREAT_MODEL:
+        problems.append(f"{label}.threat_model: drift")
+    toy_scope = binding.get("toy_scope")
+    problems += _require_keys(
+        toy_scope,
+        ("curve_family", "max_field_bits", "forbidden_targets"),
+        f"{label}.toy_scope",
+    )
+    if isinstance(toy_scope, dict):
+        if not _is_nonempty_string(toy_scope.get("curve_family")):
+            problems.append(f"{label}.toy_scope.curve_family: invalid")
+        maximum = toy_scope.get("max_field_bits")
+        if (
+            not isinstance(maximum, int)
+            or isinstance(maximum, bool)
+            or not 1 <= maximum <= 24
+        ):
+            problems.append(f"{label}.toy_scope.max_field_bits: invalid")
+        problems += _validate_string_list(
+            toy_scope.get("forbidden_targets"),
+            f"{label}.toy_scope.forbidden_targets",
+            nonempty=True,
+        )
+    digests = binding.get("contract_digests")
+    digest_keys = (
+        "mechanism_contract_sha256",
+        "prediction_contract_sha256",
+        "cost_contract_sha256",
+        "validator_design_contract_sha256",
+    )
+    problems += _require_keys(
+        digests, digest_keys, f"{label}.contract_digests"
+    )
+    if isinstance(digests, dict):
+        for key in digest_keys:
+            if not _is_sha256(digests.get(key)):
+                problems.append(
+                    f"{label}.contract_digests.{key}: invalid"
+                )
     if (
         not isinstance(binding.get("source_commit"), str)
         or not COMMIT_RE.fullmatch(binding["source_commit"])
@@ -990,6 +1063,8 @@ def validate_snapshot(
         "version",
         "created_at",
         "route_id",
+        "cell_id",
+        "typed_evidence_digest",
         "lane",
         "threat_model",
         "target_scope",
@@ -1015,6 +1090,10 @@ def validate_snapshot(
         problems.append(f"{label}.created_at: invalid")
     if not _is_nonempty_string(snapshot.get("route_id")):
         problems.append(f"{label}.route_id: invalid")
+    if not _is_nonempty_string(snapshot.get("cell_id")):
+        problems.append(f"{label}.cell_id: invalid")
+    if not _is_sha256(snapshot.get("typed_evidence_digest")):
+        problems.append(f"{label}.typed_evidence_digest: invalid")
     problems += validate_lane(snapshot.get("lane"))
     if snapshot.get("threat_model") != PRIMARY_THREAT_MODEL:
         problems.append(f"{label}.threat_model: drift")
@@ -1174,7 +1253,8 @@ def validate_snapshot(
         if isinstance(snapshot.get("lane"), dict)
         else None
     )
-    if lane_id in {"mechanism", "bounded_experiment"}:
+    generation_lanes = {"mechanism", "validator", "bounded_experiment"}
+    if lane_id in generation_lanes:
         problems += validate_generation_binding(
             snapshot.get("generation_binding"), policy
         )
@@ -1186,21 +1266,79 @@ def validate_snapshot(
             problems.append(
                 f"{label}.source_commit: generation binding mismatch"
             )
+        if isinstance(snapshot.get("generation_binding"), dict):
+            binding = snapshot["generation_binding"]
+            for key in (
+                "cell_id",
+                "typed_evidence_digest",
+                "route_id",
+                "threat_model",
+            ):
+                if binding.get(key) != snapshot.get(key):
+                    problems.append(
+                        f"{label}.{key}: generation binding mismatch"
+                    )
+            bound_scope = binding.get("toy_scope", {})
+            target_scope = snapshot.get("target_scope", {})
+            if (
+                isinstance(bound_scope, dict)
+                and isinstance(target_scope, dict)
+            ):
+                if (
+                    bound_scope.get("curve_family")
+                    != target_scope.get("curve_family")
+                ):
+                    problems.append(
+                        f"{label}.target_scope.curve_family: "
+                        "generation binding mismatch"
+                    )
+                field_bits = target_scope.get("field_bits")
+                maximum = bound_scope.get("max_field_bits")
+                if (
+                    isinstance(field_bits, int)
+                    and not isinstance(field_bits, bool)
+                    and isinstance(maximum, int)
+                    and field_bits > maximum
+                ):
+                    problems.append(
+                        f"{label}.target_scope.field_bits: "
+                        "exceeds reviewed toy scope"
+                    )
+                if not set(bound_scope.get("forbidden_targets", [])).issubset(
+                    set(target_scope.get("forbidden_targets", []))
+                ):
+                    problems.append(
+                        f"{label}.target_scope.forbidden_targets: "
+                        "generation binding mismatch"
+                    )
+            current_digests = scientific_contract_digests(
+                snapshot.get("mechanism_contract"),
+                snapshot.get("prediction_contract"),
+                snapshot.get("cost_contract"),
+                snapshot.get("validator_contract"),
+            )
+            bound_digests = binding.get("contract_digests", {})
+            digest_keys: tuple[str, ...] = ()
+            if lane_id in {"mechanism", "bounded_experiment"}:
+                digest_keys += ("mechanism_contract_sha256",)
+            if lane_id == "bounded_experiment":
+                digest_keys += (
+                    "prediction_contract_sha256",
+                    "cost_contract_sha256",
+                )
+            if lane_id in {"validator", "bounded_experiment"}:
+                digest_keys += ("validator_design_contract_sha256",)
+            for key in digest_keys:
+                if bound_digests.get(key) != current_digests.get(key):
+                    problems.append(
+                        f"{label}.{key}: reviewed contract digest mismatch"
+                    )
+    if lane_id in {"mechanism", "bounded_experiment"}:
         problems += validate_mechanism_contract(
-            snapshot.get("mechanism_contract")
+            snapshot.get("mechanism_contract"),
+            require_assured=True,
         )
     if lane_id == "validator":
-        problems += validate_generation_binding(
-            snapshot.get("generation_binding"), policy
-        )
-        if (
-            isinstance(snapshot.get("generation_binding"), dict)
-            and snapshot["generation_binding"].get("source_commit")
-            != snapshot.get("source_commit")
-        ):
-            problems.append(
-                f"{label}.source_commit: generation binding mismatch"
-            )
         problems += validate_validator_contract(
             snapshot.get("validator_contract"),
             evidence_registry=(
@@ -1222,6 +1360,24 @@ def validate_snapshot(
                 else []
             ),
         )
+        sizes = snapshot.get("prediction_contract", {}).get("tested_sizes")
+        lane_scope = (
+            snapshot.get("lane", {}).get("experiment_scope", {})
+            if isinstance(snapshot.get("lane"), dict)
+            else {}
+        )
+        max_field_bits = lane_scope.get("max_field_bits")
+        if isinstance(sizes, list) and isinstance(max_field_bits, int):
+            if any(
+                isinstance(size, int)
+                and not isinstance(size, bool)
+                and size > min(24, max_field_bits)
+                for size in sizes
+            ):
+                problems.append(
+                    f"{label}.prediction_contract.tested_sizes: "
+                    "exceeds bounded lane ceiling"
+                )
     return sorted(set(problems))
 
 
@@ -1262,7 +1418,8 @@ def derive_gates(
         gates.add("direct_target_property_lane_violation")
 
     mechanism_problems = validate_mechanism_contract(
-        snapshot.get("mechanism_contract")
+        snapshot.get("mechanism_contract"),
+        require_assured=True,
     )
     if lane_id in {"mechanism", "bounded_experiment"} and mechanism_problems:
         gates.add("missing_exact_mechanism")
@@ -1270,6 +1427,12 @@ def derive_gates(
         validate_generation_binding(
             snapshot.get("generation_binding"), policy
         )
+    ):
+        gates.add("missing_quality_cleared_generation_binding")
+    if lane_id in {"mechanism", "validator", "bounded_experiment"} and any(
+        "generation binding mismatch" in problem
+        or "reviewed contract digest mismatch" in problem
+        for problem in validation
     ):
         gates.add("missing_quality_cleared_generation_binding")
     prediction_problems = validate_prediction_contract(
@@ -1289,6 +1452,13 @@ def derive_gates(
     if lane_id in {"validator", "bounded_experiment"} and validator_problems:
         gates.add("missing_independent_validator")
     cost = snapshot.get("cost_contract")
+    if lane_id == "bounded_experiment" and isinstance(cost, dict):
+        amortization = cost.get("amortization")
+        if isinstance(amortization, dict) and (
+            amortization.get("class") != "none_single_target"
+            or amortization.get("target_count") != 1
+        ):
+            gates.add("changes_threat_model")
     if (
         lane_id == "bounded_experiment"
         and isinstance(cost, dict)
@@ -1296,6 +1466,22 @@ def derive_gates(
         and cost["preprocessing"].get("included_in_totals") is not True
     ):
         gates.add("hidden_or_unpriced_precomputation")
+    prediction = snapshot.get("prediction_contract")
+    if lane_id == "bounded_experiment" and isinstance(prediction, dict):
+        sizes = prediction.get("tested_sizes")
+        experiment_scope = (
+            lane.get("experiment_scope", {})
+            if isinstance(lane, dict)
+            else {}
+        )
+        max_field_bits = experiment_scope.get("max_field_bits")
+        if isinstance(sizes, list) and isinstance(max_field_bits, int) and any(
+            isinstance(size, int)
+            and not isinstance(size, bool)
+            and size > min(24, max_field_bits)
+            for size in sizes
+        ):
+            gates.add("toy_scope_exceeded")
     return sorted(gates)
 
 
@@ -1792,6 +1978,155 @@ def optimize_portfolio(
     }
 
 
+def _events_before(
+    lifecycle_events: list[dict[str, Any]],
+    occurred_at: str,
+) -> list[dict[str, Any]]:
+    if not _is_iso_datetime(occurred_at):
+        return []
+    boundary = datetime.fromisoformat(occurred_at.replace("Z", "+00:00"))
+    ordered: list[tuple[datetime, int, dict[str, Any]]] = []
+    for index, event in enumerate(lifecycle_events):
+        timestamp_value = event.get("occurred_at")
+        if not _is_iso_datetime(timestamp_value):
+            continue
+        timestamp = datetime.fromisoformat(
+            timestamp_value.replace("Z", "+00:00")
+        )
+        if timestamp < boundary:
+            ordered.append((timestamp, index, event))
+    return [
+        event
+        for _, _, event in sorted(
+            ordered,
+            key=lambda item: (item[0], item[1]),
+        )
+    ]
+
+
+def build_recommendation_binding(
+    policy: dict[str, Any],
+    immutable_candidates: list[dict[str, Any]],
+    lifecycle_events: list[dict[str, Any]],
+    occurred_at: str,
+) -> dict[str, Any]:
+    """Bind a recommendation to a reproducible base-portfolio computation."""
+
+    prior_events = _events_before(lifecycle_events, occurred_at)
+    states: dict[tuple[str, int], str] = {}
+    for event in prior_events:
+        key = (event.get("candidate_id"), event.get("candidate_version"))
+        target = event.get("to_state")
+        if target in STATES:
+            states[key] = target
+    completed = _completed_dependencies(prior_events)
+    boundary = (
+        datetime.fromisoformat(occurred_at.replace("Z", "+00:00"))
+        if _is_iso_datetime(occurred_at)
+        else None
+    )
+
+    entries: list[dict[str, Any]] = []
+    for candidate in immutable_candidates:
+        created_at = candidate.get("created_at")
+        if (
+            boundary is None
+            or not _is_iso_datetime(created_at)
+            or datetime.fromisoformat(created_at.replace("Z", "+00:00"))
+            > boundary
+        ):
+            continue
+        key = (candidate.get("candidate_id"), candidate.get("version"))
+        if states.get(key, "idea") not in {
+            "validator_ready",
+            "admissible",
+            "recommended",
+        }:
+            continue
+        if validate_snapshot(candidate, policy) or derive_gates(candidate, policy):
+            continue
+        if not all(
+            dependency_satisfied(dependency, completed)
+            for dependency in candidate.get("dependencies", [])
+        ):
+            continue
+        score = score_snapshot(candidate)
+        vector = cost_vector(candidate)
+        entries.append(
+            {
+                "candidate_id": candidate["candidate_id"],
+                "snapshot": candidate,
+                "score": score,
+                "cost_vector": vector,
+                "priority": {},
+            }
+        )
+
+    portfolio = optimize_portfolio(
+        entries,
+        policy,
+        completed,
+        scenario="base",
+    )
+    selected = set(portfolio.get("selected_ids", []))
+    payload = {
+        "policy_digest": sha256_json(policy),
+        "portfolio_status": portfolio.get("status"),
+        "selected_snapshots": sorted(
+            [
+                {
+                    "candidate_id": entry["snapshot"]["candidate_id"],
+                    "candidate_version": entry["snapshot"]["version"],
+                    "candidate_digest": entry["snapshot"]["snapshot_digest"],
+                }
+                for entry in entries
+                if entry["candidate_id"] in selected
+            ],
+            key=lambda item: (
+                item["candidate_id"],
+                item["candidate_version"],
+            ),
+        ),
+    }
+    return {
+        **payload,
+        "selection_digest": sha256_json(payload),
+    }
+
+
+def validate_recommendation_bindings(
+    policy: dict[str, Any],
+    immutable_candidates: list[dict[str, Any]],
+    lifecycle_events: list[dict[str, Any]],
+) -> list[str]:
+    problems: list[str] = []
+    for index, event in enumerate(lifecycle_events):
+        if event.get("to_state") != "recommended":
+            continue
+        label = f"lifecycle_events[{index}].recommendation_binding"
+        expected = build_recommendation_binding(
+            policy,
+            immutable_candidates,
+            lifecycle_events,
+            event.get("occurred_at"),
+        )
+        actual = event.get("recommendation_binding")
+        if actual != expected:
+            problems.append(
+                f"{label}: does not match the recomputed base portfolio"
+            )
+        selected_ids = {
+            item["candidate_id"]
+            for item in expected["selected_snapshots"]
+        }
+        if event.get("candidate_id") not in selected_ids:
+            problems.append(
+                f"{label}: candidate was not selected by the recomputed "
+                "base portfolio"
+            )
+    return sorted(set(problems))
+
+
 def build_calibration(
     candidates: list[dict[str, Any]],
     outcomes: list[dict[str, Any]],
@@ -1949,6 +2284,12 @@ def run_engine(
         owner_decisions,
         authorized_owner_roles,
     )
+    lifecycle_problems += validate_recommendation_bindings(
+        policy,
+        candidates,
+        lifecycle_events,
+    )
+    lifecycle_problems = sorted(set(lifecycle_problems))
     completed = _completed_dependencies(lifecycle_events)
     budgets = policy.get("portfolio_budget", {})
 
@@ -2230,6 +2571,7 @@ def true_value() -> bool:
 __all__ = [
     "bind_snapshot",
     "build_calibration",
+    "build_recommendation_binding",
     "canonical_json_bytes",
     "cost_vector",
     "dependency_satisfied",
@@ -2248,6 +2590,7 @@ __all__ = [
     "validate_mechanism_contract",
     "validate_owner_decisions",
     "validate_prediction_contract",
+    "validate_recommendation_bindings",
     "validate_snapshot",
     "validate_validator_contract",
 ]
