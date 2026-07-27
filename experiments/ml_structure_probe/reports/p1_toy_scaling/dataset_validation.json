@@ -1,0 +1,638 @@
+{
+  "allocation_checks": [
+    {
+      "allocation_failures": 0,
+      "curve_index": 0,
+      "field_bits": 13,
+      "records": 4096
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 1,
+      "field_bits": 13,
+      "records": 4096
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 2,
+      "field_bits": 13,
+      "records": 4096
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 3,
+      "field_bits": 13,
+      "records": 4096
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 4,
+      "field_bits": 13,
+      "records": 4096
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 5,
+      "field_bits": 13,
+      "records": 4096
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 6,
+      "field_bits": 13,
+      "records": 4096
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 7,
+      "field_bits": 13,
+      "records": 4096
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 8,
+      "field_bits": 13,
+      "records": 4096
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 9,
+      "field_bits": 13,
+      "records": 4096
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 0,
+      "field_bits": 16,
+      "records": 8192
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 1,
+      "field_bits": 16,
+      "records": 8192
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 2,
+      "field_bits": 16,
+      "records": 8192
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 3,
+      "field_bits": 16,
+      "records": 8192
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 4,
+      "field_bits": 16,
+      "records": 8192
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 5,
+      "field_bits": 16,
+      "records": 8192
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 6,
+      "field_bits": 16,
+      "records": 8192
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 7,
+      "field_bits": 16,
+      "records": 8192
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 8,
+      "field_bits": 16,
+      "records": 8192
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 9,
+      "field_bits": 16,
+      "records": 8192
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 0,
+      "field_bits": 20,
+      "records": 32768
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 1,
+      "field_bits": 20,
+      "records": 32768
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 2,
+      "field_bits": 20,
+      "records": 32768
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 3,
+      "field_bits": 20,
+      "records": 32768
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 4,
+      "field_bits": 20,
+      "records": 32768
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 5,
+      "field_bits": 20,
+      "records": 32768
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 6,
+      "field_bits": 20,
+      "records": 32768
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 7,
+      "field_bits": 20,
+      "records": 32768
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 8,
+      "field_bits": 20,
+      "records": 32768
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 9,
+      "field_bits": 20,
+      "records": 32768
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 0,
+      "field_bits": 24,
+      "records": 65536
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 1,
+      "field_bits": 24,
+      "records": 65536
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 2,
+      "field_bits": 24,
+      "records": 65536
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 3,
+      "field_bits": 24,
+      "records": 65536
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 4,
+      "field_bits": 24,
+      "records": 65536
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 5,
+      "field_bits": 24,
+      "records": 65536
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 6,
+      "field_bits": 24,
+      "records": 65536
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 7,
+      "field_bits": 24,
+      "records": 65536
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 8,
+      "field_bits": 24,
+      "records": 65536
+    },
+    {
+      "allocation_failures": 0,
+      "curve_index": 9,
+      "field_bits": 24,
+      "records": 65536
+    }
+  ],
+  "ec_check_failures": [],
+  "ec_checks": 1105920,
+  "errors": [],
+  "experiment_id": "ML-P1E-TOY-SCALING-2026-07-27-R2",
+  "files": [
+    {
+      "ec_checks": 20480,
+      "field_bits": 13,
+      "path": "toy_records_b13_blind.npy",
+      "records": 12288,
+      "scope": "blind",
+      "sha256": "a81c793713cb2c8a8d32add0c8d5f0ada99772a7115f0b64e4cadca68cec2af3",
+      "split_counts": {
+        "blind_curve_blind_generator": 12288,
+        "new_curve_new_generator": 0,
+        "new_curve_seen_generator": 0,
+        "seen_curve_new_generator": 0,
+        "seen_curve_seen_generator": 0,
+        "train": 0
+      }
+    },
+    {
+      "ec_checks": 20480,
+      "field_bits": 13,
+      "path": "toy_records_b13_development.npy",
+      "records": 28672,
+      "scope": "development",
+      "sha256": "81d22f004e157532d301575290edb2f5246c610d7696138f4b8f3aaab78500dd",
+      "split_counts": {
+        "blind_curve_blind_generator": 0,
+        "new_curve_new_generator": 8192,
+        "new_curve_seen_generator": 8192,
+        "seen_curve_new_generator": 3072,
+        "seen_curve_seen_generator": 1845,
+        "train": 7371
+      }
+    },
+    {
+      "ec_checks": 40960,
+      "field_bits": 16,
+      "path": "toy_records_b16_blind.npy",
+      "records": 24576,
+      "scope": "blind",
+      "sha256": "dc52cd971e5f4fc962b2f6c21f00b330ab364beb4142806839c0f32ead329141",
+      "split_counts": {
+        "blind_curve_blind_generator": 24576,
+        "new_curve_new_generator": 0,
+        "new_curve_seen_generator": 0,
+        "seen_curve_new_generator": 0,
+        "seen_curve_seen_generator": 0,
+        "train": 0
+      }
+    },
+    {
+      "ec_checks": 40960,
+      "field_bits": 16,
+      "path": "toy_records_b16_development.npy",
+      "records": 57344,
+      "scope": "development",
+      "sha256": "1495d7e8cc791471618a637e0d37720c8c509e8cc1719c4d59914d5dca9b9664",
+      "split_counts": {
+        "blind_curve_blind_generator": 0,
+        "new_curve_new_generator": 16384,
+        "new_curve_seen_generator": 16384,
+        "seen_curve_new_generator": 6144,
+        "seen_curve_seen_generator": 3690,
+        "train": 14742
+      }
+    },
+    {
+      "ec_checks": 163840,
+      "field_bits": 20,
+      "path": "toy_records_b20_blind.npy",
+      "records": 98304,
+      "scope": "blind",
+      "sha256": "00e6bedad97202edfbc77631af98ee43e39cacd4e4fe0b45a92910f840f739fc",
+      "split_counts": {
+        "blind_curve_blind_generator": 98304,
+        "new_curve_new_generator": 0,
+        "new_curve_seen_generator": 0,
+        "seen_curve_new_generator": 0,
+        "seen_curve_seen_generator": 0,
+        "train": 0
+      }
+    },
+    {
+      "ec_checks": 163840,
+      "field_bits": 20,
+      "path": "toy_records_b20_development.npy",
+      "records": 229376,
+      "scope": "development",
+      "sha256": "00a2e1aad2d372b34f64ee290733bbebe45dff8bea2dbe0b2ffce6a66f21e30e",
+      "split_counts": {
+        "blind_curve_blind_generator": 0,
+        "new_curve_new_generator": 65536,
+        "new_curve_seen_generator": 65536,
+        "seen_curve_new_generator": 24576,
+        "seen_curve_seen_generator": 14742,
+        "train": 58986
+      }
+    },
+    {
+      "ec_checks": 327680,
+      "field_bits": 24,
+      "path": "toy_records_b24_blind.npy",
+      "records": 196608,
+      "scope": "blind",
+      "sha256": "c3178bb7cdf07504bc21e19cc5da8bf8b318ad1d39506f34f92bcf1fd46f681b",
+      "split_counts": {
+        "blind_curve_blind_generator": 196608,
+        "new_curve_new_generator": 0,
+        "new_curve_seen_generator": 0,
+        "seen_curve_new_generator": 0,
+        "seen_curve_seen_generator": 0,
+        "train": 0
+      }
+    },
+    {
+      "ec_checks": 327680,
+      "field_bits": 24,
+      "path": "toy_records_b24_development.npy",
+      "records": 458752,
+      "scope": "development",
+      "sha256": "9d6f5d98f575a5b3ce3f11f8bbbb7a4c6ad1a4ebab20161535977fe666372b00",
+      "split_counts": {
+        "blind_curve_blind_generator": 0,
+        "new_curve_new_generator": 131072,
+        "new_curve_seen_generator": 131072,
+        "seen_curve_new_generator": 49152,
+        "seen_curve_seen_generator": 29493,
+        "train": 117963
+      }
+    }
+  ],
+  "full_ec_replay": true,
+  "manifest_sha256": "28dfcf66a18626a26bda3ef734da93ceb6a31b2a4a277d78789e918b1d2ef80d",
+  "oracle_sha256": "7acc852df5a927a7954f56bd9548ec021ef0b0c92f5435e8f213363f71c72792",
+  "producer_imported": false,
+  "records": 1105920,
+  "schema_version": 1,
+  "split_counts": {
+    "blind_curve_blind_generator": 331776,
+    "new_curve_new_generator": 221184,
+    "new_curve_seen_generator": 221184,
+    "seen_curve_new_generator": 82944,
+    "seen_curve_seen_generator": 49770,
+    "train": 199062
+  },
+  "status": "pass",
+  "unique_q_checks": [
+    {
+      "curve_index": 0,
+      "field_bits": 13,
+      "records": 4096,
+      "unique_q": 4096
+    },
+    {
+      "curve_index": 1,
+      "field_bits": 13,
+      "records": 4096,
+      "unique_q": 4096
+    },
+    {
+      "curve_index": 2,
+      "field_bits": 13,
+      "records": 4096,
+      "unique_q": 4096
+    },
+    {
+      "curve_index": 3,
+      "field_bits": 13,
+      "records": 4096,
+      "unique_q": 4096
+    },
+    {
+      "curve_index": 4,
+      "field_bits": 13,
+      "records": 4096,
+      "unique_q": 4096
+    },
+    {
+      "curve_index": 5,
+      "field_bits": 13,
+      "records": 4096,
+      "unique_q": 4096
+    },
+    {
+      "curve_index": 6,
+      "field_bits": 13,
+      "records": 4096,
+      "unique_q": 4096
+    },
+    {
+      "curve_index": 7,
+      "field_bits": 13,
+      "records": 4096,
+      "unique_q": 4096
+    },
+    {
+      "curve_index": 8,
+      "field_bits": 13,
+      "records": 4096,
+      "unique_q": 4096
+    },
+    {
+      "curve_index": 9,
+      "field_bits": 13,
+      "records": 4096,
+      "unique_q": 4096
+    },
+    {
+      "curve_index": 0,
+      "field_bits": 16,
+      "records": 8192,
+      "unique_q": 8192
+    },
+    {
+      "curve_index": 1,
+      "field_bits": 16,
+      "records": 8192,
+      "unique_q": 8192
+    },
+    {
+      "curve_index": 2,
+      "field_bits": 16,
+      "records": 8192,
+      "unique_q": 8192
+    },
+    {
+      "curve_index": 3,
+      "field_bits": 16,
+      "records": 8192,
+      "unique_q": 8192
+    },
+    {
+      "curve_index": 4,
+      "field_bits": 16,
+      "records": 8192,
+      "unique_q": 8192
+    },
+    {
+      "curve_index": 5,
+      "field_bits": 16,
+      "records": 8192,
+      "unique_q": 8192
+    },
+    {
+      "curve_index": 6,
+      "field_bits": 16,
+      "records": 8192,
+      "unique_q": 8192
+    },
+    {
+      "curve_index": 7,
+      "field_bits": 16,
+      "records": 8192,
+      "unique_q": 8192
+    },
+    {
+      "curve_index": 8,
+      "field_bits": 16,
+      "records": 8192,
+      "unique_q": 8192
+    },
+    {
+      "curve_index": 9,
+      "field_bits": 16,
+      "records": 8192,
+      "unique_q": 8192
+    },
+    {
+      "curve_index": 0,
+      "field_bits": 20,
+      "records": 32768,
+      "unique_q": 32768
+    },
+    {
+      "curve_index": 1,
+      "field_bits": 20,
+      "records": 32768,
+      "unique_q": 32768
+    },
+    {
+      "curve_index": 2,
+      "field_bits": 20,
+      "records": 32768,
+      "unique_q": 32768
+    },
+    {
+      "curve_index": 3,
+      "field_bits": 20,
+      "records": 32768,
+      "unique_q": 32768
+    },
+    {
+      "curve_index": 4,
+      "field_bits": 20,
+      "records": 32768,
+      "unique_q": 32768
+    },
+    {
+      "curve_index": 5,
+      "field_bits": 20,
+      "records": 32768,
+      "unique_q": 32768
+    },
+    {
+      "curve_index": 6,
+      "field_bits": 20,
+      "records": 32768,
+      "unique_q": 32768
+    },
+    {
+      "curve_index": 7,
+      "field_bits": 20,
+      "records": 32768,
+      "unique_q": 32768
+    },
+    {
+      "curve_index": 8,
+      "field_bits": 20,
+      "records": 32768,
+      "unique_q": 32768
+    },
+    {
+      "curve_index": 9,
+      "field_bits": 20,
+      "records": 32768,
+      "unique_q": 32768
+    },
+    {
+      "curve_index": 0,
+      "field_bits": 24,
+      "records": 65536,
+      "unique_q": 65536
+    },
+    {
+      "curve_index": 1,
+      "field_bits": 24,
+      "records": 65536,
+      "unique_q": 65536
+    },
+    {
+      "curve_index": 2,
+      "field_bits": 24,
+      "records": 65536,
+      "unique_q": 65536
+    },
+    {
+      "curve_index": 3,
+      "field_bits": 24,
+      "records": 65536,
+      "unique_q": 65536
+    },
+    {
+      "curve_index": 4,
+      "field_bits": 24,
+      "records": 65536,
+      "unique_q": 65536
+    },
+    {
+      "curve_index": 5,
+      "field_bits": 24,
+      "records": 65536,
+      "unique_q": 65536
+    },
+    {
+      "curve_index": 6,
+      "field_bits": 24,
+      "records": 65536,
+      "unique_q": 65536
+    },
+    {
+      "curve_index": 7,
+      "field_bits": 24,
+      "records": 65536,
+      "unique_q": 65536
+    },
+    {
+      "curve_index": 8,
+      "field_bits": 24,
+      "records": 65536,
+      "unique_q": 65536
+    },
+    {
+      "curve_index": 9,
+      "field_bits": 24,
+      "records": 65536,
+      "unique_q": 65536
+    }
+  ],
+  "validation_role": "independent shard-boundary, exact allocation, and EC replay",
+  "validator_sha256": "0d5591a27c55e9f0c8b26c24d4c7e20a3ffead94c35eb3e9d539f323b7d59564",
+  "wall_time_seconds": 58.59458174499741
+}

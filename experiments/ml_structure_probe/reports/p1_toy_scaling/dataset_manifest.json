@@ -1,0 +1,221 @@
+{
+  "catalog_payload_sha256": "e3aa11fa48357b9c1fdc5f0dbeb07108a34838ffbad1b734021627a3ef620c84",
+  "catalog_sha256": "d293afa7e5b614f39ed00356e35ee81a400b57ee9656907170193cb3aca0bbd7",
+  "classification": "route-neutral engineering qualification",
+  "config_sha256": "85594d83b1979320bbc25b5017052ef888bbe4890d81d4f25658e05b446632b5",
+  "dtype": [
+    [
+      "field_p",
+      "<u4"
+    ],
+    [
+      "group_order",
+      "<u4"
+    ],
+    [
+      "curve_a",
+      "<u4"
+    ],
+    [
+      "curve_b",
+      "<u4"
+    ],
+    [
+      "beta",
+      "<u4"
+    ],
+    [
+      "lambda",
+      "<u4"
+    ],
+    [
+      "gx",
+      "<u4"
+    ],
+    [
+      "gy",
+      "<u4"
+    ],
+    [
+      "qx",
+      "<u4"
+    ],
+    [
+      "qy",
+      "<u4"
+    ],
+    [
+      "scalar",
+      "<u4"
+    ],
+    [
+      "curve_index",
+      "|u1"
+    ],
+    [
+      "generator_index",
+      "|u1"
+    ],
+    [
+      "split_code",
+      "|u1"
+    ]
+  ],
+  "experiment_id": "ML-P1E-TOY-SCALING-2026-07-27-R2",
+  "files": [
+    {
+      "bytes": 1347968,
+      "field_bits": 13,
+      "records": 28672,
+      "relative_path": "toy_records_b13_development.npy",
+      "scope": "development",
+      "sha256": "81d22f004e157532d301575290edb2f5246c610d7696138f4b8f3aaab78500dd",
+      "split_counts": {
+        "blind_curve_blind_generator": 0,
+        "new_curve_new_generator": 8192,
+        "new_curve_seen_generator": 8192,
+        "seen_curve_new_generator": 3072,
+        "seen_curve_seen_generator": 1845,
+        "train": 7371
+      }
+    },
+    {
+      "bytes": 577920,
+      "field_bits": 13,
+      "records": 12288,
+      "relative_path": "toy_records_b13_blind.npy",
+      "scope": "blind",
+      "sha256": "a81c793713cb2c8a8d32add0c8d5f0ada99772a7115f0b64e4cadca68cec2af3",
+      "split_counts": {
+        "blind_curve_blind_generator": 12288,
+        "new_curve_new_generator": 0,
+        "new_curve_seen_generator": 0,
+        "seen_curve_new_generator": 0,
+        "seen_curve_seen_generator": 0,
+        "train": 0
+      }
+    },
+    {
+      "bytes": 2695552,
+      "field_bits": 16,
+      "records": 57344,
+      "relative_path": "toy_records_b16_development.npy",
+      "scope": "development",
+      "sha256": "1495d7e8cc791471618a637e0d37720c8c509e8cc1719c4d59914d5dca9b9664",
+      "split_counts": {
+        "blind_curve_blind_generator": 0,
+        "new_curve_new_generator": 16384,
+        "new_curve_seen_generator": 16384,
+        "seen_curve_new_generator": 6144,
+        "seen_curve_seen_generator": 3690,
+        "train": 14742
+      }
+    },
+    {
+      "bytes": 1155456,
+      "field_bits": 16,
+      "records": 24576,
+      "relative_path": "toy_records_b16_blind.npy",
+      "scope": "blind",
+      "sha256": "dc52cd971e5f4fc962b2f6c21f00b330ab364beb4142806839c0f32ead329141",
+      "split_counts": {
+        "blind_curve_blind_generator": 24576,
+        "new_curve_new_generator": 0,
+        "new_curve_seen_generator": 0,
+        "seen_curve_new_generator": 0,
+        "seen_curve_seen_generator": 0,
+        "train": 0
+      }
+    },
+    {
+      "bytes": 10781056,
+      "field_bits": 20,
+      "records": 229376,
+      "relative_path": "toy_records_b20_development.npy",
+      "scope": "development",
+      "sha256": "00a2e1aad2d372b34f64ee290733bbebe45dff8bea2dbe0b2ffce6a66f21e30e",
+      "split_counts": {
+        "blind_curve_blind_generator": 0,
+        "new_curve_new_generator": 65536,
+        "new_curve_seen_generator": 65536,
+        "seen_curve_new_generator": 24576,
+        "seen_curve_seen_generator": 14742,
+        "train": 58986
+      }
+    },
+    {
+      "bytes": 4620672,
+      "field_bits": 20,
+      "records": 98304,
+      "relative_path": "toy_records_b20_blind.npy",
+      "scope": "blind",
+      "sha256": "00e6bedad97202edfbc77631af98ee43e39cacd4e4fe0b45a92910f840f739fc",
+      "split_counts": {
+        "blind_curve_blind_generator": 98304,
+        "new_curve_new_generator": 0,
+        "new_curve_seen_generator": 0,
+        "seen_curve_new_generator": 0,
+        "seen_curve_seen_generator": 0,
+        "train": 0
+      }
+    },
+    {
+      "bytes": 21561728,
+      "field_bits": 24,
+      "records": 458752,
+      "relative_path": "toy_records_b24_development.npy",
+      "scope": "development",
+      "sha256": "9d6f5d98f575a5b3ce3f11f8bbbb7a4c6ad1a4ebab20161535977fe666372b00",
+      "split_counts": {
+        "blind_curve_blind_generator": 0,
+        "new_curve_new_generator": 131072,
+        "new_curve_seen_generator": 131072,
+        "seen_curve_new_generator": 49152,
+        "seen_curve_seen_generator": 29493,
+        "train": 117963
+      }
+    },
+    {
+      "bytes": 9240960,
+      "field_bits": 24,
+      "records": 196608,
+      "relative_path": "toy_records_b24_blind.npy",
+      "scope": "blind",
+      "sha256": "c3178bb7cdf07504bc21e19cc5da8bf8b318ad1d39506f34f92bcf1fd46f681b",
+      "split_counts": {
+        "blind_curve_blind_generator": 196608,
+        "new_curve_new_generator": 0,
+        "new_curve_seen_generator": 0,
+        "seen_curve_new_generator": 0,
+        "seen_curve_seen_generator": 0,
+        "train": 0
+      }
+    }
+  ],
+  "generation": {
+    "numpy": "2.3.5",
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.39",
+    "python": "3.12.13",
+    "wall_time_seconds": 56.70303498499561
+  },
+  "manifest_sha256": "1a68ec3b8e4e91b5281f58008bc644d2c54cdf4c2f7f9bcbe4fe461ad1a6612b",
+  "producer_sha256": "396f23e56d78d09a90962019750b7de6f082e06dbbfb52d265c21e8bf9067899",
+  "records": 1105920,
+  "schema_version": 1,
+  "split_codes": {
+    "blind_curve_blind_generator": 5,
+    "new_curve_new_generator": 4,
+    "new_curve_seen_generator": 3,
+    "seen_curve_new_generator": 2,
+    "seen_curve_seen_generator": 1,
+    "train": 0
+  },
+  "split_counts": {
+    "blind_curve_blind_generator": 331776,
+    "new_curve_new_generator": 221184,
+    "new_curve_seen_generator": 221184,
+    "seen_curve_new_generator": 82944,
+    "seen_curve_seen_generator": 49770,
+    "train": 199062
+  }
+}
