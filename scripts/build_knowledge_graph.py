@@ -44,6 +44,8 @@ RESEARCH_ENGINE_STATE = ROOT / "data" / "research_engine_state.json"
 RESEARCH_ENGINE_V02_STATE = ROOT / "data" / "research_engine_v02_state.json"
 RESEARCH_SHADOW_INTAKE = ROOT / "data" / "research_engine_shadow_intake.json"
 TYPED_EVIDENCE_STATE = ROOT / "data" / "typed_evidence_state.json"
+HYPOTHESIS_GENERATION_POLICY = ROOT / "repo" / "HYPOTHESIS_GENERATION_V0.json"
+SOURCE_REGISTRY = ROOT / "data" / "source_registry.json"
 
 
 def parse_ledger() -> list[dict]:
@@ -279,6 +281,10 @@ def build() -> dict:
         RESEARCH_SHADOW_INTAKE.read_text(encoding="utf-8")
     )
     typed_evidence = json.loads(TYPED_EVIDENCE_STATE.read_text(encoding="utf-8"))
+    generation_policy = json.loads(
+        HYPOTHESIS_GENERATION_POLICY.read_text(encoding="utf-8")
+    )
+    source_registry = json.loads(SOURCE_REGISTRY.read_text(encoding="utf-8"))
     family_by_area = {family["area"]: family["id"] for family in substrate["families"]}
     built_modules = set(imports.get("Ecdlp", []))  # what Ecdlp.lean gates
     depth_cache: dict[str, int] = {}
@@ -463,6 +469,49 @@ def build() -> dict:
                     "type": "bounded_by_research_barrier",
                 }
             )
+        seed_axes = cell["seed_axes"]
+        edges.extend(
+            [
+                {
+                    "from": cell_id,
+                    "to": seed_axes["target_feature_id"],
+                    "type": "binds_target_feature",
+                },
+                {
+                    "from": cell_id,
+                    "to": seed_axes["mechanism_primitive_id"],
+                    "type": "binds_mechanism_primitive",
+                },
+                {
+                    "from": cell_id,
+                    "to": seed_axes["uncertainty_id"],
+                    "type": "binds_unresolved_question",
+                },
+            ]
+        )
+
+    for seed in engine["hypothesis_generation"]["generated_seeds"]:
+        edges.append(
+            {
+                "from": seed["seed_id"],
+                "to": seed["cell_id"],
+                "type": "generated_from_cell",
+            }
+        )
+
+    for stub in shadow_intake["proposal_stubs"]:
+        anchor_id = stub["anchor_id"]
+        edges.append(
+            {
+                "from": stub["stub_id"],
+                "to": anchor_id,
+                "type": (
+                    "follows_up_cell"
+                    if anchor_id.startswith("CELL-")
+                    else "follows_up_source"
+                ),
+            }
+        )
 
     # Research Engine nodes connect candidate selection and retained outcomes to the
     # already classified route and hypothesis layers. The engine state remains
@@ -559,6 +608,15 @@ def build() -> dict:
                 "seed_eligible_cells"
             ],
             "typed_desk_decisions": typed_evidence["counts"]["desk_decisions"],
+            "hypothesis_axis_nodes": sum(
+                len(generation_policy["axes"][axis_name])
+                for axis_name in (
+                    "target_features",
+                    "mechanism_primitives",
+                    "unresolved_questions",
+                )
+            ),
+            "source_index_nodes": len(source_registry["sources"]),
             "research_engine_intake_candidates": engine["counts"][
                 "intake_candidates"
             ],
@@ -647,6 +705,27 @@ def build() -> dict:
             "proposal_stubs": shadow_intake["proposal_stubs"],
             "parked_ideas": shadow_intake["parked_ideas"],
             "generation_contract": shadow_intake["generation_contract"],
+        },
+        "hypothesis_axis_index": {
+            "policy_source": "repo/HYPOTHESIS_GENERATION_V0.json",
+            "target_features": generation_policy["axes"]["target_features"],
+            "mechanism_primitives": generation_policy["axes"][
+                "mechanism_primitives"
+            ],
+            "unresolved_questions": generation_policy["axes"][
+                "unresolved_questions"
+            ],
+        },
+        "source_index": {
+            "registry_source": "data/source_registry.json",
+            "sources": [
+                {
+                    "id": source["id"],
+                    "title": source["title"],
+                    "full_text_status": source["full_text_status"],
+                }
+                for source in source_registry["sources"]
+            ],
         },
         "typed_evidence": {
             "state_source": "data/typed_evidence_state.json",
@@ -815,6 +894,76 @@ def render_markdown(graph: dict) -> str:
     lines.append("")
 
     engine = graph["research_engine"]
+    shadow = graph["research_shadow_intake"]
+    generation = engine["hypothesis_generation"]
+    axis_index = graph["hypothesis_axis_index"]
+    lines.append("## Finite hypothesis-space projection")
+    lines.append("")
+    lines.append(
+        "The mathematical hypothesis space is open-ended. This section is the "
+        "finite, versioned projection induced by the current typed evidence, "
+        "mechanism identity grammar, route model, and evidence digests. It is "
+        "not a claim that every possible ECDLP idea has been enumerated."
+    )
+    lines.append("")
+    lines.append(
+        "The typed mechanism and cell are part of scientific identity. The three "
+        "synthesis axes alone are not a Cartesian-product hypothesis identifier."
+    )
+    lines.append("")
+    lines.append(
+        "| axis kind | axis | definition boundary |"
+    )
+    lines.append("|---|---|---|")
+    axis_groups = (
+        ("target feature", axis_index["target_features"]),
+        ("mechanism primitive", axis_index["mechanism_primitives"]),
+        ("unresolved question", axis_index["unresolved_questions"]),
+    )
+    for axis_kind, axes in axis_groups:
+        for axis in axes:
+            lines.append(
+                f"| {axis_kind} | **{axis['id']}**: {axis['label']} | "
+                f"{axis['boundary']} |"
+            )
+    lines.append("")
+    lines.append(
+        "| seed | typed mechanism and cell | target feature | mechanism primitive | "
+        "unresolved question | status |"
+    )
+    lines.append("|---|---|---|---|---|---|")
+    for seed in generation["generated_seeds"]:
+        lines.append(
+            f"| **{seed['seed_id']}** | `{seed['typed_cell']['mechanism_id']}` / "
+            f"`{seed['cell_id']}` | `{seed['target_feature']['id']}` | "
+            f"`{seed['mechanism_primitive']['id']}` | "
+            f"`{seed['unresolved_question']['id']}` | "
+            f"`{seed['status']}`, authorization `{seed['authorization']}` |"
+        )
+    if not generation["generated_seeds"]:
+        lines.append("| **none** | - | - | - | - | no eligible typed cells |")
+    lines.append("")
+    lines.append("| shadow stub | anchor | kind | executable | authorized |")
+    lines.append("|---|---|---|---:|---:|")
+    for stub in shadow["proposal_stubs"]:
+        lines.append(
+            f"| **{stub['stub_id']}** | `{stub['anchor_id']}` | "
+            f"`{stub['stub_kind']}` | {str(stub['executable']).lower()} | "
+            f"{str(stub['authorized']).lower()} |"
+        )
+    lines.append("")
+    lines.append(
+        "> These rows are research questions. They are not quality-cleared "
+        "hypotheses, candidates, route promotions, or permission to execute."
+    )
+    lines.append("")
+    lines.append(
+        "> Current desk priority: `CELL-M-PKC-SMOOTH-M16` / "
+        "`RSI-D8BBA6340789`. The auxiliary-curve cell remains parked pending "
+        "a finite source-defined search domain. Authorization remains `none`."
+    )
+    lines.append("")
+
     gates = engine["gate_status"]
     lines.append("## Research Engine v0")
     lines.append("")
@@ -869,7 +1018,6 @@ def render_markdown(graph: dict) -> str:
     lines.append("")
 
     lifecycle = graph["research_engine_v02"]
-    shadow = graph["research_shadow_intake"]
     lines.append("## Research Engine v0.2 shadow lifecycle")
     lines.append("")
     lines.append(

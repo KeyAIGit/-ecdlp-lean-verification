@@ -34,6 +34,12 @@ STRUCTURAL_TASK_ID = "TASK-009"
 STRUCTURAL_FOUNDATION_ID = "F-SEMAEV-ELIMINATION"
 MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
+MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
+CURRENT_PHASE = "evidence-bounded-desk-priority"
+CURRENT_TASK_ID = "TASK-015"
+DESK_PRIORITY_CELL_ID = "CELL-M-PKC-SMOOTH-M16"
+DESK_PRIORITY_STUB_ID = "RSI-D8BBA6340789"
+DESK_PRIORITY_COST_ID = "CQ-SEMAEV-S17-SYSTEM-COST"
 
 ROUTE_STATUSES = {
     "guardrail",
@@ -205,8 +211,8 @@ def validate() -> list[str]:
         problems.append(
             "exactly classical-single-target-plain must be the primary threat model"
         )
-    if data["phase_policy"].get("phase") != "research-engine-v0.2-sanitation":
-        problems.append("the current phase must be research-engine-v0.2-sanitation")
+    if data["phase_policy"].get("phase") != CURRENT_PHASE:
+        problems.append(f"the current phase must be {CURRENT_PHASE}")
     if data["phase_policy"].get("experiments_authorized") is not False:
         problems.append("experiments_authorized must remain false")
     if data["phase_policy"].get("bounded_exploration_authorized") is not False:
@@ -381,9 +387,13 @@ def validate() -> list[str]:
         if not valid:
             problems.append(f"route_selection.{field} must be nonempty")
     next_gate = data.get("next_phase_gate", {})
-    if next_gate.get("current_mode") != "proposal_intake_promotion_closed":
+    if (
+        next_gate.get("current_mode")
+        != "evidence_bounded_desk_priority_promotion_closed"
+    ):
         problems.append(
-            "next_phase_gate.current_mode must be proposal_intake_promotion_closed"
+            "next_phase_gate.current_mode must be "
+            "evidence_bounded_desk_priority_promotion_closed"
         )
     reopen = next_gate.get("reopen_requirements")
     if not isinstance(reopen, list) or not reopen:
@@ -484,6 +494,25 @@ def validate() -> list[str]:
         problems.append(
             "exactly R-GLV-SEMAEV must own the completed structural route lane; "
             f"found {completed_structural_routes}"
+        )
+    petit_route = next(
+        (route for route in routes if route.get("id") == "R-PETIT-COMPOSED-MAPS"),
+        {},
+    )
+    petit_next_action = petit_route.get("next_action", "")
+    for binding in (
+        CURRENT_TASK_ID,
+        DESK_PRIORITY_CELL_ID,
+        DESK_PRIORITY_STUB_ID,
+        DESK_PRIORITY_COST_ID,
+    ):
+        if binding not in petit_next_action:
+            problems.append(
+                f"R-PETIT-COMPOSED-MAPS.next_action is missing {binding}"
+            )
+    if "auxiliary-curve cell parked" not in petit_next_action:
+        problems.append(
+            "R-PETIT-COMPOSED-MAPS must keep the auxiliary-curve cell parked"
         )
 
     completed_structural_foundations: list[str] = []
@@ -639,7 +668,13 @@ def validate() -> list[str]:
             problems.append(f"completed build-now foundation is missing {relative}")
 
     tasks_text = TASKS.read_text(encoding="utf-8")
-    for required_task in ("TASK-008", "TASK-009", "TASK-010", "TASK-013"):
+    for required_task in (
+        "TASK-008",
+        "TASK-009",
+        "TASK-010",
+        "TASK-013",
+        CURRENT_TASK_ID,
+    ):
         if required_task not in tasks_text:
             problems.append(f"tasks/ECDLP_RESEARCH.md must contain {required_task}")
     for completed_task in ("TASK-005", "TASK-006", "TASK-007"):
@@ -678,6 +713,29 @@ def validate() -> list[str]:
             "exactly TASK-009 must be the completed bounded structural task; "
             f"found {structural_task_ids}"
         )
+    task_010 = task_sections.get(MAINTENANCE_TASK_ID, "")
+    if not re.search(
+        r"^Status: completed_accepted$", task_010, flags=re.MULTILINE
+    ):
+        problems.append("TASK-010 must be completed_accepted")
+    task_015 = task_sections.get(CURRENT_TASK_ID, "")
+    expected_task_015_lines = (
+        "Status: active_non_executable_desk_priority",
+        f"Desk priority: `{DESK_PRIORITY_CELL_ID}` / `{DESK_PRIORITY_STUB_ID}`",
+        "Authorization: none",
+    )
+    for line in expected_task_015_lines:
+        if not re.search(rf"^{re.escape(line)}$", task_015, flags=re.MULTILINE):
+            problems.append(f"{CURRENT_TASK_ID} must contain {line!r}")
+    for binding in (
+        DESK_PRIORITY_CELL_ID,
+        DESK_PRIORITY_STUB_ID,
+        DESK_PRIORITY_COST_ID,
+        "zero_retention_success",
+        "full_text_unread",
+    ):
+        if binding not in task_015:
+            problems.append(f"{CURRENT_TASK_ID} is missing binding {binding}")
     active_hypotheses = [
         hypothesis_id
         for hypothesis_id, fields in hypotheses.items()
@@ -699,16 +757,29 @@ def validate() -> list[str]:
         problems.append("decision substrate has the wrong maintenance cycle")
     if maintenance.get("task_id") != MAINTENANCE_TASK_ID:
         problems.append("maintenance cycle must bind TASK-010")
-    if maintenance.get("status") != "active_remediation_draft":
-        problems.append("maintenance cycle must remain active_remediation_draft")
+    if maintenance.get("status") != "completed_accepted":
+        problems.append("maintenance cycle must be completed_accepted")
+    if maintenance.get("completed_on") != "2026-07-27":
+        problems.append("maintenance cycle completed_on must be 2026-07-27")
+    if maintenance.get("acceptance_commit") != MAINTENANCE_ACCEPTANCE_COMMIT:
+        problems.append("maintenance cycle acceptance commit drifted")
     if maintenance.get("authorizes_experiment") is not False:
         problems.append("maintenance cycle must not authorize an experiment")
     if maintenance.get("promotes_route") is not False:
         problems.append("maintenance cycle must not promote a route")
     if maintenance.get("historical_outcomes_mutable") is not False:
         problems.append("maintenance cycle must preserve historical outcomes")
-    if "Current central task: `TASK-010`" not in next_tasks_text:
-        problems.append("tasks/NEXT.md must route current work to TASK-010")
+    if f"Current central task: `{CURRENT_TASK_ID}`" not in next_tasks_text:
+        problems.append(
+            f"tasks/NEXT.md must route current work to {CURRENT_TASK_ID}"
+        )
+    for binding in (
+        DESK_PRIORITY_CELL_ID,
+        DESK_PRIORITY_STUB_ID,
+        CURRENT_TASK_ID,
+    ):
+        if binding not in next_tasks_text:
+            problems.append(f"tasks/NEXT.md is missing desk-priority binding {binding}")
     for binding_id in (
         STRUCTURAL_DECISION_ID,
         STRUCTURAL_ITERATION_ID,

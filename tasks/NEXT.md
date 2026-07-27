@@ -20,18 +20,24 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: `TASK-010` in `tasks/ECDLP_RESEARCH.md`.
+Current central task: `TASK-015` in `tasks/ECDLP_RESEARCH.md`.
 
-`TASK-008` remains the parked proposal-intake lane. It does not become active
-while the v0.2 sanitation lifecycle is in remediation.
+`TASK-010` is accepted at
+`85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
+proposal-intake lane because TASK-015 selects only a non-executable desk
+question, not a hypothesis candidate or experiment.
 
-After `TASK-010` passes its merge gate, the scientific activation order is:
+Current scientific activation order:
 
-1. `TASK-014` closes the prime-field prior-art gaps and performs the exact PKC
-   smooth-subgroup desk screen.
-2. Its independent GLV connected-system workstream may run in parallel.
-3. Its native phase remains blocked behind the retained-mechanism gates and a
-   separate dated owner decision.
+1. `TASK-014` has closed the first evidence and arithmetic desk cycle; its
+   native phase remains blocked.
+2. `TASK-015` uses the existing knowledge graph as a finite evidence-bounded
+   hypothesis-space projection and gives sole desk priority to
+   `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`.
+3. The auxiliary-curve cell stays parked until a primary source supplies a
+   finite search domain with a completeness criterion.
+4. Any later candidate, solver, or experiment still requires the normal
+   review gates and a separate dated authorization.
 
 These entries freeze further engine-schema expansion by default. They do not
 authorize a solver, a route promotion, or an exact-target computation.

@@ -1806,11 +1806,15 @@ def validate_policy(
         and structural_gate.get("kind") == "non_experiment"
         and structural_gate.get("authorizes_experiment") is False
     )
-    proposal_intake_pause = (
-        decisions.get("next_phase_gate", {}).get("current_mode")
-        == "proposal_intake_promotion_closed"
+    current_exploration_pause = decisions.get("next_phase_gate", {}).get(
+        "current_mode"
+    ) in {
+        "proposal_intake_promotion_closed",
+        "evidence_bounded_desk_priority_promotion_closed",
+    }
+    expected_current_exploration = not (
+        structural_pause or current_exploration_pause
     )
-    expected_current_exploration = not (structural_pause or proposal_intake_pause)
     if (
         phase_policy.get("bounded_exploration_authorized")
         is not expected_current_exploration

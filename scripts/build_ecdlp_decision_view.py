@@ -224,7 +224,7 @@ def render(data: dict, sources: dict[str, dict]) -> str:
     lines.extend(
         [
             "",
-            f"**Route selection:** {data['next_phase_gate']['decision']}",
+            f"**Current phase gate:** {data['next_phase_gate']['decision']}",
             "",
             f"**Final review:** {data['next_phase_gate']['final_review']}",
             "",

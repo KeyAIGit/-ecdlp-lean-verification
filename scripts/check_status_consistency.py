@@ -63,6 +63,7 @@ def main() -> int:
     product = read_json("repo/PRODUCT_MODEL.json")
     pilot_protocol = read_json("repo/PILOT_PROTOCOL.json")
     status = read_text("STATUS.md")
+    knowledge_graph_md = read_text("data/knowledge_graph.md")
     index = read_text("index.html")
     dashboard = read_text("dashboard.html")
     explore = read_text("explore.html")
@@ -409,16 +410,100 @@ def main() -> int:
         "records_outcome_for",
         "updates_hypothesis",
         "records_route_evidence",
+        "binds_target_feature",
+        "binds_mechanism_primitive",
+        "binds_unresolved_question",
+        "generated_from_cell",
+        "follows_up_cell",
+        "follows_up_source",
     ):
         check(edge_types.get(edge_type, 0) > 0,
               f"knowledge graph is missing semantic edge type {edge_type!r}")
+    cells = {
+        item["cell_id"]
+        for item in graph.get("typed_evidence", {}).get("cell_index", [])
+    }
+    seeds = {
+        item["seed_id"]
+        for item in graph.get("research_engine", {})
+        .get("hypothesis_generation", {})
+        .get("generated_seeds", [])
+    }
+    stubs = {
+        item["stub_id"]
+        for item in graph.get("research_shadow_intake", {}).get(
+            "proposal_stubs", []
+        )
+    }
+    source_ids = {
+        item["id"]
+        for item in graph.get("source_index", {}).get("sources", [])
+    }
+    axis_index = graph.get("hypothesis_axis_index", {})
+    axis_targets = {
+        "binds_target_feature": {
+            item["id"] for item in axis_index.get("target_features", [])
+        },
+        "binds_mechanism_primitive": {
+            item["id"] for item in axis_index.get("mechanism_primitives", [])
+        },
+        "binds_unresolved_question": {
+            item["id"] for item in axis_index.get("unresolved_questions", [])
+        },
+    }
+    endpoint_contracts = {
+        "binds_target_feature": (cells, axis_targets["binds_target_feature"]),
+        "binds_mechanism_primitive": (
+            cells,
+            axis_targets["binds_mechanism_primitive"],
+        ),
+        "binds_unresolved_question": (
+            cells,
+            axis_targets["binds_unresolved_question"],
+        ),
+        "generated_from_cell": (seeds, cells),
+        "follows_up_cell": (stubs, cells),
+        "follows_up_source": (stubs, source_ids),
+    }
+    for edge in graph.get("edges", []):
+        edge_type = edge.get("type")
+        if edge_type not in endpoint_contracts:
+            continue
+        valid_sources, valid_targets = endpoint_contracts[edge_type]
+        check(
+            edge.get("from") in valid_sources,
+            f"{edge_type} edge has unresolved source {edge.get('from')!r}",
+        )
+        check(
+            edge.get("to") in valid_targets,
+            f"{edge_type} edge has unresolved target {edge.get('to')!r}",
+        )
     check(graph.get("invariant", "").lower().find("lean kernel") >= 0,
           "data/knowledge_graph.json invariant should mention the Lean kernel")
+    check(
+        "## Finite hypothesis-space projection" in knowledge_graph_md
+        and "not a claim that every possible ECDLP idea has been enumerated"
+        in knowledge_graph_md,
+        "rendered knowledge graph must expose the bounded hypothesis-space projection",
+    )
 
     check("Task contract template" in tasks,
           "tasks/NEXT.md must include the task contract template")
     all_task_text = research_tasks + "\n" + product_tasks
-    check(3 <= len(re.findall(r"^### TASK-", all_task_text, flags=re.MULTILINE)) <= 7,
+    task_sections = re.findall(
+        r"^### TASK-\d+\b.*?(?=^### TASK-\d+\b|\Z)",
+        all_task_text,
+        flags=re.MULTILINE | re.DOTALL,
+    )
+    active_task_count = sum(
+        not re.search(
+            r"^Status: (?:completed|evidence_closed)",
+            section,
+            flags=re.MULTILINE,
+        )
+        for section in task_sections
+    )
+    check(3 <= active_task_count <= 7,
           "the two owning queues must keep 3-7 active task contracts in total")
     check(
         "tasks/ECDLP_RESEARCH.md" in tasks

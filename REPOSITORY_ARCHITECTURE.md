@@ -33,8 +33,9 @@ Machine-readable companions:
 - `repo/BRANCH_INVENTORY.json` records the dated, non-destructive remote-branch
   snapshot; ancestry alone never authorizes deletion.
 - `repo/FINAL_REVIEW_PACKET.md` is the frozen adversarial-review contract for
-  draft PR #235. It is historical input, not the final packet for this branch;
-  `TASK-010` owns the eventual whole-program review.
+  draft PR #235. It is historical input. `TASK-010` owns the accepted v0.2
+  sanitation review, while `TASK-015` owns the current non-executable desk
+  priority.
 
 Their checks live under `scripts/check_*inventory.py`,
 `scripts/check_formal_substrate.py`, `scripts/check_ecdlp_decision_substrate.py`,

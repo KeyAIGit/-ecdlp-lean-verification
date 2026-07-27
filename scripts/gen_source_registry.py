@@ -261,6 +261,26 @@ SOURCES: list[dict] = [
                 "prior art for proposal design, not evidence that P4 implemented the method.",
     },
     {
+        "id": "yokota_kudo_yasuda2017_wcc",
+        "title": "Practical Limit of Index Calculus Algorithms for ECDLP over Prime Fields",
+        "authors": ["Yuki Yokota", "Momonari Kudo", "Masaya Yasuda"],
+        "year": 2017,
+        "venue": "Proceedings of the Tenth International Workshop on Coding and "
+                 "Cryptography (WCC 2017), 12 pp.",
+        "url": "https://drive.google.com/file/d/1I8t-2nEMqzTr8ueppHIO3xWHe1khWiAb/"
+               "view?usp=sharing",
+        "doi": None,
+        "aliases": ["Yokota-Kudo-Yasuda", "Practical Limit"],
+        "role": "Primary extended-abstract evidence for the bounded m=2 experiments on "
+                "p-minus-one smooth-factor accelerations and the separate p-plus-one "
+                "trace construction.",
+        "full_text_status": "full_text_inspected",
+        "note": "The author-linked 12-page PDF was inspected and hashed as "
+                "a60b09327429f0fd99561cd600455ee38da687078b55250ad4ebcb1170b7ded4. "
+                "It is a separate WCC 2017 precursor, not the CANS 2018 paper, and "
+                "does not change the latter's full_text_unread status.",
+    },
+    {
         "id": "kudo_yokota_takahashi_yasuda2018",
         "title": "Acceleration of Index Calculus for Solving ECDLP over Prime Fields and Its "
                  "Limitation",

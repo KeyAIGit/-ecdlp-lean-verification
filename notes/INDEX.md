@@ -39,6 +39,6 @@ traces live in `archive/` (ward, scratch), not here.
 | `SERVER_CONNECT.md` · `SERVER_RUNBOOK.md` | the Hetzner warm prover node |
 | `AGENT_ORCHESTRATION.md` | multi-agent orchestration patterns |
 | `EXECUTION_SECURITY.md` | execution-security posture |
-| `HYPOTHESIS_EXPLORER.md` | the hypothesis-exploration pipeline |
+| `HYPOTHESIS_EXPLORER.md` | guide to the finite evidence-bounded hypothesis-space projection |
 | `UPSTREAM_13155.md` · `UPSTREAM_SCAN.md` | Mathlib upstream tracking |
 | `FABLE_DELEGATION_REPORT.md` · `MANUS_TASK.md` | delegation session records |

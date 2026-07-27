@@ -163,12 +163,23 @@ def validate_semantics(
     kudo = sources.get("kudo_yokota_takahashi_yasuda2018", {})
     if kudo.get("full_text_status") != "full_text_unread":
         problems.append("Kudo CANS 2018 must remain full_text_unread")
+    wcc = sources.get("yokota_kudo_yasuda2017_wcc", {})
+    if wcc.get("full_text_status") != "full_text_inspected":
+        problems.append("WCC 2017 must retain its inspected full-text status")
+    if (
+        wcc.get("title")
+        == kudo.get("title")
+        or wcc.get("authors") == kudo.get("authors")
+    ):
+        problems.append("WCC 2017 and CANS 2018 must remain distinct sources")
     petit_source = sources.get("petit_kosters_messeng2016", {})
     if petit_source.get("full_text_status") != "full_text_inspected":
         problems.append("PKC 2016 must retain its inspected full-text status")
 
     phase = decisions.get("phase_policy", {})
     execution = decisions.get("execution_gates", {})
+    if phase.get("phase") != "evidence-bounded-desk-priority":
+        problems.append("current phase must remain evidence-bounded desk priority")
     if phase.get("bounded_exploration_authorized") is not False:
         problems.append("current phase must authorize zero bounded experiments")
     if execution.get("exploration", {}).get("authorized") is not False:
@@ -228,6 +239,7 @@ def validate_semantics(
     maintenance = decisions.get("maintenance_cycle", {})
     if (
         maintenance.get("task_id") != "TASK-010"
+        or maintenance.get("status") != "completed_accepted"
         or maintenance.get("authorizes_experiment") is not False
         or maintenance.get("promotes_route") is not False
     ):
