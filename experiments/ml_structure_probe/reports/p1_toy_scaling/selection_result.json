@@ -1,0 +1,3896 @@
+{
+  "adaptive_search_stopped": true,
+  "architecture_scores": [
+    {
+      "architecture_id": "trees-glv-d8-l32",
+      "fits": 14,
+      "median_conservative_information_gain": -0.08874914212624285,
+      "minimum_conservative_information_gain": -0.10013505940513918
+    },
+    {
+      "architecture_id": "trees-compressed-d6-l16",
+      "fits": 14,
+      "median_conservative_information_gain": -0.08980625682508739,
+      "minimum_conservative_information_gain": -0.13159421539087385
+    },
+    {
+      "architecture_id": "trees-affine-d8-l32",
+      "fits": 14,
+      "median_conservative_information_gain": -0.09078711797093975,
+      "minimum_conservative_information_gain": -0.12518795973884078
+    },
+    {
+      "architecture_id": "trees-compressed-d8-l32",
+      "fits": 14,
+      "median_conservative_information_gain": -0.09694395725528852,
+      "minimum_conservative_information_gain": -0.14211552871647368
+    },
+    {
+      "architecture_id": "ridge-glv-a1",
+      "fits": 14,
+      "median_conservative_information_gain": -0.10566067999413452,
+      "minimum_conservative_information_gain": -0.1209346612216613
+    },
+    {
+      "architecture_id": "ridge-compressed-a10",
+      "fits": 14,
+      "median_conservative_information_gain": -0.10814526648269784,
+      "minimum_conservative_information_gain": -0.12197175864193101
+    },
+    {
+      "architecture_id": "ridge-compressed-a1",
+      "fits": 14,
+      "median_conservative_information_gain": -0.1085142616852184,
+      "minimum_conservative_information_gain": -0.12406309894609112
+    },
+    {
+      "architecture_id": "ridge-affine-a1",
+      "fits": 14,
+      "median_conservative_information_gain": -0.11162485036987832,
+      "minimum_conservative_information_gain": -0.11638803544214762
+    },
+    {
+      "architecture_id": "rbf-compressed-c128",
+      "fits": 14,
+      "median_conservative_information_gain": -0.14979055572165206,
+      "minimum_conservative_information_gain": -0.25640783212562707
+    },
+    {
+      "architecture_id": "ridge-compressed-a0p1",
+      "fits": 14,
+      "median_conservative_information_gain": -0.15610550222464287,
+      "minimum_conservative_information_gain": -0.17970508562675783
+    },
+    {
+      "architecture_id": "mlp-compressed-128x64",
+      "fits": 14,
+      "median_conservative_information_gain": -0.31765490289284315,
+      "minimum_conservative_information_gain": -0.4053287117015575
+    },
+    {
+      "architecture_id": "mlp-glv-128x64",
+      "fits": 14,
+      "median_conservative_information_gain": -0.42708085911399046,
+      "minimum_conservative_information_gain": -0.5270751877107817
+    },
+    {
+      "architecture_id": "mlp-compressed-64",
+      "fits": 14,
+      "median_conservative_information_gain": -0.9199393620161415,
+      "minimum_conservative_information_gain": -1.4427863344012297
+    },
+    {
+      "architecture_id": "mlp-affine-64",
+      "fits": 14,
+      "median_conservative_information_gain": -1.174461924505394,
+      "minimum_conservative_information_gain": -1.4851992863250993
+    }
+  ],
+  "blind_dataset_shard_opened": false,
+  "blind_evaluation_authorized": true,
+  "catalog_sha256": "e3c33972d7f0e225941f1861d2af85e0a696c65097b4a2d611d0d6b6a637d7df",
+  "config_sha256": "fbacadc41429f91b70443826de46c309978333518da34a68321f1b25ca451e6c",
+  "confirmation_architecture_ids": [
+    "trees-glv-d8-l32"
+  ],
+  "controls": {
+    "canary_architecture_id": "ridge-compressed-a0p1",
+    "canary_pass": true,
+    "complete_matrix": true,
+    "control_counts": {
+      "curve_generator_only": 2,
+      "leak_1": 2,
+      "leak_4": 2,
+      "leak_all": 2,
+      "mismatched_points": 2,
+      "opaque_points": 2,
+      "permuted_labels": 2,
+      "random_labels": 2
+    },
+    "negative_control_ids": [
+      "curve_generator_only",
+      "mismatched_points",
+      "opaque_points",
+      "permuted_labels",
+      "random_labels"
+    ],
+    "negative_pass": true,
+    "pipeline_valid": true,
+    "runs": [
+      {
+        "architecture_id": "trees-glv-d8-l32",
+        "control_id": "random_labels",
+        "control_spec": {
+          "feature_mode_override": null,
+          "leaked_bits": 0,
+          "target_transform": "random_labels"
+        },
+        "family": "extra_trees",
+        "feature_columns": 74,
+        "feature_mode": "compressed_relation_glv_bits",
+        "field_bits": 12,
+        "fit_seconds": 0.11181575599766802,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.023117939999792725,
+          "new_curve_seen_generator": 0.023026414011837915,
+          "seen_curve_new_generator": 0.02281476500502322,
+          "seen_curve_seen_generator": 0.01319569000042975
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.4847568315878175,
+            "bit_accuracy_lift": -0.05331347056699169,
+            "bit_accuracy_lift_99ci": [
+              -0.09079786621941904,
+              -0.015829074914564333
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0064175616611548735,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.7843758439488757,
+              0.22273886311905805
+            ],
+            "information_gain_bits_per_bit": -0.023401540867909052,
+            "information_gain_bits_per_key": -0.28081849041490886,
+            "information_gain_by_bit": [
+              -0.2068648388941448,
+              -0.04044618425997483,
+              -0.02297774158387614,
+              -0.002852704449066597,
+              -0.00048071463301797564,
+              -0.0012002801855763442,
+              -0.0008549891069380275,
+              -0.0005404264962445968,
+              -0.0018796254299347681,
+              -0.0009864255599540534,
+              -0.0011168189025050129,
+              -0.0006177409136754803
+            ],
+            "information_gain_cluster_se": 0.08621215068257154,
+            "mean_hamming": 6.18291802094619,
+            "prior_bit_accuracy": 0.5380703021548092,
+            "records": 5538
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.4841699771277236,
+            "bit_accuracy_lift": -0.056202600216684724,
+            "bit_accuracy_lift_99ci": [
+              -0.08412544112833091,
+              -0.02827975930503854
+            ],
+            "bit_accuracy_lift_cluster_se": 0.004780564023672693,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.00018057060310581438,
+            "exact_recovery_count": 1,
+            "information_gain_99ci": [
+              -0.8109330393385641,
+              0.2067304305400391
+            ],
+            "information_gain_bits_per_bit": -0.02517510869993858,
+            "information_gain_bits_per_key": -0.30210130439926247,
+            "information_gain_by_bit": [
+              -0.2355148855526855,
+              -0.03459149500276823,
+              -0.01730023457381493,
+              -0.004666717930997853,
+              -0.0006275293828955269,
+              -0.00205160386741864,
+              -0.0015534447204884826,
+              -0.0011969098545418664,
+              -0.002495163461480654,
+              -0.0014239499716855947,
+              0.0004022545361414304,
+              -0.0010816246166271656
+            ],
+            "information_gain_cluster_se": 0.08711515758195025,
+            "mean_hamming": 6.189960274467317,
+            "prior_bit_accuracy": 0.5403725773444084,
+            "records": 5538
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.49443801440329216,
+            "bit_accuracy_lift": -0.02350180041152263,
+            "bit_accuracy_lift_99ci": [
+              -0.15272156316129495,
+              0.10571796233824968
+            ],
+            "bit_accuracy_lift_cluster_se": 0.013019829143277184,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -1.3906995055083167,
+              1.1240943431687764
+            ],
+            "information_gain_bits_per_bit": -0.011108548430814179,
+            "information_gain_bits_per_key": -0.13330258116977006,
+            "information_gain_by_bit": [
+              -0.0807286435556987,
+              -0.011165528620363074,
+              -0.01860038001388685,
+              -0.0032519611118198223,
+              -0.0038709140184438125,
+              -0.002089735558894667,
+              -0.0017717407553734209,
+              -0.0008974515609309746,
+              -0.004770176547652707,
+              -0.002654838633502718,
+              -0.001225025430220467,
+              -0.0022761853629829306
+            ],
+            "information_gain_cluster_se": 0.12669186796041343,
+            "mean_hamming": 6.066743827160494,
+            "prior_bit_accuracy": 0.5179398148148148,
+            "records": 2592
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.49480839220723616,
+            "bit_accuracy_lift": -0.021034039820166987,
+            "bit_accuracy_lift_99ci": [
+              -0.09929255443961241,
+              0.057224474799278426
+            ],
+            "bit_accuracy_lift_cluster_se": 0.007885113450679463,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.9930217658984108,
+              0.7405982234679516
+            ],
+            "information_gain_bits_per_bit": -0.010517647601269144,
+            "information_gain_bits_per_key": -0.12621177121522967,
+            "information_gain_by_bit": [
+              -0.06047393431848277,
+              -0.01212830014529929,
+              -0.0221858147325911,
+              -0.004139026435973263,
+              -0.005494459983011823,
+              -0.0007054954530522871,
+              -0.0030779320546262838,
+              -0.000969301711689581,
+              -0.0033177408252527767,
+              -0.004704803021683221,
+              -0.0011017633564703911,
+              -0.007913199177096921
+            ],
+            "information_gain_cluster_se": 0.08733739940626774,
+            "mean_hamming": 6.062299293513166,
+            "prior_bit_accuracy": 0.5158424320274031,
+            "records": 1557
+          }
+        },
+        "model_bytes_pickle": 1934885,
+        "n_iter": 0,
+        "params": {
+          "max_depth": 8,
+          "max_features": "sqrt",
+          "min_samples_leaf": 32,
+          "n_estimators": 32
+        },
+        "seed": 101,
+        "stage": "control/random_labels",
+        "train_records": 6219,
+        "warnings": []
+      },
+      {
+        "architecture_id": "trees-glv-d8-l32",
+        "control_id": "permuted_labels",
+        "control_spec": {
+          "feature_mode_override": null,
+          "leaked_bits": 0,
+          "target_transform": "permuted_labels"
+        },
+        "family": "extra_trees",
+        "feature_columns": 74,
+        "feature_mode": "compressed_relation_glv_bits",
+        "field_bits": 12,
+        "fit_seconds": 0.12512932199751958,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.02382924199628178,
+          "new_curve_seen_generator": 0.02324373199371621,
+          "seen_curve_new_generator": 0.02283441400504671,
+          "seen_curve_seen_generator": 0.012970175012014806
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.5345491753942458,
+            "bit_accuracy_lift": -0.0035211267605633795,
+            "bit_accuracy_lift_99ci": [
+              -0.0127483567968319,
+              0.005706103275705142
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0015797591688150616,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.00036114120621162876,
+            "exact_recovery_count": 2,
+            "information_gain_99ci": [
+              -0.2918070239294112,
+              0.11307109477795907
+            ],
+            "information_gain_bits_per_bit": -0.007447330381310514,
+            "information_gain_bits_per_key": -0.08936796457572607,
+            "information_gain_by_bit": [
+              -0.06971562154578613,
+              -0.007190083489431495,
+              -0.0021930197555612204,
+              -0.002306008405544969,
+              -0.0007765513870502079,
+              -0.0013239723041879104,
+              -0.0015903143033293718,
+              -0.00024838069615620666,
+              -0.0005549947088364854,
+              -0.0005800111975194391,
+              -0.0013700647251822353,
+              -0.0015189420571405166
+            ],
+            "information_gain_cluster_se": 0.03465882598388208,
+            "mean_hamming": 5.58540989526905,
+            "prior_bit_accuracy": 0.5380703021548092,
+            "records": 5538
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.5331046105693993,
+            "bit_accuracy_lift": -0.007267966775009028,
+            "bit_accuracy_lift_99ci": [
+              -0.01486128923061179,
+              0.00032535568059373354
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0013000240292978297,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.00018057060310581438,
+            "exact_recovery_count": 1,
+            "information_gain_99ci": [
+              -0.34193737603195307,
+              0.13135741156968572
+            ],
+            "information_gain_bits_per_bit": -0.008774165185927803,
+            "information_gain_bits_per_key": -0.10528998223113369,
+            "information_gain_by_bit": [
+              -0.08301648360958538,
+              -0.006240877389728621,
+              -0.0022331713696580034,
+              -0.0029484989572326524,
+              -0.0023538969901834837,
+              -0.0006557793031539404,
+              -0.0015151240531441961,
+              -0.0015775259425627461,
+              -0.0004874183248304189,
+              -0.0008461245210188347,
+              -0.0018077717825681178,
+              -0.0016073099874672416
+            ],
+            "information_gain_cluster_se": 0.040515505591991914,
+            "mean_hamming": 5.602744673167209,
+            "prior_bit_accuracy": 0.5403725773444084,
+            "records": 5538
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.5118955761316872,
+            "bit_accuracy_lift": -0.00604423868312757,
+            "bit_accuracy_lift_99ci": [
+              -0.05367360250837294,
+              0.041585125142117804
+            ],
+            "bit_accuracy_lift_cluster_se": 0.004799004161681719,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0007716049382716049,
+            "exact_recovery_count": 2,
+            "information_gain_99ci": [
+              -0.12400551241273325,
+              0.08166936803561561
+            ],
+            "information_gain_bits_per_bit": -0.001764006015713234,
+            "information_gain_bits_per_key": -0.02116807218855881,
+            "information_gain_by_bit": [
+              -0.0016031047419795671,
+              -0.0009870700002941502,
+              7.250776426379105e-05,
+              -0.0012248095011949177,
+              -0.0023243208033092515,
+              -0.003213050101777031,
+              0.00010474397364633386,
+              -0.0014659765743022292,
+              -0.004765473613076184,
+              -0.00046374616676761715,
+              -0.0024600324121736767,
+              -0.0028377400115943076
+            ],
+            "information_gain_cluster_se": 0.01036161863138145,
+            "mean_hamming": 5.857253086419753,
+            "prior_bit_accuracy": 0.5179398148148148,
+            "records": 2592
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.5097944765574823,
+            "bit_accuracy_lift": -0.006047955469920789,
+            "bit_accuracy_lift_99ci": [
+              -0.06264579278338478,
+              0.0505498818435432
+            ],
+            "bit_accuracy_lift_cluster_se": 0.005702642970543587,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.13754371254218267,
+              0.05024607663961258
+            ],
+            "information_gain_bits_per_bit": -0.003637401495940418,
+            "information_gain_bits_per_key": -0.04364881795128505,
+            "information_gain_by_bit": [
+              -0.005948527925430657,
+              1.4138092292571693e-05,
+              -7.20644014275785e-05,
+              -0.0025822950676532364,
+              -0.0038330877022009365,
+              0.0003180891856094417,
+              -0.005427586931753926,
+              -0.0031640190924883604,
+              -0.00790478051943048,
+              -0.004028399021670591,
+              -0.005418474369985557,
+              -0.0056018101971457065
+            ],
+            "information_gain_cluster_se": 0.00946059224212329,
+            "mean_hamming": 5.8824662813102115,
+            "prior_bit_accuracy": 0.5158424320274031,
+            "records": 1557
+          }
+        },
+        "model_bytes_pickle": 2066002,
+        "n_iter": 0,
+        "params": {
+          "max_depth": 8,
+          "max_features": "sqrt",
+          "min_samples_leaf": 32,
+          "n_estimators": 32
+        },
+        "seed": 101,
+        "stage": "control/permuted_labels",
+        "train_records": 6219,
+        "warnings": []
+      },
+      {
+        "architecture_id": "trees-glv-d8-l32",
+        "control_id": "opaque_points",
+        "control_spec": {
+          "feature_mode_override": "opaque_relation_bits",
+          "leaked_bits": 0,
+          "target_transform": "unchanged"
+        },
+        "family": "extra_trees",
+        "feature_columns": 152,
+        "feature_mode": "opaque_relation_bits",
+        "field_bits": 12,
+        "fit_seconds": 0.14237021299777552,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.024830709997331724,
+          "new_curve_seen_generator": 0.02495907100092154,
+          "seen_curve_new_generator": 0.03074065299006179,
+          "seen_curve_seen_generator": 0.013106708007398993
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.5351059347538221,
+            "bit_accuracy_lift": -0.002964367400987119,
+            "bit_accuracy_lift_99ci": [
+              -0.020316808600293116,
+              0.01438807379831888
+            ],
+            "bit_accuracy_lift_cluster_se": 0.002970845852783521,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0005417118093174431,
+            "exact_recovery_count": 3,
+            "information_gain_99ci": [
+              -0.25934551054825566,
+              0.14056375915065034
+            ],
+            "information_gain_bits_per_bit": -0.004949239641566886,
+            "information_gain_bits_per_key": -0.05939087569880265,
+            "information_gain_by_bit": [
+              -0.04558429300587626,
+              -0.005884763566845378,
+              -0.0007312213198150635,
+              -0.0031054308953664842,
+              -0.0015615027677866823,
+              0.0002376968453672967,
+              -0.0014640326027463575,
+              7.364669372967278e-05,
+              2.7134587907457343e-06,
+              0.0006560992796133885,
+              -0.0015000046696881176,
+              -0.0005297831481793826
+            ],
+            "information_gain_cluster_se": 0.03423347705745857,
+            "mean_hamming": 5.578728782954135,
+            "prior_bit_accuracy": 0.5380703021548092,
+            "records": 5538
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.5345642229445047,
+            "bit_accuracy_lift": -0.005808354399903697,
+            "bit_accuracy_lift_99ci": [
+              -0.013833913673759617,
+              0.0022172048739522235
+            ],
+            "bit_accuracy_lift_cluster_se": 0.001374025660778886,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.00036114120621162876,
+            "exact_recovery_count": 2,
+            "information_gain_99ci": [
+              -0.26703150090312955,
+              0.12501587145100396
+            ],
+            "information_gain_bits_per_bit": -0.005917317893838564,
+            "information_gain_bits_per_key": -0.07100781472606278,
+            "information_gain_by_bit": [
+              -0.053361691627676414,
+              -0.0040083586588011725,
+              -0.0020212100787968465,
+              -0.0036602398089659164,
+              -0.0011700530964469913,
+              -0.0006904944104275598,
+              -0.0012058635371159261,
+              -0.0004297119303282358,
+              -0.0015824168412518443,
+              -0.0008267729385637877,
+              -0.0010726537186423963,
+              -0.000978348079045675
+            ],
+            "information_gain_cluster_se": 0.03356047419712727,
+            "mean_hamming": 5.585229324665945,
+            "prior_bit_accuracy": 0.5403725773444084,
+            "records": 5538
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.5144675925925926,
+            "bit_accuracy_lift": -0.0034722222222222216,
+            "bit_accuracy_lift_99ci": [
+              -0.0064965485665365265,
+              -0.00044789587790791674
+            ],
+            "bit_accuracy_lift_cluster_se": 0.00030472283371030804,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.0477471042042973,
+              0.010660676466155507
+            ],
+            "information_gain_bits_per_bit": -0.0015452678224225742,
+            "information_gain_bits_per_key": -0.018543213869070898,
+            "information_gain_by_bit": [
+              -0.005582454578580278,
+              -0.0002749473863812791,
+              -0.0011480849552408425,
+              -0.0007709127813712237,
+              -0.0013303434197944784,
+              -0.0015467652936030233,
+              -0.00079557294704656,
+              -0.0017230955087904213,
+              -0.0011588059425996504,
+              -0.001302734996197175,
+              -0.0026692419797616877,
+              -0.00024025407970427196
+            ],
+            "information_gain_cluster_se": 0.0029425039513495126,
+            "mean_hamming": 5.826388888888889,
+            "prior_bit_accuracy": 0.5179398148148148,
+            "records": 2592
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.5088310854206808,
+            "bit_accuracy_lift": -0.00701134660672233,
+            "bit_accuracy_lift_99ci": [
+              -0.07020833665341888,
+              0.05618564343997423
+            ],
+            "bit_accuracy_lift_cluster_se": 0.006367555513708197,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0006422607578676942,
+            "exact_recovery_count": 1,
+            "information_gain_99ci": [
+              -0.07732334216437949,
+              0.026472891752689593
+            ],
+            "information_gain_bits_per_bit": -0.0021187687671537446,
+            "information_gain_bits_per_key": -0.025425225205844944,
+            "information_gain_by_bit": [
+              -0.005161407163619968,
+              -0.0025975924599999436,
+              0.0007600590778428765,
+              -0.0028023902911756856,
+              -0.0018446160864276028,
+              -0.0019081394879037097,
+              -0.0018666451328942302,
+              -0.0009956988390979352,
+              -0.004012391674670077,
+              0.00024376446991543558,
+              0.0007532542152580768,
+              -0.005993421833072171
+            ],
+            "information_gain_cluster_se": 0.005229112028060323,
+            "mean_hamming": 5.894026974951831,
+            "prior_bit_accuracy": 0.5158424320274031,
+            "records": 1557
+          }
+        },
+        "model_bytes_pickle": 2177193,
+        "n_iter": 0,
+        "params": {
+          "max_depth": 8,
+          "max_features": "sqrt",
+          "min_samples_leaf": 32,
+          "n_estimators": 32
+        },
+        "seed": 101,
+        "stage": "control/opaque_points",
+        "train_records": 6219,
+        "warnings": []
+      },
+      {
+        "architecture_id": "trees-glv-d8-l32",
+        "control_id": "curve_generator_only",
+        "control_spec": {
+          "feature_mode_override": "curve_generator_only_bits",
+          "leaked_bits": 0,
+          "target_transform": "unchanged"
+        },
+        "family": "extra_trees",
+        "feature_columns": 37,
+        "feature_mode": "curve_generator_only_bits",
+        "field_bits": 12,
+        "fit_seconds": 0.14836401099455543,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.023338382990914397,
+          "new_curve_seen_generator": 0.02321180400031153,
+          "seen_curve_new_generator": 0.023341335996519774,
+          "seen_curve_seen_generator": 0.023657726997043937
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.5361743108221981,
+            "bit_accuracy_lift": -0.001895991332611051,
+            "bit_accuracy_lift_99ci": [
+              -0.01326469827457738,
+              0.009472715609355278
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0019463933334868582,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.00018057060310581438,
+            "exact_recovery_count": 1,
+            "information_gain_99ci": [
+              -0.22049651942113208,
+              0.06369057978271388
+            ],
+            "information_gain_bits_per_bit": -0.006533580818267396,
+            "information_gain_bits_per_key": -0.07840296981920909,
+            "information_gain_by_bit": [
+              -0.06739536144238059,
+              -0.005393640139324857,
+              -0.0012988449029636708,
+              -0.0019263820483545956,
+              -0.00034600810696634444,
+              -0.0001931247879785284,
+              -0.000546765492113855,
+              -0.00011466145565788345,
+              -0.00012869146379207837,
+              -0.00024899468547793374,
+              -0.0005354336651243977,
+              -0.0002750616290740162
+            ],
+            "information_gain_cluster_se": 0.02432729940955199,
+            "mean_hamming": 5.565908270133622,
+            "prior_bit_accuracy": 0.5380703021548092,
+            "records": 5538
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.5361592632719393,
+            "bit_accuracy_lift": -0.004213314072469003,
+            "bit_accuracy_lift_99ci": [
+              -0.023717569661916533,
+              0.015290941516978528
+            ],
+            "bit_accuracy_lift_cluster_se": 0.003339249859083658,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0007222824124232575,
+            "exact_recovery_count": 4,
+            "information_gain_99ci": [
+              -0.22208316886468438,
+              0.03440701609447862
+            ],
+            "information_gain_bits_per_bit": -0.007819839698758322,
+            "information_gain_bits_per_key": -0.09383807638510287,
+            "information_gain_by_bit": [
+              -0.0820970120853606,
+              -0.004691337726389877,
+              -0.002654221021480013,
+              -0.0031216471194824035,
+              -0.000296646134662033,
+              5.315913929911611e-05,
+              -1.4087156392754745e-05,
+              5.989238373619309e-05,
+              -0.0003912396040245586,
+              0.00023009257990705122,
+              -0.0007688903257397237,
+              -0.00014613931451028098
+            ],
+            "information_gain_cluster_se": 0.02195635742295681,
+            "mean_hamming": 5.566088840736728,
+            "prior_bit_accuracy": 0.5403725773444084,
+            "records": 5538
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.5166859567901234,
+            "bit_accuracy_lift": -0.0012538580246913584,
+            "bit_accuracy_lift_99ci": [
+              -0.005575841776333959,
+              0.003068125726951242
+            ],
+            "bit_accuracy_lift_cluster_se": 0.00043547123759524105,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.003025580567726192,
+              -0.002328624790464236
+            ],
+            "information_gain_bits_per_bit": -0.00022309188992460736,
+            "information_gain_bits_per_key": -0.002677102679095214,
+            "information_gain_by_bit": [
+              -3.988037083738941e-05,
+              7.607543702469176e-05,
+              -0.0005398223713314746,
+              0.0001973066880767054,
+              -8.622305644245443e-05,
+              -0.00014333926572750836,
+              -0.00010779857160728534,
+              -0.0004428949693633484,
+              -7.615039808178903e-05,
+              -0.00015968678586217568,
+              -0.00034371150081813183,
+              -0.0010109775141251285
+            ],
+            "information_gain_cluster_se": 3.51116769883816e-05,
+            "mean_hamming": 5.799768518518518,
+            "prior_bit_accuracy": 0.5179398148148148,
+            "records": 2592
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.5087775636908585,
+            "bit_accuracy_lift": -0.007064868336544637,
+            "bit_accuracy_lift_99ci": [
+              -0.05016567720636633,
+              0.036035940533277064
+            ],
+            "bit_accuracy_lift_cluster_se": 0.004342719375741254,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.026694822964417206,
+              -0.010288021718119912
+            ],
+            "information_gain_bits_per_bit": -0.0015409518617723798,
+            "information_gain_bits_per_key": -0.01849142234126856,
+            "information_gain_by_bit": [
+              -0.002985294231769573,
+              -0.0007708535660685084,
+              -0.0013614192450472913,
+              -0.0015580112247058674,
+              -0.002034798427533272,
+              0.0003861328034801496,
+              -0.0019789299334834927,
+              -0.0010191107695774213,
+              -0.0017727347664621372,
+              -0.00012060573188187344,
+              -5.203767583850747e-05,
+              -0.005223759572380764
+            ],
+            "information_gain_cluster_se": 0.0008265521638054327,
+            "mean_hamming": 5.894669235709698,
+            "prior_bit_accuracy": 0.5158424320274031,
+            "records": 1557
+          }
+        },
+        "model_bytes_pickle": 173425,
+        "n_iter": 0,
+        "params": {
+          "max_depth": 8,
+          "max_features": "sqrt",
+          "min_samples_leaf": 32,
+          "n_estimators": 32
+        },
+        "seed": 101,
+        "stage": "control/curve_generator_only",
+        "train_records": 6219,
+        "warnings": []
+      },
+      {
+        "architecture_id": "trees-glv-d8-l32",
+        "control_id": "mismatched_points",
+        "control_spec": {
+          "feature_mode_override": "mismatched_relation_bits",
+          "leaked_bits": 0,
+          "target_transform": "unchanged"
+        },
+        "family": "extra_trees",
+        "feature_columns": 50,
+        "feature_mode": "mismatched_relation_bits",
+        "field_bits": 12,
+        "fit_seconds": 0.110869611002272,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.02326086700486485,
+          "new_curve_seen_generator": 0.02316743799019605,
+          "seen_curve_new_generator": 0.023258674002136104,
+          "seen_curve_seen_generator": 0.012764810002408922
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.5354520284097749,
+            "bit_accuracy_lift": -0.002618273745034309,
+            "bit_accuracy_lift_99ci": [
+              -0.013578715586052507,
+              0.008342168095983888
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0018764958090949292,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.00018057060310581438,
+            "exact_recovery_count": 1,
+            "information_gain_99ci": [
+              -0.18630140301470038,
+              0.028952349696247867
+            ],
+            "information_gain_bits_per_bit": -0.0065562105549355175,
+            "information_gain_bits_per_key": -0.07867452665922625,
+            "information_gain_by_bit": [
+              -0.05815540977954506,
+              -0.006994478756498625,
+              -0.0007914586907022924,
+              -0.003312670368431138,
+              -0.001020113026498537,
+              -0.0013524535947681054,
+              -0.0014935677495286376,
+              -0.0009095736103719231,
+              -0.0004393722408057564,
+              -0.0010633152084762467,
+              -0.0014335869970594774,
+              -0.0017085266365403989
+            ],
+            "information_gain_cluster_se": 0.01842639059232156,
+            "mean_hamming": 5.574575659082702,
+            "prior_bit_accuracy": 0.5380703021548092,
+            "records": 5538
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.5352564102564102,
+            "bit_accuracy_lift": -0.005116167087998075,
+            "bit_accuracy_lift_99ci": [
+              -0.021975659494199842,
+              0.011743325318203691
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0028864499536239885,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.00036114120621162876,
+            "exact_recovery_count": 2,
+            "information_gain_99ci": [
+              -0.20030540280859074,
+              0.01368693459699774
+            ],
+            "information_gain_bits_per_bit": -0.007775769508816362,
+            "information_gain_bits_per_key": -0.0933092341057965,
+            "information_gain_by_bit": [
+              -0.0702189216884413,
+              -0.0059911646024132246,
+              -0.004180444912401172,
+              -0.0038237123484887135,
+              -0.0013156837920183038,
+              -0.001041098695328947,
+              -0.0005601301245680419,
+              -0.0009258530606727786,
+              -0.001042813260127067,
+              0.00022987719230907892,
+              -0.0014124570630980012,
+              -0.0030268317505478762
+            ],
+            "information_gain_cluster_se": 0.01831840951964357,
+            "mean_hamming": 5.576923076923077,
+            "prior_bit_accuracy": 0.5403725773444084,
+            "records": 5538
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.5222479423868313,
+            "bit_accuracy_lift": 0.00430812757201646,
+            "bit_accuracy_lift_99ci": [
+              -0.01466420202283751,
+              0.02328045716687043
+            ],
+            "bit_accuracy_lift_cluster_se": 0.001911599932691992,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.00038580246913580245,
+            "exact_recovery_count": 1,
+            "information_gain_99ci": [
+              -0.046099454165140726,
+              0.01735967981046086
+            ],
+            "information_gain_bits_per_bit": -0.0011974905981116614,
+            "information_gain_bits_per_key": -0.014369887177339932,
+            "information_gain_by_bit": [
+              -0.0012308702372249999,
+              -0.0027550168644231974,
+              -0.0019055370981058489,
+              -0.00014747690206665126,
+              -0.00048635875997516157,
+              -0.002243269063090735,
+              -0.002077924633199511,
+              -0.00045568594064760706,
+              0.000518610377061191,
+              -0.00100946007383976,
+              -0.00023702187095202168,
+              -0.0023398761108756336
+            ],
+            "information_gain_cluster_se": 0.0031969842087646323,
+            "mean_hamming": 5.7330246913580245,
+            "prior_bit_accuracy": 0.5179398148148148,
+            "records": 2592
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.5153607364590024,
+            "bit_accuracy_lift": -0.00048169556840077185,
+            "bit_accuracy_lift_99ci": [
+              -0.0364429870168553,
+              0.03547959588005375
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0036233611675726258,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.10079337562107975,
+              0.016851699263974923
+            ],
+            "information_gain_bits_per_bit": -0.003497569848212702,
+            "information_gain_bits_per_key": -0.04197083817855241,
+            "information_gain_by_bit": [
+              -0.00563954397596445,
+              -0.0009044187313046033,
+              -0.004944909834302439,
+              -0.002338162919241291,
+              -0.005227561656614848,
+              -0.0032647249027530144,
+              -0.0045863451458005465,
+              8.032770807699135e-05,
+              -0.0030734694888956454,
+              -0.002017684590750377,
+              -0.0011992312702768782,
+              -0.008855113370725323
+            ],
+            "information_gain_cluster_se": 0.005926797658333266,
+            "mean_hamming": 5.815671162491972,
+            "prior_bit_accuracy": 0.5158424320274031,
+            "records": 1557
+          }
+        },
+        "model_bytes_pickle": 2058852,
+        "n_iter": 0,
+        "params": {
+          "max_depth": 8,
+          "max_features": "sqrt",
+          "min_samples_leaf": 32,
+          "n_estimators": 32
+        },
+        "seed": 101,
+        "stage": "control/mismatched_points",
+        "train_records": 6219,
+        "warnings": []
+      },
+      {
+        "architecture_id": "ridge-compressed-a0p1",
+        "control_id": "leak_1",
+        "control_spec": {
+          "feature_mode_override": null,
+          "leaked_bits": 1,
+          "target_transform": "unchanged"
+        },
+        "family": "ridge",
+        "feature_columns": 51,
+        "feature_mode": "compressed_relation_bits",
+        "field_bits": 12,
+        "fit_seconds": 0.010266907003824599,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.0002894299977924675,
+          "new_curve_seen_generator": 0.0003473259857855737,
+          "seen_curve_new_generator": 0.00024244999804068357,
+          "seen_curve_seen_generator": 0.000190563005162403
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.5742897556277838,
+            "bit_accuracy_lift": 0.036219453472974596,
+            "bit_accuracy_lift_99ci": [
+              0.01981464215911888,
+              0.05262426478683031
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0028086057228312988,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0005417118093174431,
+            "exact_recovery_count": 3,
+            "information_gain_99ci": [
+              0.6755010449205193,
+              1.0825443781985093
+            ],
+            "information_gain_bits_per_bit": 0.07325189262995727,
+            "information_gain_bits_per_key": 0.8790227115595144,
+            "information_gain_by_bit": [
+              -0.08965256730923866,
+              -0.007331019159368905,
+              -0.0019583471716858513,
+              -0.0021218248029956734,
+              -0.0040565890925840535,
+              -0.001437904765631439,
+              -0.0027774815461893234,
+              -0.003003827852522502,
+              -0.0012517983813279915,
+              -0.004488805032599838,
+              -0.002776913904803069,
+              0.9998797905784345
+            ],
+            "information_gain_cluster_se": 0.03484417508415073,
+            "mean_hamming": 5.108522932466594,
+            "prior_bit_accuracy": 0.5380703021548092,
+            "records": 5538
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.5668562657999278,
+            "bit_accuracy_lift": 0.02648368845551944,
+            "bit_accuracy_lift_99ci": [
+              -0.0269314478532605,
+              0.07989882476429938
+            ],
+            "bit_accuracy_lift_cluster_se": 0.009145003539049712,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0009028530155290719,
+            "exact_recovery_count": 5,
+            "information_gain_99ci": [
+              0.44825879844957794,
+              1.1996839271361406
+            ],
+            "information_gain_bits_per_bit": 0.06866428023273634,
+            "information_gain_bits_per_key": 0.8239713627928593,
+            "information_gain_by_bit": [
+              -0.1401466919399688,
+              -0.009492865304557917,
+              -0.00348497640998433,
+              -0.0033332067875537917,
+              -0.004598656992846015,
+              -0.0025201756744706936,
+              -0.002434588462644017,
+              -0.000868114408560117,
+              -0.0025108608804543047,
+              -0.0033037680983582065,
+              -0.003246947672347772,
+              0.999912215424582
+            ],
+            "information_gain_cluster_se": 0.06432432767226669,
+            "mean_hamming": 5.197724810400866,
+            "prior_bit_accuracy": 0.5403725773444084,
+            "records": 5538
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.558545524691358,
+            "bit_accuracy_lift": 0.04060570987654321,
+            "bit_accuracy_lift_99ci": [
+              0.03731657906852192,
+              0.0438948406845645
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0003314038057263178,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0019290123456790122,
+            "exact_recovery_count": 5,
+            "information_gain_99ci": [
+              0.9765999925651028,
+              0.9966389676216614
+            ],
+            "information_gain_bits_per_bit": 0.0822182900077838,
+            "information_gain_bits_per_key": 0.9866194800933821,
+            "information_gain_by_bit": [
+              9.139371160171063e-05,
+              -0.0023036693758488967,
+              0.001113607354654228,
+              -0.0007925967663402272,
+              -0.0031342954422645523,
+              -0.0006702308403222592,
+              0.0016579644772703379,
+              -0.0028345485569801,
+              -0.001991689453076653,
+              -0.0029759674251664844,
+              -0.0013381612767850832,
+              0.9997976736866636
+            ],
+            "information_gain_cluster_se": 0.0010095361030340796,
+            "mean_hamming": 5.297453703703703,
+            "prior_bit_accuracy": 0.5179398148148148,
+            "records": 2592
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.5543780774994648,
+            "bit_accuracy_lift": 0.038535645472061654,
+            "bit_accuracy_lift_99ci": [
+              0.009240784460100744,
+              0.06783050648402256
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0029516699074148022,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              0.8982537620980807,
+              1.042414377705748
+            ],
+            "information_gain_bits_per_bit": 0.08086117249182564,
+            "information_gain_bits_per_key": 0.9703340699019143,
+            "information_gain_by_bit": [
+              -0.00576626069832872,
+              -0.0022562329861603708,
+              -0.0003030163629921766,
+              -0.0040852507338092845,
+              -0.00445067066408361,
+              -0.0012079681130062409,
+              -0.0033003294945323346,
+              -0.0031001507079025923,
+              -0.003795745072779511,
+              -0.0009953060772550167,
+              -0.00039338572742836575,
+              0.999988386540186
+            ],
+            "information_gain_cluster_se": 0.0072626142644918,
+            "mean_hamming": 5.347463070006422,
+            "prior_bit_accuracy": 0.5158424320274031,
+            "records": 1557
+          }
+        },
+        "model_bytes_pickle": 2936,
+        "n_iter": 0,
+        "params": {
+          "alpha": 0.1
+        },
+        "seed": 101,
+        "stage": "control/leak_1",
+        "train_records": 6219,
+        "warnings": []
+      },
+      {
+        "architecture_id": "ridge-compressed-a0p1",
+        "control_id": "leak_4",
+        "control_spec": {
+          "feature_mode_override": null,
+          "leaked_bits": 4,
+          "target_transform": "unchanged"
+        },
+        "family": "ridge",
+        "feature_columns": 54,
+        "feature_mode": "compressed_relation_bits",
+        "field_bits": 12,
+        "fit_seconds": 0.0021581869950750843,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.00031369600037578493,
+          "new_curve_seen_generator": 0.00028279000252950937,
+          "seen_curve_new_generator": 0.00020602600125130266,
+          "seen_curve_seen_generator": 0.00016324200259987265
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.6985674732153605,
+            "bit_accuracy_lift": 0.16049717106055134,
+            "bit_accuracy_lift_99ci": [
+              0.1475822302978048,
+              0.17341211182329788
+            ],
+            "bit_accuracy_lift_cluster_se": 0.002211118180045177,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0065005417118093175,
+            "exact_recovery_count": 36,
+            "information_gain_99ci": [
+              3.684656660915973,
+              4.080709689411852
+            ],
+            "information_gain_bits_per_bit": 0.3235569312636459,
+            "information_gain_bits_per_key": 3.8826831751639124,
+            "information_gain_by_bit": [
+              -0.09002692279314371,
+              -0.007363509110723048,
+              -0.00222889628393705,
+              -0.0024977501612630437,
+              -0.004222115060868427,
+              -0.0015062138145590512,
+              -0.0036158297764268496,
+              -0.003312871854218039,
+              0.997684948156116,
+              0.9999511862615459,
+              0.9999540824233708,
+              0.9998670671778573
+            ],
+            "information_gain_cluster_se": 0.033903370818982904,
+            "mean_hamming": 3.6171903214156735,
+            "prior_bit_accuracy": 0.5380703021548092,
+            "records": 5538
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.6918412182496689,
+            "bit_accuracy_lift": 0.1514686409052606,
+            "bit_accuracy_lift_99ci": [
+              0.10595397085603757,
+              0.19698331095448363
+            ],
+            "bit_accuracy_lift_cluster_se": 0.007792394580305654,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.005958829902491874,
+            "exact_recovery_count": 33,
+            "information_gain_99ci": [
+              3.4681587215285776,
+              4.18688141029053
+            ],
+            "information_gain_bits_per_bit": 0.31896000549244913,
+            "information_gain_bits_per_key": 3.827520065909554,
+            "information_gain_by_bit": [
+              -0.14071660888684684,
+              -0.009803735302556104,
+              -0.0037030490088853013,
+              -0.003319986788982377,
+              -0.004550246814589874,
+              -0.0036405266198117413,
+              -0.00267175354317843,
+              -0.002024974982154075,
+              0.9981684859626919,
+              0.9999338397899623,
+              0.9999370616391505,
+              0.9999115604645893
+            ],
+            "information_gain_cluster_se": 0.06152489712211977,
+            "mean_hamming": 3.6979053810039724,
+            "prior_bit_accuracy": 0.5403725773444084,
+            "records": 5538
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.6822916666666666,
+            "bit_accuracy_lift": 0.16435185185185186,
+            "bit_accuracy_lift_99ci": [
+              0.1528204086093692,
+              0.1758832950943345
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0011618766169943838,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.004629629629629629,
+            "exact_recovery_count": 12,
+            "information_gain_99ci": [
+              3.9610418376968073,
+              4.011098866206921
+            ],
+            "information_gain_bits_per_bit": 0.332172529329325,
+            "information_gain_bits_per_key": 3.986070351951864,
+            "information_gain_by_bit": [
+              -0.0001086722610465621,
+              -0.0033728581544580725,
+              -0.00027861242009232613,
+              -0.0017297237630462447,
+              -0.003117199215148751,
+              -0.0011976794524016232,
+              0.0013699862887302044,
+              -0.0026512377327447744,
+              0.9975030421536549,
+              0.9999479628740324,
+              0.9999494003587709,
+              0.9997559432756498
+            ],
+            "information_gain_cluster_se": 0.0025218045009256047,
+            "mean_hamming": 3.8125,
+            "prior_bit_accuracy": 0.5179398148148148,
+            "records": 2592
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.674534360950546,
+            "bit_accuracy_lift": 0.1586919289231428,
+            "bit_accuracy_lift_99ci": [
+              0.11565480759514062,
+              0.20172905025114496
+            ],
+            "bit_accuracy_lift_cluster_se": 0.004336302393575367,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.005780346820809248,
+            "exact_recovery_count": 9,
+            "information_gain_99ci": [
+              3.9536414428115925,
+              3.9858018345045836
+            ],
+            "information_gain_bits_per_bit": 0.3308101365548403,
+            "information_gain_bits_per_key": 3.969721638658088,
+            "information_gain_by_bit": [
+              -0.005891839659738536,
+              -0.001905296634664241,
+              -0.000767860367723418,
+              -0.005187504809838957,
+              -0.0045488539974405835,
+              -0.0024585167257803707,
+              -0.004900952335546303,
+              -0.004569242759160669,
+              0.999978310885055,
+              0.99999660080213,
+              0.9999884454698641,
+              0.9999883487909279
+            ],
+            "information_gain_cluster_se": 0.0016201964626512092,
+            "mean_hamming": 3.9055876685934487,
+            "prior_bit_accuracy": 0.5158424320274031,
+            "records": 1557
+          }
+        },
+        "model_bytes_pickle": 3080,
+        "n_iter": 0,
+        "params": {
+          "alpha": 0.1
+        },
+        "seed": 101,
+        "stage": "control/leak_4",
+        "train_records": 6219,
+        "warnings": []
+      },
+      {
+        "architecture_id": "ridge-compressed-a0p1",
+        "control_id": "leak_all",
+        "control_spec": {
+          "feature_mode_override": null,
+          "leaked_bits": 12,
+          "target_transform": "unchanged"
+        },
+        "family": "ridge",
+        "feature_columns": 62,
+        "feature_mode": "compressed_relation_bits",
+        "field_bits": 12,
+        "fit_seconds": 0.002990444001625292,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.0003037209971807897,
+          "new_curve_seen_generator": 0.00030838800012134016,
+          "seen_curve_new_generator": 0.0001885800011223182,
+          "seen_curve_seen_generator": 0.0001982649991987273
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 1.0,
+            "bit_accuracy_lift": 0.4619296978451908,
+            "bit_accuracy_lift_99ci": [
+              0.440416093934501,
+              0.4834433017558806
+            ],
+            "bit_accuracy_lift_cluster_se": 0.003683262788353741,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 1.0,
+            "exact_recovery_count": 5538,
+            "information_gain_99ci": [
+              11.259067494837332,
+              12.248612754941025
+            ],
+            "information_gain_bits_per_bit": 0.9794866770740932,
+            "information_gain_bits_per_key": 11.753840124889178,
+            "information_gain_by_bit": [
+              0.8070302596192293,
+              0.9686919539005256,
+              0.9841786898115298,
+              0.996937762838943,
+              0.9994943594117556,
+              0.99974425037656,
+              1.0001055029255983,
+              0.9999923429616809,
+              0.9977393035991465,
+              0.9999797387684197,
+              0.9999847064068494,
+              0.9999612542688808
+            ],
+            "information_gain_cluster_se": 0.08470815138789296,
+            "mean_hamming": 0.0,
+            "prior_bit_accuracy": 0.5380703021548092,
+            "records": 5538
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 1.0,
+            "bit_accuracy_lift": 0.45962742265559164,
+            "bit_accuracy_lift_99ci": [
+              0.44027457003979464,
+              0.47898027527138864
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0033133287283791907,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 1.0,
+            "exact_recovery_count": 5538,
+            "information_gain_99ci": [
+              11.23726215879034,
+              12.227179072190445
+            ],
+            "information_gain_bits_per_bit": 0.977685051290852,
+            "information_gain_bits_per_key": 11.732220615490393,
+            "information_gain_by_bit": [
+              0.7809186399953509,
+              0.970846797971224,
+              0.9864112348568778,
+              0.996417541543949,
+              0.9996574710298615,
+              0.9999347037416584,
+              0.999942917733449,
+              1.0000143815987952,
+              0.9981633249696238,
+              0.9999744648541948,
+              0.9999850479099842,
+              0.9999540892852551
+            ],
+            "information_gain_cluster_se": 0.08473996606577142,
+            "mean_hamming": 0.0,
+            "prior_bit_accuracy": 0.5403725773444084,
+            "records": 5538
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 1.0,
+            "bit_accuracy_lift": 0.4820601851851852,
+            "bit_accuracy_lift_99ci": [
+              0.3602281720686692,
+              0.6038921983017012
+            ],
+            "bit_accuracy_lift_cluster_se": 0.012275459737766295,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 1.0,
+            "exact_recovery_count": 2592,
+            "information_gain_99ci": [
+              10.604243943374671,
+              13.174940600961532
+            ],
+            "information_gain_bits_per_bit": 0.9907993560140195,
+            "information_gain_bits_per_key": 11.889592272168102,
+            "information_gain_by_bit": [
+              0.9134883473164426,
+              0.9926004510903119,
+              0.9873303035296728,
+              0.998851861977813,
+              1.0000018586731447,
+              1.0000211322902535,
+              0.999967377810828,
+              0.9999685926454531,
+              0.9974882863384896,
+              0.9999809074021525,
+              0.9999771942727259,
+              0.999915958820945
+            ],
+            "information_gain_cluster_se": 0.12950817486713592,
+            "mean_hamming": 0.0,
+            "prior_bit_accuracy": 0.5179398148148148,
+            "records": 2592
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 1.0,
+            "bit_accuracy_lift": 0.48415756797259685,
+            "bit_accuracy_lift_99ci": [
+              0.37962593920867616,
+              0.5886891967365175
+            ],
+            "bit_accuracy_lift_cluster_se": 0.01053232042539967,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 1.0,
+            "exact_recovery_count": 1557,
+            "information_gain_99ci": [
+              10.944821873193588,
+              12.890348068511683
+            ],
+            "information_gain_bits_per_bit": 0.9931320809043863,
+            "information_gain_bits_per_key": 11.917584970852635,
+            "information_gain_by_bit": [
+              0.9434451245083822,
+              0.9908292104413521,
+              0.9843262634123122,
+              0.9993023912738013,
+              0.9996762553746887,
+              0.9999942188293829,
+              1.0000067364533225,
+              1.000053265094049,
+              0.9999783576641663,
+              0.999996638855097,
+              0.9999882965991994,
+              0.9999882123468825
+            ],
+            "information_gain_cluster_se": 0.09801294367744204,
+            "mean_hamming": 0.0,
+            "prior_bit_accuracy": 0.5158424320274031,
+            "records": 1557
+          }
+        },
+        "model_bytes_pickle": 3464,
+        "n_iter": 0,
+        "params": {
+          "alpha": 0.1
+        },
+        "seed": 101,
+        "stage": "control/leak_all",
+        "train_records": 6219,
+        "warnings": []
+      },
+      {
+        "architecture_id": "trees-glv-d8-l32",
+        "control_id": "random_labels",
+        "control_spec": {
+          "feature_mode_override": null,
+          "leaked_bits": 0,
+          "target_transform": "random_labels"
+        },
+        "family": "extra_trees",
+        "feature_columns": 122,
+        "feature_mode": "compressed_relation_glv_bits",
+        "field_bits": 20,
+        "fit_seconds": 0.885398904007161,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.3923773290007375,
+          "new_curve_seen_generator": 0.4083095050009433,
+          "seen_curve_new_generator": 0.14957996799785178,
+          "seen_curve_seen_generator": 0.10731145400495734
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.5002143859863282,
+            "bit_accuracy_lift": -0.018886566162109375,
+            "bit_accuracy_lift_99ci": [
+              -0.03107099384785318,
+              -0.006702138476365568
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0020860497980065436,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.3242904273594223,
+              0.00701863887964066
+            ],
+            "information_gain_bits_per_bit": -0.007931794711994527,
+            "information_gain_bits_per_key": -0.15863589423989083,
+            "information_gain_by_bit": [
+              -0.09194154346375903,
+              -0.05699645244288078,
+              -0.0029621169295397606,
+              -0.0025131868620315028,
+              -0.0004330966777547595,
+              -0.00026550294463796196,
+              -0.0002828568343128707,
+              -0.0003321520381601236,
+              -0.0003878361547021418,
+              -0.00023378809756893843,
+              -0.00018735172825008747,
+              -0.00022301908118124288,
+              -0.00012372119217672565,
+              -0.00022786736090298087,
+              -0.00018065843036796361,
+              -0.0001570491821808843,
+              -0.0002161021448688172,
+              -0.0005732396582163173,
+              -0.0001974630070883284,
+              -0.00020089000930930805
+            ],
+            "information_gain_cluster_se": 0.028361086319810335,
+            "mean_hamming": 9.995712280273438,
+            "prior_bit_accuracy": 0.5191009521484375,
+            "records": 65536
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.5001556396484375,
+            "bit_accuracy_lift": -0.018872833251953124,
+            "bit_accuracy_lift_99ci": [
+              -0.029588058515944093,
+              -0.008157607987962152
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0018345132060405395,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.3020536504199768,
+              -0.008605198771849426
+            ],
+            "information_gain_bits_per_bit": -0.0077664712297956465,
+            "information_gain_bits_per_key": -0.1553294245959131,
+            "information_gain_by_bit": [
+              -0.08853950762558131,
+              -0.0580204230969974,
+              -0.002662502333427206,
+              -0.0018474710708336712,
+              -0.00038524950656079873,
+              -0.0005012522641813209,
+              -0.00029752306519346435,
+              -0.00030873119196240764,
+              -0.00027394104938561825,
+              -0.00017380433107042984,
+              -0.00018041951293232345,
+              -0.00029712059399077725,
+              -0.0002037910004590246,
+              -0.0002547963877643927,
+              -0.0002745120098676579,
+              -0.00013431559291595118,
+              -0.00011031860741968708,
+              -0.0004386815317028683,
+              -0.0002914816059782199,
+              -0.00013358221768838444
+            ],
+            "information_gain_cluster_se": 0.025120099978193602,
+            "mean_hamming": 9.99688720703125,
+            "prior_bit_accuracy": 0.5190284729003907,
+            "records": 65536
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.500433349609375,
+            "bit_accuracy_lift": -0.014670817057291669,
+            "bit_accuracy_lift_99ci": [
+              -0.07439415815640665,
+              0.04505252404182332
+            ],
+            "bit_accuracy_lift_cluster_se": 0.006017560165946918,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -1.4213719864319925,
+              1.1064557374790065
+            ],
+            "information_gain_bits_per_bit": -0.007872906223824586,
+            "information_gain_bits_per_key": -0.157458124476493,
+            "information_gain_by_bit": [
+              -0.12841472792036165,
+              -0.011597792406756046,
+              -0.011237184199853492,
+              -0.0007292006345855599,
+              -0.0017405174535779604,
+              -0.0002353612041567349,
+              0.00021691857771395973,
+              -0.00040120780338178465,
+              -0.00034398601288044856,
+              -0.00030445443167121793,
+              -0.000184598744770741,
+              -0.0005776107147898042,
+              -0.0002470202258790214,
+              -9.452796440155899e-05,
+              -0.00017321626014249488,
+              -0.00029955132313894947,
+              -0.0002909586763392202,
+              -0.00048352412032754674,
+              -0.00024590868973452067,
+              -7.369426745695386e-05
+            ],
+            "information_gain_cluster_se": 0.1273484967337879,
+            "mean_hamming": 9.9913330078125,
+            "prior_bit_accuracy": 0.5151041666666667,
+            "records": 24576
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.5007733007733007,
+            "bit_accuracy_lift": -0.015954415954415952,
+            "bit_accuracy_lift_99ci": [
+              -0.09379713696817762,
+              0.06188830505934573
+            ],
+            "bit_accuracy_lift_cluster_se": 0.007843219226532399,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -1.3946064689674502,
+              1.0793529557879769
+            ],
+            "information_gain_bits_per_bit": -0.007881337829486825,
+            "information_gain_bits_per_key": -0.1576267565897366,
+            "information_gain_by_bit": [
+              -0.1241246526402261,
+              -0.012010393949205271,
+              -0.01205877965746834,
+              -0.0010959080319465082,
+              -0.0017504689190124387,
+              -0.0006993943237318642,
+              -0.00020549279585343306,
+              -0.0002570484003530715,
+              -0.0004820954865337967,
+              -0.00045330792873052306,
+              -0.0004821524114939777,
+              -0.0008230860106600775,
+              -0.00031826730468462346,
+              -0.000644300483405611,
+              -0.0002629942466075445,
+              -9.957720635597736e-05,
+              -0.00038134857472443443,
+              -0.0003449947485686105,
+              -0.0003746736350972471,
+              -0.0007578198350770367
+            ],
+            "information_gain_cluster_se": 0.12463468564050091,
+            "mean_hamming": 9.984533984533984,
+            "prior_bit_accuracy": 0.5167277167277168,
+            "records": 14742
+          }
+        },
+        "model_bytes_pickle": 6282988,
+        "n_iter": 0,
+        "params": {
+          "max_depth": 8,
+          "max_features": "sqrt",
+          "min_samples_leaf": 32,
+          "n_estimators": 32
+        },
+        "seed": 101,
+        "stage": "control/random_labels",
+        "train_records": 58986,
+        "warnings": []
+      },
+      {
+        "architecture_id": "trees-glv-d8-l32",
+        "control_id": "permuted_labels",
+        "control_spec": {
+          "feature_mode_override": null,
+          "leaked_bits": 0,
+          "target_transform": "permuted_labels"
+        },
+        "family": "extra_trees",
+        "feature_columns": 122,
+        "feature_mode": "compressed_relation_glv_bits",
+        "field_bits": 20,
+        "fit_seconds": 0.7768233670067275,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.39439816800586414,
+          "new_curve_seen_generator": 0.38669904599373695,
+          "seen_curve_new_generator": 0.15879642999789212,
+          "seen_curve_seen_generator": 0.08740070900239516
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.5182518005371094,
+            "bit_accuracy_lift": -0.0008491516113281249,
+            "bit_accuracy_lift_99ci": [
+              -0.002688622898059488,
+              0.0009903196754032385
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0003149289244512063,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.09026248582549062,
+              0.005509011883716296
+            ],
+            "information_gain_bits_per_bit": -0.0021188368485443518,
+            "information_gain_bits_per_key": -0.04237673697088716,
+            "information_gain_by_bit": [
+              -0.01478261272233279,
+              -0.016966877144740124,
+              -0.004907266637225461,
+              -0.0011295182999707283,
+              -0.0010331746612119474,
+              -0.00042208498813559107,
+              -0.00027770608459560213,
+              -0.00027078958466301924,
+              -7.258135002104858e-05,
+              -0.00014851800854873945,
+              -0.0001378530549723071,
+              -0.00016896026721980304,
+              -0.0002347170953457052,
+              -1.96176530927983e-05,
+              -0.00015914010360837071,
+              -0.0003935272535304751,
+              -0.00036653464599366276,
+              -0.0002672495767514094,
+              -0.00029207598799123444,
+              -0.00032593185093621733
+            ],
+            "information_gain_cluster_se": 0.008198338018158597,
+            "mean_hamming": 9.634963989257812,
+            "prior_bit_accuracy": 0.5191009521484375,
+            "records": 65536
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.5178436279296875,
+            "bit_accuracy_lift": -0.001184844970703125,
+            "bit_accuracy_lift_99ci": [
+              -0.0047082967147541776,
+              0.0023386067733479274
+            ],
+            "bit_accuracy_lift_cluster_se": 0.000603236851868173,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.10934191647025551,
+              0.020524381711833295
+            ],
+            "information_gain_bits_per_bit": -0.002220438368960555,
+            "information_gain_bits_per_key": -0.04440876737921111,
+            "information_gain_by_bit": [
+              -0.015487144571138829,
+              -0.017388969266311432,
+              -0.005817968171354761,
+              -0.0007533499081073535,
+              -0.0010643899859925767,
+              -0.0005560603802058196,
+              -0.00013459321808744021,
+              -0.00017356053374562136,
+              -0.0002774616427340931,
+              -0.00021352924049139474,
+              -0.0001865517041937463,
+              -0.0002081493029196724,
+              -0.00035504652028561654,
+              -0.0003358317921716397,
+              -0.00020190973528527777,
+              -0.0002609255014723145,
+              -0.000300477550088503,
+              -0.00027835137580906023,
+              -0.00018287318338292355,
+              -0.00023162379543301506
+            ],
+            "information_gain_cluster_se": 0.011116958960968473,
+            "mean_hamming": 9.64312744140625,
+            "prior_bit_accuracy": 0.5190284729003907,
+            "records": 65536
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.516436767578125,
+            "bit_accuracy_lift": 0.0013326009114583333,
+            "bit_accuracy_lift_99ci": [
+              -0.008833256858659419,
+              0.011498458681576087
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0010242839674461724,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.027013218533019433,
+              0.016696772825249152
+            ],
+            "information_gain_bits_per_bit": -0.00025791114269425695,
+            "information_gain_bits_per_key": -0.005158222853885139,
+            "information_gain_by_bit": [
+              -0.00011005565275991028,
+              -8.739521558629294e-05,
+              -0.00035751470769169823,
+              -0.00025463471203321635,
+              -0.00019761612383517344,
+              -0.00024091207831255406,
+              -0.00028632752281118195,
+              -7.666359126498449e-05,
+              -0.00012584770615924875,
+              -0.00037618974990744476,
+              -7.94839997377569e-05,
+              -0.0007481074777190617,
+              -0.00041116265096619904,
+              -0.00046704658888638994,
+              -0.00012509545467613605,
+              -0.00040646398359595585,
+              -0.00025378395292734906,
+              -9.616140363149703e-05,
+              -3.4619733567020016e-05,
+              -0.0004231405478160673
+            ],
+            "information_gain_cluster_se": 0.0022020494668482196,
+            "mean_hamming": 9.6712646484375,
+            "prior_bit_accuracy": 0.5151041666666667,
+            "records": 24576
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.5154761904761904,
+            "bit_accuracy_lift": -0.0012515262515262512,
+            "bit_accuracy_lift_99ci": [
+              -0.026673580416508507,
+              0.024170527913456006
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0025614565036785773,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.05355168674937798,
+              0.03744045691106207
+            ],
+            "information_gain_bits_per_bit": -0.00040278074595789706,
+            "information_gain_bits_per_key": -0.00805561491915795,
+            "information_gain_by_bit": [
+              -0.00046009376196796877,
+              -0.00033263947392570616,
+              -0.0010146076795399385,
+              -0.0005645471758190876,
+              -0.00035868919150736827,
+              -0.0004395463382172744,
+              -0.0002849756380089323,
+              -0.0003640540370154944,
+              -0.00043128981451944886,
+              -0.0002877825498002981,
+              -0.0004307750329667397,
+              -0.0005688272461941992,
+              -0.0005687783480504748,
+              -0.00037279028824679174,
+              1.9271738796883035e-05,
+              -7.033553492641067e-05,
+              -0.0006033743386695036,
+              -0.0003533956143776741,
+              -1.7385413249350023e-05,
+              -0.0005509991809521643
+            ],
+            "information_gain_cluster_se": 0.004584059506956295,
+            "mean_hamming": 9.69047619047619,
+            "prior_bit_accuracy": 0.5167277167277168,
+            "records": 14742
+          }
+        },
+        "model_bytes_pickle": 6279916,
+        "n_iter": 0,
+        "params": {
+          "max_depth": 8,
+          "max_features": "sqrt",
+          "min_samples_leaf": 32,
+          "n_estimators": 32
+        },
+        "seed": 101,
+        "stage": "control/permuted_labels",
+        "train_records": 58986,
+        "warnings": []
+      },
+      {
+        "architecture_id": "trees-glv-d8-l32",
+        "control_id": "opaque_points",
+        "control_spec": {
+          "feature_mode_override": "opaque_relation_bits",
+          "leaked_bits": 0,
+          "target_transform": "unchanged"
+        },
+        "family": "extra_trees",
+        "feature_columns": 168,
+        "feature_mode": "opaque_relation_bits",
+        "field_bits": 20,
+        "fit_seconds": 1.0348085739969974,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.37679140199907124,
+          "new_curve_seen_generator": 0.4106660230027046,
+          "seen_curve_new_generator": 0.15967779399943538,
+          "seen_curve_seen_generator": 0.098411657003453
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.5187889099121094,
+            "bit_accuracy_lift": -0.0003120422363281249,
+            "bit_accuracy_lift_99ci": [
+              -0.0018831989086619456,
+              0.001259114436005696
+            ],
+            "bit_accuracy_lift_cluster_se": 0.00026899179374616005,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.1363452106857163,
+              0.0262187975541346
+            ],
+            "information_gain_bits_per_bit": -0.0027531603282895554,
+            "information_gain_bits_per_key": -0.05506320656579085,
+            "information_gain_by_bit": [
+              -0.02688200562592167,
+              -0.017735886424799358,
+              -0.004954575792881434,
+              -0.00118468317968131,
+              -0.0012293182519003967,
+              -0.00037631436826524516,
+              -0.0001782306908082952,
+              -0.00015853706730114577,
+              -0.0001973035849050003,
+              -2.960684963655267e-05,
+              -0.00021168811638768348,
+              -0.00011703854666637353,
+              -0.00010378006754768366,
+              -0.00024663966860631267,
+              -0.0001296748577357605,
+              -0.00028933018420748046,
+              -0.0003100568571196728,
+              -0.0002082886303177431,
+              -0.00025935941807119867,
+              -0.00026088838303079656
+            ],
+            "information_gain_cluster_se": 0.013915984619805042,
+            "mean_hamming": 9.624221801757812,
+            "prior_bit_accuracy": 0.5191009521484375,
+            "records": 65536
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.5183082580566406,
+            "bit_accuracy_lift": -0.00072021484375,
+            "bit_accuracy_lift_99ci": [
+              -0.0033821107856374768,
+              0.0019416810981374764
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0004557331402923281,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.1784188075281621,
+              0.05692079723593955
+            ],
+            "information_gain_bits_per_bit": -0.0030374502573056075,
+            "information_gain_bits_per_key": -0.06074900514611128,
+            "information_gain_by_bit": [
+              -0.03218420323090552,
+              -0.017621884943979458,
+              -0.006146889078850658,
+              -0.0005940529928934171,
+              -0.0009922756825001843,
+              -0.0003887571608886257,
+              -0.0001905174199873966,
+              2.624397057230238e-05,
+              -0.0003027104955582115,
+              -0.0001513748815364289,
+              -1.5178648197957722e-05,
+              -0.00023980777649770959,
+              -0.00028888802170823363,
+              -0.00031410150758223634,
+              -0.00012910905864585393,
+              -0.0001362586847005682,
+              -0.0003506516326150795,
+              -0.000241127919106215,
+              -0.00023921844108934886,
+              -0.0002482415394413489
+            ],
+            "information_gain_cluster_se": 0.020145801987708416,
+            "mean_hamming": 9.633834838867188,
+            "prior_bit_accuracy": 0.5190284729003907,
+            "records": 65536
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.5157552083333333,
+            "bit_accuracy_lift": 0.0006510416666666664,
+            "bit_accuracy_lift_99ci": [
+              -0.0151111103456358,
+              0.016413193678969134
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0015881512375776462,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.09874509855054207,
+              0.07244583415457802
+            ],
+            "information_gain_bits_per_bit": -0.0006574816098990968,
+            "information_gain_bits_per_key": -0.013149632197982023,
+            "information_gain_by_bit": [
+              -0.00967499214503957,
+              -0.00013139970225487627,
+              -0.00010969173138906774,
+              -0.00017947523158671312,
+              -0.00013554496604629626,
+              -0.0003921689812127432,
+              -0.00018784219359281132,
+              -5.392037313468293e-06,
+              -0.00014199054137854634,
+              -5.313845409923907e-05,
+              -0.00018510779927418482,
+              -0.00017472695493101156,
+              -0.0004759160272073605,
+              -0.00020018540636487425,
+              -0.000262534001233536,
+              -0.0003354745637158998,
+              -3.218033349512722e-05,
+              -0.00019468029946198844,
+              -0.00015077837879566913,
+              -0.00012641244958895453
+            ],
+            "information_gain_cluster_se": 0.008624364598993402,
+            "mean_hamming": 9.684895833333334,
+            "prior_bit_accuracy": 0.5151041666666667,
+            "records": 24576
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.5148419481752815,
+            "bit_accuracy_lift": -0.001885768552435219,
+            "bit_accuracy_lift_99ci": [
+              -0.019200401746532005,
+              0.015428864641661568
+            ],
+            "bit_accuracy_lift_cluster_se": 0.001744574986584651,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.0319543247117836,
+              0.01932372433089112
+            ],
+            "information_gain_bits_per_bit": -0.00031576500952231157,
+            "information_gain_bits_per_key": -0.006315300190446237,
+            "information_gain_by_bit": [
+              -0.0006236426029421176,
+              -0.0003742435865497537,
+              -0.00015829781768937796,
+              -0.0004398059878813816,
+              -0.00029127131012209826,
+              -0.00034382239756326364,
+              -1.366385888649051e-05,
+              -0.00033842370080902124,
+              -0.00019417299978861724,
+              -0.00013829973442698829,
+              -0.00019654131912855139,
+              -0.0004969881996847275,
+              -0.0004477293392896112,
+              -0.00029210523474580816,
+              -0.0001035695636213211,
+              -0.00032235738995512944,
+              -0.0002519244647037718,
+              -0.00016452906356995766,
+              -0.0003655360641478384,
+              -0.0007583755549404037
+            ],
+            "information_gain_cluster_se": 0.0025833178421363,
+            "mean_hamming": 9.70316103649437,
+            "prior_bit_accuracy": 0.5167277167277168,
+            "records": 14742
+          }
+        },
+        "model_bytes_pickle": 6330604,
+        "n_iter": 0,
+        "params": {
+          "max_depth": 8,
+          "max_features": "sqrt",
+          "min_samples_leaf": 32,
+          "n_estimators": 32
+        },
+        "seed": 101,
+        "stage": "control/opaque_points",
+        "train_records": 58986,
+        "warnings": []
+      },
+      {
+        "architecture_id": "trees-glv-d8-l32",
+        "control_id": "curve_generator_only",
+        "control_spec": {
+          "feature_mode_override": "curve_generator_only_bits",
+          "leaked_bits": 0,
+          "target_transform": "unchanged"
+        },
+        "family": "extra_trees",
+        "feature_columns": 61,
+        "feature_mode": "curve_generator_only_bits",
+        "field_bits": 20,
+        "fit_seconds": 0.47049031700589694,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.38965983600064646,
+          "new_curve_seen_generator": 0.4278554880002048,
+          "seen_curve_new_generator": 0.15037211500748526,
+          "seen_curve_seen_generator": 0.09698820199992042
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.518707275390625,
+            "bit_accuracy_lift": -0.0003936767578125,
+            "bit_accuracy_lift_99ci": [
+              -0.004324371036885366,
+              0.0035370175212603655
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0006729593066139058,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.04382705548637419,
+              -0.014542895304171903
+            ],
+            "information_gain_bits_per_bit": -0.0014592487697642558,
+            "information_gain_bits_per_key": -0.029184975395273045,
+            "information_gain_by_bit": [
+              -0.004671768183794469,
+              -0.01736672705896426,
+              -0.0046160359412951235,
+              -0.0009352476073857401,
+              -0.0009543677157816369,
+              -0.00022526113629360591,
+              4.1861309067364e-05,
+              -8.46782759376376e-05,
+              -0.00010151687053310278,
+              4.1779722646263516e-05,
+              1.162796127020699e-05,
+              -3.6875116444661525e-05,
+              -3.082698260742162e-05,
+              -3.437479996701051e-05,
+              4.9051996095298125e-05,
+              -6.983952512343094e-05,
+              -3.273616001089323e-05,
+              -9.16289110407607e-05,
+              -3.270102355053286e-05,
+              -4.471107563396357e-05
+            ],
+            "information_gain_cluster_se": 0.0025068151745998553,
+            "mean_hamming": 9.6258544921875,
+            "prior_bit_accuracy": 0.5191009521484375,
+            "records": 65536
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.5179023742675781,
+            "bit_accuracy_lift": -0.0011260986328125002,
+            "bit_accuracy_lift_99ci": [
+              -0.005550199263048504,
+              0.0032980019974235032
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0007574335425587988,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.06981987657159491,
+              0.0011743892513298507
+            ],
+            "information_gain_bits_per_bit": -0.0017161371830064851,
+            "information_gain_bits_per_key": -0.034322743660132535,
+            "information_gain_by_bit": [
+              -0.009423875099208332,
+              -0.017438186760230144,
+              -0.005478221444836644,
+              -0.0004764488677930929,
+              -0.0007486353612908195,
+              -0.00016646006950611826,
+              -5.754340282855937e-05,
+              4.205564371067987e-05,
+              -1.1792731443301487e-06,
+              -4.302524068394206e-06,
+              -7.800046201662858e-06,
+              -7.001700499544693e-05,
+              -8.573558365519822e-05,
+              -0.00015712618938698588,
+              -1.3763494767152177e-05,
+              -4.964401718763565e-05,
+              -0.00011653037426084409,
+              -2.141345547072398e-05,
+              -1.9350429910232938e-05,
+              -2.8565905098073816e-05
+            ],
+            "information_gain_cluster_se": 0.0060773299205843815,
+            "mean_hamming": 9.641952514648438,
+            "prior_bit_accuracy": 0.5190284729003907,
+            "records": 65536
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.5164143880208333,
+            "bit_accuracy_lift": 0.0013102213541666666,
+            "bit_accuracy_lift_99ci": [
+              -0.012316888813456708,
+              0.014937331521790042
+            ],
+            "bit_accuracy_lift_cluster_se": 0.001373030272796908,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.009784453605244036,
+              0.006331171982182989
+            ],
+            "information_gain_bits_per_bit": -8.633204057652483e-05,
+            "information_gain_bits_per_key": -0.0017266408115305238,
+            "information_gain_by_bit": [
+              -0.0013631550294592922,
+              -1.6981177112017088e-05,
+              1.5116072996670585e-05,
+              -0.00011790128443331176,
+              7.283581497036016e-06,
+              -5.443482340976861e-07,
+              -1.1187660829121933e-06,
+              -2.187735578363703e-05,
+              -5.158379901306263e-05,
+              5.478992449481131e-05,
+              -7.363653394715939e-05,
+              -6.141226502673053e-05,
+              1.3429402503410277e-05,
+              -5.61070623464643e-05,
+              9.367126537042217e-06,
+              8.1559560840012e-06,
+              -3.4698472044339644e-05,
+              -6.216057012688716e-05,
+              1.620520700154286e-05,
+              1.0188580964900568e-05
+            ],
+            "information_gain_cluster_se": 0.0008118831331227449,
+            "mean_hamming": 9.671712239583334,
+            "prior_bit_accuracy": 0.5151041666666667,
+            "records": 24576
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.5157102157102157,
+            "bit_accuracy_lift": -0.001017501017501017,
+            "bit_accuracy_lift_99ci": [
+              -0.01979679987615044,
+              0.017761797841148404
+            ],
+            "bit_accuracy_lift_cluster_se": 0.001892150684749547,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.020864944722014462,
+              0.015662469624544133
+            ],
+            "information_gain_bits_per_bit": -0.0001300618774367596,
+            "information_gain_bits_per_key": -0.0026012375487351655,
+            "information_gain_by_bit": [
+              -0.00031969453702055566,
+              -3.419049321007855e-05,
+              3.406456937365967e-05,
+              -3.247096610839247e-05,
+              -0.0001111421708434688,
+              -0.0001586197482731854,
+              -0.00034142612618106596,
+              -0.00011162940134518607,
+              -3.78487566411093e-05,
+              4.573245482363228e-05,
+              -0.00018595712572605792,
+              -0.00015914931105348465,
+              -0.0002541415666829751,
+              -4.104978880766067e-06,
+              0.00021761933318393775,
+              -0.00012322835414062017,
+              -0.00013623846567656394,
+              -0.0003341479117724379,
+              -0.00016046730040740898,
+              -0.00039419669215306417
+            ],
+            "information_gain_cluster_se": 0.001840201079608942,
+            "mean_hamming": 9.685795685795686,
+            "prior_bit_accuracy": 0.5167277167277168,
+            "records": 14742
+          }
+        },
+        "model_bytes_pickle": 259975,
+        "n_iter": 0,
+        "params": {
+          "max_depth": 8,
+          "max_features": "sqrt",
+          "min_samples_leaf": 32,
+          "n_estimators": 32
+        },
+        "seed": 101,
+        "stage": "control/curve_generator_only",
+        "train_records": 58986,
+        "warnings": []
+      },
+      {
+        "architecture_id": "trees-glv-d8-l32",
+        "control_id": "mismatched_points",
+        "control_spec": {
+          "feature_mode_override": "mismatched_relation_bits",
+          "leaked_bits": 0,
+          "target_transform": "unchanged"
+        },
+        "family": "extra_trees",
+        "feature_columns": 82,
+        "feature_mode": "mismatched_relation_bits",
+        "field_bits": 20,
+        "fit_seconds": 0.6768040860042674,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.38610126699495595,
+          "new_curve_seen_generator": 0.3898775500128977,
+          "seen_curve_new_generator": 0.14850770401244517,
+          "seen_curve_seen_generator": 0.09784176100220066
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.5186294555664063,
+            "bit_accuracy_lift": -0.00047149658203125,
+            "bit_accuracy_lift_99ci": [
+              -0.0036299383598866614,
+              0.002686945195824161
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0005407448755610962,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.09148980263739523,
+              0.004306557083235997
+            ],
+            "information_gain_bits_per_bit": -0.0021795811388539733,
+            "information_gain_bits_per_key": -0.04359162277707962,
+            "information_gain_by_bit": [
+              -0.014994127393333438,
+              -0.017306393755344752,
+              -0.005051681934392878,
+              -0.0010391366228269833,
+              -0.0013538560306865955,
+              -0.00043258879921361773,
+              -0.00014494625098371874,
+              -0.0001337655813565414,
+              -0.0003503710714784021,
+              -0.00025973403632340757,
+              -7.312550653701439e-05,
+              -0.00026579723277575117,
+              -0.00026636024040096594,
+              -0.0003372461847984027,
+              -0.00033891199535478114,
+              -8.367477548755465e-05,
+              -0.0003008057844784927,
+              -0.0002324014903803914,
+              -0.0002516069709646901,
+              -0.0003750911199610924
+            ],
+            "information_gain_cluster_se": 0.008200466283648261,
+            "mean_hamming": 9.627410888671875,
+            "prior_bit_accuracy": 0.5191009521484375,
+            "records": 65536
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.5184257507324219,
+            "bit_accuracy_lift": -0.0006027221679687501,
+            "bit_accuracy_lift_99ci": [
+              -0.005193898679099197,
+              0.003988454343161697
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0007860379724574151,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 1.52587890625e-05,
+            "exact_recovery_count": 1,
+            "information_gain_99ci": [
+              -0.13945884584344848,
+              0.03825622629807389
+            ],
+            "information_gain_bits_per_bit": -0.0025300654886343593,
+            "information_gain_bits_per_key": -0.050601309772687286,
+            "information_gain_by_bit": [
+              -0.021125881981868735,
+              -0.017382773642112336,
+              -0.00607324096035535,
+              -0.0005851774693657776,
+              -0.001179226878183348,
+              -0.0003936051500518541,
+              -0.0002592119435716967,
+              -0.00020837978653591536,
+              -0.0002475769419676976,
+              -0.00019198916720001395,
+              -0.00020635478376647447,
+              -0.0002725619776003254,
+              -0.00039197448795978555,
+              -0.0004703646103254777,
+              -0.00019095166704786632,
+              -0.00024156948233612286,
+              -0.00047556481757524306,
+              -0.0003523222790823338,
+              -0.00016504211226636782,
+              -0.00018753963351447015
+            ],
+            "information_gain_cluster_se": 0.015212962804042858,
+            "mean_hamming": 9.631484985351562,
+            "prior_bit_accuracy": 0.5190284729003907,
+            "records": 65536
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.516107177734375,
+            "bit_accuracy_lift": 0.001003011067708333,
+            "bit_accuracy_lift_99ci": [
+              -0.012179583666600312,
+              0.01418560580201698
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0013282421160153884,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.026073901927092524,
+              0.013300457547975438
+            ],
+            "information_gain_bits_per_bit": -0.00031933610947792665,
+            "information_gain_bits_per_key": -0.006386722189558543,
+            "information_gain_by_bit": [
+              -0.0015631232905851495,
+              -0.0004997720244263607,
+              -0.0002847173838795988,
+              -0.00036201645724198575,
+              0.00020841797308734575,
+              -0.00014847244744331411,
+              -0.00024253791358385085,
+              0.0001994105979817593,
+              -0.0006329769098971783,
+              -0.00037347979491856367,
+              -0.0003059422048643752,
+              -0.000628579716236313,
+              -0.00015449938431971315,
+              -0.00010311588403073462,
+              -0.00012492109676888336,
+              -0.00035883459686460476,
+              -0.00019736180772793248,
+              -6.806991682175765e-06,
+              -0.00038574820411075385,
+              -0.0004216446520461509
+            ],
+            "information_gain_cluster_se": 0.001983626273885359,
+            "mean_hamming": 9.6778564453125,
+            "prior_bit_accuracy": 0.5151041666666667,
+            "records": 24576
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.5159917243250577,
+            "bit_accuracy_lift": -0.0007359924026590692,
+            "bit_accuracy_lift_99ci": [
+              -0.019126826099513234,
+              0.017654841294195093
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0018530099997098762,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              -0.03330800797546993,
+              0.020003962779867112
+            ],
+            "information_gain_bits_per_bit": -0.00033260112989007024,
+            "information_gain_bits_per_key": -0.0066520225978014096,
+            "information_gain_by_bit": [
+              -0.0007781728017519939,
+              7.112753556533095e-05,
+              -0.0001501592569383761,
+              -7.73183399624221e-05,
+              -8.788813770164717e-05,
+              -0.0004274594019788555,
+              -0.00030758328598316694,
+              -0.0002816593531044458,
+              0.00017775551061028564,
+              0.00010919846227773346,
+              -0.0005042870292789789,
+              -0.0007001827384477347,
+              -0.0010502623652218698,
+              -0.00013806624142414332,
+              0.00012807574208026606,
+              -0.0003558694809040709,
+              -0.00029255896531602975,
+              -0.0010434796463192,
+              -0.0004017399042497094,
+              -0.0005414928997523759
+            ],
+            "information_gain_cluster_se": 0.0026857840308451624,
+            "mean_hamming": 9.680165513498848,
+            "prior_bit_accuracy": 0.5167277167277168,
+            "records": 14742
+          }
+        },
+        "model_bytes_pickle": 6286060,
+        "n_iter": 0,
+        "params": {
+          "max_depth": 8,
+          "max_features": "sqrt",
+          "min_samples_leaf": 32,
+          "n_estimators": 32
+        },
+        "seed": 101,
+        "stage": "control/mismatched_points",
+        "train_records": 58986,
+        "warnings": []
+      },
+      {
+        "architecture_id": "ridge-compressed-a0p1",
+        "control_id": "leak_1",
+        "control_spec": {
+          "feature_mode_override": null,
+          "leaked_bits": 1,
+          "target_transform": "unchanged"
+        },
+        "family": "ridge",
+        "feature_columns": 83,
+        "feature_mode": "compressed_relation_bits",
+        "field_bits": 20,
+        "fit_seconds": 0.18740845398860984,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.004291067001759075,
+          "new_curve_seen_generator": 0.005362373995012604,
+          "seen_curve_new_generator": 0.0019297079998068511,
+          "seen_curve_seen_generator": 0.0011722720082616434
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.5436225891113281,
+            "bit_accuracy_lift": 0.024521636962890624,
+            "bit_accuracy_lift_99ci": [
+              0.021830189865004776,
+              0.027213084060776473
+            ],
+            "bit_accuracy_lift_cluster_se": 0.00046079248198577395,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              0.9331952052462794,
+              0.9769649984682359
+            ],
+            "information_gain_bits_per_bit": 0.047754005092863865,
+            "information_gain_bits_per_key": 0.9550801018572577,
+            "information_gain_by_bit": [
+              -0.01423962939684318,
+              -0.01910405403423079,
+              -0.004767608122883297,
+              -0.0012492750899209498,
+              -0.0011789847826934909,
+              -0.0002871270050005327,
+              -0.00025538399387059496,
+              -0.0005747394564541249,
+              -0.0004054253310792305,
+              -0.0004927685120926855,
+              -0.000458864359150125,
+              -3.302311336850736e-05,
+              -0.0005022698934892993,
+              -0.00019415336015584533,
+              -0.00019905069782991997,
+              -0.00036996653586118453,
+              -0.00031509767504545115,
+              -6.972668941329241e-05,
+              -0.00022150320088485496,
+              0.9999987531075447
+            ],
+            "information_gain_cluster_se": 0.003746830407811511,
+            "mean_hamming": 9.127548217773438,
+            "prior_bit_accuracy": 0.5191009521484375,
+            "records": 65536
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.5424781799316406,
+            "bit_accuracy_lift": 0.02344970703125,
+            "bit_accuracy_lift_99ci": [
+              0.019951613770227573,
+              0.026947800292272426
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0005988953218624993,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 3.0517578125e-05,
+            "exact_recovery_count": 2,
+            "information_gain_99ci": [
+              0.8858243017588692,
+              1.0155086024954871
+            ],
+            "information_gain_bits_per_bit": 0.04753332260635975,
+            "information_gain_bits_per_key": 0.9506664521271782,
+            "information_gain_by_bit": [
+              -0.017099982084067964,
+              -0.018692980795343622,
+              -0.005818366147721095,
+              -0.000727323519738693,
+              -0.000867197836114131,
+              -0.000512774706936681,
+              -0.00021092232516820502,
+              -0.000603839525707988,
+              -0.0004013155558138537,
+              -0.0006672683069908594,
+              -0.000735324561338926,
+              -0.00039562952196907066,
+              -0.0004594310610133587,
+              -0.000526949068982683,
+              -0.000330789742226296,
+              -0.0002220764001585345,
+              -0.0004217027070999511,
+              -0.0003408058187855041,
+              -0.00029762079656226234,
+              0.9999987526089347
+            ],
+            "information_gain_cluster_se": 0.01110137941369083,
+            "mean_hamming": 9.150436401367188,
+            "prior_bit_accuracy": 0.5190284729003907,
+            "records": 65536
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.54061279296875,
+            "bit_accuracy_lift": 0.025508626302083334,
+            "bit_accuracy_lift_99ci": [
+              0.016300720275974026,
+              0.03471653232819264
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0009277633751692272,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              0.9773633944858687,
+              1.0093792577230463
+            ],
+            "information_gain_bits_per_bit": 0.04966856630521728,
+            "information_gain_bits_per_key": 0.9933713261044576,
+            "information_gain_by_bit": [
+              -0.0011049444202885204,
+              -0.00012853541805992822,
+              -0.00022460202218259643,
+              -0.00012620416603895235,
+              -0.00026583340590746724,
+              -0.00020142646219551265,
+              -0.0003459887009865563,
+              -0.0005391940419343221,
+              -0.00024510007155334094,
+              -0.00011014416719072217,
+              -0.0007975238541092768,
+              -0.0004969703969633222,
+              -0.00022471245302016266,
+              -0.00027353576189099424,
+              -0.0002725102807709364,
+              -9.152021370121767e-05,
+              -0.0003889073145572921,
+              -0.0002878721076604032,
+              -0.0005019018247514725,
+              0.9999987531881085
+            ],
+            "information_gain_cluster_se": 0.0016129153171011994,
+            "mean_hamming": 9.187744140625,
+            "prior_bit_accuracy": 0.5151041666666667,
+            "records": 24576
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.5402184235517569,
+            "bit_accuracy_lift": 0.02349070682404016,
+            "bit_accuracy_lift_99ci": [
+              0.009071548790256824,
+              0.037909864857823494
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0014528348450330395,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              0.979950841581445,
+              1.0059325979450002
+            ],
+            "information_gain_bits_per_bit": 0.04964708598815505,
+            "information_gain_bits_per_key": 0.9929417197632227,
+            "information_gain_by_bit": [
+              -0.0008206177055102311,
+              -0.00041895807905149656,
+              -0.0003161514861289306,
+              -0.000112886041887555,
+              -0.000537365779273009,
+              -0.0006360540676426979,
+              -0.0005375229209184044,
+              -0.0006056296363978989,
+              -0.000332498013874779,
+              0.0004317308611908135,
+              -4.687682279175686e-05,
+              -0.00021972486013011386,
+              -0.00047008546204277434,
+              -9.70001013480589e-05,
+              -4.669965567127578e-05,
+              -0.0003206101019397265,
+              -0.0005278920982635047,
+              -0.0008320829015563217,
+              -0.0006101079667170558,
+              0.9999987526030557
+            ],
+            "information_gain_cluster_se": 0.0013089252816181225,
+            "mean_hamming": 9.195631528964862,
+            "prior_bit_accuracy": 0.5167277167277168,
+            "records": 14742
+          }
+        },
+        "model_bytes_pickle": 7164,
+        "n_iter": 0,
+        "params": {
+          "alpha": 0.1
+        },
+        "seed": 101,
+        "stage": "control/leak_1",
+        "train_records": 58986,
+        "warnings": []
+      },
+      {
+        "architecture_id": "ridge-compressed-a0p1",
+        "control_id": "leak_4",
+        "control_spec": {
+          "feature_mode_override": null,
+          "leaked_bits": 4,
+          "target_transform": "unchanged"
+        },
+        "family": "ridge",
+        "feature_columns": 86,
+        "feature_mode": "compressed_relation_bits",
+        "field_bits": 20,
+        "fit_seconds": 0.21985977399162948,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.004526987002464011,
+          "new_curve_seen_generator": 0.0044407990062609315,
+          "seen_curve_new_generator": 0.0017635609983699396,
+          "seen_curve_seen_generator": 0.001252221001777798
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 0.6183769226074218,
+            "bit_accuracy_lift": 0.09927597045898437,
+            "bit_accuracy_lift_99ci": [
+              0.09618010097830618,
+              0.10237183993966256
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0005300321091305425,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 6.103515625e-05,
+            "exact_recovery_count": 4,
+            "information_gain_99ci": [
+              3.933512472368411,
+              3.976713347759747
+            ],
+            "information_gain_bits_per_bit": 0.19775564550318075,
+            "information_gain_bits_per_key": 3.955112910064079,
+            "information_gain_by_bit": [
+              -0.014313058287400305,
+              -0.019105019937954045,
+              -0.004807672545639423,
+              -0.0012728264446249635,
+              -0.0011904062984557356,
+              -0.0003845870119585872,
+              -0.00031400990480022424,
+              -0.0005968170352556181,
+              -0.00047928598465951997,
+              -0.0005056166873518123,
+              -0.0005231847667893196,
+              -3.798275066410917e-05,
+              -0.000516715378961996,
+              -0.0002275524440291374,
+              -0.00022278442128351799,
+              -0.0003849198927783666,
+              0.9999987862635318,
+              0.9999988435821493,
+              0.9999987959496534,
+              0.9999989240608875
+            ],
+            "information_gain_cluster_se": 0.003698129272384495,
+            "mean_hamming": 7.6324615478515625,
+            "prior_bit_accuracy": 0.5191009521484375,
+            "records": 65536
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 0.6173957824707031,
+            "bit_accuracy_lift": 0.0983673095703125,
+            "bit_accuracy_lift_99ci": [
+              0.09678956690238376,
+              0.09994505223824125
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0002701193571520764,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              3.8876471807857396,
+              4.014297011957933
+            ],
+            "information_gain_bits_per_bit": 0.19754860481857145,
+            "information_gain_bits_per_key": 3.9509720963718364,
+            "information_gain_by_bit": [
+              -0.017138244580823008,
+              -0.01868547911379538,
+              -0.00588352416556177,
+              -0.0008458609603191884,
+              -0.000965233310379085,
+              -0.0005842478812596526,
+              -0.0002398677014142773,
+              -0.0006646326866775307,
+              -0.00045735959524656375,
+              -0.0007584010944456295,
+              -0.0007388886999137084,
+              -0.00041550577115908775,
+              -0.00044055146077465505,
+              -0.000582524446272463,
+              -0.00032045783736633346,
+              -0.00030241733651303453,
+              0.999998742756243,
+              0.9999988297781344,
+              0.9999987959837796,
+              0.9999989244951936
+            ],
+            "information_gain_cluster_se": 0.010841619382888135,
+            "mean_hamming": 7.6520843505859375,
+            "prior_bit_accuracy": 0.5190284729003907,
+            "records": 65536
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 0.6149495442708334,
+            "bit_accuracy_lift": 0.09984537760416666,
+            "bit_accuracy_lift_99ci": [
+              0.08954285122307165,
+              0.11014790398526167
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0010380543221218624,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              3.976557022868059,
+              4.010713277096274
+            ],
+            "information_gain_bits_per_bit": 0.19968175749909667,
+            "information_gain_bits_per_key": 3.9936351499821665,
+            "information_gain_by_bit": [
+              -0.0011790330461263507,
+              -0.00010491948946862201,
+              -0.0003548160703032209,
+              -0.00016274776191119216,
+              -0.00036810314648187654,
+              -0.0003928707958296512,
+              -0.0003241648515015967,
+              -0.0005192297983609804,
+              -0.0004624738547004954,
+              -0.00019368641555278388,
+              -0.0007974323523087006,
+              -0.0004697719317516657,
+              -0.0002161728635162731,
+              -0.00039090731858082314,
+              -0.00022226253385869538,
+              -0.00020163412346873842,
+              0.9999988185594005,
+              0.999998836648741,
+              0.9999987960875628,
+              0.9999989250399507
+            ],
+            "information_gain_cluster_se": 0.0017207452821549078,
+            "mean_hamming": 7.701009114583333,
+            "prior_bit_accuracy": 0.5151041666666667,
+            "records": 24576
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 0.6154422737756071,
+            "bit_accuracy_lift": 0.09871455704789038,
+            "bit_accuracy_lift_99ci": [
+              0.08574454088963698,
+              0.11168457320614378
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0013068232813041674,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 0.0,
+            "exact_recovery_count": 0,
+            "information_gain_99ci": [
+              3.979597287514153,
+              4.00850531558709
+            ],
+            "information_gain_bits_per_bit": 0.1997025650775211,
+            "information_gain_bits_per_key": 3.9940513015506216,
+            "information_gain_by_bit": [
+              -0.0009224086503368448,
+              -0.0004283774279107894,
+              -0.0002900575481162555,
+              -0.0002286283308003411,
+              -0.0007240512581044237,
+              -0.0007441140514860906,
+              -0.0005267350708030125,
+              -0.0006658140448463785,
+              -0.00036212914023298336,
+              0.0004638072150955586,
+              -0.00022866177362925133,
+              -0.00022878186541570994,
+              -0.00041964250424766583,
+              -0.00012300197248207409,
+              -6.786099722066655e-05,
+              -0.0004476365361775032,
+              0.9999987949159089,
+              0.9999988783707727,
+              0.9999987962549787,
+              0.9999989259654763
+            ],
+            "information_gain_cluster_se": 0.001456346840334073,
+            "mean_hamming": 7.691154524487858,
+            "prior_bit_accuracy": 0.5167277167277168,
+            "records": 14742
+          }
+        },
+        "model_bytes_pickle": 7404,
+        "n_iter": 0,
+        "params": {
+          "alpha": 0.1
+        },
+        "seed": 101,
+        "stage": "control/leak_4",
+        "train_records": 58986,
+        "warnings": []
+      },
+      {
+        "architecture_id": "ridge-compressed-a0p1",
+        "control_id": "leak_all",
+        "control_spec": {
+          "feature_mode_override": null,
+          "leaked_bits": 20,
+          "target_transform": "unchanged"
+        },
+        "family": "ridge",
+        "feature_columns": 102,
+        "feature_mode": "compressed_relation_bits",
+        "field_bits": 20,
+        "fit_seconds": 0.241410075002932,
+        "inference_seconds": {
+          "new_curve_new_generator": 0.005059839997556992,
+          "new_curve_seen_generator": 0.006372810996253975,
+          "seen_curve_new_generator": 0.002063866995740682,
+          "seen_curve_seen_generator": 0.0011369899875717238
+        },
+        "loss_curve": [],
+        "metrics": {
+          "new_curve_new_generator": {
+            "bit_accuracy": 1.0,
+            "bit_accuracy_lift": 0.4808990478515625,
+            "bit_accuracy_lift_99ci": [
+              0.47127874555865296,
+              0.49051935014447207
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0016470555837732647,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 1.0,
+            "exact_recovery_count": 65536,
+            "information_gain_99ci": [
+              19.682908002736305,
+              20.008886131995432
+            ],
+            "information_gain_bits_per_bit": 0.9922948533682661,
+            "information_gain_bits_per_key": 19.84589706736587,
+            "information_gain_by_bit": [
+              0.9083989441034828,
+              0.9436178491057698,
+              0.9970532719675971,
+              0.9971948615241308,
+              0.9998492383868436,
+              0.9997714372987512,
+              1.000031055529109,
+              1.0000028666207874,
+              0.9999900100564739,
+              1.0000012003478378,
+              0.9999975359411181,
+              0.99999880308481,
+              0.9999987464210085,
+              0.9999986353209803,
+              0.9999984966542798,
+              0.9999989358689997,
+              0.999998744226349,
+              0.999998799889244,
+              0.9999988391717417,
+              0.9999987958460076
+            ],
+            "information_gain_cluster_se": 0.027904741537068147,
+            "mean_hamming": 0.0,
+            "prior_bit_accuracy": 0.5191009521484375,
+            "records": 65536
+          },
+          "new_curve_seen_generator": {
+            "bit_accuracy": 1.0,
+            "bit_accuracy_lift": 0.48097152709960933,
+            "bit_accuracy_lift_99ci": [
+              0.47123570004257137,
+              0.4907073541566473
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0016668341418713804,
+            "cluster_interval_critical_99": 5.840909309733355,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 4,
+            "exact_recovery": 1.0,
+            "exact_recovery_count": 65536,
+            "information_gain_99ci": [
+              19.702973022900952,
+              19.994834962619674
+            ],
+            "information_gain_bits_per_bit": 0.9924451996379963,
+            "information_gain_bits_per_key": 19.848903992760313,
+            "information_gain_by_bit": [
+              0.9116570041438186,
+              0.9422892828913428,
+              0.9974527734926911,
+              0.9979129753584849,
+              0.9998588795065788,
+              0.9998322093483102,
+              0.9999269114281022,
+              0.9999849180954676,
+              0.9999980627856978,
+              1.0000044715989727,
+              0.9999990810284771,
+              0.9999982646889304,
+              0.9999970840457695,
+              0.9999990133562908,
+              0.9999989304229455,
+              0.9999990092137788,
+              0.9999987001010339,
+              0.9999987861436161,
+              0.9999988395273341,
+              0.9999987955822829
+            ],
+            "information_gain_cluster_se": 0.024984289623565973,
+            "mean_hamming": 0.0,
+            "prior_bit_accuracy": 0.5190284729003907,
+            "records": 65536
+          },
+          "seen_curve_new_generator": {
+            "bit_accuracy": 1.0,
+            "bit_accuracy_lift": 0.4848958333333333,
+            "bit_accuracy_lift_99ci": [
+              0.4218998708471651,
+              0.5478917958195014
+            ],
+            "bit_accuracy_lift_cluster_se": 0.006347300527663704,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 1.0,
+            "exact_recovery_count": 24576,
+            "information_gain_99ci": [
+              18.578309524919728,
+              21.11587911705526
+            ],
+            "information_gain_bits_per_bit": 0.992354716049352,
+            "information_gain_bits_per_key": 19.847094320987495,
+            "information_gain_by_bit": [
+              0.8721120933144673,
+              0.988479887250067,
+              0.9886743747416659,
+              0.9992350019145072,
+              0.9986786459140173,
+              0.9999867817009053,
+              0.9999660255971053,
+              0.9999583177355742,
+              1.0000118718066897,
+              1.0000006638858305,
+              1.0000008104253069,
+              0.9999988946491104,
+              0.999999346849004,
+              0.9999985213540596,
+              0.999999046629139,
+              0.9999988303630979,
+              0.9999987773290098,
+              0.9999987942042364,
+              0.9999988397936986,
+              0.9999987955295496
+            ],
+            "information_gain_cluster_se": 0.12783927870521644,
+            "mean_hamming": 0.0,
+            "prior_bit_accuracy": 0.5151041666666667,
+            "records": 24576
+          },
+          "seen_curve_seen_generator": {
+            "bit_accuracy": 1.0,
+            "bit_accuracy_lift": 0.4832722832722832,
+            "bit_accuracy_lift_99ci": [
+              0.4123923191379182,
+              0.5541522474066483
+            ],
+            "bit_accuracy_lift_cluster_se": 0.0071416709261267666,
+            "cluster_interval_critical_99": 9.924843200918287,
+            "cluster_interval_distribution": "Student-t",
+            "cluster_unit": "curve",
+            "clusters": 3,
+            "exact_recovery": 1.0,
+            "exact_recovery_count": 14742,
+            "information_gain_99ci": [
+              18.626352618553124,
+              21.073983499876366
+            ],
+            "information_gain_bits_per_bit": 0.9925084029607231,
+            "information_gain_bits_per_key": 19.850168059214745,
+            "information_gain_by_bit": [
+              0.8766672194079204,
+              0.9883231080303791,
+              0.9878609318201356,
+              0.9988017941583565,
+              0.9986709571647978,
+              0.9999148976061089,
+              0.9999842358678387,
+              0.9999663733772179,
+              0.9999904952230114,
+              1.0000040564089867,
+              0.9999983413578498,
+              0.9999963120559137,
+              0.9999992744815528,
+              0.9999971503153847,
+              0.9999989588047563,
+              0.9999987316894117,
+              0.9999987524976648,
+              0.9999988342230559,
+              0.9999988381686933,
+              0.9999987965554228
+            ],
+            "information_gain_cluster_se": 0.1233082897015833,
+            "mean_hamming": 0.0,
+            "prior_bit_accuracy": 0.5167277167277168,
+            "records": 14742
+          }
+        },
+        "model_bytes_pickle": 8684,
+        "n_iter": 0,
+        "params": {
+          "alpha": 0.1
+        },
+        "seed": 101,
+        "stage": "control/leak_all",
+        "train_records": 58986,
+        "warnings": []
+      }
+    ]
+  },
+  "curve_validation_sha256": "2d83745c030a155848df7981317118d122a386d40a7877278362e40a502bff99",
+  "dataset_files_opened": [
+    "toy_records_b12_development.npy",
+    "toy_records_b16_development.npy",
+    "toy_records_b20_development.npy"
+  ],
+  "dataset_records": 1097078,
+  "dataset_validation_sha256": "7a95341117f7efe29d8ad1a37552564f6c4c8eb94697cd2af5356635dc2d8451",
+  "experiment_id": "ML-P1E-TOY-SCALING-2026-07-27",
+  "frozen_architecture": {
+    "family": "extra_trees",
+    "feature_mode": "compressed_relation_glv_bits",
+    "id": "trees-glv-d8-l32",
+    "params": {
+      "max_depth": 8,
+      "max_features": "sqrt",
+      "min_samples_leaf": 32,
+      "n_estimators": 32
+    }
+  },
+  "manifest_sha256": "5bab6ae63d6c2853e43215572e9777d862ec7fcf6f21fa515e08823a29e0a323",
+  "metric_baseline": "exact per-record bit probabilities for d uniform in [1,n-1], computed from public group order n",
+  "native_research_engine_outcome": false,
+  "preregistration_sha256": "be4c0a2d565c485c7d9e504bc78e1d93d3b5274c6af666d33b6e7eb8cd4b0b45",
+  "producer_sha256": "df570b88a1d1f90329f6e48cd246696ff376f1b365bfb4495d1e27fde2c90a84",
+  "result_payload_sha256": "9c7b0ce7287d5c3174a22bbb7609885ce14c580fe135824340ede5de9e084169",
+  "run_counts": {
+    "confirmation": 7,
+    "controls": 16,
+    "failed": 0,
+    "screen": 196,
+    "successful": 219
+  },
+  "runtime_versions": {
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "sklearn": "1.8.0"
+  },
+  "schema_version": 1,
+  "screen_gate": {
+    "architecture_selection_in_family": true,
+    "bonferroni_one_sided_distribution": "Student-t by cluster df",
+    "checks": [
+      {
+        "accuracy_lift_lower": -0.38878623848251775,
+        "clusters": 3,
+        "field_bits": 12,
+        "information_lower": -1.1939676222082176,
+        "pass": false,
+        "seed": 101,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.06199835261636244,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.6647844545042694,
+        "pass": false,
+        "seed": 101,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.05839728257528357,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.4455927648552536,
+        "pass": false,
+        "seed": 101,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.22302409645178545,
+        "clusters": 3,
+        "field_bits": 12,
+        "information_lower": -0.8596955495093664,
+        "pass": false,
+        "seed": 211,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.12562013775675568,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.1302053975677162,
+        "pass": false,
+        "seed": 211,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.10629634155562909,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.1272092868356425,
+        "pass": false,
+        "seed": 211,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.5510567843774966,
+        "clusters": 3,
+        "field_bits": 12,
+        "information_lower": -1.288817623319803,
+        "pass": false,
+        "seed": 307,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.10143636906674226,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.2328545461757516,
+        "pass": false,
+        "seed": 307,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.061679848552576515,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.2127416856755422,
+        "pass": false,
+        "seed": 307,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.4525949514052522,
+        "clusters": 3,
+        "field_bits": 12,
+        "information_lower": -1.5893190272506206,
+        "pass": false,
+        "seed": 401,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.15552803806830456,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.1294789407867745,
+        "pass": false,
+        "seed": 401,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.0890520999371862,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.1843281777938897,
+        "pass": false,
+        "seed": 401,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.37324319033544245,
+        "clusters": 3,
+        "field_bits": 12,
+        "information_lower": -1.1641115670201465,
+        "pass": false,
+        "seed": 503,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.08389312546377224,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.2253744097595969,
+        "pass": false,
+        "seed": 503,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.02731042868226434,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.2592294909092754,
+        "pass": false,
+        "seed": 503,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.29760842745543387,
+        "clusters": 3,
+        "field_bits": 12,
+        "information_lower": -0.981106137124325,
+        "pass": false,
+        "seed": 601,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.09140099185476848,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.1010599555262932,
+        "pass": false,
+        "seed": 601,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.09917960183470892,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -0.9656186435503403,
+        "pass": false,
+        "seed": 601,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.07957899824518304,
+        "clusters": 3,
+        "field_bits": 12,
+        "information_lower": -0.6324005483263442,
+        "pass": false,
+        "seed": 701,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.03338996842922892,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.2319328459429986,
+        "pass": false,
+        "seed": 701,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.04582874284269129,
+        "clusters": 4,
+        "field_bits": 12,
+        "information_lower": -1.082497591091712,
+        "pass": false,
+        "seed": 701,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.7445434500824416,
+        "clusters": 3,
+        "field_bits": 16,
+        "information_lower": -0.9925391180070624,
+        "pass": false,
+        "seed": 101,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.055307313579402516,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.433882237398755,
+        "pass": false,
+        "seed": 101,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.027213500947205788,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.6611691004298925,
+        "pass": false,
+        "seed": 101,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.49089249207790847,
+        "clusters": 3,
+        "field_bits": 16,
+        "information_lower": -1.4124129401718273,
+        "pass": false,
+        "seed": 211,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.024033797717552347,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.2402732598434523,
+        "pass": false,
+        "seed": 211,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.03695024393119379,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.534300301784194,
+        "pass": false,
+        "seed": 211,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.25637135831527186,
+        "clusters": 3,
+        "field_bits": 16,
+        "information_lower": -0.4426238879056237,
+        "pass": false,
+        "seed": 307,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.04204921786566492,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.4697438931076054,
+        "pass": false,
+        "seed": 307,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.03543396095938069,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.738104784224859,
+        "pass": false,
+        "seed": 307,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.37034566007388037,
+        "clusters": 3,
+        "field_bits": 16,
+        "information_lower": -0.8486840534874434,
+        "pass": false,
+        "seed": 401,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.04717806358692106,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.471031318228907,
+        "pass": false,
+        "seed": 401,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.04179512728982094,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.764730290331942,
+        "pass": false,
+        "seed": 401,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.17956416701808772,
+        "clusters": 3,
+        "field_bits": 16,
+        "information_lower": -0.4656327870519277,
+        "pass": false,
+        "seed": 503,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.00996570664414825,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.449944796598003,
+        "pass": false,
+        "seed": 503,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.05325386415414933,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.7587615594841948,
+        "pass": false,
+        "seed": 503,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.5634718634500022,
+        "clusters": 3,
+        "field_bits": 16,
+        "information_lower": -0.7045087118513975,
+        "pass": false,
+        "seed": 601,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.059151129674468415,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.5193125331397073,
+        "pass": false,
+        "seed": 601,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.03861207117988712,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.8792707636808084,
+        "pass": false,
+        "seed": 601,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.39070514406608886,
+        "clusters": 3,
+        "field_bits": 16,
+        "information_lower": -1.1120666092391718,
+        "pass": false,
+        "seed": 701,
+        "split": "seen_curve_new_generator",
+        "student_t_critical": 171.4599078749525
+      },
+      {
+        "accuracy_lift_lower": -0.03113246311115645,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -2.754991705229145,
+        "pass": false,
+        "seed": 701,
+        "split": "new_curve_seen_generator",
+        "student_t_critical": 40.14359361018032
+      },
+      {
+        "accuracy_lift_lower": -0.05873699038391437,
+        "clusters": 4,
+        "field_bits": 16,
+        "information_lower": -3.0590577952749376,
+        "pass": false,
+        "seed": 701,
+        "split": "new_curve_new_generator",
+        "student_t_critical": 40.14359361018032
+      }
+    ],
+    "comparisons": 588,
+    "familywise_alpha": 0.01,
+    "pass": false,
+    "selected_comparisons": 42
+  },
+  "screen_winner_architecture_id": "trees-glv-d8-l32",
+  "selection_ledger_sha256": "ba4c0ac1cc21adfd0c2329899c6768ab1aa2f6a222606410569129b4d3244cd6",
+  "source_commit": "13e5c43836adb12f7a2e46be1fecf256205aa5da",
+  "source_dependency_sha256": {
+    "curve_math.py": "7578a46bf446252e6d5db3be2707e89ac4b89ab2090cd36ac383d04ff1b75ae1",
+    "representations.py": "74c3287e0c791990b23d8f864359aa87b8e1ee5976228f7b95c700c2d6917a6d",
+    "run_assay.py": "df570b88a1d1f90329f6e48cd246696ff376f1b365bfb4495d1e27fde2c90a84"
+  },
+  "source_worktree_dirty_before_run": false,
+  "stage": "selection_complete_blind_unopened",
+  "wall_time_seconds": 69.99934918301005
+}
