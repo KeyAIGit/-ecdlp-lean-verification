@@ -39,15 +39,15 @@
           <p>One operator view for the current decision, formal substrate, evidence, active work,
             and generated trust checks.</p></div>
         <div class="snapshot">Canonical snapshot
-          <code>snapshot 298 ledger rows / ~259 distinct</code></div>
+          <code>snapshot 299 ledger rows / ~260 distinct</code></div>
       </div>
       <div class="boundary-notice"><strong>Scope boundary.</strong>
         The environment maps and verifies the research boundary. It does not solve the plain secp256k1 discrete logarithm problem.
         Monitoring means new evidence can reopen a route; it does not mean impossibility was proved.</div>
       <div class="workspace-metrics">
-        <div class="workspace-metric"><div class="workspace-metric__value">298</div><div class="workspace-metric__label">ledger rows</div></div>
-        <div class="workspace-metric"><div class="workspace-metric__value">~259</div><div class="workspace-metric__label">distinct results</div></div>
-        <div class="workspace-metric"><div class="workspace-metric__value">166</div><div class="workspace-metric__label">proved modules</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">299</div><div class="workspace-metric__label">ledger rows</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">~260</div><div class="workspace-metric__label">distinct results</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">167</div><div class="workspace-metric__label">proved modules</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">486</div><div class="workspace-metric__label">corpus claims</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">17</div><div class="workspace-metric__label">routes evaluated</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">0</div><div class="workspace-metric__label">selected experiments</div></div>
@@ -73,7 +73,7 @@
       <article class="decision-band">
         <div class="decision-band__state"><span>RS-2026-07-24-001</span><strong>Structural selection</strong></div>
         <div class="decision-band__copy"><h3>The bounded structural question is resolved; no experiment is authorized.</h3>
-          <p>Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube premise and every nonzero affine fixed-target coordinate-scaling premise are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged. Proposal intake remains open, while toy runs,
+          <p>Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar polynomial covariance survives for S3 and S4; the naive independent-cube premise and the S4 fixed-target coordinate-scaling premise are bounded negatives. The S4 certificate isolates r=0, and Lean proves that no F_p-rational affine secp256k1 target inhabits that slice. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged. Proposal intake remains open, while toy runs,
             direct secp256k1 work, and promotion remain closed.</p></div>
       </article>
       <div class="panel-heading"><div><h2>Research Engine v0 queue</h2>
@@ -86,7 +86,7 @@
       <div class="layout-two">
         <article class="surface">
           <div class="surface__head"><div><h3>Why this decision</h3><p>Canonical rationale, not a claim of impossibility</p></div></div>
-          <div class="surface__body"><ul class="plain-list"><li>RS-2026-07-22-001 is historical after supersession; this current decision explicitly carries forward its zero-promotion assessment.</li><li>The owner selected the exact S3/S4 coordinatewise C3 stabilizer and fixed-target consequence as the sole current structural uncertainty because it can resolve the premise of the naive GLV-Semaev quotient without an attack run.</li><li>Exact symbolic certificates and narrowly scoped Lean covariance theorems can reduce this uncertainty while preserving the parked experiment status and every P0-P4 result.</li><li>A diagonal-only result is a bounded no-go for independent u_i=x_i^3 quotienting, not a lower bound for Groebner/F4, faithful Petit, or the whole R-GLV-SEMAEV route.</li><li>A larger stabilizer would still require an exact quotient, recovery map, orbit tags, excluded components, cost prediction, and a later decision before any externally validated solver experiment.</li></ul></div>
+          <div class="surface__body"><ul class="plain-list"><li>RS-2026-07-22-001 is historical after supersession; this current decision explicitly carries forward its zero-promotion assessment.</li><li>The owner selected the exact S3/S4 coordinatewise C3 polynomial classification and the S4 fixed-target consequence as the sole current structural uncertainty because they can resolve the premise of the naive GLV-Semaev quotient without an attack run.</li><li>Exact symbolic certificates and narrowly scoped Lean covariance theorems can reduce this uncertainty while preserving the parked experiment status and every P0-P4 result.</li><li>A diagonal-only result is a bounded no-go for independent u_i=x_i^3 quotienting, not a lower bound for Groebner/F4, faithful Petit, or the whole R-GLV-SEMAEV route.</li><li>A larger stabilizer would still require an exact quotient, recovery map, orbit tags, excluded components, cost prediction, and a later decision before any externally validated solver experiment.</li></ul></div>
         </article>
         <aside class="surface">
           <div class="surface__head"><div><h3>Split work queues</h3><p>3 research / 2 product contracts</p></div>
@@ -123,7 +123,8 @@ Expected output:
 - The full finite classification of coordinatewise C3 semi-invariant actions
   on S3 and S4, with polynomial equality kept distinct from zero-variety
   equality.
-- The fixed-target transport law and the point-group GLV relation bijection.
+- The `S4` fixed-target transport/classification and the point-group GLV
+  relation bijection. `S3` has no fixed-target classification claim.
 - Only completed covariance identities in the smallest kernel-checkable Lean
   package; any impractical stabilizer classification remains outside the
   verified ledger with its exact blocker.
@@ -427,7 +428,7 @@ How to verify:
       <div class="panel-heading"><div><h2>Sync Health</h2>
         <p>The public and agent-facing views resolve back to canonical machine sources and their gates.</p></div></div>
       <div class="layout-two" style="margin-bottom:30px"><article class="surface">
-  <div class="surface__head"><div><h3>Canonical counts</h3><p>298 ledger rows / ~259 distinct</p></div><span class="status status--closed">OK</span></div>
+  <div class="surface__head"><div><h3>Canonical counts</h3><p>299 ledger rows / ~260 distinct</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/stats.json">data/stats.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_status_consistency.py">scripts/check_status_consistency.py</a></div>
 </article><article class="surface">
   <div class="surface__head"><div><h3>Decision state</h3><p>1 structural route completed / 0 promoted / 0 experiments authorized</p></div><span class="status status--closed">OK</span></div>
@@ -436,7 +437,7 @@ How to verify:
   <div class="surface__head"><div><h3>Research Engine gates</h3><p>0 bounded / 0 promotion experiments</p></div><span class="status status--blue">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/RESEARCH_ENGINE_V0.json">repo/RESEARCH_ENGINE_V0.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_research_engine.py">scripts/check_research_engine.py</a></div>
 </article><article class="surface">
-  <div class="surface__head"><div><h3>Generated closure</h3><p>298 theorem nodes in the knowledge graph</p></div><span class="status status--closed">OK</span></div>
+  <div class="surface__head"><div><h3>Generated closure</h3><p>299 theorem nodes in the knowledge graph</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ARTIFACTS.yaml">repo/ARTIFACTS.yaml</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_repo_artifacts.py">scripts/check_repo_artifacts.py</a></div>
 </article><article class="surface">
   <div class="surface__head"><div><h3>Product boundary</h3><p>Reference deployment</p></div><span class="status status--blue">OK</span></div>
@@ -445,7 +446,7 @@ How to verify:
       <div class="layout-two">
         <article class="surface">
           <div class="surface__head"><div><h3>Reconsideration triggers</h3><p>What can legitimately reopen route selection</p></div></div>
-          <div class="surface__body"><ul class="plain-list"><li>A materially different phase-preserving quotient, birational construction, or relation mechanism supplies exact fixed-target semantics, recovery, orbit tags, excluded components, and a falsifiable full-cost prediction.</li><li>An independently replayable counter-certificate or proof identifies an error in the frozen S3/S4 formulas, resultant construction, assumptions, or coordinatewise C3 classification.</li><li>A formal cost theorem combines the finite target orbit with a new mechanism and proves a nonconstant full-pipeline gain rather than attributing asymptotic value to orbit size alone.</li></ul></div>
+          <div class="surface__body"><ul class="plain-list"><li>A materially different phase-preserving quotient, birational construction, or relation mechanism supplies exact fixed-target semantics, recovery, orbit tags, excluded components, and a falsifiable full-cost prediction.</li><li>An independently replayable counter-certificate or proof identifies an error in the frozen S3/S4 polynomial formulas or coordinatewise classification, the S4 resultant/fixed-target construction, or their assumptions.</li><li>A formal cost theorem combines the finite target orbit with a new mechanism and proves a nonconstant full-pipeline gain rather than attributing asymptotic value to orbit size alone.</li></ul></div>
         </article>
         <article class="surface">
           <div class="surface__head"><div><h3>Operating policy</h3><p>research-engine-v0</p></div></div>
@@ -503,7 +504,8 @@ Expected output:
 - The full finite classification of coordinatewise C3 semi-invariant actions
   on S3 and S4, with polynomial equality kept distinct from zero-variety
   equality.
-- The fixed-target transport law and the point-group GLV relation bijection.
+- The `S4` fixed-target transport/classification and the point-group GLV
+  relation bijection. `S3` has no fixed-target classification claim.
 - Only completed covariance identities in the smallest kernel-checkable Lean
   package; any impractical stabilizer classification remains outside the
   verified ledger with its exact blocker.

@@ -212,7 +212,10 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1_scalar_num_generators
 #print axioms Ecdlp.Curve.secp256k1_schnorr_batch_verify
 #print axioms Ecdlp.Curve.secp256k1_schnorr_verify
+#print axioms Ecdlp.Curve.secp256k1_seven_ne_zero
+#print axioms Ecdlp.Curve.secp256k1_seven_not_isSquare
 #print axioms Ecdlp.Curve.secp256k1_seven_nsmul_eq_zero_iff
+#print axioms Ecdlp.Curve.secp256k1_seven_pow_ne_one
 #print axioms Ecdlp.Curve.secp256k1_seven_torsion_card_le
 #print axioms Ecdlp.Curve.secp256k1_seven_torsion_ncard_le
 #print axioms Ecdlp.Curve.secp256k1_seven_torsion_x_card_le
@@ -249,6 +252,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff
 #print axioms Ecdlp.Curve.secp256k1_two_torsion_ncard_le
 #print axioms Ecdlp.Curve.secp256k1_two_torsion_x_card_le
+#print axioms Ecdlp.Curve.secp256k1_x_ne_zero
 #print axioms Ecdlp.Curve.secp256k1_zmultiples_le_torsionBy
 #print axioms Ecdlp.Curve.secp256k1_Δ_ne_zero
 #print axioms Ecdlp.Curve.secp256k1_Φ_monic
@@ -391,6 +395,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Semaev.secp256k1_S₄_glv_invariant
 #print axioms Ecdlp.Semaev.secp256k1_S₄_glv_target_transport
 #print axioms Ecdlp.Semaev.secp256k1_decomposition_completions_le_two
+#print axioms Ecdlp.Semaev.secp256k1_glv_affine_target_moves
 #print axioms Ecdlp.Semaev.secp256k1_glv_fixed_target_moves
 #print axioms Ecdlp.Semaev.secp256k1_point_decomposition_semaev
 #print axioms Ecdlp.Semaev.secp256k1_point_decomposition_semaev_double

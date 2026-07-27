@@ -11,13 +11,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 8492
+        "bytes": 8519
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 64569
+        "bytes": 65248
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -53,7 +53,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 8436
+        "bytes": 8501
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -79,13 +79,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 8492
+        "bytes": 8519
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 64569
+        "bytes": 65248
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -121,7 +121,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 8436
+        "bytes": 8501
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -145,19 +145,19 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 11106
+        "bytes": 11351
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 10093
+        "bytes": 10237
       },
       {
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 152752
+        "bytes": 152606
       },
       {
         "path": "BARRIERS.md",
@@ -181,7 +181,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 25217
+        "bytes": 25499
       },
       {
         "path": "experiments/engine/README.md",
@@ -243,13 +243,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 8492
+        "bytes": 8519
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 64569
+        "bytes": 65248
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -285,7 +285,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 8436
+        "bytes": 8501
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -309,19 +309,19 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 11106
+        "bytes": 11351
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 10093
+        "bytes": 10237
       },
       {
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 152752
+        "bytes": 152606
       },
       {
         "path": "BARRIERS.md",
@@ -345,7 +345,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 25217
+        "bytes": 25499
       },
       {
         "path": "experiments/engine/README.md",
@@ -405,7 +405,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 537730
+        "bytes": 539343
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

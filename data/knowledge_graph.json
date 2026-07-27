@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 298,
-    "ledger_rows": 298,
+    "theorems": 299,
+    "ledger_rows": 299,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -18,10 +18,10 @@
     "selected_explorations": 0,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1002,
+    "edges": 1007,
     "by_edge_type": {
-      "imports": 486,
-      "member_of": 298,
+      "imports": 490,
+      "member_of": 299,
       "requires_foundation": 41,
       "decision_grounded_in": 25,
       "supports": 24,
@@ -124,7 +124,7 @@
       "Mathlib (`linear_combination`, `mul_eq_zero`)": 1,
       "Mathlib (`Polynomial.resultant`, `exists_mul_add_mul_eq_C_resultant`)": 1,
       "Mathlib (`exists_mul_add_mul_eq_C_resultant`)": 1,
-      "Mathlib + exact Sylvester resultant + existing GLV automorphism": 1,
+      "Mathlib + exact Sylvester resultant + existing GLV automorphism + `secp256k1_x_ne_zero": 1,
       "Mathlib (`Polynomial.resultant_eq_prod_eval`)": 1,
       "Mathlib (`linear_combination` over `F[X]`)": 1,
       "Mathlib (`ring`)": 1,
@@ -163,13 +163,14 @@
       "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer": 1,
       "evalReg`/`evalFracAt` layer (`FunctionFieldRegular.lean`) + field algebra": 1,
       "evalReg`/`divEval` layer + `evalFracAt_unit_mul` + field algebra": 1,
-      "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer": 1
+      "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer": 1,
+      "ZMod.euler_criterion` + `native_decide` witness + curve equation": 1
     },
     "by_area": {
       "curve-torsion": 152,
       "primality": 55,
       "generic-hardness": 29,
-      "other": 26,
+      "other": 27,
       "protocol-soundness": 23,
       "attack-resistance": 7,
       "reduction": 5,
@@ -5167,7 +5168,7 @@
     },
     {
       "id": "thm-249",
-      "name": "Ecdlp.Semaev.S₃_diagonal_cube_covariance`, `Ecdlp.Semaev.S₃_diagonal_cube_zero_iff`, `Ecdlp.Semaev.S₄_diagonal_cube_invariant`, `Ecdlp.Semaev.secp256k1_S₃_glv_covariance`, `Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff`, `Ecdlp.Semaev.secp256k1_S₄_glv_invariant`, `Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff`, `Ecdlp.Curve.secp256k1_glv_three_point_sum_eq_iff`, `Ecdlp.Semaev.S₄_glv_target_transport`, `Ecdlp.Semaev.S₄_glv_fibre_transport`, `Ecdlp.Semaev.glv_target_ne_self`, `Ecdlp.Semaev.secp256k1_S₄_glv_target_transport`, `Ecdlp.Semaev.secp256k1_S₄_glv_fibre_transport`, `Ecdlp.Semaev.secp256k1_glv_fixed_target_moves",
+      "name": "Ecdlp.Semaev.S₃_diagonal_cube_covariance`, `Ecdlp.Semaev.S₃_diagonal_cube_zero_iff`, `Ecdlp.Semaev.S₄_diagonal_cube_invariant`, `Ecdlp.Semaev.secp256k1_S₃_glv_covariance`, `Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff`, `Ecdlp.Semaev.secp256k1_S₄_glv_invariant`, `Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff`, `Ecdlp.Curve.secp256k1_glv_three_point_sum_eq_iff`, `Ecdlp.Semaev.S₄_glv_target_transport`, `Ecdlp.Semaev.S₄_glv_fibre_transport`, `Ecdlp.Semaev.glv_target_ne_self`, `Ecdlp.Semaev.secp256k1_S₄_glv_target_transport`, `Ecdlp.Semaev.secp256k1_S₄_glv_fibre_transport`, `Ecdlp.Semaev.secp256k1_glv_fixed_target_moves`, `Ecdlp.Semaev.secp256k1_glv_affine_target_moves",
       "short_name": "S₃_diagonal_cube_covariance`,",
       "module": "Ecdlp.Proved.GlvSemaevSymmetry",
       "modules": [
@@ -5177,12 +5178,12 @@
       "files": [
         "Ecdlp/Proved/GlvSemaevSymmetry.lean"
       ],
-      "claim": "GLV covariance of Semaev `S₃`/`S₄` and exact relation-set transport (`S₃_diagonal_cube_covariance` and `S₃_diagonal_cube_zero_iff`: over any commutative ring with `β³=1`, simultaneous scaling gives `S₃(βx₁,βx₂,βx₃)=β·S₃(x₁,x₂,x₃)` and preserves its zero condition; `S₄_diagonal_cube_invariant`: the exact fixed-size resultant satisfies `S₄(βx₁,βx₂,βx₃,βx₄)=S₄(x₁,x₂,x₃,x₄)`, including degenerate quadratic slices. The secp256k1 specializations instantiate these identities at the GLV cube root. Separately, `secp256k1_glv_list_sum_eq_iff` and its three-point form prove the additive-bijection law `ΣPᵢ=R ⟺ Σφ(Pᵢ)=φ(R)`. Fixed-target layer: `S₄_glv_target_transport` gives the exact transport law `S₄(βx₁,βx₂,βx₃,x₄)=S₄(x₁,x₂,x₃,β²x₄)`, and `S₄_glv_fibre_transport` gives the *fibre* direction — a solution at target `r` maps to one at `βr`, i.e. `R↦φ(R)` — derived from full diagonal invariance so the transport exponent cannot be misread as the fibre direction (`β²` vs `β` is a real distinction). With `glv_target_ne_self` (`β≠1`, `r≠0` ⟹ `βr≠r`) and `secp256k1_glv_fixed_target_moves`, a nonidentity diagonal scaling provably transports the fixed-target relation problem instead of preserving it; `r≠0` is a hypothesis, not discharged, and the affine-target scope is explicit (a target at infinity has no `x`-coordinate). This is a diagonal covariance and finite target-transport theorem package, not a classification of all geometric zero-variety automorphisms, an asymptotic relation-generation gain, or an ECDLP attack. The *full coordinatewise stabilizer* classification is deliberately NOT claimed in Lean and remains certificate-backed (`experiments/glv_semaev_symmetry/fixed_target_certificate.json`, independently replayed); blocker: it needs `MvPolynomial` coefficient extraction over a 125-monomial support)",
-      "method": "Mathlib + exact Sylvester resultant + existing GLV automorphism",
+      "claim": "GLV covariance of Semaev `S₃`/`S₄` and exact relation-set transport (`S₃_diagonal_cube_covariance` and `S₃_diagonal_cube_zero_iff` prove simultaneous polynomial covariance and preservation of the `S₃=0` condition; `S₄_diagonal_cube_invariant` proves exact diagonal invariance of the resultant-defined `S₄`. The secp256k1 specializations instantiate these identities at the GLV cube root. `secp256k1_glv_list_sum_eq_iff` and its three-point form prove `ΣPᵢ=R ⟺ Σφ(Pᵢ)=φ(R)`. The fixed-target theorem layer is S₄ only: `S₄_glv_target_transport` and `S₄_glv_fibre_transport` distinguish the polynomial target exponent from the fibre direction. `secp256k1_glv_affine_target_moves` combines `secp256k1_x_ne_zero` with `secp256k1_glv_fixed_target_moves`, proving that every `𝔽_p`-rational affine target is moved by nonidentity diagonal GLV scaling. The exhaustive fixed-target `S₄` coordinate-scaling classification is deliberately NOT claimed in Lean and remains independently replayed certificate evidence. Scope excludes the point at infinity, extension-field targets, and non-scalar or birational automorphisms; no asymptotic or ECDLP consequence is claimed)",
+      "method": "Mathlib + exact Sylvester resultant + existing GLV automorphism + `secp256k1_x_ne_zero",
       "status": "proved",
       "area": "attack-resistance",
       "family_id": "family-attack-resistance",
-      "dependency_depth": 6,
+      "dependency_depth": 10,
       "gated": true
     },
     {
@@ -6152,6 +6153,26 @@
       "family_id": "family-curve-torsion",
       "dependency_depth": 8,
       "gated": true
+    },
+    {
+      "id": "thm-298",
+      "name": "Ecdlp.Curve.secp256k1_seven_ne_zero`, `secp256k1_seven_pow_ne_one`, `secp256k1_seven_not_isSquare`, `secp256k1_x_ne_zero",
+      "short_name": "secp256k1_seven_ne_zero`,",
+      "module": "Ecdlp.Proved.SevenNonResidue",
+      "modules": [
+        "Ecdlp.Proved.SevenNonResidue"
+      ],
+      "file": "Ecdlp/Proved/SevenNonResidue.lean",
+      "files": [
+        "Ecdlp/Proved/SevenNonResidue.lean"
+      ],
+      "claim": "7` is a quadratic non-residue modulo `p`; no affine secp256k1 point over `𝔽_p` has `x=0` (`secp256k1_seven_not_isSquare`: Euler's criterion contradicts the closed witness `7^(p/2) ≠ 1`; `secp256k1_x_ne_zero`: substituting `x=0` into `y²=x³+7` would exhibit `7` as a square)",
+      "method": "ZMod.euler_criterion` + `native_decide` witness + curve equation",
+      "status": "proved",
+      "area": "other",
+      "family_id": "family-other",
+      "dependency_depth": 9,
+      "gated": true
     }
   ],
   "barriers": [
@@ -6852,17 +6873,17 @@
         "R-PROTOCOL-FAULT-SIDECHANNEL",
         "R-QUANTUM-SHOR"
       ],
-      "gate_result": "Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar covariance survives; the naive independent-cube premise and every nonzero affine fixed-target coordinate-scaling premise are bounded negatives. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.",
+      "gate_result": "Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar polynomial covariance survives for S3 and S4; the naive independent-cube premise and the S4 fixed-target coordinate-scaling premise are bounded negatives. The S4 certificate isolates r=0, and Lean proves that no F_p-rational affine secp256k1 target inhabits that slice. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.",
       "rationale": [
         "RS-2026-07-22-001 is historical after supersession; this current decision explicitly carries forward its zero-promotion assessment.",
-        "The owner selected the exact S3/S4 coordinatewise C3 stabilizer and fixed-target consequence as the sole current structural uncertainty because it can resolve the premise of the naive GLV-Semaev quotient without an attack run.",
+        "The owner selected the exact S3/S4 coordinatewise C3 polynomial classification and the S4 fixed-target consequence as the sole current structural uncertainty because they can resolve the premise of the naive GLV-Semaev quotient without an attack run.",
         "Exact symbolic certificates and narrowly scoped Lean covariance theorems can reduce this uncertainty while preserving the parked experiment status and every P0-P4 result.",
         "A diagonal-only result is a bounded no-go for independent u_i=x_i^3 quotienting, not a lower bound for Groebner/F4, faithful Petit, or the whole R-GLV-SEMAEV route.",
         "A larger stabilizer would still require an exact quotient, recovery map, orbit tags, excluded components, cost prediction, and a later decision before any externally validated solver experiment."
       ],
       "reconsideration_triggers": [
         "A materially different phase-preserving quotient, birational construction, or relation mechanism supplies exact fixed-target semantics, recovery, orbit tags, excluded components, and a falsifiable full-cost prediction.",
-        "An independently replayable counter-certificate or proof identifies an error in the frozen S3/S4 formulas, resultant construction, assumptions, or coordinatewise C3 classification.",
+        "An independently replayable counter-certificate or proof identifies an error in the frozen S3/S4 polynomial formulas or coordinatewise classification, the S4 resultant/fixed-target construction, or their assumptions.",
         "A formal cost theorem combines the finite target orbit with a new mechanism and proves a nonconstant full-pipeline gain rather than attributing asymptotic value to orbit size alone."
       ],
       "operational_effects": [
@@ -7235,7 +7256,7 @@
           "The quotient retains enough information to recover valid relations."
         ],
         "known_cost": "Finite GLV orbit compression is constant-factor. The proposed u_i=x_i^3 map is the coordinatewise C3^m quotient, not the diagonal C3 quotient, and generically merges 3^(m-1) diagonal orbits.",
-        "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance. Certificate 2142e8d66a8422768b609e42f5ce09377d5f93609941139fc9fc4e5abe4dfe59 gives every rejected S3/S4 pair a coefficient +1 witness over Z[b], making the polynomial classification uniform across characteristics whenever a primitive cube root exists. Fixed-target certificate 9db5e0375421659f9abb905c12ae77232ef9957867f7194baaf548d45a1f091d proves that every nonzero affine target has only identity coordinate-scaling covariance in characteristic outside {2,3}; the r=0 slice has exactly the diagonal C3 stabilizer, with a pure-b witness for every rejected pair. Standard-library validators independently reconstruct S4 from the Sylvester determinant and replay both classifications. This is algorithmic path and artifact independence, not established source-author independence. The 14-theorem covariance and point-group transport module has Git-blob SHA-256 2940166077cbb1de3840d31fc2e829c96c90549bc49466250f8f548225d99e73 and passed the full Lean build, built-source no-sorry scan, and exhaustive axiom audit in workflow run 30163027316 at content head be7a4d8e7da94b33ef74b0c146d732314b293827; earlier P0-P4 evidence is retained unchanged.",
+        "current_evidence": "GLV-SEMAEV-ITER-001 exactly enumerates all 27 S3 and 81 S4 coordinatewise C3 scalings in the universal and primitive cube-root quotients and after secp256k1 specialization. Only the diagonal C3 is a scalar polynomial covariance. Certificate 2142e8d66a8422768b609e42f5ce09377d5f93609941139fc9fc4e5abe4dfe59 gives every rejected S3/S4 pair a coefficient +1 witness over Z[b], making the polynomial classification uniform across characteristics whenever a primitive cube root exists. The fixed-target certificate is S4-specific: 9db5e0375421659f9abb905c12ae77232ef9957867f7194baaf548d45a1f091d proves that every nonzero affine S4 target has only identity coordinate-scaling covariance in characteristic outside {2,3}; the r=0 slice has exactly the diagonal C3 stabilizer. Standard-library validators independently reconstruct S4 from the Sylvester determinant and replay both classifications. Lean separately proves secp256k1_seven_not_isSquare, secp256k1_x_ne_zero, and the diagonal corollary secp256k1_glv_affine_target_moves, so no F_p-rational affine secp256k1 target inhabits r=0. Exhaustiveness is still certificate-backed, not a Lean theorem; source-author independence is not established. The original 14-theorem covariance and point-group transport module passed the full Lean build, built-source no-sorry scan, and exhaustive axiom audit in workflow run 30163027316 at content head be7a4d8e7da94b33ef74b0c146d732314b293827. The affine closeout extension requires its own build and axiom audit; earlier P0-P4 evidence is retained unchanged.",
         "success_gate": "Supply a materially different exact mechanism with explicit fixed-target behavior, recovery, and a theoretical reason for a lower asymptotic solving exponent, then validate it independently. Repackaging coordinatewise cubes is not a new premise.",
         "stop_condition": "The coordinatewise quotient and dependent m=3 scaling draft are stopped. Any successor also stops if its gain is bounded by orbit size or disappears after complete relation-generation and recovery costs are counted.",
         "next_action": "Keep GLV-SEMAEV-ITER-001 closed without a solver run. Accept only a materially different phase-preserving mechanism with an exact recovery map, orbit tags, excluded components, a falsifiable full-cost prediction, and an independent validator through TASK-008 before any new decision.",
@@ -7250,7 +7271,7 @@
           "foundation_ids": [
             "F-SEMAEV-ELIMINATION"
           ],
-          "scope": "Exact S3/S4 covariance and stabilizer classification, every nonzero affine fixed-target coordinate-scaling classification plus the r=0 exception, target transport, and the smallest completed Lean theorem package only.",
+          "scope": "Exact S3/S4 scalar polynomial covariance/classification; S4-only nonzero-affine fixed-target coordinate-scaling classification plus the r=0 exception; Lean proof that the exception has no F_p-rational affine secp256k1 target; S4 target transport; and the smallest theorem package only.",
           "promotes_route": false,
           "authorizes_experiment": false
         },
@@ -7299,7 +7320,7 @@
           "petit_kosters_messeng2016",
           "kudo_yokota_takahashi_yasuda2018"
         ],
-        "anti_overclaim": "The diagonal-only classification closes the independent coordinatewise-cube quotient and its every-nonzero-affine fixed-target coordinate-scaling premise, not faithful Petit, all geometric zero-variety automorphisms, Groebner/F4 complexity, or the whole GLV-Semaev route. It is not an ECDLP or secp256k1 break."
+        "anti_overclaim": "The diagonal-only polynomial classification closes the independent coordinatewise-cube quotient, and the S4 certificate plus the base-field affine Lean fact close its S4 fixed-target coordinate-scaling premise for F_p-rational affine secp256k1 targets. It does not cover S3 fixed-target classification, the point at infinity, extension-field targets, non-scalar or birational automorphisms, faithful Petit, Groebner/F4 complexity, or the whole GLV-Semaev route. It is not an ECDLP or secp256k1 break."
       },
       {
         "id": "R-PETIT-COMPOSED-MAPS",
@@ -7720,7 +7741,7 @@
           "route_id": "R-GLV-SEMAEV",
           "hypothesis_id": "HYP_GLV_SEMAEV_001",
           "task_id": "TASK-009",
-          "scope": "Only exact S3/S4 covariance identities and the smallest fixed-target consequence needed to decide the naive quotient premise.",
+          "scope": "Only exact S3/S4 polynomial covariance identities and the smallest S4 fixed-target consequence needed to decide the naive quotient premise.",
           "promotes_foundation": false,
           "build_now": false
         }
@@ -9880,6 +9901,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.GlvSemaevSymmetry",
+      "to": "Ecdlp.Proved.SevenNonResidue",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.GlvSlope",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
@@ -10307,6 +10333,16 @@
     {
       "from": "Ecdlp.Proved.SemaevThree",
       "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenNonResidue",
+      "to": "Ecdlp.Proved.Secp256k1PrimeP",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SevenNonResidue",
+      "to": "Ecdlp.Proved.TorsionPointCount",
       "type": "imports"
     },
     {
@@ -11077,6 +11113,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.SemaevFour",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.SevenNonResidue",
       "type": "imports"
     },
     {
@@ -13032,6 +13073,11 @@
     {
       "from": "thm-297",
       "to": "family-curve-torsion",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-298",
+      "to": "family-other",
       "type": "member_of"
     },
     {

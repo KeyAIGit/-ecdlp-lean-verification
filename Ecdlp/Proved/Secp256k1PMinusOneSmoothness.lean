@@ -41,7 +41,7 @@ difficulty, not a complexity bound, not a claim about any particular algorithm,
 and not progress toward recovering a discrete logarithm. It says nothing about
 the group order `n`, about extension fields, or about auxiliary curves.
 
-The two `native_decide` uses are closed computations over literal constants and
+The `native_decide` use is a closed computation over literal constants and
 contribute only `Lean.ofReduceBool`, already in the repository's allowed trust
 base.
 -/
