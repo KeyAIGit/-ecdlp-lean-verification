@@ -1,0 +1,104 @@
+{
+  "config_sha256": "9104b537ba70768703969276a83110c357d0a2295fde179d2025a597f55ffb96",
+  "distribution_checks": {
+    "public_x_bits": {
+      "argmax_bit_big_endian": 47,
+      "max_abs_z": 2.608,
+      "threshold": 8.0
+    },
+    "public_y_parity": {
+      "max_abs_z": 1.602,
+      "ones": 500801,
+      "threshold": 6.5
+    },
+    "scalar_bits": {
+      "argmax_bit_big_endian": 125,
+      "max_abs_z": 2.612,
+      "threshold": 6.5
+    },
+    "scalar_residues": {
+      "11": {
+        "counts": [
+          90984,
+          89938,
+          90622,
+          91139,
+          90853,
+          91630,
+          90641,
+          91109,
+          90884,
+          91011,
+          91189
+        ],
+        "max_cell_abs_z": 3.3779449965918724
+      },
+      "13": {
+        "counts": [
+          76805,
+          76662,
+          76815,
+          76539,
+          77108,
+          76673,
+          77569,
+          76876,
+          77377,
+          77364,
+          76591,
+          76607,
+          77014
+        ],
+        "max_cell_abs_z": 2.424005105192648
+      },
+      "3": {
+        "counts": [
+          333302,
+          332951,
+          333747
+        ],
+        "max_cell_abs_z": 0.8775195154525466
+      },
+      "5": {
+        "counts": [
+          200494,
+          199709,
+          200369,
+          199480,
+          199948
+        ],
+        "max_cell_abs_z": 1.3
+      },
+      "7": {
+        "counts": [
+          142511,
+          142838,
+          143525,
+          142795,
+          143056,
+          142719,
+          142556
+        ],
+        "max_cell_abs_z": 1.9085607579185238
+      }
+    }
+  },
+  "errors": [],
+  "experiment_id": "ML-STRUCTURE-PROBE-FULL-KEY-BLIND-1M",
+  "manifest_sha256": "02b3e29c826b6e5005cd39f33dee5ebe009c0245f5cd45af46f1e46f4554a66f",
+  "records_observed": 1000000,
+  "schema_version": 1,
+  "source_independent": false,
+  "split_records": {
+    "blind_a": 500000,
+    "blind_b": 500000
+  },
+  "spot_checks": {
+    "arithmetic": "pure-python Jacobian secp256k1, no producer import",
+    "failures": [],
+    "requested_and_found": 2048
+  },
+  "status": "pass",
+  "unique_scalars": 1000000,
+  "validation_role": "data_engineering_path_and_artifact_replay"
+}

@@ -106,7 +106,7 @@ under successive budgets.  The predeclared search contains 301 fits:
 | screen | 240 | 80 architectures, 3 seeds, 100,000 train and 100,000 development records |
 | confirm | 36 | 12 survivors, 3 seeds, 600,000 train and 200,000 development records |
 | cross-dataset | 8 | 4 survivors in both primary-to-replica directions |
-| final ensemble | 5 | one frozen recipe, 5 new seeds, 1.6M train records |
+| final ensemble | 5 | one frozen recipe, 5 new seeds, up to 1.6M train records subject to the predeclared family cap |
 | controls | 12 | random labels, whole-key permutations, and 1/8/32-bit deliberate leaks |
 
 Every metric is computed relative to priors learned on the fitting data.
@@ -312,6 +312,48 @@ The command writes a complete JSONL attempt ledger, machine-readable result,
 Markdown report, and `frozen_full_key_recipe.json`.  The separate blind command
 is intentionally run only after the new blind dataset seed, generator config,
 and frozen recipe are committed.
+
+Generate and validate the committed independent blind million:
+
+```text
+python generate_dataset.py \
+  --config config/p0_million_full_key_blind.json \
+  --output-dir artifacts/p0_million_full_key_blind
+python validate_dataset.py \
+  --config config/p0_million_full_key_blind.json \
+  --manifest artifacts/p0_million_full_key_blind/dataset_manifest.json \
+  --output reports/full_key_blind/dataset_validation.json
+```
+
+Then run the single frozen ensemble and build the retained qualification:
+
+```text
+python full_key_blind.py \
+  --recipe reports/full_key_search/frozen_full_key_recipe.json \
+  --search-result reports/full_key_search/full_key_search_result.json \
+  --development-manifest reports/p0_million/dataset_manifest.json \
+  --development-root artifacts/p0_million \
+  --development-manifest reports/p0_million_replica/dataset_manifest.json \
+  --development-root artifacts/p0_million_replica \
+  --blind-manifest artifacts/p0_million_full_key_blind/dataset_manifest.json \
+  --blind-root artifacts/p0_million_full_key_blind \
+  --output-dir reports/full_key_blind
+
+python build_full_key_qualification.py \
+  --search-result reports/full_key_search/full_key_search_result.json \
+  --search-ledger reports/full_key_search/full_key_run_ledger.jsonl \
+  --blind-result reports/full_key_blind/blind_result.json \
+  --blind-ledger reports/full_key_blind/blind_run_ledger.jsonl \
+  --blind-validation reports/full_key_blind/dataset_validation.json \
+  --blind-manifest artifacts/p0_million_full_key_blind/dataset_manifest.json \
+  --output-dir reports/full_key_qualification
+```
+
+The winning bounded-depth tree recipe retained its predeclared 100,000-record
+training cap.  The two million development records were available to the
+controller, while the MLP scaling path reached 800,000 train records and 10
+epochs.  The retained report states these actual budgets rather than describing
+the family cap as a two-million-record fit.
 
 One-million-pair data and probe:
 

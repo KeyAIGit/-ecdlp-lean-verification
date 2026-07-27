@@ -852,9 +852,18 @@ def _report_markdown(result: dict[str, Any]) -> str:
                 f"{controls['max_null_information_bits_per_key']:.6g} bits/key"
             ),
             (
-                f"- Minimum deliberate-leak information gain: "
-                f"{controls['min_leak_information_bits_per_key']:.6g} bits/key"
+                f"- One-bit target-head information gain: "
+                f"{controls['minimum_leak_1_target_bit_information']:.6g} bits"
             ),
+            (
+                f"- Minimum 8-bit leak whole-key gain: "
+                f"{controls['minimum_leak_8_information_bits_per_key']:.6g} bits/key"
+            ),
+            (
+                f"- Minimum 32-bit leak whole-key gain: "
+                f"{controls['minimum_leak_32_information_bits_per_key']:.6g} bits/key"
+            ),
+            f"- Control qualification passed: {controls['controls_pass']}",
             "",
             "## Interpretation boundary",
             "",
@@ -993,6 +1002,59 @@ def run_search(
         if item["status"] == "success"
         and item["stage"].startswith("control_label_leak_")
     ]
+    leak_1_controls = [
+        item for item in leak_controls if item["stage"] == "control_label_leak_1"
+    ]
+    leak_8_controls = [
+        item for item in leak_controls if item["stage"] == "control_label_leak_8"
+    ]
+    leak_32_controls = [
+        item for item in leak_controls if item["stage"] == "control_label_leak_32"
+    ]
+    maximum_null_information = max(
+        (
+            item["validation"]["information_gain_bits_per_key"]
+            for item in null_controls
+        ),
+        default=float("nan"),
+    )
+    maximum_null_z = max(
+        (item["validation"]["paired_accuracy_z"] for item in null_controls),
+        default=float("nan"),
+    )
+    minimum_leak_1_target_information = min(
+        (
+            item["validation"]["best_information_bit"]["information_gain_bits"]
+            for item in leak_1_controls
+        ),
+        default=float("nan"),
+    )
+    minimum_leak_8_information = min(
+        (
+            item["validation"]["information_gain_bits_per_key"]
+            for item in leak_8_controls
+        ),
+        default=float("nan"),
+    )
+    minimum_leak_32_information = min(
+        (
+            item["validation"]["information_gain_bits_per_key"]
+            for item in leak_32_controls
+        ),
+        default=float("nan"),
+    )
+    controls_pass = (
+        maximum_null_information < 0.01
+        and maximum_null_z < 5.0
+        and minimum_leak_1_target_information > 0.25
+        and all(
+            item["validation"]["best_information_bit"]["bit_big_endian"] == 0
+            and item["validation"]["best_information_bit"]["accuracy_lift"] > 0.45
+            for item in leak_1_controls
+        )
+        and minimum_leak_8_information > 1.0
+        and minimum_leak_32_information > 5.0
+    )
     controls_summary = {
         "random_label_attempts": sum(
             item["stage"] == "control_random_labels" for item in control_records
@@ -1004,20 +1066,14 @@ def run_search(
             item["stage"].startswith("control_label_leak_")
             for item in control_records
         ),
-        "max_null_information_bits_per_key": max(
-            (
-                item["validation"]["information_gain_bits_per_key"]
-                for item in null_controls
-            ),
-            default=float("nan"),
+        "max_null_information_bits_per_key": maximum_null_information,
+        "max_null_accuracy_z": maximum_null_z,
+        "minimum_leak_1_target_bit_information": (
+            minimum_leak_1_target_information
         ),
-        "min_leak_information_bits_per_key": min(
-            (
-                item["validation"]["information_gain_bits_per_key"]
-                for item in leak_controls
-            ),
-            default=float("nan"),
-        ),
+        "minimum_leak_8_information_bits_per_key": minimum_leak_8_information,
+        "minimum_leak_32_information_bits_per_key": minimum_leak_32_information,
+        "controls_pass": controls_pass,
     }
     result = {
         "schema_version": SCHEMA_VERSION,
