@@ -4,17 +4,21 @@ from __future__ import annotations
 
 import argparse
 import copy
+import fcntl
 import hashlib
 import heapq
 import json
 import math
+import os
 import pickle
 import platform
 import statistics
 import subprocess
 import sys
+import tempfile
 import time
 import warnings
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -80,9 +84,113 @@ def git_output(root: Path, *args: str) -> str:
     ).stdout.strip()
 
 
+def git_is_ancestor(root: Path, ancestor: str, descendant: str) -> bool:
+    return (
+        subprocess.run(
+            ["git", "merge-base", "--is-ancestor", ancestor, descendant],
+            cwd=root,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        ).returncode
+        == 0
+    )
+
+
+def clean_source_state(root: Path) -> dict[str, Any]:
+    state = {
+        "source_commit": git_output(root, "rev-parse", "HEAD"),
+        "source_worktree_dirty_before_run": bool(
+            git_output(root, "status", "--porcelain")
+        ),
+    }
+    if state["source_worktree_dirty_before_run"]:
+        raise RuntimeError("P1E assay requires a clean committed source tree")
+    return state
+
+
 def append_ledger(path: Path, item: dict[str, Any]) -> None:
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(item, sort_keys=True, separators=(",", ":")) + "\n")
+
+
+@contextmanager
+def exclusive_output_lock(output_dir: Path) -> Any:
+    """Prevent two assay processes from mutating the same output directory."""
+    output_token = hashlib.sha256(
+        str(output_dir.resolve()).encode("utf-8")
+    ).hexdigest()
+    lock_path = (
+        Path(tempfile.gettempdir()) / f"p1e-toy-scaling-{output_token}.lock"
+    )
+    handle = lock_path.open("a+", encoding="utf-8")
+    try:
+        try:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as error:
+            raise RuntimeError(
+                f"P1E output directory is already in use: {output_dir}"
+            ) from error
+        handle.seek(0)
+        handle.truncate()
+        handle.write(f"pid={os.getpid()}\noutput={output_dir.resolve()}\n")
+        handle.flush()
+        yield
+    finally:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+        handle.close()
+
+
+def finalize_success_ledger(
+    path: Path,
+    rows: list[dict[str, Any]],
+    expected_count: int,
+) -> None:
+    """Atomically rewrite and read back a complete successful-run ledger."""
+    if len(rows) != expected_count:
+        raise RuntimeError(
+            f"P1E ledger row count {len(rows)} != {expected_count}"
+        )
+    items = []
+    identities = []
+    for row in rows:
+        item = dict(row)
+        item["status"] = "success"
+        items.append(item)
+        identities.append(
+            (
+                item.get("stage"),
+                item.get("field_bits"),
+                item.get("architecture_id"),
+                item.get("seed"),
+                item.get("control_id"),
+            )
+        )
+    if len(set(identities)) != expected_count:
+        raise RuntimeError("P1E ledger contains duplicate run identities")
+    payload = "".join(
+        json.dumps(item, sort_keys=True, separators=(",", ":")) + "\n"
+        for item in items
+    ).encode("utf-8")
+    temporary_path = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    try:
+        with temporary_path.open("wb") as handle:
+            handle.write(payload)
+            handle.flush()
+            os.fsync(handle.fileno())
+        temporary_path.replace(path)
+    finally:
+        temporary_path.unlink(missing_ok=True)
+    if path.read_bytes() != payload:
+        raise RuntimeError("P1E ledger read-back differs from canonical rows")
+    replayed = [
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+    ]
+    if len(replayed) != expected_count or any(
+        item.get("status") != "success" for item in replayed
+    ):
+        raise RuntimeError("P1E ledger read-back matrix is incomplete")
 
 
 @dataclass
@@ -767,6 +875,10 @@ def render_report(result: dict[str, Any]) -> str:
         ),
         f"- Frozen architecture: `{result['frozen_recipe']['architecture']['id']}`",
         f"- Corrected transfer gate: `{result['screen_gate']['pass']}`",
+        (
+            "- Independent pre-blind selection validation: `pass` "
+            f"(`{result['selection_validation_sha256'][:12]}`)"
+        ),
         f"- Metric baseline: {result['metric_baseline']}",
         "",
         "## Frozen ladder",
@@ -950,7 +1062,11 @@ def execute_controls(
     controls_rows = []
     canary_id = config["controls"]["canary_architecture_id"]
     canary_base = architectures[canary_id]
-    for bits in (12, 20):
+    control_field_bits = (
+        int(config["selection_field_bits"][0]),
+        int(config["confirmation_field_bits"][0]),
+    )
+    for bits in control_field_bits:
         data = get_data(bits)
         negative_architecture = architecture_for_stage(
             final_architecture, config, "controls"
@@ -1264,6 +1380,19 @@ def run_selection(
     )
     if run_counts["failed"] or len(controls["runs"]) != 16:
         raise RuntimeError("P1E selection/control attempt matrix is incomplete")
+    successful_rows = [
+        *screen_rows,
+        *confirmation_rows,
+        *controls["runs"],
+    ]
+    expected_successful = expected_screen + expected_confirmation + 16
+    if run_counts["successful"] != expected_successful:
+        raise RuntimeError("P1E successful-run count is incomplete")
+    finalize_success_ledger(
+        ledger_path,
+        successful_rows,
+        expected_successful,
+    )
     ledger_sha = sha256_file(ledger_path)
     opened_files = sorted(
         {
@@ -1323,8 +1452,12 @@ def run_selection(
         "metric_baseline": config["selection"]["baseline"],
         "dataset_records": int(manifest["records"]),
         "training_protocol": (
-            "architecture frozen after 12/16 selection; retrained independently "
-            "at each size; no cross-size weight transfer"
+            "architecture frozen after "
+            + "/".join(
+                str(int(bits)) for bits in config["selection_field_bits"]
+            )
+            + " selection; retrained independently at each size; "
+            "no cross-size weight transfer"
         ),
         "architecture": architectures[final_id],
         "screen_winner_architecture_id": screen_winner_id,
@@ -1454,6 +1587,102 @@ def validate_frozen_recipe(
         raise ValueError("frozen architecture differs from the configuration")
 
 
+def validate_preblind_selection_report(
+    report_path: Path,
+    recipe: dict[str, Any],
+    recipe_path: Path,
+    selection_result_path: Path,
+    selection_ledger_path: Path,
+    config_path: Path,
+    preregistration_path: Path,
+    catalog_path: Path,
+    manifest_path: Path,
+    curve_validation_path: Path,
+    dataset_validation_path: Path,
+) -> tuple[dict[str, Any], str]:
+    root = Path(__file__).resolve().parents[3]
+    current_commit = git_output(root, "rev-parse", "HEAD")
+    report_bytes = report_path.read_bytes()
+    try:
+        relative_report = report_path.resolve().relative_to(root)
+    except ValueError as error:
+        raise ValueError(
+            "pre-blind validation report is outside the repository"
+        ) from error
+    committed = subprocess.run(
+        [
+            "git",
+            "show",
+            f"{current_commit}:{relative_report.as_posix()}",
+        ],
+        cwd=root,
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+    )
+    if committed.returncode != 0 or committed.stdout != report_bytes:
+        raise ValueError(
+            "pre-blind validation report differs from committed bytes"
+        )
+    report = json.loads(report_bytes)
+    if report.get("status") != "pass" or report.get("error_count") != 0:
+        raise ValueError("independent pre-blind selection validation did not pass")
+    if report.get("report_payload_sha256") != document_payload_hash(
+        report, "report_payload_sha256"
+    ):
+        raise ValueError("pre-blind validation payload hash mismatch")
+    if (
+        report.get("source_worktree_dirty_before_run") is not False
+        or report.get("producer_modules_imported") is not False
+        or report.get("dataset_files_opened") != []
+    ):
+        raise ValueError("pre-blind validation independence boundary failed")
+    validator_path = Path(__file__).with_name("validate_selection.py")
+    result_validator_path = Path(__file__).with_name("validate_results.py")
+    if report.get("validator_sha256") != sha256_file(validator_path):
+        raise ValueError("pre-blind validator source hash mismatch")
+    validator_hashes = report.get("validator_hashes")
+    if not isinstance(validator_hashes, dict) or validator_hashes.get(
+        "validate_results_sha256"
+    ) != sha256_file(result_validator_path):
+        raise ValueError("pre-blind helper-validator source hash mismatch")
+    expected_bindings = {
+        "config_sha256": sha256_file(config_path),
+        "preregistration_sha256": sha256_file(preregistration_path),
+        "catalog_sha256": sha256_file(catalog_path),
+        "manifest_sha256": sha256_file(manifest_path),
+        "curve_validation_sha256": sha256_file(curve_validation_path),
+        "dataset_validation_sha256": sha256_file(dataset_validation_path),
+    }
+    if report.get("bindings") != expected_bindings:
+        raise ValueError("pre-blind validation input bindings mismatch")
+    expected_selection = {
+        "selection_result_sha256": sha256_file(selection_result_path),
+        "selection_ledger_sha256": sha256_file(selection_ledger_path),
+        "recipe_sha256": sha256_file(recipe_path),
+        "run_counts": recipe.get("selection_run_counts"),
+        "blind_evaluation_authorized": True,
+    }
+    if report.get("selection") != expected_selection:
+        raise ValueError("pre-blind validation selection bindings mismatch")
+    provenance = report.get("provenance")
+    if (
+        not isinstance(provenance, dict)
+        or provenance.get("selection_source_commit")
+        != recipe.get("source_commit")
+        or provenance.get("worktree_clean_before_validation") is not True
+    ):
+        raise ValueError("pre-blind validation provenance mismatch")
+    report_source_commit = str(report.get("source_commit", ""))
+    if not report_source_commit or not git_is_ancestor(
+        root, report_source_commit, current_commit
+    ):
+        raise ValueError(
+            "pre-blind validation source is not an ancestor of evaluation"
+        )
+    return report, hashlib.sha256(report_bytes).hexdigest()
+
+
 def run_evaluation(
     config: dict[str, Any],
     manifest: dict[str, Any],
@@ -1461,6 +1690,7 @@ def run_evaluation(
     recipe_path: Path,
     selection_result_path: Path,
     selection_ledger_path: Path,
+    selection_validation_path: Path,
     config_path: Path,
     preregistration_path: Path,
     catalog_path: Path,
@@ -1485,6 +1715,22 @@ def run_evaluation(
         selection_result_path,
         selection_ledger_path,
     )
+    (
+        selection_validation,
+        selection_validation_file_sha256,
+    ) = validate_preblind_selection_report(
+        selection_validation_path,
+        recipe,
+        recipe_path,
+        selection_result_path,
+        selection_ledger_path,
+        config_path,
+        preregistration_path,
+        catalog_path,
+        manifest_path,
+        curve_validation_path,
+        dataset_validation_path,
+    )
     started = time.perf_counter()
     output_dir.mkdir(parents=True, exist_ok=True)
     raw_dir.mkdir(parents=True, exist_ok=True)
@@ -1502,6 +1748,7 @@ def run_evaluation(
     }
     data_cache: dict[int, SizeData] = {}
     allowed_evaluation_splits = ["train", *SPLIT_NAMES]
+    evaluation_rows: list[dict[str, Any]] = []
 
     def get_data(bits: int) -> SizeData:
         if bits not in data_cache:
@@ -1538,6 +1785,7 @@ def run_evaluation(
                 )
                 append_ledger(ledger_path, {"status": "success", **row})
                 fit_rows.append(row)
+                evaluation_rows.append(row)
                 run_counts["successful"] += 1
                 for split, probabilities in predictions.items():
                     split_probability_sums.setdefault(
@@ -1620,6 +1868,11 @@ def run_evaluation(
         or run_counts["frozen"] != expected_frozen
     ):
         raise RuntimeError("P1E frozen evaluation matrix is incomplete")
+    finalize_success_ledger(
+        ledger_path,
+        evaluation_rows,
+        expected_frozen,
+    )
     selection_result = json.loads(
         selection_result_path.read_text(encoding="utf-8")
     )
@@ -1653,6 +1906,13 @@ def run_evaluation(
             "selection_result_payload_sha256"
         ],
         "selection_ledger_sha256": recipe["selection_ledger_sha256"],
+        "selection_validation_sha256": selection_validation_file_sha256,
+        "selection_validation_payload_sha256": selection_validation[
+            "report_payload_sha256"
+        ],
+        "selection_validation_source_commit": selection_validation[
+            "source_commit"
+        ],
         "selection_run_counts": recipe["selection_run_counts"],
         "run_counts": run_counts,
         "architecture_scores": recipe["architecture_scores"],
@@ -1704,6 +1964,7 @@ def main() -> int:
     parser.add_argument("--recipe", type=Path)
     parser.add_argument("--selection-result", type=Path)
     parser.add_argument("--selection-ledger", type=Path)
+    parser.add_argument("--selection-validation", type=Path)
     parser.add_argument("--raw-dir", type=Path)
     parser.add_argument("--jobs", type=int, default=8)
     args = parser.parse_args()
@@ -1716,44 +1977,41 @@ def main() -> int:
     dataset_dir = args.dataset_dir.resolve()
     output_dir = args.output_dir.resolve()
     root = Path(__file__).resolve().parents[3]
-    source_state = {
-        "source_commit": git_output(root, "rev-parse", "HEAD"),
-        "source_worktree_dirty_before_run": bool(
-            git_output(root, "status", "--porcelain")
-        ),
-    }
-    if source_state["source_worktree_dirty_before_run"]:
-        raise RuntimeError("P1E assay requires a clean committed source tree")
-    config = json.loads(config_path.read_text(encoding="utf-8"))
-    catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    validate_input_bindings(
-        config,
-        catalog,
-        manifest,
-        config_path,
-        preregistration_path,
-        catalog_path,
-        manifest_path,
-        curve_validation_path,
-        dataset_validation_path,
-    )
-    jobs = min(max(1, args.jobs), int(config["budget"]["max_workers"]))
     if args.stage == "select":
-        result = run_selection(
-            config,
-            manifest,
-            config_path,
-            preregistration_path,
-            catalog_path,
-            manifest_path,
-            curve_validation_path,
-            dataset_validation_path,
-            dataset_dir,
-            output_dir,
-            jobs,
-            source_state,
-        )
+        with exclusive_output_lock(output_dir):
+            source_state = clean_source_state(root)
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            validate_input_bindings(
+                config,
+                catalog,
+                manifest,
+                config_path,
+                preregistration_path,
+                catalog_path,
+                manifest_path,
+                curve_validation_path,
+                dataset_validation_path,
+            )
+            jobs = min(
+                max(1, args.jobs),
+                int(config["budget"]["max_workers"]),
+            )
+            result = run_selection(
+                config,
+                manifest,
+                config_path,
+                preregistration_path,
+                catalog_path,
+                manifest_path,
+                curve_validation_path,
+                dataset_validation_path,
+                dataset_dir,
+                output_dir,
+                jobs,
+                source_state,
+            )
         print(
             "P1E selection complete with blind unopened: "
             f"{result['run_counts']['successful']} successful fits, "
@@ -1765,31 +2023,53 @@ def main() -> int:
         args.recipe is None
         or args.selection_result is None
         or args.selection_ledger is None
+        or args.selection_validation is None
         or args.raw_dir is None
     ):
         parser.error(
             "--stage evaluate requires --recipe, --selection-result, "
-            "--selection-ledger, and --raw-dir"
+            "--selection-ledger, --selection-validation, and --raw-dir"
         )
-    result = run_evaluation(
-        config,
-        manifest,
-        json.loads(args.recipe.resolve().read_text(encoding="utf-8")),
-        args.recipe.resolve(),
-        args.selection_result.resolve(),
-        args.selection_ledger.resolve(),
-        config_path,
-        preregistration_path,
-        catalog_path,
-        manifest_path,
-        curve_validation_path,
-        dataset_validation_path,
-        dataset_dir,
-        output_dir,
-        args.raw_dir.resolve(),
-        jobs,
-        source_state,
-    )
+    with exclusive_output_lock(output_dir):
+        source_state = clean_source_state(root)
+        config = json.loads(config_path.read_text(encoding="utf-8"))
+        catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        validate_input_bindings(
+            config,
+            catalog,
+            manifest,
+            config_path,
+            preregistration_path,
+            catalog_path,
+            manifest_path,
+            curve_validation_path,
+            dataset_validation_path,
+        )
+        jobs = min(
+            max(1, args.jobs),
+            int(config["budget"]["max_workers"]),
+        )
+        result = run_evaluation(
+            config,
+            manifest,
+            json.loads(args.recipe.resolve().read_text(encoding="utf-8")),
+            args.recipe.resolve(),
+            args.selection_result.resolve(),
+            args.selection_ledger.resolve(),
+            args.selection_validation.resolve(),
+            config_path,
+            preregistration_path,
+            catalog_path,
+            manifest_path,
+            curve_validation_path,
+            dataset_validation_path,
+            dataset_dir,
+            output_dir,
+            args.raw_dir.resolve(),
+            jobs,
+            source_state,
+        )
     print(
         f"P1E evaluation complete: {result['run_counts']['successful']} "
         f"successful fits, {result['run_counts']['failed']} failed, "

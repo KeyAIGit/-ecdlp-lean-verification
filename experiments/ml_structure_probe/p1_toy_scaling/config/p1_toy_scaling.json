@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "experiment_id": "ML-P1E-TOY-SCALING-2026-07-27",
+  "experiment_id": "ML-P1E-TOY-SCALING-2026-07-27-R2",
   "classification": "route-neutral engineering qualification",
   "native_research_engine_outcome": false,
   "field_bits": [
-    12,
+    13,
     16,
     20,
     24
@@ -17,6 +17,50 @@
     "equation": "y^2=x^3+7",
     "curve_a": 0,
     "curve_b": 7,
+    "catalog_nonce": "output-lock-recovery-r2",
+    "retired_field_primes_sha256": "e0c8f3bdee6a22ec21d0236ec263dd469ab23ac8de3489861ee965a77bdbfabc",
+    "retired_field_primes": [
+      2251,
+      2503,
+      2647,
+      2731,
+      3271,
+      3343,
+      3511,
+      3691,
+      3739,
+      3931,
+      38767,
+      42667,
+      43003,
+      49939,
+      58699,
+      59467,
+      61651,
+      61987,
+      64303,
+      65167,
+      601231,
+      626683,
+      727939,
+      750667,
+      767323,
+      800923,
+      851131,
+      855787,
+      948847,
+      949771,
+      8491543,
+      9431503,
+      9908299,
+      11127859,
+      12364879,
+      13597123,
+      14078191,
+      14079739,
+      14505619,
+      16543339
+    ],
     "field_prime_residue_mod_12": 7,
     "curves_per_field_size": 10,
     "generators_per_curve": 6,
@@ -60,7 +104,7 @@
     ]
   },
   "records_per_curve_cap": {
-    "12": 4096,
+    "13": 4096,
     "16": 8192,
     "20": 32768,
     "24": 65536
@@ -83,7 +127,7 @@
     "curve_generator_only_bits"
   ],
   "selection_field_bits": [
-    12,
+    13,
     16
   ],
   "confirmation_field_bits": [
@@ -307,7 +351,7 @@
   "stop_rules": {
     "pipeline_invalid_if_canary_fails": true,
     "pipeline_invalid_if_null_or_opaque_passes": true,
-    "adaptive_search_stops_without_corrected_transfer_at_12_and_16": true,
+    "adaptive_search_stops_without_corrected_transfer_at_13_and_16": true,
     "only_frozen_reference_may_continue_after_null": true,
     "field_bits_28_32_require_new_policy_and_immutable_candidate": true
   },

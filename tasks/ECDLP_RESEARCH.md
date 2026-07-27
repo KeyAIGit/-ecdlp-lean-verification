@@ -91,8 +91,11 @@ mechanism or program search, the repository needs to determine whether the
 same model families show transferable behavior as the field and group grow
 together on independently held-out, structurally similar toy curves.
 Authorized scope:
-- route-neutral engineering qualification `ML-P1E-TOY-SCALING-2026-07-27`;
-- exact curves `y^2=x^3+7` at 12, 16, 20, and 24 field bits;
+- route-neutral engineering qualification
+  `ML-P1E-TOY-SCALING-2026-07-27-R2`;
+- exact curves `y^2=x^3+7` at 13, 16, 20, and 24 field bits;
+- explicit exclusion of all 40 field primes from the invalidated first
+  catalog, bound by a committed SHA-256 list;
 - ten independently certified prime-order curves per size, split into three
   train, four development, and three physically blind curves;
 - six GLV-orbit-separated generators per curve;
@@ -100,8 +103,10 @@ Authorized scope:
 - 14 preregistered architectures, seven seeds, fixed controls, and matched
   generic BSGS/Pollard-rho baselines;
 - physically separate development and blind data shards;
-- one architecture selected at 12/16 bits, never reselected by 20-bit results,
+- one architecture selected at 13/16 bits, never reselected by 20-bit results,
   and committed with its complete selection ledger before blind shards open.
+The replacement starts at 13 bits because the exact 12-bit family cannot
+supply ten field-prime curve instances disjoint from the retired catalog.
 Prohibited scope:
 - secp256k1 evaluation;
 - 28- or 32-bit execution;
@@ -127,6 +132,9 @@ Exit criteria:
 - all 219 selection/confirmation/control fits complete;
 - all control gates pass before a blind-authorization recipe is emitted;
 - the recipe and complete selection artifacts are committed before evaluation;
+- a separate producer-independent selection validator passes from the
+  committed selection artifacts without opening any dataset shard, and its
+  report is committed before evaluation;
 - all 28 frozen evaluation fits complete without recipe or dependency drift;
 - the independent result validator passes from raw float32 predictions;
 - any apparent transferable signal remains untrusted until converted into an

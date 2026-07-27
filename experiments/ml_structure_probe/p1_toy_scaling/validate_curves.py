@@ -174,8 +174,30 @@ def validate(
     config = json.loads(config_path.read_text(encoding="utf-8"))
     catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
     errors: list[str] = []
+    if catalog.get("experiment_id") != config.get("experiment_id"):
+        errors.append("catalog experiment id mismatch")
     if catalog.get("config_sha256") != sha256_file(config_path):
         errors.append("catalog config hash mismatch")
+    if catalog.get("catalog_nonce") != config["curve_family"].get(
+        "catalog_nonce"
+    ):
+        errors.append("catalog nonce mismatch")
+    retired_field_primes = sorted(
+        int(value)
+        for value in config["curve_family"].get("retired_field_primes", [])
+    )
+    retired_field_prime_set = set(retired_field_primes)
+    retired_sha256 = hashlib.sha256(
+        canonical_json(retired_field_primes)
+    ).hexdigest()
+    if (
+        catalog.get("retired_field_prime_count")
+        != len(retired_field_primes)
+        or catalog.get("retired_field_primes_sha256") != retired_sha256
+        or config["curve_family"].get("retired_field_primes_sha256")
+        != retired_sha256
+    ):
+        errors.append("retired field-prime binding mismatch")
     if catalog.get("source_worktree_dirty") is not False:
         errors.append("catalog source tree was dirty")
     package_dir = Path(__file__).resolve().parent
@@ -202,6 +224,11 @@ def validate(
     entries = catalog.get("curves", [])
     if len(entries) != expected_count:
         errors.append("actual catalog entry count mismatch")
+    if any(
+        int(entry.get("field_p", -1)) in retired_field_prime_set
+        for entry in entries
+    ):
+        errors.append("catalog reuses a retired field prime")
     allowed_field_bits = {int(value) for value in config["field_bits"]}
     if any(
         int(entry.get("field_bits", -1)) not in allowed_field_bits

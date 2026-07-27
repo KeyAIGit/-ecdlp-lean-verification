@@ -16,7 +16,10 @@ embedding degree greater than 100, and a checked j=0 GLV eigenpair. Thus a
 `b`-bit rung has about `b+1` informative compressed public bits and about `2b`
 affine coordinate bits.
 
-The authorized ladder is 12, 16, 20, and 24 bits. The 28- and 32-bit rungs are
+The authorized R2 ladder is 13, 16, 20, and 24 bits. The first rung moved from
+12 to 13 bits because the exact 12-bit `y^2=x^3+7` prime-order family cannot
+supply ten curve instances disjoint from the retired catalog. The 28- and
+32-bit rungs are
 deferred. They require a new policy decision and an immutable,
 mechanism-bearing candidate after a positive independently validated 24-bit
 result.
@@ -28,6 +31,14 @@ Each rung contains ten independently generated curves:
 - `c0-c2`: training curves;
 - `c3-c6`: development curves;
 - `c7-c9`: physically blind curves.
+
+The current replacement catalog uses the committed domain separator
+`output-lock-recovery-r2` and explicitly excludes all 40 field primes from the
+invalidated catalog. The exclusion list is bound by SHA-256 in the
+configuration and preregistration. The earlier blind shards are retired
+because an output-path collision made their selection provenance invalid
+before the independent validator ran. This is an incident-recovery boundary,
+not a hyperparameter choice.
 
 Each curve contains six derived generators. Indices `g0-g2` are the training
 or reference-index role, `g3` is the development role, and `g4-g5` are blind.
@@ -45,6 +56,12 @@ exact files it opened. The frozen recipe cannot authorize evaluation unless:
    and mismatched-Q controls stayed null;
 4. the selection result, ledger, dataset manifest, catalog, configuration,
    source dependencies, and runtime versions match their frozen hashes.
+
+The runner holds an exclusive lock for the complete output stage. Successful
+ledgers are rebuilt from the exact in-memory attempt matrix, written through a
+unique staging file, atomically replaced, and read back before their hash is
+used. A separate validator must then recompute the selection matrix and be
+committed before evaluation may open a blind shard.
 
 ## Leakage-resistant generator holdout
 
@@ -87,12 +104,12 @@ point; it is a high-entropy representation control, not an algebraic feature.
 
 The preregistered CPU matrix has 14 architectures and seven seeds:
 
-- 196 screen fits at 12 and 16 bits;
+- 196 screen fits at 13 and 16 bits;
 - seven unchanged 20-bit reference confirmations;
 - sixteen pre-blind control fits;
 - 28 frozen ladder fits, seven per size.
 
-That is 247 attempted fits when all runs succeed. A passing 12/16 screen cannot
+That is 247 attempted fits when all runs succeed. A passing 13/16 screen cannot
 change the selected architecture at 20 bits. The 20-bit evaluation is a fixed
 confirmation, and the recipe is committed before any blind shard is opened.
 
@@ -101,7 +118,7 @@ confirmation, and the recipe is committed before any blind shard is opened.
 The frozen architecture is retrained from scratch on training curves at each
 field size and evaluated on held-out curves and generators at that same size.
 This is a retrained scaling curve. It is not cross-size model extrapolation from
-12-20 bits to 24 bits.
+13-20 bits to 24 bits.
 
 - `seen_curve_seen_generator`: new Q values on trained curve/generator clusters;
 - `seen_curve_new_generator`: complete generator holdout on trained curves;
@@ -165,7 +182,24 @@ python experiments/ml_structure_probe/p1_toy_scaling/run_assay.py \
 ```
 
 Commit `selection_result.json`, `selection_ledger.jsonl`, and
-`frozen_assay_recipe.json`. Only then run:
+`frozen_assay_recipe.json`. From that clean commit, independently validate the
+selection freeze without opening either raw shard:
+
+```text
+python experiments/ml_structure_probe/p1_toy_scaling/validate_selection.py \
+  --config experiments/ml_structure_probe/p1_toy_scaling/config/p1_toy_scaling.json \
+  --preregistration experiments/ml_structure_probe/p1_toy_scaling/preregistration.json \
+  --catalog experiments/ml_structure_probe/reports/p1_toy_scaling/curve_catalog.json \
+  --manifest experiments/ml_structure_probe/reports/p1_toy_scaling/dataset_manifest.json \
+  --curve-validation experiments/ml_structure_probe/reports/p1_toy_scaling/curve_validation.json \
+  --dataset-validation experiments/ml_structure_probe/reports/p1_toy_scaling/dataset_validation.json \
+  --selection-result experiments/ml_structure_probe/reports/p1_toy_scaling/selection_result.json \
+  --selection-ledger experiments/ml_structure_probe/reports/p1_toy_scaling/selection_ledger.jsonl \
+  --recipe experiments/ml_structure_probe/reports/p1_toy_scaling/frozen_assay_recipe.json \
+  --output experiments/ml_structure_probe/reports/p1_toy_scaling/selection_validation.json
+```
+
+Commit the passing `selection_validation.json`. Only then run:
 
 ```text
 python experiments/ml_structure_probe/p1_toy_scaling/run_assay.py \
@@ -180,6 +214,7 @@ python experiments/ml_structure_probe/p1_toy_scaling/run_assay.py \
   --recipe experiments/ml_structure_probe/reports/p1_toy_scaling/frozen_assay_recipe.json \
   --selection-result experiments/ml_structure_probe/reports/p1_toy_scaling/selection_result.json \
   --selection-ledger experiments/ml_structure_probe/reports/p1_toy_scaling/selection_ledger.jsonl \
+  --selection-validation experiments/ml_structure_probe/reports/p1_toy_scaling/selection_validation.json \
   --output-dir experiments/ml_structure_probe/reports/p1_toy_scaling \
   --raw-dir experiments/ml_structure_probe/artifacts/p1_toy_scaling/raw
 ```

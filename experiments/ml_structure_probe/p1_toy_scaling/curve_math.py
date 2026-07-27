@@ -322,9 +322,18 @@ def prime_candidates(bits: int, domain: bytes) -> Iterable[int]:
             yield candidate
 
 
-def search_curve(bits: int, curve_index: int, used_primes: set[int]) -> dict[str, object]:
+def search_curve(
+    bits: int,
+    curve_index: int,
+    used_primes: set[int],
+    catalog_nonce: str,
+) -> dict[str, object]:
     """Search one certified prime-order ``a=0,b=7`` toy curve."""
-    domain = f"keyai/p1-toy-curve/v1/{bits}/{curve_index}".encode("ascii")
+    if not catalog_nonce:
+        raise ValueError("toy catalog nonce must be non-empty")
+    domain = (
+        f"keyai/p1-toy-curve/v2/{catalog_nonce}/{bits}/{curve_index}"
+    ).encode("utf-8")
     examined = 0
     for prime in prime_candidates(bits, domain):
         if prime in used_primes:

@@ -8,6 +8,7 @@ import math
 import warnings
 from functools import lru_cache
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import numpy as np
 
@@ -29,6 +30,8 @@ try:
     from .run_assay import (
         bsgs_solve,
         build_model,
+        exclusive_output_lock,
+        finalize_success_ledger,
         pollard_rho_solve,
         predict_probabilities,
         public_uniform_scalar_prior,
@@ -47,6 +50,8 @@ except ImportError:
     from run_assay import (
         bsgs_solve,
         build_model,
+        exclusive_output_lock,
+        finalize_success_ledger,
         pollard_rho_solve,
         predict_probabilities,
         public_uniform_scalar_prior,
@@ -66,8 +71,14 @@ FEATURE_MODES = (
 
 
 @lru_cache(maxsize=1)
+def _catalog_nonce() -> str:
+    config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    return str(config["curve_family"]["catalog_nonce"])
+
+
+@lru_cache(maxsize=1)
 def _base_entry() -> dict[str, object]:
-    entry = search_curve(12, 0, set())
+    entry = search_curve(13, 0, set(), _catalog_nonce())
     entry["curve_index"] = 0
     entry["role"] = "train"
     entry["generators"] = derive_generators(entry, 6)
@@ -106,7 +117,7 @@ def _point_set(records: np.ndarray) -> set[tuple[int, int]]:
 
 def test_curve_order_and_hasse_certificate() -> None:
     first = _entry()
-    replay = search_curve(12, 0, set())
+    replay = search_curve(13, 0, set(), _catalog_nonce())
     assert first["field_p"] == replay["field_p"]
     assert first["group_order"] == replay["group_order"]
     assert first["base_point"] == replay["base_point"]
@@ -117,8 +128,8 @@ def test_curve_order_and_hasse_certificate() -> None:
     base = (int(base_raw[0]), int(base_raw[1]))
     curve = Curve(prime, 0, 7)
 
-    assert prime.bit_length() == 12
-    assert order.bit_length() == 12
+    assert prime.bit_length() == 13
+    assert order.bit_length() == 13
     assert prime % 12 == 7
     assert is_prime(prime)
     assert is_prime(order)
@@ -195,20 +206,20 @@ def test_public_features_never_read_scalar() -> None:
     replacement = mutated["scalar"].astype(np.uint64) % (orders - 1) + 1
     mutated["scalar"] = replacement.astype(mutated["scalar"].dtype)
 
-    original_labels = scalar_bits(records, 12)
-    mutated_labels = scalar_bits(mutated, 12)
+    original_labels = scalar_bits(records, 13)
+    mutated_labels = scalar_bits(mutated, 13)
     assert np.all(np.any(original_labels != mutated_labels, axis=1))
     assert public_fingerprint(records) == public_fingerprint(mutated)
 
-    original_store = FeatureStore(records, 12)
-    mutated_store = FeatureStore(mutated, 12)
+    original_store = FeatureStore(records, 13)
+    mutated_store = FeatureStore(mutated, 13)
     expected_columns = {
-        "compressed_relation_bits": 50,
-        "affine_relation_bits": 72,
-        "compressed_relation_glv_bits": 74,
-        "mismatched_relation_bits": 50,
-        "opaque_relation_bits": 152,
-        "curve_generator_only_bits": 37,
+        "compressed_relation_bits": 54,
+        "affine_relation_bits": 78,
+        "compressed_relation_glv_bits": 80,
+        "mismatched_relation_bits": 54,
+        "opaque_relation_bits": 154,
+        "curve_generator_only_bits": 40,
     }
     for mode in FEATURE_MODES:
         original = original_store.get(mode)
@@ -225,8 +236,8 @@ def test_public_features_never_read_scalar() -> None:
             np.testing.assert_array_equal(original, original_store.get(mode))
 
     assert not np.array_equal(
-        original_store.get("compressed_relation_bits", leaked_bits=12),
-        mutated_store.get("compressed_relation_bits", leaked_bits=12),
+        original_store.get("compressed_relation_bits", leaked_bits=13),
+        mutated_store.get("compressed_relation_bits", leaked_bits=13),
     )
 
 
@@ -234,11 +245,11 @@ def test_mismatched_relation_rotates_q_and_preserves_marginals() -> None:
     all_records = _train_rows()
     records = all_records[all_records["generator_index"] == 0][:32].copy()
     assert len(records) == 32
-    store = FeatureStore(records, 12)
+    store = FeatureStore(records, 13)
     matched = store.get("compressed_relation_bits")
     mismatched = store.get("mismatched_relation_bits")
 
-    q_start = 12 + 12 + 13
+    q_start = 13 + 13 + 14
     np.testing.assert_array_equal(matched[:, :q_start], mismatched[:, :q_start])
     matched_q = matched[:, q_start:]
     mismatched_q = mismatched[:, q_start:]
@@ -321,11 +332,11 @@ def test_tiny_model_emits_finite_multibit_probabilities() -> None:
     records = _train_rows()
     train = records[:256]
     validation = records[256:288]
-    train_features = FeatureStore(train, 12).get("compressed_relation_bits")
-    validation_features = FeatureStore(validation, 12).get(
+    train_features = FeatureStore(train, 13).get("compressed_relation_bits")
+    validation_features = FeatureStore(validation, 13).get(
         "compressed_relation_bits"
     )
-    labels = scalar_bits(train, 12)
+    labels = scalar_bits(train, 13)
     architecture = {
         "family": "mlp",
         "params": {
@@ -337,13 +348,13 @@ def test_tiny_model_emits_finite_multibit_probabilities() -> None:
             "learning_rate_init": 1e-3,
         },
     }
-    model = build_model(architecture, seed=73, jobs=1, output_bits=12)
+    model = build_model(architecture, seed=73, jobs=1, output_bits=13)
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         model.fit(train_features, labels)
-    probabilities = predict_probabilities(model, validation_features, bits=12)
+    probabilities = predict_probabilities(model, validation_features, bits=13)
 
-    assert probabilities.shape == (len(validation), 12)
+    assert probabilities.shape == (len(validation), 13)
     assert probabilities.dtype == np.float64
     assert np.isfinite(probabilities).all()
     assert np.all(probabilities > 0.0)
@@ -354,10 +365,10 @@ def test_public_uniform_scalar_prior_is_exact() -> None:
     records = _train_rows()[:3].copy()
     order = int(records[0]["group_order"])
     records["group_order"] = order
-    observed = public_uniform_scalar_prior(records, 12)
+    observed = public_uniform_scalar_prior(records, 13)
     labels = np.asarray(
         [
-            [(scalar >> bit) & 1 for bit in range(11, -1, -1)]
+            [(scalar >> bit) & 1 for bit in range(12, -1, -1)]
             for scalar in range(1, order)
         ],
         dtype=np.float64,
@@ -371,6 +382,49 @@ def test_public_uniform_scalar_prior_is_exact() -> None:
     )
 
 
+def test_ledger_finalization_and_exclusive_output_lock() -> None:
+    rows = [
+        {
+            "stage": "screen",
+            "field_bits": 13,
+            "architecture_id": "a",
+            "seed": seed,
+        }
+        for seed in (101, 211, 307)
+    ]
+    with TemporaryDirectory() as temporary_directory:
+        base = Path(temporary_directory)
+        ledger_path = base / "selection_ledger.jsonl"
+        finalize_success_ledger(ledger_path, rows, expected_count=3)
+        replayed = [
+            json.loads(line)
+            for line in ledger_path.read_text(encoding="utf-8").splitlines()
+        ]
+        assert len(replayed) == 3
+        assert {row["seed"] for row in replayed} == {101, 211, 307}
+        assert all(row["status"] == "success" for row in replayed)
+
+        duplicate_rows = [rows[0], copy.deepcopy(rows[0])]
+        try:
+            finalize_success_ledger(
+                ledger_path,
+                duplicate_rows,
+                expected_count=2,
+            )
+        except RuntimeError as error:
+            assert "duplicate run identities" in str(error)
+        else:
+            raise AssertionError("duplicate ledger identities were accepted")
+
+        output_dir = base / "reports"
+        with exclusive_output_lock(output_dir):
+            try:
+                with exclusive_output_lock(output_dir):
+                    raise AssertionError("nested output lock was acquired")
+            except RuntimeError as error:
+                assert "already in use" in str(error)
+
+
 def main() -> int:
     test_curve_order_and_hasse_certificate()
     test_glv_and_generator_orbits()
@@ -380,6 +434,7 @@ def main() -> int:
     test_bsgs_and_pollard_rho_recover_known_scalars()
     test_tiny_model_emits_finite_multibit_probabilities()
     test_public_uniform_scalar_prior_is_exact()
+    test_ledger_finalization_and_exclusive_output_lock()
     print("P1 TOY-SCALING TESTS: PASS")
     return 0
 

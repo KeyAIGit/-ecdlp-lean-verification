@@ -59,13 +59,34 @@ def generate(config_path: Path) -> dict[str, Any]:
         or family["curve_b"] != 7
     ):
         raise ValueError("P1E catalog must retain the exact secp256k1 curve shape")
+    catalog_nonce = str(family.get("catalog_nonce", ""))
+    if not catalog_nonce:
+        raise ValueError("P1E catalog nonce must be non-empty")
+    retired_field_primes = sorted(
+        int(value) for value in family.get("retired_field_primes", [])
+    )
+    if (
+        len(retired_field_primes) != len(set(retired_field_primes))
+        or not retired_field_primes
+    ):
+        raise ValueError("P1E retired field-prime set must be non-empty and unique")
+    retired_sha256 = hashlib.sha256(
+        canonical_json(retired_field_primes)
+    ).hexdigest()
+    if family.get("retired_field_primes_sha256") != retired_sha256:
+        raise ValueError("P1E retired field-prime hash mismatch")
 
-    used_primes: set[int] = set()
+    used_primes: set[int] = set(retired_field_primes)
     curves: list[dict[str, Any]] = []
     started = time.perf_counter()
     for bits in config["field_bits"]:
         for curve_index in range(int(family["curves_per_field_size"])):
-            entry = search_curve(int(bits), curve_index, used_primes)
+            entry = search_curve(
+                int(bits),
+                curve_index,
+                used_primes,
+                catalog_nonce,
+            )
             used_primes.add(int(entry["field_p"]))
             entry["curve_index"] = curve_index
             entry["role"] = next(
@@ -95,6 +116,9 @@ def generate(config_path: Path) -> dict[str, Any]:
         "arithmetic_sha256": sha256_file(arithmetic_path),
         "source_commit": git_output("rev-parse", "HEAD"),
         "source_worktree_dirty": bool(git_output("status", "--porcelain")),
+        "catalog_nonce": catalog_nonce,
+        "retired_field_prime_count": len(retired_field_primes),
+        "retired_field_primes_sha256": retired_sha256,
         "curve_count": len(curves),
         "field_bits": config["field_bits"],
         "curves": curves,

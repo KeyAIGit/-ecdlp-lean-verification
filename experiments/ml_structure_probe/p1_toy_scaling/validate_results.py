@@ -53,9 +53,12 @@ NEGATIVE_CONTROL_IDS = {
 }
 CANARY_CONTROL_IDS = {"leak_1", "leak_4", "leak_all"}
 CONTROL_IDS = NEGATIVE_CONTROL_IDS | CANARY_CONTROL_IDS
-CONTROL_FIELD_BITS = (12, 20)
+CONTROL_FIELD_BITS = (13, 20)
 RUNNER_RELATIVE_PATH = (
     "experiments/ml_structure_probe/p1_toy_scaling/run_assay.py"
+)
+SELECTION_VALIDATOR_RELATIVE_PATH = (
+    "experiments/ml_structure_probe/p1_toy_scaling/validate_selection.py"
 )
 SOURCE_DEPENDENCY_RELATIVE_PATHS = {
     name: f"experiments/ml_structure_probe/p1_toy_scaling/{name}"
@@ -2066,6 +2069,142 @@ def validate_solver_baselines(
     return validation
 
 
+def validate_preblind_report(
+    *,
+    report: dict[str, Any],
+    report_path: Path,
+    config: dict[str, Any],
+    recipe: dict[str, Any],
+    assay_result: dict[str, Any],
+    config_path: Path,
+    preregistration_path: Path,
+    catalog_path: Path,
+    manifest_path: Path,
+    curve_validation_path: Path,
+    dataset_validation_path: Path,
+    selection_result_path: Path,
+    selection_ledger_path: Path,
+    recipe_path: Path,
+    findings: Findings,
+) -> dict[str, Any]:
+    if report.get("status") != "pass" or report.get("error_count") != 0:
+        findings.error("pre-blind selection validation did not pass")
+    if report.get("experiment_id") != config.get("experiment_id"):
+        findings.error("pre-blind selection validation experiment mismatch")
+    if report.get("report_payload_sha256") != payload_hash(
+        report, "report_payload_sha256"
+    ):
+        findings.error("pre-blind selection validation payload hash mismatch")
+    if report.get("source_worktree_dirty_before_run") is not False:
+        findings.error("pre-blind validation started from a dirty worktree")
+    if report.get("dataset_files_opened") != []:
+        findings.error("pre-blind validator opened dataset files")
+    if report.get("producer_modules_imported") is not False:
+        findings.error("pre-blind validator imported producer modules")
+
+    validator_path = ROOT / SELECTION_VALIDATOR_RELATIVE_PATH
+    if report.get("validator_sha256") != sha256_file(validator_path):
+        findings.error("pre-blind validator source hash mismatch")
+    validator_hashes = report.get("validator_hashes")
+    if not isinstance(validator_hashes, dict):
+        findings.error("pre-blind validator hash map is missing")
+        validator_hashes = {}
+    if validator_hashes.get("validate_selection_sha256") != sha256_file(
+        validator_path
+    ):
+        findings.error("pre-blind self-validator hash mismatch")
+    if validator_hashes.get("validate_results_sha256") != sha256_file(
+        Path(__file__)
+    ):
+        findings.error("pre-blind result-validator helper hash mismatch")
+
+    expected_bindings = {
+        "config_sha256": sha256_file(config_path),
+        "preregistration_sha256": sha256_file(preregistration_path),
+        "catalog_sha256": sha256_file(catalog_path),
+        "manifest_sha256": sha256_file(manifest_path),
+        "curve_validation_sha256": sha256_file(curve_validation_path),
+        "dataset_validation_sha256": sha256_file(dataset_validation_path),
+    }
+    compare_values(
+        findings,
+        "pre-blind validation bindings",
+        expected_bindings,
+        report.get("bindings"),
+        absolute_tolerance=0.0,
+        relative_tolerance=0.0,
+    )
+    expected_selection = {
+        "selection_result_sha256": sha256_file(selection_result_path),
+        "selection_ledger_sha256": sha256_file(selection_ledger_path),
+        "recipe_sha256": sha256_file(recipe_path),
+        "run_counts": recipe.get("selection_run_counts"),
+        "blind_evaluation_authorized": True,
+    }
+    compare_values(
+        findings,
+        "pre-blind validation selection",
+        expected_selection,
+        report.get("selection"),
+        absolute_tolerance=0.0,
+        relative_tolerance=0.0,
+    )
+    provenance = report.get("provenance")
+    if not isinstance(provenance, dict):
+        findings.error("pre-blind validation provenance is missing")
+        provenance = {}
+    if provenance.get("selection_source_commit") != recipe.get(
+        "source_commit"
+    ):
+        findings.error("pre-blind validation selection source mismatch")
+    if provenance.get("worktree_clean_before_validation") is not True:
+        findings.error("pre-blind validation provenance is not clean")
+
+    report_source = report.get("source_commit")
+    evaluation_source = assay_result.get("source_commit")
+    if not git_commit_exists(report_source):
+        findings.error("pre-blind validation source commit does not resolve")
+    if not git_commit_exists(evaluation_source):
+        findings.error("evaluation source commit does not resolve")
+    if not is_ancestor(report_source, evaluation_source):
+        findings.error(
+            "pre-blind validation source is not an ancestor of evaluation"
+        )
+    if git_commit_exists(evaluation_source):
+        require_committed_file(
+            findings,
+            evaluation_source,
+            report_path,
+            "pre-blind selection validation report",
+        )
+        require_committed_file(
+            findings,
+            evaluation_source,
+            validator_path,
+            "pre-blind selection validator source",
+        )
+
+    report_sha = sha256_file(report_path)
+    if assay_result.get("selection_validation_sha256") != report_sha:
+        findings.error("assay pre-blind validation file hash mismatch")
+    if assay_result.get(
+        "selection_validation_payload_sha256"
+    ) != report.get("report_payload_sha256"):
+        findings.error("assay pre-blind validation payload hash mismatch")
+    if assay_result.get(
+        "selection_validation_source_commit"
+    ) != report_source:
+        findings.error("assay pre-blind validation source mismatch")
+    return {
+        "status": report.get("status"),
+        "report_sha256": report_sha,
+        "report_payload_sha256": report.get("report_payload_sha256"),
+        "source_commit": report_source,
+        "selection": report.get("selection"),
+        "dataset_files_opened": report.get("dataset_files_opened"),
+    }
+
+
 def validate(
     *,
     config_path: Path,
@@ -2077,6 +2216,7 @@ def validate(
     dataset_dir: Path,
     selection_result_path: Path,
     selection_ledger_path: Path,
+    selection_validation_path: Path,
     recipe_path: Path,
     assay_result_path: Path,
     evaluation_ledger_path: Path,
@@ -2092,6 +2232,7 @@ def validate(
     dataset_validation = load_json(dataset_validation_path)
     selection_result = load_json(selection_result_path)
     recipe = load_json(recipe_path)
+    preblind_report = load_json(selection_validation_path)
     assay_result = load_json(assay_result_path)
     selection_entries, _ = load_ledger(
         selection_ledger_path, findings, "selection ledger"
@@ -2109,6 +2250,7 @@ def validate(
         ("dataset validation", dataset_validation),
         ("selection result", selection_result),
         ("frozen recipe", recipe),
+        ("pre-blind selection validation", preblind_report),
         ("assay result", assay_result),
     ):
         if document.get("experiment_id") != experiment_id:
@@ -2135,8 +2277,8 @@ def validate(
     if assay_result.get("native_research_engine_outcome") is not False:
         findings.error("assay result claims a native Research Engine outcome")
     configured_bits = [int(value) for value in config.get("field_bits", [])]
-    if configured_bits != [12, 16, 20, 24] or max(configured_bits, default=0) > 24:
-        findings.error("configured field ladder differs from authorized 12/16/20/24")
+    if configured_bits != [13, 16, 20, 24] or max(configured_bits, default=0) > 24:
+        findings.error("configured field ladder differs from authorized 13/16/20/24")
     if preregistration.get("authorized_field_bits") != configured_bits:
         findings.error("preregistration/config field ladder mismatch")
     if config.get("deferred_field_bits") != [28, 32]:
@@ -2162,8 +2304,12 @@ def validate(
         if document.get("dataset_records") != expected_records:
             findings.error(f"{label} dataset record count mismatch")
     expected_training_protocol = (
-        "architecture frozen after 12/16 selection; retrained independently "
-        "at each size; no cross-size weight transfer"
+        "architecture frozen after "
+        + "/".join(
+            str(int(bits)) for bits in config["selection_field_bits"]
+        )
+        + " selection; retrained independently at each size; "
+        "no cross-size weight transfer"
     )
     if recipe.get("training_protocol") != expected_training_protocol:
         findings.error("frozen recipe training protocol mismatch")
@@ -2230,6 +2376,23 @@ def validate(
         ):
             findings.error("assay environment worker count is invalid")
 
+    preblind_validation = validate_preblind_report(
+        report=preblind_report,
+        report_path=selection_validation_path,
+        config=config,
+        recipe=recipe,
+        assay_result=assay_result,
+        config_path=config_path,
+        preregistration_path=preregistration_path,
+        catalog_path=catalog_path,
+        manifest_path=manifest_path,
+        curve_validation_path=curve_validation_path,
+        dataset_validation_path=dataset_validation_path,
+        selection_result_path=selection_result_path,
+        selection_ledger_path=selection_ledger_path,
+        recipe_path=recipe_path,
+        findings=findings,
+    )
     selection_validation = validate_selection(
         config,
         manifest,
@@ -2464,12 +2627,16 @@ def validate(
             ),
             "selection_result_sha256": sha256_file(selection_result_path),
             "selection_ledger_sha256": sha256_file(selection_ledger_path),
+            "selection_validation_sha256": sha256_file(
+                selection_validation_path
+            ),
             "recipe_sha256": recipe_sha,
             "evaluation_result_sha256": sha256_file(assay_result_path),
             "evaluation_ledger_sha256": sha256_file(evaluation_ledger_path),
         },
         "input_validation": input_validation,
         "selection": selection_validation,
+        "preblind_selection_validation": preblind_validation,
         "evaluation_run_counts": evaluation_counts,
         "raw_prediction_validation": raw_validation,
         "solver_baseline_validation": solver_validation,
@@ -2499,6 +2666,7 @@ def main() -> int:
     parser.add_argument("--dataset-dir", type=Path, required=True)
     parser.add_argument("--selection-result", type=Path, required=True)
     parser.add_argument("--selection-ledger", type=Path, required=True)
+    parser.add_argument("--selection-validation", type=Path, required=True)
     parser.add_argument("--recipe", type=Path, required=True)
     parser.add_argument("--assay-result", type=Path, required=True)
     parser.add_argument("--evaluation-ledger", type=Path, required=True)
@@ -2515,6 +2683,7 @@ def main() -> int:
         dataset_dir=args.dataset_dir.resolve(),
         selection_result_path=args.selection_result.resolve(),
         selection_ledger_path=args.selection_ledger.resolve(),
+        selection_validation_path=args.selection_validation.resolve(),
         recipe_path=args.recipe.resolve(),
         assay_result_path=args.assay_result.resolve(),
         evaluation_ledger_path=args.evaluation_ledger.resolve(),
