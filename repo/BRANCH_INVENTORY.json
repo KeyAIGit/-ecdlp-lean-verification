@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
   "snapshot": {
-    "captured_at": "2026-07-27T15:04:23+09:00",
+    "captured_at": "2026-07-27T15:51:51+09:00",
     "remote": "origin",
     "base_ref": "origin/main",
     "base_sha": "fed55d84675fd96e5f40204b9f5f49baa8c01172",
-    "real_remote_branch_count": 31,
-    "remote_names_sha256": "ca3bb4134e258835c699e77e5ac2d3f609560425d3563e915f3ff388690b5a8f",
+    "real_remote_branch_count": 30,
+    "remote_names_sha256": "c8e79ec33c27b0e3db2b075c73e92f930ca5251619fea89d491ae6cd8fc1840a",
     "comparison": "git rev-list --left-right --count <main-tip>...<branch-tip>",
     "recording_note": "Tips are a dated observation. The active branch necessarily advances when this snapshot is committed; the gate compares the remote name set, not mutable tips."
   },
@@ -17,8 +17,7 @@
     "active_integrations": [
       "agent/glv-semaev-affine-closeout",
       "agent/research-engine-hypothesis-generation",
-      "agent/research-engine-mutation-hardening",
-      "agent/task014-evidence-closure"
+      "agent/research-engine-mutation-hardening"
     ],
     "superseded_drafts": [
       "agent/n7-certificate-generator",
@@ -27,7 +26,7 @@
     "cleanup_gate": "Content comparison, reference scan, restore path, and explicit owner approval are required before deletion or closure."
   },
   "groups": {
-    "active_integration": 4,
+    "active_integration": 3,
     "candidate_queue": 2,
     "historical_unmerged": 22,
     "keep_default": 1,
@@ -124,10 +123,10 @@
     },
     {
       "name": "agent/research-engine-mutation-hardening",
-      "tip": "99231d1fb689ca4968e20ef411577b1cf4da61c1",
+      "tip": "de594813529d984e48c76768d031f2a807c0c54e",
       "tip_date": "2026-07-26",
       "behind_main": 0,
-      "ahead_main": 9,
+      "ahead_main": 10,
       "merged_by_ancestry": false,
       "disposition": "active_integration",
       "delete_now": false,
@@ -143,17 +142,6 @@
       "disposition": "historical_unmerged",
       "delete_now": false,
       "next_action": "retain pending a dedicated content and restore-path audit"
-    },
-    {
-      "name": "agent/task014-evidence-closure",
-      "tip": "99231d1fb689ca4968e20ef411577b1cf4da61c1",
-      "tip_date": "2026-07-26",
-      "behind_main": 0,
-      "ahead_main": 9,
-      "merged_by_ancestry": false,
-      "disposition": "active_integration",
-      "delete_now": false,
-      "next_action": "retain for the scoped draft integration; inventory does not authorize merge"
     },
     {
       "name": "claude/agent-bundle-export",
