@@ -16,7 +16,6 @@ REMOTE = "origin"
 
 ACTIVE = {
     "agent/research-engine-hypothesis-generation",
-    "agent/research-engine-mutation-hardening",
     "agent/glv-semaev-affine-closeout",
 }
 SUPERSEDED = {
