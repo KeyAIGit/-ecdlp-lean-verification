@@ -195,6 +195,10 @@ jobs:
         run: |
           python3 experiments/engine/pkc_smooth_desk_screen/generate.py --check
           python3 experiments/engine/pkc_smooth_desk_screen/validate.py
+      - name: PKC M16 symbolic desk certificate
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_symbolic_desk/generate.py --check
+          python3 experiments/engine/pkc_smooth_m16_symbolic_desk/validate.py
       - name: Claim-level truth-state gate
         run: |
           python3 scripts/research_claims.py --check

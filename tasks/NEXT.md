@@ -20,23 +20,25 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: `TASK-015` in `tasks/ECDLP_RESEARCH.md`.
+Current central task: `TASK-016` in `tasks/ECDLP_RESEARCH.md`.
 
 `TASK-010` is accepted at
 `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
-proposal-intake lane because TASK-015 selects only a non-executable desk
-question, not a hypothesis candidate or experiment.
+proposal-intake lane because TASK-016 is a non-executable semantics bridge,
+not a hypothesis candidate or experiment.
 
 Current scientific activation order:
 
 1. `TASK-014` has closed the first evidence and arithmetic desk cycle; its
    native phase remains blocked.
-2. `TASK-015` uses the existing knowledge graph as a finite evidence-bounded
-   hypothesis-space projection and gives sole desk priority to
-   `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`.
-3. The auxiliary-curve cell stays parked until a primary source supplies a
+2. `TASK-015` completed the M16 symbolic desk with a scoped blocker and zero
+   retained hypotheses; the cell remains open and non-executable.
+3. `TASK-016` gives sole desk priority to the exact source-faithful ideal and
+   recovery semantics for `CELL-M-PKC-SMOOTH-M16` /
+   `RSI-D8BBA6340789`.
+4. The auxiliary-curve cell stays parked until a primary source supplies a
    finite search domain with a completeness criterion.
-4. Any later candidate, solver, or experiment still requires the normal
+5. Any later candidate, solver, or experiment still requires the normal
    review gates and a separate dated authorization.
 
 These entries freeze further engine-schema expansion by default. They do not

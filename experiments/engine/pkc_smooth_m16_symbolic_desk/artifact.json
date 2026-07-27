@@ -1,0 +1,363 @@
+{
+  "artifact_id": "PKC-SMOOTH-M16-SYMBOLIC-DESK-001",
+  "factor_base_and_linear_algebra": {
+    "exact_membership_layer": {
+      "denominator_components": 0,
+      "group": "H = {x in F_p^* : x^D = 1}",
+      "membership_polynomial": "x^D - 1",
+      "root_count": 564522,
+      "square_free": true,
+      "square_free_reason": "D divides p-1, so p does not divide D."
+    },
+    "glv_orbit_accounting": {
+      "coordinate_log_columns_after_negation": "U",
+      "glv_aware_factor_log_columns": "U/3",
+      "justification": "Because 3 divides D, the order-three beta lies in H; x, beta*x, beta^2*x have the same liftability and known GLV-related logarithms.",
+      "scope": "This is an exact optional column relation, not the source paper's linear-algebra model or a rank result."
+    },
+    "lift_count": {
+      "character_sum": "S_H = sum_{x in H} chi(x^3 + 7)",
+      "compressed_character_sum": "S_H = 3 * sum_{z in H^3} chi(z + 7)",
+      "coordinate_roots_with_curve_lifts": "U = (D + S_H)/2",
+      "rational_two_torsion_roots": 0,
+      "signed_factor_base_points": "2U = D + S_H",
+      "status": "unknown_without_character_sum_evaluation"
+    },
+    "source_nominal_sparse_model": {
+      "delta_is_a_priori_not_a_rank_theorem": true,
+      "factor_entries_per_relation_upper_bound": 16,
+      "nominal_factor_entry_occurrences_upper_bound": 9032512,
+      "nominal_relation_rows_D_plus_delta": 564532,
+      "nominal_unknown_columns_D": 564522,
+      "warning": "D columns are conditional, not the exact factor-base dimension. U, GLV relations, duplicate coordinates, relation independence, and rank remain unresolved."
+    }
+  },
+  "inputs": {
+    "D": 564522,
+    "bytes_per_field_element_for_conditional_dense_models": 32,
+    "delta_from_source": 10,
+    "factor_chain": [
+      2,
+      3,
+      7,
+      13441
+    ],
+    "m": 16,
+    "n": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+    "target_x_treated_as_fixed_constant": true
+  },
+  "kind": "deterministic_nonexperimental_symbolic_desk",
+  "recovery": {
+    "coordinate_target_relative_sign_classes": 32768,
+    "direct_presentation": {
+      "meet_in_the_middle_list_sizes_after_fixing_one_global_sign": [
+        128,
+        256
+      ],
+      "raw_factor_sign_assignments": 65536,
+      "required_final_check": "Verify the recovered signed points and the full elliptic-curve relation exactly; accept either sign of the fixed target x-coordinate with the corresponding coefficient sign."
+    },
+    "recursive_presentation": {
+      "status": "unresolved",
+      "unresolved_items": [
+        "partial sums at the point at infinity",
+        "tangent and repeated-coordinate fibers",
+        "extension-field lifts rejected by F_p recovery",
+        "compatibility of local S3 sign choices across the tree",
+        "permutation and duplicate-root multiplicities"
+      ]
+    }
+  },
+  "representations": {
+    "direct_s17_with_source_factor_chain": {
+      "equation_count": 65,
+      "macaulay_cutoff_envelope": {
+        "bytes_per_dense_field_element": 32,
+        "column_monomials_through_cutoff": "8928545774005519668805284164740256691550123497627683737876127014332443581171843456335434192405770567086005209971092861386348268527335004770531236531745089205560827798131900770160543446653813189933955186835835849404544230361282533123874565683248784396448184841118264202396852225",
+        "cutoff_total_degree": 524288,
+        "degree_profile_assumption": "Conditional on assigning the target-specialized S17 relation total degree 524288. The committed evidence provides this value as an upper bound; if specialization lowers the degree, the row-template count changes and this count is not a bound for that different profile.",
+        "dense_byte_capacity_if_every_cell_is_stored": "130133416723890002908772499467255697024971585103238211770357894705254899019213086110655521420024369560665886322549879277313757538230827210281250107667503609225870804352559420796936933564572939032476530038240119222313078219688555912760471210348630074456396099119198555572591552729555451577505957288739269632620635415278553300977695039289551905322316947572608086974114950575150045202505367171537967906199684701820426111760441345228069165274282628616227907458768730335912972787316123548389744394732678195272108349143970604228951003490839326871801166394596256800",
+        "equation_multiple_templates_before_deduplication": "455468267235771306122743577018185817331267903276745214256911860784780849903697804823364030259498655111007009917812651097978389881642587870757504691460275339220458581323184468951834294069133745906154933023109073325838017710939501928603804674652014152185686050177641353743506382689",
+        "interpretation": "A raw total-degree template count at the stated cutoff. It is neither a solving-degree estimate nor a solver-memory bound.",
+        "variable_count": 64
+      },
+      "maximum_input_equation_degree": 524288,
+      "membership": {
+        "equation_count": 64,
+        "intermediate_variable_count": 48,
+        "map_degrees": [
+          2,
+          3,
+          7,
+          13441
+        ],
+        "term_occurrences": 128
+      },
+      "relation": {
+        "actual_expanded_support": null,
+        "dense_box_support_capacity_upper_bound": "1767709980560404233722162892319098458478272216470469664370211928662343681",
+        "per_leaf_variable_degree": 32768,
+        "polynomial": "S_17",
+        "target_specialized_total_degree_upper_bound": 524288
+      },
+      "variable_count": 64
+    },
+    "recursive_s3_with_quadratic_source_factor_circuit": {
+      "equation_count": 399,
+      "macaulay_cutoff_envelope": {
+        "bytes_per_dense_field_element": 32,
+        "column_monomials_through_cutoff": "1071993300",
+        "cutoff_total_degree": 4,
+        "degree_profile_assumption": "Exact input-degree profile for 15 quartic S3 equations and 384 quadratic circuit equations.",
+        "dense_byte_capacity_if_every_cell_is_stored": "1051178277454704000",
+        "equation_multiple_templates_before_deduplication": "30643215",
+        "interpretation": "A raw total-degree template count at the stated cutoff. It is neither a solving-degree estimate nor a solver-memory bound.",
+        "variable_count": 398
+      },
+      "maximum_input_equation_degree": 4,
+      "membership_circuit": {
+        "addition_chain_exponents_including_input_one": [
+          1,
+          2,
+          4,
+          6,
+          12,
+          18,
+          36,
+          42,
+          84,
+          126,
+          252,
+          504,
+          546,
+          1092,
+          2184,
+          4368,
+          4410,
+          8820,
+          17640,
+          35280,
+          70560,
+          141120,
+          282240,
+          564480,
+          564522
+        ],
+        "auxiliary_variable_count": 368,
+        "equation_count": 384,
+        "gate_count_per_coordinate": 24,
+        "generic_multiplication_only_lower_bound_for_x_to_D": 20,
+        "map_profile": [
+          {
+            "binary": "10",
+            "bit_length": 2,
+            "exponent": 2,
+            "gate_count": 1,
+            "nonsquare_multiplications": 0,
+            "popcount": 1,
+            "squarings": 1
+          },
+          {
+            "binary": "11",
+            "bit_length": 2,
+            "exponent": 3,
+            "gate_count": 2,
+            "nonsquare_multiplications": 1,
+            "popcount": 2,
+            "squarings": 1
+          },
+          {
+            "binary": "111",
+            "bit_length": 3,
+            "exponent": 7,
+            "gate_count": 4,
+            "nonsquare_multiplications": 2,
+            "popcount": 3,
+            "squarings": 2
+          },
+          {
+            "binary": "11010010000001",
+            "bit_length": 14,
+            "exponent": 13441,
+            "gate_count": 17,
+            "nonsquare_multiplications": 4,
+            "popcount": 5,
+            "squarings": 13
+          }
+        ],
+        "pointwise_membership_equivalence": "The triangular circuit has unique intermediates and terminates at x^D = 1.",
+        "term_occurrences": 768
+      },
+      "relation": {
+        "equation_count": 15,
+        "internal_variable_count": 14,
+        "maximum_term_occurrences": 135,
+        "nonconstant_x_variable_count": 30,
+        "target_zero_term_occurrences": 129,
+        "total_degree": 4
+      },
+      "scope_boundary": "Pointwise membership is exact. Equivalence of the full recursive S3 presentation to direct S17 after saturation, including exceptional fibers, is not established.",
+      "term_occurrences": {
+        "target_nonzero_or_symbolic": 903,
+        "target_zero": 897
+      },
+      "variable_count": 398
+    },
+    "recursive_s3_with_source_factor_chain": {
+      "equation_count": 79,
+      "macaulay_cutoff_envelope": {
+        "bytes_per_dense_field_element": 32,
+        "column_monomials_through_cutoff": "1156139307429572689378455584248154868814944040377112369716608735980925708170824387414700820904261614969351918546993642747515227845685655219932533862321134017223374174738124618357099171628708148164647515538145",
+        "cutoff_total_degree": 13441,
+        "degree_profile_assumption": "Exact input-degree profile for 15 quartic S3 equations and 16 copies of the degree-2, 3, 7, 13441 source chain.",
+        "dense_byte_capacity_if_every_cell_is_stored": "2633196479421134443505197530960774290150169627137891381670157007088755717232360613135646389103083031598802386179343596307173804817744683459039515263285323339039784555048837273887963296193678184425452293835635775089740683073110977131237586441012863798522437986140408532133546053836484387956182745281602364218689948272111288665683965669263845559556605294505983744928162460871274666148210212048700564327226770630197962240",
+        "equation_multiple_templates_before_deduplication": "71174286224087286231904132162500817459993030611256771692131777358038702982641468780946736999521625199067078459021808972816817924782437455385786560385138026308210782632208327737497884599074014336746890481728816",
+        "interpretation": "A raw total-degree template count at the stated cutoff. It is neither a solving-degree estimate nor a solver-memory bound.",
+        "variable_count": 78
+      },
+      "maximum_input_equation_degree": 13441,
+      "membership": {
+        "equation_count": 64,
+        "intermediate_variable_count": 48,
+        "map_degrees": [
+          2,
+          3,
+          7,
+          13441
+        ],
+        "term_occurrences": 128
+      },
+      "relation": {
+        "equation_count": 15,
+        "internal_variable_count": 14,
+        "maximum_term_occurrences": 135,
+        "nonconstant_x_variable_count": 30,
+        "target_zero_term_occurrences": 129,
+        "total_degree": 4
+      },
+      "term_occurrences": {
+        "target_nonzero_or_symbolic": 263,
+        "target_zero": 257
+      },
+      "variable_count": 78
+    }
+  },
+  "schema_version": "1.0",
+  "scope": {
+    "excluded": [
+      "materialized S17 or recursive polynomial system",
+      "solver execution",
+      "solving-degree estimate",
+      "Macaulay fill-in estimate",
+      "exact-target relation search",
+      "discrete-log computation",
+      "route promotion or experiment authorization",
+      "asymptotic or security claim"
+    ],
+    "included": [
+      "exact integer and rational arithmetic",
+      "source-map equation and variable counts",
+      "algorithm-specific multiplication-gate counts",
+      "conditional total-degree matrix-template envelopes",
+      "recovery and full-cost blockers"
+    ]
+  },
+  "source_cost_model": {
+    "linear_algebra_term": {
+      "D_cubed": "179904743521164648",
+      "D_squared": "318685088484",
+      "paper_model": "D^omega with 2 < omega <= 3"
+    },
+    "optimistic_necessary_per_system_cost": {
+      "assumptions": [
+        "ignore all preprocessing cost P(p,16)",
+        "ignore all linear-algebra cost",
+        "treat the paper multiplier as the online-call multiplier",
+        "assume T, field operations, and group operations can be compared in one common work unit",
+        "ignore the equal-success probability conversion",
+        "require strict total work below ceil(sqrt(n))"
+      ],
+      "maximum_integer_T": "26470005625446268964608938870039985",
+      "meaning": "This uncalibrated optimistic threshold is arithmetic only. It does not establish T(E,16,L), a matched generic comparison, success rate, or complete cost."
+    },
+    "paper_relation_multiplier": {
+      "ceiling": "12856",
+      "denominator": "161005061478643748754153284772932098600827958591810235098224189852286339498581",
+      "formula": "16! * p / D^15",
+      "numerator": "2069783595117026993196331357030296352877200975898325082205304314141370419755976125"
+    },
+    "paper_yield": {
+      "denominator": "2069783595117026993196331357030296352877200975898325082205304314141370419755976125",
+      "formula": "D^16 / (16! * p)",
+      "interpretation": "Exact evaluation of the paper's heuristic expectation; not a success probability or independent-relation rate.",
+      "numerator": "90890899316046926334192120626585174166336600840165897538119716103792388946417943282"
+    },
+    "total_cost_formula": "P(p,16) + (16! * p / D^15) * T(E,16,L) + D^omega",
+    "uncalibrated_generic_reference_ceiling": {
+      "ceil_sqrt_target_group_order": "340282366920938463463374607431768211456",
+      "scope": "Integer sqrt(n) reference only. T(E,16,L), field work, group work, parallelism, and equal-success cost have not been converted to common units, so this is not a matched Pollard-rho baseline or a measured runtime."
+    }
+  },
+  "source_scope": {
+    "factorization_artifact": "experiments/engine/pkc_smooth_desk_screen/artifact.json",
+    "kernel_curve_cardinality": "Ecdlp/Proved/CurveCardinalityExact.lean",
+    "kernel_full_group": "Ecdlp/Proved/CurveFullGroup.lean",
+    "kernel_glv_eigenvalue": "Ecdlp/Proved/GlvSubgroupEigenvalue.lean",
+    "kernel_glv_orbits": "Ecdlp/Proved/GlvOrbit.lean",
+    "kernel_s3_definition": "Ecdlp/Proved/SemaevThree.lean",
+    "kernel_theorems": {
+      "curve_cardinality": "Ecdlp.Curve.secp256k1_card_point_eq_n",
+      "full_group": "Ecdlp.Curve.secp256k1_grp_eq_top",
+      "glv_eigenvalue_on_subgroup": "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples",
+      "glv_nonfixed_orbit_size_three": "Ecdlp.Curve.secp256k1_glvPoint_orbit_three_distinct",
+      "no_nonzero_two_torsion": "Ecdlp.Curve.secp256k1_no_nonzero_two_torsion",
+      "semaev_three_semantics": "Ecdlp.Semaev.secp256k1_semaev_three_iff"
+    },
+    "primary_claim_extract": "data/source_claim_extracts/petit_kosters_messeng2016.json",
+    "primary_locators": {
+      "delta_and_algorithm": "PKC 2016 Section 3.1, Algorithm 1 and paragraph after it",
+      "source_maps": "PKC 2016 Section 3.3",
+      "total_cost": "PKC 2016 Section 3.2"
+    },
+    "source_claim_ids": [
+      "SC-GLV-ENDOMORPHISM",
+      "SC-GLV-ENDOMORPHISM-NONTRIVIAL",
+      "SC-PKC-SMOOTH-SUBGROUP",
+      "SC-PKC-RELATION-YIELD",
+      "SC-SECP-NO-TWO-TORSION",
+      "SC-SECP-PMINUS1-FACTORIZATION",
+      "SC-SECP-PRIME-FIELD",
+      "SC-SEMAEV-RELATION-SEMANTICS"
+    ]
+  },
+  "terminal_disposition": {
+    "assurance": "certificate_replayed",
+    "authorization": "none",
+    "calibration": "excluded_nonexperimental",
+    "cell_transition": "open_to_open",
+    "cost_quantity_transition": "missing_to_partial",
+    "hypothesis_effect": "none",
+    "reopening_conditions": [
+      "Prove a source-faithful direct/recursive/circuit bridge including saturation and exceptional fibers.",
+      "Determine usable F_p lifts, recovery multiplicities, and independent-relation rank under negation and GLV orbits.",
+      "Bound solving degree, fill-in, online/offline work, memory, preprocessing, sparse linear algebra, money, and review effort against the matched generic baseline."
+    ],
+    "retention_disposition": "zero_retention_success",
+    "route_effect": "none",
+    "scientific_disposition": "scoped_blocker",
+    "source_independence": "not_established"
+  },
+  "unresolved_complete_cost_fields": [
+    "actual expanded S17 support",
+    "full recursive/direct equivalence after saturation",
+    "exceptional components and extension-field fibers",
+    "usable factor-base cardinality U",
+    "solving degree and Macaulay fill-in",
+    "recovery success and multiplicity distribution",
+    "independent-relation probability and rank",
+    "preprocessing and amortization",
+    "sparse linear-algebra time and storage",
+    "total online/offline work, memory, money, and reviewer effort"
+  ]
+}

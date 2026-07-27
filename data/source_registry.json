@@ -236,6 +236,7 @@
         "VERIFIED.md",
         "domains/p256/corpus.md",
         "experiments/README.md",
+        "experiments/engine/pkc_smooth_m16_symbolic_desk/README.md",
         "experiments/glv_diagonal_obstruction/README.md",
         "experiments/glv_semaev_symmetry/README.md",
         "experiments/p0_glv_semaev/README.md",
@@ -490,6 +491,7 @@
         "PUBLISHABLE_UNITS.md",
         "README.md",
         "VERIFIED.md",
+        "experiments/engine/pkc_smooth_m16_symbolic_desk/README.md",
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"

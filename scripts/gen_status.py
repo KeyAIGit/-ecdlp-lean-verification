@@ -222,16 +222,17 @@ These are research questions, not hypotheses or candidates:
 **{shadow_intake['counts']['admissible']} admissible**,
 **{shadow_intake['counts']['recommended']} recommended**, and
 **{shadow_intake['counts']['authorized']} authorized**. `TASK-010` is accepted at
-`85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. Current work is `TASK-015`, which
-selects `CELL-M-PKC-SMOOTH-M16` only as a non-executable desk-cost question.
+`85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-015` completed with an M16
+scoped blocker and zero retained hypotheses. Current work is `TASK-016`, which
+keeps `CELL-M-PKC-SMOOTH-M16` as a non-executable semantics question.
 `TASK-008` remains parked because no hypothesis proposal has quality-cleared.
 
 The Engine's bounded-exploration capability is
 **{str(engine_gates['exploration_authorized']).lower()}**, while the current decision's experiment
 authorization is **{str(phase['experiments_authorized']).lower()}** and the promotion gate is
 **{str(engine_gates['promotion_authorized']).lower()}**. `GLV-SEMAEV-ITER-001` is complete; its
-certificates and kernel-checked identities authorize no hypothesis run. `TASK-015` authorizes no
-S17 construction or solver, target computation, or route promotion. Any later experiment needs
+certificates and kernel-checked identities authorize no hypothesis run. `TASK-016` authorizes no
+S17 expansion, polynomial-system materialization, solver, target computation, or route promotion. Any later experiment needs
 a new dated decision plus the normal fixed budgets, dependency order, and retained terminal
 outcome.
 

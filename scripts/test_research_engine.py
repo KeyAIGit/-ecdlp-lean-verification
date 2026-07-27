@@ -2536,6 +2536,14 @@ class ResearchEngineTests(unittest.TestCase):
             {seed["status"] for seed in seeds},
         )
         self.assertTrue(all(seed["cell_id"].startswith("CELL-") for seed in seeds))
+        m16 = next(
+            seed
+            for seed in seeds
+            if seed["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        instruction = m16["proposal_packet"]["instruction"]
+        self.assertIn("complete desk bridge is unresolved", instruction)
+        self.assertNotIn("desk quantity is missing", instruction)
 
     def test_hypothesis_seed_generation_is_order_independent(self) -> None:
         reordered = copy.deepcopy(self.generation_policy)

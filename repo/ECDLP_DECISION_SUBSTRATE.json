@@ -121,7 +121,7 @@
       "authorized": false,
       "scope": "Research Engine v0 retains a bounded-exploration capability, but the current evidence-bounded desk phase authorizes no hypothesis run.",
       "cannot_do": [
-        "execute a candidate, solver run, or parameter sweep during TASK-015",
+        "execute a candidate, solver run, or parameter sweep during TASK-016",
         "target secp256k1 directly",
         "change the declared threat model",
         "claim an asymptotic improvement",
@@ -174,12 +174,12 @@
       "Maintain the accepted Research Engine v0.2 lifecycle and its non-executable generation plane.",
       "Ingest WCC 2017 as a separate inspected source while CANS 2018 remains full-text unread.",
       "Use the existing knowledge graph as the finite evidence-bounded hypothesis-space projection.",
-      "Under TASK-015, derive only the unresolved symbolic size, recovery, memory, preprocessing, independence, and total-cost fields for CELL-M-PKC-SMOOTH-M16.",
+      "Under TASK-016, define only the source-faithful M16 ideal, projection, exceptional fibers, and recovery semantics needed before any solving-cost argument.",
       "Maintain canonical provenance and regenerate affected views without changing the recorded claim boundary."
     ],
     "forbidden_work": [
       "Run any hypothesis experiment, general solver sweep, exact-target secp256k1 work, expensive scaling, or promotion experiment.",
-      "Construct or run an S17 solver, Sage, msolve, F4, or a parameter sweep while CQ-SEMAEV-S17-SYSTEM-COST remains a desk question.",
+      "Expand or materialize S17 or a recursive system, or run Sage, msolve, F4, a solver, or a parameter sweep while CQ-SEMAEV-S17-SYSTEM-COST remains partial.",
       "Activate an auxiliary-curve search before a primary source supplies a finite family or search domain with a completeness criterion.",
       "Transfer WCC 2017 m=2 toy timings, speedups, or practical-limit conclusions to secp256k1 m=16 or to cryptographic scaling.",
       "Resume GLV-SEMAEV-ITER-001 or activate another route without a new dated decision.",
@@ -778,7 +778,7 @@
       "current_evidence": "The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-curve realizations. In the second construction the auxiliary curve only shares the base field with the target; a self-isogeny of the auxiliary curve defines the root map. The paper explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. WCC 2017 adds bounded m=2 practicality evidence on selected small primes and a distinct p-plus-one trace extension; it cannot be transferred quantitatively to m=16 or substituted for the auxiliary curve. Historical P4 did not implement either PKC construction and remains only an inconclusive negative control; it is not evidence against the faithful route.",
       "success_gate": "First reproduce the exact construction from a verified primary source, then compare it under the common evaluation contract.",
       "stop_condition": "Reject low-bit filters, redundant auxiliary variables, or presentation-only degree changes as substitutes for the cited construction.",
-      "next_action": "Keep the route parked. TASK-015 gives sole desk priority to CELL-M-PKC-SMOOTH-M16 and RSI-D8BBA6340789, limited to the unresolved symbolic cost fields of CQ-SEMAEV-S17-SYSTEM-COST with no solver execution. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.",
+      "next_action": "Keep the route parked. TASK-015 recorded a scoped M16 cost blocker with zero retained hypotheses. TASK-016 gives sole desk priority to the source-faithful ideal and recovery semantics for CELL-M-PKC-SMOOTH-M16, RSI-D8BBA6340789, and CQ-SEMAEV-S17-SYSTEM-COST, with no system materialization or solver execution. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.",
       "authorized_experiment": false,
       "hypothesis_ids": [
         "HYP_GLV_SEMAEV_001"
@@ -1324,7 +1324,7 @@
       "Require a new dated decision before any hypothesis experiment, general solver sweep, route promotion, or exact-target work.",
       "For any later promotion, pass every common acceptance requirement and bind one exact route, hypothesis, task, mechanism, validator, and cost theorem consistently across all governing artifacts."
     ],
-    "decision": "RS-2026-07-24-001 remains the last attack-route selection and promotes no route. TASK-010 is accepted at commit 85f85d4ca0b9dba323bfdd05ce8750d6db4732ac. TASK-015 selects CELL-M-PKC-SMOOTH-M16 only as the next non-executable desk-cost question; it is not a hypothesis, candidate, experiment, or route promotion.",
+    "decision": "RS-2026-07-24-001 remains the last attack-route selection and promotes no route. TASK-010 is accepted at commit 85f85d4ca0b9dba323bfdd05ce8750d6db4732ac. TASK-015 completed with a scoped M16 blocker and zero retained hypotheses. TASK-016 keeps CELL-M-PKC-SMOOTH-M16 as the next non-executable ideal-and-recovery semantics question; it is not a hypothesis, candidate, experiment, or route promotion.",
     "final_review": "Independent adversarial review is requested when another qualified reviewer is available. It is an additional audit, not a merge prerequisite; required CI, explicit scope, rollback safety, and the owner's standing authorization govern merges."
   }
 }

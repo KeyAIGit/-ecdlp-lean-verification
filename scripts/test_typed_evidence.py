@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 19,
+                "source_claims": 20,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -241,15 +241,40 @@ class TypedEvidenceTests(unittest.TestCase):
             cells["CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND"]["seed_eligible"]
         )
 
-    def test_m4_screen_does_not_close_the_m16_cost_cell(self) -> None:
+    def test_m16_symbolic_blocker_keeps_cell_open_and_non_authorizing(
+        self,
+    ) -> None:
         problems, state = self.build()
         self.assertEqual([], problems)
         cells = {item["cell_id"]: item for item in state["cells"]}
         self.assertEqual(
             "decided_inapplicable", cells["CELL-M-PKC-SMOOTH-M4"]["status"]
         )
-        self.assertEqual("open", cells["CELL-M-PKC-SMOOTH-M16"]["status"])
-        self.assertTrue(cells["CELL-M-PKC-SMOOTH-M16"]["seed_eligible"])
+        m16 = cells["CELL-M-PKC-SMOOTH-M16"]
+        self.assertEqual("open", m16["status"])
+        self.assertTrue(m16["seed_eligible"])
+        self.assertEqual("none", m16["authorization"])
+        self.assertEqual("partial", m16["cost_quantity_status"])
+        self.assertEqual(
+            ["B-PKC-M16-COMPLETE-COST-BRIDGE"], m16["barrier_ids"]
+        )
+        self.assertIn(
+            "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
+            m16["source_claim_ids"],
+        )
+        self.assertFalse(
+            any(
+                decision["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+                for decision in state["desk_decisions"]
+            )
+        )
+        claims = {
+            item["id"]: item for item in state["source_claims"]
+        }
+        self.assertEqual(
+            "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json",
+            claims["SC-PKC-M16-SYMBOLIC-DESK-RESULT"]["evidence_path"],
+        )
 
     def test_wcc_precursor_is_bounded_and_does_not_replace_cans(self) -> None:
         sources = {

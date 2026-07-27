@@ -4,9 +4,9 @@
   "source_hashes": {
     "policy_sha256": "04c74829a69d4380b25a1de83a120b41d20a3cde5687ee5ac812fad1ce36fc74",
     "hypothesis_generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-    "typed_evidence_state_sha256": "294fb0b11b9096c4f3fd2a186a4e3e4134b6e386e319184cee892b3ad24798d8",
-    "research_claim_state_sha256": "7ec6a4284d20b54af0c47bb4c5a0b08aa53ca5de2a593914cfc6fcc9a57bb8be",
-    "decision_substrate_sha256": "53372ba6fe1f8961beea01a90522ae02cdf41834d1bf19af9e3cf3d01c310302",
+    "typed_evidence_state_sha256": "fee8d3d62bd5361aea74352d6c7a2dd170e4c12002d1b4dba4aef65e8f67b3c3",
+    "research_claim_state_sha256": "0e53d7f41f3aa2bcd61d91cee4946ed7f0e40549fcf8922fd8be66fdc0198ddb",
+    "decision_substrate_sha256": "74de3216488d4d0133fc97b5d6d25d83856e4dfb467e5c71f7e6324f26b672f7",
     "hypotheses_sha256": "719eb78ba7a8e40101c14c92ac426a0028de9d7aa14e6ffc3735ecffa4615c5c",
     "outcome_events_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
     "historical_baseline_anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
@@ -1111,8 +1111,8 @@
     "generator_id": "ecdlp-hypothesis-generation-v0",
     "source_hashes": {
       "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-      "typed_evidence_state_sha256": "294fb0b11b9096c4f3fd2a186a4e3e4134b6e386e319184cee892b3ad24798d8",
-      "research_claim_state_sha256": "7ec6a4284d20b54af0c47bb4c5a0b08aa53ca5de2a593914cfc6fcc9a57bb8be",
+      "typed_evidence_state_sha256": "fee8d3d62bd5361aea74352d6c7a2dd170e4c12002d1b4dba4aef65e8f67b3c3",
+      "research_claim_state_sha256": "0e53d7f41f3aa2bcd61d91cee4946ed7f0e40549fcf8922fd8be66fdc0198ddb",
       "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
@@ -1135,7 +1135,7 @@
       "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
       "target_id": "secp256k1-classical-single-target-plain",
       "counts": {
-        "source_claims": 19,
+        "source_claims": 20,
         "target_properties": 5,
         "mechanisms": 7,
         "cells": 7,
@@ -1147,10 +1147,10 @@
         "desk_decisions": 3
       },
       "source_hashes": {
-        "policy_sha256": "c00207593192df3c98b9b45d986268d8b5924c254c65799fe3bfefe3271c1866",
-        "decision_substrate_sha256": "0db2792ea76aab300d4290f27f301ea92109d53acd0c4f557450737e56ef113e",
+        "policy_sha256": "3f0b8c95832ecf67205db0d0c01a01e81228d7466da2e0487a8b5f35e38f666b",
+        "decision_substrate_sha256": "3090f779764355b6ec333bc740c683175d7e2a7fcabce5793381133b14d1a7db",
         "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-        "evidence_files_sha256": "27054848fdb5f9c757abf90528b267a6eee71f5cbd2efb5a7b16a6c46cc1874c",
+        "evidence_files_sha256": "3640a5ad22a64ba0be65d019fbc8038a793bf3853cae751e989e515b1a984ac7",
         "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
       },
       "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
@@ -1178,15 +1178,15 @@
         "route_promotions": 0,
         "exact_target_runs": 0
       },
-      "state_sha256": "7ec6a4284d20b54af0c47bb4c5a0b08aa53ca5de2a593914cfc6fcc9a57bb8be"
+      "state_sha256": "0e53d7f41f3aa2bcd61d91cee4946ed7f0e40549fcf8922fd8be66fdc0198ddb"
     },
     "seed_coverage": {
       "threshold": 12,
       "eligible_seed_count": 2,
       "overflow_triggered": false,
       "represented_seed_ids": [
-        "HGS-7C7E54520C62",
-        "HGS-181F56A9E6D7"
+        "HGS-148D100BA7D6",
+        "HGS-56147CA8639C"
       ],
       "represented_cell_ids": [
         "CELL-M-PKC-AUXILIARY-CURVE",
@@ -1197,10 +1197,10 @@
     },
     "generated_seeds": [
       {
-        "seed_id": "HGS-7C7E54520C62",
+        "seed_id": "HGS-148D100BA7D6",
         "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
         "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-        "claim_state_digest": "7ec6a4284d20b54af0c47bb4c5a0b08aa53ca5de2a593914cfc6fcc9a57bb8be",
+        "claim_state_digest": "0e53d7f41f3aa2bcd61d91cee4946ed7f0e40549fcf8922fd8be66fdc0198ddb",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1282,7 +1282,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "7c7e54520c6293c3652f75b86101ecc340b46d179afa6cf42ba745b97ff6f3b5",
+        "deduplication_key": "148d100ba7d6cca04b6f9bf6c0abc012c6fd53162a8595b685e73c5d63def441",
         "proposal_packet": {
           "required_sections": [
             "new_premise",
@@ -1344,10 +1344,10 @@
         }
       },
       {
-        "seed_id": "HGS-181F56A9E6D7",
+        "seed_id": "HGS-56147CA8639C",
         "cell_id": "CELL-M-PKC-SMOOTH-M16",
-        "typed_evidence_digest": "ece101a9b55926c309b3dfaa2fe263b30fe982b8d21d2e0a58c03352860027b9",
-        "claim_state_digest": "7ec6a4284d20b54af0c47bb4c5a0b08aa53ca5de2a593914cfc6fcc9a57bb8be",
+        "typed_evidence_digest": "ce24f057602f7db1a4927ad17495f77fcb66047d9649228e7dcf64571a57e9be",
+        "claim_state_digest": "0e53d7f41f3aa2bcd61d91cee4946ed7f0e40549fcf8922fd8be66fdc0198ddb",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1375,10 +1375,11 @@
             "definition": "Total cost of constructing, representing, solving, and validating the relation system required by an arity-sixteen smooth-subgroup instantiation.",
             "baseline": "The same success probability priced against generic square-root work and lower-arity prime-field relation pipelines.",
             "measurement": "An exact symbolic size bound must precede any solver run; degree, monomial count, memory, and recovery are all included.",
-            "status": "missing",
+            "status": "partial",
             "source_claim_ids": [
               "SC-PKC-SMOOTH-SUBGROUP",
               "SC-PKC-RELATION-YIELD",
+              "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
               "SC-SEMAEV-RELATION-SEMANTICS"
             ]
           },
@@ -1413,6 +1414,7 @@
             }
           ],
           "source_claim_ids": [
+            "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
             "SC-PKC-RELATION-YIELD",
             "SC-PKC-SMOOTH-SUBGROUP",
             "SC-SECP-PMINUS1-FACTORIZATION",
@@ -1420,7 +1422,7 @@
             "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
             "SC-SEMAEV-RELATION-SEMANTICS"
           ],
-          "boundary": "This open desk-cost cell does not justify an S17 solver run; clearing two arithmetic predicates is not a cost-changing mechanism, and exact representation, recovery, and symbolic cost bounds remain prerequisites."
+          "boundary": "This open desk-cost cell has exact input-presentation and direct recovery ceilings but no complete cost bridge. The scoped blocker does not justify an S17 or recursive-system materialization, solver run, target computation, hypothesis retention, or route promotion."
         },
         "target_feature": {
           "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
@@ -1448,7 +1450,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "181f56a9e6d7ea95ca06859891ecc6bece42c602f9b13d89716594dc82471302",
+        "deduplication_key": "56147ca8639c860c78595454b9d1b0332fddb9a6d29378d67481a1d6f507c9cb",
         "proposal_packet": {
           "required_sections": [
             "new_premise",
@@ -1506,7 +1508,7 @@
             "typed_evidence_mismatch",
             "target_property_violated"
           ],
-          "instruction": "Return an exact symbolic size and cost bridge or a scoped blocker. Do not request compute while the desk quantity is missing."
+          "instruction": "Return an exact symbolic size and cost bridge or a scoped blocker. Do not request compute while the complete desk bridge is unresolved."
         }
       }
     ],
