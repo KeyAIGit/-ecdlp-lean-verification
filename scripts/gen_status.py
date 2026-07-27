@@ -222,19 +222,21 @@ These are research questions, not hypotheses or candidates:
 **{shadow_intake['counts']['admissible']} admissible**,
 **{shadow_intake['counts']['recommended']} recommended**, and
 **{shadow_intake['counts']['authorized']} authorized**. `TASK-010` is accepted at
-`85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-016` completed with an M16
-scoped semantic blocker and zero retained hypotheses. Current work is
-`TASK-017`, which keeps `CELL-M-PKC-SMOOTH-M16` as a non-executable
-exceptional-fiber, liftability, projective-identity, and recovery-domain
-question.
+`85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-017` completed the exact
+set-theoretic projective-tree and exceptional-fiber replay for nonsingular
+`y²=x³+7` in characteristic outside `{{2,3,7}}`, with a scoped direct-S17
+blocker and zero retained hypotheses. Current work is `TASK-018`, which keeps
+`CELL-M-PKC-SMOOTH-M16` as a non-executable recursive-projective-S17
+definition and reverse-projection question above S4.
 `TASK-008` remains parked because no hypothesis proposal has quality-cleared.
 
 The Engine's bounded-exploration capability is
 **{str(engine_gates['exploration_authorized']).lower()}**, while the current decision's experiment
 authorization is **{str(phase['experiments_authorized']).lower()}** and the promotion gate is
 **{str(engine_gates['promotion_authorized']).lower()}**. `GLV-SEMAEV-ITER-001` is complete; its
-certificates and kernel-checked identities authorize no hypothesis run. `TASK-017` authorizes no
-S17 expansion, polynomial-system materialization, solver, target computation, or route promotion. Any later experiment needs
+certificates and kernel-checked identities authorize no hypothesis run. `TASK-018` authorizes no
+S17 expansion or evaluation, polynomial-system materialization, solver, cost inference, target
+computation, or route promotion. Any later experiment needs
 a new dated decision plus the normal fixed budgets, dependency order, and retained terminal
 outcome.
 

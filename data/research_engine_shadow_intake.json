@@ -3,9 +3,9 @@
   "state_id": "research-engine-shadow-intake-v0",
   "status": "shadow_non_executing",
   "source_hashes": {
-    "source_registry_sha256": "7f88474c1946731f12a2de5054c83f89c37246373a2ce0a9672ff9ebfc8fa1fe",
-    "typed_evidence_state_sha256": "a132de1fa15508a529436e3a3b07fd3ee7c56df143a1a1569287ee637021d3d5",
-    "research_claim_state_sha256": "c7463d4d9415dd4ce0b5820c0a3ba6cd1e3e5dbbf5fa79129334f72815538e76"
+    "source_registry_sha256": "ff590e1a1294637f7b4cadd5cedb1a56f4773c8830c1ab2b937eb9620ec7368e",
+    "typed_evidence_state_sha256": "10e28cb799f0143e8e0b561edfb06fc80721625f9956c5f437abcb522ae8dc19",
+    "research_claim_state_sha256": "eb65d94952eb94d0842c7f41689493aa2449802a59122180c5f321f19bb1f77b"
   },
   "counts": {
     "proposal_stubs": 4,
@@ -97,6 +97,7 @@
         "cell:CELL-M-PKC-SMOOTH-M16",
         "data/source_claim_extracts/petit_kosters_messeng2016.json",
         "experiments/engine/pkc_smooth_desk_screen/artifact.json",
+        "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
         "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
         "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
       ],
