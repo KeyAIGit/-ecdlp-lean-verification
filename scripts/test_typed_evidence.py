@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 20,
+                "source_claims": 21,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -262,6 +262,14 @@ class TypedEvidenceTests(unittest.TestCase):
             "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
             m16["source_claim_ids"],
         )
+        self.assertIn(
+            "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
+            m16["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
+            m16["cost_quantity"]["source_claim_ids"],
+        )
         self.assertFalse(
             any(
                 decision["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
@@ -274,6 +282,24 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual(
             "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json",
             claims["SC-PKC-M16-SYMBOLIC-DESK-RESULT"]["evidence_path"],
+        )
+        semantic_claim = claims["SC-PKC-M16-SEMANTIC-BRIDGE-RESULT"]
+        self.assertEqual(
+            "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
+            semantic_claim["evidence_path"],
+        )
+        self.assertEqual(
+            "963eea60097807ae0aa66a5d881b0c34bf0497ade53ed4d37d38861a73887c19",
+            semantic_claim["artifact_sha256"],
+        )
+        barriers = {
+            item["id"]: item for item in state["barriers"]
+        }
+        m16_barrier = barriers["B-PKC-M16-COMPLETE-COST-BRIDGE"]
+        self.assertEqual("open", m16_barrier["disposition"])
+        self.assertIn(
+            "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
+            m16_barrier["source_claim_ids"],
         )
 
     def test_wcc_precursor_is_bounded_and_does_not_replace_cans(self) -> None:
