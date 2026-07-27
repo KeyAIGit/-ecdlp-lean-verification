@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 298,
-  "ledger_reference_count": 486,
-  "ledger_named_declarations": 461,
+  "ledger_rows": 299,
+  "ledger_reference_count": 491,
+  "ledger_named_declarations": 466,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 747,
-  "distinct_qualified_names": 747,
-  "verified_md_citations": 461,
+  "declaration_count": 757,
+  "distinct_qualified_names": 757,
+  "verified_md_citations": 466,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -31,7 +31,7 @@
       "line": 38
     },
     {
-      "ledger_id": "ledger-155",
+      "ledger_id": "ledger-156",
       "cited": "P256.IsElliptic",
       "resolution": "anonymous-instance-target",
       "namespace": "Ecdlp.P256",
@@ -40,7 +40,7 @@
       "line": 74
     },
     {
-      "ledger_id": "ledger-158",
+      "ledger_id": "ledger-159",
       "cited": "Fact (Nat.Prime Ecdlp.P256.p)",
       "resolution": "anonymous-instance-target",
       "namespace": "Ecdlp.P256.Primality",
@@ -49,7 +49,7 @@
       "line": 183
     },
     {
-      "ledger_id": "ledger-159",
+      "ledger_id": "ledger-160",
       "cited": "Fact (Nat.Prime Ecdlp.P256.n)",
       "resolution": "anonymous-instance-target",
       "namespace": "Ecdlp.P256.Primality",
@@ -58,7 +58,7 @@
       "line": 192
     },
     {
-      "ledger_id": "ledger-166",
+      "ledger_id": "ledger-167",
       "cited": "Curve25519.IsElliptic",
       "resolution": "anonymous-instance-target",
       "namespace": "Ecdlp.Curve25519",
@@ -67,7 +67,7 @@
       "line": 65
     },
     {
-      "ledger_id": "ledger-271",
+      "ledger_id": "ledger-272",
       "cited": "Module (ZMod Secp256k1.n) ↥secp256k1Grp",
       "resolution": "anonymous-instance-target",
       "namespace": "Ecdlp.Curve",
@@ -108,6 +108,8 @@
     "Ecdlp.Curve.mk_φ_mul_ΨSq",
     "Ecdlp.Curve.mk_ψ_sq",
     "Ecdlp.Curve.normEDS_consecutive_eq_zero_of_eval_eq_zero",
+    "Ecdlp.Curve.pMinusOneCofactor_no_small_prime_factor",
+    "Ecdlp.Curve.pMinusOneCofactor_prime",
     "Ecdlp.Curve.p_mod_four",
     "Ecdlp.Curve.px",
     "Ecdlp.Curve.py",
@@ -237,6 +239,7 @@
     "Ecdlp.Curve.secp256k1_omega_recurrence_three",
     "Ecdlp.Curve.secp256k1_omega_recurrence_two",
     "Ecdlp.Curve.secp256k1_one_nsmul_coords",
+    "Ecdlp.Curve.secp256k1_p_sub_one_factorization",
     "Ecdlp.Curve.secp256k1_pointGroupEquiv",
     "Ecdlp.Curve.secp256k1_pointX_neg",
     "Ecdlp.Curve.secp256k1_pointX_neg_zsmul_add",
@@ -286,6 +289,8 @@
     "Ecdlp.Curve.secp256k1_seven_torsion_x_card_le",
     "Ecdlp.Curve.secp256k1_seven_torsion_x_mem",
     "Ecdlp.Curve.secp256k1_smallprime_addOrderOf",
+    "Ecdlp.Curve.secp256k1_smooth_divisor_dvd_smooth_part",
+    "Ecdlp.Curve.secp256k1_smooth_divisor_le",
     "Ecdlp.Curve.secp256k1_taproot_tweak_verify",
     "Ecdlp.Curve.secp256k1_threeTorsionX_finite",
     "Ecdlp.Curve.secp256k1_threeTorsionX_ncard_le",
@@ -1893,6 +1898,58 @@
     },
     {
       "id": "ledger-067",
+      "claim": "secp256k1 `p−1` smooth-divisor ceiling — a target-property screen fact (`secp256k1_p_sub_one_factorization`: the complete prime factorization `p−1 = 2·3·7·13441·C` with `C` the 237-bit prime cofactor, reusing the Pratt node already established for `p`; `secp256k1_smooth_divisor_dvd_smooth_part`: every 13441-smooth divisor of `p−1` divides `564522 = 2·3·7·13441 ≈ 2^19.11`, since the remaining cofactor is prime and strictly larger, hence coprime to any such divisor; `secp256k1_smooth_divisor_le` gives the numeric ceiling `d ≤ 564522`. An exact arithmetic ceiling on the target, decidable in advance, used to screen published factor-base constructions that require `p−1` to carry a large smooth divisor — at zero experimental cost. Not an ECDLP statement, not a complexity bound, not a claim about any algorithm, and says nothing about the group order `n`, extension fields, or auxiliary curves. Inherits `Lean.ofReduceBool` from one closed `native_decide` identity)",
+      "theorem_cell": "`Ecdlp.Curve.secp256k1_p_sub_one_factorization`, `secp256k1_smooth_divisor_dvd_smooth_part`, `secp256k1_smooth_divisor_le`, `pMinusOneCofactor_prime`, `pMinusOneCofactor_no_small_prime_factor`",
+      "declared_files": [
+        "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean"
+      ],
+      "method": "Mathlib + native_decide (reuses the `p` Pratt certificate)",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.Curve.secp256k1_p_sub_one_factorization",
+          "canonical_name": "Ecdlp.Curve.secp256k1_p_sub_one_factorization",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+          "line": 72
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1_smooth_divisor_dvd_smooth_part",
+          "canonical_name": "Ecdlp.Curve.secp256k1_smooth_divisor_dvd_smooth_part",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+          "line": 92
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1_smooth_divisor_le",
+          "canonical_name": "Ecdlp.Curve.secp256k1_smooth_divisor_le",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+          "line": 107
+        },
+        {
+          "cited": "Ecdlp.Curve.pMinusOneCofactor_prime",
+          "canonical_name": "Ecdlp.Curve.pMinusOneCofactor_prime",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+          "line": 64
+        },
+        {
+          "cited": "Ecdlp.Curve.pMinusOneCofactor_no_small_prime_factor",
+          "canonical_name": "Ecdlp.Curve.pMinusOneCofactor_no_small_prime_factor",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+          "line": 80
+        }
+      ]
+    },
+    {
+      "id": "ledger-068",
       "claim": "Pohlig–Hellman: projection to order-`d` subgroup",
       "theorem_cell": "`Ecdlp.PohligHellman.projection`",
       "declared_files": [
@@ -1912,7 +1969,7 @@
       ]
     },
     {
-      "id": "ledger-068",
+      "id": "ledger-069",
       "claim": "Pohlig–Hellman: component depends only on `x mod d",
       "theorem_cell": "`Ecdlp.PohligHellman.component`",
       "declared_files": [
@@ -1932,7 +1989,7 @@
       ]
     },
     {
-      "id": "ledger-069",
+      "id": "ledger-070",
       "claim": "Pohlig–Hellman: CRT reconstruction",
       "theorem_cell": "`Ecdlp.PohligHellman.reconstruct`",
       "declared_files": [
@@ -1952,7 +2009,7 @@
       ]
     },
     {
-      "id": "ledger-070",
+      "id": "ledger-071",
       "claim": "secp256k1 has no small embedding degree (`p^k ≢ 1 mod n` for `1≤k≤100`; MOV/FR resistance)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_embedding_degree_gt_100`",
       "declared_files": [
@@ -1972,7 +2029,7 @@
       ]
     },
     {
-      "id": "ledger-071",
+      "id": "ledger-072",
       "claim": "secp256k1 trace of Frobenius: ordinary, non-anomalous, Hasse (`t≠0`, `t≠1`, `t²≤4p`; Smart/SSSA + supersingular resistance)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous`",
       "declared_files": [
@@ -1992,7 +2049,7 @@
       ]
     },
     {
-      "id": "ledger-072",
+      "id": "ledger-073",
       "claim": "secp256k1 classical attack-resistance profile — the substrate thesis, one unconditional theorem (`secp256k1_classical_security_profile`: a single kernel-verified conjunction certifying that *every known classically-expressible ECDLP shortcut is blocked* — `#E = n` (cofactor 1) ∧ `Nat.Prime n` (⇒ no Pohlig–Hellman reduction, no proper subgroup) ∧ `t ≠ 0` (not supersingular) ∧ `t ≠ 1` (not anomalous) ∧ `t² ≤ 4p` (Hasse) ∧ embedding degree `> 100` (no MOV/FR transfer). Honest scope: this is the *classical structural* envelope, not a hardness proof — the only proved hardness is the generic `Ω(√n)` bound (`secp256k1_generic_security`), and it is classical-only (Shor breaks ECDLP quantumly). The machine-checked statement of \"every classical attack we can express is blocked\", not \"unbreakable\". Assembles proved conjuncts; inherits `Lean.ofReduceBool` from them)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_classical_security_profile`",
       "declared_files": [
@@ -2012,7 +2069,7 @@
       ]
     },
     {
-      "id": "ledger-073",
+      "id": "ledger-074",
       "claim": "secp256k1 quadratic-twist security certificate — a limitation, not a strength (`secp256k1_twist_security_profile`: the twist order `#Ẽ = 2p+2−n` factors exactly as `3²·13²·3319·22639·Q` with `Q` a 220-bit prime (`secp256k1_twist_maxprime_prime`, full Pratt certificate; `secp256k1_twist_order_factorization`). Two honest consequences: (1) the cofactor `3²·13²·3319·22639 = 114286177161 ≈ 2³⁷ > 1` is nontrivial — unlike the simple point group of `E`, the twist has genuine small-order subgroups a point can be confined to; (2) `2²¹⁹ < Q < 2²²⁰`, so generic twist-DLP costs `≈ √Q < 2¹¹⁰`, below the curve's `≈2¹²⁸`. This is the machine-checked reason single-coordinate (`x`-only / Montgomery-ladder) secp256k1 code must validate points. Inherits `Lean.ofReduceBool` from `native_decide` + Pratt)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_twist_security_profile`, `secp256k1_twist_order_factorization`, `secp256k1_twist_maxprime_prime`",
       "declared_files": [
@@ -2048,7 +2105,7 @@
       ]
     },
     {
-      "id": "ledger-074",
+      "id": "ledger-075",
       "claim": "secp256k1 CM Frobenius certificate (`N(π)=a²−ab+b²=p` `secp256k1_frobenius_norm`, `Tr(π)=2a−b=p+1−n` `secp256k1_frobenius_trace`, `4p=t²+3b²` `secp256k1_four_p_eq_trace_sq` — the integer CM data for `π=a+bω`; with `t²<4p` this pins `End(E)⊗ℚ=ℚ(√−3)`, the order `ℤ[ω]` of discriminant −3 (corrects mistaken CM composites). Arithmetic certificate, not a Frobenius-as-endomorphism proof — that CM theory is a Mathlib gap)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_frobenius_norm`, `secp256k1_frobenius_trace`, `secp256k1_four_p_eq_trace_sq`",
       "declared_files": [
@@ -2084,7 +2141,7 @@
       ]
     },
     {
-      "id": "ledger-075",
+      "id": "ledger-076",
       "claim": "secp256k1 `b₂ = 0` (Weierstrass invariant)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_b₂`",
       "declared_files": [
@@ -2104,7 +2161,7 @@
       ]
     },
     {
-      "id": "ledger-076",
+      "id": "ledger-077",
       "claim": "secp256k1 `b₄ = 0` (Weierstrass invariant)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_b₄`",
       "declared_files": [
@@ -2124,7 +2181,7 @@
       ]
     },
     {
-      "id": "ledger-077",
+      "id": "ledger-078",
       "claim": "secp256k1 `b₆ = 28` (Weierstrass invariant)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_b₆`",
       "declared_files": [
@@ -2144,7 +2201,7 @@
       ]
     },
     {
-      "id": "ledger-078",
+      "id": "ledger-079",
       "claim": "secp256k1 `b₈ = 0` (Weierstrass invariant)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_b₈`",
       "declared_files": [
@@ -2164,7 +2221,7 @@
       ]
     },
     {
-      "id": "ledger-079",
+      "id": "ledger-080",
       "claim": "secp256k1 2-division polynomial `Ψ₂Sq = 4X³+28` (Mathlib torsion bridge; 2-torsion `x`-coords)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Ψ₂Sq`",
       "declared_files": [
@@ -2184,7 +2241,7 @@
       ]
     },
     {
-      "id": "ledger-080",
+      "id": "ledger-081",
       "claim": "secp256k1 3-division polynomial `Ψ₃ = 3X⁴+84X` (3-torsion `E[3]`; the CM-by-ℤ[ζ₃] / GLV structure)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Ψ₃`",
       "declared_files": [
@@ -2204,7 +2261,7 @@
       ]
     },
     {
-      "id": "ledger-081",
+      "id": "ledger-082",
       "claim": "2-torsion `x`-coordinate ⇒ root of `Ψ₂Sq` (division-polynomial↔torsion, rung 4 forward)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Ψ₂Sq_root_of_two_torsion`",
       "declared_files": [
@@ -2224,7 +2281,7 @@
       ]
     },
     {
-      "id": "ledger-082",
+      "id": "ledger-083",
       "claim": "collision equation `a+xb ≡ c+xd (mod n)` (rho/BSGS solve step)",
       "theorem_cell": "`Ecdlp.GenericGroup.collision_modEq`",
       "declared_files": [
@@ -2244,7 +2301,7 @@
       ]
     },
     {
-      "id": "ledger-083",
+      "id": "ledger-084",
       "claim": "collision equation, `ZMod` subtractive form `(a−c)=x(d−b)",
       "theorem_cell": "`Ecdlp.GenericGroup.collision_zmod`",
       "declared_files": [
@@ -2264,7 +2321,7 @@
       ]
     },
     {
-      "id": "ledger-084",
+      "id": "ledger-085",
       "claim": "discrete-log recovery `x=(a−c)(d−b)⁻¹` (collision solve, `d−b` a unit)",
       "theorem_cell": "`Ecdlp.GenericGroup.collision_recovers_log`",
       "declared_files": [
@@ -2284,7 +2341,7 @@
       ]
     },
     {
-      "id": "ledger-085",
+      "id": "ledger-086",
       "claim": "discrete log well-defined mod `n` (`g^x=g^y ⇒ x≡y`)",
       "theorem_cell": "`Ecdlp.GenericGroup.dlog_unique`",
       "declared_files": [
@@ -2304,7 +2361,7 @@
       ]
     },
     {
-      "id": "ledger-086",
+      "id": "ledger-087",
       "claim": "deg Ψ₂Sq = 3` (2-torsion count: `#E[2] ≤ 4`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Ψ₂Sq_natDegree`",
       "declared_files": [
@@ -2324,7 +2381,7 @@
       ]
     },
     {
-      "id": "ledger-087",
+      "id": "ledger-088",
       "claim": "≤ 3 two-torsion `x`-coordinates (`#roots Ψ₂Sq ≤ 3`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_two_torsion_x_card_le`",
       "declared_files": [
@@ -2344,7 +2401,7 @@
       ]
     },
     {
-      "id": "ledger-088",
+      "id": "ledger-089",
       "claim": "Ψ₂Sq ≠ 0` (2-torsion is a proper finite set)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Ψ₂Sq_ne_zero`",
       "declared_files": [
@@ -2364,7 +2421,7 @@
       ]
     },
     {
-      "id": "ledger-089",
+      "id": "ledger-090",
       "claim": "deg Ψ₃ = 4` (3-torsion count `#E[3] ≤ 9`; GLV-relevant CM torsion)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Ψ₃_natDegree`",
       "declared_files": [
@@ -2384,7 +2441,7 @@
       ]
     },
     {
-      "id": "ledger-090",
+      "id": "ledger-091",
       "claim": "batch Schnorr verification (per-signature challenges `(∑sᵢ)G=∑Rᵢ+∑cᵢPᵢ`)",
       "theorem_cell": "`Ecdlp.Schnorr.schnorr_batch_verify`",
       "declared_files": [
@@ -2404,7 +2461,7 @@
       ]
     },
     {
-      "id": "ledger-091",
+      "id": "ledger-092",
       "claim": "ElGamal ciphertext re-randomization (mixnet unlinkability)",
       "theorem_cell": "`Ecdlp.Schnorr.elgamal_rerandomize_decrypt`",
       "declared_files": [
@@ -2424,7 +2481,7 @@
       ]
     },
     {
-      "id": "ledger-092",
+      "id": "ledger-093",
       "claim": "ElGamal additive homomorphism (e-voting homomorphic tally)",
       "theorem_cell": "`Ecdlp.Schnorr.elgamal_additively_homomorphic`",
       "declared_files": [
@@ -2444,7 +2501,7 @@
       ]
     },
     {
-      "id": "ledger-093",
+      "id": "ledger-094",
       "claim": "vector Pedersen commitment homomorphism (Bulletproofs / confidential tx)",
       "theorem_cell": "`Ecdlp.Schnorr.pedersen_vector_homomorphic`",
       "declared_files": [
@@ -2464,7 +2521,7 @@
       ]
     },
     {
-      "id": "ledger-094",
+      "id": "ledger-095",
       "claim": "adaptor signature completeness (atomic swaps / Lightning PTLC)",
       "theorem_cell": "`Ecdlp.Schnorr.adaptor_complete`",
       "declared_files": [
@@ -2484,7 +2541,7 @@
       ]
     },
     {
-      "id": "ledger-095",
+      "id": "ledger-096",
       "claim": "Taproot key-tweak verification (BIP-341 key-path spend, `Q=P+t·G`)",
       "theorem_cell": "`Ecdlp.Schnorr.taproot_tweak_verify`",
       "declared_files": [
@@ -2504,7 +2561,7 @@
       ]
     },
     {
-      "id": "ledger-096",
+      "id": "ledger-097",
       "claim": "E[n]` = points of order dividing `n` (`P∈E[n] ⟺ ord P ∣ n`)",
       "theorem_cell": "`Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd`",
       "declared_files": [
@@ -2524,7 +2581,7 @@
       ]
     },
     {
-      "id": "ledger-097",
+      "id": "ledger-098",
       "claim": "torsion filtration (`E[m] ≤ E[n]` when `m ∣ n`)",
       "theorem_cell": "`Ecdlp.Torsion.torsionBy_dvd_le`",
       "declared_files": [
@@ -2544,7 +2601,7 @@
       ]
     },
     {
-      "id": "ledger-098",
+      "id": "ledger-099",
       "claim": "a `ZMod n`-module is killed by `n` (`n • x = 0`)",
       "theorem_cell": "`Ecdlp.Torsion.zmod_module_nsmul_eq_zero`",
       "declared_files": [
@@ -2564,7 +2621,7 @@
       ]
     },
     {
-      "id": "ledger-099",
+      "id": "ledger-100",
       "claim": "the DL group is its own `n`-torsion (`G[n] = ⊤`; cofactor-1 shape)",
       "theorem_cell": "`Ecdlp.Torsion.torsionBy_eq_top`",
       "declared_files": [
@@ -2584,7 +2641,7 @@
       ]
     },
     {
-      "id": "ledger-100",
+      "id": "ledger-101",
       "claim": "E[n] = ker[n]` (torsion = kernel of the multiplication-by-`n` endomorphism)",
       "theorem_cell": "`Ecdlp.Torsion.torsionBy_eq_ker_nsmul`",
       "declared_files": [
@@ -2604,7 +2661,7 @@
       ]
     },
     {
-      "id": "ledger-101",
+      "id": "ledger-102",
       "claim": "⟨G⟩ ⊆ E[n]` (base-point subgroup lies in the `n`-torsion when `ord G ∣ n`)",
       "theorem_cell": "`Ecdlp.Torsion.zmultiples_le_torsionBy`",
       "declared_files": [
@@ -2624,7 +2681,7 @@
       ]
     },
     {
-      "id": "ledger-102",
+      "id": "ledger-103",
       "claim": "secp256k1 `E[n]` = points of order dividing `n` (curve-named)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_mem_torsionBy_iff_addOrderOf_dvd`",
       "declared_files": [
@@ -2644,7 +2701,7 @@
       ]
     },
     {
-      "id": "ledger-103",
+      "id": "ledger-104",
       "claim": "secp256k1 `E[n] = ker[n]` (torsion = kernel of `[n]` on the curve group)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_torsionBy_eq_ker_nsmul`",
       "declared_files": [
@@ -2664,7 +2721,7 @@
       ]
     },
     {
-      "id": "ledger-104",
+      "id": "ledger-105",
       "claim": "secp256k1 base point `G ≠ O` (SEC2 generator as a non-zero curve point)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_G_ne_zero`",
       "declared_files": [
@@ -2684,7 +2741,7 @@
       ]
     },
     {
-      "id": "ledger-105",
+      "id": "ledger-106",
       "claim": "Ψ₃ ≠ 0` (3-torsion is a proper finite set)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Ψ₃_ne_zero`",
       "declared_files": [
@@ -2704,7 +2761,7 @@
       ]
     },
     {
-      "id": "ledger-106",
+      "id": "ledger-107",
       "claim": "≤ 4 three-torsion `x`-coordinates (`#E[3] ≤ 9`; GLV/CM torsion)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_three_torsion_x_card_le`",
       "declared_files": [
@@ -2724,7 +2781,7 @@
       ]
     },
     {
-      "id": "ledger-107",
+      "id": "ledger-108",
       "claim": "secp256k1 `c₆ = -6048` (Weierstrass `c₆` invariant)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_c₆`",
       "declared_files": [
@@ -2744,7 +2801,7 @@
       ]
     },
     {
-      "id": "ledger-108",
+      "id": "ledger-109",
       "claim": "secp256k1 `c₆ ≠ 0` (`-6048 ≢ 0 mod p`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_c₆_ne_zero`",
       "declared_files": [
@@ -2764,7 +2821,7 @@
       ]
     },
     {
-      "id": "ledger-109",
+      "id": "ledger-110",
       "claim": "discriminant identity `1728·Δ = -c₆²` (since `c₄ = 0`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_c_relation`",
       "declared_files": [
@@ -2784,7 +2841,7 @@
       ]
     },
     {
-      "id": "ledger-110",
+      "id": "ledger-111",
       "claim": "secp256k1 torsion filtration (`E[m] ≤ E[n]` when `m ∣ n`, curve-named)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_torsionBy_dvd_le`",
       "declared_files": [
@@ -2804,7 +2861,7 @@
       ]
     },
     {
-      "id": "ledger-111",
+      "id": "ledger-112",
       "claim": "secp256k1 `⟨P⟩ ⊆ E[n]` (finite-order point's subgroup is `n`-torsion)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_zmultiples_le_torsionBy`",
       "declared_files": [
@@ -2824,7 +2881,7 @@
       ]
     },
     {
-      "id": "ledger-112",
+      "id": "ledger-113",
       "claim": "preΨ₄ = 2X⁶ + 280X³ − 784` (secp256k1 4-division polynomial auxiliary)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₄`",
       "declared_files": [
@@ -2844,7 +2901,7 @@
       ]
     },
     {
-      "id": "ledger-113",
+      "id": "ledger-114",
       "claim": "deg preΨ₄ = 6` (4-torsion bound up the tower)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₄_natDegree`",
       "declared_files": [
@@ -2864,7 +2921,7 @@
       ]
     },
     {
-      "id": "ledger-114",
+      "id": "ledger-115",
       "claim": "preΨ₄ ≠ 0` (proper finite root set)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₄_ne_zero`",
       "declared_files": [
@@ -2884,7 +2941,7 @@
       ]
     },
     {
-      "id": "ledger-115",
+      "id": "ledger-116",
       "claim": "anomalous ⟺ trace one (`#E=p ⟺ a_p=1`; Smart/SSSA scope) ³",
       "theorem_cell": "`Ecdlp.Curve.anomalous_iff_trace_one`",
       "declared_files": [
@@ -2904,7 +2961,7 @@
       ]
     },
     {
-      "id": "ledger-116",
+      "id": "ledger-117",
       "claim": "GLV endomorphism preserves the curve (`(x,y)↦(βx,y)` keeps `Y²=X³+7`, via `β³=1`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glv_preserves_equation`",
       "declared_files": [
@@ -2924,7 +2981,7 @@
       ]
     },
     {
-      "id": "ledger-117",
+      "id": "ledger-118",
       "claim": "GLV endomorphism preserves nonsingularity (smooth `(x,y)` ↦ smooth `(βx,y)`; `β` a unit)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glv_preserves_nonsingular`",
       "declared_files": [
@@ -2944,7 +3001,7 @@
       ]
     },
     {
-      "id": "ledger-118",
+      "id": "ledger-119",
       "claim": "GLV slope scaling, secant branch (`x₁≠x₂`: `slope(βx₁,βx₂)=β²·slope`, via `β⁻¹=β²`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glv_slope_of_X_ne`",
       "declared_files": [
@@ -2964,7 +3021,7 @@
       ]
     },
     {
-      "id": "ledger-119",
+      "id": "ledger-120",
       "claim": "GLV slope scaling, tangent branch (doubling `x₁=x₂`: `3(βx)²/(2y)=β²·slope`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glv_slope_of_Y_ne`",
       "declared_files": [
@@ -2984,7 +3041,7 @@
       ]
     },
     {
-      "id": "ledger-120",
+      "id": "ledger-121",
       "claim": "GLV slope scaling, all branches (unconditional: GLV scales the addition slope by exactly `β²`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glv_slope`",
       "declared_files": [
@@ -3004,7 +3061,7 @@
       ]
     },
     {
-      "id": "ledger-121",
+      "id": "ledger-122",
       "claim": "GLV β-equivariance of `addX` (`addX(βx₁,βx₂,β²ℓ)=β·addX`; new `X`-coord scales by `β`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glv_addX`",
       "declared_files": [
@@ -3024,7 +3081,7 @@
       ]
     },
     {
-      "id": "ledger-122",
+      "id": "ledger-123",
       "claim": "GLV β-equivariance of `addY` (`addY(βx₁,βx₂,y₁,β²ℓ)=addY`; `Y`-coord unchanged)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glv_addY`",
       "declared_files": [
@@ -3044,7 +3101,7 @@
       ]
     },
     {
-      "id": "ledger-123",
+      "id": "ledger-124",
       "claim": "GLV map is an additive endomorphism (`glvPoint(P+Q)=glvPoint P+glvPoint Q`, all branches; homomorphism half only — the `glvPoint=[λ]` eigenvalue property is not proved)",
       "theorem_cell": "`Ecdlp.Curve.glvPoint_add`",
       "declared_files": [
@@ -3064,7 +3121,7 @@
       ]
     },
     {
-      "id": "ledger-124",
+      "id": "ledger-125",
       "claim": "GLV endomorphism bundled as `AddMonoidHom` (`glvHom : Point →+ Point`; *supporting* — repackages `glvPoint_add`, no new content)",
       "theorem_cell": "`Ecdlp.Curve.glvHom`",
       "declared_files": [
@@ -3084,7 +3141,7 @@
       ]
     },
     {
-      "id": "ledger-125",
+      "id": "ledger-126",
       "claim": "GLV endomorphism is a primitive cube root of unity (`φ²+φ+1=0`: `glvPoint²(P)+glvPoint(P)+P=0` for all `P`; the CM / `End(E)` structure behind GLV — reached with no `λ`, no point-counting)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glv_cube_relation`",
       "declared_files": [
@@ -3104,7 +3161,7 @@
       ]
     },
     {
-      "id": "ledger-126",
+      "id": "ledger-127",
       "claim": "GLV covariance law of the division polynomials (`ψ_m(βx) = β^((m²−1)/2)·ψ_m(x)`: for `j=0` each `ψ_m` sits on one exponent-residue mod 3, so `β` acts by a scalar — `Ψ₃(βx)=β·Ψ₃(x)` (`secp256k1_Ψ₃_eval_glv`), and `preΨ' 5`, `preΨ' 7`, `Ψ₂Sq` are `β`-invariant (`secp256k1_{preΨ₅,preΨ₇,Ψ₂Sq}_eval_glv_invariant`), from the explicit forms + `β³=1`. Explains the failed experiment #100: `Res(preΨ' 5(X), preΨ' 5(βX)) = Res(preΨ' 5, preΨ' 5) = 0` identically because `preΨ' 5` is `β`-invariant — the split/inert resultant test was ill-posed, not a signal. The residual is closed by a kernel-only `linear_combination`, but the underlying cube fact `β³=1` lifts `Secp256k1.beta_field_eigenvalue` (`native_decide`), so these results inherit `Lean.ofReduceBool` — compiler-trusted, not kernel-only)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Ψ₃_eval_glv`, `secp256k1_preΨ₅_eval_glv_invariant`, `secp256k1_preΨ₇_eval_glv_invariant`, `secp256k1_Ψ₂Sq_eval_glv_invariant`",
       "declared_files": [
@@ -3148,7 +3205,7 @@
       ]
     },
     {
-      "id": "ledger-127",
+      "id": "ledger-128",
       "claim": "GLV automorphism orbit structure (orbits of `glvPoint` have size ≤ 3; away from the `x=0` fixed locus exactly 3: `secp256k1_glvPoint_orbit_closed` — `{P, φP, φ²P}` is `φ`-closed (cycling via the existing `glvPoint_cube_eq_id`, `φ³=id`); `secp256k1_glvPoint_orbit_three_distinct` — the three are pairwise distinct for `x≠0`. The group root of the measured `~3×` GLV factor-base constant (P0–P4): orbit size ≤3 ⇒ at most a 3× compression, a constant, never an exponent change — not an ECDLP advantage. Compiler-trusted: the orbit facts lift `Secp256k1.beta_field_eigenvalue` (`native_decide`), so they inherit `Lean.ofReduceBool`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glvPoint_orbit_closed`, `secp256k1_glvPoint_orbit_three_distinct`",
       "declared_files": [
@@ -3176,7 +3233,7 @@
       ]
     },
     {
-      "id": "ledger-128",
+      "id": "ledger-129",
       "claim": "GLV endomorphism preserves `n`-torsion (`glvPoint` maps `E[n]→E[n]`; restricts to an endomorphism of the torsion, still `φ²+φ+1=0` there — the scene where `[λ]` lives)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glv_preserves_torsion`",
       "declared_files": [
@@ -3196,7 +3253,7 @@
       ]
     },
     {
-      "id": "ledger-129",
+      "id": "ledger-130",
       "claim": "GLV endomorphism satisfies its minimal polynomial in `End(E)` (operator form: `glvHom∘glvHom+glvHom+id=0` as `AddMonoidHom`s — `φ²+φ+1=0` in the endomorphism ring, composable with Mathlib's hom API; *alternate/operator form* of `secp256k1_glv_cube_relation`)",
       "theorem_cell": "`Ecdlp.Curve.glvHom_minpoly`",
       "declared_files": [
@@ -3216,7 +3273,7 @@
       ]
     },
     {
-      "id": "ledger-130",
+      "id": "ledger-131",
       "claim": "GLV endomorphism has order dividing 3 (`glvPoint³=id`: iterating `(x,y)↦(βx,y)` scales `x` by `β³=1`; the CM automorphism is order-3)",
       "theorem_cell": "`Ecdlp.Curve.glvPoint_cube_eq_id`",
       "declared_files": [
@@ -3236,7 +3293,7 @@
       ]
     },
     {
-      "id": "ledger-131",
+      "id": "ledger-132",
       "claim": "GLV endomorphism is an automorphism (`glvPoint` is bijective — `glvPoint²` is its two-sided inverse, from `glvPoint³=id`)",
       "theorem_cell": "`Ecdlp.Curve.glvPoint_bijective`",
       "declared_files": [
@@ -3256,7 +3313,7 @@
       ]
     },
     {
-      "id": "ledger-132",
+      "id": "ledger-133",
       "claim": "secp256k1 5-division polynomial has degree 12 (`deg(ψ₅=preΨ' 5)=(5²−1)/2=12`; instantiates Mathlib's general `natDegree_preΨ'` at `n=5`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₅_natDegree`",
       "declared_files": [
@@ -3276,7 +3333,7 @@
       ]
     },
     {
-      "id": "ledger-133",
+      "id": "ledger-134",
       "claim": "5-division polynomial is nonzero (deg 12 ⇒ `ψ₅≠0`; 5-torsion `x`-coords are a proper finite set)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₅_ne_zero`",
       "declared_files": [
@@ -3296,7 +3353,7 @@
       ]
     },
     {
-      "id": "ledger-134",
+      "id": "ledger-135",
       "claim": "≤ 12 five-torsion `x`-coordinates (`#E[5]≤25`; roots of the odd division polynomial `ψ₅` are the order-5 `x`-coords, consistent with `E[5]≅(ℤ/5)²`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_five_torsion_x_card_le`",
       "declared_files": [
@@ -3316,7 +3373,7 @@
       ]
     },
     {
-      "id": "ledger-135",
+      "id": "ledger-136",
       "claim": "deg(ψₙ)=(n²−1)/2` for all odd `n` coprime to `p` (uniform division-polynomial degree; generalizes the `Ψ₃`/`ψ₅` per-level facts via Mathlib's `natDegree_preΨ'`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_odd_preΨ_natDegree`",
       "declared_files": [
@@ -3336,7 +3393,7 @@
       ]
     },
     {
-      "id": "ledger-136",
+      "id": "ledger-137",
       "claim": "≤ `(n²−1)/2` odd-`n`-torsion `x`-coordinates (uniform `#E[n]≤n²` for every odd `n` coprime to `p`; the general statement behind the 3-/5-torsion nodes)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_odd_torsion_x_card_le`",
       "declared_files": [
@@ -3356,7 +3413,7 @@
       ]
     },
     {
-      "id": "ledger-137",
+      "id": "ledger-138",
       "claim": "point-level 2-torsion criterion `2•P=0 ⟺ y=0` (both-directions `ψ₂↔E[2]` bridge at the point level — the criterion Mathlib records only as a TODO; upgrades the forward-only `Ψ₂Sq`-root fact)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff`",
       "declared_files": [
@@ -3376,7 +3433,7 @@
       ]
     },
     {
-      "id": "ledger-138",
+      "id": "ledger-139",
       "claim": "GLV endomorphism is *not* the identity (`glvHom ≠ id`, witnessed by `β·Gx ≠ Gx` on the base point — rules out the degenerate case, so with `glvHom³=id` and `φ²+φ+1=0` the order in `Aut(E)` is *exactly* 3: `glvHom` is a primitive cube root of unity ⇒ `ℤ[ω]↪End(E)`, genuine CM)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glvHom_ne_id`",
       "declared_files": [
@@ -3396,7 +3453,7 @@
       ]
     },
     {
-      "id": "ledger-139",
+      "id": "ledger-140",
       "claim": "point-level trace-zero identity `P+λP+λ²P=0` (pointwise reading of `glvHom_minpoly`: `X²+X+1` applied to any `P` returns `O`; the three points of a `⟨λ⟩`-orbit sum to zero)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glvPoint_orbit_sum`",
       "declared_files": [
@@ -3416,7 +3473,7 @@
       ]
     },
     {
-      "id": "ledger-140",
+      "id": "ledger-141",
       "claim": "fixed locus of the GLV automorphism `φ(P)=P ⟺ x=0` (`β·x=x ⇒ (β−1)x=0 ⇒ x=0` since `β≠1`; the ramification locus of `E→E/⟨φ⟩`, pins the order-3 automorphism's action together with `glvHom≠id`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glvPoint_fixed_iff`",
       "declared_files": [
@@ -3436,7 +3493,7 @@
       ]
     },
     {
-      "id": "ledger-141",
+      "id": "ledger-142",
       "claim": "φ`-fixed points are 3-torsion `φP=P ⇒ 3•P=0` (composes the trace-zero identity with the fixed hypothesis: `φP=P` collapses `P+φP+φ²P=O` to `3P=O`; the group-law form of `ker(φ−1)⊆E[3]`, `N(ω−1)=3`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glvPoint_fixed_three_torsion`",
       "declared_files": [
@@ -3456,7 +3513,7 @@
       ]
     },
     {
-      "id": "ledger-142",
+      "id": "ledger-143",
       "claim": "secp256k1 7-division polynomial has degree 24 (`deg(ψ₇=preΨ' 7)=(7²−1)/2=24`; instantiates Mathlib's general `natDegree_preΨ'` at `n=7`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₇_natDegree`",
       "declared_files": [
@@ -3476,7 +3533,7 @@
       ]
     },
     {
-      "id": "ledger-143",
+      "id": "ledger-144",
       "claim": "7-division polynomial is nonzero (deg 24 ⇒ `ψ₇≠0`; 7-torsion `x`-coords are a proper finite set)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₇_ne_zero`",
       "declared_files": [
@@ -3496,7 +3553,7 @@
       ]
     },
     {
-      "id": "ledger-144",
+      "id": "ledger-145",
       "claim": "≤ 24 seven-torsion `x`-coordinates (`#E[7]≤49`; roots of the odd division polynomial `ψ₇` are the order-7 `x`-coords, consistent with `E[7]≅(ℤ/7)²`; the concrete `n=7` level of the uniform odd bound)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_seven_torsion_x_card_le`",
       "declared_files": [
@@ -3516,7 +3573,7 @@
       ]
     },
     {
-      "id": "ledger-145",
+      "id": "ledger-146",
       "claim": "secp256k1 11-division polynomial has degree 60 (`deg(preΨ' 11)=(11²−1)/2=60`; instantiates Mathlib's general `natDegree_preΨ'` at `n=11` — an instance of `secp256k1_odd_preΨ_natDegree`; closes the `eleven_torsion_degree` prover-loop target; polynomial layer only: no `ℓ=11` torsion bridge is formalized, so no `E[11]` claim)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₁₁_natDegree`",
       "declared_files": [
@@ -3536,7 +3593,7 @@
       ]
     },
     {
-      "id": "ledger-146",
+      "id": "ledger-147",
       "claim": "11-division polynomial is nonzero (deg 60 ⇒ `preΨ' 11 ≠ 0`; its root multiset in `𝔽_p` is well-defined and finite)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₁₁_ne_zero`",
       "declared_files": [
@@ -3556,7 +3613,7 @@
       ]
     },
     {
-      "id": "ledger-147",
+      "id": "ledger-148",
       "claim": "preΨ' 11` has ≤ 60 roots in `𝔽_p` (degree-60 polynomial ⇒ ≤ 60 roots with multiplicity; instance of the uniform odd root bound at `n=11`; polynomial layer only — the root ↔ 11-torsion correspondence is *not* formalized (unlike `ℓ∈{2,3,5,7}`), so this carries no `#E[11]` statement; classical expectation `E[11]≅(ℤ/11)²` is unproved motivation)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₁₁_roots_card_le`",
       "declared_files": [
@@ -3576,7 +3633,7 @@
       ]
     },
     {
-      "id": "ledger-148",
+      "id": "ledger-149",
       "claim": "secp256k1 13-division polynomial has degree 84 (`deg(preΨ' 13)=(13²−1)/2=84`; instantiates Mathlib's general `natDegree_preΨ'` at `n=13` — an instance of `secp256k1_odd_preΨ_natDegree`; closes the `thirteen_torsion_degree` prover-loop target; polynomial layer only: no `ℓ=13` torsion bridge is formalized, so no `E[13]` claim)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₁₃_natDegree`",
       "declared_files": [
@@ -3596,7 +3653,7 @@
       ]
     },
     {
-      "id": "ledger-149",
+      "id": "ledger-150",
       "claim": "Compressed division polynomials — cube-covariance structural core + `m∈{3,5,7}` forms (`cube_covariant_support`/`exists_comp_X_pow_of_invariant`/`exists_X_mul_comp_of_covariant`: over any field with a primitive cube root `β`, `p(βX)=c·p(X)` forces every support exponent `k` to satisfy `β^k=c`, hence `c=1 ⇒ p∈F[X³]` and `c=β ⇒ p∈X·F[X³]` with the matching `deg` drop — the foundation-free structural heart. Applied unconditionally to secp256k1's concrete forms: `Ψ₃=X·R₃(X³)` (`deg R₃=1`), `preΨ₅=R₅(X³)` (`deg R₅=4`), `preΨ₇=R₇(X³)` (`deg R₇=8`), plus the new bare degree `deg preΨ₉=40`. For `m∈{9,11,13}` the compressed form is stated conditional on the polynomial-level `β`-covariance of `ψ_m` (`preΨ'_compressed_of_{invariant,covariant}`) — the isolated missing lemma (repo has only the `eval`-level covariance, `m∈{3,5,7}`). Concrete forms inherit `Lean.ofReduceBool` from `native_decide` degree facts; the structural core does not. Drafted with the Kimi K3 proof-drafter, kernel-verified in CI)",
       "theorem_cell": "`Ecdlp.Curve.cube_covariant_support`, `exists_comp_X_pow_of_invariant`, `exists_X_mul_comp_of_covariant`, `secp256k1_Ψ₃_compressed`, `secp256k1_preΨ₅_compressed`, `secp256k1_preΨ₇_compressed`, `secp256k1_preΨ₉_natDegree`",
       "declared_files": [
@@ -3664,7 +3721,7 @@
       ]
     },
     {
-      "id": "ledger-150",
+      "id": "ledger-151",
       "claim": "13-division polynomial is nonzero (deg 84 ⇒ `preΨ' 13 ≠ 0`; its root multiset in `𝔽_p` is well-defined and finite)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₁₃_ne_zero`",
       "declared_files": [
@@ -3684,7 +3741,7 @@
       ]
     },
     {
-      "id": "ledger-151",
+      "id": "ledger-152",
       "claim": "preΨ' 13` has ≤ 84 roots in `𝔽_p` (degree-84 polynomial ⇒ ≤ 84 roots with multiplicity; instance of the uniform odd root bound at `n=13`; polynomial layer only — the root ↔ 13-torsion correspondence is *not* formalized (unlike `ℓ∈{2,3,5,7}`), so this carries no `#E[13]` statement; classical expectation `E[13]≅(ℤ/13)²` is unproved motivation)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_preΨ₁₃_roots_card_le`",
       "declared_files": [
@@ -3704,7 +3761,7 @@
       ]
     },
     {
-      "id": "ledger-152",
+      "id": "ledger-153",
       "claim": "GLV eigenvalue property `φ=[k]`, conditional on cyclicity (if `E(𝔽_p)` is cyclic then `glvHom` is multiplication by a fixed `k:ℤ` with `(k²+k+1)•P=0` for all `P` — the geometric `β`-action *is* scalar `[λ]`; a genuine reduction isolating the one deep missing input, point-counting `#E=n`, as the explicit `[IsAddCyclic]` hypothesis)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glvHom_eq_zsmul`",
       "declared_files": [
@@ -3724,7 +3781,7 @@
       ]
     },
     {
-      "id": "ledger-153",
+      "id": "ledger-154",
       "claim": "GLV/CM endomorphism preserves the discrete log (no-go) (`secp256k1_glv_preserves_dlog`: for every scalar `m:ℤ` and points with `Q = m•P`, `glvHom Q = m•glvHom P` — mapping a DLP instance `(P,Q)` through the GLV endomorphism gives another instance with the same secret `m`. The endomorphism is a DLP self-reduction that is the identity on the exponent, so *this reduction* cannot shrink it: the formal core of the believed \"CM-by-`ℤ[ζ₃]` gives no asymptotic advantage against ECDLP\" — a scoped, not universal, no-go (it does not rule out some unknown faster algorithm using `ℤ[ζ₃]`; it proves *this* map is exponent-preserving). The order-3 automorphism buys only a constant factor (~√3 rho, ~2× scalar-mult). Unconditional as an identity on the exponent)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glv_preserves_dlog`",
       "declared_files": [
@@ -3744,7 +3801,7 @@
       ]
     },
     {
-      "id": "ledger-154",
+      "id": "ledger-155",
       "claim": "GLV structure is one scalar on base and target (no-go, cond. cyclicity) (`secp256k1_glv_single_scalar`: under cyclicity, on a DLP instance `Q = m•P` the endomorphism satisfies `glvHom P = k•P` and `glvHom Q = k•Q` for the one eigenvalue `k` with `k²+k+1≡0` — it multiplies base and target by the *same* `k`, leaving `m` invariant. The entire CM \"extra structure\" is this single known relation; no new unknown, no new equation on `m`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glv_single_scalar`",
       "declared_files": [
@@ -3764,7 +3821,7 @@
       ]
     },
     {
-      "id": "ledger-155",
+      "id": "ledger-156",
       "claim": "NIST P-256 is a genuine elliptic curve (`P256_Δ_ne_zero` + `IsElliptic` instance: `y²=x³−3x+b` over `𝔽_p`, `p=2²⁵⁶−2²²⁴+2¹⁹²+2⁹⁶−1`, discriminant a unit — demonstrates the secp256k1 Mathlib grounding is curve-agnostic, same machinery gives P-256 the formalized group law, under the published `[Fact p.Prime]`)",
       "theorem_cell": "`Ecdlp.P256.P256_Δ_ne_zero` (+ `instance : P256.IsElliptic`)",
       "declared_files": [
@@ -3782,7 +3839,7 @@
           "line": 54
         },
         {
-          "ledger_id": "ledger-155",
+          "ledger_id": "ledger-156",
           "cited": "P256.IsElliptic",
           "resolution": "anonymous-instance-target",
           "namespace": "Ecdlp.P256",
@@ -3793,7 +3850,7 @@
       ]
     },
     {
-      "id": "ledger-156",
+      "id": "ledger-157",
       "claim": "P-256 base point on curve; constants validated (`P256_generator_equation`: the standard generator `G=(Gx,Gy)` satisfies P-256's equation in `𝔽_p` — one `native_decide` simultaneously validates `p`, `b`, `Gx`, `Gy`; a genuine rational point of the Mathlib curve)",
       "theorem_cell": "`Ecdlp.P256.P256_generator_equation`",
       "declared_files": [
@@ -3813,7 +3870,7 @@
       ]
     },
     {
-      "id": "ledger-157",
+      "id": "ledger-158",
       "claim": "P-256 has `c₄ ≠ 0`, hence `j ≠ 0` — no CM/GLV (structural contrast) (`P256_c₄_ne_zero`: `c₄=144≠0`, so unlike secp256k1 (`c₄=0`, `j=0`) P-256 has no complex multiplication by `ℤ[ζ₃]` and no GLV endomorphism. Makes concrete that secp256k1's `j=0`/CM structure is a *special* feature, not generic)",
       "theorem_cell": "`Ecdlp.P256.P256_c₄_ne_zero`",
       "declared_files": [
@@ -3833,7 +3890,7 @@
       ]
     },
     {
-      "id": "ledger-158",
+      "id": "ledger-159",
       "claim": "NIST P-256 field prime `p` is prime (Pratt certificate) (`p256_p_prime`: full recursive Pratt / `lucas_primality` certificate for `p = 2²⁵⁶−2²²⁴+2¹⁹²+2⁹⁶−1`, 9 recursive nodes, witness `a=6`. Discharges the `[Fact p.Prime]` hypothesis, so P-256's `IsElliptic` instance and Mathlib group law become unconditional — exactly as for secp256k1. The second curve's primality via the *same* generator `scripts/pratt_certificate.py`, the honest cross-domain proof that the machinery is curve-agnostic)",
       "theorem_cell": "`Ecdlp.P256.Primality.p256_p_prime` (+ `instance : Fact (Nat.Prime Ecdlp.P256.p)`)",
       "declared_files": [
@@ -3851,7 +3908,7 @@
           "line": 181
         },
         {
-          "ledger_id": "ledger-158",
+          "ledger_id": "ledger-159",
           "cited": "Fact (Nat.Prime Ecdlp.P256.p)",
           "resolution": "anonymous-instance-target",
           "namespace": "Ecdlp.P256.Primality",
@@ -3862,7 +3919,7 @@
       ]
     },
     {
-      "id": "ledger-159",
+      "id": "ledger-160",
       "claim": "NIST P-256 group order `n` is prime (Pratt certificate) (`p256_n_prime`: full recursive Pratt / `lucas_primality` certificate for the base-point order `n`, 10 recursive nodes, witness `a=7`. Gives `[Fact n.Prime]` for P-256, the foundation for its prime-order group structure — the analogue of secp256k1's `Secp256k1PrimeN`. Both P-256 primes (`p`, `n`) now proved by the same curve-agnostic generator)",
       "theorem_cell": "`Ecdlp.P256.Primality.p256_n_prime` (+ `instance : Fact (Nat.Prime Ecdlp.P256.n)`)",
       "declared_files": [
@@ -3880,7 +3937,7 @@
           "line": 190
         },
         {
-          "ledger_id": "ledger-159",
+          "ledger_id": "ledger-160",
           "cited": "Fact (Nat.Prime Ecdlp.P256.n)",
           "resolution": "anonymous-instance-target",
           "namespace": "Ecdlp.P256.Primality",
@@ -3891,7 +3948,7 @@
       ]
     },
     {
-      "id": "ledger-160",
+      "id": "ledger-161",
       "claim": "NIST P-256 has no small embedding degree (MOV/Frey–Rück resistance) (`p256_embedding_degree_gt_100`: for every `1 ≤ k ≤ 100`, `p^k ≢ 1 (mod n)`, so P-256's embedding degree exceeds 100 — the MOV/FR pairing transfer would need an intractable `𝔽_{p^k}`, `k>100`. The second live domain's first attack-boundary rung, mirroring secp256k1's `EmbeddingDegree.lean`; pure modular arithmetic on the verified primes `p`, `n`)",
       "theorem_cell": "`Ecdlp.P256.p256_embedding_degree_gt_100`",
       "declared_files": [
@@ -3911,7 +3968,7 @@
       ]
     },
     {
-      "id": "ledger-161",
+      "id": "ledger-162",
       "claim": "NIST P-256 is ordinary, non-anomalous, Hasse-consistent (Smart/SSSA boundary) (`p256_trace_ordinary_nonanomalous`: with `#E=n`, the trace `t=p+1−n` satisfies `t≠0` (not supersingular), `t≠1` (not anomalous — Smart/SSSA inapplicable), `t²≤4p` (Hasse; `t` is 127-bit, cofactor 1). The second live domain's SSSA boundary rung, mirroring secp256k1's `TraceOfFrobenius.lean`; conditional on the published `#E=n` as for secp256k1)",
       "theorem_cell": "`Ecdlp.P256.p256_trace_ordinary_nonanomalous`",
       "declared_files": [
@@ -3931,7 +3988,7 @@
       ]
     },
     {
-      "id": "ledger-162",
+      "id": "ledger-163",
       "claim": "NIST P-256 base point has exact order `n` (weak point-counting keystone) (`p256_generator_addOrderOf`: the SEC 2 generator `G=(Gx,Gy)` in Mathlib's point group has `addOrderOf G = n`, so `⟨G⟩` is cyclic of order `n` — the crypto subgroup pinned WITHOUT computing `#E(𝔽_p)` (no Hasse/Schoof). Proof: `n•G=0` (native double-and-add over 𝔽_p) + `G≠0`, `n` prime ⇒ `addOrderOf_eq_prime`. Mirrors secp256k1's `GeneratorOrder.lean`; server-verified on the warm Lean toolchain then CI. Does NOT give the strong keystone `#E=n`)",
       "theorem_cell": "`Ecdlp.P256.p256_generator_addOrderOf` (+ `p256_generator_nonsingular`, `p256_generator_nsmul_n_eq_zero`)",
       "declared_files": [
@@ -3967,7 +4024,7 @@
       ]
     },
     {
-      "id": "ledger-163",
+      "id": "ledger-164",
       "claim": "P-256 rational-point group is finite (`instFiniteP256Point`: `Finite P256.toAffine.Point`, now a one-line `inferInstance` corollary of the general `WeierstrassCurve.Affine.instFinitePoint` since `ZMod p` is a finite commutative ring. Makes Mathlib's `Nat.card E.toAffine.Point` a real quantity for P-256 rather than junk `0`. Pure-kernel, no native_decide)",
       "theorem_cell": "`Ecdlp.P256.instFiniteP256Point`",
       "declared_files": [
@@ -3987,7 +4044,7 @@
       ]
     },
     {
-      "id": "ledger-164",
+      "id": "ledger-165",
       "claim": "n ∣ #E(𝔽_p)` for P-256 — base-point order divides the curve cardinality (`p256_n_dvd_card_point`: `P256.n ∣ Nat.card P256.toAffine.Point`, by Lagrange on `⟨G⟩` (order the proved `n`) + finiteness. The first verified fact about P-256's `#E` itself — all prior P-256 point-counting stayed inside `⟨G⟩`. Weak keystone: pins `#E ∈ {n, 2n, 3n, …}`. The strong keystone `#E = n` is NOT proved for P-256: the secp256k1 `j=0` / `−7`-non-cube 2-torsion route is `j=0`-specific and does not transfer (P-256 has `c₄=144≠0`, `j≠0`), and the general Hasse bound is a Mathlib gap. Pure-kernel)",
       "theorem_cell": "`Ecdlp.P256.p256_n_dvd_card_point` (+ `p256_grp_card`)",
       "declared_files": [
@@ -4015,7 +4072,7 @@
       ]
     },
     {
-      "id": "ledger-165",
+      "id": "ledger-166",
       "claim": "NIST P-256 quadratic-twist security certificate — cross-curve companion of the secp256k1 twist limitation (`p256_twist_security_profile`: the number `2p+2−n` factors exactly as `3·5·13·179·Q` with `Q` a 241-bit prime (`p256_twist_maxprime_prime`, full Pratt certificate; `p256_twist_order_factorization`). Honest scope: interpreting `2p+2−n` as the twist order `#Ẽ = p+1+t` rests on `#E = n`, which for P-256 is NOT in-repo (only `n ∣ #E` is proved; parked on Hasse) — the theorems themselves are unconditional arithmetic about the literal number. Consequences: (1) cofactor `3·5·13·179 = 34905 ≈ 2¹⁵ > 1` — the twist has small-order subgroups; (2) `2²⁴⁰ < Q < 2²⁴¹`, so generic twist-DLP `≈ √Q ≈ 2¹²⁰ < 2¹²⁸` — the machine-checked form of the publicly tabulated ~2^120.3 P-256 twist-security figure. Cross-curve: secp256k1's twist (`2¹¹⁰`, cofactor `2³⁷`) is weaker than P-256's (`2¹²⁰`, cofactor `2¹⁵`); point validation mandatory for `x`-only code on both. Inherits `Lean.ofReduceBool` from `native_decide` + Pratt)",
       "theorem_cell": "`Ecdlp.P256.p256_twist_security_profile`, `p256_twist_order_factorization`, `p256_twist_maxprime_prime`",
       "declared_files": [
@@ -4051,7 +4108,7 @@
       ]
     },
     {
-      "id": "ledger-166",
+      "id": "ledger-167",
       "claim": "Curve25519 is a genuine elliptic curve (Montgomery model) (`Curve25519_Δ_ne_zero` + `IsElliptic`: `v²=u³+486662u²+u` over `𝔽_p`, `p=2²⁵⁵−19`, discriminant a unit — a third curve, and a *different model*: the same Mathlib EC group law now covers a Montgomery-form, non-short-Weierstrass curve, under `[Fact p.Prime]`)",
       "theorem_cell": "`Ecdlp.Curve25519.Curve25519_Δ_ne_zero` (+ `instance : Curve25519.IsElliptic`)",
       "declared_files": [
@@ -4069,7 +4126,7 @@
           "line": 46
         },
         {
-          "ledger_id": "ledger-166",
+          "ledger_id": "ledger-167",
           "cited": "Curve25519.IsElliptic",
           "resolution": "anonymous-instance-target",
           "namespace": "Ecdlp.Curve25519",
@@ -4080,7 +4137,7 @@
       ]
     },
     {
-      "id": "ledger-167",
+      "id": "ledger-168",
       "claim": "Curve25519 base point on curve; constants validated (`Curve25519_generator_equation`: the RFC 7748 base point `u=9` satisfies the Montgomery equation in `𝔽_p` — one `native_decide` validating `p`, `A`, `Gu`, `Gv` together; a rational point of the Mathlib curve)",
       "theorem_cell": "`Ecdlp.Curve25519.Curve25519_generator_equation`",
       "declared_files": [
@@ -4100,7 +4157,7 @@
       ]
     },
     {
-      "id": "ledger-168",
+      "id": "ledger-169",
       "claim": "Curve25519 is Montgomery, not short Weierstrass (`Curve25519_a₂_ne_zero`: `a₂=486662≠0`, the `u²` coefficient — a structural contrast with secp256k1/P-256 (`a₂=0`); with cofactor 8 (vs. prime order), shows the formalization is tied to neither curve *shape* nor prime order)",
       "theorem_cell": "`Ecdlp.Curve25519.Curve25519_a₂_ne_zero`",
       "declared_files": [
@@ -4120,7 +4177,7 @@
       ]
     },
     {
-      "id": "ledger-169",
+      "id": "ledger-170",
       "claim": "odd torsion ∩ 2-torsion = {O} (odd `n`: a point killed by both `n` and `2` is `O`, since `addOrderOf P ∣ gcd(n,2)=1`; node N12 of the `ψₙ↔E[n]` bridge decomposition — a reachable leaf toward the deep torsion correspondence, see `notes/DIVISION_POLY_TORSION_MAP.md`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_odd_two_torsion_disjoint`",
       "declared_files": [
@@ -4140,7 +4197,7 @@
       ]
     },
     {
-      "id": "ledger-170",
+      "id": "ledger-171",
       "claim": "Kernel-structure lemma — order `n²` killed by prime `n` ⇒ `(ℤ/n)²` (a finite abelian group `A` with `∀ a, n • a = 0` and `Nat.card A = n²`, `n` prime, is additively `ZMod n × ZMod n`: killed-by-`n` gives the `𝔽_n`-vector-space structure via `AddCommGroup.zmodModule`, `n² = n^dim` pins `dim = 2`, dimension classifies. Input (iii) of node N10 of the `ψₙ↔E[n]` bridge — the group-theoretic half of `E[n] ≅ (ℤ/n)²`, stated curve-free/upstreamable; the counting half `#E[n] = n²` (N10 (i)+(ii): degree + separability) stays open, see `notes/SEPARABILITY_ROUTES.md`)",
       "theorem_cell": "`Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq`",
       "declared_files": [
@@ -4160,7 +4217,7 @@
       ]
     },
     {
-      "id": "ledger-171",
+      "id": "ledger-172",
       "claim": "Division-polynomial evaluation bridge — `ΨSq`/`Φ` at a point ↔ scalar `normEDS` (curve-generic, all `n : ℤ`: with `β² = Ψ₂Sq(x₀)` and `w k := normEDS β (Ψ₃ x₀) (preΨ₄ x₀) k`, `(preΨ n).eval x₀ = preNormEDS(β⁴)(Ψ₃ x₀)(preΨ₄ x₀) n`, `(ΨSq n).eval x₀ = w n²`, and `(Φ n).eval x₀ = x₀·w n² − w(n+1)·w(n−1)` — pure consequences of Mathlib's `preΨ`/`ΨSq`/`Φ` and `normEDS` twist conventions; nodes L2/L3 toward N10(i). Certificate `scripts/certs/eval_bridge_check.py` prints `CERT_OK`; no `native_decide`, no new axioms; curve-agnostic/upstreamable)",
       "theorem_cell": "`Ecdlp.Curve.eval_ΨSq_eq_normEDS_sq`, `eval_Φ_eq_normEDS`, `eval_preΨ_eq_preNormEDS`",
       "declared_files": [
@@ -4196,7 +4253,7 @@
       ]
     },
     {
-      "id": "ledger-172",
+      "id": "ledger-173",
       "claim": "Common root ⇒ consecutive `normEDS` zeros (local descent) (over an integral domain, if `ΨSq n` and `Φ n` both vanish at `x₀` then `w n = 0` and `w(n−1) = 0 ∨ w(n+1) = 0`: `ΨSq = w²` kills `w n`, then `Φ = x·w² − w₊w₋` collapses and a domain has no zero divisors; node N5 local step)",
       "theorem_cell": "`Ecdlp.Curve.normEDS_consecutive_eq_zero_of_eval_eq_zero`",
       "declared_files": [
@@ -4216,7 +4273,7 @@
       ]
     },
     {
-      "id": "ledger-173",
+      "id": "ledger-174",
       "claim": "¬ IsCoprime(Φₙ, ΨSqₙ)` ⇒ consecutive scalar-`normEDS` zeros over `k̄` (global descent, N5 reduced to the scalar sequence) (composes the L1 field↔closure bridge `exists_common_root_of_not_isCoprime` with the local descent: a non-coprimality over a field `k` yields two consecutive `normEDS` zeros over any algebraically closed extension, with `β² = Ψ₂Sq(x₀)` supplied by `IsAlgClosed.exists_pow_nat_eq`. Turns the coprimality obligation `gcd(Φₙ,ΨSqₙ)=1` into a statement purely about the scalar EDS)",
       "theorem_cell": "`Ecdlp.Curve.exists_normEDS_consecutive_eq_zero_of_not_isCoprime`, `exists_sq_eq_eval_Ψ₂Sq`",
       "declared_files": [
@@ -4244,7 +4301,7 @@
       ]
     },
     {
-      "id": "ledger-174",
+      "id": "ledger-175",
       "claim": "*(secp256k1 instantiation)* the same global descent over `𝔽̄_p` for secp256k1 (`secp256k1Bar := secp256k1.map (algebraMap _ _)`): a non-coprimality of `Φ n`/`ΨSq n` over `𝔽_p` produces consecutive `normEDS` zeros over `𝔽̄_p` — the N5 obligation for secp256k1 reduced to the scalar sequence",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_exists_normEDS_consecutive_eq_zero_of_not_isCoprime`",
       "declared_files": [
@@ -4264,7 +4321,7 @@
       ]
     },
     {
-      "id": "ledger-175",
+      "id": "ledger-176",
       "claim": "Φ n` is monic for secp256k1 (N4 monic half) (`secp256k1.Φ n` has leading coefficient `1`, so its degree is genuine and `Φ n ≠ 0` — Mathlib's `leadingCoeff_Φ` is unconditional)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Φ_monic`",
       "declared_files": [
@@ -4284,7 +4341,7 @@
       ]
     },
     {
-      "id": "ledger-176",
+      "id": "ledger-177",
       "claim": "[n]`-numerator strictly dominates its denominator (`deg ΨSqₙ = n²−1 < n² = deg Φₙ`; so the rational map `x∘[n]=Φₙ/ψₙ²` attains degree `n²` at the numerator — the differential-free Route-B crux for `deg[n]=n²`, modulo coprimality; see `notes/SEPARABILITY_ROUTES.md`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_ΨSq_natDegree_lt_Φ`",
       "declared_files": [
@@ -4304,7 +4361,7 @@
       ]
     },
     {
-      "id": "ledger-177",
+      "id": "ledger-178",
       "claim": "Ψ₂Sq` and `Ψ₃` are coprime (`IsCoprime (4X³+28) (3X⁴+84X)` — \"no point is both 2- and 3-torsion\", where `Δ≠0` enters; node L5 of the B1 coprimality plan, proved by an explicit CAS-computed Bézout certificate over `𝔽_p`; first hand-built sub-lemma toward `gcd(Φₙ,ψₙ²)=1`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_Ψ₂Sq_Ψ₃`",
       "declared_files": [
@@ -4324,7 +4381,7 @@
       ]
     },
     {
-      "id": "ledger-178",
+      "id": "ledger-179",
       "claim": "Ψ₃` and `preΨ₄` are coprime (`IsCoprime (3X⁴+84X) (2X⁶+280X³−784)` — \"no point is both 3- and 4-torsion\", the second place `Δ≠0` enters; node L6 of B1, CAS-computed Bézout certificate over `𝔽_p`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_Ψ₃_preΨ₄`",
       "declared_files": [
@@ -4344,7 +4401,7 @@
       ]
     },
     {
-      "id": "ledger-179",
+      "id": "ledger-180",
       "claim": "Ψ₂Sq` and `preΨ₄` are coprime (`IsCoprime (4X³+28) (2X⁶+280X³−784)` — \"no point is both 2- and *primitive* 4-torsion\"; completes the pairwise low-torsion disjointness with L5/L6, third manifestation of `Δ≠0`; node L6b of B1, CAS-computed Bézout certificate over `𝔽_p`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_Ψ₂Sq_preΨ₄`",
       "declared_files": [
@@ -4364,7 +4421,7 @@
       ]
     },
     {
-      "id": "ledger-180",
+      "id": "ledger-181",
       "claim": "Ψ₃` and `preΨ' 5` are coprime — `E[3] ⊥ E[5]` (`IsCoprime (3X⁴+84X) (5X¹²+2660X⁹−11760X⁶−548800X³−614656)` — \"no point is both 3- and 5-torsion\" (a shared `x`-coordinate would force `Q = ±P`, i.e. `3 = 5`); CAS extended-Euclid Bézout certificate over `𝔽_p` (`scripts/certs/torsion_disjoint_3_5.py`), the mod-3 exponent structure collapsing the product to six residue equations; also records the first explicit 5-division form `secp256k1_preΨ₅` via Mathlib's `preΨ'_odd` at `m = 0`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_Ψ₃_preΨ₅`, `secp256k1_preΨ₅`",
       "declared_files": [
@@ -4392,7 +4449,7 @@
       ]
     },
     {
-      "id": "ledger-181",
+      "id": "ledger-182",
       "claim": "Ψ₂Sq` and `preΨ' 5` are coprime — `E[2] ⊥ E[5]` (`IsCoprime (4X³+28) (preΨ' 5)` — \"no point is both 2- and 5-torsion\" (a common root would be a nonzero point of order dividing `gcd(2,5) = 1`); CAS Bézout certificate over `𝔽_p` (`scripts/certs/torsion_disjoint_2_5.py`), both polynomials on exponents `≡ 0 (mod 3)` so the product collapses to five residue equations — the five-power sibling of `CoprimePsi3Psi5`; reuses `secp256k1_preΨ₅`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_Ψ₂Sq_preΨ₅`",
       "declared_files": [
@@ -4412,7 +4469,7 @@
       ]
     },
     {
-      "id": "ledger-182",
+      "id": "ledger-183",
       "claim": "Ψ₃` and `preΨ' 7` are coprime — `E[3] ⊥ E[7]` (`IsCoprime (3X⁴+84X) (preΨ' 7)` — \"no point is both 3- and 7-torsion\"; CAS Bézout certificate over `𝔽_p` (`scripts/certs/torsion_disjoint_3_7.py`), ten collapsed residue equations against the degree-24 `preΨ' 7`; also records the first explicit 7-division form `secp256k1_preΨ₇` via `preΨ'_odd` at `m = 1`, collapsing to `preΨ'5·Ψ₃³ − preΨ₄³·Ψ₂Sq²`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_Ψ₃_preΨ₇`, `secp256k1_preΨ₇`",
       "declared_files": [
@@ -4440,7 +4497,7 @@
       ]
     },
     {
-      "id": "ledger-183",
+      "id": "ledger-184",
       "claim": "Ψ₂Sq` and `preΨ' 7` are coprime over `𝔽_p[X]` (`secp256k1_isCoprime_Ψ₂Sq_preΨ₇`: `IsCoprime secp256k1.Ψ₂Sq (secp256k1.preΨ' 7)` — a polynomial coprimality via an explicit CAS Bézout certificate over `𝔽_p` (`scripts/certs/psi2_psi7_coprime_cert.py`), nine collapsed residue equations on the exponent-`≡0 mod 3` lattice against the degree-24 `preΨ' 7`; the nine-power sibling of `CoprimePsi2Psi5`, completing the `Ψ₂Sq ⊥ preΨₙ` family for the `y≠0`-on-torsion input to the ℓ=7 structure. The classical `gcd(2,7)=1` / `E[2] ⊥ E[7]` reading and its `𝔽̄_p` `y≠0`-at-roots consequence are motivation only — not part of the statement)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_Ψ₂Sq_preΨ₇`",
       "declared_files": [
@@ -4460,7 +4517,7 @@
       ]
     },
     {
-      "id": "ledger-184",
+      "id": "ledger-185",
       "claim": "preΨ' 5` and `preΨ' 7` are coprime — `E[5] ⊥ E[7]` (`IsCoprime (secp256k1.preΨ' 5) (secp256k1.preΨ' 7)` — \"no point is both 5- and 7-torsion\" (a shared `x`-coordinate would force `Q = ±P`, i.e. `5 = 7`); CAS extended-Euclid Bézout certificate over `𝔽_p` (`scripts/certs/torsion_disjoint_5_7.py`; `Res(ψ₅,ψ₇) = 2¹⁹²·3¹⁴⁴·7⁹⁶`, prime support `{2,3,7}` = the curve's bad-reduction primes), both polynomials on exponents `≡ 0 (mod 3)` so the product collapses to twelve residue equations against the degree-24 `preΨ' 7` — the twelve-power sibling of `CoprimePsi3Psi7`; completes pairwise `{2,3,5,7}`-torsion `x`-locus disjointness. Reuses `secp256k1_preΨ₅`/`secp256k1_preΨ₇`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_preΨ₅_preΨ₇`",
       "declared_files": [
@@ -4480,7 +4537,7 @@
       ]
     },
     {
-      "id": "ledger-185",
+      "id": "ledger-186",
       "claim": "preΨ₄` and `preΨ' 5` are coprime — `E[4] ⊥ E[5]` (`IsCoprime secp256k1.preΨ₄ (secp256k1.preΨ' 5)` — no nonidentity point is both (primitive) 4- and 5-torsion (a shared `x` would force `Q = ±P`, i.e. `4 = 5`); CAS extended-Euclid Bézout certificate over `𝔽_p` (`Res(preΨ₄,ψ₅) = 2⁴⁸·3³⁶·7²⁴`, prime support `{2,3,7}` = the curve's bad-reduction primes), both on exponents `≡ 0 (mod 3)`, six collapsed residue equations; extends the `preΨ₄ ⊥ {2,3}` pairs toward the `{2,3,4,5,7}`-torsion disjointness matrix)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_preΨ₄_preΨ₅`",
       "declared_files": [
@@ -4500,7 +4557,7 @@
       ]
     },
     {
-      "id": "ledger-186",
+      "id": "ledger-187",
       "claim": "preΨ₄` and `preΨ' 7` are coprime — `E[4] ⊥ E[7]` (`IsCoprime secp256k1.preΨ₄ (secp256k1.preΨ' 7)` — no nonidentity point is both (primitive) 4- and 7-torsion; CAS extended-Euclid Bézout certificate over `𝔽_p` (`Res(preΨ₄,ψ₇) = 2⁹⁶·3⁷²·7⁴⁸`, prime support `{2,3,7}`), both on exponents `≡ 0 (mod 3)`, ten collapsed residue equations; with `CoprimePsi4Psi5` completes `preΨ₄ ⊥ {2,3,5,7}` — full mutual disjointness of the `{2,3,4,5,7}`-torsion `x`-loci)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_preΨ₄_preΨ₇`",
       "declared_files": [
@@ -4520,7 +4577,7 @@
       ]
     },
     {
-      "id": "ledger-187",
+      "id": "ledger-188",
       "claim": "IsCoprime` ↔ no common root (over a field `k`, non-coprime `f,g ∈ k[X]` ⇒ a genuine common root in any algebraically-closed extension, + easy converse — the field↔`k̄` bridge B1 consumes, independent of the open L4 TODO; node L1 of B1, general/upstreamable)",
       "theorem_cell": "`Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime`",
       "declared_files": [
@@ -4540,7 +4597,7 @@
       ]
     },
     {
-      "id": "ledger-188",
+      "id": "ledger-189",
       "claim": "*(supporting, conditional all-index frontier)* Integral division-resultant transport and the exact missing geometric bridge (`secp256k1_resultant_eq_intCast` proves that every fixed-size integral resultant commutes with reduction; universal bad-prime support implies `IsCoprime` for every pair of distinct odd primes; independently, the exact algebraic-closure root-to-torsion proposition implies the same theorem. Both universal premises remain explicit `def : Prop` inputs, not global assumptions; unconditional all-index support remains open)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_preΨ'_odd_primes_of_integral_resultant_bad_prime_support`, `Ecdlp.Curve.secp256k1_isCoprime_preΨ'_odd_primes_of_torsion_bridge`",
       "declared_files": [
@@ -4568,7 +4625,7 @@
       ]
     },
     {
-      "id": "ledger-189",
+      "id": "ledger-190",
       "claim": "GLV eigenvalue ⇒ scalar action (an endomorphism `φ` fixing a cyclic group's generator as a `λ`-eigenvector acts as `[λ]` on the whole subgroup: `φ x = λ•x`; the algebraic core of the GLV speed-up used on secp256k1, promoted from stem `glv_root_mod_n_condition_008`)",
       "theorem_cell": "`Ecdlp.Curve.glv_root_mod_n_condition`",
       "declared_files": [
@@ -4588,7 +4645,7 @@
       ]
     },
     {
-      "id": "ledger-190",
+      "id": "ledger-191",
       "claim": "r`-general elliptic-sequence identity ⇐ its `r=1` case (`isEllSequence_of_rec_one`: any `W:ℤ→R` over a `CommRing` satisfying the two-index recurrence is an `IsEllSequence`; pure `linear_combination`, no `W 1=1` needed — more general than the roadmap expected. Isolates all remaining content of the open Mathlib TODO \"`normEDS` is elliptic\" into the `r=1` master recurrence; first upstream-Mathlib stepping stone toward it, see `notes/B1_TRACTABILITY_MAP.md`)",
       "theorem_cell": "`Ecdlp.EDS.isEllSequence_of_rec_one`",
       "declared_files": [
@@ -4608,7 +4665,7 @@
       ]
     },
     {
-      "id": "ledger-191",
+      "id": "ledger-192",
       "claim": "Somos-4 recurrence for `normEDS` (`normEDS_somos4`: `normEDS(m+2)·normEDS(m−2) = b²·normEDS(m+1)·normEDS(m−1) − c·normEDS(m)²` for all `m:ℤ` over any `CommRing` — the `n=2` slice of Ward's master recurrence and the companion identity for the open Mathlib TODO \"`normEDS` is elliptic\"; single-parameter `normEDSRec'` strong induction, `b²`-cancellation over the domain `MvPolynomial (Fin 3) ℤ`, reflected by `normEDS_neg` and transported to any `CommRing` via `map_normEDS`; second upstream-Mathlib stepping stone toward L4, see `notes/L4_WARD_INDUCTION.md`)",
       "theorem_cell": "`Ecdlp.NormEDS.normEDS_somos4`",
       "declared_files": [
@@ -4628,7 +4685,7 @@
       ]
     },
     {
-      "id": "ledger-192",
+      "id": "ledger-193",
       "claim": "Ward apparition rigidity — `normEDS` has no two consecutive zeros (`normEDS_not_consecutive_zeros`: over any integral domain, given `¬(b=0∧c=0)` and `¬(c=0∧d=0)`, `normEDS b c d` never vanishes at two consecutive integers — the scalar core of node N5; composed with the eval-bridge global descent it discharges `IsCoprime(Φₙ,ΨSqₙ)`. Minimal-zero rank-of-apparition argument via `normEDS_isEllSequence`'s `r=1` translation identity + `normEDS_odd`/`normEDS_neg`; upstream-Mathlib candidate, no `native_decide`, no new axioms; supporting helpers `normEDS_shift_mul_shift_of_eq_zero`/`normEDS_sub_eq_zero_of_eq_zero`/`normEDS_not_consecutive_zeros'` in the same file)",
       "theorem_cell": "`Ecdlp.NormEDS.normEDS_not_consecutive_zeros`",
       "declared_files": [
@@ -4648,7 +4705,7 @@
       ]
     },
     {
-      "id": "ledger-193",
+      "id": "ledger-194",
       "claim": "Node N5 closed — `Φ n ⊥ ΨSq n` for secp256k1, every `n : ℤ` (`secp256k1_isCoprime_Φ_ΨSq`: `IsCoprime (secp256k1.Φ n) (secp256k1.ΨSq n)` over `𝔽_p[X]` for all `n` — the highest-value unblocked node of the ψₙ↔E[n] bridge toward the counting half `#E[n]=n²` (N10(i)). A non-coprimality feeds the landed eval-bridge descent `secp256k1_exists_normEDS_consecutive_eq_zero_of_not_isCoprime` to two consecutive scalar-`normEDS` zeros, which Ward apparition rigidity `normEDS_not_consecutive_zeros` forbids; the two degeneracy escapes are killed by the `Ψ₂Sq⊥Ψ₃` and `Ψ₃⊥preΨ₄` Bézout certificates pushed to `𝔽̄_p`. No `char∤n` hypothesis; the same module also gives the closure form `secp256k1Bar_isCoprime_Φ_ΨSq` and the registered scalar target `secp256k1_normEDS_no_consecutive_zero`. No new `native_decide`, no new axioms; Split-PR 1 of `notes/reviews/PR172_SPLIT_PLAN.md`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_Φ_ΨSq`",
       "declared_files": [
@@ -4668,7 +4725,7 @@
       ]
     },
     {
-      "id": "ledger-194",
+      "id": "ledger-195",
       "claim": "Coordinate-ring translation `φₙ·ΨSqₙ = Φₙ·ψₙ²` (N7-uniform S1 brick, curve-generic) (`mk_ψ_sq`: `mk W (ψ n)² = mk W (C (ΨSq n))`, and `mk_φ_mul_ΨSq`: `mk W (φ n)·mk W (C (ΨSq n)) = mk W (C (Φ n))·mk W (ψ n)²` in the affine coordinate ring `W.CoordinateRing` of an arbitrary Weierstrass curve `W` over any `CommRing R`, all `n : ℤ` — the algebraic link between the *bivariate* division polynomials `φₙ/ψₙ²` that compute `x([n]•P)` on points and the *univariate* `Φₙ/ΨSqₙ` whose degrees Mathlib supplies. Two-step rewrites over Mathlib's own congruences `mk_ψ`/`mk_Ψ_sq`/`mk_φ`. Honest scope: coordinate-ring identity only — the Point-level statement `x([n]•P)=φₙ(P)/ψₙ(P)²` on `E(k)` needs the multiplication-by-`n` coordinate map (absent from Mathlib) and is not claimed here; this is the substrate that step consumes, first brick of the N7-uniform build (`BARRIERS.md §B3`). No `native_decide`, no new axioms)",
       "theorem_cell": "`Ecdlp.Curve.mk_ψ_sq`, `mk_φ_mul_ΨSq`",
       "declared_files": [
@@ -4696,7 +4753,7 @@
       ]
     },
     {
-      "id": "ledger-195",
+      "id": "ledger-196",
       "claim": "Division-polynomial doubling `ψₙ ∣ ψ₂ₙ` (N7-uniform S2 brick — the ω prerequisite, curve-generic) (`ψ_two_mul`: `ψ₂ₖ = ψₖ · complEDS₂ ψ₂ (C Ψ₃) (C preΨ₄) k`, and `ψ_dvd_ψ_two_mul`: `ψₖ ∣ ψ₂ₖ` in `R[X][Y]` for an arbitrary Weierstrass curve `W` over any `CommRing R`, all `k : ℤ` — the explicit factorisation making `ψ₂ₖ/ψₖ` a genuine polynomial. This is exactly the \"as a start … `ψₙ` always divides `ψ₂ₙ`\" step that Mathlib's own module docstring names as the first prerequisite for the (still-`TODO`) bivariate `y`-coordinate division polynomials `ωₙ := (ψ₂ₙ/ψₙ − ψₙ·(a₁φₙ + a₃ψₙ²))/2`. Because `W.ψ` is definitionally `normEDS ψ₂ (C Ψ₃) (C preΨ₄)` and Mathlib now carries the scalar 2-complement `complEDS₂`, the anticipated induction is a direct specialization. Honest scope: the `ψₙ∣ψ₂ₙ` divisibility only — `ωₙ` is not defined (needs the further `÷2` well-definedness, Mathlib's open `TODO`), and no `Point`-level `[n]`-arithmetic is claimed; S2 substrate the `ω`/`[n]`-map steps consume. No `native_decide`, no new axioms)",
       "theorem_cell": "`Ecdlp.Curve.ψ_two_mul`, `ψ_dvd_ψ_two_mul`",
       "declared_files": [
@@ -4724,7 +4781,7 @@
       ]
     },
     {
-      "id": "ledger-196",
+      "id": "ledger-197",
       "claim": "ω-free EDS engine — `ψ` elliptic-net relation + the x-coordinate difference identity (N7-uniform, curve-generic) (`ψ_isEllSequence`: `ψ` satisfies Mathlib's three-term net relation `ψ(m+n)ψ(m−n)ψr² = ψ(m+r)ψ(m−r)ψn² − ψ(n+r)ψ(n−r)ψm²` — it is `normEDS ψ₂ (C Ψ₃)(C preΨ₄)` definitionally; `ψ_succ_mul_ψ_pred`: `ψ(n+1)ψ(n−1) = X·ψn² − φn`; and `φ_ψ_diff`: `φn·ψm² − φm·ψn² = ψ(m+n)ψ(m−n)` (Silverman, *Arithmetic of Elliptic Curves*, III Ex. 3.7) — the `r=1` net specialisation, the ω-free core of the multiplication-by-`n` x-coordinate difference `x(nP)−x(mP) = −ψ(m+n)ψ(m−n)/(ψn²ψm²)`. Arbitrary Weierstrass `W` over any `CommRing`, all `m,n : ℤ`. Honest scope: algebraic identities in `R[X][Y]`; the `Point`-level transport is a separate (open) rung. No `native_decide`, no new axioms)",
       "theorem_cell": "`Ecdlp.Curve.ψ_isEllSequence`, `ψ_succ_mul_ψ_pred`, `φ_ψ_diff`",
       "declared_files": [
@@ -4760,7 +4817,7 @@
       ]
     },
     {
-      "id": "ledger-197",
+      "id": "ledger-198",
       "claim": "Point-evaluated ω-free x-difference identity `φ_ψ_diff` at a point (N7-uniform odd-step brick, curve-generic) (`φ_ψ_diff_evalEval`: for an arbitrary Weierstrass curve `W` over any `CommRing R`, all `m n : ℤ` and every point `(x,y) : R`, `φₙ(P)·ψₘ(P)² − φₘ(P)·ψₙ(P)² = ψ(m+n)(P)·ψ(m−n)(P)` with `·(P) = evalEval x y` — the Silverman ω-free x-coordinate difference identity `φ_ψ_diff` transported from the bivariate ring `R[X][Y]` to a point by the `evalEval` ring hom. This is the scalar identity the open N7-uniform target's `odd_x_algebra` wall (`Ecdlp/Targets/n7_uniform_carrier_induction.lean`) reduces to at `(m,n)=(k+1,k)`: the secant `x`-coordinate of two consecutive multiples `kP,(k+1)P` pinned to the canonical ratio at index `2k+1`. Honest scope: the point-level identity only; closing the wall additionally needs the secant-`addX` algebra and the `Carrier` y-coupling that pins `Yₖ,Yₖ₊₁`. Proof: `congrArg (evalEval x y)` over the proved `φ_ψ_diff` + `evalEval_mul`/`sub`/`pow` distribution — the idiom of `OmegaRecurrenceAnchors`. No `native_decide`, no new axioms)",
       "theorem_cell": "`Ecdlp.Curve.φ_ψ_diff_evalEval`",
       "declared_files": [
@@ -4780,7 +4837,7 @@
       ]
     },
     {
-      "id": "ledger-198",
+      "id": "ledger-199",
       "claim": "N7-uniform ω-free base: joint `(x,y)` carrier rungs `n=1,2` + ω-recurrence anchors (secp256k1) (`secp256k1_one_nsmul_coords` / `secp256k1_two_nsmul_coords_ωfree`: the `n=1,2` base cases of the joint carrier — whenever `n•P=(X,Y)` is affine, `X=Φₙ(x)/ΨSqₙ(x)` and the ω-free `y`-relation `Y·(4y)·ψₙ(P)³ = ψ(n+2)ψ(n−1)² − ψ(n−2)ψ(n+1)²`; and `secp256k1_omega_recurrence_two`/`_three`: that ω-recurrence numerator equals `4y·ωₙ` at `n=2,3`, cross-checking the group-law-derived `ω₂,ω₃`. The `y`-conjunct uses only Mathlib's `ψ` — no `ω` division polynomial. Honest scope: base leaves + anchors only; the uniform induction over all `n` stays the open target `n7_uniform_secp256k1_x` (`Ecdlp/Targets/n7_uniform_carrier_induction.lean`, whose `normEDSRec'` reduction to these leaves + named residual walls is machine-checked). These four secp256k1 forms inherit `Lean.ofReduceBool` from the secp256k1 primality/coefficient facts (`native_decide`); no *new* axioms beyond the trusted base)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_one_nsmul_coords`, `secp256k1_two_nsmul_coords_ωfree`, `secp256k1_omega_recurrence_two`, `secp256k1_omega_recurrence_three`",
       "declared_files": [
@@ -4826,7 +4883,7 @@
       ]
     },
     {
-      "id": "ledger-199",
+      "id": "ledger-200",
       "claim": "Squarefree division polynomials `ψₙ` over `𝔽_p`, `n∈{3,4,5,7}` (`secp256k1_isCoprime_Ψ₃_derivative` + `preΨ₄`/`preΨ₅`/`preΨ₇` analogues: `IsCoprime ψₙ (derivative ψₙ)` over `𝔽_p` — the field squarefreeness certificate for the small division polynomials (incl. the even-index primitive-4-division `preΨ₄`, `secp256k1_isCoprime_preΨ₄_derivative`), node B4 at small `n`, via explicit extended-Euclid Bézout certificates `u·ψₙ+v·ψₙ′=1`. Scope is purely the `𝔽_p`-polynomial fact — no `𝔽̄_p`, no root count, no torsion is asserted here; the downstream `𝔽̄_p` root-count consumes exactly this. `native_decide` residue certs, no new axioms; general-`n` B4 open)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_isCoprime_Ψ₃_derivative`, `secp256k1_isCoprime_preΨ₄_derivative`",
       "declared_files": [
@@ -4854,7 +4911,7 @@
       ]
     },
     {
-      "id": "ledger-200",
+      "id": "ledger-201",
       "claim": "Exact distinct-root counts of `ψₙ` over `𝔽̄_p`: `4/6/12/24` for `n=3/4/5/7` (`secp256k1_Ψ₃_roots_card_bar` + `preΨ₄`/`preΨ₅`/`preΨ₇` (=`6`/`12`/`24`), with `…_roots_nodup_bar` (`.Nodup`) and `…_separable` (`Separable ψₙ`): `((ψₙ).map φ).roots.card` over `𝔽̄_p`, `φ:𝔽_p→𝔽̄_p` the base change — the separability/root-count layer, from squarefreeness + `IsAlgClosed.splits` + `splits_iff_card_roots`. For odd `n` the count is `(n²−1)/2`; the even `n=4` gives `6` = the primitive-4-torsion `x`-coordinates (`(#E[4]−#E[2])/2`). A statement purely about `ψₙ` and its roots in `𝔽̄_p`; the `#E[n]` consequence is deferred to the structure assembly)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Ψ₃_roots_card_bar`, `secp256k1_preΨ₄_roots_card_bar`",
       "declared_files": [
@@ -4882,7 +4939,7 @@
       ]
     },
     {
-      "id": "ledger-201",
+      "id": "ledger-202",
       "claim": "3-torsion bridge over `𝔽̄_p`: `3•P=0 ⟺ ψ₃(P)=0` (`secp256k1Bar_three_nsmul_eq_zero_iff`: for a nonsingular affine `P` on `secp256k1Bar` over `K=AlgebraicClosure (ZMod p)`, `3•P=0 ↔ (ψ 3).evalEval P = 0 ↔ 3x⁴+84x=0` — the per-point `n=3` division-poly↔torsion equivalence over the closure (node N11@3), the `𝔽̄_p` port of `ThreeTorsionBridge.lean`. Per-point iff only; the surjectivity-onto-roots, `#E[3]=9` count, and group structure are downstream, not here. No `native_decide`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1Bar_three_nsmul_eq_zero_iff`",
       "declared_files": [
@@ -4902,7 +4959,7 @@
       ]
     },
     {
-      "id": "ledger-202",
+      "id": "ledger-203",
       "claim": "5-torsion bridge over `𝔽̄_p`: `5•P=0 ⟺ ψ₅(P)=0` (`secp256k1Bar_five_nsmul_eq_zero_iff`: for a nonsingular affine `P` on `secp256k1Bar`, `5•P=0 ↔ (ψ 5).evalEval P = 0` — per-point `n=5` bridge over the closure (N11@5), `𝔽̄_p` port of `FiveTorsionBridge.lean`; the module also proves the `2•P=0 ⟺ y=0` half. Per-point iff only; `#E[5]=25`/group downstream. No `native_decide`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1Bar_five_nsmul_eq_zero_iff`",
       "declared_files": [
@@ -4922,7 +4979,7 @@
       ]
     },
     {
-      "id": "ledger-203",
+      "id": "ledger-204",
       "claim": "7-torsion bridge over `𝔽̄_p`: `7•P=0 ⟺ ψ₇(P)=0` (`secp256k1Bar_seven_nsmul_eq_zero_iff`: for a nonsingular affine `P` on `secp256k1Bar`, `7•P=0 ↔ (ψ 7).evalEval P = 0` — per-point `n=7` bridge over the closure (N11@7), `𝔽̄_p` port of `SevenTorsionBridge.lean`. Per-point iff only; `#E[7]=49`/group downstream. No `native_decide`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1Bar_seven_nsmul_eq_zero_iff`",
       "declared_files": [
@@ -4942,7 +4999,7 @@
       ]
     },
     {
-      "id": "ledger-204",
+      "id": "ledger-205",
       "claim": "Dependence relation recovers the discrete log (`jacobson_xedni_dependence_recovers_log`: for `Q = x•P` in any `AddCommGroup`, a nontrivial integer relation `a•P + b•Q = 0` with `b` a unit mod `n = addOrderOf P` pins the discrete log `x ≡ -a·b⁻¹ (mod n)` — the neutral algebraic core of the Jacobson–Xedni point-dependence idea; Layer-3 generated from corpus claim `jacobson-xedni-dependence-recovers-log-003`, closed via `addOrderOf_dvd_iff_zsmul_eq_zero` + `ZMod` arithmetic)",
       "theorem_cell": "`Ecdlp.jacobson_xedni_dependence_recovers_log`",
       "declared_files": [
@@ -4962,7 +5019,7 @@
       ]
     },
     {
-      "id": "ledger-205",
+      "id": "ledger-206",
       "claim": "ψ 3` evaluated at a secp256k1 point = `3x⁴+84x` (`secp256k1_psi3_evalEval`: the bivariate 3-division polynomial reduces to the concrete univariate on the curve; the bookkeeping half of the n=3 torsion bridge)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_psi3_evalEval`",
       "declared_files": [
@@ -4982,7 +5039,7 @@
       ]
     },
     {
-      "id": "ledger-206",
+      "id": "ledger-207",
       "claim": "Point-level 3-torsion bridge `3•P = 0 ⟺ ψ₃(P)=0` (`secp256k1_three_nsmul_eq_zero_iff`: for a nonzero affine `P=(x,y)` on secp256k1, the group relation `3•P=0` holds iff the 3-division polynomial vanishes — the full `ψ₃ ↔ E[3]` equivalence, upgrading the forward-only `Ψ₃`-root fact; original elementary proof via the doubling identity `addX−x = −(3x⁴+84x)/(4y²)`, the n=3 analogue of the n=2 bridge)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_three_nsmul_eq_zero_iff`",
       "declared_files": [
@@ -5002,7 +5059,7 @@
       ]
     },
     {
-      "id": "ledger-207",
+      "id": "ledger-208",
       "claim": "Point-level 4-torsion bridge `4•P = 0 ⟺ ψ₄(P)=0` (`secp256k1_four_nsmul_eq_zero_iff`: for a nonzero affine `P=(x,y)` on secp256k1, `4•P=0` iff the 4-division polynomial vanishes — the even-index member of the `{2,3,5,7}` torsion-bridge family. Runs by doubling-of-doubling: `4•P=2•(2•P)`, so `4•P=0 ⟺ Y(2•P)=0` (2-torsion of the double, via `secp256k1_two_nsmul_eq_zero_iff`), and the landed doubling `y`-coordinate `Y(2•P)=ω₂/(2y)³` (`secp256k1_two_nsmul_coords`) gives `Y(2•P)=0 ⟺ ω₂(x)=0 ⟺ ψ₄(P)=4y·ω₂=0`, with `ω₂=x⁶+140x³−392`. The `n=4` non-degeneracy leaf of the uniform carrier. Inherits `Lean.ofReduceBool` from the `2≠0` fact (`native_decide`); no new axioms)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_four_nsmul_eq_zero_iff`",
       "declared_files": [
@@ -5022,7 +5079,7 @@
       ]
     },
     {
-      "id": "ledger-208",
+      "id": "ledger-209",
       "claim": "3-torsion `x`-coordinate set is finite (`secp256k1_threeTorsionX_finite`: the set `threeTorsionX = {x | ∃ y h, 3•(x,y)=0}` of `x`-coordinates of nonzero 3-torsion points is finite — via the bridge it embeds into the roots of `Ψ₃`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_threeTorsionX_finite`",
       "declared_files": [
@@ -5042,7 +5099,7 @@
       ]
     },
     {
-      "id": "ledger-209",
+      "id": "ledger-210",
       "claim": "≤ 4 nonzero 3-torsion `x`-coordinates on secp256k1 (`secp256k1_threeTorsionX_ncard_le`: `threeTorsionX.ncard ≤ 4` — upgrades the forward-only degree-4 *root* bound to a bound on the actual *set* of 3-torsion `x`-values, the set-level payoff of the n=3 bridge)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_threeTorsionX_ncard_le`",
       "declared_files": [
@@ -5062,7 +5119,7 @@
       ]
     },
     {
-      "id": "ledger-210",
+      "id": "ledger-211",
       "claim": "*(alternate/supporting, n=3 bridge)* concrete iff `3•P=0 ⟺ 3x⁴+84x=0` (`secp256k1_three_nsmul_eq_zero_iff_poly`), root-form iff (`secp256k1_three_nsmul_eq_zero_iff_eval`), `Ψ₃`/torsion-poly eval lemmas (`secp256k1_Ψ₃_eval`, `secp256k1_eval_threeTorsionPoly`), point↦root map (`secp256k1_three_torsion_x_mem_Ψ₃_roots`), its set form (`secp256k1_threeTorsionX_subset_Ψ₃_roots`), and the dedup card bound (`secp256k1_Ψ₃_roots_toFinset_card_le`)",
       "theorem_cell": "`Ecdlp.Curve.*`",
       "declared_files": [
@@ -5154,7 +5211,7 @@
       ]
     },
     {
-      "id": "ledger-211",
+      "id": "ledger-212",
       "claim": "ψ 5` at a secp256k1 point reduces to a concrete degree-12 univariate (`secp256k1_psi5_evalEval`: on the curve `y²=x³+7`, `(ψ 5).evalEval x y = 5x¹²+2660x⁹−11760x⁶−548800x³−614656` — a polynomial in `x³`, reflecting the `j=0`/CM structure; via the master `ψ_odd` recursion `ψ₅ = preΨ₄·ψ₂⁴ − Ψ₃³`, the bookkeeping half of the n=5 torsion bridge)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_psi5_evalEval`",
       "declared_files": [
@@ -5174,7 +5231,7 @@
       ]
     },
     {
-      "id": "ledger-212",
+      "id": "ledger-213",
       "claim": "Point-level 5-torsion bridge `5•P = 0 ⟺ ψ₅(P)=0` (`secp256k1_five_nsmul_eq_zero_iff`: for a nonzero affine `P=(x,y)` on secp256k1, `5•P=0` holds iff the 5-division polynomial vanishes — the full `ψ₅ ↔ E[5]` equivalence, the n=5 analogue of the n=2/n=3 bridges; original elementary proof via the route `5•P=0 ⟺ x(2P)=x(3P) ⟺ ψ₅=0`, the core `x`-difference identity designed by a sympy-verified certificate and re-checked by the Lean kernel; reuses the merged n=2/n=3 bridges to close the degenerate branches)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_five_nsmul_eq_zero_iff`",
       "declared_files": [
@@ -5194,7 +5251,7 @@
       ]
     },
     {
-      "id": "ledger-213",
+      "id": "ledger-214",
       "claim": "*(alternate/supporting, n=5 bridge)* the core `x(2P)=x(3P) ⟺ ψ₅=0` field-algebra identity (`five_core`) and the concrete eval lemmas `secp256k1_preΨ₄_eval` (`= 2x⁶+280x³−784`), `secp256k1_psi2_evalEval` (`= 2y`)",
       "theorem_cell": "`Ecdlp.Curve.*`",
       "declared_files": [
@@ -5246,7 +5303,7 @@
       ]
     },
     {
-      "id": "ledger-214",
+      "id": "ledger-215",
       "claim": "ψ 7` at a secp256k1 point reduces to a concrete degree-24 univariate (`secp256k1_psi7_evalEval`: on the curve `y²=x³+7`, `(ψ 7).evalEval x y = 7x²⁴+27608x²¹−2101904x¹⁸−284585728x¹⁵−2228742656x¹²−26142548992x⁹−330576748544x⁶−661153497088x³+377801998336`; via `ψ_odd 3` (`ψ₇ = ψ₅·ψ₃³ − ψ₂·ψ₄³`), the bookkeeping half of the n=7 torsion bridge)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_psi7_evalEval`",
       "declared_files": [
@@ -5266,7 +5323,7 @@
       ]
     },
     {
-      "id": "ledger-215",
+      "id": "ledger-216",
       "claim": "Point-level 7-torsion bridge `7•P = 0 ⟺ ψ₇(P)=0` (`secp256k1_seven_nsmul_eq_zero_iff`: for a nonzero affine `P=(x,y)` on secp256k1, `7•P=0` holds iff the 7-division polynomial vanishes — the full `ψ₇ ↔ E[7]` equivalence, the n=7 analogue of the n=2/n=3/n=5 bridges; original elementary proof via the route `7•P=0 ⟺ x(3P)=x(4P) ⟺ ψ₇=0`, the core slope-algebra identity designed by a sympy-verified certificate and re-checked by the Lean kernel; reuses the merged n=3 bridge to close the 3-torsion branch)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_seven_nsmul_eq_zero_iff`",
       "declared_files": [
@@ -5286,7 +5343,7 @@
       ]
     },
     {
-      "id": "ledger-216",
+      "id": "ledger-217",
       "claim": "*(alternate/supporting, n=7 bridge)* the core slope-algebra certificate `seven_master` (`G·(ℓ₂²−3x)⁶·(2y)¹² = −4(x³+7)·ψ₇`) and the `x(3P)=x(4P) ⟺ ψ₇=0` step `seven_core",
       "theorem_cell": "`Ecdlp.Curve.*`",
       "declared_files": [
@@ -5330,7 +5387,7 @@
       ]
     },
     {
-      "id": "ledger-217",
+      "id": "ledger-218",
       "claim": "Exact-order small-prime torsion classification (`secp256k1_smallprime_addOrderOf`: for a nonzero affine `P=(x,y)` and each prime `ℓ ∈ {2,3,5,7}`, `addOrderOf P = ℓ ⟺ (ψ ℓ).evalEval x y = 0` — the capstone tying the full per-`n` bridge ladder to *exact point order*; upgrades each `ℓ•P=0` bridge to an order statement since a `Point.some` is automatically nonzero and `ℓ` prime)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_smallprime_addOrderOf`",
       "declared_files": [
@@ -5350,7 +5407,7 @@
       ]
     },
     {
-      "id": "ledger-218",
+      "id": "ledger-219",
       "claim": "*(alternate/supporting, order classification)* the reusable order-upgrade lemma `addOrderOf_eq_of_prime_nsmul` (prime `ℓ`: `addOrderOf P = ℓ ⟺ ℓ•P=0` for nonzero `P`) and concrete-poly corollaries `secp256k1_addOrderOf_three_iff_poly` (`= 3 ⟺ 3x⁴+84x=0`), `secp256k1_addOrderOf_five_iff_poly` (`= 5 ⟺ 5x¹²+…=0`)",
       "theorem_cell": "`Ecdlp.Curve.*`",
       "declared_files": [
@@ -5394,7 +5451,7 @@
       ]
     },
     {
-      "id": "ledger-219",
+      "id": "ledger-220",
       "claim": "#E[n] ≤ n²` point-cardinality bound for secp256k1 (`secp256k1_{three,five,seven}_torsion_card_le`: `Nat.card {P // n•P = 0} ≤ n²` for n = 3,5,7 — i.e. ≤ 9 / 25 / 49 torsion points; upgrades the earlier x-*coordinate* count to a genuine point count, converting an asserted-but-unproven docstring claim into a kernel-checked theorem via a ≤2-to-1 fiber argument + the division-polynomial degree bounds. Dodges the point-counting barrier: an upper bound needs no exact `#E(𝔽ₚ)` computation)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_{three,five,seven}_torsion_card_le`",
       "declared_files": [
@@ -5430,7 +5487,7 @@
       ]
     },
     {
-      "id": "ledger-220",
+      "id": "ledger-221",
       "claim": "Reusable ≤2-to-1 torsion fiber-counting lemma (`secp256k1_torsion_ncard_le`: if every nonzero `n`-torsion `x`-coord lies in a finite set of size ≤ m, then `#{P | n•P=0} ≤ 2m+1` — at most two `y` per `x` on the curve, plus the identity; the general counting core behind the `#E[n] ≤ n²` bounds)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_torsion_ncard_le`",
       "declared_files": [
@@ -5450,7 +5507,7 @@
       ]
     },
     {
-      "id": "ledger-221",
+      "id": "ledger-222",
       "claim": "*(alternate/supporting, point count)* `Set.ncard` carrier forms `secp256k1_{three,five,seven}_torsion_ncard_le`; the fiber/curve machinery `px`/`py`/`secp256k1_curve_of_nonsingular`; concrete degree-12/24 polynomials `Q5`/`Q7` with `_eval`/`_natDegree_le`/`_ne_zero`; and x-root-membership `secp256k1_{five,seven}_torsion_x_mem",
       "theorem_cell": "`Ecdlp.Curve.*`",
       "declared_files": [
@@ -5622,7 +5679,7 @@
       ]
     },
     {
-      "id": "ledger-222",
+      "id": "ledger-223",
       "claim": "Tight `#E[2] ≤ 4` point-cardinality bound (`secp256k1_two_torsion_ncard_le`: `Set.ncard {P \\| 2•P=0} ≤ 4` — the tight `(ℤ/2)²` ceiling, closing an asserted-but-unproven gap where only the x-coordinate bound existed; the 2-torsion `y=0` fiber is 1-to-1, giving 4 not the generic ≤ 7)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_two_torsion_ncard_le`",
       "declared_files": [
@@ -5642,7 +5699,7 @@
       ]
     },
     {
-      "id": "ledger-223",
+      "id": "ledger-224",
       "claim": "Tight `#E[4](𝔽_p) ≤ 16` point-cardinality bound (`secp256k1_four_torsion_ncard_le`: `Set.ncard {P \\| 4•P=0} ≤ 16 = 4²` — the even-index entry of the `#E[n]` count family, at the tight value. `n=4` mixes self-paired 2-torsion (`y=0`) with `±y`-paired primitive 4-torsion, so instead of the generic `≤2m+1` we split `E[4] = E[2] ⊔ P₄` (`P₄ = {4•P=0, 2•P≠0}`): `#E[2] ≤ 4` (`secp256k1_two_torsion_ncard_le`) + a `≤2`-to-`1` fiber count `#P₄ ≤ 12` over the six `preΨ₄`-roots — via the 4-torsion bridge `4•P=0 ⟺ ψ₄=0` and `ψ₄=4y·(x⁶+140x³−392)`, a primitive point (`2•P≠0`⟹`y≠0`) forces `preΨ₄(x)=0`. `4+12=16`. Finiteness from the global `Finite W.Point` instance; reuses the `px`/`py` curve-fiber machinery of `TorsionPointCount`. The even-index tight companion of `#E[3]≤9`/`#E[5]≤25`/`#E[7]≤49`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_four_torsion_ncard_le`",
       "declared_files": [
@@ -5662,7 +5719,7 @@
       ]
     },
     {
-      "id": "ledger-224",
+      "id": "ledger-225",
       "claim": "Torsion intersection = gcd (`secp256k1_torsionBy_inf_eq_gcd`: `E[m] ⊓ E[n] = E[gcd m n]` — the full lattice identity generalizing the coprime-disjoint leaf; via the `addOrderOf ∣ ·` characterization of `torsionBy`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_torsionBy_inf_eq_gcd`",
       "declared_files": [
@@ -5682,7 +5739,7 @@
       ]
     },
     {
-      "id": "ledger-225",
+      "id": "ledger-226",
       "claim": "GLV/CM automorphism permutes the `n`-torsion (`secp256k1_glvPoint_bijOn_torsion`: the order-3 GLV endomorphism `glvPoint` restricts to a `Set.BijOn` of `E[n] = {P \\| n•P=0}` onto itself — additivity sends `E[n]` into itself, `glvPoint³ = id` gives surjectivity; a new endomorphism↔torsion interaction, no point-counting/Weil needed)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glvPoint_bijOn_torsion`",
       "declared_files": [
@@ -5702,7 +5759,7 @@
       ]
     },
     {
-      "id": "ledger-226",
+      "id": "ledger-227",
       "claim": "GLV fixed locus meets `E[n]` trivially when `gcd(n,3)=1` (`secp256k1_glvPoint_fixed_coprime_three`: `Coprime n 3 → n•P=0 → glvPoint P = P → P = 0` — the coprime-3 fixed-point-freeness of the CM automorphism, the group-law shadow of `ker(φ−1) ⊆ E[3]`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_glvPoint_fixed_coprime_three`",
       "declared_files": [
@@ -5722,7 +5779,7 @@
       ]
     },
     {
-      "id": "ledger-227",
+      "id": "ledger-228",
       "claim": "secp256k1 scalar group `ℤ/n` has no proper nontrivial subgroup (`secp256k1_scalar_no_proper_subgroup`: every `H : AddSubgroup (ZMod n)` is `⊥` or `⊤` — the full subgroup-lattice dichotomy from `n` prime, strictly stronger than the element-level generator fact; small-subgroup / invalid-subgroup confinement-attack resistance)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_scalar_no_proper_subgroup`",
       "declared_files": [
@@ -5742,7 +5799,7 @@
       ]
     },
     {
-      "id": "ledger-228",
+      "id": "ledger-229",
       "claim": "secp256k1 has exactly `n−1` full-order private keys (`secp256k1_scalar_num_generators`: `#{a : ZMod n \\| addOrderOf a = n} = n−1` — every nonzero scalar generates, `φ(n)=n−1`; the quantitative generator/valid-key count)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_scalar_num_generators`",
       "declared_files": [
@@ -5762,7 +5819,7 @@
       ]
     },
     {
-      "id": "ledger-229",
+      "id": "ledger-230",
       "claim": "ECDSA nonce-reuse private-key recovery (`ecdsa_nonce_reuse_recovers`: two signatures `sᵢ·k = zᵢ + r·x` sharing nonce `k`, `s₁≠s₂`, `r≠0` ⇒ `k=(z₁−z₂)/(s₁−s₂) ∧ x=(s₁k−z₁)/r` — the exact algebra behind the Sony PS3 / Android-Bitcoin key thefts; stated over any field, no adversary/probability model)",
       "theorem_cell": "`Ecdlp.Schnorr.ecdsa_nonce_reuse_recovers`",
       "declared_files": [
@@ -5782,7 +5839,7 @@
       ]
     },
     {
-      "id": "ledger-230",
+      "id": "ledger-231",
       "claim": "ECDSA known/leaked-nonce private-key recovery (`ecdsa_known_nonce_recovers_key`: `s·k=z+r·x` with known `k`, `r≠0` ⇒ `x=(sk−z)/r` — the biased/leaked-nonce (HNP) scenario, distinct from nonce-reuse)",
       "theorem_cell": "`Ecdlp.Schnorr.ecdsa_known_nonce_recovers_key`",
       "declared_files": [
@@ -5802,7 +5859,7 @@
       ]
     },
     {
-      "id": "ledger-231",
+      "id": "ledger-232",
       "claim": "ECDSA signature malleability — the algebraic core of BIP-62 rule 5 / BIP-146 low-`s` (every signature `(r,s)` has a sibling `(r,−s)` verifying the same message/key: `ecdsa_sibling_signing_equation` — the signing identity holds for `(−s,−k)`; `ecdsa_sibling_scalars` — `u/(−s) = −(u/s)` negates both verifier scalars; `secp256k1_pointX_neg` — point negation fixes the `x`-coordinate (`−(x,y)=(x,−y)`, `a₁=a₃=0`); `secp256k1_pointX_neg_zsmul_add` — the negated verification point has the same `pointX`. Honest scope: identity-level algebra, no `Verify` predicate, no hash/DER level, no `ZMod p → ZMod n` reduction of `x`. Field lemmas pure-kernel; curve lemma under `[Fact p.Prime]` (discharged via Pratt ⇒ compiler-trusted transitively))",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_pointX_neg`, `secp256k1_pointX_neg_zsmul_add`, `Ecdlp.Schnorr.ecdsa_sibling_signing_equation`, `ecdsa_sibling_scalars`",
       "declared_files": [
@@ -5846,7 +5903,7 @@
       ]
     },
     {
-      "id": "ledger-232",
+      "id": "ledger-233",
       "claim": "Shamir secret-sharing reconstruction (`shamir_reconstruct`: for a degree-`<t` sharing polynomial `f` and `t = #s` distinct nodes, `f.eval 0` (the secret) `= (Lagrange.interpolate s v (f.eval ∘ v)).eval 0` — the information-theoretic recovery direction of Shamir's `(t,n)` SSS; secret = `f(0)`, shares = `(vᵢ, f(vᵢ))`)",
       "theorem_cell": "`Ecdlp.Schnorr.shamir_reconstruct`",
       "declared_files": [
@@ -5866,7 +5923,7 @@
       ]
     },
     {
-      "id": "ledger-233",
+      "id": "ledger-234",
       "claim": "Number of generators of a cyclic group = `φ(n)` (`mov_random_q_success_probability`: in a cyclic group of order `n`, `#{g \\| orderOf g = n} = φ(n)` — the count of full-order elements; underpins the MOV/Frey–Rück random-`Q` success probability `φ(n)/n`. Layer-3 generated, closed the last open Layer-3 `Targets/` stem of its batch (the intentional smoke stem stays open), corpus claim `mov-random-q-success-probability-006`)",
       "theorem_cell": "`Ecdlp.MovReduction.mov_random_q_success_probability`",
       "declared_files": [
@@ -5886,7 +5943,7 @@
       ]
     },
     {
-      "id": "ledger-234",
+      "id": "ledger-235",
       "claim": "*(alternate/supporting, this batch)* Shamir polynomial-identity form `shamir_reconstruct_poly`; the GLV `E[n]`-self-map `secp256k1_glvPoint_mapsTo_torsion`; and the simple-group packaging `secp256k1_scalar_isSimpleAddGroup",
       "theorem_cell": "`Ecdlp.*`",
       "declared_files": [
@@ -5956,7 +6013,7 @@
       ]
     },
     {
-      "id": "ledger-235",
+      "id": "ledger-236",
       "claim": "Semaev's 3rd summation polynomial — forward direction (`S₃_eq_zero_of_chord`: for `y² = x³ + a·x + b` over a field, if `(x₁,y₁), (x₂,y₂)` are curve points with `x₁ ≠ x₂` and `x₃` is the `x`-coordinate of their chord-sum, then `S₃(x₁,x₂,x₃) = 0` — equivalently `P₁+P₂+P₃ = O ⇒ S₃ = 0`; `secp256k1_semaev_three_chord` specializes it to secp256k1 `y² = x³ + 7`. First Semaev summation polynomial formalized in Lean/Mathlib (a green-field `BARRIERS.md` item). Certificate designed + verified by exact symbolic elimination (sympy: Gröbner + iterated resultant), kernel-checked via `linear_combination`. A construction, not an attack — a necessary collinearity condition that by itself computes nothing about any discrete log)",
       "theorem_cell": "`Ecdlp.Semaev.S₃_eq_zero_of_chord`, `secp256k1_semaev_three_chord`",
       "declared_files": [
@@ -5984,7 +6041,7 @@
       ]
     },
     {
-      "id": "ledger-236",
+      "id": "ledger-237",
       "claim": "Semaev's `S₃` — tangent / doubling case (`S₃_eq_zero_of_tangent`: the `x₁ = x₂` companion of the chord case — if `(x₁,y₁)` is a curve point and `x₃` is the `x`-coordinate of `2·(x₁,y₁)` (cleared doubling form `4·y₁²·(x₃+2·x₁) = (3·x₁²+a)²`), then `S₃(x₁,x₁,x₃) = 0`; `secp256k1_semaev_three_tangent` specializes to secp256k1. With the chord case this completes the `S₃` forward direction in every nondegenerate case. No `y₁·y₂` cross term arises, so a single certified `linear_combination` suffices)",
       "theorem_cell": "`Ecdlp.Semaev.S₃_eq_zero_of_tangent`, `secp256k1_semaev_three_tangent`",
       "declared_files": [
@@ -6012,7 +6069,7 @@
       ]
     },
     {
-      "id": "ledger-237",
+      "id": "ledger-238",
       "claim": "Semaev's `S₃` on actual secp256k1 curve points (`secp256k1_semaev_three_point`: for genuine points of the Mathlib elliptic curve `secp256k1.toAffine.Point`, the group relation `P₁+P₂+P₃ = O` with `x(P₁) ≠ x(P₂)` implies `S₃(x₁,x₂,x₃) = 0`. Connects the abstract chord identity to Mathlib's formalized elliptic-curve group law by unfolding `Point.add_of_X_ne` / `slope` / `addX` to recover `x₃ = x(P₁+P₂)` — the honest statement whose hypothesis is the actual curve addition, not a raw coordinate equation)",
       "theorem_cell": "`Ecdlp.Semaev.secp256k1_semaev_three_point`",
       "declared_files": [
@@ -6032,7 +6089,7 @@
       ]
     },
     {
-      "id": "ledger-238",
+      "id": "ledger-239",
       "claim": "Semaev's `S₃` on actual secp256k1 points — tangent case (`secp256k1_semaev_three_point_double`: the `P₁ = P₂` companion — for genuine points of `secp256k1.toAffine.Point`, `2•P₁ + P₃ = O` with `P₁` not 2-torsion (`y₁ ≠ negY x₁ y₁`) implies `S₃(x₁,x₁,x₃) = 0`, via Mathlib's tangent doubling `Point.add_of_Y_ne`. With the chord point theorem, the `S₃` forward direction now holds on Mathlib's actual elliptic-curve group law in every nondegenerate case)",
       "theorem_cell": "`Ecdlp.Semaev.secp256k1_semaev_three_point_double`",
       "declared_files": [
@@ -6052,7 +6109,7 @@
       ]
     },
     {
-      "id": "ledger-239",
+      "id": "ledger-240",
       "claim": "Point decomposition ⇒ Semaev relation (index-calculus entry point) (`secp256k1_point_decomposition_semaev`: if a curve point `R` decomposes as a sum `R = P₁ + P₂` with `x(P₁) ≠ x(P₂)`, then `S₃(x(P₁), x(P₂), x(R)) = 0` — every 2-term decomposition of `R` lies on the Semaev variety. This is the structural reduction index calculus rests on: the search for decompositions is confined to the roots of a single codimension-1 polynomial condition, not the whole group. Proof recasts `R = P₁+P₂` as `P₁+P₂+(−R)=0` and uses `x(−R) = x(R)` (`Point.neg_some`) to hand off to `secp256k1_semaev_three_point`. Forward/structural half only — records *where* solutions live, not the cost of *finding* them; over `𝔽_p` that root-finding is the studied `Θ(√n)` barrier)",
       "theorem_cell": "`Ecdlp.Semaev.secp256k1_point_decomposition_semaev`",
       "declared_files": [
@@ -6072,7 +6129,7 @@
       ]
     },
     {
-      "id": "ledger-240",
+      "id": "ledger-241",
       "claim": "Point decomposition ⇒ Semaev relation — doubling case (`secp256k1_point_decomposition_semaev_double`: the `P₁ = P₂` companion — if `R = 2·P₁` with `P₁` not 2-torsion, then `S₃(x(P₁), x(P₁), x(R)) = 0`. With the generic-sum theorem, covers every 2-term decomposition of `R`)",
       "theorem_cell": "`Ecdlp.Semaev.secp256k1_point_decomposition_semaev_double`",
       "declared_files": [
@@ -6092,7 +6149,7 @@
       ]
     },
     {
-      "id": "ledger-241",
+      "id": "ledger-242",
       "claim": "Semaev polynomial has degree exactly 2 in each variable (`secp256k1_S₃poly_natDegree`: for `x₁ ≠ x₂` over `𝔽_p`, `S₃(x₁,x₂,·)` is a degree-exactly-2 univariate polynomial, leading coefficient `(x₁−x₂)² ≠ 0`. Base case of the classical `deg_{xᵢ} Sₘ = 2^{m−2}` degree tower — the doubling that makes higher-order decompositions blow up. Via `Polynomial.natDegree_quadratic`)",
       "theorem_cell": "`Ecdlp.Semaev.secp256k1_S₃poly_natDegree`",
       "declared_files": [
@@ -6112,7 +6169,7 @@
       ]
     },
     {
-      "id": "ledger-242",
+      "id": "ledger-243",
       "claim": "Bounded decomposition fan-out (index-calculus cost ingredient) (`secp256k1_decomposition_completions_le_two`: fixing a base coordinate `x₁` and the target `x_R` with `x₁ ≠ x_R`, at most 2 field elements `x₂` complete a 2-decomposition `S₃(x₁,x₂,x_R)=0` — any finite set of completions has card `≤ 2`. A degree-2 polynomial over a field has `≤ 2` roots, so the index-calculus relation graph has bounded fan-out at each factor-base point. The one exact, kernel-checked quantitative fact under the prime-field cost analysis — *not* the hardness claim itself, which stays an open conjecture; see `BARRIERS.md`)",
       "theorem_cell": "`Ecdlp.Semaev.secp256k1_decomposition_completions_le_two`",
       "declared_files": [
@@ -6132,7 +6189,7 @@
       ]
     },
     {
-      "id": "ledger-243",
+      "id": "ledger-244",
       "claim": "Semaev's `S₃` — reverse direction (the two roots) (`S₃_root_of_eq_zero`: `S₃` is quadratic in `x₃` with leading coefficient `(x₁−x₂)²`; if `(x₁,y₁), (x₂,y₂)` lie on `y² = x³ + a·x + b` and `S₃(x₁,x₂,x₃) = 0`, then `(x₁−x₂)²·x₃` equals `(y₂−y₁)² − (x₁+x₂)(x₁−x₂)²` or `(y₂+y₁)² − (x₁+x₂)(x₁−x₂)²` — the cleared `x`-coordinates of `P₁+P₂` and `P₁−P₂`. Via a sympy-certified master factorization `(x₁−x₂)²·S₃ = (D·x₃−R₊)(D·x₃−R₋)`, a pure `ring` identity, then `mul_eq_zero`; needs no `x₁ ≠ x₂`)",
       "theorem_cell": "`Ecdlp.Semaev.S₃_root_of_eq_zero`",
       "declared_files": [
@@ -6152,7 +6209,7 @@
       ]
     },
     {
-      "id": "ledger-244",
+      "id": "ledger-245",
       "claim": "Semaev's `S₃` — full characterization (iff) (`S₃_eq_zero_iff`: for on-curve `(x₁,y₁), (x₂,y₂)` with `x₁ ≠ x₂`, `S₃(x₁,x₂,x₃) = 0 ⟺ (x₁−x₂)²(x₁+x₂+x₃) = (y₂−y₁)²  ∨  = (y₂+y₁)²` — i.e. `x₃` is the `x`-coordinate of `P₁+P₂` or of `P₁−P₂`; `secp256k1_semaev_three_iff` specializes to secp256k1. Combines forward + reverse: the complete statement of `S₃` as the elimination of `y₁,y₂` from \"three points sum to `O`\")",
       "theorem_cell": "`Ecdlp.Semaev.S₃_eq_zero_iff`, `secp256k1_semaev_three_iff`",
       "declared_files": [
@@ -6180,7 +6237,7 @@
       ]
     },
     {
-      "id": "ledger-245",
+      "id": "ledger-246",
       "claim": "Semaev's 4th summation polynomial `S₄` — definition + forward direction (`S₄ = Res_X(S₃(x₁,x₂,X), S₃(x₃,x₄,X))` via Mathlib's `Polynomial.resultant _ _ 2 2`; `S₄_eq_zero_of_common_root`: a shared root `X₀` of the two `S₃` slices — e.g. `X₀ = x(P₁+P₂) = x(P₃+P₄)` — forces `S₄ = 0`, over any commutative ring, via the resultant Bézout identity `exists_mul_add_mul_eq_C_resultant`. `secp256k1_semaev_four_of_common_root` specializes to secp256k1. The first rung above `S₃` — the recursion index calculus over `𝔽_{p^k}` uses. First `S₄` in Lean)",
       "theorem_cell": "`Ecdlp.Semaev.S₄`, `S₄_eq_zero_of_common_root`, `secp256k1_semaev_four_of_common_root`",
       "declared_files": [
@@ -6216,7 +6273,7 @@
       ]
     },
     {
-      "id": "ledger-246",
+      "id": "ledger-247",
       "claim": "Semaev forward direction generalized to all `n` — the resultant recursion engine (`resultant_eq_zero_of_common_root`: for *any* two univariate polynomials `f, g` over a commutative ring sharing an evaluation-root `X₀` (`f(X₀) = g(X₀) = 0`), `Res(f,g,m,n) = 0`, provided the Sylvester sizes are not both zero. Every Semaev step `Sₙ₊₁ = Res_X(Sₙ(…,X), S₃(…,X))` inherits its forward direction from this one lemma at level `n`; `S₄_eq_zero_of_common_root` is now literally the instance `f = S₃(x₁,x₂,·)`, `g = S₃(x₃,x₄,·)`, and `S₅, S₆, …` are discharged verbatim with `f` the previous slice. The mechanism-level generalization of the Semaev forward direction to the whole infinite `Sₙ` family — via the Bézout identity `exists_mul_add_mul_eq_C_resultant`, over any commutative ring, no field or closure)",
       "theorem_cell": "`Ecdlp.Semaev.resultant_eq_zero_of_common_root`",
       "declared_files": [
@@ -6236,7 +6293,7 @@
       ]
     },
     {
-      "id": "ledger-247",
+      "id": "ledger-248",
       "claim": "*(alternate/supporting)* `S₄` infrastructure — the `S₃`-as-polynomial bridge `S₃poly_eval` (`(S₃poly …).eval x₃ = S₃ …`) and `S₄`'s full symmetry: block swap `S₄_block_swap` `(x₁,x₂)↔(x₃,x₄)` (from `resultant_comm`) and within-pair `S₄_symm₁₂`, `S₄_symm₃₄` — so `S₄` is symmetric on all of `{x₁,x₂,x₃,x₄}`, the symmetry a summation polynomial must have",
       "theorem_cell": "`Ecdlp.Semaev.S₃poly_eval`, `S₄_block_swap`, `S₄_symm₁₂`, `S₄_symm₃₄`",
       "declared_files": [
@@ -6280,7 +6337,7 @@
       ]
     },
     {
-      "id": "ledger-248",
+      "id": "ledger-249",
       "claim": "GLV covariance of Semaev `S₃`/`S₄` and exact relation-set transport (`S₃_diagonal_cube_covariance` and `S₃_diagonal_cube_zero_iff` prove simultaneous polynomial covariance and preservation of the `S₃=0` condition; `S₄_diagonal_cube_invariant` proves exact diagonal invariance of the resultant-defined `S₄`. The secp256k1 specializations instantiate these identities at the GLV cube root. `secp256k1_glv_list_sum_eq_iff` and its three-point form prove `ΣPᵢ=R ⟺ Σφ(Pᵢ)=φ(R)`. The fixed-target theorem layer is S₄ only: `S₄_glv_target_transport` and `S₄_glv_fibre_transport` distinguish the polynomial target exponent from the fibre direction. `secp256k1_glv_affine_target_moves` combines `secp256k1_x_ne_zero` with `secp256k1_glv_fixed_target_moves`, proving that every `𝔽_p`-rational affine target is moved by nonidentity diagonal GLV scaling. The exhaustive fixed-target `S₄` coordinate-scaling classification is deliberately NOT claimed in Lean and remains independently replayed certificate evidence. Scope excludes the point at infinity, extension-field targets, and non-scalar or birational automorphisms; no asymptotic or ECDLP consequence is claimed)",
       "theorem_cell": "`Ecdlp.Semaev.S₃_diagonal_cube_covariance`, `Ecdlp.Semaev.S₃_diagonal_cube_zero_iff`, `Ecdlp.Semaev.S₄_diagonal_cube_invariant`, `Ecdlp.Semaev.secp256k1_S₃_glv_covariance`, `Ecdlp.Semaev.secp256k1_S₃_glv_zero_iff`, `Ecdlp.Semaev.secp256k1_S₄_glv_invariant`, `Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff`, `Ecdlp.Curve.secp256k1_glv_three_point_sum_eq_iff`, `Ecdlp.Semaev.S₄_glv_target_transport`, `Ecdlp.Semaev.S₄_glv_fibre_transport`, `Ecdlp.Semaev.glv_target_ne_self`, `Ecdlp.Semaev.secp256k1_S₄_glv_target_transport`, `Ecdlp.Semaev.secp256k1_S₄_glv_fibre_transport`, `Ecdlp.Semaev.secp256k1_glv_fixed_target_moves`, `Ecdlp.Semaev.secp256k1_glv_affine_target_moves`",
       "declared_files": [
@@ -6412,7 +6469,7 @@
       ]
     },
     {
-      "id": "ledger-249",
+      "id": "ledger-250",
       "claim": "Semaev's `S₄` — reverse/meaning direction (`S₄_common_root_of_eq_zero`: over a field, for on-curve `(x₁,y₁), (x₂,y₂)` with `x₁ ≠ x₂` and `S₄(x₁,x₂,x₃,x₄) = 0`, the two `S₃` slices share a root `X₀` in the field — the converse of `S₄_eq_zero_of_common_root`. Since `S₄` is the resultant, its vanishing forces a shared root; it lies *in* `K` because `S₃(x₁,x₂,·)` splits with the explicitly known roots `x(P₁±P₂)`. Via `resultant_eq_prod_eval`; `secp256k1_semaev_four_common_root_of_eq_zero` specializes. With the forward direction, `S₄` now holds both ways)",
       "theorem_cell": "`Ecdlp.Semaev.S₄_common_root_of_eq_zero`, `secp256k1_semaev_four_common_root_of_eq_zero`",
       "declared_files": [
@@ -6440,7 +6497,7 @@
       ]
     },
     {
-      "id": "ledger-250",
+      "id": "ledger-251",
       "claim": "S₃`-slice two-root factorization over `F[X]` (`S₃poly_master_factor`: `(x₁−x₂)²·S₃poly = (D·X − R₊)·(D·X − R₋)` as a polynomial identity in `F[X]` — the lift of the scalar master factorization, exhibiting `S₃`'s degree-2 slice as split with the explicit roots `x(P₁±P₂)`; the key input to the `S₄` reverse)",
       "theorem_cell": "`Ecdlp.Semaev.S₃poly_master_factor`",
       "declared_files": [
@@ -6460,7 +6517,7 @@
       ]
     },
     {
-      "id": "ledger-251",
+      "id": "ledger-252",
       "claim": "*(alternate/supporting)* Semaev `S₃` full symmetry — `S₃_symm₁₂` (swap `x₁,x₂`) and `S₃_symm₂₃` (swap `x₂,x₃`), so `S₃` is symmetric in all three `x`-arguments, as a summation polynomial must be",
       "theorem_cell": "`Ecdlp.Semaev.S₃_symm₁₂`, `S₃_symm₂₃`",
       "declared_files": [
@@ -6488,7 +6545,7 @@
       ]
     },
     {
-      "id": "ledger-252",
+      "id": "ledger-253",
       "claim": "Multiplication-by-2 `x`-coordinate formula in Mathlib's canonical division polynomials (`secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq`: for a non-2-torsion point `P=(x,y)` on `y²=x³+7`, the doubled `x`-coordinate `addX x x (slope x x y y) = (Φ 2)(x)/(Ψ₂Sq)(x)` — with Mathlib's own `Φ`/`ΨSq` division polynomials, `Φ 2 = X⁴−56X` (`secp256k1_Φ₂`), `Ψ₂Sq = 4X³+28 = 4y²`. This is the base case `n=2` of the general multiplication formula `x([n]P)=Φₙ/ΨSqₙ` — the engine of the general `ψₙ`-vanishing ⟺ `n`-torsion bridge (`notes/FOUNDATIONS.md` rung 4). Unlike the per-`n` bridges (which used ad-hoc reduced polynomials like `3x⁴+84x`), this states the *canonical* `Φₙ/ΨSqₙ` shape. The general-`n` formula, by induction on the division-polynomial recurrence, is the missing Mathlib rung — absent from v4.31, present only in a stalled upstream PR)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq`, `secp256k1_Φ₂`",
       "declared_files": [
@@ -6516,7 +6573,7 @@
       ]
     },
     {
-      "id": "ledger-253",
+      "id": "ledger-254",
       "claim": "Multiplication-by-2 `y`-coordinate formula `y(2•P) = ω₂/(2y)³` (N7-uniform S3a base) (`secp256k1_double_y_eq_ω₂`: for a non-2-torsion point `P=(x,y)` on `y²=x³+7`, the doubled `y`-coordinate `addY x x y (slope x x y y) = (x⁶ + 140x³ − 392)/(2y)³` — the `y`-analogue of the `n=2` `x`-formula and the first `y`-coordinate division-polynomial value in the repo, i.e. `y(2•P) = ω₂/ψ₂³` with `ψ₂ = 2y` and the `n=2` `y`-coordinate (\"omega\") polynomial `ω₂ = x⁶ + 140x³ − 392`. Mathlib has no `ω` division polynomial (open `TODO`); the value is derived from the group law's doubling `addY` and closed by one certified `linear_combination` against the curve equation and the slope relation `2y·ℓ = 3x²`. Base case of node S3a of the N7-uniform build (`BARRIERS.md §B3`; target `n7_uniform_secp256k1_x`). Honest scope: fixed `n=2` coordinate identity only; the uniform `y([n]P)=ωₙ/ψₙ³` and the general bivariate `ωₙ` remain open. No `native_decide`, no new axioms)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_double_y_eq_ω₂`",
       "declared_files": [
@@ -6536,7 +6593,7 @@
       ]
     },
     {
-      "id": "ledger-254",
+      "id": "ledger-255",
       "claim": "Point-level doubling `2•P = (Φ₂/Ψ₂Sq, ω₂/(2y)³)` on secp256k1's group (N7-uniform S3a) (`secp256k1_two_nsmul_coords`: for a nonsingular non-2-torsion `P=(x,y)` on `y²=x³+7`, if the double `2 • Point.some x y h` is the affine point `Point.some X Y h'` then both coordinates are pinned to their division-polynomial values: `X = Φ₂(x)/Ψ₂Sq(x)` and `Y = (x⁶+140x³−392)/(2y)³`. Connects the two landed coordinate identities to the actual group operation `2 • P` on `secp256k1.toAffine.Point` (via `two_nsmul` + `Point.add_self_of_Y_ne` + the doubled point's coordinate injectivity) — the `n=2` Point-level instance of the open target `n7_uniform_secp256k1_x` and the base case of node S3a of the N7-uniform build. Honest scope: fixed `n=2` only; the uniform statement for all `n` remains open. No `native_decide`, no new axioms)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_two_nsmul_coords`",
       "declared_files": [
@@ -6556,7 +6613,7 @@
       ]
     },
     {
-      "id": "ledger-255",
+      "id": "ledger-256",
       "claim": "Multiplication-by-3 `y`-coordinate formula `y(3•P) = ω₃/ψ₃³` (N7-uniform S3a) (`secp256k1_triple_y_eq_ω₃`: in the chord-tangent slope parametrisation `s₂` (`2y·s₂=3x²`), `s₃` (`(s₂²−3x)·s₃ = −(s₂(s₂²−3x)+y)−y`) of the `x`-triple, the tripled `y`-coordinate `s₃·(s₂²−s₃²)−y` equals `ω₃/(3x⁴+84x)³` with the `n=3` `y`-coordinate (\"omega\") polynomial `ω₃ = y·(x¹²+1540x⁹−87024x⁶−109760x³−1229312)` — bivariate, the `y` factor being the odd-`n` shape. Companion to the `x`-triple `x(3•P)=Φ₃/ΨSq₃` and extends the `n=2` `y`-formula. Mathlib has no `ω` division polynomial (open `TODO`). Proof mirrors the `x`-triple: Step A clears `s₃` via `hℓ3` into an `s₃`-free `W`-expression, Step B is the `s₃`-free master identity cleared by `(2y)³` (CAS-derived `linear_combination` cofactors), then cancel `(s₂²−3x)³`. Honest scope: fixed `n=3` coordinate identity; the uniform `y([n]P)=ωₙ/ψₙ³` remains open. No `native_decide`, no new axioms)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_triple_y_eq_ω₃`",
       "declared_files": [
@@ -6576,7 +6633,7 @@
       ]
     },
     {
-      "id": "ledger-256",
+      "id": "ledger-257",
       "claim": "n = 3` division polynomials `Φ₃`/`ΨSq₃` for secp256k1 — canonical + explicit forms (`secp256k1_Φ₃`: `Φ 3 = X·Ψ₃² − preΨ₄·Ψ₂Sq`; `secp256k1_ΨSq₃`: `ΨSq 3 = Ψ₃²` — Mathlib's canonical `Φ_three`/`ΨSq_three` specialised to secp256k1. Substituting the concrete `Ψ₃ = 3X⁴+84X`, `preΨ₄ = 2X⁶+280X³−784`, `Ψ₂Sq = 4X³+28` gives the explicit degree-9 numerator `Φ₃(x) = x⁹−672x⁶+2352x³+21952` (`secp256k1_Φ₃_eval`) and degree-8 denominator `ΨSq₃(x) = 9x⁸+504x⁵+7056x²` (`secp256k1_ΨSq₃_eval`) of `x(3•P) = Φ₃/ΨSq₃`. Groundwork for node N7@3 and the degree half of N10(i) (`deg [n] = n²`): the numerator degree `9 = 3²` is the general `deg [n] = n²` prediction at `n = 3`. Ring identities in `𝔽_p[X]`, no `native_decide`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_Φ₃`, `secp256k1_ΨSq₃`, `secp256k1_Φ₃_eval`, `secp256k1_ΨSq₃_eval`",
       "declared_files": [
@@ -6620,7 +6677,7 @@
       ]
     },
     {
-      "id": "ledger-257",
+      "id": "ledger-258",
       "claim": "Multiplication-by-3 `x`-coordinate formula for secp256k1 — `x(3•P) = Φ₃/ΨSq₃` (`secp256k1_triple_x_eq_Φ₃_div_ΨSq₃`: for `P=(x,y)` on `y²=x³+7` with `y≠0`, `Ψ₃(x)≠0`, and the chord-tangent slopes `s₂` (`2y·s₂=3x²`) / `s₃` (secant `2P→P`, the `FiveTorsionBridge` parametrisation), the tripled `x`-coordinate `s₃²−(s₂²−2x)−x = (Φ 3)(x)/(ΨSq 3)(x)` in Mathlib's canonical division polynomials. Node N7@3 — extends the `n=2` case `secp256k1_double_x_eq_Φ₂_div_Ψ₂Sq`, connecting the concrete `Φ₃`/`ΨSq₃` forms to the actual elliptic-curve group law. Proof mirrors `five_core`: square the secant relation to clear `s₃`, then a CAS-derived `linear_combination` of the slope + curve equations after clearing `(2y)⁴`; certificate `scripts/certs/triple_mult_formula_check.py` (`CERT_OK`). No `native_decide`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_triple_x_eq_Φ₃_div_ΨSq₃`",
       "declared_files": [
@@ -6640,7 +6697,7 @@
       ]
     },
     {
-      "id": "ledger-258",
+      "id": "ledger-259",
       "claim": "Weil-pairing foundations, rung 1 — torsion ⟺ principal divisor (`secp256k1_torsion_iff_principal`: a point `P` of secp256k1 is `n`-torsion `⟺ n • toClass P = 0`, i.e. iff the divisor `n·([P] − [O])` is principal in the coordinate ring `F[secp256k1]`. Obtained by transporting `n`-torsion across Mathlib's Abel–Jacobi map `toClass : W.Point →+ Additive (ClassGroup W.CoordinateRing)` — the injective embedding `E ↪ Pic` on which Mathlib *builds* the group law — via `toClass_eq_zero` + `map_nsmul`. This is the first genuine rung of the Weil pairing construction: principality of `n·([P] − [O])` is the existence precondition for the Miller function `f_P`. Key finding: the divisor-class substrate (`toClass`, `FunctionField`, `rootsOfUnity`) is already in Mathlib, so the pairing is more reachable than \"from zero\" — remaining rungs (extract `f_P`, evaluate at divisors, Weil reciprocity, bilinear `eₙ→μₙ`) are the open frontier, `notes/FOUNDATIONS.md`)",
       "theorem_cell": "`Ecdlp.Weil.secp256k1_torsion_iff_principal`",
       "declared_files": [
@@ -6660,7 +6717,7 @@
       ]
     },
     {
-      "id": "ledger-259",
+      "id": "ledger-260",
       "claim": "Weil-pairing foundations, rung 2 — the Miller function exists (`secp256k1_miller_function_exists`: for a nonzero `n`-torsion point `P=(x,y)` of secp256k1, there exists `f_P` in the function field `F(secp256k1)` generating the principal fractional ideal `(⟨X−x, Y−y⟩)ⁿ = (XYIdeal' h)ⁿ` — the Miller function, whose divisor is `n·([P] − [O])`. Extracted from rung 1: `n`-torsion trivializes the class `ClassGroup.mk ((XYIdeal' h)ⁿ) = (mk (XYIdeal' h))ⁿ = 1`, and Mathlib's `ClassGroup.mk_eq_one_iff` turns a trivial class into a principal ideal, whose generator is `f_P`. Rung W2 of the Weil sub-ladder — the input to Weil reciprocity / the pairing `eₙ`)",
       "theorem_cell": "`Ecdlp.Weil.secp256k1_miller_function_exists`",
       "declared_files": [
@@ -6680,7 +6737,7 @@
       ]
     },
     {
-      "id": "ledger-260",
+      "id": "ledger-261",
       "claim": "Weil-pairing foundations, rung 3 — the Miller function is unique up to a unit (`secp256k1_miller_function_unique`: two generators `f, g` of the same principal ideal `(XYIdeal' h)ⁿ` differ by a unit of the coordinate ring, `∃ u : F[secp256k1]ˣ, u • f = g` — the well-definedness input for the Weil pairing `eₙ` (its value must not depend on the chosen Miller function). Representative-independence half of rung W3. Proof designed by the Fable model and kernel-verified — a piloted \"strong-model + Lean-kernel\" loop: Fable read the Mathlib source, identified `Submodule.span_singleton_eq_span_singleton`, and produced the proof, which the kernel accepted)",
       "theorem_cell": "`Ecdlp.Weil.secp256k1_miller_function_unique`",
       "declared_files": [
@@ -6700,7 +6757,7 @@
       ]
     },
     {
-      "id": "ledger-261",
+      "id": "ledger-262",
       "claim": "Weil-pairing infrastructure — point-evaluation homomorphism (`evalAt`: for a rational point `(x,y)` on any Weierstrass curve over a field, evaluation of a regular function at `P` as a ring hom `F[E] →+* F`, built from Mathlib's `quotientXYIdealEquiv` (`F[E]/⟨X−x,Y−y⟩ ≃ F`); `evalAt_surjective` (every value attained — `P` is `F`-rational) and `evalAt_ker` (kernel `= ⟨X−x, Y−y⟩`, the maximal ideal of `P` — the functions vanishing at `P`). The first rung of the function-evaluation layer Mathlib lacks (v4.31 has no rational-function evaluation API and `F[E]` is not known to be Dedekind there); regular-function evaluation now exists, the rational extension via localization is next. Unblocks the Weil pairing's `f_P(D_Q)` step)",
       "theorem_cell": "`Ecdlp.Weil.evalAt`, `evalAt_surjective`, `evalAt_ker`",
       "declared_files": [
@@ -6736,7 +6793,7 @@
       ]
     },
     {
-      "id": "ledger-262",
+      "id": "ledger-263",
       "claim": "A rational point is a closed point (maximal ideal) (`xyIdeal_isMaximal`: for `(x,y)` on any Weierstrass curve over a field, the ideal `⟨X−x, Y−y⟩` of `F[E]` is maximal — since the quotient `F[E]/⟨X−x,Y−y⟩ ≃ F` is a field. Establishes each `F`-rational point as a closed point of the affine curve; the prerequisite for localizing at `P` (the local ring `F[E]_P`) to evaluate rational functions regular at `P` — the next infrastructure rung toward the Weil pairing's `f_P(D_Q)`)",
       "theorem_cell": "`Ecdlp.Weil.xyIdeal_isMaximal`",
       "declared_files": [
@@ -6756,7 +6813,7 @@
       ]
     },
     {
-      "id": "ledger-263",
+      "id": "ledger-264",
       "claim": "evalRatAt` extends `evalAt` (`evalRatAt_algebraMap`: for `(x,y)` on any Weierstrass curve over a field and a regular function `r ∈ F[E]`, the value of its image in the local ring `F[E]_P = Localization.AtPrime ⟨X−x,Y−y⟩` under `evalRatAt` equals its direct value `evalAt h r`. The correctness certificate that rational-function evaluation genuinely extends regular-function evaluation — the residue of the localization at `P` coincides *definitionally* with the quotient by `P`'s maximal ideal. Closes the evaluation layer before the Miller function `f_P` is evaluated; proof developed on the warm-server `lake env lean` loop)",
       "theorem_cell": "`Ecdlp.Weil.evalRatAt_algebraMap`",
       "declared_files": [
@@ -6776,7 +6833,7 @@
       ]
     },
     {
-      "id": "ledger-264",
+      "id": "ledger-265",
       "claim": "Distinct x-coordinates ⇒ distinct closed points (`xyIdeal_ne_of_x_ne`: rational points on a Weierstrass curve with `x₁ ≠ x₂` give different maximal ideals `⟨X−x, Y−y⟩` of `F[E]`. Proof: `XClass x₁ − XClass x₂ = algebraMap F F[E] (x₂−x₁)` is a unit when `x₁ ≠ x₂`; equal ideals would force that unit into a maximal (proper) ideal — contradiction. The divisor-support separation the Weil pairing needs — the points of `D_Q` chosen to compute `f_P(D_Q)` must avoid `P`, `O`, which requires distinct points to be genuinely distinct closed points; scouted + proved on the warm-server loop)",
       "theorem_cell": "`Ecdlp.Weil.xyIdeal_ne_of_x_ne`",
       "declared_files": [
@@ -6796,7 +6853,7 @@
       ]
     },
     {
-      "id": "ledger-265",
+      "id": "ledger-266",
       "claim": "Distinct points ⇒ distinct closed points (full separation) (`xyIdeal_ne_of_ne`: for rational points `(x₁,y₁) ≠ (x₂,y₂)` on a Weierstrass curve the maximal ideals `⟨X−x, Y−y⟩` differ — combining the x-coordinate case with the `YClass` companion `xyIdeal_ne_of_y_ne` (`y₁ ≠ y₂ ⇒` distinct ideals, same unit-in-a-maximal-ideal argument on `Y − ·`). The complete divisor-support-separation lemma for the Weil pairing: any two distinct rational points are distinct closed points of `F[E]`)",
       "theorem_cell": "`Ecdlp.Weil.xyIdeal_ne_of_ne` (+ `xyIdeal_ne_of_y_ne`)",
       "declared_files": [
@@ -6824,7 +6881,7 @@
       ]
     },
     {
-      "id": "ledger-266",
+      "id": "ledger-267",
       "claim": "Weil W3 — zero locus of point-evaluation (`evalRatAt_eq_zero_iff`: a rational function regular at `P` vanishes at `P` iff it lies in the maximal ideal of the local ring `F[E]_P`. From `evalRatAt = residueFieldEquiv ∘ residue`: residue-field iso injective, so `evalRatAt r = 0 ↔ residue r = 0 ↔ r ∈ 𝔪`)",
       "theorem_cell": "`Ecdlp.Weil.evalRatAt_eq_zero_iff`",
       "declared_files": [
@@ -6844,7 +6901,7 @@
       ]
     },
     {
-      "id": "ledger-267",
+      "id": "ledger-268",
       "claim": "Weil W3 — nonvanishing criterion at a point (`evalRatAt_ne_zero_iff_isUnit`: a rational function regular at `P` is nonzero at `P` iff it is a unit of the local ring `F[E]_P` — exactly the condition to evaluate a Miller function `f_P` to a nonzero value in `𝔽_p`, off its zero/pole support. Completes the *point-evaluation* half of Weil rung W3; `f_P(D_Q)` over a whole divisor and Weil reciprocity (W4) remain genuine Mathlib gaps — see `BARRIERS.md`)",
       "theorem_cell": "`Ecdlp.Weil.evalRatAt_ne_zero_iff_isUnit`",
       "declared_files": [
@@ -6864,7 +6921,7 @@
       ]
     },
     {
-      "id": "ledger-268",
+      "id": "ledger-269",
       "claim": "ψ₃ root ⟺ Miller divisor `3·([P]−[O])` principal (`secp256k1_psi3_root_iff_class_torsion`: for a nonzero affine `P=(x,y)` of secp256k1, `(ψ 3).evalEval x y = 0 ↔ 3 • toClass P = 0` — the 3-division polynomial vanishes at `P` iff the Abel–Jacobi class is 3-torsion, i.e. iff `3·([P]−[O])` is principal. Welds the division-polynomial torsion tower to Weil divisor-class rung 1 at their shared middle `3•P=0`; the first result letting a computable coordinate condition `ψ 3 = 0` *decide* the divisor-theoretic principality the Miller function needs)",
       "theorem_cell": "`Ecdlp.Weil.secp256k1_psi3_root_iff_class_torsion`",
       "declared_files": [
@@ -6884,7 +6941,7 @@
       ]
     },
     {
-      "id": "ledger-269",
+      "id": "ledger-270",
       "claim": "ψ₅ root ⟺ Miller divisor `5·([P]−[O])` principal (`secp256k1_psi5_root_iff_class_torsion`: the `n=5` analogue — `(ψ 5).evalEval x y = 0 ↔ 5 • toClass P = 0`)",
       "theorem_cell": "`Ecdlp.Weil.secp256k1_psi5_root_iff_class_torsion`",
       "declared_files": [
@@ -6904,7 +6961,7 @@
       ]
     },
     {
-      "id": "ledger-270",
+      "id": "ledger-271",
       "claim": "ψ₇ root ⟺ Miller divisor `7·([P]−[O])` principal (`secp256k1_psi7_root_iff_class_torsion`: the `n=7` analogue — `(ψ 7).evalEval x y = 0 ↔ 7 • toClass P = 0`)",
       "theorem_cell": "`Ecdlp.Weil.secp256k1_psi7_root_iff_class_torsion`",
       "declared_files": [
@@ -6924,7 +6981,7 @@
       ]
     },
     {
-      "id": "ledger-271",
+      "id": "ledger-272",
       "claim": "The concrete secp256k1 subgroup `⟨G⟩` is a `ZMod n`-module (`secp256k1_grp_nsmul_eq_zero`: every point of `⟨G⟩ = zmultiples secp256k1G` is annihilated by `n`, so `⟨G⟩` carries a `Module (ZMod n)` structure built via `AddCommGroup.zmodModule`. This realises the abstract discrete-log model on a genuine elliptic-curve group — Mathlib provides no automatic `ZMod n`-module on a cyclic subgroup; it must be constructed from the exponent bound, which the weak keystone `addOrderOf secp256k1G = n` supplies. The bridge that lets every abstract protocol theorem instantiate on real `WeierstrassCurve.Affine.Point` values)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_grp_nsmul_eq_zero` (+ the `Module (ZMod n) ↥⟨G⟩` instance, `secp256k1Gₙ`)",
       "declared_files": [
@@ -6950,7 +7007,7 @@
           "line": 68
         },
         {
-          "ledger_id": "ledger-271",
+          "ledger_id": "ledger-272",
           "cited": "Module (ZMod Secp256k1.n) ↥secp256k1Grp",
           "resolution": "anonymous-instance-target",
           "namespace": "Ecdlp.Curve",
@@ -6961,7 +7018,7 @@
       ]
     },
     {
-      "id": "ledger-272",
+      "id": "ledger-273",
       "claim": "Deployed signature/agreement protocols are correct on the concrete secp256k1 group (the abstract `Ecdlp.Schnorr` correctness theorems instantiated at the concrete carrier `↥⟨G⟩` with base point `secp256k1Gₙ`, about genuine curve points: Diffie–Hellman agreement `secp256k1_dh_agree`, Schnorr/EdDSA verification `secp256k1_schnorr_verify`, Bitcoin Taproot key-tweak `secp256k1_taproot_tweak_verify` (BIP-341), adaptor-signature completeness `secp256k1_adaptor_complete` (atomic swaps / Lightning PTLCs). Contingent only on `ord(G) = n` + the abstract algebra — the honest content: the real secp256k1 protocols verify on the actual curve subgroup, not only an abstract module)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_dh_agree`, `secp256k1_schnorr_verify`, `secp256k1_taproot_tweak_verify`, `secp256k1_adaptor_complete`",
       "declared_files": [
@@ -7005,7 +7062,7 @@
       ]
     },
     {
-      "id": "ledger-273",
+      "id": "ledger-274",
       "claim": "*(instantiation, multiparty protocols)* the same concrete-`⟨G⟩` realization for the multi-signer / threshold protocols — aggregate Schnorr / Taproot multisig `secp256k1_threshold_schnorr_aggregate` (MuSig/FROST), MuSig2 key aggregation `secp256k1_musig_key_aggregate`, Feldman VSS share verification `secp256k1_feldman_vss_verify` (DKG), threshold ElGamal partial-decryption combination `secp256k1_threshold_elgamal_combine`, batch Schnorr verification `secp256k1_schnorr_batch_verify",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_threshold_schnorr_aggregate`, `secp256k1_musig_key_aggregate`, `secp256k1_feldman_vss_verify`, `secp256k1_threshold_elgamal_combine`, `secp256k1_schnorr_batch_verify`",
       "declared_files": [
@@ -7057,7 +7114,7 @@
       ]
     },
     {
-      "id": "ledger-274",
+      "id": "ledger-275",
       "claim": "The secp256k1 crypto subgroup `⟨G⟩` is cyclic of order exactly `n` (`secp256k1_grp_card`: `Nat.card ⟨G⟩ = n`, from `Nat.card (zmultiples g) = addOrderOf g` + the weak keystone; `secp256k1_grp_isAddCyclic`: `IsAddCyclic ⟨G⟩`. The group-object-level statement of \"⟨G⟩ is a concrete cyclic group of order `n`\" — no Hasse/`#E`, only `addOrderOf G = n`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_grp_card`, `secp256k1_grp_isAddCyclic`",
       "declared_files": [
@@ -7085,7 +7142,7 @@
       ]
     },
     {
-      "id": "ledger-275",
+      "id": "ledger-276",
       "claim": "The discrete-log map is a group isomorphism `ZMod n ≃+ ⟨G⟩` (`secp256k1_dlogEquiv`: base-point multiplication `c ↦ c·G` is an additive-group isomorphism between the scalar ring `ZMod n` and the concrete secp256k1 subgroup `⟨G⟩` — the exact group-theoretic content of the ECDLP setting: the discrete log `dlog = (c ↦ c·G)⁻¹` is a well-defined bijection. Its *computational* inversion is the open ECDLP hardness conjecture; this asserts only the unconditional bijection, via injective (`c.val < n = addOrderOf G`) + surjective (`zmultiples`) on the `ZMod n`-module `⟨G⟩`. Built with `AddEquiv.ofBijective`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_dlogEquiv` (+ `secp256k1_dlogHom`, `_injective`, `_surjective`, `secp256k1_gen_addOrderOf`)",
       "declared_files": [
@@ -7137,7 +7194,7 @@
       ]
     },
     {
-      "id": "ledger-276",
+      "id": "ledger-277",
       "claim": "Affine Weierstrass points are finite over any finite ring — general lemma (Mathlib-gap upstream candidate) (`instFinitePoint`: `Finite W.Point` for every `W : WeierstrassCurve.Affine R` with `[CommRing R] [Finite R]`, via `Point ↪ Option (R × R)`. Weakest hypotheses — no `Field`/`Nontrivial`. Mathlib v4.31.0 has no `Finite`/`Fintype` instance on any `Point` variant (gap confirmed against pinned source); natural upstream home `Mathlib/AlgebraicGeometry/EllipticCurve/Affine/Point.lean`. Subsumes the two per-curve instances below, now one-line `inferInstance` corollaries. Pure-kernel)",
       "theorem_cell": "`WeierstrassCurve.Affine.instFinitePoint`",
       "declared_files": [
@@ -7157,7 +7214,7 @@
       ]
     },
     {
-      "id": "ledger-277",
+      "id": "ledger-278",
       "claim": "secp256k1 rational-point group is finite (`instFiniteSecp256k1Point`: `Finite secp256k1.toAffine.Point`, now a one-line `inferInstance` corollary of the general `WeierstrassCurve.Affine.instFinitePoint` since `ZMod Secp256k1.p` is a finite commutative ring. Makes Mathlib's `Nat.card E.toAffine.Point` (as used in `EllipticCurve/LFunction.lean`) a real quantity rather than junk `0`. Pure-kernel, no native_decide)",
       "theorem_cell": "`Ecdlp.Curve.instFiniteSecp256k1Point`",
       "declared_files": [
@@ -7177,7 +7234,7 @@
       ]
     },
     {
-      "id": "ledger-278",
+      "id": "ledger-279",
       "claim": "n ∣ #E(𝔽_p)` — base-point order divides the curve cardinality (`secp256k1_n_dvd_card_point`: `Secp256k1.n ∣ Nat.card secp256k1.toAffine.Point`, by Lagrange on `⟨G⟩` (order the proved `n`) + finiteness. The first verified fact about `#E` itself — all prior point-counting stayed inside `⟨G⟩`. Pins `#E ∈ {n, 2n, 3n, …}`; the strong keystone `#E = n` is now proved on top, curve-specifically without Hasse/Schoof (`CurveCardinalityExact.lean`). Compiler-trusted: inherits `Lean.ofReduceBool` from the order keystone `secp256k1_generator_addOrderOf` via `secp256k1_grp_card` — the Lagrange/finiteness step itself adds no `native_decide`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_n_dvd_card_point`",
       "declared_files": [
@@ -7197,7 +7254,7 @@
       ]
     },
     {
-      "id": "ledger-279",
+      "id": "ledger-280",
       "claim": "The exact curve cardinality `#E(𝔽_p) = n` — cofactor 1, without Hasse or Schoof (`secp256k1_card_point_eq_n`: `Nat.card secp256k1.toAffine.Point = Secp256k1.n`). A curve-specific certificate that upgrades `n ∣ #E` to equality using the special structure of `E : Y² = X³ + 7` over `p ≡ 1 (mod 3)`: `#E ≤ 2p+1` (`secp256k1_card_point_le`, ≤2 `y` per `x`) and `2p+1 < 3n` force `#E ∈ {n, 2n}`; `2n` (even) is excluded because additive Cauchy would yield a nonzero 2-torsion point, but `E[2] = {O}` (`secp256k1_no_nonzero_two_torsion`: `2•P=0 ⟹ P=0`, since `y=0 ⟹ x³=−7` and `−7` is not a cube in `𝔽_p`, `(−7)^((p−1)/3)≠1`). Removes the last standing assumption behind Units 1–2 (the published order `n` as `#E`). Uses `native_decide` for the 256-bit non-cube leaf and the literal arithmetic (`Lean.ofReduceBool`); numeric facts independently re-checked in `scripts/certs/cardinality_secp256k1.py`, prints `CERT_OK`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_card_point_eq_n`, `secp256k1_no_nonzero_two_torsion`, `secp256k1_card_point_le`",
       "declared_files": [
@@ -7233,7 +7290,7 @@
       ]
     },
     {
-      "id": "ledger-280",
+      "id": "ledger-281",
       "claim": "The whole point group equals `⟨G⟩` — `E(𝔽_p)` is cyclic, `glvPoint = [λ]` unconditional (`secp256k1_grp_eq_top`: `secp256k1Grp = ⊤`, from `#⟨G⟩ = n = #E` via `AddSubgroup.eq_top_of_card_eq`). Upgrades every `⟨G⟩`-only result to the full rational-point group now that `#E = n` is proved: `secp256k1_point_isAddCyclic` (`IsAddCyclic E(𝔽_p)`, an instance), `secp256k1_mem_zmultiples` (every point is a multiple of `G`), and `secp256k1_glvHom_eq_zsmul_unconditional` (the GLV eigenvalue property with the `[IsAddCyclic]` hypothesis now discharged — `glvHom = [k]` with `k²+k+1` annihilating every point, no remaining hypotheses). Resolves the `⟨G⟩`-vs-`E(𝔽_p)` scope ambiguity. Pure-kernel on top of the keystone",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_grp_eq_top`, `secp256k1_point_isAddCyclic`, `secp256k1_mem_zmultiples`, `secp256k1_glvHom_eq_zsmul_unconditional`",
       "declared_files": [
@@ -7277,7 +7334,7 @@
       ]
     },
     {
-      "id": "ledger-281",
+      "id": "ledger-282",
       "claim": "The full point-group structure theorem: `E(𝔽_p) ≃+ ℤ/n` (`secp256k1_pointGroupEquiv`: base-point multiplication `c ↦ c·G` is an additive-group isomorphism from the scalar ring `ZMod n` onto the entire rational-point group `E(𝔽_p)`, not merely `⟨G⟩`. Lifts the subgroup discrete-log iso `secp256k1_dlogEquiv` off `⟨G⟩` by transporting across cofactor 1 `⟨G⟩ = ⊤` (`AddEquiv.addSubgroupCongr secp256k1_grp_eq_top`) then stripping the `⊤` subtype (`AddSubgroup.topEquiv`). The complete group-theoretic classification of secp256k1's points: cyclic of order `n`, i.e. `≅ ℤ/n`. Unconditional given `#E = n`; computational inversion is the open ECDLP conjecture, the bijection is a theorem. Inherits `Lean.ofReduceBool` through the order keystone)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_pointGroupEquiv` (+ `secp256k1_point_group_equiv_exists`)",
       "declared_files": [
@@ -7305,7 +7362,7 @@
       ]
     },
     {
-      "id": "ledger-282",
+      "id": "ledger-283",
       "claim": "secp256k1's point group has no proper nontrivial subgroup — group-level cofactor-1 security (`secp256k1_point_group_no_proper_subgroup`: every `AddSubgroup` of `E(𝔽_p)` is `⊥` or `⊤`, since `#E = n` is prime; plus `secp256k1_nonzero_point_generates`: every `P ≠ 0` has `zmultiples P = ⊤`, and an `IsSimpleAddGroup` instance). The point-group (curve) statement of small-subgroup / invalid-subgroup attack resistance — there is no small-order subgroup a point could be confined to. The geometric counterpart of the scalar-ring `secp256k1_scalar_no_proper_subgroup`, proved the same way with `secp256k1_card_point_eq_n` as the cardinality bridge. Pure-kernel on top of the keystone",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_point_group_no_proper_subgroup`, `secp256k1_nonzero_point_generates`",
       "declared_files": [
@@ -7333,7 +7390,7 @@
       ]
     },
     {
-      "id": "ledger-283",
+      "id": "ledger-284",
       "claim": "N7@5 — multiplication-by-5 `x`-coordinate formula: `x(5•P) = Φ₅(x)/ΨSq₅(x)` (`secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅`: whenever `5•P` is an affine point `(X,Y)`, then `X = (Φ 5)(x)/(ΨSq 5)(x)` — the degree-25 numerator over `preΨ₅²`, again with no side conditions: the generic branch adds `3P + 2P` — a chord between two nontrivial multiples, prototyping the addition step of the general N7 engine — through `quint_x_core` (12 `linear_combination` certificates incl. a 94+55-monomial master, designed by cofactor-tracked elimination of the three slopes `s₅, s₃, s₂`, kernel-re-verified); the 2-torsion branch (`5P = P`) and 3-torsion branch (`5P = 2P`, reduced to the `n = 2` formula) hold via `Ψ₂Sq ⊥ preΨ₅` / `Ψ₃ ⊥ preΨ₅` certificates. `Φ 5`/`ΨSq 5` eval forms derived through Mathlib's `Φ_ofNat`/`ΨSq_ofNat`/`preΨ'_even` recurrences (`preΨ₆ = Ψ₃(preΨ₅ − preΨ₄²)`). All certificates + 25-point (and independent 40-point, different prime) numeric checks: `scripts/certs/quint_mult_formula_check.py` (`CERT_OK`). N7 ladder now `n = 2, 3, 5`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_quintuple_x_eq_Φ₅_div_ΨSq₅`, `quint_x_core`",
       "declared_files": [
@@ -7361,7 +7418,7 @@
       ]
     },
     {
-      "id": "ledger-284",
+      "id": "ledger-285",
       "claim": "#E[3](𝔽̄_p) = 9` and `E[3] ≅ (ℤ/3)²` — node N13 at `n = 3` (`secp256k1Bar_three_torsion_structure`: the 3-torsion subgroup of secp256k1 over the algebraic closure is additively `ZMod 3 × ZMod 3` — the full 2-dimensional `𝔽₃`-plane. Route: the torsion set is proved EQUAL to the explicit 9-element finset `{O} ∪ {(x, ±y) : Ψ₃(x) = 0}` — membership by the closure bridge, `y ≠ 0` at every `Ψ₃`-root by `Ψ₂Sq ⊥ Ψ₃`, the two `y`-values distinct since `char ≠ 2`, exactly `4` distinct roots by the separability certificates; count `1 + 4·2 = 9` by finset card algebra (`secp256k1Bar_three_torsion_ncard`/`_card`/`secp256k1Bar_torsionBy_three_card`); then the kernel-structure lemma N10(iii) classifies. Composes six previously landed rungs (closure bridge, exact root counts, coprimality certificate, `±y`-pairing, N10(iii), torsionBy vocabulary) — the endpoint `N13@3` of the `ψₙ↔E[n]` critical path at `n = 3`)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1Bar_three_torsion_structure`, `secp256k1Bar_three_torsion_ncard`, `secp256k1Bar_torsionBy_three_card`",
       "declared_files": [
@@ -7397,7 +7454,7 @@
       ]
     },
     {
-      "id": "ledger-285",
+      "id": "ledger-286",
       "claim": "#E[5](𝔽̄_p) = 25` and `E[5] ≅ (ℤ/5)²` — N13 at `n = 5` (`secp256k1Bar_five_torsion_structure` + the closure bridge `secp256k1Bar_five_nsmul_eq_zero_iff` (`FiveTorsionBridgeBar.lean`, token-identical port of the `𝔽_p` five-bridge incl. `five_core`): the 5-torsion set equals `{O} ∪ {(x, ±y) : preΨ₅(x) = 0}` — 12 distinct roots (separability certificates) × 2 + O = 25 = 5²; `y ≠ 0` via `Ψ₂Sq ⊥ preΨ₅`; N10(iii) classifies. Replication of the E[3] pattern)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1Bar_five_torsion_structure`, `secp256k1Bar_five_nsmul_eq_zero_iff`, `secp256k1Bar_five_torsion_ncard`",
       "declared_files": [
@@ -7434,7 +7491,7 @@
       ]
     },
     {
-      "id": "ledger-286",
+      "id": "ledger-287",
       "claim": "#E[7](𝔽̄_p) = 49` and `E[7] ≅ (ℤ/7)²` — N13 at `n = 7` (`secp256k1Bar_seven_torsion_structure` + the closure bridge `secp256k1Bar_seven_nsmul_eq_zero_iff` (`SevenTorsionBridgeBar.lean`, token-identical port of `seven_master`/`seven_core`): 24 distinct `preΨ₇` roots × 2 + O = 49 = 7²; `y ≠ 0` via the new `Ψ₂Sq ⊥ preΨ₇` certificate; N10(iii) classifies. The N13 instance family is now `n ∈ {3, 5, 7}` — every odd prime with a landed torsion bridge; the general-`n` theorem remains the open program (separability/N10 general core))",
       "theorem_cell": "`Ecdlp.Curve.secp256k1Bar_seven_torsion_structure`, `secp256k1Bar_seven_nsmul_eq_zero_iff`, `secp256k1Bar_seven_torsion_ncard`",
       "declared_files": [
@@ -7471,7 +7528,7 @@
       ]
     },
     {
-      "id": "ledger-287",
+      "id": "ledger-288",
       "claim": "N7@4 — multiplication-by-4 `x`-coordinate formula: `x(4•P) = Φ₄(x)/ΨSq₄(x)` (`secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`: whenever `4•P` is an affine point `(X,Y)`, `X = (Φ 4)(x)/(ΨSq 4)(x)` with the degree-16 monic numerator `Φ₄(x) = x¹⁶ − 3808x¹³ + 144256x¹⁰ + 2985472x⁷ + 38108672x⁴ + 68841472x` and degree-15 denominator `ΨSq₄ = preΨ₄²·Ψ₂Sq` — the even rung `n = 4` of the N7 ladder (`n = 2, 3, 4, 5`). The generic branch runs doubling-of-doubling (`4P = 2·(2P)`, two tangents — vs. the odd chords), and its crux is that the outer doubling is the `n = 2` formula applied at `X2 = x(2P)`: `quad_x_core` chains `hInner` (the `n=2` identity `(s₄²−2X2)(4X2³+28) = X2⁴−56X2` at `X2`), `hBridge`, `hkey`; both 2-torsion escapes (`2P = O` or `2P` 2-torsion ⟹ `4P = O`) contradict an affine `4P`. Eval forms via Mathlib `Φ_ofNat`/`ΨSq_ofNat`/`preΨ'_even`; `Φ₄`/`ΨSq₄` independently verified against from-scratch division polynomials + 2-prime numeric `x(4P)` check (`scripts/certs/quad_mult_formula_check.py`, `CERT_OK`))",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_quadruple_x_eq_Φ₄_div_ΨSq₄`, `quad_x_core`",
       "declared_files": [
@@ -7499,7 +7556,7 @@
       ]
     },
     {
-      "id": "ledger-288",
+      "id": "ledger-289",
       "claim": "N7@4 — multiplication-by-4 `y`-coordinate formula `y(4•P) = ω₄/ψ₄³` + fully closed `carrier_four` leaf (`secp256k1_quadruple_y`: whenever `4•P` is an affine point `(X,Y)`, `Y·ψ₄³ = ω₄(x)` with `ψ₄ = (2x⁶+280x³−784)(2y)` and the degree-24 `ω₄(x) = x²⁴+8624x²¹−2875712x¹⁸−16946944x¹⁵−1054135040x¹²−35487778816x⁹−229379784704x⁶−701632282624x³−188900999168` — the `y`-companion of the landed `x(4P)=Φ₄/ΨSq₄`, and the `n=4` analogue of `y(2P)=ω₂/(2y)³` / `y(3P)=ω₃/ψ₃³`. The core `quad_y_core` runs doubling-of-doubling (tangents `s₂` at `P`, `s₄` at `2P`) and closes by three CAS-designed `linear_combination` certificates assembled via the exact identity `(2Y2)³·4096y¹² = ψ₄³`. Fed by the freshly-derived even-index brick `secp256k1_psi6_evalEval` (`ψ6 = 2y·(3x¹⁶+4704x¹³−131712x¹⁰−7639296x⁷−12907776x⁴−103262208x)`) and its anchor `secp256k1_omega_recurrence_four` (`ψ₆ψ₃²−ψ₂ψ₅² = 4y·ω₄`), it reshapes into the joint ω-free carrier leaf `secp256k1_four_nsmul_coords_ωfree`, which closes `carrier_four` (both conjuncts) in the uniform induction stem — the `n=4` (even) base rung of `n7_uniform_secp256k1_x`. `ω₄`/`ψ₆` CAS-validated (on-curve `(A,B)` representation) + 10-prime numeric `Y(4P)·ψ₄³=ω₄` check. Honest scope: fixed `n=4`; the uniform induction over all `n` stays open. No `native_decide`, no new axioms)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_quadruple_y`, `quad_y_core`, `secp256k1_four_nsmul_coords_ωfree`, `secp256k1_omega_recurrence_four`, `secp256k1_psi6_evalEval`",
       "declared_files": [
@@ -7553,7 +7610,7 @@
       ]
     },
     {
-      "id": "ledger-289",
+      "id": "ledger-290",
       "claim": "X³ + 7` is separable — exactly 3 distinct roots over `𝔽̄_p` (`secp256k1_cubic_separable` + `secp256k1_cubic_roots_card_bar` = 3 / `_nodup_bar`: the 2-torsion cubic `X³+7` (whose roots are the `x`-coordinates of the 2-torsion, `Ψ₂Sq = 4(X³+7)`) is coprime to its derivative `3X²` by a trivial Bézout certificate `u₀·(X³+7) + (v₀X)·(3X²) = 1` (`u₀ = 7⁻¹`, `v₀ = −21⁻¹`; `p ∤ 21`), so it is separable and splits with `natDegree = 3` distinct roots over the closure — the `n = 2` analogue of the `secp256k1_Ψ₃_separable` family, the counting brick of E[2]. Constants cert-verified `scripts/certs/cubic_separable_cert.py` (`CERT_OK`))",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_cubic_separable`, `secp256k1_cubic_isCoprime_derivative`, `secp256k1_cubic_roots_card_bar`, `secp256k1_cubic_roots_nodup_bar`",
       "declared_files": [
@@ -7597,7 +7654,7 @@
       ]
     },
     {
-      "id": "ledger-290",
+      "id": "ledger-291",
       "claim": "#E[2](𝔽̄_p) = 4` and `E[2] ≅ (ℤ/2)²` — N13 at `n = 2`, completing the family to `n ∈ {2,3,5,7}` (`secp256k1Bar_two_torsion_structure` + the closure characterization `secp256k1Bar_two_nsmul_eq_zero_iff`: `2•P = O ⟺ y = 0`. Structurally the `n = 2` N13 instance — no multiplication formula: `2•P = O ⟺ P = −P ⟺ y = negY = −y ⟺ y = 0` (`char ≠ 2`), and `y = 0` on the curve forces `x³+7 = 0`. So `E[2] = {O} ∪ {(x,0) : X³+7-root}`, an explicit 4-element finset (no `±y` split — `y = 0` is forced), `1 + 3 = 4 = 2²`; N10(iii) at prime 2 classifies. The even companion of the odd family)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1Bar_two_torsion_structure`, `secp256k1Bar_two_nsmul_eq_zero_iff`, `secp256k1Bar_two_torsion_ncard`",
       "declared_files": [
@@ -7633,7 +7690,7 @@
       ]
     },
     {
-      "id": "ledger-291",
+      "id": "ledger-292",
       "claim": "W3 evaluation layer completed at the fraction level — `evalFracAt` + the Miller-representative nonvanishing (`evalFracAt h a b := evalAt h a / evalAt h b` with the representation-independence core `evalFracAt_well_defined` (cross-multiplication `a₁b₂ = a₂b₁` + nonvanishing denominators ⟹ equal values — transported through the ring hom `evalAt`, no domain instance needed), Miller-loop multiplicativity `evalFracAt_mul`, unit facts (`evalAt_unit_ne_zero`: coordinate-ring units never vanish at rational points; `evalFracAt_unit_mul`), and the bridge to the localization layer `evalRatAt_eq_evalFracAt` (an `a/b` presentation of a rational function regular at `P` evaluates identically under the residue map). Plus the secp256k1 Miller-layer theorem `secp256k1_miller_eval_scaling`: the W2 Miller-function representative ambiguity is a globally nonvanishing unit factor at every rational point — the well-definedness seed for the eventual `eₙ`. Honest scope: extracting an `a/b` presentation from an abstract `FunctionField` element is the documented next rung; curve-agnostic sections PR-able)",
       "theorem_cell": "`Ecdlp.Weil.evalFracAt_well_defined`, `evalFracAt_mul`, `evalAt_unit_ne_zero`, `evalRatAt_eq_evalFracAt`, `secp256k1_miller_eval_scaling`",
       "declared_files": [
@@ -7685,7 +7742,7 @@
       ]
     },
     {
-      "id": "ledger-292",
+      "id": "ledger-293",
       "claim": "Function-field `a/b` extraction — every rational function is a quotient of regular functions (`functionField_exists_num_den`: every `f` in the curve's function field (`FractionRing F[E]`, definitionally) equals `algebraMap a / algebraMap b` with `b ≠ 0` — via `IsLocalization.surj` on the nonZeroDivisors localization; with the division-free form (`functionField_exists_mul_num_den`), cross-multiplication faithfulness of two presentations (`functionField_num_den_cross`), nonzero-numerator (`functionField_num_ne_zero`), the weld to `evalFracAt` (`evalFracAt_num_den_well_defined`: presentations regular at `P` evaluate equally), and the Miller instantiation `secp256k1_miller_function_num_den` (the W2 generator `f_P` = an explicit quotient `↑a/↑b`, and the fractional ideal is generated by that quotient). Honest scope: the extraction controls `b ≠ 0` but not *where* `b` vanishes — choosing a presentation with `b(P) ≠ 0` for `f` regular at `P` is the documented next rung, then `f_P(D_Q)` and W4)",
       "theorem_cell": "`Ecdlp.Weil.functionField_exists_num_den`, `functionField_num_den_cross`, `evalFracAt_num_den_well_defined`, `secp256k1_miller_function_num_den`",
       "declared_files": [
@@ -7729,7 +7786,7 @@
       ]
     },
     {
-      "id": "ledger-293",
+      "id": "ledger-294",
       "claim": "W3 closed at the function-field level — `RegularAt` and evaluation of abstract elements (`FunctionFieldRegular.lean`: the `RegularAt` predicate (`∃ a b, evalAt b ≠ 0 ∧ f = a/b`), the unique value `evalReg` with its defining lemmas, and the two-way bridge to the localization: an element of `Localization.AtPrime (XYIdeal P)` maps to a `RegularAt` function (via `IsLocalization.surj` + `evalAt_ker` rewriting `b ∉ XYIdeal ⟺ evalAt b ≠ 0`), and conversely a regular presentation determines a localization element (`IsLocalization.mk'`), with the payoff weld `evalRatAt = evalReg` on the overlap. With this, every abstract function-field element regular at `P` has a well-defined value at `P` — the W3 evaluation half is closed end-to-end (`evalAt → evalRatAt → evalFracAt → a/b extraction → RegularAt`); next: `f_P(D_Q)` divisor evaluation and W4 reciprocity)",
       "theorem_cell": "`Ecdlp.Weil.RegularAt`, `evalReg`, `evalRatAt_eq_evalReg` (+ 14 supporting)",
       "declared_files": [
@@ -7885,7 +7942,7 @@
       ]
     },
     {
-      "id": "ledger-294",
+      "id": "ledger-295",
       "claim": "Weil ladder W3e-1 — divisor evaluation `f((Q)−(O))` is multiplicative in the function (`divEval_mul`: for `f, g` regular at both `Q` and `O`, `divEval (f·g) = divEval f · divEval g`, where `divEval f := evalReg f Q / evalReg f O` is the value of `f` at the degree-0 divisor `(Q)−(O)`; via the pointwise multiplicativity `evalReg_mul` — `evalReg (f·g) = evalReg f · evalReg g` at a point, from `evalReg_eq` + `evalFracAt_mul`. The homomorphism property that makes `f_P(D_Q)` a map `E → μₙ` in the Weil pairing; first evaluation-half rung of `notes/WEIL_LADDER.md`)",
       "theorem_cell": "`Ecdlp.Weil.divEval_mul`, `evalReg_mul`",
       "declared_files": [
@@ -7913,7 +7970,7 @@
       ]
     },
     {
-      "id": "ledger-295",
+      "id": "ledger-296",
       "claim": "Weil ladder W3e-2 — how the Miller representative enters `divEval`, and conditional representative-independence (`divEval_smul_unit`: for `g = u·f` with `u` a unit of `F[E]` and `f, g` regular at `Q, O`, `divEval g = (u(Q)/u(O)) · divEval f` — the entire dependence of `divEval` on the choice of Miller function is the single ratio `u(Q)/u(O)`, from the pointwise `evalReg_smul_unit` = `evalReg (u·f) = u(P)·evalReg f` via `evalFracAt_unit_mul`; and `divEval_smul_unit_eq`: if additionally `u(Q) = u(O)` the ratio is `1`, so `divEval g = divEval f`. secp256k1 forms `secp256k1_divEval_miller_rep_scaling`/`_indep` apply this to the `secp256k1_miller_function_unique` ambiguity. Honest scope: unconditional independence needs `u(Q)=u(O)`, i.e. that units of `F[E]` are constants — absent from Mathlib v4.31, carried as an explicit hypothesis, not proved)",
       "theorem_cell": "`Ecdlp.Weil.divEval_smul_unit`, `divEval_smul_unit_eq`, `evalReg_smul_unit`",
       "declared_files": [
@@ -7949,7 +8006,7 @@
       ]
     },
     {
-      "id": "ledger-296",
+      "id": "ledger-297",
       "claim": "Weil ladder W3e-3 — the raw pairing value's domain (support-disjointness bridge) + the `divEval` unit law (`secp256k1_miller_jointly_regular`: a Miller function `f` for `(P,n)` has a fixed presentation `a/b`, and at any two points `A, B` where the single denominator `b` does not vanish — i.e. `A, B` off `supp(div f)` — `f` is regular at both, the joint-regularity hypothesis `divEval hA hB` consumes, from one geometric condition; and `divEval_one`/`evalReg_one`: `divEval 1 ((A)−(B)) = 1`, which with `divEval_mul` makes `divEval` a monoid hom on the functions regular at both points. Closes the reachable W3-evaluation scaffolding. Honest scope: this packages the raw value's domain + algebra; it does not assemble `eₙ(P,Q)` — that needs Weil reciprocity, the frozen W4 no-go, since the base point `O ∈ supp(div f_P)`)",
       "theorem_cell": "`Ecdlp.Weil.secp256k1_miller_jointly_regular`, `divEval_one`",
       "declared_files": [
@@ -7977,7 +8034,7 @@
       ]
     },
     {
-      "id": "ledger-297",
+      "id": "ledger-298",
       "claim": "7` is a quadratic non-residue modulo `p`; no affine secp256k1 point over `𝔽_p` has `x=0` (`secp256k1_seven_not_isSquare`: Euler's criterion contradicts the closed witness `7^(p/2) ≠ 1`; `secp256k1_x_ne_zero`: substituting `x=0` into `y²=x³+7` would exhibit `7` as a square)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_seven_ne_zero`, `secp256k1_seven_pow_ne_one`, `secp256k1_seven_not_isSquare`, `secp256k1_x_ne_zero`",
       "declared_files": [
@@ -8568,6 +8625,13 @@
       "file": "Ecdlp/Proved/CurveSmoothness.lean",
       "line": 77
     },
+    "Ecdlp.Curve.lt_pMinusOneCofactor": {
+      "name": "lt_pMinusOneCofactor",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+      "line": 68
+    },
     "Ecdlp.Curve.mk_φ_mul_ΨSq": {
       "name": "mk_φ_mul_ΨSq",
       "namespace": "Ecdlp.Curve",
@@ -8616,6 +8680,41 @@
       "kind": "instance",
       "file": "Ecdlp/Proved/CurveTorsion.lean",
       "line": 54
+    },
+    "Ecdlp.Curve.pMinusOneCofactor": {
+      "name": "pMinusOneCofactor",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+      "line": 54
+    },
+    "Ecdlp.Curve.pMinusOneCofactor_no_small_prime_factor": {
+      "name": "pMinusOneCofactor_no_small_prime_factor",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+      "line": 80
+    },
+    "Ecdlp.Curve.pMinusOneCofactor_prime": {
+      "name": "pMinusOneCofactor_prime",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+      "line": 64
+    },
+    "Ecdlp.Curve.pMinusOneSmoothPart": {
+      "name": "pMinusOneSmoothPart",
+      "namespace": "Ecdlp.Curve",
+      "kind": "def",
+      "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+      "line": 58
+    },
+    "Ecdlp.Curve.pMinusOneSmoothPart_eq": {
+      "name": "pMinusOneSmoothPart_eq",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+      "line": 60
     },
     "Ecdlp.Curve.p_mod_four": {
       "name": "p_mod_four",
@@ -9870,6 +9969,20 @@
       "file": "Ecdlp/Proved/NsmulCoordsBaseOne.lean",
       "line": 30
     },
+    "Ecdlp.Curve.secp256k1_p_sub_one_factorization": {
+      "name": "secp256k1_p_sub_one_factorization",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+      "line": 72
+    },
+    "Ecdlp.Curve.secp256k1_p_sub_one_smooth_part_value": {
+      "name": "secp256k1_p_sub_one_smooth_part_value",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+      "line": 77
+    },
     "Ecdlp.Curve.secp256k1_pointGroupEquiv": {
       "name": "secp256k1_pointGroupEquiv",
       "namespace": "Ecdlp.Curve",
@@ -10331,6 +10444,20 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/SmallPrimeTorsion.lean",
       "line": 36
+    },
+    "Ecdlp.Curve.secp256k1_smooth_divisor_dvd_smooth_part": {
+      "name": "secp256k1_smooth_divisor_dvd_smooth_part",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+      "line": 92
+    },
+    "Ecdlp.Curve.secp256k1_smooth_divisor_le": {
+      "name": "secp256k1_smooth_divisor_le",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+      "line": 107
     },
     "Ecdlp.Curve.secp256k1_sqrt_of_isSquare": {
       "name": "secp256k1_sqrt_of_isSquare",
