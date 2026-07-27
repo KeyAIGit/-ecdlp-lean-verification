@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 12,
+                "source_claims": 16,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -123,6 +123,12 @@ class TypedEvidenceTests(unittest.TestCase):
 
     def test_metadata_only_claim_cannot_decide_a_property(self) -> None:
         policy = copy.deepcopy(self.policy)
+        claim = next(
+            item
+            for item in policy["source_claims"]
+            if item["id"] == "SC-AMADORI-PRIME-FIELD-VARIANT"
+        )
+        claim["read_status"] = "metadata_only"
         prop = next(
             item
             for item in policy["target_properties"]
@@ -151,6 +157,29 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertTrue(
             any(
                 "contradicts source registry full_text_unread" in item
+                for item in problems
+            )
+        )
+
+    def test_inspected_source_registry_requires_a_full_text_claim(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        claim = next(
+            item
+            for item in policy["source_claims"]
+            if item["id"] == "SC-AMADORI-PRIME-FIELD-VARIANT"
+        )
+        claim["read_status"] = "metadata_only"
+        claim["artifact_sha256"] = None
+        claim["locator"] = {
+            "kind": "section",
+            "value": "Bibliographic record and abstract only",
+        }
+        claim["evidence_path"] = None
+        problems, _ = self.build(policy=policy)
+        self.assertTrue(
+            any(
+                "full_text_inspected but its typed evidence has no "
+                "full_text_obtained claim" in item
                 for item in problems
             )
         )
@@ -185,27 +214,27 @@ class TypedEvidenceTests(unittest.TestCase):
             cells["CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND"]["seed_eligible"]
         )
 
-    def test_m4_screen_does_not_close_the_m14_cost_cell(self) -> None:
+    def test_m4_screen_does_not_close_the_m16_cost_cell(self) -> None:
         problems, state = self.build()
         self.assertEqual([], problems)
         cells = {item["cell_id"]: item for item in state["cells"]}
         self.assertEqual(
             "decided_inapplicable", cells["CELL-M-PKC-SMOOTH-M4"]["status"]
         )
-        self.assertEqual("open", cells["CELL-M-PKC-SMOOTH-M14"]["status"])
-        self.assertTrue(cells["CELL-M-PKC-SMOOTH-M14"]["seed_eligible"])
+        self.assertEqual("open", cells["CELL-M-PKC-SMOOTH-M16"]["status"])
+        self.assertTrue(cells["CELL-M-PKC-SMOOTH-M16"]["seed_eligible"])
 
-    def test_pkc_smooth_threshold_is_recomputed_from_p_and_arity(self) -> None:
+    def test_pkc_smooth_thresholds_are_recomputed_from_p_and_arity(self) -> None:
         policy = copy.deepcopy(self.policy)
         mechanism = next(
             item
             for item in policy["mechanisms"]
-            if item["id"] == "M-PKC-SMOOTH-M14"
+            if item["id"] == "M-PKC-SMOOTH-M16"
         )
         mechanism["requires_all"][0]["expected"] -= 1
         problems, _ = self.build(policy=policy)
         self.assertTrue(
-            any("recomputed ceil(p^(1/14))" in item for item in problems)
+            any("must use both recomputed thresholds" in item for item in problems)
         )
 
     def test_unknown_target_property_creates_resolution_work(self) -> None:
@@ -256,6 +285,22 @@ class TypedEvidenceTests(unittest.TestCase):
         problems, _ = self.build(desk_records=records)
         self.assertTrue(
             any("differs from the materialized cell" in item for item in problems)
+        )
+
+    def test_desk_decision_covers_repeated_property_requirements(self) -> None:
+        records = copy.deepcopy(self.desk_records)
+        decision = next(
+            record
+            for _, record in records
+            if record["cell_id"] == "CELL-M-PKC-SMOOTH-M4"
+        )
+        decision["property_verdicts"].pop()
+        problems, _ = self.build(desk_records=records)
+        self.assertTrue(
+            any(
+                "property_verdicts do not cover every cell requirement" in item
+                for item in problems
+            )
         )
 
 

@@ -35,10 +35,12 @@ may emit a non-executable research question. Neither path authorizes a run.
 3. The PKC 2016 arity-four smooth-subgroup instance fails the target's
    factor-base-size requirement. This does not close the construction at every
    arity.
-4. At arity fourteen, the small-factor product in secp256k1 `p-1` exceeds the
-   exact integer ceiling of `p^(1/14)`. This clears only the raw size predicate;
-   the corresponding S15 construction, solving, recovery, and total cost remain
-   unpriced, so no solver run is justified.
+4. The source's relation-yield balance is stricter than the raw
+   `p^(1/m)` size condition. The small-factor product `564522` first clears both
+   exact integer thresholds at arity sixteen: `65536` for `p^(1/16)` and
+   `445676` for `(16! p)^(1/16)`. This arithmetic screen leaves the
+   corresponding S17 construction, generalized-root representation, recovery,
+   and total cost unpriced, so no solver run is justified.
 5. The PKC 2016 auxiliary curve is not required to be isogenous to secp256k1.
    It is an auxiliary curve over the same field; its own smooth-kernel isogeny
    defines the composed root map. The next obligation is an explicit instance

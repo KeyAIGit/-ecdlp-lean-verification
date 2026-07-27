@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.1",
+  "source_id": "yokoyama_yasuda_takahashi_kogure2020",
+  "source_title": "Complexity Bounds on Semaev's Naive Index Calculus Method for ECDLP",
+  "source_url": "https://web.archive.org/web/20210718042719id_/https://www.degruyter.com/document/doi/10.1515/jmc-2019-0029/pdf",
+  "source_artifact_sha256": "8d7256195d40b1afa56d99adc34c4775d90b8ce4d98aea3ff7d881fc87adea59",
+  "acquired_on": "2026-07-26",
+  "review_status": "full_text_obtained",
+  "review_provenance": {
+    "method": "Direct inspection of the final 26-page publisher PDF obtained from a preserved publisher snapshot; the random-V setup, Assumption 7, Remark 8, Lemma 8, Proposition 9, and the resulting naive-method bound were checked in context.",
+    "source_independence": "not_established",
+    "boundary": "The source is primary literature, but this extract is an internal claim-level review. The statistical assumption and the non-rigorous cross-algorithm transfer remain assumptions rather than established facts."
+  },
+  "claims": [
+    {
+      "claim_id": "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND",
+      "locator": {
+        "kind": "section",
+        "value": "Naive random-V setup in Section 2; Assumption 7, Remark 8, Lemma 8, and Proposition 9 in Sections 3.4 and 4.1.2"
+      },
+      "paraphrase": "For the naive point-decomposition ideal built from a randomly chosen subset V of the field, Proposition 9 gives a lower bound of (m*d^(m-1))^(1-epsilon) field operations for almost every target pair under Assumption 7 and Remark 8, for efficient Gröbner-basis algorithms using S-polynomials.",
+      "boundary": "This is a conditional cost lower bound, not a solving-degree theorem. The source's naive setup uses random V, while Petit subgroup or isogeny-kernel root sets, Amadori's accumulated random-point factor base, and Kudo's unread hybrid construction have different structure; no transfer to them is asserted."
+    }
+  ]
+}

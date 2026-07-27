@@ -277,6 +277,29 @@ SOURCES: list[dict] = [
                 "confirmed, and the full paper was not inspected in this iteration.",
     },
     {
+        "id": "yokoyama_yasuda_takahashi_kogure2020",
+        "title": "Complexity Bounds on Semaev's Naive Index Calculus Method for ECDLP",
+        "authors": [
+            "Kazuhiro Yokoyama",
+            "Masaya Yasuda",
+            "Yasushi Takahashi",
+            "Jun Kogure",
+        ],
+        "year": 2020,
+        "venue": "Journal of Mathematical Cryptology 14(1), pp. 460–485",
+        "url": "https://doi.org/10.1515/jmc-2019-0029",
+        "doi": "10.1515/jmc-2019-0029",
+        "aliases": ["Yokoyama–Yasuda–Takahashi–Kogure", "Yokoyama"],
+        "role": "Conditional lower-bound evidence for Gröbner-basis computation in "
+                "Semaev's naive random-factor-base index calculus method.",
+        "full_text_status": "full_text_inspected",
+        "note": "The final 26-page publisher PDF was inspected from a preserved publisher "
+                "snapshot. Proposition 9 depends on Assumption 7 and the explicitly "
+                "non-rigorous transfer in Remark 8, and is scoped to the naive random-V "
+                "ideal and algorithms using S-polynomials. It is not a no-go theorem for "
+                "structured Petit, Amadori, or Kudo systems.",
+    },
+    {
         "id": "petit_ecdlp_largechar",
         "title": "Faster Algorithms for the ECDLP in the Large Characteristic Case (title as "
                  "cited in the repo)",

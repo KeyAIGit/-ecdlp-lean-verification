@@ -136,11 +136,13 @@ exact `Θ` statements.
   (base of the `deg Sₘ = 2^{m−2}` tower), so each factor-base coordinate has **≤ 2 completions** —
   bounded relation fan-out. **What remains genuinely open (NOT a theorem here):** that this
   bounded-fan-out plus factor-base balance yields *no* subexponential algorithm over `𝔽_p`. The
-  obstruction is that a prime field affords **no Weil restriction** to split the single Semaev
-  equation into a solvable Gröbner system (the extension-field trick of Gaudry–Diem), so the
-  decomposition collapses to one equation of degree `~2^{m−2}` that is as hard as the original.
-  This is the studied heuristic behind prime-field ECDLP staying `Θ(√n)` — but a *proof* would
-  settle the open hardness conjecture and is **not** claimed. The kernel-checked results map
+  obstruction is that a prime field affords **no Weil restriction** to split the raw
+  coordinate-only factor-base equation into the extension-field Gröbner systems used by
+  Gaudry–Diem. Published prime-field variants instead add structured univariate map equations,
+  and their total solving cost remains open; neither presentation is proved as hard as the
+  original problem. This is part of the studied heuristic behind prime-field ECDLP staying
+  `Θ(√n)`, but a *proof* would settle an open hardness conjecture and is **not** claimed. The
+  kernel-checked results map
   *where the search lives and how it branches*; the cost lower bound itself stays in the open
   frontier, recorded here, not dressed as proved.
 
@@ -419,9 +421,10 @@ surfaced PR, and wider-GitHub Lean search:
 - **Weil pairing** `e_n : E[n]×E[n]→μ_n` and the structure theorem `E[n] ≅ (ℤ/n)²` — nothing.
 - **Division-polynomial torsion bridge** `ψₙ(P)=0 ⟺ P ∈ E[n]` — the keystone; `ψₙ` is free but
   the link to the point group / mul-by-`n` lives only in stalled PR #13782. **Highest-ROI next port.**
-- **Semaev summation polynomials** `S_n` — zero hits upstream (master, PRs, GitHub-wide);
-  the `S₃` base case + forward direction is now formalized **in this repo**
-  (`Ecdlp/Proved/SemaevThree.lean`), still the only Lean Semaev formalization anywhere.
+- **Semaev summation polynomials** `S_n` — the dated upstream and surfaced-PR scan recorded in
+  `notes/UPSTREAM_SCAN.md` found no other Lean formalization. The `S₃` base case + forward
+  direction is formalized **in this repo** (`Ecdlp/Proved/SemaevThree.lean`); absence from that
+  bounded scan is not proof of global uniqueness.
 - **General multi-index elliptic nets** (rank ≥ 2, subnet functoriality) — only rank-1 exists
   (master + stalled PR #25989).
 - **EC isogenies / endomorphisms / Frobenius** as point-group homs — no module.

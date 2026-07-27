@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
   "snapshot": {
-    "captured_at": "2026-07-26T01:13:30-07:00",
+    "captured_at": "2026-07-27T15:04:23+09:00",
     "remote": "origin",
     "base_ref": "origin/main",
     "base_sha": "fed55d84675fd96e5f40204b9f5f49baa8c01172",
-    "real_remote_branch_count": 28,
-    "remote_names_sha256": "b145f0f9b02a262725b059f4a79024e8c49740170e3801e809512e7ad64b9d77",
+    "real_remote_branch_count": 31,
+    "remote_names_sha256": "ca3bb4134e258835c699e77e5ac2d3f609560425d3563e915f3ff388690b5a8f",
     "comparison": "git rev-list --left-right --count <main-tip>...<branch-tip>",
     "recording_note": "Tips are a dated observation. The active branch necessarily advances when this snapshot is committed; the gate compares the remote name set, not mutable tips."
   },
@@ -17,7 +17,8 @@
     "active_integrations": [
       "agent/glv-semaev-affine-closeout",
       "agent/research-engine-hypothesis-generation",
-      "agent/research-engine-mutation-hardening"
+      "agent/research-engine-mutation-hardening",
+      "agent/task014-evidence-closure"
     ],
     "superseded_drafts": [
       "agent/n7-certificate-generator",
@@ -26,9 +27,9 @@
     "cleanup_gate": "Content comparison, reference scan, restore path, and explicit owner approval are required before deletion or closure."
   },
   "groups": {
-    "active_integration": 3,
+    "active_integration": 4,
     "candidate_queue": 2,
-    "historical_unmerged": 20,
+    "historical_unmerged": 22,
     "keep_default": 1,
     "superseded_draft": 2
   },
@@ -123,10 +124,10 @@
     },
     {
       "name": "agent/research-engine-mutation-hardening",
-      "tip": "4c8ff4b1a43feb804a6c5d335b122beefced82a3",
+      "tip": "99231d1fb689ca4968e20ef411577b1cf4da61c1",
       "tip_date": "2026-07-26",
       "behind_main": 0,
-      "ahead_main": 7,
+      "ahead_main": 9,
       "merged_by_ancestry": false,
       "disposition": "active_integration",
       "delete_now": false,
@@ -142,6 +143,17 @@
       "disposition": "historical_unmerged",
       "delete_now": false,
       "next_action": "retain pending a dedicated content and restore-path audit"
+    },
+    {
+      "name": "agent/task014-evidence-closure",
+      "tip": "99231d1fb689ca4968e20ef411577b1cf4da61c1",
+      "tip_date": "2026-07-26",
+      "behind_main": 0,
+      "ahead_main": 9,
+      "merged_by_ancestry": false,
+      "disposition": "active_integration",
+      "delete_now": false,
+      "next_action": "retain for the scoped draft integration; inventory does not authorize merge"
     },
     {
       "name": "claude/agent-bundle-export",
@@ -204,6 +216,17 @@
       "tip_date": "2026-07-24",
       "behind_main": 2,
       "ahead_main": 4,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "retain pending a dedicated content and restore-path audit"
+    },
+    {
+      "name": "claude/opus-task014-hypothesis-audit",
+      "tip": "f2e00d44b12e221ef7eeb6dacc21537abd00d97d",
+      "tip_date": "2026-07-26",
+      "behind_main": 0,
+      "ahead_main": 2,
       "merged_by_ancestry": false,
       "disposition": "historical_unmerged",
       "delete_now": false,
@@ -327,6 +350,17 @@
       "ahead_main": 1,
       "merged_by_ancestry": false,
       "disposition": "candidate_queue",
+      "delete_now": false,
+      "next_action": "retain pending a dedicated content and restore-path audit"
+    },
+    {
+      "name": "research/pkc-sextic-twist-cm-screen",
+      "tip": "389b2a6dea728a5d515de74069d4597718b37083",
+      "tip_date": "2026-07-26",
+      "behind_main": 0,
+      "ahead_main": 14,
+      "merged_by_ancestry": false,
+      "disposition": "historical_unmerged",
       "delete_now": false,
       "next_action": "retain pending a dedicated content and restore-path audit"
     },

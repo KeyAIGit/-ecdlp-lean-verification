@@ -114,8 +114,7 @@
         "CEV-GLV-SEMAEV-INDEPENDENT-REPLAY",
         "REO-2026-07-24-001",
         "REO-2026-07-24-002",
-        "REO-2026-07-24-003",
-        "REO-2026-07-24-004"
+        "REO-2026-07-24-003"
       ],
       "assurance": [
         "certificate_replayed",

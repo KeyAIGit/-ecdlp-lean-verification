@@ -255,19 +255,26 @@ decision.
 
 ### TASK-014 - Run the first post-v0.2 scientific activation cycle
 
-Status: queued_after_task_010
+Status: evidence_closed_phase_d_blocked
 Kind: literature | applicability | cost | data | theorem | structural | research
 Hypothesis: none during evidence closure; the desk phase owns
 `RQ-PKC-SMOOTH-ARITY-COST-001`, while the parallel structural workstream owns
 `RQ-GLV-CONNECTED-SYSTEM-RIGIDITY-001`
 Why it matters: A new prime-field Semaev/Petit proposal cannot be assessed
-honestly while a relevant lower-bound paper is absent, Kudo CANS 2018 remains
-full-text unread, and Amadori has contradictory read status between the source
-registry and typed evidence. After those gaps close, the published
-smooth-subgroup construction needs a full desk-cost screen before any solver
-or native experiment can be justified. In parallel, a narrow connected-system
-GLV theorem can prevent the completed local phase obstruction from returning
-under a tree-local rephrasing.
+honestly without claim-level source boundaries and a full-cost bridge.
+Yokoyama and Amadori are now bound to inspected primary artifacts and exact
+extracts; Kudo CANS 2018 remains full-text unread. The deterministic
+smooth-subgroup desk screen resolves the two arithmetic predicates but leaves
+solving degree, recovery, relation independence, and total work unknown, so it
+does not justify a solver or native experiment.
+Current cycle disposition:
+- direct Petit smooth-subgroup instance: arithmetic predicates pass together
+  first at `m=16`, but the total mechanism remains `inconclusive` and no native
+  run is authorized
+- auxiliary-curve instance: `parked` with no retained exact candidate
+- connected-system GLV workstream: stopped before Lean work because no
+  decision-critical theorem and no source-independent review survived
+- Phase D: blocked with zero retained candidates
 Inputs:
 - Yokoyama, Yasuda, Takahashi, and Kogure, *Complexity bounds on
   Semaev's naive index calculus method for ECDLP*, JMC 14 (2020),
@@ -279,7 +286,7 @@ Inputs:
 - Petit, Kosters, and Messeng, PKC 2016
 - `data/source_registry.json`
 - `repo/ECDLP_TYPED_EVIDENCE_V0.json`
-- `CELL-M-PKC-SMOOTH-M14`
+- `CELL-M-PKC-SMOOTH-M16`
 - `EDD-2026-07-25-003`
 - exact secp256k1 public parameters
 - the matched plain Semaev baseline
@@ -302,8 +309,9 @@ Expected output:
 - Phase B, desk screen:
   - Exact, reproducible values for arities `m = 10..20`, including the
     source-validated factor-base threshold and relation-yield expression. The
-    expression `D^m / (m! p)` is review input, not canonical fact, until Phase
-    A anchors it to the source and its assumptions.
+    expression `D^m / (m! p)` is anchored to PKC 2016 Section 3.2 and remains
+    a heuristic expectation in that paper's unit-cost model, not a theorem
+    about relation independence or total attack cost.
   - Four representations: direct `S_(m+1)`, sequential `S3`, balanced `S3`,
     and a source-faithful low-degree membership/addition-chain encoding.
   - For each representation: variables, equations, multidegrees, monomial

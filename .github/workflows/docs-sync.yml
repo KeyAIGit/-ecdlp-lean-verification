@@ -191,6 +191,10 @@ jobs:
         run: |
           python3 scripts/build_typed_evidence_state.py --check
           python3 scripts/test_typed_evidence.py
+      - name: PKC smooth-subgroup desk-screen gate
+        run: |
+          python3 experiments/engine/pkc_smooth_desk_screen/generate.py --check
+          python3 experiments/engine/pkc_smooth_desk_screen/validate.py
       - name: Claim-level truth-state gate
         run: |
           python3 scripts/research_claims.py --check

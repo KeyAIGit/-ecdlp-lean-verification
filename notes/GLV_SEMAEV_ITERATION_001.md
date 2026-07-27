@@ -214,9 +214,9 @@ Outcome taxonomy:
 | Item | Outcome | Scope |
 |---|---|---|
 | Diagonal `S3` and `S4` laws | `proved` | Exact symbolic certificate and kernel-accepted Lean package |
-| Full coordinatewise semi-invariant classification | `proved` | Symbolic primitive component and exact secp256k1 specialization |
+| Full coordinatewise semi-invariant classification | `certificate_replayed` | Symbolic primitive component and exact secp256k1 specialization; not kernel-checked |
 | Independent `u_i=x_i^3` quotient | `bounded_negative` | It quotients by `C3^m`, not the diagonal `C3`, and loses relative phase |
-| Fixed-target scaling premise | `bounded_negative` | For every nonzero affine target in characteristic outside `{2,3}`, nonidentity diagonal action transports the target instead of preserving it; the zero slice has exactly the diagonal `C3` |
+| Fixed-target scaling premise | `bounded_negative` | For affine targets with `x(R) != 0` in characteristic outside `{2,3}`, nonidentity diagonal action transports the target instead of preserving it; the `x(R)=0` slice has exactly the diagonal `C3` |
 | Whole GLV-Semaev route | `open_parked` | No general Groebner lower bound or faithful Petit no-go was proved |
 
 This result does not imply that all geometric zero-variety automorphisms are
