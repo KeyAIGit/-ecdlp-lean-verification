@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 16,
+                "source_claims": 17,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -65,6 +65,33 @@ class TypedEvidenceTests(unittest.TestCase):
                 decision["authorization"] == "none"
                 for decision in state["desk_decisions"]
             )
+        )
+
+    def test_smooth_divisor_property_preserves_independent_replay(self) -> None:
+        property_record = next(
+            item
+            for item in self.policy["target_properties"]
+            if item["id"] == "TP-SECP-PMINUS1-SMOOTH-DIVISOR"
+        )
+        self.assertEqual("kernel_verified", property_record["status"])
+        self.assertIn(
+            "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
+            property_record["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-SECP-PMINUS1-FACTORIZATION",
+            property_record["source_claim_ids"],
+        )
+        claims = {
+            item["id"]: item for item in self.policy["source_claims"]
+        }
+        self.assertEqual(
+            "kernel_verified",
+            claims["SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"]["read_status"],
+        )
+        self.assertEqual(
+            "certificate_replayed",
+            claims["SC-SECP-PMINUS1-FACTORIZATION"]["read_status"],
         )
 
     def test_evidence_file_hash_is_recomputed(self) -> None:

@@ -11,9 +11,9 @@
 ## Verified asset (the ledger)
 | metric | value | source |
 |---|---|---|
-| ledger rows | **297** | `VERIFIED.md` → `data/stats.json` |
-| distinct results | **~258** | `data/stats.json` |
-| proved modules | **165** | `data/stats.json` |
+| ledger rows | **299** | `VERIFIED.md` → `data/stats.json` |
+| distinct results | **~260** | `data/stats.json` |
+| proved modules | **167** | `data/stats.json` |
 | `sorry` | **0** | axiom-audit + no-sorry gate |
 | custom axioms | **0** | axiom-audit gate |
 
@@ -71,8 +71,8 @@ The current bottleneck is **a missing proposal-level non-generic mechanism, not 
 volume**. Decision `RS-2026-07-24-001` evaluated all **17 attack routes** and
 recorded **1 route in completed bounded structural work**
 (`R-GLV-SEMAEV`), while promoting
-**0 routes**. The completed work resolved one exact S3/S4 symmetry and
-fixed-target uncertainty; it was not an attack experiment or a route promotion. The map contains
+**0 routes**. The completed work resolved one exact S3/S4 polynomial-symmetry
+question and one S4 fixed-target uncertainty; it was not an attack experiment or a route promotion. The map contains
 **11 foundation decisions**,
 bounded exploration authorized = **false**,
 promotion experiments authorized =

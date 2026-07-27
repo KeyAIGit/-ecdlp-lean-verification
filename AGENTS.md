@@ -106,8 +106,10 @@ branch from current `main`; preserve any unrelated local changes.
   `GLV-SEMAEV-ITER-001` on `R-GLV-SEMAEV`. Only the diagonal `C3` covariance
   survived; the route remains parked and no experiment, solver sweep, or
   direct secp256k1 work is authorized.
-- `TASK-009` is completed with exact symbolic replay, fixed-target transport,
-  and a kernel-accepted Lean package.
+- `TASK-009` is completed with exact symbolic replay, `S4` fixed-target
+  transport/classification, and a kernel-accepted Lean package. `S3` has
+  polynomial covariance/classification only; exhaustive fixed-target
+  classification remains certificate-backed.
 - `TASK-013` owns Research Engine v0: deterministic selection, historical
   outcome retention, independent validation, and feedback into generated state.
   Its bounded-exploration capability remains available in policy, but candidate

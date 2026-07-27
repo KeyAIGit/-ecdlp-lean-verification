@@ -4,8 +4,8 @@
   "status": "shadow_non_executing",
   "source_hashes": {
     "source_registry_sha256": "84b8589d2bf9e5bf5cd6378e4e87e835576394d52fb111d88aadba28a16cf85d",
-    "typed_evidence_state_sha256": "787b4beada1cc617dc1b40873b643abca052bc43d7ded47fb25a37bd7b0d3e1f",
-    "research_claim_state_sha256": "180b7b6c7c93b38f07ebd19d33047d5007df1cbc2174b18721ca2e1f5890e38b"
+    "typed_evidence_state_sha256": "6b9b9ef4d4b9c517a99f15fe95f2ac2c88a83b1766972c8d697da6b01882b9e2",
+    "research_claim_state_sha256": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1"
   },
   "counts": {
     "proposal_stubs": 4,
@@ -91,6 +91,7 @@
         "a scoped stop decision with no solver execution"
       ],
       "evidence_refs": [
+        "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
         "Ecdlp/Proved/Secp256k1PrimeP.lean",
         "Ecdlp/Proved/SemaevFour.lean",
         "cell:CELL-M-PKC-SMOOTH-M16",

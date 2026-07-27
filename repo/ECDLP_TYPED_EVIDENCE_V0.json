@@ -124,6 +124,22 @@
       "evidence_path": "Ecdlp/Proved/Secp256k1PrimeP.lean"
     },
     {
+      "id": "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
+      "source_id": "repo:kernel",
+      "source_type": "kernel_theorem",
+      "citation": "Lean theorem secp256k1_smooth_divisor_dvd_smooth_part.",
+      "read_status": "kernel_verified",
+      "url": null,
+      "artifact_sha256": null,
+      "locator": {
+        "kind": "theorem",
+        "value": "Ecdlp.Curve.secp256k1_smooth_divisor_dvd_smooth_part"
+      },
+      "statement": "Every divisor of secp256k1 p-1 whose prime divisors are at most 13441 divides 564522.",
+      "boundary": "This is arithmetic about divisors of the base-field value p-1 only; it is not an ECDLP or complexity result and says nothing about the group order, extension fields, or auxiliary curves.",
+      "evidence_path": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean"
+    },
+    {
       "id": "SC-SECP-PRIME-FIELD",
       "source_id": "sec2_v2",
       "source_type": "public_constant",
@@ -283,15 +299,16 @@
     },
     {
       "id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
-      "label": "Available smooth divisor below the large prime cofactor",
+      "label": "Maximum 13441-smooth divisor of p-1",
       "value_type": "integer",
       "value": 564522,
-      "status": "certificate_replayed",
-      "statement": "The product of the small prime factors 2, 3, 7, and 13441 in p-1 is 564522.",
-      "scope": "Multiplicative group of the secp256k1 base field.",
+      "status": "kernel_verified",
+      "statement": "The exact 13441-smooth divisor ceiling for secp256k1 p-1 is 564522.",
+      "scope": "Divisors of the secp256k1 base-field value p-1, with smoothness bound 13441.",
       "source_claim_ids": [
         "SC-SECP-PMINUS1-FACTORIZATION",
-        "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME"
+        "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+        "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
       ]
     },
     {

@@ -3,10 +3,10 @@
   "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
   "target_id": "secp256k1-classical-single-target-plain",
   "source_hashes": {
-    "policy_sha256": "78ef75dd591ebf7c502e343ecf4fe526510a1cab6f8b3e214805e4bcdab85328",
-    "decision_substrate_sha256": "fe1f6d6a32b7c93ee69130ee3385598a316697277a01c517d5d65473f2d173d2",
+    "policy_sha256": "a4eaf69f96e18e029fa6545ded5c9d9102fdf3445da10964bae67a8119344742",
+    "decision_substrate_sha256": "a938d1923f4fa49a019c757e02e9c1ce8e5bae3f5e83e3b570d116827c7dc448",
     "source_registry_identity_sha256": "dc353baa19b7a9ecae373f7dcc43c2d63714fb45cf94dcfa4fae79cc6ac5ed2b",
-    "evidence_files_sha256": "dc0233beb540b6efce20372761a4829c7f9d131eaf4a16faa89307a638bc09c8",
+    "evidence_files_sha256": "e5ed1b197f4e180816ccca426b823c875dd882bfa6cae59f100231c241e5596b",
     "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
   },
   "trust_boundary": {
@@ -16,7 +16,7 @@
     "authorization_boundary": "Typed cells, generated seeds, and desk decisions authorize no experiment, target computation, route promotion, or security claim."
   },
   "counts": {
-    "source_claims": 16,
+    "source_claims": 17,
     "target_properties": 5,
     "mechanisms": 7,
     "cells": 7,
@@ -237,6 +237,22 @@
       "evidence_path": "Ecdlp/Proved/Secp256k1PrimeP.lean"
     },
     {
+      "id": "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
+      "source_id": "repo:kernel",
+      "source_type": "kernel_theorem",
+      "citation": "Lean theorem secp256k1_smooth_divisor_dvd_smooth_part.",
+      "read_status": "kernel_verified",
+      "url": null,
+      "artifact_sha256": null,
+      "locator": {
+        "kind": "theorem",
+        "value": "Ecdlp.Curve.secp256k1_smooth_divisor_dvd_smooth_part"
+      },
+      "statement": "Every divisor of secp256k1 p-1 whose prime divisors are at most 13441 divides 564522.",
+      "boundary": "This is arithmetic about divisors of the base-field value p-1 only; it is not an ECDLP or complexity result and says nothing about the group order, extension fields, or auxiliary curves.",
+      "evidence_path": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean"
+    },
+    {
       "id": "SC-SECP-PRIME-FIELD",
       "source_id": "sec2_v2",
       "source_type": "public_constant",
@@ -325,15 +341,16 @@
     },
     {
       "id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
-      "label": "Available smooth divisor below the large prime cofactor",
+      "label": "Maximum 13441-smooth divisor of p-1",
       "value_type": "integer",
       "value": 564522,
-      "status": "certificate_replayed",
-      "statement": "The product of the small prime factors 2, 3, 7, and 13441 in p-1 is 564522.",
-      "scope": "Multiplicative group of the secp256k1 base field.",
+      "status": "kernel_verified",
+      "statement": "The exact 13441-smooth divisor ceiling for secp256k1 p-1 is 564522.",
+      "scope": "Divisors of the secp256k1 base-field value p-1, with smoothness bound 13441.",
       "source_claim_ids": [
         "SC-SECP-PMINUS1-FACTORIZATION",
-        "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME"
+        "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+        "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
       ]
     },
     {
@@ -765,27 +782,29 @@
       "requirement_results": [
         {
           "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
-          "property_status": "certificate_replayed",
+          "property_status": "kernel_verified",
           "operator": "gte",
           "expected": 65536,
           "actual": 564522,
           "verdict": "satisfied",
           "source_claim_ids": [
             "SC-SECP-PMINUS1-FACTORIZATION",
-            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME"
+            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+            "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
           ],
           "rationale": "The available divisor exceeds the exact condition-one ceiling of p to the one-sixteenth."
         },
         {
           "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
-          "property_status": "certificate_replayed",
+          "property_status": "kernel_verified",
           "operator": "gte",
           "expected": 445676,
           "actual": 564522,
           "verdict": "satisfied",
           "source_claim_ids": [
             "SC-SECP-PMINUS1-FACTORIZATION",
-            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME"
+            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+            "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
           ],
           "rationale": "The available divisor also exceeds the source-anchored relation-yield balance ceiling of (16! times p) to the one-sixteenth."
         }
@@ -796,6 +815,7 @@
         "SC-PKC-SMOOTH-SUBGROUP",
         "SC-SECP-PMINUS1-FACTORIZATION",
         "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+        "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
         "SC-SEMAEV-RELATION-SEMANTICS"
       ],
       "source_ids": [
@@ -804,12 +824,13 @@
         "repo:kernel"
       ],
       "evidence_paths": [
+        "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
         "Ecdlp/Proved/Secp256k1PrimeP.lean",
         "Ecdlp/Proved/SemaevFour.lean",
         "data/source_claim_extracts/petit_kosters_messeng2016.json",
         "experiments/engine/pkc_smooth_desk_screen/artifact.json"
       ],
-      "evidence_digest": "5440697caea4780431adcf2d8ae3a6d16cf8112df94ac82364621dc635cfed24",
+      "evidence_digest": "ece101a9b55926c309b3dfaa2fe263b30fe982b8d21d2e0a58c03352860027b9",
       "seed_axes": {
         "target_feature_id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
         "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",
@@ -848,27 +869,29 @@
       "requirement_results": [
         {
           "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
-          "property_status": "certificate_replayed",
+          "property_status": "kernel_verified",
           "operator": "gte",
           "expected": 18446744073709551616,
           "actual": 564522,
           "verdict": "violated",
           "source_claim_ids": [
             "SC-SECP-PMINUS1-FACTORIZATION",
-            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME"
+            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+            "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
           ],
           "rationale": "An arity-four factor base at the secp256k1 scale requires size on the order of p to the one-fourth, approximately two to the sixty-four."
         },
         {
           "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
-          "property_status": "certificate_replayed",
+          "property_status": "kernel_verified",
           "operator": "gte",
           "expected": 40829356287426834431,
           "actual": 564522,
           "verdict": "violated",
           "source_claim_ids": [
             "SC-SECP-PMINUS1-FACTORIZATION",
-            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME"
+            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+            "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
           ],
           "rationale": "The same source's relation-yield balance requires the factor-base degree to reach the exact ceiling of (4! times p) to the one-fourth."
         }
@@ -881,7 +904,8 @@
         "SC-PKC-RELATION-YIELD",
         "SC-PKC-SMOOTH-SUBGROUP",
         "SC-SECP-PMINUS1-FACTORIZATION",
-        "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME"
+        "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+        "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
       ],
       "source_ids": [
         "petit_kosters_messeng2016",
@@ -889,11 +913,12 @@
         "repo:kernel"
       ],
       "evidence_paths": [
+        "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
         "Ecdlp/Proved/Secp256k1PrimeP.lean",
         "data/source_claim_extracts/petit_kosters_messeng2016.json",
         "experiments/engine/pkc_smooth_desk_screen/artifact.json"
       ],
-      "evidence_digest": "57e748fe530037cf0dbcd0f9d105fbe63bba0848310b5b69fb2258101ec9836f",
+      "evidence_digest": "7fbb33dacabe1287607af61b4d13451c029fdcfad06900f3e0dad06fe76bc33f",
       "seed_axes": {
         "target_feature_id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
         "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",

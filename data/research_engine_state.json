@@ -4,10 +4,10 @@
   "source_hashes": {
     "policy_sha256": "04c74829a69d4380b25a1de83a120b41d20a3cde5687ee5ac812fad1ce36fc74",
     "hypothesis_generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-    "typed_evidence_state_sha256": "787b4beada1cc617dc1b40873b643abca052bc43d7ded47fb25a37bd7b0d3e1f",
-    "research_claim_state_sha256": "180b7b6c7c93b38f07ebd19d33047d5007df1cbc2174b18721ca2e1f5890e38b",
-    "decision_substrate_sha256": "ab7ba33ed1fa3c741f9af3bf50be04afb567e8fea2e5bd77174039ce2035da80",
-    "hypotheses_sha256": "a5092e10f7971ac254e531b7fa8e20b3007296f41ddd5a79a2bd5bbd9fd81106",
+    "typed_evidence_state_sha256": "6b9b9ef4d4b9c517a99f15fe95f2ac2c88a83b1766972c8d697da6b01882b9e2",
+    "research_claim_state_sha256": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1",
+    "decision_substrate_sha256": "342b005c182bda7a4e9670cd02a3e76f77993f3b7a3464dd38e5e7e1888282aa",
+    "hypotheses_sha256": "719eb78ba7a8e40101c14c92ac426a0028de9d7aa14e6ffc3735ecffa4615c5c",
     "outcome_events_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
     "historical_baseline_anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
   },
@@ -1111,8 +1111,8 @@
     "generator_id": "ecdlp-hypothesis-generation-v0",
     "source_hashes": {
       "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-      "typed_evidence_state_sha256": "787b4beada1cc617dc1b40873b643abca052bc43d7ded47fb25a37bd7b0d3e1f",
-      "research_claim_state_sha256": "180b7b6c7c93b38f07ebd19d33047d5007df1cbc2174b18721ca2e1f5890e38b",
+      "typed_evidence_state_sha256": "6b9b9ef4d4b9c517a99f15fe95f2ac2c88a83b1766972c8d697da6b01882b9e2",
+      "research_claim_state_sha256": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1",
       "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
@@ -1135,7 +1135,7 @@
       "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
       "target_id": "secp256k1-classical-single-target-plain",
       "counts": {
-        "source_claims": 16,
+        "source_claims": 17,
         "target_properties": 5,
         "mechanisms": 7,
         "cells": 7,
@@ -1147,10 +1147,10 @@
         "desk_decisions": 3
       },
       "source_hashes": {
-        "policy_sha256": "78ef75dd591ebf7c502e343ecf4fe526510a1cab6f8b3e214805e4bcdab85328",
-        "decision_substrate_sha256": "fe1f6d6a32b7c93ee69130ee3385598a316697277a01c517d5d65473f2d173d2",
+        "policy_sha256": "a4eaf69f96e18e029fa6545ded5c9d9102fdf3445da10964bae67a8119344742",
+        "decision_substrate_sha256": "a938d1923f4fa49a019c757e02e9c1ce8e5bae3f5e83e3b570d116827c7dc448",
         "source_registry_identity_sha256": "dc353baa19b7a9ecae373f7dcc43c2d63714fb45cf94dcfa4fae79cc6ac5ed2b",
-        "evidence_files_sha256": "dc0233beb540b6efce20372761a4829c7f9d131eaf4a16faa89307a638bc09c8",
+        "evidence_files_sha256": "e5ed1b197f4e180816ccca426b823c875dd882bfa6cae59f100231c241e5596b",
         "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
       },
       "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
@@ -1178,15 +1178,15 @@
         "route_promotions": 0,
         "exact_target_runs": 0
       },
-      "state_sha256": "180b7b6c7c93b38f07ebd19d33047d5007df1cbc2174b18721ca2e1f5890e38b"
+      "state_sha256": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1"
     },
     "seed_coverage": {
       "threshold": 12,
       "eligible_seed_count": 2,
       "overflow_triggered": false,
       "represented_seed_ids": [
-        "HGS-68FEBA54FFD8",
-        "HGS-0F92E98C609A"
+        "HGS-572ADC0A03C5",
+        "HGS-FC06B660E42A"
       ],
       "represented_cell_ids": [
         "CELL-M-PKC-AUXILIARY-CURVE",
@@ -1197,10 +1197,10 @@
     },
     "generated_seeds": [
       {
-        "seed_id": "HGS-68FEBA54FFD8",
+        "seed_id": "HGS-572ADC0A03C5",
         "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
         "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-        "claim_state_digest": "180b7b6c7c93b38f07ebd19d33047d5007df1cbc2174b18721ca2e1f5890e38b",
+        "claim_state_digest": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1281,7 +1281,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "68feba54ffd8ed24cdd3ab51f6af057254b7e31666ba387e8ec4016f222f84b1",
+        "deduplication_key": "572adc0a03c5418111ef58ce42dba51b8717236d5a4bac692b13f32b85158dc6",
         "proposal_packet": {
           "required_sections": [
             "new_premise",
@@ -1343,10 +1343,10 @@
         }
       },
       {
-        "seed_id": "HGS-0F92E98C609A",
+        "seed_id": "HGS-FC06B660E42A",
         "cell_id": "CELL-M-PKC-SMOOTH-M16",
-        "typed_evidence_digest": "5440697caea4780431adcf2d8ae3a6d16cf8112df94ac82364621dc635cfed24",
-        "claim_state_digest": "180b7b6c7c93b38f07ebd19d33047d5007df1cbc2174b18721ca2e1f5890e38b",
+        "typed_evidence_digest": "ece101a9b55926c309b3dfaa2fe263b30fe982b8d21d2e0a58c03352860027b9",
+        "claim_state_digest": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1383,27 +1383,29 @@
           "requirement_results": [
             {
               "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
-              "property_status": "certificate_replayed",
+              "property_status": "kernel_verified",
               "operator": "gte",
               "expected": 65536,
               "actual": 564522,
               "verdict": "satisfied",
               "source_claim_ids": [
                 "SC-SECP-PMINUS1-FACTORIZATION",
-                "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME"
+                "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+                "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
               ],
               "rationale": "The available divisor exceeds the exact condition-one ceiling of p to the one-sixteenth."
             },
             {
               "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
-              "property_status": "certificate_replayed",
+              "property_status": "kernel_verified",
               "operator": "gte",
               "expected": 445676,
               "actual": 564522,
               "verdict": "satisfied",
               "source_claim_ids": [
                 "SC-SECP-PMINUS1-FACTORIZATION",
-                "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME"
+                "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+                "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
               ],
               "rationale": "The available divisor also exceeds the source-anchored relation-yield balance ceiling of (16! times p) to the one-sixteenth."
             }
@@ -1413,6 +1415,7 @@
             "SC-PKC-SMOOTH-SUBGROUP",
             "SC-SECP-PMINUS1-FACTORIZATION",
             "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+            "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
             "SC-SEMAEV-RELATION-SEMANTICS"
           ],
           "boundary": "This open desk-cost cell does not justify an S17 solver run; clearing two arithmetic predicates is not a cost-changing mechanism, and exact representation, recovery, and symbolic cost bounds remain prerequisites."
@@ -1443,7 +1446,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "0f92e98c609afeeaae2d1c2724dcbca058aff65cc6cc26dfd8500fa3d8756ff4",
+        "deduplication_key": "fc06b660e42abefd08543756552d24fa7d08397260d4eea9a731d2ebe815fa89",
         "proposal_packet": {
           "required_sections": [
             "new_premise",

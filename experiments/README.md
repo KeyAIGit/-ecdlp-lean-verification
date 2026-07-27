@@ -41,8 +41,10 @@ subexponential index-calculus algorithms. So the real question — whether invar
 `RS-2026-07-24-001` keeps `HYP_GLV_SEMAEV_001` **PARKED as an experiment** while
 recording the completed `GLV-SEMAEV-ITER-001` bounded structural lane. Its exact
 certificate leaves only the diagonal `C3` among the enumerated scalar
-covariances and closes the independent `u_i=x_i^3` fixed-target premise. The
-separate kernel-accepted package proves the positive covariance and relation-set
+covariances. Its fixed-target classification is `S4` only and closes the
+independent `u_i=x_i^3` fixed-target premise at that scope; Lean also proves
+that the `r=0` exception is not an `F_p`-rational affine secp256k1 target. The
+separate kernel-checkable package proves the positive covariance and relation-set
 transport identities, not that exhaustive classification. This does not
 authorize another P0-P4 run or constitute a step toward breaking secp256k1.
 

@@ -20,6 +20,7 @@ import Ecdlp.Proved.SqrtThreeModFour
 import Ecdlp.Proved.Secp256k1Order
 import Ecdlp.Proved.Secp256k1PrimeN
 import Ecdlp.Proved.Secp256k1PrimeP
+import Ecdlp.Proved.Secp256k1PMinusOneSmoothness
 import Ecdlp.Proved.PohligHellman
 import Ecdlp.Proved.EmbeddingDegree
 import Ecdlp.Proved.TraceOfFrobenius
@@ -87,6 +88,7 @@ import Ecdlp.Proved.ShamirSSS
 import Ecdlp.Proved.MovRandomQ
 import Ecdlp.Proved.SemaevThree
 import Ecdlp.Proved.SemaevFour
+import Ecdlp.Proved.SevenNonResidue
 import Ecdlp.Proved.GlvSemaevSymmetry
 import Ecdlp.Proved.PointDecomposition
 import Ecdlp.Proved.SemaevDegree

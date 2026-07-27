@@ -616,6 +616,8 @@
         "Ecdlp.Curve.glvPoint_cube_eq_id, secp256k1_glvHom_ne_id (Ecdlp/Proved/GlvAutomorphism.lean:31, GlvOrderThree.lean:53)",
         "Ecdlp.Curve.secp256k1_lambda_orderOf, secp256k1_beta_orderOf (Ecdlp/Proved/Secp256k1Order.lean)",
         "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples (Ecdlp/Proved/GlvSubgroupEigenvalue.lean:27)",
+        "Ecdlp.Curve.secp256k1_seven_not_isSquare, secp256k1_x_ne_zero (Ecdlp/Proved/SevenNonResidue.lean)",
+        "Ecdlp.Semaev.secp256k1_glv_affine_target_moves (Ecdlp/Proved/GlvSemaevSymmetry.lean)",
         "Secp256k1.glv_lambda_eigenvalue, Secp256k1.beta_is_cube_root (Ecdlp/Secp256k1Verified.lean:10,18)"
       ],
       "experimental_evidence": [
