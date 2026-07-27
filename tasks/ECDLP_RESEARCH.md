@@ -494,13 +494,18 @@ Recorded result:
 
 ### TASK-016 - Fix the source-faithful M16 ideal and recovery semantics
 
-Status: active_non_executable_semantics_bridge
+Status: completed_non_executable_scoped_blocker
 Kind: theorem | data | research | review
 Hypothesis: none. This task defines the mathematical object that a later cost
 argument would have to price; it is not a solver candidate.
 Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
 Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
 Authorization: none
+Outcome: `scoped_blocker`
+Retention: `zero_retention_success`
+Completed on: 2026-07-27
+Artifact: `experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json`
+Artifact SHA-256: `963eea60097807ae0aa66a5d881b0c34bf0497ade53ed4d37d38861a73887c19`
 Why it matters: TASK-015 showed that low input degree can be obtained only by
 adding variables, while solving degree, fill-in, recovery, and rank remain
 unknown. Those quantities are not meaningful until direct S17, the recursive
@@ -514,7 +519,7 @@ Decision boundary:
   or completeness of the combined recursive-S3 system.
 - The exact usable lift count, recursive partial sums at the identity,
   tangent and repeated-coordinate fibers, extension-field lifts, permutation
-  multiplicities, and compatible sign recovery remain unresolved.
+  multiplicities, and compatible sign recovery were the scoped uncertainty.
 - CANS 2018 remains a separate `full_text_unread` source and the
   auxiliary-curve search remains parked.
 Inputs:
@@ -567,6 +572,104 @@ How to verify:
 - independent producer/validator replay
 - finite-field counterexample fault injection where used
 - source-map and recovery-contract review
+- typed-evidence, scientific-semantic, and decision-substrate gates
+- `lake build`, no-`sorry`, and axiom audit only if a Lean theorem is added
+- generated fixpoint and full repository CI
+
+Recorded result:
+- The fixed labeled affine left-fold is exact only after base-field
+  liftability and nonidentity-prefix localization. That topology is not
+  unconditionally interchangeable with the direct signed-relation semantics.
+- An exact same-`m,D,H` control witness shows an intended signed relation whose
+  fixed affine ordering loses the identity prefix. A separate same-parameter
+  witness shows that `x^D=1` can admit an extension-only curve lift and an S3
+  common root outside the base field.
+- The control multiset has 120 unique orders and 240 direct sign preimages.
+  Exactly two preimages in the first order are blocked by the affine identity
+  prefix; 238 remain affine-admissible, and all normalize to `14P-R=O`.
+- The homogeneous Kummer form and its identity and tangent specializations are
+  replayed, but the global projective-tree/direct-S17 equivalence is only the
+  next proof target. It is not asserted here.
+- `CQ-SEMAEV-S17-SYSTEM-COST` stays `partial`,
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` stays open but narrowed, and the M16 cell
+  stays open, seed-eligible, non-executable, and unselected. No hypothesis,
+  experiment, route promotion, cost advantage, or exact-target work follows.
+
+### TASK-017 - Classify M16 exceptional fibers, liftability, and recovery domain
+
+Status: active_non_executable_exceptional_fiber_classification
+Kind: theorem | data | research | review
+Hypothesis: none. This task closes the semantic domain needed before a later
+solving-cost contract can be meaningful; it is not a solver candidate.
+Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
+Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
+Authorization: none
+Why it matters: TASK-016 disproved the naive global affine substitution and
+isolated two independent exceptional mechanisms: identity prefixes and
+extension-only or non-liftable fibers. The next useful result is a complete
+set-theoretic classification of those fibers and a recovery domain, not a
+choice from an unbounded hypothesis space and not a solving-degree estimate.
+Decision boundary:
+- Keep the direct S17 relation, the homogeneous projective S3 tree, its affine
+  chart, and base-field recovery as separate predicates.
+- Classify external non-lifts, internal extension-only roots, identity
+  prefixes, repeated-coordinate tangent branches, rational two-torsion,
+  duplicate roots, topology-dependent permutations, and GLV lift signs.
+- Saturate only by projective irrelevant ideals that exclude `[0:0]`. Do not
+  saturate by coordinate differences, because that removes valid tangent and
+  duplicate strata.
+- State only set-theoretic projection unless radicality, multiplicity, or
+  scheme equality is independently proved.
+- CANS 2018 remains `full_text_unread`; the auxiliary-curve search remains
+  parked; `zero_retention_success` remains a valid outcome.
+Inputs:
+- `experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json`
+- `data/source_claim_extracts/petit_kosters_messeng2016.json`
+- `Ecdlp/Proved/SemaevThree.lean`
+- `Ecdlp/Proved/SemaevFour.lean`
+- `Ecdlp/Proved/CurveCardinalityExact.lean`
+- `Ecdlp/Proved/GlvSubgroupEigenvalue.lean`
+- `Ecdlp/Proved/GlvOrbit.lean`
+- `repo/ECDLP_TYPED_EVIDENCE_V0.json`
+- `CELL-M-PKC-SMOOTH-M16`
+- `B-PKC-M16-COMPLETE-COST-BRIDGE`
+Expected output:
+- A frozen homogeneous caterpillar topology and exact projective predicate,
+  including the identity tag and affine-chart localization.
+- An independently replayable exceptional-fiber table with field, lift,
+  multiplicity, projection, and recovery disposition for every named stratum.
+- A deterministic base-field recovery certificate that distinguishes ordered
+  topology tuples, coordinate multisets, signed point multisets, and
+  GLV-normalized relation rows.
+- Either a proved set-theoretic projective-tree/direct-S17 bridge on the stated
+  domain or the smallest remaining counterexample with a narrowed blocker.
+Exit criteria:
+- Every accepted relation row has exact leaf lifts, target normalization,
+  duplicate and GLV aggregation, topology multiplicity, and two final curve
+  checks.
+- Every rejected fiber has a named reason and cannot silently enter rank or
+  yield accounting.
+- No solving-degree, fill-in, memory, rank, sparse-linear-algebra, or full-cost
+  claim starts until this task records a complete bridge or a new scoped
+  blocker.
+- No S17 expansion, materialized M16 solve, Sage, msolve, F4, Groebner sweep,
+  exact-target relation search, discrete-log computation, experiment
+  authorization, or route promotion occurs.
+- M16 remains open and non-executable unless a later dated decision changes
+  the gate after independent review.
+Files allowed to edit:
+- the TASK-016 semantic certificate directory or a successor non-run
+  exceptional-fiber certificate directory under `experiments/engine/`
+- directly affected source, typed-evidence, task, test, and generated views
+- a narrow Lean module only after the statement and independent certificate
+  are stable
+Files that must be regenerated:
+- typed-evidence, engine, shadow-intake, graph, status, decision, bundle, and
+  site views affected by the result
+How to verify:
+- independent producer/validator replay
+- finite-field and projective-specialization fault injection
+- recovery-state, permutation, and GLV-normalization review
 - typed-evidence, scientific-semantic, and decision-substrate gates
 - `lake build`, no-`sorry`, and axiom audit only if a Lean theorem is added
 - generated fixpoint and full repository CI

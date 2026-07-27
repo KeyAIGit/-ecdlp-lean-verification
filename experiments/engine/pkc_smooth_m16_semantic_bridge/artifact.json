@@ -1,0 +1,894 @@
+{
+  "artifact_id": "PKC-SMOOTH-M16-SEMANTIC-BRIDGE-001",
+  "conditional_bridge": {
+    "affine_left_fold_exact_domain": [
+      "every leaf x-coordinate has an F_p curve lift",
+      "for the fixed leaf order, a sign assignment exists whose prefix sums of sizes 2 through 15 are not the identity",
+      "every internal u_k is the x-coordinate of the corresponding finite prefix sum",
+      "distinct-input S3 roots use the proved chord iff semantics",
+      "repeated-input S3 roots use the localized tangent identity with 4*y^2 nonzero",
+      "the final recovered signed curve relation is checked exactly"
+    ],
+    "forward": "A signed relation with all fixed-order prefixes finite projects to the affine left-fold S3 equations.",
+    "missing_global_stratum": "If a required prefix sum is the identity, it has no affine x-coordinate. The repeated-x S3 slice retains only the tangent branch, so a pure affine u_k chain is not globally complete.",
+    "reverse": "After exact base-field lift and local-root recovery, an affine left-fold solution glues to a signed curve relation.",
+    "status": "exact_only_after_nonidentity_localization"
+  },
+  "control_field_extension_fiber_witness": {
+    "direct_extension_relation": {
+      "cancellation_pairs": [
+        "the two x=1 leaves use opposite F_(p^2) lifts",
+        "the two x=-1 leaves use opposite F_p lifts"
+      ],
+      "remaining_leaf_points": "twelve copies of P",
+      "semantic_sum": "two opposite-lift pairs cancel and twelve P sum to R",
+      "target_point": {
+        "kind": "affine",
+        "x": 466635,
+        "y": 422051
+      },
+      "target_scalar": 12
+    },
+    "field_and_membership": {
+      "D": 564522,
+      "all_leaf_and_target_x_to_D": true,
+      "leaf_x_coordinates": [
+        1,
+        564522,
+        1,
+        564522,
+        555781,
+        555781,
+        555781,
+        555781,
+        555781,
+        555781,
+        555781,
+        555781,
+        555781,
+        555781,
+        555781,
+        555781
+      ],
+      "p": 564523,
+      "source_root_set": "H = F_p^*",
+      "target_x": 466635
+    },
+    "first_affine_slice": {
+      "base_field_roots": [],
+      "coefficients_z2_z1_z0": [
+        4,
+        564495,
+        1
+      ],
+      "discriminant": 768,
+      "discriminant_legendre_symbol": -1,
+      "fixed_size_self_resultant": 0,
+      "inputs": [
+        1,
+        564522
+      ],
+      "sylvester_matrix": [
+        [
+          4,
+          564495,
+          1,
+          0
+        ],
+        [
+          0,
+          4,
+          564495,
+          1
+        ],
+        [
+          4,
+          564495,
+          1,
+          0
+        ],
+        [
+          0,
+          4,
+          564495,
+          1
+        ]
+      ]
+    },
+    "liftability": [
+      {
+        "legendre_symbol": -1,
+        "rhs": 8,
+        "status": "extension_only",
+        "x": 1
+      },
+      {
+        "legendre_symbol": 1,
+        "rhs": 6,
+        "status": "base_field_lift",
+        "x": 564522,
+        "y_roots": [
+          163761,
+          400762
+        ]
+      }
+    ],
+    "meaning": "At the exact m, D, control field, factor chain, and membership layer, the direct algebraic signed relation exists over F_(p^2), while the first affine recursive equation has no F_p root.",
+    "scope": "Recovery rejects this tuple because x=1 has no F_p lift. This is a base-field recursive-recovery semantics blocker, not a usable base-field relation and not an S17 evaluation."
+  },
+  "control_field_m16_counterexample": {
+    "curve": {
+      "a": 0,
+      "b": 7,
+      "discriminant_mod_p": 543355,
+      "equation": "y^2 = x^3 + 7",
+      "order": 564469,
+      "order_factorization": [
+        163,
+        3463
+      ],
+      "rational_two_torsion_x": []
+    },
+    "direct_relation_witness": {
+      "leaf_scalars": [
+        50,
+        50,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "leaf_signs": [
+        1,
+        -1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "scope": "Exact intended signed-point relation semantics. S17 is not expanded or evaluated in this certificate.",
+      "signed_scalar_sum_before_target": 14,
+      "target_scalar": 14,
+      "target_sign": -1,
+      "verified_group_sum": "identity"
+    },
+    "field": {
+      "D": 564522,
+      "factor_chain": [
+        2,
+        3,
+        7,
+        13441
+      ],
+      "multiplicative_group_order": 564522,
+      "p": 564523,
+      "p_equals_D_plus_one": true,
+      "p_is_prime": true,
+      "source_root_set": "H = F_p^*"
+    },
+    "membership_checks": {
+      "all_witness_x_nonzero": true,
+      "base_x_to_D": 1,
+      "doubled_repeated_x_to_D": 1,
+      "repeated_x_to_D": 1,
+      "target_x_to_D": 1
+    },
+    "points": {
+      "base_P": {
+        "kind": "affine",
+        "x": 555781,
+        "y": 547362
+      },
+      "doubled_repeated_100P": {
+        "kind": "affine",
+        "x": 210845,
+        "y": 520607
+      },
+      "repeated_50P": {
+        "kind": "affine",
+        "x": 169010,
+        "y": 177754
+      },
+      "seed_T": {
+        "kind": "affine",
+        "x": 2,
+        "y": 100588
+      },
+      "target_14P": {
+        "kind": "affine",
+        "x": 442919,
+        "y": 534774
+      }
+    },
+    "recursive_affine_obstruction": {
+      "checked_layer_indexed_parent_occurrences": 105,
+      "checked_layer_indexed_root_evaluations": 210,
+      "first_slice_coefficients_z2_z1_z0": [
+        0,
+        35699,
+        394027
+      ],
+      "first_slice_unique_root": 210845,
+      "first_state_modulo_global_sign": 100,
+      "reachable_scalar_classes_after_each_base_leaf": [
+        [
+          100
+        ],
+        [
+          99,
+          101
+        ],
+        [
+          98,
+          100,
+          102
+        ],
+        [
+          97,
+          99,
+          101,
+          103
+        ],
+        [
+          96,
+          98,
+          100,
+          102,
+          104
+        ],
+        [
+          95,
+          97,
+          99,
+          101,
+          103,
+          105
+        ],
+        [
+          94,
+          96,
+          98,
+          100,
+          102,
+          104,
+          106
+        ],
+        [
+          93,
+          95,
+          97,
+          99,
+          101,
+          103,
+          105,
+          107
+        ],
+        [
+          92,
+          94,
+          96,
+          98,
+          100,
+          102,
+          104,
+          106,
+          108
+        ],
+        [
+          91,
+          93,
+          95,
+          97,
+          99,
+          101,
+          103,
+          105,
+          107,
+          109
+        ],
+        [
+          90,
+          92,
+          94,
+          96,
+          98,
+          100,
+          102,
+          104,
+          106,
+          108,
+          110
+        ],
+        [
+          89,
+          91,
+          93,
+          95,
+          97,
+          99,
+          101,
+          103,
+          105,
+          107,
+          109,
+          111
+        ],
+        [
+          88,
+          90,
+          92,
+          94,
+          96,
+          98,
+          100,
+          102,
+          104,
+          106,
+          108,
+          110,
+          112
+        ],
+        [
+          87,
+          89,
+          91,
+          93,
+          95,
+          97,
+          99,
+          101,
+          103,
+          105,
+          107,
+          109,
+          111,
+          113
+        ],
+        [
+          86,
+          88,
+          90,
+          92,
+          94,
+          96,
+          98,
+          100,
+          102,
+          104,
+          106,
+          108,
+          110,
+          112,
+          114
+        ]
+      ],
+      "root_evaluations_for_unique_parent_classes": 54,
+      "target_scalar_class": 14,
+      "terminal_intersection_with_target": [],
+      "terminal_scalar_classes": [
+        86,
+        88,
+        90,
+        92,
+        94,
+        96,
+        98,
+        100,
+        102,
+        104,
+        106,
+        108,
+        110,
+        112,
+        114
+      ],
+      "unique_parent_scalar_classes": 27
+    },
+    "scope": "This is a fixed labeled-topology structural witness at the same m, D, source factor chain, and exact x^D=1 membership layer. It is not the secp256k1 target field and makes no attack-cost claim.",
+    "subgroup": {
+      "base_construction": "P = [163]T",
+      "base_scalar": 1,
+      "cofactor": 163,
+      "order": 3463,
+      "order_is_prime": true,
+      "verified_order_multiple": "[3463]P = identity"
+    }
+  },
+  "extension_field_membership_witness": {
+    "curve": {
+      "a": 0,
+      "b": 2,
+      "discriminant_nonzero": true,
+      "equation": "y^2 = x^3 + 2 over F_5",
+      "liftability": [
+        {
+          "rhs": 3,
+          "x": 1,
+          "y_roots": []
+        },
+        {
+          "rhs": 1,
+          "x": 4,
+          "y_roots": [
+            1,
+            4
+          ]
+        }
+      ]
+    },
+    "field": {
+      "D": 564522,
+      "D_mod_multiplicative_group_order": 2,
+      "characteristic_greater_than_three": true,
+      "gcd_D_multiplicative_group_order": 2,
+      "membership_equation": "x^564522 = 1",
+      "membership_roots": [
+        1,
+        4
+      ],
+      "p": 5
+    },
+    "meaning": "The exact x^D=1 membership layer admits x=1 even though x=1 has no F_5 curve lift. The two identical S3(1,4,z) slices share roots over F_25 but have no root in F_5, so base-field liftability and extension-only fibers require separate recovery checks.",
+    "s3_slice": {
+      "base_field_roots": [],
+      "coefficients_z2_z1_z0": [
+        4,
+        2,
+        1
+      ],
+      "discriminant": 3,
+      "fixed_size_self_resultant": 0,
+      "inputs": [
+        1,
+        4
+      ],
+      "quadratic_residues": [
+        0,
+        1,
+        4
+      ],
+      "s4_coordinates": [
+        1,
+        4,
+        1,
+        4
+      ],
+      "sylvester_matrix": [
+        [
+          4,
+          2,
+          1,
+          0
+        ],
+        [
+          0,
+          4,
+          2,
+          1
+        ],
+        [
+          4,
+          2,
+          1,
+          0
+        ],
+        [
+          0,
+          4,
+          2,
+          1
+        ]
+      ]
+    },
+    "scope": "Exact membership-layer and resultant-fiber witness only; it is not an on-curve signed relation."
+  },
+  "kind": "deterministic_nonexperimental_semantic_counterexample",
+  "local_s3_semantics": {
+    "distinct_inputs": {
+      "meaning": "For lifted inputs with x1 != x2, the two roots are the x-coordinates of the sum and difference.",
+      "source_theorem": "Ecdlp.Semaev.secp256k1_semaev_three_iff"
+    },
+    "identity_branch": {
+      "affine_parent": null,
+      "condition": "the two lifted points are negatives",
+      "consequence": "The identity has no affine x-coordinate and cannot be stored in u_k."
+    },
+    "repeated_inputs": {
+      "cleared_doubling_identity": "4*y^2*x(2P) = x^4 - 56*x",
+      "localization": "4*y^2 != 0",
+      "specialization": "S3(x,x,z) = -4*y^2 * (z - x(2P))",
+      "unique_affine_root": "x(2P)"
+    }
+  },
+  "m16_presentation_contract": {
+    "direct_relation": {
+      "polynomial": "S_17(x_1,...,x_16,x_target)",
+      "polynomial_materialized": false,
+      "semantic_target": "there exist signs epsilon_i and epsilon_target in {-1,+1} with sum epsilon_i*P_i + epsilon_target*R = identity"
+    },
+    "membership": {
+      "artifact": "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json",
+      "artifact_sha256": "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7",
+      "circuit_gate_count_per_coordinate": 24,
+      "equation": "x_i^564522 = 1",
+      "status": "exact_pointwise"
+    },
+    "recursive_affine_left_fold": {
+      "equation_count": 15,
+      "equations": [
+        "S3(x_1, x_2, u_2) = 0",
+        "S3(u_2, x_3, u_3) = 0",
+        "S3(u_3, x_4, u_4) = 0",
+        "S3(u_4, x_5, u_5) = 0",
+        "S3(u_5, x_6, u_6) = 0",
+        "S3(u_6, x_7, u_7) = 0",
+        "S3(u_7, x_8, u_8) = 0",
+        "S3(u_8, x_9, u_9) = 0",
+        "S3(u_9, x_10, u_10) = 0",
+        "S3(u_10, x_11, u_11) = 0",
+        "S3(u_11, x_12, u_12) = 0",
+        "S3(u_12, x_13, u_13) = 0",
+        "S3(u_13, x_14, u_14) = 0",
+        "S3(u_14, x_15, u_15) = 0",
+        "S3(u_15, x_16, x_target) = 0"
+      ],
+      "internal_variable_count": 14,
+      "internal_variables": [
+        "u_2",
+        "u_3",
+        "u_4",
+        "u_5",
+        "u_6",
+        "u_7",
+        "u_8",
+        "u_9",
+        "u_10",
+        "u_11",
+        "u_12",
+        "u_13",
+        "u_14",
+        "u_15"
+      ],
+      "leaf_variable_count": 16,
+      "projection": "drop u_2,...,u_15 and every membership-circuit auxiliary",
+      "target_x": "fixed constant",
+      "variable_order": [
+        "x_1",
+        "x_2",
+        "x_3",
+        "x_4",
+        "x_5",
+        "x_6",
+        "x_7",
+        "x_8",
+        "x_9",
+        "x_10",
+        "x_11",
+        "x_12",
+        "x_13",
+        "x_14",
+        "x_15",
+        "x_16",
+        "u_2",
+        "u_3",
+        "u_4",
+        "u_5",
+        "u_6",
+        "u_7",
+        "u_8",
+        "u_9",
+        "u_10",
+        "u_11",
+        "u_12",
+        "u_13",
+        "u_14",
+        "u_15",
+        "membership auxiliaries in coordinate-major gate order"
+      ]
+    }
+  },
+  "projective_completion_candidate": {
+    "affine_restriction": "V != 0 removes the identity root and recovers the repeated-input affine specialization",
+    "exact_local_identities": {
+      "affine_chart": "S3^h([x1:1],[x2:1],[x3:1]) = S3(x1,x2,x3)",
+      "one_infinity": "S3^h([X1:Z1],[X2:Z2],[1:0]) = (X1*Z2-X2*Z1)^2",
+      "two_infinities": "S3^h([X1:Z1],[1:0],[1:0]) = Z1^2"
+    },
+    "homogeneous_polynomial": "X1^2*X2^2*Z3^2 + X1^2*Z2^2*X3^2 + Z1^2*X2^2*X3^2 - 2*X1^2*X2*Z2*X3*Z3 - 2*X1*Z1*X2^2*X3*Z3 - 2*X1*Z1*X2*Z2*X3^2 - 28*(X1*Z1*Z2^2*Z3^2 + Z1^2*X2*Z2*Z3^2 + Z1^2*Z2^2*X3*Z3)",
+    "kummer_coordinate": {
+      "affine_point": "[x(P):1]",
+      "identity": "[1:0]"
+    },
+    "repeated_input_homogeneous_slice": "S3^h(x,x;U,V) = V * (-4*y^2*U + (x^4 - 56*x)*V)",
+    "root_meanings": [
+      "[1:0] is the identity branch",
+      "[x(2P):1] is the tangent branch"
+    ],
+    "saturation_policy": "exclude only projective zero coordinates [0:0]; do not saturate by coordinate differences because tangent and duplicate strata are valid",
+    "status": "next_task_requires_independent_proof",
+    "tree_bridge_candidate": "the affine tree is the homogeneous projective tree localized to nonidentity tree-cut partial sums",
+    "warning": "This candidate is not used as a proved global bridge in the current terminal disposition."
+  },
+  "recovery_contract": {
+    "acceptance": [
+      "lift every leaf x_i in F_p and reject non-lifts",
+      "enumerate or meet-in-the-middle the 2^15 relative sign classes",
+      "combine duplicate signed points before emitting a relation row",
+      "canonicalize coordinate permutations so they do not count as independent relations",
+      "if Q=eta*phi^j(P0), map an occurrence epsilon*Q to coefficient epsilon*eta*lambda^j modulo n only under the proved eigenvalue and full-group membership theorems",
+      "verify the full elliptic-curve relation and target coefficient exactly"
+    ],
+    "canonical_relation_row": {
+      "duplicate_aggregation": "sum all signed occurrences of the same recovered point before GLV projection",
+      "final_verification": "reconstruct the normalized sparse row on the curve and verify that its exact group sum is the identity",
+      "status": "required_before_rank_accounting",
+      "steps": [
+        "ordered lifted leaf tuple",
+        "exact signed point tuple with target",
+        "duplicate-aggregated point row",
+        "GLV-normalized sparse coefficient row",
+        "exact curve re-verification"
+      ],
+      "target_normalization": "use global sign to set the target coefficient to -1; accept exactly when the signed leaf sum equals R"
+    },
+    "direct_sign_search": {
+      "meet_in_the_middle_list_sizes": [
+        128,
+        256
+      ],
+      "raw_assignments": 65536,
+      "relative_classes": 32768
+    },
+    "glv_normalization": {
+      "coefficient_rule": "if Q=eta*phi^j(P0), an occurrence epsilon*Q contributes epsilon*eta*lambda^j modulo n to P0",
+      "eigenvalue_theorem": "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples",
+      "full_group_membership_path": "Ecdlp/Proved/CurveFullGroup.lean",
+      "full_group_membership_theorem": "Ecdlp.Curve.secp256k1_mem_zmultiples",
+      "orbit_path": "Ecdlp/Proved/GlvOrbit.lean",
+      "representative_rule": "choose the minimum canonical encoding modulo point sign among P, phi(P), and phi^2(P), and retain eta in Q=eta*phi^j(P0)",
+      "status": "future_requirement_not_replayed",
+      "subgroup_eigenvalue_path": "Ecdlp/Proved/GlvSubgroupEigenvalue.lean"
+    },
+    "identity_prefix_policy": "Direct leaf-point recovery may accept an identity prefix, but the affine recursive presentation cannot use it as u_k. Such rows belong to a separate projective/identity stratum.",
+    "multiplicity_policy": "Repeated coordinates, opposite signs, permutations, and GLV orbit aliases are canonicalized before rank accounting.",
+    "ordered_tree_dynamic_program": {
+      "backpointers": "retain child-state backpointers and exact multiplicities for every surviving parent state",
+      "identity_state": "route A+B=identity to the named non-affine stratum; do not encode it as an affine u_k",
+      "leaf_states": "{P_i,-P_i} after exact F_p lift; reject an empty lift set",
+      "parent_transition": "form every exact A+B, retain it only when nonidentity and x(A+B) equals the supplied internal coordinate",
+      "root_acceptance": "accept exactly the surviving root states R or -R, then apply target normalization",
+      "state_bound_per_supplied_x": 2
+    },
+    "permutation_accounting": {
+      "direct_coordinate_orbit_count": "16! / product_x multiplicity(x)!",
+      "levels": [
+        "ordered leaf tuple and fixed tree topology",
+        "sorted coordinate multiset",
+        "normalized sparse GLV row"
+      ],
+      "recursive_warning": "permutation admissibility is topology dependent and must be replayed rather than inferred from the direct coordinate orbit count"
+    },
+    "permutation_recovery_audit": {
+      "accepted_record_sha256": "5d395b1f65633c2f061970aff44b1c18ca30abce7d507addba6effe66530813a",
+      "affine_admissible_preimages": 238,
+      "affine_admissible_record_sha256": "bb6833e75d3a6f274d1631300a4f108b71cc4a911a1fe31e8b82807f5660299d",
+      "blocked_records": [
+        {
+          "identity_prefix_sizes": [
+            2
+          ],
+          "permutation_rank": 0,
+          "repeated_positions_zero_based": [
+            0,
+            1
+          ],
+          "sign_mask_tail_15": 0,
+          "target_orientation": -1
+        },
+        {
+          "identity_prefix_sizes": [
+            2
+          ],
+          "permutation_rank": 0,
+          "repeated_positions_zero_based": [
+            0,
+            1
+          ],
+          "sign_mask_tail_15": 32766,
+          "target_orientation": 1
+        }
+      ],
+      "coordinate_multiset": [
+        {
+          "multiplicity": 14,
+          "scalar_on_P": 1
+        },
+        {
+          "multiplicity": 2,
+          "scalar_on_P": 50
+        }
+      ],
+      "derived_point_basis_coefficients": {
+        "base_P": 14,
+        "repeated_50P": 0
+      },
+      "direct_preimages": 240,
+      "identity_blocked_preimages": 2,
+      "normalized_row": {
+        "dropped_zero_coefficients": [
+          {
+            "basis": "repeated_50P",
+            "coefficient_mod_order": 0
+          }
+        ],
+        "factor_coefficients": [
+          {
+            "basis": "base_P",
+            "coefficient_mod_order": 14
+          }
+        ],
+        "target_coefficient_mod_order": 3462,
+        "verification": "[14]P - R = identity"
+      },
+      "normalized_row_preimages": 240,
+      "normalized_row_sha256": "1da1800e8811c562792af470244f4a23cc2de8a0187cd9588e95f666055bf2b8",
+      "ordering_rank_definition": "lexicographic combinations of the two zero-based positions occupied by repeated_50P",
+      "per_rank_counts_sha256": "eb2b88b1f98a2c4faeaa6a4ebf8b47e13759747915f75cf927a0344cd26da768",
+      "relative_sign_convention": "the first leaf sign is +1; bit i-1 of sign_mask_tail_15 selects +1 for leaf i and 0 selects -1",
+      "unique_orderings": 120
+    },
+    "recursive_solution_policy": "Reject a raw polynomial solution unless every internal value lifts to the exact recovered finite prefix point and all local signs glue to the final exact group relation."
+  },
+  "schema_version": "1.0",
+  "scope": {
+    "excluded": [
+      "S17 expansion or evaluation at the M16 witness",
+      "materialized recursive or membership polynomial system",
+      "Sage, msolve, F4, Groebner, or parameter sweep",
+      "exact-target secp256k1 relation search",
+      "discrete-log computation",
+      "solving-degree, rank, runtime, or security claim",
+      "hypothesis retention, experiment authorization, or route promotion"
+    ],
+    "included": [
+      "exact finite-field and elliptic-curve arithmetic",
+      "source-faithful x^D=1 membership witness at m=16 and D=564522",
+      "conditional affine S3 semantic contract",
+      "base-field liftability and extension-only resultant fibers",
+      "identity-prefix obstruction and recovery requirements"
+    ]
+  },
+  "small_no_rational_two_torsion_resultant_boundary_witness": {
+    "curve": {
+      "equation": "y^2 = x^3 + 7 over F_13",
+      "p": 13,
+      "rational_two_torsion_x": []
+    },
+    "direct_signed_points": [
+      {
+        "kind": "affine",
+        "x": 7,
+        "y": 5
+      },
+      {
+        "kind": "affine",
+        "x": 7,
+        "y": 8
+      },
+      {
+        "kind": "affine",
+        "x": 8,
+        "y": 5
+      },
+      {
+        "kind": "affine",
+        "x": 8,
+        "y": 8
+      }
+    ],
+    "fixed_size_s4_resultant": 0,
+    "left_slice_coefficients_z2_z1_z0": [
+      0,
+      4,
+      7
+    ],
+    "left_slice_roots": [
+      8
+    ],
+    "meaning": "The fixed 2-by-2 S4 resultant vanishes because both padded quadratic leading coefficients vanish, while the two affine S3 slices have no common root.",
+    "recursive_common_roots": [],
+    "right_slice_coefficients_z2_z1_z0": [
+      0,
+      4,
+      8
+    ],
+    "right_slice_roots": [
+      11
+    ],
+    "signed_group_sum": "identity",
+    "sylvester_matrix": [
+      [
+        0,
+        4,
+        7,
+        0
+      ],
+      [
+        0,
+        0,
+        4,
+        7
+      ],
+      [
+        0,
+        4,
+        8,
+        0
+      ],
+      [
+        0,
+        0,
+        4,
+        8
+      ]
+    ]
+  },
+  "source_scope": {
+    "curve_full_group": "Ecdlp/Proved/CurveFullGroup.lean",
+    "glv_eigenvalue": "Ecdlp/Proved/GlvSubgroupEigenvalue.lean",
+    "glv_orbit": "Ecdlp/Proved/GlvOrbit.lean",
+    "m16_desk_artifact": "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json",
+    "m16_desk_artifact_sha256": "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7",
+    "primary_claim_extract": "data/source_claim_extracts/petit_kosters_messeng2016.json",
+    "semaev_four": "Ecdlp/Proved/SemaevFour.lean",
+    "semaev_three": "Ecdlp/Proved/SemaevThree.lean",
+    "source_claim_ids": [
+      "SC-GLV-ENDOMORPHISM",
+      "SC-GLV-ENDOMORPHISM-NONTRIVIAL",
+      "SC-PKC-SMOOTH-SUBGROUP",
+      "SC-SECP-NO-TWO-TORSION",
+      "SC-SEMAEV-RELATION-SEMANTICS",
+      "SC-PKC-M16-SYMBOLIC-DESK-RESULT"
+    ]
+  },
+  "terminal_disposition": {
+    "authorization": "none",
+    "barrier_effect": "narrowed_open",
+    "cell_transition": "open_to_open",
+    "cost_quantity_transition": "partial_to_partial",
+    "hypothesis_effect": "none",
+    "retention_disposition": "zero_retention_success",
+    "route_effect": "none",
+    "scientific_disposition": "scoped_blocker",
+    "source_independence": "not_established"
+  },
+  "unresolved_fields": [
+    "target-field occurrence and frequency of identity-prefix strata",
+    "projective or explicitly stratified recursive presentation",
+    "distinct-coordinate localization and its relation-yield effect",
+    "complete liftability and exceptional-fiber classification",
+    "duplicate, permutation, GLV-orbit, and rank multiplicities",
+    "direct S17 semantics and recursive projection on every remaining stratum",
+    "solving degree, fill-in, preprocessing, sparse linear algebra, and total cost"
+  ]
+}

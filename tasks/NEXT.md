@@ -20,12 +20,12 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: `TASK-016` in `tasks/ECDLP_RESEARCH.md`.
+Current central task: `TASK-017` in `tasks/ECDLP_RESEARCH.md`.
 
 `TASK-010` is accepted at
 `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
-proposal-intake lane because TASK-016 is a non-executable semantics bridge,
-not a hypothesis candidate or experiment.
+proposal-intake lane because TASK-017 is a non-executable exceptional-fiber
+classification, not a hypothesis candidate or experiment.
 
 Current scientific activation order:
 
@@ -33,12 +33,15 @@ Current scientific activation order:
    native phase remains blocked.
 2. `TASK-015` completed the M16 symbolic desk with a scoped blocker and zero
    retained hypotheses; the cell remains open and non-executable.
-3. `TASK-016` gives sole desk priority to the exact source-faithful ideal and
-   recovery semantics for `CELL-M-PKC-SMOOTH-M16` /
-   `RSI-D8BBA6340789`.
-4. The auxiliary-curve cell stays parked until a primary source supplies a
+3. `TASK-016` completed with a scoped blocker: a fixed affine S3 tree is exact
+   only after base-field-lift and nonidentity-prefix localization. The M16
+   cell remains open and non-executable.
+4. `TASK-017` gives sole desk priority to the exceptional fibers, projective
+   identity strata, liftability, and exact recovery domain for
+   `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`.
+5. The auxiliary-curve cell stays parked until a primary source supplies a
    finite search domain with a completeness criterion.
-5. Any later candidate, solver, or experiment still requires the normal
+6. Any later candidate, solver, or experiment still requires the normal
    review gates and a separate dated authorization.
 
 These entries freeze further engine-schema expansion by default. They do not

@@ -36,15 +36,22 @@ MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
 MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
 CURRENT_PHASE = "evidence-bounded-desk-priority"
-CURRENT_TASK_ID = "TASK-016"
-COMPLETED_DESK_TASK_ID = "TASK-015"
+CURRENT_TASK_ID = "TASK-017"
+COMPLETED_DESK_TASK_ID = "TASK-016"
+PREVIOUS_DESK_TASK_ID = "TASK-015"
 DESK_PRIORITY_CELL_ID = "CELL-M-PKC-SMOOTH-M16"
 DESK_PRIORITY_STUB_ID = "RSI-D8BBA6340789"
 DESK_PRIORITY_COST_ID = "CQ-SEMAEV-S17-SYSTEM-COST"
 M16_ARTIFACT_PATH = (
-    "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
+    "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json"
 )
 M16_ARTIFACT_SHA256 = (
+    "963eea60097807ae0aa66a5d881b0c34bf0497ade53ed4d37d38861a73887c19"
+)
+M16_SYMBOLIC_ARTIFACT_PATH = (
+    "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
+)
+M16_SYMBOLIC_ARTIFACT_SHA256 = (
     "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7"
 )
 
@@ -680,6 +687,8 @@ def validate() -> list[str]:
         "TASK-009",
         "TASK-010",
         "TASK-013",
+        PREVIOUS_DESK_TASK_ID,
+        COMPLETED_DESK_TASK_ID,
         CURRENT_TASK_ID,
     ):
         if required_task not in tasks_text:
@@ -754,7 +763,7 @@ def validate() -> list[str]:
             )
     current_task = task_sections.get(CURRENT_TASK_ID, "")
     expected_current_task_lines = (
-        "Status: active_non_executable_semantics_bridge",
+        "Status: active_non_executable_exceptional_fiber_classification",
         f"Desk priority: `{DESK_PRIORITY_CELL_ID}` / `{DESK_PRIORITY_STUB_ID}`",
         "Authorization: none",
     )
@@ -767,6 +776,7 @@ def validate() -> list[str]:
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
         DESK_PRIORITY_COST_ID,
+        M16_ARTIFACT_PATH,
         "zero_retention_success",
         "full_text_unread",
     ):
@@ -840,11 +850,34 @@ def validate() -> list[str]:
     )
     if selection.get("decision_id") not in decisions_log:
         problems.append("route-selection decision is missing from research_decisions.md")
-    closure_row = next(
+    symbolic_closure_row = next(
         (
             line
             for line in decisions_log.splitlines()
             if line.startswith("| 25 |")
+        ),
+        "",
+    )
+    for binding in (
+        PREVIOUS_DESK_TASK_ID,
+        COMPLETED_DESK_TASK_ID,
+        "scoped_blocker",
+        "zero_retention_success",
+        M16_SYMBOLIC_ARTIFACT_PATH,
+        M16_SYMBOLIC_ARTIFACT_SHA256,
+        "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+    ):
+        if binding not in symbolic_closure_row:
+            problems.append(
+                "TASK-015 closure row is missing binding "
+                f"{binding}"
+            )
+    semantic_closure_row = next(
+        (
+            line
+            for line in decisions_log.splitlines()
+            if line.startswith("| 26 |")
         ),
         "",
     )
@@ -855,12 +888,12 @@ def validate() -> list[str]:
         "zero_retention_success",
         M16_ARTIFACT_PATH,
         M16_ARTIFACT_SHA256,
-        "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
+        "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
         "B-PKC-M16-COMPLETE-COST-BRIDGE",
     ):
-        if binding not in closure_row:
+        if binding not in semantic_closure_row:
             problems.append(
-                "TASK-015 closure row is missing binding "
+                "TASK-016 closure row is missing binding "
                 f"{binding}"
             )
 
