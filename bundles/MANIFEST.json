@@ -11,13 +11,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 10820
+        "bytes": 10993
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 66602
+        "bytes": 67775
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -29,13 +29,13 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 38163
+        "bytes": 40820
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 55297
+        "bytes": 58160
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
@@ -59,7 +59,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 65776
+        "bytes": 65856
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -101,13 +101,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 2799
+        "bytes": 3108
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 19590
+        "bytes": 24190
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -133,13 +133,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 10820
+        "bytes": 10993
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 66602
+        "bytes": 67775
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -151,13 +151,13 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 38163
+        "bytes": 40820
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 55297
+        "bytes": 58160
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
@@ -181,7 +181,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 65776
+        "bytes": 65856
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -223,13 +223,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 2799
+        "bytes": 3108
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 19590
+        "bytes": 24190
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -259,7 +259,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 11233
+        "bytes": 11620
       },
       {
         "path": "VERIFIED.md",
@@ -434,6 +434,12 @@
         "reason": "claim-level primary-source extraction bound to the typed evidence layer",
         "exists": true,
         "bytes": 2771
+      },
+      {
+        "path": "data/source_claim_extracts/yokota_kudo_yasuda2017_wcc.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 2512
       },
       {
         "path": "data/source_claim_extracts/yokoyama_yasuda_takahashi_kogure2020.json",
@@ -447,13 +453,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 10820
+        "bytes": 10993
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 66602
+        "bytes": 67775
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
@@ -465,13 +471,13 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 38163
+        "bytes": 40820
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 55297
+        "bytes": 58160
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
@@ -495,7 +501,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 65776
+        "bytes": 65856
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -537,13 +543,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 2799
+        "bytes": 3108
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 19590
+        "bytes": 24190
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -573,7 +579,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 11233
+        "bytes": 11620
       },
       {
         "path": "VERIFIED.md",
@@ -750,6 +756,12 @@
         "bytes": 2771
       },
       {
+        "path": "data/source_claim_extracts/yokota_kudo_yasuda2017_wcc.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 2512
+      },
+      {
         "path": "data/source_claim_extracts/yokoyama_yasuda_takahashi_kogure2020.json",
         "reason": "claim-level primary-source extraction bound to the typed evidence layer",
         "exists": true,
@@ -759,13 +771,13 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 597889
+        "bytes": 616807
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 20116
+        "bytes": 20146
       },
       {
         "path": "PUBLISHABLE_UNITS.md",

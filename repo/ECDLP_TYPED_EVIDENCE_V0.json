@@ -282,6 +282,38 @@
       "statement": "The source accumulates random points as its factor base and replaces repeated decompositions plus sparse linear algebra by one summation-polynomial system whose recovered point relation yields the discrete logarithm congruence.",
       "boundary": "Its relative comparison with Petit assumes T(E,m,V) approximately T-prime(E,m,V); it explicitly does not claim work below p^(1/2), reports only 11-22-bit experiments, and leaves the single-system cost unresolved.",
       "evidence_path": "data/source_claim_extracts/amadori_pintore_sala2018.json"
+    },
+    {
+      "id": "SC-WCC2017-PMINUS1-M2-PRACTICAL-LIMIT",
+      "source_id": "yokota_kudo_yasuda2017_wcc",
+      "source_type": "primary_literature",
+      "citation": "Yokota, Kudo, and Yasuda, WCC 2017, Practical Limit of Index Calculus Algorithms for ECDLP over Prime Fields.",
+      "read_status": "full_text_obtained",
+      "url": "https://drive.google.com/file/d/1I8t-2nEMqzTr8ueppHIO3xWHe1khWiAb/view?usp=sharing",
+      "artifact_sha256": "a60b09327429f0fd99561cd600455ee38da687078b55250ad4ebcb1170b7ded4",
+      "locator": {
+        "kind": "section",
+        "value": "Section 1 final paragraph; Section 2.3; Sections 3.1-3.4, equations (4)-(8), Tables 1-2; Section 5"
+      },
+      "statement": "For m=2 and selected favorable primes with a power-of-two factor N approximately p^(1/2) dividing p-1, the exhaustive k=1 presentation has the lowest reported time in every row of Table 1, while Table 2 reports lower resultant or GCD times at 12.1, 14.1, and 16.0 bits; Groebner variants exhibit severe memory growth.",
+      "boundary": "The source explicitly makes no asymptotic claim. Its selected small-prime measurements do not price m=16 or S17, establish cryptographic scaling, or attack secp256k1.",
+      "evidence_path": "data/source_claim_extracts/yokota_kudo_yasuda2017_wcc.json"
+    },
+    {
+      "id": "SC-WCC2017-PPLUS1-TRACE-EXTENSION",
+      "source_id": "yokota_kudo_yasuda2017_wcc",
+      "source_type": "primary_literature",
+      "citation": "Yokota, Kudo, and Yasuda, WCC 2017, p-plus-one trace extension.",
+      "read_status": "full_text_obtained",
+      "url": "https://drive.google.com/file/d/1I8t-2nEMqzTr8ueppHIO3xWHe1khWiAb/view?usp=sharing",
+      "artifact_sha256": "a60b09327429f0fd99561cd600455ee38da687078b55250ad4ebcb1170b7ded4",
+      "locator": {
+        "kind": "section",
+        "value": "Section 4.1, equations (9)-(10); Section 4.2, Table 3; Section 5"
+      },
+      "statement": "The source constructs a factor-base coordinate set from N-th roots of unity in the quadratic extension and the field trace when p+1 has a large smooth factor, with its low-degree experiments specialized to m=2.",
+      "boundary": "This extension-field trace construction is not the PKC 2016 auxiliary elliptic curve and self-isogeny construction. Its 5.6-10.1-bit measurements do not resolve the auxiliary-curve property or its typed cell.",
+      "evidence_path": "data/source_claim_extracts/yokota_kudo_yasuda2017_wcc.json"
     }
   ],
   "target_properties": [
@@ -388,7 +420,9 @@
         "SC-PKC-RELATION-YIELD",
         "SC-SEMAEV-RELATION-SEMANTICS",
         "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND",
-        "SC-AMADORI-PRIME-FIELD-VARIANT"
+        "SC-AMADORI-PRIME-FIELD-VARIANT",
+        "SC-WCC2017-PMINUS1-M2-PRACTICAL-LIMIT",
+        "SC-WCC2017-PPLUS1-TRACE-EXTENSION"
       ]
     },
     {
@@ -689,7 +723,9 @@
         "SC-PKC-SMOOTH-SUBGROUP",
         "SC-PKC-RELATION-YIELD",
         "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND",
-        "SC-AMADORI-PRIME-FIELD-VARIANT"
+        "SC-AMADORI-PRIME-FIELD-VARIANT",
+        "SC-WCC2017-PMINUS1-M2-PRACTICAL-LIMIT",
+        "SC-WCC2017-PPLUS1-TRACE-EXTENSION"
       ],
       "requires_all": [
         {

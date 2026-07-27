@@ -206,7 +206,7 @@ nothing. The generation layer currently emits
 Creative output is untrusted and zero retained drafts is a valid cycle result.
 {engine_queue_summary}
 
-## Research Engine v0.2 sanitation
+## Research Engine v0.2 lifecycle
 The v0.2 lifecycle currently contains
 **{engine_v02['engine']['input_candidate_count']} immutable candidate snapshots**,
 **{len(engine_v02['engine']['admissible'])} admissible**,
@@ -221,16 +221,19 @@ stubs** and **{shadow_intake['counts']['parked_ideas']} parked desired-property 
 These are research questions, not hypotheses or candidates:
 **{shadow_intake['counts']['admissible']} admissible**,
 **{shadow_intake['counts']['recommended']} recommended**, and
-**{shadow_intake['counts']['authorized']} authorized**. Current sanitation work is `TASK-010`;
-`TASK-008` remains parked until this lifecycle is reviewed on a frozen commit.
+**{shadow_intake['counts']['authorized']} authorized**. `TASK-010` is accepted at
+`85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. Current work is `TASK-015`, which
+selects `CELL-M-PKC-SMOOTH-M16` only as a non-executable desk-cost question.
+`TASK-008` remains parked because no hypothesis proposal has quality-cleared.
 
 The Engine's bounded-exploration capability is
 **{str(engine_gates['exploration_authorized']).lower()}**, while the current decision's experiment
 authorization is **{str(phase['experiments_authorized']).lower()}** and the promotion gate is
 **{str(engine_gates['promotion_authorized']).lower()}**. `GLV-SEMAEV-ITER-001` is complete; its
-certificates and kernel-checked identities authorize no hypothesis run. `TASK-008` proposal
-intake is parked during `TASK-010`, and any later experiment needs a new dated decision plus the normal fixed
-budgets, dependency order, and retained terminal outcome.
+certificates and kernel-checked identities authorize no hypothesis run. `TASK-015` authorizes no
+S17 construction or solver, target computation, or route promotion. Any later experiment needs
+a new dated decision plus the normal fixed budgets, dependency order, and retained terminal
+outcome.
 
 ## Active work protocol
 `tasks/NEXT.md` is the queue router. ECDLP research is owned by

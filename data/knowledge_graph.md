@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every ledger row below cites kernel-checked declarations (no `sorry`, no custom axioms).
 
-**299 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **7 typed evidence cells** · **3 desk-decided cells** · **2 research-question seeds** · **4 shadow proposal stubs** · **0 bounded explorations selected** · **8 retained outcomes** · **1076 edges**
+**299 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **7 typed evidence cells** · **3 desk-decided cells** · **2 research-question seeds** · **4 shadow proposal stubs** · **0 bounded explorations selected** · **8 retained outcomes** · **1105 edges**
 
 > A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline counts; `data/result_registry.json` owns declaration-level resolution.
 
@@ -10,13 +10,13 @@ By proof method: Mathlib (106), Mathlib + native_decide (31), native_decide (20)
 
 By research area: curve-torsion (152), primality (55), generic-hardness (29), other (27), protocol-soundness (23), attack-resistance (7), reduction (5), params (1)
 
-By edge type: imports (490), member_of (299), requires_foundation (41), grounded_in_source_claim (36), decision_grounded_in (25), supports (24), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), requires_target_property (9), records_outcome_for (8), updates_hypothesis (8), records_route_evidence (8), blocked_by (7), instantiates_mechanism (7), evaluates_route (7), must_change_cost_quantity (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (3), bounded_by_research_barrier (3), depends_on_candidate (3)
+By edge type: imports (490), member_of (299), requires_foundation (41), grounded_in_source_claim (38), decision_grounded_in (25), supports (24), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), requires_target_property (9), records_outcome_for (8), updates_hypothesis (8), records_route_evidence (8), blocked_by (7), instantiates_mechanism (7), evaluates_route (7), must_change_cost_quantity (7), binds_target_feature (7), binds_mechanism_primitive (7), binds_unresolved_question (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (3), bounded_by_research_barrier (3), follows_up_cell (3), depends_on_candidate (3), generated_from_cell (2), follows_up_source (1)
 
 ## secp256k1 route decisions
 
 This target-specific layer is generated from `repo/ECDLP_DECISION_SUBSTRATE.json`. It does not replace the attack evidence registry or the formal release map.
 
-Phase: **research-engine-v0.2-sanitation**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Structural routes: **R-GLV-SEMAEV**. Promoted routes: **none**. Selected attack route: **none**.
+Phase: **evidence-bounded-desk-priority**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Structural routes: **R-GLV-SEMAEV**. Promoted routes: **none**. Selected attack route: **none**.
 
 Selection **RS-2026-07-24-001** (`2026-07-24`): **select_one_bounded_structural**. Completed the bounded, non-experimental GLV-SEMAEV-ITER-001. Only the diagonal C3 scalar polynomial covariance survives for S3 and S4; the naive independent-cube premise and the S4 fixed-target coordinate-scaling premise are bounded negatives. The S4 certificate isolates r=0, and Lean proves that no F_p-rational affine secp256k1 target inhabits that slice. No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.
 
@@ -69,6 +69,40 @@ Cells are regenerated joins over mechanisms, target properties, source claims, s
 | **CELL-M-PKC-SMOOTH-M16** | `R-PETIT-COMPOSED-MAPS` | `open` | `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=satisfied, `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=satisfied | `CQ-SEMAEV-S17-SYSTEM-COST` | true |
 | **CELL-M-PKC-SMOOTH-M4** | `R-PETIT-COMPOSED-MAPS` | `decided_inapplicable` | `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=violated, `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=violated | `CQ-PKC-GENERALIZED-ROOT-COST` | false |
 | **CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND** | `R-PRIME-FIELD-INDEX-CALCULUS` | `open` | `TP-SECP-PRIME-FIELD-COORDINATES`=satisfied | `CQ-PRIME-FIELD-RELATION-TOTAL` | false |
+
+## Finite hypothesis-space projection
+
+The mathematical hypothesis space is open-ended. This section is the finite, versioned projection induced by the current typed evidence, mechanism identity grammar, route model, and evidence digests. It is not a claim that every possible ECDLP idea has been enumerated.
+
+The typed mechanism and cell are part of scientific identity. The three synthesis axes alone are not a Cartesian-product hypothesis identifier.
+
+| axis kind | axis | definition boundary |
+|---|---|---|
+| target feature | **TF-J0-GLV-C3**: the exact order-three GLV action on the j=0 curve | The order-three orbit gives a known constant-factor structure; by itself it neither preserves a fixed target nor changes an asymptotic exponent. |
+| target feature | **TF-PRIME-FIELD-REPRESENTATION**: the explicit prime-field coordinate representation | Access to coordinates is only an opportunity surface. It is not evidence that relation generation, generalized root finding, or descent is cheaper than the square-root baseline. |
+| target feature | **TF-LOW-DEGREE-COMPOSED-FACTOR-BASE**: the low-degree composed-map factor-base construction | A smaller coordinate image or a successful toy solve is not a complexity improvement unless recovery, exceptional fibers, preprocessing, and total relation cost are all included. |
+| mechanism primitive | **MP-FAITHFUL-PHASE-QUOTIENT**: a phase-preserving faithful quotient with recovery | Independent coordinate cubes are excluded. More variables or a toric invariant ring do not count as a gain without an audited reduction in total solving cost. |
+| mechanism primitive | **MP-SEMAEV-RELATION-SAMPLING**: summation-polynomial relation sampling with complete costs | Polynomial degree, matrix size, or one solver timing is only a proxy and cannot establish a subgeneric algorithm without an end-to-end cost bridge. |
+| mechanism primitive | **MP-GENERALIZED-ROOT-RECOVERY**: generalized root finding with explicit fiber recovery | The construction remains a proposal primitive until its generalized root problem and all offline work are cheaper than the matched plain presentation at increasing toy sizes. |
+| unresolved question | **U-GLV-SOLVING-COST**: whether a faithful GLV presentation changes solving cost rather than notation | The closed independent-cube quotient may not be reopened without a new premise, and finite target batching alone is not an asymptotic bridge. |
+| unresolved question | **U-PRIME-FIELD-RELATION-EXPONENT**: whether prime-field relation generation changes the square-root exponent | Toy relations, proxy matrices, and informal asymptotics remain insufficient until the factor-base probability, solver, recovery, linear algebra, and precomputation terms are joined. |
+| unresolved question | **U-PETIT-GENERALIZED-ROOT-COST**: whether the composed-map generalized root problem scales better end to end | Approximate or nonfaithful variants and isolated toy wins do not answer the faithful generalized-root question. |
+
+| seed | typed mechanism and cell | target feature | mechanism primitive | unresolved question | status |
+|---|---|---|---|---|---|
+| **HGS-7C7E54520C62** | `M-PKC-AUXILIARY-CURVE` / `CELL-M-PKC-AUXILIARY-CURVE` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `property_resolution_required`, authorization `none` |
+| **HGS-181F56A9E6D7** | `M-PKC-SMOOTH-M16` / `CELL-M-PKC-SMOOTH-M16` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `desk_cost_bridge_required`, authorization `none` |
+
+| shadow stub | anchor | kind | executable | authorized |
+|---|---|---|---:|---:|
+| **RSI-2AD454D97023** | `kudo_yokota_takahashi_yasuda2018` | `literature_full_text_ingestion` | false | false |
+| **RSI-C6924493AA26** | `CELL-M-PKC-AUXILIARY-CURVE` | `full_cost_contract` | false | false |
+| **RSI-D8BBA6340789** | `CELL-M-PKC-SMOOTH-M16` | `desk_cost_contract` | false | false |
+| **RSI-F01A8A1FA604** | `CELL-M-PKC-AUXILIARY-CURVE` | `structural_applicability` | false | false |
+
+> These rows are research questions. They are not quality-cleared hypotheses, candidates, route promotions, or permission to execute.
+
+> Current desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`. The auxiliary-curve cell remains parked pending a finite source-defined search domain. Authorization remains `none`.
 
 ## Research Engine v0
 

@@ -1,100 +1,75 @@
-# Hypothesis explorer — disciplined, non-monotonous idea search (DeepSeek breadth tier)
+# Hypothesis-space guide
 
-## Honest purpose
-DeepSeek is the **breadth / exploration tier**, not a breakthrough machine. It will *not* crack
-ECDLP. Its job is to **map the hypothesis space systematically and without repetition**, and for
-every idea produce a **concrete, machine-checkable sub-claim** that either fails fast (→ grows the
-honest no-go map) or, rarely, survives (→ a lead for the depth tier, Fable, to deepen). The main
-product of this tier is a **growing, machine-checked no-go map + a short list of live leads** —
-that is exactly the honest north-star search, not a promise of a break.
+## What can and cannot be mapped
 
-The failure mode we engineer against: ask a model "how might one solve ECDLP?" and it returns the
-same standard list every run (Semaev, Weil descent, isogeny-to-weak-curve, Smart, Gröbner…). That
-is monotonous and low-value. Below is how we force diversity and discipline.
+The mathematical space of ECDLP ideas is open-ended. New transformations,
+information sources, recovery methods, cost models, and combinations can always
+be proposed, so the repository does not claim a complete map of every possible
+hypothesis.
 
-## Anti-monotony design (six mechanisms)
+The actionable frontier is finite relative to the current evidence snapshot and
+the grammar in `repo/HYPOTHESIS_GENERATION_V0.json`. Its canonical generated map
+is:
 
-1. **Persistent hypothesis ledger + explicit novelty pressure.** `notes/HYPOTHESIS_LEDGER.md`
-   records every hypothesis ever generated with a short canonical signature and its outcome. Each
-   new prompt is fed the full list of already-seen signatures with the instruction *"these are
-   already explored — do NOT restate them; propose directions orthogonal to all of them."* This
-   memory-across-runs is the core anti-repetition mechanism.
+- `data/knowledge_graph.json` for machine use;
+- `data/knowledge_graph.md` for a rendered view;
+- `data/typed_evidence_state.json` for mechanism and target-property cells;
+- `data/research_engine_state.json` for generated research-question seeds;
+- `data/research_engine_shadow_intake.json` for non-executable follow-up stubs.
 
-2. **Axis-structured coverage.** The search space is partitioned into explicit axes; each run
-   targets the *least-explored* axis (tracked in the ledger), so the search cannot collapse into
-   one corner:
-   - algebraic (endomorphism ring / CM, isogeny graph, torsion structure `E[n]`),
-   - index-calculus / factor-base (Semaev summation, Weil descent, decomposition bases),
-   - analytic / p-adic (formal groups, canonical heights, Frobenius/`L`-functions),
-   - geometric (higher genus, abelian varieties, moduli, covers),
-   - cross-domain analogy (lattices, codes, dynamical systems, tensor networks, category theory),
-   - reduction / equivalence (to factoring, to other DLPs, to hidden-subgroup variants).
+This is a versioned evidence-bounded projection, not a Cartesian product of
+keywords and not a completeness theorem.
 
-3. **"Avoid the known" grounding.** Every prompt is given (a) our **machine-checked no-go facts**
-   (secp256k1 resists MOV — embedding degree > 100; anti-Smart/anomalous — trace of Frobenius;
-   Semaev is prime-field-irrelevant) and (b) the standard *failed* approaches, with the constraint:
-   propose ideas that are **not restatements** of these. A **novelty-critic** second pass rejects
-   near-duplicates before anything is recorded.
+## Identity and deduplication
 
-4. **Force a checkable sub-claim (the discipline that separates signal from vibes).** A hypothesis
-   is accepted into the pipeline **only if** it names a concrete, small, **kernel- or
-   sympy-checkable** consequence (e.g. a polynomial identity, a coprimality/resultant fact, a
-   torsion/degree count, an explicit map). No checkable sub-claim ⇒ vacuous ⇒ discarded. This is
-   what turns "an idea" into a testable structural claim.
+A generated research-question seed is identified by its typed mechanism and
+cell, the three synthesis axes, route, threat model, and exact typed-evidence
+and claim-state digests. The cell carries its construction, requirements, cost
+quantity, and evidence boundary. Current seeds do not instantiate a proposal's
+fixed-target semantics, recovery map, non-generic information source,
+preprocessing, amortization, or complete changed-cost signature.
 
-5. **Diversity sampling.** High temperature + `N` independent samples per axis + semantic dedup on
-   the canonical signatures, so a single run yields varied ideas rather than one repeated.
+Those additional fields belong to proposal identity. They become mandatory
+only if a seed later passes intake and is expanded into a proposal. No current
+seed has done so, and the current projection contains zero quality-cleared
+proposals.
 
-6. **Outcome loop, recorded.** Each surviving sub-claim is verified/refuted (kernel via the server,
-   or sympy for algebraic identities) and filed:
-   - **refuted** → append to the no-go map (a *result*, not a failure),
-   - **inconclusive / needs foundation** → parked with the missing dependency named,
-   - **supported** → promoted to a **lead** for Fable + the Lean corpus to deepen.
-   The ledger grows monotonically; no run repeats a prior signature.
+Two cells may share the same three synthesis axes and still represent different
+scientific questions. In the current state,
+`CELL-M-PKC-SMOOTH-M16` and `CELL-M-PKC-AUXILIARY-CURVE` share the same feature,
+primitive, and unresolved-question IDs, but differ in their exact construction,
+target-property status, evidence, and admissible next step.
 
-## Tiers (who does what) — v2 architecture (`scripts/explore_pipeline.py`)
-A first live run showed the flaw in "DeepSeek does everything": DeepSeek is weak at rigour, so its
-self-written sympy scripts either crashed or *gamed the gate* (substituted a trivial already-known
-check and printed `CERT_OK`). The honest division of labour puts each model on its strength:
-- **Tier 1 — Breadth (DeepSeek), N axis-scoped agents:** cheap, diverse research *angles* only — the
-  idea and the *kind* of checkable consequence. **No scripts** (rigour is off its critical path).
-- **Tier 2 — Rigour (Opus):** turns each unique angle into a precise small sub-claim **and** a
-  faithful sympy script that tests exactly it. This is the rigour DeepSeek could not do reliably.
-- **Tier 3 — Verify (sympy, offline):** `supported` / `refuted` (clean `AssertionError` only) /
-  `parked` (a crash is a broken tool, never a no-go).
-- **Tier 4 — Gate / cross-check (Opus panel):** `K` independent adversarial verifiers per survivor
-  judge *faithful* (script tests the claim, not a substitute), *non-trivial* (not already-known),
-  *relevant*. **Unanimous** ⇒ a real lead; else `rejected-by-gate`. Prompt rules alone cannot catch
-  semantic gaming — this panel is what does.
-- **Depth (Fable):** spent ONLY on gated leads — pre-verified, narrow, faithful targets.
-- **Verifier of truth (Lean kernel):** the sole judge before anything enters the built corpus.
+## Current finite frontier
 
-Per-tier USD is logged each run, so whether the cheap breadth tier earns its place is decided on
-data, not intuition. Old single-model script: `scripts/hypothesis_explorer.py` (kept; superseded).
+The generated state has seven typed cells, two seed-eligible cells, four shadow
+stubs, zero quality-cleared proposals, zero retained candidate snapshots, and
+zero experiment authorizations. A seed or stub is a research question, not a
+hypothesis, candidate, or route promotion.
 
-## Honest expected output
-Overwhelmingly: a **precise, machine-checked no-go map** — which *is* the deliverable of the
-honest search and a publishable contribution. Occasionally: a lead worth deep work. Essentially
-never (but not provably never): the break itself. We state these odds plainly and do not inflate
-them.
+TASK-015 assigns the sole next desk priority to
+`CELL-M-PKC-SMOOTH-M16` and its `desk_cost_contract` stub. The arithmetic
+applicability predicates are already resolved. The remaining work is limited to
+the unresolved representation, symbolic size, recovery, independence, memory,
+preprocessing, and total-cost fields of `CQ-SEMAEV-S17-SYSTEM-COST`.
 
-## Tiering & token economics (why this saves Fable spend)
-DeepSeek is the **cheap wide front-end**; Fable is the **expensive narrow back-end**. The explorer
-makes each DeepSeek agent do the token-heavy work — broad generation **and** writing a
-self-contained sympy script that checks its own sub-claim — and then we RUN that script offline
-(the judge). ~most ideas are refuted for free and become no-go entries; only the sympy-**supported**
-survivors are written to `notes/HYPOTHESIS_LEADS.md` (with the verified certificate) and handed to
-Fable. So Fable is never spent on the wide search or on unverified ideas — only on pre-chewed,
-already-checked narrow targets. DeepSeek is dirt-cheap (~sub-cent per hypothesis), so the fleet can
-run 10–20+ agents per cycle; concurrency is capped by `--workers`, not by cost.
+`CELL-M-PKC-AUXILIARY-CURVE` stays parked until a primary source supplies a
+finite family or search domain with a completeness criterion. An unbounded
+search over auxiliary curves cannot produce an honest negative verdict.
 
-## Status
-`scripts/hypothesis_explorer.py` is **v1 — parallel and self-verifying**: a `ThreadPoolExecutor`
-fleet of axis-pinned DeepSeek agents (`--agents`, `--workers`), each returning a hypothesis +
-sub-claim + a sympy script that is executed offline (`run_sympy` → supported/refuted/parked),
-ledger dedup by canonical signature, and a leads file for the depth tier. Locally verified: the
-module compiles, no-ops with zero spend when `DEEPSEEK_API_KEY` is absent, and the sympy verifier
-correctly returns supported/refuted/parked on known inputs. The DeepSeek calls run only where the
-key lives — GitHub Actions: `.github/workflows/hypothesis-explore.yml` (manual dispatch only,
-draft-PR only, `DEEPSEEK_API_KEY` secret). The weekly cron was removed by the execution-security
-audit. Not yet exercised against the live DeepSeek API.
+## Authorization boundary
+
+The selected desk question authorizes no materialized S17 or recursive
+polynomial system and no solver run, Sage, msolve, F4, or parameter sweep. It
+also authorizes no secp256k1 discrete-log computation, novelty claim while CANS
+2018 remains unread, or route promotion. The valid terminal outputs are an
+exact symbolic cost bridge, a narrowly scoped blocker, or zero retained
+hypotheses.
+
+## Historical model-fleet path
+
+The older model-fleet explorer remains available only for reproducibility of
+historical workflows. It is not the canonical search or mapping path and cannot
+authorize a proposal or experiment. The canonical current path is the typed
+evidence state, generated seed layer, shadow intake, and graph projection listed
+above.

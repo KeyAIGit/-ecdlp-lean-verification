@@ -209,10 +209,12 @@ How to verify:
 
 ### TASK-010 - Independent adversarial audit at a stable checkpoint
 
-Status: active_remediation_draft
+Status: completed_accepted
 Kind: review | research | ops
 Hypothesis: none
 Lifecycle: RESEARCH-ENGINE-V0.2-SANITATION-001
+Completed on: 2026-07-27
+Acceptance commit: `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`
 Why it matters: The independent audit found reproducibility, lifecycle,
 calibration, semantic-drift, and authorization defects. This task repairs those
 findings before Research Engine v0.2 is treated as stable.
@@ -391,3 +393,89 @@ Operational release criterion: v0.2 may be described as exercised as a
 research machine only after three native outcomes, at least one external
 scientific review, and at least one evidence-driven candidate decision change.
 This is an operational milestone, not evidence of an ECDLP breakthrough.
+
+### TASK-015 - Map the bounded hypothesis frontier and select one desk question
+
+Status: active_non_executable_desk_priority
+Kind: literature | cost | data | research | review
+Hypothesis: none. `CELL-M-PKC-SMOOTH-M16` is a research-question cell, not a
+hypothesis, candidate, experiment, or selected attack route.
+Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
+Authorization: none
+Why it matters: The mathematical idea space is open-ended, but the actionable
+frontier can be made finite relative to a versioned evidence snapshot,
+mechanism grammar, route model, target properties, recovery contract, and cost
+quantities. The existing knowledge graph already supplies that projection.
+Choosing the exact M16 desk-cost cell avoids both a free-form idea search and
+an unbounded auxiliary-curve search.
+Decision boundary:
+- WCC 2017 is a separate inspected source. It does not replace unread CANS
+  2018 and supplies no novelty claim.
+- WCC 2017 studies favorable `m=2` examples on selected 12.1-22.0-bit primes
+  and explicitly makes no asymptotic claim. Its timing and speedup numbers do
+  not transfer to secp256k1 `m=16` or S17.
+- The M16 arithmetic predicates are already resolved. TASK-015 may address
+  only the remaining null cost fields.
+- `CELL-M-PKC-AUXILIARY-CURVE` remains parked until a primary source supplies
+  a finite family or search domain with a completeness criterion.
+Inputs:
+- `repo/HYPOTHESIS_GENERATION_V0.json`
+- `repo/ECDLP_TYPED_EVIDENCE_V0.json`
+- `data/typed_evidence_state.json`
+- `data/research_engine_state.json`
+- `data/research_engine_shadow_intake.json`
+- `data/knowledge_graph.json`
+- `data/source_claim_extracts/yokota_kudo_yasuda2017_wcc.json`
+- `data/source_claim_extracts/petit_kosters_messeng2016.json`
+- `experiments/engine/pkc_smooth_desk_screen/artifact.json`
+- `CQ-SEMAEV-S17-SYSTEM-COST`
+Expected output:
+- One generated finite hypothesis-space projection using the existing
+  knowledge graph, with typed cell identity kept distinct from the three
+  shared synthesis axes.
+- One source card for WCC 2017 and an explicit CANS 2018 unread boundary.
+- One residual desk contract for M16 covering symbolic direct-S17, recursive-S3,
+  and source-faithful factor-base presentations without materializing a
+  polynomial system or invoking a solver.
+- Separate treatment of the source map's degree-13441 component and any
+  equivalent low-degree exponentiation-circuit encoding, including recovery
+  semantics and exceptional components.
+- Exact symbolic degree, monomial-support, memory, preprocessing, recovery,
+  independence, and total-cost bounds where derivable; otherwise the smallest
+  explicit blocker.
+- A terminal disposition of exact desk bridge, scoped blocker, or
+  `zero_retention_success`.
+Exit criteria:
+- The knowledge graph remains schema 4.0 and no parallel atlas or Research
+  Engine v0.3 is created.
+- WCC claims attach only to broad prime-field total-cost evidence, not to the
+  M16 cost quantity, auxiliary-curve property, or either typed cell.
+- CANS 2018 remains `full_text_unread`.
+- M16 remains an open, seed-eligible, non-executable cell until its complete
+  cost bridge is independently reviewed.
+- Auxiliary-curve applicability remains unknown and unselected.
+- No materialized S17 or recursive system, solver execution, Sage, msolve, F4,
+  parameter sweep,
+  secp256k1 discrete-log computation, route promotion, novelty claim, or
+  asymptotic claim is authorized.
+- Zero retained hypotheses is an accepted result.
+Files allowed to edit:
+- source and typed-evidence registries
+- the existing hypothesis-space guide and knowledge-graph generator
+- the TASK-014 comparison note only as an explicitly dated TASK-015 addendum
+- the current phase gates in `repo/ECDLP_DECISION_SUBSTRATE.json`, while
+  `route_selection` remains unchanged
+- `scripts/research_engine_lib.py` only for recognizing the current closed
+  desk-priority mode, and the existing generated decision-view builder
+- this task contract and append-only decision log
+- directly affected tests and generated views
+- a later dedicated symbolic desk artifact, but no solver or run directory
+Files that must be regenerated:
+- source, typed-evidence, claim, engine, shadow-intake, graph, status, decision,
+  bundle, and site views
+How to verify:
+- source-registry and typed-evidence checks
+- WCC/CANS non-conflation fault injection
+- knowledge-graph edge and rendered-projection checks
+- scientific-semantic and decision-substrate gates
+- generated fixpoint and full repository CI

@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 17,
+                "source_claims": 19,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -250,6 +250,63 @@ class TypedEvidenceTests(unittest.TestCase):
         )
         self.assertEqual("open", cells["CELL-M-PKC-SMOOTH-M16"]["status"])
         self.assertTrue(cells["CELL-M-PKC-SMOOTH-M16"]["seed_eligible"])
+
+    def test_wcc_precursor_is_bounded_and_does_not_replace_cans(self) -> None:
+        sources = {
+            item["id"]: item for item in self.source_registry["sources"]
+        }
+        self.assertEqual(
+            "full_text_inspected",
+            sources["yokota_kudo_yasuda2017_wcc"]["full_text_status"],
+        )
+        self.assertEqual(
+            "full_text_unread",
+            sources["kudo_yokota_takahashi_yasuda2018"]["full_text_status"],
+        )
+
+        claim_ids = {
+            item["id"]
+            for item in self.policy["source_claims"]
+            if item["source_id"] == "yokota_kudo_yasuda2017_wcc"
+        }
+        expected = {
+            "SC-WCC2017-PMINUS1-M2-PRACTICAL-LIMIT",
+            "SC-WCC2017-PPLUS1-TRACE-EXTENSION",
+        }
+        self.assertEqual(expected, claim_ids)
+
+        costs = {
+            item["id"]: set(item["source_claim_ids"])
+            for item in self.policy["cost_quantities"]
+        }
+        self.assertTrue(
+            expected <= costs["CQ-PRIME-FIELD-RELATION-TOTAL"]
+        )
+        self.assertTrue(
+            expected.isdisjoint(costs["CQ-SEMAEV-S17-SYSTEM-COST"])
+        )
+        self.assertTrue(
+            expected.isdisjoint(costs["CQ-PKC-GENERALIZED-ROOT-COST"])
+        )
+
+        problems, state = self.build()
+        self.assertEqual([], problems)
+        cells = {item["cell_id"]: item for item in state["cells"]}
+        self.assertEqual("open", cells["CELL-M-PKC-SMOOTH-M16"]["status"])
+        self.assertEqual(
+            "property_resolution_required",
+            cells["CELL-M-PKC-AUXILIARY-CURVE"]["status"],
+        )
+        self.assertTrue(
+            expected.isdisjoint(
+                cells["CELL-M-PKC-SMOOTH-M16"]["source_claim_ids"]
+            )
+        )
+        self.assertTrue(
+            expected.isdisjoint(
+                cells["CELL-M-PKC-AUXILIARY-CURVE"]["source_claim_ids"]
+            )
+        )
 
     def test_pkc_smooth_thresholds_are_recomputed_from_p_and_arity(self) -> None:
         policy = copy.deepcopy(self.policy)
