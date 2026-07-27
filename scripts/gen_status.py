@@ -162,8 +162,8 @@ The current bottleneck is **a missing proposal-level non-generic mechanism, not 
 volume**. Decision `{selection['decision_id']}` evaluated all **{len(routes)} attack routes** and
 recorded **{len(selected_structural)} route in completed bounded structural work**
 ({", ".join(f"`{item}`" for item in selected_structural) or "none"}), while promoting
-**{len(promoted_routes)} routes**. The completed work resolved one exact S3/S4 symmetry and
-fixed-target uncertainty; it was not an attack experiment or a route promotion. The map contains
+**{len(promoted_routes)} routes**. The completed work resolved one exact S3/S4 polynomial-symmetry
+question and one S4 fixed-target uncertainty; it was not an attack experiment or a route promotion. The map contains
 **{len(foundations)} foundation decisions**,
 bounded exploration authorized = **{str(phase['bounded_exploration_authorized']).lower()}**,
 promotion experiments authorized =

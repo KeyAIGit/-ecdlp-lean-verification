@@ -39,13 +39,15 @@ Z[b,beta,x1,...]/(beta^3-1)
 
 and compared exactly with `beta^k*Sj` for each `k` in `{0,1,2}`.
 
-The final x-coordinate is designated as the target coordinate. A unit-scalar
-polynomial equality with target exponent zero preserves a fixed-target fiber.
-A full diagonal equality with a nonzero target exponent transports that fiber
-to the target's GLV image. The strengthened fixed-target certificate proves
-that no such nonidentity coordinate scaling preserves any nonzero affine
-target in characteristic outside `{2,3}`. The special slice `xT=0` has exactly
-the diagonal `C3` stabilizer.
+For the strengthened fixed-target analysis, the fourth coordinate of `S4` is
+designated as the target coordinate. A unit-scalar polynomial equality with
+target exponent zero preserves an `S4` fixed-target fiber. A full diagonal
+equality with a nonzero target exponent transports that fiber to the target's
+GLV image. The strengthened certificate proves that no such nonidentity
+coordinate scaling preserves any nonzero affine `S4` target in characteristic
+outside `{2,3}`. The special slice `xT=0` has exactly the diagonal `C3`
+stabilizer. The `S3` result is a polynomial covariance/classification only;
+this package makes no fixed-target `S3` classification claim.
 
 The producer first works in `Z[b,beta]/(beta^3-1)`, as requested, and then
 independently reduces the same tables in the primitive component
@@ -73,15 +75,15 @@ identities themselves need only `beta^3=1` in a commutative ring.
 
 ## Frozen result
 
-| Polynomial | Coordinatewise scalings | Primitive-root semi-invariants | Fixed-target scalar covariances in the base table | Rejected scalar covariances |
+| Polynomial | Coordinatewise scalings | Primitive-root semi-invariants | Base-table actions with final-coordinate exponent zero | Rejected scalar covariances |
 |---|---:|---:|---:|---:|
 | `S3` | 27 | 3 diagonal | 1 (identity) | 24 |
 | `S4` | 81 | 3 diagonal | 1 (identity) | 78 |
 
 For `S3`, diagonal exponents `0`, `1`, and `2` have unit characters
 `1`, `beta`, and `beta^2`, respectively. For resultant-defined `S4`, all three
-diagonal actions leave the polynomial exactly equal. In both cases the two
-nonidentity diagonal actions move a nonzero target fiber.
+diagonal actions leave the polynomial exactly equal. Only the `S4` statement
+below is a complete fixed-target classification.
 
 For `F_r(x1,x2,x3) = S4(x1,x2,x3,r)`, the exact transport law is
 
@@ -94,6 +96,13 @@ Equivalently, diagonal scaling maps the fiber for `r` to the fiber for
 has only the identity coordinate-scaling covariance in characteristic outside
 `{2,3}`. When `r=0`, exactly the full diagonal `C3` preserves the slice; every
 other candidate is rejected by a specialization-stable pure-`b` witness.
+
+For secp256k1 over its base field, Lean separately proves that `7` is not a
+square and hence no affine point has `x=0`. Therefore every actual
+`𝔽_p`-rational affine secp256k1 target lies in the certificate's `r != 0`
+case. The resulting exhaustive `S4` stabilizer statement is composite evidence:
+the nonzero-coordinate fact is kernel-checkable, while exhaustiveness remains
+certificate-backed.
 
 ## Independent replay
 
@@ -128,3 +137,6 @@ would need a radical or absolute-irreducibility bridge not proved here.
 This is a polynomial identity and target-fiber transport certificate. It does
 not test an attack, establish a relation-generation speedup, measure Groebner
 complexity, or make any claim about solving secp256k1 ECDLP.
+The fixed-target certificate and every quantified fixed-target conclusion in
+this package concern `S4` only. The `S3` result stops at polynomial
+covariance/classification.

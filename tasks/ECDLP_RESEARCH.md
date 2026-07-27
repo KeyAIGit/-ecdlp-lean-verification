@@ -132,7 +132,8 @@ Expected output:
 - The full finite classification of coordinatewise C3 semi-invariant actions
   on S3 and S4, with polynomial equality kept distinct from zero-variety
   equality.
-- The fixed-target transport law and the point-group GLV relation bijection.
+- The `S4` fixed-target transport/classification and the point-group GLV
+  relation bijection. `S3` has no fixed-target classification claim.
 - Only completed covariance identities in the smallest kernel-checkable Lean
   package; any impractical stabilizer classification remains outside the
   verified ledger with its exact blocker.
