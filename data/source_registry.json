@@ -236,6 +236,7 @@
         "VERIFIED.md",
         "domains/p256/corpus.md",
         "experiments/README.md",
+        "experiments/engine/pkc_smooth_m16_semantic_bridge/README.md",
         "experiments/engine/pkc_smooth_m16_symbolic_desk/README.md",
         "experiments/glv_diagonal_obstruction/README.md",
         "experiments/glv_semaev_symmetry/README.md",
