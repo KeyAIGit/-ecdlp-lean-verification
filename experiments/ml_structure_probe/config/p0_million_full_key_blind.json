@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ML-STRUCTURE-PROBE-FULL-KEY-BLIND-1M",
+  "curve": "secp256k1",
+  "record_format": "scalar32-compressed-point33-v1",
+  "master_seed_hex": "e3780ba9b64128b6efa2caf931fe8619b35ae37deb3c035b4de9d2d7fa8a10bd",
+  "splits": {
+    "blind_a": 500000,
+    "blind_b": 500000
+  },
+  "shard_records": 50000,
+  "workers": 8,
+  "validator_spot_checks": 2048,
+  "quality_thresholds": {
+    "max_scalar_bit_abs_z": 6.5,
+    "max_public_x_bit_abs_z": 8.0,
+    "max_y_parity_abs_z": 6.5
+  },
+  "scientific_evidence": false,
+  "blind_policy": {
+    "seed_committed_before_generation": true,
+    "fit_on_blind": false,
+    "selection_on_blind": false,
+    "required_halves": [
+      "blind_a",
+      "blind_b"
+    ]
+  }
+}

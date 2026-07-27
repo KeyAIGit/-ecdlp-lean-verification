@@ -80,6 +80,49 @@ before generation.  No primary-test result changes the frozen recipes.
 `compare_runs.py` rejects equal dataset roots and recipe drift before producing
 the cross-seed report.
 
+## All-256-bit AutoML extension
+
+`full_key_search.py` tests the user's direct question: can a model consume the
+entire public point and simultaneously predict every one of the 256 private
+scalar bits?  The target is a 256-column Bernoulli matrix.  The scalar is never
+cast to `float32` or `float64`, because doing so would retain only about 24 or
+53 significant bits and would silently destroy most of the target.
+
+The three bit-level public representations are deliberately distinguished:
+
+| representation | columns | meaning |
+|---|---:|---|
+| compressed SEC 1 bytes | 264 | all 33 physical bytes, including 7 constant prefix bits |
+| informative compressed point | 257 | 256 x-coordinate bits plus 1 y-parity bit |
+| affine `x||y` | 512 | both coordinates, although y is recoverable from x plus parity |
+
+Centered bytes, 16-bit limbs, popcounts, fixed pairwise interactions, and all
+three bit forms are included in the 80-architecture screen.  MLP, multi-output
+ridge, bounded-depth ExtraTrees, and random Fourier feature heads are trained
+under successive budgets.  The predeclared search contains 301 fits:
+
+| stage | fits | role |
+|---|---:|---|
+| screen | 240 | 80 architectures, 3 seeds, 100,000 train and 100,000 development records |
+| confirm | 36 | 12 survivors, 3 seeds, 600,000 train and 200,000 development records |
+| cross-dataset | 8 | 4 survivors in both primary-to-replica directions |
+| final ensemble | 5 | one frozen recipe, 5 new seeds, 1.6M train records |
+| controls | 12 | random labels, whole-key permutations, and 1/8/32-bit deliberate leaks |
+
+Every metric is computed relative to priors learned on the fitting data.
+Information gain and accuracy uncertainty are clustered by complete key, not
+by pretending that the 256 output bits are independent samples.  The result
+includes bits/key gain, bit accuracy, Hamming distance, exact key matches,
+confidence slices, per-bit exploratory metrics, whole-key standard errors, and
+95% confidence intervals.
+
+The two existing millions are development data.  After the recipe is frozen,
+`full_key_blind.py` refits its fixed five-seed ensemble on those two millions
+and evaluates the one unchanged ensemble on `blind_a` and `blind_b` from a new
+third million.  Both blind halves must independently cross every threshold and
+have positive lower 95% confidence bounds.  Blind data is never used for
+selection, calibration, early stopping, or refitting.
+
 ## Is one million pairs enough?
 
 It is enough for:
@@ -253,7 +296,22 @@ Smoke test:
 ```text
 cd experiments/ml_structure_probe
 python test_probe.py
+python test_full_key.py
 ```
+
+Run the all-256-bit development search after generating both existing million
+datasets:
+
+```text
+python full_key_search.py \
+  --config config/full_key_search.json \
+  --output-dir reports/full_key_search
+```
+
+The command writes a complete JSONL attempt ledger, machine-readable result,
+Markdown report, and `frozen_full_key_recipe.json`.  The separate blind command
+is intentionally run only after the new blind dataset seed, generator config,
+and frozen recipe are committed.
 
 One-million-pair data and probe:
 
