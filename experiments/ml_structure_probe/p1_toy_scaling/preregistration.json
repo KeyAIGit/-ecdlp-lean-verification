@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "experiment_id": "ML-P1E-TOY-SCALING-2026-07-27",
-  "status": "source_protocol_commit_pending",
+  "status": "catalog_and_dataset_validated_selection_authorized",
   "owner_direction_date": "2026-07-27",
   "classification": "route-neutral engineering qualification",
   "hypothesis_id": null,
@@ -53,16 +53,16 @@
     "statistical_interval": "Student-t"
   },
   "frozen_bindings": {
-    "source_commit": null,
-    "config_sha256": null,
-    "catalog_file_sha256": null,
-    "catalog_payload_sha256": null,
-    "manifest_file_sha256": null,
-    "manifest_payload_sha256": null,
-    "curve_validation_sha256": null,
-    "dataset_validation_sha256": null,
-    "dataset_records": null,
-    "full_ec_replay": null
+    "source_commit": "b092ef33ffd59b128919ad70800ebcdca9e7be0e",
+    "config_sha256": "fbacadc41429f91b70443826de46c309978333518da34a68321f1b25ca451e6c",
+    "catalog_file_sha256": "e3c33972d7f0e225941f1861d2af85e0a696c65097b4a2d611d0d6b6a637d7df",
+    "catalog_payload_sha256": "e0bcb2bb9ed5ef1c47abedf694da95edf1ae82f43bf27651cf60e07f52a0b995",
+    "manifest_file_sha256": "5bab6ae63d6c2853e43215572e9777d862ec7fcf6f21fa515e08823a29e0a323",
+    "manifest_payload_sha256": "7db2d760624a723bfe4ad5e3eda7d3393135496ae4178760e57485f4e57a2731",
+    "curve_validation_sha256": "2d83745c030a155848df7981317118d122a386d40a7877278362e40a502bff99",
+    "dataset_validation_sha256": "7a95341117f7efe29d8ad1a37552564f6c4c8eb94697cd2af5356635dc2d8451",
+    "dataset_records": 1097078,
+    "full_ec_replay": true
   },
   "claim_boundary": {
     "allowed": [

@@ -1,0 +1,3826 @@
+{
+  "arithmetic_sha256": "7578a46bf446252e6d5db3be2707e89ac4b89ab2090cd36ac383d04ff1b75ae1",
+  "catalog_sha256": "e0bcb2bb9ed5ef1c47abedf694da95edf1ae82f43bf27651cf60e07f52a0b995",
+  "classification": "route-neutral engineering qualification",
+  "config_sha256": "fbacadc41429f91b70443826de46c309978333518da34a68321f1b25ca451e6c",
+  "curve_count": 40,
+  "curves": [
+    {
+      "anomalous": false,
+      "base_point": [
+        3491,
+        2454
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 0,
+      "embedding_degree": 948,
+      "field_bits": 12,
+      "field_p": 3691,
+      "generators": [
+        {
+          "base_multiplier": 2880,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b12-c0-p3691-g0",
+          "point": [
+            916,
+            1234
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 3442,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b12-c0-p3691-g1",
+          "point": [
+            777,
+            1395
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 2167,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b12-c0-p3691-g2",
+          "point": [
+            2476,
+            1168
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 1328,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b12-c0-p3691-g3",
+          "point": [
+            3293,
+            409
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 999,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b12-c0-p3691-g4",
+          "point": [
+            1445,
+            2100
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 219,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b12-c0-p3691-g5",
+          "point": [
+            2633,
+            3413
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 474,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 2724,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 3793,
+      "hasse": {
+        "lower": 3571,
+        "trace_bound": 121,
+        "twice_order_exceeds_upper": true,
+        "upper": 3813
+      },
+      "id": "toy-secp-j0-b12-c0-p3691",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 5
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        2667,
+        3313
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 1,
+      "embedding_degree": 4020,
+      "field_bits": 12,
+      "field_p": 3931,
+      "generators": [
+        {
+          "base_multiplier": 3591,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b12-c1-p3931-g0",
+          "point": [
+            3873,
+            1987
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 3587,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b12-c1-p3931-g1",
+          "point": [
+            1078,
+            3126
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 3907,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b12-c1-p3931-g2",
+          "point": [
+            3853,
+            3352
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 3356,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b12-c1-p3931-g3",
+          "point": [
+            1028,
+            3182
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 2820,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b12-c1-p3931-g4",
+          "point": [
+            3066,
+            2357
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 3291,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b12-c1-p3931-g5",
+          "point": [
+            2789,
+            3043
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 617,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 2208,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 4021,
+      "hasse": {
+        "lower": 3807,
+        "trace_bound": 125,
+        "twice_order_exceeds_upper": true,
+        "upper": 4057
+      },
+      "id": "toy-secp-j0-b12-c1-p3931",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 5
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        635,
+        870
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 2,
+      "embedding_degree": 2556,
+      "field_bits": 12,
+      "field_p": 2503,
+      "generators": [
+        {
+          "base_multiplier": 1727,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b12-c2-p2503-g0",
+          "point": [
+            1932,
+            674
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 703,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b12-c2-p2503-g1",
+          "point": [
+            1475,
+            804
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 667,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b12-c2-p2503-g2",
+          "point": [
+            188,
+            1624
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 809,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b12-c2-p2503-g3",
+          "point": [
+            1268,
+            111
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 1894,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b12-c2-p2503-g4",
+          "point": [
+            1697,
+            465
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 746,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b12-c2-p2503-g5",
+          "point": [
+            973,
+            1402
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 1226,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 835,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 2557,
+      "hasse": {
+        "lower": 2404,
+        "trace_bound": 100,
+        "twice_order_exceeds_upper": true,
+        "upper": 2604
+      },
+      "id": "toy-secp-j0-b12-c2-p2503",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 7
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        1277,
+        368
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 3,
+      "embedding_degree": 1686,
+      "field_bits": 12,
+      "field_p": 3271,
+      "generators": [
+        {
+          "base_multiplier": 915,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b12-c3-p3271-g0",
+          "point": [
+            1993,
+            2548
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 326,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b12-c3-p3271-g1",
+          "point": [
+            426,
+            1702
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 2950,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b12-c3-p3271-g2",
+          "point": [
+            2900,
+            306
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 2761,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b12-c3-p3271-g3",
+          "point": [
+            3109,
+            3088
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 2231,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b12-c3-p3271-g4",
+          "point": [
+            1834,
+            865
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 2739,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b12-c3-p3271-g5",
+          "point": [
+            119,
+            397
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 842,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 2718,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 3373,
+      "hasse": {
+        "lower": 3158,
+        "trace_bound": 114,
+        "twice_order_exceeds_upper": true,
+        "upper": 3386
+      },
+      "id": "toy-secp-j0-b12-c3-p3271",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 8
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        1331,
+        2100
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 4,
+      "embedding_degree": 1338,
+      "field_bits": 12,
+      "field_p": 2647,
+      "generators": [
+        {
+          "base_multiplier": 2561,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b12-c4-p2647-g0",
+          "point": [
+            1293,
+            944
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 2655,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b12-c4-p2647-g1",
+          "point": [
+            1616,
+            687
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 640,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b12-c4-p2647-g2",
+          "point": [
+            2212,
+            489
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 762,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b12-c4-p2647-g3",
+          "point": [
+            99,
+            2444
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 1226,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b12-c4-p2647-g4",
+          "point": [
+            1725,
+            529
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 1796,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b12-c4-p2647-g5",
+          "point": [
+            2457,
+            1573
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 185,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 1643,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 2677,
+      "hasse": {
+        "lower": 2546,
+        "trace_bound": 102,
+        "twice_order_exceeds_upper": true,
+        "upper": 2750
+      },
+      "id": "toy-secp-j0-b12-c4-p2647",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 3
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        777,
+        2646
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 5,
+      "embedding_degree": 112,
+      "field_bits": 12,
+      "field_p": 2731,
+      "generators": [
+        {
+          "base_multiplier": 1304,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b12-c5-p2731-g0",
+          "point": [
+            411,
+            1517
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 1305,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b12-c5-p2731-g1",
+          "point": [
+            2335,
+            2114
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 942,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b12-c5-p2731-g2",
+          "point": [
+            391,
+            370
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 1173,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b12-c5-p2731-g3",
+          "point": [
+            1399,
+            67
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 1708,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b12-c5-p2731-g4",
+          "point": [
+            422,
+            1241
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 1426,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b12-c5-p2731-g5",
+          "point": [
+            1553,
+            1885
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 446,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 2297,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 2689,
+      "hasse": {
+        "lower": 2628,
+        "trace_bound": 104,
+        "twice_order_exceeds_upper": true,
+        "upper": 2836
+      },
+      "id": "toy-secp-j0-b12-c5-p2731",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 8
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        2043,
+        1131
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 6,
+      "embedding_degree": 468,
+      "field_bits": 12,
+      "field_p": 2251,
+      "generators": [
+        {
+          "base_multiplier": 342,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b12-c6-p2251-g0",
+          "point": [
+            2010,
+            627
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 1006,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b12-c6-p2251-g1",
+          "point": [
+            1723,
+            927
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 1826,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b12-c6-p2251-g2",
+          "point": [
+            1035,
+            459
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 1699,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b12-c6-p2251-g3",
+          "point": [
+            1376,
+            593
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 857,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b12-c6-p2251-g4",
+          "point": [
+            1428,
+            1171
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 608,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b12-c6-p2251-g5",
+          "point": [
+            2229,
+            1490
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 708,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 1106,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 2341,
+      "hasse": {
+        "lower": 2158,
+        "trace_bound": 94,
+        "twice_order_exceeds_upper": true,
+        "upper": 2346
+      },
+      "id": "toy-secp-j0-b12-c6-p2251",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 9
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        2588,
+        2306
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 7,
+      "embedding_degree": 1695,
+      "field_bits": 12,
+      "field_p": 3343,
+      "generators": [
+        {
+          "base_multiplier": 2276,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b12-c7-p3343-g0",
+          "point": [
+            1052,
+            2594
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 187,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b12-c7-p3343-g1",
+          "point": [
+            72,
+            1295
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 2437,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b12-c7-p3343-g2",
+          "point": [
+            686,
+            221
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 1279,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b12-c7-p3343-g3",
+          "point": [
+            3324,
+            1100
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 459,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b12-c7-p3343-g4",
+          "point": [
+            941,
+            3057
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 2926,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b12-c7-p3343-g5",
+          "point": [
+            3100,
+            1927
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 1424,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 555,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 3391,
+      "hasse": {
+        "lower": 3229,
+        "trace_bound": 115,
+        "twice_order_exceeds_upper": true,
+        "upper": 3459
+      },
+      "id": "toy-secp-j0-b12-c7-p3343",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 27
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        2134,
+        601
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 8,
+      "embedding_degree": 429,
+      "field_bits": 12,
+      "field_p": 3511,
+      "generators": [
+        {
+          "base_multiplier": 413,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b12-c8-p3511-g0",
+          "point": [
+            522,
+            3089
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 3239,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b12-c8-p3511-g1",
+          "point": [
+            1059,
+            3141
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 481,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b12-c8-p3511-g2",
+          "point": [
+            1678,
+            13
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 383,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b12-c8-p3511-g3",
+          "point": [
+            61,
+            1793
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 2471,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b12-c8-p3511-g4",
+          "point": [
+            1198,
+            364
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 3424,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b12-c8-p3511-g5",
+          "point": [
+            331,
+            1883
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 756,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 268,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 3433,
+      "hasse": {
+        "lower": 3394,
+        "trace_bound": 118,
+        "twice_order_exceeds_upper": true,
+        "upper": 3630
+      },
+      "id": "toy-secp-j0-b12-c8-p3511",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 4
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        2095,
+        758
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 9,
+      "embedding_degree": 963,
+      "field_bits": 12,
+      "field_p": 3739,
+      "generators": [
+        {
+          "base_multiplier": 2376,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b12-c9-p3739-g0",
+          "point": [
+            3006,
+            3480
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 3741,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b12-c9-p3739-g1",
+          "point": [
+            3447,
+            3613
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 69,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b12-c9-p3739-g2",
+          "point": [
+            1417,
+            1665
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 2868,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b12-c9-p3739-g3",
+          "point": [
+            2327,
+            1492
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 3793,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b12-c9-p3739-g4",
+          "point": [
+            208,
+            1691
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 734,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b12-c9-p3739-g5",
+          "point": [
+            1881,
+            2234
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 694,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 2713,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 3853,
+      "hasse": {
+        "lower": 3618,
+        "trace_bound": 122,
+        "twice_order_exceeds_upper": true,
+        "upper": 3862
+      },
+      "id": "toy-secp-j0-b12-c9-p3739",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 6
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        31209,
+        48754
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 0,
+      "embedding_degree": 12387,
+      "field_bits": 16,
+      "field_p": 49939,
+      "generators": [
+        {
+          "base_multiplier": 4070,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b16-c0-p49939-g0",
+          "point": [
+            23342,
+            20058
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 15546,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b16-c0-p49939-g1",
+          "point": [
+            14671,
+            41619
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 35269,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b16-c0-p49939-g2",
+          "point": [
+            11596,
+            39513
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 21424,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b16-c0-p49939-g3",
+          "point": [
+            11737,
+            4758
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 31025,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b16-c0-p49939-g4",
+          "point": [
+            11827,
+            30235
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 37629,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b16-c0-p49939-g5",
+          "point": [
+            32167,
+            17141
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 18775,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 7133,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 49549,
+      "hasse": {
+        "lower": 49494,
+        "trace_bound": 446,
+        "twice_order_exceeds_upper": true,
+        "upper": 50386
+      },
+      "id": "toy-secp-j0-b16-c0-p49939",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 12
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        49835,
+        32115
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 1,
+      "embedding_degree": 63798,
+      "field_bits": 16,
+      "field_p": 64303,
+      "generators": [
+        {
+          "base_multiplier": 10795,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b16-c1-p64303-g0",
+          "point": [
+            6794,
+            43441
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 20747,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b16-c1-p64303-g1",
+          "point": [
+            11992,
+            42739
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 20111,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b16-c1-p64303-g2",
+          "point": [
+            14935,
+            52474
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 15852,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b16-c1-p64303-g3",
+          "point": [
+            13953,
+            50524
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 6238,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b16-c1-p64303-g4",
+          "point": [
+            39575,
+            20940
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 46486,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b16-c1-p64303-g5",
+          "point": [
+            10240,
+            26284
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 16680,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 26001,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 63799,
+      "hasse": {
+        "lower": 63797,
+        "trace_bound": 507,
+        "twice_order_exceeds_upper": true,
+        "upper": 64811
+      },
+      "id": "toy-secp-j0-b16-c1-p64303",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 7
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        41350,
+        2952
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 2,
+      "embedding_degree": 32439,
+      "field_bits": 16,
+      "field_p": 65167,
+      "generators": [
+        {
+          "base_multiplier": 45556,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b16-c2-p65167-g0",
+          "point": [
+            42470,
+            39229
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 39244,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b16-c2-p65167-g1",
+          "point": [
+            34922,
+            16619
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 100,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b16-c2-p65167-g2",
+          "point": [
+            57236,
+            37528
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 59085,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b16-c2-p65167-g3",
+          "point": [
+            51539,
+            34902
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 32965,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b16-c2-p65167-g4",
+          "point": [
+            4357,
+            61361
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 538,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b16-c2-p65167-g5",
+          "point": [
+            23892,
+            14405
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 19844,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 61941,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 64879,
+      "hasse": {
+        "lower": 64658,
+        "trace_bound": 510,
+        "twice_order_exceeds_upper": true,
+        "upper": 65678
+      },
+      "id": "toy-secp-j0-b16-c2-p65167",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 19
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        22594,
+        26714
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 3,
+      "embedding_degree": 10313,
+      "field_bits": 16,
+      "field_p": 61651,
+      "generators": [
+        {
+          "base_multiplier": 47306,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b16-c3-p61651-g0",
+          "point": [
+            37209,
+            61216
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 45758,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b16-c3-p61651-g1",
+          "point": [
+            13910,
+            16185
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 17938,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b16-c3-p61651-g2",
+          "point": [
+            2018,
+            58932
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 33989,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b16-c3-p61651-g3",
+          "point": [
+            27796,
+            16459
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 51957,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b16-c3-p61651-g4",
+          "point": [
+            24038,
+            29872
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 33749,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b16-c3-p61651-g5",
+          "point": [
+            48711,
+            10999
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 22000,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 23780,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 61879,
+      "hasse": {
+        "lower": 61156,
+        "trace_bound": 496,
+        "twice_order_exceeds_upper": true,
+        "upper": 62148
+      },
+      "id": "toy-secp-j0-b16-c3-p61651",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 11
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        18846,
+        55532
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 4,
+      "embedding_degree": 20672,
+      "field_bits": 16,
+      "field_p": 61987,
+      "generators": [
+        {
+          "base_multiplier": 27963,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b16-c4-p61987-g0",
+          "point": [
+            43587,
+            11865
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 60357,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b16-c4-p61987-g1",
+          "point": [
+            13912,
+            35295
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 20093,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b16-c4-p61987-g2",
+          "point": [
+            21653,
+            1390
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 57737,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b16-c4-p61987-g3",
+          "point": [
+            3967,
+            38626
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 48758,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b16-c4-p61987-g4",
+          "point": [
+            51422,
+            1142
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 37431,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b16-c4-p61987-g5",
+          "point": [
+            11555,
+            36186
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 19222,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 15990,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 62017,
+      "hasse": {
+        "lower": 61491,
+        "trace_bound": 497,
+        "twice_order_exceeds_upper": true,
+        "upper": 62485
+      },
+      "id": "toy-secp-j0-b16-c4-p61987",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 3
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        22799,
+        1751
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 5,
+      "embedding_degree": 2952,
+      "field_bits": 16,
+      "field_p": 38767,
+      "generators": [
+        {
+          "base_multiplier": 24720,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b16-c5-p38767-g0",
+          "point": [
+            17898,
+            5408
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 19202,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b16-c5-p38767-g1",
+          "point": [
+            9147,
+            14906
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 4160,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b16-c5-p38767-g2",
+          "point": [
+            10141,
+            17068
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 16678,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b16-c5-p38767-g3",
+          "point": [
+            17119,
+            14780
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 262,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b16-c5-p38767-g4",
+          "point": [
+            8067,
+            11611
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 12979,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b16-c5-p38767-g5",
+          "point": [
+            36776,
+            6326
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 5750,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 24170,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 38377,
+      "hasse": {
+        "lower": 38375,
+        "trace_bound": 393,
+        "twice_order_exceeds_upper": true,
+        "upper": 39161
+      },
+      "id": "toy-secp-j0-b16-c5-p38767",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 2
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        55349,
+        32568
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 6,
+      "embedding_degree": 59148,
+      "field_bits": 16,
+      "field_p": 59467,
+      "generators": [
+        {
+          "base_multiplier": 50806,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b16-c6-p59467-g0",
+          "point": [
+            38473,
+            58031
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 58775,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b16-c6-p59467-g1",
+          "point": [
+            44333,
+            2759
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 2333,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b16-c6-p59467-g2",
+          "point": [
+            40855,
+            6150
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 13770,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b16-c6-p59467-g3",
+          "point": [
+            43584,
+            41463
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 25847,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b16-c6-p59467-g4",
+          "point": [
+            4092,
+            32853
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 40810,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b16-c6-p59467-g5",
+          "point": [
+            28717,
+            20901
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 1117,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 23882,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 59149,
+      "hasse": {
+        "lower": 58981,
+        "trace_bound": 487,
+        "twice_order_exceeds_upper": true,
+        "upper": 59955
+      },
+      "id": "toy-secp-j0-b16-c6-p59467",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 9
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        3375,
+        20166
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 7,
+      "embedding_degree": 1482,
+      "field_bits": 16,
+      "field_p": 42667,
+      "generators": [
+        {
+          "base_multiplier": 27546,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b16-c7-p42667-g0",
+          "point": [
+            35018,
+            28177
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 32033,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b16-c7-p42667-g1",
+          "point": [
+            27435,
+            10737
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 5883,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b16-c7-p42667-g2",
+          "point": [
+            31823,
+            39979
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 3579,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b16-c7-p42667-g3",
+          "point": [
+            32180,
+            29478
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 28353,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b16-c7-p42667-g4",
+          "point": [
+            39844,
+            42467
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 18531,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b16-c7-p42667-g5",
+          "point": [
+            9859,
+            5681
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 14404,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 548,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 42979,
+      "hasse": {
+        "lower": 42255,
+        "trace_bound": 413,
+        "twice_order_exceeds_upper": true,
+        "upper": 43081
+      },
+      "id": "toy-secp-j0-b16-c7-p42667",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 2
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        23749,
+        41548
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 8,
+      "embedding_degree": 29121,
+      "field_bits": 16,
+      "field_p": 58699,
+      "generators": [
+        {
+          "base_multiplier": 47914,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b16-c8-p58699-g0",
+          "point": [
+            16538,
+            44629
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 16326,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b16-c8-p58699-g1",
+          "point": [
+            24046,
+            15531
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 27357,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b16-c8-p58699-g2",
+          "point": [
+            49791,
+            45208
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 26589,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b16-c8-p58699-g3",
+          "point": [
+            22260,
+            28492
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 1728,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b16-c8-p58699-g4",
+          "point": [
+            48044,
+            51844
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 48255,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b16-c8-p58699-g5",
+          "point": [
+            57292,
+            17652
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 14514,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 23169,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 58243,
+      "hasse": {
+        "lower": 58216,
+        "trace_bound": 484,
+        "twice_order_exceeds_upper": true,
+        "upper": 59184
+      },
+      "id": "toy-secp-j0-b16-c8-p58699",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 23
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        21237,
+        38166
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 9,
+      "embedding_degree": 2411,
+      "field_bits": 16,
+      "field_p": 43003,
+      "generators": [
+        {
+          "base_multiplier": 30887,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b16-c9-p43003-g0",
+          "point": [
+            10924,
+            26658
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 10136,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b16-c9-p43003-g1",
+          "point": [
+            35243,
+            17335
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 19062,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b16-c9-p43003-g2",
+          "point": [
+            23396,
+            38776
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 16013,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b16-c9-p43003-g3",
+          "point": [
+            28564,
+            22297
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 31511,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b16-c9-p43003-g4",
+          "point": [
+            16650,
+            9694
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 9462,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b16-c9-p43003-g5",
+          "point": [
+            3928,
+            30434
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 20031,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 24377,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 43399,
+      "hasse": {
+        "lower": 42590,
+        "trace_bound": 414,
+        "twice_order_exceeds_upper": true,
+        "upper": 43418
+      },
+      "id": "toy-secp-j0-b16-c9-p43003",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 5
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        138353,
+        386243
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 0,
+      "embedding_degree": 208412,
+      "field_bits": 20,
+      "field_p": 626683,
+      "generators": [
+        {
+          "base_multiplier": 518337,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b20-c0-p626683-g0",
+          "point": [
+            625291,
+            211243
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 154227,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b20-c0-p626683-g1",
+          "point": [
+            187359,
+            275777
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 274906,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b20-c0-p626683-g2",
+          "point": [
+            456985,
+            39518
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 532392,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b20-c0-p626683-g3",
+          "point": [
+            230985,
+            478934
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 358518,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b20-c0-p626683-g4",
+          "point": [
+            140197,
+            244968
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 486522,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b20-c0-p626683-g5",
+          "point": [
+            172748,
+            48961
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 33781,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 64038,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 625237,
+      "hasse": {
+        "lower": 625101,
+        "trace_bound": 1583,
+        "twice_order_exceeds_upper": true,
+        "upper": 628267
+      },
+      "id": "toy-secp-j0-b20-c0-p626683",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 16
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        556431,
+        191055
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 1,
+      "embedding_degree": 47403,
+      "field_bits": 20,
+      "field_p": 949771,
+      "generators": [
+        {
+          "base_multiplier": 338406,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b20-c1-p949771-g0",
+          "point": [
+            314743,
+            274967
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 293104,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b20-c1-p949771-g1",
+          "point": [
+            565711,
+            59210
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 367360,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b20-c1-p949771-g2",
+          "point": [
+            829259,
+            840695
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 348769,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b20-c1-p949771-g3",
+          "point": [
+            553196,
+            696267
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 327945,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b20-c1-p949771-g4",
+          "point": [
+            322475,
+            431058
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 711206,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b20-c1-p949771-g5",
+          "point": [
+            201815,
+            336565
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 303082,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 144233,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 948061,
+      "hasse": {
+        "lower": 947823,
+        "trace_bound": 1949,
+        "twice_order_exceeds_upper": true,
+        "upper": 951721
+      },
+      "id": "toy-secp-j0-b20-c1-p949771",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 5
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        8231,
+        471379
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 2,
+      "embedding_degree": 2151,
+      "field_bits": 20,
+      "field_p": 948847,
+      "generators": [
+        {
+          "base_multiplier": 45042,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b20-c2-p948847-g0",
+          "point": [
+            624578,
+            559395
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 747620,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b20-c2-p948847-g1",
+          "point": [
+            918311,
+            407165
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 868178,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b20-c2-p948847-g2",
+          "point": [
+            421138,
+            742763
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 749475,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b20-c2-p948847-g3",
+          "point": [
+            756720,
+            944956
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 5914,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b20-c2-p948847-g4",
+          "point": [
+            628400,
+            833142
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 925360,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b20-c2-p948847-g5",
+          "point": [
+            937465,
+            405310
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 83618,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 298704,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 950743,
+      "hasse": {
+        "lower": 946900,
+        "trace_bound": 1948,
+        "twice_order_exceeds_upper": true,
+        "upper": 950796
+      },
+      "id": "toy-secp-j0-b20-c2-p948847",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 10
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        534730,
+        603768
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 3,
+      "embedding_degree": 133306,
+      "field_bits": 20,
+      "field_p": 800923,
+      "generators": [
+        {
+          "base_multiplier": 635990,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b20-c3-p800923-g0",
+          "point": [
+            800468,
+            245068
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 530518,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b20-c3-p800923-g1",
+          "point": [
+            663322,
+            119888
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 229790,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b20-c3-p800923-g2",
+          "point": [
+            571135,
+            753042
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 668604,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b20-c3-p800923-g3",
+          "point": [
+            71250,
+            124253
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 528681,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b20-c3-p800923-g4",
+          "point": [
+            77578,
+            39660
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 258120,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b20-c3-p800923-g5",
+          "point": [
+            533011,
+            203449
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 313149,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 551409,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 799837,
+      "hasse": {
+        "lower": 799135,
+        "trace_bound": 1789,
+        "twice_order_exceeds_upper": true,
+        "upper": 802713
+      },
+      "id": "toy-secp-j0-b20-c3-p800923",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 18
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        206220,
+        202287
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 4,
+      "embedding_degree": 767880,
+      "field_bits": 20,
+      "field_p": 767323,
+      "generators": [
+        {
+          "base_multiplier": 374688,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b20-c4-p767323-g0",
+          "point": [
+            655516,
+            241515
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 33874,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b20-c4-p767323-g1",
+          "point": [
+            306496,
+            79754
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 241412,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b20-c4-p767323-g2",
+          "point": [
+            36557,
+            120400
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 665311,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b20-c4-p767323-g3",
+          "point": [
+            420212,
+            605974
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 575415,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b20-c4-p767323-g4",
+          "point": [
+            210046,
+            394458
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 516038,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b20-c4-p767323-g5",
+          "point": [
+            699582,
+            23690
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 316850,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 149732,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 767881,
+      "hasse": {
+        "lower": 765573,
+        "trace_bound": 1751,
+        "twice_order_exceeds_upper": true,
+        "upper": 769075
+      },
+      "id": "toy-secp-j0-b20-c4-p767323",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 19
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        117044,
+        756284
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 5,
+      "embedding_degree": 854052,
+      "field_bits": 20,
+      "field_p": 855787,
+      "generators": [
+        {
+          "base_multiplier": 325769,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b20-c5-p855787-g0",
+          "point": [
+            716427,
+            405485
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 851771,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b20-c5-p855787-g1",
+          "point": [
+            850505,
+            72938
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 665600,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b20-c5-p855787-g2",
+          "point": [
+            781228,
+            762711
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 689912,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b20-c5-p855787-g3",
+          "point": [
+            702375,
+            179931
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 258662,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b20-c5-p855787-g4",
+          "point": [
+            182635,
+            484935
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 372797,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b20-c5-p855787-g5",
+          "point": [
+            608679,
+            292893
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 156853,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 686002,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 854053,
+      "hasse": {
+        "lower": 853938,
+        "trace_bound": 1850,
+        "twice_order_exceeds_upper": true,
+        "upper": 857638
+      },
+      "id": "toy-secp-j0-b20-c5-p855787",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 5
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        29179,
+        430453
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 6,
+      "embedding_degree": 364599,
+      "field_bits": 20,
+      "field_p": 727939,
+      "generators": [
+        {
+          "base_multiplier": 587632,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b20-c6-p727939-g0",
+          "point": [
+            334360,
+            45579
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 710271,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b20-c6-p727939-g1",
+          "point": [
+            646002,
+            107232
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 108342,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b20-c6-p727939-g2",
+          "point": [
+            286213,
+            62087
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 148379,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b20-c6-p727939-g3",
+          "point": [
+            279801,
+            188028
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 134590,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b20-c6-p727939-g4",
+          "point": [
+            12314,
+            22316
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 230856,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b20-c6-p727939-g5",
+          "point": [
+            594035,
+            556089
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 112747,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 232465,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 729199,
+      "hasse": {
+        "lower": 726234,
+        "trace_bound": 1706,
+        "twice_order_exceeds_upper": true,
+        "upper": 729646
+      },
+      "id": "toy-secp-j0-b20-c6-p727939",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 8
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        480009,
+        74042
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 7,
+      "embedding_degree": 852750,
+      "field_bits": 20,
+      "field_p": 851131,
+      "generators": [
+        {
+          "base_multiplier": 418653,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b20-c7-p851131-g0",
+          "point": [
+            556384,
+            593666
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 340802,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b20-c7-p851131-g1",
+          "point": [
+            674223,
+            830413
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 527140,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b20-c7-p851131-g2",
+          "point": [
+            36846,
+            430563
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 211143,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b20-c7-p851131-g3",
+          "point": [
+            354669,
+            399127
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 444747,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b20-c7-p851131-g4",
+          "point": [
+            646014,
+            427536
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 849556,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b20-c7-p851131-g5",
+          "point": [
+            477728,
+            61931
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 336456,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 600765,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 852751,
+      "hasse": {
+        "lower": 849287,
+        "trace_bound": 1845,
+        "twice_order_exceeds_upper": true,
+        "upper": 852977
+      },
+      "id": "toy-secp-j0-b20-c7-p851131",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 27
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        478003,
+        169898
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 8,
+      "embedding_degree": 601188,
+      "field_bits": 20,
+      "field_p": 601231,
+      "generators": [
+        {
+          "base_multiplier": 535342,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b20-c8-p601231-g0",
+          "point": [
+            553336,
+            225858
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 380082,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b20-c8-p601231-g1",
+          "point": [
+            52762,
+            541765
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 209949,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b20-c8-p601231-g2",
+          "point": [
+            61853,
+            484860
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 599403,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b20-c8-p601231-g3",
+          "point": [
+            359774,
+            417139
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 125868,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b20-c8-p601231-g4",
+          "point": [
+            475286,
+            343471
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 599044,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b20-c8-p601231-g5",
+          "point": [
+            47740,
+            355924
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 153834,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 175990,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 601189,
+      "hasse": {
+        "lower": 599682,
+        "trace_bound": 1550,
+        "twice_order_exceeds_upper": true,
+        "upper": 602782
+      },
+      "id": "toy-secp-j0-b20-c8-p601231",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 27
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        212101,
+        625986
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 9,
+      "embedding_degree": 750456,
+      "field_bits": 20,
+      "field_p": 750667,
+      "generators": [
+        {
+          "base_multiplier": 67390,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b20-c9-p750667-g0",
+          "point": [
+            114742,
+            477651
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 585680,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b20-c9-p750667-g1",
+          "point": [
+            69805,
+            458488
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 530766,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b20-c9-p750667-g2",
+          "point": [
+            456413,
+            306970
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 24812,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b20-c9-p750667-g3",
+          "point": [
+            505814,
+            734754
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 209930,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b20-c9-p750667-g4",
+          "point": [
+            745324,
+            477768
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 373487,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b20-c9-p750667-g5",
+          "point": [
+            102008,
+            240933
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 120953,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 28718,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 750457,
+      "hasse": {
+        "lower": 748936,
+        "trace_bound": 1732,
+        "twice_order_exceeds_upper": true,
+        "upper": 752400
+      },
+      "id": "toy-secp-j0-b20-c9-p750667",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 6
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        11003343,
+        7720936
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 0,
+      "embedding_degree": 2756696,
+      "field_bits": 24,
+      "field_p": 16543339,
+      "generators": [
+        {
+          "base_multiplier": 12305171,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b24-c0-p16543339-g0",
+          "point": [
+            9444633,
+            5701557
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 5632841,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b24-c0-p16543339-g1",
+          "point": [
+            5174459,
+            4723516
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 2834294,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b24-c0-p16543339-g2",
+          "point": [
+            2199535,
+            2422107
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 7575377,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b24-c0-p16543339-g3",
+          "point": [
+            930084,
+            843701
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 5663937,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b24-c0-p16543339-g4",
+          "point": [
+            7870021,
+            8429871
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 9334165,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b24-c0-p16543339-g5",
+          "point": [
+            2849359,
+            9669358
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 653781,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 4908155,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 16540177,
+      "hasse": {
+        "lower": 16535206,
+        "trace_bound": 8134,
+        "twice_order_exceeds_upper": true,
+        "upper": 16551474
+      },
+      "id": "toy-secp-j0-b24-c0-p16543339",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 11
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        547586,
+        6377027
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 1,
+      "embedding_degree": 12358482,
+      "field_bits": 24,
+      "field_p": 12364879,
+      "generators": [
+        {
+          "base_multiplier": 102530,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b24-c1-p12364879-g0",
+          "point": [
+            5508500,
+            1084891
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 8197678,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b24-c1-p12364879-g1",
+          "point": [
+            4888919,
+            672858
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 11698532,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b24-c1-p12364879-g2",
+          "point": [
+            2393122,
+            12256806
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 11195250,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b24-c1-p12364879-g3",
+          "point": [
+            8489460,
+            1361419
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 807662,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b24-c1-p12364879-g4",
+          "point": [
+            2315118,
+            11100884
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 1344788,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b24-c1-p12364879-g5",
+          "point": [
+            11007897,
+            4555515
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 1092098,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 6021740,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 12358483,
+      "hasse": {
+        "lower": 12357848,
+        "trace_bound": 7032,
+        "twice_order_exceeds_upper": true,
+        "upper": 12371912
+      },
+      "id": "toy-secp-j0-b24-c1-p12364879",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 12
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        2056085,
+        5530320
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 2,
+      "embedding_degree": 3626079,
+      "field_bits": 24,
+      "field_p": 14505619,
+      "generators": [
+        {
+          "base_multiplier": 4050100,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b24-c2-p14505619-g0",
+          "point": [
+            1031112,
+            12186670
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 2337992,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b24-c2-p14505619-g1",
+          "point": [
+            2315573,
+            8729382
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 13022209,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b24-c2-p14505619-g2",
+          "point": [
+            5651478,
+            820877
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 12724845,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b24-c2-p14505619-g3",
+          "point": [
+            6882076,
+            11162758
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 12328700,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b24-c2-p14505619-g4",
+          "point": [
+            5177190,
+            10059590
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 3400260,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b24-c2-p14505619-g5",
+          "point": [
+            5553829,
+            9400045
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 2805379,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 2631062,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 14504317,
+      "hasse": {
+        "lower": 14498003,
+        "trace_bound": 7617,
+        "twice_order_exceeds_upper": true,
+        "upper": 14513237
+      },
+      "id": "toy-secp-j0-b24-c2-p14505619",
+      "role": "train",
+      "search": {
+        "prime_candidates_examined": 10
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        8609908,
+        4963833
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 3,
+      "embedding_degree": 2347615,
+      "field_bits": 24,
+      "field_p": 14078191,
+      "generators": [
+        {
+          "base_multiplier": 2316182,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b24-c3-p14078191-g0",
+          "point": [
+            13956576,
+            9952196
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 6639983,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b24-c3-p14078191-g1",
+          "point": [
+            10156458,
+            10731491
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 9540078,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b24-c3-p14078191-g2",
+          "point": [
+            651469,
+            10425735
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 7788381,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b24-c3-p14078191-g3",
+          "point": [
+            6655574,
+            1321179
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 6137956,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b24-c3-p14078191-g4",
+          "point": [
+            2693190,
+            12948950
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 3448573,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b24-c3-p14078191-g5",
+          "point": [
+            13182483,
+            12738613
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 6208371,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 3412038,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 14085691,
+      "hasse": {
+        "lower": 14070688,
+        "trace_bound": 7504,
+        "twice_order_exceeds_upper": true,
+        "upper": 14085696
+      },
+      "id": "toy-secp-j0-b24-c3-p14078191",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 22
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        8542688,
+        3012673
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 4,
+      "embedding_degree": 2477799,
+      "field_bits": 24,
+      "field_p": 9908299,
+      "generators": [
+        {
+          "base_multiplier": 571629,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b24-c4-p9908299-g0",
+          "point": [
+            8580501,
+            9422326
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 6911991,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b24-c4-p9908299-g1",
+          "point": [
+            7527508,
+            2539644
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 9143562,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b24-c4-p9908299-g2",
+          "point": [
+            9756592,
+            822617
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 7336135,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b24-c4-p9908299-g3",
+          "point": [
+            2406908,
+            2446233
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 3843129,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b24-c4-p9908299-g4",
+          "point": [
+            7191314,
+            2391791
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 2582733,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b24-c4-p9908299-g5",
+          "point": [
+            257514,
+            4842590
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 3122634,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 3928237,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 9911197,
+      "hasse": {
+        "lower": 9902005,
+        "trace_bound": 6295,
+        "twice_order_exceeds_upper": true,
+        "upper": 9914595
+      },
+      "id": "toy-secp-j0-b24-c4-p9908299",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 15
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        4314133,
+        374444
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 5,
+      "embedding_degree": 4244304,
+      "field_bits": 24,
+      "field_p": 8491543,
+      "generators": [
+        {
+          "base_multiplier": 8222137,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b24-c5-p8491543-g0",
+          "point": [
+            4683749,
+            7487525
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 3962228,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b24-c5-p8491543-g1",
+          "point": [
+            7206418,
+            5165239
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 7757700,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b24-c5-p8491543-g2",
+          "point": [
+            8055796,
+            5170628
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 5219378,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b24-c5-p8491543-g3",
+          "point": [
+            1195230,
+            5551308
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 4951627,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b24-c5-p8491543-g4",
+          "point": [
+            7751305,
+            5782164
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 1025006,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b24-c5-p8491543-g5",
+          "point": [
+            7361115,
+            7972504
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 1819824,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 5223983,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 8488609,
+      "hasse": {
+        "lower": 8485716,
+        "trace_bound": 5828,
+        "twice_order_exceeds_upper": true,
+        "upper": 8497372
+      },
+      "id": "toy-secp-j0-b24-c5-p8491543",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 5
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        3152052,
+        12861479
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 6,
+      "embedding_degree": 2346927,
+      "field_bits": 24,
+      "field_p": 14079739,
+      "generators": [
+        {
+          "base_multiplier": 5199291,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b24-c6-p14079739-g0",
+          "point": [
+            6844186,
+            2145937
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 1025186,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b24-c6-p14079739-g1",
+          "point": [
+            9980150,
+            12148193
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 10020879,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b24-c6-p14079739-g2",
+          "point": [
+            4143781,
+            11795508
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 7698466,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b24-c6-p14079739-g3",
+          "point": [
+            1830332,
+            9464633
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 9173902,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b24-c6-p14079739-g4",
+          "point": [
+            13982948,
+            6340212
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 4045321,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b24-c6-p14079739-g5",
+          "point": [
+            4151889,
+            8959663
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 556087,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 509254,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 14081563,
+      "hasse": {
+        "lower": 14072236,
+        "trace_bound": 7504,
+        "twice_order_exceeds_upper": true,
+        "upper": 14087244
+      },
+      "id": "toy-secp-j0-b24-c6-p14079739",
+      "role": "development",
+      "search": {
+        "prime_candidates_examined": 13
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        3942452,
+        9611682
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 7,
+      "embedding_degree": 6797379,
+      "field_bits": 24,
+      "field_p": 13597123,
+      "generators": [
+        {
+          "base_multiplier": 8696247,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b24-c7-p13597123-g0",
+          "point": [
+            11549933,
+            9260873
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 6956818,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b24-c7-p13597123-g1",
+          "point": [
+            7150143,
+            10251214
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 6671281,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b24-c7-p13597123-g2",
+          "point": [
+            11797642,
+            5214078
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 1274699,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b24-c7-p13597123-g3",
+          "point": [
+            1282768,
+            7911245
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 5913928,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b24-c7-p13597123-g4",
+          "point": [
+            7734859,
+            8942324
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 7103513,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b24-c7-p13597123-g5",
+          "point": [
+            6575736,
+            12803654
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 5657320,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 11201434,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 13594759,
+      "hasse": {
+        "lower": 13589750,
+        "trace_bound": 7374,
+        "twice_order_exceeds_upper": true,
+        "upper": 13604498
+      },
+      "id": "toy-secp-j0-b24-c7-p13597123",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 6
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        7121060,
+        9156278
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 8,
+      "embedding_degree": 11132256,
+      "field_bits": 24,
+      "field_p": 11127859,
+      "generators": [
+        {
+          "base_multiplier": 6734513,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b24-c8-p11127859-g0",
+          "point": [
+            7610187,
+            3163965
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 107129,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b24-c8-p11127859-g1",
+          "point": [
+            10198892,
+            1019315
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 3701847,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b24-c8-p11127859-g2",
+          "point": [
+            9295464,
+            1300349
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 3527955,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b24-c8-p11127859-g3",
+          "point": [
+            7079664,
+            10768058
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 6688342,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b24-c8-p11127859-g4",
+          "point": [
+            3992487,
+            6795927
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 10442846,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b24-c8-p11127859-g5",
+          "point": [
+            10049150,
+            7278475
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 3457050,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 5618005,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 11132257,
+      "hasse": {
+        "lower": 11121189,
+        "trace_bound": 6671,
+        "twice_order_exceeds_upper": true,
+        "upper": 11134531
+      },
+      "id": "toy-secp-j0-b24-c8-p11127859",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 23
+      }
+    },
+    {
+      "anomalous": false,
+      "base_point": [
+        6010967,
+        5580909
+      ],
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_index": 9,
+      "embedding_degree": 1570966,
+      "field_bits": 24,
+      "field_p": 9431503,
+      "generators": [
+        {
+          "base_multiplier": 4199066,
+          "generator_index": 0,
+          "id": "toy-secp-j0-b24-c9-p9431503-g0",
+          "point": [
+            3220156,
+            6328132
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 9202374,
+          "generator_index": 1,
+          "id": "toy-secp-j0-b24-c9-p9431503-g1",
+          "point": [
+            8919940,
+            3496155
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 4332992,
+          "generator_index": 2,
+          "id": "toy-secp-j0-b24-c9-p9431503-g2",
+          "point": [
+            8308092,
+            2200552
+          ],
+          "role": "train"
+        },
+        {
+          "base_multiplier": 1968279,
+          "generator_index": 3,
+          "id": "toy-secp-j0-b24-c9-p9431503-g3",
+          "point": [
+            3747604,
+            5116706
+          ],
+          "role": "development"
+        },
+        {
+          "base_multiplier": 239014,
+          "generator_index": 4,
+          "id": "toy-secp-j0-b24-c9-p9431503-g4",
+          "point": [
+            6000863,
+            988206
+          ],
+          "role": "blind"
+        },
+        {
+          "base_multiplier": 4616209,
+          "generator_index": 5,
+          "id": "toy-secp-j0-b24-c9-p9431503-g5",
+          "point": [
+            7893908,
+            4411776
+          ],
+          "role": "blind"
+        }
+      ],
+      "glv": {
+        "beta": 1935218,
+        "beta_polynomial_zero": true,
+        "eigenpair_checked": true,
+        "lambda": 8117255,
+        "lambda_polynomial_zero": true
+      },
+      "group_order": 9425797,
+      "hasse": {
+        "lower": 9425362,
+        "trace_bound": 6142,
+        "twice_order_exceeds_upper": true,
+        "upper": 9437646
+      },
+      "id": "toy-secp-j0-b24-c9-p9431503",
+      "role": "blind",
+      "search": {
+        "prime_candidates_examined": 3
+      }
+    }
+  ],
+  "experiment_id": "ML-P1E-TOY-SCALING-2026-07-27",
+  "field_bits": [
+    12,
+    16,
+    20,
+    24
+  ],
+  "generation": {
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.39",
+    "python": "3.12.13",
+    "wall_time_seconds": 0.1641616470005829
+  },
+  "native_research_engine_outcome": false,
+  "producer_sha256": "6b40f1fb5260ecf858fc8f499f1043d935208741b76bff258c4ff0722e7c008f",
+  "schema_version": 1,
+  "source_commit": "b092ef33ffd59b128919ad70800ebcdca9e7be0e",
+  "source_worktree_dirty": false
+}
