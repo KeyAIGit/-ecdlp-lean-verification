@@ -107,7 +107,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 28969
+        "bytes": 32247
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -229,7 +229,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 28969
+        "bytes": 32247
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -549,7 +549,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 28969
+        "bytes": 32247
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -771,7 +771,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 617460
+        "bytes": 617655
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

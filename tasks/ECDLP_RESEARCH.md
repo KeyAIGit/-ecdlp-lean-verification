@@ -14,6 +14,69 @@ Canonical start order:
 
 ## Active tasks
 
+### ML-P0 qualification under TASK-013
+
+State: active_engineering_qualification
+Parent task: TASK-013
+Kind: data | research | experiment-infrastructure
+Hypothesis: none; P0 is a route-neutral engineering qualification
+Why it matters: Direct pair regression is unlikely to discover a usable ECDLP
+algorithm by scale alone, but ML can widen the search for representation-specific
+signals and explicit mechanisms. Before such output may enter proposal intake,
+the repository needs deterministic synthetic data, split isolation, canaries,
+nulls, independent-path arithmetic replay, and bounded streaming probes.
+Inputs:
+- owner direction dated 2026-07-27 to design and begin an ML research lane
+- `notes/ML_STRUCTURE_DISCOVERY_PLAN.md`
+- `experiments/ml_structure_probe/`
+- the generic-group scope and candidate lifecycle
+- Takhanov et al., *Intractability of Learning the Discrete Logarithm with
+  Gradient-Based Methods*
+Expected output:
+- A reproducible generator for one million synthetic secp256k1 scalar/public
+  point pairs, with no wallet or external key material.
+- Separate train, validation, and test derivation domains.
+- A validator that checks every artifact hash and independently recomputes a
+  deterministic public-key sample without importing the producer.
+- Streaming linear probes over scalar bits/residues, positive canaries, and a
+  permutation null.
+- A budgeted AutoML controller that compares multiple model and representation
+  families by successive halving, selects only on validation, evaluates one
+  finalist per task on test, and retains a complete run ledger.
+- A staged plan in which ML observations must become explicit mechanisms before
+  they can enter the normal proposal and candidate gates.
+Exit criteria:
+- `python experiments/ml_structure_probe/test_probe.py` passes.
+- The million-pair configuration completes within the declared 8-worker,
+  8-GB-memory engineering budget and its validator passes.
+- Both canaries cross the preregistered threshold and the permutation null does
+  not.
+- The AutoML run records every attempted method and parameter set, and no
+  scientific task uses test feedback for further tuning.
+- Primary AutoML finalists are frozen and replayed on a second independently
+  derived one-million-pair dataset before the retained P0 conclusion.
+- Any apparent scalar signal is labelled untrusted and creates no hypothesis,
+  route promotion, or scientific outcome.
+- P0 makes no learnability, hardness, recovery, or asymptotic claim.
+Files allowed to edit:
+- `experiments/ml_structure_probe/`
+- `notes/ML_STRUCTURE_DISCOVERY_PLAN.md`
+- this task contract
+- experiment index, source registry generator, and generated source registry
+  directly affected by the new primary source
+Files that must be regenerated:
+- `data/source_registry.json`
+How to verify:
+- `python -m py_compile experiments/ml_structure_probe/*.py`
+- `python experiments/ml_structure_probe/test_probe.py`
+- `python scripts/gen_source_registry.py --check`
+- repository artifact and status consistency gates
+
+This owner-directed P0 does not supersede TASK-010, authorize a candidate
+experiment, or enter native Research Engine calibration. A P1 toy-scaling run
+requires an immutable candidate, validator evidence, and the normal dated
+authorization path.
+
 ### TASK-013 - Build and calibrate Research Engine v0
 
 Status: active

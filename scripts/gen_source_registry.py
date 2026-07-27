@@ -71,6 +71,34 @@ SOURCES: list[dict] = [
         "note": None,
     },
     {
+        "id": "takhanov2024",
+        "title": "Intractability of Learning the Discrete Logarithm with "
+                 "Gradient-Based Methods",
+        "authors": [
+            "Rustem Takhanov",
+            "Maxat Tezekbayev",
+            "Artur Pak",
+            "Arman Bolatov",
+            "Zhibek Kadyrsizova",
+            "Zhenisbek Assylbekov",
+        ],
+        "year": 2024,
+        "venue": "Proceedings of the 15th Asian Conference on Machine Learning, "
+                 "PMLR 222, pp. 1321-1336",
+        "url": "https://proceedings.mlr.press/v222/takhanov24a.html",
+        "doi": None,
+        "aliases": ["Takhanov"],
+        "role": "Primary theoretical and empirical prior for the limitations of "
+                "gradient-based learning of discrete-log parity in prime-order "
+                "cyclic groups. It motivates treating direct scalar-bit regression "
+                "as a diagnostic baseline rather than the main discovery engine.",
+        "full_text_status": "full_text_inspected",
+        "note": "The result studies gradient concentration for a concept class "
+                "indexed by the logarithm base. It is not represented here as an "
+                "unconditional impossibility theorem for every fixed-base, "
+                "representation-aware secp256k1 learner.",
+    },
+    {
         "id": "nechaev1994",
         "title": "Complexity of a determinate algorithm for the discrete logarithm",
         "authors": ["V. I. Nechaev"],

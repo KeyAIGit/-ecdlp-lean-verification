@@ -1,0 +1,233 @@
+{
+  "config": "experiments/ml_structure_probe/config/p0_million_full_key_blind.json",
+  "config_sha256": "9104b537ba70768703969276a83110c357d0a2295fde179d2025a597f55ffb96",
+  "curve": "secp256k1",
+  "dataset_role": "synthetic_data_engineering_qualification",
+  "dataset_root_sha256": "fc3104ca99aac35cc6891c7dc4756e5e28637e423314191be37ab714638be95f",
+  "derivation": {
+    "domain": "keyai/ml-structure-probe/scalar/v1",
+    "hash": "SHA-256",
+    "master_seed_sha256": "416743780d6cf08bd8ebfe451930940521933a0aa6dc4580358fdea960d10365",
+    "method": "domain-separated rejection sampling into [1,n-1]",
+    "split_domains": [
+      "blind_a",
+      "blind_b"
+    ]
+  },
+  "experiment_id": "ML-STRUCTURE-PROBE-FULL-KEY-BLIND-1M",
+  "generation": {
+    "elapsed_seconds": 106.652354,
+    "records_per_second": 9376.258
+  },
+  "manifest_sha256": "ca9355118b22c32d20c53aa463ef33316d53aad6f758ee10a39678ab98b22014",
+  "private_data_origin": "deterministic synthetic scalars; no wallet data",
+  "record_format": "scalar32-compressed-point33-v1",
+  "record_size_bytes": 65,
+  "runtime": {
+    "cryptography": "46.0.0",
+    "openssl": "OpenSSL 3.5.3 16 Sep 2025",
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.39",
+    "python": "3.12.13",
+    "workers": 8
+  },
+  "schema_version": 1,
+  "scientific_evidence": false,
+  "shards": [
+    {
+      "byte_count": 3250000,
+      "part": 0,
+      "record_count": 50000,
+      "relative_path": "blind_a/part-00000.bin",
+      "sha256": "3affe6af65875e0389aa6c6ba05851b87e25a307cbf1576e0b030c0fcdab5d19",
+      "split": "blind_a",
+      "start_index": 0
+    },
+    {
+      "byte_count": 3250000,
+      "part": 1,
+      "record_count": 50000,
+      "relative_path": "blind_a/part-00001.bin",
+      "sha256": "67c5e4a78f55049caab04c5b70aff7fc2b2b025a92eb4297dceb1093884c81aa",
+      "split": "blind_a",
+      "start_index": 50000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 2,
+      "record_count": 50000,
+      "relative_path": "blind_a/part-00002.bin",
+      "sha256": "1660c1ddd6eccda49308ae60c9cff4e710a135c57cc99a4986dc149d43abe226",
+      "split": "blind_a",
+      "start_index": 100000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 3,
+      "record_count": 50000,
+      "relative_path": "blind_a/part-00003.bin",
+      "sha256": "d77a0909ad920a5177385c468c2e2b16b898dbb5cf9ec8a4e62ab5bbeefc6ea0",
+      "split": "blind_a",
+      "start_index": 150000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 4,
+      "record_count": 50000,
+      "relative_path": "blind_a/part-00004.bin",
+      "sha256": "0adcc19c281d5db77c3f3b4b8f3cdbeb409ce6e266d6786d801a25705e3dfc68",
+      "split": "blind_a",
+      "start_index": 200000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 5,
+      "record_count": 50000,
+      "relative_path": "blind_a/part-00005.bin",
+      "sha256": "115885882d8994947d276901e95625a6aa1a0bd8ffe16de390bfaf6f8c70f83f",
+      "split": "blind_a",
+      "start_index": 250000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 6,
+      "record_count": 50000,
+      "relative_path": "blind_a/part-00006.bin",
+      "sha256": "5a9a9bde4ab23002f04a767e06750b412bf1089ff03dd248e2ee62a7ecb2a154",
+      "split": "blind_a",
+      "start_index": 300000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 7,
+      "record_count": 50000,
+      "relative_path": "blind_a/part-00007.bin",
+      "sha256": "7ebd85d485cc3e16c9e28bf53c1fd5c5b5d66fba8085f5bb5b681dff0ed5097c",
+      "split": "blind_a",
+      "start_index": 350000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 8,
+      "record_count": 50000,
+      "relative_path": "blind_a/part-00008.bin",
+      "sha256": "be58cd69c4e0e61ea77edb3b901d824ae52bbbfc814f16d161d8d440b9c35c0c",
+      "split": "blind_a",
+      "start_index": 400000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 9,
+      "record_count": 50000,
+      "relative_path": "blind_a/part-00009.bin",
+      "sha256": "aac6b83dc7865ee439775e9730e3d9d93ab71ab9e82f188757a2d5b4cb9ddc09",
+      "split": "blind_a",
+      "start_index": 450000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 0,
+      "record_count": 50000,
+      "relative_path": "blind_b/part-00000.bin",
+      "sha256": "28eb2b8d461f3cbe9488e199c0c1f4d7c04e53f9276ecf17c68b0ba4194c678d",
+      "split": "blind_b",
+      "start_index": 0
+    },
+    {
+      "byte_count": 3250000,
+      "part": 1,
+      "record_count": 50000,
+      "relative_path": "blind_b/part-00001.bin",
+      "sha256": "b9db739ad9d99af85965146499769642aed87a6f49123eb6a74284b17c051445",
+      "split": "blind_b",
+      "start_index": 50000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 2,
+      "record_count": 50000,
+      "relative_path": "blind_b/part-00002.bin",
+      "sha256": "240f7e8550b310680c3a78ba35814aba535e37121af47c33d9332bea66446ca4",
+      "split": "blind_b",
+      "start_index": 100000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 3,
+      "record_count": 50000,
+      "relative_path": "blind_b/part-00003.bin",
+      "sha256": "c036d327665fa9ec5f5f426f64f9a04632bbc737bf63842bcf0adfa04dafa8ea",
+      "split": "blind_b",
+      "start_index": 150000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 4,
+      "record_count": 50000,
+      "relative_path": "blind_b/part-00004.bin",
+      "sha256": "6d4abfd2a95ea623b77283bd2e6212291b53922cc7d98952a4d3ef58ca7cebce",
+      "split": "blind_b",
+      "start_index": 200000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 5,
+      "record_count": 50000,
+      "relative_path": "blind_b/part-00005.bin",
+      "sha256": "005c39ab9532d71359b651ed5049b1a601cab15471f7a85c20b09efd01f58861",
+      "split": "blind_b",
+      "start_index": 250000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 6,
+      "record_count": 50000,
+      "relative_path": "blind_b/part-00006.bin",
+      "sha256": "a55f4dd06c24bae3f90407b30734f915b782fce2edd07d40b1846fdcfdd77ceb",
+      "split": "blind_b",
+      "start_index": 300000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 7,
+      "record_count": 50000,
+      "relative_path": "blind_b/part-00007.bin",
+      "sha256": "847a8700f46ffd95b37da0749d056b007cbcd16e0d708548dc5c47f4d6df252b",
+      "split": "blind_b",
+      "start_index": 350000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 8,
+      "record_count": 50000,
+      "relative_path": "blind_b/part-00008.bin",
+      "sha256": "e4ab6f0383a368d93c3f54e4c14877fb2f2085c784fbe534212d39d39e0cce6a",
+      "split": "blind_b",
+      "start_index": 400000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 9,
+      "record_count": 50000,
+      "relative_path": "blind_b/part-00009.bin",
+      "sha256": "d4181e4f535f5f12bb2a4eb98f56c6850104917c5e64caef358b07d6f1cf4c95",
+      "split": "blind_b",
+      "start_index": 450000
+    }
+  ],
+  "source_hashes": {
+    "experiments/ml_structure_probe/config/p0_million_full_key_blind.json": "9104b537ba70768703969276a83110c357d0a2295fde179d2025a597f55ffb96",
+    "experiments/ml_structure_probe/generate_dataset.py": "924bcc5c4d70439d80a0d9847b601d36aeab8fee483f13b2d5b07e47c702b3c7",
+    "experiments/ml_structure_probe/probe.py": "6b6921dee8a494592492c68267c889b3612f8b11532131a11a1db35cdecc5da7",
+    "experiments/ml_structure_probe/validate_dataset.py": "dc8d930ea53bc3c0f28c9c5ad91bc7e72b630185b1b4ab89ae424d55e1d50bd3"
+  },
+  "source_state": {
+    "commit": "11af097743e23a048b8e81dbbe2292919d6245c1",
+    "tracked_files_dirty": false
+  },
+  "splits": {
+    "blind_a": 500000,
+    "blind_b": 500000
+  },
+  "total_bytes": 65000000,
+  "total_records": 1000000
+}

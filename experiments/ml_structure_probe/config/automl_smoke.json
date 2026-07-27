@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ML-STRUCTURE-PROBE-P0-AUTOML-SMOKE",
+  "random_state": 314159,
+  "jobs": 2,
+  "prediction_batch_records": 2000,
+  "scientific_tasks": [
+    "d_bit_0",
+    "d_bit_127",
+    "d_mod_3"
+  ],
+  "rounds": [
+    {
+      "name": "screen",
+      "train_records": 3000,
+      "validation_records": 1000,
+      "survivors_per_task": 2,
+      "preserve_family_diversity": true
+    },
+    {
+      "name": "final_selection",
+      "train_records": 6000,
+      "validation_records": 2000,
+      "survivors_per_task": 1,
+      "preserve_family_diversity": false
+    }
+  ],
+  "final_test_records": 2000,
+  "controls": {
+    "train_records": 6000,
+    "validation_records": 2000,
+    "test_records": 2000,
+    "alpha": 0.0001,
+    "eta0": 0.01,
+    "epochs": 3
+  },
+  "thresholds": {
+    "minimum_information_gain_bits": 0.01,
+    "minimum_accuracy_lift": 0.002,
+    "minimum_accuracy_z": 6.0
+  },
+  "recipes": [
+    {
+      "id": "logistic_bits",
+      "family": "sgd_logistic",
+      "feature_mode": "compressed_bits",
+      "params": {
+        "alpha": 0.0001,
+        "eta0": 0.01,
+        "epochs": 3
+      }
+    },
+    {
+      "id": "bernoulli_bits",
+      "family": "bernoulli_nb",
+      "feature_mode": "compressed_bits",
+      "params": {
+        "alpha": 1.0
+      }
+    },
+    {
+      "id": "trees_bytes",
+      "family": "extra_trees",
+      "feature_mode": "compressed_bytes",
+      "params": {
+        "n_estimators": 16,
+        "max_depth": 8,
+        "min_samples_leaf": 5,
+        "max_features": "sqrt"
+      }
+    },
+    {
+      "id": "mlp_bytes",
+      "family": "mlp",
+      "feature_mode": "compressed_bytes",
+      "params": {
+        "hidden_layers": [
+          16
+        ],
+        "alpha": 0.0001,
+        "batch_size": 512,
+        "learning_rate_init": 0.001,
+        "epochs": 2
+      }
+    }
+  ]
+}

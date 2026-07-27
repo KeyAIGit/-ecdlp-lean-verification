@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ML-STRUCTURE-PROBE-FULL-KEY-AUTOML-V1",
+  "search_seed": 20260727,
+  "jobs": 8,
+  "feature_workers": 8,
+  "prediction_batch_records": 10000,
+  "development_datasets": [
+    {
+      "id": "primary",
+      "manifest": "reports/p0_million/dataset_manifest.json",
+      "dataset_root": "artifacts/p0_million"
+    },
+    {
+      "id": "replica",
+      "manifest": "reports/p0_million_replica/dataset_manifest.json",
+      "dataset_root": "artifacts/p0_million_replica"
+    }
+  ],
+  "stages": {
+    "screen": {
+      "architecture_count": 80,
+      "seeds": [
+        11,
+        29,
+        47
+      ],
+      "train_records_per_dataset": 50000,
+      "validation_records_per_dataset": 50000,
+      "max_epochs": 2,
+      "survivors": 12
+    },
+    "confirm": {
+      "seeds": [
+        11,
+        29,
+        47
+      ],
+      "train_records_per_dataset": 300000,
+      "validation_records_per_dataset": 100000,
+      "max_epochs": 5,
+      "survivors": 4
+    },
+    "cross_dataset": {
+      "seeds": [
+        71,
+        101
+      ],
+      "train_records": 800000,
+      "validation_records": 200000,
+      "max_epochs": 10,
+      "survivors": 1
+    },
+    "final_ensemble": {
+      "seeds": [
+        131,
+        173,
+        211,
+        257,
+        307
+      ],
+      "train_records_per_dataset": 800000,
+      "validation_records_per_dataset": 200000,
+      "max_epochs": 16
+    }
+  },
+  "architecture_space": {
+    "mlp_count": 52,
+    "ridge_count": 12,
+    "extra_trees_count": 8,
+    "rbf_logistic_count": 8,
+    "feature_modes": [
+      "compressed_bits_264",
+      "compressed_bits_257",
+      "compressed_bytes",
+      "x_limbs16",
+      "byte_popcounts",
+      "affine_bytes",
+      "affine_bits_512",
+      "affine_limbs16",
+      "bit_interactions_64"
+    ]
+  },
+  "controls": {
+    "random_label_seeds": [
+      401,
+      409,
+      419
+    ],
+    "permuted_label_seeds": [
+      431,
+      439,
+      443
+    ],
+    "leak_widths": [
+      1,
+      8,
+      32
+    ],
+    "leak_seeds": [
+      449,
+      457
+    ]
+  },
+  "thresholds": {
+    "minimum_information_bits_per_key": 0.01,
+    "minimum_bit_accuracy_lift": 0.001,
+    "minimum_paired_z": 5.0
+  },
+  "scientific_evidence": false,
+  "purpose": "Engineering representation assay only; no wallet keys and no key-recovery claim."
+}

@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ML-STRUCTURE-PROBE-P0-AUTOML-1M-REPLICA",
+  "random_state": 314159,
+  "jobs": 8,
+  "prediction_batch_records": 25000,
+  "scientific_tasks": [
+    "d_bit_0",
+    "d_bit_127",
+    "d_mod_3"
+  ],
+  "rounds": [
+    {
+      "name": "frozen_replication",
+      "train_records": 600000,
+      "validation_records": 200000,
+      "survivors_per_task": 1,
+      "preserve_family_diversity": false
+    }
+  ],
+  "final_test_records": 200000,
+  "controls": {
+    "train_records": 200000,
+    "validation_records": 100000,
+    "test_records": 100000,
+    "alpha": 0.0001,
+    "eta0": 0.01,
+    "epochs": 3
+  },
+  "thresholds": {
+    "minimum_information_gain_bits": 0.01,
+    "minimum_accuracy_lift": 0.002,
+    "minimum_accuracy_z": 6.0
+  },
+  "recipes": [
+    {
+      "id": "trees_bytes_d8_l5",
+      "family": "extra_trees",
+      "feature_mode": "compressed_bytes",
+      "tasks": [
+        "d_bit_0"
+      ],
+      "max_train_records": 200000,
+      "params": {
+        "n_estimators": 64,
+        "max_depth": 8,
+        "min_samples_leaf": 5,
+        "max_features": "sqrt"
+      }
+    },
+    {
+      "id": "logistic_limbs_a1e4",
+      "family": "sgd_logistic",
+      "feature_mode": "x_limbs16",
+      "tasks": [
+        "d_bit_127",
+        "d_mod_3"
+      ],
+      "params": {
+        "alpha": 0.0001,
+        "eta0": 0.01,
+        "epochs": 4
+      }
+    }
+  ]
+}
