@@ -284,6 +284,22 @@
       "evidence_path": "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json"
     },
     {
+      "id": "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
+      "source_id": "repo:certificate",
+      "source_type": "certificate",
+      "citation": "Deterministic PKC smooth-subgroup M16 projective exceptional-fiber and recovery-domain certificate.",
+      "read_status": "certificate_replayed",
+      "url": null,
+      "artifact_sha256": "578db732807a452e26de03dcd338d62c25a7d90490a62bbf427b1f96c3a869cf",
+      "locator": {
+        "kind": "certificate_field",
+        "value": "terminal_disposition.scientific_disposition"
+      },
+      "statement": "For the nonsingular curve y^2=x^3+7 over fields of characteristic not in {2,3,7}, exact replay proves the set-theoretic homogeneous projective S3 caterpillar is equivalent to signed-point semantics on the stated algebraic-closure and base-field lift domains, classifies the identity, tangent, rational two-torsion, duplicate, extension-only, and non-lift strata, and completes deterministic supplied-coordinate recovery plus raw and compressed secp256k1 GLV sign checks.",
+      "boundary": "Assurance is certificate_replayed, source_independence is not_established, and calibration is excluded_nonexperimental. The certificate returns a scoped blocker with the barrier narrowed but open: the direct S17 predicate is not frozen and no reverse theorem above S4 is present. CQ-SEMAEV-S17-SYSTEM-COST remains partial while solving cost is unpriced. It claims no S17 expansion or evaluation, radicality, scheme equality, multiplicity comparison, relation yield or rank, solving or sparse-linear-algebra cost, experiment authorization, hypothesis retention, exact-target search, or route promotion.",
+      "evidence_path": "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json"
+    },
+    {
       "id": "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND",
       "source_id": "yokoyama_yasuda_takahashi_kogure2020",
       "source_type": "primary_literature",
@@ -482,6 +498,7 @@
         "SC-PKC-RELATION-YIELD",
         "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
         "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
+        "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
         "SC-SEMAEV-RELATION-SEMANTICS"
       ]
     }
@@ -530,13 +547,14 @@
       "id": "B-PKC-M16-COMPLETE-COST-BRIDGE",
       "route_id": "R-PETIT-COMPOSED-MAPS",
       "disposition": "open",
-      "exact_scope": "The M16 input presentations, conditional fixed-topology affine left-fold semantics on base-field-liftable nonidentity-prefix strata, and deterministic recovery checks are exact. The fixed labeled affine recursion is not globally complete across identity prefixes, extension-only fibers, and fixed-resultant degeneracies, while the complete cost bridge also lacks full direct-S17 semantics, relation yield and rank, solving degree and fill-in, preprocessing, and sparse linear algebra.",
+      "exact_scope": "For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, the M16 input presentations and set-theoretic homogeneous projective S3 caterpillar semantics are exact, including identity, tangent, rational two-torsion, duplicate, extension-only, non-lift, topology, recovery, and GLV lift-sign strata. The barrier is narrowed but open: CQ-SEMAEV-S17-SYSTEM-COST remains partial while solving cost is unpriced, and the complete bridge still lacks a frozen recursive projective S17 predicate and a reverse direct-S17 projection theorem above S4, followed by relation yield and rank, solving degree and fill-in, preprocessing, and sparse linear algebra.",
       "source_claim_ids": [
         "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
-        "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT"
+        "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
+        "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT"
       ],
       "reopening_conditions": [
-        "Provide an independently reviewed projective, identity-tagged, or constructible-locus recursion covering all exceptional fibers and base-field liftability, prove the complete direct-S17 projection and recovery semantics, determine the usable relation-rank model, and combine proved solving and sparse-linear-algebra costs with a matched generic baseline."
+        "Freeze an independently reviewed recursive projective S17 definition with declared resultant degrees and prove the reverse projection above S4 against the exact projective-tree predicate before any cost claim; then determine the usable relation-rank model and combine proved solving and sparse-linear-algebra costs with a matched generic baseline."
       ]
     }
   ],
@@ -691,7 +709,7 @@
       "status": "published",
       "scope": "Desk-cost analysis of the PKC 2016 smooth-subgroup construction at the first arity where the available divisor clears both the source's raw size condition and relation-yield balance.",
       "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
-      "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. TASK-016 fixes the conditional affine semantics and a finite recovery audit but shows that identity prefixes and extension-only fibers prevent an unconditional fixed-topology substitution; the complete projective recovery domain and generalized-root cost remain unresolved.",
+      "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs; the direct S17 predicate and reverse projection above S4 remain unresolved before any generalized-root cost can be priced.",
       "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
       "cost_quantity_id": "CQ-SEMAEV-S17-SYSTEM-COST",
       "source_claim_ids": [
@@ -723,7 +741,7 @@
         "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",
         "uncertainty_id": "U-PETIT-GENERALIZED-ROOT-COST"
       },
-      "boundary": "This open desk-cost cell has exact input presentations, conditional affine semantics on the base-field-liftable nonidentity-prefix stratum, and a finite control recovery audit, but no complete projective exceptional-fiber or cost bridge. The scoped blocker does not justify an S17 or recursive-system materialization, solver run, target computation, hypothesis retention, or route promotion."
+      "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, and deterministic control and secp256k1 GLV recovery checks, but no frozen direct S17 predicate, reverse theorem above S4, or complete cost bridge. CQ-SEMAEV-S17-SYSTEM-COST remains partial and solving cost remains unpriced. The scoped blocker does not justify S17 expansion or evaluation, recursive-system materialization, a solver run, target computation, hypothesis retention, or route promotion."
     },
     {
       "id": "M-PKC-AUXILIARY-CURVE",

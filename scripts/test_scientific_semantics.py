@@ -211,6 +211,57 @@ class ScientificSemanticTests(unittest.TestCase):
         )
         self.assertIn("M16 semantic bridge artifact hash drifted", problems)
 
+    def test_m16_exceptional_certificate_boundaries_cannot_drift(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim_id = "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT"
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["source_claim_ids"].remove(claim_id)
+        cell["cost_quantity"]["source_claim_ids"].remove(claim_id)
+        barrier = next(
+            item
+            for item in typed["barriers"]
+            if item["id"] == "B-PKC-M16-COMPLETE-COST-BRIDGE"
+        )
+        barrier["source_claim_ids"].remove(claim_id)
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == claim_id
+        )
+        claim["artifact_sha256"] = "0" * 64
+        claim["statement"] = "Unscoped projective equivalence."
+        claim["boundary"] = "Fully independent and fully priced."
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "M16 cell must retain its exceptional-fiber certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 cost quantity must retain its exceptional-fiber certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost barrier must retain its exceptional-fiber certificate",
+            problems,
+        )
+        self.assertIn("M16 exceptional-fiber artifact hash drifted", problems)
+        self.assertIn(
+            "M16 exceptional-fiber claim must retain its nonsingular "
+            "characteristic boundary",
+            problems,
+        )
+        self.assertTrue(
+            any(
+                "M16 exceptional-fiber claim must retain" in problem
+                and "source independence" in problem
+                for problem in problems
+            )
+        )
+
     def test_shadow_intake_cannot_authorize_or_activate_glv(self) -> None:
         shadow = copy.deepcopy(self.shadow)
         shadow["proposal_stubs"][0]["route_id"] = "R-GLV-SEMAEV"
