@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.org/schemas/research-engine-v0.2/validator-contract.json",
+  "title": "Research Engine v0.2 validator contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "raw_artifact_format",
+    "recomputed_decisive_claim",
+    "implementation",
+    "prohibited_producer_fields",
+    "independence",
+    "independence_evidence",
+    "source_review_requirements"
+  ],
+  "properties": {
+    "status": {
+      "enum": ["design_only_unverified", "ready_evidence_bound"]
+    },
+    "raw_artifact_format": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["media_type", "schema_id"],
+      "properties": {
+        "media_type": {"type": "string", "minLength": 1},
+        "schema_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "recomputed_decisive_claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "procedure"],
+      "properties": {
+        "claim_id": {"type": "string", "minLength": 1},
+        "procedure": {"type": "string", "minLength": 1}
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "prohibited_producer_fields": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "independence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path_independent",
+        "artifact_independent",
+        "source_independent",
+        "producer_identity",
+        "validator_identity",
+        "same_model",
+        "same_session",
+        "shared_context"
+      ],
+      "properties": {
+        "path_independent": {"type": "boolean"},
+        "artifact_independent": {"type": "boolean"},
+        "source_independent": {"type": "boolean"},
+        "producer_identity": {"type": "string", "minLength": 1},
+        "validator_identity": {"type": "string", "minLength": 1},
+        "same_model": {"type": ["boolean", "null"]},
+        "same_session": {"type": ["boolean", "null"]},
+        "shared_context": {"type": ["boolean", "null"]}
+      }
+    },
+    "independence_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "artifact", "source"],
+      "properties": {
+        "path": {"$ref": "#/$defs/axisEvidence"},
+        "artifact": {"$ref": "#/$defs/axisEvidence"},
+        "source": {"$ref": "#/$defs/axisEvidence"}
+      }
+    },
+    "source_review_requirements": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "axisEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence_id", "sha256"],
+      "properties": {
+        "status": {
+          "enum": ["planned", "verified", "human_attested"]
+        },
+        "evidence_id": {"type": ["string", "null"], "minLength": 1},
+        "sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

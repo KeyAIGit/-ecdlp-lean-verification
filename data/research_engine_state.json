@@ -2,9 +2,12 @@
   "schema_version": "0.1-generated",
   "engine_id": "ecdlp-research-engine-v0",
   "source_hashes": {
-    "policy_sha256": "77499c92fdaac8e30ad15ba06ba723aaadf255b25e95cb596b6caea63cd90c58",
-    "decision_substrate_sha256": "395d6c250040f4dff0f255f83b466bd586a47b8a007659d2b7009eca56ed7d16",
-    "hypotheses_sha256": "0f0f5a63301fded4e898c16e80df9ee7626d8a98278dce3f885ed388008bcb23",
+    "policy_sha256": "04c74829a69d4380b25a1de83a120b41d20a3cde5687ee5ac812fad1ce36fc74",
+    "hypothesis_generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
+    "typed_evidence_state_sha256": "6b9b9ef4d4b9c517a99f15fe95f2ac2c88a83b1766972c8d697da6b01882b9e2",
+    "research_claim_state_sha256": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1",
+    "decision_substrate_sha256": "342b005c182bda7a4e9670cd02a3e76f77993f3b7a3464dd38e5e7e1888282aa",
+    "hypotheses_sha256": "719eb78ba7a8e40101c14c92ac426a0028de9d7aa14e6ffc3735ecffa4615c5c",
     "outcome_events_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
     "historical_baseline_anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
   },
@@ -56,6 +59,14 @@
     "normalized_hypotheses": 9,
     "outcome_events": 8,
     "candidate_proposals": 6,
+    "generated_hypothesis_seeds": 2,
+    "submitted_hypothesis_proposals": 0,
+    "quality_cleared_hypothesis_proposals": 0,
+    "retained_hypothesis_drafts": 0,
+    "typed_evidence_cells": 7,
+    "typed_seed_eligible_cells": 2,
+    "typed_desk_decisions": 3,
+    "typed_decided_cells": 3,
     "intake_candidates": 0,
     "authorized_exploration_candidates": 0,
     "closed_candidates": 6,
@@ -1095,9 +1106,428 @@
     "rule": "Threat-model scope, substrate decision disposition, and Engine evidence are independent axes.",
     "route_count": 17
   },
+  "hypothesis_generation": {
+    "schema_version": "0.1-generated",
+    "generator_id": "ecdlp-hypothesis-generation-v0",
+    "source_hashes": {
+      "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
+      "typed_evidence_state_sha256": "6b9b9ef4d4b9c517a99f15fe95f2ac2c88a83b1766972c8d697da6b01882b9e2",
+      "research_claim_state_sha256": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1",
+      "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "trust_boundary": {
+      "creative_output": "A generated seed or proposer-authored mechanism is untrusted research input. It may be novel, mistaken, duplicated, or merely a renamed representation.",
+      "deterministic_engine": "The deterministic layer checks provenance, scope, exact required fields, known-premise fingerprints, review coverage, and authorization boundaries. It does not prove mathematical novelty or truth.",
+      "quality_claim": "Quality-cleared means that every declared hard gate and five-role review gate passed for the exact proposal digest. It does not mean the hypothesis is true, novel in all literature, or likely to break ECDLP.",
+      "authorization_boundary": "This layer never authorizes an experiment, promotes a route, targets secp256k1 directly, or makes an asymptotic claim."
+    },
+    "counts": {
+      "generated_seeds": 2,
+      "submitted_proposals": 0,
+      "adversarial_reviews": 0,
+      "quality_cleared_proposals": 0,
+      "retained_hypothesis_drafts": 0,
+      "typed_evidence_cells": 7,
+      "typed_seed_eligible_cells": 2
+    },
+    "typed_evidence": {
+      "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
+      "target_id": "secp256k1-classical-single-target-plain",
+      "counts": {
+        "source_claims": 17,
+        "target_properties": 5,
+        "mechanisms": 7,
+        "cells": 7,
+        "open_cells": 3,
+        "property_resolution_cells": 1,
+        "decided_inapplicable_cells": 2,
+        "decided_closed_cells": 1,
+        "seed_eligible_cells": 2,
+        "desk_decisions": 3
+      },
+      "source_hashes": {
+        "policy_sha256": "a4eaf69f96e18e029fa6545ded5c9d9102fdf3445da10964bae67a8119344742",
+        "decision_substrate_sha256": "a938d1923f4fa49a019c757e02e9c1ce8e5bae3f5e83e3b570d116827c7dc448",
+        "source_registry_identity_sha256": "dc353baa19b7a9ecae373f7dcc43c2d63714fb45cf94dcfa4fae79cc6ac5ed2b",
+        "evidence_files_sha256": "e5ed1b197f4e180816ccca426b823c875dd882bfa6cae59f100231c241e5596b",
+        "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
+      },
+      "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
+      "authorization": "none"
+    },
+    "research_claims": {
+      "claim_model_id": "ECDLP-RESEARCH-CLAIMS-V0",
+      "counts": {
+        "routes_represented": 1,
+        "research_questions": 1,
+        "claims": 4,
+        "closed_child_claims": 1,
+        "inconclusive_claims": 1,
+        "confirmed_claims": 2,
+        "mechanism_variants": 3,
+        "proposal_seed_eligible_variants": 0,
+        "evidence_events": 8,
+        "calibration_eligible_events": 0
+      },
+      "open_routes": [
+        "R-GLV-SEMAEV"
+      ],
+      "authorization": {
+        "experiments": 0,
+        "route_promotions": 0,
+        "exact_target_runs": 0
+      },
+      "state_sha256": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1"
+    },
+    "seed_coverage": {
+      "threshold": 12,
+      "eligible_seed_count": 2,
+      "overflow_triggered": false,
+      "represented_seed_ids": [
+        "HGS-572ADC0A03C5",
+        "HGS-FC06B660E42A"
+      ],
+      "represented_cell_ids": [
+        "CELL-M-PKC-AUXILIARY-CURVE",
+        "CELL-M-PKC-SMOOTH-M16"
+      ],
+      "disposition": "within_declared_coverage",
+      "rule": "An overflow is materialized rather than hidden or treated as a generation failure. Every seed remains non-executable; the coverage artifact must be reviewed before a later cycle may change the threshold or synthesis partition."
+    },
+    "generated_seeds": [
+      {
+        "seed_id": "HGS-572ADC0A03C5",
+        "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
+        "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
+        "claim_state_digest": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "route_source_ids": [
+          "amadori_pintore_sala2018",
+          "petit_kosters_messeng2016"
+        ],
+        "threat_model": "classical-single-target-plain",
+        "status": "property_resolution_required",
+        "authorization": "none",
+        "synthesis_rule": {
+          "id": "SYN-TYPED-OPEN-CELL-001",
+          "version": "1.0",
+          "operator": "typed_open_cell"
+        },
+        "typed_cell": {
+          "mechanism_id": "M-PKC-AUXILIARY-CURVE",
+          "status": "property_resolution_required",
+          "intake_mode": "property_resolution",
+          "construction": "Find an auxiliary curve E0 over the same field whose order contains a B-smooth factor near p to the one-over-m scale; use the kernel self-isogeny on E0 to construct the composed root map L for target-curve factor-base coordinates.",
+          "relation_action": "The original target curve remains the relation group. The auxiliary self-isogeny defines only the root set and low-degree decomposition of L; all recovered x-values must still lift to valid target-curve points and relations.",
+          "changed_quantity": "Auxiliary-curve search, composed-map construction, generalized-root solving, recovery, and total relation-generation cost.",
+          "cost_quantity": {
+            "id": "CQ-PKC-GENERALIZED-ROOT-COST",
+            "label": "Generalized root-finding and recovery cost",
+            "definition": "Cost of solving the composed-map fiber constraints and recovering valid factor-base points without hidden discarded components.",
+            "baseline": "Direct factor-base membership and relation recovery at the same arity and effective factor-base size.",
+            "measurement": "Price all roots, spurious fibers, recovery failures, preprocessing, and independent relation validation as field size grows.",
+            "status": "partial",
+            "source_claim_ids": [
+              "SC-PKC-SMOOTH-SUBGROUP",
+              "SC-PKC-RELATION-YIELD",
+              "SC-PKC-AUXILIARY-CURVE"
+            ]
+          },
+          "requirement_results": [
+            {
+              "property_id": "TP-SECP-PKC-AUXILIARY-CURVE",
+              "property_status": "unknown",
+              "operator": "eq",
+              "expected": true,
+              "actual": null,
+              "verdict": "unknown",
+              "source_claim_ids": [
+                "SC-PKC-AUXILIARY-CURVE"
+              ],
+              "rationale": "The construction cannot proceed until an explicit auxiliary-curve instance over the shared field is constructed and its complete cost is recorded."
+            }
+          ],
+          "source_claim_ids": [
+            "SC-PKC-AUXILIARY-CURVE",
+            "SC-PKC-RELATION-YIELD",
+            "SC-PKC-SMOOTH-SUBGROUP"
+          ],
+          "boundary": "The first output is a bounded arithmetic construction or no-instance record plus a complete precomputation estimate, not an ECDLP experiment."
+        },
+        "target_feature": {
+          "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
+          "statement": "Petit-style factor bases define x-coordinates through a low-degree composition, creating structured fibers whose relation yield and generalized root-solving cost can be measured independently.",
+          "boundary": "A smaller coordinate image or a successful toy solve is not a complexity improvement unless recovery, exceptional fibers, preprocessing, and total relation cost are all included."
+        },
+        "mechanism_primitive": {
+          "id": "MP-GENERALIZED-ROOT-RECOVERY",
+          "statement": "Exploit a composed rational map only through an algorithm that enumerates or samples valid fibers, recovers curve points, prices excluded components, and returns independently checkable relations.",
+          "boundary": "The construction remains a proposal primitive until its generalized root problem and all offline work are cheaper than the matched plain presentation at increasing toy sizes."
+        },
+        "unresolved_question": {
+          "id": "U-PETIT-GENERALIZED-ROOT-COST",
+          "statement": "The faithful Petit-style route has no validated algorithm showing that generalized root finding plus recovery and preprocessing beats the matched plain factor-base pipeline as field size grows.",
+          "boundary": "Approximate or nonfaithful variants and isolated toy wins do not answer the faithful generalized-root question."
+        },
+        "shared_compatibility_tags": [
+          "petit-faithful-root-solving"
+        ],
+        "research_question": "Can this target-property cell be decided without an ECDLP run: Construct or rule out a fully priced auxiliary-curve instance over the secp256k1 base field under the exact PKC 2016 conditions. The answer must instantiate or refute the typed construction and price every named precomputation term.",
+        "evidence_inputs": [
+          "experiments/p1_petit/README.md",
+          "experiments/p1_petit_m3/README.md",
+          "experiments/p1_petit_m3/RESULTS.md",
+          "experiments/p4_petit/README.md",
+          "experiments/p4_petit/RESULTS.md"
+        ],
+        "deduplication_key": "572adc0a03c5418111ef58ce42dba51b8717236d5a4bac692b13f32b85158dc6",
+        "proposal_packet": {
+          "required_sections": [
+            "new_premise",
+            "premise_counterfactual",
+            "mechanism_signature",
+            "mechanism_contract",
+            "prediction_contract",
+            "cost_contract",
+            "validator_contract",
+            "novelty_scope",
+            "nearest_prior_art",
+            "exact_mechanism",
+            "fixed_target_semantics",
+            "non_generic_information_source",
+            "null_model",
+            "competing_mechanism",
+            "cost_bridge",
+            "falsifiable_prediction",
+            "matched_baseline",
+            "stop_condition",
+            "outcome_matrix",
+            "independent_validator_plan",
+            "claim_boundary",
+            "evidence_manifest"
+          ],
+          "required_review_roles": [
+            "algebra",
+            "cryptanalysis_skeptic",
+            "prior_art",
+            "cost_model",
+            "validator_design"
+          ],
+          "hard_rejections": [
+            "adversarial_review_blocked",
+            "adversarial_review_incomplete",
+            "duplicate_or_reencoding",
+            "duplicate_mechanism_signature",
+            "hidden_or_unpriced_precomputation",
+            "missing_cost_changing_bridge",
+            "missing_exact_mechanism",
+            "missing_falsifiable_prediction",
+            "missing_fixed_target_semantics",
+            "missing_independent_validator_plan",
+            "missing_new_premise",
+            "missing_non_generic_information_source",
+            "missing_primary_source_comparison",
+            "missing_primary_source_anchor",
+            "novelty_scope_overclaimed",
+            "proxy_not_decisive",
+            "review_independence_unestablished",
+            "seed_scope_mismatch",
+            "semantic_reencoding_risk",
+            "targets_secp256k1_directly",
+            "threat_model_drift",
+            "typed_evidence_mismatch",
+            "target_property_violated"
+          ],
+          "instruction": "Return a provenance-bound arithmetic construction, a scoped no-instance result, or the smallest exact blocker. Do not return an attack claim or experiment; unresolved conditions remain unknown."
+        }
+      },
+      {
+        "seed_id": "HGS-FC06B660E42A",
+        "cell_id": "CELL-M-PKC-SMOOTH-M16",
+        "typed_evidence_digest": "ece101a9b55926c309b3dfaa2fe263b30fe982b8d21d2e0a58c03352860027b9",
+        "claim_state_digest": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "route_source_ids": [
+          "amadori_pintore_sala2018",
+          "petit_kosters_messeng2016"
+        ],
+        "threat_model": "classical-single-target-plain",
+        "status": "desk_cost_bridge_required",
+        "authorization": "none",
+        "synthesis_rule": {
+          "id": "SYN-TYPED-OPEN-CELL-001",
+          "version": "1.0",
+          "operator": "typed_open_cell"
+        },
+        "typed_cell": {
+          "mechanism_id": "M-PKC-SMOOTH-M16",
+          "status": "open",
+          "intake_mode": "desk_cost_bridge",
+          "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
+          "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation whose representation and generalized-root cost remain unresolved.",
+          "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
+          "cost_quantity": {
+            "id": "CQ-SEMAEV-S17-SYSTEM-COST",
+            "label": "Semaev S17 system construction and solving cost",
+            "definition": "Total cost of constructing, representing, solving, and validating the relation system required by an arity-sixteen smooth-subgroup instantiation.",
+            "baseline": "The same success probability priced against generic square-root work and lower-arity prime-field relation pipelines.",
+            "measurement": "An exact symbolic size bound must precede any solver run; degree, monomial count, memory, and recovery are all included.",
+            "status": "missing",
+            "source_claim_ids": [
+              "SC-PKC-SMOOTH-SUBGROUP",
+              "SC-PKC-RELATION-YIELD",
+              "SC-SEMAEV-RELATION-SEMANTICS"
+            ]
+          },
+          "requirement_results": [
+            {
+              "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+              "property_status": "kernel_verified",
+              "operator": "gte",
+              "expected": 65536,
+              "actual": 564522,
+              "verdict": "satisfied",
+              "source_claim_ids": [
+                "SC-SECP-PMINUS1-FACTORIZATION",
+                "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+                "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
+              ],
+              "rationale": "The available divisor exceeds the exact condition-one ceiling of p to the one-sixteenth."
+            },
+            {
+              "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+              "property_status": "kernel_verified",
+              "operator": "gte",
+              "expected": 445676,
+              "actual": 564522,
+              "verdict": "satisfied",
+              "source_claim_ids": [
+                "SC-SECP-PMINUS1-FACTORIZATION",
+                "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+                "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
+              ],
+              "rationale": "The available divisor also exceeds the source-anchored relation-yield balance ceiling of (16! times p) to the one-sixteenth."
+            }
+          ],
+          "source_claim_ids": [
+            "SC-PKC-RELATION-YIELD",
+            "SC-PKC-SMOOTH-SUBGROUP",
+            "SC-SECP-PMINUS1-FACTORIZATION",
+            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+            "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
+            "SC-SEMAEV-RELATION-SEMANTICS"
+          ],
+          "boundary": "This open desk-cost cell does not justify an S17 solver run; clearing two arithmetic predicates is not a cost-changing mechanism, and exact representation, recovery, and symbolic cost bounds remain prerequisites."
+        },
+        "target_feature": {
+          "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
+          "statement": "Petit-style factor bases define x-coordinates through a low-degree composition, creating structured fibers whose relation yield and generalized root-solving cost can be measured independently.",
+          "boundary": "A smaller coordinate image or a successful toy solve is not a complexity improvement unless recovery, exceptional fibers, preprocessing, and total relation cost are all included."
+        },
+        "mechanism_primitive": {
+          "id": "MP-GENERALIZED-ROOT-RECOVERY",
+          "statement": "Exploit a composed rational map only through an algorithm that enumerates or samples valid fibers, recovers curve points, prices excluded components, and returns independently checkable relations.",
+          "boundary": "The construction remains a proposal primitive until its generalized root problem and all offline work are cheaper than the matched plain presentation at increasing toy sizes."
+        },
+        "unresolved_question": {
+          "id": "U-PETIT-GENERALIZED-ROOT-COST",
+          "statement": "The faithful Petit-style route has no validated algorithm showing that generalized root finding plus recovery and preprocessing beats the matched plain factor-base pipeline as field size grows.",
+          "boundary": "Approximate or nonfaithful variants and isolated toy wins do not answer the faithful generalized-root question."
+        },
+        "shared_compatibility_tags": [
+          "petit-faithful-root-solving"
+        ],
+        "research_question": "Can an exact desk derivation price Total construction, representation, solving, and recovery cost of the corresponding S17 system. against the declared baseline before any solver run?",
+        "evidence_inputs": [
+          "experiments/p1_petit/README.md",
+          "experiments/p1_petit_m3/README.md",
+          "experiments/p1_petit_m3/RESULTS.md",
+          "experiments/p4_petit/README.md",
+          "experiments/p4_petit/RESULTS.md"
+        ],
+        "deduplication_key": "fc06b660e42abefd08543756552d24fa7d08397260d4eea9a731d2ebe815fa89",
+        "proposal_packet": {
+          "required_sections": [
+            "new_premise",
+            "premise_counterfactual",
+            "mechanism_signature",
+            "mechanism_contract",
+            "prediction_contract",
+            "cost_contract",
+            "validator_contract",
+            "novelty_scope",
+            "nearest_prior_art",
+            "exact_mechanism",
+            "fixed_target_semantics",
+            "non_generic_information_source",
+            "null_model",
+            "competing_mechanism",
+            "cost_bridge",
+            "falsifiable_prediction",
+            "matched_baseline",
+            "stop_condition",
+            "outcome_matrix",
+            "independent_validator_plan",
+            "claim_boundary",
+            "evidence_manifest"
+          ],
+          "required_review_roles": [
+            "algebra",
+            "cryptanalysis_skeptic",
+            "prior_art",
+            "cost_model",
+            "validator_design"
+          ],
+          "hard_rejections": [
+            "adversarial_review_blocked",
+            "adversarial_review_incomplete",
+            "duplicate_or_reencoding",
+            "duplicate_mechanism_signature",
+            "hidden_or_unpriced_precomputation",
+            "missing_cost_changing_bridge",
+            "missing_exact_mechanism",
+            "missing_falsifiable_prediction",
+            "missing_fixed_target_semantics",
+            "missing_independent_validator_plan",
+            "missing_new_premise",
+            "missing_non_generic_information_source",
+            "missing_primary_source_comparison",
+            "missing_primary_source_anchor",
+            "novelty_scope_overclaimed",
+            "proxy_not_decisive",
+            "review_independence_unestablished",
+            "seed_scope_mismatch",
+            "semantic_reencoding_risk",
+            "targets_secp256k1_directly",
+            "threat_model_drift",
+            "typed_evidence_mismatch",
+            "target_property_violated"
+          ],
+          "instruction": "Return an exact symbolic size and cost bridge or a scoped blocker. Do not request compute while the desk quantity is missing."
+        }
+      }
+    ],
+    "proposal_intake": [],
+    "collision_groups": {
+      "premise_fingerprints": [],
+      "mechanism_signatures": [],
+      "near_duplicate_pairs": []
+    },
+    "portfolio_overflow": {
+      "triggered": false,
+      "rule": "If more than three proposals clear every quality gate, retain none automatically and require an explicit comparative portfolio decision; do not silently truncate or rank by model confidence.",
+      "quality_cleared_proposal_ids": []
+    },
+    "retained_hypothesis_drafts": [],
+    "authorization_boundary": "Seeds, proposals, reviews, and generated drafts are all non-executable. Only the existing Research Engine exploration gate can authorize a preregistered toy run; promotion stays separately closed."
+  },
   "feedback_contract": {
     "append_only_input": "experiments/engine/outcomes/",
     "generated_updates": [
+      "source-grounded non-executable proposal-seed queue",
+      "digest-bound proposal and adversarial review state",
+      "quality-cleared non-executable hypothesis drafts",
       "candidate terminal state",
       "normalized hypothesis evidence summary",
       "effective route evidence disposition",

@@ -1,5 +1,10 @@
 # Opus 5 handoff: Research Engine v0 scientific audit
 
+> **FROZEN HISTORICAL SNAPSHOT.** This handoff predates the merged v0 baseline
+> and is retained for provenance only. Current remediation is governed by
+> `RESEARCH-ENGINE-V0.2-SANITATION-001`, `TASK-010`, and
+> `notes/reviews/RESEARCH_ENGINE_V0_2_BASELINE_AUDIT.md`.
+
 ## Role
 
 Act as an independent mathematical and experimental-design reviewer. Do not

@@ -17,6 +17,14 @@ Machine-readable companions:
   the formal-`proved` versus empirical-`supported` result taxonomy, budgets, and
   the hard boundary before promotion;
   `data/research_engine_state.json` is its generated state.
+- `repo/RESEARCH_CLAIMS_V0.json` separates route, question, child claim,
+  mechanism variant, evidence event, disposition, and assurance.
+- `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json` owns immutable candidate snapshots,
+  digest-bound generation handoffs, evidence-bound validator independence,
+  mutable lifecycle, exhaustive bounded portfolio comparison, and the separate
+  owner-authorization boundary; `data/research_engine_v02_state.json` is its
+  shadow state and `data/research_engine_shadow_intake.json` is its generated,
+  non-executable left-hand queue.
 - `repo/PRODUCT_MODEL.json` owns the product category, current-vs-future
   capability boundary, public rhetoric, customer hypotheses, and MVP exit gate.
 - `repo/PILOT_PROTOCOL.json` owns TASK-011 qualification, safety, measurements,
@@ -61,10 +69,13 @@ publication reviewers. Each audience needs a stable route through the repo.
 | Open proof targets | Candidate statements and target metadata | `Ecdlp/Targets/`, `targets/` | Open conjectures live here, not in `Ecdlp/Proved/`. Target JSON should track target stems. |
 | Canonical corpus and overlays | Read-only claim corpus plus curated coverage overrides | `data/KG_CLAIM_FORMALIZATION_v1.csv`, `data/corpus_coverage_overrides.json`, `data/claim_traceability.jsonl` | Treat the corpus as vendored input. Curated overlays may be edited with review. |
 | ECDLP decision layer | Target-specific route applicability, evidence gates, and foundation priority | `repo/ECDLP_DECISION_SUBSTRATE.json` | The JSON is canonical. Its Markdown view is generated. A missing Mathlib module is not automatically a project priority. |
-| Research Engine v0 | Boolean admissibility before scoring, mechanism/validator intake, preregistered expected-information-gain ordering, raw-artifact validator replay, deterministic outcome classification, review-anchored events, explicit decision deltas, and separate threat-model/decision/evidence axes | `repo/RESEARCH_ENGINE_V0.json`, `experiments/engine/outcomes/`, `experiments/engine/runs/`, `data/research_engine_state.json` | Edit policy and append events; regenerate state. A pending mechanism or validator cannot be selected, and generated evidence cannot promote a route. |
+| Typed ECDLP evidence | Claim-level anchors, target properties, mechanism requirements, scoped barriers, cost quantities, regenerated applicability cells, and zero-cost desk decisions | `repo/ECDLP_TYPED_EVIDENCE_V0.json`, `experiments/engine/desk_decisions/`, `data/typed_evidence_state.json` | Cells are derived, not authored. A decided cell emits no seed. A desk decision is scoped evidence, never an experiment, route closure, or authorization. |
+| Claim-level research truth | Route-question-claim-variant-event hierarchy with disposition separated from assurance | `repo/RESEARCH_CLAIMS_V0.json`, `data/research_claim_state.json` | A bounded-negative child never closes its parent route. Certificate assurance is never relabelled as Lean assurance. |
+| Research Engine v0 | Typed-cell seed generation, structured scientific contracts, digest-bound adversarial proposal review, Boolean admissibility before scoring, mechanism/validator intake, preregistered expected-information-gain ordering, raw-artifact validator replay, deterministic outcome classification, review-anchored events, explicit decision deltas, and separate threat-model/decision/evidence axes | `repo/RESEARCH_ENGINE_V0.json`, `repo/HYPOTHESIS_GENERATION_V0.json`, `experiments/engine/proposals/`, `experiments/engine/proposal_reviews/`, `experiments/engine/outcomes/`, `experiments/engine/runs/`, `data/research_engine_state.json` | Generated seeds and quality-cleared drafts are non-executable. The legacy candidate set is a hash-frozen fixture; future mechanism candidates must bind an exact cleared draft. Prose alone cannot clear mechanism, prediction, cost, or validator gates. |
+| Research Engine v0.2 lifecycle | Immutable candidate versions, registered generation bindings, evidence-bound validator independence, append-only lifecycle, scenario scoring, exhaustive portfolio comparison, deferred state, frozen calibration, and dated owner decisions | `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`, `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json`, `data/research_engine_v02_state.json`, `data/research_engine_shadow_intake.json` | Engine computes admissible/recommended only. Validator design is not validator readiness; source independence requires human attestation. Shadow stubs are research questions, not hypotheses. Authorization and route promotion remain zero. |
 | Product and pilot decision layer | Product category, reference-deployment boundary, customer hypotheses, discovery evidence, safety, and MVP gates | `repo/PRODUCT_MODEL.json`, `repo/PILOT_PROTOCOL.json` | Both JSON contracts are canonical. Public surfaces are generated from them; planned features and unvalidated users remain explicit. |
 | Verified ledger and trust boundary | Human-auditable theorem ledger and scope statements | `VERIFIED.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `BARRIERS.md`, `COVERAGE.md` | Keep counts delegated to `STATUS.md`/`data/stats.json`; keep scope wording adversarially honest. |
-| Generated machine views | Derived stats, registries, graphs, engine state, audits, badges, and snapshots | `data/stats.json`, `data/{result_registry,source_registry,knowledge_graph,research_engine_state}.json`, `Ecdlp/LedgerAxiomAudit.lean`, `badges/theorems.json`, `STATUS.md` | Do not hand-edit. Change generators and regenerate. |
+| Generated machine views | Derived stats, registries, graphs, engine state, audits, badges, and snapshots | `data/stats.json`, `data/{result_registry,source_registry,knowledge_graph,research_engine_state,research_engine_v02_state,research_engine_shadow_intake}.json`, `Ecdlp/LedgerAxiomAudit.lean`, `badges/theorems.json`, `STATUS.md` | Do not hand-edit. Change generators and regenerate. |
 | Public surfaces | Product thesis, operator workspace, route explorer, and external-pilot contract | `index.html`, `dashboard.html`, `explore.html`, `pilot.html`, `assets/`, `fonts/`, `CNAME` | Generate all four pages through `scripts/site_generator.py`; canonical counters must remain useful without JavaScript. |
 | Research OS control plane | Routed research/product tasks, hypotheses, formal architecture, automation, and agent orientation | `AGENTS.md`, `CLAUDE.md`, `ROADMAP.md`, `tasks/NEXT.md`, `tasks/ECDLP_RESEARCH.md`, `tasks/KEYAI_PRODUCT.md`, `experiments/HYPOTHESES.yaml`, `REPOSITORY_ARCHITECTURE.md`, `repo/` | Keep short, current, and executable by low-context agents. Never count product activity as ECDLP progress. |
 | Reproducible experiments | Non-kernel scripts, manifests, review-anchored outcomes, and measured evidence | `experiments/` | Measurements are evidence, never proofs. Only the selected bounded sequence may run; promotion remains separately gated. |
@@ -81,7 +92,10 @@ publication reviewers. Each audience needs a stable route through the repo.
 | Which exact declarations does each ledger row cite? | `data/result_registry.json` | `Ecdlp/LedgerAxiomAudit.lean` |
 | What is the formal critical path and release boundary? | `repo/FORMAL_SUBSTRATE.json` | semantic edges in `data/knowledge_graph.json` |
 | Which route should be pursued for the exact secp256k1 objective? | `repo/ECDLP_DECISION_SUBSTRATE.json` | `repo/ECDLP_DECISION_SUBSTRATE.md`, decision edges in `data/knowledge_graph.json` |
+| Which mechanism/target intersections are decidable, open, or blocked on source extraction? | `repo/ECDLP_TYPED_EVIDENCE_V0.json`, `experiments/engine/desk_decisions/` | `data/typed_evidence_state.json`, typed edges in `data/knowledge_graph.json` |
+| Which exact child claims are closed, open, or only differently assured? | `repo/RESEARCH_CLAIMS_V0.json` | `data/research_claim_state.json`, claim bindings in engine state |
 | Which bounded exploration runs next, under what budget, and what did prior runs establish? | `repo/RESEARCH_ENGINE_V0.json`, `experiments/engine/outcomes/` | `data/research_engine_state.json`, engine edges in `data/knowledge_graph.json` |
+| Which research questions enter shadow intake, and which candidates are admissible, recommended, or owner-authorized? | `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`, `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json` | `data/research_engine_v02_state.json`, `data/research_engine_shadow_intake.json` |
 | What product exists now, for whom, and what qualifies as MVP? | `repo/PRODUCT_MODEL.json` | `index.html`, `dashboard.html`, `explore.html`, `pilot.html`, `tasks/KEYAI_PRODUCT.md` |
 | What may TASK-011 collect, what evidence closes discovery, and what may unlock TASK-012? | `repo/PILOT_PROTOCOL.json` | `.github/ISSUE_TEMPLATE/keyai-pilot.yml`, `pilot.html`, `STATUS.md` |
 | What detailed evidence exists for each attack family? | `data/attack_registry.json` | `notes/RESEARCH_MAP.md` |
@@ -104,7 +118,11 @@ possible:
 | `data/frontier_map.json` | `scripts/build_frontier_map.py` |
 | `data/knowledge_graph.json`, `data/knowledge_graph.md` | `scripts/build_knowledge_graph.py` |
 | `repo/ECDLP_DECISION_SUBSTRATE.md` | `scripts/build_ecdlp_decision_view.py` |
+| `data/typed_evidence_state.json` | `scripts/build_typed_evidence_state.py` |
+| `data/research_claim_state.json` | `scripts/research_claims.py` |
 | `data/research_engine_state.json` | `scripts/build_research_engine_state.py` |
+| `data/research_engine_v02_state.json` | `scripts/build_research_engine_v02_state.py` |
+| `data/research_engine_shadow_intake.json` | `scripts/build_research_shadow_intake.py` |
 | `data/result_registry.json` | `scripts/gen_result_registry.py` |
 | `Ecdlp/LedgerAxiomAudit.lean` | `scripts/gen_axiom_audit.py` |
 | `COVERAGE.md` | `scripts/coverage_report.py` |
@@ -113,7 +131,9 @@ possible:
 | repository artifact classification | `scripts/check_repo_artifacts.py` |
 | formal dependency/release map | `scripts/check_formal_substrate.py` |
 | ECDLP route and foundation decisions | `scripts/check_ecdlp_decision_substrate.py` |
+| typed evidence, applicability cells, and desk decisions | `scripts/build_typed_evidence_state.py --check`, `scripts/test_typed_evidence.py` |
 | Research Engine policy, events, selector, and generated state | `scripts/check_research_engine.py`, `scripts/test_research_engine.py` |
+| v0.2 lifecycle, shadow intake, and 19 owner regressions | `scripts/test_research_engine_v02.py`, `scripts/test_research_shadow_intake.py`, `scripts/check_research_engine_v02_acceptance.py` |
 | product category, capability, and public claim boundary | `scripts/check_product_model.py` |
 | generated-artifact closure | `scripts/check_generated_fixpoint.py --check` |
 
@@ -123,7 +143,7 @@ hand-maintained in `repo/ARTIFACTS.yaml`.
 
 ## Research And Product Maps
 
-The repository deliberately has five related but non-interchangeable maps:
+The repository deliberately has eight related but non-interchangeable maps:
 
 1. `data/frontier_map.json` classifies the imported claim corpus. Its priority
    numbers describe corpus coverage, not attack value.
@@ -133,11 +153,22 @@ The repository deliberately has five related but non-interchangeable maps:
 3. `repo/ECDLP_DECISION_SUBSTRATE.json` owns the project decision for the exact
    plain single-target secp256k1 problem. It may defer a large formal gap when
    the route's prerequisite is false or no candidate needs the theorem.
-4. `repo/RESEARCH_ENGINE_V0.json` admits only eligible uncertainty into a
+4. `repo/ECDLP_TYPED_EVIDENCE_V0.json` joins mechanisms to target facts,
+   claim-level evidence, scoped barriers, and cost quantities. Its regenerated
+   cells decide cheap applicability questions before synthesis and expose only
+   unresolved cells to the generator.
+5. `repo/RESEARCH_CLAIMS_V0.json` prevents a scoped child result from silently
+   closing its route and keeps assurance independent from disposition.
+6. `repo/RESEARCH_ENGINE_V0.json` admits only eligible uncertainty into a
    bounded, dependency-ordered toy sequence and retains every terminal outcome.
    The sequence is empty when mechanism or validator gates remain unresolved.
    Engine evidence can change an evidence disposition, not promote a route.
-5. `repo/PRODUCT_MODEL.json` is orthogonal to those mathematical maps. It
+7. `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json` separates immutable scientific
+   identity, mutable lifecycle, portfolio recommendation, and owner
+   authorization. Mechanism-bearing candidates bind the exact cleared draft
+   and registered validator-independence evidence. Its shadow intake may be
+   empty without lowering a gate.
+8. `repo/PRODUCT_MODEL.json` is orthogonal to those mathematical maps. It
    decides what KeyAI is as a product and what the reference repository proves
    about that product. `repo/PILOT_PROTOCOL.json` owns the bounded external
    discovery contract and evidence required before product implementation expands.

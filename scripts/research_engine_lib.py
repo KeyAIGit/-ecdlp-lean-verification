@@ -8,12 +8,25 @@ import hashlib
 import json
 import math
 import re
-import subprocess
 import sys
 from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
 from typing import Any
+
+from hypothesis_generation_lib import (
+    GENERATION_POLICY_PATH,
+    PROPOSALS_DIR,
+    REVIEWS_DIR,
+    build_generation_state,
+    load_json_records as load_hypothesis_generation_records,
+)
+from scientific_provenance import (
+    git_commit_exists,
+    git_file_bytes,
+    scientific_source_commit_allowed,
+    validation_problems as scientific_provenance_problems,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 POLICY_PATH = ROOT / "repo" / "RESEARCH_ENGINE_V0.json"
@@ -79,6 +92,14 @@ CANDIDATE_BUDGET_FIELDS = {
     "wall_time_seconds",
     "peak_memory_bytes",
     "parallel_workers",
+}
+CANDIDATE_INTAKE_CONTRACT_FIELDS = {
+    "legacy_candidate_set_status",
+    "legacy_candidate_set_sha256",
+    "authoritative_new_candidate_source",
+    "compiler_status",
+    "compiled_candidate_count",
+    "authorization_rule",
 }
 PREREGISTRATION_FIELDS = {
     "status",
@@ -294,6 +315,12 @@ HISTORICAL_BASELINE_EVENT_IDS = {
 V0_REVIEWED_HISTORICAL_ROOT_SHA256 = (
     "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
 )
+# The original six candidates are retained only as reviewed regression fixtures.
+# This code anchor prevents an author from editing their self-declared scientific
+# gates and updating the adjacent policy digest in the same metadata-only change.
+V0_REVIEWED_CANDIDATE_SET_SHA256 = (
+    "65f795672caddeab1a19073beaabfd31dcad55fc85e623dcacea0570fc49c182"
+)
 RETROSPECTIVE_CASE_IDS = {
     "RET-P0-PAIR-ENUMERATION",
     "RET-P2-WARD-EDS",
@@ -400,32 +427,6 @@ def canonical_json(value: Any) -> str:
 
 def sha256_json(value: Any) -> str:
     return hashlib.sha256(canonical_json(value).encode("ascii")).hexdigest()
-
-
-def git_commit_exists(commit: str) -> bool:
-    if not isinstance(commit, str) or not COMMIT_ID.fullmatch(commit):
-        return False
-    result = subprocess.run(
-        ["git", "cat-file", "-e", f"{commit}^{{commit}}"],
-        cwd=ROOT,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        check=False,
-    )
-    return result.returncode == 0
-
-
-def git_file_bytes(commit: str, relative: str) -> bytes | None:
-    if not git_commit_exists(commit):
-        return None
-    result = subprocess.run(
-        ["git", "show", f"{commit}:{relative}"],
-        cwd=ROOT,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.DEVNULL,
-        check=False,
-    )
-    return result.stdout if result.returncode == 0 else None
 
 
 def git_json(commit: str, relative: str) -> dict[str, Any] | None:
@@ -693,8 +694,11 @@ def validate_engine_run_manifest(
     source_commit = manifest.get("source_commit")
     if source_commit != event.get("provenance", {}).get("source_commit"):
         problems.append(f"{label}: source_commit differs from outcome event")
-    if not git_commit_exists(source_commit):
-        problems.append(f"{label}: source_commit does not resolve to a Git commit")
+    if not scientific_source_commit_allowed(source_commit):
+        problems.append(
+            f"{label}: source_commit is not reproducible from protected main "
+            "or a registered immutable evidence ref"
+        )
     expected_candidate_hash = sha256_json(candidate)
     if manifest.get("candidate_policy_sha256") != expected_candidate_hash:
         problems.append(f"{label}: candidate_policy_sha256 is stale or incorrect")
@@ -1768,6 +1772,24 @@ def validate_policy(
         problems.append("policy.status is invalid")
     if not _nonempty_text(policy.get("engine_id")):
         problems.append("policy.engine_id must be nonempty")
+    ownership = policy.get("canonical_ownership", {})
+    generation_ownership = {
+        "typed_evidence_policy": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
+        "typed_evidence_state": "data/typed_evidence_state.json",
+        "research_claim_policy": "repo/RESEARCH_CLAIMS_V0.json",
+        "research_claim_state": "data/research_claim_state.json",
+        "desk_decisions": "experiments/engine/desk_decisions/",
+        "hypothesis_generation_policy": "repo/HYPOTHESIS_GENERATION_V0.json",
+        "hypothesis_proposals": "experiments/engine/proposals/",
+        "hypothesis_proposal_reviews": (
+            "experiments/engine/proposal_reviews/"
+        ),
+    }
+    for field, expected in generation_ownership.items():
+        if ownership.get(field) != expected:
+            problems.append(
+                f"canonical_ownership.{field} must be {expected}"
+            )
 
     policy_gates = policy.get("gates", {})
     exploration_gate = policy_gates.get("exploration", {})
@@ -1904,6 +1926,53 @@ def validate_policy(
                 problems.append(f"{hypothesis_id}: {field} must be nonempty")
 
     candidates = policy.get("candidate_proposals", [])
+    candidate_intake = policy.get("candidate_intake_contract")
+    if _exact_keys(
+        candidate_intake,
+        CANDIDATE_INTAKE_CONTRACT_FIELDS,
+        "candidate_intake_contract",
+        problems,
+    ):
+        if (
+            candidate_intake.get("legacy_candidate_set_status")
+            != "frozen_non_executable_fixture"
+        ):
+            problems.append(
+                "candidate_intake_contract must freeze the legacy candidates "
+                "as non-executable fixtures"
+            )
+        if (
+            candidate_intake.get("legacy_candidate_set_sha256")
+            != V0_REVIEWED_CANDIDATE_SET_SHA256
+        ):
+            problems.append(
+                "candidate_intake_contract legacy digest differs from the "
+                "reviewed code anchor"
+            )
+        if sha256_json(candidates) != V0_REVIEWED_CANDIDATE_SET_SHA256:
+            problems.append(
+                "legacy candidate set changed; new candidates must enter through "
+                "the typed proposal compiler"
+            )
+        if (
+            candidate_intake.get("authoritative_new_candidate_source")
+            != "quality_cleared_hypothesis_proposals"
+        ):
+            problems.append(
+                "candidate_intake_contract must source new candidates from "
+                "quality-cleared proposals"
+            )
+        if (
+            candidate_intake.get("compiler_status") != "not_implemented"
+            or candidate_intake.get("compiled_candidate_count") != 0
+        ):
+            problems.append(
+                "candidate compiler is not implemented; compiled count must stay zero"
+            )
+        if not _nonempty_text(candidate_intake.get("authorization_rule")):
+            problems.append(
+                "candidate_intake_contract.authorization_rule must be nonempty"
+            )
     candidate_ids = [candidate.get("id") for candidate in candidates]
     if len(candidate_ids) != len(set(candidate_ids)) or None in candidate_ids:
         problems.append("candidate ids must be present and unique")
@@ -2732,6 +2801,7 @@ def validate_outcome(
     policy: dict[str, Any],
     decisions: dict[str, Any],
     hypotheses: dict[str, dict[str, str]],
+    source_reviews: dict[str, dict[str, Any]] | None = None,
 ) -> list[str]:
     problems: list[str] = []
     label = path.name
@@ -2866,6 +2936,27 @@ def validate_outcome(
                 problems.append(
                     f"{label}: reviewed source independence needs source_review_id"
                 )
+            if (
+                independence.get("source") == "reviewed_independent"
+                and _nonempty_text(source_review_id)
+                and source_reviews is not None
+            ):
+                source_review = source_reviews.get(str(source_review_id))
+                if source_review is None:
+                    problems.append(
+                        f"{label}: source_review_id does not resolve to a "
+                        "prior-art review"
+                    )
+                elif (
+                    source_review.get("reviewer_role") != "prior_art"
+                    or source_review.get("verdict") != "pass"
+                    or source_review.get("source_independence")
+                    != "declared_independent"
+                ):
+                    problems.append(
+                        f"{label}: source_review_id must reference a passing, "
+                        "independent prior-art review"
+                    )
         else:
             independence = {}
         path_verified = independence.get("path") == "verified_distinct"
@@ -2996,9 +3087,10 @@ def validate_outcome(
         if source_kind == "native_engine_run":
             if commit == "0" * 40:
                 problems.append(f"{label}: native event needs a real source commit")
-            elif not git_commit_exists(commit):
+            elif not scientific_source_commit_allowed(commit):
                 problems.append(
-                    f"{label}: native source_commit does not resolve to a Git commit"
+                    f"{label}: native source_commit is not reproducible from "
+                    "protected main or a registered immutable evidence ref"
                 )
             manifest_path = repo_file(run_manifest)
             if manifest_path is None:
@@ -3496,7 +3588,16 @@ def build_state(
     decisions: dict[str, Any],
     hypotheses: dict[str, dict[str, str]],
     outcomes: list[tuple[Path, dict[str, Any]]],
+    hypothesis_generation: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    if hypothesis_generation is None:
+        _, hypothesis_generation = build_generation_state(
+            load_json(GENERATION_POLICY_PATH),
+            decisions,
+            policy,
+            load_hypothesis_generation_records(PROPOSALS_DIR),
+            load_hypothesis_generation_records(REVIEWS_DIR),
+        )
     event_values = [event for _, event in outcomes]
     selection = apply_execution_feedback(
         policy, select_candidates(policy), event_values
@@ -3629,6 +3730,15 @@ def build_state(
         "engine_id": policy["engine_id"],
         "source_hashes": {
             "policy_sha256": sha256_json(policy),
+            "hypothesis_generation_policy_sha256": hypothesis_generation[
+                "source_hashes"
+            ]["generation_policy_sha256"],
+            "typed_evidence_state_sha256": hypothesis_generation[
+                "source_hashes"
+            ]["typed_evidence_state_sha256"],
+            "research_claim_state_sha256": hypothesis_generation[
+                "source_hashes"
+            ]["research_claim_state_sha256"],
             "decision_substrate_sha256": sha256_json(decisions),
             "hypotheses_sha256": file_sha256(HYPOTHESES_PATH),
             "outcome_events_sha256": sha256_json(event_values),
@@ -3656,6 +3766,35 @@ def build_state(
             "normalized_hypotheses": len(normalized_hypotheses),
             "outcome_events": len(event_values),
             "candidate_proposals": len(policy["candidate_proposals"]),
+            "generated_hypothesis_seeds": hypothesis_generation["counts"][
+                "generated_seeds"
+            ],
+            "submitted_hypothesis_proposals": hypothesis_generation["counts"][
+                "submitted_proposals"
+            ],
+            "quality_cleared_hypothesis_proposals": hypothesis_generation[
+                "counts"
+            ]["quality_cleared_proposals"],
+            "retained_hypothesis_drafts": hypothesis_generation["counts"][
+                "retained_hypothesis_drafts"
+            ],
+            "typed_evidence_cells": hypothesis_generation["counts"][
+                "typed_evidence_cells"
+            ],
+            "typed_seed_eligible_cells": hypothesis_generation["counts"][
+                "typed_seed_eligible_cells"
+            ],
+            "typed_desk_decisions": hypothesis_generation[
+                "typed_evidence"
+            ]["counts"].get("desk_decisions", 0),
+            "typed_decided_cells": (
+                hypothesis_generation["typed_evidence"]["counts"].get(
+                    "decided_inapplicable_cells", 0
+                )
+                + hypothesis_generation["typed_evidence"]["counts"].get(
+                    "decided_closed_cells", 0
+                )
+            ),
             "intake_candidates": sum(
                 candidate.get("authorization") == "intake"
                 for candidate in policy["candidate_proposals"]
@@ -3715,6 +3854,7 @@ def build_state(
             ),
             "route_count": len(route_states),
         },
+        "hypothesis_generation": hypothesis_generation,
         "feedback_contract": policy["feedback_contract"],
     }
 
@@ -3798,14 +3938,42 @@ def validate_historical_scope_guards(
 
 def validate_all() -> tuple[list[str], dict[str, Any]]:
     problems: list[str] = []
+    problems.extend(scientific_provenance_problems())
     policy = load_json(POLICY_PATH)
     decisions = load_json(DECISION_PATH)
     hypotheses = parse_hypotheses()
     outcomes = load_outcomes()
+    generation_policy = load_json(GENERATION_POLICY_PATH)
+    generation_proposals = load_hypothesis_generation_records(PROPOSALS_DIR)
+    generation_reviews = load_hypothesis_generation_records(REVIEWS_DIR)
     problems.extend(validate_policy(policy, decisions, hypotheses))
+    generation_problems, generation_state = build_generation_state(
+        generation_policy,
+        decisions,
+        policy,
+        generation_proposals,
+        generation_reviews,
+    )
+    problems.extend(generation_problems)
+    source_reviews = {
+        review["review_id"]: review
+        for _, review in generation_reviews
+        if isinstance(review, dict)
+        and isinstance(review.get("review_id"), str)
+        and review.get("reviewer_role") == "prior_art"
+    }
     event_ids: list[str] = []
     for path, event in outcomes:
-        problems.extend(validate_outcome(path, event, policy, decisions, hypotheses))
+        problems.extend(
+            validate_outcome(
+                path,
+                event,
+                policy,
+                decisions,
+                hypotheses,
+                source_reviews,
+            )
+        )
         if isinstance(event, dict) and isinstance(event.get("event_id"), str):
             event_ids.append(event["event_id"])
     if len(event_ids) != len(set(event_ids)):
@@ -3821,7 +3989,13 @@ def validate_all() -> tuple[list[str], dict[str, Any]]:
         )
     )
     problems.extend(validate_native_sequence(policy, decisions, outcomes))
-    state = build_state(policy, decisions, hypotheses, outcomes)
+    state = build_state(
+        policy,
+        decisions,
+        hypotheses,
+        outcomes,
+        generation_state,
+    )
     if not state["retrospective_validation"]["passed"]:
         problems.append("historical no-reopen validation failed")
     return problems, state

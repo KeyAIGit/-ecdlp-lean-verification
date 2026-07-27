@@ -20,16 +20,36 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: `TASK-008` in `tasks/ECDLP_RESEARCH.md`.
+Current central task: `TASK-010` in `tasks/ECDLP_RESEARCH.md`.
+
+`TASK-008` remains the parked proposal-intake lane. It does not become active
+while the v0.2 sanitation lifecycle is in remediation.
+
+After `TASK-010` passes its merge gate, the scientific activation order is:
+
+1. `TASK-014` closes the prime-field prior-art gaps and performs the exact PKC
+   smooth-subgroup desk screen.
+2. Its independent GLV connected-system workstream may run in parallel.
+3. Its native phase remains blocked behind the retained-mechanism gates and a
+   separate dated owner decision.
+
+These entries freeze further engine-schema expansion by default. They do not
+authorize a solver, a route promotion, or an exact-target computation.
 
 Most recent completed bounded structural binding:
 `RS-2026-07-24-001` / `GLV-SEMAEV-ITER-001` / `R-GLV-SEMAEV` /
 `HYP_GLV_SEMAEV_001` / `TASK-009`.
 Only the diagonal `C3` covariance survived. No experiment hypothesis or attack
 route is promoted; new work enters through proposal intake.
+Proposal intake begins with a regenerated typed mechanism/property cell. A
+desk-decided cell cannot emit a seed, and no generated seed or draft authorizes
+execution.
 
 Architecture sources: `repo/FORMAL_SUBSTRATE.json`,
-`repo/RESEARCH_ENGINE_V0.json`, and `repo/ARTIFACTS.yaml`.
+`repo/ECDLP_TYPED_EVIDENCE_V0.json`, `repo/RESEARCH_ENGINE_V0.json`,
+`repo/RESEARCH_CLAIMS_V0.json`, `repo/HYPOTHESIS_GENERATION_V0.json`,
+`repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`,
+`repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json`, and `repo/ARTIFACTS.yaml`.
 
 ## Task contract template
 

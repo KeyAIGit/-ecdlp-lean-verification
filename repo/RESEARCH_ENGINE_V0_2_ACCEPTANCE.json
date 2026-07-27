@@ -1,0 +1,377 @@
+{
+  "schema_version": "0.2",
+  "acceptance_id": "research-engine-v0.2-owner-regressions",
+  "baseline_main": "fed55d84675fd96e5f40204b9f5f49baa8c01172",
+  "independent_oracle": {
+    "artifact": "RE_V0_2_ORACLE_PACKET.md",
+    "sha256": "0305d148e5afdb99dafdb79b09d38c6666188455960fb516a1ce9c56b416b9f3",
+    "status": "implementation_independent_review_input",
+    "boundary": "The external packet is an oracle input, not authorization or automatically trusted repository truth."
+  },
+  "required_case_count": 19,
+  "cases": [
+    {
+      "id": "RE02-REG-01",
+      "requirement": "A terminal candidate releases its portfolio slot.",
+      "invariant": "Only non-terminal candidates occupy current selection slots.",
+      "test_refs": [
+        "scripts/test_research_engine_v02.py::test_terminal_candidates_release_selection_slots"
+      ],
+      "fault_injection": "Count terminal candidates against max_selected_per_cycle and assert the fourth live candidate is missing.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-02",
+      "requirement": "A completed prerequisite unlocks a dependent without reselection.",
+      "invariant": "Dependencies read append-only outcomes, not current portfolio membership.",
+      "test_refs": [
+        "scripts/test_research_engine_v02.py::test_completed_prerequisite_unlocks_without_consuming_slot"
+      ],
+      "fault_injection": "Resolve dependencies only from currently selected candidates.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-03",
+      "requirement": "Current policy changes cannot rewrite frozen calibration.",
+      "invariant": "Calibration binds an immutable candidate digest and frozen prediction.",
+      "test_refs": [
+        "scripts/test_research_engine_v02.py::test_current_policy_cannot_rewrite_frozen_calibration"
+      ],
+      "fault_injection": "Re-read priors or likelihoods from the mutable current policy.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-04",
+      "requirement": "A nonexistent source_review_id is rejected.",
+      "invariant": "Source independence must resolve to a real digest-bound prior-art review.",
+      "test_refs": [
+        "scripts/test_research_engine.py::test_native_source_review_id_must_resolve"
+      ],
+      "fault_injection": "Accept an arbitrary nonempty source_review_id string.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-05",
+      "requirement": "A prose-only mechanism packet cannot clear the mechanism gate.",
+      "invariant": "Presence and fluency are not evidence of an exact map or recovery contract.",
+      "test_refs": [
+        "scripts/test_research_engine_v02.py::test_prose_only_mechanism_packet_does_not_clear_gate"
+      ],
+      "fault_injection": "Treat a nonempty description field as an exact mechanism.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-06",
+      "requirement": "The broad GLV route remains open when its exact child claim closes.",
+      "invariant": "Child-claim disposition never propagates implicitly to its parent route.",
+      "test_refs": [
+        "scripts/test_research_claims.py::test_broad_glv_route_stays_open_when_child_is_closed"
+      ],
+      "fault_injection": "Derive route closure from any bounded-negative child.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-07",
+      "requirement": "Structural truth updates do not enter Brier calibration.",
+      "invariant": "Only native preregistered predictive outcomes contribute to calibration.",
+      "test_refs": [
+        "scripts/test_research_engine_v02.py::test_structural_results_do_not_enter_brier_calibration",
+        "scripts/test_research_claims.py::test_structural_event_updates_truth_not_brier"
+      ],
+      "fault_injection": "Add structural confirmations as perfect zero-loss Brier observations.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-08",
+      "requirement": "The portfolio optimizer beats a coupled greedy counterexample.",
+      "invariant": "Dependencies and shared budgets require exhaustive portfolio comparison at current scale.",
+      "test_refs": [
+        "scripts/test_research_engine_v02.py::test_exhaustive_portfolio_beats_greedy_ratio_counterexample"
+      ],
+      "fault_injection": "Select candidates independently by EIG-to-cost ratio.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-09",
+      "requirement": "Eight historical event files and the reviewed root remain immutable.",
+      "invariant": "Both canonical scientific content and exact raw bytes are pinned.",
+      "test_refs": [
+        "scripts/test_research_engine_v02.py::test_historical_semantic_root_and_raw_bytes_are_both_pinned",
+        "scripts/test_research_engine.py::test_historical_baseline_cannot_drop_or_rewrite_an_event"
+      ],
+      "fault_injection": "Reformat or migrate all event files and silently rebaseline the root.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-10",
+      "requirement": "A stale branch-only source_commit is rejected after squash merge.",
+      "invariant": "Scientific provenance is reproducible from protected main or an immutable evidence ref.",
+      "test_refs": [
+        "scripts/test_research_engine.py::test_deleted_pre_squash_source_commit_is_not_reproducible"
+      ],
+      "fault_injection": "Use git cat-file object existence as the provenance test.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-11",
+      "requirement": "A proposal plus five reviews creates only a non-authorized draft.",
+      "invariant": "Quality clearance and owner authorization are separate axes.",
+      "test_refs": [
+        "scripts/test_research_engine.py::test_complete_adversarial_packet_only_creates_non_authorized_draft"
+      ],
+      "fault_injection": "Set authorized when all review verdicts pass.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-12",
+      "requirement": "Self-review and shared model, session, or context fail independence.",
+      "invariant": "Independence is derived from provenance non-collision.",
+      "test_refs": [
+        "scripts/test_research_engine.py::test_same_model_family_cannot_self_certify_independence",
+        "scripts/test_research_engine.py::test_shared_context_cannot_self_certify_independence",
+        "scripts/test_research_engine.py::test_proposer_cannot_review_its_own_proposal"
+      ],
+      "fault_injection": "Trust the declared_independent label without provenance checks.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-13",
+      "requirement": "Proposal mutation invalidates old review digests.",
+      "invariant": "Every review is bound to the exact immutable proposal digest.",
+      "test_refs": [
+        "scripts/test_research_engine.py::test_review_digest_invalidates_after_proposal_change"
+      ],
+      "fault_injection": "Rebind existing reviews to the proposal currently on disk.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-14",
+      "requirement": "Semantic reencoding of the closed GLV cube quotient is blocked even with a different lexical fingerprint.",
+      "invariant": "Adversarial mechanism review dominates lexical novelty.",
+      "test_refs": [
+        "scripts/test_research_engine.py::test_semantic_glv_reencoding_is_blocked_by_adversarial_review"
+      ],
+      "fault_injection": "Accept a cubic-residue-class restatement because its words and fingerprint differ.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-15",
+      "requirement": "A canonical claim mutation updates seeds or breaks the generated fixpoint.",
+      "invariant": "Seeds bind the generated claim-state digest without a second hand-maintained copy.",
+      "test_refs": [
+        "scripts/test_research_engine.py::test_canonical_claim_change_invalidates_generated_seeds"
+      ],
+      "fault_injection": "Generate seed identity without the canonical claim-state digest.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-16",
+      "requirement": "A semantic contradiction between decision substrate and attack registry fails.",
+      "invariant": "Faithful Petit, Weil descent, and toy P4 remain distinct canonical assertions.",
+      "test_refs": [
+        "scripts/test_scientific_semantics.py::test_petit_weil_contradiction_fails_gate"
+      ],
+      "fault_injection": "Restore the claim that faithful prime-field Petit requires Weil descent.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-17",
+      "requirement": "More than twelve generated seeds create an explicit coverage artifact.",
+      "invariant": "Bounded generation never silently truncates or fails opaquely.",
+      "test_refs": [
+        "scripts/test_research_engine.py::test_seed_overflow_produces_coverage_artifact"
+      ],
+      "fault_injection": "Return seeds[:12] without recording the omitted identities.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-18",
+      "requirement": "More than three cleared candidates enter a real portfolio comparison.",
+      "invariant": "The selection cap does not rewrite quality clearance; unselected candidates are deferred by digest.",
+      "test_refs": [
+        "scripts/test_research_engine_v02.py::test_more_than_three_candidates_receive_real_portfolio_comparison"
+      ],
+      "fault_injection": "Reject or silently discard candidates beyond the first three.",
+      "status": "implemented"
+    },
+    {
+      "id": "RE02-REG-19",
+      "requirement": "No test path can open route promotion or exact-target authorization.",
+      "invariant": "Owner authorization cannot bypass scientific or exact-target gates, and engine output never promotes routes.",
+      "test_refs": [
+        "scripts/test_research_engine_v02.py::test_owner_decision_cannot_bypass_exact_target_gate",
+        "scripts/test_research_engine.py::test_promotion_gate_cannot_be_enabled_in_engine_policy",
+        "experiments/framework/test_framework.py::test_route_flag_cannot_bypass_global_promotion_gates"
+      ],
+      "fault_injection": "Provide an approved owner decision for an exact secp256k1 candidate and derive promotion from supported.",
+      "status": "implemented"
+    }
+  ],
+  "supplementary_oracles": [
+    {
+      "id": "RE02-ORACLE-ZERO",
+      "test_ref": "scripts/test_research_engine_v02.py::test_zero_retention_is_a_success_not_a_fallback"
+    },
+    {
+      "id": "RE02-ORACLE-OWNER-TIME",
+      "test_ref": "scripts/test_research_engine_v02.py::test_owner_decision_must_postdate_immutable_snapshot"
+    },
+    {
+      "id": "RE02-ORACLE-SEED-SCOPE",
+      "test_ref": "scripts/test_research_engine.py::test_proposal_cannot_change_typed_evidence_binding"
+    },
+    {
+      "id": "RE02-ORACLE-TOY-SCOPE",
+      "test_ref": "scripts/test_research_engine.py::test_native_event_cannot_bypass_scope_or_budget"
+    },
+    {
+      "id": "RE02-ORACLE-STRUCTURED-CONTRACTS",
+      "test_ref": "scripts/test_research_engine.py::test_prose_only_packet_cannot_clear_structured_scientific_gates"
+    },
+    {
+      "id": "RE02-ORACLE-STRUCTURED-SCOPE",
+      "test_ref": "scripts/test_research_engine.py::test_structured_scope_derives_threat_and_toy_ceiling_gates"
+    },
+    {
+      "id": "RE02-ORACLE-DRAFT-BINDING",
+      "test_ref": "scripts/test_research_engine_v02.py::test_candidate_requires_registered_quality_cleared_draft"
+    },
+    {
+      "id": "RE02-ORACLE-VALIDATOR-EVIDENCE",
+      "test_ref": "scripts/test_research_engine_v02.py::test_self_declared_validator_without_registered_evidence_is_rejected"
+    },
+    {
+      "id": "RE02-ORACLE-SOURCE-ATTESTATION",
+      "test_ref": "scripts/test_research_engine_v02.py::test_source_independence_requires_third_party_human_attestation"
+    },
+    {
+      "id": "RE02-ORACLE-AUTH-PERSISTENCE",
+      "test_ref": "scripts/test_research_engine_v02.py::test_authorized_state_remains_visible_after_recommendation_slot_release"
+    },
+    {
+      "id": "RE02-ORACLE-AUTH-TRANSITION",
+      "test_ref": "scripts/test_research_engine_v02.py::test_owner_decision_without_authorized_lifecycle_event_does_not_authorize"
+    },
+    {
+      "id": "RE02-ORACLE-AUTH-REVOCATION",
+      "test_ref": "scripts/test_research_engine_v02.py::test_latest_owner_revocation_removes_current_authorization"
+    },
+    {
+      "id": "RE02-ORACLE-AUTH-ROLE",
+      "test_ref": "scripts/test_research_engine_v02.py::test_unrecognized_owner_role_cannot_authorize"
+    },
+    {
+      "id": "RE02-ORACLE-AUTH-TIMEZONE",
+      "test_ref": "scripts/test_research_engine_v02.py::test_owner_decision_requires_timezone"
+    },
+    {
+      "id": "RE02-ORACLE-AUTH-ORDER",
+      "test_ref": "scripts/test_research_engine_v02.py::test_authorization_event_cannot_predate_owner_decision"
+    },
+    {
+      "id": "RE02-ORACLE-DEPENDENCY-COMPLETION",
+      "test_ref": "scripts/test_research_engine_v02.py::test_uncompleted_prerequisite_cannot_be_co_selected"
+    },
+    {
+      "id": "RE02-ORACLE-DEPENDENCY-VERSION",
+      "test_ref": "scripts/test_research_engine_v02.py::test_completed_prerequisite_must_meet_minimum_version"
+    },
+    {
+      "id": "RE02-ORACLE-ACTIVE-VERSION",
+      "test_ref": "scripts/test_research_engine_v02.py::test_portfolio_rejects_two_active_versions_with_one_candidate_id"
+    },
+    {
+      "id": "RE02-ORACLE-TOY-CEILING-CONSISTENCY",
+      "test_ref": "scripts/test_research_engine_v02.py::test_target_scope_cannot_exceed_bounded_lane_ceiling"
+    },
+    {
+      "id": "RE02-ORACLE-CANDIDATE-SOURCE-BINDING",
+      "test_ref": "scripts/test_research_engine_v02.py::test_candidate_source_commit_must_match_generation_binding"
+    },
+    {
+      "id": "RE02-ORACLE-LIFECYCLE-FAIL-CLOSED",
+      "test_ref": "scripts/test_research_engine_v02.py::test_invalid_terminal_event_cannot_unlock_dependency"
+    },
+    {
+      "id": "RE02-ORACLE-OUTCOME-DEPENDENCY-SEPARATION",
+      "test_ref": "scripts/test_research_engine_v02.py::test_calibration_outcome_cannot_unlock_dependency"
+    },
+    {
+      "id": "RE02-ORACLE-CALIBRATION-EVENT-IDENTITY",
+      "test_ref": "scripts/test_research_engine_v02.py::test_duplicate_outcome_event_is_not_double_counted"
+    },
+    {
+      "id": "RE02-ORACLE-REVIEWED-CONTRACT-BINDING",
+      "test_ref": "scripts/test_research_engine_v02.py::test_post_review_contract_mutation_invalidates_generation_binding"
+    },
+    {
+      "id": "RE02-ORACLE-DERIVED-MULTI-TARGET-DRIFT",
+      "test_ref": "scripts/test_research_engine_v02.py::test_reviewed_multi_target_cost_derives_threat_model_drift"
+    },
+    {
+      "id": "RE02-ORACLE-MATRIX-CEILING-ALL-VALUES",
+      "test_ref": "scripts/test_research_engine_v02.py::test_every_prediction_size_respects_reviewed_toy_ceiling"
+    },
+    {
+      "id": "RE02-ORACLE-SCHEMA-COMPLETE-PROSE",
+      "test_ref": "scripts/test_research_engine_v02.py::test_schema_complete_unproved_prose_cannot_clear_mechanism_gate"
+    },
+    {
+      "id": "RE02-ORACLE-REVIEWED-ROUTE-BINDING",
+      "test_ref": "scripts/test_research_engine_v02.py::test_candidate_route_cannot_drift_from_reviewed_draft"
+    },
+    {
+      "id": "RE02-ORACLE-GENERATED-SOURCE-BINDING",
+      "test_ref": "scripts/test_research_engine_v02.py::test_generated_lifecycle_state_binds_both_canonical_inputs"
+    },
+    {
+      "id": "RE02-ORACLE-EXTERNAL-DIGEST-ANCHOR",
+      "test_ref": "scripts/test_research_engine_v02.py::test_snapshot_digest_matches_external_committed_anchors"
+    },
+    {
+      "id": "RE02-ORACLE-UNSUCCESSFUL-PREREQUISITE",
+      "test_ref": "scripts/test_research_engine_v02.py::test_unsuccessful_terminal_outcomes_do_not_unlock_dependency"
+    },
+    {
+      "id": "RE02-ORACLE-DEPENDENCY-OUTCOME-MATCH",
+      "test_ref": "scripts/test_research_engine_v02.py::test_successful_but_unaccepted_outcome_does_not_unlock_dependency"
+    },
+    {
+      "id": "RE02-ORACLE-NONTERMINAL-OUTCOME",
+      "test_ref": "scripts/test_research_engine_v02.py::test_nonterminal_outcome_field_cannot_unlock_dependency"
+    },
+    {
+      "id": "RE02-ORACLE-EIG-NUMERIC-ANCHOR",
+      "test_ref": "scripts/test_research_engine_v02.py::test_eig_matches_external_numeric_anchor"
+    },
+    {
+      "id": "RE02-ORACLE-SHARED-SETUP-DEDUPE",
+      "test_ref": "scripts/test_research_engine_v02.py::test_shared_setup_is_charged_once_per_portfolio"
+    },
+    {
+      "id": "RE02-ORACLE-PEAK-RESOURCE-ALGEBRA",
+      "test_ref": "scripts/test_research_engine_v02.py::test_peak_resources_use_maximum_not_sum"
+    },
+    {
+      "id": "RE02-ORACLE-CLAIM-ENUM-GATE",
+      "test_ref": "scripts/test_scientific_semantics.py::test_invalid_claim_disposition_fails_canonical_gate"
+    },
+    {
+      "id": "RE02-ORACLE-PETIT-CONTRADICTION-APPEND",
+      "test_ref": "scripts/test_scientific_semantics.py::test_petit_weil_contradiction_fails_gate"
+    },
+    {
+      "id": "RE02-ORACLE-RECOMMENDATION-REPLAY",
+      "test_ref": "scripts/test_research_engine_v02.py::test_recommended_event_must_match_recomputed_portfolio"
+    },
+    {
+      "id": "RE02-ORACLE-CROSS-PLATFORM-EOL",
+      "test_ref": "scripts/test_research_engine.py::test_repository_text_hash_is_checkout_eol_independent"
+    }
+  ],
+  "authorization_boundary": {
+    "experiments": 0,
+    "route_promotions": 0,
+    "exact_target_runs": 0
+  }
+}

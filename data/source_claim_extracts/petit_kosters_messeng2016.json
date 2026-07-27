@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.1",
+  "source_id": "petit_kosters_messeng2016",
+  "source_title": "Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over Prime Fields",
+  "source_url": "https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf",
+  "source_artifact_sha256": "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943",
+  "acquired_on": "2026-07-25",
+  "review_status": "full_text_obtained",
+  "review_provenance": {
+    "method": "Independent review packet followed by direct primary-source confirmation.",
+    "source_independence": "not_established",
+    "boundary": "The record binds claim locations and paraphrases. The paper leaves asymptotic complexity open and its experiments do not establish an advantage over generic algorithms."
+  },
+  "claims": [
+    {
+      "claim_id": "SC-PKC-SMOOTH-SUBGROUP",
+      "locator": {
+        "kind": "section",
+        "value": "Sections 3.1-3.3 and 5"
+      },
+      "paraphrase": "The first construction requires a B-smooth divisor of p-1 with size approximately p^(1/m), uses its multiplicative subgroup or a coset as the root set of a composed map, and inserts those constraints into the Semaev relation system.",
+      "boundary": "Raw factor-base size is only an applicability condition. Solver, recovery, relation collection, linear algebra, and preprocessing remain part of the total cost."
+    },
+    {
+      "claim_id": "SC-PKC-AUXILIARY-CURVE",
+      "locator": {
+        "kind": "section",
+        "value": "Sections 3.4-3.5"
+      },
+      "paraphrase": "For an arbitrary base-field prime, the second construction searches for an auxiliary curve over the same field whose order contains a B-smooth factor of size approximately p^(1/m). A self-isogeny of that auxiliary curve defines the composed root map used for the original target curve's factor-base coordinates.",
+      "boundary": "The auxiliary curve is not required to be related to the target curve beyond sharing the field. Its search cost, map construction, generalized-root solving, recovery, and total attack cost must all be priced."
+    },
+    {
+      "claim_id": "SC-PKC-RELATION-YIELD",
+      "locator": {
+        "kind": "section",
+        "value": "Section 3.2, published p. 10"
+      },
+      "paraphrase": "The paper estimates the expected number of decompositions per target as (deg L)^m divided by m! times p, charges relation collection by the reciprocal yield, and identifies (deg L)^m approximately m! times p as the balance point for its partial cost analysis.",
+      "boundary": "This is a heuristic expectation in the paper's unit-cost model. It does not bound T(E,m,L), prove independent relations, price recovery or preprocessing fully, or establish an advantage over Pollard rho."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1",
+  "protected_main": {
+    "ref": "refs/heads/main",
+    "commit": "fed55d84675fd96e5f40204b9f5f49baa8c01172",
+    "recorded_on": "2026-07-25"
+  },
+  "immutable_evidence_refs": [],
+  "rule": "A scientific source_commit must be an ancestor of the recorded protected-main commit or equal the commit pinned by an explicitly registered immutable evidence ref.",
+  "limits": [
+    "Git object existence alone is not scientific provenance.",
+    "A deleted source branch is not an immutable evidence ref.",
+    "Updating protected_main is an explicit repository-governance change."
+  ]
+}

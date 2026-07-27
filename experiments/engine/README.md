@@ -6,6 +6,58 @@ exploration. The policy and candidate queue live in
 from that policy, `experiments/HYPOTHESES.yaml`, the decision substrate, and the
 events under `outcomes/`.
 
+## Hypothesis generation
+
+`repo/HYPOTHESIS_GENERATION_V0.json` adds the proposal side of the loop:
+
+```text
+typed source/property/mechanism join
+    -> decided desk cell OR bounded seed
+    -> untrusted proposal
+    -> five adversarial reviews
+    -> quality-cleared non-executable draft
+    -> future deterministic candidate compiler
+    -> existing candidate gate
+```
+
+`repo/ECDLP_TYPED_EVIDENCE_V0.json` is the canonical left half. Its generated
+view, `data/typed_evidence_state.json`, evaluates each mechanism's declared
+requirements against typed target properties, binds claim-level evidence and
+artifact hashes, attaches scoped barriers and a named cost quantity, and emits
+only unresolved cells. A violated property produces a scoped desk decision
+instead of an experiment. The generator cannot synthesize from a free route/tag
+cross product. A seed is not evidence and never authorizes a run.
+Full-text literature claims additionally bind a local record under
+`data/source_claim_extracts/`; CI checks the source id, URL, source-artifact
+hash, locator, paraphrase, and scope boundary against that record.
+
+Desk decisions live under `desk_decisions/`. They may record `inapplicable` or
+`closed` only for the exact cell scope and must preserve explicit reopening
+conditions. They do not fabricate run envelopes, close an attack family,
+promote a route, or enter predictive calibration.
+
+Model- or human-authored proposals live under `proposals/`. The Engine derives
+hard rejections rather than trusting proposer labels, recomputes premise
+fingerprints, groups duplicate structured mechanism identities, flags lexical
+near-duplicates, rejects exact known-premise duplicates, requires a null model,
+a competing explanation, fixed-target semantics and a recovery map, prices
+preprocessing and amortization, and binds evidence hashes to the proposal's
+source commit. Reviews live under
+`proposal_reviews/` and cover algebra, cryptanalysis, prior art, cost, and
+validator design. The first round is blind, provenance records model family and
+session, and the independent roles cannot share the proposer family. This is
+still an attestation rather than proof of intellectual independence. A blocking
+review is retained; it is never averaged into a score.
+
+Quality clearance does not prove truth or global novelty. It creates only a
+non-executable hypothesis draft. The normal candidate preregistration,
+independent validator, selector, and dated decision contracts remain mandatory.
+The six original v0 candidates are retained as a code-anchored, hash-frozen
+non-executable regression fixture. The compiler from a cleared proposal and
+typed cell into a candidate is not implemented, so neither a seed nor a cleared
+draft can currently enter execution. Zero retained drafts is an acceptable
+successful cycle.
+
 An outcome event records what a run actually established. It never overwrites a
 prior event, promotes a route, authorizes exact-target work, or claims a
 secp256k1 break. The allowed terminal outcomes are:

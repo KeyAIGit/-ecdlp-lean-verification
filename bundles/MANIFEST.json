@@ -11,25 +11,79 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 8519
+        "bytes": 10820
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 65248
+        "bytes": 66602
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
         "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
         "exists": true,
-        "bytes": 34963
+        "bytes": 36585
+      },
+      {
+        "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
+        "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
+        "exists": true,
+        "bytes": 38163
+      },
+      {
+        "path": "data/typed_evidence_state.json",
+        "reason": "materialized applicability cells and non-experimental desk decisions",
+        "exists": true,
+        "bytes": 55297
+      },
+      {
+        "path": "repo/RESEARCH_CLAIMS_V0.json",
+        "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
+        "exists": true,
+        "bytes": 10802
+      },
+      {
+        "path": "data/research_claim_state.json",
+        "reason": "generated claim-level truth state and calibration-exclusion boundary",
+        "exists": true,
+        "bytes": 10558
+      },
+      {
+        "path": "repo/HYPOTHESIS_GENERATION_V0.json",
+        "reason": "source-grounded seed axes, proposal quality gates, and adversarial review contract",
+        "exists": true,
+        "bytes": 15431
       },
       {
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 43571
+        "bytes": 65776
+      },
+      {
+        "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
+        "reason": "immutable candidate lifecycle, portfolio, calibration, and owner-authorization boundary",
+        "exists": true,
+        "bytes": 3109
+      },
+      {
+        "path": "data/research_engine_v02_state.json",
+        "reason": "generated non-executing lifecycle state and byte-pinned historical boundary",
+        "exists": true,
+        "bytes": 7040
+      },
+      {
+        "path": "data/research_engine_shadow_intake.json",
+        "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
+        "exists": true,
+        "bytes": 7366
+      },
+      {
+        "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
+        "reason": "the 19 owner regression cases and their concrete fault-injection tests",
+        "exists": true,
+        "bytes": 17271
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -47,13 +101,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 1783
+        "bytes": 2799
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 8501
+        "bytes": 19590
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -79,25 +133,79 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 8519
+        "bytes": 10820
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 65248
+        "bytes": 66602
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
         "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
         "exists": true,
-        "bytes": 34963
+        "bytes": 36585
+      },
+      {
+        "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
+        "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
+        "exists": true,
+        "bytes": 38163
+      },
+      {
+        "path": "data/typed_evidence_state.json",
+        "reason": "materialized applicability cells and non-experimental desk decisions",
+        "exists": true,
+        "bytes": 55297
+      },
+      {
+        "path": "repo/RESEARCH_CLAIMS_V0.json",
+        "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
+        "exists": true,
+        "bytes": 10802
+      },
+      {
+        "path": "data/research_claim_state.json",
+        "reason": "generated claim-level truth state and calibration-exclusion boundary",
+        "exists": true,
+        "bytes": 10558
+      },
+      {
+        "path": "repo/HYPOTHESIS_GENERATION_V0.json",
+        "reason": "source-grounded seed axes, proposal quality gates, and adversarial review contract",
+        "exists": true,
+        "bytes": 15431
       },
       {
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 43571
+        "bytes": 65776
+      },
+      {
+        "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
+        "reason": "immutable candidate lifecycle, portfolio, calibration, and owner-authorization boundary",
+        "exists": true,
+        "bytes": 3109
+      },
+      {
+        "path": "data/research_engine_v02_state.json",
+        "reason": "generated non-executing lifecycle state and byte-pinned historical boundary",
+        "exists": true,
+        "bytes": 7040
+      },
+      {
+        "path": "data/research_engine_shadow_intake.json",
+        "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
+        "exists": true,
+        "bytes": 7366
+      },
+      {
+        "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
+        "reason": "the 19 owner regression cases and their concrete fault-injection tests",
+        "exists": true,
+        "bytes": 17271
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -115,13 +223,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 1783
+        "bytes": 2799
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 8501
+        "bytes": 19590
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -145,13 +253,13 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 11351
+        "bytes": 12250
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 10237
+        "bytes": 11233
       },
       {
         "path": "VERIFIED.md",
@@ -163,7 +271,7 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 36461
+        "bytes": 36636
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -181,13 +289,85 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 25499
+        "bytes": 25764
       },
       {
         "path": "experiments/engine/README.md",
         "reason": "Research Engine event lifecycle and regeneration contract",
         "exists": true,
-        "bytes": 5486
+        "bytes": 8295
+      },
+      {
+        "path": "experiments/engine/hypothesis_seed.schema.json",
+        "reason": "deterministic non-executable seed contract",
+        "exists": true,
+        "bytes": 5511
+      },
+      {
+        "path": "experiments/engine/hypothesis_proposal.schema.json",
+        "reason": "structured untrusted proposal contract before candidate intake",
+        "exists": true,
+        "bytes": 12122
+      },
+      {
+        "path": "experiments/engine/hypothesis_review.schema.json",
+        "reason": "digest-bound five-role adversarial review contract",
+        "exists": true,
+        "bytes": 2682
+      },
+      {
+        "path": "experiments/engine/research_claim.schema.json",
+        "reason": "claim-level disposition, assurance, scope, and reopening contract",
+        "exists": true,
+        "bytes": 2255
+      },
+      {
+        "path": "experiments/engine/candidate_snapshot.schema.json",
+        "reason": "immutable v0.2 candidate/version scientific identity",
+        "exists": true,
+        "bytes": 9060
+      },
+      {
+        "path": "experiments/engine/candidate_lifecycle.schema.json",
+        "reason": "append-only v0.2 candidate lifecycle transitions",
+        "exists": true,
+        "bytes": 3659
+      },
+      {
+        "path": "experiments/engine/mechanism_contract.schema.json",
+        "reason": "exact map, fixed-target, recovery, and cost-changing mechanism contract",
+        "exists": true,
+        "bytes": 4266
+      },
+      {
+        "path": "experiments/engine/prediction_contract.schema.json",
+        "reason": "matched baseline, effect threshold, and stop-rule contract",
+        "exists": true,
+        "bytes": 2644
+      },
+      {
+        "path": "experiments/engine/cost_contract.schema.json",
+        "reason": "online, offline, memory, storage, money, effort, setup, and amortization",
+        "exists": true,
+        "bytes": 2462
+      },
+      {
+        "path": "experiments/engine/validator_contract.schema.json",
+        "reason": "raw-artifact recomputation and three-axis validator independence",
+        "exists": true,
+        "bytes": 3390
+      },
+      {
+        "path": "experiments/engine/research_lane.schema.json",
+        "reason": "lane-specific applicability, structural, mechanism, validator, experiment, and formal gates",
+        "exists": true,
+        "bytes": 4441
+      },
+      {
+        "path": "notes/RESEARCH_ENGINE_V0_TO_V0_2.md",
+        "reason": "migration boundary, preserved history, lifecycle semantics, and regeneration order",
+        "exists": true,
+        "bytes": 6457
       },
       {
         "path": "experiments/engine/outcome.schema.json",
@@ -236,6 +416,30 @@
         "reason": "protocol regression fixture; explicitly not scientific evidence",
         "exists": true,
         "bytes": 372
+      },
+      {
+        "path": "data/source_claim_extracts/amadori_pintore_sala2018.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 1755
+      },
+      {
+        "path": "data/source_claim_extracts/fhjrv2014.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 1408
+      },
+      {
+        "path": "data/source_claim_extracts/petit_kosters_messeng2016.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 2771
+      },
+      {
+        "path": "data/source_claim_extracts/yokoyama_yasuda_takahashi_kogure2020.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 1937
       }
     ],
     "large": [
@@ -243,25 +447,79 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 8519
+        "bytes": 10820
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
         "reason": "exact target, route dispositions, evidence gates, and foundation priority",
         "exists": true,
-        "bytes": 65248
+        "bytes": 66602
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0.json",
         "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
         "exists": true,
-        "bytes": 34963
+        "bytes": 36585
+      },
+      {
+        "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
+        "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
+        "exists": true,
+        "bytes": 38163
+      },
+      {
+        "path": "data/typed_evidence_state.json",
+        "reason": "materialized applicability cells and non-experimental desk decisions",
+        "exists": true,
+        "bytes": 55297
+      },
+      {
+        "path": "repo/RESEARCH_CLAIMS_V0.json",
+        "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
+        "exists": true,
+        "bytes": 10802
+      },
+      {
+        "path": "data/research_claim_state.json",
+        "reason": "generated claim-level truth state and calibration-exclusion boundary",
+        "exists": true,
+        "bytes": 10558
+      },
+      {
+        "path": "repo/HYPOTHESIS_GENERATION_V0.json",
+        "reason": "source-grounded seed axes, proposal quality gates, and adversarial review contract",
+        "exists": true,
+        "bytes": 15431
       },
       {
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 43571
+        "bytes": 65776
+      },
+      {
+        "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
+        "reason": "immutable candidate lifecycle, portfolio, calibration, and owner-authorization boundary",
+        "exists": true,
+        "bytes": 3109
+      },
+      {
+        "path": "data/research_engine_v02_state.json",
+        "reason": "generated non-executing lifecycle state and byte-pinned historical boundary",
+        "exists": true,
+        "bytes": 7040
+      },
+      {
+        "path": "data/research_engine_shadow_intake.json",
+        "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
+        "exists": true,
+        "bytes": 7366
+      },
+      {
+        "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
+        "reason": "the 19 owner regression cases and their concrete fault-injection tests",
+        "exists": true,
+        "bytes": 17271
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -279,13 +537,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 1783
+        "bytes": 2799
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 8501
+        "bytes": 19590
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -309,13 +567,13 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 11351
+        "bytes": 12250
       },
       {
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 10237
+        "bytes": 11233
       },
       {
         "path": "VERIFIED.md",
@@ -327,7 +585,7 @@
         "path": "BARRIERS.md",
         "reason": "the no-go / blocked map — what needs missing Mathlib foundations",
         "exists": true,
-        "bytes": 36461
+        "bytes": 36636
       },
       {
         "path": "notes/SECURITY_SCOPE.md",
@@ -345,13 +603,85 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 25499
+        "bytes": 25764
       },
       {
         "path": "experiments/engine/README.md",
         "reason": "Research Engine event lifecycle and regeneration contract",
         "exists": true,
-        "bytes": 5486
+        "bytes": 8295
+      },
+      {
+        "path": "experiments/engine/hypothesis_seed.schema.json",
+        "reason": "deterministic non-executable seed contract",
+        "exists": true,
+        "bytes": 5511
+      },
+      {
+        "path": "experiments/engine/hypothesis_proposal.schema.json",
+        "reason": "structured untrusted proposal contract before candidate intake",
+        "exists": true,
+        "bytes": 12122
+      },
+      {
+        "path": "experiments/engine/hypothesis_review.schema.json",
+        "reason": "digest-bound five-role adversarial review contract",
+        "exists": true,
+        "bytes": 2682
+      },
+      {
+        "path": "experiments/engine/research_claim.schema.json",
+        "reason": "claim-level disposition, assurance, scope, and reopening contract",
+        "exists": true,
+        "bytes": 2255
+      },
+      {
+        "path": "experiments/engine/candidate_snapshot.schema.json",
+        "reason": "immutable v0.2 candidate/version scientific identity",
+        "exists": true,
+        "bytes": 9060
+      },
+      {
+        "path": "experiments/engine/candidate_lifecycle.schema.json",
+        "reason": "append-only v0.2 candidate lifecycle transitions",
+        "exists": true,
+        "bytes": 3659
+      },
+      {
+        "path": "experiments/engine/mechanism_contract.schema.json",
+        "reason": "exact map, fixed-target, recovery, and cost-changing mechanism contract",
+        "exists": true,
+        "bytes": 4266
+      },
+      {
+        "path": "experiments/engine/prediction_contract.schema.json",
+        "reason": "matched baseline, effect threshold, and stop-rule contract",
+        "exists": true,
+        "bytes": 2644
+      },
+      {
+        "path": "experiments/engine/cost_contract.schema.json",
+        "reason": "online, offline, memory, storage, money, effort, setup, and amortization",
+        "exists": true,
+        "bytes": 2462
+      },
+      {
+        "path": "experiments/engine/validator_contract.schema.json",
+        "reason": "raw-artifact recomputation and three-axis validator independence",
+        "exists": true,
+        "bytes": 3390
+      },
+      {
+        "path": "experiments/engine/research_lane.schema.json",
+        "reason": "lane-specific applicability, structural, mechanism, validator, experiment, and formal gates",
+        "exists": true,
+        "bytes": 4441
+      },
+      {
+        "path": "notes/RESEARCH_ENGINE_V0_TO_V0_2.md",
+        "reason": "migration boundary, preserved history, lifecycle semantics, and regeneration order",
+        "exists": true,
+        "bytes": 6457
       },
       {
         "path": "experiments/engine/outcome.schema.json",
@@ -402,16 +732,40 @@
         "bytes": 372
       },
       {
+        "path": "data/source_claim_extracts/amadori_pintore_sala2018.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 1755
+      },
+      {
+        "path": "data/source_claim_extracts/fhjrv2014.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 1408
+      },
+      {
+        "path": "data/source_claim_extracts/petit_kosters_messeng2016.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 2771
+      },
+      {
+        "path": "data/source_claim_extracts/yokoyama_yasuda_takahashi_kogure2020.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 1937
+      },
+      {
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 539343
+        "bytes": 597889
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 15612
+        "bytes": 20116
       },
       {
         "path": "PUBLISHABLE_UNITS.md",

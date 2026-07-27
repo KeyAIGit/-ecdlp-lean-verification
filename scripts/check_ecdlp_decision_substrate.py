@@ -32,6 +32,8 @@ STRUCTURAL_ROUTE_ID = "R-GLV-SEMAEV"
 STRUCTURAL_HYPOTHESIS_ID = "HYP_GLV_SEMAEV_001"
 STRUCTURAL_TASK_ID = "TASK-009"
 STRUCTURAL_FOUNDATION_ID = "F-SEMAEV-ELIMINATION"
+MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
+MAINTENANCE_TASK_ID = "TASK-010"
 
 ROUTE_STATUSES = {
     "guardrail",
@@ -203,8 +205,8 @@ def validate() -> list[str]:
         problems.append(
             "exactly classical-single-target-plain must be the primary threat model"
         )
-    if data["phase_policy"].get("phase") != "research-engine-v0":
-        problems.append("the current phase must be research-engine-v0")
+    if data["phase_policy"].get("phase") != "research-engine-v0.2-sanitation":
+        problems.append("the current phase must be research-engine-v0.2-sanitation")
     if data["phase_policy"].get("experiments_authorized") is not False:
         problems.append("experiments_authorized must remain false")
     if data["phase_policy"].get("bounded_exploration_authorized") is not False:
@@ -692,8 +694,21 @@ def validate() -> list[str]:
             "tasks/ECDLP_RESEARCH.md must preserve the promotion boundary"
         )
     next_tasks_text = NEXT_TASKS.read_text(encoding="utf-8")
-    if "Current central task: `TASK-008`" not in next_tasks_text:
-        problems.append("tasks/NEXT.md must route current work to TASK-008")
+    maintenance = data.get("maintenance_cycle", {})
+    if maintenance.get("cycle_id") != MAINTENANCE_CYCLE_ID:
+        problems.append("decision substrate has the wrong maintenance cycle")
+    if maintenance.get("task_id") != MAINTENANCE_TASK_ID:
+        problems.append("maintenance cycle must bind TASK-010")
+    if maintenance.get("status") != "active_remediation_draft":
+        problems.append("maintenance cycle must remain active_remediation_draft")
+    if maintenance.get("authorizes_experiment") is not False:
+        problems.append("maintenance cycle must not authorize an experiment")
+    if maintenance.get("promotes_route") is not False:
+        problems.append("maintenance cycle must not promote a route")
+    if maintenance.get("historical_outcomes_mutable") is not False:
+        problems.append("maintenance cycle must preserve historical outcomes")
+    if "Current central task: `TASK-010`" not in next_tasks_text:
+        problems.append("tasks/NEXT.md must route current work to TASK-010")
     for binding_id in (
         STRUCTURAL_DECISION_ID,
         STRUCTURAL_ITERATION_ID,

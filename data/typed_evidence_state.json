@@ -1,0 +1,1105 @@
+{
+  "schema_version": "0.1-generated",
+  "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
+  "target_id": "secp256k1-classical-single-target-plain",
+  "source_hashes": {
+    "policy_sha256": "a4eaf69f96e18e029fa6545ded5c9d9102fdf3445da10964bae67a8119344742",
+    "decision_substrate_sha256": "a938d1923f4fa49a019c757e02e9c1ce8e5bae3f5e83e3b570d116827c7dc448",
+    "source_registry_identity_sha256": "dc353baa19b7a9ecae373f7dcc43c2d63714fb45cf94dcfa4fae79cc6ac5ed2b",
+    "evidence_files_sha256": "e5ed1b197f4e180816ccca426b823c875dd882bfa6cae59f100231c241e5596b",
+    "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
+  },
+  "trust_boundary": {
+    "claim_acceptance": "A source claim is usable for a decisive screen only when its exact locator and evidence artifact are recorded with a decisive read status.",
+    "unknown_policy": "Missing or unresolved evidence remains unknown and creates a property-resolution task; it is never coerced to false or treated as novelty.",
+    "screen_scope": "Applicability and bounded-negative decisions apply only to the named mechanism instance and never close an entire route by implication.",
+    "authorization_boundary": "Typed cells, generated seeds, and desk decisions authorize no experiment, target computation, route promotion, or security claim."
+  },
+  "counts": {
+    "source_claims": 17,
+    "target_properties": 5,
+    "mechanisms": 7,
+    "cells": 7,
+    "open_cells": 3,
+    "property_resolution_cells": 1,
+    "decided_inapplicable_cells": 2,
+    "decided_closed_cells": 1,
+    "seed_eligible_cells": 2,
+    "desk_decisions": 3
+  },
+  "source_claims": [
+    {
+      "id": "SC-AMADORI-PRIME-FIELD-VARIANT",
+      "source_id": "amadori_pintore_sala2018",
+      "source_type": "primary_literature",
+      "citation": "Amadori, Pintore, and Sala, On the Discrete Logarithm Problem for Prime-Field Elliptic Curves.",
+      "read_status": "full_text_obtained",
+      "url": "https://pure.tue.nl/ws/files/91158650/609.pdf",
+      "artifact_sha256": "fe8ccf5ad01470315f791b97d92978e9d1b16ae2dd1cc73492c78c12448c8e2c",
+      "locator": {
+        "kind": "section",
+        "value": "Section 3; Section 3.2, p. 10 unnumbered T approximately T-prime assumption; Section 4"
+      },
+      "statement": "The source accumulates random points as its factor base and replaces repeated decompositions plus sparse linear algebra by one summation-polynomial system whose recovered point relation yields the discrete logarithm congruence.",
+      "boundary": "Its relative comparison with Petit assumes T(E,m,V) approximately T-prime(E,m,V); it explicitly does not claim work below p^(1/2), reports only 11-22-bit experiments, and leaves the single-system cost unresolved.",
+      "evidence_path": "data/source_claim_extracts/amadori_pintore_sala2018.json"
+    },
+    {
+      "id": "SC-FHJRV-TORSION-ACTION",
+      "source_id": "fhjrv2014",
+      "source_type": "primary_literature",
+      "citation": "Faugere, Huot, Joux, Renault, and Vitse, EUROCRYPT 2014, Symmetrized Summation Polynomials.",
+      "read_status": "full_text_obtained",
+      "url": "https://www.iacr.org/archive/eurocrypt2014/84410158/84410158.pdf",
+      "artifact_sha256": "43c86db3f1a7d33de35801f2de90f277359d065e8c3c28b25abe94106cf63779",
+      "locator": {
+        "kind": "section",
+        "value": "Sections 1-2 and 4"
+      },
+      "statement": "A rational small-order torsion point can act coordinatewise on summation-polynomial variables; the relation-preserving subgroup can grow with the number of free variables.",
+      "boundary": "This is a mechanism and conditional complexity result for curves with the required rational torsion, not evidence that secp256k1 has that target property.",
+      "evidence_path": "data/source_claim_extracts/fhjrv2014.json"
+    },
+    {
+      "id": "SC-GLV-ENDOMORPHISM",
+      "source_id": "repo:kernel",
+      "source_type": "kernel_theorem",
+      "citation": "Lean GLV endomorphism order-divides-three theorem.",
+      "read_status": "kernel_verified",
+      "url": null,
+      "artifact_sha256": null,
+      "locator": {
+        "kind": "theorem",
+        "value": "glvPoint_cube_eq_id"
+      },
+      "statement": "The secp256k1 map sending x to beta times x and preserving y is an additive automorphism whose cube is the identity.",
+      "boundary": "This theorem establishes that the order divides three, not that the map is nontrivial. Existence of the automorphism alone gives no asymptotic discrete-log improvement and does not imply independent coordinatewise covariance.",
+      "evidence_path": "Ecdlp/Proved/GlvAutomorphism.lean"
+    },
+    {
+      "id": "SC-GLV-ENDOMORPHISM-NONTRIVIAL",
+      "source_id": "repo:kernel",
+      "source_type": "kernel_theorem",
+      "citation": "Lean secp256k1 GLV nonidentity theorem.",
+      "read_status": "kernel_verified",
+      "url": null,
+      "artifact_sha256": null,
+      "locator": {
+        "kind": "theorem",
+        "value": "secp256k1_glvHom_ne_id"
+      },
+      "statement": "The secp256k1 GLV additive automorphism is not the identity.",
+      "boundary": "Together with the separate cube-is-identity theorem this gives exact order three. Nontriviality alone gives no asymptotic discrete-log improvement.",
+      "evidence_path": "Ecdlp/Proved/GlvOrderThree.lean"
+    },
+    {
+      "id": "SC-GLV-FIXED-TARGET-CLASSIFICATION",
+      "source_id": "repo:certificate",
+      "source_type": "certificate",
+      "citation": "Exact symbolic fixed-target GLV-Semaev classification certificate.",
+      "read_status": "certificate_replayed",
+      "url": null,
+      "artifact_sha256": "9db5e0375421659f9abb905c12ae77232ef9957867f7194baaf548d45a1f091d",
+      "locator": {
+        "kind": "certificate_field",
+        "value": "fixed_target_classification"
+      },
+      "statement": "For nonzero affine target coordinate and the stated characteristic assumptions, only the identity coordinate scaling preserves the fixed-target S4 layer.",
+      "boundary": "The result concerns coordinatewise scalar C3 actions; it is not a Groebner lower bound and does not close faithful phase-preserving constructions.",
+      "evidence_path": "experiments/glv_semaev_symmetry/fixed_target_certificate.json"
+    },
+    {
+      "id": "SC-GLV-SEMAEV-CLASSIFICATION",
+      "source_id": "repo:certificate",
+      "source_type": "certificate",
+      "citation": "Exact symbolic GLV-Semaev coordinate-scaling classification certificate.",
+      "read_status": "certificate_replayed",
+      "url": null,
+      "artifact_sha256": "2142e8d66a8422768b609e42f5ce09377d5f93609941139fc9fc4e5abe4dfe59",
+      "locator": {
+        "kind": "certificate_field",
+        "value": "classification"
+      },
+      "statement": "The replayed exact certificate finds only the diagonal C3 coordinate-scaling covariance for S3 and S4 among the enumerated coordinatewise C3 action.",
+      "boundary": "This certificate-backed exhaustiveness result is not a Lean theorem and excludes neither non-scalar nor birational mechanisms.",
+      "evidence_path": "experiments/glv_semaev_symmetry/certificate.json"
+    },
+    {
+      "id": "SC-GLV-SEMAEV-COVARIANCE",
+      "source_id": "repo:kernel",
+      "source_type": "kernel_theorem",
+      "citation": "Lean GLV-Semaev diagonal covariance and fixed-target transport package.",
+      "read_status": "kernel_verified",
+      "url": null,
+      "artifact_sha256": null,
+      "locator": {
+        "kind": "theorem",
+        "value": "secp256k1_glv_list_sum_eq_iff"
+      },
+      "statement": "Lean proves diagonal S3 covariance, diagonal S4 invariance, and the exact transport of S4 fibers and point relations under the GLV map.",
+      "boundary": "The kernel package proves positive identities and transport laws; it does not prove exhaustive coordinatewise stabilizer classification.",
+      "evidence_path": "Ecdlp/Proved/GlvSemaevSymmetry.lean"
+    },
+    {
+      "id": "SC-PKC-AUXILIARY-CURVE",
+      "source_id": "petit_kosters_messeng2016",
+      "source_type": "primary_literature",
+      "citation": "Petit, Kosters, and Messeng, PKC 2016, auxiliary-curve construction.",
+      "read_status": "full_text_obtained",
+      "url": "https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf",
+      "artifact_sha256": "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943",
+      "locator": {
+        "kind": "section",
+        "value": "Sections 3.4-3.5"
+      },
+      "statement": "For an arbitrary prime p, a second construction searches for an auxiliary curve over the same field whose order has a sufficiently large smooth factor, then uses a self-isogeny of that auxiliary curve to define the composed root map.",
+      "boundary": "The auxiliary curve is a priori unrelated to the ECDLP target curve beyond sharing the field. Search, map construction, generalized-root solving, recovery, and total attack cost remain separate obligations.",
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+    },
+    {
+      "id": "SC-PKC-RELATION-YIELD",
+      "source_id": "petit_kosters_messeng2016",
+      "source_type": "primary_literature",
+      "citation": "Petit, Kosters, and Messeng, PKC 2016, partial cost analysis.",
+      "read_status": "full_text_obtained",
+      "url": "https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf",
+      "artifact_sha256": "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943",
+      "locator": {
+        "kind": "section",
+        "value": "Section 3.2, published p. 10"
+      },
+      "statement": "The source estimates decompositions per target by (deg L)^m divided by m! times p and uses (deg L)^m approximately m! times p as the balance point in its partial cost model.",
+      "boundary": "This is a heuristic relation-yield expression in a unit-cost model. It does not bound T(E,m,L), prove relation independence, or establish an end-to-end advantage.",
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+    },
+    {
+      "id": "SC-PKC-SMOOTH-SUBGROUP",
+      "source_id": "petit_kosters_messeng2016",
+      "source_type": "primary_literature",
+      "citation": "Petit, Kosters, and Messeng, PKC 2016, Algebraic Approaches for the ECDLP over Prime Fields.",
+      "read_status": "full_text_obtained",
+      "url": "https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf",
+      "artifact_sha256": "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943",
+      "locator": {
+        "kind": "section",
+        "value": "Sections 3.1-3.3 and 5"
+      },
+      "statement": "One faithful prime-field factor-base construction uses roots produced from a sufficiently large smooth-order subgroup of the multiplicative group of the base field.",
+      "boundary": "The construction supplies an applicability condition and generalized-root problem; it does not by itself establish an end-to-end advantage on secp256k1.",
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+    },
+    {
+      "id": "SC-SECP-NO-TWO-TORSION",
+      "source_id": "repo:kernel",
+      "source_type": "kernel_theorem",
+      "citation": "Lean theorem secp256k1_no_nonzero_two_torsion.",
+      "read_status": "kernel_verified",
+      "url": null,
+      "artifact_sha256": null,
+      "locator": {
+        "kind": "theorem",
+        "value": "Ecdlp.Proved.secp256k1_no_nonzero_two_torsion"
+      },
+      "statement": "Every rational secp256k1 point over the base field annihilated by multiplication by two is the identity point.",
+      "boundary": "This excludes direct rational two-torsion on secp256k1 over the base field only; it does not exclude auxiliary curves or extension fields.",
+      "evidence_path": "Ecdlp/Proved/CurveCardinalityExact.lean"
+    },
+    {
+      "id": "SC-SECP-PMINUS1-FACTORIZATION",
+      "source_id": "repo:certificate",
+      "source_type": "certificate",
+      "citation": "Deterministic exact p-minus-one arithmetic certificate.",
+      "read_status": "certificate_replayed",
+      "url": null,
+      "artifact_sha256": "7d2338eadefd7b531b83fc77a4e944a32aef5ab8646cacef5eb3b26191c7f78e",
+      "locator": {
+        "kind": "certificate_field",
+        "value": "p_minus_one_factorization.identity"
+      },
+      "statement": "The independently replayed integer identity writes p-1 as 2 times 3 times 7 times 13441 times the 237-bit cofactor, so the displayed small-factor product is 564522.",
+      "boundary": "This certificate checks exact integer arithmetic, not cofactor primality or total relation-generation and Groebner cost.",
+      "evidence_path": "experiments/engine/pkc_smooth_desk_screen/artifact.json"
+    },
+    {
+      "id": "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+      "source_id": "repo:kernel",
+      "source_type": "kernel_theorem",
+      "citation": "Lean primality theorem for the 237-bit cofactor of secp256k1 p-1.",
+      "read_status": "kernel_verified",
+      "url": null,
+      "artifact_sha256": null,
+      "locator": {
+        "kind": "theorem",
+        "value": "pr_205115282021455665897114700593932402728804164701536103180137503955397371"
+      },
+      "statement": "The 237-bit cofactor displayed in the p-1 factorization certificate is prime.",
+      "boundary": "Cofactor primality does not turn the certificate's arithmetic identity into a standalone kernel theorem and does not decide attack cost.",
+      "evidence_path": "Ecdlp/Proved/Secp256k1PrimeP.lean"
+    },
+    {
+      "id": "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
+      "source_id": "repo:kernel",
+      "source_type": "kernel_theorem",
+      "citation": "Lean theorem secp256k1_smooth_divisor_dvd_smooth_part.",
+      "read_status": "kernel_verified",
+      "url": null,
+      "artifact_sha256": null,
+      "locator": {
+        "kind": "theorem",
+        "value": "Ecdlp.Curve.secp256k1_smooth_divisor_dvd_smooth_part"
+      },
+      "statement": "Every divisor of secp256k1 p-1 whose prime divisors are at most 13441 divides 564522.",
+      "boundary": "This is arithmetic about divisors of the base-field value p-1 only; it is not an ECDLP or complexity result and says nothing about the group order, extension fields, or auxiliary curves.",
+      "evidence_path": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean"
+    },
+    {
+      "id": "SC-SECP-PRIME-FIELD",
+      "source_id": "sec2_v2",
+      "source_type": "public_constant",
+      "citation": "SEC 2 version 2.0 secp256k1 domain parameters.",
+      "read_status": "public_constant_recomputed",
+      "url": "https://www.secg.org/sec2-v2.pdf",
+      "artifact_sha256": null,
+      "locator": {
+        "kind": "section",
+        "value": "Section 2.4.1"
+      },
+      "statement": "secp256k1 is defined over a 256-bit prime field and exposes its specified affine curve representation.",
+      "boundary": "Coordinate access is an opportunity surface, not evidence that a non-generic relation algorithm beats the generic square-root baseline.",
+      "evidence_path": null
+    },
+    {
+      "id": "SC-SEMAEV-RELATION-SEMANTICS",
+      "source_id": "repo:kernel",
+      "source_type": "kernel_theorem",
+      "citation": "Lean Semaev S3 and S4 relation-semantics package.",
+      "read_status": "kernel_verified",
+      "url": null,
+      "artifact_sha256": null,
+      "locator": {
+        "kind": "theorem",
+        "value": "Ecdlp.Proved.secp256k1_semaev_four_of_common_root"
+      },
+      "statement": "The formalized Semaev polynomials provide checked algebraic implications between point-sum relations and polynomial vanishing in the covered cases.",
+      "boundary": "The current Lean package is not an end-to-end prime-field index-calculus algorithm and does not supply relation probabilities or solver complexity.",
+      "evidence_path": "Ecdlp/Proved/SemaevFour.lean"
+    },
+    {
+      "id": "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND",
+      "source_id": "yokoyama_yasuda_takahashi_kogure2020",
+      "source_type": "primary_literature",
+      "citation": "Yokoyama, Yasuda, Takahashi, and Kogure, Journal of Mathematical Cryptology 14(1), 2020.",
+      "read_status": "full_text_obtained",
+      "url": "https://web.archive.org/web/20210718042719id_/https://www.degruyter.com/document/doi/10.1515/jmc-2019-0029/pdf",
+      "artifact_sha256": "8d7256195d40b1afa56d99adc34c4775d90b8ce4d98aea3ff7d881fc87adea59",
+      "locator": {
+        "kind": "section",
+        "value": "Naive random-V setup in Section 2; Assumption 7, Remark 8, Lemma 8, and Proposition 9 in Sections 3.4 and 4.1.2"
+      },
+      "statement": "For the naive random-factor-base point-decomposition ideal, Proposition 9 conditionally lower-bounds almost-every-target Groebner-basis cost by (m*d^(m-1))^(1-epsilon) field operations for efficient algorithms using S-polynomials.",
+      "boundary": "The result depends on Assumption 7 and the non-rigorous transfer in Remark 8, is a cost rather than solving-degree bound, and does not automatically apply to structured Petit, Amadori, or unread Kudo systems.",
+      "evidence_path": "data/source_claim_extracts/yokoyama_yasuda_takahashi_kogure2020.json"
+    }
+  ],
+  "target_properties": [
+    {
+      "id": "TP-SECP-DIRECT-TWO-TORSION",
+      "label": "Direct rational two-torsion",
+      "value_type": "boolean",
+      "value": false,
+      "status": "kernel_verified",
+      "statement": "The secp256k1 base-field point group contains no nonidentity point of order dividing two.",
+      "scope": "Direct secp256k1 over the specified prime base field only.",
+      "source_claim_ids": [
+        "SC-SECP-NO-TWO-TORSION"
+      ]
+    },
+    {
+      "id": "TP-SECP-GLV-C3",
+      "label": "Nontrivial GLV order-three action",
+      "value_type": "boolean",
+      "value": true,
+      "status": "kernel_verified",
+      "statement": "secp256k1 carries the nontrivial order-three GLV automorphism used by the structural route.",
+      "scope": "The secp256k1 point group and its affine coordinate representation.",
+      "source_claim_ids": [
+        "SC-GLV-ENDOMORPHISM",
+        "SC-GLV-ENDOMORPHISM-NONTRIVIAL"
+      ]
+    },
+    {
+      "id": "TP-SECP-PKC-AUXILIARY-CURVE",
+      "label": "PKC auxiliary-curve instance",
+      "value_type": "boolean",
+      "value": null,
+      "status": "unknown",
+      "statement": "No explicit auxiliary curve over the secp256k1 base field with the required smooth order factor and fully priced composed map is recorded yet.",
+      "scope": "The shared base field and the exact PKC 2016 auxiliary-curve construction; no isogeny to secp256k1 is required.",
+      "source_claim_ids": [
+        "SC-PKC-AUXILIARY-CURVE"
+      ]
+    },
+    {
+      "id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+      "label": "Maximum 13441-smooth divisor of p-1",
+      "value_type": "integer",
+      "value": 564522,
+      "status": "kernel_verified",
+      "statement": "The exact 13441-smooth divisor ceiling for secp256k1 p-1 is 564522.",
+      "scope": "Divisors of the secp256k1 base-field value p-1, with smoothness bound 13441.",
+      "source_claim_ids": [
+        "SC-SECP-PMINUS1-FACTORIZATION",
+        "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+        "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
+      ]
+    },
+    {
+      "id": "TP-SECP-PRIME-FIELD-COORDINATES",
+      "label": "Prime-field coordinate representation",
+      "value_type": "boolean",
+      "value": true,
+      "status": "public_constant_recomputed",
+      "statement": "The target is a curve over the specified 256-bit prime field with accessible coordinate formulas.",
+      "scope": "Public secp256k1 domain parameters and classical non-generic analysis.",
+      "source_claim_ids": [
+        "SC-SECP-PRIME-FIELD"
+      ]
+    }
+  ],
+  "cost_quantities": [
+    {
+      "id": "CQ-GLV-FAITHFUL-QUOTIENT-COST",
+      "label": "Faithful GLV phase-quotient solving cost",
+      "definition": "End-to-end relation-generation cost after retaining all relative GLV phase information, including quotient construction, recovery, excluded components, and solver work.",
+      "baseline": "Matched Semaev relation collection without the proposed quotient, with identical target, factor base, relation arity, and success criterion.",
+      "measurement": "Require an exact map and recovery algorithm, then compare preregistered scaling laws rather than one solver timing.",
+      "status": "missing",
+      "source_claim_ids": [
+        "SC-GLV-SEMAEV-COVARIANCE",
+        "SC-GLV-SEMAEV-CLASSIFICATION",
+        "SC-GLV-FIXED-TARGET-CLASSIFICATION"
+      ]
+    },
+    {
+      "id": "CQ-PKC-GENERALIZED-ROOT-COST",
+      "label": "Generalized root-finding and recovery cost",
+      "definition": "Cost of solving the composed-map fiber constraints and recovering valid factor-base points without hidden discarded components.",
+      "baseline": "Direct factor-base membership and relation recovery at the same arity and effective factor-base size.",
+      "measurement": "Price all roots, spurious fibers, recovery failures, preprocessing, and independent relation validation as field size grows.",
+      "status": "partial",
+      "source_claim_ids": [
+        "SC-PKC-SMOOTH-SUBGROUP",
+        "SC-PKC-RELATION-YIELD",
+        "SC-PKC-AUXILIARY-CURVE"
+      ]
+    },
+    {
+      "id": "CQ-PRIME-FIELD-RELATION-TOTAL",
+      "label": "Total prime-field relation-generation cost",
+      "definition": "Online and offline cost of obtaining enough independently validated full relations, including factor-base construction, polynomial solving, recovery, and linear algebra.",
+      "baseline": "The generic square-root attack and the matched plain Semaev pipeline must both be priced under the same threat model.",
+      "measurement": "Record scaling across field sizes with matched baselines and retain every preprocessing, memory, parallelism, and amortization term.",
+      "status": "partial",
+      "source_claim_ids": [
+        "SC-PKC-SMOOTH-SUBGROUP",
+        "SC-PKC-RELATION-YIELD",
+        "SC-SEMAEV-RELATION-SEMANTICS",
+        "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND",
+        "SC-AMADORI-PRIME-FIELD-VARIANT"
+      ]
+    },
+    {
+      "id": "CQ-RELATION-SYMMETRY-GROWTH",
+      "label": "Relation-preserving coordinatewise subgroup growth",
+      "definition": "The order of the coordinatewise curve-symmetry subgroup preserving the fixed-target relation, expressed as a function of relation arity.",
+      "baseline": "A subgroup whose order is bounded independently of arity supplies only bounded orbit compression unless another cost lever is proved.",
+      "measurement": "Derive the action on the point-sum relation, classify its preserving subgroup, and verify the formula independently.",
+      "status": "defined",
+      "source_claim_ids": [
+        "SC-FHJRV-TORSION-ACTION",
+        "SC-GLV-SEMAEV-COVARIANCE",
+        "SC-GLV-SEMAEV-CLASSIFICATION"
+      ]
+    },
+    {
+      "id": "CQ-SEMAEV-S17-SYSTEM-COST",
+      "label": "Semaev S17 system construction and solving cost",
+      "definition": "Total cost of constructing, representing, solving, and validating the relation system required by an arity-sixteen smooth-subgroup instantiation.",
+      "baseline": "The same success probability priced against generic square-root work and lower-arity prime-field relation pipelines.",
+      "measurement": "An exact symbolic size bound must precede any solver run; degree, monomial count, memory, and recovery are all included.",
+      "status": "missing",
+      "source_claim_ids": [
+        "SC-PKC-SMOOTH-SUBGROUP",
+        "SC-PKC-RELATION-YIELD",
+        "SC-SEMAEV-RELATION-SEMANTICS"
+      ]
+    }
+  ],
+  "barriers": [
+    {
+      "id": "B-GLV-FINITE-TARGET-BATCHING",
+      "route_id": "R-GLV-SEMAEV",
+      "disposition": "scoped_negative",
+      "exact_scope": "Processing a target together with its two GLV images is a finite target-batching factor and is not by itself an asymptotic relation-generation bridge.",
+      "source_claim_ids": [
+        "SC-GLV-SEMAEV-COVARIANCE",
+        "SC-GLV-FIXED-TARGET-CLASSIFICATION"
+      ],
+      "reopening_conditions": [
+        "Prove a distinct mechanism changing a cost quantity with field size or relation arity rather than relying only on the three target images."
+      ]
+    },
+    {
+      "id": "B-GLV-INDEPENDENT-CUBES",
+      "route_id": "R-GLV-SEMAEV",
+      "disposition": "closed",
+      "exact_scope": "Replacing every free coordinate independently by its cube is not a faithful quotient of the fixed-target GLV-Semaev relation system.",
+      "source_claim_ids": [
+        "SC-GLV-SEMAEV-CLASSIFICATION",
+        "SC-GLV-FIXED-TARGET-CLASSIFICATION"
+      ],
+      "reopening_conditions": [
+        "Provide a different exact quotient with relative phase tags, an inverse recovery map, and a cost bridge not based on the closed independent-cube identification."
+      ]
+    },
+    {
+      "id": "B-PKC-SMOOTH-M4-SHORTFALL",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "disposition": "closed",
+      "exact_scope": "The m-equals-four smooth-subgroup instance cannot obtain a factor base near size two-to-the-sixty-four from the small-factor part of secp256k1 p-minus-one.",
+      "source_claim_ids": [
+        "SC-PKC-SMOOTH-SUBGROUP",
+        "SC-SECP-PMINUS1-FACTORIZATION"
+      ],
+      "reopening_conditions": [
+        "Change the exact construction or arity and reprice the complete system; do not reinterpret this instance-level shortfall as route-wide inapplicability."
+      ]
+    }
+  ],
+  "cells": [
+    {
+      "cell_id": "CELL-M-FHJRV-DIRECT-TWO-TORSION",
+      "mechanism_id": "M-FHJRV-DIRECT-TWO-TORSION",
+      "route_id": "R-GLV-SEMAEV",
+      "threat_model": "classical-single-target-plain",
+      "status": "decided_inapplicable",
+      "scope": "Apply the published coordinatewise rational two-torsion translation mechanism directly to secp256k1 over its base field.",
+      "construction": "Translate selected free points by one rational point of order two so the even-weight coordinate action preserves their sum.",
+      "relation_action": "For an order-two point T, translating an even number of free variables adds an even multiple of T and preserves the fixed target.",
+      "changed_quantity": "The relation-preserving subgroup would have order growing exponentially with relation arity.",
+      "cost_quantity_id": "CQ-RELATION-SYMMETRY-GROWTH",
+      "cost_quantity_status": "defined",
+      "cost_quantity": {
+        "id": "CQ-RELATION-SYMMETRY-GROWTH",
+        "label": "Relation-preserving coordinatewise subgroup growth",
+        "definition": "The order of the coordinatewise curve-symmetry subgroup preserving the fixed-target relation, expressed as a function of relation arity.",
+        "baseline": "A subgroup whose order is bounded independently of arity supplies only bounded orbit compression unless another cost lever is proved.",
+        "measurement": "Derive the action on the point-sum relation, classify its preserving subgroup, and verify the formula independently.",
+        "status": "defined",
+        "source_claim_ids": [
+          "SC-FHJRV-TORSION-ACTION",
+          "SC-GLV-SEMAEV-COVARIANCE",
+          "SC-GLV-SEMAEV-CLASSIFICATION"
+        ]
+      },
+      "requirement_results": [
+        {
+          "property_id": "TP-SECP-DIRECT-TWO-TORSION",
+          "property_status": "kernel_verified",
+          "operator": "eq",
+          "expected": true,
+          "actual": false,
+          "verdict": "violated",
+          "source_claim_ids": [
+            "SC-SECP-NO-TWO-TORSION"
+          ],
+          "rationale": "The direct published action requires a nonidentity rational point of order two on the target curve."
+        }
+      ],
+      "barrier_ids": [],
+      "source_claim_ids": [
+        "SC-FHJRV-TORSION-ACTION",
+        "SC-GLV-SEMAEV-CLASSIFICATION",
+        "SC-GLV-SEMAEV-COVARIANCE",
+        "SC-SECP-NO-TWO-TORSION"
+      ],
+      "source_ids": [
+        "fhjrv2014",
+        "repo:certificate",
+        "repo:kernel"
+      ],
+      "evidence_paths": [
+        "Ecdlp/Proved/CurveCardinalityExact.lean",
+        "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+        "data/source_claim_extracts/fhjrv2014.json",
+        "experiments/glv_semaev_symmetry/certificate.json"
+      ],
+      "evidence_digest": "fff808a596c91c5ef0a07e3cf8442708f89e4b782d82cac2afcd0e95a5a9f4bd",
+      "seed_axes": {
+        "target_feature_id": "TF-J0-GLV-C3",
+        "mechanism_primitive_id": "MP-SEMAEV-RELATION-SAMPLING",
+        "uncertainty_id": "U-GLV-SOLVING-COST"
+      },
+      "intake_mode": "none",
+      "seed_eligible": false,
+      "boundary": "The failed target property excludes only direct base-field use; auxiliary curves, extension fields, and unrelated sum-compatible actions remain separate.",
+      "authorization": "none"
+    },
+    {
+      "cell_id": "CELL-M-GLV-FAITHFUL-PHASE-QUOTIENT",
+      "mechanism_id": "M-GLV-FAITHFUL-PHASE-QUOTIENT",
+      "route_id": "R-GLV-SEMAEV",
+      "threat_model": "classical-single-target-plain",
+      "status": "open",
+      "scope": "A not-yet-specified quotient that retains enough relative GLV phase data to preserve and recover fixed-target Semaev relations.",
+      "construction": "Use mixed diagonal invariants or explicit phase tags with a total recovery map instead of independent coordinate cubes.",
+      "relation_action": "The construction must preserve the exact fixed-target relation and distinguish all phase combinations merged by the naive quotient.",
+      "changed_quantity": "Unknown effect on solving degree, sparse support, mixed volume, recovery cost, or full relation cost.",
+      "cost_quantity_id": "CQ-GLV-FAITHFUL-QUOTIENT-COST",
+      "cost_quantity_status": "missing",
+      "cost_quantity": {
+        "id": "CQ-GLV-FAITHFUL-QUOTIENT-COST",
+        "label": "Faithful GLV phase-quotient solving cost",
+        "definition": "End-to-end relation-generation cost after retaining all relative GLV phase information, including quotient construction, recovery, excluded components, and solver work.",
+        "baseline": "Matched Semaev relation collection without the proposed quotient, with identical target, factor base, relation arity, and success criterion.",
+        "measurement": "Require an exact map and recovery algorithm, then compare preregistered scaling laws rather than one solver timing.",
+        "status": "missing",
+        "source_claim_ids": [
+          "SC-GLV-SEMAEV-COVARIANCE",
+          "SC-GLV-SEMAEV-CLASSIFICATION",
+          "SC-GLV-FIXED-TARGET-CLASSIFICATION"
+        ]
+      },
+      "requirement_results": [
+        {
+          "property_id": "TP-SECP-GLV-C3",
+          "property_status": "kernel_verified",
+          "operator": "eq",
+          "expected": true,
+          "actual": true,
+          "verdict": "satisfied",
+          "source_claim_ids": [
+            "SC-GLV-ENDOMORPHISM",
+            "SC-GLV-ENDOMORPHISM-NONTRIVIAL"
+          ],
+          "rationale": "A faithful GLV quotient requires the proved order-three action but must add a new premise beyond it."
+        }
+      ],
+      "barrier_ids": [
+        "B-GLV-FINITE-TARGET-BATCHING"
+      ],
+      "source_claim_ids": [
+        "SC-GLV-ENDOMORPHISM",
+        "SC-GLV-ENDOMORPHISM-NONTRIVIAL",
+        "SC-GLV-FIXED-TARGET-CLASSIFICATION",
+        "SC-GLV-SEMAEV-CLASSIFICATION",
+        "SC-GLV-SEMAEV-COVARIANCE"
+      ],
+      "source_ids": [
+        "repo:certificate",
+        "repo:kernel"
+      ],
+      "evidence_paths": [
+        "Ecdlp/Proved/GlvAutomorphism.lean",
+        "Ecdlp/Proved/GlvOrderThree.lean",
+        "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+        "experiments/glv_semaev_symmetry/certificate.json",
+        "experiments/glv_semaev_symmetry/fixed_target_certificate.json"
+      ],
+      "evidence_digest": "301978f04e5a12c6c4fed9eae9f2d94b926a2aa1326a6ca91693687554beb0f1",
+      "seed_axes": {
+        "target_feature_id": "TF-J0-GLV-C3",
+        "mechanism_primitive_id": "MP-FAITHFUL-PHASE-QUOTIENT",
+        "uncertainty_id": "U-GLV-SOLVING-COST"
+      },
+      "intake_mode": "none",
+      "seed_eligible": false,
+      "boundary": "This is a parked desired-property record, not a mechanism. It cannot emit a seed until a new claim supplies an exact map, recovery semantics, and cost-changing bridge.",
+      "authorization": "none"
+    },
+    {
+      "cell_id": "CELL-M-GLV-INDEPENDENT-CUBES",
+      "mechanism_id": "M-GLV-INDEPENDENT-CUBES",
+      "route_id": "R-GLV-SEMAEV",
+      "threat_model": "classical-single-target-plain",
+      "status": "decided_closed",
+      "scope": "Fixed-target Semaev relation systems with every free x-coordinate replaced independently by its cube.",
+      "construction": "Map each x_i to u_i equals x_i cubed and discard all relative GLV phase information.",
+      "relation_action": "The map quotients a coordinatewise C3 power, while the exact relation admits only the diagonal C3 action.",
+      "changed_quantity": "Proposed variable-domain compression by independent phase removal.",
+      "cost_quantity_id": "CQ-RELATION-SYMMETRY-GROWTH",
+      "cost_quantity_status": "defined",
+      "cost_quantity": {
+        "id": "CQ-RELATION-SYMMETRY-GROWTH",
+        "label": "Relation-preserving coordinatewise subgroup growth",
+        "definition": "The order of the coordinatewise curve-symmetry subgroup preserving the fixed-target relation, expressed as a function of relation arity.",
+        "baseline": "A subgroup whose order is bounded independently of arity supplies only bounded orbit compression unless another cost lever is proved.",
+        "measurement": "Derive the action on the point-sum relation, classify its preserving subgroup, and verify the formula independently.",
+        "status": "defined",
+        "source_claim_ids": [
+          "SC-FHJRV-TORSION-ACTION",
+          "SC-GLV-SEMAEV-COVARIANCE",
+          "SC-GLV-SEMAEV-CLASSIFICATION"
+        ]
+      },
+      "requirement_results": [
+        {
+          "property_id": "TP-SECP-GLV-C3",
+          "property_status": "kernel_verified",
+          "operator": "eq",
+          "expected": true,
+          "actual": true,
+          "verdict": "satisfied",
+          "source_claim_ids": [
+            "SC-GLV-ENDOMORPHISM",
+            "SC-GLV-ENDOMORPHISM-NONTRIVIAL"
+          ],
+          "rationale": "The proposed coordinate cubes are motivated by the actual order-three GLV action."
+        }
+      ],
+      "barrier_ids": [
+        "B-GLV-INDEPENDENT-CUBES"
+      ],
+      "source_claim_ids": [
+        "SC-FHJRV-TORSION-ACTION",
+        "SC-GLV-ENDOMORPHISM",
+        "SC-GLV-ENDOMORPHISM-NONTRIVIAL",
+        "SC-GLV-FIXED-TARGET-CLASSIFICATION",
+        "SC-GLV-SEMAEV-CLASSIFICATION",
+        "SC-GLV-SEMAEV-COVARIANCE"
+      ],
+      "source_ids": [
+        "fhjrv2014",
+        "repo:certificate",
+        "repo:kernel"
+      ],
+      "evidence_paths": [
+        "Ecdlp/Proved/GlvAutomorphism.lean",
+        "Ecdlp/Proved/GlvOrderThree.lean",
+        "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+        "data/source_claim_extracts/fhjrv2014.json",
+        "experiments/glv_semaev_symmetry/certificate.json",
+        "experiments/glv_semaev_symmetry/fixed_target_certificate.json"
+      ],
+      "evidence_digest": "9d8313db281d1009b815a3e8c5165ea251b4419b206398dd239b3217fcc9b0c9",
+      "seed_axes": {
+        "target_feature_id": "TF-J0-GLV-C3",
+        "mechanism_primitive_id": "MP-FAITHFUL-PHASE-QUOTIENT",
+        "uncertainty_id": "U-GLV-SOLVING-COST"
+      },
+      "intake_mode": "none",
+      "seed_eligible": false,
+      "boundary": "This bounded negative does not close faithful phase-preserving, non-scalar, or birational GLV-Semaev mechanisms.",
+      "authorization": "none"
+    },
+    {
+      "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
+      "mechanism_id": "M-PKC-AUXILIARY-CURVE",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "threat_model": "classical-single-target-plain",
+      "status": "property_resolution_required",
+      "scope": "Construct or rule out a fully priced auxiliary-curve instance over the secp256k1 base field under the exact PKC 2016 conditions.",
+      "construction": "Find an auxiliary curve E0 over the same field whose order contains a B-smooth factor near p to the one-over-m scale; use the kernel self-isogeny on E0 to construct the composed root map L for target-curve factor-base coordinates.",
+      "relation_action": "The original target curve remains the relation group. The auxiliary self-isogeny defines only the root set and low-degree decomposition of L; all recovered x-values must still lift to valid target-curve points and relations.",
+      "changed_quantity": "Auxiliary-curve search, composed-map construction, generalized-root solving, recovery, and total relation-generation cost.",
+      "cost_quantity_id": "CQ-PKC-GENERALIZED-ROOT-COST",
+      "cost_quantity_status": "partial",
+      "cost_quantity": {
+        "id": "CQ-PKC-GENERALIZED-ROOT-COST",
+        "label": "Generalized root-finding and recovery cost",
+        "definition": "Cost of solving the composed-map fiber constraints and recovering valid factor-base points without hidden discarded components.",
+        "baseline": "Direct factor-base membership and relation recovery at the same arity and effective factor-base size.",
+        "measurement": "Price all roots, spurious fibers, recovery failures, preprocessing, and independent relation validation as field size grows.",
+        "status": "partial",
+        "source_claim_ids": [
+          "SC-PKC-SMOOTH-SUBGROUP",
+          "SC-PKC-RELATION-YIELD",
+          "SC-PKC-AUXILIARY-CURVE"
+        ]
+      },
+      "requirement_results": [
+        {
+          "property_id": "TP-SECP-PKC-AUXILIARY-CURVE",
+          "property_status": "unknown",
+          "operator": "eq",
+          "expected": true,
+          "actual": null,
+          "verdict": "unknown",
+          "source_claim_ids": [
+            "SC-PKC-AUXILIARY-CURVE"
+          ],
+          "rationale": "The construction cannot proceed until an explicit auxiliary-curve instance over the shared field is constructed and its complete cost is recorded."
+        }
+      ],
+      "barrier_ids": [],
+      "source_claim_ids": [
+        "SC-PKC-AUXILIARY-CURVE",
+        "SC-PKC-RELATION-YIELD",
+        "SC-PKC-SMOOTH-SUBGROUP"
+      ],
+      "source_ids": [
+        "petit_kosters_messeng2016"
+      ],
+      "evidence_paths": [
+        "data/source_claim_extracts/petit_kosters_messeng2016.json"
+      ],
+      "evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
+      "seed_axes": {
+        "target_feature_id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
+        "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",
+        "uncertainty_id": "U-PETIT-GENERALIZED-ROOT-COST"
+      },
+      "intake_mode": "property_resolution",
+      "seed_eligible": true,
+      "boundary": "The first output is a bounded arithmetic construction or no-instance record plus a complete precomputation estimate, not an ECDLP experiment.",
+      "authorization": "none"
+    },
+    {
+      "cell_id": "CELL-M-PKC-SMOOTH-M16",
+      "mechanism_id": "M-PKC-SMOOTH-M16",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "threat_model": "classical-single-target-plain",
+      "status": "open",
+      "scope": "Desk-cost analysis of the PKC 2016 smooth-subgroup construction at the first arity where the available divisor clears both the source's raw size condition and relation-yield balance.",
+      "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
+      "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation whose representation and generalized-root cost remain unresolved.",
+      "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
+      "cost_quantity_id": "CQ-SEMAEV-S17-SYSTEM-COST",
+      "cost_quantity_status": "missing",
+      "cost_quantity": {
+        "id": "CQ-SEMAEV-S17-SYSTEM-COST",
+        "label": "Semaev S17 system construction and solving cost",
+        "definition": "Total cost of constructing, representing, solving, and validating the relation system required by an arity-sixteen smooth-subgroup instantiation.",
+        "baseline": "The same success probability priced against generic square-root work and lower-arity prime-field relation pipelines.",
+        "measurement": "An exact symbolic size bound must precede any solver run; degree, monomial count, memory, and recovery are all included.",
+        "status": "missing",
+        "source_claim_ids": [
+          "SC-PKC-SMOOTH-SUBGROUP",
+          "SC-PKC-RELATION-YIELD",
+          "SC-SEMAEV-RELATION-SEMANTICS"
+        ]
+      },
+      "requirement_results": [
+        {
+          "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+          "property_status": "kernel_verified",
+          "operator": "gte",
+          "expected": 65536,
+          "actual": 564522,
+          "verdict": "satisfied",
+          "source_claim_ids": [
+            "SC-SECP-PMINUS1-FACTORIZATION",
+            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+            "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
+          ],
+          "rationale": "The available divisor exceeds the exact condition-one ceiling of p to the one-sixteenth."
+        },
+        {
+          "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+          "property_status": "kernel_verified",
+          "operator": "gte",
+          "expected": 445676,
+          "actual": 564522,
+          "verdict": "satisfied",
+          "source_claim_ids": [
+            "SC-SECP-PMINUS1-FACTORIZATION",
+            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+            "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
+          ],
+          "rationale": "The available divisor also exceeds the source-anchored relation-yield balance ceiling of (16! times p) to the one-sixteenth."
+        }
+      ],
+      "barrier_ids": [],
+      "source_claim_ids": [
+        "SC-PKC-RELATION-YIELD",
+        "SC-PKC-SMOOTH-SUBGROUP",
+        "SC-SECP-PMINUS1-FACTORIZATION",
+        "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+        "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
+        "SC-SEMAEV-RELATION-SEMANTICS"
+      ],
+      "source_ids": [
+        "petit_kosters_messeng2016",
+        "repo:certificate",
+        "repo:kernel"
+      ],
+      "evidence_paths": [
+        "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+        "Ecdlp/Proved/Secp256k1PrimeP.lean",
+        "Ecdlp/Proved/SemaevFour.lean",
+        "data/source_claim_extracts/petit_kosters_messeng2016.json",
+        "experiments/engine/pkc_smooth_desk_screen/artifact.json"
+      ],
+      "evidence_digest": "ece101a9b55926c309b3dfaa2fe263b30fe982b8d21d2e0a58c03352860027b9",
+      "seed_axes": {
+        "target_feature_id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
+        "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",
+        "uncertainty_id": "U-PETIT-GENERALIZED-ROOT-COST"
+      },
+      "intake_mode": "desk_cost_bridge",
+      "seed_eligible": true,
+      "boundary": "This open desk-cost cell does not justify an S17 solver run; clearing two arithmetic predicates is not a cost-changing mechanism, and exact representation, recovery, and symbolic cost bounds remain prerequisites.",
+      "authorization": "none"
+    },
+    {
+      "cell_id": "CELL-M-PKC-SMOOTH-M4",
+      "mechanism_id": "M-PKC-SMOOTH-M4",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "threat_model": "classical-single-target-plain",
+      "status": "decided_inapplicable",
+      "scope": "Instantiate the PKC 2016 multiplicative smooth-subgroup factor-base construction at relation arity four for secp256k1.",
+      "construction": "Build a faithful composed-map factor base from a smooth divisor of p-minus-one large enough for the arity-four relation target.",
+      "relation_action": "The factor-base polynomial is compiled into the Semaev relation system and recovered through the published composed map.",
+      "changed_quantity": "Proposed factor-base construction and generalized-root cost at arity four.",
+      "cost_quantity_id": "CQ-PKC-GENERALIZED-ROOT-COST",
+      "cost_quantity_status": "partial",
+      "cost_quantity": {
+        "id": "CQ-PKC-GENERALIZED-ROOT-COST",
+        "label": "Generalized root-finding and recovery cost",
+        "definition": "Cost of solving the composed-map fiber constraints and recovering valid factor-base points without hidden discarded components.",
+        "baseline": "Direct factor-base membership and relation recovery at the same arity and effective factor-base size.",
+        "measurement": "Price all roots, spurious fibers, recovery failures, preprocessing, and independent relation validation as field size grows.",
+        "status": "partial",
+        "source_claim_ids": [
+          "SC-PKC-SMOOTH-SUBGROUP",
+          "SC-PKC-RELATION-YIELD",
+          "SC-PKC-AUXILIARY-CURVE"
+        ]
+      },
+      "requirement_results": [
+        {
+          "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+          "property_status": "kernel_verified",
+          "operator": "gte",
+          "expected": 18446744073709551616,
+          "actual": 564522,
+          "verdict": "violated",
+          "source_claim_ids": [
+            "SC-SECP-PMINUS1-FACTORIZATION",
+            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+            "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
+          ],
+          "rationale": "An arity-four factor base at the secp256k1 scale requires size on the order of p to the one-fourth, approximately two to the sixty-four."
+        },
+        {
+          "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+          "property_status": "kernel_verified",
+          "operator": "gte",
+          "expected": 40829356287426834431,
+          "actual": 564522,
+          "verdict": "violated",
+          "source_claim_ids": [
+            "SC-SECP-PMINUS1-FACTORIZATION",
+            "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+            "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
+          ],
+          "rationale": "The same source's relation-yield balance requires the factor-base degree to reach the exact ceiling of (4! times p) to the one-fourth."
+        }
+      ],
+      "barrier_ids": [
+        "B-PKC-SMOOTH-M4-SHORTFALL"
+      ],
+      "source_claim_ids": [
+        "SC-PKC-AUXILIARY-CURVE",
+        "SC-PKC-RELATION-YIELD",
+        "SC-PKC-SMOOTH-SUBGROUP",
+        "SC-SECP-PMINUS1-FACTORIZATION",
+        "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
+        "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
+      ],
+      "source_ids": [
+        "petit_kosters_messeng2016",
+        "repo:certificate",
+        "repo:kernel"
+      ],
+      "evidence_paths": [
+        "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean",
+        "Ecdlp/Proved/Secp256k1PrimeP.lean",
+        "data/source_claim_extracts/petit_kosters_messeng2016.json",
+        "experiments/engine/pkc_smooth_desk_screen/artifact.json"
+      ],
+      "evidence_digest": "7fbb33dacabe1287607af61b4d13451c029fdcfad06900f3e0dad06fe76bc33f",
+      "seed_axes": {
+        "target_feature_id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
+        "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",
+        "uncertainty_id": "U-PETIT-GENERALIZED-ROOT-COST"
+      },
+      "intake_mode": "none",
+      "seed_eligible": false,
+      "boundary": "This is an arity-four screen only and must not be promoted to a claim that the entire smooth-subgroup or faithful Petit route is inapplicable.",
+      "authorization": "none"
+    },
+    {
+      "cell_id": "CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND",
+      "mechanism_id": "M-PRIME-FIELD-SEMAEV-ENDTOEND",
+      "route_id": "R-PRIME-FIELD-INDEX-CALCULUS",
+      "threat_model": "classical-single-target-plain",
+      "status": "open",
+      "scope": "A future exact mechanism that changes the full cost of prime-field relation generation rather than only a polynomial presentation or one solver step.",
+      "construction": "Specify factor base, relation system, sampling or solving procedure, recovery map, enough-relations criterion, and linear-algebra stage as one costed pipeline.",
+      "relation_action": "Every produced polynomial solution must recover to an independently validated point relation for the fixed target.",
+      "changed_quantity": "End-to-end exponent or another formally defined total-cost quantity relative to the generic square-root baseline.",
+      "cost_quantity_id": "CQ-PRIME-FIELD-RELATION-TOTAL",
+      "cost_quantity_status": "partial",
+      "cost_quantity": {
+        "id": "CQ-PRIME-FIELD-RELATION-TOTAL",
+        "label": "Total prime-field relation-generation cost",
+        "definition": "Online and offline cost of obtaining enough independently validated full relations, including factor-base construction, polynomial solving, recovery, and linear algebra.",
+        "baseline": "The generic square-root attack and the matched plain Semaev pipeline must both be priced under the same threat model.",
+        "measurement": "Record scaling across field sizes with matched baselines and retain every preprocessing, memory, parallelism, and amortization term.",
+        "status": "partial",
+        "source_claim_ids": [
+          "SC-PKC-SMOOTH-SUBGROUP",
+          "SC-PKC-RELATION-YIELD",
+          "SC-SEMAEV-RELATION-SEMANTICS",
+          "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND",
+          "SC-AMADORI-PRIME-FIELD-VARIANT"
+        ]
+      },
+      "requirement_results": [
+        {
+          "property_id": "TP-SECP-PRIME-FIELD-COORDINATES",
+          "property_status": "public_constant_recomputed",
+          "operator": "eq",
+          "expected": true,
+          "actual": true,
+          "verdict": "satisfied",
+          "source_claim_ids": [
+            "SC-SECP-PRIME-FIELD"
+          ],
+          "rationale": "The non-generic route consumes the public prime-field representation rather than only a black-box group oracle."
+        }
+      ],
+      "barrier_ids": [],
+      "source_claim_ids": [
+        "SC-AMADORI-PRIME-FIELD-VARIANT",
+        "SC-PKC-RELATION-YIELD",
+        "SC-PKC-SMOOTH-SUBGROUP",
+        "SC-SECP-PRIME-FIELD",
+        "SC-SEMAEV-RELATION-SEMANTICS",
+        "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND"
+      ],
+      "source_ids": [
+        "amadori_pintore_sala2018",
+        "petit_kosters_messeng2016",
+        "repo:kernel",
+        "sec2_v2",
+        "yokoyama_yasuda_takahashi_kogure2020"
+      ],
+      "evidence_paths": [
+        "Ecdlp/Proved/SemaevFour.lean",
+        "data/source_claim_extracts/amadori_pintore_sala2018.json",
+        "data/source_claim_extracts/petit_kosters_messeng2016.json",
+        "data/source_claim_extracts/yokoyama_yasuda_takahashi_kogure2020.json"
+      ],
+      "evidence_digest": "ba1a710557e9cade5b934fddc7e377030344863b24f922304bdd2466f13cbf3b",
+      "seed_axes": {
+        "target_feature_id": "TF-PRIME-FIELD-REPRESENTATION",
+        "mechanism_primitive_id": "MP-SEMAEV-RELATION-SAMPLING",
+        "uncertainty_id": "U-PRIME-FIELD-RELATION-EXPONENT"
+      },
+      "intake_mode": "none",
+      "seed_eligible": false,
+      "boundary": "This is a parked desired-property record, not a mechanism. A prose idea, solver benchmark, or lower polynomial degree cannot emit a seed without the complete cost and recovery bridge.",
+      "authorization": "none"
+    }
+  ],
+  "desk_decisions": [
+    {
+      "schema_version": "0.1",
+      "decision_id": "EDD-2026-07-25-001",
+      "decided_on": "2026-07-25",
+      "cell_id": "CELL-M-GLV-INDEPENDENT-CUBES",
+      "route_id": "R-GLV-SEMAEV",
+      "classification": "bounded_negative",
+      "scope": "mechanism_only",
+      "rationale": "Exact symbolic replay shows that independent coordinate cubes erase relative phases not identified by the diagonal GLV action, so this quotient is not faithful to the fixed-target relation.",
+      "evidence_claim_ids": [
+        "SC-GLV-SEMAEV-CLASSIFICATION",
+        "SC-GLV-FIXED-TARGET-CLASSIFICATION"
+      ],
+      "property_verdicts": [
+        {
+          "property_id": "TP-SECP-GLV-C3",
+          "operator": "eq",
+          "expected": true,
+          "actual": true,
+          "verdict": "satisfied"
+        }
+      ],
+      "route_effect": "none",
+      "authorization": "none",
+      "calibration": "excluded_nonexperimental",
+      "reopening_conditions": [
+        "A different exact phase-preserving quotient with complete recovery and a cost-changing bridge may be submitted as a new mechanism."
+      ]
+    },
+    {
+      "schema_version": "0.1",
+      "decision_id": "EDD-2026-07-25-002",
+      "decided_on": "2026-07-25",
+      "cell_id": "CELL-M-FHJRV-DIRECT-TWO-TORSION",
+      "route_id": "R-GLV-SEMAEV",
+      "classification": "inapplicable",
+      "scope": "mechanism_instance_only",
+      "rationale": "The published direct torsion-translation mechanism requires a nonidentity rational two-torsion point, while the Lean kernel proves that secp256k1 has no such base-field point.",
+      "evidence_claim_ids": [
+        "SC-FHJRV-TORSION-ACTION",
+        "SC-SECP-NO-TWO-TORSION"
+      ],
+      "property_verdicts": [
+        {
+          "property_id": "TP-SECP-DIRECT-TWO-TORSION",
+          "operator": "eq",
+          "expected": true,
+          "actual": false,
+          "verdict": "violated"
+        }
+      ],
+      "route_effect": "none",
+      "authorization": "none",
+      "calibration": "excluded_nonexperimental",
+      "reopening_conditions": [
+        "A distinct sum-compatible action present on secp256k1, or an explicitly costed auxiliary-curve construction, must be entered as a separate mechanism."
+      ]
+    },
+    {
+      "schema_version": "0.1",
+      "decision_id": "EDD-2026-07-25-003",
+      "decided_on": "2026-07-25",
+      "cell_id": "CELL-M-PKC-SMOOTH-M4",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "classification": "inapplicable",
+      "scope": "mechanism_instance_only",
+      "rationale": "At relation arity four the available small-factor divisor of p-minus-one is far below the approximately two-to-the-sixty-four factor-base scale; this decides only the m-equals-four instantiation.",
+      "evidence_claim_ids": [
+        "SC-PKC-SMOOTH-SUBGROUP",
+        "SC-PKC-RELATION-YIELD",
+        "SC-SECP-PMINUS1-FACTORIZATION"
+      ],
+      "property_verdicts": [
+        {
+          "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+          "operator": "gte",
+          "expected": 18446744073709551616,
+          "actual": 564522,
+          "verdict": "violated"
+        },
+        {
+          "property_id": "TP-SECP-PMINUS1-SMOOTH-DIVISOR",
+          "operator": "gte",
+          "expected": 40829356287426834431,
+          "actual": 564522,
+          "verdict": "violated"
+        }
+      ],
+      "route_effect": "none",
+      "authorization": "none",
+      "calibration": "excluded_nonexperimental",
+      "reopening_conditions": [
+        "A different arity or construction must receive its own typed applicability and total-cost analysis; the arity-four screen does not close the route."
+      ]
+    }
+  ],
+  "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate."
+}

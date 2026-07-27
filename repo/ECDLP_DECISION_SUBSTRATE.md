@@ -6,7 +6,7 @@
 
 Given P in E(F_p), P != O, Q in <P>, Q = [k]P, **Recover k modulo ord(P). The primary target fixes P to a generator of the prime-order secp256k1 group, so ord(P) = n.**
 
-Current phase: **research-engine-v0**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Selected promoted route: **none**.
+Current phase: **research-engine-v0.2-sanitation**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Selected promoted route: **none**.
 
 Bounded structural routes recorded by the decision: **1** (`R-GLV-SEMAEV`). Promoted routes: **0** (-).
 
@@ -17,7 +17,14 @@ The formal-result map, attack encyclopedia, and this decision layer are delibera
 - **attack_evidence:** `data/attack_registry.json`
 - **research_decisions:** `repo/ECDLP_DECISION_SUBSTRATE.json`
 - **research_engine_policy:** `repo/RESEARCH_ENGINE_V0.json`
+- **research_claim_policy:** `repo/RESEARCH_CLAIMS_V0.json`
+- **hypothesis_generation_policy:** `repo/HYPOTHESIS_GENERATION_V0.json`
+- **candidate_lifecycle_policy:** `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`
+- **research_engine_acceptance:** `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json`
 - **research_engine_state:** `data/research_engine_state.json`
+- **research_claim_state:** `data/research_claim_state.json`
+- **candidate_lifecycle_state:** `data/research_engine_v02_state.json`
+- **shadow_intake_state:** `data/research_engine_shadow_intake.json`
 - **active_work:** `tasks/ECDLP_RESEARCH.md`
 - **experiment_authorization:** `repo/RESEARCH_ENGINE_V0.json and experiments/HYPOTHESES.yaml`
 
@@ -71,7 +78,7 @@ Reopen selection only when:
 | P1 | **R-WEIL-DESCENT**: Weil descent and GHS-style transfer | `ruled_out_for_target` | `classical-single-target-plain` | Document as a target-applicability exclusion; no formal stack now. |
 | P2 | **R-EDS-DIVISION-POLYNOMIAL**: Elliptic divisibility sequences and division-polynomial re-encodings | `open_parked` | `classical-single-target-plain` | Keep HYP_WARD_EDS_001 parked; finish no additional point-division bridge unless a selected route needs it. |
 | P2 | **R-INTERVAL-AUXILIARY-INPUT**: Interval DLP, partial-key knowledge, and auxiliary-power algorithms | `conditional_only` | `classical-conditioned` | Keep as a scope category for future protocol or leakage analyses. |
-| P2 | **R-PETIT-COMPOSED-MAPS**: Petit-style composed rational maps | `open_parked` | `classical-single-target-plain` | Keep the route parked while proposal intake separates the two source mechanisms. First perform an exact target-applicability screen for the p-1-smooth construction. Treat the auxiliary-isogeny construction as a genuinely open mechanism only after it supplies exact recovery semantics and a falsifiable prediction for a dedicated generalized-root solver; do not authorize an undirected solver sweep. |
+| P2 | **R-PETIT-COMPOSED-MAPS**: Petit-style composed rational maps | `open_parked` | `classical-single-target-plain` | Keep the route parked while proposal intake separates the two source mechanisms. First perform an exact target-applicability screen for the p-1-smooth construction. Treat the auxiliary-curve/self-isogeny construction as a genuinely open mechanism only after it supplies exact recovery semantics and a falsifiable prediction for a dedicated generalized-root solver; do not authorize an undirected solver sweep. |
 | P3 | **R-ISOGENY-ENDOMORPHISM-TRANSFER**: Isogeny, endomorphism-ring, and Frobenius transfer | `monitor` | `classical-single-target-plain` | Monitor literature and reuse GLV facts; no build now. |
 
 ## Route evidence
@@ -291,9 +298,9 @@ Reopen selection only when:
 
 ### R-PETIT-COMPOSED-MAPS: Petit-style composed rational maps
 
-- **Applicability:** source-grounded but target applicability remains unresolved: PKC 2016 specifies a p-1-smooth construction and an auxiliary-isogeny construction, neither with a validated secp256k1 full-cost bridge
+- **Applicability:** source-grounded but target applicability remains unresolved: PKC 2016 specifies a p-1-smooth construction and a separate auxiliary-curve construction whose own self-isogeny defines the root map; neither has a validated secp256k1 full-cost bridge
 - **Known cost:** No reliable project estimate; the existing six-variable toy presentation is explicitly non-faithful and descriptive.
-- **Evidence:** The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-isogeny realizations. It explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. Historical P4 did not implement either construction and remains only an inconclusive negative control; it is not evidence against the faithful route.
+- **Evidence:** The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-curve realizations. In the second construction the auxiliary curve only shares the base field with the target; a self-isogeny of the auxiliary curve defines the root map. The paper explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. Historical P4 did not implement either construction and remains only an inconclusive negative control; it is not evidence against the faithful route.
 - **Promotion gate:** First reproduce the exact construction from a verified primary source, then compare it under the common evaluation contract.
 - **Stop condition:** Reject low-bit filters, redundant auxiliary variables, or presentation-only degree changes as substitutes for the cited construction.
 - **Anti-overclaim:** The existing P4 experiment is not a faithful Petit implementation and cannot support a claim about the original method.

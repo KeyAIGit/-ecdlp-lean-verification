@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.org/schemas/hypothesis-seed-v0.1.json",
+  "title": "KeyAI non-executable research-question seed",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "seed_id",
+    "cell_id",
+    "typed_evidence_digest",
+    "claim_state_digest",
+    "route_id",
+    "route_source_ids",
+    "threat_model",
+    "status",
+    "authorization",
+    "synthesis_rule",
+    "typed_cell",
+    "target_feature",
+    "mechanism_primitive",
+    "unresolved_question",
+    "shared_compatibility_tags",
+    "research_question",
+    "evidence_inputs",
+    "deduplication_key",
+    "proposal_packet"
+  ],
+  "properties": {
+    "seed_id": {
+      "type": "string",
+      "pattern": "^HGS-[A-F0-9]{12}$"
+    },
+    "cell_id": {
+      "type": "string",
+      "pattern": "^CELL-[A-Z0-9-]+$"
+    },
+    "typed_evidence_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "claim_state_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "route_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "route_source_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "threat_model": {
+      "const": "classical-single-target-plain"
+    },
+    "status": {
+      "enum": [
+        "proposal_required",
+        "desk_cost_bridge_required",
+        "property_resolution_required"
+      ]
+    },
+    "authorization": {
+      "const": "none"
+    },
+    "synthesis_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "operator"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "const": "1.0"
+        },
+        "operator": {
+          "const": "typed_open_cell"
+        }
+      }
+    },
+    "typed_cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mechanism_id",
+        "status",
+        "intake_mode",
+        "construction",
+        "relation_action",
+        "changed_quantity",
+        "cost_quantity",
+        "requirement_results",
+        "source_claim_ids",
+        "boundary"
+      ],
+      "properties": {
+        "mechanism_id": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "open",
+            "property_resolution_required"
+          ]
+        },
+        "intake_mode": {
+          "enum": [
+            "proposal",
+            "desk_cost_bridge",
+            "property_resolution"
+          ]
+        },
+        "construction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relation_action": {
+          "type": "string",
+          "minLength": 1
+        },
+        "changed_quantity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cost_quantity": {
+          "type": "object"
+        },
+        "requirement_results": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object"
+          }
+        },
+        "source_claim_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "boundary": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "target_feature": {
+      "$ref": "#/$defs/axis_projection"
+    },
+    "mechanism_primitive": {
+      "$ref": "#/$defs/axis_projection"
+    },
+    "unresolved_question": {
+      "$ref": "#/$defs/axis_projection"
+    },
+    "shared_compatibility_tags": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "research_question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_inputs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "deduplication_key": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "proposal_packet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_sections",
+        "required_review_roles",
+        "hard_rejections",
+        "instruction"
+      ],
+      "properties": {
+        "required_sections": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "required_review_roles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "hard_rejections": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "instruction": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "$defs": {
+    "axis_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "statement",
+        "boundary"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "boundary": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

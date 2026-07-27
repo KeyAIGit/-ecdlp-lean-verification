@@ -1,0 +1,538 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.org/schemas/hypothesis-proposal-v0.1.json",
+  "title": "KeyAI source-grounded hypothesis proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "proposal_id",
+    "seed_id",
+    "cell_id",
+    "typed_evidence_digest",
+    "created_on",
+    "proposer_id",
+    "route_id",
+    "threat_model",
+    "title",
+    "hypothesis_statement",
+    "new_premise",
+    "premise_counterfactual",
+    "premise_fingerprint",
+    "mechanism_identity",
+    "mechanism_signature",
+    "mechanism_contract",
+    "prediction_contract",
+    "cost_contract",
+    "validator_contract",
+    "novelty_scope",
+    "nearest_prior_art",
+    "exact_mechanism",
+    "non_generic_information_source",
+    "null_model",
+    "competing_mechanism",
+    "cost_bridge",
+    "falsifiable_prediction",
+    "matched_baseline",
+    "stop_condition",
+    "outcome_matrix",
+    "validator_plan",
+    "toy_scope",
+    "claim_boundary",
+    "evidence_inputs",
+    "evidence_manifest",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "proposal_id": {
+      "type": "string",
+      "pattern": "^HGP-[A-Z0-9][A-Z0-9-]{4,80}$"
+    },
+    "seed_id": {
+      "type": "string",
+      "pattern": "^HGS-[A-F0-9]{12}$"
+    },
+    "cell_id": {
+      "type": "string",
+      "pattern": "^CELL-[A-Z0-9-]+$"
+    },
+    "typed_evidence_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "created_on": {
+      "type": "string",
+      "format": "date"
+    },
+    "proposer_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "route_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "threat_model": {
+      "const": "classical-single-target-plain"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "hypothesis_statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "new_premise": {
+      "type": "string",
+      "minLength": 1
+    },
+    "premise_counterfactual": {
+      "type": "string",
+      "minLength": 1
+    },
+    "premise_fingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "mechanism_signature": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "mechanism_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transformation_class",
+        "information_source_class",
+        "target_semantics_class",
+        "recovery_class",
+        "changed_cost_term",
+        "precomputation_class",
+        "amortization_class"
+      ],
+      "properties": {
+        "transformation_class": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{2,80}$"
+        },
+        "information_source_class": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{2,80}$"
+        },
+        "target_semantics_class": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{2,80}$"
+        },
+        "recovery_class": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{2,80}$"
+        },
+        "changed_cost_term": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{2,80}$"
+        },
+        "precomputation_class": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{2,80}$"
+        },
+        "amortization_class": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{2,80}$"
+        }
+      }
+    },
+    "mechanism_contract": {
+      "$ref": "mechanism_contract.schema.json"
+    },
+    "prediction_contract": {
+      "$ref": "prediction_contract.schema.json"
+    },
+    "cost_contract": {
+      "$ref": "cost_contract.schema.json"
+    },
+    "validator_contract": {
+      "$ref": "validator_contract.schema.json"
+    },
+    "novelty_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "new_to_repository",
+        "new_to_reviewed_corpus",
+        "global_novelty",
+        "rationale"
+      ],
+      "properties": {
+        "new_to_repository": {
+          "type": "boolean"
+        },
+        "new_to_reviewed_corpus": {
+          "type": "boolean"
+        },
+        "global_novelty": {
+          "enum": [
+            "unverified",
+            "verified_by_primary_review"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "nearest_prior_art": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_id",
+          "primary",
+          "reference",
+          "locator",
+          "overlap",
+          "difference",
+          "evidence_file"
+        ],
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1
+          },
+          "locator": {
+            "type": "string",
+            "minLength": 1
+          },
+          "overlap": {
+            "type": "string",
+            "minLength": 1
+          },
+          "difference": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_file": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "exact_mechanism": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "map",
+        "domain",
+        "codomain",
+        "relation_semantics",
+        "fixed_target_semantics",
+        "exceptional_locus",
+        "recovery_map",
+        "implementation_identity"
+      ],
+      "properties": {
+        "map": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "codomain": {
+          "type": "string"
+        },
+        "relation_semantics": {
+          "type": "string"
+        },
+        "fixed_target_semantics": {
+          "type": "string"
+        },
+        "exceptional_locus": {
+          "type": "string"
+        },
+        "recovery_map": {
+          "type": "string"
+        },
+        "implementation_identity": {
+          "type": "string"
+        }
+      }
+    },
+    "non_generic_information_source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "null_model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "competing_mechanism": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cost_bridge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseline",
+        "changed_term",
+        "online_cost",
+        "offline_cost",
+        "memory_cost",
+        "parallelism",
+        "precomputation",
+        "amortization_scope",
+        "scaling_claim"
+      ],
+      "properties": {
+        "baseline": {
+          "type": "string"
+        },
+        "changed_term": {
+          "type": "string"
+        },
+        "online_cost": {
+          "type": "string"
+        },
+        "offline_cost": {
+          "type": "string"
+        },
+        "memory_cost": {
+          "type": "string"
+        },
+        "parallelism": {
+          "type": "string"
+        },
+        "precomputation": {
+          "type": "string"
+        },
+        "amortization_scope": {
+          "type": "string"
+        },
+        "scaling_claim": {
+          "type": "string"
+        }
+      }
+    },
+    "falsifiable_prediction": {
+      "type": "string",
+      "minLength": 1
+    },
+    "matched_baseline": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stop_condition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outcome_matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supported",
+        "falsified",
+        "bounded_negative",
+        "inapplicable",
+        "inconclusive",
+        "resource_exhausted"
+      ],
+      "properties": {
+        "supported": {
+          "type": "string"
+        },
+        "falsified": {
+          "type": "string"
+        },
+        "bounded_negative": {
+          "type": "string"
+        },
+        "inapplicable": {
+          "type": "string"
+        },
+        "inconclusive": {
+          "type": "string"
+        },
+        "resource_exhausted": {
+          "type": "string"
+        }
+      }
+    },
+    "validator_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decisive_claim",
+        "raw_artifacts",
+        "independent_method",
+        "failure_labels"
+      ],
+      "properties": {
+        "decisive_claim": {
+          "type": "string"
+        },
+        "raw_artifacts": {
+          "type": "string"
+        },
+        "independent_method": {
+          "type": "string"
+        },
+        "failure_labels": {
+          "type": "string"
+        }
+      }
+    },
+    "toy_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "curve_family",
+        "max_field_bits",
+        "forbidden_targets"
+      ],
+      "properties": {
+        "curve_family": {
+          "type": "string",
+          "minLength": 1
+        },
+        "max_field_bits": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 24
+        },
+        "forbidden_targets": {
+          "type": "array",
+          "contains": {
+            "const": "secp256k1"
+          },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_inputs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidence_manifest": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256",
+          "relation",
+          "locator",
+          "source_id",
+          "primary"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "relation": {
+            "enum": [
+              "supports",
+              "contradicts",
+              "bounds",
+              "context"
+            ]
+          },
+          "locator": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "primary": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generation_method",
+        "generator",
+        "generator_family",
+        "generator_version",
+        "session_id",
+        "context_sha256",
+        "source_commit",
+        "prompt_sha256"
+      ],
+      "properties": {
+        "generation_method": {
+          "enum": [
+            "human",
+            "model_assisted",
+            "hybrid"
+          ]
+        },
+        "generator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generator_family": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generator_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "prompt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

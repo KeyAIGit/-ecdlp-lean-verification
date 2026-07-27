@@ -66,11 +66,31 @@ class FrameworkTests(unittest.TestCase):
                 }
             ],
         }
+        closed_errors = validate_record(
+            record,
+            self.decisions,
+            synthetic_policy,
+            self.engine_state,
+            {record["candidate"]["id"]},
+        )
+        self.assertIn(
+            "decision-substrate exploration gate is closed", closed_errors
+        )
+        self.assertIn(
+            "phase policy does not authorize bounded exploration",
+            closed_errors,
+        )
+
+        owner_decision = copy.deepcopy(self.decisions)
+        owner_decision["execution_gates"]["exploration"]["authorized"] = True
+        owner_decision["phase_policy"][
+            "bounded_exploration_authorized"
+        ] = True
         self.assertEqual(
             [],
             validate_record(
                 record,
-                self.decisions,
+                owner_decision,
                 synthetic_policy,
                 self.engine_state,
                 {record["candidate"]["id"]},

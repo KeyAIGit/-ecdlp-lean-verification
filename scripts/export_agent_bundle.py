@@ -40,8 +40,26 @@ _SMALL = [
      "exact target, route dispositions, evidence gates, and foundation priority"),
     ("repo/RESEARCH_ENGINE_V0.json",
      "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary"),
+    ("repo/ECDLP_TYPED_EVIDENCE_V0.json",
+     "claim-level evidence, target properties, mechanism requirements, and scoped barriers"),
+    ("data/typed_evidence_state.json",
+     "materialized applicability cells and non-experimental desk decisions"),
+    ("repo/RESEARCH_CLAIMS_V0.json",
+     "route-question-claim-variant-event truth model with disposition and assurance separated"),
+    ("data/research_claim_state.json",
+     "generated claim-level truth state and calibration-exclusion boundary"),
+    ("repo/HYPOTHESIS_GENERATION_V0.json",
+     "source-grounded seed axes, proposal quality gates, and adversarial review contract"),
     ("data/research_engine_state.json",
      "generated dual-gate state, selected sequence, and retained outcome summaries"),
+    ("repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
+     "immutable candidate lifecycle, portfolio, calibration, and owner-authorization boundary"),
+    ("data/research_engine_v02_state.json",
+     "generated non-executing lifecycle state and byte-pinned historical boundary"),
+    ("data/research_engine_shadow_intake.json",
+     "derived unread-source, applicability, and cost-contract proposal stubs"),
+    ("repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
+     "the 19 owner regression cases and their concrete fault-injection tests"),
     ("repo/PRODUCT_MODEL.json",
      "product category, current-vs-future boundary, public claims, and MVP evidence gate"),
     ("repo/PILOT_PROTOCOL.json",
@@ -52,6 +70,13 @@ _SMALL = [
     ("data/stats.json", "machine-readable headline counts (ledger rows / distinct / modules)"),
     ("data/frontier_map.json", "per-claim frontier status: verified / tractable / blocked / informal"),
 ]
+_SOURCE_CLAIM_EXTRACTS = [
+    (
+        path.relative_to(ROOT).as_posix(),
+        "claim-level primary-source extraction bound to the typed evidence layer",
+    )
+    for path in sorted((ROOT / "data" / "source_claim_extracts").glob("*.json"))
+]
 _MEDIUM_EXTRA = [
     ("README.md", "the front door: what this is, what it does NOT claim"),
     ("AGENTS.md", "agent operating rules, invariants, and forbidden moves"),
@@ -61,6 +86,30 @@ _MEDIUM_EXTRA = [
     ("notes/FOUNDATIONS.md", "the Weil/Semaev foundation ladder and its open rungs"),
     ("experiments/HYPOTHESES.yaml", "testable directions with evidence and exit criteria"),
     ("experiments/engine/README.md", "Research Engine event lifecycle and regeneration contract"),
+    ("experiments/engine/hypothesis_seed.schema.json",
+     "deterministic non-executable seed contract"),
+    ("experiments/engine/hypothesis_proposal.schema.json",
+     "structured untrusted proposal contract before candidate intake"),
+    ("experiments/engine/hypothesis_review.schema.json",
+     "digest-bound five-role adversarial review contract"),
+    ("experiments/engine/research_claim.schema.json",
+     "claim-level disposition, assurance, scope, and reopening contract"),
+    ("experiments/engine/candidate_snapshot.schema.json",
+     "immutable v0.2 candidate/version scientific identity"),
+    ("experiments/engine/candidate_lifecycle.schema.json",
+     "append-only v0.2 candidate lifecycle transitions"),
+    ("experiments/engine/mechanism_contract.schema.json",
+     "exact map, fixed-target, recovery, and cost-changing mechanism contract"),
+    ("experiments/engine/prediction_contract.schema.json",
+     "matched baseline, effect threshold, and stop-rule contract"),
+    ("experiments/engine/cost_contract.schema.json",
+     "online, offline, memory, storage, money, effort, setup, and amortization"),
+    ("experiments/engine/validator_contract.schema.json",
+     "raw-artifact recomputation and three-axis validator independence"),
+    ("experiments/engine/research_lane.schema.json",
+     "lane-specific applicability, structural, mechanism, validator, experiment, and formal gates"),
+    ("notes/RESEARCH_ENGINE_V0_TO_V0_2.md",
+     "migration boundary, preserved history, lifecycle semantics, and regeneration order"),
     ("experiments/engine/outcome.schema.json", "strict terminal-outcome event schema"),
     ("experiments/engine/run.schema.json", "native run envelope and frozen matrix binding"),
     ("experiments/engine/instance_result.schema.json", "per-instance result and artifact binding"),
@@ -74,7 +123,7 @@ _MEDIUM_EXTRA = [
      "scientific-validator boundary and current no-validator status"),
     ("experiments/framework/fixtures/pure_engine_validator.py",
      "protocol regression fixture; explicitly not scientific evidence"),
-]
+] + _SOURCE_CLAIM_EXTRACTS
 def outcome_reason(path: Path) -> str:
     event = json.loads(path.read_text(encoding="utf-8"))
     source_kind = event.get("provenance", {}).get("source_kind")
@@ -117,6 +166,11 @@ Ground rules:
 - `STATUS.md` is the canonical live snapshot. If prose anywhere conflicts with it, STATUS wins.
 - `repo/ECDLP_DECISION_SUBSTRATE.json` owns route applicability and foundation priority.
 - `repo/RESEARCH_ENGINE_V0.json` owns bounded exploration; generated evidence cannot promote a route.
+- `repo/ECDLP_TYPED_EVIDENCE_V0.json` owns claim-level target-property and mechanism applicability screens.
+- `repo/RESEARCH_CLAIMS_V0.json` owns exact child-claim dispositions and assurance; a child result never closes its route by implication.
+- `repo/HYPOTHESIS_GENERATION_V0.json` owns non-executable seed and proposal-quality compilation.
+- `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json` owns immutable candidate lifecycle and portfolio selection.
+- `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json` owns the 19 required regression cases.
 - `repo/PRODUCT_MODEL.json` owns product rhetoric, current capability, and MVP boundaries.
 - `repo/PILOT_PROTOCOL.json` owns TASK-011 discovery, safety, evidence, and disposition.
 - Never weaken a proof, add a `sorry`/`admit`, or add an axiom to make anything pass.

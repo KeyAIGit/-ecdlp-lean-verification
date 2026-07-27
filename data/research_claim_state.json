@@ -1,0 +1,261 @@
+{
+  "schema_version": "0.2-generated",
+  "claim_model_id": "ECDLP-RESEARCH-CLAIMS-V0",
+  "status": "non_executable_truth_state",
+  "source_hashes": {
+    "claim_policy_sha256": "0a4594677afd38a9fb0987fb5ccc1a3e2149f647d8cb11f58ec2acd5b01503ad",
+    "decision_substrate_sha256": "a938d1923f4fa49a019c757e02e9c1ce8e5bae3f5e83e3b570d116827c7dc448"
+  },
+  "counts": {
+    "routes_represented": 1,
+    "research_questions": 1,
+    "claims": 4,
+    "closed_child_claims": 1,
+    "inconclusive_claims": 1,
+    "confirmed_claims": 2,
+    "mechanism_variants": 3,
+    "proposal_seed_eligible_variants": 0,
+    "evidence_events": 8,
+    "calibration_eligible_events": 0
+  },
+  "research_questions": [
+    {
+      "research_question_id": "RQ-GLV-SEMAEV-COST-MECHANISM",
+      "route_id": "R-GLV-SEMAEV",
+      "hypothesis_ids": [
+        "HYP_GLV_SEMAEV_001"
+      ],
+      "statement": "Can a secp256k1-specific GLV and Semaev construction preserve fixed-target relation semantics while changing a full audited relation-generation or solving-cost quantity beyond finite orbit bookkeeping?",
+      "status": "open_parked",
+      "threat_model": "classical-single-target-plain",
+      "reopening_conditions": [
+        "A materially different phase-preserving map supplies exact fixed-target semantics, recovery, exceptional components, and a non-orbit cost bridge.",
+        "A reviewed primary source supplies a concrete mechanism not represented by the closed independent-cube child claim."
+      ],
+      "route_status": "open_parked",
+      "route_authorized_experiment": false,
+      "route_priority": "P1"
+    }
+  ],
+  "mechanism_variants": [
+    {
+      "mechanism_variant_id": "MV-GLV-DIAGONAL-COVARIANCE",
+      "research_question_id": "RQ-GLV-SEMAEV-COST-MECHANISM",
+      "kind": "structural_identity",
+      "description": "Apply the same order-three GLV scalar to every free Semaev coordinate and transport the target through the matching GLV orbit.",
+      "mechanism_status": "specified_structural_not_attack",
+      "proposal_seed_eligible": false
+    },
+    {
+      "mechanism_variant_id": "MV-GLV-INDEPENDENT-CUBES",
+      "research_question_id": "RQ-GLV-SEMAEV-COST-MECHANISM",
+      "kind": "quotient_candidate",
+      "description": "Replace each relation coordinate independently by u_i=x_i^3 and identify all erased coordinate phases at a fixed target.",
+      "mechanism_status": "closed_child_variant",
+      "proposal_seed_eligible": false
+    },
+    {
+      "mechanism_variant_id": "MV-GLV-PHASE-PRESERVING-UNSPECIFIED",
+      "research_question_id": "RQ-GLV-SEMAEV-COST-MECHANISM",
+      "kind": "desired_property_only",
+      "description": "Retain relative phases, fixed-target semantics, and recovery while changing a full cost quantity; no exact map currently exists.",
+      "mechanism_status": "parked_without_exact_mechanism",
+      "proposal_seed_eligible": false
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "CLM-GLV-INDEPENDENT-CUBES-FIXED-TARGET",
+      "route_id": "R-GLV-SEMAEV",
+      "research_question_id": "RQ-GLV-SEMAEV-COST-MECHANISM",
+      "statement": "The independent coordinate quotient u_i=x_i^3 is not a faithful quotient of the fixed-target diagonal GLV-Semaev relation system because it erases relative phases outside the true diagonal action.",
+      "threat_model": "classical-single-target-plain",
+      "mechanism_variant_id": "MV-GLV-INDEPENDENT-CUBES",
+      "scope": "The exact independent-cube mechanism and dependent fixed-target premise only; faithful Petit, phase-preserving maps, non-scalar actions, and the parent route remain open or parked.",
+      "claim_disposition": "bounded_negative",
+      "supersedes": [],
+      "reopening_conditions": [
+        "A new mechanism variant retains relative phases through an explicit recovery map and is not semantically equivalent to independent coordinate cubes."
+      ],
+      "evidence_event_ids": [
+        "CEV-GLV-SEMAEV-STABILIZER-CERTIFICATE",
+        "CEV-GLV-SEMAEV-INDEPENDENT-REPLAY",
+        "REO-2026-07-24-001",
+        "REO-2026-07-24-002",
+        "REO-2026-07-24-003"
+      ],
+      "assurance": [
+        "certificate_replayed",
+        "independent_reproduction",
+        "historical_migration"
+      ]
+    },
+    {
+      "claim_id": "CLM-GLV-PHASE-PRESERVING-COST-BRIDGE",
+      "route_id": "R-GLV-SEMAEV",
+      "research_question_id": "RQ-GLV-SEMAEV-COST-MECHANISM",
+      "statement": "A materially different phase-preserving GLV-Semaev construction with a complete recovery map and a non-orbit full-cost bridge has not yet been specified.",
+      "threat_model": "classical-single-target-plain",
+      "mechanism_variant_id": "MV-GLV-PHASE-PRESERVING-UNSPECIFIED",
+      "scope": "Absence of a current proposal in the reviewed repository, not a proof that no future GLV-Semaev algorithm can exist.",
+      "claim_disposition": "inconclusive",
+      "supersedes": [],
+      "reopening_conditions": [
+        "An exact phase-preserving mechanism contract is supplied and survives prior-art, recovery, cost-model, and validator review."
+      ],
+      "evidence_event_ids": [
+        "CEV-GLV-SEMAEV-OPEN-BOUNDARY"
+      ],
+      "assurance": [
+        "literature_only"
+      ]
+    },
+    {
+      "claim_id": "CLM-GLV-SEMAEV-COORDINATEWISE-STABILIZER",
+      "route_id": "R-GLV-SEMAEV",
+      "research_question_id": "RQ-GLV-SEMAEV-COST-MECHANISM",
+      "statement": "Within the enumerated coordinatewise C3 scalar action, only the diagonal C3 gives polynomial covariance for S3 and S4 under the certificate assumptions.",
+      "threat_model": "classical-single-target-plain",
+      "mechanism_variant_id": "MV-GLV-DIAGONAL-COVARIANCE",
+      "scope": "Exact finite coordinatewise scalar classification in the replayed symbolic model; not a Lean theorem and not a classification of non-scalar or birational automorphisms.",
+      "claim_disposition": "confirmed",
+      "supersedes": [],
+      "reopening_conditions": [
+        "An independent replay finds a certificate mismatch or an omitted coordinatewise C3 action under the stated assumptions."
+      ],
+      "evidence_event_ids": [
+        "CEV-GLV-SEMAEV-STABILIZER-CERTIFICATE",
+        "CEV-GLV-SEMAEV-INDEPENDENT-REPLAY"
+      ],
+      "assurance": [
+        "certificate_replayed",
+        "independent_reproduction"
+      ]
+    },
+    {
+      "claim_id": "CLM-GLV-SEMAEV-COVARIANCE",
+      "route_id": "R-GLV-SEMAEV",
+      "research_question_id": "RQ-GLV-SEMAEV-COST-MECHANISM",
+      "statement": "The checked S3 and S4 polynomial identities have the recorded diagonal GLV covariance and target-transport laws.",
+      "threat_model": "classical-single-target-plain",
+      "mechanism_variant_id": "MV-GLV-DIAGONAL-COVARIANCE",
+      "scope": "Positive polynomial and point-relation identities only; no exhaustive stabilizer, solving-degree, asymptotic, or ECDLP consequence.",
+      "claim_disposition": "confirmed",
+      "supersedes": [],
+      "reopening_conditions": [
+        "A Lean regression, axiom-audit failure, or independently reproduced counterexample invalidates a named covariance declaration."
+      ],
+      "evidence_event_ids": [
+        "CEV-GLV-SEMAEV-LEAN-COVARIANCE"
+      ],
+      "assurance": [
+        "lean_kernel"
+      ]
+    }
+  ],
+  "evidence_events": [
+    {
+      "evidence_event_id": "CEV-GLV-SEMAEV-INDEPENDENT-REPLAY",
+      "event_class": "structural",
+      "assurance": "independent_reproduction",
+      "outcome": "confirmed",
+      "evidence_refs": [
+        "experiments/glv_semaev_symmetry/validate.py",
+        "experiments/glv_semaev_symmetry/validate_fixed_target.py",
+        "notes/GLV_SEMAEV_ITERATION_001.md"
+      ],
+      "calibration_eligible": false,
+      "authorization": "none"
+    },
+    {
+      "evidence_event_id": "CEV-GLV-SEMAEV-LEAN-COVARIANCE",
+      "event_class": "structural",
+      "assurance": "lean_kernel",
+      "outcome": "confirmed",
+      "evidence_refs": [
+        "Ecdlp/Proved/GlvSemaevSymmetry.lean",
+        "VERIFIED.md"
+      ],
+      "calibration_eligible": false,
+      "authorization": "none"
+    },
+    {
+      "evidence_event_id": "CEV-GLV-SEMAEV-OPEN-BOUNDARY",
+      "event_class": "literature",
+      "assurance": "literature_only",
+      "outcome": "inconclusive",
+      "evidence_refs": [
+        "notes/GLV_SEMAEV_ITERATION_001.md",
+        "repo/ECDLP_DECISION_SUBSTRATE.json"
+      ],
+      "calibration_eligible": false,
+      "authorization": "none"
+    },
+    {
+      "evidence_event_id": "CEV-GLV-SEMAEV-STABILIZER-CERTIFICATE",
+      "event_class": "structural",
+      "assurance": "certificate_replayed",
+      "outcome": "confirmed",
+      "evidence_refs": [
+        "experiments/glv_semaev_symmetry/certificate.json",
+        "experiments/glv_semaev_symmetry/fixed_target_certificate.json",
+        "experiments/glv_semaev_symmetry/validate.py",
+        "experiments/glv_semaev_symmetry/validate_fixed_target.py"
+      ],
+      "calibration_eligible": false,
+      "authorization": "none"
+    },
+    {
+      "evidence_event_id": "REO-2026-07-24-001",
+      "event_class": "historical_migration",
+      "assurance": "historical_migration",
+      "outcome": "bounded_negative",
+      "evidence_refs": [
+        "experiments/engine/outcomes/REO-2026-07-24-001.json"
+      ],
+      "calibration_eligible": false,
+      "authorization": "none"
+    },
+    {
+      "evidence_event_id": "REO-2026-07-24-002",
+      "event_class": "historical_migration",
+      "assurance": "historical_migration",
+      "outcome": "bounded_negative",
+      "evidence_refs": [
+        "experiments/engine/outcomes/REO-2026-07-24-002.json"
+      ],
+      "calibration_eligible": false,
+      "authorization": "none"
+    },
+    {
+      "evidence_event_id": "REO-2026-07-24-003",
+      "event_class": "historical_migration",
+      "assurance": "historical_migration",
+      "outcome": "inconclusive",
+      "evidence_refs": [
+        "experiments/engine/outcomes/REO-2026-07-24-003.json"
+      ],
+      "calibration_eligible": false,
+      "authorization": "none"
+    },
+    {
+      "evidence_event_id": "REO-2026-07-24-004",
+      "event_class": "historical_migration",
+      "assurance": "historical_migration",
+      "outcome": "historical_structural_confirmation",
+      "evidence_refs": [
+        "experiments/engine/outcomes/REO-2026-07-24-004.json"
+      ],
+      "calibration_eligible": false,
+      "authorization": "none"
+    }
+  ],
+  "open_routes": [
+    "R-GLV-SEMAEV"
+  ],
+  "authorization": {
+    "experiments": 0,
+    "route_promotions": 0,
+    "exact_target_runs": 0
+  }
+}

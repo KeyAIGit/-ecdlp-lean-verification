@@ -306,6 +306,16 @@ def validate_record(
     if kind == "candidate_run" and authorization_class == "exploration":
         if engine_policy is None or engine_state is None:
             engine_policy, engine_state = load_engine(ROOT)
+        if decisions.get("execution_gates", {}).get("exploration", {}).get(
+            "authorized"
+        ) is not True:
+            errors.append("decision-substrate exploration gate is closed")
+        if decisions.get("phase_policy", {}).get(
+            "bounded_exploration_authorized"
+        ) is not True:
+            errors.append(
+                "phase policy does not authorize bounded exploration"
+            )
         policy_candidates = {
             item["id"]: item for item in engine_policy.get("candidate_proposals", [])
         }

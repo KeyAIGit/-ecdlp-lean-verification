@@ -1,0 +1,374 @@
+{
+  "schema_version": "0.1",
+  "generator_id": "ecdlp-hypothesis-generation-v0",
+  "status": "active",
+  "purpose": "Generate source-grounded ECDLP research questions from compatible target features, mechanism primitives, and unresolved cost-changing questions; compile model- or human-authored answers through adversarial review before they may enter candidate intake.",
+  "trust_boundary": {
+    "creative_output": "A generated seed or proposer-authored mechanism is untrusted research input. It may be novel, mistaken, duplicated, or merely a renamed representation.",
+    "deterministic_engine": "The deterministic layer checks provenance, scope, exact required fields, known-premise fingerprints, review coverage, and authorization boundaries. It does not prove mathematical novelty or truth.",
+    "quality_claim": "Quality-cleared means that every declared hard gate and five-role review gate passed for the exact proposal digest. It does not mean the hypothesis is true, novel in all literature, or likely to break ECDLP.",
+    "authorization_boundary": "This layer never authorizes an experiment, promotes a route, targets secp256k1 directly, or makes an asymptotic claim."
+  },
+  "limits": {
+    "max_generated_seeds": 12,
+    "max_quality_cleared_per_cycle": 3,
+    "max_toy_field_bits": 24
+  },
+  "typed_evidence_contract": {
+    "policy_path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
+    "state_path": "data/typed_evidence_state.json",
+    "seedable_statuses": [
+      "open",
+      "property_resolution_required"
+    ],
+    "required_authorization": "none",
+    "decision_rule": "Only a materialized typed cell marked seed-eligible may enter synthesis; violated or closed cells are retained as scoped desk decisions and produce no creative prompt."
+  },
+  "synthesis_rules": [
+    {
+      "id": "SYN-TYPED-OPEN-CELL-001",
+      "version": "1.0",
+      "operator": "typed_open_cell",
+      "axis_order": [
+        "target_features",
+        "mechanism_primitives",
+        "unresolved_questions"
+      ],
+      "required_predicates": [
+        "typed_cell_seed_eligible",
+        "typed_cell_authorization_none",
+        "primary_threat_model",
+        "eligible_route_status",
+        "resolved_axis_bindings"
+      ],
+      "seed_identity_fields": [
+        "cell_id",
+        "typed_mechanism_id",
+        "feature_id",
+        "mechanism_primitive_id",
+        "uncertainty_id",
+        "route_id",
+        "threat_model",
+        "evidence_digest",
+        "synthesis_rule_id",
+        "synthesis_rule_version"
+      ],
+      "status": "active"
+    }
+  ],
+  "lifecycle": [
+    "evidence_snapshot",
+    "typed_evidence_cell",
+    "generated_seed",
+    "untrusted_proposal",
+    "blind_adversarial_review",
+    "quality_compilation",
+    "non_executable_hypothesis_draft",
+    "existing_candidate_gate"
+  ],
+  "fingerprint_contract": {
+    "premise_version": "lexical-v1",
+    "premise_limitation": "The premise digest catches exact normalized duplicates only. Lexical near-duplicates are flagged as semantic re-encoding risks and require adversarial review; neither check proves mathematical equivalence.",
+    "mechanism_version": "structured-identity-v1",
+    "mechanism_identity_fields": [
+      "amortization_class",
+      "changed_cost_term",
+      "information_source_class",
+      "precomputation_class",
+      "recovery_class",
+      "target_semantics_class",
+      "transformation_class"
+    ],
+    "near_duplicate_policy": "All same-route premise pairs above the fixed lexical threshold enter one visible collision audit and cannot quality-clear until the semantic re-encoding risk is removed."
+  },
+  "compatibility_rule": {
+    "eligible_route_statuses": [
+      "monitor",
+      "open_parked"
+    ],
+    "require_primary_threat_model": true,
+    "require_shared_route": true,
+    "require_shared_compatibility_tag": true
+  },
+  "quality_gate": {
+    "required_sections": [
+      "new_premise",
+      "premise_counterfactual",
+      "mechanism_signature",
+      "mechanism_contract",
+      "prediction_contract",
+      "cost_contract",
+      "validator_contract",
+      "novelty_scope",
+      "nearest_prior_art",
+      "exact_mechanism",
+      "fixed_target_semantics",
+      "non_generic_information_source",
+      "null_model",
+      "competing_mechanism",
+      "cost_bridge",
+      "falsifiable_prediction",
+      "matched_baseline",
+      "stop_condition",
+      "outcome_matrix",
+      "independent_validator_plan",
+      "claim_boundary",
+      "evidence_manifest"
+    ],
+    "required_review_roles": [
+      "algebra",
+      "cryptanalysis_skeptic",
+      "prior_art",
+      "cost_model",
+      "validator_design"
+    ],
+    "required_independent_roles": [
+      "cryptanalysis_skeptic",
+      "prior_art"
+    ],
+    "hard_rejections": [
+      "adversarial_review_blocked",
+      "adversarial_review_incomplete",
+      "duplicate_or_reencoding",
+      "duplicate_mechanism_signature",
+      "hidden_or_unpriced_precomputation",
+      "missing_cost_changing_bridge",
+      "missing_exact_mechanism",
+      "missing_falsifiable_prediction",
+      "missing_fixed_target_semantics",
+      "missing_independent_validator_plan",
+      "missing_new_premise",
+      "missing_non_generic_information_source",
+      "missing_primary_source_comparison",
+      "missing_primary_source_anchor",
+      "novelty_scope_overclaimed",
+      "proxy_not_decisive",
+      "review_independence_unestablished",
+      "seed_scope_mismatch",
+      "semantic_reencoding_risk",
+      "targets_secp256k1_directly",
+      "threat_model_drift",
+      "typed_evidence_mismatch",
+      "target_property_violated"
+    ],
+    "zero_retention_allowed": true,
+    "overflow_rule": "If more than three proposals clear every quality gate, retain none automatically and require an explicit comparative portfolio decision; do not silently truncate or rank by model confidence."
+  },
+  "known_premises": [
+    {
+      "id": "KP-GLV-INDEPENDENT-CUBES",
+      "basis": "Replace every Semaev relation coordinate independently by u_i = x_i^3 and treat all erased GLV phases as equivalent for the same fixed target.",
+      "disposition": "closed",
+      "evidence_inputs": [
+        "experiments/glv_diagonal_obstruction/README.md",
+        "experiments/p4_petit/RESULTS.md"
+      ]
+    },
+    {
+      "id": "KP-GLV-CONSTANT-BATCHING",
+      "basis": "Process R, phi(R), and phi^2(R) as a finite target batch and infer a nonconstant asymptotic reduction from the order-three orbit alone.",
+      "disposition": "closed",
+      "evidence_inputs": [
+        "experiments/glv_diagonal_obstruction/README.md",
+        "notes/SECURITY_SCOPE.md"
+      ]
+    },
+    {
+      "id": "KP-STRUCTURAL-IDENTITY-AS-ATTACK",
+      "basis": "Treat confirmation of a known division-polynomial or torsion identity as evidence that a discrete-log attack mechanism was positively tested.",
+      "disposition": "closed",
+      "evidence_inputs": [
+        "experiments/engine/outcomes/REO-2026-07-24-004.json",
+        "experiments/engine/README.md"
+      ]
+    }
+  ],
+  "axes": {
+    "target_features": [
+      {
+        "id": "TF-J0-GLV-C3",
+        "label": "the exact order-three GLV action on the j=0 curve",
+        "statement": "secp256k1 has a kernel-checked order-three GLV endomorphism whose affine x-coordinate action is multiplication by a nontrivial cube root of unity.",
+        "boundary": "The order-three orbit gives a known constant-factor structure; by itself it neither preserves a fixed target nor changes an asymptotic exponent.",
+        "route_ids": [
+          "R-GLV-SEMAEV"
+        ],
+        "threat_models": [
+          "classical-single-target-plain"
+        ],
+        "compatibility_tags": [
+          "glv-faithful-fixed-target"
+        ],
+        "evidence_inputs": [
+          "Ecdlp/Proved/GlvEndomorphism.lean",
+          "experiments/glv_diagonal_obstruction/README.md"
+        ],
+        "status": "active"
+      },
+      {
+        "id": "TF-PRIME-FIELD-REPRESENTATION",
+        "label": "the explicit prime-field coordinate representation",
+        "statement": "The plain target exposes prime-field curve coordinates and arithmetic outside the generic-group oracle model, so a legitimate classical escape must identify exactly which representation information it consumes.",
+        "boundary": "Access to coordinates is only an opportunity surface. It is not evidence that relation generation, generalized root finding, or descent is cheaper than the square-root baseline.",
+        "route_ids": [
+          "R-PRIME-FIELD-INDEX-CALCULUS"
+        ],
+        "threat_models": [
+          "classical-single-target-plain"
+        ],
+        "compatibility_tags": [
+          "prime-field-relation-generation"
+        ],
+        "evidence_inputs": [
+          "Ecdlp/Proved/GenericGroupBound.lean",
+          "notes/SECURITY_SCOPE.md"
+        ],
+        "status": "active"
+      },
+      {
+        "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
+        "label": "the low-degree composed-map factor-base construction",
+        "statement": "Petit-style factor bases define x-coordinates through a low-degree composition, creating structured fibers whose relation yield and generalized root-solving cost can be measured independently.",
+        "boundary": "A smaller coordinate image or a successful toy solve is not a complexity improvement unless recovery, exceptional fibers, preprocessing, and total relation cost are all included.",
+        "route_ids": [
+          "R-PETIT-COMPOSED-MAPS"
+        ],
+        "threat_models": [
+          "classical-single-target-plain"
+        ],
+        "compatibility_tags": [
+          "petit-faithful-root-solving"
+        ],
+        "evidence_inputs": [
+          "experiments/p1_petit/README.md",
+          "experiments/p4_petit/README.md"
+        ],
+        "status": "active"
+      }
+    ],
+    "mechanism_primitives": [
+      {
+        "id": "MP-FAITHFUL-PHASE-QUOTIENT",
+        "label": "a phase-preserving faithful quotient with recovery",
+        "statement": "Use invariants or a birational presentation that preserves relative GLV phases, fixed-target relation semantics, exceptional components, and an explicit recovery map.",
+        "boundary": "Independent coordinate cubes are excluded. More variables or a toric invariant ring do not count as a gain without an audited reduction in total solving cost.",
+        "route_ids": [
+          "R-GLV-SEMAEV"
+        ],
+        "threat_models": [
+          "classical-single-target-plain"
+        ],
+        "compatibility_tags": [
+          "glv-faithful-fixed-target"
+        ],
+        "evidence_inputs": [
+          "experiments/glv_diagonal_obstruction/README.md",
+          "Ecdlp/Proved/SemaevFour.lean"
+        ],
+        "status": "active"
+      },
+      {
+        "id": "MP-SEMAEV-RELATION-SAMPLING",
+        "label": "summation-polynomial relation sampling with complete costs",
+        "statement": "Generate factor-base relations through exact Semaev systems while measuring relation probability, algebraic solving effort, recovery failures, linear algebra, and rejected components.",
+        "boundary": "Polynomial degree, matrix size, or one solver timing is only a proxy and cannot establish a subgeneric algorithm without an end-to-end cost bridge.",
+        "route_ids": [
+          "R-PRIME-FIELD-INDEX-CALCULUS"
+        ],
+        "threat_models": [
+          "classical-single-target-plain"
+        ],
+        "compatibility_tags": [
+          "prime-field-relation-generation"
+        ],
+        "evidence_inputs": [
+          "Ecdlp/Proved/SemaevThree.lean",
+          "experiments/p3_sm_system/README.md"
+        ],
+        "status": "active"
+      },
+      {
+        "id": "MP-GENERALIZED-ROOT-RECOVERY",
+        "label": "generalized root finding with explicit fiber recovery",
+        "statement": "Exploit a composed rational map only through an algorithm that enumerates or samples valid fibers, recovers curve points, prices excluded components, and returns independently checkable relations.",
+        "boundary": "The construction remains a proposal primitive until its generalized root problem and all offline work are cheaper than the matched plain presentation at increasing toy sizes.",
+        "route_ids": [
+          "R-PETIT-COMPOSED-MAPS"
+        ],
+        "threat_models": [
+          "classical-single-target-plain"
+        ],
+        "compatibility_tags": [
+          "petit-faithful-root-solving"
+        ],
+        "evidence_inputs": [
+          "experiments/p1_petit_m3/README.md",
+          "experiments/p4_petit/RESULTS.md"
+        ],
+        "status": "active"
+      }
+    ],
+    "unresolved_questions": [
+      {
+        "id": "U-GLV-SOLVING-COST",
+        "label": "whether a faithful GLV presentation changes solving cost rather than notation",
+        "statement": "No exact phase-preserving fixed-target presentation currently demonstrates a lower solving degree, relation cost, or total index-calculus exponent than the plain system.",
+        "boundary": "The closed independent-cube quotient may not be reopened without a new premise, and finite target batching alone is not an asymptotic bridge.",
+        "route_ids": [
+          "R-GLV-SEMAEV"
+        ],
+        "threat_models": [
+          "classical-single-target-plain"
+        ],
+        "compatibility_tags": [
+          "glv-faithful-fixed-target"
+        ],
+        "evidence_inputs": [
+          "experiments/glv_diagonal_obstruction/README.md",
+          "experiments/p4_petit/RESULTS.md"
+        ],
+        "status": "active"
+      },
+      {
+        "id": "U-PRIME-FIELD-RELATION-EXPONENT",
+        "label": "whether prime-field relation generation changes the square-root exponent",
+        "statement": "The repository lacks a source-grounded mechanism and cost theorem connecting prime-field summation-polynomial relation yield to total work below the Pollard-rho square-root baseline.",
+        "boundary": "Toy relations, proxy matrices, and informal asymptotics remain insufficient until the factor-base probability, solver, recovery, linear algebra, and precomputation terms are joined.",
+        "route_ids": [
+          "R-PRIME-FIELD-INDEX-CALCULUS"
+        ],
+        "threat_models": [
+          "classical-single-target-plain"
+        ],
+        "compatibility_tags": [
+          "prime-field-relation-generation"
+        ],
+        "evidence_inputs": [
+          "experiments/p3_sm_system/RESULTS.md",
+          "BARRIERS.md"
+        ],
+        "status": "active"
+      },
+      {
+        "id": "U-PETIT-GENERALIZED-ROOT-COST",
+        "label": "whether the composed-map generalized root problem scales better end to end",
+        "statement": "The faithful Petit-style route has no validated algorithm showing that generalized root finding plus recovery and preprocessing beats the matched plain factor-base pipeline as field size grows.",
+        "boundary": "Approximate or nonfaithful variants and isolated toy wins do not answer the faithful generalized-root question.",
+        "route_ids": [
+          "R-PETIT-COMPOSED-MAPS"
+        ],
+        "threat_models": [
+          "classical-single-target-plain"
+        ],
+        "compatibility_tags": [
+          "petit-faithful-root-solving"
+        ],
+        "evidence_inputs": [
+          "experiments/p1_petit_m3/RESULTS.md",
+          "experiments/p4_petit/RESULTS.md"
+        ],
+        "status": "active"
+      }
+    ]
+  }
+}

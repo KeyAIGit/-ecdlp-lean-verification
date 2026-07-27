@@ -76,14 +76,17 @@ accepted content head be7a4d8e7da94b33ef74b0c146d732314b293827
 GitHub Actions run 30163027316
 ```
 
-The cited run accepted the original exact content-addressed module in the repository's
-full `lake build`, built-source no-`sorry` scan, and generated exhaustive axiom
-audit containing all 14 public declarations. The branch was later rebased
-without changing this module blob. The symbolic stabilizer classification
-remains certificate-backed rather than being overstated as a kernel theorem.
-The affine closeout adds `secp256k1_glv_affine_target_moves` and the separate
-`SevenNonResidue.lean` arithmetic prerequisite; those additions require their
-own build and axiom-audit result and do not retroactively inherit the cited run.
+The cited run accepted the original exact content-addressed module in the
+repository's full `lake build`, built-source no-`sorry` scan, and generated
+exhaustive axiom audit containing all 14 public declarations. The later affine
+closeout added `secp256k1_glv_affine_target_moves` and the separate
+`SevenNonResidue.lean` arithmetic prerequisite. GitHub Actions run
+`30189185914` accepted those additions at content head
+`3392a77c93a95fbd9bc40bceb1138f9485459e5e`; integration run `30246372659`
+rechecked the combined package at head
+`57388c2fc35e6d5961f8edd72fa0fb0efabf8955`. The symbolic stabilizer
+classification remains certificate-backed rather than being overstated as a
+kernel theorem.
 
 The coefficient witnesses also make an arbitrary scalar exhaustive. A
 coefficient-one anchor forces any proportionality scalar to be a power of
@@ -220,7 +223,7 @@ Outcome taxonomy:
 
 | Item | Outcome | Scope |
 |---|---|---|
-| Diagonal `S3` and `S4` laws | `proved` | Exact symbolic certificate and the original kernel-accepted Lean package; the affine closeout addition requires its own build |
+| Diagonal `S3` and `S4` laws | `proved` | Exact symbolic certificate and kernel-accepted Lean package, including the affine zero-slice closeout |
 | Full coordinatewise semi-invariant classification | `certificate_replayed` | Symbolic primitive component and exact secp256k1 specialization; not a Lean theorem |
 | Independent `u_i=x_i^3` quotient | `bounded_negative` | It quotients by `C3^m`, not the diagonal `C3`, and loses relative phase |
 | Fixed-target `S4` scaling premise | `bounded_negative` | For every nonzero affine target in characteristic outside `{2,3}`, nonidentity diagonal action transports the target instead of preserving it; the zero slice has exactly the diagonal `C3`. Lean proves that this exceptional slice contains no `𝔽_p`-rational affine secp256k1 target |

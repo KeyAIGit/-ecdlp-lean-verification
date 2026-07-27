@@ -8,6 +8,7 @@ conventions: `CLAUDE.md`. **When an autonomous cycle is explicitly dispatched,
 delegated but bounded; the kernel/CI remains the sole judge).
 For a small-context start, read `STATUS.md`, then
 `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/RESEARCH_ENGINE_V0.json`,
+`repo/HYPOTHESIS_GENERATION_V0.json`,
 `data/research_engine_state.json`, `repo/PRODUCT_MODEL.json`,
 `repo/PILOT_PROTOCOL.json`, then use `tasks/NEXT.md` to choose
 `tasks/ECDLP_RESEARCH.md` or `tasks/KEYAI_PRODUCT.md`; load
@@ -77,12 +78,16 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 `TIERS` in `scripts/export_agent_bundle.py`):
 - **small** — the live snapshot: `STATUS.md`,
   `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/RESEARCH_ENGINE_V0.json`,
-  `data/research_engine_state.json`, `repo/PRODUCT_MODEL.json`,
+  `repo/ECDLP_TYPED_EVIDENCE_V0.json`,
+  `repo/HYPOTHESIS_GENERATION_V0.json`,
+  `data/typed_evidence_state.json`, `data/research_engine_state.json`,
+  `repo/PRODUCT_MODEL.json`,
   `repo/PILOT_PROTOCOL.json`, the queue router and both owning queues,
   `data/stats.json`, `data/frontier_map.json`.
 - **medium** — adds `README.md`, this file, `VERIFIED.md`, `BARRIERS.md`,
   `notes/SECURITY_SCOPE.md`, `notes/FOUNDATIONS.md`, `experiments/HYPOTHESES.yaml`,
-  and the Research Engine event contract/schema.
+  claim-level records under `data/source_claim_extracts/`, and the Research
+  Engine event contract/schema.
 - **large** — adds `data/knowledge_graph.json`, `REPOSITORY_ARCHITECTURE.md`,
   `PUBLISHABLE_UNITS.md`, `TRUST_REPORT.md`, and review-anchored outcome events.
 
@@ -102,24 +107,37 @@ branch from current `main`; preserve any unrelated local changes.
   survived; the route remains parked and no experiment, solver sweep, or
   direct secp256k1 work is authorized.
 - `TASK-009` is completed with exact symbolic replay, `S4` fixed-target
-  transport/classification, and a kernel-checkable Lean package. `S3` has
+  transport/classification, and a kernel-accepted Lean package. `S3` has
   polynomial covariance/classification only; exhaustive fixed-target
-  classification remains certificate-backed. `TASK-008` proposal intake is the current
-  central ECDLP task.
+  classification remains certificate-backed.
 - `TASK-013` owns Research Engine v0: deterministic selection, historical
   outcome retention, independent validation, and feedback into generated state.
   Its bounded-exploration capability remains available in policy, but candidate
   execution stays paused in the current proposal-intake mode.
-- `TASK-008` accepts new primary evidence or a concrete proposal and checks it
-  against the common gate. Intake does not bypass the selected exploration
-  sequence or authorize promotion by itself.
+- `TASK-013` also owns typed-cell seed generation and digest-bound adversarial
+  proposal review before deterministic selection. Seeds must come from
+  regenerated mechanism/property cells, never a free-form route/tag cross
+  product.
+- Desk decisions may retire a scoped cell as `inapplicable` or `closed` without
+  fabricating an experiment run. They cannot close a wider route, promote a
+  hypothesis, or authorize execution.
+- Generated seeds and quality-cleared drafts are non-executable. Creative model
+  output is untrusted; zero retained drafts is a valid cycle result.
+- `TASK-010` is the current central task under
+  `RESEARCH-ENGINE-V0.2-SANITATION-001`. It repairs the audited Research Engine
+  lifecycle and generation plane without authorizing execution.
+- `TASK-008` remains the parked proposal-intake lane. Intake does not bypass
+  owner authorization or authorize promotion by itself.
 - The division-polynomial, torsion, Weil, Semaev, cost-model, lattice, isogeny,
   p-adic, and quantum gaps remain mapped assets. None is an active target merely
   because it is deep or absent from Mathlib.
 - All hypotheses remain parked as experiments. The completed structural lane
   did not promote `HYP_GLV_SEMAEV_001` or the broader Semaev foundation.
-- `TASK-010` is a periodic independent adversarial audit. It remains parked
-  until another qualified reviewer is available and is not a merge prerequisite.
+- Earlier TASK-010 review briefs are frozen historical snapshots. The active
+  remediation set is `notes/reviews/RESEARCH_ENGINE_V0_2_BASELINE_AUDIT.md`,
+  `notes/reviews/RESEARCH_ENGINE_V0_2_ORACLE_INTAKE.md`,
+  `notes/RESEARCH_ENGINE_V0_TO_V0_2.md`, and
+  `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json`.
 - `TASK-011` runs bounded external discovery and ends with a recorded
   `build/change/stop/pending` disposition for CH-001. It does not validate the
   adapter or authorize candidate execution. Do not claim users, retention, or

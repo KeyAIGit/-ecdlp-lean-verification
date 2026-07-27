@@ -14,7 +14,7 @@ A machine-readable research map of known ECDLP attack families and exactly where
 1. **keystone-foundations** — the anchor facts everything builds on: `secp256k1_card_point_eq_n` (#E(F_p)=n, cofactor 1, *no Hasse/Schoof* — now landed in the built tree), `secp256k1_n_prime` (prime order, Pratt), `secp256k1_p_prime` (prime base field, Pratt).
 2. **attack-models** — generic/black-box and abstract cost-model families: the generic Ω(√n) lower bound, BSGS/Pollard-rho, multi-target/preprocessing/Cheon, lattice-HNP nonce attacks, and quantum/Shor. Bounded from below by the generic wall, or blocked on a missing Mathlib foundation.
 3. **secp256k1-structural** — attacks neutralized or scoped by secp256k1's own algebra: the CM/GLV endomorphism (constant-factor only) and Pohlig-Hellman (killed by prime order).
-4. **no-go-barriers** — transfer attacks blocked by machine-checked no-gos: pairing transfer (MOV/Frey-Ruck + Tate, one embedding-degree obstruction), Weil descent (prime field), and p-adic/anomalous lifting (non-anomalous trace).
+4. **no-go-barriers** — transfer-attack boundaries with explicit assurance: pairing transfer and p-adic/anomalous lifting have kernel-checked target facts; Weil descent is inapplicable to the prime-field target by a documented structural argument, but no dedicated Lean no-go theorem exists.
 5. **experiments-scaling** — the reproducible prime-field index-calculus experiments (P0–P4): Semaev summation systems, GLV-symmetric factor bases, Petit composed maps. All partial negatives (~3× constant only); the mathematical question remains open, but `HYP_GLV_SEMAEV_001` is **PARKED**. This is retained evidence, not authorized work.
 
 ## How to read an attack object

@@ -3,7 +3,9 @@
 > **Generated** by `scripts/gen_status.py` from `data/stats.json`,
 > `data/frontier_map.json`, `repo/PRODUCT_MODEL.json`, and
 > `repo/PILOT_PROTOCOL.json`, `repo/ECDLP_DECISION_SUBSTRATE.json`, and
-> `data/research_engine_state.json`.
+> `repo/ECDLP_TYPED_EVIDENCE_V0.json`, `data/typed_evidence_state.json`, and
+> `data/research_engine_state.json`, `data/research_engine_v02_state.json`, and
+> `data/research_engine_shadow_intake.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -92,14 +94,43 @@ The engine normalizes **9 hypotheses** and retains
 **0 native**. Its historical
 no-reopen guard matched four frozen cases; this is not predictive EIG calibration. Predictive
 calibration currently contains **0 native
-outcomes**. Selected bounded explorations: **0** (none). Ready now: **0** (none). **0 candidates remain at intake** behind exact-mechanism or independent-validator hard gates.
+outcomes**. Before synthesis, the typed evidence layer materializes
+**7 mechanism/property cells**:
+**3 decided at desk** and
+**2 eligible to emit a bounded research question**.
+Its **3 desk decisions** are non-experimental and authorize
+nothing. The generation layer currently emits
+**2 source-grounded seeds**, with
+**0 submitted proposals**,
+**0 quality-cleared proposals**, and
+**0 retained non-executable drafts**.
+Creative output is untrusted and zero retained drafts is a valid cycle result.
+Selected bounded explorations: **0** (none). Ready now: **0** (none). **0 candidates remain at intake** behind exact-mechanism or independent-validator hard gates.
+
+## Research Engine v0.2 sanitation
+The v0.2 lifecycle currently contains
+**0 immutable candidate snapshots**,
+**0 admissible**,
+**0 recommended**, and
+**0 authorized**. Recommendation cannot create
+authorization; authorization requires a separate dated owner decision bound to the exact
+candidate digest. The eight historical events are referenced without migration, with both their
+canonical review root and raw file bytes pinned.
+
+Shadow intake contains **4 non-executable proposal
+stubs** and **1 parked desired-property record**.
+These are research questions, not hypotheses or candidates:
+**0 admissible**,
+**0 recommended**, and
+**0 authorized**. Current sanitation work is `TASK-010`;
+`TASK-008` remains parked until this lifecycle is reviewed on a frozen commit.
 
 The Engine's bounded-exploration capability is
 **true**, while the current decision's experiment
 authorization is **false** and the promotion gate is
 **false**. `GLV-SEMAEV-ITER-001` is complete; its
 certificates and kernel-checked identities authorize no hypothesis run. `TASK-008` proposal
-intake is current, and any later experiment needs a new dated decision plus the normal fixed
+intake is parked during `TASK-010`, and any later experiment needs a new dated decision plus the normal fixed
 budgets, dependency order, and retained terminal outcome.
 
 ## Active work protocol
@@ -113,8 +144,14 @@ claim boundary. Public surfaces must distinguish current capabilities, the refer
 customer hypotheses, and future product direction.
 
 The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view is generated.
-The engine policy is `repo/RESEARCH_ENGINE_V0.json`; its generated state is
-`data/research_engine_state.json`. The candidate-neutral validation contract lives in
+The engine policies are `repo/RESEARCH_ENGINE_V0.json`,
+`repo/HYPOTHESIS_GENERATION_V0.json`, and
+`repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`; typed applicability is owned by
+`repo/ECDLP_TYPED_EVIDENCE_V0.json`, materialized in
+`data/typed_evidence_state.json`, and the combined generated state is
+`data/research_engine_state.json`. The v0.2 lifecycle and shadow intake are
+`data/research_engine_v02_state.json` and
+`data/research_engine_shadow_intake.json`. The candidate-neutral validation contract lives in
 `experiments/framework/`. No one file authorizes promotion by itself.
 
 The hypothesis registry is `experiments/HYPOTHESES.yaml`. It records testable
@@ -127,7 +164,14 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 `README.md` (the front door) · `repo/PRODUCT_MODEL.json` (product and MVP authority) ·
 `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
 `repo/RESEARCH_ENGINE_V0.json` (exploration policy and selector) ·
+`repo/ECDLP_TYPED_EVIDENCE_V0.json` (claim-level applicability screens) ·
+`repo/HYPOTHESIS_GENERATION_V0.json` (seed and proposal-quality policy) ·
+`repo/RESEARCH_ENGINE_LIFECYCLE_V0.json` (immutable candidate lifecycle) ·
+`repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json` (19 regression cases) ·
+`data/typed_evidence_state.json` (materialized mechanism/property cells) ·
 `data/research_engine_state.json` (generated engine state) ·
+`data/research_engine_v02_state.json` (generated lifecycle state) ·
+`data/research_engine_shadow_intake.json` (non-executable shadow queue) ·
 `tasks/NEXT.md` (queue router) · `tasks/ECDLP_RESEARCH.md` (research queue) ·
 `tasks/KEYAI_PRODUCT.md` (product queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3

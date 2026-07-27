@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.org/schemas/research-engine-v0.2/mechanism-contract.json",
+  "title": "Research Engine v0.2 mechanism contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_objects",
+    "target_objects",
+    "transformation",
+    "fixed_target_semantics",
+    "exceptional_locus",
+    "orbit_stabilizer",
+    "relation_semantics",
+    "recovery_map",
+    "implementation_identity",
+    "cost_changing_mechanism",
+    "source_ids"
+  ],
+  "properties": {
+    "source_objects": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "target_objects": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "transformation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "exact_map", "domain", "codomain"],
+      "properties": {
+        "kind": {"type": "string", "minLength": 1},
+        "exact_map": {"type": "string", "minLength": 1},
+        "domain": {"type": "string", "minLength": 1},
+        "codomain": {"type": "string", "minLength": 1}
+      }
+    },
+    "fixed_target_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_slot", "target_action", "same_target_preserved"],
+      "properties": {
+        "target_slot": {"type": "string", "minLength": 1},
+        "target_action": {"type": "string", "minLength": 1},
+        "same_target_preserved": {"type": "boolean"}
+      }
+    },
+    "exceptional_locus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["definition", "treatment"],
+      "properties": {
+        "definition": {"type": "string", "minLength": 1},
+        "treatment": {
+          "enum": ["excluded", "separately_recovered", "proved_empty", "unresolved"]
+        }
+      }
+    },
+    "orbit_stabilizer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acting_group", "stabilizer", "orbit_size_law"],
+      "properties": {
+        "acting_group": {"type": "string", "minLength": 1},
+        "stabilizer": {"type": "string", "minLength": 1},
+        "orbit_size_law": {"type": "string", "minLength": 1}
+      }
+    },
+    "relation_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_relation", "target_relation", "equivalence_status"],
+      "properties": {
+        "source_relation": {"type": "string", "minLength": 1},
+        "target_relation": {"type": "string", "minLength": 1},
+        "equivalence_status": {
+          "enum": ["proved", "certificate_replayed", "specified_unproved"]
+        }
+      }
+    },
+    "recovery_map": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["forward", "inverse", "excluded_components", "spurious_solution_policy"],
+      "properties": {
+        "forward": {"type": "string", "minLength": 1},
+        "inverse": {"type": "string", "minLength": 1},
+        "excluded_components": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "spurious_solution_policy": {"type": "string", "minLength": 1}
+      }
+    },
+    "implementation_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["implementation_path", "sha256"],
+      "properties": {
+        "implementation_path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "cost_changing_mechanism": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quantity", "causal_bridge", "growth_law", "non_orbit_lever"],
+      "properties": {
+        "quantity": {"type": "string", "minLength": 1},
+        "causal_bridge": {"type": "string", "minLength": 1},
+        "growth_law": {"type": "string", "minLength": 1},
+        "non_orbit_lever": {"type": ["string", "null"], "minLength": 1}
+      }
+    },
+    "source_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}
