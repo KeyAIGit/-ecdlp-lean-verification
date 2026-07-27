@@ -1,0 +1,320 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ML-P1E-TOY-SCALING-2026-07-27",
+  "classification": "route-neutral engineering qualification",
+  "native_research_engine_outcome": false,
+  "field_bits": [
+    12,
+    16,
+    20,
+    24
+  ],
+  "deferred_field_bits": [
+    28,
+    32
+  ],
+  "curve_family": {
+    "equation": "y^2=x^3+7",
+    "curve_a": 0,
+    "curve_b": 7,
+    "field_prime_residue_mod_12": 7,
+    "curves_per_field_size": 10,
+    "generators_per_curve": 6,
+    "require_prime_group_order": true,
+    "require_cofactor_one": true,
+    "require_group_order_same_bit_width": true,
+    "exclude_anomalous_curves": true,
+    "minimum_embedding_degree_exclusive": 100,
+    "require_glv_eigenpair": true
+  },
+  "curve_roles": {
+    "train": [
+      0,
+      1,
+      2
+    ],
+    "development": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "blind": [
+      7,
+      8,
+      9
+    ]
+  },
+  "generator_roles": {
+    "train": [
+      0,
+      1,
+      2
+    ],
+    "development": [
+      3
+    ],
+    "blind": [
+      4,
+      5
+    ]
+  },
+  "records_per_curve_cap": {
+    "12": 4096,
+    "16": 8192,
+    "20": 32768,
+    "24": 65536
+  },
+  "split_fractions": {
+    "train_curve_train_generator": 0.6,
+    "seen_curve_seen_generator": 0.15,
+    "seen_curve_new_generator": 0.25,
+    "new_curve_seen_generator": 0.5,
+    "new_curve_new_generator": 0.5,
+    "blind_curve_blind_generator": 1.0
+  },
+  "feature_modes": [
+    "compressed_relation_bits",
+    "affine_relation_bits",
+    "compressed_relation_glv_bits"
+  ],
+  "control_feature_modes": [
+    "opaque_relation_bits",
+    "curve_generator_only_bits"
+  ],
+  "selection_field_bits": [
+    12,
+    16
+  ],
+  "confirmation_field_bits": [
+    20
+  ],
+  "blind_field_bits": [
+    24
+  ],
+  "seeds": [
+    101,
+    211,
+    307,
+    401,
+    503,
+    601,
+    701
+  ],
+  "stage_epoch_caps": {
+    "screen": 6,
+    "confirmation": 10,
+    "frozen_blind": 10,
+    "controls": 10
+  },
+  "architectures": [
+    {
+      "id": "ridge-compressed-a0p1",
+      "family": "ridge",
+      "feature_mode": "compressed_relation_bits",
+      "params": {
+        "alpha": 0.1
+      }
+    },
+    {
+      "id": "ridge-compressed-a1",
+      "family": "ridge",
+      "feature_mode": "compressed_relation_bits",
+      "params": {
+        "alpha": 1.0
+      }
+    },
+    {
+      "id": "ridge-compressed-a10",
+      "family": "ridge",
+      "feature_mode": "compressed_relation_bits",
+      "params": {
+        "alpha": 10.0
+      }
+    },
+    {
+      "id": "ridge-affine-a1",
+      "family": "ridge",
+      "feature_mode": "affine_relation_bits",
+      "params": {
+        "alpha": 1.0
+      }
+    },
+    {
+      "id": "ridge-glv-a1",
+      "family": "ridge",
+      "feature_mode": "compressed_relation_glv_bits",
+      "params": {
+        "alpha": 1.0
+      }
+    },
+    {
+      "id": "mlp-compressed-64",
+      "family": "mlp",
+      "feature_mode": "compressed_relation_bits",
+      "params": {
+        "hidden_layers": [
+          64
+        ],
+        "activation": "relu",
+        "alpha": 0.0001,
+        "batch_size": 1024,
+        "learning_rate_init": 0.001,
+        "epochs": 6
+      }
+    },
+    {
+      "id": "mlp-compressed-128x64",
+      "family": "mlp",
+      "feature_mode": "compressed_relation_bits",
+      "params": {
+        "hidden_layers": [
+          128,
+          64
+        ],
+        "activation": "relu",
+        "alpha": 0.0001,
+        "batch_size": 1024,
+        "learning_rate_init": 0.001,
+        "epochs": 6
+      }
+    },
+    {
+      "id": "mlp-affine-64",
+      "family": "mlp",
+      "feature_mode": "affine_relation_bits",
+      "params": {
+        "hidden_layers": [
+          64
+        ],
+        "activation": "tanh",
+        "alpha": 0.001,
+        "batch_size": 1024,
+        "learning_rate_init": 0.001,
+        "epochs": 6
+      }
+    },
+    {
+      "id": "mlp-glv-128x64",
+      "family": "mlp",
+      "feature_mode": "compressed_relation_glv_bits",
+      "params": {
+        "hidden_layers": [
+          128,
+          64
+        ],
+        "activation": "relu",
+        "alpha": 0.0001,
+        "batch_size": 1024,
+        "learning_rate_init": 0.001,
+        "epochs": 6
+      }
+    },
+    {
+      "id": "trees-compressed-d6-l16",
+      "family": "extra_trees",
+      "feature_mode": "compressed_relation_bits",
+      "params": {
+        "n_estimators": 32,
+        "max_depth": 6,
+        "min_samples_leaf": 16,
+        "max_features": "sqrt"
+      }
+    },
+    {
+      "id": "trees-compressed-d8-l32",
+      "family": "extra_trees",
+      "feature_mode": "compressed_relation_bits",
+      "params": {
+        "n_estimators": 32,
+        "max_depth": 8,
+        "min_samples_leaf": 32,
+        "max_features": "sqrt"
+      }
+    },
+    {
+      "id": "trees-affine-d8-l32",
+      "family": "extra_trees",
+      "feature_mode": "affine_relation_bits",
+      "params": {
+        "n_estimators": 32,
+        "max_depth": 8,
+        "min_samples_leaf": 32,
+        "max_features": "sqrt"
+      }
+    },
+    {
+      "id": "trees-glv-d8-l32",
+      "family": "extra_trees",
+      "feature_mode": "compressed_relation_glv_bits",
+      "params": {
+        "n_estimators": 32,
+        "max_depth": 8,
+        "min_samples_leaf": 32,
+        "max_features": "sqrt"
+      }
+    },
+    {
+      "id": "rbf-compressed-c128",
+      "family": "rbf_logistic",
+      "feature_mode": "compressed_relation_bits",
+      "params": {
+        "gamma": 0.01,
+        "n_components": 128,
+        "alpha": 0.0001,
+        "batch_size": 1024,
+        "learning_rate_init": 0.001,
+        "epochs": 6
+      }
+    }
+  ],
+  "selection": {
+    "baseline": "exact per-record bit probabilities for d uniform in [1,n-1], computed from public group order n",
+    "primary_splits": [
+      "seen_curve_new_generator",
+      "new_curve_seen_generator",
+      "new_curve_new_generator"
+    ],
+    "score": "median conservative information gain across primary splits, sizes and seeds",
+    "top_confirmation_recipes": 1,
+    "architecture_identity_frozen_after_selection_sizes": true,
+    "confirmation_may_reselect_architecture": false,
+    "positive_familywise_alpha": 0.01,
+    "blind_tuning_forbidden": true
+  },
+  "recovery": {
+    "beam_widths": [
+      1,
+      16,
+      256
+    ],
+    "maximum_bsgs_targets_per_split": 8,
+    "verify_every_candidate_with_group_law": true
+  },
+  "controls": {
+    "canary_architecture_id": "ridge-compressed-a0p1",
+    "random_labels": true,
+    "permutation_within_curve_generator": true,
+    "opaque_point_labels": true,
+    "curve_generator_only_ablation": true,
+    "mismatched_public_points": true,
+    "leaked_target_bits": [
+      1,
+      4
+    ],
+    "full_target_leak": true
+  },
+  "stop_rules": {
+    "pipeline_invalid_if_canary_fails": true,
+    "pipeline_invalid_if_null_or_opaque_passes": true,
+    "adaptive_search_stops_without_corrected_transfer_at_12_and_16": true,
+    "only_frozen_reference_may_continue_after_null": true,
+    "field_bits_28_32_require_new_policy_and_immutable_candidate": true
+  },
+  "budget": {
+    "max_wall_time_seconds": 21600,
+    "max_peak_memory_bytes": 8589934592,
+    "max_workers": 8,
+    "max_total_records": 1200000
+  }
+}

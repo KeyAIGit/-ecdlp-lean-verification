@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ML-P1E-TOY-SCALING-2026-07-27",
+  "status": "source_protocol_commit_pending",
+  "owner_direction_date": "2026-07-27",
+  "classification": "route-neutral engineering qualification",
+  "hypothesis_id": null,
+  "route_id": null,
+  "native_research_engine_run": false,
+  "native_outcome_prohibited": true,
+  "route_promotion_prohibited": true,
+  "secp256k1_target_prohibited": true,
+  "purpose": "Measure whether direct all-bit scalar prediction transfers across complete toy generators and curves before considering an explicit mechanism search.",
+  "p0_provenance": {
+    "source_commit": "11af097",
+    "retained_result_commit": "1910609",
+    "qualification_summary_sha256": "9137e630de2697698e4d19142b8cfc154fcdcca818d74e1b8143aedbba20a774"
+  },
+  "authorized_field_bits": [
+    12,
+    16,
+    20,
+    24
+  ],
+  "deferred_field_bits": [
+    28,
+    32
+  ],
+  "freeze_sequence": [
+    "commit implementation, configuration, controls, metrics, and stop rules",
+    "generate and independently validate the exact 10-curve-per-rung catalog",
+    "generate physically separate development and blind shards and independently replay every record",
+    "bind and commit the compact catalog, manifest, validations, and authorized preregistration while raw shards remain ignored",
+    "select one architecture on 12- and 16-bit development data and lock its identity so 20-bit results cannot reselect it",
+    "run the unchanged 20-bit reference confirmation and all controls without opening any blind shard",
+    "commit the selection ledger, selection result, and blind-authorization recipe",
+    "only then open blind shards for the frozen retrained scaling ladder"
+  ],
+  "design": {
+    "curves_per_field_size": 10,
+    "curve_roles": {
+      "train": 3,
+      "development": 4,
+      "blind": 3
+    },
+    "physical_blind_shards": true,
+    "selection_architecture_count": 14,
+    "model_seeds": 7,
+    "expected_selection_fits": 219,
+    "expected_frozen_evaluation_fits": 28,
+    "metric_baseline": "exact per-record public scalar-bit prior for d uniform in [1,n-1]",
+    "statistical_cluster_unit": "curve",
+    "statistical_interval": "Student-t"
+  },
+  "frozen_bindings": {
+    "source_commit": null,
+    "config_sha256": null,
+    "catalog_file_sha256": null,
+    "catalog_payload_sha256": null,
+    "manifest_file_sha256": null,
+    "manifest_payload_sha256": null,
+    "curve_validation_sha256": null,
+    "dataset_validation_sha256": null,
+    "dataset_records": null,
+    "full_ec_replay": null
+  },
+  "claim_boundary": {
+    "allowed": [
+      "observed behavior on the exact listed toy curves",
+      "presence or absence of transfer across held-out generators and curves",
+      "control and pipeline validity",
+      "bounded null for the listed models and compute budget"
+    ],
+    "forbidden": [
+      "a conclusion about secp256k1",
+      "a native Research Engine supported or falsified outcome",
+      "a subgeneric algorithm claim",
+      "extrapolation from 24 bits to 256 bits",
+      "treating model weights as an attack mechanism"
+    ]
+  },
+  "positive_escalation_gate": [
+    "independently verified recovery on blind 24-bit curves",
+    "consistent transfer across both curves and generators",
+    "decreasing K50 divided by sqrt(group order)",
+    "upper 95% confidence bound on log2 total-work slope below 0.5",
+    "explicit executable mechanism extracted from the model",
+    "new immutable candidate snapshot and later owner authorization"
+  ]
+}

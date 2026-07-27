@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.example/schemas/ml-p1e-toy-curve-catalog-v1.json",
+  "title": "ML-P1E deterministic toy-curve catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "experiment_id",
+    "classification",
+    "native_research_engine_outcome",
+    "config_sha256",
+    "producer_sha256",
+    "arithmetic_sha256",
+    "source_commit",
+    "source_worktree_dirty",
+    "curve_count",
+    "field_bits",
+    "curves",
+    "generation",
+    "catalog_sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "experiment_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "classification": {
+      "const": "route-neutral engineering qualification"
+    },
+    "native_research_engine_outcome": {
+      "const": false
+    },
+    "config_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "producer_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "arithmetic_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$"
+    },
+    "source_worktree_dirty": {
+      "const": false
+    },
+    "curve_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "field_bits": {
+      "type": "array",
+      "items": {
+        "enum": [
+          12,
+          16,
+          20,
+          24
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "curves": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/curve"
+      },
+      "minItems": 1
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "wall_time_seconds",
+        "python",
+        "platform"
+      ],
+      "properties": {
+        "wall_time_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "python": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        }
+      }
+    },
+    "catalog_sha256": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "point": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "generator_index",
+        "role",
+        "base_multiplier",
+        "point"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "generator_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "role": {
+          "enum": [
+            "train",
+            "development",
+            "blind"
+          ]
+        },
+        "base_multiplier": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "point": {
+          "$ref": "#/$defs/point"
+        }
+      }
+    },
+    "curve": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "field_bits",
+        "field_p",
+        "curve_a",
+        "curve_b",
+        "group_order",
+        "cofactor",
+        "anomalous",
+        "embedding_degree",
+        "base_point",
+        "hasse",
+        "glv",
+        "search",
+        "curve_index",
+        "role",
+        "generators"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "field_bits": {
+          "enum": [
+            12,
+            16,
+            20,
+            24
+          ]
+        },
+        "field_p": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "curve_a": {
+          "const": 0
+        },
+        "curve_b": {
+          "const": 7
+        },
+        "group_order": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "cofactor": {
+          "const": 1
+        },
+        "anomalous": {
+          "const": false
+        },
+        "embedding_degree": {
+          "type": "integer",
+          "exclusiveMinimum": 100
+        },
+        "base_point": {
+          "$ref": "#/$defs/point"
+        },
+        "hasse": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "lower",
+            "upper",
+            "trace_bound",
+            "twice_order_exceeds_upper"
+          ],
+          "properties": {
+            "lower": {
+              "type": "integer"
+            },
+            "upper": {
+              "type": "integer"
+            },
+            "trace_bound": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "twice_order_exceeds_upper": {
+              "const": true
+            }
+          }
+        },
+        "glv": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "beta",
+            "lambda",
+            "beta_polynomial_zero",
+            "lambda_polynomial_zero",
+            "eigenpair_checked"
+          ],
+          "properties": {
+            "beta": {
+              "type": "integer",
+              "minimum": 2
+            },
+            "lambda": {
+              "type": "integer",
+              "minimum": 2
+            },
+            "beta_polynomial_zero": {
+              "const": true
+            },
+            "lambda_polynomial_zero": {
+              "const": true
+            },
+            "eigenpair_checked": {
+              "const": true
+            }
+          }
+        },
+        "search": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "prime_candidates_examined"
+          ],
+          "properties": {
+            "prime_candidates_examined": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "curve_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9
+        },
+        "role": {
+          "enum": [
+            "train",
+            "development",
+            "blind"
+          ]
+        },
+        "generators": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/generator"
+          },
+          "minItems": 6,
+          "maxItems": 6
+        }
+      }
+    }
+  }
+}
