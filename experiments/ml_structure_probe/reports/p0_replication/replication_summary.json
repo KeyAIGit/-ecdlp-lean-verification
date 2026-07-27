@@ -216,9 +216,9 @@
   "replica": {
     "dataset_root_sha256": "eb1a2f1301f211ef973f82d9d13b80cb469d6f115cc1869be48d2b8ea1605421",
     "experiment_id": "ML-STRUCTURE-PROBE-P0-AUTOML-1M-REPLICA",
-    "result_sha256": "2fb2a3319ae24d54dd4a55a17e545d7552ab23160d1dd7493c2af476fdf3f728",
+    "result_sha256": "0ce3c89358bb65e062f61a3c05c13c499d02ac0c514e320558e711845321f813",
     "source_state": {
-      "commit": "fd8a93b090b8b2fb7f5b8c59b57dd8150ea619cf",
+      "commit": "262e236f0c4fe62ffa05d0f2a14741197393d897",
       "tracked_files_dirty": false
     }
   },

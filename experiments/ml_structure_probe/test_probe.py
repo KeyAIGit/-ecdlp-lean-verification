@@ -7,6 +7,7 @@ import tempfile
 from pathlib import Path
 
 import automl
+import build_report
 import generate_dataset
 import probe
 import validate_dataset
@@ -46,8 +47,18 @@ def test_smoke_end_to_end() -> None:
         output_root = Path(temporary)
         manifest_path = generate_dataset.generate(config_path, output_root)
         validation = validate_dataset.validate(config_path, manifest_path)
+        validation_path = output_root / "validation.json"
+        validation_path.write_text(
+            json.dumps(validation, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
         assert validation["status"] == "pass", validation["errors"]
         result = probe.run_probe(config_path, manifest_path)
+        probe_path = output_root / "probe.json"
+        probe_path.write_text(
+            json.dumps(result, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
         assert result["pipeline_status"] == "pass"
         assert result["canaries_pass"]
         assert result["permuted_null_pass"]
@@ -60,6 +71,15 @@ def test_smoke_end_to_end() -> None:
         assert automl_result["run_summary"]["failed"] == 0
         assert len(automl_result["finalists"]) == 3
         assert not automl_result["representation_signals_requiring_replication"]
+        retained = build_report.build(
+            manifest_path,
+            validation_path,
+            probe_path,
+            output_root / "automl" / "automl_result.json",
+            output_root / "retained",
+        )
+        assert retained["status"] == "pass"
+        assert "run_ledger.jsonl" in retained["artifact_hashes"]
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         assert manifest["total_records"] == 10_000
         assert manifest["total_bytes"] == 650_000

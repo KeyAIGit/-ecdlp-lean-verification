@@ -7,7 +7,7 @@
       "canary_public_y_parity": {
         "family": "sgd_logistic",
         "feature_mode": "compressed_bits",
-        "fit_seconds": 0.6283462689971202,
+        "fit_seconds": 0.61937267799658,
         "recipe_id": "fixed_control_logistic",
         "run_id": "control/canary_public_y_parity/fixed_control_logistic",
         "stage": "control",
@@ -46,7 +46,7 @@
       "canary_scalar_leak": {
         "family": "sgd_logistic",
         "feature_mode": "compressed_bits_plus_deliberate_scalar_leak",
-        "fit_seconds": 0.645848322994425,
+        "fit_seconds": 0.6363817349993042,
         "recipe_id": "fixed_control_logistic",
         "run_id": "control/canary_scalar_leak/fixed_control_logistic",
         "stage": "control",
@@ -85,7 +85,7 @@
       "permuted_d_bit_0": {
         "family": "sgd_logistic",
         "feature_mode": "compressed_bits",
-        "fit_seconds": 0.6308505490014795,
+        "fit_seconds": 0.6287066990043968,
         "recipe_id": "fixed_control_logistic",
         "run_id": "control/permuted_d_bit_0/fixed_control_logistic",
         "stage": "control",
@@ -317,10 +317,10 @@
     {
       "configured_train_records": 600000,
       "configured_validation_records": 200000,
-      "evaluation_seconds": 0.2309797139969305,
+      "evaluation_seconds": 0.22268521299702115,
       "family": "extra_trees",
       "feature_mode": "compressed_bytes",
-      "fit_seconds": 1.1599939039952005,
+      "fit_seconds": 1.2579128990037134,
       "max_train_records": 200000,
       "parameters": {
         "max_depth": 8,
@@ -359,10 +359,10 @@
     {
       "configured_train_records": 600000,
       "configured_validation_records": 200000,
-      "evaluation_seconds": 0.04245299800095381,
+      "evaluation_seconds": 0.02756272000260651,
       "family": "sgd_logistic",
       "feature_mode": "x_limbs16",
-      "fit_seconds": 0.7302117630024441,
+      "fit_seconds": 0.6574408300002688,
       "max_train_records": null,
       "parameters": {
         "alpha": 0.0001,
@@ -400,10 +400,10 @@
     {
       "configured_train_records": 600000,
       "configured_validation_records": 200000,
-      "evaluation_seconds": 0.035838629002682865,
+      "evaluation_seconds": 0.036170371997286566,
       "family": "sgd_logistic",
       "feature_mode": "x_limbs16",
-      "fit_seconds": 2.040765541998553,
+      "fit_seconds": 1.961143070999242,
       "max_train_records": null,
       "parameters": {
         "alpha": 0.0001,
@@ -473,7 +473,7 @@
     "experiments/ml_structure_probe/config/automl_million_replica.json": "30449babb721fe49f4d295914dfffc6c5f1e8ff47b4a17004c94be5888a6093a"
   },
   "source_state": {
-    "commit": "fd8a93b090b8b2fb7f5b8c59b57dd8150ea619cf",
+    "commit": "262e236f0c4fe62ffa05d0f2a14741197393d897",
     "tracked_files_dirty": false
   }
 }

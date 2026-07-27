@@ -32,6 +32,12 @@ def build(
     validation = load(validation_path)
     probe = load(probe_path)
     automl = load(automl_path)
+    ledger_path = automl_path.with_name("run_ledger.jsonl")
+    ledger = [
+        json.loads(line)
+        for line in ledger_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
     manifest_sha256 = sha256_file(manifest_path)
     errors: list[str] = []
     if validation.get("manifest_sha256") != manifest_sha256:
@@ -46,6 +52,20 @@ def build(
         errors.append("linear probe pipeline did not pass")
     if automl.get("pipeline_status") != "pass":
         errors.append("AutoML pipeline did not pass")
+    expected_run_ids = {
+        item["run_id"] for item in automl["runs"]
+    } | {
+        item["run_id"] for item in automl["finalists"].values()
+    } | {
+        item["run_id"] for item in automl["controls"]["tasks"].values()
+    }
+    ledger_run_ids = [item["run_id"] for item in ledger]
+    if len(ledger_run_ids) != len(set(ledger_run_ids)):
+        errors.append("AutoML ledger contains duplicate run ids")
+    if set(ledger_run_ids) != expected_run_ids:
+        missing = sorted(expected_run_ids - set(ledger_run_ids))
+        extra = sorted(set(ledger_run_ids) - expected_run_ids)
+        errors.append(f"AutoML ledger mismatch: missing={missing}, extra={extra}")
     if errors:
         raise ValueError("; ".join(errors))
 
@@ -108,6 +128,7 @@ def build(
             "dataset_validation.json": sha256_file(validation_path),
             "linear_probe_result.json": sha256_file(probe_path),
             "automl_result.json": sha256_file(automl_path),
+            "run_ledger.jsonl": sha256_file(ledger_path),
         },
         "scope": automl["scope"],
     }

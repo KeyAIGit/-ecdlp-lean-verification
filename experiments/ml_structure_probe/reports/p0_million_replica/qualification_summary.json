@@ -1,9 +1,10 @@
 {
   "artifact_hashes": {
-    "automl_result.json": "2fb2a3319ae24d54dd4a55a17e545d7552ab23160d1dd7493c2af476fdf3f728",
+    "automl_result.json": "0ce3c89358bb65e062f61a3c05c13c499d02ac0c514e320558e711845321f813",
     "dataset_manifest.json": "5c50fde3c82d093a703907f46602fe021a618b4759bff865f73ceabdd5b37d2e",
     "dataset_validation.json": "fc6f24f1fb99b74046903215bb181ab4d9953ee7e7c6e69466352f0f841b1ffc",
-    "linear_probe_result.json": "44597eddce5a0ed6be6ce06fb80e1abfd8ca0d9803fb417d301c497b0ed6649f"
+    "linear_probe_result.json": "44597eddce5a0ed6be6ce06fb80e1abfd8ca0d9803fb417d301c497b0ed6649f",
+    "run_ledger.jsonl": "bcc741ba09838fe728c20a20cfdcb54b3ea625b9a856fc8b3aa7f6177325765c"
   },
   "automl": {
     "controls": {
@@ -184,7 +185,7 @@
     },
     "signals": [],
     "source_state": {
-      "commit": "fd8a93b090b8b2fb7f5b8c59b57dd8150ea619cf",
+      "commit": "262e236f0c4fe62ffa05d0f2a14741197393d897",
       "tracked_files_dirty": false
     }
   },
