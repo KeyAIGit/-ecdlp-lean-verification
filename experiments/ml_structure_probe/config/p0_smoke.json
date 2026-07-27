@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ML-STRUCTURE-PROBE-P0-SMOKE",
+  "curve": "secp256k1",
+  "record_format": "scalar32-compressed-point33-v1",
+  "master_seed_hex": "68d843aca81dd7c92f2045925447af697caa5eaf63fa9d987c899888c7a67ea0",
+  "splits": {
+    "train": 6000,
+    "validation": 2000,
+    "test": 2000
+  },
+  "shard_records": 2000,
+  "workers": 2,
+  "validator_spot_checks": 64,
+  "quality_thresholds": {
+    "max_scalar_bit_abs_z": 8.0,
+    "max_public_x_bit_abs_z": 10.0,
+    "max_y_parity_abs_z": 8.0
+  },
+  "probe": {
+    "feature_mode": "compressed_public_bits",
+    "batch_records": 2000,
+    "epochs": 2,
+    "alpha": 0.0001,
+    "eta0": 0.01,
+    "random_state": 1729,
+    "minimum_information_gain_bits": 0.01,
+    "minimum_accuracy_lift": 0.002,
+    "minimum_accuracy_z": 6.0,
+    "tasks": [
+      "d_bit_0",
+      "d_bit_127",
+      "d_mod_3",
+      "canary_public_y_parity",
+      "canary_scalar_leak",
+      "permuted_d_bit_0"
+    ]
+  }
+}

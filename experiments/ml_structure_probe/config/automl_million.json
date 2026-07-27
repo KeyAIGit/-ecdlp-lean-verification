@@ -1,0 +1,289 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ML-STRUCTURE-PROBE-P0-AUTOML-1M",
+  "random_state": 314159,
+  "jobs": 8,
+  "prediction_batch_records": 25000,
+  "scientific_tasks": [
+    "d_bit_0",
+    "d_bit_127",
+    "d_mod_3"
+  ],
+  "rounds": [
+    {
+      "name": "screen",
+      "train_records": 50000,
+      "validation_records": 50000,
+      "survivors_per_task": 6,
+      "preserve_family_diversity": true
+    },
+    {
+      "name": "confirm",
+      "train_records": 200000,
+      "validation_records": 100000,
+      "survivors_per_task": 2,
+      "preserve_family_diversity": false
+    },
+    {
+      "name": "final_selection",
+      "train_records": 600000,
+      "validation_records": 200000,
+      "survivors_per_task": 1,
+      "preserve_family_diversity": false
+    }
+  ],
+  "final_test_records": 200000,
+  "controls": {
+    "train_records": 200000,
+    "validation_records": 100000,
+    "test_records": 100000,
+    "alpha": 0.0001,
+    "eta0": 0.01,
+    "epochs": 3
+  },
+  "thresholds": {
+    "minimum_information_gain_bits": 0.01,
+    "minimum_accuracy_lift": 0.002,
+    "minimum_accuracy_z": 6.0
+  },
+  "recipes": [
+    {
+      "id": "logistic_bits_a1e5_e003",
+      "family": "sgd_logistic",
+      "feature_mode": "compressed_bits",
+      "params": {
+        "alpha": 0.00001,
+        "eta0": 0.003,
+        "epochs": 3
+      }
+    },
+    {
+      "id": "logistic_bits_a1e5_e01",
+      "family": "sgd_logistic",
+      "feature_mode": "compressed_bits",
+      "params": {
+        "alpha": 0.00001,
+        "eta0": 0.01,
+        "epochs": 3
+      }
+    },
+    {
+      "id": "logistic_bits_a1e4_e003",
+      "family": "sgd_logistic",
+      "feature_mode": "compressed_bits",
+      "params": {
+        "alpha": 0.0001,
+        "eta0": 0.003,
+        "epochs": 3
+      }
+    },
+    {
+      "id": "logistic_bits_a1e4_e01",
+      "family": "sgd_logistic",
+      "feature_mode": "compressed_bits",
+      "params": {
+        "alpha": 0.0001,
+        "eta0": 0.01,
+        "epochs": 3
+      }
+    },
+    {
+      "id": "logistic_bits_a1e3_e003",
+      "family": "sgd_logistic",
+      "feature_mode": "compressed_bits",
+      "params": {
+        "alpha": 0.001,
+        "eta0": 0.003,
+        "epochs": 3
+      }
+    },
+    {
+      "id": "logistic_bytes_a1e4",
+      "family": "sgd_logistic",
+      "feature_mode": "compressed_bytes",
+      "params": {
+        "alpha": 0.0001,
+        "eta0": 0.01,
+        "epochs": 4
+      }
+    },
+    {
+      "id": "logistic_limbs_a1e4",
+      "family": "sgd_logistic",
+      "feature_mode": "x_limbs16",
+      "params": {
+        "alpha": 0.0001,
+        "eta0": 0.01,
+        "epochs": 4
+      }
+    },
+    {
+      "id": "logistic_popcount_a1e4",
+      "family": "sgd_logistic",
+      "feature_mode": "byte_popcounts",
+      "params": {
+        "alpha": 0.0001,
+        "eta0": 0.01,
+        "epochs": 4
+      }
+    },
+    {
+      "id": "bernoulli_bits_a01",
+      "family": "bernoulli_nb",
+      "feature_mode": "compressed_bits",
+      "params": {
+        "alpha": 0.1
+      }
+    },
+    {
+      "id": "bernoulli_bits_a1",
+      "family": "bernoulli_nb",
+      "feature_mode": "compressed_bits",
+      "params": {
+        "alpha": 1.0
+      }
+    },
+    {
+      "id": "bernoulli_bits_a10",
+      "family": "bernoulli_nb",
+      "feature_mode": "compressed_bits",
+      "params": {
+        "alpha": 10.0
+      }
+    },
+    {
+      "id": "trees_bytes_d8_l5",
+      "family": "extra_trees",
+      "feature_mode": "compressed_bytes",
+      "max_train_records": 200000,
+      "params": {
+        "n_estimators": 64,
+        "max_depth": 8,
+        "min_samples_leaf": 5,
+        "max_features": "sqrt"
+      }
+    },
+    {
+      "id": "trees_bytes_d16_l10",
+      "family": "extra_trees",
+      "feature_mode": "compressed_bytes",
+      "max_train_records": 200000,
+      "params": {
+        "n_estimators": 64,
+        "max_depth": 16,
+        "min_samples_leaf": 10,
+        "max_features": "sqrt"
+      }
+    },
+    {
+      "id": "trees_limbs_d12_l10",
+      "family": "extra_trees",
+      "feature_mode": "x_limbs16",
+      "max_train_records": 200000,
+      "params": {
+        "n_estimators": 64,
+        "max_depth": 12,
+        "min_samples_leaf": 10,
+        "max_features": 0.7
+      }
+    },
+    {
+      "id": "hist_bytes_l15",
+      "family": "hist_gbdt",
+      "feature_mode": "compressed_bytes",
+      "max_train_records": 200000,
+      "params": {
+        "learning_rate": 0.08,
+        "max_iter": 80,
+        "max_leaf_nodes": 15,
+        "min_samples_leaf": 30,
+        "l2_regularization": 1.0
+      }
+    },
+    {
+      "id": "hist_limbs_l31",
+      "family": "hist_gbdt",
+      "feature_mode": "x_limbs16",
+      "max_train_records": 200000,
+      "params": {
+        "learning_rate": 0.05,
+        "max_iter": 100,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 30,
+        "l2_regularization": 2.0
+      }
+    },
+    {
+      "id": "mlp_bytes_h32",
+      "family": "mlp",
+      "feature_mode": "compressed_bytes",
+      "max_train_records": 300000,
+      "params": {
+        "hidden_layers": [
+          32
+        ],
+        "alpha": 0.0001,
+        "batch_size": 1024,
+        "learning_rate_init": 0.001,
+        "epochs": 5
+      }
+    },
+    {
+      "id": "mlp_bytes_h64_32",
+      "family": "mlp",
+      "feature_mode": "compressed_bytes",
+      "max_train_records": 300000,
+      "params": {
+        "hidden_layers": [
+          64,
+          32
+        ],
+        "alpha": 0.001,
+        "batch_size": 1024,
+        "learning_rate_init": 0.001,
+        "epochs": 5
+      }
+    },
+    {
+      "id": "mlp_bits_h32",
+      "family": "mlp",
+      "feature_mode": "compressed_bits",
+      "max_train_records": 200000,
+      "params": {
+        "hidden_layers": [
+          32
+        ],
+        "alpha": 0.001,
+        "batch_size": 1024,
+        "learning_rate_init": 0.0005,
+        "epochs": 4
+      }
+    },
+    {
+      "id": "rbf_bytes_g01",
+      "family": "rbf_sgd",
+      "feature_mode": "compressed_bytes",
+      "max_train_records": 300000,
+      "params": {
+        "gamma": 0.1,
+        "n_components": 128,
+        "alpha": 0.0001,
+        "eta0": 0.01,
+        "epochs": 3
+      }
+    },
+    {
+      "id": "rbf_bytes_g1",
+      "family": "rbf_sgd",
+      "feature_mode": "compressed_bytes",
+      "max_train_records": 300000,
+      "params": {
+        "gamma": 1.0,
+        "n_components": 256,
+        "alpha": 0.0001,
+        "eta0": 0.01,
+        "epochs": 3
+      }
+    }
+  ]
+}
