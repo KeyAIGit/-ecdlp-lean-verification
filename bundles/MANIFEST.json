@@ -289,7 +289,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 25439
+        "bytes": 25482
       },
       {
         "path": "experiments/engine/README.md",
@@ -603,7 +603,7 @@
         "path": "experiments/HYPOTHESES.yaml",
         "reason": "testable directions with evidence and exit criteria",
         "exists": true,
-        "bytes": 25439
+        "bytes": 25482
       },
       {
         "path": "experiments/engine/README.md",
