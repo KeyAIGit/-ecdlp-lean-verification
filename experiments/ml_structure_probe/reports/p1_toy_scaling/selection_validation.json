@@ -1,0 +1,62 @@
+{
+  "bindings": {
+    "catalog_sha256": "d293afa7e5b614f39ed00356e35ee81a400b57ee9656907170193cb3aca0bbd7",
+    "config_sha256": "85594d83b1979320bbc25b5017052ef888bbe4890d81d4f25658e05b446632b5",
+    "curve_validation_sha256": "9f66477d9ed1309fa785ebf4c9df68ad5bf8cbf632ea9586c902db7789b4dada",
+    "dataset_validation_sha256": "61162b173a62b12eb1f47d1813bb62dc749f823aecdc072ada00cff325d1ca00",
+    "manifest_sha256": "28dfcf66a18626a26bda3ef734da93ceb6a31b2a4a277d78789e918b1d2ef80d",
+    "preregistration_sha256": "b15d29620c1aa05fc9fef7eb76eedfca4a263082bdcce4da6735519ac4d9f474"
+  },
+  "dataset_files_opened": [],
+  "error_count": 0,
+  "errors": [],
+  "errors_truncated": false,
+  "experiment_id": "ML-P1E-TOY-SCALING-2026-07-27-R2",
+  "input_validation": {
+    "curve_count": 40,
+    "curve_validation_sha256": "9f66477d9ed1309fa785ebf4c9df68ad5bf8cbf632ea9586c902db7789b4dada",
+    "curve_validation_status": "pass",
+    "dataset_ec_checks": 1105920,
+    "dataset_full_ec_replay": true,
+    "dataset_validation_sha256": "61162b173a62b12eb1f47d1813bb62dc749f823aecdc072ada00cff325d1ca00",
+    "dataset_validation_status": "pass"
+  },
+  "producer_modules_imported": false,
+  "provenance": {
+    "catalog_source_commit": "dc69bf077353d995b6ce304d10264ea1a23592b1",
+    "catalog_source_is_ancestor": true,
+    "selection_source_commit": "46500e797527e027effcb6960debcaf8ddf1a085",
+    "selection_source_is_ancestor": true,
+    "validation_artifact_commit": "1663c993b72d2b8bf7db49102a8dc8f9b2479063",
+    "worktree_clean_before_validation": true
+  },
+  "report_payload_sha256": "259b735071bfdf3f1299abecb06781bc36c8dc1084ae32796f9d550f65f5ec71",
+  "schema_version": 1,
+  "selection": {
+    "blind_evaluation_authorized": true,
+    "recipe_sha256": "f5df480c7e35c9d3f85ee1b34eddc4f640d16196d674a0f98e27c0e614927962",
+    "run_counts": {
+      "confirmation": 7,
+      "controls": 16,
+      "failed": 0,
+      "screen": 196,
+      "successful": 219
+    },
+    "selection_ledger_sha256": "53b91cc9b1dfed7a4c00cd26c973cd3ac35bf8ca0b64ecab59dadf3dd065e153",
+    "selection_result_sha256": "997a9bccbdd5642346ceb0ad5c535de063ca608778e24d4e13f96367a2ac4cb2"
+  },
+  "source_commit": "1663c993b72d2b8bf7db49102a8dc8f9b2479063",
+  "source_worktree_dirty_before_run": false,
+  "status": "pass",
+  "validation_role": "independent pre-blind selection authorization",
+  "validator_hashes": {
+    "framework_oracle_sha256": "7acc852df5a927a7954f56bd9548ec021ef0b0c92f5435e8f213363f71c72792",
+    "validate_curves_sha256": "0a33a4c1c62242a1a271822323b47c5baa876dec17dcaf2fb847aee15ab0e859",
+    "validate_dataset_sha256": "0d5591a27c55e9f0c8b26c24d4c7e20a3ffead94c35eb3e9d539f323b7d59564",
+    "validate_results_sha256": "5153adcaae3e22f2fdf562d700930866c20d180f752b63c8d2c655422b3ad91d",
+    "validate_selection_sha256": "f1d4368ba0f58f41611794e02e5e9a44bb8f14895fa0f896a677c2ee8c88506d"
+  },
+  "validator_sha256": "f1d4368ba0f58f41611794e02e5e9a44bb8f14895fa0f896a677c2ee8c88506d",
+  "wall_time_seconds": 0.14053918200079352,
+  "warnings": []
+}
