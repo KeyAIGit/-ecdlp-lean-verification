@@ -3,9 +3,9 @@
   "state_id": "research-engine-shadow-intake-v0",
   "status": "shadow_non_executing",
   "source_hashes": {
-    "source_registry_sha256": "aac8f9d395d9614610c716f528f202ec5277991b66d3c6086f7bd02a8495f1d3",
-    "typed_evidence_state_sha256": "6b9b9ef4d4b9c517a99f15fe95f2ac2c88a83b1766972c8d697da6b01882b9e2",
-    "research_claim_state_sha256": "e0fe680c265d3b1632915dd6ad48aa781484ab688acc9649e490aedab20ffbe1"
+    "source_registry_sha256": "274dfe7594f04989c281139b1d752f0b595f62d7fb103762b309f45e3dd4dd6f",
+    "typed_evidence_state_sha256": "fee8d3d62bd5361aea74352d6c7a2dd170e4c12002d1b4dba4aef65e8f67b3c3",
+    "research_claim_state_sha256": "0e53d7f41f3aa2bcd61d91cee4946ed7f0e40549fcf8922fd8be66fdc0198ddb"
   },
   "counts": {
     "proposal_stubs": 4,
@@ -96,7 +96,8 @@
         "Ecdlp/Proved/SemaevFour.lean",
         "cell:CELL-M-PKC-SMOOTH-M16",
         "data/source_claim_extracts/petit_kosters_messeng2016.json",
-        "experiments/engine/pkc_smooth_desk_screen/artifact.json"
+        "experiments/engine/pkc_smooth_desk_screen/artifact.json",
+        "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
       ],
       "lifecycle_state": "idea",
       "scientific_identity": "research_question_seed",

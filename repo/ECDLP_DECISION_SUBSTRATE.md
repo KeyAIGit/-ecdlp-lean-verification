@@ -6,7 +6,7 @@
 
 Given P in E(F_p), P != O, Q in <P>, Q = [k]P, **Recover k modulo ord(P). The primary target fixes P to a generator of the prime-order secp256k1 group, so ord(P) = n.**
 
-Current phase: **research-engine-v0.2-sanitation**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Selected promoted route: **none**.
+Current phase: **evidence-bounded-desk-priority**. Bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Selected promoted route: **none**.
 
 Bounded structural routes recorded by the decision: **1** (`R-GLV-SEMAEV`). Promoted routes: **0** (-).
 
@@ -78,7 +78,7 @@ Reopen selection only when:
 | P1 | **R-WEIL-DESCENT**: Weil descent and GHS-style transfer | `ruled_out_for_target` | `classical-single-target-plain` | Document as a target-applicability exclusion; no formal stack now. |
 | P2 | **R-EDS-DIVISION-POLYNOMIAL**: Elliptic divisibility sequences and division-polynomial re-encodings | `open_parked` | `classical-single-target-plain` | Keep HYP_WARD_EDS_001 parked; finish no additional point-division bridge unless a selected route needs it. |
 | P2 | **R-INTERVAL-AUXILIARY-INPUT**: Interval DLP, partial-key knowledge, and auxiliary-power algorithms | `conditional_only` | `classical-conditioned` | Keep as a scope category for future protocol or leakage analyses. |
-| P2 | **R-PETIT-COMPOSED-MAPS**: Petit-style composed rational maps | `open_parked` | `classical-single-target-plain` | Keep the route parked while proposal intake separates the two source mechanisms. First perform an exact target-applicability screen for the p-1-smooth construction. Treat the auxiliary-curve/self-isogeny construction as a genuinely open mechanism only after it supplies exact recovery semantics and a falsifiable prediction for a dedicated generalized-root solver; do not authorize an undirected solver sweep. |
+| P2 | **R-PETIT-COMPOSED-MAPS**: Petit-style composed rational maps | `open_parked` | `classical-single-target-plain` | Keep the route parked. TASK-015 recorded a scoped M16 cost blocker with zero retained hypotheses. TASK-016 gives sole desk priority to the source-faithful ideal and recovery semantics for CELL-M-PKC-SMOOTH-M16, RSI-D8BBA6340789, and CQ-SEMAEV-S17-SYSTEM-COST, with no system materialization or solver execution. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion. |
 | P3 | **R-ISOGENY-ENDOMORPHISM-TRANSFER**: Isogeny, endomorphism-ring, and Frobenius transfer | `monitor` | `classical-single-target-plain` | Monitor literature and reuse GLV facts; no build now. |
 
 ## Route evidence
@@ -216,7 +216,7 @@ Reopen selection only when:
 
 - **Applicability:** conceptually direct, with no validated subgeneric secp256k1 algorithm in the audited evidence
 - **Known cost:** No accepted plain-prime-field asymptotic improvement is established here; known toy systems encounter relation-yield, degree, and memory barriers.
-- **Evidence:** S3/S4 foundations and limited toy measurements exist, but they do not establish a degree-of-regularity law or subgeneric scaling.
+- **Evidence:** S3/S4 foundations and limited toy measurements exist, but they do not establish a degree-of-regularity law or subgeneric scaling. WCC 2017 adds bounded m=2 practicality evidence on selected small primes and explicitly makes no asymptotic claim.
 - **Promotion gate:** Provide an exact relation system, independent EC validation, a justified solving-cost model, and multi-size evidence consistent with o(sqrt(n)).
 - **Stop condition:** Park when gains rely only on factor-base constants, unvalidated Macaulay proxies, tiny fields, or hidden exhaustive enumeration.
 - **Anti-overclaim:** Solving selected toy systems or proving Semaev identities does not establish a practical or asymptotic ECDLP improvement.
@@ -224,7 +224,7 @@ Reopen selection only when:
 - **Formal nodes:** `semaev-foundations`, `experimental-hypotheses`
 - **Lean anchors:** `Ecdlp.Semaev.S₃_eq_zero_iff`, `Ecdlp.Semaev.S₄_eq_zero_of_common_root`
 - **Repository evidence:** `Ecdlp/Proved/SemaevThree.lean`, `Ecdlp/Proved/SemaevFour.lean`, `experiments/p1_petit_m3/RESULTS.md`
-- **Primary sources:** [semaev2004: Summation polynomials and the discrete logarithm problem on elliptic curves](https://eprint.iacr.org/2004/031), [gaudry2009: Index calculus for abelian varieties of small dimension and the elliptic curve discrete logarithm problem](https://doi.org/10.1016/j.jsc.2008.08.005), [diem2011: On the discrete logarithm problem in elliptic curves](https://doi.org/10.1112/S0010437X10005075), [petit_kosters_messeng2016: Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over Prime Fields](https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf), [amadori_pintore_sala2018: On the Discrete Logarithm Problem for Prime-Field Elliptic Curves](https://eprint.iacr.org/2017/609), [fhjrv2014: Symmetrized Summation Polynomials: Using Small Order Torsion Points to Speed Up Elliptic Curve Index Calculus](https://www.iacr.org/archive/eurocrypt2014/84410158/84410158.pdf)
+- **Primary sources:** [semaev2004: Summation polynomials and the discrete logarithm problem on elliptic curves](https://eprint.iacr.org/2004/031), [gaudry2009: Index calculus for abelian varieties of small dimension and the elliptic curve discrete logarithm problem](https://doi.org/10.1016/j.jsc.2008.08.005), [diem2011: On the discrete logarithm problem in elliptic curves](https://doi.org/10.1112/S0010437X10005075), [petit_kosters_messeng2016: Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over Prime Fields](https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf), [amadori_pintore_sala2018: On the Discrete Logarithm Problem for Prime-Field Elliptic Curves](https://eprint.iacr.org/2017/609), [yokota_kudo_yasuda2017_wcc: Practical Limit of Index Calculus Algorithms for ECDLP over Prime Fields](https://drive.google.com/file/d/1I8t-2nEMqzTr8ueppHIO3xWHe1khWiAb/view?usp=sharing), [fhjrv2014: Symmetrized Summation Polynomials: Using Small Order Torsion Points to Speed Up Elliptic Curve Index Calculus](https://www.iacr.org/archive/eurocrypt2014/84410158/84410158.pdf)
 
 ### R-PROTOCOL-FAULT-SIDECHANNEL: Invalid-curve, twist, fault, and side-channel routes
 
@@ -300,7 +300,7 @@ Reopen selection only when:
 
 - **Applicability:** source-grounded but target applicability remains unresolved: PKC 2016 specifies a p-1-smooth construction and a separate auxiliary-curve construction whose own self-isogeny defines the root map; neither has a validated secp256k1 full-cost bridge
 - **Known cost:** No reliable project estimate; the existing six-variable toy presentation is explicitly non-faithful and descriptive.
-- **Evidence:** The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-curve realizations. In the second construction the auxiliary curve only shares the base field with the target; a self-isogeny of the auxiliary curve defines the root map. The paper explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. Historical P4 did not implement either construction and remains only an inconclusive negative control; it is not evidence against the faithful route.
+- **Evidence:** The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-curve realizations. In the second construction the auxiliary curve only shares the base field with the target; a self-isogeny of the auxiliary curve defines the root map. The paper explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. WCC 2017 adds bounded m=2 practicality evidence on selected small primes and a distinct p-plus-one trace extension; it cannot be transferred quantitatively to m=16 or substituted for the auxiliary curve. Historical P4 did not implement either PKC construction and remains only an inconclusive negative control; it is not evidence against the faithful route.
 - **Promotion gate:** First reproduce the exact construction from a verified primary source, then compare it under the common evaluation contract.
 - **Stop condition:** Reject low-bit filters, redundant auxiliary variables, or presentation-only degree changes as substitutes for the cited construction.
 - **Anti-overclaim:** The existing P4 experiment is not a faithful Petit implementation and cannot support a claim about the original method.
@@ -308,7 +308,7 @@ Reopen selection only when:
 - **Formal nodes:** `semaev-foundations`, `experimental-hypotheses`
 - **Lean anchors:** -
 - **Repository evidence:** `experiments/p4_petit/README.md`, `experiments/p4_petit/RESULTS.md`
-- **Primary sources:** [petit_kosters_messeng2016: Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over Prime Fields](https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf), [amadori_pintore_sala2018: On the Discrete Logarithm Problem for Prime-Field Elliptic Curves](https://eprint.iacr.org/2017/609)
+- **Primary sources:** [petit_kosters_messeng2016: Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over Prime Fields](https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf), [amadori_pintore_sala2018: On the Discrete Logarithm Problem for Prime-Field Elliptic Curves](https://eprint.iacr.org/2017/609), [yokota_kudo_yasuda2017_wcc: Practical Limit of Index Calculus Algorithms for ECDLP over Prime Fields](https://drive.google.com/file/d/1I8t-2nEMqzTr8ueppHIO3xWHe1khWiAb/view?usp=sharing)
 
 ### R-ISOGENY-ENDOMORPHISM-TRANSFER: Isogeny, endomorphism-ring, and Frobenius transfer
 
@@ -363,8 +363,8 @@ The tracked 2026 quantum update (`luo2026`) reports **835 logical qubits** and *
 - Specify fixed-target behavior, recovery map, orbit tags, excluded components, and a falsifiable full-cost prediction.
 - Provide an independent raw-artifact validator before requesting any solver experiment.
 - Require a new dated decision before any hypothesis experiment, general solver sweep, route promotion, or exact-target work.
-- For any later promotion, pass every common acceptance requirement and bind the same route, hypothesis, task, mechanism, validator, and cost theorem.
+- For any later promotion, pass every common acceptance requirement and bind one exact route, hypothesis, task, mechanism, validator, and cost theorem consistently across all governing artifacts.
 
-**Route selection:** RS-2026-07-24-001 completed GLV-SEMAEV-ITER-001 with a diagonal-only bounded result. R-GLV-SEMAEV remains open_parked, zero routes are promoted, zero experiments are authorized, and TASK-008 proposal intake is the current central ECDLP queue.
+**Current phase gate:** RS-2026-07-24-001 remains the last attack-route selection and promotes no route. TASK-010 is accepted at commit 85f85d4ca0b9dba323bfdd05ce8750d6db4732ac. TASK-015 completed with a scoped M16 blocker and zero retained hypotheses. TASK-016 keeps CELL-M-PKC-SMOOTH-M16 as the next non-executable ideal-and-recovery semantics question; it is not a hypothesis, candidate, experiment, or route promotion.
 
 **Final review:** Independent adversarial review is requested when another qualified reviewer is available. It is an additional audit, not a merge prerequisite; required CI, explicit scope, rollback safety, and the owner's standing authorization govern merges.

@@ -107,7 +107,7 @@ nothing. The generation layer currently emits
 Creative output is untrusted and zero retained drafts is a valid cycle result.
 Selected bounded explorations: **0** (none). Ready now: **0** (none). **0 candidates remain at intake** behind exact-mechanism or independent-validator hard gates.
 
-## Research Engine v0.2 sanitation
+## Research Engine v0.2 lifecycle
 The v0.2 lifecycle currently contains
 **0 immutable candidate snapshots**,
 **0 admissible**,
@@ -122,16 +122,20 @@ stubs** and **1 parked desired-property record**.
 These are research questions, not hypotheses or candidates:
 **0 admissible**,
 **0 recommended**, and
-**0 authorized**. Current sanitation work is `TASK-010`;
-`TASK-008` remains parked until this lifecycle is reviewed on a frozen commit.
+**0 authorized**. `TASK-010` is accepted at
+`85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-015` completed with an M16
+scoped blocker and zero retained hypotheses. Current work is `TASK-016`, which
+keeps `CELL-M-PKC-SMOOTH-M16` as a non-executable semantics question.
+`TASK-008` remains parked because no hypothesis proposal has quality-cleared.
 
 The Engine's bounded-exploration capability is
 **true**, while the current decision's experiment
 authorization is **false** and the promotion gate is
 **false**. `GLV-SEMAEV-ITER-001` is complete; its
-certificates and kernel-checked identities authorize no hypothesis run. `TASK-008` proposal
-intake is parked during `TASK-010`, and any later experiment needs a new dated decision plus the normal fixed
-budgets, dependency order, and retained terminal outcome.
+certificates and kernel-checked identities authorize no hypothesis run. `TASK-016` authorizes no
+S17 expansion, polynomial-system materialization, solver, target computation, or route promotion. Any later experiment needs
+a new dated decision plus the normal fixed budgets, dependency order, and retained terminal
+outcome.
 
 ## Active work protocol
 `tasks/NEXT.md` is the queue router. ECDLP research is owned by

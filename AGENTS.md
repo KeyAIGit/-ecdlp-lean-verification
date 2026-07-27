@@ -123,9 +123,16 @@ branch from current `main`; preserve any unrelated local changes.
   hypothesis, or authorize execution.
 - Generated seeds and quality-cleared drafts are non-executable. Creative model
   output is untrusted; zero retained drafts is a valid cycle result.
-- `TASK-010` is the current central task under
-  `RESEARCH-ENGINE-V0.2-SANITATION-001`. It repairs the audited Research Engine
-  lifecycle and generation plane without authorizing execution.
+- `TASK-010` and `RESEARCH-ENGINE-V0.2-SANITATION-001` are accepted at
+  `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. The lifecycle remains
+  non-executing and authorizes no route promotion.
+- `TASK-014` closed the first post-v0.2 evidence and arithmetic desk cycle.
+  Phase D remains blocked with zero retained candidates.
+- `TASK-015` completed the M16 symbolic desk with a scoped blocker and zero
+  retained hypotheses. `TASK-016` is the current central task and gives sole
+  desk priority to the source-faithful ideal and recovery semantics for
+  `CELL-M-PKC-SMOOTH-M16`. This is not a selected hypothesis, candidate,
+  experiment, or attack route.
 - `TASK-008` remains the parked proposal-intake lane. Intake does not bypass
   owner authorization or authorize promotion by itself.
 - The division-polynomial, torsion, Weil, Semaev, cost-model, lattice, isogeny,
@@ -133,8 +140,8 @@ branch from current `main`; preserve any unrelated local changes.
   because it is deep or absent from Mathlib.
 - All hypotheses remain parked as experiments. The completed structural lane
   did not promote `HYP_GLV_SEMAEV_001` or the broader Semaev foundation.
-- Earlier TASK-010 review briefs are frozen historical snapshots. The active
-  remediation set is `notes/reviews/RESEARCH_ENGINE_V0_2_BASELINE_AUDIT.md`,
+- TASK-010 review briefs are frozen audit inputs for the accepted lifecycle:
+  `notes/reviews/RESEARCH_ENGINE_V0_2_BASELINE_AUDIT.md`,
   `notes/reviews/RESEARCH_ENGINE_V0_2_ORACLE_INTAKE.md`,
   `notes/RESEARCH_ENGINE_V0_TO_V0_2.md`, and
   `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json`.

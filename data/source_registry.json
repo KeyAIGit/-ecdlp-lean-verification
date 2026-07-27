@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "purpose": "External works cited across the substrate, with provenance (where_used) computed from the hand-authored docs. Companion to result_registry.json (theorem-name provenance).",
   "scan_scope": "**/*.md excluding .git, .lake, archive, data, node_modules, platform",
-  "source_count": 27,
+  "source_count": 28,
   "sources": [
     {
       "id": "amadori_pintore_sala2018",
@@ -236,6 +236,7 @@
         "VERIFIED.md",
         "domains/p256/corpus.md",
         "experiments/README.md",
+        "experiments/engine/pkc_smooth_m16_symbolic_desk/README.md",
         "experiments/glv_diagonal_obstruction/README.md",
         "experiments/glv_semaev_symmetry/README.md",
         "experiments/ml_structure_probe/README.md",
@@ -363,7 +364,6 @@
         "domains/p256/corpus.md",
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
-        "notes/HYPOTHESIS_EXPLORER.md",
         "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md",
         "notes/WEIL_LADDER.md"
@@ -493,6 +493,7 @@
         "PUBLISHABLE_UNITS.md",
         "README.md",
         "VERIFIED.md",
+        "experiments/engine/pkc_smooth_m16_symbolic_desk/README.md",
         "experiments/ml_structure_probe/README.md",
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/RESEARCH_MAP.md",
@@ -601,7 +602,6 @@
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
         "notes/GLV_SEMAEV_ITERATION_001.md",
-        "notes/HYPOTHESIS_EXPLORER.md",
         "notes/RESEARCH_MAP.md",
         "notes/UPSTREAM_SCAN.md",
         "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
@@ -694,7 +694,6 @@
         "experiments/p2_ward_eds/RESULTS.md",
         "notes/FOUNDATIONS.md",
         "notes/FOUNDATION_ROADMAP.md",
-        "notes/HYPOTHESIS_EXPLORER.md",
         "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
       ]
@@ -765,6 +764,29 @@
       "full_text_status": "not_asserted",
       "where_used": [
         "notes/GLV_SEMAEV_ITERATION_001.md"
+      ]
+    },
+    {
+      "id": "yokota_kudo_yasuda2017_wcc",
+      "title": "Practical Limit of Index Calculus Algorithms for ECDLP over Prime Fields",
+      "authors": [
+        "Yuki Yokota",
+        "Momonari Kudo",
+        "Masaya Yasuda"
+      ],
+      "year": 2017,
+      "venue": "Proceedings of the Tenth International Workshop on Coding and Cryptography (WCC 2017), 12 pp.",
+      "url": "https://drive.google.com/file/d/1I8t-2nEMqzTr8ueppHIO3xWHe1khWiAb/view?usp=sharing",
+      "doi": null,
+      "aliases": [
+        "Yokota-Kudo-Yasuda",
+        "Practical Limit"
+      ],
+      "role": "Primary extended-abstract evidence for the bounded m=2 experiments on p-minus-one smooth-factor accelerations and the separate p-plus-one trace construction.",
+      "full_text_status": "full_text_inspected",
+      "note": "The author-linked 12-page PDF was inspected and hashed as a60b09327429f0fd99561cd600455ee38da687078b55250ad4ebcb1170b7ded4. It is a separate WCC 2017 precursor, not the CANS 2018 paper, and does not change the latter's full_text_unread status.",
+      "where_used": [
+        "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md"
       ]
     },
     {

@@ -952,8 +952,8 @@ def generate_seeds(
             )
             instruction = (
                 "Return an exact symbolic size and cost bridge or a scoped "
-                "blocker. Do not request compute while the desk quantity is "
-                "missing."
+                "blocker. Do not request compute while the complete desk "
+                "bridge is unresolved."
             )
         else:
             status = "proposal_required"

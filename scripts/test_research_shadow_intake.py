@@ -54,6 +54,24 @@ class ResearchShadowIntakeTests(unittest.TestCase):
             any(stub["anchor_id"] == kudo["id"] for stub in after["proposal_stubs"])
         )
 
+    def test_inspected_wcc_precursor_does_not_discharge_cans_stub(self) -> None:
+        wcc = next(
+            source
+            for source in self.sources["sources"]
+            if source["id"] == "yokota_kudo_yasuda2017_wcc"
+        )
+        self.assertEqual("full_text_inspected", wcc["full_text_status"])
+        state = self.build()
+        literature_anchors = {
+            stub["anchor_id"]
+            for stub in state["proposal_stubs"]
+            if stub["stub_kind"] == "literature_full_text_ingestion"
+        }
+        self.assertEqual(
+            {"kudo_yokota_takahashi_yasuda2018"},
+            literature_anchors,
+        )
+
     def test_petit_constructions_and_cost_are_separate_stubs(self) -> None:
         state = self.build()
         by_anchor: dict[str, list[str]] = {}

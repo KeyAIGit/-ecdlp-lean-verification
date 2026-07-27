@@ -111,6 +111,30 @@ class ScientificSemanticTests(unittest.TestCase):
             self.validate(sources=sources),
         )
 
+    def test_wcc_cannot_be_silently_downgraded_or_conflated(self) -> None:
+        sources = copy.deepcopy(self.sources)
+        wcc = next(
+            item
+            for item in sources["sources"]
+            if item["id"] == "yokota_kudo_yasuda2017_wcc"
+        )
+        kudo = next(
+            item
+            for item in sources["sources"]
+            if item["id"] == "kudo_yokota_takahashi_yasuda2018"
+        )
+        wcc["full_text_status"] = "full_text_unread"
+        wcc["title"] = kudo["title"]
+        problems = self.validate(sources=sources)
+        self.assertIn(
+            "WCC 2017 must retain its inspected full-text status",
+            problems,
+        )
+        self.assertIn(
+            "WCC 2017 and CANS 2018 must remain distinct sources",
+            problems,
+        )
+
     def test_desired_glv_properties_cannot_open_intake(self) -> None:
         typed = copy.deepcopy(self.typed)
         cell = next(
@@ -125,6 +149,31 @@ class ScientificSemanticTests(unittest.TestCase):
                 for item in self.validate(typed=typed))
         )
 
+    def test_m16_scoped_blocker_cannot_be_promoted_to_closure(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["status"] = "decided_closed"
+        cell["seed_eligible"] = False
+        cell["cost_quantity_status"] = "defined"
+        cell["authorization"] = "experiment"
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "M16 scoped blocker must leave the cell open", problems
+        )
+        self.assertIn(
+            "M16 scoped blocker must leave the cell seed-eligible", problems
+        )
+        self.assertIn(
+            "M16 symbolic result must leave cost status partial", problems
+        )
+        self.assertIn(
+            "M16 symbolic result cannot authorize execution", problems
+        )
+
     def test_shadow_intake_cannot_authorize_or_activate_glv(self) -> None:
         shadow = copy.deepcopy(self.shadow)
         shadow["proposal_stubs"][0]["route_id"] = "R-GLV-SEMAEV"
@@ -136,6 +185,22 @@ class ScientificSemanticTests(unittest.TestCase):
             "unspecified phase-preserving GLV properties cannot enter intake",
             problems,
         )
+
+    def test_task016_phase_cannot_reopen_sanitation_or_authorization(self) -> None:
+        decisions = copy.deepcopy(self.decisions)
+        decisions["phase_policy"]["phase"] = "research-engine-v0.2-sanitation"
+        decisions["phase_policy"]["bounded_exploration_authorized"] = True
+        decisions["maintenance_cycle"]["status"] = "active_remediation_draft"
+        problems = self.validate(decisions=decisions)
+        self.assertIn(
+            "current phase must remain evidence-bounded desk priority",
+            problems,
+        )
+        self.assertIn(
+            "current phase must authorize zero bounded experiments",
+            problems,
+        )
+        self.assertIn("TASK-010 maintenance cycle boundary drifted", problems)
 
 
 if __name__ == "__main__":
