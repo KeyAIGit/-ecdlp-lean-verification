@@ -104,6 +104,41 @@ def validate_semantics(
             "desired faithful GLV properties cannot be emitted as a mechanism seed"
         )
 
+    typed_counts = typed_state.get("counts", {})
+    expected_typed_counts = {
+        "source_claims": 20,
+        "cells": 7,
+        "seed_eligible_cells": 2,
+        "desk_decisions": 3,
+    }
+    for field, expected in expected_typed_counts.items():
+        if typed_counts.get(field) != expected:
+            problems.append(
+                f"typed evidence {field} must remain {expected}"
+            )
+    m16_cell = cells.get("CELL-M-PKC-SMOOTH-M16", {})
+    if m16_cell.get("status") != "open":
+        problems.append("M16 scoped blocker must leave the cell open")
+    if m16_cell.get("seed_eligible") is not True:
+        problems.append("M16 scoped blocker must leave the cell seed-eligible")
+    if m16_cell.get("cost_quantity_status") != "partial":
+        problems.append("M16 symbolic result must leave cost status partial")
+    if m16_cell.get("barrier_ids") != [
+        "B-PKC-M16-COMPLETE-COST-BRIDGE"
+    ]:
+        problems.append("M16 cell must retain its open complete-cost barrier")
+    if "SC-PKC-M16-SYMBOLIC-DESK-RESULT" not in m16_cell.get(
+        "source_claim_ids", []
+    ):
+        problems.append("M16 cell must retain its symbolic desk certificate")
+    if m16_cell.get("authorization") != "none":
+        problems.append("M16 symbolic result cannot authorize execution")
+    if any(
+        decision.get("cell_id") == "CELL-M-PKC-SMOOTH-M16"
+        for decision in typed_state.get("desk_decisions", [])
+    ):
+        problems.append("M16 scoped blocker cannot be stored as a desk closure")
+
     petit_route = routes.get("R-PETIT-COMPOSED-MAPS", {})
     petit_attack = attack_index.get("IC-4-petit-composed-map", {})
     if petit_route.get("status") != "open_parked":
@@ -235,6 +270,16 @@ def validate_semantics(
         problems.append(
             "unspecified phase-preserving GLV properties cannot enter intake"
         )
+    m16_stubs = [
+        stub
+        for stub in shadow_intake.get("proposal_stubs", [])
+        if stub.get("anchor_id") == "CELL-M-PKC-SMOOTH-M16"
+    ]
+    if (
+        len(m16_stubs) != 1
+        or m16_stubs[0].get("stub_id") != "RSI-D8BBA6340789"
+    ):
+        problems.append("M16 must retain exactly its canonical shadow stub")
 
     maintenance = decisions.get("maintenance_cycle", {})
     if (

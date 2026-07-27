@@ -396,12 +396,14 @@ This is an operational milestone, not evidence of an ECDLP breakthrough.
 
 ### TASK-015 - Map the bounded hypothesis frontier and select one desk question
 
-Status: active_non_executable_desk_priority
+Status: completed_non_executable_scoped_blocker
 Kind: literature | cost | data | research | review
 Hypothesis: none. `CELL-M-PKC-SMOOTH-M16` is a research-question cell, not a
 hypothesis, candidate, experiment, or selected attack route.
 Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
 Authorization: none
+Outcome: `scoped_blocker`
+Retention: `zero_retention_success`
 Why it matters: The mathematical idea space is open-ended, but the actionable
 frontier can be made finite relative to a versioned evidence snapshot,
 mechanism grammar, route model, target properties, recovery contract, and cost
@@ -478,4 +480,93 @@ How to verify:
 - WCC/CANS non-conflation fault injection
 - knowledge-graph edge and rendered-projection checks
 - scientific-semantic and decision-substrate gates
+- generated fixpoint and full repository CI
+
+Recorded result:
+- `experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json` fixes the
+  exact source-chain, recursive-S3, quadratic-circuit, direct-recovery, and
+  conditional matrix-template counts without materializing a system.
+- `CQ-SEMAEV-S17-SYSTEM-COST` moves from `missing` to `partial`.
+- `B-PKC-M16-COMPLETE-COST-BRIDGE` records the remaining open blocker.
+- M16 remains open, seed-eligible, non-executable, and unselected; no desk
+  closure, hypothesis retention, experiment authorization, or route promotion
+  is created.
+
+### TASK-016 - Fix the source-faithful M16 ideal and recovery semantics
+
+Status: active_non_executable_semantics_bridge
+Kind: theorem | data | research | review
+Hypothesis: none. This task defines the mathematical object that a later cost
+argument would have to price; it is not a solver candidate.
+Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
+Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
+Authorization: none
+Why it matters: TASK-015 showed that low input degree can be obtained only by
+adding variables, while solving degree, fill-in, recovery, and rank remain
+unknown. Those quantities are not meaningful until direct S17, the recursive
+S3 tree, and the source-factor membership circuit are related by an exact
+base-field semantics with every exceptional fiber accounted for.
+Decision boundary:
+- The membership-only layer is fixed: `x^564522 - 1` has exactly 564522 simple
+  roots in the base field, and its triangular source-factor circuit has unique
+  intermediate values and no denominator components.
+- Membership square-freeness must not be promoted to radicality, saturation,
+  or completeness of the combined recursive-S3 system.
+- The exact usable lift count, recursive partial sums at the identity,
+  tangent and repeated-coordinate fibers, extension-field lifts, permutation
+  multiplicities, and compatible sign recovery remain unresolved.
+- CANS 2018 remains a separate `full_text_unread` source and the
+  auxiliary-curve search remains parked.
+Inputs:
+- `experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json`
+- `data/source_claim_extracts/petit_kosters_messeng2016.json`
+- `Ecdlp/Proved/SemaevThree.lean`
+- `Ecdlp/Proved/SemaevFour.lean`
+- `Ecdlp/Proved/CurveCardinalityExact.lean`
+- `repo/ECDLP_TYPED_EVIDENCE_V0.json`
+- `CELL-M-PKC-SMOOTH-M16`
+- `B-PKC-M16-COMPLETE-COST-BRIDGE`
+Expected output:
+- One explicit source-faithful affine presentation for the direct S17,
+  recursive-S3 tree, and the 24-gate source-factor membership circuit, with
+  constants, variable order, projection maps, and target-sign convention.
+- A proof or independently replayable certificate for the membership-only
+  projection and its simple-root property.
+- A smallest counterexample or exact bridge for direct versus recursive
+  semantics over the base field, explicitly treating saturation, projective
+  components, partial sums at the identity, tangencies, repeated roots, and
+  extension-field lifts.
+- A deterministic recovery contract covering sign classes, permutations,
+  duplicate points, GLV orbit coefficients, and exact final curve checks.
+- A terminal disposition of exact semantic bridge, scoped blocker, or
+  `zero_retention_success`.
+Exit criteria:
+- Every claimed equivalence states its field, localization or saturation,
+  nondegeneracy assumptions, projection, inverse recovery map, and excluded
+  components.
+- A finite counterexample closes only its stated presentation and branch.
+- No direct S17 expansion, system materialization, Sage, msolve, F4, Groebner
+  sweep, exact-target relation search, discrete-log computation, or route
+  promotion occurs.
+- M16 stays open and non-executable unless a later dated decision changes the
+  gate after independent review.
+- If the semantic bridge succeeds, solving degree, memory, relation rank, and
+  sparse linear algebra move to a separate later cost task. They are not
+  inferred from input degree.
+Files allowed to edit:
+- a dedicated non-run semantic certificate directory under
+  `experiments/engine/`
+- a dated structural note
+- directly affected source, typed-evidence, task, test, and generated views
+- a narrow Lean module only after the statement and independent certificate
+  are stable
+Files that must be regenerated:
+- typed-evidence, engine, shadow-intake, graph, status, decision, bundle, and
+  site views affected by the result
+How to verify:
+- independent producer/validator replay
+- finite-field counterexample fault injection where used
+- source-map and recovery-contract review
+- typed-evidence, scientific-semantic, and decision-substrate gates
+- `lake build`, no-`sorry`, and axiom audit only if a Lean theorem is added
 - generated fixpoint and full repository CI

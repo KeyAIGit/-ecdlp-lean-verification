@@ -123,16 +123,17 @@ These are research questions, not hypotheses or candidates:
 **0 admissible**,
 **0 recommended**, and
 **0 authorized**. `TASK-010` is accepted at
-`85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. Current work is `TASK-015`, which
-selects `CELL-M-PKC-SMOOTH-M16` only as a non-executable desk-cost question.
+`85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-015` completed with an M16
+scoped blocker and zero retained hypotheses. Current work is `TASK-016`, which
+keeps `CELL-M-PKC-SMOOTH-M16` as a non-executable semantics question.
 `TASK-008` remains parked because no hypothesis proposal has quality-cleared.
 
 The Engine's bounded-exploration capability is
 **true**, while the current decision's experiment
 authorization is **false** and the promotion gate is
 **false**. `GLV-SEMAEV-ITER-001` is complete; its
-certificates and kernel-checked identities authorize no hypothesis run. `TASK-015` authorizes no
-S17 construction or solver, target computation, or route promotion. Any later experiment needs
+certificates and kernel-checked identities authorize no hypothesis run. `TASK-016` authorizes no
+S17 expansion, polynomial-system materialization, solver, target computation, or route promotion. Any later experiment needs
 a new dated decision plus the normal fixed budgets, dependency order, and retained terminal
 outcome.
 

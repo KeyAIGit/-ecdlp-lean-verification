@@ -36,10 +36,17 @@ MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
 MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
 CURRENT_PHASE = "evidence-bounded-desk-priority"
-CURRENT_TASK_ID = "TASK-015"
+CURRENT_TASK_ID = "TASK-016"
+COMPLETED_DESK_TASK_ID = "TASK-015"
 DESK_PRIORITY_CELL_ID = "CELL-M-PKC-SMOOTH-M16"
 DESK_PRIORITY_STUB_ID = "RSI-D8BBA6340789"
 DESK_PRIORITY_COST_ID = "CQ-SEMAEV-S17-SYSTEM-COST"
+M16_ARTIFACT_PATH = (
+    "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
+)
+M16_ARTIFACT_SHA256 = (
+    "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7"
+)
 
 ROUTE_STATUSES = {
     "guardrail",
@@ -718,14 +725,43 @@ def validate() -> list[str]:
         r"^Status: completed_accepted$", task_010, flags=re.MULTILINE
     ):
         problems.append("TASK-010 must be completed_accepted")
-    task_015 = task_sections.get(CURRENT_TASK_ID, "")
-    expected_task_015_lines = (
-        "Status: active_non_executable_desk_priority",
+    completed_desk_task = task_sections.get(COMPLETED_DESK_TASK_ID, "")
+    expected_completed_desk_lines = (
+        "Status: completed_non_executable_scoped_blocker",
+        "Authorization: none",
+        "Outcome: `scoped_blocker`",
+        "Retention: `zero_retention_success`",
+    )
+    for line in expected_completed_desk_lines:
+        if not re.search(
+            rf"^{re.escape(line)}$",
+            completed_desk_task,
+            flags=re.MULTILINE,
+        ):
+            problems.append(
+                f"{COMPLETED_DESK_TASK_ID} must contain {line!r}"
+            )
+    for binding in (
+        M16_ARTIFACT_PATH,
+        DESK_PRIORITY_CELL_ID,
+        DESK_PRIORITY_STUB_ID,
+        DESK_PRIORITY_COST_ID,
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+    ):
+        if binding not in completed_desk_task:
+            problems.append(
+                f"{COMPLETED_DESK_TASK_ID} is missing closure binding {binding}"
+            )
+    current_task = task_sections.get(CURRENT_TASK_ID, "")
+    expected_current_task_lines = (
+        "Status: active_non_executable_semantics_bridge",
         f"Desk priority: `{DESK_PRIORITY_CELL_ID}` / `{DESK_PRIORITY_STUB_ID}`",
         "Authorization: none",
     )
-    for line in expected_task_015_lines:
-        if not re.search(rf"^{re.escape(line)}$", task_015, flags=re.MULTILINE):
+    for line in expected_current_task_lines:
+        if not re.search(
+            rf"^{re.escape(line)}$", current_task, flags=re.MULTILINE
+        ):
             problems.append(f"{CURRENT_TASK_ID} must contain {line!r}")
     for binding in (
         DESK_PRIORITY_CELL_ID,
@@ -734,7 +770,7 @@ def validate() -> list[str]:
         "zero_retention_success",
         "full_text_unread",
     ):
-        if binding not in task_015:
+        if binding not in current_task:
             problems.append(f"{CURRENT_TASK_ID} is missing binding {binding}")
     active_hypotheses = [
         hypothesis_id
@@ -804,6 +840,29 @@ def validate() -> list[str]:
     )
     if selection.get("decision_id") not in decisions_log:
         problems.append("route-selection decision is missing from research_decisions.md")
+    closure_row = next(
+        (
+            line
+            for line in decisions_log.splitlines()
+            if line.startswith("| 25 |")
+        ),
+        "",
+    )
+    for binding in (
+        COMPLETED_DESK_TASK_ID,
+        CURRENT_TASK_ID,
+        "scoped_blocker",
+        "zero_retention_success",
+        M16_ARTIFACT_PATH,
+        M16_ARTIFACT_SHA256,
+        "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+    ):
+        if binding not in closure_row:
+            problems.append(
+                "TASK-015 closure row is missing binding "
+                f"{binding}"
+            )
 
     return problems
 
