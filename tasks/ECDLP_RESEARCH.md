@@ -927,45 +927,25 @@ Recorded result:
 
 ### TASK-019 - Kernelize fixed-degree projective resultants and reverse projection
 
-Status: active_non_executable_projective_s17_kernel_bridge
+Status: completed_non_executable_scoped_blocker
 Kind: theorem | data | research | review
-Hypothesis: none. This task certifies the two narrow algebraic lemmas required
-by the remaining universal reverse implication; it is not a solver candidate.
+Hypothesis: none. This task tested the theorem-level bridge required by the
+remaining universal reverse implication; it was not a solver candidate.
 Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
 Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
 Authorization: none
+Outcome: `scoped_blocker`
+Retention: `zero_retention_success`
+Completed on: 2026-07-28
+Artifact:
+- `experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json`
+- ID `PKC-SMOOTH-M16-PROJECTIVE-RESULTANT-KERNEL-001`
+- SHA-256 `0b9d8b48953aae2defa28ade67992084cecca3a01b43490bc338a0fd5ce97c5a`
 Why it matters: TASK-018 freezes the recursive projective S17 contract,
 records its forward algebraic argument, and replays bounded S4/S5
 forward/reverse fixtures, but finite fixtures cannot replace a universal
-proof. The remaining gap must be
-closed at fixed degree and with specialization behavior stated explicitly
-before any direct-S17 equivalence or cost bridge can be claimed.
-Decision boundary:
-- Kernel-check a fixed-degree theorem that the literal homogeneous Sylvester
-  resultant vanishes exactly when the two binary homogeneous forms have a
-  common projective root over the named algebraic closure, under explicit
-  degree and nondegeneracy hypotheses.
-- Work on the nonsingular curve `y^2=x^3+7` over fields of characteristic not
-  in `{2,3,7}`; do not transfer the earlier projective result to characteristic
-  seven.
-- Prove the separate compatibility lemma that specializing recursive symbolic
-  `C_r`, including output `[1:0]`, agrees with the fixed-degree resultant used
-  at the previous recursive step.
-- Use those lemmas to prove the universal reverse projection above S4 or
-  record the smallest exact missing assumption. Registered S4/S5 fixtures are
-  regression evidence only.
-- Keep the literal determinant under the frozen coefficient, argument, and
-  row order, fixed degrees, and coefficient unit 1 in that definition.
-  Preserve the declared multihomogeneous projective-rescaling law. Do not
-  introduce primitive or content normalization.
-- Claim only the stated set-theoretic implication. Do not infer radicality,
-  scheme equality, multiplicity preservation, relation yield, rank, solving
-  degree, fill-in, memory, or total work.
-- Do not expand or evaluate S17, materialize the recursive M16 system, or run
-  Sage, msolve, F4, a Groebner sweep, a parameter sweep, an exact-target
-  search, or a discrete-log computation.
-- CANS 2018 remains `full_text_unread`; the auxiliary-curve search remains
-  parked; `zero_retention_success` remains a valid outcome.
+proof. TASK-019 isolates which part of that gap is generic resultant algebra
+and which part still depends on the actual frozen recursion.
 Inputs:
 - `experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json`
 - `experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json`
@@ -974,43 +954,109 @@ Inputs:
 - `repo/ECDLP_TYPED_EVIDENCE_V0.json`
 - `CELL-M-PKC-SMOOTH-M16`
 - `B-PKC-M16-COMPLETE-COST-BRIDGE`
+Recorded result:
+- `Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root`
+  is kernel checked. For positive formal degrees over an algebraically closed
+  field, with explicit actual-degree bounds, the fixed resultant vanishes
+  exactly when the two fixed-degree homogenizations share a non-irrelevant
+  projective root. Zero forms and degree drops are included; the affine chart
+  is `[x:1]`, the infinity witness is `[1:0]`, and `[0:0]` is excluded.
+- The mapped and injective-base-change variants keep the coefficient map and
+  formal degrees explicit. They prove generic fixed-resultant compatibility;
+  they do not instantiate the frozen recursive symbolic `C_r`.
+- `Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose` and
+  `det_taskSylvester_eq_resultant` kernel-check the literal TASK-018 matrix:
+  first `n` shifted descending rows of `f`, then `m` of `g`, with descending
+  columns. Simultaneous row/column reversal and transpose preserve the
+  determinant exactly, so the coefficient unit is `1`; no primitive or
+  content normalization is inserted. The end-to-end determinant/common-root
+  theorem is also kernel checked.
+- The non-run certificate independently binds the theorem statements and
+  convention fixtures to TASK-018. Assurance is
+  `kernel_bound_non_run_certificate`, source independence is
+  `not_established`, calibration is `excluded_nonexperimental`, cost is
+  `partial`, the barrier is `narrowed_open`, and retention is
+  `zero_retention_success`. Its typed evidence claim is
+  `SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT`.
+- The exact remaining blockers are the specialization theorem for the actual
+  frozen recursive `C_r` at formal degrees `(2^(r-2), 2)`, including affine
+  output and `[1:0]`, and the downstream universal reverse induction
+  `C16 → C2`. Neither is refuted; neither is implied by the generic map
+  theorem.
+- `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`; solving cost, rank, and yield
+  remain `unpriced`; `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open; the route
+  remains `open_parked`; and the M16 cell remains open, non-executable, and
+  unselected. No S17 materialization, solver, exact-target computation,
+  experiment authorization, cost claim, hypothesis retention, or route
+  promotion is created.
+
+### TASK-020 - Kernelize frozen recursive C_r specialization
+
+Status: active_non_executable_recursive_cr_specialization_bridge
+Kind: theorem | research | review
+Hypothesis: none. This is the smallest exact theorem task left by TASK-019;
+it is not a solver candidate and does not include the downstream universal
+reverse induction.
+Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
+Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
+Authorization: none
+Why it matters: the generic fixed-degree coefficient-map theorem cannot by
+itself show that the actual frozen recursive symbolic `C_r` specializes to
+the fixed resultant used at the preceding recursive step. That binding is
+required before the universal `C16 → C2` reverse argument can be attempted.
+Decision boundary:
+- Bind the existing frozen recursive `C_r` definition without expanding,
+  evaluating, or materializing S17.
+- Kernel-check exact specialization at formal degrees `(2^(r-2), 2)`, under
+  the frozen coefficient, argument, row, and column convention, with
+  coefficient unit exactly `1`.
+- State and prove both the affine-output branch and the output `[1:0]` branch;
+  preserve the irrelevant-pair exclusion and fixed formal degrees through
+  degree drop.
+- Treat any missing recursive definition, degree/homogeneity lemma, or
+  specialization identity as an explicit theorem-level blocker. Do not
+  replace the actual recursion with the generic coefficient-map theorem.
+- Leave the universal reverse `C16 → C2` induction as a downstream blocker;
+  it is not an exit criterion for TASK-020.
+- Do not infer radicality, scheme equality, multiplicity preservation,
+  relation yield, rank, solving degree, fill-in, memory, or total work. Do not
+  run a solver, parameter sweep, exact-target search, or discrete-log
+  computation.
+Inputs:
+- `experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json`
+- `experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json`
+- `Ecdlp/Proved/FixedDegreeProjectiveResultant.lean`
+- `Ecdlp/Proved/TaskSylvesterConvention.lean`
+- the frozen recursive projective `C_r` contract from TASK-018
+- `CELL-M-PKC-SMOOTH-M16`
+- `B-PKC-M16-COMPLETE-COST-BRIDGE`
 Expected output:
-- One kernel-checked fixed-degree projective resultant common-root theorem
-  with all field, degree, zero-form, projective-domain, and unit hypotheses
-  explicit.
-- One kernel-checked recursive-specialization compatibility lemma, including
-  the output `[1:0]` case.
-- A kernel-checked universal reverse-projection induction above S4, or the
-  smallest exact theorem-level blocker with no broader negative claim.
-- An independently replayable non-run certificate that binds the theorem
-  statements to the frozen TASK-018 contract without materializing S17.
+- One kernel-checked theorem binding the actual frozen recursive `C_r`
+  specialization to the literal fixed-degree resultant, with formal degrees
+  `(2^(r-2), 2)`, coefficient unit `1`, and both affine and `[1:0]` output
+  branches explicit; or the smallest exact missing lemma.
+- One independently replayable non-run certificate binding the theorem to the
+  TASK-018 convention without materializing S17.
 Exit criteria:
-- Every theorem states its field, fixed degrees, projective domain,
-  irrelevant-pair exclusion, specialization map, witness, and unit
-  convention.
-- The reverse induction explicitly covers the `[1:0]` specialization and does
-  not treat finite S5 fixtures as a universal proof.
-- `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`,
-  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open, the route remains
-  `open_parked`, and experiment authorization remains false.
-- No S17 expansion or evaluation, materialized M16 system, solver execution,
-  cost inference, exact-target work, hypothesis retention, or route promotion
-  occurs.
+- The theorem names the actual frozen recursion rather than only arbitrary
+  polynomials under a ring homomorphism.
+- Formal degrees, coefficient map, projective domain, irrelevant-pair
+  exclusion, affine witness, infinity witness, and unit convention are
+  explicit.
+- Universal reverse projection remains separately open unless a later task
+  authorizes and proves it.
+- `CQ-SEMAEV-S17-SYSTEM-COST` stays `partial`, the complete-cost barrier stays
+  open, and experiment authorization stays false.
 Files allowed to edit:
-- one narrow fixed-degree projective-resultant Lean module and its direct
-  theorem dependencies
-- one dedicated non-run TASK-019 certificate directory under
-  `experiments/engine/`
-- directly affected canonical source, typed-evidence, task, test, and
-  generated views
+- one narrow recursive-specialization Lean module and its direct theorem
+  dependencies
+- one dedicated non-run TASK-020 certificate directory
+- directly affected canonical task and proof ledgers
 Files that must be regenerated:
-- typed-evidence, engine, shadow-intake, graph, status, decision, bundle, and
-  site views affected by the result
+- only generated views directly affected by the final recorded result
 How to verify:
-- independent fixed-degree common-root and specialization replay
-- degree-drop, zero-form, argument-order, row-order, unit, affine-output, and
-  `[1:0]` fault fixtures
-- typed-evidence, scientific-semantic, and decision-substrate gates
-- `lake build`, no-`sorry`, and exhaustive axiom audit for every added Lean
-  theorem
+- `lake build` of the narrow module, no-`sorry`, and exhaustive axiom audit
+- independent affine, `[1:0]`, degree-drop, row/argument-order, and unit-one
+  fixtures
+- scientific-semantic and non-execution gates
 - generated fixpoint and full repository CI

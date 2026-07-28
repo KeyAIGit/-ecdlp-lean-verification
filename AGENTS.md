@@ -136,11 +136,16 @@ branch from current `main`; preserve any unrelated local changes.
   forward algebraic argument, replayed bounded S4/S5 forward/reverse fixtures,
   and closed with a scoped universal-reverse-projection blocker and zero
   retained hypotheses.
-  `TASK-019` is the current central task and gives sole desk priority to a
-  kernel-checked fixed-degree projective resultant common-root theorem and
-  recursive symbolic `C_r` specialization compatibility, including output
-  `[1:0]`, for `CELL-M-PKC-SMOOTH-M16`. This is not a selected hypothesis,
-  candidate, experiment, cost claim, or attack route.
+  `TASK-019` then kernel-checked the generic fixed-degree projective-resultant
+  common-root theorem and the literal TASK-018 Sylvester determinant bridge
+  with coefficient unit exactly `1`, and closed with a scoped blocker and
+  zero retained hypotheses. Its generic coefficient-map theorem is not the
+  specialization theorem for the actual frozen recursive `C_r`.
+  `TASK-020` is the current central task and gives sole desk priority to that
+  exact frozen-`C_r` specialization, including affine output and `[1:0]`, for
+  `CELL-M-PKC-SMOOTH-M16`. The universal reverse `C16 → C2` induction remains
+  open downstream. This is not a selected hypothesis, candidate, experiment,
+  solver authorization, cost claim, or attack route.
 - `TASK-008` remains the parked proposal-intake lane. Intake does not bypass
   owner authorization or authorize promotion by itself.
 - The division-polynomial, torsion, Weil, Semaev, cost-model, lattice, isogeny,

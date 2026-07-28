@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 299,
-  "ledger_reference_count": 491,
-  "ledger_named_declarations": 466,
+  "ledger_rows": 300,
+  "ledger_reference_count": 497,
+  "ledger_named_declarations": 472,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 757,
-  "distinct_qualified_names": 757,
-  "verified_md_citations": 466,
+  "declaration_count": 774,
+  "distinct_qualified_names": 774,
+  "verified_md_citations": 472,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -404,6 +404,9 @@
     "Ecdlp.PohligHellman.reconstruct",
     "Ecdlp.Primality.secp256k1_n_prime",
     "Ecdlp.Primality.secp256k1_p_prime",
+    "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root",
+    "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root_over",
+    "Ecdlp.ProjectiveResultant.map_fixedDegree_resultant_eq_zero_iff_common_projective_root",
     "Ecdlp.Proved.cofactor_card_mul_index",
     "Ecdlp.Proved.cube_root_of_eigenvalue",
     "Ecdlp.Proved.orderOf_eigenvalue_eq_three",
@@ -475,6 +478,9 @@
     "Ecdlp.Semaev.secp256k1_semaev_three_point_double",
     "Ecdlp.Semaev.secp256k1_semaev_three_tangent",
     "Ecdlp.Targets.glv_eigenvalue_zmod",
+    "Ecdlp.TaskSylvester.det_taskSylvester_eq_resultant",
+    "Ecdlp.TaskSylvester.det_taskSylvester_eq_zero_iff_common_projective_root",
+    "Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose",
     "Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd",
     "Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq",
     "Ecdlp.Torsion.torsionBy_dvd_le",
@@ -8076,6 +8082,67 @@
           "line": 38
         }
       ]
+    },
+    {
+      "id": "ledger-299",
+      "claim": "Fixed-formal-degree projective resultant and literal TASK-018 Sylvester convention (for positive declared degrees over an algebraically closed field, under explicit actual-degree bounds, `Res(f,g;m,n)=0` iff the fixed-degree homogenizations share a non-irrelevant projective root. Zero forms and degree drops are included: affine roots use `[x:1]`, while simultaneous degree drop is witnessed by `[1:0]`; `[0:0]` is excluded. The mapped and injective-base-change forms retain the formal degrees. The literal TASK-018 matrix — first `n` shifted descending rows of `f`, then `m` of `g`, with descending columns — is exactly a simultaneous row/column reversal of Mathlib's transposed Sylvester matrix, so its determinant equals the fixed resultant with coefficient unit exactly `1`, without primitive/content normalization. Honest scope: the general coefficient-map theorem is not the specialization theorem for the frozen recursive `C_r`; neither that specialization nor the universal reverse `C16 → C2` implication is proved here)",
+      "theorem_cell": "`Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root`, `map_fixedDegree_resultant_eq_zero_iff_common_projective_root`, `fixedDegree_resultant_eq_zero_iff_common_projective_root_over`; `Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose`, `det_taskSylvester_eq_resultant`, `det_taskSylvester_eq_zero_iff_common_projective_root`",
+      "declared_files": [
+        "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+        "Ecdlp/Proved/TaskSylvesterConvention.lean"
+      ],
+      "method": "Mathlib fixed-degree homogenization/resultant + exact matrix reindex/transpose",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root",
+          "canonical_name": "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+          "line": 151
+        },
+        {
+          "cited": "Ecdlp.ProjectiveResultant.map_fixedDegree_resultant_eq_zero_iff_common_projective_root",
+          "canonical_name": "Ecdlp.ProjectiveResultant.map_fixedDegree_resultant_eq_zero_iff_common_projective_root",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+          "line": 214
+        },
+        {
+          "cited": "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root_over",
+          "canonical_name": "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root_over",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+          "line": 230
+        },
+        {
+          "cited": "Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose",
+          "canonical_name": "Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+          "line": 45
+        },
+        {
+          "cited": "Ecdlp.TaskSylvester.det_taskSylvester_eq_resultant",
+          "canonical_name": "Ecdlp.TaskSylvester.det_taskSylvester_eq_resultant",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+          "line": 81
+        },
+        {
+          "cited": "Ecdlp.TaskSylvester.det_taskSylvester_eq_zero_iff_common_projective_root",
+          "canonical_name": "Ecdlp.TaskSylvester.det_taskSylvester_eq_zero_iff_common_projective_root",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+          "line": 91
+        }
+      ]
     }
   ],
   "declarations": {
@@ -11950,6 +12017,69 @@
       "file": "Ecdlp/Proved/Secp256k1PrimeP.lean",
       "line": 193
     },
+    "Ecdlp.ProjectiveResultant.HasCommonProjectiveRoot": {
+      "name": "HasCommonProjectiveRoot",
+      "namespace": "Ecdlp.ProjectiveResultant",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+      "line": 28
+    },
+    "Ecdlp.ProjectiveResultant.HasCommonProjectiveRootOver": {
+      "name": "HasCommonProjectiveRootOver",
+      "namespace": "Ecdlp.ProjectiveResultant",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+      "line": 205
+    },
+    "Ecdlp.ProjectiveResultant.eval_homogenize_one_zero": {
+      "name": "eval_homogenize_one_zero",
+      "namespace": "Ecdlp.ProjectiveResultant",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+      "line": 57
+    },
+    "Ecdlp.ProjectiveResultant.eval_homogenize_second_zero": {
+      "name": "eval_homogenize_second_zero",
+      "namespace": "Ecdlp.ProjectiveResultant",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+      "line": 36
+    },
+    "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root": {
+      "name": "fixedDegree_resultant_eq_zero_iff_common_projective_root",
+      "namespace": "Ecdlp.ProjectiveResultant",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+      "line": 151
+    },
+    "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root_over": {
+      "name": "fixedDegree_resultant_eq_zero_iff_common_projective_root_over",
+      "namespace": "Ecdlp.ProjectiveResultant",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+      "line": 230
+    },
+    "Ecdlp.ProjectiveResultant.map_fixedDegree_resultant_eq_zero_iff_common_projective_root": {
+      "name": "map_fixedDegree_resultant_eq_zero_iff_common_projective_root",
+      "namespace": "Ecdlp.ProjectiveResultant",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+      "line": 214
+    },
+    "Ecdlp.ProjectiveResultant.natDegree_lt_of_le_of_coeff_eq_zero": {
+      "name": "natDegree_lt_of_le_of_coeff_eq_zero",
+      "namespace": "Ecdlp.ProjectiveResultant",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+      "line": 74
+    },
+    "Ecdlp.ProjectiveResultant.one_zero_is_common_root_iff": {
+      "name": "one_zero_is_common_root_iff",
+      "namespace": "Ecdlp.ProjectiveResultant",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+      "line": 64
+    },
     "Ecdlp.Proved.cofactor_card_mul_index": {
       "name": "cofactor_card_mul_index",
       "namespace": "Ecdlp.Proved",
@@ -12488,6 +12618,62 @@
       "kind": "theorem",
       "file": "Ecdlp/Statements.lean",
       "line": 15
+    },
+    "Ecdlp.TaskSylvester.descendingShift": {
+      "name": "descendingShift",
+      "namespace": "Ecdlp.TaskSylvester",
+      "kind": "def",
+      "file": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+      "line": 26
+    },
+    "Ecdlp.TaskSylvester.det_taskSylvester_eq_resultant": {
+      "name": "det_taskSylvester_eq_resultant",
+      "namespace": "Ecdlp.TaskSylvester",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+      "line": 81
+    },
+    "Ecdlp.TaskSylvester.det_taskSylvester_eq_zero_iff_common_projective_root": {
+      "name": "det_taskSylvester_eq_zero_iff_common_projective_root",
+      "namespace": "Ecdlp.TaskSylvester",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+      "line": 91
+    },
+    "Ecdlp.TaskSylvester.fixtureFThreeTwo": {
+      "name": "fixtureFThreeTwo",
+      "namespace": "Ecdlp.TaskSylvester",
+      "kind": "def",
+      "file": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+      "line": 107
+    },
+    "Ecdlp.TaskSylvester.fixtureGThreeTwo": {
+      "name": "fixtureGThreeTwo",
+      "namespace": "Ecdlp.TaskSylvester",
+      "kind": "def",
+      "file": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+      "line": 112
+    },
+    "Ecdlp.TaskSylvester.taskSylvester": {
+      "name": "taskSylvester",
+      "namespace": "Ecdlp.TaskSylvester",
+      "kind": "def",
+      "file": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+      "line": 35
+    },
+    "Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose": {
+      "name": "taskSylvester_eq_reindex_transpose",
+      "namespace": "Ecdlp.TaskSylvester",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+      "line": 45
+    },
+    "Ecdlp.TaskSylvester.taskSylvester_fixture_three_two_det": {
+      "name": "taskSylvester_fixture_three_two_det",
+      "namespace": "Ecdlp.TaskSylvester",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+      "line": 117
     },
     "Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd": {
       "name": "mem_torsionBy_iff_addOrderOf_dvd",

@@ -36,7 +36,8 @@ MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
 MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
 CURRENT_PHASE = "evidence-bounded-desk-priority"
-CURRENT_TASK_ID = "TASK-019"
+CURRENT_TASK_ID = "TASK-020"
+COMPLETED_RESULTANT_TASK_ID = "TASK-019"
 COMPLETED_DESK_TASK_ID = "TASK-018"
 PREVIOUS_PROJECTIVE_TASK_ID = "TASK-017"
 PREVIOUS_SEMANTIC_TASK_ID = "TASK-016"
@@ -49,6 +50,13 @@ M16_PROJECTIVE_ARTIFACT_PATH = (
 )
 M16_PROJECTIVE_ARTIFACT_SHA256 = (
     "3164cb89adac7622b4d08d781061ea386dc64e754236e48c838a3dac23040715"
+)
+M16_RESULTANT_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_projective_resultant_kernel/artifact.json"
+)
+M16_RESULTANT_ARTIFACT_SHA256 = (
+    "0b9d8b48953aae2defa28ade67992084cecca3a01b43490bc338a0fd5ce97c5a"
 )
 M16_EXCEPTIONAL_ARTIFACT_PATH = (
     "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json"
@@ -545,6 +553,45 @@ def validate() -> list[str]:
             "R-PETIT-COMPOSED-MAPS must retain the TASK-018 projective "
             "certificate as evidence"
         )
+    if M16_RESULTANT_ARTIFACT_PATH not in petit_route.get(
+        "evidence_files", []
+    ):
+        problems.append(
+            "R-PETIT-COMPOSED-MAPS must retain the TASK-019 "
+            "projective-resultant kernel certificate as evidence"
+        )
+    petit_current_evidence = petit_route.get("current_evidence", "")
+    for binding in (
+        "TASK-019 kernel-checks",
+        "fixed-degree projective resultant common-root theorem",
+        "PKC-SMOOTH-M16-PROJECTIVE-RESULTANT-KERNEL-001",
+        M16_RESULTANT_ARTIFACT_SHA256,
+        "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
+        "coefficient unit 1",
+        "zero forms",
+        "[1:0]",
+        "recursive frozen C_r specialization",
+        "universal C16-to-C2 induction",
+        "zero_retention_success",
+    ):
+        if binding not in petit_current_evidence:
+            problems.append(
+                "R-PETIT-COMPOSED-MAPS.current_evidence is missing "
+                f"{binding}"
+            )
+    for binding in (
+        "exact recursive frozen C_r specialization",
+        "formal degrees (2^(r-2),2)",
+        "coefficient unit 1",
+        "[1:0]",
+        "universal C16-to-C2 induction remains downstream",
+        "hypothesis retention",
+        "route promotion",
+    ):
+        if binding not in petit_next_action:
+            problems.append(
+                f"R-PETIT-COMPOSED-MAPS.next_action is missing {binding}"
+            )
     if "auxiliary-curve cell parked" not in petit_next_action:
         problems.append(
             "R-PETIT-COMPOSED-MAPS must keep the auxiliary-curve cell parked"
@@ -712,6 +759,7 @@ def validate() -> list[str]:
         PREVIOUS_SEMANTIC_TASK_ID,
         PREVIOUS_PROJECTIVE_TASK_ID,
         COMPLETED_DESK_TASK_ID,
+        COMPLETED_RESULTANT_TASK_ID,
         CURRENT_TASK_ID,
     ):
         if required_task not in tasks_text:
@@ -795,8 +843,51 @@ def validate() -> list[str]:
                 f"{COMPLETED_DESK_TASK_ID} is missing closure binding {binding}"
             )
     current_task = task_sections.get(CURRENT_TASK_ID, "")
+    completed_resultant_task = task_sections.get(
+        COMPLETED_RESULTANT_TASK_ID, ""
+    )
+    expected_completed_resultant_lines = (
+        "Status: completed_non_executable_scoped_blocker",
+        "Authorization: none",
+        "Outcome: `scoped_blocker`",
+        "Retention: `zero_retention_success`",
+    )
+    for line in expected_completed_resultant_lines:
+        if not re.search(
+            rf"^{re.escape(line)}$",
+            completed_resultant_task,
+            flags=re.MULTILINE,
+        ):
+            problems.append(
+                f"{COMPLETED_RESULTANT_TASK_ID} must contain {line!r}"
+            )
+    for binding in (
+        M16_RESULTANT_ARTIFACT_PATH,
+        M16_RESULTANT_ARTIFACT_SHA256,
+        "PKC-SMOOTH-M16-PROJECTIVE-RESULTANT-KERNEL-001",
+        "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
+        DESK_PRIORITY_CELL_ID,
+        DESK_PRIORITY_STUB_ID,
+        DESK_PRIORITY_COST_ID,
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+        "`kernel_bound_non_run_certificate`",
+        "`not_established`",
+        "`excluded_nonexperimental`",
+        "`unpriced`",
+        "fixed-degree",
+        "zero forms",
+        "[1:0]",
+        "recursive",
+        "C16",
+        "C2",
+    ):
+        if binding.casefold() not in completed_resultant_task.casefold():
+            problems.append(
+                f"{COMPLETED_RESULTANT_TASK_ID} is missing closure binding "
+                f"{binding}"
+            )
     expected_current_task_lines = (
-        "Status: active_non_executable_projective_s17_kernel_bridge",
+        "Status: active_non_executable_recursive_cr_specialization_bridge",
         f"Desk priority: `{DESK_PRIORITY_CELL_ID}` / `{DESK_PRIORITY_STUB_ID}`",
         "Authorization: none",
     )
@@ -809,11 +900,13 @@ def validate() -> list[str]:
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
         DESK_PRIORITY_COST_ID,
-        M16_PROJECTIVE_ARTIFACT_PATH,
-        "nonsingular curve",
-        "`{2,3,7}`",
-        "zero_retention_success",
-        "full_text_unread",
+        M16_RESULTANT_ARTIFACT_PATH,
+        "recursive",
+        "formal degree",
+        "[1:0]",
+        "C16",
+        "C2",
+        "downstream",
     ):
         if binding not in current_task:
             problems.append(f"{CURRENT_TASK_ID} is missing binding {binding}")
@@ -970,7 +1063,7 @@ def validate() -> list[str]:
     )
     for binding in (
         COMPLETED_DESK_TASK_ID,
-        CURRENT_TASK_ID,
+        COMPLETED_RESULTANT_TASK_ID,
         "scoped_blocker",
         "zero_retention_success",
         M16_PROJECTIVE_ARTIFACT_PATH,
@@ -989,6 +1082,40 @@ def validate() -> list[str]:
         if binding not in projective_closure_row:
             problems.append(
                 "TASK-018 closure row is missing binding "
+                f"{binding}"
+            )
+    resultant_closure_row = next(
+        (
+            line
+            for line in decisions_log.splitlines()
+            if line.startswith("| 29 |")
+        ),
+        "",
+    )
+    for binding in (
+        COMPLETED_RESULTANT_TASK_ID,
+        CURRENT_TASK_ID,
+        "scoped_blocker",
+        "zero_retention_success",
+        M16_RESULTANT_ARTIFACT_PATH,
+        M16_RESULTANT_ARTIFACT_SHA256,
+        "PKC-SMOOTH-M16-PROJECTIVE-RESULTANT-KERNEL-001",
+        "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+        "kernel_bound_non_run_certificate",
+        "not_established",
+        "excluded_nonexperimental",
+        "unpriced",
+        "resultant/common-projective-root",
+        "zero forms",
+        "[1:0]",
+        "recursive",
+        "C16",
+        "C2",
+    ):
+        if binding not in resultant_closure_row:
+            problems.append(
+                "TASK-019 closure row is missing binding "
                 f"{binding}"
             )
 

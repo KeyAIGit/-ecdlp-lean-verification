@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 299,
-    "ledger_rows": 299,
+    "theorems": 300,
+    "ledger_rows": 300,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -29,11 +29,11 @@
     "selected_explorations": 0,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1110,
+    "edges": 1115,
     "by_edge_type": {
-      "imports": 490,
-      "member_of": 299,
-      "grounded_in_source_claim": 42,
+      "imports": 493,
+      "member_of": 300,
+      "grounded_in_source_claim": 43,
       "requires_foundation": 41,
       "decision_grounded_in": 25,
       "supports": 24,
@@ -187,13 +187,14 @@
       "evalReg`/`evalFracAt` layer (`FunctionFieldRegular.lean`) + field algebra": 1,
       "evalReg`/`divEval` layer + `evalFracAt_unit_mul` + field algebra": 1,
       "secp256k1_miller_function_regularAt` + `evalReg`/`divEval` layer": 1,
-      "ZMod.euler_criterion` + `native_decide` witness + curve equation": 1
+      "ZMod.euler_criterion` + `native_decide` witness + curve equation": 1,
+      "Mathlib fixed-degree homogenization/resultant + exact matrix reindex/transpose": 1
     },
     "by_area": {
       "curve-torsion": 152,
       "primality": 55,
       "generic-hardness": 29,
-      "other": 27,
+      "other": 28,
       "protocol-soundness": 23,
       "attack-resistance": 7,
       "reduction": 5,
@@ -6196,6 +6197,28 @@
       "family_id": "family-other",
       "dependency_depth": 9,
       "gated": true
+    },
+    {
+      "id": "thm-299",
+      "name": "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root`, `map_fixedDegree_resultant_eq_zero_iff_common_projective_root`, `fixedDegree_resultant_eq_zero_iff_common_projective_root_over`; `Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose`, `det_taskSylvester_eq_resultant`, `det_taskSylvester_eq_zero_iff_common_projective_root",
+      "short_name": "fixedDegree_resultant_eq_zero_iff_common_projective_root`,",
+      "module": "Ecdlp.Proved.FixedDegreeProjectiveResultant",
+      "modules": [
+        "Ecdlp.Proved.FixedDegreeProjectiveResultant",
+        "Ecdlp.Proved.TaskSylvesterConvention"
+      ],
+      "file": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+      "files": [
+        "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+        "Ecdlp/Proved/TaskSylvesterConvention.lean"
+      ],
+      "claim": "Fixed-formal-degree projective resultant and literal TASK-018 Sylvester convention (for positive declared degrees over an algebraically closed field, under explicit actual-degree bounds, `Res(f,g;m,n)=0` iff the fixed-degree homogenizations share a non-irrelevant projective root. Zero forms and degree drops are included: affine roots use `[x:1]`, while simultaneous degree drop is witnessed by `[1:0]`; `[0:0]` is excluded. The mapped and injective-base-change forms retain the formal degrees. The literal TASK-018 matrix — first `n` shifted descending rows of `f`, then `m` of `g`, with descending columns — is exactly a simultaneous row/column reversal of Mathlib's transposed Sylvester matrix, so its determinant equals the fixed resultant with coefficient unit exactly `1`, without primitive/content normalization. Honest scope: the general coefficient-map theorem is not the specialization theorem for the frozen recursive `C_r`; neither that specialization nor the universal reverse `C16 → C2` implication is proved here)",
+      "method": "Mathlib fixed-degree homogenization/resultant + exact matrix reindex/transpose",
+      "status": "proved",
+      "area": "other",
+      "family_id": "family-other",
+      "dependency_depth": 1,
+      "gated": true
     }
   ],
   "barriers": [
@@ -6836,7 +6859,8 @@
         "Use the existing knowledge graph as the finite evidence-bounded hypothesis-space projection.",
         "Maintain the TASK-017 scoped exceptional-fiber blocker and independently replay its exact set-theoretic projective-tree bridge for nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, complete named-stratum table, recovery audit, and secp256k1 GLV lift-sign checks.",
         "Maintain the TASK-018 scoped projective-S17 blocker and independently replay its frozen recursive contract, fixed degrees, and literal Sylvester determinant under the frozen coefficient, argument, and row order. Keep coefficient unit 1 in that definition, forbid primitive/content normalization, preserve the declared multidegree under projective rescaling, record the forward algebraic argument, and replay bounded S4/S5 forward/reverse fixtures.",
-        "Under TASK-019, kernel-check only a fixed-degree projective resultant common-root theorem and the compatibility of recursive symbolic C_r specialization, including output [1:0], needed for the universal reverse projection above S4.",
+        "Maintain the TASK-019 non-run kernel binding for the fixed-degree projective resultant common-root theorem, coefficient-map and algebraic-closure reflection variants, and literal TASK-018 Sylvester matrix, determinant unit 1, and end-to-end common-root corollary, including formal-degree drops, zero forms, affine witnesses, and [1:0].",
+        "Under TASK-020, kernel-check only the exact recursive frozen C_r specialization at formal degrees (2^(r-2),2), retaining coefficient unit 1, affine output, and [1:0]. Keep the universal C16-to-C2 induction downstream and non-authorizing.",
         "Maintain canonical provenance and regenerate affected views without changing the recorded claim boundary."
       ],
       "forbidden_work": [
@@ -7370,10 +7394,10 @@
           "Composition, solving, and recovery costs improve the full attack."
         ],
         "known_cost": "No reliable project estimate; the existing six-variable toy presentation is explicitly non-faithful and descriptive.",
-        "current_evidence": "The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-curve realizations. In the second construction the auxiliary curve only shares the base field with the target; a self-isogeny of the auxiliary curve defines the root map. The paper explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. WCC 2017 adds bounded m=2 practicality evidence on selected small primes and a distinct p-plus-one trace extension; it cannot be transferred quantitatively to m=16 or substituted for the auxiliary curve. Historical P4 did not implement either PKC construction and remains only an inconclusive negative control; it is not evidence against the faithful route. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 independently replayed an exact set-theoretic homogeneous projective S3-tree bridge, every named exceptional lift and identity stratum, deterministic supplied-coordinate recovery, and raw and compressed secp256k1 GLV lift-sign checks. TASK-018 freezes the recursive projective S17 contract, including fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. Its coefficient unit is 1 in that definition, primitive/content normalization is forbidden, and projective rescaling follows the declared multidegree. It records the forward algebraic argument and replays bounded S4/S5 forward/reverse fixtures; the generic C16 forward implication is not computationally replayed or kernel checked. Assurance is certificate_replayed, source independence is not_established, and calibration is excluded_nonexperimental. The barrier is narrowed but open: the universal reverse projection above S4 remains unproved pending a kernel-checked fixed-degree projective resultant common-root theorem and a specialization-compatibility lemma for recursive symbolic C_r, including output [1:0]. CQ-SEMAEV-S17-SYSTEM-COST remains partial while relation yield, rank, and solving cost remain unpriced.",
+        "current_evidence": "The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-curve realizations. In the second construction the auxiliary curve only shares the base field with the target; a self-isogeny of the auxiliary curve defines the root map. The paper explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. WCC 2017 adds bounded m=2 practicality evidence on selected small primes and a distinct p-plus-one trace extension; it cannot be transferred quantitatively to m=16 or substituted for the auxiliary curve. Historical P4 did not implement either PKC construction and remains only an inconclusive negative control; it is not evidence against the faithful route. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 independently replayed an exact set-theoretic homogeneous projective S3-tree bridge, every named exceptional lift and identity stratum, deterministic supplied-coordinate recovery, and raw and compressed secp256k1 GLV lift-sign checks. TASK-018 freezes the recursive projective S17 contract, including fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, coefficient-map and algebraic-closure reflection variants, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and its end-to-end common-root corollary. Formal-degree drops, zero forms, affine witnesses, and [1:0] are retained without primitive/content, monic, or actual-degree normalization. The non-run binding is PKC-SMOOTH-M16-PROJECTIVE-RESULTANT-KERNEL-001 with SHA-256 0b9d8b48953aae2defa28ade67992084cecca3a01b43490bc338a0fd5ce97c5a and typed claim SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT. Assurance is kernel_bound_non_run_certificate, source independence is not_established, calibration is excluded_nonexperimental, and retention is zero_retention_success. The barrier is narrowed but open only on the exact recursive frozen C_r specialization at formal degrees (2^(r-2),2), including coefficient unit 1, affine output, and [1:0], followed downstream by the universal C16-to-C2 induction. CQ-SEMAEV-S17-SYSTEM-COST remains partial while relation yield, rank, and solving cost remain unpriced.",
         "success_gate": "First reproduce the exact construction from a verified primary source, then compare it under the common evaluation contract.",
         "stop_condition": "Reject low-bit filters, redundant auxiliary variables, or presentation-only degree changes as substitutes for the cited construction.",
-        "next_action": "Keep the route parked. TASK-018 recorded a scoped recursive-projective-S17 blocker with zero retained hypotheses. TASK-019 gives sole desk priority to kernel-checking a fixed-degree projective resultant common-root theorem and the specialization compatibility of recursive symbolic C_r, including output [1:0], needed for the universal reverse projection above S4 for CELL-M-PKC-SMOOTH-M16, RSI-D8BBA6340789, and CQ-SEMAEV-S17-SYSTEM-COST. It authorizes no S17 expansion or evaluation, system materialization, solver execution, or cost inference. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.",
+        "next_action": "Keep the route parked. TASK-019 completed the fixed-degree projective-resultant and literal Sylvester kernel binding with zero retained hypotheses. TASK-020 gives sole desk priority to kernel-checking the exact recursive frozen C_r specialization at formal degrees (2^(r-2),2), retaining coefficient unit 1, affine output, and [1:0], for CELL-M-PKC-SMOOTH-M16, RSI-D8BBA6340789, and CQ-SEMAEV-S17-SYSTEM-COST. The universal C16-to-C2 induction remains downstream and non-authorizing. TASK-020 authorizes no S17 expansion or evaluation, system materialization, solver execution, experiment, hypothesis retention, route promotion, or cost inference. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.",
         "authorized_experiment": false,
         "hypothesis_ids": [
           "HYP_GLV_SEMAEV_001"
@@ -7396,7 +7420,8 @@
           "experiments/engine/pkc_smooth_m16_semantic_bridge/README.md",
           "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
           "experiments/engine/pkc_smooth_m16_exceptional_fibers/README.md",
-          "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json"
+          "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json",
+          "experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json"
         ],
         "source_ids": [
           "petit_kosters_messeng2016",
@@ -9075,8 +9100,8 @@
       "generator_id": "ecdlp-hypothesis-generation-v0",
       "source_hashes": {
         "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-        "typed_evidence_state_sha256": "161a6f3faad23d4baec338d75a00ca070bd167458597b41e16c67a8dca492fca",
-        "research_claim_state_sha256": "3f38a6a69f60f041d69b185b728192c3907d09b37da4da7dddb147275a435214",
+        "typed_evidence_state_sha256": "471f1354c40e830109320fdbd91127082120246621c8fbc9e7f6ede68a48c6db",
+        "research_claim_state_sha256": "1e230dcee80ad58bde2ebb505ce6600baf9e7557d70d0888d36b68379fd37106",
         "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
       },
@@ -9099,7 +9124,7 @@
         "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
         "target_id": "secp256k1-classical-single-target-plain",
         "counts": {
-          "source_claims": 23,
+          "source_claims": 24,
           "target_properties": 5,
           "mechanisms": 7,
           "cells": 7,
@@ -9111,10 +9136,10 @@
           "desk_decisions": 3
         },
         "source_hashes": {
-          "policy_sha256": "d9b733331bd3b8afd0dc6e96d0a7179d60c8fc5b922bb5ad0b62079ce15830b1",
-          "decision_substrate_sha256": "c988762b9b200633a98494178ee156308dfc75dc80b1fbccc36ce60ae8b84423",
+          "policy_sha256": "d6c77763ae2134422ed8c5866168fe48fece69344129bdb43cdb6062b43c8ff7",
+          "decision_substrate_sha256": "dfd46771f82bbada67da8a2899019d01956d1cd141c17e2515a3760903ee49ea",
           "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-          "evidence_files_sha256": "c90cbea19f627de5e58e960e032bc8af47115f86b8f2405f9c1323c68730d94b",
+          "evidence_files_sha256": "3e3d3bc46633d1185bee2f32c98530c7cdf38fa1b74c5538f9f7258cd691e26e",
           "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
         },
         "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
@@ -9142,15 +9167,15 @@
           "route_promotions": 0,
           "exact_target_runs": 0
         },
-        "state_sha256": "3f38a6a69f60f041d69b185b728192c3907d09b37da4da7dddb147275a435214"
+        "state_sha256": "1e230dcee80ad58bde2ebb505ce6600baf9e7557d70d0888d36b68379fd37106"
       },
       "seed_coverage": {
         "threshold": 12,
         "eligible_seed_count": 2,
         "overflow_triggered": false,
         "represented_seed_ids": [
-          "HGS-F93A1368B6E3",
-          "HGS-A16DB1D7E4E8"
+          "HGS-802E42BBD756",
+          "HGS-37188041B84A"
         ],
         "represented_cell_ids": [
           "CELL-M-PKC-AUXILIARY-CURVE",
@@ -9161,10 +9186,10 @@
       },
       "generated_seeds": [
         {
-          "seed_id": "HGS-F93A1368B6E3",
+          "seed_id": "HGS-802E42BBD756",
           "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
           "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-          "claim_state_digest": "3f38a6a69f60f041d69b185b728192c3907d09b37da4da7dddb147275a435214",
+          "claim_state_digest": "1e230dcee80ad58bde2ebb505ce6600baf9e7557d70d0888d36b68379fd37106",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9246,7 +9271,7 @@
             "experiments/p4_petit/README.md",
             "experiments/p4_petit/RESULTS.md"
           ],
-          "deduplication_key": "f93a1368b6e33843d75c00595f39c7d2c8d4d7964f971445cf5e96ed6b2133e4",
+          "deduplication_key": "802e42bbd75674f254d8963e2c29af1ddf73edb9bfe11faeec22e6657e44b7d9",
           "proposal_packet": {
             "required_sections": [
               "new_premise",
@@ -9308,10 +9333,10 @@
           }
         },
         {
-          "seed_id": "HGS-A16DB1D7E4E8",
+          "seed_id": "HGS-37188041B84A",
           "cell_id": "CELL-M-PKC-SMOOTH-M16",
-          "typed_evidence_digest": "c7126e4dcb98250b3cf677b29dc9bb7f4890d94bb2f3cae450fbeadd1be41f58",
-          "claim_state_digest": "3f38a6a69f60f041d69b185b728192c3907d09b37da4da7dddb147275a435214",
+          "typed_evidence_digest": "10898f19aa3073ea8954dd25a67335aa09072e1569e20b08da85ef6d2755b257",
+          "claim_state_digest": "1e230dcee80ad58bde2ebb505ce6600baf9e7557d70d0888d36b68379fd37106",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9331,7 +9356,7 @@
             "status": "open",
             "intake_mode": "desk_cost_bridge",
             "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
-            "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. Its coefficient unit is 1 in that definition, no primitive/content normalization is allowed, and projective rescaling follows the declared multidegree. It records the forward algebraic argument and replays bounded S4/S5 forward/reverse fixtures. The universal reverse projection above S4 remains unproved pending a kernel-checked fixed-degree projective resultant common-root theorem and recursive-specialization compatibility.",
+            "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and the end-to-end common-root corollary while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. The remaining exact mechanism gap is the recursive frozen C_r specialization at formal degrees (2^(r-2),2), including affine output and [1:0], plus the universal C16-to-C2 induction.",
             "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
             "cost_quantity": {
               "id": "CQ-SEMAEV-S17-SYSTEM-COST",
@@ -9347,6 +9372,7 @@
                 "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
                 "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
                 "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
+                "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
                 "SC-SEMAEV-RELATION-SEMANTICS"
               ]
             },
@@ -9382,6 +9408,7 @@
             ],
             "source_claim_ids": [
               "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
+              "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
               "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
               "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
               "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
@@ -9392,7 +9419,7 @@
               "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
               "SC-SEMAEV-RELATION-SEMANTICS"
             ],
-            "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, deterministic control and secp256k1 GLV recovery checks, and a frozen recursive projective S17 contract with its forward algebraic argument recorded and bounded S4/S5 forward/reverse fixtures replayed. The universal reverse theorem above S4 and complete cost bridge remain unproved. CQ-SEMAEV-S17-SYSTEM-COST remains partial; solving cost, rank, and yield remain unpriced. The scoped blocker does not justify S17 expansion or evaluation, recursive-system materialization, a solver run, target computation, hypothesis retention, experiment authorization, or route promotion."
+            "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, deterministic control and secp256k1 GLV recovery checks, a frozen recursive projective S17 contract, and kernel-checked fixed-degree projective resultant plus literal Sylvester unit-one and end-to-end common-root theorems that retain formal-degree drops, zero forms, affine witnesses, and [1:0]. The exact recursive frozen C_r specialization and universal C16-to-C2 induction remain open, and the complete cost bridge is unproved. CQ-SEMAEV-S17-SYSTEM-COST remains partial; solving cost, rank, and yield remain unpriced. The scoped blocker has zero_retention_success and does not justify S17 expansion or evaluation, recursive-system materialization, a solver run, target computation, hypothesis retention, experiment authorization, or route promotion."
           },
           "target_feature": {
             "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
@@ -9420,7 +9447,7 @@
             "experiments/p4_petit/README.md",
             "experiments/p4_petit/RESULTS.md"
           ],
-          "deduplication_key": "a16db1d7e4e87371bfcd6804e14a248ed73972ec19865b7de62ff58d27a56144",
+          "deduplication_key": "37188041b84ab90566f428417347541d29c891597046be57200a246150d69a3c",
           "proposal_packet": {
             "required_sections": [
               "new_premise",
@@ -9809,6 +9836,7 @@
           "experiments/engine/pkc_smooth_desk_screen/artifact.json",
           "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
           "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json",
+          "experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json",
           "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
           "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
         ],
@@ -10225,7 +10253,7 @@
     "state_source": "data/typed_evidence_state.json",
     "policy_source": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
     "counts": {
-      "source_claims": 23,
+      "source_claims": 24,
       "target_properties": 5,
       "mechanisms": 7,
       "cells": 7,
@@ -10237,10 +10265,10 @@
       "desk_decisions": 3
     },
     "source_hashes": {
-      "policy_sha256": "d9b733331bd3b8afd0dc6e96d0a7179d60c8fc5b922bb5ad0b62079ce15830b1",
-      "decision_substrate_sha256": "c988762b9b200633a98494178ee156308dfc75dc80b1fbccc36ce60ae8b84423",
+      "policy_sha256": "d6c77763ae2134422ed8c5866168fe48fece69344129bdb43cdb6062b43c8ff7",
+      "decision_substrate_sha256": "dfd46771f82bbada67da8a2899019d01956d1cd141c17e2515a3760903ee49ea",
       "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-      "evidence_files_sha256": "c90cbea19f627de5e58e960e032bc8af47115f86b8f2405f9c1323c68730d94b",
+      "evidence_files_sha256": "3e3d3bc46633d1185bee2f32c98530c7cdf38fa1b74c5538f9f7258cd691e26e",
       "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
     },
     "trust_boundary": {
@@ -10385,7 +10413,7 @@
           }
         ],
         "seed_eligible": true,
-        "evidence_digest": "c7126e4dcb98250b3cf677b29dc9bb7f4890d94bb2f3cae450fbeadd1be41f58",
+        "evidence_digest": "10898f19aa3073ea8954dd25a67335aa09072e1569e20b08da85ef6d2755b257",
         "authorization": "none"
       },
       {
@@ -11875,6 +11903,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.TaskSylvesterConvention",
+      "to": "Ecdlp.Proved.FixedDegreeProjectiveResultant",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.ThirteenTorsion",
       "to": "Ecdlp.Proved.DivisionPolynomial",
       "type": "imports"
@@ -12542,6 +12575,16 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.SemaevFour",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FixedDegreeProjectiveResultant",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.TaskSylvesterConvention",
       "type": "imports"
     },
     {
@@ -14510,6 +14553,11 @@
       "type": "member_of"
     },
     {
+      "from": "thm-299",
+      "to": "family-other",
+      "type": "member_of"
+    },
+    {
       "from": "thm-065",
       "to": "secp-parameters",
       "type": "supports",
@@ -15641,6 +15689,11 @@
     },
     {
       "from": "CELL-M-PKC-SMOOTH-M16",
+      "to": "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-PKC-SMOOTH-M16",
       "to": "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
       "type": "grounded_in_source_claim"
     },
@@ -15858,12 +15911,12 @@
       "type": "binds_unresolved_question"
     },
     {
-      "from": "HGS-F93A1368B6E3",
+      "from": "HGS-802E42BBD756",
       "to": "CELL-M-PKC-AUXILIARY-CURVE",
       "type": "generated_from_cell"
     },
     {
-      "from": "HGS-A16DB1D7E4E8",
+      "from": "HGS-37188041B84A",
       "to": "CELL-M-PKC-SMOOTH-M16",
       "type": "generated_from_cell"
     },

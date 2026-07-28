@@ -319,6 +319,104 @@ class ScientificSemanticTests(unittest.TestCase):
                 )
             )
 
+    def test_m16_resultant_kernel_certificate_and_blocker_cannot_drift(
+        self,
+    ) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim_id = "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT"
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["source_claim_ids"].remove(claim_id)
+        cell["cost_quantity"]["source_claim_ids"].remove(claim_id)
+        cell["relation_action"] = (
+            "The already proved fixed-degree theorem is still pending."
+        )
+        cell["boundary"] = "Executable with retained hypotheses."
+        barrier = next(
+            item
+            for item in typed["barriers"]
+            if item["id"] == "B-PKC-M16-COMPLETE-COST-BRIDGE"
+        )
+        barrier["source_claim_ids"].remove(claim_id)
+        barrier["exact_scope"] = (
+            "The barrier is pending a kernel-checked fixed-degree "
+            "projective resultant common-root theorem."
+        )
+        barrier["reopening_conditions"] = [
+            "Kernel-check a fixed-degree projective resultant "
+            "common-root theorem."
+        ]
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == claim_id
+        )
+        claim["artifact_sha256"] = "0" * 64
+        claim["statement"] = "An unspecified determinant was checked."
+        claim["boundary"] = "Fully independent, priced, and executable."
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "M16 cell must retain its projective-resultant kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 cost quantity must retain its projective-resultant "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost barrier must retain its projective-resultant "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 projective-resultant artifact hash drifted",
+            problems,
+        )
+        for boundary in (
+            "fixed-degree theorem",
+            "literal matrix bridge",
+            "unit-one convention",
+            "zero-form coverage",
+            "projective-infinity coverage",
+            "kernel-bound non-run assurance",
+            "recursive-specialization blocker",
+            "universal-induction blocker",
+            "zero retention",
+            "no-authorization boundary",
+            "no-promotion boundary",
+        ):
+            self.assertTrue(
+                any(
+                    "M16 projective-resultant claim must retain" in problem
+                    and boundary in problem
+                    for problem in problems
+                )
+            )
+        self.assertIn(
+            "M16 complete-cost barrier cannot reopen the kernel-checked "
+            "fixed-degree theorem",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost reopening must require recursive "
+            "specialization and universal induction",
+            problems,
+        )
+        for boundary in (
+            "narrowed mechanism gap",
+            "recursive specialization",
+            "universal induction",
+            "zero retention",
+            "no hypothesis retention",
+            "no experiment authorization",
+            "no route promotion",
+        ):
+            self.assertIn(f"M16 cell must retain {boundary}", problems)
+
     def test_shadow_intake_cannot_authorize_or_activate_glv(self) -> None:
         shadow = copy.deepcopy(self.shadow)
         shadow["proposal_stubs"][0]["route_id"] = "R-GLV-SEMAEV"

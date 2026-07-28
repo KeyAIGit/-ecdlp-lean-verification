@@ -1,0 +1,741 @@
+{
+  "artifact_id": "PKC-SMOOTH-M16-PROJECTIVE-RESULTANT-KERNEL-001",
+  "assumption_contract": {
+    "affine_output": "when V!=0 the witness dehomogenizes to x=U/V and [x:1]",
+    "coefficient_domain": "the generic common-root theorem uses a Field K with IsAlgClosed K",
+    "formal_degrees": "m>0 and n>0",
+    "degree_bounds": "natDegree(f)<=m and natDegree(g)<=n",
+    "infinity_output": "when V=0 the valid witness is represented by [1:0]",
+    "normalization": "formal degrees and leading zero coefficients are retained; no primitive, content, monic, or actual-degree normalization",
+    "projective_domain": "a witness pair (U,V) satisfies U!=0 or V!=0",
+    "specialization_map": "the mapped theorem keeps the coefficient ring homomorphism explicit",
+    "zero_forms": "included; no f!=0 or g!=0 hypothesis is imposed"
+  },
+  "depends_on": [
+    {
+      "digest_match": true,
+      "observed_sha256": "3164cb89adac7622b4d08d781061ea386dc64e754236e48c838a3dac23040715",
+      "path": "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json",
+      "required_sha256": "3164cb89adac7622b4d08d781061ea386dc64e754236e48c838a3dac23040715"
+    },
+    {
+      "digest_match": true,
+      "observed_sha256": "6b4c793c5bf994f5c42b4ec2d7f66f101953bbdd76a0af61a78d917e080e86e3",
+      "path": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean",
+      "required_sha256": "6b4c793c5bf994f5c42b4ec2d7f66f101953bbdd76a0af61a78d917e080e86e3"
+    },
+    {
+      "digest_match": true,
+      "observed_sha256": "9d94086350955a812fe4c02f353b72a5b7581ade57c6507ccebffa96808cd5a8",
+      "path": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+      "required_sha256": "9d94086350955a812fe4c02f353b72a5b7581ade57c6507ccebffa96808cd5a8"
+    }
+  ],
+  "fixtures": {
+    "F5_affine_output": {
+      "common_projective_roots": [
+        [
+          4,
+          1
+        ]
+      ],
+      "distinguished_witness": [
+        4,
+        1
+      ],
+      "field_prime": 5,
+      "fixed_resultant_mod_p": 0,
+      "formal_degrees": [
+        2,
+        2
+      ],
+      "infinity_is_common_root": false,
+      "left_coefficients_descending": [
+        1,
+        0,
+        4
+      ],
+      "right_coefficients_descending": [
+        1,
+        1,
+        0
+      ],
+      "task_sylvester_matrix": [
+        [
+          1,
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          4
+        ],
+        [
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          1,
+          0
+        ]
+      ]
+    },
+    "F5_degree_drop_infinity": {
+      "common_projective_roots": [
+        [
+          1,
+          0
+        ]
+      ],
+      "distinguished_witness": [
+        1,
+        0
+      ],
+      "field_prime": 5,
+      "fixed_resultant_mod_p": 0,
+      "formal_degrees": [
+        2,
+        2
+      ],
+      "left_coefficients_descending": [
+        0,
+        2,
+        0
+      ],
+      "reduced_affine_control": {
+        "common_roots": [],
+        "degrees": [
+          1,
+          1
+        ],
+        "left_coefficients_descending": [
+          2,
+          0
+        ],
+        "resultant_mod_5": 1,
+        "right_coefficients_descending": [
+          4,
+          3
+        ]
+      },
+      "required_disposition": "retain_[1:0]_and_fixed_formal_degrees",
+      "right_coefficients_descending": [
+        0,
+        4,
+        3
+      ],
+      "task_sylvester_matrix": [
+        [
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          4,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          4,
+          3
+        ]
+      ]
+    },
+    "F5_odd_convention_control": {
+      "field_prime": 5,
+      "formal_degrees": [
+        1,
+        1
+      ],
+      "left_coefficients_descending": [
+        1,
+        0
+      ],
+      "literal_resultant_mod_5": 1,
+      "negative_unit_result_mod_5": 4,
+      "reversed_coefficient_resultant_mod_5": 4,
+      "right_coefficients_descending": [
+        1,
+        1
+      ],
+      "swapped_argument_matrix": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "swapped_argument_resultant_mod_5": 4,
+      "swapped_row_block_resultant_mod_5": 4,
+      "task_sylvester_matrix": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "F5_specialization_to_infinity": {
+      "field_prime": 5,
+      "formal_degrees": [
+        2,
+        2
+      ],
+      "left_coefficients_descending_polynomials_ascending_s": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ],
+        [
+          0
+        ]
+      ],
+      "parameter": "s",
+      "recursive_claim_status": "fixture_only_not_Cr_theorem",
+      "resultant_polynomial_ascending_s_over_Z": [
+        0,
+        -12,
+        9
+      ],
+      "right_coefficients_descending_polynomials_ascending_s": [
+        [
+          0,
+          1
+        ],
+        [
+          4
+        ],
+        [
+          3
+        ]
+      ],
+      "values": {
+        "0": {
+          "distinguished_witness": [
+            1,
+            0
+          ],
+          "resultant_mod_5": 0
+        },
+        "1": {
+          "resultant_mod_5": 2
+        }
+      }
+    },
+    "F5_one_sided_drop_no_root": {
+      "common_projective_roots": [],
+      "field_prime": 5,
+      "fixed_resultant_mod_p": 1,
+      "formal_degrees": [
+        2,
+        2
+      ],
+      "left_coefficients_descending": [
+        0,
+        1,
+        0
+      ],
+      "required_disposition": "one_degree_drop_alone_does_not_force_zero",
+      "right_coefficients_descending": [
+        1,
+        0,
+        1
+      ],
+      "task_sylvester_matrix": [
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1
+        ]
+      ]
+    },
+    "F5_recurrence_row_order": {
+      "common_projective_roots": [],
+      "field_prime": 5,
+      "fixed_resultant_mod_p": 2,
+      "formal_degrees": [
+        4,
+        2
+      ],
+      "left_coefficients_descending": [
+        1,
+        2,
+        3,
+        4,
+        0
+      ],
+      "right_coefficients_descending": [
+        2,
+        0,
+        1
+      ],
+      "row_order_check": "full_matrix_equality_not_determinant_only",
+      "task_sylvester_matrix": [
+        [
+          1,
+          2,
+          3,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          0
+        ],
+        [
+          2,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          0,
+          1
+        ]
+      ]
+    },
+    "F5_zero_both": {
+      "common_projective_roots": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "distinguished_witness": [
+        1,
+        0
+      ],
+      "field_prime": 5,
+      "fixed_resultant_mod_p": 0,
+      "formal_degrees": [
+        2,
+        2
+      ],
+      "left_coefficients_descending": [
+        0,
+        0,
+        0
+      ],
+      "right_coefficients_descending": [
+        0,
+        0,
+        0
+      ],
+      "task_sylvester_matrix": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "zero_form_policy": "both_zero_included"
+    },
+    "F5_zero_left": {
+      "common_projective_roots": [
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "distinguished_witness": [
+        2,
+        1
+      ],
+      "field_prime": 5,
+      "fixed_resultant_mod_p": 0,
+      "formal_degrees": [
+        2,
+        2
+      ],
+      "left_coefficients_descending": [
+        0,
+        0,
+        0
+      ],
+      "right_coefficients_descending": [
+        1,
+        0,
+        1
+      ],
+      "task_sylvester_matrix": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1
+        ]
+      ],
+      "zero_form_policy": "included_without_nonzero_hypothesis"
+    },
+    "F5_zero_right": {
+      "common_projective_roots": [
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "distinguished_witness": [
+        2,
+        1
+      ],
+      "field_prime": 5,
+      "fixed_resultant_mod_p": 0,
+      "formal_degrees": [
+        2,
+        2
+      ],
+      "left_coefficients_descending": [
+        1,
+        0,
+        1
+      ],
+      "right_coefficients_descending": [
+        0,
+        0,
+        0
+      ],
+      "task_sylvester_matrix": [
+        [
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "zero_form_policy": "right_zero_included"
+    }
+  },
+  "kernel_contract": {
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "axiom_audit_status": "standard_lean_axioms_only",
+    "build_status": "passed",
+    "build_targets": [
+      "Ecdlp.Proved.FixedDegreeProjectiveResultant",
+      "Ecdlp.Proved.TaskSylvesterConvention"
+    ],
+    "forbidden_axioms": [
+      "sorryAx"
+    ],
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "mathlib_input_revision": "v4.31.0",
+    "no_sorry_status": "passed",
+    "validator_invokes_lean": false
+  },
+  "kind": "non_run_kernel_binding_certificate",
+  "open_exact_blocker": {
+    "depends_on_kernel_checked_components": [
+      "fixed_degree_common_root",
+      "coefficient_map_resultant",
+      "literal_task_sylvester_unit_one"
+    ],
+    "downstream_open": [
+      "generic_C16_forward",
+      "universal_reverse_C16_to_C2"
+    ],
+    "forbidden_promotions": [
+      "RecS17_iff_GeoCat",
+      "RecS17_implies_RatCat",
+      "RecS17_implies_Recover",
+      "cost_complete",
+      "route_promotion"
+    ],
+    "not_refuted": true,
+    "smallest_missing_component": {
+      "id": "recursive_Cr_specialization_binding",
+      "reason": "no kernel-bound recursive C_r definition and application theorem is present",
+      "requirement": "exact specialization of frozen C_r at formal degrees (2^(r-2),2), with coefficient unit 1, affine output, and [1:0]"
+    },
+    "status": "open_exact_blocker"
+  },
+  "literal_convention_binding": {
+    "argument_order": "(f,g,m,n) is retained",
+    "binary_form": "p.homogenize d=sum_(k=0)^d p.coeff(k)*U^k*V^(d-k)",
+    "determinant": "ordinary determinant",
+    "formal_degree_reduction": "forbidden",
+    "literal_coefficient_unit": 1,
+    "mathlib_relation": "taskSylvester(f,g,m,n)=reindex(Fin.revPerm,Fin.revPerm,transpose(Polynomial.sylvester(f,g,m,n)))",
+    "monic_normalization": "forbidden",
+    "primitive_part_or_content_division": "forbidden",
+    "task_coefficient_order": "descending U degree [p.coeff(d),...,p.coeff(0)]",
+    "task_column_order": "descending monomial slots",
+    "task_row_order": "first n shifted rows of f, then m shifted rows of g"
+  },
+  "producer_checks": {
+    "C16_evaluated": false,
+    "C16_expanded": false,
+    "M16_system_materialized": false,
+    "S17_materialized": false,
+    "exact_target_search_executed": false,
+    "experiment_authorized": false,
+    "parameter_sweep_executed": false,
+    "solver_executed": false
+  },
+  "proof_status": {
+    "cost_rank_yield_claim": "not_claimed",
+    "direct_S17_equivalence": "not_claimed",
+    "fixed_degree_common_root": "kernel_checked",
+    "recursive_Cr_specialization": "open_exact_blocker",
+    "scheme_or_multiplicity_claim": "not_claimed",
+    "task_sylvester_end_to_end": "kernel_checked",
+    "task_sylvester_matrix_bridge": "kernel_checked",
+    "universal_reverse_C16_to_C2": "open_exact_blocker"
+  },
+  "schema_version": 1,
+  "scope": {
+    "barrier": "B-PKC-M16-COMPLETE-COST-BRIDGE",
+    "cell": "CELL-M-PKC-SMOOTH-M16",
+    "characteristic_seven_transfer": "forbidden",
+    "cost_quantity": "CQ-SEMAEV-S17-SYSTEM-COST",
+    "excluded": [
+      "expanded or evaluated S17",
+      "materialized M16 polynomial system",
+      "recursive C_r specialization claimed without a theorem",
+      "universal reverse C16-to-C2 projection claimed without a theorem",
+      "scheme equality, radicality, or multiplicity preservation",
+      "solver, parameter sweep, exact-target, or discrete-log execution",
+      "degree of regularity, fill-in, rank, yield, memory, or cost",
+      "experiment authorization, route promotion, or hypothesis retention"
+    ],
+    "generic_resultant_scope": "any algebraically closed field; no curve or characteristic restriction is used by the generic theorem",
+    "included": [
+      "fixed-degree projective resultant common-root theorem",
+      "literal TASK-018 Sylvester matrix and determinant unit-one bridge",
+      "small independent degree-drop, zero-form, affine, infinity, ordering, and specialization fixtures",
+      "exact blocker registration for recursive specialization and universal reverse projection"
+    ],
+    "recursive_curve_scope": "E:y^2=x^3+7 over fields of characteristic not in {2,3,7}",
+    "task": "TASK-019"
+  },
+  "terminal_disposition": {
+    "assurance": "kernel_bound_non_run_certificate",
+    "authorization": "none",
+    "barrier_effect": "narrowed_open",
+    "cell_status": "open_non_executable",
+    "cost_quantity_status": "partial",
+    "experiment_permission": "none",
+    "hypothesis_effect": "none",
+    "rank_status": "unpriced",
+    "remaining_blocker": "recursive symbolic C_r specialization, including output [1:0], and the universal C16-to-C2 reverse induction remain open_exact_blocker",
+    "retention_disposition": "zero_retention_success",
+    "route_effect": "none",
+    "solving_cost_status": "unpriced",
+    "yield_status": "unpriced"
+  },
+  "theorem_bindings": {
+    "degree_drop": {
+      "declaration": "Ecdlp.ProjectiveResultant.natDegree_lt_of_le_of_coeff_eq_zero",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean"
+    },
+    "distinguished_infinity_common_root": {
+      "declaration": "Ecdlp.ProjectiveResultant.one_zero_is_common_root_iff",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean"
+    },
+    "distinguished_infinity_evaluation": {
+      "declaration": "Ecdlp.ProjectiveResultant.eval_homogenize_one_zero",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean"
+    },
+    "fixed_degree_common_root": {
+      "declaration": "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean"
+    },
+    "infinity_evaluation": {
+      "declaration": "Ecdlp.ProjectiveResultant.eval_homogenize_second_zero",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean"
+    },
+    "injective_algebraic_closure_reflection": {
+      "declaration": "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root_over",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean"
+    },
+    "literal_determinant_unit_one": {
+      "declaration": "Ecdlp.TaskSylvester.det_taskSylvester_eq_resultant",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/TaskSylvesterConvention.lean"
+    },
+    "literal_end_to_end_common_root": {
+      "declaration": "Ecdlp.TaskSylvester.det_taskSylvester_eq_zero_iff_common_projective_root",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/TaskSylvesterConvention.lean"
+    },
+    "literal_matrix_relation": {
+      "declaration": "Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/TaskSylvesterConvention.lean"
+    },
+    "mapped_fixed_degree_common_root": {
+      "declaration": "Ecdlp.ProjectiveResultant.map_fixedDegree_resultant_eq_zero_iff_common_projective_root",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean"
+    },
+    "projective_root_predicate": {
+      "declaration": "Ecdlp.ProjectiveResultant.HasCommonProjectiveRoot",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FixedDegreeProjectiveResultant.lean"
+    }
+  }
+}

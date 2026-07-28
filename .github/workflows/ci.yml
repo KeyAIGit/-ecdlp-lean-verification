@@ -94,6 +94,12 @@ jobs:
           python3 experiments/engine/pkc_smooth_m16_projective_bridge/test_validate.py
           (cd experiments/engine/pkc_smooth_m16_projective_bridge && sha256sum -c artifact.sha256)
 
+      - name: Replay PKC M16 projective resultant kernel certificate
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_projective_resultant_kernel/validate.py
+          python3 experiments/engine/pkc_smooth_m16_projective_resultant_kernel/test_validate.py
+          (cd experiments/engine/pkc_smooth_m16_projective_resultant_kernel && sha256sum -c artifact.sha256)
+
       - name: Check generated Research Engine state
         run: python3 scripts/build_research_engine_state.py --check
 
