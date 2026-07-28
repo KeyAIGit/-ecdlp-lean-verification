@@ -262,6 +262,63 @@ class ScientificSemanticTests(unittest.TestCase):
             )
         )
 
+    def test_m16_projective_certificate_boundaries_cannot_drift(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim_id = "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT"
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["source_claim_ids"].remove(claim_id)
+        cell["cost_quantity"]["source_claim_ids"].remove(claim_id)
+        barrier = next(
+            item
+            for item in typed["barriers"]
+            if item["id"] == "B-PKC-M16-COMPLETE-COST-BRIDGE"
+        )
+        barrier["source_claim_ids"].remove(claim_id)
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == claim_id
+        )
+        claim["artifact_sha256"] = "0" * 64
+        claim["statement"] = "An unspecified polynomial was checked."
+        claim["boundary"] = "Fully independent, priced, and executable."
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "M16 cell must retain its projective-S17 bridge certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 cost quantity must retain its projective-S17 certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost barrier must retain its projective-S17 certificate",
+            problems,
+        )
+        self.assertIn("M16 projective-S17 artifact hash drifted", problems)
+        for boundary in (
+            "source independence",
+            "calibration",
+            "partial cost quantity",
+            "unpriced solving cost",
+            "unpriced rank",
+            "unpriced yield",
+            "generic-forward assurance boundary",
+            "narrowed-open barrier",
+            "no-authorization boundary",
+        ):
+            self.assertTrue(
+                any(
+                    "M16 projective-S17 claim must retain" in problem
+                    and boundary in problem
+                    for problem in problems
+                )
+            )
+
     def test_shadow_intake_cannot_authorize_or_activate_glv(self) -> None:
         shadow = copy.deepcopy(self.shadow)
         shadow["proposal_stubs"][0]["route_id"] = "R-GLV-SEMAEV"

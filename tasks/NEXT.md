@@ -20,13 +20,13 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: `TASK-018` in `tasks/ECDLP_RESEARCH.md`.
+Current central task: `TASK-019` in `tasks/ECDLP_RESEARCH.md`.
 
 `TASK-010` is accepted at
 `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
-proposal-intake lane because TASK-018 is a non-executable recursive-projective
-S17 definition and reverse-projection task, not a hypothesis candidate or
-experiment.
+proposal-intake lane because TASK-019 is a non-executable fixed-degree
+projective-resultant and recursive-specialization theorem task, not a
+hypothesis candidate or experiment.
 
 Current scientific activation order:
 
@@ -39,15 +39,23 @@ Current scientific activation order:
    cell remains open and non-executable.
 4. `TASK-017` completed the exact set-theoretic homogeneous projective-tree
    bridge, named exceptional-fiber classification, recovery domain, and GLV
-   lift-sign replay. The direct S17 predicate and reverse theorem above S4
-   remain the scoped blocker.
-5. `TASK-018` gives sole desk priority to freezing the recursive projective
-   S17 definition and proving or replaying the reverse projection above S4 for
-   `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`, before any solver or cost
-   claim.
-6. The auxiliary-curve cell stays parked until a primary source supplies a
+   lift-sign replay.
+5. `TASK-018` completed with a scoped blocker and zero retained hypotheses. It
+   freezes the recursive projective S17 contract with fixed degrees and the
+   literal Sylvester determinant under the frozen coefficient, argument, and
+   row order, with coefficient unit 1 in that definition and projective
+   rescaling governed by the declared multidegree. It records the forward
+   algebraic argument and replays bounded S4/S5 forward/reverse fixtures; the
+   generic C16 forward implication is not computationally replayed or kernel
+   checked. The universal reverse projection above S4 remains unproved.
+6. `TASK-019` gives sole desk priority to a kernel-checked fixed-degree
+   projective resultant common-root theorem and recursive symbolic `C_r`
+   specialization compatibility, including output `[1:0]`, for
+   `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`. It authorizes no S17
+   materialization, solver, or cost claim.
+7. The auxiliary-curve cell stays parked until a primary source supplies a
    finite search domain with a completeness criterion.
-7. Any later candidate, solver, or experiment still requires the normal
+8. Any later candidate, solver, or experiment still requires the normal
    review gates and a separate dated authorization.
 
 These entries freeze further engine-schema expansion by default. They do not

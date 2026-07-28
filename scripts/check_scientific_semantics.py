@@ -12,6 +12,14 @@ from research_claims import validate_and_build as validate_claim_policy
 
 ROOT = Path(__file__).resolve().parent.parent
 
+M16_PROJECTIVE_CLAIM_ID = "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT"
+M16_PROJECTIVE_ARTIFACT_PATH = (
+    "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json"
+)
+M16_PROJECTIVE_ARTIFACT_SHA256 = (
+    "3164cb89adac7622b4d08d781061ea386dc64e754236e48c838a3dac23040715"
+)
+
 PETIT_WEIL_CONTRADICTIONS = (
     re.compile(
         r"faithful petit.{0,120}"
@@ -108,7 +116,7 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 22,
+        "source_claims": 23,
         "cells": 7,
         "seed_eligible_cells": 2,
         "desk_decisions": 3,
@@ -141,6 +149,10 @@ def validate_semantics(
         (
             "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
             "exceptional-fiber certificate",
+        ),
+        (
+            M16_PROJECTIVE_CLAIM_ID,
+            "projective-S17 bridge certificate",
         ),
     ):
         if claim_id not in m16_cell.get("source_claim_ids", []):
@@ -208,6 +220,52 @@ def validate_semantics(
         problems.append(
             "M16 cost quantity must retain its exceptional-fiber certificate"
         )
+    projective_claim = typed_claims.get(M16_PROJECTIVE_CLAIM_ID, {})
+    if projective_claim.get("read_status") != "certificate_replayed":
+        problems.append(
+            "M16 projective-S17 assurance must remain certificate_replayed"
+        )
+    if projective_claim.get(
+        "artifact_sha256"
+    ) != M16_PROJECTIVE_ARTIFACT_SHA256:
+        problems.append("M16 projective-S17 artifact hash drifted")
+    if projective_claim.get("evidence_path") != M16_PROJECTIVE_ARTIFACT_PATH:
+        problems.append("M16 projective-S17 evidence path drifted")
+    projective_statement = projective_claim.get("statement", "")
+    for token, label in (
+        ("recursive projective S17", "frozen recursive predicate"),
+        ("fixed-degree", "fixed-degree resultant convention"),
+        ("reverse projection", "reverse-projection boundary"),
+    ):
+        if token not in projective_statement:
+            problems.append(
+                f"M16 projective-S17 claim must retain {label}"
+            )
+    projective_boundary = projective_claim.get("boundary", "")
+    for token, label in (
+        ("source_independence is not_established", "source independence"),
+        ("calibration is excluded_nonexperimental", "calibration"),
+        ("CQ-SEMAEV-S17-SYSTEM-COST remains partial", "partial cost quantity"),
+        ("solving cost is unpriced", "unpriced solving cost"),
+        ("rank is unpriced", "unpriced rank"),
+        ("yield is unpriced", "unpriced yield"),
+        (
+            "generic C16 forward implication is not computationally replayed or kernel checked",
+            "generic-forward assurance boundary",
+        ),
+        ("barrier narrowed but open", "narrowed-open barrier"),
+        ("no experiment authorization", "no-authorization boundary"),
+    ):
+        if token not in projective_boundary:
+            problems.append(
+                f"M16 projective-S17 claim must retain {label}"
+            )
+    if M16_PROJECTIVE_CLAIM_ID not in m16_cell.get(
+        "cost_quantity", {}
+    ).get("source_claim_ids", []):
+        problems.append(
+            "M16 cost quantity must retain its projective-S17 certificate"
+        )
     m16_barrier = typed_barriers.get(
         "B-PKC-M16-COMPLETE-COST-BRIDGE", {}
     )
@@ -224,6 +282,12 @@ def validate_semantics(
     ):
         problems.append(
             "M16 complete-cost barrier must retain its exceptional-fiber certificate"
+        )
+    if M16_PROJECTIVE_CLAIM_ID not in m16_barrier.get(
+        "source_claim_ids", []
+    ):
+        problems.append(
+            "M16 complete-cost barrier must retain its projective-S17 certificate"
         )
     if m16_cell.get("authorization") != "none":
         problems.append("M16 semantic result cannot authorize execution")

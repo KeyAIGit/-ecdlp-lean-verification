@@ -36,8 +36,11 @@ Machine-readable companions:
   draft PR #235. It is historical input. `TASK-010` owns the accepted v0.2
   sanitation review. `TASK-017` records the completed exact set-theoretic
   projective-tree and exceptional-fiber result with a scoped direct-S17
-  blocker, while `TASK-018` owns the current non-executable recursive
-  projective S17 definition and reverse-projection bridge above S4.
+  blocker. `TASK-018` records the frozen recursive projective S17 contract,
+  the forward algebraic argument, bounded S4/S5 forward/reverse fixtures, and
+  the scoped universal-reverse-projection blocker. `TASK-019` owns the current
+  non-executable fixed-degree projective-resultant common-root theorem and
+  recursive-specialization compatibility bridge, including output `[1:0]`.
 
 Their checks live under `scripts/check_*inventory.py`,
 `scripts/check_formal_substrate.py`, `scripts/check_ecdlp_decision_substrate.py`,

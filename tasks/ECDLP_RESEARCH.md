@@ -852,7 +852,7 @@ Recorded result:
 
 ### TASK-018 - Freeze recursive projective S17 and prove the reverse projection
 
-Status: active_non_executable_projective_s17_bridge
+Status: completed_non_executable_scoped_blocker
 Kind: theorem | data | research | review
 Hypothesis: none. This task fixes the remaining mathematical predicate and
 reverse implication needed before any later cost contract can be meaningful;
@@ -860,25 +860,31 @@ it is not a solver candidate.
 Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
 Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
 Authorization: none
+Outcome: `scoped_blocker`
+Retention: `zero_retention_success`
+Completed on: 2026-07-28
+Artifact: `experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json`
+Artifact ID: `PKC-SMOOTH-M16-PROJECTIVE-S17-BRIDGE-001`
+Artifact SHA-256: `3164cb89adac7622b4d08d781061ea386dc64e754236e48c838a3dac23040715`
+Evidence claim: `SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT`
 Why it matters: TASK-017 proves the complete set-theoretic projective S3-tree
-semantics and recovery domain, but `DirectS17` is still not a well-defined
-repository predicate above S4. Without a frozen recursive projective
-definition and reverse projection theorem, any S17 solver, rank, yield, or
-cost claim would price an ambiguous object.
+semantics and recovery domain. TASK-018 was required to freeze the exact
+recursive projective S17 object before any attempt to certify its universal
+reverse projection or price a solver.
 Decision boundary:
 - Freeze one recursive projective S17 definition with explicit base cases,
-  elimination variable order, homogeneous coordinates, resultant
-  normalization, declared degrees, and equality up to specified units.
+  elimination variable order, homogeneous coordinates, fixed degrees, and the
+  literal Sylvester determinant under the frozen coefficient, argument, and
+  row order, with coefficient unit 1 in that definition and no primitive or
+  content normalization. Projective rescaling follows the declared
+  multidegree.
 - Work on the nonsingular curve `y^2=x^3+7` over fields of characteristic not
   in `{2,3,7}`; do not transfer the TASK-017 theorem to characteristic seven.
 - Keep the recursive S17 predicate, the homogeneous S3 caterpillar, its affine
   chart, and recovery as separate predicates until both implications are
   proved on a named field and domain.
-- Prove or independently replay the reverse projection above S4 against the
-  TASK-017 projective-tree predicate, retaining identity, tangent,
-  two-torsion, duplicate, extension-only, and non-lift strata.
-- Claim only set-theoretic equivalence unless radicality, scheme equality, or
-  multiplicity preservation is independently proved.
+- Any future equivalence claim must be only set-theoretic unless radicality,
+  scheme equality, or multiplicity preservation is independently proved.
 - Do not infer degree of regularity, fill-in, memory, rank, yield, or total
   work from recursive polynomial degree or input size.
 - CANS 2018 remains `full_text_unread`; the auxiliary-curve search remains
@@ -892,38 +898,119 @@ Inputs:
 - `repo/ECDLP_TYPED_EVIDENCE_V0.json`
 - `CELL-M-PKC-SMOOTH-M16`
 - `B-PKC-M16-COMPLETE-COST-BRIDGE`
+Recorded result:
+- The certificate freezes the recursive projective S17 contract with explicit
+  base cases, fixed-degree recurrence, and the literal Sylvester determinant
+  under the frozen coefficient, argument, and row order, with coefficient
+  unit 1 in that definition and no primitive or content normalization.
+  Projective rescaling follows the declared multidegree. It does not expand,
+  evaluate, or materialize S17.
+- The forward projective-tree algebraic argument is recorded, but the generic
+  C16 forward implication is not computationally replayed or kernel checked.
+  Bounded S4/S5 forward/reverse fixtures, including the F5/F25 cases and
+  exhaustive cases over primes 5, 11, and 13, are replayed as finite checks.
+- These S5 fixtures do not establish the universal reverse projection above
+  S4. That implication remains unproved, not false. Its narrow missing bridge
+  is a kernel-checked fixed-degree projective resultant common-root theorem
+  together with a lemma that specialization of recursive symbolic `C_r`,
+  including output `[1:0]`, agrees with the fixed resultant at the previous
+  step.
+- Assurance is `certificate_replayed`, source independence is
+  `not_established`, and calibration is `excluded_nonexperimental`.
+  `CQ-SEMAEV-S17-SYSTEM-COST` stays `partial`; solving cost, rank, and yield
+  stay `unpriced`. `B-PKC-M16-COMPLETE-COST-BRIDGE` is narrowed but stays
+  open, and the M16 cell stays open, seed-eligible, non-executable, and
+  unselected.
+- No hypothesis, experiment authorization, route promotion, S17
+  materialization, solver run, exact-target computation, or cost claim is
+  created.
+
+### TASK-019 - Kernelize fixed-degree projective resultants and reverse projection
+
+Status: active_non_executable_projective_s17_kernel_bridge
+Kind: theorem | data | research | review
+Hypothesis: none. This task certifies the two narrow algebraic lemmas required
+by the remaining universal reverse implication; it is not a solver candidate.
+Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
+Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
+Authorization: none
+Why it matters: TASK-018 freezes the recursive projective S17 contract,
+records its forward algebraic argument, and replays bounded S4/S5
+forward/reverse fixtures, but finite fixtures cannot replace a universal
+proof. The remaining gap must be
+closed at fixed degree and with specialization behavior stated explicitly
+before any direct-S17 equivalence or cost bridge can be claimed.
+Decision boundary:
+- Kernel-check a fixed-degree theorem that the literal homogeneous Sylvester
+  resultant vanishes exactly when the two binary homogeneous forms have a
+  common projective root over the named algebraic closure, under explicit
+  degree and nondegeneracy hypotheses.
+- Work on the nonsingular curve `y^2=x^3+7` over fields of characteristic not
+  in `{2,3,7}`; do not transfer the earlier projective result to characteristic
+  seven.
+- Prove the separate compatibility lemma that specializing recursive symbolic
+  `C_r`, including output `[1:0]`, agrees with the fixed-degree resultant used
+  at the previous recursive step.
+- Use those lemmas to prove the universal reverse projection above S4 or
+  record the smallest exact missing assumption. Registered S4/S5 fixtures are
+  regression evidence only.
+- Keep the literal determinant under the frozen coefficient, argument, and
+  row order, fixed degrees, and coefficient unit 1 in that definition.
+  Preserve the declared multihomogeneous projective-rescaling law. Do not
+  introduce primitive or content normalization.
+- Claim only the stated set-theoretic implication. Do not infer radicality,
+  scheme equality, multiplicity preservation, relation yield, rank, solving
+  degree, fill-in, memory, or total work.
+- Do not expand or evaluate S17, materialize the recursive M16 system, or run
+  Sage, msolve, F4, a Groebner sweep, a parameter sweep, an exact-target
+  search, or a discrete-log computation.
+- CANS 2018 remains `full_text_unread`; the auxiliary-curve search remains
+  parked; `zero_retention_success` remains a valid outcome.
+Inputs:
+- `experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json`
+- `experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json`
+- `Ecdlp/Proved/SemaevThree.lean`
+- `Ecdlp/Proved/SemaevFour.lean`
+- `repo/ECDLP_TYPED_EVIDENCE_V0.json`
+- `CELL-M-PKC-SMOOTH-M16`
+- `B-PKC-M16-COMPLETE-COST-BRIDGE`
 Expected output:
-- One frozen recursive projective definition of S17 with base cases,
-  normalization, resultant degrees, coordinate order, and unit convention.
-- A forward and reverse set-theoretic projection contract between that
-  predicate and the TASK-017 homogeneous caterpillar on an explicit domain.
-- An independent symbolic or finite certificate that detects extraneous
-  resultant components without deleting valid identity, tangent, duplicate,
-  or two-torsion strata.
-- Either an exact recursive-S17/projective-tree bridge or the smallest named
-  counterexample and a further narrowed blocker.
+- One kernel-checked fixed-degree projective resultant common-root theorem
+  with all field, degree, zero-form, projective-domain, and unit hypotheses
+  explicit.
+- One kernel-checked recursive-specialization compatibility lemma, including
+  the output `[1:0]` case.
+- A kernel-checked universal reverse-projection induction above S4, or the
+  smallest exact theorem-level blocker with no broader negative claim.
+- An independently replayable non-run certificate that binds the theorem
+  statements to the frozen TASK-018 contract without materializing S17.
 Exit criteria:
-- Every implication states its field, projective domain, irrelevant-ideal
-  exclusion, projection map, inverse witness, and exceptional strata.
-- Resultant normalization and degree declarations are replayable without
-  expanding or materializing S17.
-- No S17 expansion or evaluation, materialized M16 system, Sage, msolve, F4,
-  Groebner sweep, exact-target relation search, discrete-log computation,
-  experiment authorization, cost inference, or route promotion occurs.
-- M16 remains open and non-executable unless a later dated decision changes
-  the gate after independent review.
+- Every theorem states its field, fixed degrees, projective domain,
+  irrelevant-pair exclusion, specialization map, witness, and unit
+  convention.
+- The reverse induction explicitly covers the `[1:0]` specialization and does
+  not treat finite S5 fixtures as a universal proof.
+- `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`,
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open, the route remains
+  `open_parked`, and experiment authorization remains false.
+- No S17 expansion or evaluation, materialized M16 system, solver execution,
+  cost inference, exact-target work, hypothesis retention, or route promotion
+  occurs.
 Files allowed to edit:
-- a dedicated non-run recursive-projective-S17 certificate directory under
+- one narrow fixed-degree projective-resultant Lean module and its direct
+  theorem dependencies
+- one dedicated non-run TASK-019 certificate directory under
   `experiments/engine/`
-- directly affected source, typed-evidence, task, test, and generated views
-- a narrow Lean module only after the statement and independent certificate
-  are stable
+- directly affected canonical source, typed-evidence, task, test, and
+  generated views
 Files that must be regenerated:
 - typed-evidence, engine, shadow-intake, graph, status, decision, bundle, and
   site views affected by the result
 How to verify:
-- independent definition and reverse-projection replay
-- resultant-component and projective-specialization fault injection
+- independent fixed-degree common-root and specialization replay
+- degree-drop, zero-form, argument-order, row-order, unit, affine-output, and
+  `[1:0]` fault fixtures
 - typed-evidence, scientific-semantic, and decision-substrate gates
-- `lake build`, no-`sorry`, and axiom audit only if a Lean theorem is added
+- `lake build`, no-`sorry`, and exhaustive axiom audit for every added Lean
+  theorem
 - generated fixpoint and full repository CI
