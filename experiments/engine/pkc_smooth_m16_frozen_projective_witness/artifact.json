@@ -1,0 +1,233 @@
+{
+  "artifact_id": "PKC-SMOOTH-M16-FROZEN-PROJECTIVE-WITNESS-001",
+  "assumption_contract": {
+    "coefficient_map": "the source is a CommRing k and phi is an explicit ring homomorphism k ->+* K",
+    "main_target": "the recursive extraction theorem uses a Field K with IsAlgClosed K",
+    "normalization": "declared homogenization degrees are retained; no primitive, content, monic, sign, actual-degree, or variable-dependent normalization",
+    "projective_domain": "each ProjectivePair satisfies u!=0 or v!=0; [0:0] is excluded and [1:0] is allowed",
+    "witness_field": "all intermediate witnesses live in the algebraically closed target K; no descent to k or another smaller field is claimed",
+    "zero_forms_and_degree_drops": "included by exact declared-degree homogeneity and projective evaluation"
+  },
+  "depends_on": [
+    {
+      "digest_match": true,
+      "observed_sha256": "d025053b9f882c88086fd5f04bcbd9627c72987e263e9b55af6024794305acbe",
+      "path": "experiments/engine/pkc_smooth_m16_frozen_cr_specialization/artifact.json",
+      "required_sha256": "d025053b9f882c88086fd5f04bcbd9627c72987e263e9b55af6024794305acbe"
+    },
+    {
+      "digest_match": true,
+      "observed_sha256": "194e03cb6ddcb8f539229b4c3c7639b138f90fcdcd1d44295c16bc58c7514320",
+      "path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "required_sha256": "194e03cb6ddcb8f539229b4c3c7639b138f90fcdcd1d44295c16bc58c7514320"
+    },
+    {
+      "digest_match": true,
+      "observed_sha256": "5cffb444d95f7691f92bfbd094d945be7e97069edb244d5234fa06f359a852b9",
+      "path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "required_sha256": "5cffb444d95f7691f92bfbd094d945be7e97069edb244d5234fa06f359a852b9"
+    }
+  ],
+  "downstream_open_boundary": {
+    "closed_here": [
+      "exact declared-degree projective evaluation of the actual frozen family",
+      "universal all-stage frozen projective witness-chain equivalence",
+      "stage-14 C16-to-C2 chain with fourteen valid intermediate slots"
+    ],
+    "not_claimed": [
+      "direct RecS17 iff GeoCat equivalence",
+      "base-field descent or rationality of intermediate witnesses",
+      "RatCat or Recover",
+      "S17 or M16 system materialization",
+      "relation yield, rank, solving degree, fill-in, memory, recovery cost, or total work"
+    ],
+    "remaining_blocker": "the complete S17 representation, materialization, rank, yield, solving, and recovery-cost bridge remains open and unpriced"
+  },
+  "kernel_contract": {
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "axiom_audit_status": "standard_lean_axioms_only",
+    "build_status": "passed",
+    "build_targets": [
+      "Ecdlp.Proved.FrozenRecursiveProjectiveWitness"
+    ],
+    "forbidden_axioms": [
+      "sorryAx"
+    ],
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "mathlib_input_revision": "v4.31.0",
+    "no_sorry_status": "passed",
+    "validator_invokes_lean": false
+  },
+  "kind": "non_run_kernel_binding_certificate",
+  "producer_checks": {
+    "C16_evaluated": false,
+    "C16_expanded": false,
+    "M16_system_materialized": false,
+    "S17_materialized": false,
+    "exact_target_search_executed": false,
+    "experiment_authorized": false,
+    "parameter_sweep_executed": false,
+    "solver_executed": false
+  },
+  "projective_evaluation_contract": {
+    "affine_fixture_theorems": [
+      "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_affine",
+      "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_affine"
+    ],
+    "infinity_fixture_theorems": [
+      "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_infinity",
+      "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_infinity"
+    ],
+    "local_declared_degree": 2,
+    "predecessor_declared_degree": "2^(s+1)",
+    "universal_pair": "[U:V]",
+    "valid_pair_condition": "U!=0 or V!=0",
+    "zero_pair_excluded": true
+  },
+  "proof_status": {
+    "base_field_descent": "not_claimed",
+    "direct_S17_equivalence": "not_claimed",
+    "local_projective_evaluation_bridge": "kernel_checked",
+    "predecessor_projective_evaluation_bridge": "kernel_checked",
+    "projective_infinity_at_every_stage": "kernel_checked",
+    "solving_rank_yield_cost_claim": "not_claimed",
+    "universal_C16_to_C2_projective_witness_chain": "kernel_checked",
+    "universal_all_stage_chain_equivalence": "kernel_checked",
+    "universal_output_homogeneity": "kernel_checked"
+  },
+  "schema_version": 1,
+  "scope": {
+    "barrier": "B-PKC-M16-COMPLETE-COST-BRIDGE",
+    "cell": "CELL-M-PKC-SMOOTH-M16",
+    "cost_quantity": "CQ-SEMAEV-S17-SYSTEM-COST",
+    "excluded": [
+      "direct RecS17 iff GeoCat, RatCat, or Recover",
+      "base-field descent or witness rationality",
+      "expanded or evaluated C16 or S17",
+      "materialized M16 polynomial system",
+      "solver, parameter sweep, exact-target, or discrete-log execution",
+      "relation yield, rank, solving degree, fill-in, memory, recovery cost, or total work",
+      "experiment authorization, route promotion, or hypothesis retention"
+    ],
+    "included": [
+      "actual frozenC family at every stage",
+      "exact declared-degree output homogeneity",
+      "predecessor and local projective homogenization/evaluation bridges",
+      "affine and infinity fixtures",
+      "minimal FrozenProjectiveChain",
+      "all-stage coefficient-map chain equivalence",
+      "stage-14 C16-to-C2 chain with fourteen intermediate projective slots"
+    ],
+    "polynomial_scope": "CommRing source coefficients mapped to an algebraically closed Field target for recursive witness extraction",
+    "task": "TASK-021"
+  },
+  "terminal_disposition": {
+    "assurance": "kernel_bound_non_run_certificate",
+    "authorization": "none",
+    "barrier_effect": "narrowed_open",
+    "cell_status": "open_non_executable",
+    "cost_quantity_status": "partial",
+    "experiment_permission": "none",
+    "hypothesis_effect": "none",
+    "rank_status": "unpriced",
+    "remaining_blocker": "complete S17 representation, materialization, rank, yield, solving, and recovery-cost bridge",
+    "retention_disposition": "zero_retention_success",
+    "route_effect": "none",
+    "solving_cost_status": "unpriced",
+    "yield_status": "unpriced"
+  },
+  "theorem_bindings": {
+    "C16_chain": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC16_eq_zero_iff_projectiveChain",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "theorem"
+    },
+    "all_stage_chain": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_iff_projectiveChain",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "theorem"
+    },
+    "chain_definition": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.FrozenProjectiveChain",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "def"
+    },
+    "local_affine_fixture": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_affine",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "theorem"
+    },
+    "local_eval_bridge": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "theorem"
+    },
+    "local_form_identity": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.homogenize_localSliceAt",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "theorem"
+    },
+    "local_infinity_fixture": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_infinity",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "theorem"
+    },
+    "output_homogeneity": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver_frozenC_isHomogeneous",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "theorem"
+    },
+    "predecessor_affine_fixture": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_affine",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "theorem"
+    },
+    "predecessor_eval_bridge": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "theorem"
+    },
+    "predecessor_form_identity": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.homogenize_previousSliceAtOver_frozenC",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "theorem"
+    },
+    "predecessor_infinity_fixture": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_infinity",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "source_shape": "theorem"
+    }
+  },
+  "witness_chain_contract": {
+    "C16_stage": 14,
+    "base_equation": "HValue (q 0).coord (q 1).coord y.coord = 0",
+    "base_stage": 0,
+    "family_index": "frozenC k s = C_(s+2)",
+    "infinity_point": "[1:0]",
+    "infinity_point_allowed": true,
+    "internal_projective_witness_count_at_C16": 14,
+    "leaf_count_at_C16": 16,
+    "leaf_index_end_at_C16": 15,
+    "leaf_index_start": 0,
+    "successor_equation": "exists z, Chain q s z and HValue z.coord (q (s+2)).coord y.coord = 0",
+    "zero_pair": "[0:0]",
+    "zero_pair_excluded": true
+  }
+}

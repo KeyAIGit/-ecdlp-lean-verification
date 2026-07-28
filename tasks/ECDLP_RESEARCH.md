@@ -1058,13 +1058,20 @@ Recorded result:
 
 ### TASK-021 - Kernelize universal frozen C16-to-C2 projective witness extraction
 
-Status: active_non_executable_universal_recursive_extraction
+Status: completed_non_executable_kernel_result
 Kind: theorem | research | review
 Hypothesis: none. This is the smallest exact theorem task left by TASK-020;
 it is not a solver candidate or a cost experiment.
 Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
 Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
 Authorization: none
+Outcome: `closed_exact_theorem`
+Retention: `zero_retention_success`
+Completed on: 2026-07-28
+Artifact:
+- `experiments/engine/pkc_smooth_m16_frozen_projective_witness/artifact.json`
+- ID `PKC-SMOOTH-M16-FROZEN-PROJECTIVE-WITNESS-001`
+- SHA-256 `89c645545d89334473d51654a41ff7ec2364857d034c64ce08d505337fa1e2d4`
 Why it matters: TASK-020 returns a non-irrelevant common projective root of
 the fixed homogenized predecessor and local slices at every vanishing
 successor. To recurse, those homogenized evaluations must be identified with
@@ -1090,6 +1097,45 @@ Decision boundary:
   relation yield, rank, solving degree, fill-in, memory, or total work.
 - Do not expand or evaluate S17, materialize the M16 system, run a solver,
   parameter sweep, exact-target search, or discrete-log computation.
+Recorded result:
+- `projectiveOutputAtOver_frozenC_isHomogeneous` proves exact homogeneity of
+  the actual universal binary output at declared degree `2^(s+1)`. The proof
+  uses the literal Sylvester row split: two degree-zero predecessor rows and
+  `2^(s+1)` degree-two local rows.
+- `homogenize_previousSliceAtOver_frozenC` identifies the declared-degree
+  predecessor homogenization with that actual universal binary output.
+  `eval_homogenize_previousSliceAtOver_frozenC` then gives exact direct
+  projective specialization for every valid pair. Separate affine and
+  `[1:0]` corollaries compile.
+- `homogenize_localSliceAt` and `eval_homogenize_localSliceAt` give the exact
+  degree-two local bridge to literal `HValue`, again with separate affine and
+  `[1:0]` corollaries.
+- `FrozenProjectiveChain` is minimal: the base is `C2 = H`; each successor
+  adds one valid projective intermediate, the predecessor chain, and one
+  literal local `H` equation.
+- `specializeOver_frozenC_eq_zero_iff_projectiveChain` proves the all-stage
+  equivalence after every explicit coefficient map into an algebraically
+  closed target field. No injectivity assumption is used.
+- `specializeOver_frozenC16_eq_zero_iff_projectiveChain` instantiates stage
+  `14`: leaves are `q 0` through `q 15` and the chain has fourteen
+  existential intermediate projective slots. `[0:0]` is excluded by
+  `ProjectivePair`; `[1:0]` is allowed at every level.
+- The complete public module was built and independently replayed. Its axiom
+  audit contains only `propext`, `Classical.choice`, and `Quot.sound`; there
+  is no `sorry`, `admit`, custom axiom, or `unsafe`.
+- The independent non-run certificate binds the source digests, theorem
+  declarations, stage and leaf schedule, affine and infinity fixtures,
+  algebraic-closure boundary, and non-execution disposition. Its validator
+  passes and all 29 semantic mutations are rejected. The typed evidence
+  claim is `SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT`.
+- This theorem closes only the frozen-family projective witness-chain gap.
+  It does not prove direct `RecS17 iff GeoCat`, base-field descent, `RatCat`,
+  `Recover`, S17 materialization, relation yield, rank, solving degree,
+  memory, recovery cost, or total work.
+- `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`;
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open; the route remains
+  `open_parked`; no hypothesis, solver, experiment authorization, exact
+  target computation, cost claim, or route promotion is created.
 Inputs:
 - `Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean`
 - `Ecdlp/Proved/FixedDegreeProjectiveResultant.lean`

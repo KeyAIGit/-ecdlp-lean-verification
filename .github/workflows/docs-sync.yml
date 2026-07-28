@@ -226,6 +226,11 @@ jobs:
           python3 experiments/engine/pkc_smooth_m16_frozen_cr_specialization/validate.py
           python3 experiments/engine/pkc_smooth_m16_frozen_cr_specialization/test_validate.py
           (cd experiments/engine/pkc_smooth_m16_frozen_cr_specialization && sha256sum -c artifact.sha256)
+      - name: PKC M16 frozen projective witness certificate
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_frozen_projective_witness/validate.py
+          python3 experiments/engine/pkc_smooth_m16_frozen_projective_witness/test_validate.py
+          (cd experiments/engine/pkc_smooth_m16_frozen_projective_witness && sha256sum -c artifact.sha256)
       - name: Claim-level truth-state gate
         run: |
           python3 scripts/research_claims.py --check
