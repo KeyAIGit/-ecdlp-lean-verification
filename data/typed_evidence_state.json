@@ -3,10 +3,10 @@
   "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
   "target_id": "secp256k1-classical-single-target-plain",
   "source_hashes": {
-    "policy_sha256": "d6c77763ae2134422ed8c5866168fe48fece69344129bdb43cdb6062b43c8ff7",
-    "decision_substrate_sha256": "dfd46771f82bbada67da8a2899019d01956d1cd141c17e2515a3760903ee49ea",
+    "policy_sha256": "bfef2acf5013439c4d9fee22486b7f69ea0d8c71aa6f03a31d8e906adb018c95",
+    "decision_substrate_sha256": "c9d5ba88069fa5d163e96cf6e98f0a4072426911d27acdde24af2af1868a1615",
     "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-    "evidence_files_sha256": "3e3d3bc46633d1185bee2f32c98530c7cdf38fa1b74c5538f9f7258cd691e26e",
+    "evidence_files_sha256": "cbfe62d47f4878d0adad65693a5cb40dbfa92a1b5fccf17d8c5d500eec4667dd",
     "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
   },
   "trust_boundary": {
@@ -16,7 +16,7 @@
     "authorization_boundary": "Typed cells, generated seeds, and desk decisions authorize no experiment, target computation, route promotion, or security claim."
   },
   "counts": {
-    "source_claims": 24,
+    "source_claims": 25,
     "target_properties": 5,
     "mechanisms": 7,
     "cells": 7,
@@ -171,6 +171,22 @@
       "statement": "For the nonsingular curve y^2=x^3+7 over fields of characteristic not in {2,3,7}, exact replay proves the set-theoretic homogeneous projective S3 caterpillar is equivalent to signed-point semantics on the stated algebraic-closure and base-field lift domains, classifies the identity, tangent, rational two-torsion, duplicate, extension-only, and non-lift strata, and completes deterministic supplied-coordinate recovery plus raw and compressed secp256k1 GLV sign checks.",
       "boundary": "Assurance is certificate_replayed, source_independence is not_established, and calibration is excluded_nonexperimental. The certificate returns a scoped blocker with the barrier narrowed but open: the direct S17 predicate is not frozen and no reverse theorem above S4 is present. CQ-SEMAEV-S17-SYSTEM-COST remains partial while solving cost is unpriced. It claims no S17 expansion or evaluation, radicality, scheme equality, multiplicity comparison, relation yield or rank, solving or sparse-linear-algebra cost, experiment authorization, hypothesis retention, exact-target search, or route promotion.",
       "evidence_path": "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json"
+    },
+    {
+      "id": "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
+      "source_id": "repo:certificate",
+      "source_type": "certificate",
+      "citation": "Deterministic PKC smooth-subgroup M16 frozen recursive C_r specialization kernel certificate.",
+      "read_status": "certificate_replayed",
+      "url": null,
+      "artifact_sha256": "d025053b9f882c88086fd5f04bcbd9627c72987e263e9b55af6024794305acbe",
+      "locator": {
+        "kind": "certificate_field",
+        "value": "proof_status.coefficient_map_specialization"
+      },
+      "statement": "Lean kernel checks the actual frozenC left-fold family with frozenC R s equal to C_(s+2) and frozenC R 14 equal to C16. Every successor specializes after an explicit coefficient map to the literal TASK-018 Sylvester determinant at fixed formal degrees (2^(s+1),2) with coefficient unit 1; separate theorems retain affine output [y:1] and infinity output [1:0]. The predecessor output degree is uniformly at most 2^(s+1), so over an algebraically closed field every frozen successor vanishes exactly when the predecessor and local H slices share a non-irrelevant projective root, without a residual degree hypothesis.",
+      "boundary": "Assurance is kernel_bound_non_run_certificate, source_independence is not_established, and calibration is excluded_nonexperimental. The exact recursive frozen C_r specialization, affine and [1:0] output branches, universal output-degree bound, and unconditional one-step common-projective-root interface are kernel checked. The remaining open_exact_blocker is the universal C16-to-C2 projective witness extraction: every recovered common root must be bound back to predecessor frozen-form specialization and assembled into the full fourteen-node internal projective tree. CQ-SEMAEV-S17-SYSTEM-COST remains partial; solving cost is unpriced, rank is unpriced, and yield is unpriced. The certificate claims no RecS17 iff GeoCat theorem, base-field lift or recovery implication, S17 expansion or evaluation, polynomial-system materialization, scheme or multiplicity result, solver or sparse-linear-algebra cost, hypothesis retention, exact-target search, experiment authorization, or route promotion; its retention disposition is zero_retention_success.",
+      "evidence_path": "experiments/engine/pkc_smooth_m16_frozen_cr_specialization/artifact.json"
     },
     {
       "id": "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
@@ -550,6 +566,7 @@
         "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
         "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
         "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
+        "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
         "SC-SEMAEV-RELATION-SEMANTICS"
       ]
     }
@@ -585,16 +602,17 @@
       "id": "B-PKC-M16-COMPLETE-COST-BRIDGE",
       "route_id": "R-PETIT-COMPOSED-MAPS",
       "disposition": "open",
-      "exact_scope": "For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, the M16 input presentations and set-theoretic homogeneous projective S3 caterpillar semantics are exact, including identity, tangent, rational two-torsion, duplicate, extension-only, non-lift, topology, recovery, and GLV lift-sign strata. TASK-018 freezes the recursive projective S17 contract, including fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, coefficient-map and algebraic-closure reflection variants, the literal TASK-018 Sylvester matrix bridge with coefficient unit 1, and its end-to-end common-root corollary, while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. The barrier is narrowed but open only on the exact recursive frozen C_r specialization at formal degrees (2^(r-2),2), including coefficient unit 1, affine output, and [1:0], followed by the universal C16-to-C2 induction. CQ-SEMAEV-S17-SYSTEM-COST remains partial while relation yield and rank, solving degree and fill-in, preprocessing, sparse linear algebra, and total solving cost remain unpriced.",
+      "exact_scope": "For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, the M16 input presentations and set-theoretic homogeneous projective S3 caterpillar semantics are exact, including identity, tangent, rational two-torsion, duplicate, extension-only, non-lift, topology, recovery, and GLV lift-sign strata. TASK-018 freezes the recursive projective S17 contract, including fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, coefficient-map and algebraic-closure reflection variants, the literal TASK-018 Sylvester matrix bridge with coefficient unit 1, and its end-to-end common-root corollary, while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. TASK-020 kernel-checks the actual frozenC family, exact same-field and coefficient-map specialization at formal degrees (2^(s+1),2) with coefficient unit 1, separate affine [y:1] and infinity [1:0] branches, the universal output-degree bound, and the unconditional one-step common-projective-root equivalence. The barrier is narrowed but open only on the universal C16-to-C2 projective witness extraction that binds every recovered common root back to predecessor specialization and assembles the full fourteen-node internal projective tree. CQ-SEMAEV-S17-SYSTEM-COST remains partial while relation yield and rank, solving degree and fill-in, preprocessing, sparse linear algebra, and total solving cost remain unpriced.",
       "source_claim_ids": [
         "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
         "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
         "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
         "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
-        "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT"
+        "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
+        "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT"
       ],
       "reopening_conditions": [
-        "Kernel-check the exact recursive frozen C_r specialization at formal degrees (2^(r-2),2), retaining coefficient unit 1, affine output, and [1:0], then prove the universal C16-to-C2 induction against the exact projective-tree predicate before any cost claim; after that, determine the usable relation-rank model and combine proved solving and sparse-linear-algebra costs with a matched generic baseline."
+        "Prove the universal C16-to-C2 projective witness extraction against the exact projective-tree predicate, binding every recovered common root back to predecessor specialization and retaining affine and [1:0] branches at every level, before any cost claim; after that, determine the usable relation-rank model and combine proved solving and sparse-linear-algebra costs with a matched generic baseline."
       ]
     },
     {
@@ -897,7 +915,7 @@
       "status": "open",
       "scope": "Desk-cost analysis of the PKC 2016 smooth-subgroup construction at the first arity where the available divisor clears both the source's raw size condition and relation-yield balance.",
       "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
-      "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and the end-to-end common-root corollary while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. The remaining exact mechanism gap is the recursive frozen C_r specialization at formal degrees (2^(r-2),2), including affine output and [1:0], plus the universal C16-to-C2 induction.",
+      "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and the end-to-end common-root corollary while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. TASK-020 kernel-checks the actual frozenC family, exact coefficient-map specialization with unit 1 and affine and [1:0] output branches, the universal output-degree bound, and the unconditional one-step common-projective-root equivalence. The remaining exact mechanism gap is the universal C16-to-C2 projective witness extraction and full fourteen-node internal projective-tree assembly.",
       "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
       "cost_quantity_id": "CQ-SEMAEV-S17-SYSTEM-COST",
       "cost_quantity_status": "partial",
@@ -916,6 +934,7 @@
           "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
           "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
           "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
+          "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
           "SC-SEMAEV-RELATION-SEMANTICS"
         ]
       },
@@ -954,6 +973,7 @@
       ],
       "source_claim_ids": [
         "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
+        "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
         "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
         "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
         "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
@@ -977,12 +997,13 @@
         "data/source_claim_extracts/petit_kosters_messeng2016.json",
         "experiments/engine/pkc_smooth_desk_screen/artifact.json",
         "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
+        "experiments/engine/pkc_smooth_m16_frozen_cr_specialization/artifact.json",
         "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json",
         "experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json",
         "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
         "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
       ],
-      "evidence_digest": "10898f19aa3073ea8954dd25a67335aa09072e1569e20b08da85ef6d2755b257",
+      "evidence_digest": "d56c253fea5c525e37c25a9fcd30d434cd8f5ede37dbeb65f605d982c9ba421e",
       "seed_axes": {
         "target_feature_id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
         "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",
@@ -990,7 +1011,7 @@
       },
       "intake_mode": "desk_cost_bridge",
       "seed_eligible": true,
-      "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, deterministic control and secp256k1 GLV recovery checks, a frozen recursive projective S17 contract, and kernel-checked fixed-degree projective resultant plus literal Sylvester unit-one and end-to-end common-root theorems that retain formal-degree drops, zero forms, affine witnesses, and [1:0]. The exact recursive frozen C_r specialization and universal C16-to-C2 induction remain open, and the complete cost bridge is unproved. CQ-SEMAEV-S17-SYSTEM-COST remains partial; solving cost, rank, and yield remain unpriced. The scoped blocker has zero_retention_success and does not justify S17 expansion or evaluation, recursive-system materialization, a solver run, target computation, hypothesis retention, experiment authorization, or route promotion.",
+      "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, deterministic control and secp256k1 GLV recovery checks, a frozen recursive projective S17 contract, kernel-checked fixed-degree projective resultant plus literal Sylvester unit-one and end-to-end common-root theorems, and the actual frozenC specialization with affine and [1:0] branches, universal output-degree bound, and unconditional one-step common-root interface. The universal C16-to-C2 projective witness extraction and full internal projective-tree assembly remain open, and the complete cost bridge is unproved. CQ-SEMAEV-S17-SYSTEM-COST remains partial; solving cost, rank, and yield remain unpriced. The scoped blocker has zero_retention_success and does not justify S17 expansion or evaluation, recursive-system materialization, a solver run, target computation, hypothesis retention, experiment authorization, or route promotion.",
       "authorization": "none"
     },
     {

@@ -20,12 +20,12 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: `TASK-020` in `tasks/ECDLP_RESEARCH.md`.
+Current central task: `TASK-021` in `tasks/ECDLP_RESEARCH.md`.
 
 `TASK-010` is accepted at
 `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
-proposal-intake lane because TASK-020 is a non-executable
-recursive-specialization theorem task, not a hypothesis candidate or
+proposal-intake lane because TASK-021 is a non-executable recursive
+projective-witness theorem task, not a hypothesis candidate or
 experiment.
 
 Current scientific activation order:
@@ -54,15 +54,19 @@ Current scientific activation order:
    kernel checked, including zero forms, degree drop, affine roots, `[1:0]`,
    and coefficient unit exactly `1`. The general coefficient-map theorem does
    not bind the actual frozen recursive `C_r`.
-7. `TASK-020` gives sole desk priority to that exact frozen-`C_r`
-   specialization at formal degrees `(2^(r-2), 2)`, including affine output
-   and `[1:0]`, under the literal unit-one convention, for
-   `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`. The universal reverse
-   `C16 → C2` induction remains a downstream blocker. TASK-020 authorizes no
-   S17 materialization, solver, or cost claim.
-8. The auxiliary-curve cell stays parked until a primary source supplies a
+7. `TASK-020` completed with a scoped blocker and zero retained hypotheses.
+   The actual frozen family, coefficient-map specialization, affine and
+   `[1:0]` branches, uniform output-degree bound, and unconditional one-step
+   common-projective-root equivalence are kernel checked under the literal
+   unit-one convention.
+8. `TASK-021` gives sole desk priority to the remaining projective
+   homogenization bridge and universal recursive witness extraction
+   `C16 → C2` for `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`. It must cover
+   valid projective intermediates, including `[1:0]`, at every level. TASK-021
+   authorizes no S17 materialization, solver, or cost claim.
+9. The auxiliary-curve cell stays parked until a primary source supplies a
    finite search domain with a completeness criterion.
-9. Any later candidate, solver, or experiment still requires the normal
+10. Any later candidate, solver, or experiment still requires the normal
    review gates and a separate dated authorization.
 
 These entries freeze further engine-schema expansion by default. They do not

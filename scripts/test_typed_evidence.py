@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 24,
+                "source_claims": 25,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -294,6 +294,14 @@ class TypedEvidenceTests(unittest.TestCase):
             "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
             m16["cost_quantity"]["source_claim_ids"],
         )
+        self.assertIn(
+            "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
+            m16["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
+            m16["cost_quantity"]["source_claim_ids"],
+        )
         self.assertFalse(
             any(
                 decision["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
@@ -433,6 +441,50 @@ class TypedEvidenceTests(unittest.TestCase):
             "route promotion",
         ):
             self.assertIn(token, resultant_claim["boundary"])
+        frozen_cr_claim = claims[
+            "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT"
+        ]
+        self.assertEqual(
+            "experiments/engine/"
+            "pkc_smooth_m16_frozen_cr_specialization/artifact.json",
+            frozen_cr_claim["evidence_path"],
+        )
+        self.assertEqual(
+            "d025053b9f882c88086fd5f04bcbd962"
+            "7c72987e263e9b55af6024794305acbe",
+            frozen_cr_claim["artifact_sha256"],
+        )
+        self.assertEqual(
+            "certificate_replayed",
+            frozen_cr_claim["read_status"],
+        )
+        for token in (
+            "actual frozenC",
+            "explicit coefficient map",
+            "formal degrees (2^(s+1),2)",
+            "coefficient unit 1",
+            "affine output [y:1]",
+            "infinity output [1:0]",
+            "uniformly at most 2^(s+1)",
+            "without a residual degree hypothesis",
+        ):
+            self.assertIn(token, frozen_cr_claim["statement"])
+        for token in (
+            "kernel_bound_non_run_certificate",
+            "source_independence is not_established",
+            "calibration is excluded_nonexperimental",
+            "universal C16-to-C2 projective witness extraction",
+            "full fourteen-node internal projective tree",
+            "open_exact_blocker",
+            "CQ-SEMAEV-S17-SYSTEM-COST remains partial",
+            "solving cost is unpriced",
+            "rank is unpriced",
+            "yield is unpriced",
+            "zero_retention_success",
+            "experiment authorization",
+            "route promotion",
+        ):
+            self.assertIn(token, frozen_cr_claim["boundary"])
         barriers = {
             item["id"]: item for item in state["barriers"]
         }
@@ -454,12 +506,19 @@ class TypedEvidenceTests(unittest.TestCase):
             "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
             m16_barrier["source_claim_ids"],
         )
+        self.assertIn(
+            "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
+            m16_barrier["source_claim_ids"],
+        )
         for token in (
             "TASK-019 kernel-checks",
             "zero forms",
-            "recursive frozen C_r specialization",
-            "formal degrees (2^(r-2),2)",
-            "universal C16-to-C2 induction",
+            "TASK-020 kernel-checks",
+            "actual frozenC family",
+            "formal degrees (2^(s+1),2)",
+            "universal output-degree bound",
+            "unconditional one-step common-projective-root equivalence",
+            "universal C16-to-C2 projective witness extraction",
         ):
             self.assertIn(token, m16_barrier["exact_scope"])
         self.assertNotIn(
@@ -467,9 +526,19 @@ class TypedEvidenceTests(unittest.TestCase):
             "common-root theorem",
             m16_barrier["exact_scope"],
         )
+        self.assertNotIn(
+            "open only on the exact recursive frozen C_r specialization",
+            m16_barrier["exact_scope"],
+        )
         reopening = " ".join(m16_barrier["reopening_conditions"])
-        self.assertIn("recursive frozen C_r specialization", reopening)
-        self.assertIn("universal C16-to-C2 induction", reopening)
+        self.assertIn(
+            "universal C16-to-C2 projective witness extraction",
+            reopening,
+        )
+        self.assertNotIn(
+            "Kernel-check the exact recursive frozen C_r specialization",
+            reopening,
+        )
         self.assertNotIn(
             "Kernel-check a fixed-degree projective resultant common-root "
             "theorem",
@@ -480,12 +549,24 @@ class TypedEvidenceTests(unittest.TestCase):
             m16["relation_action"],
         )
         self.assertIn(
-            "recursive frozen C_r specialization",
+            "TASK-020 kernel-checks",
             m16["relation_action"],
         )
         self.assertIn(
-            "universal C16-to-C2 induction",
+            "actual frozenC family",
             m16["relation_action"],
+        )
+        self.assertIn(
+            "universal C16-to-C2 projective witness extraction",
+            m16["relation_action"],
+        )
+        self.assertIn(
+            "unconditional one-step common-root interface",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "universal C16-to-C2 projective witness extraction",
+            m16["boundary"],
         )
         self.assertIn("zero_retention_success", m16["boundary"])
 

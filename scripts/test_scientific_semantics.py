@@ -402,14 +402,136 @@ class ScientificSemanticTests(unittest.TestCase):
             problems,
         )
         self.assertIn(
-            "M16 complete-cost reopening must require recursive "
-            "specialization and universal induction",
+            "M16 complete-cost reopening must require universal "
+            "projective witness extraction",
             problems,
         )
         for boundary in (
             "narrowed mechanism gap",
-            "recursive specialization",
-            "universal induction",
+            "TASK-020 specialization result",
+            "actual frozen family",
+            "universal witness extraction",
+            "unconditional one-step interface",
+            "open universal witness extraction",
+            "zero retention",
+            "no hypothesis retention",
+            "no experiment authorization",
+            "no route promotion",
+        ):
+            self.assertIn(f"M16 cell must retain {boundary}", problems)
+
+    def test_m16_frozen_cr_specialization_and_blocker_cannot_drift(
+        self,
+    ) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim_id = "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT"
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["source_claim_ids"].remove(claim_id)
+        cell["cost_quantity"]["source_claim_ids"].remove(claim_id)
+        cell["relation_action"] = (
+            "The frozen specialization is still pending."
+        )
+        cell["boundary"] = "Executable with complete cost and promotion."
+        barrier = next(
+            item
+            for item in typed["barriers"]
+            if item["id"] == "B-PKC-M16-COMPLETE-COST-BRIDGE"
+        )
+        barrier["source_claim_ids"].remove(claim_id)
+        barrier["exact_scope"] = (
+            "The barrier is open only on the exact recursive frozen C_r "
+            "specialization."
+        )
+        barrier["reopening_conditions"] = [
+            "Kernel-check the exact recursive frozen C_r specialization."
+        ]
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == claim_id
+        )
+        claim["artifact_sha256"] = "0" * 64
+        claim["evidence_path"] = "wrong/artifact.json"
+        claim["statement"] = "An arbitrary recursive polynomial was checked."
+        claim["boundary"] = "The route is priced, executable, and promoted."
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "M16 cell must retain its frozen-Cr specialization "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 cost quantity must retain its frozen-Cr specialization "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost barrier must retain its frozen-Cr "
+            "specialization kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 frozen-Cr specialization artifact hash drifted",
+            problems,
+        )
+        self.assertIn(
+            "M16 frozen-Cr specialization evidence path drifted",
+            problems,
+        )
+        for boundary in (
+            "actual frozen family",
+            "explicit coefficient map",
+            "fixed formal degrees",
+            "unit-one convention",
+            "affine-output branch",
+            "infinity-output branch",
+            "universal output-degree bound",
+            "unconditional one-step common-root interface",
+            "kernel-bound non-run assurance",
+            "universal witness-extraction blocker",
+            "full witness tree",
+            "partial cost quantity",
+            "unpriced solving cost",
+            "unpriced rank",
+            "unpriced yield",
+            "zero retention",
+            "no-authorization boundary",
+            "no-promotion boundary",
+        ):
+            self.assertTrue(
+                any(
+                    "M16 frozen-Cr specialization claim must retain"
+                    in problem
+                    and boundary in problem
+                    for problem in problems
+                )
+            )
+        self.assertIn(
+            "M16 complete-cost barrier cannot reopen the kernel-checked "
+            "frozen-Cr specialization",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost reopening must require universal "
+            "projective witness extraction",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost reopening cannot require the already "
+            "kernel-checked frozen-Cr specialization",
+            problems,
+        )
+        for boundary in (
+            "narrowed mechanism gap",
+            "TASK-020 specialization result",
+            "actual frozen family",
+            "universal witness extraction",
+            "unconditional one-step interface",
+            "open universal witness extraction",
             "zero retention",
             "no hypothesis retention",
             "no experiment authorization",

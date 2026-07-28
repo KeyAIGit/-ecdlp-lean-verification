@@ -141,10 +141,14 @@ branch from current `main`; preserve any unrelated local changes.
   with coefficient unit exactly `1`, and closed with a scoped blocker and
   zero retained hypotheses. Its generic coefficient-map theorem is not the
   specialization theorem for the actual frozen recursive `C_r`.
-  `TASK-020` is the current central task and gives sole desk priority to that
-  exact frozen-`C_r` specialization, including affine output and `[1:0]`, for
-  `CELL-M-PKC-SMOOTH-M16`. The universal reverse `C16 → C2` induction remains
-  open downstream. This is not a selected hypothesis, candidate, experiment,
+  `TASK-020` then kernel-checked the actual frozen-`C_r` coefficient-map
+  specialization, its affine and `[1:0]` branches, the uniform output-degree
+  bound, and the unconditional one-step common-projective-root equivalence.
+  It closed with a scoped recursive-extraction blocker and zero retained
+  hypotheses. `TASK-021` is the current central task and gives sole desk
+  priority to the projective homogenization bridge and universal witness-chain
+  extraction `C16 → C2` for `CELL-M-PKC-SMOOTH-M16`, including `[1:0]` at
+  every level. This is not a selected hypothesis, candidate, experiment,
   solver authorization, cost claim, or attack route.
 - `TASK-008` remains the parked proposal-intake lane. Intake does not bypass
   owner authorization or authorize promotion by itself.
