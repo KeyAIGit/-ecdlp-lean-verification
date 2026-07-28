@@ -4,9 +4,9 @@
   "source_hashes": {
     "policy_sha256": "04c74829a69d4380b25a1de83a120b41d20a3cde5687ee5ac812fad1ce36fc74",
     "hypothesis_generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-    "typed_evidence_state_sha256": "10e28cb799f0143e8e0b561edfb06fc80721625f9956c5f437abcb522ae8dc19",
-    "research_claim_state_sha256": "eb65d94952eb94d0842c7f41689493aa2449802a59122180c5f321f19bb1f77b",
-    "decision_substrate_sha256": "e129cc0c74efbdc2ed571fe9d973e708f7550f8928aa809e3e8837d521936c96",
+    "typed_evidence_state_sha256": "161a6f3faad23d4baec338d75a00ca070bd167458597b41e16c67a8dca492fca",
+    "research_claim_state_sha256": "3f38a6a69f60f041d69b185b728192c3907d09b37da4da7dddb147275a435214",
+    "decision_substrate_sha256": "a55a6af584cb51852d84847ee1a254816d9250fa9b2ce5ab124ece1396696707",
     "hypotheses_sha256": "719eb78ba7a8e40101c14c92ac426a0028de9d7aa14e6ffc3735ecffa4615c5c",
     "outcome_events_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
     "historical_baseline_anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
@@ -1111,8 +1111,8 @@
     "generator_id": "ecdlp-hypothesis-generation-v0",
     "source_hashes": {
       "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-      "typed_evidence_state_sha256": "10e28cb799f0143e8e0b561edfb06fc80721625f9956c5f437abcb522ae8dc19",
-      "research_claim_state_sha256": "eb65d94952eb94d0842c7f41689493aa2449802a59122180c5f321f19bb1f77b",
+      "typed_evidence_state_sha256": "161a6f3faad23d4baec338d75a00ca070bd167458597b41e16c67a8dca492fca",
+      "research_claim_state_sha256": "3f38a6a69f60f041d69b185b728192c3907d09b37da4da7dddb147275a435214",
       "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
@@ -1135,7 +1135,7 @@
       "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
       "target_id": "secp256k1-classical-single-target-plain",
       "counts": {
-        "source_claims": 22,
+        "source_claims": 23,
         "target_properties": 5,
         "mechanisms": 7,
         "cells": 7,
@@ -1147,10 +1147,10 @@
         "desk_decisions": 3
       },
       "source_hashes": {
-        "policy_sha256": "3ecdbb250b32f56e5cd1d24e2faaefbf5a99f57002361ca9a7cacc68f30bed06",
-        "decision_substrate_sha256": "09dff06cf25cf57a2009c774df33d8e263ec9da75f3c5bb449303e9f1adbaff8",
+        "policy_sha256": "d9b733331bd3b8afd0dc6e96d0a7179d60c8fc5b922bb5ad0b62079ce15830b1",
+        "decision_substrate_sha256": "c988762b9b200633a98494178ee156308dfc75dc80b1fbccc36ce60ae8b84423",
         "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-        "evidence_files_sha256": "bcb6463a0729fc6da6afb2361f522a6be13cd9d6d13724b9d1431bc740ba54c3",
+        "evidence_files_sha256": "c90cbea19f627de5e58e960e032bc8af47115f86b8f2405f9c1323c68730d94b",
         "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
       },
       "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
@@ -1178,15 +1178,15 @@
         "route_promotions": 0,
         "exact_target_runs": 0
       },
-      "state_sha256": "eb65d94952eb94d0842c7f41689493aa2449802a59122180c5f321f19bb1f77b"
+      "state_sha256": "3f38a6a69f60f041d69b185b728192c3907d09b37da4da7dddb147275a435214"
     },
     "seed_coverage": {
       "threshold": 12,
       "eligible_seed_count": 2,
       "overflow_triggered": false,
       "represented_seed_ids": [
-        "HGS-8C3820EB9E94",
-        "HGS-846C89AE66EE"
+        "HGS-F93A1368B6E3",
+        "HGS-A16DB1D7E4E8"
       ],
       "represented_cell_ids": [
         "CELL-M-PKC-AUXILIARY-CURVE",
@@ -1197,10 +1197,10 @@
     },
     "generated_seeds": [
       {
-        "seed_id": "HGS-8C3820EB9E94",
+        "seed_id": "HGS-F93A1368B6E3",
         "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
         "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-        "claim_state_digest": "eb65d94952eb94d0842c7f41689493aa2449802a59122180c5f321f19bb1f77b",
+        "claim_state_digest": "3f38a6a69f60f041d69b185b728192c3907d09b37da4da7dddb147275a435214",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1282,7 +1282,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "8c3820eb9e94d5825c48c8b4f2cc9809318a0bae8514a38a107761c3974efb4e",
+        "deduplication_key": "f93a1368b6e33843d75c00595f39c7d2c8d4d7964f971445cf5e96ed6b2133e4",
         "proposal_packet": {
           "required_sections": [
             "new_premise",
@@ -1344,10 +1344,10 @@
         }
       },
       {
-        "seed_id": "HGS-846C89AE66EE",
+        "seed_id": "HGS-A16DB1D7E4E8",
         "cell_id": "CELL-M-PKC-SMOOTH-M16",
-        "typed_evidence_digest": "ce8479daf271b6427c4c0f048e90614d5570b11afc389769e358a45988219d2b",
-        "claim_state_digest": "eb65d94952eb94d0842c7f41689493aa2449802a59122180c5f321f19bb1f77b",
+        "typed_evidence_digest": "c7126e4dcb98250b3cf677b29dc9bb7f4890d94bb2f3cae450fbeadd1be41f58",
+        "claim_state_digest": "3f38a6a69f60f041d69b185b728192c3907d09b37da4da7dddb147275a435214",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1367,7 +1367,7 @@
           "status": "open",
           "intake_mode": "desk_cost_bridge",
           "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
-          "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs; the direct S17 predicate and reverse projection above S4 remain unresolved before any generalized-root cost can be priced.",
+          "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. Its coefficient unit is 1 in that definition, no primitive/content normalization is allowed, and projective rescaling follows the declared multidegree. It records the forward algebraic argument and replays bounded S4/S5 forward/reverse fixtures. The universal reverse projection above S4 remains unproved pending a kernel-checked fixed-degree projective resultant common-root theorem and recursive-specialization compatibility.",
           "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
           "cost_quantity": {
             "id": "CQ-SEMAEV-S17-SYSTEM-COST",
@@ -1382,6 +1382,7 @@
               "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
               "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
               "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
+              "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
               "SC-SEMAEV-RELATION-SEMANTICS"
             ]
           },
@@ -1417,6 +1418,7 @@
           ],
           "source_claim_ids": [
             "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
+            "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
             "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
             "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
             "SC-PKC-RELATION-YIELD",
@@ -1426,7 +1428,7 @@
             "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
             "SC-SEMAEV-RELATION-SEMANTICS"
           ],
-          "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, and deterministic control and secp256k1 GLV recovery checks, but no frozen direct S17 predicate, reverse theorem above S4, or complete cost bridge. CQ-SEMAEV-S17-SYSTEM-COST remains partial and solving cost remains unpriced. The scoped blocker does not justify S17 expansion or evaluation, recursive-system materialization, a solver run, target computation, hypothesis retention, or route promotion."
+          "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, deterministic control and secp256k1 GLV recovery checks, and a frozen recursive projective S17 contract with its forward algebraic argument recorded and bounded S4/S5 forward/reverse fixtures replayed. The universal reverse theorem above S4 and complete cost bridge remain unproved. CQ-SEMAEV-S17-SYSTEM-COST remains partial; solving cost, rank, and yield remain unpriced. The scoped blocker does not justify S17 expansion or evaluation, recursive-system materialization, a solver run, target computation, hypothesis retention, experiment authorization, or route promotion."
         },
         "target_feature": {
           "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
@@ -1454,7 +1456,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "846c89ae66eed7cf248a0b57f3091794ca8c9f402a9137ea4aefbf0184794727",
+        "deduplication_key": "a16db1d7e4e87371bfcd6804e14a248ed73972ec19865b7de62ff58d27a56144",
         "proposal_packet": {
           "required_sections": [
             "new_premise",

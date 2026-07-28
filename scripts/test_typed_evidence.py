@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 22,
+                "source_claims": 23,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -278,6 +278,14 @@ class TypedEvidenceTests(unittest.TestCase):
             "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
             m16["cost_quantity"]["source_claim_ids"],
         )
+        self.assertIn(
+            "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
+            m16["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
+            m16["cost_quantity"]["source_claim_ids"],
+        )
         self.assertFalse(
             any(
                 decision["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
@@ -329,6 +337,53 @@ class TypedEvidenceTests(unittest.TestCase):
             "solving cost is unpriced",
             exceptional_claim["boundary"],
         )
+        projective_claim = claims[
+            "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT"
+        ]
+        self.assertEqual(
+            "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json",
+            projective_claim["evidence_path"],
+        )
+        self.assertEqual(
+            "3164cb89adac7622b4d08d781061ea386dc64e754236e48c838a3dac23040715",
+            projective_claim["artifact_sha256"],
+        )
+        self.assertEqual(
+            "certificate_replayed",
+            projective_claim["read_status"],
+        )
+        self.assertIn(
+            "recursive projective S17",
+            projective_claim["statement"],
+        )
+        self.assertIn(
+            "fixed-degree",
+            projective_claim["statement"],
+        )
+        self.assertIn(
+            "reverse projection",
+            projective_claim["statement"],
+        )
+        self.assertIn(
+            "source_independence is not_established",
+            projective_claim["boundary"],
+        )
+        self.assertIn(
+            "calibration is excluded_nonexperimental",
+            projective_claim["boundary"],
+        )
+        self.assertIn(
+            "rank is unpriced",
+            projective_claim["boundary"],
+        )
+        self.assertIn(
+            "yield is unpriced",
+            projective_claim["boundary"],
+        )
+        self.assertIn(
+            "no experiment authorization",
+            projective_claim["boundary"],
+        )
         barriers = {
             item["id"]: item for item in state["barriers"]
         }
@@ -340,6 +395,10 @@ class TypedEvidenceTests(unittest.TestCase):
         )
         self.assertIn(
             "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
+            m16_barrier["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
             m16_barrier["source_claim_ids"],
         )
 

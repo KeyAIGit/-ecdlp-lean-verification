@@ -36,17 +36,24 @@ MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
 MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
 CURRENT_PHASE = "evidence-bounded-desk-priority"
-CURRENT_TASK_ID = "TASK-018"
-COMPLETED_DESK_TASK_ID = "TASK-017"
+CURRENT_TASK_ID = "TASK-019"
+COMPLETED_DESK_TASK_ID = "TASK-018"
+PREVIOUS_PROJECTIVE_TASK_ID = "TASK-017"
 PREVIOUS_SEMANTIC_TASK_ID = "TASK-016"
 PREVIOUS_DESK_TASK_ID = "TASK-015"
 DESK_PRIORITY_CELL_ID = "CELL-M-PKC-SMOOTH-M16"
 DESK_PRIORITY_STUB_ID = "RSI-D8BBA6340789"
 DESK_PRIORITY_COST_ID = "CQ-SEMAEV-S17-SYSTEM-COST"
-M16_ARTIFACT_PATH = (
+M16_PROJECTIVE_ARTIFACT_PATH = (
+    "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json"
+)
+M16_PROJECTIVE_ARTIFACT_SHA256 = (
+    "3164cb89adac7622b4d08d781061ea386dc64e754236e48c838a3dac23040715"
+)
+M16_EXCEPTIONAL_ARTIFACT_PATH = (
     "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json"
 )
-M16_ARTIFACT_SHA256 = (
+M16_EXCEPTIONAL_ARTIFACT_SHA256 = (
     "578db732807a452e26de03dcd338d62c25a7d90490a62bbf427b1f96c3a869cf"
 )
 M16_SEMANTIC_ARTIFACT_PATH = (
@@ -531,6 +538,13 @@ def validate() -> list[str]:
             problems.append(
                 f"R-PETIT-COMPOSED-MAPS.next_action is missing {binding}"
             )
+    if M16_PROJECTIVE_ARTIFACT_PATH not in petit_route.get(
+        "evidence_files", []
+    ):
+        problems.append(
+            "R-PETIT-COMPOSED-MAPS must retain the TASK-018 projective "
+            "certificate as evidence"
+        )
     if "auxiliary-curve cell parked" not in petit_next_action:
         problems.append(
             "R-PETIT-COMPOSED-MAPS must keep the auxiliary-curve cell parked"
@@ -696,6 +710,7 @@ def validate() -> list[str]:
         "TASK-013",
         PREVIOUS_DESK_TASK_ID,
         PREVIOUS_SEMANTIC_TASK_ID,
+        PREVIOUS_PROJECTIVE_TASK_ID,
         COMPLETED_DESK_TASK_ID,
         CURRENT_TASK_ID,
     ):
@@ -759,9 +774,10 @@ def validate() -> list[str]:
                 f"{COMPLETED_DESK_TASK_ID} must contain {line!r}"
             )
     for binding in (
-        M16_ARTIFACT_PATH,
-        M16_ARTIFACT_SHA256,
-        "PKC-SMOOTH-M16-EXCEPTIONAL-FIBERS-001",
+        M16_PROJECTIVE_ARTIFACT_PATH,
+        M16_PROJECTIVE_ARTIFACT_SHA256,
+        "PKC-SMOOTH-M16-PROJECTIVE-S17-BRIDGE-001",
+        "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
         DESK_PRIORITY_COST_ID,
@@ -771,6 +787,8 @@ def validate() -> list[str]:
         "`not_established`",
         "`excluded_nonexperimental`",
         "`unpriced`",
+        "fixed-degree",
+        "reverse projection",
     ):
         if binding not in completed_desk_task:
             problems.append(
@@ -778,7 +796,7 @@ def validate() -> list[str]:
             )
     current_task = task_sections.get(CURRENT_TASK_ID, "")
     expected_current_task_lines = (
-        "Status: active_non_executable_projective_s17_bridge",
+        "Status: active_non_executable_projective_s17_kernel_bridge",
         f"Desk priority: `{DESK_PRIORITY_CELL_ID}` / `{DESK_PRIORITY_STUB_ID}`",
         "Authorization: none",
     )
@@ -791,7 +809,7 @@ def validate() -> list[str]:
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
         DESK_PRIORITY_COST_ID,
-        M16_ARTIFACT_PATH,
+        M16_PROJECTIVE_ARTIFACT_PATH,
         "nonsingular curve",
         "`{2,3,7}`",
         "zero_retention_success",
@@ -900,7 +918,7 @@ def validate() -> list[str]:
     )
     for binding in (
         PREVIOUS_SEMANTIC_TASK_ID,
-        COMPLETED_DESK_TASK_ID,
+        PREVIOUS_PROJECTIVE_TASK_ID,
         "scoped_blocker",
         "zero_retention_success",
         M16_SEMANTIC_ARTIFACT_PATH,
@@ -922,12 +940,12 @@ def validate() -> list[str]:
         "",
     )
     for binding in (
+        PREVIOUS_PROJECTIVE_TASK_ID,
         COMPLETED_DESK_TASK_ID,
-        CURRENT_TASK_ID,
         "scoped_blocker",
         "zero_retention_success",
-        M16_ARTIFACT_PATH,
-        M16_ARTIFACT_SHA256,
+        M16_EXCEPTIONAL_ARTIFACT_PATH,
+        M16_EXCEPTIONAL_ARTIFACT_SHA256,
         "PKC-SMOOTH-M16-EXCEPTIONAL-FIBERS-001",
         "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
         "B-PKC-M16-COMPLETE-COST-BRIDGE",
@@ -940,6 +958,37 @@ def validate() -> list[str]:
         if binding not in exceptional_closure_row:
             problems.append(
                 "TASK-017 closure row is missing binding "
+                f"{binding}"
+            )
+    projective_closure_row = next(
+        (
+            line
+            for line in decisions_log.splitlines()
+            if line.startswith("| 28 |")
+        ),
+        "",
+    )
+    for binding in (
+        COMPLETED_DESK_TASK_ID,
+        CURRENT_TASK_ID,
+        "scoped_blocker",
+        "zero_retention_success",
+        M16_PROJECTIVE_ARTIFACT_PATH,
+        M16_PROJECTIVE_ARTIFACT_SHA256,
+        "PKC-SMOOTH-M16-PROJECTIVE-S17-BRIDGE-001",
+        "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+        "certificate_replayed",
+        "not_established",
+        "excluded_nonexperimental",
+        "unpriced",
+        "fixed-degree",
+        "reverse projection",
+        "{2,3,7}",
+    ):
+        if binding not in projective_closure_row:
+            problems.append(
+                "TASK-018 closure row is missing binding "
                 f"{binding}"
             )
 
