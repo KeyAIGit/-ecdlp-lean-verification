@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 300,
-  "ledger_reference_count": 497,
-  "ledger_named_declarations": 472,
+  "ledger_rows": 301,
+  "ledger_reference_count": 503,
+  "ledger_named_declarations": 478,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 774,
-  "distinct_qualified_names": 774,
-  "verified_md_citations": 472,
+  "declaration_count": 816,
+  "distinct_qualified_names": 816,
+  "verified_md_citations": 478,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -361,6 +361,12 @@
     "Ecdlp.DLEQ.chaum_pedersen_verify",
     "Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime",
     "Ecdlp.EDS.isEllSequence_of_rec_one",
+    "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_frozenC_natDegree_le",
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_eq_zero_iff_common_projective_root",
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over",
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_affine",
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_eq_zero_iff_common_projective_root",
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_infinity",
     "Ecdlp.GenericGroup.badSet_card_le",
     "Ecdlp.GenericGroup.bsgs_decomp",
     "Ecdlp.GenericGroup.bsgs_steps_sq_ge",
@@ -8143,6 +8149,66 @@
           "line": 91
         }
       ]
+    },
+    {
+      "id": "ledger-300",
+      "claim": "Frozen recursive projective `C_r` specialization, uniform output degree, and one-step reverse interface (`frozenC R s = C_(s+2)` is the literal TASK-018 left-fold recursion. After every coefficient map and valid projective leaf specialization, each successor equals the exact literal Sylvester determinant at fixed formal degrees `(2^(s+1),2)` with coefficient unit `1`; separate corollaries cover affine output `[y:1]` and infinity `[1:0]`. The predecessor output degree is uniformly at most `2^(s+1)`: the determinant has two rows constant in the new output and `2^(s+1)` rows of degree at most two. Hence, over an algebraically closed field, every frozen successor vanishes iff its predecessor and local `H` slice share a non-irrelevant projective root, without a residual degree hypothesis. Honest scope: this is a one-step witness interface, not yet the recursive witness-chain induction `C16 → C2`, a direct-S17 equivalence, or a solving-cost claim)",
+      "theorem_cell": "`Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over`, `specialize_frozenC_succ_over_affine`, `specialize_frozenC_succ_over_infinity`, `previousSliceAtOver_frozenC_natDegree_le`, `specialize_frozenC_succ_eq_zero_iff_common_projective_root`, `specialize_frozenC_succ_over_eq_zero_iff_common_projective_root`",
+      "declared_files": [
+        "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean"
+      ],
+      "method": "Mathlib multivariate evaluation + literal fixed-degree Sylvester determinant + row-weighted determinant-degree bound",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+          "line": 352
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_affine",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_affine",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+          "line": 367
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_infinity",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_infinity",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+          "line": 379
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_frozenC_natDegree_le",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_frozenC_natDegree_le",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+          "line": 609
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_eq_zero_iff_common_projective_root",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_eq_zero_iff_common_projective_root",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+          "line": 635
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_eq_zero_iff_common_projective_root",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_eq_zero_iff_common_projective_root",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+          "line": 648
+        }
+      ]
     }
   ],
   "declarations": {
@@ -11225,6 +11291,300 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
       "line": 36
+    },
+    "Ecdlp.FrozenProjectiveSemaev.Axis": {
+      "name": "Axis",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "inductive",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 45
+    },
+    "Ecdlp.FrozenProjectiveSemaev.HValue": {
+      "name": "HValue",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 88
+    },
+    "Ecdlp.FrozenProjectiveSemaev.ProjectivePair": {
+      "name": "ProjectivePair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "structure",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 59
+    },
+    "Ecdlp.FrozenProjectiveSemaev.ProjectivePair.affine": {
+      "name": "affine",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev.ProjectivePair",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 69
+    },
+    "Ecdlp.FrozenProjectiveSemaev.ProjectivePair.coord": {
+      "name": "coord",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev.ProjectivePair",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 77
+    },
+    "Ecdlp.FrozenProjectiveSemaev.ProjectivePair.infinity": {
+      "name": "infinity",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev.ProjectivePair",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 73
+    },
+    "Ecdlp.FrozenProjectiveSemaev.Var": {
+      "name": "Var",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "inductive",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 52
+    },
+    "Ecdlp.FrozenProjectiveSemaev.assignment": {
+      "name": "assignment",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 149
+    },
+    "Ecdlp.FrozenProjectiveSemaev.coeff_map_C_natDegree": {
+      "name": "coeff_map_C_natDegree",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 524
+    },
+    "Ecdlp.FrozenProjectiveSemaev.constantPair": {
+      "name": "constantPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 442
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenC": {
+      "name": "frozenC",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 139
+    },
+    "Ecdlp.FrozenProjectiveSemaev.leafPair": {
+      "name": "leafPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 102
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localSlice": {
+      "name": "localSlice",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 125
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localSliceAt": {
+      "name": "localSliceAt",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 174
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localSliceAt_constantPair_affine_coeff_natDegree_le": {
+      "name": "localSliceAt_constantPair_affine_coeff_natDegree_le",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 554
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localSliceAt_constantPair_affine_explicit": {
+      "name": "localSliceAt_constantPair_affine_explicit",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 531
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localSliceAt_natDegree_le": {
+      "name": "localSliceAt_natDegree_le",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 222
+    },
+    "Ecdlp.FrozenProjectiveSemaev.map_localSlice": {
+      "name": "map_localSlice",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 214
+    },
+    "Ecdlp.FrozenProjectiveSemaev.map_localSlice_over": {
+      "name": "map_localSlice_over",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 339
+    },
+    "Ecdlp.FrozenProjectiveSemaev.map_outputSlice": {
+      "name": "map_outputSlice",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 185
+    },
+    "Ecdlp.FrozenProjectiveSemaev.map_outputSlice_over": {
+      "name": "map_outputSlice_over",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 309
+    },
+    "Ecdlp.FrozenProjectiveSemaev.natDegree_det_le_sum_row": {
+      "name": "natDegree_det_le_sum_row",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 419
+    },
+    "Ecdlp.FrozenProjectiveSemaev.outputPair": {
+      "name": "outputPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 107
+    },
+    "Ecdlp.FrozenProjectiveSemaev.outputSlice": {
+      "name": "outputSlice",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 113
+    },
+    "Ecdlp.FrozenProjectiveSemaev.previousSliceAt": {
+      "name": "previousSliceAt",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 163
+    },
+    "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver": {
+      "name": "previousSliceAtOver",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 296
+    },
+    "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_constantPair": {
+      "name": "previousSliceAtOver_constantPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 454
+    },
+    "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_eq_specializeOver_polynomial": {
+      "name": "previousSliceAtOver_eq_specializeOver_polynomial",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 489
+    },
+    "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_frozenC_natDegree_le": {
+      "name": "previousSliceAtOver_frozenC_natDegree_le",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 609
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specialize": {
+      "name": "specialize",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 156
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specializeOver": {
+      "name": "specializeOver",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 287
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ": {
+      "name": "specialize_frozenC_succ",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 232
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_affine": {
+      "name": "specialize_frozenC_succ_affine",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 245
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_eq_zero_iff_common_projective_root": {
+      "name": "specialize_frozenC_succ_eq_zero_iff_common_projective_root",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 635
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_eq_zero_iff_common_projective_root_of_natDegree_le": {
+      "name": "specialize_frozenC_succ_eq_zero_iff_common_projective_root_of_natDegree_le",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 269
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_infinity": {
+      "name": "specialize_frozenC_succ_infinity",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 255
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over": {
+      "name": "specialize_frozenC_succ_over",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 352
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_affine": {
+      "name": "specialize_frozenC_succ_over_affine",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 367
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_eq_zero_iff_common_projective_root": {
+      "name": "specialize_frozenC_succ_over_eq_zero_iff_common_projective_root",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 648
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_eq_zero_iff_common_projective_root_of_natDegree_le": {
+      "name": "specialize_frozenC_succ_over_eq_zero_iff_common_projective_root_of_natDegree_le",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 396
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_infinity": {
+      "name": "specialize_frozenC_succ_over_infinity",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 379
+    },
+    "Ecdlp.FrozenProjectiveSemaev.taskSylvester_natDegree_le_two_mul_left": {
+      "name": "taskSylvester_natDegree_le_two_mul_left",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "line": 572
     },
     "Ecdlp.GenericGroup.Aff": {
       "name": "Aff",

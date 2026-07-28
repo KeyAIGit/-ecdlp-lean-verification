@@ -992,36 +992,24 @@ Recorded result:
 
 ### TASK-020 - Kernelize frozen recursive C_r specialization
 
-Status: active_non_executable_recursive_cr_specialization_bridge
+Status: completed_non_executable_scoped_blocker
 Kind: theorem | research | review
-Hypothesis: none. This is the smallest exact theorem task left by TASK-019;
-it is not a solver candidate and does not include the downstream universal
-reverse induction.
+Hypothesis: none. This task tested the exact recursive-specialization bridge
+left by TASK-019; it was not a solver candidate.
 Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
 Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
 Authorization: none
-Why it matters: the generic fixed-degree coefficient-map theorem cannot by
-itself show that the actual frozen recursive symbolic `C_r` specializes to
-the fixed resultant used at the preceding recursive step. That binding is
-required before the universal `C16 → C2` reverse argument can be attempted.
-Decision boundary:
-- Bind the existing frozen recursive `C_r` definition without expanding,
-  evaluating, or materializing S17.
-- Kernel-check exact specialization at formal degrees `(2^(r-2), 2)`, under
-  the frozen coefficient, argument, row, and column convention, with
-  coefficient unit exactly `1`.
-- State and prove both the affine-output branch and the output `[1:0]` branch;
-  preserve the irrelevant-pair exclusion and fixed formal degrees through
-  degree drop.
-- Treat any missing recursive definition, degree/homogeneity lemma, or
-  specialization identity as an explicit theorem-level blocker. Do not
-  replace the actual recursion with the generic coefficient-map theorem.
-- Leave the universal reverse `C16 → C2` induction as a downstream blocker;
-  it is not an exit criterion for TASK-020.
-- Do not infer radicality, scheme equality, multiplicity preservation,
-  relation yield, rank, solving degree, fill-in, memory, or total work. Do not
-  run a solver, parameter sweep, exact-target search, or discrete-log
-  computation.
+Outcome: `scoped_blocker`
+Retention: `zero_retention_success`
+Completed on: 2026-07-28
+Artifact:
+- `experiments/engine/pkc_smooth_m16_frozen_cr_specialization/artifact.json`
+- ID `PKC-SMOOTH-M16-FROZEN-CR-SPECIALIZATION-001`
+- SHA-256 `d025053b9f882c88086fd5f04bcbd9627c72987e263e9b55af6024794305acbe`
+Why it matters: TASK-019 proved the generic fixed-degree resultant theorem,
+but that theorem did not name or constrain the actual frozen recursive
+symbolic family. TASK-020 binds the real recursion before any universal
+projective witness extraction is attempted.
 Inputs:
 - `experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json`
 - `experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json`
@@ -1030,33 +1018,106 @@ Inputs:
 - the frozen recursive projective `C_r` contract from TASK-018
 - `CELL-M-PKC-SMOOTH-M16`
 - `B-PKC-M16-COMPLETE-COST-BRIDGE`
+Recorded result:
+- `Ecdlp.FrozenProjectiveSemaev.frozenC` is the literal frozen left-fold
+  family: stage `s` is `C_(s+2)`, stage `14` is `C16`, the new leaf is
+  `Q_(s+3)`, and every successor uses formal degrees `(2^(s+1), 2)`.
+- `specialize_frozenC_succ_over` kernel-checks exact specialization after an
+  explicit coefficient map. The result is the literal TASK-018 Sylvester
+  determinant with coefficient unit exactly `1`, unchanged argument and row
+  order, and no primitive, content, monic, or actual-degree normalization.
+  Same-field, affine `[y:1]`, and infinity `[1:0]` forms are separate
+  corollaries, while `[0:0]` is excluded.
+- `previousSliceAtOver_frozenC_natDegree_le` proves uniformly that the output
+  slice of `C_(s+2)` has degree at most `2^(s+1)`. At a successor, the
+  determinant has two rows constant in the new output and `2^(s+1)` rows of
+  degree at most two, so no recursive degree hypothesis is needed.
+- The uniform bound discharges the last hypothesis of the one-step resultant
+  theorem. Both same-field and coefficient-map variants now state
+  unconditionally that one frozen successor vanishes exactly when its
+  predecessor slice and local literal `H` slice share a non-irrelevant
+  projective root over an algebraically closed target field.
+- All 23 public theorems in the module depend only on `propext`,
+  `Classical.choice`, and `Quot.sound`; there is no `sorry`, `admit`, custom
+  axiom, or `unsafe`.
+- The independent certificate binds all stages `C2` through `C16`, the
+  literal nine-term `H` including `-28`, fixed degrees, matrix dimensions,
+  affine and infinity branches, theorem names, source hashes, and
+  non-execution boundary. Its validator passes and all 73 semantic mutations
+  are rejected. The typed evidence claim is
+  `SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT`.
+- The exact remaining theorem blocker is projective evaluation and recursive
+  witness-chain assembly: a root of the fixed homogenized predecessor slice
+  must be identified with specialization of the actual projective `C_r`, then
+  recursively extracted from `C16` through `C2`. This is open, not refuted.
+- `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`; solving cost, rank, and yield
+  remain `unpriced`; `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open; the route
+  remains `open_parked`; and no S17 materialization, solver, exact-target
+  computation, experiment authorization, cost claim, hypothesis retention,
+  or route promotion is created.
+
+### TASK-021 - Kernelize universal frozen C16-to-C2 projective witness extraction
+
+Status: active_non_executable_universal_recursive_extraction
+Kind: theorem | research | review
+Hypothesis: none. This is the smallest exact theorem task left by TASK-020;
+it is not a solver candidate or a cost experiment.
+Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
+Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
+Authorization: none
+Why it matters: TASK-020 returns a non-irrelevant common projective root of
+the fixed homogenized predecessor and local slices at every vanishing
+successor. To recurse, those homogenized evaluations must be identified with
+the actual projective frozen-family specialization, including `[1:0]`, and
+the witnesses must be assembled into one exact chain.
+Decision boundary:
+- Prove the projective evaluation bridge for each valid pair `[U:V]`: the
+  declared-degree homogenization of the predecessor output slice evaluates
+  to the actual `frozenC` specialization, and the degree-two homogenized local
+  slice evaluates to the literal `HValue`.
+- Define only the minimal `FrozenProjectiveChain`: base `C2 = H`; a successor
+  contains one valid projective intermediate, the predecessor chain, and the
+  local `H` equation.
+- Prove for every stage `s` and explicit coefficient map that
+  `specializeOver φ q y (frozenC k s) = 0` is equivalent to that chain.
+  Instantiate `s = 14` to obtain the universal `C16 → C2` witness extraction
+  with infinity allowed at every level.
+- If exact projective homogeneity or a top-coefficient identity is missing,
+  isolate and kernel-check the smallest lemma rather than replacing it with
+  an affine-only argument or finite fixture.
+- Do not claim base-field liftability, `RatCat_Fp`, recovery, direct-S17
+  equivalence, radicality, scheme equality, multiplicity preservation,
+  relation yield, rank, solving degree, fill-in, memory, or total work.
+- Do not expand or evaluate S17, materialize the M16 system, run a solver,
+  parameter sweep, exact-target search, or discrete-log computation.
+Inputs:
+- `Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean`
+- `Ecdlp/Proved/FixedDegreeProjectiveResultant.lean`
+- `experiments/engine/pkc_smooth_m16_frozen_cr_specialization/artifact.json`
+- `experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json`
+- `CELL-M-PKC-SMOOTH-M16`
+- `B-PKC-M16-COMPLETE-COST-BRIDGE`
 Expected output:
-- One kernel-checked theorem binding the actual frozen recursive `C_r`
-  specialization to the literal fixed-degree resultant, with formal degrees
-  `(2^(r-2), 2)`, coefficient unit `1`, and both affine and `[1:0]` output
-  branches explicit; or the smallest exact missing lemma.
-- One independently replayable non-run certificate binding the theorem to the
-  TASK-018 convention without materializing S17.
+- A kernel-checked projective homogenization/specialization bridge for the
+  actual frozen family and local `H`.
+- A kernel-checked all-stage chain equivalence and its `C16` corollary; or the
+  smallest exact missing projective-homogeneity lemma.
+- One narrow non-run certificate only if a new theorem result is obtained.
 Exit criteria:
-- The theorem names the actual frozen recursion rather than only arbitrary
-  polynomials under a ring homomorphism.
-- Formal degrees, coefficient map, projective domain, irrelevant-pair
-  exclusion, affine witness, infinity witness, and unit convention are
-  explicit.
-- Universal reverse projection remains separately open unless a later task
-  authorizes and proves it.
+- The proof uses the actual `frozenC`, covers every valid `[U:V]`, excludes
+  `[0:0]`, permits `[1:0]` at every recursive stage, and introduces no hidden
+  normalization.
+- Finite S4/S5 fixtures are not substituted for the universal proof.
 - `CQ-SEMAEV-S17-SYSTEM-COST` stays `partial`, the complete-cost barrier stays
-  open, and experiment authorization stays false.
+  open, the route stays `open_parked`, and authorization stays false.
 Files allowed to edit:
-- one narrow recursive-specialization Lean module and its direct theorem
-  dependencies
-- one dedicated non-run TASK-020 certificate directory
+- one narrow witness-chain Lean module and direct theorem dependencies
+- one dedicated non-run TASK-021 certificate directory if the theorem closes
 - directly affected canonical task and proof ledgers
 Files that must be regenerated:
 - only generated views directly affected by the final recorded result
 How to verify:
-- `lake build` of the narrow module, no-`sorry`, and exhaustive axiom audit
-- independent affine, `[1:0]`, degree-drop, row/argument-order, and unit-one
-  fixtures
-- scientific-semantic and non-execution gates
-- generated fixpoint and full repository CI
+- narrow Lean build, no-`sorry`, and exhaustive axiom audit
+- affine and infinity projective-evaluation fixtures
+- certificate validator and fault tests if a certificate is created
+- scientific-semantic, non-execution, generated-fixpoint, and full CI gates

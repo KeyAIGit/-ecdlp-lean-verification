@@ -36,7 +36,8 @@ MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
 MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
 CURRENT_PHASE = "evidence-bounded-desk-priority"
-CURRENT_TASK_ID = "TASK-020"
+CURRENT_TASK_ID = "TASK-021"
+COMPLETED_SPECIALIZATION_TASK_ID = "TASK-020"
 COMPLETED_RESULTANT_TASK_ID = "TASK-019"
 COMPLETED_DESK_TASK_ID = "TASK-018"
 PREVIOUS_PROJECTIVE_TASK_ID = "TASK-017"
@@ -57,6 +58,19 @@ M16_RESULTANT_ARTIFACT_PATH = (
 )
 M16_RESULTANT_ARTIFACT_SHA256 = (
     "0b9d8b48953aae2defa28ade67992084cecca3a01b43490bc338a0fd5ce97c5a"
+)
+M16_SPECIALIZATION_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_frozen_cr_specialization/artifact.json"
+)
+M16_SPECIALIZATION_ARTIFACT_SHA256 = (
+    "d025053b9f882c88086fd5f04bcbd9627c72987e263e9b55af6024794305acbe"
+)
+M16_SPECIALIZATION_ARTIFACT_ID = (
+    "PKC-SMOOTH-M16-FROZEN-CR-SPECIALIZATION-001"
+)
+M16_SPECIALIZATION_CLAIM_ID = (
+    "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT"
 )
 M16_EXCEPTIONAL_ARTIFACT_PATH = (
     "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json"
@@ -259,6 +273,29 @@ def validate() -> list[str]:
         problems.append("promotion experiments must remain unauthorized")
     if data["phase_policy"].get("selected_attack_route") is not None:
         problems.append("completed structural selection must keep selected_attack_route=null")
+    phase_allowed = "\n".join(data["phase_policy"].get("allowed_work", []))
+    for binding in (
+        COMPLETED_SPECIALIZATION_TASK_ID,
+        "actual frozen recursive C_r specialization",
+        "predecessor output-degree bound",
+        "unconditional one-step resultant/common-projective-root equivalence",
+        CURRENT_TASK_ID,
+        "projective homogenization/specialization bridge",
+        "recursive projective witness chain",
+        "universal C16-to-C2 extraction",
+    ):
+        if binding not in phase_allowed:
+            problems.append(f"phase_policy.allowed_work is missing {binding}")
+    phase_forbidden = "\n".join(data["phase_policy"].get("forbidden_work", []))
+    for binding in (
+        COMPLETED_SPECIALIZATION_TASK_ID,
+        "universal C16-to-C2 witness extraction",
+        "direct-S17 equivalence",
+        "solving-cost result",
+        "execution authorization",
+    ):
+        if binding not in phase_forbidden:
+            problems.append(f"phase_policy.forbidden_work is missing {binding}")
     execution_gates = data.get("execution_gates", {})
     if execution_gates.get("exploration", {}).get("authorized") is not False:
         problems.append(
@@ -266,6 +303,13 @@ def validate() -> list[str]:
         )
     if execution_gates.get("promotion", {}).get("authorized") is not False:
         problems.append("execution_gates.promotion must remain closed")
+    exploration_cannot_do = "\n".join(
+        execution_gates.get("exploration", {}).get("cannot_do", [])
+    )
+    if CURRENT_TASK_ID not in exploration_cannot_do:
+        problems.append(
+            "execution_gates.exploration.cannot_do must bind the current task"
+        )
     if execution_gates.get("exploration", {}).get("policy_source") != (
         "repo/RESEARCH_ENGINE_V0.json"
     ):
@@ -434,6 +478,33 @@ def validate() -> list[str]:
     reopen = next_gate.get("reopen_requirements")
     if not isinstance(reopen, list) or not reopen:
         problems.append("next_phase_gate.reopen_requirements must be nonempty")
+    reopen_text = "\n".join(reopen) if isinstance(reopen, list) else ""
+    for binding in (
+        CURRENT_TASK_ID,
+        "projective homogenization/specialization",
+        "recursive witness-chain",
+        "universal C16-to-C2 extraction",
+        "does not authorize an experiment or route promotion",
+    ):
+        if binding not in reopen_text:
+            problems.append(
+                f"next_phase_gate.reopen_requirements is missing {binding}"
+            )
+    next_gate_decision = next_gate.get("decision", "")
+    for binding in (
+        COMPLETED_SPECIALIZATION_TASK_ID,
+        "actual recursive frozen C_r specialization",
+        "uniform predecessor output-degree bound",
+        "unconditional one-step resultant/common-projective-root equivalence",
+        CURRENT_TASK_ID,
+        "projective homogenization/specialization",
+        "recursive witness-chain",
+        "universal C16-to-C2 extraction",
+        "open_parked",
+        "authorization remains false",
+    ):
+        if binding not in next_gate_decision:
+            problems.append(f"next_phase_gate.decision is missing {binding}")
 
     target_anchors = data["target_problem"].get("formal_anchors", [])
     for anchor in target_anchors:
@@ -560,6 +631,13 @@ def validate() -> list[str]:
             "R-PETIT-COMPOSED-MAPS must retain the TASK-019 "
             "projective-resultant kernel certificate as evidence"
         )
+    if M16_SPECIALIZATION_ARTIFACT_PATH not in petit_route.get(
+        "evidence_files", []
+    ):
+        problems.append(
+            "R-PETIT-COMPOSED-MAPS must retain the TASK-020 frozen-C_r "
+            "specialization certificate as evidence"
+        )
     petit_current_evidence = petit_route.get("current_evidence", "")
     for binding in (
         "TASK-019 kernel-checks",
@@ -570,9 +648,19 @@ def validate() -> list[str]:
         "coefficient unit 1",
         "zero forms",
         "[1:0]",
-        "recursive frozen C_r specialization",
-        "universal C16-to-C2 induction",
+        "TASK-020 now kernel-checks",
+        "actual recursive frozen C_r family",
+        "formal degrees (2^(r-2),2)",
+        "uniform predecessor output-degree bound",
+        "unconditional one-step resultant/common-projective-root equivalence",
+        M16_SPECIALIZATION_ARTIFACT_ID,
+        M16_SPECIALIZATION_ARTIFACT_SHA256,
+        M16_SPECIALIZATION_CLAIM_ID,
+        "projective homogenization/specialization and recursive witness-chain bridge",
+        "universal C16-to-C2 extraction",
         "zero_retention_success",
+        "CQ-SEMAEV-S17-SYSTEM-COST remains partial",
+        "solving cost remain unpriced",
     ):
         if binding not in petit_current_evidence:
             problems.append(
@@ -580,13 +668,15 @@ def validate() -> list[str]:
                 f"{binding}"
             )
     for binding in (
-        "exact recursive frozen C_r specialization",
-        "formal degrees (2^(r-2),2)",
-        "coefficient unit 1",
-        "[1:0]",
-        "universal C16-to-C2 induction remains downstream",
+        CURRENT_TASK_ID,
+        "exact projective homogenization/specialization bridge",
+        "recursive projective witness chain",
+        "universal C16-to-C2 extraction",
+        "[1:0] allowed at every level",
         "hypothesis retention",
         "route promotion",
+        "cost claim",
+        "cost inference",
     ):
         if binding not in petit_next_action:
             problems.append(
@@ -595,6 +685,16 @@ def validate() -> list[str]:
     if "auxiliary-curve cell parked" not in petit_next_action:
         problems.append(
             "R-PETIT-COMPOSED-MAPS must keep the auxiliary-curve cell parked"
+        )
+    if petit_route.get("status") != "open_parked":
+        problems.append("R-PETIT-COMPOSED-MAPS must remain open_parked")
+    if petit_route.get("authorized_experiment") is not False:
+        problems.append(
+            "R-PETIT-COMPOSED-MAPS authorization must remain false"
+        )
+    if "No reliable project estimate" not in petit_route.get("known_cost", ""):
+        problems.append(
+            "R-PETIT-COMPOSED-MAPS must not acquire a TASK-020 cost claim"
         )
 
     completed_structural_foundations: list[str] = []
@@ -760,6 +860,7 @@ def validate() -> list[str]:
         PREVIOUS_PROJECTIVE_TASK_ID,
         COMPLETED_DESK_TASK_ID,
         COMPLETED_RESULTANT_TASK_ID,
+        COMPLETED_SPECIALIZATION_TASK_ID,
         CURRENT_TASK_ID,
     ):
         if required_task not in tasks_text:
@@ -842,7 +943,6 @@ def validate() -> list[str]:
             problems.append(
                 f"{COMPLETED_DESK_TASK_ID} is missing closure binding {binding}"
             )
-    current_task = task_sections.get(CURRENT_TASK_ID, "")
     completed_resultant_task = task_sections.get(
         COMPLETED_RESULTANT_TASK_ID, ""
     )
@@ -886,8 +986,57 @@ def validate() -> list[str]:
                 f"{COMPLETED_RESULTANT_TASK_ID} is missing closure binding "
                 f"{binding}"
             )
+    completed_specialization_task = task_sections.get(
+        COMPLETED_SPECIALIZATION_TASK_ID, ""
+    )
+    expected_completed_specialization_lines = (
+        "Status: completed_non_executable_scoped_blocker",
+        "Authorization: none",
+        "Outcome: `scoped_blocker`",
+        "Retention: `zero_retention_success`",
+    )
+    for line in expected_completed_specialization_lines:
+        if not re.search(
+            rf"^{re.escape(line)}$",
+            completed_specialization_task,
+            flags=re.MULTILINE,
+        ):
+            problems.append(
+                f"{COMPLETED_SPECIALIZATION_TASK_ID} must contain {line!r}"
+            )
+    for binding in (
+        M16_SPECIALIZATION_ARTIFACT_PATH,
+        M16_SPECIALIZATION_ARTIFACT_SHA256,
+        M16_SPECIALIZATION_ARTIFACT_ID,
+        M16_SPECIALIZATION_CLAIM_ID,
+        DESK_PRIORITY_CELL_ID,
+        DESK_PRIORITY_STUB_ID,
+        DESK_PRIORITY_COST_ID,
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+        "`unpriced`",
+        "actual frozen",
+        "formal degrees",
+        "coefficient unit exactly `1`",
+        "affine `[y:1]`",
+        "infinity `[1:0]`",
+        "uniform",
+        "unconditionally",
+        "projective evaluation",
+        "witness-chain",
+        "C16",
+        "C2",
+        "open_parked",
+        "authorization",
+        "cost claim",
+    ):
+        if binding.casefold() not in completed_specialization_task.casefold():
+            problems.append(
+                f"{COMPLETED_SPECIALIZATION_TASK_ID} is missing closure binding "
+                f"{binding}"
+            )
+    current_task = task_sections.get(CURRENT_TASK_ID, "")
     expected_current_task_lines = (
-        "Status: active_non_executable_recursive_cr_specialization_bridge",
+        "Status: active_non_executable_universal_recursive_extraction",
         f"Desk priority: `{DESK_PRIORITY_CELL_ID}` / `{DESK_PRIORITY_STUB_ID}`",
         "Authorization: none",
     )
@@ -900,13 +1049,16 @@ def validate() -> list[str]:
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
         DESK_PRIORITY_COST_ID,
-        M16_RESULTANT_ARTIFACT_PATH,
-        "recursive",
-        "formal degree",
+        M16_SPECIALIZATION_ARTIFACT_PATH,
+        "projective evaluation bridge",
+        "FrozenProjectiveChain",
+        "specializeOver",
         "[1:0]",
         "C16",
         "C2",
-        "downstream",
+        "partial",
+        "open_parked",
+        "authorization stays false",
     ):
         if binding not in current_task:
             problems.append(f"{CURRENT_TASK_ID} is missing binding {binding}")
@@ -1094,7 +1246,7 @@ def validate() -> list[str]:
     )
     for binding in (
         COMPLETED_RESULTANT_TASK_ID,
-        CURRENT_TASK_ID,
+        COMPLETED_SPECIALIZATION_TASK_ID,
         "scoped_blocker",
         "zero_retention_success",
         M16_RESULTANT_ARTIFACT_PATH,
@@ -1116,6 +1268,45 @@ def validate() -> list[str]:
         if binding not in resultant_closure_row:
             problems.append(
                 "TASK-019 closure row is missing binding "
+                f"{binding}"
+            )
+    specialization_closure_row = next(
+        (
+            line
+            for line in decisions_log.splitlines()
+            if line.startswith("| 30 |")
+        ),
+        "",
+    )
+    for binding in (
+        COMPLETED_SPECIALIZATION_TASK_ID,
+        CURRENT_TASK_ID,
+        "scoped_blocker",
+        "zero_retention_success",
+        M16_SPECIALIZATION_ARTIFACT_PATH,
+        M16_SPECIALIZATION_ARTIFACT_SHA256,
+        M16_SPECIALIZATION_ARTIFACT_ID,
+        M16_SPECIALIZATION_CLAIM_ID,
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+        "kernel_bound_non_run_certificate",
+        "not_established",
+        "excluded_nonexperimental",
+        "partial",
+        "unpriced",
+        "predecessor output-degree bound",
+        "unconditional one-step resultant/common-projective-root equivalence",
+        "projective evaluation",
+        "witness-chain",
+        "C16",
+        "C2",
+        "[1:0]",
+        "open_parked",
+        "experiment authorization",
+        "cost claim",
+    ):
+        if binding not in specialization_closure_row:
+            problems.append(
+                "TASK-020 closure row is missing binding "
                 f"{binding}"
             )
 

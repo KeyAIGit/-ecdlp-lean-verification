@@ -293,6 +293,12 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.DLEQ.chaum_pedersen_verify
 #print axioms Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime
 #print axioms Ecdlp.EDS.isEllSequence_of_rec_one
+#print axioms Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_frozenC_natDegree_le
+#print axioms Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_eq_zero_iff_common_projective_root
+#print axioms Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over
+#print axioms Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_affine
+#print axioms Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_eq_zero_iff_common_projective_root
+#print axioms Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_infinity
 #print axioms Ecdlp.GenericGroup.badSet_card_le
 #print axioms Ecdlp.GenericGroup.bsgs_decomp
 #print axioms Ecdlp.GenericGroup.bsgs_steps_sq_ge

@@ -1,0 +1,848 @@
+{
+  "artifact_id": "PKC-SMOOTH-M16-FROZEN-CR-SPECIALIZATION-001",
+  "assumption_contract": {
+    "affine_output": "[y:1] is an explicit specialization corollary",
+    "coefficient_map": "the source is a CommRing k and the named coefficient map is an explicit ring homomorphism k ->+* K",
+    "common_root_target": "the unconditional common-projective-root equivalence uses a Field K with IsAlgClosed K",
+    "degree_bound_target": "the universal output-slice degree bound uses a Field K after any coefficient map from a CommRing k",
+    "infinity_output": "[1:0] is an explicit specialization corollary and is not reduced to an affine chart",
+    "normalization": "fixed formal degrees and leading zero coefficients are retained; no primitive, content, monic, sign, actual-degree, or variable-dependent normalization",
+    "projective_domain": "every ProjectivePair satisfies u!=0 or v!=0; only [0:0] is excluded",
+    "zero_forms_and_degree_drops": "included by the fixed-degree resultant interface"
+  },
+  "depends_on": [
+    {
+      "digest_match": true,
+      "observed_sha256": "3164cb89adac7622b4d08d781061ea386dc64e754236e48c838a3dac23040715",
+      "path": "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json",
+      "required_sha256": "3164cb89adac7622b4d08d781061ea386dc64e754236e48c838a3dac23040715"
+    },
+    {
+      "digest_match": true,
+      "observed_sha256": "0b9d8b48953aae2defa28ade67992084cecca3a01b43490bc338a0fd5ce97c5a",
+      "path": "experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json",
+      "required_sha256": "0b9d8b48953aae2defa28ade67992084cecca3a01b43490bc338a0fd5ce97c5a"
+    },
+    {
+      "digest_match": true,
+      "observed_sha256": "194e03cb6ddcb8f539229b4c3c7639b138f90fcdcd1d44295c16bc58c7514320",
+      "path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "required_sha256": "194e03cb6ddcb8f539229b4c3c7639b138f90fcdcd1d44295c16bc58c7514320"
+    },
+    {
+      "digest_match": true,
+      "observed_sha256": "9d94086350955a812fe4c02f353b72a5b7581ade57c6507ccebffa96808cd5a8",
+      "path": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+      "required_sha256": "9d94086350955a812fe4c02f353b72a5b7581ade57c6507ccebffa96808cd5a8"
+    }
+  ],
+  "fixtures": {
+    "F5_affine_intermediate_root": {
+      "coefficient_map_commutes": true,
+      "common_projective_roots_mod_5": [
+        [
+          0,
+          1
+        ]
+      ],
+      "distinguished_witness": [
+        0,
+        1
+      ],
+      "field_prime": 5,
+      "formal_degrees": [
+        2,
+        2
+      ],
+      "integer_resultant": -62720,
+      "left_coefficients_descending_over_Z": [
+        0,
+        -28,
+        0
+      ],
+      "mapped_resultant_mod_5": 0,
+      "projective_inputs_q0_q1_q2_y": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "required_branch": "affine_common_root_[0:1]",
+      "right_coefficients_descending_over_Z": [
+        1,
+        -40,
+        -80
+      ],
+      "task_sylvester_matrix_over_Z": [
+        [
+          0,
+          -28,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -28,
+          0
+        ],
+        [
+          1,
+          -40,
+          -80,
+          0
+        ],
+        [
+          0,
+          1,
+          -40,
+          -80
+        ]
+      ]
+    },
+    "F5_infinity_intermediate_root": {
+      "coefficient_map_commutes": true,
+      "common_projective_roots_mod_5": [
+        [
+          1,
+          0
+        ]
+      ],
+      "distinguished_witness": [
+        1,
+        0
+      ],
+      "field_prime": 5,
+      "formal_degrees": [
+        2,
+        2
+      ],
+      "integer_resultant": 0,
+      "left_coefficients_descending_over_Z": [
+        0,
+        -28,
+        0
+      ],
+      "mapped_resultant_mod_5": 0,
+      "projective_inputs_q0_q1_q2_y": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "required_branch": "retain_common_root_[1:0]_after_degree_drop",
+      "right_coefficients_descending_over_Z": [
+        0,
+        -60,
+        -96
+      ],
+      "task_sylvester_matrix_over_Z": [
+        [
+          0,
+          -28,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -28,
+          0
+        ],
+        [
+          0,
+          -60,
+          -96,
+          0
+        ],
+        [
+          0,
+          0,
+          -60,
+          -96
+        ]
+      ]
+    },
+    "F5_minus_28_nonzero_control": {
+      "coefficient_map_commutes": true,
+      "common_projective_roots_mod_5": [],
+      "field_prime": 5,
+      "formal_degrees": [
+        2,
+        2
+      ],
+      "integer_resultant": -21952,
+      "left_coefficients_descending_over_Z": [
+        0,
+        -28,
+        0
+      ],
+      "mapped_resultant_mod_5": 3,
+      "projective_inputs_q0_q1_q2_y": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "required_disposition": "literal_minus_28_block_is_semantically_detected",
+      "right_coefficients_descending_over_Z": [
+        1,
+        -28,
+        -28
+      ],
+      "task_sylvester_matrix_over_Z": [
+        [
+          0,
+          -28,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -28,
+          0
+        ],
+        [
+          1,
+          -28,
+          -28,
+          0
+        ],
+        [
+          0,
+          1,
+          -28,
+          -28
+        ]
+      ],
+      "zeroed_minus_28_resultant_mod_5": 0
+    }
+  },
+  "frozen_family_contract": {
+    "C16_binding": "frozenC R 14 = C16",
+    "argument_order": "H(T,Q_(s+3),Y) is the right operand",
+    "base": "frozenC R 0 = C2(Q1,Q2;Y) = H(Q1,Q2,Y)",
+    "coefficient_unit": 1,
+    "family_index": "frozenC R s = C_(s+2)",
+    "formal_degrees": [
+      "2^(s+1)",
+      "2"
+    ],
+    "left_operand": "outputSlice(frozenC R s)",
+    "normalization": "none",
+    "output_branches": [
+      "[y:1]",
+      "[1:0]"
+    ],
+    "right_operand": "localSlice(s+2) = H(T,Q_(s+3),Y)",
+    "successor": "frozenC R (s+1) = resultant(outputSlice(frozenC R s),localSlice(s+2),2^(s+1),2)",
+    "topology": "fixed_left_fold"
+  },
+  "h_literal": {
+    "argument_coordinate_order": [
+      "X1",
+      "Z1",
+      "X2",
+      "Z2",
+      "X3",
+      "Z3"
+    ],
+    "multidegree": [
+      2,
+      2,
+      2
+    ],
+    "term_count": 9,
+    "terms": [
+      {
+        "coefficient": 1,
+        "exponents": [
+          2,
+          0,
+          2,
+          0,
+          0,
+          2
+        ]
+      },
+      {
+        "coefficient": 1,
+        "exponents": [
+          2,
+          0,
+          0,
+          2,
+          2,
+          0
+        ]
+      },
+      {
+        "coefficient": 1,
+        "exponents": [
+          0,
+          2,
+          2,
+          0,
+          2,
+          0
+        ]
+      },
+      {
+        "coefficient": -2,
+        "exponents": [
+          2,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "coefficient": -2,
+        "exponents": [
+          1,
+          1,
+          2,
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "coefficient": -2,
+        "exponents": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          0
+        ]
+      },
+      {
+        "coefficient": -28,
+        "exponents": [
+          1,
+          1,
+          0,
+          2,
+          0,
+          2
+        ]
+      },
+      {
+        "coefficient": -28,
+        "exponents": [
+          0,
+          2,
+          1,
+          1,
+          0,
+          2
+        ]
+      },
+      {
+        "coefficient": -28,
+        "exponents": [
+          0,
+          2,
+          0,
+          2,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  "kernel_contract": {
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "axiom_audit_status": "standard_lean_axioms_only",
+    "build_status": "passed",
+    "build_targets": [
+      "Ecdlp.Proved.FrozenRecursiveProjectiveSemaev"
+    ],
+    "forbidden_axioms": [
+      "sorryAx"
+    ],
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "mathlib_input_revision": "v4.31.0",
+    "no_sorry_status": "passed",
+    "validator_invokes_lean": false
+  },
+  "kind": "non_run_kernel_binding_certificate",
+  "literal_sylvester_contract": {
+    "argument_order": "(left,right,m,2)",
+    "coefficient_order": "descending eliminated-coordinate degree",
+    "column_order": "descending monomial slots",
+    "formal_degree_reduction": "forbidden",
+    "literal_coefficient_unit": 1,
+    "monic_normalization": "forbidden",
+    "primitive_part_or_content_division": "forbidden",
+    "row_order": "first 2 shifted rows of the left operand, then m shifted rows of the right operand",
+    "successor_formal_degrees": [
+      "2^(s+1)",
+      "2"
+    ]
+  },
+  "open_exact_blocker": {
+    "depends_on_kernel_checked_components": [
+      "actual_frozen_family",
+      "coefficient_map_specialization",
+      "affine_and_infinity_outputs",
+      "universal_output_degree_bound",
+      "unconditional_one_step_common_projective_root"
+    ],
+    "downstream_open": [
+      "universal_C16_to_C2_reverse_induction",
+      "RecS17_iff_GeoCat"
+    ],
+    "forbidden_promotions": [
+      "RecS17_iff_GeoCat",
+      "RecS17_implies_RatCat",
+      "RecS17_implies_Recover",
+      "cost_complete",
+      "route_promotion"
+    ],
+    "not_refuted": true,
+    "smallest_missing_component": {
+      "id": "universal_C16_to_C2_reverse_induction",
+      "reason": "the one-step interface does not yet bind every recovered common root back to predecessor frozen-form specialization and assemble the full fourteen-node internal projective tree",
+      "requirement": "iterate the unconditional one-step projective-root witness from C16 through C2, retaining affine and [1:0] branches at every level"
+    },
+    "status": "open_exact_blocker"
+  },
+  "producer_checks": {
+    "C16_evaluated": false,
+    "C16_expanded": false,
+    "M16_system_materialized": false,
+    "S17_materialized": false,
+    "exact_target_search_executed": false,
+    "experiment_authorized": false,
+    "normalization_executed": false,
+    "parameter_sweep_executed": false,
+    "solver_executed": false
+  },
+  "proof_status": {
+    "actual_frozen_family_definition": "kernel_checked",
+    "affine_output_specialization": "kernel_checked",
+    "coefficient_map_specialization": "kernel_checked",
+    "direct_S17_equivalence": "not_claimed",
+    "infinity_output_specialization": "kernel_checked",
+    "literal_H_including_minus_28": "kernel_checked",
+    "literal_sylvester_unit_one": "kernel_checked",
+    "scheme_or_multiplicity_claim": "not_claimed",
+    "solving_rank_yield_cost_claim": "not_claimed",
+    "unconditional_one_step_common_projective_root": "kernel_checked",
+    "universal_C16_to_C2_reverse_induction": "open_exact_blocker",
+    "universal_output_degree_bound": "kernel_checked"
+  },
+  "recurrence_schedule": {
+    "stage_rows": [
+      {
+        "frozen_index": 0,
+        "name": "C2",
+        "output_degree_bound": 2
+      },
+      {
+        "frozen_index": 1,
+        "name": "C3",
+        "output_degree_bound": 4
+      },
+      {
+        "frozen_index": 2,
+        "name": "C4",
+        "output_degree_bound": 8
+      },
+      {
+        "frozen_index": 3,
+        "name": "C5",
+        "output_degree_bound": 16
+      },
+      {
+        "frozen_index": 4,
+        "name": "C6",
+        "output_degree_bound": 32
+      },
+      {
+        "frozen_index": 5,
+        "name": "C7",
+        "output_degree_bound": 64
+      },
+      {
+        "frozen_index": 6,
+        "name": "C8",
+        "output_degree_bound": 128
+      },
+      {
+        "frozen_index": 7,
+        "name": "C9",
+        "output_degree_bound": 256
+      },
+      {
+        "frozen_index": 8,
+        "name": "C10",
+        "output_degree_bound": 512
+      },
+      {
+        "frozen_index": 9,
+        "name": "C11",
+        "output_degree_bound": 1024
+      },
+      {
+        "frozen_index": 10,
+        "name": "C12",
+        "output_degree_bound": 2048
+      },
+      {
+        "frozen_index": 11,
+        "name": "C13",
+        "output_degree_bound": 4096
+      },
+      {
+        "frozen_index": 12,
+        "name": "C14",
+        "output_degree_bound": 8192
+      },
+      {
+        "frozen_index": 13,
+        "name": "C15",
+        "output_degree_bound": 16384
+      },
+      {
+        "frozen_index": 14,
+        "name": "C16",
+        "output_degree_bound": 32768
+      }
+    ],
+    "successor_rows": [
+      {
+        "left_formal_degree": 2,
+        "right_formal_degree": 2,
+        "row_degree_sum": 4,
+        "stage_index": 0,
+        "successor": "C3",
+        "successor_output_degree_bound": 4,
+        "sylvester_size": 4,
+        "weight_two_row_count": 2,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 4,
+        "right_formal_degree": 2,
+        "row_degree_sum": 8,
+        "stage_index": 1,
+        "successor": "C4",
+        "successor_output_degree_bound": 8,
+        "sylvester_size": 6,
+        "weight_two_row_count": 4,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 8,
+        "right_formal_degree": 2,
+        "row_degree_sum": 16,
+        "stage_index": 2,
+        "successor": "C5",
+        "successor_output_degree_bound": 16,
+        "sylvester_size": 10,
+        "weight_two_row_count": 8,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 16,
+        "right_formal_degree": 2,
+        "row_degree_sum": 32,
+        "stage_index": 3,
+        "successor": "C6",
+        "successor_output_degree_bound": 32,
+        "sylvester_size": 18,
+        "weight_two_row_count": 16,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 32,
+        "right_formal_degree": 2,
+        "row_degree_sum": 64,
+        "stage_index": 4,
+        "successor": "C7",
+        "successor_output_degree_bound": 64,
+        "sylvester_size": 34,
+        "weight_two_row_count": 32,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 64,
+        "right_formal_degree": 2,
+        "row_degree_sum": 128,
+        "stage_index": 5,
+        "successor": "C8",
+        "successor_output_degree_bound": 128,
+        "sylvester_size": 66,
+        "weight_two_row_count": 64,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 128,
+        "right_formal_degree": 2,
+        "row_degree_sum": 256,
+        "stage_index": 6,
+        "successor": "C9",
+        "successor_output_degree_bound": 256,
+        "sylvester_size": 130,
+        "weight_two_row_count": 128,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 256,
+        "right_formal_degree": 2,
+        "row_degree_sum": 512,
+        "stage_index": 7,
+        "successor": "C10",
+        "successor_output_degree_bound": 512,
+        "sylvester_size": 258,
+        "weight_two_row_count": 256,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 512,
+        "right_formal_degree": 2,
+        "row_degree_sum": 1024,
+        "stage_index": 8,
+        "successor": "C11",
+        "successor_output_degree_bound": 1024,
+        "sylvester_size": 514,
+        "weight_two_row_count": 512,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 1024,
+        "right_formal_degree": 2,
+        "row_degree_sum": 2048,
+        "stage_index": 9,
+        "successor": "C12",
+        "successor_output_degree_bound": 2048,
+        "sylvester_size": 1026,
+        "weight_two_row_count": 1024,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 2048,
+        "right_formal_degree": 2,
+        "row_degree_sum": 4096,
+        "stage_index": 10,
+        "successor": "C13",
+        "successor_output_degree_bound": 4096,
+        "sylvester_size": 2050,
+        "weight_two_row_count": 2048,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 4096,
+        "right_formal_degree": 2,
+        "row_degree_sum": 8192,
+        "stage_index": 11,
+        "successor": "C14",
+        "successor_output_degree_bound": 8192,
+        "sylvester_size": 4098,
+        "weight_two_row_count": 4096,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 8192,
+        "right_formal_degree": 2,
+        "row_degree_sum": 16384,
+        "stage_index": 12,
+        "successor": "C15",
+        "successor_output_degree_bound": 16384,
+        "sylvester_size": 8194,
+        "weight_two_row_count": 8192,
+        "weight_zero_row_count": 2
+      },
+      {
+        "left_formal_degree": 16384,
+        "right_formal_degree": 2,
+        "row_degree_sum": 32768,
+        "stage_index": 13,
+        "successor": "C16",
+        "successor_output_degree_bound": 32768,
+        "sylvester_size": 16386,
+        "weight_two_row_count": 16384,
+        "weight_zero_row_count": 2
+      }
+    ]
+  },
+  "schema_version": 1,
+  "scope": {
+    "barrier": "B-PKC-M16-COMPLETE-COST-BRIDGE",
+    "cell": "CELL-M-PKC-SMOOTH-M16",
+    "characteristic_seven_transfer": "forbidden",
+    "cost_quantity": "CQ-SEMAEV-S17-SYSTEM-COST",
+    "excluded": [
+      "expanded or evaluated C16 or S17",
+      "materialized M16 polynomial system",
+      "universal C16-to-C2 reverse induction claimed without a theorem",
+      "direct RecS17 iff GeoCat equivalence",
+      "scheme equality, radicality, or multiplicity preservation",
+      "solver, parameter sweep, exact-target, or discrete-log execution",
+      "degree of regularity, fill-in, rank, yield, memory, or cost",
+      "experiment authorization, route promotion, or hypothesis retention"
+    ],
+    "generic_kernel_scope": "the recursive identities are algebraic over CommRing coefficients; the common-root equivalence targets an algebraically closed field",
+    "included": [
+      "actual frozenC family from C2 through C16",
+      "literal nine-term H including the -28 block",
+      "fixed degrees (2^(s+1),2) and TASK Sylvester coefficient unit +1",
+      "same-field and explicit coefficient-map specialization",
+      "affine [y:1] and infinity [1:0] output branches",
+      "universal output-slice degree bound",
+      "unconditional one-step common-projective-root equivalence",
+      "exact blocker registration for universal C16-to-C2 reverse induction"
+    ],
+    "recursive_curve_scope": "E:y^2=x^3+7 over fields of characteristic not in {2,3,7}",
+    "task": "TASK-020"
+  },
+  "terminal_disposition": {
+    "assurance": "kernel_bound_non_run_certificate",
+    "authorization": "none",
+    "barrier_effect": "narrowed_open",
+    "cell_status": "open_non_executable",
+    "cost_quantity_status": "partial",
+    "experiment_permission": "none",
+    "hypothesis_effect": "none",
+    "rank_status": "unpriced",
+    "remaining_blocker": "universal C16-to-C2 reverse induction and full projective-tree assembly remain open_exact_blocker",
+    "retention_disposition": "zero_retention_success",
+    "route_effect": "none",
+    "solving_cost_status": "unpriced",
+    "yield_status": "unpriced"
+  },
+  "theorem_bindings": {
+    "actual_frozen_family": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.frozenC",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "noncomputable def"
+    },
+    "affine_output_specialization": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_affine",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "theorem"
+    },
+    "coefficient_map_specialization": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "theorem"
+    },
+    "infinity_output_specialization": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_infinity",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "theorem"
+    },
+    "literal_H": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.HValue",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "def"
+    },
+    "literal_determinant_unit_one": {
+      "declaration": "Ecdlp.TaskSylvester.det_taskSylvester_eq_resultant",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/TaskSylvesterConvention.lean",
+      "source_shape": "theorem"
+    },
+    "local_slice_degree_bound": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.localSliceAt_natDegree_le",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "theorem"
+    },
+    "projective_pair_domain": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.ProjectivePair",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "structure"
+    },
+    "same_field_affine_output": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_affine",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "theorem"
+    },
+    "same_field_infinity_output": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_infinity",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "theorem"
+    },
+    "same_field_one_step_common_root": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_eq_zero_iff_common_projective_root",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "theorem"
+    },
+    "same_field_specialization": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "theorem"
+    },
+    "unconditional_mapped_one_step_common_root": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_eq_zero_iff_common_projective_root",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "theorem"
+    },
+    "universal_output_degree_bound": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_frozenC_natDegree_le",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
+      "source_shape": "theorem"
+    }
+  }
+}

@@ -4,8 +4,8 @@
   "status": "shadow_non_executing",
   "source_hashes": {
     "source_registry_sha256": "eea7bedf9c730f630538b16102586e7d6bf22dcd34e9c80990afd29db8b21aed",
-    "typed_evidence_state_sha256": "471f1354c40e830109320fdbd91127082120246621c8fbc9e7f6ede68a48c6db",
-    "research_claim_state_sha256": "1e230dcee80ad58bde2ebb505ce6600baf9e7557d70d0888d36b68379fd37106"
+    "typed_evidence_state_sha256": "3025e69490aba18e0ffc204baa35e616527e3ead329ba3a1abe81bdd2c2fdeb9",
+    "research_claim_state_sha256": "eb7743e9ee4c2766b83772f95d416145d37dd7fa2aec40f1a17e29730a3d544a"
   },
   "counts": {
     "proposal_stubs": 4,
@@ -98,6 +98,7 @@
         "data/source_claim_extracts/petit_kosters_messeng2016.json",
         "experiments/engine/pkc_smooth_desk_screen/artifact.json",
         "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
+        "experiments/engine/pkc_smooth_m16_frozen_cr_specialization/artifact.json",
         "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json",
         "experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json",
         "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",

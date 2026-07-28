@@ -229,17 +229,20 @@ universal-reverse-projection blocker and zero retained hypotheses. `TASK-019`
 then kernel-checked the generic fixed-degree projective-resultant common-root
 theorem and the exact literal TASK-018 Sylvester unit-one bridge, and
 completed with a scoped frozen-recursion blocker and zero retained
-hypotheses. Current work is `TASK-020`, which keeps
-`CELL-M-PKC-SMOOTH-M16` as a non-executable frozen-recursive-`C_r`
-specialization question; the universal reverse `C16 → C2` induction remains
-open downstream.
+hypotheses. `TASK-020` then kernel-checked the actual frozen-`C_r`
+coefficient-map specialization, affine and `[1:0]` branches, uniform
+output-degree bound, and unconditional one-step common-projective-root
+equivalence. It completed with a scoped projective witness-chain blocker and
+zero retained hypotheses. Current work is `TASK-021`, which keeps
+`CELL-M-PKC-SMOOTH-M16` as a non-executable projective homogenization and
+universal `C16 → C2` witness-extraction question.
 `TASK-008` remains parked because no hypothesis proposal has quality-cleared.
 
 The Engine's bounded-exploration capability is
 **{str(engine_gates['exploration_authorized']).lower()}**, while the current decision's experiment
 authorization is **{str(phase['experiments_authorized']).lower()}** and the promotion gate is
 **{str(engine_gates['promotion_authorized']).lower()}**. `GLV-SEMAEV-ITER-001` is complete; its
-certificates and kernel-checked identities authorize no hypothesis run. `TASK-020` authorizes no
+certificates and kernel-checked identities authorize no hypothesis run. `TASK-021` authorizes no
 S17 expansion or evaluation, polynomial-system materialization, solver, cost inference, target
 computation, or route promotion. Any later experiment needs
 a new dated decision plus the normal fixed budgets, dependency order, and retained terminal
