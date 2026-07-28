@@ -1,0 +1,42 @@
+{
+  "audience": "technical",
+  "chart_map": [
+    {
+      "family": "comparison",
+      "palette_policy": "single-root preferred with a neutral zero reference",
+      "question": "Did information gain cross the zero baseline at any evaluation stage?",
+      "section": "Gain оставался ниже baseline на каждом строгом этапе",
+      "takeaway": "Every recorded stage remained below zero.",
+      "type": "bar",
+      "x": "evaluation",
+      "y": "information_gain_bits_per_key"
+    }
+  ],
+  "decision_useful_answer": "No full-key representation signal met the frozen gate. Both blind halves are bounded nulls for the tested model and compute budget.",
+  "delivery_mode": "sites-app",
+  "omissions": [
+    "Confidence intervals are kept in the exact blind table because the native bar chart does not expose interval marks."
+  ],
+  "question": "Can full-length secp256k1 public keys predict all 256 private-key bits under the recorded AutoML and data budgets?",
+  "required_structure_mapping": {
+    "further_questions": "Открытые вопросы",
+    "key_findings_with_visual_evidence": [
+      "Gain оставался ниже baseline на каждом строгом этапе",
+      "Новый миллион подтвердил bounded null"
+    ],
+    "limitations_uncertainty_robustness": [
+      "Дополнительные эпохи снижали train loss, но не создавали обобщение",
+      "Что этот результат не устанавливает"
+    ],
+    "methodology": [
+      "AutoML проверил ширину, глубину, эпохи и четыре семейства",
+      "Controls обнаружили намеренную утечку и отвергли null-labels"
+    ],
+    "recommended_next_steps": "Следующий полезный эксперимент",
+    "scope_data_metric_definitions": [
+      "Почему вход бывает 264, 257 и 512 бит",
+      "Область, метрики и валидация"
+    ],
+    "technical_summary": "Технический итог"
+  }
+}

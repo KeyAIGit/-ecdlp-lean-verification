@@ -1,0 +1,57 @@
+{
+  "architecture": {
+    "family": "extra_trees",
+    "feature_mode": "byte_popcounts",
+    "id": "arch-076",
+    "max_train_records": 100000,
+    "params": {
+      "max_depth": 6,
+      "max_features": "sqrt",
+      "min_samples_leaf": 256,
+      "n_estimators": 16
+    }
+  },
+  "blind_policy": {
+    "fit_on_blind": false,
+    "require_thresholds_on_both_halves": true,
+    "required_splits": [
+      "blind_a",
+      "blind_b"
+    ],
+    "selection_on_blind": false,
+    "single_ensemble_evaluation": true
+  },
+  "dev_records_per_manifest": 200000,
+  "development_splits": [
+    "train",
+    "validation",
+    "test"
+  ],
+  "ensemble_seeds": [
+    131,
+    173,
+    211,
+    257,
+    307
+  ],
+  "experiment_id": "ML-STRUCTURE-PROBE-FULL-KEY-AUTOML-V1-BLIND",
+  "feature_mode": "byte_popcounts",
+  "feature_workers": 8,
+  "frozen_from": {
+    "ledger_sha256": "648e9dd3b1ba19a19e60be1d76e8a4789de1c175118b92099e167e38cb3eac9f",
+    "search_config_sha256": "1cb241574df4ee31751c395a6872dec7f7f9c8f3197f1f7f330babf78d6f34d7",
+    "search_result_sha256": "3aba659f33cfebcad6991c1d3a407f42b20ddcac33d4f5bd6e80bafc818878dc",
+    "source_commit": "11af097743e23a048b8e81dbbe2292919d6245c1"
+  },
+  "jobs": 8,
+  "prediction_batch_records": 10000,
+  "recipe_id": "arch-076",
+  "schema_version": 1,
+  "scientific_evidence": false,
+  "thresholds": {
+    "minimum_bit_accuracy_lift": 0.001,
+    "minimum_information_bits_per_key": 0.01,
+    "minimum_paired_z": 5.0
+  },
+  "train_records_per_manifest": 1000000
+}

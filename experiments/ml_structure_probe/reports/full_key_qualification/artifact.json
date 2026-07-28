@@ -1,0 +1,1100 @@
+{
+  "manifest": {
+    "blocks": [
+      {
+        "body": "# ML-инверсия secp256k1: полный 256-битный тест",
+        "id": "title",
+        "type": "markdown"
+      },
+      {
+        "body": "## Технический итог\n\n**Проверенный прямой путь `Q → 256 бит d` не дал сигнала.** Все 301 AutoML fit завершились, controls сработали, а один frozen ensemble затем провалил заранее заданные пороги на обеих независимых половинах нового миллиона. На blind_a и blind_b информационный выигрыш был отрицательным, средняя Hamming-дистанция осталась около 128, точных ключей не было.\n\nЭто ограниченный null для проверенных моделей, представлений и CPU-бюджета. Он не доказывает невозможность ML-алгоритма и не является доказательством сложности ECDLP.",
+        "id": "technical-summary",
+        "type": "markdown"
+      },
+      {
+        "cardIds": [
+          "attempts-card",
+          "pairs-card",
+          "exact-card"
+        ],
+        "id": "headline-strip",
+        "type": "metric-strip"
+      },
+      {
+        "body": "## Gain оставался ниже baseline на каждом строгом этапе\n\nИнформационный выигрыш измеряет улучшение factorized 256-битного log-loss относительно prior-only модели. Ноль означает равенство baseline; положительное значение было бы кандидатом на структуру. Все показанные значения ниже нуля. Небольшие положительные accuracy-lift отдельных запусков не сопровождались положительным log-loss и не повторились с заданной силой на blind.",
+        "id": "gain-finding",
+        "type": "markdown"
+      },
+      {
+        "chartId": "gain-chart",
+        "id": "gain-chart-block",
+        "type": "chart"
+      },
+      {
+        "body": "## Новый миллион подтвердил bounded null\n\nОдин и тот же probability-averaging ensemble оценивался неизменным на двух половинах по 500k ключей. Для принятия сигнала каждая половина должна была одновременно дать ≥0.01 bits/key, lift ≥0.001, clustered z ≥5 и положительные нижние границы двух 95% интервалов. Ни одна половина не прошла ни общий gain, ни полный gate.",
+        "id": "blind-finding",
+        "type": "markdown"
+      },
+      {
+        "id": "blind-table-block",
+        "tableId": "blind-table",
+        "type": "table"
+      },
+      {
+        "body": "## Почему вход бывает 264, 257 и 512 бит\n\nSEC 1 compressed key занимает 33 байта, то есть 264 физических бита. Однако в префиксе `02/03` семь битов постоянны и только один кодирует чётность y, поэтому информативное представление содержит 256 бит x + 1 parity. Affine `x||y` содержит 512 координатных битов, но y однозначно восстанавливается из x и parity на secp256k1. Все три формы были включены; 512 бит не добавляют независимой информации.",
+        "id": "input-definition",
+        "type": "markdown"
+      },
+      {
+        "id": "representation-table-block",
+        "tableId": "representation-table",
+        "type": "table"
+      },
+      {
+        "body": "## AutoML проверил ширину, глубину, эпохи и четыре семейства\n\nScreen содержал 80 архитектур × 3 seed. Successive halving оставил 12 confirm-рецептов, затем четыре cross-dataset кандидата и один пятиseedовый ансамбль. Проверены MLP глубиной 0–3 скрытых слоя и шириной до 256, ridge, bounded ExtraTrees и random Fourier heads, разные learning rates, batch sizes, regularization и 1–16 эпох. Все попытки и warnings записаны в JSONL.",
+        "id": "search-design",
+        "type": "markdown"
+      },
+      {
+        "id": "stage-table-block",
+        "tableId": "stage-table",
+        "type": "table"
+      },
+      {
+        "body": "## Controls обнаружили намеренную утечку и отвергли null-labels\n\nШесть random/permuted-label запусков не пересекли gate. Намеренно добавленные 1, 8 и 32 целевых бита были найдены: для одного бита оценивается именно раскрытая output-head, поскольку ошибки остальных 255 голов могут оставить общий bits/key отрицательным. Это подтверждает чувствительность пайплайна к доступному предиктивному сигналу.",
+        "id": "control-finding",
+        "type": "markdown"
+      },
+      {
+        "id": "control-table-block",
+        "tableId": "control-table",
+        "type": "table"
+      },
+      {
+        "body": "## Дополнительные эпохи снижали train loss, но не создавали обобщение\n\nУ лучшего MLP-представителя переход от 100k/2 эпох к 600k/5 эпох приблизил held-out gain к нулю. На 800k/10 эпохах train loss продолжил снижаться, но cross-dataset gain ухудшился до примерно -0.010…-0.012 bits/key. Это профиль запоминания/калибровки, а не приближения к алгоритму. Размер и число эпох менялись совместно, поэтому это диагностическая learning curve, не чистая оценка causal effect эпох.",
+        "id": "scaling-finding",
+        "type": "markdown"
+      },
+      {
+        "id": "scaling-table-block",
+        "tableId": "scaling-table",
+        "type": "table"
+      },
+      {
+        "body": "## Область, метрики и валидация\n\nДанные состоят только из синтетических `(d,Q=[d]G)`; wallet keys не использовались. Два development seed дали 2M пар, третий заранее committed seed дал 1M blind-пар. Все 3M scalars уникальны; новый набор прошёл 2,048 независимых арифметических spot-checks. Output представлен 256 Bernoulli heads, а не одним float. Неопределённость считается по целым ключам, не по 256 зависимым битам.",
+        "id": "scope-method",
+        "type": "markdown"
+      },
+      {
+        "body": "## Что этот результат не устанавливает\n\nПроверено около 2.59×10^-71 scalar space. Не проверены GPU CNN/Transformer/residual architectures, авторегрессионные nibble/byte heads, differentiable field/group operations и toy-order scaling. Финальный ExtraTrees был заранее ограничен 100k train records ради памяти, хотя selection использовал оба development-миллиона и MLP доходил до 800k/10 эпох. Поэтому вывод относится только к записанному model/compute budget.",
+        "id": "limitations",
+        "type": "markdown"
+      },
+      {
+        "body": "## Следующий полезный эксперимент\n\n1. Перенести тот же 256-head protocol на группы порядка 12, 16, 20, 24, 28 и 32 бит и построить scaling law.\n2. Реализовать streaming GPU baseline с residual bit/limb mixers и фиксированным полным data budget.\n3. Продолжать secp256k1 direct inversion только если toy ladder показывает воспроизводимый алгоритмический режим; иначе направить ML на генерацию явных программ и проверку гипотез.\n4. Для любой новой адаптивной версии заранее commit новый blind seed; текущий blind больше нельзя считать нетронутым.",
+        "id": "next-steps",
+        "type": "markdown"
+      },
+      {
+        "body": "## Открытые вопросы\n\n- Возникает ли signal на малых группах и как он масштабируется с bit length?\n- Сохраняется ли он при смене генератора и opaque coordinate relabeling?\n- Можно ли извлечь короткую field/group program, а не только weight matrix?\n- Улучшает ли GPU-модель cross-entropy, а не только train loss?",
+        "id": "further-questions",
+        "type": "markdown"
+      }
+    ],
+    "cards": [
+      {
+        "dataset": "headline",
+        "description": "Все заранее заданные попытки завершены.",
+        "id": "attempts-card",
+        "metrics": [
+          {
+            "field": "attempts",
+            "format": "number",
+            "label": "AutoML fit"
+          },
+          {
+            "field": "failures",
+            "format": "number",
+            "label": "Failures"
+          }
+        ],
+        "sourceId": "headline-source"
+      },
+      {
+        "dataset": "headline",
+        "description": "Два development-миллиона и новый blind-миллион.",
+        "id": "pairs-card",
+        "metrics": [
+          {
+            "field": "synthetic_pairs",
+            "format": "compact",
+            "label": "Синтетические пары"
+          }
+        ],
+        "sourceId": "headline-source"
+      },
+      {
+        "dataset": "headline",
+        "description": "Полное совпадение всех 256 битов.",
+        "id": "exact-card",
+        "metrics": [
+          {
+            "field": "exact_blind_keys",
+            "format": "number",
+            "label": "Точные blind-ключи"
+          },
+          {
+            "field": "blind_halves_crossed",
+            "format": "number",
+            "label": "Halves passed"
+          }
+        ],
+        "sourceId": "headline-source"
+      }
+    ],
+    "charts": [
+      {
+        "dataset": "comparisons",
+        "description": "Все значения ниже нулевой линии baseline; ранние этапы используют адаптивно выбранных лидеров.",
+        "encodings": {
+          "x": {
+            "field": "evaluation",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "information_gain_bits_per_key",
+            "type": "quantitative"
+          }
+        },
+        "id": "gain-chart",
+        "options": {
+          "baseline": 0,
+          "grouping": "single",
+          "legend": false,
+          "orientation": "vertical",
+          "valueLabels": true
+        },
+        "sourceId": "comparison-source",
+        "title": "Информационный выигрыш по этапам оценки",
+        "type": "bar"
+      }
+    ],
+    "description": "Технический отчёт по 301 AutoML fit и независимой проверке frozen ensemble на новом миллионе синтетических пар.",
+    "generatedAt": "2026-07-27T09:57:35Z",
+    "sources": [
+      {
+        "id": "headline-source",
+        "label": "Qualification headline values",
+        "path": "experiments/ml_structure_probe/reports/full_key_qualification/",
+        "query": {
+          "description": "Materialize the reviewed headline counts.",
+          "engine": "DuckDB",
+          "filters": [
+            "All retained development and blind results"
+          ],
+          "language": "SQL",
+          "metric_definitions": [
+            "Attempts count every JSONL fit record.",
+            "Exact blind keys require equality of all 256 predicted bits."
+          ],
+          "sql": "SELECT * FROM (VALUES\n  (301, 0, 3000000, 0, 0)\n) AS report_rows(\"attempts\", \"failures\", \"synthetic_pairs\", \"exact_blind_keys\", \"blind_halves_crossed\")",
+          "tables_used": [
+            "qualification_summary.json",
+            "full_key_search_result.json",
+            "blind_result.json"
+          ]
+        }
+      },
+      {
+        "id": "comparison-source",
+        "label": "Information-gain comparison",
+        "path": "experiments/ml_structure_probe/reports/full_key_search/",
+        "query": {
+          "description": "Materialize the reviewed evaluation-stage comparison rows.",
+          "engine": "DuckDB",
+          "filters": [
+            "Synthetic secp256k1 pairs only",
+            "Development datasets only for architecture selection",
+            "Frozen metrics for blind_a and blind_b"
+          ],
+          "language": "SQL",
+          "metric_definitions": [
+            "Information gain = prior-null binary cross-entropy minus model binary cross-entropy, summed over 256 bits and divided by ln(2), averaged per complete key."
+          ],
+          "sql": "SELECT * FROM (VALUES\n  (1, 'Screen best', 'adaptive development', 'arch-076', 'extra_trees', 'byte_popcounts', 100000, -0.0038015709431982975, -4.335937500044018e-06, NULL),\n  (2, 'Confirm best', 'adaptive development', 'arch-039', 'mlp', 'affine_limbs16', 200000, -0.003665243359035913, -4.373046875000286e-05, NULL),\n  (3, 'primary to replica', 'cross-dataset development', 'arch-076', 'extra_trees', 'byte_popcounts', 200000, -0.004935100328075547, 0.0001842773437499834, 0),\n  (4, 'replica to primary', 'cross-dataset development', 'arch-076', 'extra_trees', 'byte_popcounts', 200000, -0.004334618008394375, 7.947265625002364e-05, 0),\n  (5, 'Development ensemble', 'post-selection development', 'arch-076', 'extra_trees', 'byte_popcounts', 400000, -0.0032347620100718097, 0.00010462890625001497, 0),\n  (6, 'blind_a', 'frozen blind', 'arch-076', 'extra_trees', 'byte_popcounts', 500000, -0.0015314739059353341, -3.9742187500024784e-05, 0),\n  (7, 'blind_b', 'frozen blind', 'arch-076', 'extra_trees', 'byte_popcounts', 500000, -0.0016253060977499656, -2.476562500020041e-06, 0)\n) AS report_rows(\"order\", \"evaluation\", \"role\", \"model\", \"family\", \"feature_mode\", \"records\", \"information_gain_bits_per_key\", \"bit_accuracy_lift\", \"exact_key_matches\")",
+          "tables_used": [
+            "full_key_search_result.json",
+            "full_key_run_ledger.jsonl",
+            "blind_result.json"
+          ]
+        }
+      },
+      {
+        "id": "blind-source",
+        "label": "Frozen blind ensemble result",
+        "path": "experiments/ml_structure_probe/reports/full_key_blind/",
+        "query": {
+          "description": "Materialize the two frozen blind evaluation rows.",
+          "engine": "DuckDB",
+          "filters": [
+            "500,000 records in blind_a",
+            "500,000 records in blind_b",
+            "No fit, calibration, model selection, or early stopping on blind data"
+          ],
+          "language": "SQL",
+          "metric_definitions": [
+            "Information gain = prior-null binary cross-entropy minus model binary cross-entropy, summed over 256 bits and divided by ln(2), averaged per complete key.",
+            "Signal gate: gain >= 0.01 bits/key, accuracy lift >= 0.001, clustered z >= 5, and both lower 95% confidence bounds > 0."
+          ],
+          "sql": "SELECT * FROM (VALUES\n  ('blind_a', 500000, -0.0015314739059353341, -0.0017159136822472209, -0.0013470341296234474, 0.499982890625, 0.5000226328125, -3.9742187500024784e-05, -0.00012262379674127968, 4.3139421741279664e-05, -0.9398135108607754, 128.00438, 0, FALSE),\n  ('blind_b', 500000, -0.0016253060977499656, -0.0018095595659664014, -0.0014410526295335299, 0.49996634375, 0.4999688203125, -2.476562500020041e-06, -8.536920594912704e-05, 8.041608094912705e-05, -0.05855734723240504, 128.008616, 0, FALSE)\n) AS report_rows(\"half\", \"records\", \"information_gain_bits_per_key\", \"info_ci_low\", \"info_ci_high\", \"bit_accuracy\", \"null_bit_accuracy\", \"bit_accuracy_lift\", \"lift_ci_low\", \"lift_ci_high\", \"clustered_accuracy_z\", \"mean_hamming_distance\", \"exact_key_matches\", \"threshold_crossed\")",
+          "tables_used": [
+            "blind_result.json",
+            "blind_run_ledger.jsonl",
+            "dataset_validation.json"
+          ]
+        }
+      },
+      {
+        "id": "representation-source",
+        "label": "Public-key representation screen",
+        "path": "experiments/ml_structure_probe/reports/full_key_search/",
+        "query": {
+          "description": "Materialize representation coverage and best screen metrics.",
+          "engine": "DuckDB",
+          "filters": [
+            "Synthetic secp256k1 pairs only",
+            "Development datasets only for architecture selection"
+          ],
+          "language": "SQL",
+          "metric_definitions": [
+            "Information gain = prior-null binary cross-entropy minus model binary cross-entropy, summed over 256 bits and divided by ln(2), averaged per complete key.",
+            "Independent public bits count x-coordinate bits plus y parity."
+          ],
+          "sql": "SELECT * FROM (VALUES\n  ('affine_bits_512', 7, 512, 257, 'arch-045', 'mlp', -0.3075510569692529, FALSE),\n  ('affine_bytes', 6, 512, 257, 'arch-025', 'extra_trees', -0.01948763992770504, TRUE),\n  ('affine_limbs16', 9, 512, 257, 'arch-019', 'mlp', -0.008932716139045033, TRUE),\n  ('bit_interactions_64', 7, 321, 257, 'arch-069', 'mlp', -0.37616895992498744, FALSE),\n  ('byte_popcounts', 14, 264, 257, 'arch-076', 'extra_trees', -0.0038015709431982975, TRUE),\n  ('compressed_bits_257', 9, 257, 257, 'arch-070', 'mlp', -0.050352588053140905, FALSE),\n  ('compressed_bits_264', 6, 264, 257, 'arch-051', 'extra_trees', -0.04596594719410065, FALSE),\n  ('compressed_bytes', 13, 264, 257, 'arch-058', 'mlp', -0.010911286025784566, TRUE),\n  ('x_limbs16', 9, 257, 257, 'arch-067', 'rbf_logistic', -0.009112237143061079, TRUE)\n) AS report_rows(\"representation\", \"architectures\", \"physical_input_columns\", \"independent_public_bits\", \"best_architecture\", \"best_family\", \"best_median_information_bits_per_key\", \"survived_screen\")",
+          "tables_used": [
+            "full_key_search_result.json",
+            "full_key_run_ledger.jsonl"
+          ]
+        }
+      },
+      {
+        "id": "stage-source",
+        "label": "AutoML stage ledger counts",
+        "path": "experiments/ml_structure_probe/reports/full_key_search/",
+        "query": {
+          "description": "Materialize attempted, successful and failed run counts by stage.",
+          "engine": "DuckDB",
+          "filters": [
+            "Every predeclared ledger row"
+          ],
+          "language": "SQL",
+          "metric_definitions": [
+            "Attempt status is read directly from the append-only JSONL ledger."
+          ],
+          "sql": "SELECT * FROM (VALUES\n  ('confirm', 36, 36, 0),\n  ('control_label_leak_1', 2, 2, 0),\n  ('control_label_leak_32', 2, 2, 0),\n  ('control_label_leak_8', 2, 2, 0),\n  ('control_permuted_keys', 3, 3, 0),\n  ('control_random_labels', 3, 3, 0),\n  ('cross_dataset', 8, 8, 0),\n  ('final_ensemble_member', 5, 5, 0),\n  ('screen', 240, 240, 0)\n) AS report_rows(\"stage\", \"attempts\", \"successful\", \"failed\")",
+          "tables_used": [
+            "full_key_search_result.json",
+            "full_key_run_ledger.jsonl"
+          ]
+        }
+      },
+      {
+        "id": "control-source",
+        "label": "Leak and null control qualification",
+        "path": "experiments/ml_structure_probe/reports/full_key_search/",
+        "query": {
+          "description": "Materialize the four preregistered control classes.",
+          "engine": "DuckDB",
+          "filters": [
+            "Random labels, whole-key permutations, and deliberate label leaks"
+          ],
+          "language": "SQL",
+          "metric_definitions": [
+            "Leak-1 is evaluated on the deliberately exposed target head.",
+            "Leak-8 and leak-32 are evaluated by whole-key information gain."
+          ],
+          "sql": "SELECT * FROM (VALUES\n  ('Random + permuted labels', 6, 'No gain and z < 5', 'max gain -0.6655; max z 1.9', TRUE),\n  ('1 leaked target bit', 2, 'Target head gain > 0.25 bit', '0.354 to 0.355', TRUE),\n  ('8 leaked target bits', 2, 'Whole-key gain > 1 bit', '1.947 to 2.102', TRUE),\n  ('32 leaked target bits', 2, 'Whole-key gain > 5 bits', '10.151 to 10.245', TRUE)\n) AS report_rows(\"control\", \"attempts\", \"criterion\", \"observed\", \"passed\")",
+          "tables_used": [
+            "full_key_search_result.json",
+            "full_key_run_ledger.jsonl"
+          ]
+        }
+      },
+      {
+        "id": "scaling-source",
+        "label": "MLP scaling diagnostic",
+        "path": "experiments/ml_structure_probe/reports/full_key_search/",
+        "query": {
+          "description": "Materialize the arch-039 data and epoch scaling rows.",
+          "engine": "DuckDB",
+          "filters": [
+            "Architecture arch-039 only"
+          ],
+          "language": "SQL",
+          "metric_definitions": [
+            "Information gain = prior-null binary cross-entropy minus model binary cross-entropy, summed over 256 bits and divided by ln(2), averaged per complete key.",
+            "Train size and epochs changed jointly; this is not a causal ablation."
+          ],
+          "sql": "SELECT * FROM (VALUES\n  ('screen', 'mixed', 100000, 100000, 2, 3, -0.029558787325862427, 6.292968749993522e-05, 177.4835463702211),\n  ('confirm', 'mixed', 600000, 200000, 5, 3, -0.003665243359035913, -4.373046875000286e-05, 177.44477355462888),\n  ('cross_dataset', 'primary_to_replica', 800000, 200000, 10, 1, -0.009593896727342635, -7.486328125000385e-05, 177.43927455929307),\n  ('cross_dataset', 'replica_to_primary', 800000, 200000, 10, 1, -0.011663628013765038, 9.062499999989981e-06, 177.43964080099784)\n) AS report_rows(\"stage\", \"direction\", \"train_records\", \"validation_records\", \"epochs\", \"seeds\", \"median_information_bits_per_key\", \"median_bit_accuracy_lift\", \"median_final_train_loss_nats_per_key\")",
+          "tables_used": [
+            "full_key_search_result.json",
+            "full_key_run_ledger.jsonl"
+          ]
+        }
+      }
+    ],
+    "surface": "report",
+    "tables": [
+      {
+        "columns": [
+          {
+            "field": "half",
+            "label": "Half",
+            "type": "text"
+          },
+          {
+            "field": "records",
+            "label": "Keys",
+            "type": "number"
+          },
+          {
+            "field": "information_gain_bits_per_key",
+            "label": "Info bits/key",
+            "type": "number"
+          },
+          {
+            "field": "info_ci_low",
+            "label": "Info CI low",
+            "type": "number"
+          },
+          {
+            "field": "bit_accuracy_lift",
+            "label": "Bit lift",
+            "type": "number"
+          },
+          {
+            "field": "clustered_accuracy_z",
+            "label": "Clustered z",
+            "type": "number"
+          },
+          {
+            "field": "mean_hamming_distance",
+            "label": "Mean Hamming",
+            "type": "number"
+          },
+          {
+            "field": "exact_key_matches",
+            "label": "Exact keys",
+            "type": "number"
+          },
+          {
+            "field": "threshold_crossed",
+            "label": "Passed",
+            "type": "boolean"
+          }
+        ],
+        "dataset": "blind_metrics",
+        "defaultSort": {
+          "direction": "asc",
+          "field": "half"
+        },
+        "description": "500k ключей на строку; один неизменяемый ансамбль.",
+        "id": "blind-table",
+        "sourceId": "blind-source",
+        "title": "Метрики двух blind-половин"
+      },
+      {
+        "columns": [
+          {
+            "field": "representation",
+            "label": "Representation",
+            "type": "text"
+          },
+          {
+            "field": "architectures",
+            "label": "Architectures",
+            "type": "number"
+          },
+          {
+            "field": "physical_input_columns",
+            "label": "Input columns",
+            "type": "number"
+          },
+          {
+            "field": "independent_public_bits",
+            "label": "Independent bits",
+            "type": "number"
+          },
+          {
+            "field": "best_family",
+            "label": "Best family",
+            "type": "text"
+          },
+          {
+            "field": "best_median_information_bits_per_key",
+            "label": "Best median info",
+            "type": "number"
+          }
+        ],
+        "dataset": "representations",
+        "defaultSort": {
+          "direction": "desc",
+          "field": "physical_input_columns"
+        },
+        "description": "264 физических, 257 информативных и 512 affine битов.",
+        "id": "representation-table",
+        "sourceId": "representation-source",
+        "title": "Покрытие представлений открытого ключа"
+      },
+      {
+        "columns": [
+          {
+            "field": "stage",
+            "label": "Stage",
+            "type": "text"
+          },
+          {
+            "field": "attempts",
+            "label": "Attempts",
+            "type": "number"
+          },
+          {
+            "field": "successful",
+            "label": "Successful",
+            "type": "number"
+          },
+          {
+            "field": "failed",
+            "label": "Failed",
+            "type": "number"
+          }
+        ],
+        "dataset": "stages",
+        "defaultSort": {
+          "direction": "desc",
+          "field": "attempts"
+        },
+        "description": "301 попытка, включая controls и пять ensemble members.",
+        "id": "stage-table",
+        "sourceId": "stage-source",
+        "title": "Полнота AutoML-журнала"
+      },
+      {
+        "columns": [
+          {
+            "field": "control",
+            "label": "Control",
+            "type": "text"
+          },
+          {
+            "field": "attempts",
+            "label": "Attempts",
+            "type": "number"
+          },
+          {
+            "field": "criterion",
+            "label": "Criterion",
+            "type": "text"
+          },
+          {
+            "field": "observed",
+            "label": "Observed",
+            "type": "text"
+          },
+          {
+            "field": "passed",
+            "label": "Passed",
+            "type": "boolean"
+          }
+        ],
+        "dataset": "controls",
+        "defaultSort": {
+          "direction": "desc",
+          "field": "attempts"
+        },
+        "description": "Leak-1 оценивается по намеренно раскрытой голове.",
+        "id": "control-table",
+        "sourceId": "control-source",
+        "title": "Отрицательные и leak-контроли"
+      },
+      {
+        "columns": [
+          {
+            "field": "stage",
+            "label": "Stage",
+            "type": "text"
+          },
+          {
+            "field": "direction",
+            "label": "Direction",
+            "type": "text"
+          },
+          {
+            "field": "train_records",
+            "label": "Train keys",
+            "type": "number"
+          },
+          {
+            "field": "epochs",
+            "label": "Epochs",
+            "type": "number"
+          },
+          {
+            "field": "seeds",
+            "label": "Seeds",
+            "type": "number"
+          },
+          {
+            "field": "median_information_bits_per_key",
+            "label": "Median info",
+            "type": "number"
+          },
+          {
+            "field": "median_bit_accuracy_lift",
+            "label": "Median lift",
+            "type": "number"
+          }
+        ],
+        "dataset": "mlp_scaling",
+        "defaultSort": {
+          "direction": "asc",
+          "field": "train_records"
+        },
+        "description": "Одна архитектура arch-039; размер и эпохи меняются вместе, поэтому строки не являются чистым causal ablation.",
+        "id": "scaling-table",
+        "sourceId": "scaling-source",
+        "title": "MLP: данные, эпохи и held-out gain"
+      }
+    ],
+    "title": "ML-инверсия secp256k1: полный 256-битный тест",
+    "version": 1
+  },
+  "package_info": {
+    "live_connection": false,
+    "snapshot_generated_at": "2026-07-27T09:57:35Z",
+    "snapshot_label": "Full-key AutoML and blind results"
+  },
+  "snapshot": {
+    "datasets": {
+      "blind_metrics": [
+        {
+          "bit_accuracy": 0.499982890625,
+          "bit_accuracy_lift": -3.9742187500024784e-05,
+          "clustered_accuracy_z": -0.9398135108607754,
+          "exact_key_matches": 0,
+          "half": "blind_a",
+          "info_ci_high": -0.0013470341296234474,
+          "info_ci_low": -0.0017159136822472209,
+          "information_gain_bits_per_key": -0.0015314739059353341,
+          "lift_ci_high": 4.3139421741279664e-05,
+          "lift_ci_low": -0.00012262379674127968,
+          "mean_hamming_distance": 128.00438,
+          "null_bit_accuracy": 0.5000226328125,
+          "records": 500000,
+          "threshold_crossed": false
+        },
+        {
+          "bit_accuracy": 0.49996634375,
+          "bit_accuracy_lift": -2.476562500020041e-06,
+          "clustered_accuracy_z": -0.05855734723240504,
+          "exact_key_matches": 0,
+          "half": "blind_b",
+          "info_ci_high": -0.0014410526295335299,
+          "info_ci_low": -0.0018095595659664014,
+          "information_gain_bits_per_key": -0.0016253060977499656,
+          "lift_ci_high": 8.041608094912705e-05,
+          "lift_ci_low": -8.536920594912704e-05,
+          "mean_hamming_distance": 128.008616,
+          "null_bit_accuracy": 0.4999688203125,
+          "records": 500000,
+          "threshold_crossed": false
+        }
+      ],
+      "comparisons": [
+        {
+          "bit_accuracy_lift": -4.335937500044018e-06,
+          "evaluation": "Screen best",
+          "exact_key_matches": null,
+          "family": "extra_trees",
+          "feature_mode": "byte_popcounts",
+          "information_gain_bits_per_key": -0.0038015709431982975,
+          "model": "arch-076",
+          "order": 1,
+          "records": 100000,
+          "role": "adaptive development"
+        },
+        {
+          "bit_accuracy_lift": -4.373046875000286e-05,
+          "evaluation": "Confirm best",
+          "exact_key_matches": null,
+          "family": "mlp",
+          "feature_mode": "affine_limbs16",
+          "information_gain_bits_per_key": -0.003665243359035913,
+          "model": "arch-039",
+          "order": 2,
+          "records": 200000,
+          "role": "adaptive development"
+        },
+        {
+          "bit_accuracy_lift": 0.0001842773437499834,
+          "evaluation": "primary to replica",
+          "exact_key_matches": 0,
+          "family": "extra_trees",
+          "feature_mode": "byte_popcounts",
+          "information_gain_bits_per_key": -0.004935100328075547,
+          "model": "arch-076",
+          "order": 3,
+          "records": 200000,
+          "role": "cross-dataset development"
+        },
+        {
+          "bit_accuracy_lift": 7.947265625002364e-05,
+          "evaluation": "replica to primary",
+          "exact_key_matches": 0,
+          "family": "extra_trees",
+          "feature_mode": "byte_popcounts",
+          "information_gain_bits_per_key": -0.004334618008394375,
+          "model": "arch-076",
+          "order": 4,
+          "records": 200000,
+          "role": "cross-dataset development"
+        },
+        {
+          "bit_accuracy_lift": 0.00010462890625001497,
+          "evaluation": "Development ensemble",
+          "exact_key_matches": 0,
+          "family": "extra_trees",
+          "feature_mode": "byte_popcounts",
+          "information_gain_bits_per_key": -0.0032347620100718097,
+          "model": "arch-076",
+          "order": 5,
+          "records": 400000,
+          "role": "post-selection development"
+        },
+        {
+          "bit_accuracy_lift": -3.9742187500024784e-05,
+          "evaluation": "blind_a",
+          "exact_key_matches": 0,
+          "family": "extra_trees",
+          "feature_mode": "byte_popcounts",
+          "information_gain_bits_per_key": -0.0015314739059353341,
+          "model": "arch-076",
+          "order": 6,
+          "records": 500000,
+          "role": "frozen blind"
+        },
+        {
+          "bit_accuracy_lift": -2.476562500020041e-06,
+          "evaluation": "blind_b",
+          "exact_key_matches": 0,
+          "family": "extra_trees",
+          "feature_mode": "byte_popcounts",
+          "information_gain_bits_per_key": -0.0016253060977499656,
+          "model": "arch-076",
+          "order": 7,
+          "records": 500000,
+          "role": "frozen blind"
+        }
+      ],
+      "controls": [
+        {
+          "attempts": 6,
+          "control": "Random + permuted labels",
+          "criterion": "No gain and z < 5",
+          "observed": "max gain -0.6655; max z 1.9",
+          "passed": true
+        },
+        {
+          "attempts": 2,
+          "control": "1 leaked target bit",
+          "criterion": "Target head gain > 0.25 bit",
+          "observed": "0.354 to 0.355",
+          "passed": true
+        },
+        {
+          "attempts": 2,
+          "control": "8 leaked target bits",
+          "criterion": "Whole-key gain > 1 bit",
+          "observed": "1.947 to 2.102",
+          "passed": true
+        },
+        {
+          "attempts": 2,
+          "control": "32 leaked target bits",
+          "criterion": "Whole-key gain > 5 bits",
+          "observed": "10.151 to 10.245",
+          "passed": true
+        }
+      ],
+      "headline": [
+        {
+          "attempts": 301,
+          "blind_halves_crossed": 0,
+          "exact_blind_keys": 0,
+          "failures": 0,
+          "synthetic_pairs": 3000000
+        }
+      ],
+      "mlp_scaling": [
+        {
+          "direction": "mixed",
+          "epochs": 2,
+          "median_bit_accuracy_lift": 6.292968749993522e-05,
+          "median_final_train_loss_nats_per_key": 177.4835463702211,
+          "median_information_bits_per_key": -0.029558787325862427,
+          "seeds": 3,
+          "stage": "screen",
+          "train_records": 100000,
+          "validation_records": 100000
+        },
+        {
+          "direction": "mixed",
+          "epochs": 5,
+          "median_bit_accuracy_lift": -4.373046875000286e-05,
+          "median_final_train_loss_nats_per_key": 177.44477355462888,
+          "median_information_bits_per_key": -0.003665243359035913,
+          "seeds": 3,
+          "stage": "confirm",
+          "train_records": 600000,
+          "validation_records": 200000
+        },
+        {
+          "direction": "primary_to_replica",
+          "epochs": 10,
+          "median_bit_accuracy_lift": -7.486328125000385e-05,
+          "median_final_train_loss_nats_per_key": 177.43927455929307,
+          "median_information_bits_per_key": -0.009593896727342635,
+          "seeds": 1,
+          "stage": "cross_dataset",
+          "train_records": 800000,
+          "validation_records": 200000
+        },
+        {
+          "direction": "replica_to_primary",
+          "epochs": 10,
+          "median_bit_accuracy_lift": 9.062499999989981e-06,
+          "median_final_train_loss_nats_per_key": 177.43964080099784,
+          "median_information_bits_per_key": -0.011663628013765038,
+          "seeds": 1,
+          "stage": "cross_dataset",
+          "train_records": 800000,
+          "validation_records": 200000
+        }
+      ],
+      "representations": [
+        {
+          "architectures": 7,
+          "best_architecture": "arch-045",
+          "best_family": "mlp",
+          "best_median_information_bits_per_key": -0.3075510569692529,
+          "independent_public_bits": 257,
+          "physical_input_columns": 512,
+          "representation": "affine_bits_512",
+          "survived_screen": false
+        },
+        {
+          "architectures": 6,
+          "best_architecture": "arch-025",
+          "best_family": "extra_trees",
+          "best_median_information_bits_per_key": -0.01948763992770504,
+          "independent_public_bits": 257,
+          "physical_input_columns": 512,
+          "representation": "affine_bytes",
+          "survived_screen": true
+        },
+        {
+          "architectures": 9,
+          "best_architecture": "arch-019",
+          "best_family": "mlp",
+          "best_median_information_bits_per_key": -0.008932716139045033,
+          "independent_public_bits": 257,
+          "physical_input_columns": 512,
+          "representation": "affine_limbs16",
+          "survived_screen": true
+        },
+        {
+          "architectures": 7,
+          "best_architecture": "arch-069",
+          "best_family": "mlp",
+          "best_median_information_bits_per_key": -0.37616895992498744,
+          "independent_public_bits": 257,
+          "physical_input_columns": 321,
+          "representation": "bit_interactions_64",
+          "survived_screen": false
+        },
+        {
+          "architectures": 14,
+          "best_architecture": "arch-076",
+          "best_family": "extra_trees",
+          "best_median_information_bits_per_key": -0.0038015709431982975,
+          "independent_public_bits": 257,
+          "physical_input_columns": 264,
+          "representation": "byte_popcounts",
+          "survived_screen": true
+        },
+        {
+          "architectures": 9,
+          "best_architecture": "arch-070",
+          "best_family": "mlp",
+          "best_median_information_bits_per_key": -0.050352588053140905,
+          "independent_public_bits": 257,
+          "physical_input_columns": 257,
+          "representation": "compressed_bits_257",
+          "survived_screen": false
+        },
+        {
+          "architectures": 6,
+          "best_architecture": "arch-051",
+          "best_family": "extra_trees",
+          "best_median_information_bits_per_key": -0.04596594719410065,
+          "independent_public_bits": 257,
+          "physical_input_columns": 264,
+          "representation": "compressed_bits_264",
+          "survived_screen": false
+        },
+        {
+          "architectures": 13,
+          "best_architecture": "arch-058",
+          "best_family": "mlp",
+          "best_median_information_bits_per_key": -0.010911286025784566,
+          "independent_public_bits": 257,
+          "physical_input_columns": 264,
+          "representation": "compressed_bytes",
+          "survived_screen": true
+        },
+        {
+          "architectures": 9,
+          "best_architecture": "arch-067",
+          "best_family": "rbf_logistic",
+          "best_median_information_bits_per_key": -0.009112237143061079,
+          "independent_public_bits": 257,
+          "physical_input_columns": 257,
+          "representation": "x_limbs16",
+          "survived_screen": true
+        }
+      ],
+      "stages": [
+        {
+          "attempts": 36,
+          "failed": 0,
+          "stage": "confirm",
+          "successful": 36
+        },
+        {
+          "attempts": 2,
+          "failed": 0,
+          "stage": "control_label_leak_1",
+          "successful": 2
+        },
+        {
+          "attempts": 2,
+          "failed": 0,
+          "stage": "control_label_leak_32",
+          "successful": 2
+        },
+        {
+          "attempts": 2,
+          "failed": 0,
+          "stage": "control_label_leak_8",
+          "successful": 2
+        },
+        {
+          "attempts": 3,
+          "failed": 0,
+          "stage": "control_permuted_keys",
+          "successful": 3
+        },
+        {
+          "attempts": 3,
+          "failed": 0,
+          "stage": "control_random_labels",
+          "successful": 3
+        },
+        {
+          "attempts": 8,
+          "failed": 0,
+          "stage": "cross_dataset",
+          "successful": 8
+        },
+        {
+          "attempts": 5,
+          "failed": 0,
+          "stage": "final_ensemble_member",
+          "successful": 5
+        },
+        {
+          "attempts": 240,
+          "failed": 0,
+          "stage": "screen",
+          "successful": 240
+        }
+      ]
+    },
+    "generatedAt": "2026-07-27T09:57:35Z",
+    "status": "ready",
+    "version": 1
+  },
+  "sources": [
+    {
+      "id": "headline-source",
+      "label": "Qualification headline values",
+      "path": "experiments/ml_structure_probe/reports/full_key_qualification/",
+      "query": {
+        "description": "Materialize the reviewed headline counts.",
+        "engine": "DuckDB",
+        "filters": [
+          "All retained development and blind results"
+        ],
+        "language": "SQL",
+        "metric_definitions": [
+          "Attempts count every JSONL fit record.",
+          "Exact blind keys require equality of all 256 predicted bits."
+        ],
+        "sql": "SELECT * FROM (VALUES\n  (301, 0, 3000000, 0, 0)\n) AS report_rows(\"attempts\", \"failures\", \"synthetic_pairs\", \"exact_blind_keys\", \"blind_halves_crossed\")",
+        "tables_used": [
+          "qualification_summary.json",
+          "full_key_search_result.json",
+          "blind_result.json"
+        ]
+      }
+    },
+    {
+      "id": "comparison-source",
+      "label": "Information-gain comparison",
+      "path": "experiments/ml_structure_probe/reports/full_key_search/",
+      "query": {
+        "description": "Materialize the reviewed evaluation-stage comparison rows.",
+        "engine": "DuckDB",
+        "filters": [
+          "Synthetic secp256k1 pairs only",
+          "Development datasets only for architecture selection",
+          "Frozen metrics for blind_a and blind_b"
+        ],
+        "language": "SQL",
+        "metric_definitions": [
+          "Information gain = prior-null binary cross-entropy minus model binary cross-entropy, summed over 256 bits and divided by ln(2), averaged per complete key."
+        ],
+        "sql": "SELECT * FROM (VALUES\n  (1, 'Screen best', 'adaptive development', 'arch-076', 'extra_trees', 'byte_popcounts', 100000, -0.0038015709431982975, -4.335937500044018e-06, NULL),\n  (2, 'Confirm best', 'adaptive development', 'arch-039', 'mlp', 'affine_limbs16', 200000, -0.003665243359035913, -4.373046875000286e-05, NULL),\n  (3, 'primary to replica', 'cross-dataset development', 'arch-076', 'extra_trees', 'byte_popcounts', 200000, -0.004935100328075547, 0.0001842773437499834, 0),\n  (4, 'replica to primary', 'cross-dataset development', 'arch-076', 'extra_trees', 'byte_popcounts', 200000, -0.004334618008394375, 7.947265625002364e-05, 0),\n  (5, 'Development ensemble', 'post-selection development', 'arch-076', 'extra_trees', 'byte_popcounts', 400000, -0.0032347620100718097, 0.00010462890625001497, 0),\n  (6, 'blind_a', 'frozen blind', 'arch-076', 'extra_trees', 'byte_popcounts', 500000, -0.0015314739059353341, -3.9742187500024784e-05, 0),\n  (7, 'blind_b', 'frozen blind', 'arch-076', 'extra_trees', 'byte_popcounts', 500000, -0.0016253060977499656, -2.476562500020041e-06, 0)\n) AS report_rows(\"order\", \"evaluation\", \"role\", \"model\", \"family\", \"feature_mode\", \"records\", \"information_gain_bits_per_key\", \"bit_accuracy_lift\", \"exact_key_matches\")",
+        "tables_used": [
+          "full_key_search_result.json",
+          "full_key_run_ledger.jsonl",
+          "blind_result.json"
+        ]
+      }
+    },
+    {
+      "id": "blind-source",
+      "label": "Frozen blind ensemble result",
+      "path": "experiments/ml_structure_probe/reports/full_key_blind/",
+      "query": {
+        "description": "Materialize the two frozen blind evaluation rows.",
+        "engine": "DuckDB",
+        "filters": [
+          "500,000 records in blind_a",
+          "500,000 records in blind_b",
+          "No fit, calibration, model selection, or early stopping on blind data"
+        ],
+        "language": "SQL",
+        "metric_definitions": [
+          "Information gain = prior-null binary cross-entropy minus model binary cross-entropy, summed over 256 bits and divided by ln(2), averaged per complete key.",
+          "Signal gate: gain >= 0.01 bits/key, accuracy lift >= 0.001, clustered z >= 5, and both lower 95% confidence bounds > 0."
+        ],
+        "sql": "SELECT * FROM (VALUES\n  ('blind_a', 500000, -0.0015314739059353341, -0.0017159136822472209, -0.0013470341296234474, 0.499982890625, 0.5000226328125, -3.9742187500024784e-05, -0.00012262379674127968, 4.3139421741279664e-05, -0.9398135108607754, 128.00438, 0, FALSE),\n  ('blind_b', 500000, -0.0016253060977499656, -0.0018095595659664014, -0.0014410526295335299, 0.49996634375, 0.4999688203125, -2.476562500020041e-06, -8.536920594912704e-05, 8.041608094912705e-05, -0.05855734723240504, 128.008616, 0, FALSE)\n) AS report_rows(\"half\", \"records\", \"information_gain_bits_per_key\", \"info_ci_low\", \"info_ci_high\", \"bit_accuracy\", \"null_bit_accuracy\", \"bit_accuracy_lift\", \"lift_ci_low\", \"lift_ci_high\", \"clustered_accuracy_z\", \"mean_hamming_distance\", \"exact_key_matches\", \"threshold_crossed\")",
+        "tables_used": [
+          "blind_result.json",
+          "blind_run_ledger.jsonl",
+          "dataset_validation.json"
+        ]
+      }
+    },
+    {
+      "id": "representation-source",
+      "label": "Public-key representation screen",
+      "path": "experiments/ml_structure_probe/reports/full_key_search/",
+      "query": {
+        "description": "Materialize representation coverage and best screen metrics.",
+        "engine": "DuckDB",
+        "filters": [
+          "Synthetic secp256k1 pairs only",
+          "Development datasets only for architecture selection"
+        ],
+        "language": "SQL",
+        "metric_definitions": [
+          "Information gain = prior-null binary cross-entropy minus model binary cross-entropy, summed over 256 bits and divided by ln(2), averaged per complete key.",
+          "Independent public bits count x-coordinate bits plus y parity."
+        ],
+        "sql": "SELECT * FROM (VALUES\n  ('affine_bits_512', 7, 512, 257, 'arch-045', 'mlp', -0.3075510569692529, FALSE),\n  ('affine_bytes', 6, 512, 257, 'arch-025', 'extra_trees', -0.01948763992770504, TRUE),\n  ('affine_limbs16', 9, 512, 257, 'arch-019', 'mlp', -0.008932716139045033, TRUE),\n  ('bit_interactions_64', 7, 321, 257, 'arch-069', 'mlp', -0.37616895992498744, FALSE),\n  ('byte_popcounts', 14, 264, 257, 'arch-076', 'extra_trees', -0.0038015709431982975, TRUE),\n  ('compressed_bits_257', 9, 257, 257, 'arch-070', 'mlp', -0.050352588053140905, FALSE),\n  ('compressed_bits_264', 6, 264, 257, 'arch-051', 'extra_trees', -0.04596594719410065, FALSE),\n  ('compressed_bytes', 13, 264, 257, 'arch-058', 'mlp', -0.010911286025784566, TRUE),\n  ('x_limbs16', 9, 257, 257, 'arch-067', 'rbf_logistic', -0.009112237143061079, TRUE)\n) AS report_rows(\"representation\", \"architectures\", \"physical_input_columns\", \"independent_public_bits\", \"best_architecture\", \"best_family\", \"best_median_information_bits_per_key\", \"survived_screen\")",
+        "tables_used": [
+          "full_key_search_result.json",
+          "full_key_run_ledger.jsonl"
+        ]
+      }
+    },
+    {
+      "id": "stage-source",
+      "label": "AutoML stage ledger counts",
+      "path": "experiments/ml_structure_probe/reports/full_key_search/",
+      "query": {
+        "description": "Materialize attempted, successful and failed run counts by stage.",
+        "engine": "DuckDB",
+        "filters": [
+          "Every predeclared ledger row"
+        ],
+        "language": "SQL",
+        "metric_definitions": [
+          "Attempt status is read directly from the append-only JSONL ledger."
+        ],
+        "sql": "SELECT * FROM (VALUES\n  ('confirm', 36, 36, 0),\n  ('control_label_leak_1', 2, 2, 0),\n  ('control_label_leak_32', 2, 2, 0),\n  ('control_label_leak_8', 2, 2, 0),\n  ('control_permuted_keys', 3, 3, 0),\n  ('control_random_labels', 3, 3, 0),\n  ('cross_dataset', 8, 8, 0),\n  ('final_ensemble_member', 5, 5, 0),\n  ('screen', 240, 240, 0)\n) AS report_rows(\"stage\", \"attempts\", \"successful\", \"failed\")",
+        "tables_used": [
+          "full_key_search_result.json",
+          "full_key_run_ledger.jsonl"
+        ]
+      }
+    },
+    {
+      "id": "control-source",
+      "label": "Leak and null control qualification",
+      "path": "experiments/ml_structure_probe/reports/full_key_search/",
+      "query": {
+        "description": "Materialize the four preregistered control classes.",
+        "engine": "DuckDB",
+        "filters": [
+          "Random labels, whole-key permutations, and deliberate label leaks"
+        ],
+        "language": "SQL",
+        "metric_definitions": [
+          "Leak-1 is evaluated on the deliberately exposed target head.",
+          "Leak-8 and leak-32 are evaluated by whole-key information gain."
+        ],
+        "sql": "SELECT * FROM (VALUES\n  ('Random + permuted labels', 6, 'No gain and z < 5', 'max gain -0.6655; max z 1.9', TRUE),\n  ('1 leaked target bit', 2, 'Target head gain > 0.25 bit', '0.354 to 0.355', TRUE),\n  ('8 leaked target bits', 2, 'Whole-key gain > 1 bit', '1.947 to 2.102', TRUE),\n  ('32 leaked target bits', 2, 'Whole-key gain > 5 bits', '10.151 to 10.245', TRUE)\n) AS report_rows(\"control\", \"attempts\", \"criterion\", \"observed\", \"passed\")",
+        "tables_used": [
+          "full_key_search_result.json",
+          "full_key_run_ledger.jsonl"
+        ]
+      }
+    },
+    {
+      "id": "scaling-source",
+      "label": "MLP scaling diagnostic",
+      "path": "experiments/ml_structure_probe/reports/full_key_search/",
+      "query": {
+        "description": "Materialize the arch-039 data and epoch scaling rows.",
+        "engine": "DuckDB",
+        "filters": [
+          "Architecture arch-039 only"
+        ],
+        "language": "SQL",
+        "metric_definitions": [
+          "Information gain = prior-null binary cross-entropy minus model binary cross-entropy, summed over 256 bits and divided by ln(2), averaged per complete key.",
+          "Train size and epochs changed jointly; this is not a causal ablation."
+        ],
+        "sql": "SELECT * FROM (VALUES\n  ('screen', 'mixed', 100000, 100000, 2, 3, -0.029558787325862427, 6.292968749993522e-05, 177.4835463702211),\n  ('confirm', 'mixed', 600000, 200000, 5, 3, -0.003665243359035913, -4.373046875000286e-05, 177.44477355462888),\n  ('cross_dataset', 'primary_to_replica', 800000, 200000, 10, 1, -0.009593896727342635, -7.486328125000385e-05, 177.43927455929307),\n  ('cross_dataset', 'replica_to_primary', 800000, 200000, 10, 1, -0.011663628013765038, 9.062499999989981e-06, 177.43964080099784)\n) AS report_rows(\"stage\", \"direction\", \"train_records\", \"validation_records\", \"epochs\", \"seeds\", \"median_information_bits_per_key\", \"median_bit_accuracy_lift\", \"median_final_train_loss_nats_per_key\")",
+        "tables_used": [
+          "full_key_search_result.json",
+          "full_key_run_ledger.jsonl"
+        ]
+      }
+    }
+  ],
+  "surface": "report"
+}

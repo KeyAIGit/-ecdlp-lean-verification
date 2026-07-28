@@ -7,11 +7,13 @@ retraction noted in `p0_glv_semaev/`) is **measure what the code actually does, 
 it independently before reporting**. Every experiment ships its own brute-force / replay
 validator, and no experiment here touches the Lean ledger or the headline theorem count.
 
-The only current implementation work under `experiments/` is the
-candidate-neutral validation infrastructure in `experiments/framework/`. It
-runs deterministic fixtures, not a cryptanalytic hypothesis. A real candidate
-record is rejected until `repo/ECDLP_DECISION_SUBSTRATE.json` explicitly
-authorizes its route.
+Current non-hypothesis implementation work under `experiments/` consists of the
+candidate-neutral validation infrastructure in `experiments/framework/` and
+the route-neutral ML data/probe/AutoML qualification package in
+`experiments/ml_structure_probe/`. The latter generates only synthetic keys,
+uses canaries and nulls, selects model parameters only on validation, and
+records no scientific outcome. A real candidate record is rejected until
+`repo/ECDLP_DECISION_SUBSTRATE.json` explicitly authorizes its route.
 
 ## The GLV–Semaev line (`HYP_GLV_SEMAEV_001`, status: PARKED)
 

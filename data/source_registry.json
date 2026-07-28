@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "purpose": "External works cited across the substrate, with provenance (where_used) computed from the hand-authored docs. Companion to result_registry.json (theorem-name provenance).",
   "scan_scope": "**/*.md excluding .git, .lake, archive, data, node_modules, platform",
-  "source_count": 27,
+  "source_count": 28,
   "sources": [
     {
       "id": "amadori_pintore_sala2018",
@@ -241,6 +241,7 @@
         "experiments/engine/pkc_smooth_m16_symbolic_desk/README.md",
         "experiments/glv_diagonal_obstruction/README.md",
         "experiments/glv_semaev_symmetry/README.md",
+        "experiments/ml_structure_probe/README.md",
         "experiments/p0_glv_semaev/README.md",
         "experiments/p0_glv_semaev/RESULTS.md",
         "experiments/p1_petit/README.md",
@@ -261,6 +262,7 @@
         "notes/GLV_LAMBDA.md",
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/INDEX.md",
+        "notes/ML_STRUCTURE_DISCOVERY_PLAN.md",
         "notes/POINT_COUNTING_KEYSTONE.md",
         "notes/RESEARCH_ENGINE_TYPED_EVIDENCE_V0_1.md",
         "notes/RESEARCH_ENGINE_V0_TO_V0_2.md",
@@ -494,6 +496,7 @@
         "README.md",
         "VERIFIED.md",
         "experiments/engine/pkc_smooth_m16_symbolic_desk/README.md",
+        "experiments/ml_structure_probe/README.md",
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md"
@@ -715,6 +718,32 @@
       "full_text_status": "not_asserted",
       "where_used": [
         "notes/GLV_SEMAEV_ITERATION_001.md"
+      ]
+    },
+    {
+      "id": "takhanov2024",
+      "title": "Intractability of Learning the Discrete Logarithm with Gradient-Based Methods",
+      "authors": [
+        "Rustem Takhanov",
+        "Maxat Tezekbayev",
+        "Artur Pak",
+        "Arman Bolatov",
+        "Zhibek Kadyrsizova",
+        "Zhenisbek Assylbekov"
+      ],
+      "year": 2024,
+      "venue": "Proceedings of the 15th Asian Conference on Machine Learning, PMLR 222, pp. 1321-1336",
+      "url": "https://proceedings.mlr.press/v222/takhanov24a.html",
+      "doi": null,
+      "aliases": [
+        "Takhanov"
+      ],
+      "role": "Primary theoretical and empirical prior for the limitations of gradient-based learning of discrete-log parity in prime-order cyclic groups. It motivates treating direct scalar-bit regression as a diagnostic baseline rather than the main discovery engine.",
+      "full_text_status": "full_text_inspected",
+      "note": "The result studies gradient concentration for a concept class indexed by the logarithm base. It is not represented here as an unconditional impossibility theorem for every fixed-base, representation-aware secp256k1 learner.",
+      "where_used": [
+        "experiments/ml_structure_probe/README.md",
+        "tasks/ECDLP_RESEARCH.md"
       ]
     },
     {

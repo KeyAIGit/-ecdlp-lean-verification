@@ -1,0 +1,235 @@
+{
+  "config": "experiments/ml_structure_probe/config/p0_million.json",
+  "config_sha256": "1f9703d3919f78516b98f5fb607ffbdbfad4b59834713fdeb12a393c5362e0d4",
+  "curve": "secp256k1",
+  "dataset_role": "synthetic_data_engineering_qualification",
+  "dataset_root_sha256": "81324f58ae00f4f3d33972a5dafa7cd27dc60fdc35f6f41866cafc3be0231e40",
+  "derivation": {
+    "domain": "keyai/ml-structure-probe/scalar/v1",
+    "hash": "SHA-256",
+    "master_seed_sha256": "da5830c324bedd7eb99de98f88984cf27a4aab464686f0f1aae3023513683905",
+    "method": "domain-separated rejection sampling into [1,n-1]",
+    "split_domains": [
+      "test",
+      "train",
+      "validation"
+    ]
+  },
+  "experiment_id": "ML-STRUCTURE-PROBE-P0-1M",
+  "generation": {
+    "elapsed_seconds": 110.297545,
+    "records_per_second": 9066.385
+  },
+  "manifest_sha256": "1903b58b1a72b0aef0f1a679e6ee4c77507a652dde73c79426386fce892de83c",
+  "private_data_origin": "deterministic synthetic scalars; no wallet data",
+  "record_format": "scalar32-compressed-point33-v1",
+  "record_size_bytes": 65,
+  "runtime": {
+    "cryptography": "46.0.0",
+    "openssl": "OpenSSL 3.5.3 16 Sep 2025",
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.39",
+    "python": "3.12.13",
+    "workers": 8
+  },
+  "schema_version": 1,
+  "scientific_evidence": false,
+  "shards": [
+    {
+      "byte_count": 3250000,
+      "part": 0,
+      "record_count": 50000,
+      "relative_path": "test/part-00000.bin",
+      "sha256": "c0019d8f227fb9a1390a81ee78630f1b97cbd52f5e96c5a448504dab47e9d33b",
+      "split": "test",
+      "start_index": 0
+    },
+    {
+      "byte_count": 3250000,
+      "part": 1,
+      "record_count": 50000,
+      "relative_path": "test/part-00001.bin",
+      "sha256": "bf94911676e206e38dfde26df7a9c54468db1992a22d2c2b149a2bbd1231d9b4",
+      "split": "test",
+      "start_index": 50000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 2,
+      "record_count": 50000,
+      "relative_path": "test/part-00002.bin",
+      "sha256": "cef67c5cfa362dc97cca475380f0f7c5f05841b026bfb9c837d9e4a0c51dce8b",
+      "split": "test",
+      "start_index": 100000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 3,
+      "record_count": 50000,
+      "relative_path": "test/part-00003.bin",
+      "sha256": "d278045df2fecd2e87794180b2260f026af34d4a88fb42efd987c5a2f7ddd17e",
+      "split": "test",
+      "start_index": 150000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 0,
+      "record_count": 50000,
+      "relative_path": "train/part-00000.bin",
+      "sha256": "10eb76842894f8e4afbf8e650b37aa0dca0207ec93e970937837eb47ef033b4b",
+      "split": "train",
+      "start_index": 0
+    },
+    {
+      "byte_count": 3250000,
+      "part": 1,
+      "record_count": 50000,
+      "relative_path": "train/part-00001.bin",
+      "sha256": "8ff26cc717055855fa973b586667a924539af969430906ed28b960a07155c2e5",
+      "split": "train",
+      "start_index": 50000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 2,
+      "record_count": 50000,
+      "relative_path": "train/part-00002.bin",
+      "sha256": "d97adfcd3fddfca078939cd866660be425a095f31b41ebd1dd004914099e0b7e",
+      "split": "train",
+      "start_index": 100000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 3,
+      "record_count": 50000,
+      "relative_path": "train/part-00003.bin",
+      "sha256": "d7f5d0637164bc73b6fa926080965bd0a3215e93bb59df88202bd6e4e5a05d05",
+      "split": "train",
+      "start_index": 150000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 4,
+      "record_count": 50000,
+      "relative_path": "train/part-00004.bin",
+      "sha256": "844ff5832424a236120fe5e5937319e7334da10c34d6379db0675a39c01afe91",
+      "split": "train",
+      "start_index": 200000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 5,
+      "record_count": 50000,
+      "relative_path": "train/part-00005.bin",
+      "sha256": "c795c39ce14eb2bffcb1bb7c645e55e66df995754af3a531cb6a4e6c3bc6879f",
+      "split": "train",
+      "start_index": 250000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 6,
+      "record_count": 50000,
+      "relative_path": "train/part-00006.bin",
+      "sha256": "1a26a4c024e1536aadbdb9f03a9603f3f5e35fb55a21a48bc4330c40c2ccca96",
+      "split": "train",
+      "start_index": 300000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 7,
+      "record_count": 50000,
+      "relative_path": "train/part-00007.bin",
+      "sha256": "5dfc85f0c8a78280e62ff8a600948e0b1d230bdc73ddaa6deef6d9d58d721735",
+      "split": "train",
+      "start_index": 350000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 8,
+      "record_count": 50000,
+      "relative_path": "train/part-00008.bin",
+      "sha256": "046e599ef68b34e5f0b9131985b3c880096e3e7f97e9e6d6ad4b1b0f7b4f1a47",
+      "split": "train",
+      "start_index": 400000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 9,
+      "record_count": 50000,
+      "relative_path": "train/part-00009.bin",
+      "sha256": "44f4225392254621c314e8e8e30f63e802e27c906c1d260a9df2fe188c7662b3",
+      "split": "train",
+      "start_index": 450000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 10,
+      "record_count": 50000,
+      "relative_path": "train/part-00010.bin",
+      "sha256": "4973b90f3d57b652175d6872b18a7185cc425d49f1b0ea31dfafe28e1b7a504c",
+      "split": "train",
+      "start_index": 500000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 11,
+      "record_count": 50000,
+      "relative_path": "train/part-00011.bin",
+      "sha256": "74812f0eff151671b9f4757395b65b4f3458a3e3fcaefee8062d3e835d68bf22",
+      "split": "train",
+      "start_index": 550000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 0,
+      "record_count": 50000,
+      "relative_path": "validation/part-00000.bin",
+      "sha256": "6f28d7b96a39be48272b3f39373aff9c947ffd9c6fcafbc26cbf3c76ae14c10d",
+      "split": "validation",
+      "start_index": 0
+    },
+    {
+      "byte_count": 3250000,
+      "part": 1,
+      "record_count": 50000,
+      "relative_path": "validation/part-00001.bin",
+      "sha256": "4e3ccf631744e968308a6138da6739ce16af822aeaa30c350ea6564e4fe386ae",
+      "split": "validation",
+      "start_index": 50000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 2,
+      "record_count": 50000,
+      "relative_path": "validation/part-00002.bin",
+      "sha256": "f5c7514ca8fa1dcc90cc11a2a42e01c42020d4b00e6ea19b1576634baa414d14",
+      "split": "validation",
+      "start_index": 100000
+    },
+    {
+      "byte_count": 3250000,
+      "part": 3,
+      "record_count": 50000,
+      "relative_path": "validation/part-00003.bin",
+      "sha256": "fc57ec5f4fbcc5ae41b931a5bc21ed13fbcb7e033b6c2188e340c584b13f4756",
+      "split": "validation",
+      "start_index": 150000
+    }
+  ],
+  "source_hashes": {
+    "experiments/ml_structure_probe/config/p0_million.json": "1f9703d3919f78516b98f5fb607ffbdbfad4b59834713fdeb12a393c5362e0d4",
+    "experiments/ml_structure_probe/generate_dataset.py": "924bcc5c4d70439d80a0d9847b601d36aeab8fee483f13b2d5b07e47c702b3c7",
+    "experiments/ml_structure_probe/probe.py": "6b6921dee8a494592492c68267c889b3612f8b11532131a11a1db35cdecc5da7",
+    "experiments/ml_structure_probe/validate_dataset.py": "dc8d930ea53bc3c0f28c9c5ad91bc7e72b630185b1b4ab89ae424d55e1d50bd3"
+  },
+  "source_state": {
+    "commit": "be7d11151d48473cb6cc808f5b197a9b6ac89a6b",
+    "tracked_files_dirty": false
+  },
+  "splits": {
+    "test": 200000,
+    "train": 600000,
+    "validation": 200000
+  },
+  "total_bytes": 65000000,
+  "total_records": 1000000
+}

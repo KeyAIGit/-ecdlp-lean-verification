@@ -1,0 +1,294 @@
+{
+  "canaries_pass": true,
+  "config_sha256": "1f9703d3919f78516b98f5fb607ffbdbfad4b59834713fdeb12a393c5362e0d4",
+  "experiment_id": "ML-STRUCTURE-PROBE-P0-1M",
+  "interpretation": "no_material_linear_signal_at_preregistered_threshold",
+  "manifest_sha256": "def4ff99c54f4611436c39e91ab09aa65de3673562c7e6a6538e075193ef8812",
+  "model": {
+    "alpha": 0.0001,
+    "epochs": 2,
+    "eta0": 0.01,
+    "family": "streaming linear logistic probe",
+    "features": "compressed_public_bits",
+    "implementation": "sklearn.linear_model.SGDClassifier",
+    "random_state": 1729
+  },
+  "permuted_null_pass": true,
+  "pipeline_status": "pass",
+  "representation_signals_requiring_new_candidate": [],
+  "result_role": "engineering_qualification_and_linear_representation_screen",
+  "runtime": {
+    "numpy": "2.3.5",
+    "python": "3.12.13",
+    "scikit_learn": "1.8.0"
+  },
+  "schema_version": 1,
+  "scientific_evidence": false,
+  "scope": [
+    "No claim about nonlinear, neural, gradient-free, or program-synthesis models.",
+    "No claim that ECDLP is learnable or unlearnable.",
+    "No route promotion, exact-target recovery attempt, or asymptotic inference.",
+    "Canaries deliberately contain direct information and are not scientific tasks."
+  ],
+  "tasks": {
+    "canary_public_y_parity": {
+      "classes": [
+        0,
+        1
+      ],
+      "coefficient_l2": 11.715985298156738,
+      "feature_count": 264,
+      "test": {
+        "accuracy": 1.0,
+        "accuracy_lift": 0.49960000000000004,
+        "accuracy_z": 446.85596761749053,
+        "class_counts": [
+          99920,
+          100080
+        ],
+        "information_gain_bits_per_record": 0.9955838501703327,
+        "log_loss_nats": 0.0030629058456420897,
+        "null_accuracy": 0.5004,
+        "null_log_loss_nats": 0.6931490446022232,
+        "records": 200000
+      },
+      "threshold_crossed_both_splits": true,
+      "train_class_counts": [
+        300387,
+        299613
+      ],
+      "validation": {
+        "accuracy": 1.0,
+        "accuracy_lift": 0.49924500000000005,
+        "accuracy_z": 446.53881204761586,
+        "class_counts": [
+          100151,
+          99849
+        ],
+        "information_gain_bits_per_record": 0.9955860830789571,
+        "log_loss_nats": 0.003058378219604492,
+        "null_accuracy": 0.500755,
+        "null_log_loss_nats": 0.6931460647105031,
+        "records": 200000
+      }
+    },
+    "canary_scalar_leak": {
+      "classes": [
+        0,
+        1
+      ],
+      "coefficient_l2": 11.714360237121582,
+      "feature_count": 265,
+      "test": {
+        "accuracy": 1.0,
+        "accuracy_lift": 0.49982000000000004,
+        "accuracy_z": 447.05262757458917,
+        "class_counts": [
+          99964,
+          100036
+        ],
+        "information_gain_bits_per_record": 0.9955774485704962,
+        "log_loss_nats": 0.003066130256652832,
+        "null_accuracy": 0.50018,
+        "null_log_loss_nats": 0.6931478317623562,
+        "records": 200000
+      },
+      "threshold_crossed_both_splits": true,
+      "train_class_counts": [
+        300251,
+        299749
+      ],
+      "validation": {
+        "accuracy": 1.0,
+        "accuracy_lift": 0.49975,
+        "accuracy_z": 446.99004457596703,
+        "class_counts": [
+          100050,
+          99950
+        ],
+        "information_gain_bits_per_record": 0.9955821813637541,
+        "log_loss_nats": 0.0030621302032470704,
+        "null_accuracy": 0.50025,
+        "null_log_loss_nats": 0.6931471122312534,
+        "records": 200000
+      }
+    },
+    "d_bit_0": {
+      "classes": [
+        0,
+        1
+      ],
+      "coefficient_l2": 0.11462639272212982,
+      "feature_count": 264,
+      "test": {
+        "accuracy": 0.499955,
+        "accuracy_lift": -0.00022499999999997522,
+        "accuracy_z": -0.2012461310157086,
+        "class_counts": [
+          99964,
+          100036
+        ],
+        "information_gain_bits_per_record": -0.000501153759996861,
+        "log_loss_nats": 0.693495205078125,
+        "null_accuracy": 0.50018,
+        "null_log_loss_nats": 0.6931478317623562,
+        "records": 200000
+      },
+      "threshold_crossed_both_splits": false,
+      "train_class_counts": [
+        300251,
+        299749
+      ],
+      "validation": {
+        "accuracy": 0.5,
+        "accuracy_lift": -0.00024999999999997247,
+        "accuracy_z": -0.2236068257008093,
+        "class_counts": [
+          100050,
+          99950
+        ],
+        "information_gain_bits_per_record": -0.000529002846048483,
+        "log_loss_nats": 0.6935137890625,
+        "null_accuracy": 0.50025,
+        "null_log_loss_nats": 0.6931471122312534,
+        "records": 200000
+      }
+    },
+    "d_bit_127": {
+      "classes": [
+        0,
+        1
+      ],
+      "coefficient_l2": 0.10796521604061127,
+      "feature_count": 264,
+      "test": {
+        "accuracy": 0.499945,
+        "accuracy_lift": -0.002554999999999974,
+        "accuracy_z": -2.2852900393087934,
+        "class_counts": [
+          100500,
+          99500
+        ],
+        "information_gain_bits_per_record": -0.0004660105925858936,
+        "log_loss_nats": 0.693466044921875,
+        "null_accuracy": 0.5025,
+        "null_log_loss_nats": 0.693143030993513,
+        "records": 200000
+      },
+      "threshold_crossed_both_splits": false,
+      "train_class_counts": [
+        300274,
+        299726
+      ],
+      "validation": {
+        "accuracy": 0.49897,
+        "accuracy_lift": -0.0014100000000000223,
+        "accuracy_z": -1.2611427035279665,
+        "class_counts": [
+          100076,
+          99924
+        ],
+        "information_gain_bits_per_record": -0.00046328375522750704,
+        "log_loss_nats": 0.69346802734375,
+        "null_accuracy": 0.50038,
+        "null_log_loss_nats": 0.6931469035150148,
+        "records": 200000
+      }
+    },
+    "d_mod_3": {
+      "classes": [
+        0,
+        1,
+        2
+      ],
+      "coefficient_l2": 0.8351073265075684,
+      "feature_count": 264,
+      "test": {
+        "accuracy": 0.33503,
+        "accuracy_lift": 0.0010450000000000181,
+        "accuracy_z": 0.9908908132107408,
+        "class_counts": [
+          66797,
+          66643,
+          66560
+        ],
+        "information_gain_bits_per_record": -0.0013721081693741555,
+        "log_loss_nats": 1.0995663671875,
+        "null_accuracy": 0.333985,
+        "null_log_loss_nats": 1.098615294278475,
+        "records": 200000
+      },
+      "threshold_crossed_both_splits": false,
+      "train_class_counts": [
+        199715,
+        199882,
+        200403
+      ],
+      "validation": {
+        "accuracy": 0.33368,
+        "accuracy_lift": -0.00029000000000001247,
+        "accuracy_z": -0.27498713208910464,
+        "class_counts": [
+          66794,
+          66649,
+          66557
+        ],
+        "information_gain_bits_per_record": -0.0012873538571459584,
+        "log_loss_nats": 1.099507646484375,
+        "null_accuracy": 0.33397,
+        "null_log_loss_nats": 1.0986153207879112,
+        "records": 200000
+      }
+    },
+    "permuted_d_bit_0": {
+      "classes": [
+        0,
+        1
+      ],
+      "coefficient_l2": 0.1071256771683693,
+      "feature_count": 264,
+      "test": {
+        "accuracy": 0.50114,
+        "accuracy_lift": 0.0011400000000000299,
+        "accuracy_z": 1.0196469977399307,
+        "class_counts": [
+          100000,
+          100000
+        ],
+        "information_gain_bits_per_record": -0.00040557074917032843,
+        "log_loss_nats": 0.69342830078125,
+        "null_accuracy": 0.5,
+        "null_log_loss_nats": 0.693147180559945,
+        "records": 200000
+      },
+      "threshold_crossed_both_splits": false,
+      "train_class_counts": [
+        300000,
+        300000
+      ],
+      "validation": {
+        "accuracy": 0.500025,
+        "accuracy_lift": 2.5000000000052758e-05,
+        "accuracy_z": 0.02236067977504508,
+        "class_counts": [
+          100000,
+          100000
+        ],
+        "information_gain_bits_per_record": -0.0004539517527877004,
+        "log_loss_nats": 0.6934618359375,
+        "null_accuracy": 0.5,
+        "null_log_loss_nats": 0.693147180559945,
+        "records": 200000
+      }
+    }
+  },
+  "thresholds": {
+    "accuracy_lift": 0.002,
+    "accuracy_z": 6.0,
+    "information_gain_bits_per_record": 0.01,
+    "must_replicate_on": [
+      "validation",
+      "test"
+    ]
+  }
+}

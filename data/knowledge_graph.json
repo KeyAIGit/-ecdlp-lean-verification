@@ -20,7 +20,7 @@
     "typed_seed_eligible_cells": 2,
     "typed_desk_decisions": 3,
     "hypothesis_axis_nodes": 9,
-    "source_index_nodes": 27,
+    "source_index_nodes": 28,
     "research_engine_intake_candidates": 0,
     "research_engine_outcomes": 8,
     "research_engine_v02_candidates": 0,
@@ -10193,6 +10193,11 @@
         "id": "sturmfels2008",
         "title": "Algorithms in Invariant Theory",
         "full_text_status": "not_asserted"
+      },
+      {
+        "id": "takhanov2024",
+        "title": "Intractability of Learning the Discrete Logarithm with Gradient-Based Methods",
+        "full_text_status": "full_text_inspected"
       },
       {
         "id": "tsakou_ionica2021",

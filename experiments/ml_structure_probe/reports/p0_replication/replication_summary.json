@@ -1,0 +1,231 @@
+{
+  "comparisons": {
+    "d_bit_0": {
+      "primary": {
+        "test": {
+          "accuracy": 0.499805,
+          "accuracy_lift": -0.0003749999999999587,
+          "accuracy_z": -0.33541021835951434,
+          "class_counts": [
+            99964,
+            100036
+          ],
+          "information_gain_bits_per_record": -4.5292882282963315e-05,
+          "log_loss_nats": 0.6931787916354898,
+          "null_accuracy": 0.50018,
+          "null_log_loss_nats": 0.6931473970018359,
+          "records": 200000
+        },
+        "threshold_crossed_both_splits": false,
+        "validation": {
+          "accuracy": 0.500695,
+          "accuracy_lift": 0.0004450000000000287,
+          "accuracy_z": 0.3980201497475101,
+          "class_counts": [
+            100050,
+            99950
+          ],
+          "information_gain_bits_per_record": -3.347317519238442e-05,
+          "log_loss_nats": 0.6931715534296912,
+          "null_accuracy": 0.50025,
+          "null_log_loss_nats": 0.6931483515926822,
+          "records": 200000
+        }
+      },
+      "recipe_id": "trees_bytes_d8_l5",
+      "replica": {
+        "test": {
+          "accuracy": 0.49846,
+          "accuracy_lift": -0.004530000000000034,
+          "accuracy_z": -4.05182762336562,
+          "class_counts": [
+            99402,
+            100598
+          ],
+          "information_gain_bits_per_record": -6.62003536953582e-05,
+          "log_loss_nats": 0.6931964421135887,
+          "null_accuracy": 0.50299,
+          "null_log_loss_nats": 0.6931505555250727,
+          "records": 200000
+        },
+        "threshold_crossed_both_splits": false,
+        "validation": {
+          "accuracy": 0.501655,
+          "accuracy_lift": -0.00013499999999999623,
+          "accuracy_z": -0.12074844456764704,
+          "class_counts": [
+            100358,
+            99642
+          ],
+          "information_gain_bits_per_record": -3.257843599062517e-05,
+          "log_loss_nats": 0.6931679748272483,
+          "null_accuracy": 0.50179,
+          "null_log_loss_nats": 0.6931453931761944,
+          "records": 200000
+        }
+      },
+      "replicated_signal": false
+    },
+    "d_bit_127": {
+      "primary": {
+        "test": {
+          "accuracy": 0.49998,
+          "accuracy_lift": -0.0025199999999999667,
+          "accuracy_z": -2.2539846963045567,
+          "class_counts": [
+            100500,
+            99500
+          ],
+          "information_gain_bits_per_record": -3.1553537048379415e-05,
+          "log_loss_nats": 0.6931649022387548,
+          "null_accuracy": 0.5025,
+          "null_log_loss_nats": 0.693143030993513,
+          "records": 200000
+        },
+        "threshold_crossed_both_splits": false,
+        "validation": {
+          "accuracy": 0.499865,
+          "accuracy_lift": -0.0005150000000000432,
+          "accuracy_z": -0.4606301363949979,
+          "class_counts": [
+            100076,
+            99924
+          ],
+          "information_gain_bits_per_record": -2.360703203873708e-06,
+          "log_loss_nats": 0.6931485398297847,
+          "null_accuracy": 0.50038,
+          "null_log_loss_nats": 0.6931469035150148,
+          "records": 200000
+        }
+      },
+      "recipe_id": "logistic_limbs_a1e4",
+      "replica": {
+        "test": {
+          "accuracy": 0.50065,
+          "accuracy_lift": -0.0017300000000000093,
+          "accuracy_z": -1.5473765704488516,
+          "class_counts": [
+            99524,
+            100476
+          ],
+          "information_gain_bits_per_record": -2.5595512091721524e-05,
+          "log_loss_nats": 0.6931580832338737,
+          "null_accuracy": 0.50238,
+          "null_log_loss_nats": 0.6931403417768324,
+          "records": 200000
+        },
+        "threshold_crossed_both_splits": false,
+        "validation": {
+          "accuracy": 0.50044,
+          "accuracy_lift": -0.00019999999999997797,
+          "accuracy_z": -0.1788855847430945,
+          "class_counts": [
+            99872,
+            100128
+          ],
+          "information_gain_bits_per_record": -7.64986076395356e-06,
+          "log_loss_nats": 0.6931517806421581,
+          "null_accuracy": 0.50064,
+          "null_log_loss_nats": 0.6931464781627379,
+          "records": 200000
+        }
+      },
+      "replicated_signal": false
+    },
+    "d_mod_3": {
+      "primary": {
+        "test": {
+          "accuracy": 0.33302,
+          "accuracy_lift": -0.0009649999999999936,
+          "accuracy_z": -0.9150331432998488,
+          "class_counts": [
+            66797,
+            66643,
+            66560
+          ],
+          "information_gain_bits_per_record": -5.337340394610939e-05,
+          "log_loss_nats": 1.0986522899029372,
+          "null_accuracy": 0.333985,
+          "null_log_loss_nats": 1.098615294278475,
+          "records": 200000
+        },
+        "threshold_crossed_both_splits": false,
+        "validation": {
+          "accuracy": 0.332965,
+          "accuracy_lift": -0.0010049999999999781,
+          "accuracy_z": -0.9529726474121802,
+          "class_counts": [
+            66794,
+            66649,
+            66557
+          ],
+          "information_gain_bits_per_record": -6.0760598129104725e-05,
+          "log_loss_nats": 1.0986574368251936,
+          "null_accuracy": 0.33397,
+          "null_log_loss_nats": 1.0986153207879112,
+          "records": 200000
+        }
+      },
+      "recipe_id": "logistic_limbs_a1e4",
+      "replica": {
+        "test": {
+          "accuracy": 0.33452,
+          "accuracy_lift": 3.500000000000725e-05,
+          "accuracy_z": 0.03317537148800367,
+          "class_counts": [
+            66886,
+            66897,
+            66217
+          ],
+          "information_gain_bits_per_record": -2.2483184259064446e-06,
+          "log_loss_nats": 1.0986241990079475,
+          "null_accuracy": 0.334485,
+          "null_log_loss_nats": 1.0986226405923696,
+          "records": 200000
+        },
+        "threshold_crossed_both_splits": false,
+        "validation": {
+          "accuracy": 0.33178,
+          "accuracy_lift": -0.0032749999999999724,
+          "accuracy_z": -3.1029543627302707,
+          "class_counts": [
+            66631,
+            67011,
+            66358
+          ],
+          "information_gain_bits_per_record": -6.592550352237801e-05,
+          "log_loss_nats": 1.0986623078325939,
+          "null_accuracy": 0.335055,
+          "null_log_loss_nats": 1.0986166117557004,
+          "records": 200000
+        }
+      },
+      "replicated_signal": false
+    }
+  },
+  "interpretation": "No frozen model produced a threshold-crossing signal in both fresh-seed assays. This is a replicated bounded null for the recorded models, representations, tasks, curve, and budgets.",
+  "primary": {
+    "dataset_root_sha256": "81324f58ae00f4f3d33972a5dafa7cd27dc60fdc35f6f41866cafc3be0231e40",
+    "experiment_id": "ML-STRUCTURE-PROBE-P0-AUTOML-1M",
+    "result_sha256": "5f05d76cc10354162d16c0c056060f478413a0b016ff84e8d583a03bc2d93dba",
+    "source_state": {
+      "commit": "be7d11151d48473cb6cc808f5b197a9b6ac89a6b",
+      "tracked_files_dirty": false
+    }
+  },
+  "replica": {
+    "dataset_root_sha256": "eb1a2f1301f211ef973f82d9d13b80cb469d6f115cc1869be48d2b8ea1605421",
+    "experiment_id": "ML-STRUCTURE-PROBE-P0-AUTOML-1M-REPLICA",
+    "result_sha256": "0ce3c89358bb65e062f61a3c05c13c499d02ac0c514e320558e711845321f813",
+    "source_state": {
+      "commit": "262e236f0c4fe62ffa05d0f2a14741197393d897",
+      "tracked_files_dirty": false
+    }
+  },
+  "replicated_signals": [],
+  "result_role": "fresh_seed_frozen_model_replication",
+  "route_promotion_authorized": false,
+  "schema_version": 1,
+  "scientific_evidence": false,
+  "status": "pass"
+}
