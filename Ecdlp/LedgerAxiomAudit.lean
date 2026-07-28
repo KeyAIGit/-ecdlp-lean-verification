@@ -336,6 +336,9 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.PohligHellman.reconstruct
 #print axioms Ecdlp.Primality.secp256k1_n_prime
 #print axioms Ecdlp.Primality.secp256k1_p_prime
+#print axioms Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root
+#print axioms Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root_over
+#print axioms Ecdlp.ProjectiveResultant.map_fixedDegree_resultant_eq_zero_iff_common_projective_root
 #print axioms Ecdlp.Proved.cofactor_card_mul_index
 #print axioms Ecdlp.Proved.cube_root_of_eigenvalue
 #print axioms Ecdlp.Proved.orderOf_eigenvalue_eq_three
@@ -407,6 +410,9 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Semaev.secp256k1_semaev_three_point_double
 #print axioms Ecdlp.Semaev.secp256k1_semaev_three_tangent
 #print axioms Ecdlp.Targets.glv_eigenvalue_zmod
+#print axioms Ecdlp.TaskSylvester.det_taskSylvester_eq_resultant
+#print axioms Ecdlp.TaskSylvester.det_taskSylvester_eq_zero_iff_common_projective_root
+#print axioms Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose
 #print axioms Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd
 #print axioms Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq
 #print axioms Ecdlp.Torsion.torsionBy_dvd_le

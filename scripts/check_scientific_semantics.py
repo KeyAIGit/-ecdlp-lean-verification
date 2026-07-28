@@ -19,6 +19,16 @@ M16_PROJECTIVE_ARTIFACT_PATH = (
 M16_PROJECTIVE_ARTIFACT_SHA256 = (
     "3164cb89adac7622b4d08d781061ea386dc64e754236e48c838a3dac23040715"
 )
+M16_RESULTANT_KERNEL_CLAIM_ID = (
+    "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT"
+)
+M16_RESULTANT_KERNEL_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_projective_resultant_kernel/artifact.json"
+)
+M16_RESULTANT_KERNEL_ARTIFACT_SHA256 = (
+    "0b9d8b48953aae2defa28ade67992084cecca3a01b43490bc338a0fd5ce97c5a"
+)
 
 PETIT_WEIL_CONTRADICTIONS = (
     re.compile(
@@ -116,7 +126,7 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 23,
+        "source_claims": 24,
         "cells": 7,
         "seed_eligible_cells": 2,
         "desk_decisions": 3,
@@ -153,6 +163,10 @@ def validate_semantics(
         (
             M16_PROJECTIVE_CLAIM_ID,
             "projective-S17 bridge certificate",
+        ),
+        (
+            M16_RESULTANT_KERNEL_CLAIM_ID,
+            "projective-resultant kernel certificate",
         ),
     ):
         if claim_id not in m16_cell.get("source_claim_ids", []):
@@ -266,6 +280,68 @@ def validate_semantics(
         problems.append(
             "M16 cost quantity must retain its projective-S17 certificate"
         )
+    resultant_kernel_claim = typed_claims.get(
+        M16_RESULTANT_KERNEL_CLAIM_ID, {}
+    )
+    if resultant_kernel_claim.get("read_status") != "certificate_replayed":
+        problems.append(
+            "M16 projective-resultant assurance must remain "
+            "certificate_replayed"
+        )
+    if resultant_kernel_claim.get(
+        "artifact_sha256"
+    ) != M16_RESULTANT_KERNEL_ARTIFACT_SHA256:
+        problems.append("M16 projective-resultant artifact hash drifted")
+    if resultant_kernel_claim.get(
+        "evidence_path"
+    ) != M16_RESULTANT_KERNEL_ARTIFACT_PATH:
+        problems.append("M16 projective-resultant evidence path drifted")
+    resultant_statement = resultant_kernel_claim.get("statement", "")
+    for token, label in (
+        ("fixed-degree resultant", "fixed-degree theorem"),
+        ("literal TASK-018 Sylvester matrix", "literal matrix bridge"),
+        ("coefficient unit 1", "unit-one convention"),
+        ("zero forms", "zero-form coverage"),
+        ("output [1:0]", "projective-infinity coverage"),
+    ):
+        if token not in resultant_statement:
+            problems.append(
+                f"M16 projective-resultant claim must retain {label}"
+            )
+    resultant_boundary = resultant_kernel_claim.get("boundary", "")
+    for token, label in (
+        (
+            "kernel_bound_non_run_certificate",
+            "kernel-bound non-run assurance",
+        ),
+        ("source_independence is not_established", "source independence"),
+        ("calibration is excluded_nonexperimental", "calibration"),
+        (
+            "recursive frozen C_r specialization",
+            "recursive-specialization blocker",
+        ),
+        ("formal degrees (2^(r-2),2)", "frozen formal degrees"),
+        ("universal C16-to-C2 induction", "universal-induction blocker"),
+        ("open_exact_blocker", "exact-blocker status"),
+        ("CQ-SEMAEV-S17-SYSTEM-COST remains partial", "partial cost quantity"),
+        ("solving cost is unpriced", "unpriced solving cost"),
+        ("rank is unpriced", "unpriced rank"),
+        ("yield is unpriced", "unpriced yield"),
+        ("zero_retention_success", "zero retention"),
+        ("experiment authorization", "no-authorization boundary"),
+        ("route promotion", "no-promotion boundary"),
+    ):
+        if token not in resultant_boundary:
+            problems.append(
+                f"M16 projective-resultant claim must retain {label}"
+            )
+    if M16_RESULTANT_KERNEL_CLAIM_ID not in m16_cell.get(
+        "cost_quantity", {}
+    ).get("source_claim_ids", []):
+        problems.append(
+            "M16 cost quantity must retain its projective-resultant "
+            "kernel certificate"
+        )
     m16_barrier = typed_barriers.get(
         "B-PKC-M16-COMPLETE-COST-BRIDGE", {}
     )
@@ -289,6 +365,78 @@ def validate_semantics(
         problems.append(
             "M16 complete-cost barrier must retain its projective-S17 certificate"
         )
+    if M16_RESULTANT_KERNEL_CLAIM_ID not in m16_barrier.get(
+        "source_claim_ids", []
+    ):
+        problems.append(
+            "M16 complete-cost barrier must retain its projective-resultant "
+            "kernel certificate"
+        )
+    m16_scope = m16_barrier.get("exact_scope", "")
+    for token, label in (
+        ("TASK-019 kernel-checks", "TASK-019 kernel result"),
+        ("zero forms", "zero-form coverage"),
+        (
+            "recursive frozen C_r specialization",
+            "recursive-specialization blocker",
+        ),
+        ("formal degrees (2^(r-2),2)", "frozen formal degrees"),
+        ("universal C16-to-C2 induction", "universal-induction blocker"),
+    ):
+        if token not in m16_scope:
+            problems.append(f"M16 complete-cost barrier must retain {label}")
+    if (
+        "pending a kernel-checked fixed-degree projective resultant "
+        "common-root theorem"
+    ) in m16_scope:
+        problems.append(
+            "M16 complete-cost barrier cannot reopen the kernel-checked "
+            "fixed-degree theorem"
+        )
+    reopening_text = " ".join(
+        item
+        for item in m16_barrier.get("reopening_conditions", [])
+        if isinstance(item, str)
+    )
+    if (
+        "recursive frozen C_r specialization" not in reopening_text
+        or "universal C16-to-C2 induction" not in reopening_text
+    ):
+        problems.append(
+            "M16 complete-cost reopening must require recursive "
+            "specialization and universal induction"
+        )
+    if (
+        "Kernel-check a fixed-degree projective resultant common-root theorem"
+        in reopening_text
+    ):
+        problems.append(
+            "M16 complete-cost reopening cannot require an already "
+            "kernel-checked theorem"
+        )
+    for field, token, label in (
+        (
+            "relation_action",
+            "remaining exact mechanism gap",
+            "narrowed mechanism gap",
+        ),
+        (
+            "relation_action",
+            "recursive frozen C_r specialization",
+            "recursive specialization",
+        ),
+        (
+            "relation_action",
+            "universal C16-to-C2 induction",
+            "universal induction",
+        ),
+        ("boundary", "zero_retention_success", "zero retention"),
+        ("boundary", "hypothesis retention", "no hypothesis retention"),
+        ("boundary", "experiment authorization", "no experiment authorization"),
+        ("boundary", "route promotion", "no route promotion"),
+    ):
+        if token not in str(m16_cell.get(field, "")):
+            problems.append(f"M16 cell must retain {label}")
     if m16_cell.get("authorization") != "none":
         problems.append("M16 semantic result cannot authorize execution")
     if any(

@@ -20,13 +20,13 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: `TASK-019` in `tasks/ECDLP_RESEARCH.md`.
+Current central task: `TASK-020` in `tasks/ECDLP_RESEARCH.md`.
 
 `TASK-010` is accepted at
 `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
-proposal-intake lane because TASK-019 is a non-executable fixed-degree
-projective-resultant and recursive-specialization theorem task, not a
-hypothesis candidate or experiment.
+proposal-intake lane because TASK-020 is a non-executable
+recursive-specialization theorem task, not a hypothesis candidate or
+experiment.
 
 Current scientific activation order:
 
@@ -48,14 +48,21 @@ Current scientific activation order:
    algebraic argument and replays bounded S4/S5 forward/reverse fixtures; the
    generic C16 forward implication is not computationally replayed or kernel
    checked. The universal reverse projection above S4 remains unproved.
-6. `TASK-019` gives sole desk priority to a kernel-checked fixed-degree
-   projective resultant common-root theorem and recursive symbolic `C_r`
-   specialization compatibility, including output `[1:0]`, for
-   `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`. It authorizes no S17
-   materialization, solver, or cost claim.
-7. The auxiliary-curve cell stays parked until a primary source supplies a
+6. `TASK-019` completed with a scoped blocker and zero retained hypotheses.
+   The generic fixed-degree projective-resultant/common-projective-root
+   equivalence and the literal TASK-018 Sylvester determinant bridge are
+   kernel checked, including zero forms, degree drop, affine roots, `[1:0]`,
+   and coefficient unit exactly `1`. The general coefficient-map theorem does
+   not bind the actual frozen recursive `C_r`.
+7. `TASK-020` gives sole desk priority to that exact frozen-`C_r`
+   specialization at formal degrees `(2^(r-2), 2)`, including affine output
+   and `[1:0]`, under the literal unit-one convention, for
+   `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`. The universal reverse
+   `C16 → C2` induction remains a downstream blocker. TASK-020 authorizes no
+   S17 materialization, solver, or cost claim.
+8. The auxiliary-curve cell stays parked until a primary source supplies a
    finite search domain with a completeness criterion.
-8. Any later candidate, solver, or experiment still requires the normal
+9. Any later candidate, solver, or experiment still requires the normal
    review gates and a separate dated authorization.
 
 These entries freeze further engine-schema expansion by default. They do not
