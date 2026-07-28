@@ -660,13 +660,19 @@ Recorded result:
 
 ### TASK-017 - Classify M16 exceptional fibers, liftability, and recovery domain
 
-Status: active_non_executable_exceptional_fiber_classification
+Status: completed_non_executable_scoped_blocker
 Kind: theorem | data | research | review
 Hypothesis: none. This task closes the semantic domain needed before a later
 solving-cost contract can be meaningful; it is not a solver candidate.
 Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
 Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
 Authorization: none
+Outcome: `scoped_blocker`
+Retention: `zero_retention_success`
+Completed on: 2026-07-27
+Artifact: `experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json`
+Artifact ID: `PKC-SMOOTH-M16-EXCEPTIONAL-FIBERS-001`
+Artifact SHA-256: `578db732807a452e26de03dcd338d62c25a7d90490a62bbf427b1f96c3a869cf`
 Why it matters: TASK-016 disproved the naive global affine substitution and
 isolated two independent exceptional mechanisms: identity prefixes and
 extension-only or non-liftable fibers. The next useful result is a complete
@@ -675,6 +681,8 @@ choice from an unbounded hypothesis space and not a solving-degree estimate.
 Decision boundary:
 - Keep the direct S17 relation, the homogeneous projective S3 tree, its affine
   chart, and base-field recovery as separate predicates.
+- Restrict every local and projective theorem to the nonsingular curve
+  `y^2=x^3+7` over fields of characteristic not in `{2,3,7}`.
 - Classify external non-lifts, internal extension-only roots, identity
   prefixes, repeated-coordinate tangent branches, rational two-torsion,
   duplicate roots, topology-dependent permutations, and GLV lift signs.
@@ -733,6 +741,109 @@ How to verify:
 - independent producer/validator replay
 - finite-field and projective-specialization fault injection
 - recovery-state, permutation, and GLV-normalization review
+- typed-evidence, scientific-semantic, and decision-substrate gates
+- `lake build`, no-`sorry`, and axiom audit only if a Lean theorem is added
+- generated fixpoint and full repository CI
+
+Recorded result:
+- For the nonsingular curve `y^2=x^3+7` in characteristic not in `{2,3,7}`,
+  the homogeneous projective S3 caterpillar now has an exact set-theoretic
+  signed-point bridge over the algebraic closure and, after external
+  base-field liftability is imposed, over the base field.
+- Identity inputs, repeated non-two-torsion tangents, repeated rational
+  two-torsion, external non-lifts, internal extension-only prefixes,
+  duplicates, topology permutations, and GLV lift signs have explicit
+  recovery dispositions. Only the projective irrelevant pair `[0:0]` is
+  excluded; coordinate-equality loci remain.
+- The control replay fixes 120 coordinate orders, 240 normalized sign
+  preimages, 239 projective fibers, 238 affine fibers, one identity fiber,
+  and one normalized row `14P-R=O`. The secp256k1 M16 replay checks both the
+  raw sixteen-leaf group identity and the duplicate-compressed GLV row.
+- The direct S17 predicate remains unfrozen, and no reverse theorem above S4
+  exists in the current repository. Therefore the result is a scoped blocker,
+  not a direct-S17 bridge or a solving-cost result.
+- Assurance is `certificate_replayed`, source independence is
+  `not_established`, and calibration is `excluded_nonexperimental`.
+  `CQ-SEMAEV-S17-SYSTEM-COST` stays `partial` while solving cost is
+  `unpriced`; `B-PKC-M16-COMPLETE-COST-BRIDGE` is narrowed but stays open, and
+  the M16 cell stays open, seed-eligible, non-executable, and unselected. No
+  hypothesis, experiment, authorization, route promotion, rank, yield, or
+  cost claim is created.
+
+### TASK-018 - Freeze recursive projective S17 and prove the reverse projection
+
+Status: active_non_executable_projective_s17_bridge
+Kind: theorem | data | research | review
+Hypothesis: none. This task fixes the remaining mathematical predicate and
+reverse implication needed before any later cost contract can be meaningful;
+it is not a solver candidate.
+Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
+Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
+Authorization: none
+Why it matters: TASK-017 proves the complete set-theoretic projective S3-tree
+semantics and recovery domain, but `DirectS17` is still not a well-defined
+repository predicate above S4. Without a frozen recursive projective
+definition and reverse projection theorem, any S17 solver, rank, yield, or
+cost claim would price an ambiguous object.
+Decision boundary:
+- Freeze one recursive projective S17 definition with explicit base cases,
+  elimination variable order, homogeneous coordinates, resultant
+  normalization, declared degrees, and equality up to specified units.
+- Work on the nonsingular curve `y^2=x^3+7` over fields of characteristic not
+  in `{2,3,7}`; do not transfer the TASK-017 theorem to characteristic seven.
+- Keep the recursive S17 predicate, the homogeneous S3 caterpillar, its affine
+  chart, and recovery as separate predicates until both implications are
+  proved on a named field and domain.
+- Prove or independently replay the reverse projection above S4 against the
+  TASK-017 projective-tree predicate, retaining identity, tangent,
+  two-torsion, duplicate, extension-only, and non-lift strata.
+- Claim only set-theoretic equivalence unless radicality, scheme equality, or
+  multiplicity preservation is independently proved.
+- Do not infer degree of regularity, fill-in, memory, rank, yield, or total
+  work from recursive polynomial degree or input size.
+- CANS 2018 remains `full_text_unread`; the auxiliary-curve search remains
+  parked; `zero_retention_success` remains a valid outcome.
+Inputs:
+- `experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json`
+- `experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json`
+- `data/source_claim_extracts/petit_kosters_messeng2016.json`
+- `Ecdlp/Proved/SemaevThree.lean`
+- `Ecdlp/Proved/SemaevFour.lean`
+- `repo/ECDLP_TYPED_EVIDENCE_V0.json`
+- `CELL-M-PKC-SMOOTH-M16`
+- `B-PKC-M16-COMPLETE-COST-BRIDGE`
+Expected output:
+- One frozen recursive projective definition of S17 with base cases,
+  normalization, resultant degrees, coordinate order, and unit convention.
+- A forward and reverse set-theoretic projection contract between that
+  predicate and the TASK-017 homogeneous caterpillar on an explicit domain.
+- An independent symbolic or finite certificate that detects extraneous
+  resultant components without deleting valid identity, tangent, duplicate,
+  or two-torsion strata.
+- Either an exact recursive-S17/projective-tree bridge or the smallest named
+  counterexample and a further narrowed blocker.
+Exit criteria:
+- Every implication states its field, projective domain, irrelevant-ideal
+  exclusion, projection map, inverse witness, and exceptional strata.
+- Resultant normalization and degree declarations are replayable without
+  expanding or materializing S17.
+- No S17 expansion or evaluation, materialized M16 system, Sage, msolve, F4,
+  Groebner sweep, exact-target relation search, discrete-log computation,
+  experiment authorization, cost inference, or route promotion occurs.
+- M16 remains open and non-executable unless a later dated decision changes
+  the gate after independent review.
+Files allowed to edit:
+- a dedicated non-run recursive-projective-S17 certificate directory under
+  `experiments/engine/`
+- directly affected source, typed-evidence, task, test, and generated views
+- a narrow Lean module only after the statement and independent certificate
+  are stable
+Files that must be regenerated:
+- typed-evidence, engine, shadow-intake, graph, status, decision, bundle, and
+  site views affected by the result
+How to verify:
+- independent definition and reverse-projection replay
+- resultant-component and projective-specialization fault injection
 - typed-evidence, scientific-semantic, and decision-substrate gates
 - `lake build`, no-`sorry`, and axiom audit only if a Lean theorem is added
 - generated fixpoint and full repository CI

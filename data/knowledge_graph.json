@@ -29,12 +29,12 @@
     "selected_explorations": 0,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1108,
+    "edges": 1109,
     "by_edge_type": {
       "imports": 490,
       "member_of": 299,
       "requires_foundation": 41,
-      "grounded_in_source_claim": 40,
+      "grounded_in_source_claim": 41,
       "decision_grounded_in": 25,
       "supports": 24,
       "depends_on": 18,
@@ -6834,13 +6834,13 @@
         "Maintain the accepted Research Engine v0.2 lifecycle and its non-executable generation plane.",
         "Ingest WCC 2017 as a separate inspected source while CANS 2018 remains full-text unread.",
         "Use the existing knowledge graph as the finite evidence-bounded hypothesis-space projection.",
-        "Maintain the TASK-016 scoped semantic blocker and independently replay its conditional affine bridge, identity-prefix witness, extension-only lift witness, and finite recovery audit.",
-        "Under TASK-017, classify only the M16 projective identity strata, liftability, exceptional fibers, and exact recovery domain needed before any solving-cost argument.",
+        "Maintain the TASK-017 scoped exceptional-fiber blocker and independently replay its exact set-theoretic projective-tree bridge for nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, complete named-stratum table, recovery audit, and secp256k1 GLV lift-sign checks.",
+        "Under TASK-018, freeze only a recursive projective S17 definition with declared resultant degrees and prove or replay the reverse projection above S4 before any solver or cost claim.",
         "Maintain canonical provenance and regenerate affected views without changing the recorded claim boundary."
       ],
       "forbidden_work": [
         "Run any hypothesis experiment, general solver sweep, exact-target secp256k1 work, expensive scaling, or promotion experiment.",
-        "Expand or materialize S17 or a recursive system, or run Sage, msolve, F4, a solver, or a parameter sweep while CQ-SEMAEV-S17-SYSTEM-COST remains partial.",
+        "Expand or evaluate S17, materialize S17 or a recursive system, price solving from the recursive definition alone, or run Sage, msolve, F4, a solver, or a parameter sweep while CQ-SEMAEV-S17-SYSTEM-COST remains partial.",
         "Activate an auxiliary-curve search before a primary source supplies a finite family or search domain with a completeness criterion.",
         "Transfer WCC 2017 m=2 toy timings, speedups, or practical-limit conclusions to secp256k1 m=16 or to cryptographic scaling.",
         "Resume GLV-SEMAEV-ITER-001 or activate another route without a new dated decision.",
@@ -7369,10 +7369,10 @@
           "Composition, solving, and recovery costs improve the full attack."
         ],
         "known_cost": "No reliable project estimate; the existing six-variable toy presentation is explicitly non-faithful and descriptive.",
-        "current_evidence": "The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-curve realizations. In the second construction the auxiliary curve only shares the base field with the target; a self-isogeny of the auxiliary curve defines the root map. The paper explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. WCC 2017 adds bounded m=2 practicality evidence on selected small primes and a distinct p-plus-one trace extension; it cannot be transferred quantitatively to m=16 or substituted for the auxiliary curve. Historical P4 did not implement either PKC construction and remains only an inconclusive negative control; it is not evidence against the faithful route. TASK-016 independently replayed a conditional affine M16 semantic bridge and exact identity-prefix and extension-only blockers. It narrows the required recovery domain but supplies no global projective bridge, relation yield, rank, or solving cost.",
+        "current_evidence": "The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-curve realizations. In the second construction the auxiliary curve only shares the base field with the target; a self-isogeny of the auxiliary curve defines the root map. The paper explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. WCC 2017 adds bounded m=2 practicality evidence on selected small primes and a distinct p-plus-one trace extension; it cannot be transferred quantitatively to m=16 or substituted for the auxiliary curve. Historical P4 did not implement either PKC construction and remains only an inconclusive negative control; it is not evidence against the faithful route. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 independently replayed an exact set-theoretic homogeneous projective S3-tree bridge, every named exceptional lift and identity stratum, deterministic supplied-coordinate recovery, and raw and compressed secp256k1 GLV lift-sign checks. Assurance is certificate_replayed, source independence is not_established, and calibration is excluded_nonexperimental. The barrier is narrowed but open: CQ-SEMAEV-S17-SYSTEM-COST remains partial while the direct S17 predicate and reverse projection above S4 remain unfrozen, and relation yield, rank, and solving cost remain unpriced.",
         "success_gate": "First reproduce the exact construction from a verified primary source, then compare it under the common evaluation contract.",
         "stop_condition": "Reject low-bit filters, redundant auxiliary variables, or presentation-only degree changes as substitutes for the cited construction.",
-        "next_action": "Keep the route parked. TASK-016 recorded a scoped M16 semantic blocker with zero retained hypotheses. TASK-017 gives sole desk priority to exceptional fibers, projective identity strata, liftability, and the exact recovery domain for CELL-M-PKC-SMOOTH-M16, RSI-D8BBA6340789, and CQ-SEMAEV-S17-SYSTEM-COST, with no system materialization or solver execution. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.",
+        "next_action": "Keep the route parked. TASK-017 recorded a scoped M16 exceptional-fiber blocker with zero retained hypotheses. TASK-018 gives sole desk priority to freezing a recursive projective S17 definition and proving or replaying the reverse projection above S4 for CELL-M-PKC-SMOOTH-M16, RSI-D8BBA6340789, and CQ-SEMAEV-S17-SYSTEM-COST, with no S17 expansion or evaluation, system materialization, solver execution, or cost inference. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.",
         "authorized_experiment": false,
         "hypothesis_ids": [
           "HYP_GLV_SEMAEV_001"
@@ -7392,7 +7392,9 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md",
           "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
-          "experiments/engine/pkc_smooth_m16_semantic_bridge/README.md"
+          "experiments/engine/pkc_smooth_m16_semantic_bridge/README.md",
+          "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
+          "experiments/engine/pkc_smooth_m16_exceptional_fibers/README.md"
         ],
         "source_ids": [
           "petit_kosters_messeng2016",
@@ -9071,8 +9073,8 @@
       "generator_id": "ecdlp-hypothesis-generation-v0",
       "source_hashes": {
         "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-        "typed_evidence_state_sha256": "a132de1fa15508a529436e3a3b07fd3ee7c56df143a1a1569287ee637021d3d5",
-        "research_claim_state_sha256": "c7463d4d9415dd4ce0b5820c0a3ba6cd1e3e5dbbf5fa79129334f72815538e76",
+        "typed_evidence_state_sha256": "10e28cb799f0143e8e0b561edfb06fc80721625f9956c5f437abcb522ae8dc19",
+        "research_claim_state_sha256": "eb65d94952eb94d0842c7f41689493aa2449802a59122180c5f321f19bb1f77b",
         "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
       },
@@ -9095,7 +9097,7 @@
         "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
         "target_id": "secp256k1-classical-single-target-plain",
         "counts": {
-          "source_claims": 21,
+          "source_claims": 22,
           "target_properties": 5,
           "mechanisms": 7,
           "cells": 7,
@@ -9107,10 +9109,10 @@
           "desk_decisions": 3
         },
         "source_hashes": {
-          "policy_sha256": "c73c111b8ace6da0ecac14b45d346ce691af61a844505a2ed27b0c469e275d82",
-          "decision_substrate_sha256": "d6106f5cd41fdd49421f9ba6c38e9c630a6823963a7de713f9d38dedc12365db",
+          "policy_sha256": "3ecdbb250b32f56e5cd1d24e2faaefbf5a99f57002361ca9a7cacc68f30bed06",
+          "decision_substrate_sha256": "09dff06cf25cf57a2009c774df33d8e263ec9da75f3c5bb449303e9f1adbaff8",
           "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-          "evidence_files_sha256": "06939b0965ad139ab03331a2d679c220855c2058fc65c1f64bf764e28356454e",
+          "evidence_files_sha256": "bcb6463a0729fc6da6afb2361f522a6be13cd9d6d13724b9d1431bc740ba54c3",
           "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
         },
         "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
@@ -9138,15 +9140,15 @@
           "route_promotions": 0,
           "exact_target_runs": 0
         },
-        "state_sha256": "c7463d4d9415dd4ce0b5820c0a3ba6cd1e3e5dbbf5fa79129334f72815538e76"
+        "state_sha256": "eb65d94952eb94d0842c7f41689493aa2449802a59122180c5f321f19bb1f77b"
       },
       "seed_coverage": {
         "threshold": 12,
         "eligible_seed_count": 2,
         "overflow_triggered": false,
         "represented_seed_ids": [
-          "HGS-8F8117445DE1",
-          "HGS-44E6487F3768"
+          "HGS-8C3820EB9E94",
+          "HGS-846C89AE66EE"
         ],
         "represented_cell_ids": [
           "CELL-M-PKC-AUXILIARY-CURVE",
@@ -9157,10 +9159,10 @@
       },
       "generated_seeds": [
         {
-          "seed_id": "HGS-8F8117445DE1",
+          "seed_id": "HGS-8C3820EB9E94",
           "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
           "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-          "claim_state_digest": "c7463d4d9415dd4ce0b5820c0a3ba6cd1e3e5dbbf5fa79129334f72815538e76",
+          "claim_state_digest": "eb65d94952eb94d0842c7f41689493aa2449802a59122180c5f321f19bb1f77b",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9242,7 +9244,7 @@
             "experiments/p4_petit/README.md",
             "experiments/p4_petit/RESULTS.md"
           ],
-          "deduplication_key": "8f8117445de1ee2d26a5e8355b510550aeb8e4ac59ad04fde9a51f69c6b60713",
+          "deduplication_key": "8c3820eb9e94d5825c48c8b4f2cc9809318a0bae8514a38a107761c3974efb4e",
           "proposal_packet": {
             "required_sections": [
               "new_premise",
@@ -9304,10 +9306,10 @@
           }
         },
         {
-          "seed_id": "HGS-44E6487F3768",
+          "seed_id": "HGS-846C89AE66EE",
           "cell_id": "CELL-M-PKC-SMOOTH-M16",
-          "typed_evidence_digest": "b70e12885d46b1e6b3cb1f2a00df6a8e8b4f9e654685942b27cee8342b14cfbc",
-          "claim_state_digest": "c7463d4d9415dd4ce0b5820c0a3ba6cd1e3e5dbbf5fa79129334f72815538e76",
+          "typed_evidence_digest": "ce8479daf271b6427c4c0f048e90614d5570b11afc389769e358a45988219d2b",
+          "claim_state_digest": "eb65d94952eb94d0842c7f41689493aa2449802a59122180c5f321f19bb1f77b",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9327,7 +9329,7 @@
             "status": "open",
             "intake_mode": "desk_cost_bridge",
             "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
-            "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. TASK-016 fixes the conditional affine semantics and a finite recovery audit but shows that identity prefixes and extension-only fibers prevent an unconditional fixed-topology substitution; the complete projective recovery domain and generalized-root cost remain unresolved.",
+            "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs; the direct S17 predicate and reverse projection above S4 remain unresolved before any generalized-root cost can be priced.",
             "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
             "cost_quantity": {
               "id": "CQ-SEMAEV-S17-SYSTEM-COST",
@@ -9341,6 +9343,7 @@
                 "SC-PKC-RELATION-YIELD",
                 "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
                 "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
+                "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
                 "SC-SEMAEV-RELATION-SEMANTICS"
               ]
             },
@@ -9375,6 +9378,7 @@
               }
             ],
             "source_claim_ids": [
+              "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
               "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
               "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
               "SC-PKC-RELATION-YIELD",
@@ -9384,7 +9388,7 @@
               "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
               "SC-SEMAEV-RELATION-SEMANTICS"
             ],
-            "boundary": "This open desk-cost cell has exact input presentations, conditional affine semantics on the base-field-liftable nonidentity-prefix stratum, and a finite control recovery audit, but no complete projective exceptional-fiber or cost bridge. The scoped blocker does not justify an S17 or recursive-system materialization, solver run, target computation, hypothesis retention, or route promotion."
+            "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, and deterministic control and secp256k1 GLV recovery checks, but no frozen direct S17 predicate, reverse theorem above S4, or complete cost bridge. CQ-SEMAEV-S17-SYSTEM-COST remains partial and solving cost remains unpriced. The scoped blocker does not justify S17 expansion or evaluation, recursive-system materialization, a solver run, target computation, hypothesis retention, or route promotion."
           },
           "target_feature": {
             "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
@@ -9412,7 +9416,7 @@
             "experiments/p4_petit/README.md",
             "experiments/p4_petit/RESULTS.md"
           ],
-          "deduplication_key": "44e6487f3768e0cfa773869cf960e3e43599e2b8219f40eb3c290ab388fa5af5",
+          "deduplication_key": "846c89ae66eed7cf248a0b57f3091794ca8c9f402a9137ea4aefbf0184794727",
           "proposal_packet": {
             "required_sections": [
               "new_premise",
@@ -9799,6 +9803,7 @@
           "cell:CELL-M-PKC-SMOOTH-M16",
           "data/source_claim_extracts/petit_kosters_messeng2016.json",
           "experiments/engine/pkc_smooth_desk_screen/artifact.json",
+          "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
           "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
           "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
         ],
@@ -10215,7 +10220,7 @@
     "state_source": "data/typed_evidence_state.json",
     "policy_source": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
     "counts": {
-      "source_claims": 21,
+      "source_claims": 22,
       "target_properties": 5,
       "mechanisms": 7,
       "cells": 7,
@@ -10227,10 +10232,10 @@
       "desk_decisions": 3
     },
     "source_hashes": {
-      "policy_sha256": "c73c111b8ace6da0ecac14b45d346ce691af61a844505a2ed27b0c469e275d82",
-      "decision_substrate_sha256": "d6106f5cd41fdd49421f9ba6c38e9c630a6823963a7de713f9d38dedc12365db",
+      "policy_sha256": "3ecdbb250b32f56e5cd1d24e2faaefbf5a99f57002361ca9a7cacc68f30bed06",
+      "decision_substrate_sha256": "09dff06cf25cf57a2009c774df33d8e263ec9da75f3c5bb449303e9f1adbaff8",
       "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-      "evidence_files_sha256": "06939b0965ad139ab03331a2d679c220855c2058fc65c1f64bf764e28356454e",
+      "evidence_files_sha256": "bcb6463a0729fc6da6afb2361f522a6be13cd9d6d13724b9d1431bc740ba54c3",
       "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
     },
     "trust_boundary": {
@@ -10375,7 +10380,7 @@
           }
         ],
         "seed_eligible": true,
-        "evidence_digest": "b70e12885d46b1e6b3cb1f2a00df6a8e8b4f9e654685942b27cee8342b14cfbc",
+        "evidence_digest": "ce8479daf271b6427c4c0f048e90614d5570b11afc389769e358a45988219d2b",
         "authorization": "none"
       },
       {
@@ -15626,6 +15631,11 @@
     },
     {
       "from": "CELL-M-PKC-SMOOTH-M16",
+      "to": "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-PKC-SMOOTH-M16",
       "to": "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
       "type": "grounded_in_source_claim"
     },
@@ -15838,12 +15848,12 @@
       "type": "binds_unresolved_question"
     },
     {
-      "from": "HGS-8F8117445DE1",
+      "from": "HGS-8C3820EB9E94",
       "to": "CELL-M-PKC-AUXILIARY-CURVE",
       "type": "generated_from_cell"
     },
     {
-      "from": "HGS-44E6487F3768",
+      "from": "HGS-846C89AE66EE",
       "to": "CELL-M-PKC-SMOOTH-M16",
       "type": "generated_from_cell"
     },

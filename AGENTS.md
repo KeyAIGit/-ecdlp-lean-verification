@@ -128,13 +128,14 @@ branch from current `main`; preserve any unrelated local changes.
   non-executing and authorizes no route promotion.
 - `TASK-014` closed the first post-v0.2 evidence and arithmetic desk cycle.
   Phase D remains blocked with zero retained candidates.
-- `TASK-015` completed the M16 symbolic desk. `TASK-016` then proved a scoped
-  semantic blocker: the affine S3 tree requires base-field liftability and
-  nonidentity-prefix localization. `TASK-017` is the current central task and
-  gives sole desk priority to exceptional fibers, projective identity strata,
-  liftability, and the exact recovery domain for
-  `CELL-M-PKC-SMOOTH-M16`. This is not a selected hypothesis, candidate,
-  experiment, or attack route.
+- `TASK-015` completed the M16 symbolic desk. `TASK-016` isolated the affine
+  liftability and identity-prefix blocker. `TASK-017` then proved the exact
+  set-theoretic homogeneous projective-tree bridge, classified every named
+  exceptional stratum, and replayed exact recovery and GLV lift signs.
+  `TASK-018` is the current central task and gives sole desk priority to
+  freezing a recursive projective S17 definition and proving or replaying the
+  reverse projection above S4 for `CELL-M-PKC-SMOOTH-M16`. This is not a
+  selected hypothesis, candidate, experiment, cost claim, or attack route.
 - `TASK-008` remains the parked proposal-intake lane. Intake does not bypass
   owner authorization or authorize promotion by itself.
 - The division-polynomial, torsion, Weil, Semaev, cost-model, lattice, isogeny,

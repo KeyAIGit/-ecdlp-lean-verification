@@ -108,7 +108,7 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 21,
+        "source_claims": 22,
         "cells": 7,
         "seed_eligible_cells": 2,
         "desk_decisions": 3,
@@ -138,6 +138,10 @@ def validate_semantics(
             "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
             "semantic bridge certificate",
         ),
+        (
+            "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
+            "exceptional-fiber certificate",
+        ),
     ):
         if claim_id not in m16_cell.get("source_claim_ids", []):
             problems.append(f"M16 cell must retain its {label}")
@@ -162,6 +166,48 @@ def validate_semantics(
         problems.append(
             "M16 cost quantity must retain its semantic bridge certificate"
         )
+    exceptional_claim = typed_claims.get(
+        "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT", {}
+    )
+    if exceptional_claim.get("read_status") != "certificate_replayed":
+        problems.append(
+            "M16 exceptional-fiber assurance must remain certificate_replayed"
+        )
+    if exceptional_claim.get("artifact_sha256") != (
+        "578db732807a452e26de03dcd338d62c25a7d90490a62bbf427b1f96c3a869cf"
+    ):
+        problems.append("M16 exceptional-fiber artifact hash drifted")
+    if exceptional_claim.get("evidence_path") != (
+        "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json"
+    ):
+        problems.append("M16 exceptional-fiber evidence path drifted")
+    exceptional_statement = exceptional_claim.get("statement", "")
+    if (
+        "nonsingular curve y^2=x^3+7" not in exceptional_statement
+        or "characteristic not in {2,3,7}" not in exceptional_statement
+    ):
+        problems.append(
+            "M16 exceptional-fiber claim must retain its nonsingular "
+            "characteristic boundary"
+        )
+    exceptional_boundary = exceptional_claim.get("boundary", "")
+    for token, label in (
+        ("source_independence is not_established", "source independence"),
+        ("calibration is excluded_nonexperimental", "calibration"),
+        ("CQ-SEMAEV-S17-SYSTEM-COST remains partial", "partial cost quantity"),
+        ("solving cost is unpriced", "unpriced solving cost"),
+        ("barrier narrowed but open", "narrowed-open barrier"),
+    ):
+        if token not in exceptional_boundary:
+            problems.append(
+                f"M16 exceptional-fiber claim must retain {label}"
+            )
+    if "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT" not in m16_cell.get(
+        "cost_quantity", {}
+    ).get("source_claim_ids", []):
+        problems.append(
+            "M16 cost quantity must retain its exceptional-fiber certificate"
+        )
     m16_barrier = typed_barriers.get(
         "B-PKC-M16-COMPLETE-COST-BRIDGE", {}
     )
@@ -172,6 +218,12 @@ def validate_semantics(
     ):
         problems.append(
             "M16 complete-cost barrier must retain its semantic bridge certificate"
+        )
+    if "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT" not in m16_barrier.get(
+        "source_claim_ids", []
+    ):
+        problems.append(
+            "M16 complete-cost barrier must retain its exceptional-fiber certificate"
         )
     if m16_cell.get("authorization") != "none":
         problems.append("M16 semantic result cannot authorize execution")

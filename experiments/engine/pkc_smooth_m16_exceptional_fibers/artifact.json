@@ -1,0 +1,2017 @@
+{
+  "artifact_id": "PKC-SMOOTH-M16-EXCEPTIONAL-FIBERS-001",
+  "bridge_theorem": {
+    "affine_chart": "AffCat_Fp iff such a relation exists with every fixed-order prefix of sizes 2 through 15 nonidentity",
+    "assumptions": [
+      "E/k is the nonsingular curve y^2=x^3+7",
+      "char(k) not in {2,3,7}",
+      "the curve discriminant -16*27*7^2 is nonzero in k"
+    ],
+    "direct_S17_bridge": "unresolved_not_frozen",
+    "fp_projective_tree": "when every external coordinate has an E(F_p) lift, RatCat_Fp iff a base-field signed relation exists",
+    "global_projective_tree": "induction over the 15 left-fold vertices gives GeoCat_kbar iff the chosen external Kummer coordinates admit a signed-point relation over the algebraic closure",
+    "local_case_split": [
+      "distinct finite inputs",
+      "repeated finite non-two-torsion inputs",
+      "repeated finite two-torsion inputs",
+      "at least one identity input"
+    ],
+    "local_lemma": "for P,Q over the algebraic closure of such a field, H(kappa(P),kappa(Q),W)=0 iff W=kappa(P+Q) or W=kappa(P-Q)",
+    "proof_method": "exact local formulas followed by induction",
+    "status": "exact_set_theoretic_bridge"
+  },
+  "claim_boundaries": {
+    "coordinate_difference_saturation": "forbidden",
+    "global_s17_equivalence": "not_claimed",
+    "multiplicity_equality": "not_claimed",
+    "radicality": "not_claimed",
+    "result_scope": "set_theoretic",
+    "scheme_equivalence": "not_claimed"
+  },
+  "control_recovery_replay": {
+    "coordinate_multiset": [
+      {
+        "basis": "P",
+        "multiplicity": 14,
+        "scalar_on_P": 1,
+        "x": 555781
+      },
+      {
+        "basis": "50P",
+        "multiplicity": 2,
+        "scalar_on_P": 50,
+        "x": 169010
+      }
+    ],
+    "exact_group_checks": {
+      "all_240_raw_leaf_sums_equal_oriented_target": true,
+      "all_240_target_normalized_leaf_sums_equal_R": true,
+      "normalized_row_sum": {
+        "kind": "identity"
+      }
+    },
+    "fiber_accounting": {
+      "affine_fibers": 238,
+      "fiber_preimage_multiplicity_profile": {
+        "1": 238,
+        "2": 1
+      },
+      "identity_fiber_masks": [
+        0,
+        32766
+      ],
+      "identity_fibers": 1,
+      "normalized_preimages": 240,
+      "preimage_records_sha256": "268e280341da1b0435eaa56cc4571aac290f18ccdd2e76b109278f5b29600484",
+      "projective_fibers": 239,
+      "unique_orders": 120
+    },
+    "field": {
+      "D": 564522,
+      "curve": "y^2 = x^3 + 7",
+      "curve_order": 564469,
+      "curve_order_factors": [
+        163,
+        3463
+      ],
+      "factor_chain": [
+        2,
+        3,
+        7,
+        13441
+      ],
+      "p": 564523,
+      "p_minus_one_equals_D": true,
+      "rational_two_torsion_x": []
+    },
+    "hashes": {
+      "backpointer_edges": "96e4a2dc4cda35762c5fde8dbd3874598a6f21985af423f2bde15bbc503d60a6",
+      "fiber_summaries": "85b328da27047098662fcbc6efd16985394070251edb34b1135eb5589ecdfa7f",
+      "normalized_row": "2799fac96b14cea9b0c61f96dfefd0b6a2f55efabf408e86489d78ca83e45ebc"
+    },
+    "normalized_row": {
+      "basis_coefficients_mod_3463": {
+        "50P": 0,
+        "P": 14
+      },
+      "display": "14P - R = O",
+      "duplicate_aggregation": "the two 50P coefficients sum to zero",
+      "preimage_count": 240,
+      "target": "R",
+      "target_coefficient_mod_3463": 3462
+    },
+    "ordered_topologies": {
+      "definition": "lexicographic choices of the two zero-based positions occupied by 50P",
+      "first": {
+        "leaf_scalars_on_P": [
+          50,
+          50,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "ordering_index": 0,
+        "repeated_positions_zero_based": [
+          0,
+          1
+        ]
+      },
+      "last": {
+        "leaf_scalars_on_P": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          50,
+          50
+        ],
+        "ordering_index": 119,
+        "repeated_positions_zero_based": [
+          14,
+          15
+        ]
+      },
+      "records_sha256": "0eb5b76aecb41ced961284e6c2090d7d8431d4e1e508dc87511c66cb00e7b938",
+      "unique_orders": 120
+    },
+    "subgroup": {
+      "P": {
+        "kind": "affine",
+        "x": 555781,
+        "y": 547362
+      },
+      "cofactor": 163,
+      "order": 3463,
+      "order_check": "[3463]P = O",
+      "repeated_50P": {
+        "kind": "affine",
+        "x": 169010,
+        "y": 177754
+      },
+      "seed": {
+        "kind": "affine",
+        "x": 2,
+        "y": 100588
+      },
+      "target_R_14P": {
+        "kind": "affine",
+        "x": 442919,
+        "y": 534774
+      }
+    },
+    "supplied_internal_dp": {
+      "accepted_terminal_records_sha256": "ea4bd5456bda97fd95a9ec5c059fe5d0b8e38b9f0c6a7e81fc9328ee8f3c9f80",
+      "all_projective_fibers_replayed": true,
+      "backpointer_edge_count": 3599,
+      "backpointer_edges_sha256": "96e4a2dc4cda35762c5fde8dbd3874598a6f21985af423f2bde15bbc503d60a6",
+      "fiber_summaries_sha256": "85b328da27047098662fcbc6efd16985394070251edb34b1135eb5589ecdfa7f",
+      "first_leaf_sign_normalization": "+1",
+      "identity_fiber": {
+        "accepted_masks": [
+          0,
+          32766
+        ],
+        "affine_admissible": false,
+        "backpointer_edge_count": 29,
+        "backpointer_edges": [
+          {
+            "child_scalar": 0,
+            "leaf_index_zero_based": 1,
+            "parent_mask": 0,
+            "parent_scalar": 50,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 3462,
+            "leaf_index_zero_based": 2,
+            "parent_mask": 0,
+            "parent_scalar": 0,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 1,
+            "leaf_index_zero_based": 2,
+            "parent_mask": 0,
+            "parent_scalar": 0,
+            "sign": 1,
+            "tail_mask": 2
+          },
+          {
+            "child_scalar": 2,
+            "leaf_index_zero_based": 3,
+            "parent_mask": 2,
+            "parent_scalar": 1,
+            "sign": 1,
+            "tail_mask": 6
+          },
+          {
+            "child_scalar": 3461,
+            "leaf_index_zero_based": 3,
+            "parent_mask": 0,
+            "parent_scalar": 3462,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 3,
+            "leaf_index_zero_based": 4,
+            "parent_mask": 6,
+            "parent_scalar": 2,
+            "sign": 1,
+            "tail_mask": 14
+          },
+          {
+            "child_scalar": 3460,
+            "leaf_index_zero_based": 4,
+            "parent_mask": 0,
+            "parent_scalar": 3461,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 4,
+            "leaf_index_zero_based": 5,
+            "parent_mask": 14,
+            "parent_scalar": 3,
+            "sign": 1,
+            "tail_mask": 30
+          },
+          {
+            "child_scalar": 3459,
+            "leaf_index_zero_based": 5,
+            "parent_mask": 0,
+            "parent_scalar": 3460,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 5,
+            "leaf_index_zero_based": 6,
+            "parent_mask": 30,
+            "parent_scalar": 4,
+            "sign": 1,
+            "tail_mask": 62
+          },
+          {
+            "child_scalar": 3458,
+            "leaf_index_zero_based": 6,
+            "parent_mask": 0,
+            "parent_scalar": 3459,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 6,
+            "leaf_index_zero_based": 7,
+            "parent_mask": 62,
+            "parent_scalar": 5,
+            "sign": 1,
+            "tail_mask": 126
+          },
+          {
+            "child_scalar": 3457,
+            "leaf_index_zero_based": 7,
+            "parent_mask": 0,
+            "parent_scalar": 3458,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 7,
+            "leaf_index_zero_based": 8,
+            "parent_mask": 126,
+            "parent_scalar": 6,
+            "sign": 1,
+            "tail_mask": 254
+          },
+          {
+            "child_scalar": 3456,
+            "leaf_index_zero_based": 8,
+            "parent_mask": 0,
+            "parent_scalar": 3457,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 8,
+            "leaf_index_zero_based": 9,
+            "parent_mask": 254,
+            "parent_scalar": 7,
+            "sign": 1,
+            "tail_mask": 510
+          },
+          {
+            "child_scalar": 3455,
+            "leaf_index_zero_based": 9,
+            "parent_mask": 0,
+            "parent_scalar": 3456,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 9,
+            "leaf_index_zero_based": 10,
+            "parent_mask": 510,
+            "parent_scalar": 8,
+            "sign": 1,
+            "tail_mask": 1022
+          },
+          {
+            "child_scalar": 3454,
+            "leaf_index_zero_based": 10,
+            "parent_mask": 0,
+            "parent_scalar": 3455,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 10,
+            "leaf_index_zero_based": 11,
+            "parent_mask": 1022,
+            "parent_scalar": 9,
+            "sign": 1,
+            "tail_mask": 2046
+          },
+          {
+            "child_scalar": 3453,
+            "leaf_index_zero_based": 11,
+            "parent_mask": 0,
+            "parent_scalar": 3454,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 11,
+            "leaf_index_zero_based": 12,
+            "parent_mask": 2046,
+            "parent_scalar": 10,
+            "sign": 1,
+            "tail_mask": 4094
+          },
+          {
+            "child_scalar": 3452,
+            "leaf_index_zero_based": 12,
+            "parent_mask": 0,
+            "parent_scalar": 3453,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 12,
+            "leaf_index_zero_based": 13,
+            "parent_mask": 4094,
+            "parent_scalar": 11,
+            "sign": 1,
+            "tail_mask": 8190
+          },
+          {
+            "child_scalar": 3451,
+            "leaf_index_zero_based": 13,
+            "parent_mask": 0,
+            "parent_scalar": 3452,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 13,
+            "leaf_index_zero_based": 14,
+            "parent_mask": 8190,
+            "parent_scalar": 12,
+            "sign": 1,
+            "tail_mask": 16382
+          },
+          {
+            "child_scalar": 3450,
+            "leaf_index_zero_based": 14,
+            "parent_mask": 0,
+            "parent_scalar": 3451,
+            "sign": -1,
+            "tail_mask": 0
+          },
+          {
+            "child_scalar": 14,
+            "leaf_index_zero_based": 15,
+            "parent_mask": 16382,
+            "parent_scalar": 13,
+            "sign": 1,
+            "tail_mask": 32766
+          },
+          {
+            "child_scalar": 3449,
+            "leaf_index_zero_based": 15,
+            "parent_mask": 0,
+            "parent_scalar": 3450,
+            "sign": -1,
+            "tail_mask": 0
+          }
+        ],
+        "fiber_index": 0,
+        "identity_prefix_sizes": [
+          2
+        ],
+        "internal_coordinates": [
+          {
+            "X": 1,
+            "Z": 0,
+            "kind": "identity"
+          },
+          {
+            "X": 555781,
+            "Z": 1,
+            "kind": "finite",
+            "x": 555781
+          },
+          {
+            "X": 203372,
+            "Z": 1,
+            "kind": "finite",
+            "x": 203372
+          },
+          {
+            "X": 409793,
+            "Z": 1,
+            "kind": "finite",
+            "x": 409793
+          },
+          {
+            "X": 503026,
+            "Z": 1,
+            "kind": "finite",
+            "x": 503026
+          },
+          {
+            "X": 427601,
+            "Z": 1,
+            "kind": "finite",
+            "x": 427601
+          },
+          {
+            "X": 335786,
+            "Z": 1,
+            "kind": "finite",
+            "x": 335786
+          },
+          {
+            "X": 451942,
+            "Z": 1,
+            "kind": "finite",
+            "x": 451942
+          },
+          {
+            "X": 155978,
+            "Z": 1,
+            "kind": "finite",
+            "x": 155978
+          },
+          {
+            "X": 12365,
+            "Z": 1,
+            "kind": "finite",
+            "x": 12365
+          },
+          {
+            "X": 287702,
+            "Z": 1,
+            "kind": "finite",
+            "x": 287702
+          },
+          {
+            "X": 302052,
+            "Z": 1,
+            "kind": "finite",
+            "x": 302052
+          },
+          {
+            "X": 466635,
+            "Z": 1,
+            "kind": "finite",
+            "x": 466635
+          },
+          {
+            "X": 89193,
+            "Z": 1,
+            "kind": "finite",
+            "x": 89193
+          }
+        ],
+        "internal_coordinates_sha256": "80fc56885c6544365e2ec5c672a0222b5c52374a9d38d9d42d2d6a816f818abb",
+        "layer_backpointer_path_counts": [
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "layer_state_widths": [
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "layers": [
+          {
+            "after_leaf_count": 1,
+            "backpointer_path_count": 1,
+            "state_scalars": [
+              50
+            ]
+          },
+          {
+            "after_leaf_count": 2,
+            "backpointer_path_count": 1,
+            "state_scalars": [
+              0
+            ]
+          },
+          {
+            "after_leaf_count": 3,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              1,
+              3462
+            ]
+          },
+          {
+            "after_leaf_count": 4,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              2,
+              3461
+            ]
+          },
+          {
+            "after_leaf_count": 5,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              3,
+              3460
+            ]
+          },
+          {
+            "after_leaf_count": 6,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              4,
+              3459
+            ]
+          },
+          {
+            "after_leaf_count": 7,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              5,
+              3458
+            ]
+          },
+          {
+            "after_leaf_count": 8,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              6,
+              3457
+            ]
+          },
+          {
+            "after_leaf_count": 9,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              7,
+              3456
+            ]
+          },
+          {
+            "after_leaf_count": 10,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              8,
+              3455
+            ]
+          },
+          {
+            "after_leaf_count": 11,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              9,
+              3454
+            ]
+          },
+          {
+            "after_leaf_count": 12,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              10,
+              3453
+            ]
+          },
+          {
+            "after_leaf_count": 13,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              11,
+              3452
+            ]
+          },
+          {
+            "after_leaf_count": 14,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              12,
+              3451
+            ]
+          },
+          {
+            "after_leaf_count": 15,
+            "backpointer_path_count": 2,
+            "state_scalars": [
+              13,
+              3450
+            ]
+          }
+        ],
+        "ordering_index": 0,
+        "preimage_count": 2,
+        "repeated_positions_zero_based": [
+          0,
+          1
+        ],
+        "target_orientations": [
+          -1,
+          1
+        ]
+      },
+      "identity_state_rule": "retain O as [1:0] in projective mode",
+      "leaf_state_rule": "start at the positive lift of leaf 1; for each later leaf try both lifts",
+      "ordinary_backpointer_edges_per_fiber": 15,
+      "ordinary_layer_state_widths": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "supplied_coordinate_rule": "after leaves 2 through 15 retain a point state exactly when its Kummer coordinate equals the supplied [U_i:V_i]",
+      "terminal_rule": "accept exactly R or -R after leaf 16"
+    }
+  },
+  "depends_on": {
+    "artifact": "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
+    "digest_match": true,
+    "observed_sha256": "963eea60097807ae0aa66a5d881b0c34bf0497ade53ed4d37d38861a73887c19",
+    "required_sha256": "963eea60097807ae0aa66a5d881b0c34bf0497ade53ed4d37d38861a73887c19"
+  },
+  "frobenius_classification": {
+    "field_scope": "E/F_p is nonsingular and p not in {2,3,7}",
+    "minus_space": "E_minus=ker(pi+1)",
+    "plus_space": "E_plus=ker(pi-1)=E(F_p)",
+    "prefix_decomposition": "A=B+T with B in E_plus and T in E_minus",
+    "rational_kummer_criterion": "kappa(A) in P1(F_p) iff pi(A)=A or pi(A)=-A iff 2T=O or 2B=O",
+    "secp256k1_specialization": "absence of rational two-torsion reduces the criterion to T=O or B=O",
+    "topology_consequence": "an order is projectively F_p-admissible exactly when every prefix satisfies the criterion; affine admissibility also requires every prefix to differ from O"
+  },
+  "frozen_predicates": {
+    "affine_chart": {
+      "dehomogenization": "W_i=[u_i:1]",
+      "field_scope": "p not in {2,3,7}; discriminant(E) is nonzero",
+      "identity_excluded": true,
+      "localization": "V_2*...*V_15 != 0",
+      "name": "AffCat_Fp",
+      "parent": "RatCat_Fp",
+      "status": "frozen"
+    },
+    "algebraic_closure_projective_semantics": {
+      "equations": [
+        "H(Q_1,Q_2,W_2)=0",
+        "H(W_2,Q_3,W_3)=0",
+        "H(W_3,Q_4,W_4)=0",
+        "H(W_4,Q_5,W_5)=0",
+        "H(W_5,Q_6,W_6)=0",
+        "H(W_6,Q_7,W_7)=0",
+        "H(W_7,Q_8,W_8)=0",
+        "H(W_8,Q_9,W_9)=0",
+        "H(W_9,Q_10,W_10)=0",
+        "H(W_10,Q_11,W_11)=0",
+        "H(W_11,Q_12,W_12)=0",
+        "H(W_12,Q_13,W_13)=0",
+        "H(W_13,Q_14,W_14)=0",
+        "H(W_14,Q_15,W_15)=0",
+        "H(W_15,Q_16,Q_T)=0"
+      ],
+      "external_domain": "Q_1,...,Q_16,Q_T in P1(k)",
+      "field_scope": "nonsingular E:y^2=x^3+7 with char(k) not in {2,3,7}",
+      "internal_domain": "W_2,...,W_15 in P1(algebraic_closure(k))",
+      "internal_variables": [
+        "W_2=[U_2:V_2]",
+        "W_3=[U_3:V_3]",
+        "W_4=[U_4:V_4]",
+        "W_5=[U_5:V_5]",
+        "W_6=[U_6:V_6]",
+        "W_7=[U_7:V_7]",
+        "W_8=[U_8:V_8]",
+        "W_9=[U_9:V_9]",
+        "W_10=[U_10:V_10]",
+        "W_11=[U_11:V_11]",
+        "W_12=[U_12:V_12]",
+        "W_13=[U_13:V_13]",
+        "W_14=[U_14:V_14]",
+        "W_15=[U_15:V_15]"
+      ],
+      "name": "GeoCat_kbar",
+      "status": "frozen"
+    },
+    "base_recovery": {
+      "field_scope": "p not in {2,3,7}; discriminant(E) is nonzero",
+      "inputs": "ordered leaf coordinates, supplied projective internals, and full target point R",
+      "leaf_requirement": "every finite leaf has an E(F_p) lift",
+      "method": "exact point-state DP with retained backpointers",
+      "name": "Recover_Fp",
+      "status": "frozen",
+      "terminal_requirement": "the final state is R or -R"
+    },
+    "direct_S17": {
+      "name": "DirectS17",
+      "polynomial_frozen": false,
+      "predicate_defined": false,
+      "reason": "the repository has no frozen recursive projective definition and no reverse theorem above S4",
+      "status": "unresolved_not_frozen"
+    },
+    "fp_rational_projective_internals": {
+      "equations": [
+        "H(Q_1,Q_2,W_2)=0",
+        "H(W_2,Q_3,W_3)=0",
+        "H(W_3,Q_4,W_4)=0",
+        "H(W_4,Q_5,W_5)=0",
+        "H(W_5,Q_6,W_6)=0",
+        "H(W_6,Q_7,W_7)=0",
+        "H(W_7,Q_8,W_8)=0",
+        "H(W_8,Q_9,W_9)=0",
+        "H(W_9,Q_10,W_10)=0",
+        "H(W_10,Q_11,W_11)=0",
+        "H(W_11,Q_12,W_12)=0",
+        "H(W_12,Q_13,W_13)=0",
+        "H(W_13,Q_14,W_14)=0",
+        "H(W_14,Q_15,W_15)=0",
+        "H(W_15,Q_16,Q_T)=0"
+      ],
+      "external_domain": "Q_1,...,Q_16,Q_T in P1(F_p)",
+      "field_scope": "p not in {2,3,7}; discriminant(E) is nonzero",
+      "internal_domain": "W_2,...,W_15 in P1(F_p)",
+      "name": "RatCat_Fp",
+      "status": "frozen"
+    }
+  },
+  "kind": "deterministic_nonexperimental_set_theoretic_exceptional_fiber_certificate",
+  "leaf_lift_types": {
+    "exhaustive_nonoverlapping": true,
+    "field_scope": "nonsingular E:y^2=x^3+7 over F_p with p not in {2,3,7}",
+    "normalization": "a valid finite [X:Z] has x=X/Z; a valid Z=0 coordinate normalizes to O=[1:0]",
+    "types": [
+      {
+        "base_recovery": "reject INVALID_PROJECTIVE",
+        "condition": "[X:Z]=[0:0]",
+        "frobenius_type": "undefined",
+        "geometric_lifts": 0,
+        "id": "invalid_projective"
+      },
+      {
+        "base_recovery": "retain the identity point",
+        "condition": "Z=0 and X!=0",
+        "frobenius_type": "plus",
+        "geometric_lifts": 1,
+        "id": "identity",
+        "lift": "O",
+        "normalized_coordinate": "[1:0]"
+      },
+      {
+        "base_recovery": "retain both signed lifts",
+        "condition": "Z!=0 and chi(x^3+7)=+1",
+        "frobenius_type": "plus",
+        "geometric_lifts": 2,
+        "id": "finite_base_pair",
+        "lifts": "P and -P in E(F_p)"
+      },
+      {
+        "base_recovery": "reject EXTERNAL_NONLIFT",
+        "condition": "Z!=0 and chi(x^3+7)=-1",
+        "frobenius_equation": "pi(P)=-P",
+        "frobenius_type": "minus",
+        "geometric_lifts": 2,
+        "id": "finite_extension_pair",
+        "lifts": "P and -P in E(F_(p^2))"
+      },
+      {
+        "base_recovery": "retain one lift and collapse sign aliases",
+        "condition": "Z!=0 and x^3+7=0",
+        "frobenius_type": "plus",
+        "geometric_lifts": 1,
+        "id": "finite_rational_two_torsion",
+        "lift": "T=(x,0)=-T in E(F_p)[2]"
+      }
+    ]
+  },
+  "local_transition_types": {
+    "duplicate_policy": "algebraic multiplicity never creates another point state, backpointer, or relation row",
+    "duplicate_root_sources": [
+      "identity_input_duplicate",
+      "repeated_two_torsion_duplicate",
+      "distinct_two_torsion_duplicate"
+    ],
+    "exhaustive_nonoverlapping_for_valid_inputs": true,
+    "field_scope": "nonsingular E:y^2=x^3+7 over F_p with p not in {2,3,7}",
+    "priority": [
+      "invalid_projective_input",
+      "identity_input_duplicate",
+      "repeated_two_torsion_duplicate",
+      "repeated_tangent",
+      "distinct_two_torsion_duplicate",
+      "distinct_rational_split",
+      "distinct_extension_only"
+    ],
+    "types": [
+      {
+        "condition": "one input is [0:0]",
+        "disposition": "reject INVALID_PROJECTIVE",
+        "id": "invalid_projective_input",
+        "root_structure": "undefined"
+      },
+      {
+        "condition": "at least one valid input is O",
+        "disposition": "retain one point state, not two aliases",
+        "formula": "H(O,[X:Z],[U:V])=(X*V-Z*U)^2",
+        "id": "identity_input_duplicate",
+        "root_structure": "the other coordinate, multiplicity 2"
+      },
+      {
+        "condition": "finite a=b and f(a)=a^3+7=0",
+        "disposition": "retain O and collapse the two local signs",
+        "formula": "H([a:1],[a:1],[U:V])=c*V^2 with c!=0",
+        "id": "repeated_two_torsion_duplicate",
+        "root_structure": "O, multiplicity 2"
+      },
+      {
+        "condition": "finite a=b and f(a)!=0",
+        "disposition": "keep both projective branches; affine mode keeps only kappa(2P)",
+        "formula": "H([a:1],[a:1],[U:V])=V*(-4*f(a)*U+(a^4-56*a)*V)",
+        "id": "repeated_tangent",
+        "root_structure": "O and kappa(2P), each multiplicity 1"
+      },
+      {
+        "condition": "finite a!=b and f(a)*f(b)=0",
+        "discriminant": "16*f(a)*f(b)=0",
+        "disposition": "retain one state and collapse sign aliases",
+        "id": "distinct_two_torsion_duplicate",
+        "root_structure": "one finite F_p coordinate, multiplicity 2"
+      },
+      {
+        "condition": "finite a!=b and chi(f(a)*f(b))=+1",
+        "discriminant": "16*f(a)*f(b), a nonzero square",
+        "disposition": "retain both exact point branches",
+        "id": "distinct_rational_split",
+        "root_structure": "two distinct roots in P1(F_p)"
+      },
+      {
+        "condition": "finite a!=b and chi(f(a)*f(b))=-1",
+        "discriminant": "16*f(a)*f(b), a nonsquare",
+        "disposition": "reject INTERNAL_EXTENSION_ONLY in F_p mode",
+        "id": "distinct_extension_only",
+        "root_structure": "two conjugate simple roots in P1(F_(p^2)); no root in P1(F_p)"
+      }
+    ]
+  },
+  "producer_checks": {
+    "all_source_paths_exist": true,
+    "control_backpointer_edges_replayed": 3599,
+    "control_normalized_preimages_replayed": 240,
+    "control_projective_fibers_replayed": 239,
+    "direct_S17_materialized": false,
+    "excluded_characteristics": [
+      2,
+      3,
+      7
+    ],
+    "nonsingular_curve_scope_enforced": true,
+    "primary_claim_extract_digest_bound": true,
+    "prior_digest_bound": true,
+    "secp_compressed_group_check": true,
+    "secp_m16_leaf_count": 16,
+    "secp_raw_group_check": true,
+    "small_fields_exhaustive": [
+      11,
+      13
+    ]
+  },
+  "projective_s3": {
+    "affine_coefficients_z2_z_1": [
+      "(x1-x2)^2",
+      "-2*((x1+x2)*(x1*x2)+14)",
+      "(x1*x2)^2-28*(x1+x2)"
+    ],
+    "curve": "nonsingular E:y^2=x^3+7 over k with char(k) not in {2,3,7}",
+    "exact_local_formulas": {
+      "distinct_discriminant": "Disc_U/V H=16*f(x(P))*f(x(Q)), f(x)=x^3+7",
+      "distinct_factorization": "H(kappa(P),kappa(Q),[U:V])=(x(P)-x(Q))^2*(U-x(P+Q)*V)*(U-x(P-Q)*V)",
+      "identity": "H([1:0],[X:Z],[U:V])=(X*V-Z*U)^2",
+      "repeated": "H([x:1],[x:1],[U:V])=V*(-4*f(x)*U+(x^4-56*x)*V)"
+    },
+    "field_scope": "char(k) not in {2,3,7}, equivalently the discriminant -16*27*7^2 is nonzero in k",
+    "homogeneous_polynomial": "X1^2*X2^2*Z3^2 + X1^2*Z2^2*X3^2 + Z1^2*X2^2*X3^2 - 2*X1^2*X2*Z2*X3*Z3 - 2*X1*Z1*X2^2*X3*Z3 - 2*X1*Z1*X2*Z2*X3^2 - 28*(X1*Z1*Z2^2*Z3^2 + Z1^2*X2*Z2*Z3^2 + Z1^2*Z2^2*X3*Z3)",
+    "irrelevant_ideal_saturation": {
+      "coordinate_pair_ideals": [
+        "<X_1,Z_1>",
+        "<X_2,Z_2>",
+        "<X_3,Z_3>",
+        "<X_4,Z_4>",
+        "<X_5,Z_5>",
+        "<X_6,Z_6>",
+        "<X_7,Z_7>",
+        "<X_8,Z_8>",
+        "<X_9,Z_9>",
+        "<X_10,Z_10>",
+        "<X_11,Z_11>",
+        "<X_12,Z_12>",
+        "<X_13,Z_13>",
+        "<X_14,Z_14>",
+        "<X_15,Z_15>",
+        "<X_16,Z_16>",
+        "<X_T,Z_T>",
+        "<U_2,V_2>",
+        "<U_3,V_3>",
+        "<U_4,V_4>",
+        "<U_5,V_5>",
+        "<U_6,V_6>",
+        "<U_7,V_7>",
+        "<U_8,V_8>",
+        "<U_9,V_9>",
+        "<U_10,V_10>",
+        "<U_11,V_11>",
+        "<U_12,V_12>",
+        "<U_13,V_13>",
+        "<U_14,V_14>",
+        "<U_15,V_15>"
+      ],
+      "forbidden_extra_saturands": [
+        "X_i*Z_j-X_j*Z_i",
+        "U_i*V_j-U_j*V_i",
+        "all coordinate differences"
+      ],
+      "irrelevant_ideal_B": "product of all 31 listed coordinate-pair ideals",
+      "saturated_ideal": "I_cat : B^infinity",
+      "set_theoretic_effect": "exclude the union of loci on which any projective coordinate pair is [0:0]"
+    },
+    "kummer_coordinate": {
+      "affine": "kappa((x,y))=[x:1]",
+      "identity": "kappa(O)=[1:0]"
+    },
+    "multidegree": [
+      2,
+      2,
+      2
+    ],
+    "name": "H=S3h",
+    "projective_validity": "every coordinate pair must differ from [0:0]",
+    "saturation_policy": "remove only components supported on a projective coordinate pair [0:0]; never remove coordinate-equality loci",
+    "scheme_claim": "none; every bridge claim is set-theoretic"
+  },
+  "recovery_dispositions": {
+    "exhaustive_nonoverlapping": true,
+    "field_scope": "nonsingular E:y^2=x^3+7 over F_p with p not in {2,3,7}",
+    "partition_rule": "apply the first matching row in priority order",
+    "post_acceptance_normalizations": {
+      "glv_lift_signs": "retain eta in Q=eta*phi^j(P0) and use epsilon*eta*lambda^j modulo n",
+      "topology_permutations": "keep the ordered leaf tuple, coordinate multiset, signed point multiset, and normalized row as distinct objects; replay each order because prefix admissibility depends on it"
+    },
+    "rows": [
+      {
+        "affine": "excluded",
+        "base_recovery": "reject",
+        "condition": "some coordinate pair is [0:0]",
+        "fp_projective": "excluded",
+        "geometric_projective": "excluded",
+        "id": "INVALID_PROJECTIVE",
+        "priority": 1
+      },
+      {
+        "affine": "may be allowed",
+        "base_recovery": "reject before row emission",
+        "condition": "all coordinates are valid and some finite leaf has chi(f(x))=-1",
+        "fp_projective": "may be allowed",
+        "geometric_projective": "allowed",
+        "id": "EXTERNAL_NONLIFT",
+        "priority": 2
+      },
+      {
+        "affine": "absent",
+        "base_recovery": "reject",
+        "condition": "all finite leaves lift over F_p, but a required local root is present only over an extension",
+        "fp_projective": "absent",
+        "geometric_projective": "allowed",
+        "id": "INTERNAL_EXTENSION_ONLY",
+        "priority": 3
+      },
+      {
+        "affine": "reject",
+        "base_recovery": "accept with an explicit O state",
+        "condition": "base recovery succeeds and at least one supplied internal coordinate has V_i=0",
+        "fp_projective": "accept",
+        "geometric_projective": "accept",
+        "id": "IDENTITY_PREFIX",
+        "priority": 4
+      },
+      {
+        "affine": "accept if every internal V_i!=0",
+        "base_recovery": "accept after sign-alias collapse",
+        "condition": "no earlier row matches and some retained lift has y=0",
+        "fp_projective": "accept",
+        "geometric_projective": "accept",
+        "id": "RATIONAL_TWO_TORSION",
+        "priority": 5
+      },
+      {
+        "affine": "accept",
+        "base_recovery": "accept with exact branch backpointer",
+        "condition": "no earlier row matches and a repeated finite input uses its tangent output",
+        "fp_projective": "accept",
+        "geometric_projective": "accept",
+        "id": "REPEATED_TANGENT",
+        "priority": 6
+      },
+      {
+        "affine": "accept",
+        "base_recovery": "accept after both exact curve checks",
+        "condition": "none of the earlier rows matches",
+        "fp_projective": "accept",
+        "geometric_projective": "accept",
+        "id": "ORDINARY_RATIONAL",
+        "priority": 7
+      }
+    ]
+  },
+  "schema_version": "1.0",
+  "scope": {
+    "excluded": [
+      "S17 expansion or evaluation",
+      "any materialized polynomial system",
+      "Sage, msolve, F4, Groebner, or solver execution",
+      "exact-target relation search",
+      "discrete-log computation",
+      "rank, yield, or cost accounting",
+      "experiment authorization",
+      "hypothesis retention",
+      "route promotion"
+    ],
+    "included": [
+      "homogeneous projective S3 left-fold semantics",
+      "finite-field lift and local-root classification",
+      "supplied-internal-coordinate point recovery",
+      "ordered topology and duplicate accounting",
+      "fixed secp256k1 GLV sign replay"
+    ]
+  },
+  "secp256k1_glv_replay": {
+    "P0": {
+      "definition": "the even-y lift of x=1",
+      "kind": "affine",
+      "n_multiple": {
+        "kind": "identity"
+      },
+      "rhs": 8,
+      "x": 1,
+      "y": 29896722852569046015560700294576055776214335159245303116488692907525646231534
+    },
+    "coefficient_replay": {
+      "compressed_row": "-(-P0) - P0 = O",
+      "eta_minus_one_rows": 3,
+      "lambda_squared_mod_n": 78074008874160198520644763525212887401909906723592317393988542598630163514318,
+      "leaf_coefficient_display": "-1",
+      "leaf_coefficient_on_representative_mod_n": 115792089237316195423570985008687907852837564279074904382605163141518161494336,
+      "rule": "a signed occurrence epsilon*Q with Q=eta*phi^j(representative) contributes epsilon*eta*lambda^j modulo n",
+      "target_coefficient": -1
+    },
+    "exact_group_checks": {
+      "compressed_leaf_term": {
+        "kind": "affine",
+        "x": 1,
+        "y": 29896722852569046015560700294576055776214335159245303116488692907525646231534
+      },
+      "compressed_relation_sum": {
+        "kind": "identity"
+      },
+      "lambda_P0_equals_phi_P0": true,
+      "lambda_squared_P0_equals_phi_squared_P0": true,
+      "raw_and_compressed_close": true,
+      "raw_leaf_sum": {
+        "kind": "affine",
+        "x": 1,
+        "y": 29896722852569046015560700294576055776214335159245303116488692907525646231534
+      },
+      "raw_relation_sum": {
+        "kind": "identity"
+      }
+    },
+    "field_and_curve": {
+      "D": 564522,
+      "D_divisible_by_3": true,
+      "beta": 55594575648329892869085402983802832744385952214688224221778511981742606582254,
+      "beta_polynomial_check_mod_p": 0,
+      "curve": "y^2 = x^3 + 7",
+      "lambda": 37718080363155996902926221483475020450927657555482586988616620542887997980018,
+      "lambda_polynomial_check_mod_n": 0,
+      "n": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+      "p": 115792089237316195423570985008687907853269984665640564039457584007908834671663
+    },
+    "m16_membership_row": {
+      "construction": "fixed theorem identity with no target search",
+      "leaf_count": 16,
+      "leaves": [
+        {
+          "epsilon": 1,
+          "index_one_based": 1,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": 1,
+          "index_one_based": 2,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": 1,
+          "index_one_based": 3,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": 1,
+          "index_one_based": 4,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": 1,
+          "index_one_based": 5,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": 1,
+          "index_one_based": 6,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": 1,
+          "index_one_based": 7,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": -1,
+          "index_one_based": 8,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": -1,
+          "index_one_based": 9,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": -1,
+          "index_one_based": 10,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": -1,
+          "index_one_based": 11,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": -1,
+          "index_one_based": 12,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": -1,
+          "index_one_based": 13,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": -1,
+          "index_one_based": 14,
+          "point": "P0",
+          "x": 1
+        },
+        {
+          "epsilon": -1,
+          "index_one_based": 15,
+          "point": "phi(P0)",
+          "x": 55594575648329892869085402983802832744385952214688224221778511981742606582254
+        },
+        {
+          "epsilon": -1,
+          "index_one_based": 16,
+          "point": "phi^2(P0)",
+          "x": 60197513588986302554485582024885075108884032450952339817679072026166228089408
+        }
+      ],
+      "membership_checks": [
+        {
+          "index_one_based": 1,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 2,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 3,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 4,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 5,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 6,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 7,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 8,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 9,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 10,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 11,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 12,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 13,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 14,
+          "x": 1,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 15,
+          "x": 55594575648329892869085402983802832744385952214688224221778511981742606582254,
+          "x_to_D_mod_p": 1
+        },
+        {
+          "index_one_based": 16,
+          "x": 60197513588986302554485582024885075108884032450952339817679072026166228089408,
+          "x_to_D_mod_p": 1
+        }
+      ],
+      "semantic_identity": "seven P0 minus seven P0 minus phi(P0) minus phi^2(P0) minus P0 = O",
+      "target": "P0",
+      "target_coefficient": -1
+    },
+    "phi_orbit": {
+      "negative": [
+        {
+          "j": 0,
+          "point": {
+            "kind": "affine",
+            "x": 1,
+            "y": 85895366384747149408010284714111852077055649506395260922968891100383188440129
+          }
+        },
+        {
+          "j": 1,
+          "point": {
+            "kind": "affine",
+            "x": 55594575648329892869085402983802832744385952214688224221778511981742606582254,
+            "y": 85895366384747149408010284714111852077055649506395260922968891100383188440129
+          }
+        },
+        {
+          "j": 2,
+          "point": {
+            "kind": "affine",
+            "x": 60197513588986302554485582024885075108884032450952339817679072026166228089408,
+            "y": 85895366384747149408010284714111852077055649506395260922968891100383188440129
+          }
+        }
+      ],
+      "orbit_sum": {
+        "kind": "identity"
+      },
+      "positive": [
+        {
+          "j": 0,
+          "point": {
+            "kind": "affine",
+            "x": 1,
+            "y": 29896722852569046015560700294576055776214335159245303116488692907525646231534
+          },
+          "x_rule": "1",
+          "y_is_even": true
+        },
+        {
+          "j": 1,
+          "point": {
+            "kind": "affine",
+            "x": 55594575648329892869085402983802832744385952214688224221778511981742606582254,
+            "y": 29896722852569046015560700294576055776214335159245303116488692907525646231534
+          },
+          "x_rule": "beta^1 mod p",
+          "y_is_even": true
+        },
+        {
+          "j": 2,
+          "point": {
+            "kind": "affine",
+            "x": 60197513588986302554485582024885075108884032450952339817679072026166228089408,
+            "y": 29896722852569046015560700294576055776214335159245303116488692907525646231534
+          },
+          "x_rule": "beta^2 mod p",
+          "y_is_even": true
+        }
+      ],
+      "positive_orbit_size": 3,
+      "signed_orbit_size": 6
+    },
+    "representative": {
+      "label": "-P0",
+      "point": {
+        "kind": "affine",
+        "x": 1,
+        "y": 85895366384747149408010284714111852077055649506395260922968891100383188440129
+      },
+      "selection": "fixed deterministic signed-orbit representative"
+    },
+    "signed_lift_rows": [
+      {
+        "base_point": "P0",
+        "coefficient_contribution_mod_n": 0,
+        "epsilon_counts": {
+          "+1": 7,
+          "-1": 7
+        },
+        "eta": -1,
+        "j": 0,
+        "relation_to_representative": "P0 = -phi^0(-P0)"
+      },
+      {
+        "base_point": "phi(P0)",
+        "coefficient_contribution_mod_n": 37718080363155996902926221483475020450927657555482586988616620542887997980018,
+        "epsilon": -1,
+        "eta": -1,
+        "j": 1,
+        "relation_to_representative": "phi(P0) = -phi^1(-P0)"
+      },
+      {
+        "base_point": "phi^2(P0)",
+        "coefficient_contribution_mod_n": 78074008874160198520644763525212887401909906723592317393988542598630163514318,
+        "epsilon": -1,
+        "eta": -1,
+        "j": 2,
+        "relation_to_representative": "phi^2(P0) = -phi^2(-P0)"
+      }
+    ],
+    "theorem_bindings": {
+      "curve_cardinality": "Ecdlp.Curve.secp256k1_card_point_eq_n",
+      "glv_eigenvalue": "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples",
+      "glv_orbit": "Ecdlp.Curve.secp256k1_glvPoint_orbit_three_distinct",
+      "no_nonzero_two_torsion": "Ecdlp.Curve.secp256k1_no_nonzero_two_torsion",
+      "whole_group_membership": "Ecdlp.Curve.secp256k1_mem_zmultiples"
+    }
+  },
+  "small_field_replays": {
+    "F11_with_rational_two_torsion": {
+      "checks": {
+        "all_valid_input_pairs_classified_once": true,
+        "distinct_discriminant_formula_all_pairs": true,
+        "identity_formula_all_coordinates": true,
+        "repeated_formula_all_coordinates": true,
+        "root_multiplicity_replayed": true
+      },
+      "curve": "y^2 = x^3 + 7 over F_11",
+      "curve_discriminant_nonzero": true,
+      "field": "F_11",
+      "field_scope": "char(F_p) not in {2,3,7}; curve discriminant is nonzero",
+      "fp_root_profile": {
+        "0_fp_roots_0_multiplicity": 50,
+        "1_fp_roots_2_multiplicity": 44,
+        "2_fp_roots_2_multiplicity": 50
+      },
+      "leaf_records_sha256": "4792de9c90089673679edf9ca50cf0184d3c81ac0878988954f84e3cebaf2117",
+      "leaf_type_counts": {
+        "finite_base_pair": 5,
+        "finite_extension_pair": 5,
+        "finite_rational_two_torsion": 1,
+        "identity": 1
+      },
+      "named_examples": {
+        "identity_identity": {
+          "fp_roots": [
+            {
+              "coordinate": {
+                "X": 1,
+                "Z": 0,
+                "kind": "identity"
+              },
+              "multiplicity": 2
+            }
+          ],
+          "input": [
+            {
+              "X": 1,
+              "Z": 0,
+              "kind": "identity"
+            },
+            {
+              "X": 1,
+              "Z": 0,
+              "kind": "identity"
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            0,
+            0,
+            1
+          ],
+          "type": "identity_input_duplicate"
+        },
+        "ordinary_extension_only": {
+          "fp_roots": [],
+          "input": [
+            {
+              "X": 2,
+              "Z": 1,
+              "kind": "finite",
+              "x": 2
+            },
+            {
+              "X": 8,
+              "Z": 1,
+              "kind": "finite",
+              "x": 8
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            3,
+            4,
+            9
+          ],
+          "type": "distinct_extension_only"
+        },
+        "ordinary_split": {
+          "fp_roots": [
+            {
+              "coordinate": {
+                "X": 4,
+                "Z": 1,
+                "kind": "finite",
+                "x": 4
+              },
+              "multiplicity": 1
+            },
+            {
+              "coordinate": {
+                "X": 7,
+                "Z": 1,
+                "kind": "finite",
+                "x": 7
+              },
+              "multiplicity": 1
+            }
+          ],
+          "input": [
+            {
+              "X": 2,
+              "Z": 1,
+              "kind": "finite",
+              "x": 2
+            },
+            {
+              "X": 3,
+              "Z": 1,
+              "kind": "finite",
+              "x": 3
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            1,
+            0,
+            6
+          ],
+          "type": "distinct_rational_split"
+        },
+        "repeated_two_torsion": {
+          "fp_roots": [
+            {
+              "coordinate": {
+                "X": 1,
+                "Z": 0,
+                "kind": "identity"
+              },
+              "multiplicity": 2
+            }
+          ],
+          "input": [
+            {
+              "X": 5,
+              "Z": 1,
+              "kind": "finite",
+              "x": 5
+            },
+            {
+              "X": 5,
+              "Z": 1,
+              "kind": "finite",
+              "x": 5
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            0,
+            0,
+            4
+          ],
+          "type": "repeated_two_torsion_duplicate"
+        },
+        "two_torsion_with_base_point": {
+          "fp_roots": [
+            {
+              "coordinate": {
+                "X": 2,
+                "Z": 1,
+                "kind": "finite",
+                "x": 2
+              },
+              "multiplicity": 2
+            }
+          ],
+          "input": [
+            {
+              "X": 5,
+              "Z": 1,
+              "kind": "finite",
+              "x": 5
+            },
+            {
+              "X": 2,
+              "Z": 1,
+              "kind": "finite",
+              "x": 2
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            9,
+            8,
+            3
+          ],
+          "type": "distinct_two_torsion_duplicate"
+        },
+        "two_torsion_with_twist_point": {
+          "fp_roots": [
+            {
+              "coordinate": {
+                "X": 0,
+                "Z": 1,
+                "kind": "finite",
+                "x": 0
+              },
+              "multiplicity": 2
+            }
+          ],
+          "input": [
+            {
+              "X": 5,
+              "Z": 1,
+              "kind": "finite",
+              "x": 5
+            },
+            {
+              "X": 1,
+              "Z": 1,
+              "kind": "finite",
+              "x": 1
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            5,
+            0,
+            0
+          ],
+          "type": "distinct_two_torsion_duplicate"
+        }
+      },
+      "ordered_transition_count": 144,
+      "p": 11,
+      "projective_coordinate_count": 12,
+      "transition_records_sha256": "7223bcc7c1214425ae4577c61a7e0ca91598571e5b6220cdf5319548f4d34c68",
+      "transition_type_counts": {
+        "distinct_extension_only": 50,
+        "distinct_rational_split": 40,
+        "distinct_two_torsion_duplicate": 20,
+        "identity_input_duplicate": 23,
+        "repeated_tangent": 10,
+        "repeated_two_torsion_duplicate": 1
+      }
+    },
+    "F13_no_rational_two_torsion": {
+      "checks": {
+        "all_valid_input_pairs_classified_once": true,
+        "distinct_discriminant_formula_all_pairs": true,
+        "identity_formula_all_coordinates": true,
+        "repeated_formula_all_coordinates": true,
+        "root_multiplicity_replayed": true
+      },
+      "curve": "y^2 = x^3 + 7 over F_13",
+      "curve_discriminant_nonzero": true,
+      "field": "F_13",
+      "field_scope": "char(F_p) not in {2,3,7}; curve discriminant is nonzero",
+      "fp_root_profile": {
+        "0_fp_roots_0_multiplicity": 60,
+        "1_fp_roots_2_multiplicity": 27,
+        "2_fp_roots_2_multiplicity": 109
+      },
+      "leaf_records_sha256": "dfd599586e895341604258afbbd32f3760ead9218c98dad4aa75b8b1ace832c7",
+      "leaf_type_counts": {
+        "finite_base_pair": 3,
+        "finite_extension_pair": 10,
+        "identity": 1
+      },
+      "named_examples": {
+        "base_base_split": {
+          "fp_roots": [
+            {
+              "coordinate": {
+                "X": 7,
+                "Z": 1,
+                "kind": "finite",
+                "x": 7
+              },
+              "multiplicity": 1
+            },
+            {
+              "coordinate": {
+                "X": 11,
+                "Z": 1,
+                "kind": "finite",
+                "x": 11
+              },
+              "multiplicity": 1
+            }
+          ],
+          "input": [
+            {
+              "X": 7,
+              "Z": 1,
+              "kind": "finite",
+              "x": 7
+            },
+            {
+              "X": 8,
+              "Z": 1,
+              "kind": "finite",
+              "x": 8
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            1,
+            8,
+            12
+          ],
+          "type": "distinct_rational_split"
+        },
+        "base_repeated_tangent": {
+          "fp_roots": [
+            {
+              "coordinate": {
+                "X": 8,
+                "Z": 1,
+                "kind": "finite",
+                "x": 8
+              },
+              "multiplicity": 1
+            },
+            {
+              "coordinate": {
+                "X": 1,
+                "Z": 0,
+                "kind": "identity"
+              },
+              "multiplicity": 1
+            }
+          ],
+          "input": [
+            {
+              "X": 7,
+              "Z": 1,
+              "kind": "finite",
+              "x": 7
+            },
+            {
+              "X": 7,
+              "Z": 1,
+              "kind": "finite",
+              "x": 7
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            0,
+            4,
+            7
+          ],
+          "type": "repeated_tangent"
+        },
+        "base_twist_extension_only": {
+          "fp_roots": [],
+          "input": [
+            {
+              "X": 7,
+              "Z": 1,
+              "kind": "finite",
+              "x": 7
+            },
+            {
+              "X": 1,
+              "Z": 1,
+              "kind": "finite",
+              "x": 1
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            10,
+            3,
+            7
+          ],
+          "type": "distinct_extension_only"
+        },
+        "identity_input": {
+          "fp_roots": [
+            {
+              "coordinate": {
+                "X": 7,
+                "Z": 1,
+                "kind": "finite",
+                "x": 7
+              },
+              "multiplicity": 2
+            }
+          ],
+          "input": [
+            {
+              "X": 1,
+              "Z": 0,
+              "kind": "identity"
+            },
+            {
+              "X": 7,
+              "Z": 1,
+              "kind": "finite",
+              "x": 7
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            1,
+            12,
+            10
+          ],
+          "type": "identity_input_duplicate"
+        },
+        "twist_repeated_tangent": {
+          "fp_roots": [
+            {
+              "coordinate": {
+                "X": 6,
+                "Z": 1,
+                "kind": "finite",
+                "x": 6
+              },
+              "multiplicity": 1
+            },
+            {
+              "coordinate": {
+                "X": 1,
+                "Z": 0,
+                "kind": "identity"
+              },
+              "multiplicity": 1
+            }
+          ],
+          "input": [
+            {
+              "X": 1,
+              "Z": 1,
+              "kind": "finite",
+              "x": 1
+            },
+            {
+              "X": 1,
+              "Z": 1,
+              "kind": "finite",
+              "x": 1
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            0,
+            7,
+            10
+          ],
+          "type": "repeated_tangent"
+        },
+        "twist_twist_split": {
+          "fp_roots": [
+            {
+              "coordinate": {
+                "X": 2,
+                "Z": 1,
+                "kind": "finite",
+                "x": 2
+              },
+              "multiplicity": 1
+            },
+            {
+              "coordinate": {
+                "X": 12,
+                "Z": 1,
+                "kind": "finite",
+                "x": 12
+              },
+              "multiplicity": 1
+            }
+          ],
+          "input": [
+            {
+              "X": 1,
+              "Z": 1,
+              "kind": "finite",
+              "x": 1
+            },
+            {
+              "X": 2,
+              "Z": 1,
+              "kind": "finite",
+              "x": 2
+            }
+          ],
+          "output_binary_coefficients_U2_UV_V2": [
+            1,
+            12,
+            11
+          ],
+          "type": "distinct_rational_split"
+        }
+      },
+      "ordered_transition_count": 196,
+      "p": 13,
+      "projective_coordinate_count": 14,
+      "transition_records_sha256": "2f6b8b9078ef75b6d7bcad3e656b1b01677ee80e3801af512d5eb7390a4f3145",
+      "transition_type_counts": {
+        "distinct_extension_only": 60,
+        "distinct_rational_split": 96,
+        "identity_input_duplicate": 27,
+        "repeated_tangent": 13
+      }
+    }
+  },
+  "source_scope": {
+    "all_listed_paths_exist": true,
+    "canonical_policy_or_generated_files_hashed": false,
+    "curve_cardinality": "Ecdlp/Proved/CurveCardinalityExact.lean",
+    "curve_full_group": "Ecdlp/Proved/CurveFullGroup.lean",
+    "glv_eigenvalue": "Ecdlp/Proved/GlvSubgroupEigenvalue.lean",
+    "glv_orbit": "Ecdlp/Proved/GlvOrbit.lean",
+    "primary_claim_extract": "data/source_claim_extracts/petit_kosters_messeng2016.json",
+    "primary_claim_extract_digest_match": true,
+    "primary_claim_extract_observed_sha256": "f8839553f6935ed5cd331369cc13d91124373750c757b28eeca3ee773835f14f",
+    "primary_claim_extract_sha256": "f8839553f6935ed5cd331369cc13d91124373750c757b28eeca3ee773835f14f",
+    "semaev_four": "Ecdlp/Proved/SemaevFour.lean",
+    "semaev_three": "Ecdlp/Proved/SemaevThree.lean",
+    "source_claim_ids": [
+      "SC-PKC-SMOOTH-SUBGROUP",
+      "SC-SEMAEV-RELATION-SEMANTICS",
+      "SC-SECP-NO-TWO-TORSION",
+      "SC-GLV-ENDOMORPHISM",
+      "SC-GLV-ENDOMORPHISM-NONTRIVIAL",
+      "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT"
+    ],
+    "task016_artifact": "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
+    "task016_artifact_sha256": "963eea60097807ae0aa66a5d881b0c34bf0497ade53ed4d37d38861a73887c19",
+    "task_contract_anchor": "tasks/ECDLP_RESEARCH.md#task-017"
+  },
+  "terminal_disposition": {
+    "assurance": "certificate_replayed",
+    "authorization": "none",
+    "barrier_effect": "narrowed_open",
+    "barrier_transition": "open_to_open",
+    "calibration": "excluded_nonexperimental",
+    "cell_status": "open_non_executable",
+    "cell_transition": "open_to_open",
+    "completed_scope": "exact set-theoretic homogeneous projective-tree to signed-point bridge, including all named local strata and base-recovery normalization",
+    "cost_quantity_status": "partial",
+    "cost_quantity_transition": "partial_to_partial",
+    "experiment_permission": "none",
+    "hypothesis_effect": "none",
+    "next_mathematical_step": "freeze a recursive projective definition of S17 with declared resultant degrees, then test a projective resultant induction against the frozen tree predicate",
+    "rank_status": "unpriced",
+    "remaining_blocker": "the direct S17 predicate is not frozen, and no reverse theorem above S4 is present",
+    "retention_disposition": "zero_retention_success",
+    "route_effect": "none",
+    "scientific_disposition": "scoped_blocker",
+    "solving_cost_status": "unpriced",
+    "source_independence": "not_established",
+    "yield_status": "unpriced"
+  },
+  "unresolved_fields": [
+    "a frozen direct S17 definition",
+    "a reverse direct-S17 theorem above S4",
+    "radicality or scheme-level multiplicity comparison"
+  ]
+}
