@@ -145,11 +145,12 @@ branch from current `main`; preserve any unrelated local changes.
   specialization, its affine and `[1:0]` branches, the uniform output-degree
   bound, and the unconditional one-step common-projective-root equivalence.
   It closed with a scoped recursive-extraction blocker and zero retained
-  hypotheses. `TASK-021` is the current central task and gives sole desk
-  priority to the projective homogenization bridge and universal witness-chain
-  extraction `C16 → C2` for `CELL-M-PKC-SMOOTH-M16`, including `[1:0]` at
-  every level. This is not a selected hypothesis, candidate, experiment,
-  solver authorization, cost claim, or attack route.
+  hypotheses. `TASK-021` then kernel-checked the exact projective
+  homogenization/evaluation bridge and universal witness-chain extraction
+  `C16 → C2` for `CELL-M-PKC-SMOOTH-M16`: fourteen valid intermediate slots,
+  `[1:0]` allowed, and `[0:0]` excluded at every level. No successor task is
+  currently authorized. This result is not a selected hypothesis, candidate,
+  experiment, solver authorization, cost claim, or attack route.
 - `TASK-008` remains the parked proposal-intake lane. Intake does not bypass
   owner authorization or authorize promotion by itself.
 - The division-polynomial, torsion, Weil, Semaev, cost-model, lattice, isogeny,

@@ -106,6 +106,12 @@ jobs:
           python3 experiments/engine/pkc_smooth_m16_frozen_cr_specialization/test_validate.py
           (cd experiments/engine/pkc_smooth_m16_frozen_cr_specialization && sha256sum -c artifact.sha256)
 
+      - name: Replay PKC M16 frozen projective witness certificate
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_frozen_projective_witness/validate.py
+          python3 experiments/engine/pkc_smooth_m16_frozen_projective_witness/test_validate.py
+          (cd experiments/engine/pkc_smooth_m16_frozen_projective_witness && sha256sum -c artifact.sha256)
+
       - name: Check generated Research Engine state
         run: python3 scripts/build_research_engine_state.py --check
 

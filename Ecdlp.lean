@@ -91,6 +91,7 @@ import Ecdlp.Proved.SemaevFour
 import Ecdlp.Proved.FixedDegreeProjectiveResultant
 import Ecdlp.Proved.TaskSylvesterConvention
 import Ecdlp.Proved.FrozenRecursiveProjectiveSemaev
+import Ecdlp.Proved.FrozenRecursiveProjectiveWitness
 import Ecdlp.Proved.SevenNonResidue
 import Ecdlp.Proved.GlvSemaevSymmetry
 import Ecdlp.Proved.PointDecomposition

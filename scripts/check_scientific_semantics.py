@@ -37,6 +37,16 @@ M16_FROZEN_CR_ARTIFACT_PATH = (
 M16_FROZEN_CR_ARTIFACT_SHA256 = (
     "d025053b9f882c88086fd5f04bcbd9627c72987e263e9b55af6024794305acbe"
 )
+M16_WITNESS_CLAIM_ID = (
+    "SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT"
+)
+M16_WITNESS_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_frozen_projective_witness/artifact.json"
+)
+M16_WITNESS_ARTIFACT_SHA256 = (
+    "89c645545d89334473d51654a41ff7ec2364857d034c64ce08d505337fa1e2d4"
+)
 
 PETIT_WEIL_CONTRADICTIONS = (
     re.compile(
@@ -134,7 +144,7 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 25,
+        "source_claims": 26,
         "cells": 7,
         "seed_eligible_cells": 2,
         "desk_decisions": 3,
@@ -179,6 +189,10 @@ def validate_semantics(
         (
             M16_FROZEN_CR_CLAIM_ID,
             "frozen-Cr specialization kernel certificate",
+        ),
+        (
+            M16_WITNESS_CLAIM_ID,
+            "frozen projective witness kernel certificate",
         ),
     ):
         if claim_id not in m16_cell.get("source_claim_ids", []):
@@ -419,6 +433,70 @@ def validate_semantics(
             "M16 cost quantity must retain its frozen-Cr specialization "
             "kernel certificate"
         )
+    witness_claim = typed_claims.get(M16_WITNESS_CLAIM_ID, {})
+    if witness_claim.get("read_status") != "certificate_replayed":
+        problems.append(
+            "M16 frozen projective witness assurance must remain "
+            "certificate_replayed"
+        )
+    if witness_claim.get("artifact_sha256") != M16_WITNESS_ARTIFACT_SHA256:
+        problems.append("M16 frozen projective witness artifact hash drifted")
+    if witness_claim.get("evidence_path") != M16_WITNESS_ARTIFACT_PATH:
+        problems.append(
+            "M16 frozen projective witness evidence path drifted"
+        )
+    witness_statement = witness_claim.get("statement", "")
+    for token, label in (
+        ("declared-degree output homogeneity", "exact output homogeneity"),
+        (
+            "projective homogenization/evaluation bridges",
+            "projective evaluation bridges",
+        ),
+        ("every explicit coefficient map", "explicit coefficient map"),
+        ("FrozenProjectiveChain", "minimal witness chain"),
+        ("stage 14", "C16 stage"),
+        (
+            "fourteen valid intermediate projective slots",
+            "fourteen intermediate slots",
+        ),
+        ("[1:0] is allowed", "projective infinity"),
+        ("[0:0] is excluded", "zero-pair exclusion"),
+    ):
+        if token not in witness_statement:
+            problems.append(
+                f"M16 frozen projective witness claim must retain {label}"
+            )
+    witness_boundary = witness_claim.get("boundary", "")
+    for token, label in (
+        (
+            "kernel_bound_non_run_certificate",
+            "kernel-bound non-run assurance",
+        ),
+        ("source_independence is not_established", "source independence"),
+        ("calibration is excluded_nonexperimental", "calibration"),
+        ("algebraically closed target", "target-field scope"),
+        ("no descent", "no base-field descent"),
+        ("no direct RecS17 iff GeoCat", "no direct-S17 claim"),
+        ("CQ-SEMAEV-S17-SYSTEM-COST remains partial", "partial cost quantity"),
+        (
+            "solving cost, rank, and yield remain unpriced",
+            "unpriced cost boundary",
+        ),
+        ("zero_retention_success", "zero retention"),
+        ("experiment authorization", "no-authorization boundary"),
+        ("route promotion", "no-promotion boundary"),
+    ):
+        if token not in witness_boundary:
+            problems.append(
+                f"M16 frozen projective witness claim must retain {label}"
+            )
+    if M16_WITNESS_CLAIM_ID not in m16_cell.get(
+        "cost_quantity", {}
+    ).get("source_claim_ids", []):
+        problems.append(
+            "M16 cost quantity must retain its frozen projective witness "
+            "kernel certificate"
+        )
     m16_barrier = typed_barriers.get(
         "B-PKC-M16-COMPLETE-COST-BRIDGE", {}
     )
@@ -456,6 +534,13 @@ def validate_semantics(
             "M16 complete-cost barrier must retain its frozen-Cr "
             "specialization kernel certificate"
         )
+    if M16_WITNESS_CLAIM_ID not in m16_barrier.get(
+        "source_claim_ids", []
+    ):
+        problems.append(
+            "M16 complete-cost barrier must retain its frozen projective "
+            "witness kernel certificate"
+        )
     m16_scope = m16_barrier.get("exact_scope", "")
     for token, label in (
         ("TASK-019 kernel-checks", "TASK-019 kernel result"),
@@ -468,9 +553,18 @@ def validate_semantics(
             "unconditional one-step common-projective-root equivalence",
             "unconditional one-step common-root interface",
         ),
+        ("TASK-021 kernel-checks", "TASK-021 kernel result"),
         (
-            "universal C16-to-C2 projective witness extraction",
-            "universal witness-extraction blocker",
+            "all-stage frozen projective witness-chain equivalence",
+            "universal witness extraction",
+        ),
+        (
+            "fourteen intermediate projective slots",
+            "fourteen intermediate slots",
+        ),
+        (
+            "exact S17 representation and materialization",
+            "remaining representation blocker",
         ),
     ):
         if token not in m16_scope:
@@ -496,11 +590,16 @@ def validate_semantics(
         for item in m16_barrier.get("reopening_conditions", [])
         if isinstance(item, str)
     )
-    if "universal C16-to-C2 projective witness extraction" not in reopening_text:
+    if "proved frozen projective chain" not in reopening_text:
         problems.append(
-            "M16 complete-cost reopening must require universal "
-            "projective witness extraction"
+            "M16 complete-cost reopening must retain the proved frozen "
+            "projective chain"
         )
+    for token in ("exact S17 representation", "materializable system"):
+        if token not in reopening_text:
+            problems.append(
+                f"M16 complete-cost reopening must require {token}"
+            )
     if (
         "Kernel-check a fixed-degree projective resultant common-root theorem"
         in reopening_text
@@ -517,7 +616,7 @@ def validate_semantics(
     for field, token, label in (
         (
             "relation_action",
-            "remaining exact mechanism gap",
+            "remaining mechanism gap",
             "narrowed mechanism gap",
         ),
         (
@@ -532,18 +631,18 @@ def validate_semantics(
         ),
         (
             "relation_action",
-            "universal C16-to-C2 projective witness extraction",
+            "universal all-stage frozen witness-chain equivalence",
             "universal witness extraction",
         ),
         (
             "boundary",
-            "unconditional one-step common-root interface",
-            "unconditional one-step interface",
+            "all-stage frozen projective witness chain",
+            "universal all-stage witness chain",
         ),
         (
             "boundary",
-            "universal C16-to-C2 projective witness extraction",
-            "open universal witness extraction",
+            "direct S17 representation and materializable system bridge",
+            "open direct-S17 representation bridge",
         ),
         ("boundary", "zero_retention_success", "zero retention"),
         ("boundary", "hypothesis retention", "no hypothesis retention"),

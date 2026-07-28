@@ -20,13 +20,14 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: `TASK-021` in `tasks/ECDLP_RESEARCH.md`.
+Current central task: none. `TASK-021` is completed; a successor must be
+introduced by a new narrow task contract against the still-open complete-cost
+barrier before any further research execution.
 
 `TASK-010` is accepted at
 `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
-proposal-intake lane because TASK-021 is a non-executable recursive
-projective-witness theorem task, not a hypothesis candidate or
-experiment.
+proposal-intake lane. Closing TASK-021 created no executable hypothesis,
+experiment authorization, or route promotion.
 
 Current scientific activation order:
 
@@ -59,11 +60,12 @@ Current scientific activation order:
    `[1:0]` branches, uniform output-degree bound, and unconditional one-step
    common-projective-root equivalence are kernel checked under the literal
    unit-one convention.
-8. `TASK-021` gives sole desk priority to the remaining projective
-   homogenization bridge and universal recursive witness extraction
-   `C16 → C2` for `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`. It must cover
-   valid projective intermediates, including `[1:0]`, at every level. TASK-021
-   authorizes no S17 materialization, solver, or cost claim.
+8. `TASK-021` completed the exact projective homogenization bridges and
+   universal recursive witness extraction `C16 → C2` for
+   `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`. The kernel-checked chain has
+   fourteen valid projective intermediate slots; `[1:0]` is allowed and
+   `[0:0]` is excluded at every level. The complete cost bridge remains open,
+   and TASK-021 authorizes no S17 materialization, solver, or cost claim.
 9. The auxiliary-curve cell stays parked until a primary source supplies a
    finite search domain with a completeness criterion.
 10. Any later candidate, solver, or experiment still requires the normal

@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 301,
-  "ledger_reference_count": 503,
-  "ledger_named_declarations": 478,
+  "ledger_rows": 302,
+  "ledger_reference_count": 540,
+  "ledger_named_declarations": 515,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 816,
-  "distinct_qualified_names": 816,
-  "verified_md_citations": 478,
+  "declaration_count": 853,
+  "distinct_qualified_names": 853,
+  "verified_md_citations": 515,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -361,12 +361,49 @@
     "Ecdlp.DLEQ.chaum_pedersen_verify",
     "Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime",
     "Ecdlp.EDS.isEllSequence_of_rec_one",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenProjectiveChain",
+    "Ecdlp.FrozenProjectiveSemaev.HValue_binaryConstant_binaryPair_eq",
+    "Ecdlp.FrozenProjectiveSemaev.HValue_cycle",
+    "Ecdlp.FrozenProjectiveSemaev.binaryConstantPair",
+    "Ecdlp.FrozenProjectiveSemaev.binaryPair",
+    "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic",
+    "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic_isHomogeneous",
+    "Ecdlp.FrozenProjectiveSemaev.dehomogenize_localProjectiveAt",
+    "Ecdlp.FrozenProjectiveSemaev.dehomogenize_projectiveOutputAtOver",
+    "Ecdlp.FrozenProjectiveSemaev.det_isHomogeneous_sum_row",
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt",
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_affine",
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_infinity",
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC",
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_affine",
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_infinity",
+    "Ecdlp.FrozenProjectiveSemaev.eval_localProjectiveAt",
+    "Ecdlp.FrozenProjectiveSemaev.eval_projectiveOutputAtOver",
+    "Ecdlp.FrozenProjectiveSemaev.homogenize_localSliceAt",
+    "Ecdlp.FrozenProjectiveSemaev.homogenize_previousSliceAtOver_frozenC",
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffOne",
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffOne_isHomogeneous",
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffTwo",
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffTwo_isHomogeneous",
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffZero",
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffZero_isHomogeneous",
+    "Ecdlp.FrozenProjectiveSemaev.localProjectiveAt",
+    "Ecdlp.FrozenProjectiveSemaev.localProjectiveAt_isHomogeneous",
+    "Ecdlp.FrozenProjectiveSemaev.localSliceAt_binaryPair_coeff_isHomogeneous",
+    "Ecdlp.FrozenProjectiveSemaev.localSliceAt_binaryPair_explicit",
+    "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_binaryConstantPair",
     "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_frozenC_natDegree_le",
+    "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver",
+    "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver_frozenC_isHomogeneous",
+    "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC16_eq_zero_iff_projectiveChain",
+    "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_iff_projectiveChain",
+    "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_zero",
     "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_eq_zero_iff_common_projective_root",
     "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over",
     "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_affine",
     "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_eq_zero_iff_common_projective_root",
     "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_infinity",
+    "Ecdlp.FrozenProjectiveSemaev.taskSylvester_isHomogeneous_two_mul_left",
     "Ecdlp.GenericGroup.badSet_card_le",
     "Ecdlp.GenericGroup.bsgs_decomp",
     "Ecdlp.GenericGroup.bsgs_steps_sq_ge",
@@ -8209,6 +8246,314 @@
           "line": 648
         }
       ]
+    },
+    {
+      "id": "ledger-301",
+      "claim": "Universal frozen `C16 → C2` projective witness-chain extraction (the actual universal binary output of `frozenC k s` is homogeneous of declared degree `2^(s+1)`, so its predecessor homogenization evaluates exactly as direct projective specialization for every valid `[U:V]`; the local degree-two homogenization evaluates exactly as literal `H`. Over an algebraically closed target field, vanishing of every mapped `frozenC k s` is iff a minimal left-associated `FrozenProjectiveChain`; at `s = 14`, `C16` uses leaves `q 0` through `q 15` and fourteen valid intermediate projective slots. `[0:0]` is excluded by type and `[1:0]` is allowed at every level. Honest scope: witnesses live in the algebraically closed target; no base-field descent, direct-S17, `RatCat`, `Recover`, system-materialization, rank, yield, or cost result is claimed)",
+      "theorem_cell": "`Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver_frozenC_isHomogeneous`, `homogenize_previousSliceAtOver_frozenC`, `eval_homogenize_previousSliceAtOver_frozenC`, `homogenize_localSliceAt`, `eval_homogenize_localSliceAt`, `specializeOver_frozenC_eq_zero_iff_projectiveChain`, `specializeOver_frozenC16_eq_zero_iff_projectiveChain` and supporting declarations",
+      "declared_files": [
+        "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean"
+      ],
+      "method": "Mathlib exact homogenization + row-homogeneous Sylvester determinant + fixed-degree projective resultant induction",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver_frozenC_isHomogeneous",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver_frozenC_isHomogeneous",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 379
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.homogenize_previousSliceAtOver_frozenC",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.homogenize_previousSliceAtOver_frozenC",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 416
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 428
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.homogenize_localSliceAt",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.homogenize_localSliceAt",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 502
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 519
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_iff_projectiveChain",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_iff_projectiveChain",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 574
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC16_eq_zero_iff_projectiveChain",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC16_eq_zero_iff_projectiveChain",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 608
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenProjectiveChain",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 547
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.HValue_binaryConstant_binaryPair_eq",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 350
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.HValue_cycle",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 465
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.binaryConstantPair",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 28
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.binaryPair",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 39
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 152
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic_isHomogeneous",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 160
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.dehomogenize_localProjectiveAt",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 492
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.dehomogenize_projectiveOutputAtOver",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 91
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.det_isHomogeneous_sum_row",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 130
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_affine",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 528
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_infinity",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 535
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_affine",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 440
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_infinity",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 451
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.eval_localProjectiveAt",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 511
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.eval_projectiveOutputAtOver",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 59
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffOne",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 189
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffOne_isHomogeneous",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 207
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffTwo",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 183
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffTwo_isHomogeneous",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 202
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffZero",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 196
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffZero_isHomogeneous",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 212
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.localProjectiveAt",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 473
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.localProjectiveAt_isHomogeneous",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 482
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.localSliceAt_binaryPair_coeff_isHomogeneous",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 243
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.localSliceAt_binaryPair_explicit",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 218
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_binaryConstantPair",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 276
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 47
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_zero",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 558
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.taskSylvester_isHomogeneous_two_mul_left",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+          "line": 316
+        }
+      ]
     }
   ],
   "declarations": {
@@ -11299,12 +11644,33 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 45
     },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenProjectiveChain": {
+      "name": "FrozenProjectiveChain",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 547
+    },
     "Ecdlp.FrozenProjectiveSemaev.HValue": {
       "name": "HValue",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
       "kind": "def",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 88
+    },
+    "Ecdlp.FrozenProjectiveSemaev.HValue_binaryConstant_binaryPair_eq": {
+      "name": "HValue_binaryConstant_binaryPair_eq",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 350
+    },
+    "Ecdlp.FrozenProjectiveSemaev.HValue_cycle": {
+      "name": "HValue_cycle",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 465
     },
     "Ecdlp.FrozenProjectiveSemaev.ProjectivePair": {
       "name": "ProjectivePair",
@@ -11348,6 +11714,34 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 149
     },
+    "Ecdlp.FrozenProjectiveSemaev.binaryConstantPair": {
+      "name": "binaryConstantPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 28
+    },
+    "Ecdlp.FrozenProjectiveSemaev.binaryPair": {
+      "name": "binaryPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 39
+    },
+    "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic": {
+      "name": "binaryQuadratic",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 152
+    },
+    "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic_isHomogeneous": {
+      "name": "binaryQuadratic_isHomogeneous",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 160
+    },
     "Ecdlp.FrozenProjectiveSemaev.coeff_map_C_natDegree": {
       "name": "coeff_map_C_natDegree",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -11362,6 +11756,83 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 442
     },
+    "Ecdlp.FrozenProjectiveSemaev.dehomogenize_localProjectiveAt": {
+      "name": "dehomogenize_localProjectiveAt",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 492
+    },
+    "Ecdlp.FrozenProjectiveSemaev.dehomogenize_projectiveOutputAtOver": {
+      "name": "dehomogenize_projectiveOutputAtOver",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 91
+    },
+    "Ecdlp.FrozenProjectiveSemaev.det_isHomogeneous_sum_row": {
+      "name": "det_isHomogeneous_sum_row",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 130
+    },
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt": {
+      "name": "eval_homogenize_localSliceAt",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 519
+    },
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_affine": {
+      "name": "eval_homogenize_localSliceAt_affine",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 528
+    },
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_infinity": {
+      "name": "eval_homogenize_localSliceAt_infinity",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 535
+    },
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC": {
+      "name": "eval_homogenize_previousSliceAtOver_frozenC",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 428
+    },
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_affine": {
+      "name": "eval_homogenize_previousSliceAtOver_frozenC_affine",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 440
+    },
+    "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_infinity": {
+      "name": "eval_homogenize_previousSliceAtOver_frozenC_infinity",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 451
+    },
+    "Ecdlp.FrozenProjectiveSemaev.eval_localProjectiveAt": {
+      "name": "eval_localProjectiveAt",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 511
+    },
+    "Ecdlp.FrozenProjectiveSemaev.eval_projectiveOutputAtOver": {
+      "name": "eval_projectiveOutputAtOver",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 59
+    },
     "Ecdlp.FrozenProjectiveSemaev.frozenC": {
       "name": "frozenC",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -11369,12 +11840,82 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 139
     },
+    "Ecdlp.FrozenProjectiveSemaev.homogenize_localSliceAt": {
+      "name": "homogenize_localSliceAt",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 502
+    },
+    "Ecdlp.FrozenProjectiveSemaev.homogenize_previousSliceAtOver_frozenC": {
+      "name": "homogenize_previousSliceAtOver_frozenC",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 416
+    },
     "Ecdlp.FrozenProjectiveSemaev.leafPair": {
       "name": "leafPair",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
       "kind": "def",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 102
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffOne": {
+      "name": "localBinaryCoeffOne",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 189
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffOne_isHomogeneous": {
+      "name": "localBinaryCoeffOne_isHomogeneous",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 207
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffTwo": {
+      "name": "localBinaryCoeffTwo",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 183
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffTwo_isHomogeneous": {
+      "name": "localBinaryCoeffTwo_isHomogeneous",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 202
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffZero": {
+      "name": "localBinaryCoeffZero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 196
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffZero_isHomogeneous": {
+      "name": "localBinaryCoeffZero_isHomogeneous",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 212
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localProjectiveAt": {
+      "name": "localProjectiveAt",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 473
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localProjectiveAt_isHomogeneous": {
+      "name": "localProjectiveAt_isHomogeneous",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 482
     },
     "Ecdlp.FrozenProjectiveSemaev.localSlice": {
       "name": "localSlice",
@@ -11389,6 +11930,20 @@
       "kind": "def",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 174
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localSliceAt_binaryPair_coeff_isHomogeneous": {
+      "name": "localSliceAt_binaryPair_coeff_isHomogeneous",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 243
+    },
+    "Ecdlp.FrozenProjectiveSemaev.localSliceAt_binaryPair_explicit": {
+      "name": "localSliceAt_binaryPair_explicit",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 218
     },
     "Ecdlp.FrozenProjectiveSemaev.localSliceAt_constantPair_affine_coeff_natDegree_le": {
       "name": "localSliceAt_constantPair_affine_coeff_natDegree_le",
@@ -11474,6 +12029,13 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 296
     },
+    "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_binaryConstantPair": {
+      "name": "previousSliceAtOver_binaryConstantPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 276
+    },
     "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_constantPair": {
       "name": "previousSliceAtOver_constantPair",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -11495,6 +12057,20 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 609
     },
+    "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver": {
+      "name": "projectiveOutputAtOver",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 47
+    },
+    "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver_frozenC_isHomogeneous": {
+      "name": "projectiveOutputAtOver_frozenC_isHomogeneous",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 379
+    },
     "Ecdlp.FrozenProjectiveSemaev.specialize": {
       "name": "specialize",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -11508,6 +12084,27 @@
       "kind": "def",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 287
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC16_eq_zero_iff_projectiveChain": {
+      "name": "specializeOver_frozenC16_eq_zero_iff_projectiveChain",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 608
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_iff_projectiveChain": {
+      "name": "specializeOver_frozenC_eq_zero_iff_projectiveChain",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 574
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_zero": {
+      "name": "specializeOver_frozenC_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 558
     },
     "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ": {
       "name": "specialize_frozenC_succ",
@@ -11578,6 +12175,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 379
+    },
+    "Ecdlp.FrozenProjectiveSemaev.taskSylvester_isHomogeneous_two_mul_left": {
+      "name": "taskSylvester_isHomogeneous_two_mul_left",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "line": 316
     },
     "Ecdlp.FrozenProjectiveSemaev.taskSylvester_natDegree_le_two_mul_left": {
       "name": "taskSylvester_natDegree_le_two_mul_left",

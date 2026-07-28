@@ -402,8 +402,8 @@ class ScientificSemanticTests(unittest.TestCase):
             problems,
         )
         self.assertIn(
-            "M16 complete-cost reopening must require universal "
-            "projective witness extraction",
+            "M16 complete-cost reopening must retain the proved frozen "
+            "projective chain",
             problems,
         )
         for boundary in (
@@ -411,8 +411,8 @@ class ScientificSemanticTests(unittest.TestCase):
             "TASK-020 specialization result",
             "actual frozen family",
             "universal witness extraction",
-            "unconditional one-step interface",
-            "open universal witness extraction",
+            "universal all-stage witness chain",
+            "open direct-S17 representation bridge",
             "zero retention",
             "no hypothesis retention",
             "no experiment authorization",
@@ -516,8 +516,8 @@ class ScientificSemanticTests(unittest.TestCase):
             problems,
         )
         self.assertIn(
-            "M16 complete-cost reopening must require universal "
-            "projective witness extraction",
+            "M16 complete-cost reopening must retain the proved frozen "
+            "projective chain",
             problems,
         )
         self.assertIn(
@@ -530,14 +530,91 @@ class ScientificSemanticTests(unittest.TestCase):
             "TASK-020 specialization result",
             "actual frozen family",
             "universal witness extraction",
-            "unconditional one-step interface",
-            "open universal witness extraction",
+            "universal all-stage witness chain",
+            "open direct-S17 representation bridge",
             "zero retention",
             "no hypothesis retention",
             "no experiment authorization",
             "no route promotion",
         ):
             self.assertIn(f"M16 cell must retain {boundary}", problems)
+
+    def test_m16_frozen_projective_witness_cannot_drift(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim_id = "SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT"
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["source_claim_ids"].remove(claim_id)
+        cell["cost_quantity"]["source_claim_ids"].remove(claim_id)
+        barrier = next(
+            item
+            for item in typed["barriers"]
+            if item["id"] == "B-PKC-M16-COMPLETE-COST-BRIDGE"
+        )
+        barrier["source_claim_ids"].remove(claim_id)
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == claim_id
+        )
+        claim["artifact_sha256"] = "0" * 64
+        claim["evidence_path"] = "wrong/artifact.json"
+        claim["statement"] = "An affine approximation was sampled."
+        claim["boundary"] = "The route is priced, executable, and promoted."
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "M16 cell must retain its frozen projective witness kernel "
+            "certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 cost quantity must retain its frozen projective witness "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost barrier must retain its frozen projective "
+            "witness kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 frozen projective witness artifact hash drifted",
+            problems,
+        )
+        self.assertIn(
+            "M16 frozen projective witness evidence path drifted",
+            problems,
+        )
+        for boundary in (
+            "exact output homogeneity",
+            "projective evaluation bridges",
+            "explicit coefficient map",
+            "minimal witness chain",
+            "C16 stage",
+            "fourteen intermediate slots",
+            "projective infinity",
+            "zero-pair exclusion",
+            "kernel-bound non-run assurance",
+            "target-field scope",
+            "no base-field descent",
+            "no direct-S17 claim",
+            "partial cost quantity",
+            "unpriced cost boundary",
+            "zero retention",
+            "no-authorization boundary",
+            "no-promotion boundary",
+        ):
+            self.assertTrue(
+                any(
+                    "M16 frozen projective witness claim must retain"
+                    in problem
+                    and boundary in problem
+                    for problem in problems
+                )
+            )
 
     def test_shadow_intake_cannot_authorize_or_activate_glv(self) -> None:
         shadow = copy.deepcopy(self.shadow)

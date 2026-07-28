@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 25,
+                "source_claims": 26,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -485,6 +485,48 @@ class TypedEvidenceTests(unittest.TestCase):
             "route promotion",
         ):
             self.assertIn(token, frozen_cr_claim["boundary"])
+        witness_claim = claims[
+            "SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT"
+        ]
+        self.assertEqual(
+            "experiments/engine/"
+            "pkc_smooth_m16_frozen_projective_witness/artifact.json",
+            witness_claim["evidence_path"],
+        )
+        self.assertEqual(
+            "89c645545d89334473d51654a41ff7ec"
+            "2364857d034c64ce08d505337fa1e2d4",
+            witness_claim["artifact_sha256"],
+        )
+        self.assertEqual(
+            "certificate_replayed",
+            witness_claim["read_status"],
+        )
+        for token in (
+            "declared-degree output homogeneity",
+            "projective homogenization/evaluation bridges",
+            "every explicit coefficient map",
+            "FrozenProjectiveChain",
+            "stage 14",
+            "fourteen valid intermediate projective slots",
+            "[1:0] is allowed",
+            "[0:0] is excluded",
+        ):
+            self.assertIn(token, witness_claim["statement"])
+        for token in (
+            "kernel_bound_non_run_certificate",
+            "source_independence is not_established",
+            "calibration is excluded_nonexperimental",
+            "algebraically closed target",
+            "no descent",
+            "no direct RecS17 iff GeoCat",
+            "CQ-SEMAEV-S17-SYSTEM-COST remains partial",
+            "solving cost, rank, and yield remain unpriced",
+            "zero_retention_success",
+            "experiment authorization",
+            "route promotion",
+        ):
+            self.assertIn(token, witness_claim["boundary"])
         barriers = {
             item["id"]: item for item in state["barriers"]
         }
@@ -510,6 +552,10 @@ class TypedEvidenceTests(unittest.TestCase):
             "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
             m16_barrier["source_claim_ids"],
         )
+        self.assertIn(
+            "SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT",
+            m16_barrier["source_claim_ids"],
+        )
         for token in (
             "TASK-019 kernel-checks",
             "zero forms",
@@ -518,7 +564,10 @@ class TypedEvidenceTests(unittest.TestCase):
             "formal degrees (2^(s+1),2)",
             "universal output-degree bound",
             "unconditional one-step common-projective-root equivalence",
-            "universal C16-to-C2 projective witness extraction",
+            "TASK-021 kernel-checks",
+            "all-stage frozen projective witness-chain equivalence",
+            "fourteen intermediate projective slots",
+            "exact S17 representation and materialization",
         ):
             self.assertIn(token, m16_barrier["exact_scope"])
         self.assertNotIn(
@@ -532,9 +581,11 @@ class TypedEvidenceTests(unittest.TestCase):
         )
         reopening = " ".join(m16_barrier["reopening_conditions"])
         self.assertIn(
-            "universal C16-to-C2 projective witness extraction",
+            "proved frozen projective chain",
             reopening,
         )
+        self.assertIn("exact S17 representation", reopening)
+        self.assertIn("materializable system", reopening)
         self.assertNotIn(
             "Kernel-check the exact recursive frozen C_r specialization",
             reopening,
@@ -544,10 +595,7 @@ class TypedEvidenceTests(unittest.TestCase):
             "theorem",
             reopening,
         )
-        self.assertIn(
-            "remaining exact mechanism gap",
-            m16["relation_action"],
-        )
+        self.assertIn("remaining mechanism gap", m16["relation_action"])
         self.assertIn(
             "TASK-020 kernel-checks",
             m16["relation_action"],
@@ -557,15 +605,15 @@ class TypedEvidenceTests(unittest.TestCase):
             m16["relation_action"],
         )
         self.assertIn(
-            "universal C16-to-C2 projective witness extraction",
+            "universal all-stage frozen witness-chain equivalence",
             m16["relation_action"],
         )
         self.assertIn(
-            "unconditional one-step common-root interface",
+            "all-stage frozen projective witness chain",
             m16["boundary"],
         )
         self.assertIn(
-            "universal C16-to-C2 projective witness extraction",
+            "direct S17 representation and materializable system bridge",
             m16["boundary"],
         )
         self.assertIn("zero_retention_success", m16["boundary"])
