@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
   "snapshot": {
-    "captured_at": "2026-07-28T06:45:40-07:00",
+    "captured_at": "2026-07-28T11:00:09-07:00",
     "remote": "origin",
     "base_ref": "origin/main",
     "base_sha": "ffc9c98ed42649693ab76c8e9bdf91752971dedb",
-    "real_remote_branch_count": 27,
-    "remote_names_sha256": "a7fe6148ef361404e37fd0c27cb5a98224ec5086004b116053f31abec6bde817",
+    "real_remote_branch_count": 28,
+    "remote_names_sha256": "f1beef2e8d236e63346ca2a7a19277ce72ad1198717ee46b0e7f2adc3539b55b",
     "comparison": "git rev-list --left-right --count <main-tip>...<branch-tip>",
     "recording_note": "Tips are a dated observation. The active branch necessarily advances when this snapshot is committed; the gate compares the remote name set, not mutable tips."
   },
@@ -23,7 +23,7 @@
   },
   "groups": {
     "candidate_queue": 2,
-    "historical_unmerged": 22,
+    "historical_unmerged": 23,
     "keep_default": 1,
     "superseded_draft": 2
   },
@@ -112,6 +112,17 @@
       "behind_main": 33,
       "ahead_main": 0,
       "merged_by_ancestry": true,
+      "disposition": "historical_unmerged",
+      "delete_now": false,
+      "next_action": "retain pending a dedicated content and restore-path audit"
+    },
+    {
+      "name": "agent/task021-projective-witness-chain",
+      "tip": "978aa6651a97dc1a4906e9773279b705a2bb0032",
+      "tip_date": "2026-07-28",
+      "behind_main": 0,
+      "ahead_main": 1,
+      "merged_by_ancestry": false,
       "disposition": "historical_unmerged",
       "delete_now": false,
       "next_action": "retain pending a dedicated content and restore-path audit"
