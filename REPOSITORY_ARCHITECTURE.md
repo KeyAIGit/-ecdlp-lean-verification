@@ -34,9 +34,10 @@ Machine-readable companions:
   snapshot; ancestry alone never authorizes deletion.
 - `repo/FINAL_REVIEW_PACKET.md` is the frozen adversarial-review contract for
   draft PR #235. It is historical input. `TASK-010` owns the accepted v0.2
-  sanitation review. `TASK-016` records the completed scoped M16 semantic
-  blocker, while `TASK-017` owns the current non-executable exceptional-fiber,
-  liftability, and recovery-domain classification.
+  sanitation review. `TASK-017` records the completed exact set-theoretic
+  projective-tree and exceptional-fiber result with a scoped direct-S17
+  blocker, while `TASK-018` owns the current non-executable recursive
+  projective S17 definition and reverse-projection bridge above S4.
 
 Their checks live under `scripts/check_*inventory.py`,
 `scripts/check_formal_substrate.py`, `scripts/check_ecdlp_decision_substrate.py`,

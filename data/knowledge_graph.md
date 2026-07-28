@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every ledger row below cites kernel-checked declarations (no `sorry`, no custom axioms).
 
-**299 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **7 typed evidence cells** · **3 desk-decided cells** · **2 research-question seeds** · **4 shadow proposal stubs** · **0 bounded explorations selected** · **8 retained outcomes** · **1108 edges**
+**299 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **7 typed evidence cells** · **3 desk-decided cells** · **2 research-question seeds** · **4 shadow proposal stubs** · **0 bounded explorations selected** · **8 retained outcomes** · **1109 edges**
 
 > A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline counts; `data/result_registry.json` owns declaration-level resolution.
 
@@ -10,7 +10,7 @@ By proof method: Mathlib (106), Mathlib + native_decide (31), native_decide (20)
 
 By research area: curve-torsion (152), primality (55), generic-hardness (29), other (27), protocol-soundness (23), attack-resistance (7), reduction (5), params (1)
 
-By edge type: imports (490), member_of (299), requires_foundation (41), grounded_in_source_claim (40), decision_grounded_in (25), supports (24), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), requires_target_property (9), records_outcome_for (8), updates_hypothesis (8), records_route_evidence (8), blocked_by (7), instantiates_mechanism (7), evaluates_route (7), must_change_cost_quantity (7), binds_target_feature (7), binds_mechanism_primitive (7), binds_unresolved_question (7), tests_hypothesis (6), explores_route (6), bounded_by_research_barrier (4), governs_hypothesis (3), follows_up_cell (3), depends_on_candidate (3), generated_from_cell (2), follows_up_source (1)
+By edge type: imports (490), member_of (299), requires_foundation (41), grounded_in_source_claim (41), decision_grounded_in (25), supports (24), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), requires_target_property (9), records_outcome_for (8), updates_hypothesis (8), records_route_evidence (8), blocked_by (7), instantiates_mechanism (7), evaluates_route (7), must_change_cost_quantity (7), binds_target_feature (7), binds_mechanism_primitive (7), binds_unresolved_question (7), tests_hypothesis (6), explores_route (6), bounded_by_research_barrier (4), governs_hypothesis (3), follows_up_cell (3), depends_on_candidate (3), generated_from_cell (2), follows_up_source (1)
 
 ## secp256k1 route decisions
 
@@ -90,8 +90,8 @@ The typed mechanism and cell are part of scientific identity. The three synthesi
 
 | seed | typed mechanism and cell | target feature | mechanism primitive | unresolved question | status |
 |---|---|---|---|---|---|
-| **HGS-8F8117445DE1** | `M-PKC-AUXILIARY-CURVE` / `CELL-M-PKC-AUXILIARY-CURVE` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `property_resolution_required`, authorization `none` |
-| **HGS-44E6487F3768** | `M-PKC-SMOOTH-M16` / `CELL-M-PKC-SMOOTH-M16` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `desk_cost_bridge_required`, authorization `none` |
+| **HGS-8C3820EB9E94** | `M-PKC-AUXILIARY-CURVE` / `CELL-M-PKC-AUXILIARY-CURVE` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `property_resolution_required`, authorization `none` |
+| **HGS-846C89AE66EE** | `M-PKC-SMOOTH-M16` / `CELL-M-PKC-SMOOTH-M16` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `desk_cost_bridge_required`, authorization `none` |
 
 | shadow stub | anchor | kind | executable | authorized |
 |---|---|---|---:|---:|

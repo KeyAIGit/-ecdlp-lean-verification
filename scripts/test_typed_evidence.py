@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 21,
+                "source_claims": 22,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -270,6 +270,14 @@ class TypedEvidenceTests(unittest.TestCase):
             "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
             m16["cost_quantity"]["source_claim_ids"],
         )
+        self.assertIn(
+            "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
+            m16["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
+            m16["cost_quantity"]["source_claim_ids"],
+        )
         self.assertFalse(
             any(
                 decision["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
@@ -292,6 +300,35 @@ class TypedEvidenceTests(unittest.TestCase):
             "963eea60097807ae0aa66a5d881b0c34bf0497ade53ed4d37d38861a73887c19",
             semantic_claim["artifact_sha256"],
         )
+        exceptional_claim = claims["SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT"]
+        self.assertEqual(
+            "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
+            exceptional_claim["evidence_path"],
+        )
+        self.assertEqual(
+            "578db732807a452e26de03dcd338d62c25a7d90490a62bbf427b1f96c3a869cf",
+            exceptional_claim["artifact_sha256"],
+        )
+        self.assertEqual(
+            "certificate_replayed",
+            exceptional_claim["read_status"],
+        )
+        self.assertIn(
+            "characteristic not in {2,3,7}",
+            exceptional_claim["statement"],
+        )
+        self.assertIn(
+            "source_independence is not_established",
+            exceptional_claim["boundary"],
+        )
+        self.assertIn(
+            "calibration is excluded_nonexperimental",
+            exceptional_claim["boundary"],
+        )
+        self.assertIn(
+            "solving cost is unpriced",
+            exceptional_claim["boundary"],
+        )
         barriers = {
             item["id"]: item for item in state["barriers"]
         }
@@ -299,6 +336,10 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual("open", m16_barrier["disposition"])
         self.assertIn(
             "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
+            m16_barrier["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
             m16_barrier["source_claim_ids"],
         )
 
