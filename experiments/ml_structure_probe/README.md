@@ -222,18 +222,23 @@ Exit: the pipeline passes even if every scientific target is null.
 
 ### Phase 1: toy-curve scaling ladder
 
-Use multiple prime-order curves and generators at 12, 16, 20, 24, 28, and 32
-bits.  Hold out complete curves and complete generators.  Include:
+The route-neutral implementation is
+[`p1_toy_scaling/`](p1_toy_scaling/README.md). It uses ten prime-order
+`y^2=x^3+7` curves per size at 12, 16, 20, and 24 bits and holds out complete
+curves, generators, and physically separate blind shards. The 28- and 32-bit
+rungs remain deferred pending an explicit independently validated mechanism
+and a new policy decision. The implemented ladder includes:
 
 - affine coordinates and compressed encodings;
-- random opaque relabeling as the generic-group control;
-- weak-generator and injected-coordinate canaries;
-- direct scalar bits and residues;
-- relational triples `(P,Q,P+Q)`;
-- algorithm traces from BSGS, Pollard rho, and GLV-accelerated rho.
+- deterministic 64-bit opaque point labels and mismatched-Q controls;
+- complete scalar-bit targets and deliberate target-leak canaries;
+- GLV public constants as an explicit representation family;
+- matched BSGS and Pollard-rho recovery baselines.
 
 Exit: measure whether a signal is representation-specific, generator-specific,
-or merely memorization.  No secp256k1 inference is allowed.
+or merely memorization. The current direct all-bit assay is a retrained
+within-size scaling curve, not cross-size model extrapolation. No secp256k1
+inference is allowed.
 
 ### Phase 2: model families
 

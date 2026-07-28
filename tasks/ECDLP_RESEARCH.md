@@ -73,9 +73,89 @@ How to verify:
 - repository artifact and status consistency gates
 
 This owner-directed P0 does not supersede TASK-010, authorize a candidate
-experiment, or enter native Research Engine calibration. A P1 toy-scaling run
-requires an immutable candidate, validator evidence, and the normal dated
-authorization path.
+experiment, or enter native Research Engine calibration. A native candidate
+experiment still requires an immutable candidate, validator evidence, and the
+normal dated authorization path. The separate ML-P1E contract below authorizes
+only a route-neutral engineering scaling qualification.
+
+### ML-P1E toy-scaling qualification under TASK-013
+
+State: active_engineering_qualification
+Parent task: TASK-013
+Kind: data | research | experiment-infrastructure
+Hypothesis: none
+Owner direction: 2026-07-27
+Why it matters: P0 retained a bounded null for direct full-length scalar
+prediction on secp256k1. Before replacing direct regression with explicit
+mechanism or program search, the repository needs to determine whether the
+same model families show transferable behavior as the field and group grow
+together on independently held-out, structurally similar toy curves.
+Authorized scope:
+- route-neutral engineering qualification
+  `ML-P1E-TOY-SCALING-2026-07-27-R2`;
+- exact curves `y^2=x^3+7` at 13, 16, 20, and 24 field bits;
+- explicit exclusion of all 40 field primes from the invalidated first
+  catalog, bound by a committed SHA-256 list;
+- ten independently certified prime-order curves per size, split into three
+  train, four development, and three physically blind curves;
+- six GLV-orbit-separated generators per curve;
+- complete scalar-bit prediction from public curve, generator, and point data;
+- 14 preregistered architectures, seven seeds, fixed controls, and matched
+  generic BSGS/Pollard-rho baselines;
+- physically separate development and blind data shards;
+- one architecture selected at 13/16 bits, never reselected by 20-bit results,
+  and committed with its complete selection ledger before blind shards open.
+The replacement starts at 13 bits because the exact 12-bit family cannot
+supply ten field-prime curve instances disjoint from the retired catalog.
+Prohibited scope:
+- secp256k1 evaluation;
+- 28- or 32-bit execution;
+- native Research Engine outcomes;
+- route promotion or calibration;
+- asymptotic, subgeneric, or key-recovery claims;
+- treating model weights as an attack mechanism.
+Expected output:
+- deterministic curve catalog with exact independent point counts;
+- roughly 1.1 million unique deterministic synthetic records;
+- independent full replay of every `[d]G=Q` relation and exact
+  scalar-to-split/generator allocation;
+- complete selection and evaluation ledgers with no silently omitted fit;
+- deliberate-leak canaries and five negative controls before blind opening;
+- frozen raw predictions independently replayed against an exact public
+  scalar-bit prior;
+- group-law-verified beam recovery and per-target generic solver evidence;
+- a bounded report whose conclusions apply only to the exact toy catalog.
+Exit criteria:
+- source, configuration, catalog, manifest, validations, and preregistration
+  are hash-bound and committed before selection;
+- selection opens only development shards on a clean source tree;
+- all 219 selection/confirmation/control fits complete;
+- all control gates pass before a blind-authorization recipe is emitted;
+- the recipe and complete selection artifacts are committed before evaluation;
+- a separate producer-independent selection validator passes from the
+  committed selection artifacts without opening any dataset shard, and its
+  report is committed before evaluation;
+- all 28 frozen evaluation fits complete without recipe or dependency drift;
+- the independent result validator passes from raw float32 predictions;
+- any apparent transferable signal remains untrusted until converted into an
+  explicit executable mechanism and admitted through the normal candidate
+  lifecycle.
+Files allowed to edit:
+- `experiments/ml_structure_probe/p1_toy_scaling/`;
+- `experiments/ml_structure_probe/reports/p1_toy_scaling/`;
+- this task contract;
+- the ML structure-probe package index.
+Raw ignored files:
+- `experiments/ml_structure_probe/artifacts/p1_toy_scaling/`.
+How to verify:
+- `python -m py_compile experiments/ml_structure_probe/p1_toy_scaling/*.py`;
+- `python experiments/ml_structure_probe/p1_toy_scaling/test_p1.py`;
+- independent curve, dataset, and result validators;
+- repository artifact and status consistency gates.
+
+This contract does not modify `experiments/HYPOTHESES.yaml`, native candidate
+snapshots, owner-decision records, Research Engine outcomes, route evidence, or
+exploration/promotion flags.
 
 ### TASK-013 - Build and calibrate Research Engine v0
 

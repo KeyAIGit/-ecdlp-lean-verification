@@ -3,7 +3,7 @@
   "state_id": "research-engine-shadow-intake-v0",
   "status": "shadow_non_executing",
   "source_hashes": {
-    "source_registry_sha256": "2c1915c7672fd9ddef782ba5fa84a044e5831150e59a890b07e028625bf7a9e0",
+    "source_registry_sha256": "eea7bedf9c730f630538b16102586e7d6bf22dcd34e9c80990afd29db8b21aed",
     "typed_evidence_state_sha256": "10e28cb799f0143e8e0b561edfb06fc80721625f9956c5f437abcb522ae8dc19",
     "research_claim_state_sha256": "eb65d94952eb94d0842c7f41689493aa2449802a59122180c5f321f19bb1f77b"
   },

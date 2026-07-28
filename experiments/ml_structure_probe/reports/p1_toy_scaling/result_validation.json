@@ -1,0 +1,1491 @@
+{
+  "bindings": {
+    "catalog_sha256": "d293afa7e5b614f39ed00356e35ee81a400b57ee9656907170193cb3aca0bbd7",
+    "config_sha256": "85594d83b1979320bbc25b5017052ef888bbe4890d81d4f25658e05b446632b5",
+    "curve_validation_sha256": "9f66477d9ed1309fa785ebf4c9df68ad5bf8cbf632ea9586c902db7789b4dada",
+    "dataset_validation_sha256": "61162b173a62b12eb1f47d1813bb62dc749f823aecdc072ada00cff325d1ca00",
+    "evaluation_ledger_sha256": "deafc30e89fbec86896913a957eccf868ade1f2228f5c2aa42781337fdf59ef9",
+    "evaluation_result_sha256": "6a4a6b8302877a9b6505d70fc246677c741c7b26cda314bdc17ac36a4edd044f",
+    "manifest_sha256": "28dfcf66a18626a26bda3ef734da93ceb6a31b2a4a277d78789e918b1d2ef80d",
+    "preregistration_sha256": "b15d29620c1aa05fc9fef7eb76eedfca4a263082bdcce4da6735519ac4d9f474",
+    "recipe_sha256": "f5df480c7e35c9d3f85ee1b34eddc4f640d16196d674a0f98e27c0e614927962",
+    "selection_ledger_sha256": "53b91cc9b1dfed7a4c00cd26c973cd3ac35bf8ca0b64ecab59dadf3dd065e153",
+    "selection_result_sha256": "997a9bccbdd5642346ceb0ad5c535de063ca608778e24d4e13f96367a2ac4cb2",
+    "selection_validation_sha256": "6e7a9ed3cb789551ad81ce7c38ef4fb3386c0b98ccf1b351276e0284928adf78"
+  },
+  "control_validation": {
+    "attempts": 16,
+    "canary_pass": true,
+    "complete_matrix": true,
+    "metric_replay_scope": "selection-ledger binding and decision logic; controls are copied unchanged into the assay result",
+    "negative_pass": true,
+    "pipeline_valid": true,
+    "successful": 16
+  },
+  "error_count": 0,
+  "errors": [],
+  "errors_truncated": false,
+  "evaluation_run_counts": {
+    "failed": 0,
+    "frozen": 28,
+    "successful": 28
+  },
+  "experiment_id": "ML-P1E-TOY-SCALING-2026-07-27-R2",
+  "framework_oracle": "experiments.framework.ec_oracle",
+  "framework_oracle_sha256": "7acc852df5a927a7954f56bd9548ec021ef0b0c92f5435e8f213363f71c72792",
+  "input_validation": {
+    "curve_count": 40,
+    "curve_validation_sha256": "9f66477d9ed1309fa785ebf4c9df68ad5bf8cbf632ea9586c902db7789b4dada",
+    "curve_validation_status": "pass",
+    "dataset_ec_checks": 1105920,
+    "dataset_full_ec_replay": true,
+    "dataset_validation_sha256": "61162b173a62b12eb1f47d1813bb62dc749f823aecdc072ada00cff325d1ca00",
+    "dataset_validation_status": "pass"
+  },
+  "limitations": [
+    "Control decisions are rebound to their selection-ledger rows, but the producer does not retain raw control predictions for independent metric replay.",
+    "Screen and confirmation scores are independently re-aggregated from the selection ledger, but their per-fit metrics cannot be recomputed because selection predictions are not retained.",
+    "Solver-baseline candidate scalars and summary arithmetic are independently checked, but the BSGS and Pollard-rho searches themselves are not rerun.",
+    "Raw ensemble probabilities are validated as decisive artifacts, but per-seed raw predictions are not retained, so their averaging cannot be reconstructed independently."
+  ],
+  "oracle_recovery": {
+    "cached_replays": 32,
+    "candidate_submissions": 907168,
+    "curve_instances": 40,
+    "ec_scalar_multiplications": 905382,
+    "out_of_range_submissions": 1754,
+    "rejected_candidate_submissions": 906852,
+    "valid_recovery_submissions": 316
+  },
+  "preblind_selection_validation": {
+    "dataset_files_opened": [],
+    "report_payload_sha256": "259b735071bfdf3f1299abecb06781bc36c8dc1084ae32796f9d550f65f5ec71",
+    "report_sha256": "6e7a9ed3cb789551ad81ce7c38ef4fb3386c0b98ccf1b351276e0284928adf78",
+    "selection": {
+      "blind_evaluation_authorized": true,
+      "recipe_sha256": "f5df480c7e35c9d3f85ee1b34eddc4f640d16196d674a0f98e27c0e614927962",
+      "run_counts": {
+        "confirmation": 7,
+        "controls": 16,
+        "failed": 0,
+        "screen": 196,
+        "successful": 219
+      },
+      "selection_ledger_sha256": "53b91cc9b1dfed7a4c00cd26c973cd3ac35bf8ca0b64ecab59dadf3dd065e153",
+      "selection_result_sha256": "997a9bccbdd5642346ceb0ad5c535de063ca608778e24d4e13f96367a2ac4cb2"
+    },
+    "source_commit": "1663c993b72d2b8bf7db49102a8dc8f9b2479063",
+    "status": "pass"
+  },
+  "producer_modules_imported": false,
+  "raw_prediction_validation": [
+    {
+      "artifact_sha256": "0c67e919001610445b05008e9f0e7c9bd7871a3a87ed957c467d21b0f91320a6",
+      "candidate_recovery": {
+        "blind_curve_blind_generator": {
+          "beam": {
+            "claimed_hits": 45,
+            "oracle_valid_hits": 45
+          },
+          "hard_candidates_in_range": 11447,
+          "hard_label_matches": 4,
+          "hard_oracle_valid_recoveries": 4,
+          "records": 12288
+        },
+        "new_curve_new_generator": {
+          "beam": {
+            "claimed_hits": 41,
+            "oracle_valid_hits": 41
+          },
+          "hard_candidates_in_range": 7810,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 8192
+        },
+        "new_curve_seen_generator": {
+          "beam": {
+            "claimed_hits": 49,
+            "oracle_valid_hits": 49
+          },
+          "hard_candidates_in_range": 7780,
+          "hard_label_matches": 1,
+          "hard_oracle_valid_recoveries": 1,
+          "records": 8192
+        },
+        "seen_curve_new_generator": {
+          "beam": {
+            "claimed_hits": 41,
+            "oracle_valid_hits": 41
+          },
+          "hard_candidates_in_range": 3001,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 3072
+        },
+        "seen_curve_seen_generator": {
+          "beam": {
+            "claimed_hits": 41,
+            "oracle_valid_hits": 41
+          },
+          "hard_candidates_in_range": 1825,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 1845
+        }
+      },
+      "field_bits": 13,
+      "metrics_recomputed": {
+        "blind_curve_blind_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": 118.0,
+            "recovery": {
+              "1": 0.0009765625,
+              "16": 0.005859375,
+              "256": 0.0439453125
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5314816205929487,
+          "bit_accuracy_lift": -0.000532101362179487,
+          "bit_accuracy_lift_99ci": [
+            -0.015610552973374308,
+            0.014546350249015332
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0015192634589733065,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 0.0003255208333333333,
+          "exact_recovery_count": 4,
+          "information_gain_99ci": [
+            -1.2471384446453404,
+            0.8387547222339203
+          ],
+          "information_gain_bits_per_bit": -0.015707066246593043,
+          "information_gain_bits_per_key": -0.20419186120571,
+          "information_gain_by_bit": [
+            -0.17874708113246837,
+            -0.01778063375022008,
+            -0.00434916311618412,
+            -0.0003162907774424584,
+            -0.0003945026154972531,
+            -0.00041917714827598016,
+            -0.0012449264437171604,
+            -0.0002903080447042764,
+            -9.94029691866907e-05,
+            -0.0001855966808327538,
+            -3.317024489037193e-05,
+            -5.6852054981981916e-05,
+            -0.00027475622730805744
+          ],
+          "information_gain_cluster_se": 0.10508443935347338,
+          "mean_hamming": 6.090738932291667,
+          "prior_bit_accuracy": 0.5320137219551282,
+          "records": 12288
+        },
+        "new_curve_new_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": 102.0,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0029296875,
+              "256": 0.0400390625
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5187612680288461,
+          "bit_accuracy_lift": -0.0017183743990384613,
+          "bit_accuracy_lift_99ci": [
+            -0.010118931451709261,
+            0.006682182653632338
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0014382276127232483,
+          "cluster_interval_critical_99": 5.840909309733355,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 4,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.1573602849828166,
+            0.03819185030884853
+          ],
+          "information_gain_bits_per_bit": -0.004583401333614161,
+          "information_gain_bits_per_key": -0.05958421733698403,
+          "information_gain_by_bit": [
+            -0.04305288347195055,
+            -0.00815455695599887,
+            -0.0031128416279324446,
+            -0.0011299780141846953,
+            0.00014806176424610307,
+            -0.0002663564661024672,
+            -0.001146003912310769,
+            -0.0003669000590851559,
+            -0.0005424813834062401,
+            -0.00045105067557572745,
+            -0.0008383624608037715,
+            -0.00013063475032938228,
+            -0.0005402293235501196
+          ],
+          "information_gain_cluster_se": 0.016739870876422862,
+          "mean_hamming": 6.256103515625,
+          "prior_bit_accuracy": 0.5204796424278846,
+          "records": 8192
+        },
+        "new_curve_seen_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": 132.0,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.001953125,
+              "256": 0.0478515625
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5220477764423077,
+          "bit_accuracy_lift": -0.001389723557692307,
+          "bit_accuracy_lift_99ci": [
+            -0.006552659110781793,
+            0.003773211995397179
+          ],
+          "bit_accuracy_lift_cluster_se": 0.000883926676362859,
+          "cluster_interval_critical_99": 5.840909309733355,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 4,
+          "exact_recovery": 0.0001220703125,
+          "exact_recovery_count": 1,
+          "information_gain_99ci": [
+            -0.19238644391089332,
+            0.06490370488351987
+          ],
+          "information_gain_bits_per_bit": -0.00490318227028359,
+          "information_gain_bits_per_key": -0.06374136951368672,
+          "information_gain_by_bit": [
+            -0.04869245261436672,
+            -0.00844786036066855,
+            -0.003996255559629035,
+            0.0006621477361815711,
+            -0.0005666100191924435,
+            -8.839607017544529e-05,
+            -0.0009298726035139407,
+            -0.00048531930869941304,
+            -0.00018207619042767307,
+            -0.00030457894718087714,
+            6.817518537967216e-06,
+            -0.0005384093338285489,
+            -0.00017850376072355665
+          ],
+          "information_gain_cluster_se": 0.02202483681484851,
+          "mean_hamming": 6.21337890625,
+          "prior_bit_accuracy": 0.5234375,
+          "records": 8192
+        },
+        "seen_curve_new_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": 158.0,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0009765625,
+              "256": 0.0400390625
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5325771233974359,
+          "bit_accuracy_lift": 0.0004256810897435889,
+          "bit_accuracy_lift_99ci": [
+            -0.0019450363074099543,
+            0.0027963984868971323
+          ],
+          "bit_accuracy_lift_cluster_se": 0.00023886698753429117,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.0531147723117109,
+            0.035365192546642416
+          ],
+          "information_gain_bits_per_bit": -0.0006826761448103264,
+          "information_gain_bits_per_key": -0.008874789882534243,
+          "information_gain_by_bit": [
+            -0.0004948205248744307,
+            -0.0003687463316060335,
+            -0.0011515256358333944,
+            -0.001483928474884582,
+            -0.00012142972916133249,
+            -0.0010588419528719235,
+            -0.001998446664528823,
+            0.00048764797502571995,
+            -0.001766788194413433,
+            -0.0019578439252100383,
+            -1.1405274207399908e-05,
+            -0.0001154599144360581,
+            0.0011667987644674853
+          ],
+          "information_gain_cluster_se": 0.004457499381459587,
+          "mean_hamming": 6.076497395833333,
+          "prior_bit_accuracy": 0.5321514423076923,
+          "records": 3072
+        },
+        "seen_curve_seen_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": 113.0,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.00390625,
+              "256": 0.0400390625
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5306649989576819,
+          "bit_accuracy_lift": -0.0029601834479883243,
+          "bit_accuracy_lift_99ci": [
+            -0.04749638829311996,
+            0.04157602139714331
+          ],
+          "bit_accuracy_lift_cluster_se": 0.004487345940237218,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.07775102646282467,
+            0.02819844076222853
+          ],
+          "information_gain_bits_per_bit": -0.001905868680792158,
+          "information_gain_bits_per_key": -0.024776292850298066,
+          "information_gain_by_bit": [
+            -0.002933221582316372,
+            -0.002219339123467544,
+            -0.0012256779158108556,
+            -0.004656811924082294,
+            -0.000992466761664891,
+            -0.002085994736506872,
+            -0.0019247358640277772,
+            0.0016690285909417655,
+            -0.0003450451974758886,
+            -0.0023721778711256196,
+            -0.0021864156012722587,
+            -0.0028992803055770703,
+            -0.0026041545579123743
+          ],
+          "information_gain_cluster_se": 0.0053375889714434134,
+          "mean_hamming": 6.101355013550135,
+          "prior_bit_accuracy": 0.5336251824056703,
+          "records": 1845
+        }
+      },
+      "records": 33589
+    },
+    {
+      "artifact_sha256": "a2aaf3198088c1814c7dc469f9887880f6b6120f2d903beb860b045db4de871a",
+      "candidate_recovery": {
+        "blind_curve_blind_generator": {
+          "beam": {
+            "claimed_hits": 7,
+            "oracle_valid_hits": 7
+          },
+          "hard_candidates_in_range": 24571,
+          "hard_label_matches": 1,
+          "hard_oracle_valid_recoveries": 1,
+          "records": 24576
+        },
+        "new_curve_new_generator": {
+          "beam": {
+            "claimed_hits": 3,
+            "oracle_valid_hits": 3
+          },
+          "hard_candidates_in_range": 16382,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 16384
+        },
+        "new_curve_seen_generator": {
+          "beam": {
+            "claimed_hits": 8,
+            "oracle_valid_hits": 8
+          },
+          "hard_candidates_in_range": 16375,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 16384
+        },
+        "seen_curve_new_generator": {
+          "beam": {
+            "claimed_hits": 6,
+            "oracle_valid_hits": 6
+          },
+          "hard_candidates_in_range": 6142,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 6144
+        },
+        "seen_curve_seen_generator": {
+          "beam": {
+            "claimed_hits": 4,
+            "oracle_valid_hits": 4
+          },
+          "hard_candidates_in_range": 3690,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 3690
+        }
+      },
+      "field_bits": 16,
+      "metrics_recomputed": {
+        "blind_curve_blind_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": 150.0,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0068359375
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5286738077799479,
+          "bit_accuracy_lift": -0.0003000895182291667,
+          "bit_accuracy_lift_99ci": [
+            -0.002258278690751187,
+            0.0016580996542928537
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0001973017742326489,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 4.0690104166666664e-05,
+          "exact_recovery_count": 1,
+          "information_gain_99ci": [
+            -0.14404219114879183,
+            0.06897629578747391
+          ],
+          "information_gain_bits_per_bit": -0.002345809230041194,
+          "information_gain_bits_per_key": -0.03753294768065896,
+          "information_gain_by_bit": [
+            -0.01797550261962044,
+            -0.011809784273411396,
+            -0.002852845220616237,
+            -0.0026152463906263857,
+            -0.0005306729734981277,
+            6.056181863298853e-05,
+            -0.00026875472849002287,
+            -7.076600807419578e-05,
+            -0.0005134439311356307,
+            -1.0621783291028241e-05,
+            -0.00014415641215356762,
+            -6.510654141107213e-05,
+            -0.0002532317914561259,
+            -0.00022660323880413654,
+            -0.0003551735094618183,
+            9.8399922758089e-05
+          ],
+          "information_gain_cluster_se": 0.010731579462966044,
+          "mean_hamming": 7.541219075520833,
+          "prior_bit_accuracy": 0.5289738972981771,
+          "records": 24576
+        },
+        "new_curve_new_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": 191.0,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0029296875
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5249252319335938,
+          "bit_accuracy_lift": -0.000110626220703125,
+          "bit_accuracy_lift_99ci": [
+            -0.006031068741901908,
+            0.005809816300495658
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0010136165804411467,
+          "cluster_interval_critical_99": 5.840909309733355,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 4,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.49763970763351606,
+            0.28702221919268556
+          ],
+          "information_gain_bits_per_bit": -0.00658179651377599,
+          "information_gain_bits_per_key": -0.10530874422041525,
+          "information_gain_by_bit": [
+            -0.0937989487455385,
+            -0.004152579636409452,
+            -0.0035673527757833956,
+            -0.0014010707928068951,
+            -0.0003869662653900746,
+            -0.0003081806657334283,
+            -0.00010996631177929541,
+            -3.791064318437486e-05,
+            -0.00024495223463754783,
+            0.0001982014460967075,
+            -0.0004893480852619311,
+            -6.582716833661409e-05,
+            -0.00019993315311638227,
+            -0.00016331100893155113,
+            -0.0004337838671079422,
+            -0.00014681431249515036
+          ],
+          "information_gain_cluster_se": 0.06716950094727822,
+          "mean_hamming": 7.6011962890625,
+          "prior_bit_accuracy": 0.5250358581542969,
+          "records": 16384
+        },
+        "new_curve_seen_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": 67.5,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0009765625,
+              "256": 0.0078125
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5247764587402344,
+          "bit_accuracy_lift": 0.00072479248046875,
+          "bit_accuracy_lift_99ci": [
+            -0.004675501095995454,
+            0.006125086056932954
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0009245638461574974,
+          "cluster_interval_critical_99": 5.840909309733355,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 4,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.48679758537718887,
+            0.27676760375157217
+          ],
+          "information_gain_bits_per_bit": -0.006563436925800543,
+          "information_gain_bits_per_key": -0.10501499081280836,
+          "information_gain_by_bit": [
+            -0.09254545618508161,
+            -0.004869641882398288,
+            -0.002884869506959204,
+            -0.0021516071873097556,
+            -0.0007957118979372151,
+            0.00034971460007458864,
+            -0.0002896760239939316,
+            -4.927548836915063e-05,
+            -0.0005244092348318772,
+            0.00010788710834252605,
+            -0.00021472780616599302,
+            -0.00025732364608096905,
+            -0.00029023940356875987,
+            -8.663237153631267e-05,
+            -0.0003138218217854622,
+            -0.00019920006520726506
+          ],
+          "information_gain_cluster_se": 0.0653635545972566,
+          "mean_hamming": 7.60357666015625,
+          "prior_bit_accuracy": 0.5240516662597656,
+          "records": 16384
+        },
+        "seen_curve_new_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": 113.5,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.005859375
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5229695638020834,
+          "bit_accuracy_lift": -0.002166748046875,
+          "bit_accuracy_lift_99ci": [
+            -0.021895982561438772,
+            0.017562486467688772
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0019878635979597484,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.011868649688389238,
+            -0.006231612411854064
+          ],
+          "information_gain_bits_per_bit": -0.0005656331906326031,
+          "information_gain_bits_per_key": -0.009050131050121651,
+          "information_gain_by_bit": [
+            -0.00145196569891351,
+            -0.0015636117520685564,
+            1.1273698352525451e-05,
+            -0.0002461375834843405,
+            -0.00020284836396053138,
+            -0.0004984918222468046,
+            -0.0003349067911935397,
+            -0.00020689135166404278,
+            -0.0008355295153172016,
+            -0.000793576898191155,
+            -0.0007267816747464983,
+            0.000171632208424651,
+            -0.0002175246319748496,
+            -0.0010578131892991394,
+            -0.0007706001065085818,
+            -0.0003263575773300761
+          ],
+          "information_gain_cluster_se": 0.00028398621330428744,
+          "mean_hamming": 7.632486979166667,
+          "prior_bit_accuracy": 0.5251363118489584,
+          "records": 6144
+        },
+        "seen_curve_seen_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": 160.0,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.00390625
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5221714092140921,
+          "bit_accuracy_lift": -0.0008976964769647697,
+          "bit_accuracy_lift_99ci": [
+            -0.01535754751793004,
+            0.0135621545640005
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0014569349609097487,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.025415798527649216,
+            0.012992401797442366
+          ],
+          "information_gain_bits_per_bit": -0.0003882311478189646,
+          "information_gain_bits_per_key": -0.006211698365103425,
+          "information_gain_by_bit": [
+            -0.0004087226207600383,
+            0.00018304041656212825,
+            -0.00019572773717847292,
+            -0.0009931559564401147,
+            -0.0012366711875538147,
+            -0.000374827289505342,
+            -0.0009144325533625489,
+            -0.0008160313994275224,
+            0.0017010980874134433,
+            -0.00036983140155045623,
+            -0.0013287873827097958,
+            -0.00042701974192922276,
+            0.00031038986380445467,
+            -0.0008986965913072875,
+            0.0001708468170436075,
+            -0.0006131696882024515
+          ],
+          "information_gain_cluster_se": 0.001934952499881202,
+          "mean_hamming": 7.645257452574525,
+          "prior_bit_accuracy": 0.5230691056910569,
+          "records": 3690
+        }
+      },
+      "records": 67178
+    },
+    {
+      "artifact_sha256": "ad1aaa4ce5fb5aa826ce996479ac80641cb682e2615d79223f8a55c2396357af",
+      "candidate_recovery": {
+        "blind_curve_blind_generator": {
+          "beam": {
+            "claimed_hits": 0,
+            "oracle_valid_hits": 0
+          },
+          "hard_candidates_in_range": 98304,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 98304
+        },
+        "new_curve_new_generator": {
+          "beam": {
+            "claimed_hits": 1,
+            "oracle_valid_hits": 1
+          },
+          "hard_candidates_in_range": 65536,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 65536
+        },
+        "new_curve_seen_generator": {
+          "beam": {
+            "claimed_hits": 0,
+            "oracle_valid_hits": 0
+          },
+          "hard_candidates_in_range": 65536,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 65536
+        },
+        "seen_curve_new_generator": {
+          "beam": {
+            "claimed_hits": 0,
+            "oracle_valid_hits": 0
+          },
+          "hard_candidates_in_range": 24576,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 24576
+        },
+        "seen_curve_seen_generator": {
+          "beam": {
+            "claimed_hits": 0,
+            "oracle_valid_hits": 0
+          },
+          "hard_candidates_in_range": 14742,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 14742
+        }
+      },
+      "field_bits": 20,
+      "metrics_recomputed": {
+        "blind_curve_blind_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": null,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5168060302734375,
+          "bit_accuracy_lift": -0.00024007161458333332,
+          "bit_accuracy_lift_99ci": [
+            -0.0025093534336699725,
+            0.0020292102045033063
+          ],
+          "bit_accuracy_lift_cluster_se": 0.00022864661669180588,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.8965940344332533,
+            0.5262907630277043
+          ],
+          "information_gain_bits_per_bit": -0.009257581785138587,
+          "information_gain_bits_per_key": -0.1851516357027745,
+          "information_gain_by_bit": [
+            -0.1603835705119557,
+            -0.017427682113435015,
+            -0.005470257417055463,
+            -0.0011076264313743718,
+            -9.005724944946976e-05,
+            -8.138110391729767e-05,
+            -1.5666609458504414e-05,
+            -3.288045551185476e-05,
+            -5.070203539844795e-05,
+            2.4062993329878873e-05,
+            -0.00017541140119000515,
+            -3.622456643603955e-05,
+            -2.022238243238172e-05,
+            -1.0261647200013922e-05,
+            -0.0001319715752278827,
+            -6.5625298285727e-05,
+            -4.231565006292018e-05,
+            -9.04616747626135e-06,
+            -1.0669448500630017e-05,
+            -1.4126631733638286e-05
+          ],
+          "information_gain_cluster_se": 0.07168298625258414,
+          "mean_hamming": 9.66387939453125,
+          "prior_bit_accuracy": 0.5170461018880208,
+          "records": 98304
+        },
+        "new_curve_new_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": 94.0,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0009765625
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.51016845703125,
+          "bit_accuracy_lift": 4.882812499999991e-05,
+          "bit_accuracy_lift_99ci": [
+            -0.002983009903042669,
+            0.0030806661530426685
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0005190695262106502,
+          "cluster_interval_critical_99": 5.840909309733355,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 4,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.5331091697889345,
+            0.1680153324046892
+          ],
+          "information_gain_bits_per_bit": -0.009127345934606117,
+          "information_gain_bits_per_key": -0.1825469186921227,
+          "information_gain_by_bit": [
+            -0.15829092165237682,
+            -0.018164879793167575,
+            -0.004628712497113416,
+            -0.0007259853158880432,
+            -6.26892444307023e-05,
+            -3.055716418496723e-05,
+            -9.797807360405941e-05,
+            -9.571285383235693e-05,
+            3.0804573390427954e-06,
+            -2.1634163073970187e-05,
+            -5.961944218982225e-05,
+            -6.288954543201408e-05,
+            -0.00010245168088542051,
+            -2.7174746028170088e-05,
+            -9.986514518099588e-05,
+            -0.00013763845071922162,
+            2.582565492386873e-05,
+            -1.690439875853529e-05,
+            3.201374563596983e-05,
+            1.777561684488569e-05
+          ],
+          "information_gain_cluster_se": 0.06001843762796164,
+          "mean_hamming": 9.796630859375,
+          "prior_bit_accuracy": 0.51011962890625,
+          "records": 65536
+        },
+        "new_curve_seen_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": null,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5098052978515625,
+          "bit_accuracy_lift": -8.926391601562509e-05,
+          "bit_accuracy_lift_99ci": [
+            -0.0009544174929238379,
+            0.0007758896608925876
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0001481196729876479,
+          "cluster_interval_critical_99": 5.840909309733355,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 4,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.5212845994657388,
+            0.16092114467987131
+          ],
+          "information_gain_bits_per_bit": -0.009009086369646781,
+          "information_gain_bits_per_key": -0.18018172739293373,
+          "information_gain_by_bit": [
+            -0.1559294094823014,
+            -0.017742859142924557,
+            -0.004782313174912616,
+            -0.0008830882353793689,
+            -0.0001752871924504815,
+            -0.00010386147064596019,
+            7.427289663691748e-06,
+            -3.511065857574238e-05,
+            -5.2728232557447225e-05,
+            -4.053232777431814e-05,
+            -0.00010188278070763446,
+            -3.7652200008121466e-05,
+            -4.63466929546624e-05,
+            -1.2827885212789905e-05,
+            -4.086142590267344e-05,
+            -6.809642311027194e-05,
+            -2.2325761268119127e-05,
+            -6.318928852283973e-05,
+            -4.0083689913861e-05,
+            -1.0698617476423325e-05
+          ],
+          "information_gain_cluster_se": 0.05839893310864928,
+          "mean_hamming": 9.80389404296875,
+          "prior_bit_accuracy": 0.5098945617675781,
+          "records": 65536
+        },
+        "seen_curve_new_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": null,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.524664306640625,
+          "bit_accuracy_lift": -0.0009094238281249998,
+          "bit_accuracy_lift_99ci": [
+            -0.01062358765522674,
+            0.008804739998976739
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0009787725237012253,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.0037891481079570678,
+            0.0013908232672313235
+          ],
+          "information_gain_bits_per_bit": -5.995812101814361e-05,
+          "information_gain_bits_per_key": -0.001199162420362872,
+          "information_gain_by_bit": [
+            -0.00011633357939745627,
+            -0.00020456372239188172,
+            -2.6221124499432927e-05,
+            -3.9855446735411376e-05,
+            -2.2408741833263454e-05,
+            5.105300756977454e-05,
+            -6.236832274120228e-05,
+            -2.232654665034283e-05,
+            -6.096053152640442e-06,
+            -0.00013104212342457674,
+            -0.00012594027667653317,
+            -6.433242305602093e-05,
+            -0.0001458172320578691,
+            2.885246737682823e-05,
+            -0.0001615536098049061,
+            -2.289203322900792e-05,
+            -1.1864146783372365e-05,
+            -7.076322204283723e-05,
+            -6.69525522406039e-05,
+            2.2263261407883665e-05
+          ],
+          "information_gain_cluster_se": 0.0002609598595325475,
+          "mean_hamming": 9.5067138671875,
+          "prior_bit_accuracy": 0.52557373046875,
+          "records": 24576
+        },
+        "seen_curve_seen_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": null,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5256512006512006,
+          "bit_accuracy_lift": -0.0010649843983177318,
+          "bit_accuracy_lift_99ci": [
+            -0.002779093693855273,
+            0.0006491248972198094
+          ],
+          "bit_accuracy_lift_cluster_se": 0.00017270895477511874,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.008537496065264119,
+            0.004292442344191766
+          ],
+          "information_gain_bits_per_bit": -0.00010612634302680896,
+          "information_gain_bits_per_key": -0.0021225268605361766,
+          "information_gain_by_bit": [
+            -8.451774703348996e-05,
+            0.00017363147181570984,
+            -0.00011290166071059096,
+            6.431146549148038e-05,
+            -0.00015043734651925324,
+            -0.00016575839936063704,
+            -0.00016929585855890404,
+            -0.0001762353813347259,
+            5.918659993026696e-05,
+            0.00025710885506175803,
+            -0.0003804576722823538,
+            -0.00025439715343684256,
+            -6.532145411602346e-05,
+            -8.640494780431363e-05,
+            -8.067352027388752e-05,
+            0.0001061062076277651,
+            -0.0003345571183447785,
+            -0.0002556779177734002,
+            -0.0002269182817995033,
+            -0.00023931700111445552
+          ],
+          "information_gain_cluster_se": 0.0006463547156225504,
+          "mean_hamming": 9.486975986975986,
+          "prior_bit_accuracy": 0.5267161850495183,
+          "records": 14742
+        }
+      },
+      "records": 268694
+    },
+    {
+      "artifact_sha256": "d6a2c2fa88f3863cfa083735008d125eaca3eb87217bd475873b371ee60b4153",
+      "candidate_recovery": {
+        "blind_curve_blind_generator": {
+          "beam": {
+            "claimed_hits": 0,
+            "oracle_valid_hits": 0
+          },
+          "hard_candidates_in_range": 196605,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 196608
+        },
+        "new_curve_new_generator": {
+          "beam": {
+            "claimed_hits": 0,
+            "oracle_valid_hits": 0
+          },
+          "hard_candidates_in_range": 131070,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 131072
+        },
+        "new_curve_seen_generator": {
+          "beam": {
+            "claimed_hits": 0,
+            "oracle_valid_hits": 0
+          },
+          "hard_candidates_in_range": 131068,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 131072
+        },
+        "seen_curve_new_generator": {
+          "beam": {
+            "claimed_hits": 0,
+            "oracle_valid_hits": 0
+          },
+          "hard_candidates_in_range": 49151,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 49152
+        },
+        "seen_curve_seen_generator": {
+          "beam": {
+            "claimed_hits": 0,
+            "oracle_valid_hits": 0
+          },
+          "hard_candidates_in_range": 29493,
+          "hard_label_matches": 0,
+          "hard_oracle_valid_recoveries": 0,
+          "records": 29493
+        }
+      },
+      "field_bits": 24,
+      "metrics_recomputed": {
+        "blind_curve_blind_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": null,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5145717196994357,
+          "bit_accuracy_lift": -0.0007040235731336804,
+          "bit_accuracy_lift_99ci": [
+            -0.0016877589942277706,
+            0.00027971184796040966
+          ],
+          "bit_accuracy_lift_cluster_se": 9.911848491501315e-05,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.1503338317128311,
+            0.09449800185318706
+          ],
+          "information_gain_bits_per_bit": -0.0011632464554092478,
+          "information_gain_bits_per_key": -0.027917914929822017,
+          "information_gain_by_bit": [
+            -0.020739109112728374,
+            -0.004737431074052547,
+            -0.001477286370509541,
+            -0.0004323839712701136,
+            -0.00017892658021605311,
+            -6.493368852827026e-05,
+            6.548579587403666e-06,
+            9.717929147704679e-06,
+            -1.1549525317202158e-05,
+            -3.5359103325152794e-05,
+            -2.1577730239615145e-05,
+            -5.000245039324891e-05,
+            -1.5895423957822688e-05,
+            -2.7084112465127675e-05,
+            -4.864830468113764e-06,
+            -2.488283776799941e-05,
+            -1.0357611411783108e-05,
+            -1.7273875368040236e-05,
+            -2.1100691684165453e-06,
+            -3.360187137256306e-05,
+            4.894512721327724e-06,
+            1.8172262222064868e-05,
+            -3.958766739905996e-05,
+            -3.303030754140187e-05
+          ],
+          "information_gain_cluster_se": 0.012334292270902844,
+          "mean_hamming": 11.650278727213541,
+          "prior_bit_accuracy": 0.5152757432725694,
+          "records": 196608
+        },
+        "new_curve_new_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": null,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5149396260579427,
+          "bit_accuracy_lift": 0.000435193379720052,
+          "bit_accuracy_lift_99ci": [
+            -0.003674411390642328,
+            0.004544798150082432
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0007035898954147584,
+          "cluster_interval_critical_99": 5.840909309733355,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 4,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.027652262086606268,
+            0.0024776823365645854
+          ],
+          "information_gain_bits_per_bit": -0.0005244704114592045,
+          "information_gain_bits_per_key": -0.01258728987502084,
+          "information_gain_by_bit": [
+            -0.008582885461364343,
+            -0.0024116293367221096,
+            -0.0010240902327664147,
+            -0.0002530976072079821,
+            -7.177188799661155e-05,
+            -5.992153913548212e-05,
+            2.091711269773505e-05,
+            3.727972197671068e-05,
+            -1.313910904434836e-05,
+            -2.333522288019542e-05,
+            -1.6109959500660258e-05,
+            -3.599061609697571e-05,
+            -2.8597737802278078e-05,
+            6.004195960367987e-06,
+            -9.941769426022438e-06,
+            -1.0162397836391582e-05,
+            -3.173267746523386e-05,
+            -4.015794430005691e-06,
+            3.2881572161496436e-06,
+            -4.972196806391887e-05,
+            -1.0509337124821308e-05,
+            6.565640957519652e-06,
+            3.4379981921333045e-05,
+            -5.907203088692589e-05
+          ],
+          "information_gain_cluster_se": 0.0025792169357057113,
+          "mean_hamming": 11.641448974609375,
+          "prior_bit_accuracy": 0.5145044326782227,
+          "records": 131072
+        },
+        "new_curve_seen_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": null,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5147113800048828,
+          "bit_accuracy_lift": -0.00012365976969401046,
+          "bit_accuracy_lift_99ci": [
+            -0.0010665718794158968,
+            0.0008192523400278759
+          ],
+          "bit_accuracy_lift_cluster_se": 0.00016143241740641432,
+          "cluster_interval_critical_99": 5.840909309733355,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 4,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.02686274107261105,
+            0.0013556194849549136
+          ],
+          "information_gain_bits_per_bit": -0.0005313983664095022,
+          "information_gain_bits_per_key": -0.01275356079382807,
+          "information_gain_by_bit": [
+            -0.008155579546991554,
+            -0.00256867303336448,
+            -0.001203434161648091,
+            -0.0001958472703631601,
+            -0.00018844761035925387,
+            -0.00011018860384704728,
+            -5.981491488170422e-05,
+            -2.318926951475548e-05,
+            -2.1948729156355904e-05,
+            1.8069091823100223e-05,
+            3.178829291469875e-08,
+            2.229824937312126e-06,
+            -3.615776372162518e-05,
+            4.114454939065197e-06,
+            -6.446969964695551e-06,
+            1.537332453302713e-05,
+            3.0312349470765325e-07,
+            -2.5474414923059256e-05,
+            -3.774496698417913e-05,
+            -3.9485897919938766e-05,
+            -4.413718299812741e-05,
+            -3.1135169018677695e-05,
+            -2.799567272963788e-05,
+            -1.798122346183729e-05
+          ],
+          "information_gain_cluster_se": 0.002415579412484849,
+          "mean_hamming": 11.646926879882812,
+          "prior_bit_accuracy": 0.5148350397745768,
+          "records": 131072
+        },
+        "seen_curve_new_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": null,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5148510403103299,
+          "bit_accuracy_lift": 0.00029839409722222273,
+          "bit_accuracy_lift_99ci": [
+            -0.0023139477507508155,
+            0.0029107359451952613
+          ],
+          "bit_accuracy_lift_cluster_se": 0.00026321240498100096,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.005853425467915225,
+            0.003306551349728069
+          ],
+          "information_gain_bits_per_bit": -5.305987746223238e-05,
+          "information_gain_bits_per_key": -0.0012734370590935776,
+          "information_gain_by_bit": [
+            -0.0001338651054919923,
+            -0.000210399453976047,
+            -8.557934801348037e-05,
+            -7.669560823344344e-05,
+            -9.626182944535591e-05,
+            -2.1068355786666305e-05,
+            2.080147325948671e-05,
+            2.2530997016406462e-05,
+            -0.00012025908892440068,
+            -4.610540602184232e-05,
+            -2.003914892978322e-05,
+            -3.3497230167503425e-05,
+            -1.3058154875613293e-05,
+            -4.572399576963523e-06,
+            -9.423404977491916e-05,
+            -6.769781185571354e-05,
+            -7.329105617503054e-07,
+            -9.331038700294769e-05,
+            1.2409724351692284e-06,
+            -5.690852725040706e-05,
+            -5.6170808774540015e-05,
+            2.997461846168199e-05,
+            -2.7066304871331483e-05,
+            -9.04631907316205e-05
+          ],
+          "information_gain_cluster_se": 0.0004614670797416616,
+          "mean_hamming": 11.643575032552084,
+          "prior_bit_accuracy": 0.5145526462131076,
+          "records": 49152
+        },
+        "seen_curve_seen_generator": {
+          "beam": {
+            "median_true_rank_when_recovered": null,
+            "recovery": {
+              "1": 0.0,
+              "16": 0.0,
+              "256": 0.0
+            },
+            "sample_records": 1024
+          },
+          "bit_accuracy": 0.5146207009572893,
+          "bit_accuracy_lift": -0.00040122514947049556,
+          "bit_accuracy_lift_99ci": [
+            -0.008503486045421687,
+            0.007701035746480696
+          ],
+          "bit_accuracy_lift_cluster_se": 0.0008163616020857174,
+          "cluster_interval_critical_99": 9.924843200918287,
+          "cluster_interval_distribution": "Student-t",
+          "cluster_unit": "curve",
+          "clusters": 3,
+          "exact_recovery": 0.0,
+          "exact_recovery_count": 0,
+          "information_gain_99ci": [
+            -0.007004119379054196,
+            0.0033790743045443127
+          ],
+          "information_gain_bits_per_bit": -7.552177238562265e-05,
+          "information_gain_bits_per_key": -0.0018125225372549415,
+          "information_gain_by_bit": [
+            -7.212901181799488e-05,
+            -0.0003050335396046804,
+            2.086619950342095e-05,
+            -1.367205126670511e-05,
+            -9.692614250405417e-05,
+            -1.856180226801258e-05,
+            -2.9167629130631164e-05,
+            -2.930139834113183e-05,
+            -0.0001083503148366579,
+            -5.351749762696463e-05,
+            -2.0865824925408657e-05,
+            -0.00010889596823307308,
+            -0.00014242963509932202,
+            -8.049532176136905e-05,
+            -7.001820179611144e-05,
+            -0.0002380642862761629,
+            -9.164781788072849e-05,
+            -9.005612078358144e-05,
+            6.7665409308255915e-06,
+            -7.978701162674714e-06,
+            -8.67135005917372e-05,
+            5.400577293046775e-05,
+            -0.00018391821057791885,
+            -4.6418074134737135e-05
+          ],
+          "information_gain_cluster_se": 0.0005230910692189984,
+          "mean_hamming": 11.649103177025056,
+          "prior_bit_accuracy": 0.5150219261067598,
+          "records": 29493
+        }
+      },
+      "records": 537397
+    }
+  ],
+  "schema_version": 1,
+  "selection": {
+    "blind_evaluation_authorized": true,
+    "control_attempts": 16,
+    "final_architecture_id": "trees-compressed-d6-l16",
+    "recipe_payload_sha256": "b97d6f8b9312187c4a57d661d358d0886205c40133da11c65b2fc39f2ac030fc",
+    "recipe_sha256": "f5df480c7e35c9d3f85ee1b34eddc4f640d16196d674a0f98e27c0e614927962",
+    "run_counts": {
+      "confirmation": 7,
+      "controls": 16,
+      "failed": 0,
+      "screen": 196,
+      "successful": 219
+    },
+    "screen_gate_pass": false,
+    "screen_winner_architecture_id": "trees-compressed-d6-l16",
+    "selection_ledger_sha256": "53b91cc9b1dfed7a4c00cd26c973cd3ac35bf8ca0b64ecab59dadf3dd065e153",
+    "selection_result_sha256": "997a9bccbdd5642346ceb0ad5c535de063ca608778e24d4e13f96367a2ac4cb2"
+  },
+  "solver_baseline_validation": [
+    {
+      "candidate_checks": 8,
+      "ec_valid_recoveries": 8,
+      "field_bits": 13,
+      "method": "bsgs",
+      "targets": 8
+    },
+    {
+      "candidate_checks": 8,
+      "ec_valid_recoveries": 8,
+      "field_bits": 13,
+      "method": "pollard_rho",
+      "targets": 8
+    },
+    {
+      "candidate_checks": 8,
+      "ec_valid_recoveries": 8,
+      "field_bits": 16,
+      "method": "bsgs",
+      "targets": 8
+    },
+    {
+      "candidate_checks": 8,
+      "ec_valid_recoveries": 8,
+      "field_bits": 16,
+      "method": "pollard_rho",
+      "targets": 8
+    },
+    {
+      "candidate_checks": 8,
+      "ec_valid_recoveries": 8,
+      "field_bits": 20,
+      "method": "bsgs",
+      "targets": 8
+    },
+    {
+      "candidate_checks": 8,
+      "ec_valid_recoveries": 8,
+      "field_bits": 20,
+      "method": "pollard_rho",
+      "targets": 8
+    },
+    {
+      "candidate_checks": 8,
+      "ec_valid_recoveries": 8,
+      "field_bits": 24,
+      "method": "bsgs",
+      "targets": 8
+    },
+    {
+      "candidate_checks": 8,
+      "ec_valid_recoveries": 8,
+      "field_bits": 24,
+      "method": "pollard_rho",
+      "targets": 8
+    }
+  ],
+  "status": "pass",
+  "validation_environment": {
+    "numpy": "2.3.5",
+    "python": "3.12.13",
+    "scipy": "1.17.0"
+  },
+  "validation_role": "independent metric, artifact, recipe, ledger, and EC recovery replay",
+  "validator_sha256": "5153adcaae3e22f2fdf562d700930866c20d180f752b63c8d2c655422b3ad91d",
+  "wall_time_seconds": 71.66332855400105,
+  "warnings": []
+}
