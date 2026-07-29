@@ -1,0 +1,135 @@
+{
+  "artifact_id": "PKC-SMOOTH-M16-INFINITY-STRATA-001",
+  "binding_state": {
+    "artifact_sidecar": "artifact.sha256",
+    "digest_match": true,
+    "source_path": "Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean",
+    "source_sha256": "1314477f9821da87d2017837abca4fec957ae9998390a231e93532230129a22c",
+    "source_status": "final"
+  },
+  "depends_on": [
+    {
+      "digest_match": true,
+      "path": "experiments/engine/pkc_smooth_m16_exact_chart_cover/artifact.json",
+      "required_sha256": "934809fabbb8c98c5ed9356a0a1f3367a23f8fbc1bc86239069942537fd678ed"
+    },
+    {
+      "digest_match": true,
+      "path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "required_sha256": "4f7b95453d8fafba3ec9cae0a9bbad5d8f782c6c0202f6e7cf37e17981b63019"
+    }
+  ],
+  "downstream_open_boundary": {
+    "closed_here": [
+      "all three one-infinity specializations of H are squared projective determinants",
+      "two recursive endpoint infinities expose the middle v-coordinate squared",
+      "affine external inputs forbid adjacent infinity slots",
+      "every selected boundary infinity satisfies its forced endpoint determinant equation",
+      "an isolated infinity slot forces each existing affine neighbor to the normalized current input coordinate",
+      "the complete chart cover is exactly equivalent to its admissible-mask restriction",
+      "the mask count drops from 16384 to 987 for affine inputs and conditionally to 377 when both endpoint determinants are nonzero"
+    ],
+    "not_claimed": [
+      "sufficiency of the admissible-mask predicate",
+      "a unique mask for a relation or a solver-facing mask-selection algorithm",
+      "relation independence, yield, rank, solving degree, memory, recovery, runtime, or total cost",
+      "a solver run, parameter sweep, exact-target search, discrete-log execution, or ECDLP shortcut",
+      "experiment authorization, hypothesis retention, route promotion, or route rejection"
+    ],
+    "remaining_blocker": "necessary mask pruning is closed, but sufficient orchestration, relation yield and rank, solving, recovery, and complete cost remain open"
+  },
+  "kind": "source_bound_non_run_certificate",
+  "local_identity_fixture": {
+    "fields": [
+      5,
+      7
+    ],
+    "full_production_mask_enumeration_executed": false,
+    "identity_checks": [
+      "H(a,b,infinity)=det(a,b)^2",
+      "H(infinity,b,c)=det(b,c)^2",
+      "H(a,infinity,c)=det(a,c)^2",
+      "H(infinity,b,infinity)=b.v^2"
+    ],
+    "mask_counts_derived_by_path_recurrence": true,
+    "neighbor_coordinate_fixture_exhaustive": true,
+    "projective_zero_pair_admitted": false
+  },
+  "mask_pruning_contract": {
+    "adjacent_infinity_consequence": "q(i+2).v^2 = 0",
+    "affine_input_assumption": "forall n, (q n).v != 0",
+    "boundary_conditions": {
+      "slot_0_infinity_implies": "det(q0,q1)=0",
+      "slot_13_infinity_implies": "det(q15,y)=0"
+    },
+    "endpoint_nonzero_assumptions_required_for_377": true,
+    "full_mask_count": 16384,
+    "full_mask_count_formula": "2^14",
+    "interior_separated_mask_count": 377,
+    "interior_slot_count": 12,
+    "neighbor_forcing": "isolated infinity forces adjacent affine coordinate to q.u/q.v",
+    "production_mask_family_materialized": false,
+    "projective_slot_count": 14,
+    "separated_mask_count": 987,
+    "separated_mask_definition": "no adjacent slots are both in I",
+    "stage": 14
+  },
+  "producer_checks": {
+    "discrete_log_executed": false,
+    "exact_target_search_executed": false,
+    "experiment_authorized": false,
+    "full_production_mask_family_enumerated": false,
+    "parameter_sweep_executed": false,
+    "rank_estimated": false,
+    "relation_yield_estimated": false,
+    "solver_executed": false
+  },
+  "proof_status": {
+    "card_infinityMask": "compiler_trusted_native_decide",
+    "card_interiorSeparatedInfinityMask": "compiler_trusted_native_decide",
+    "card_separatedInfinityMask": "compiler_trusted_native_decide",
+    "cover_equivalences": "kernel_checked",
+    "forced_neighbor_theorems": "kernel_checked",
+    "infinity_identities": "kernel_checked",
+    "mask_necessity_theorems": "kernel_checked",
+    "solver_rank_yield_cost_claim": "not_claimed"
+  },
+  "schema_version": 1,
+  "scope": {
+    "barrier": "B-PKC-M16-COMPLETE-COST-BRIDGE",
+    "cell": "CELL-M-PKC-SMOOTH-M16",
+    "cost_quantity": "CQ-SEMAEV-S17-SYSTEM-COST",
+    "task": "TASK-024"
+  },
+  "terminal_disposition": {
+    "assurance": "kernel_bound_non_run_certificate",
+    "authorization": "none",
+    "barrier_effect": "necessary_infinity_mask_pruning_closed_only",
+    "cell_status": "open_non_executable",
+    "cost_quantity_status": "partial",
+    "experiment_permission": "none",
+    "hypothesis_effect": "none",
+    "mask_orchestration_status": "necessary_filter_only",
+    "rank_status": "unpriced",
+    "retention_disposition": "zero_retention_success",
+    "route_effect": "none",
+    "route_status": "open_parked",
+    "solving_cost_status": "unpriced",
+    "yield_status": "unpriced"
+  },
+  "theorem_bindings": {
+    "HValue_first_infinity": "Ecdlp.FrozenProjectiveSemaev.HValue_first_infinity",
+    "HValue_first_third_infinity": "Ecdlp.FrozenProjectiveSemaev.HValue_first_third_infinity",
+    "HValue_middle_infinity": "Ecdlp.FrozenProjectiveSemaev.HValue_middle_infinity",
+    "HValue_third_infinity": "Ecdlp.FrozenProjectiveSemaev.HValue_third_infinity",
+    "card_infinityMask": "Ecdlp.FrozenProjectiveSemaev.card_infinityMask",
+    "card_interiorSeparatedInfinityMask": "Ecdlp.FrozenProjectiveSemaev.card_interiorSeparatedInfinityMask",
+    "card_separatedInfinityMask": "Ecdlp.FrozenProjectiveSemaev.card_separatedInfinityMask",
+    "frozenChartCover_iff_admissibleChartCover": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_admissibleChartCover",
+    "frozenChartCover_iff_interiorChartCover": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_interiorChartCover",
+    "frozenChartSystem_leftInfinity_forces_rightCoordinate": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_leftInfinity_forces_rightCoordinate",
+    "frozenChartSystem_rightInfinity_forces_leftCoordinate": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_rightInfinity_forces_leftCoordinate",
+    "frozenChartSystem_separatedInfinityMask": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_separatedInfinityMask",
+    "frozenProjectiveChain_iff_admissibleChartPolynomialCover": "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_admissibleChartPolynomialCover"
+  }
+}

@@ -163,11 +163,20 @@ branch from current `main`; preserve any unrelated local changes.
   The cover is exactly equivalent to the projective chain, guarded system, and
   source frozen predicate after the existing injective base change. The
   `2^14` logical masks are not enumerated or materialized. Only
-  `card_chartEquation` uses `native_decide`; `card_chartVar` does not. The M16
-  cell remains open and non-executable on mask selection or finite-cover
-  orchestration, yield, rank, solving, recovery, and total cost. No successor
-  execution is currently authorized. This result is not a selected hypothesis,
-  candidate, solver authorization, cost claim, or attack route.
+  `card_chartEquation` uses `native_decide`; `card_chartVar` does not.
+  `TASK-024` then proved exact necessary infinity-stratum pruning. Affine
+  external inputs forbid adjacent infinity slots, so the exact cover restricts
+  from 16384 masks to 987 separated masks. If both endpoint determinants are
+  nonzero, slots 0 and 13 are affine and the conditional cover has 377 masks.
+  An isolated infinity also forces each existing affine neighbor to the
+  normalized current input coordinate. The three mask counts use
+  `native_decide`; the identities, necessity results, neighbor results, and
+  cover equivalences use ordinary kernel proofs. This is a necessary filter,
+  not a sufficient mask selector. The M16 cell remains open and
+  non-executable on sufficient mask orchestration, yield, rank, solving,
+  recovery, and total cost. No successor execution is currently authorized.
+  This result is not a selected hypothesis, candidate, solver authorization,
+  cost claim, or attack route.
 - `TASK-008` remains the parked proposal-intake lane. Intake does not bypass
   owner authorization or authorize promotion by itself.
 - The division-polynomial, torsion, Weil, Semaev, cost-model, lattice, isogeny,

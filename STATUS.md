@@ -11,9 +11,9 @@
 ## Verified asset (the ledger)
 | metric | value | source |
 |---|---|---|
-| ledger rows | **304** | `VERIFIED.md` → `data/stats.json` |
-| distinct results | **~265** | `data/stats.json` |
-| proved modules | **173** | `data/stats.json` |
+| ledger rows | **305** | `VERIFIED.md` → `data/stats.json` |
+| distinct results | **~266** | `data/stats.json` |
+| proved modules | **174** | `data/stats.json` |
 | `sorry` | **0** | axiom-audit + no-sorry gate |
 | custom axioms | **0** | axiom-audit gate |
 
@@ -152,18 +152,26 @@ chart-polynomial cover. For each infinity mask `I`, selected slots are
 degree ceilings `2/4/2`. The existential cover is exactly equivalent to the
 stage-14 chain, the guarded system, and the source frozen predicate after
 the existing injective base change. The `2^14` logical masks were not
-enumerated or materialized. The remaining M16 gap requires a separately
-authorized design for mask selection or finite-cover orchestration, relation
-yield, rank, solving, recovery, and total cost.
+enumerated or materialized. `TASK-024` then kernel-checked exact necessary
+infinity-stratum pruning. With affine external inputs, adjacent infinity
+slots are impossible, reducing the exact logical cover from 16384 masks to
+987 separated masks. When both endpoint determinants are nonzero, the
+conditional exact cover has 377 interior masks. Isolated infinity slots also
+force their existing affine neighbors to the normalized current-input
+coordinate. These predicates are necessary, not sufficient or unique. The
+remaining M16 gap requires a separately authorized sufficient design for mask
+selection or finite-cover orchestration, relation yield, rank, solving,
+recovery, and total cost.
 `TASK-008` remains parked because no hypothesis proposal has quality-cleared.
 
 The Engine's bounded-exploration capability is
 **true**, while the current decision's experiment
 authorization is **false** and the promotion gate is
 **false**. `GLV-SEMAEV-ITER-001` is complete; its
-certificates and kernel-checked identities authorize no hypothesis run. Closing `TASK-023`
-authorizes no direct-S17 expansion or evaluation, mask enumeration, solver input or run, cost inference,
-target computation, or route promotion. Any later experiment needs
+certificates and kernel-checked identities authorize no hypothesis run. Closing `TASK-024`
+authorizes no direct-S17 expansion or evaluation, production mask enumeration,
+sufficient mask-selection claim, solver input or run, cost inference, target
+computation, or route promotion. Any later experiment needs
 a new dated decision plus the normal fixed budgets, dependency order, and retained terminal
 outcome.
 
