@@ -1,0 +1,239 @@
+{
+  "artifact_id": "PKC-SMOOTH-M16-GUARDED-PROJECTIVE-SYSTEM-001",
+  "assumption_contract": {
+    "coefficient_map": "phi : k ->+* K is injective",
+    "guard_semantics": "A*U+B*V-1=0 has a solution (A,B) exactly when U!=0 or V!=0",
+    "no_base_field_descent": "all guarded witness variables live in K; no descent to k is claimed",
+    "projective_domain": "[0:0] is excluded and [1:0] is retained at every guarded slot",
+    "source_coefficients": "the source uses a Field k",
+    "system_semantics": "FrozenGuardedProjectiveSystem is directly an existential GuardVar assignment making every indexed guardedEquation polynomial vanish, not a parallel recursive syntax",
+    "target_coefficients": "the target uses a Field K with IsAlgClosed K"
+  },
+  "depends_on": [
+    {
+      "digest_match": true,
+      "observed_sha256": "89c645545d89334473d51654a41ff7ec2364857d034c64ce08d505337fa1e2d4",
+      "path": "experiments/engine/pkc_smooth_m16_frozen_projective_witness/artifact.json",
+      "required_sha256": "89c645545d89334473d51654a41ff7ec2364857d034c64ce08d505337fa1e2d4"
+    },
+    {
+      "digest_match": true,
+      "observed_sha256": "37feeef48e77437b44b6ae6dd4750782e19ecd824e3ea2e73b657e2fb8296fb9",
+      "path": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "required_sha256": "37feeef48e77437b44b6ae6dd4750782e19ecd824e3ea2e73b657e2fb8296fb9"
+    }
+  ],
+  "downstream_open_boundary": {
+    "closed_here": [
+      "stage-14 frozen RecS17 is equivalent, after an injective coefficient map into an algebraically closed target, to the guarded scalar projective system",
+      "FrozenGuardedProjectiveSystem is directly the vanishing locus of the literal finite guardedEquation family under an existential scalar assignment, not a parallel recursive syntax",
+      "the stage-14 guarded scalar projective system is equivalent to FrozenProjectiveChain",
+      "four scalar variables for each of fourteen projective witness slots give 56 variables",
+      "fifteen H equations and fourteen guard equations give 29 equations",
+      "every guarded equation has total degree at most four",
+      "the guard equation excludes [0:0] and retains [1:0]"
+    ],
+    "not_claimed": [
+      "base-field descent or rationality of intermediate witnesses",
+      "an expanded or evaluated S17 polynomial",
+      "independence of the 29 equations or removal of projective and guard redundancy",
+      "relation yield, rank, solving degree, fill-in, memory, recovery cost, or total work",
+      "a solver run, parameter sweep, exact-target search, or discrete-log execution",
+      "experiment authorization, hypothesis retention, or route promotion"
+    ],
+    "remaining_blocker": "solver-ready chart or gauge handling without counting guard and projective redundancy as independent relations, followed by yield, rank, solving, recovery, and total-cost validation"
+  },
+  "finite_field_fixture": {
+    "assignment_order": [
+      "U",
+      "V",
+      "A",
+      "B"
+    ],
+    "distinguished_infinity_pair": [
+      1,
+      0
+    ],
+    "distinguished_infinity_pair_allowed": true,
+    "exhaustive_assignment_count": 625,
+    "field_prime": 5,
+    "guard_equation": "A*U+B*V-1=0",
+    "guard_solution_count": 120,
+    "nonzero_coordinate_pair_count": 24,
+    "solutions_per_nonzero_coordinate_pair": 5,
+    "zero_pair": [
+      0,
+      0
+    ],
+    "zero_pair_rejected": true
+  },
+  "guarded_system_contract": {
+    "equation_families": {
+      "H": {
+        "count": 15,
+        "degree_upper_bound": 4
+      },
+      "guard": {
+        "count": 14,
+        "degree_upper_bound": 2
+      }
+    },
+    "exact_total_degree_claimed": false,
+    "guard_equation": "A*U+B*V-1=0",
+    "leaf_count": 16,
+    "projective_slot_count": 14,
+    "stage": 14,
+    "total_degree_upper_bound": 4,
+    "total_equation_count": 29,
+    "total_variable_count": 56,
+    "variable_coordinates_per_slot": [
+      "U",
+      "V",
+      "A",
+      "B"
+    ],
+    "variables_per_projective_slot": 4
+  },
+  "kernel_contract": {
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "axiom_audit_status": "standard_lean_axioms_only_with_disclosed_native_decide_counts",
+    "build_status": "passed",
+    "build_targets": [
+      "Ecdlp.Proved.FrozenProjectiveGuardSystem"
+    ],
+    "compiler_trust_marker": "Lean.ofReduceBool",
+    "compiler_trusted_declarations": [
+      "Ecdlp.FrozenProjectiveSemaev.card_guardVar_fourteen",
+      "Ecdlp.FrozenProjectiveSemaev.card_guarded_equations_fourteen"
+    ],
+    "forbidden_axioms": [
+      "sorryAx"
+    ],
+    "lean_toolchain": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "mathlib_input_revision": "v4.31.0",
+    "no_sorry_status": "passed",
+    "validator_invokes_lean": false
+  },
+  "kind": "non_run_kernel_binding_certificate",
+  "producer_checks": {
+    "C16_evaluated": false,
+    "S17_expanded": false,
+    "discrete_log_executed": false,
+    "exact_target_search_executed": false,
+    "experiment_authorized": false,
+    "guarded_scalar_representation_materialized": true,
+    "parameter_sweep_executed": false,
+    "solver_input_emitted": false,
+    "solver_executed": false
+  },
+  "proof_status": {
+    "base_field_descent": "not_claimed",
+    "card_guardVar_fourteen": "compiler_trusted_native_decide",
+    "card_guarded_equations_fourteen": "compiler_trusted_native_decide",
+    "expanded_S17_polynomial": "not_claimed",
+    "frozenProjectiveChain_iff_guardedProjectiveSystem": "kernel_checked",
+    "frozenRecS17_iff_guardedProjectiveSystem_over": "kernel_checked",
+    "FrozenGuardedProjectiveSystem": "kernel_checked_definition",
+    "guardEquation": "kernel_checked_definition",
+    "guardedEquation": "kernel_checked_definition",
+    "guardedEquation_totalDegree_le_four": "kernel_checked",
+    "literal_polynomial_family_direct_vanishing_semantics": "kernel_checked",
+    "parallel_recursive_syntax_as_system_definition": "not_used",
+    "solving_rank_yield_cost_claim": "not_claimed"
+  },
+  "schema_version": 1,
+  "scope": {
+    "barrier": "B-PKC-M16-COMPLETE-COST-BRIDGE",
+    "cell": "CELL-M-PKC-SMOOTH-M16",
+    "cost_quantity": "CQ-SEMAEV-S17-SYSTEM-COST",
+    "excluded": [
+      "base-field descent or witness rationality",
+      "expanded or evaluated S17",
+      "equation independence, rank, yield, or solving-cost claims",
+      "solver, parameter sweep, exact-target, or discrete-log execution",
+      "experiment authorization, route promotion, or hypothesis retention"
+    ],
+    "included": [
+      "exact stage-14 guarded scalar representation of FrozenProjectiveChain",
+      "injective coefficient-map equivalence from frozen RecS17",
+      "four guarded scalar variables per fourteen projective witness slots",
+      "fifteen H equations and fourteen nonzero-pair guards",
+      "total-degree upper bound four",
+      "exhaustive F5 guard semantics fixture"
+    ],
+    "polynomial_scope": "Field source coefficients mapped injectively to an algebraically closed Field target",
+    "task": "TASK-022"
+  },
+  "terminal_disposition": {
+    "assurance": "kernel_bound_non_run_certificate",
+    "authorization": "none",
+    "barrier_effect": "literal_finite_polynomial_representation_materialized_cost_bridge_open",
+    "cell_status": "open_non_executable",
+    "cost_quantity_status": "partial",
+    "experiment_permission": "none",
+    "hypothesis_effect": "none",
+    "rank_status": "unpriced",
+    "remaining_blocker": "solver-ready chart or gauge handling, relation yield and rank, solving and recovery behavior, and complete end-to-end cost",
+    "representation_status": "literal_finite_polynomial_vanishing_family_closed",
+    "retention_disposition": "zero_retention_success",
+    "route_effect": "none",
+    "route_status": "open_parked",
+    "solving_cost_status": "unpriced",
+    "yield_status": "unpriced"
+  },
+  "theorem_bindings": {
+    "card_guardVar_fourteen": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.card_guardVar_fourteen",
+      "kernel_status": "compiler_trusted_native_decide",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "source_shape": "theorem"
+    },
+    "card_guarded_equations_fourteen": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.card_guarded_equations_fourteen",
+      "kernel_status": "compiler_trusted_native_decide",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "source_shape": "theorem"
+    },
+    "frozenProjectiveChain_iff_guardedProjectiveSystem": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_guardedProjectiveSystem",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "source_shape": "theorem"
+    },
+    "frozenRecS17_iff_guardedProjectiveSystem_over": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_guardedProjectiveSystem_over",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "source_shape": "theorem"
+    },
+    "guardEquation": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.guardEquation",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "source_shape": "def"
+    },
+    "guarded_equation_family": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.guardedEquation",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "source_shape": "def"
+    },
+    "guardedEquation_totalDegree_le_four": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.guardedEquation_totalDegree_le_four",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "source_shape": "theorem"
+    },
+    "guarded_projective_system": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.FrozenGuardedProjectiveSystem",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "source_shape": "def"
+    }
+  }
+}

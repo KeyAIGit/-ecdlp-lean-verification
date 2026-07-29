@@ -1167,3 +1167,112 @@ How to verify:
 - affine and infinity projective-evaluation fixtures
 - certificate validator and fault tests if a certificate is created
 - scientific-semantic, non-execution, generated-fixpoint, and full CI gates
+
+### TASK-022 - Materialize the frozen stage-14 guarded projective system
+
+Status: completed_non_executable_kernel_result
+Kind: theorem | research | review
+Hypothesis: none. This is the smallest exact representation task left by
+TASK-021; it is not a solver candidate or a cost experiment.
+Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
+Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
+Authorization: none
+Outcome: `closed_exact_theorem`
+Retention: `zero_retention_success`
+Completed on: 2026-07-29
+Artifact:
+- `experiments/engine/pkc_smooth_m16_guarded_projective_system/artifact.json`
+- ID `PKC-SMOOTH-M16-GUARDED-PROJECTIVE-SYSTEM-001`
+- SHA-256 `3445da55b44a71d0f40ee60206c90f2ef1798c28abd125542ce3acbeeb8e1d46`
+Source:
+- `Ecdlp/Proved/FrozenProjectiveGuardSystem.lean`
+- SHA-256 `37feeef48e77437b44b6ae6dd4750782e19ecd824e3ea2e73b657e2fb8296fb9`
+Typed claim:
+- `SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT`
+Why it matters: TASK-021 proves an exact recursive chain of fourteen valid
+projective witnesses, but the existential `ProjectivePair` representation is
+not yet a finite scalar polynomial inventory. A guard
+`A*U + B*V - 1 = 0` expresses exactly that `(U,V)` is not `[0:0]` over a
+field while retaining `[1:0]`. The target representation is one literal finite
+`MvPolynomial` family:
+`∃ assignment : GuardVar → K, ∀ e : GuardedEquation,
+MvPolynomial.eval assignment (guardedEquation q y e) = 0`.
+Decision boundary:
+- Work only with the already proved frozen stage-14 predicate
+  `specialize q y (frozenC k 14) = 0`.
+- Use an explicit injective coefficient map from a source field `k` to an
+  algebraically closed target field `K`. Target witnesses need not descend
+  to `k`; base-field descent is not claimed.
+- Materialize fourteen raw `(U,V,A,B)` slots, fifteen literal `H` equations,
+  and fourteen nonzero-pair guards.
+- Prove only a total-degree upper bound. Do not state that every equation has
+  exact degree four in every characteristic.
+- Keep raw variable and equation counts distinct from dimension, relation
+  independence, rank, or solver complexity.
+- Do not expand or evaluate direct `S17`, emit solver input, run a solver,
+  parameter sweep, exact-target search, or discrete-log computation.
+Recorded result:
+- `GuardCoordinate`, `GuardVar`, and `GuardedEquation` give the finite raw
+  indices. `card_guardVar_fourteen` records 56 variables and
+  `card_guarded_equations_fourteen` records 29 equation-family members.
+  These two cardinality theorems use `native_decide` and therefore disclose
+  compiler trust through `Lean.ofReduceBool`.
+- `guardEquation` is the literal polynomial
+  `A_i*U_i + B_i*V_i - 1`. `guardEquation_excludes_zero` rejects `[0:0]`,
+  while `guardEquation_preserves_infinity` retains `[1:0]`.
+- `guardedEquation` enumerates one base `H`, thirteen internal `H` steps,
+  one final `H`, and fourteen guards. The inventory is fifteen `H` equations
+  plus fourteen guards.
+- `guardedEquation_totalDegree_le_four` proves only the uniform upper bound
+  `totalDegree <= 4`; coefficient cancellation may lower actual degree in a
+  particular characteristic.
+- `FrozenGuardedProjectiveSystem` is literally one assignment satisfying
+  every polynomial indexed by `GuardedEquation`.
+  `frozenProjectiveChain_iff_guardedProjectiveSystem` proves this finite
+  family is exactly the TASK-021 chain over a field; it is not a parallel
+  recursive syntax.
+- `frozenRecS17_iff_guardedProjectiveSystem_over` proves that, after an
+  injective field map into an algebraically closed target, source-field
+  vanishing of `frozenC k 14` is equivalent to the guarded target system.
+- The result materializes the literal finite guarded polynomial family for
+  the frozen recursive predicate only. It does not produce an expanded direct
+  `S17`, descend target witnesses, remove chart/gauge or guard redundancy,
+  establish independent relations, or determine yield, rank, solving degree,
+  fill-in, memory, recovery cost, or total work.
+- `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`;
+  `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`;
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open; the route remains
+  `open_parked`; no hypothesis, solver, experiment authorization, exact
+  target computation, cost claim, or route promotion is created.
+Inputs:
+- `Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean`
+- `experiments/engine/pkc_smooth_m16_frozen_projective_witness/artifact.json`
+- `CELL-M-PKC-SMOOTH-M16`
+- `B-PKC-M16-COMPLETE-COST-BRIDGE`
+Expected output:
+- A kernel-checked literal finite guarded `MvPolynomial` family for the actual
+  frozen stage-14 predicate.
+- Exact raw counts and a degree upper bound, with compiler trust disclosed
+  for finite-cardinality facts.
+- One narrow non-run certificate bound to the Lean source digest.
+Exit criteria:
+- The source uses `Field k`, an injective `k -> K`, and
+  `[Field K] [IsAlgClosed K]`.
+- `[0:0]` is excluded and `[1:0]` is retained.
+- The representation has fourteen slots, 56 raw variables, fifteen `H`
+  equations, fourteen guards, and total degree at most four.
+- The M16 cell and complete-cost barrier remain open and authorization stays
+  false.
+Files allowed to edit:
+- one narrow guarded-system Lean module and direct import
+- one dedicated non-run TASK-022 certificate directory
+- directly affected canonical task, proof, evidence, and decision ledgers
+Files that must be regenerated:
+- only generated views directly affected by the final recorded result
+How to verify:
+- narrow and full Lean builds, built-source no-`sorry`, and exhaustive axiom
+  audit
+- exact source and artifact digest checks
+- exhaustive finite-field guard fixture plus certificate fault tests
+- typed-evidence, decision-substrate, scientific-semantic,
+  generated-fixpoint, and full CI gates

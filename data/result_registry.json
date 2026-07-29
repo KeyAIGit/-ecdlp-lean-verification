@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 302,
-  "ledger_reference_count": 540,
-  "ledger_named_declarations": 515,
+  "ledger_rows": 303,
+  "ledger_reference_count": 557,
+  "ledger_named_declarations": 532,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 853,
-  "distinct_qualified_names": 853,
-  "verified_md_citations": 515,
+  "declaration_count": 870,
+  "distinct_qualified_names": 870,
+  "verified_md_citations": 532,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -361,13 +361,19 @@
     "Ecdlp.DLEQ.chaum_pedersen_verify",
     "Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime",
     "Ecdlp.EDS.isEllSequence_of_rec_one",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenGuardedProjectiveSystem",
     "Ecdlp.FrozenProjectiveSemaev.FrozenProjectiveChain",
+    "Ecdlp.FrozenProjectiveSemaev.GuardCoordinate",
+    "Ecdlp.FrozenProjectiveSemaev.GuardVar",
+    "Ecdlp.FrozenProjectiveSemaev.GuardedEquation",
     "Ecdlp.FrozenProjectiveSemaev.HValue_binaryConstant_binaryPair_eq",
     "Ecdlp.FrozenProjectiveSemaev.HValue_cycle",
     "Ecdlp.FrozenProjectiveSemaev.binaryConstantPair",
     "Ecdlp.FrozenProjectiveSemaev.binaryPair",
     "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic",
     "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic_isHomogeneous",
+    "Ecdlp.FrozenProjectiveSemaev.card_guardVar_fourteen",
+    "Ecdlp.FrozenProjectiveSemaev.card_guarded_equations_fourteen",
     "Ecdlp.FrozenProjectiveSemaev.dehomogenize_localProjectiveAt",
     "Ecdlp.FrozenProjectiveSemaev.dehomogenize_projectiveOutputAtOver",
     "Ecdlp.FrozenProjectiveSemaev.det_isHomogeneous_sum_row",
@@ -379,6 +385,15 @@
     "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_infinity",
     "Ecdlp.FrozenProjectiveSemaev.eval_localProjectiveAt",
     "Ecdlp.FrozenProjectiveSemaev.eval_projectiveOutputAtOver",
+    "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_guardedProjectiveSystem",
+    "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_guardedProjectiveSystem_over",
+    "Ecdlp.FrozenProjectiveSemaev.guardConstantCoordinate",
+    "Ecdlp.FrozenProjectiveSemaev.guardEquation",
+    "Ecdlp.FrozenProjectiveSemaev.guardEquation_excludes_zero",
+    "Ecdlp.FrozenProjectiveSemaev.guardEquation_preserves_infinity",
+    "Ecdlp.FrozenProjectiveSemaev.guardProjectiveCoordinate",
+    "Ecdlp.FrozenProjectiveSemaev.guardedEquation",
+    "Ecdlp.FrozenProjectiveSemaev.guardedEquation_totalDegree_le_four",
     "Ecdlp.FrozenProjectiveSemaev.homogenize_localSliceAt",
     "Ecdlp.FrozenProjectiveSemaev.homogenize_previousSliceAtOver_frozenC",
     "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffOne",
@@ -391,6 +406,8 @@
     "Ecdlp.FrozenProjectiveSemaev.localProjectiveAt_isHomogeneous",
     "Ecdlp.FrozenProjectiveSemaev.localSliceAt_binaryPair_coeff_isHomogeneous",
     "Ecdlp.FrozenProjectiveSemaev.localSliceAt_binaryPair_explicit",
+    "Ecdlp.FrozenProjectiveSemaev.mapProjectivePair",
+    "Ecdlp.FrozenProjectiveSemaev.mapProjectivePair_coord",
     "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_binaryConstantPair",
     "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_frozenC_natDegree_le",
     "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver",
@@ -8554,6 +8571,154 @@
           "line": 316
         }
       ]
+    },
+    {
+      "id": "ledger-302",
+      "claim": "Exact guarded scalar representation of the frozen stage-14 `C16` predicate (over a source field `k`, an injective coefficient map into an algebraically closed field `K` carries `specialize q y (frozenC k 14) = 0` iff the literal finite polynomial family `∃ assignment : GuardVar → K, ∀ e : GuardedEquation, MvPolynomial.eval assignment (guardedEquation q y e) = 0` holds. Four raw scalar coordinates `(U,V,A,B)` for each of fourteen intermediate projective slots give 56 variables; fifteen literal `H` equations plus fourteen guards `AU+BV−1=0` give 29 equation-family members. Every equation has total degree at most four. The guards exclude `[0:0]` and retain `[1:0]`. Honest scope: target witnesses need not descend to `k`; 56 variables and 29 equations are raw counts, not independent dimensions or relations. This is one literal finite `MvPolynomial` family equivalent to the recursive chain, not a parallel recursive syntax, expanded direct `S17`, solver input, rank/yield result, solving-cost claim, or ECDLP attack. The two finite-cardinality facts are compiler-trusted through `native_decide`; the equivalence and degree-bound theorems use the standard Lean/Mathlib trust base)",
+      "theorem_cell": "`Ecdlp.FrozenProjectiveSemaev.guardEquation`, `FrozenGuardedProjectiveSystem`, `frozenProjectiveChain_iff_guardedProjectiveSystem`, `frozenRecS17_iff_guardedProjectiveSystem_over`, `guardedEquation_totalDegree_le_four`, `card_guardVar_fourteen`, `card_guarded_equations_fourteen` and supporting declarations",
+      "declared_files": [
+        "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean"
+      ],
+      "method": "literal finite guarded `MvPolynomial` family + TASK-021 chain equivalence + injective base change; `native_decide` only for two finite-cardinality facts",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.guardEquation",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.guardEquation",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 76
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.FrozenGuardedProjectiveSystem",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenGuardedProjectiveSystem",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 380
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_guardedProjectiveSystem",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_guardedProjectiveSystem",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 389
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_guardedProjectiveSystem_over",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_guardedProjectiveSystem_over",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 547
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.guardedEquation_totalDegree_le_four",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.guardedEquation_totalDegree_le_four",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 280
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.card_guardVar_fourteen",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.card_guardVar_fourteen",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 52
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.card_guarded_equations_fourteen",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.card_guarded_equations_fourteen",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 56
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.GuardCoordinate",
+          "resolution": "supporting-expansion",
+          "kind": "inductive",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 30
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.GuardVar",
+          "resolution": "supporting-expansion",
+          "kind": "inductive",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 38
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.GuardedEquation",
+          "resolution": "supporting-expansion",
+          "kind": "inductive",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 44
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.guardConstantCoordinate",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 70
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.guardEquation_excludes_zero",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 348
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.guardEquation_preserves_infinity",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 360
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.guardProjectiveCoordinate",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 63
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.guardedEquation",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 83
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.mapProjectivePair",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 489
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.mapProjectivePair_coord",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+          "line": 508
+        }
+      ]
     }
   ],
   "declarations": {
@@ -11644,12 +11809,40 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 45
     },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenGuardedProjectiveSystem": {
+      "name": "FrozenGuardedProjectiveSystem",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 380
+    },
     "Ecdlp.FrozenProjectiveSemaev.FrozenProjectiveChain": {
       "name": "FrozenProjectiveChain",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
       "kind": "def",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
       "line": 547
+    },
+    "Ecdlp.FrozenProjectiveSemaev.GuardCoordinate": {
+      "name": "GuardCoordinate",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "inductive",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 30
+    },
+    "Ecdlp.FrozenProjectiveSemaev.GuardVar": {
+      "name": "GuardVar",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "inductive",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 38
+    },
+    "Ecdlp.FrozenProjectiveSemaev.GuardedEquation": {
+      "name": "GuardedEquation",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "inductive",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 44
     },
     "Ecdlp.FrozenProjectiveSemaev.HValue": {
       "name": "HValue",
@@ -11741,6 +11934,20 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
       "line": 160
+    },
+    "Ecdlp.FrozenProjectiveSemaev.card_guardVar_fourteen": {
+      "name": "card_guardVar_fourteen",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 52
+    },
+    "Ecdlp.FrozenProjectiveSemaev.card_guarded_equations_fourteen": {
+      "name": "card_guarded_equations_fourteen",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 56
     },
     "Ecdlp.FrozenProjectiveSemaev.coeff_map_C_natDegree": {
       "name": "coeff_map_C_natDegree",
@@ -11839,6 +12046,69 @@
       "kind": "def",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 139
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_guardedProjectiveSystem": {
+      "name": "frozenProjectiveChain_iff_guardedProjectiveSystem",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 389
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_guardedProjectiveSystem_over": {
+      "name": "frozenRecS17_iff_guardedProjectiveSystem_over",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 547
+    },
+    "Ecdlp.FrozenProjectiveSemaev.guardConstantCoordinate": {
+      "name": "guardConstantCoordinate",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 70
+    },
+    "Ecdlp.FrozenProjectiveSemaev.guardEquation": {
+      "name": "guardEquation",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 76
+    },
+    "Ecdlp.FrozenProjectiveSemaev.guardEquation_excludes_zero": {
+      "name": "guardEquation_excludes_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 348
+    },
+    "Ecdlp.FrozenProjectiveSemaev.guardEquation_preserves_infinity": {
+      "name": "guardEquation_preserves_infinity",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 360
+    },
+    "Ecdlp.FrozenProjectiveSemaev.guardProjectiveCoordinate": {
+      "name": "guardProjectiveCoordinate",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 63
+    },
+    "Ecdlp.FrozenProjectiveSemaev.guardedEquation": {
+      "name": "guardedEquation",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 83
+    },
+    "Ecdlp.FrozenProjectiveSemaev.guardedEquation_totalDegree_le_four": {
+      "name": "guardedEquation_totalDegree_le_four",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 280
     },
     "Ecdlp.FrozenProjectiveSemaev.homogenize_localSliceAt": {
       "name": "homogenize_localSliceAt",
@@ -11965,6 +12235,20 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 222
+    },
+    "Ecdlp.FrozenProjectiveSemaev.mapProjectivePair": {
+      "name": "mapProjectivePair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 489
+    },
+    "Ecdlp.FrozenProjectiveSemaev.mapProjectivePair_coord": {
+      "name": "mapProjectivePair_coord",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "line": 508
     },
     "Ecdlp.FrozenProjectiveSemaev.map_localSlice": {
       "name": "map_localSlice",
