@@ -155,11 +155,19 @@ branch from current `main`; preserve any unrelated local changes.
   scalar variables, while fifteen literal `H` equations and fourteen guards
   give 29 equation-family members, all of total degree at most four. This is
   not a parallel recursive syntax. The guards exclude `[0:0]` and retain
-  `[1:0]`; the two finite-cardinality facts use `native_decide`. The M16 cell
-  remains open and non-executable on chart/gauge redundancy, yield, rank,
-  solving, recovery, and total cost. No successor execution is currently
-  authorized. This result is not a selected hypothesis, candidate, solver
-  authorization, cost claim, or attack route.
+  `[1:0]`; the two finite-cardinality facts use `native_decide`. `TASK-023`
+  then kernel-checked the exact affine/infinity chart-polynomial cover. For
+  each `I : Finset (Fin 14)`, infinity slots are fixed to `[1:0]`, affine slots
+  use one scalar `[X_i:1]`, and the fixed-mask system has `14 - I.card`
+  variables and fifteen literal `H` equations with degree ceilings `2/4/2`.
+  The cover is exactly equivalent to the projective chain, guarded system, and
+  source frozen predicate after the existing injective base change. The
+  `2^14` logical masks are not enumerated or materialized. Only
+  `card_chartEquation` uses `native_decide`; `card_chartVar` does not. The M16
+  cell remains open and non-executable on mask selection or finite-cover
+  orchestration, yield, rank, solving, recovery, and total cost. No successor
+  execution is currently authorized. This result is not a selected hypothesis,
+  candidate, solver authorization, cost claim, or attack route.
 - `TASK-008` remains the parked proposal-intake lane. Intake does not bypass
   owner authorization or authorize promotion by itself.
 - The division-polynomial, torsion, Weil, Semaev, cost-model, lattice, isogeny,

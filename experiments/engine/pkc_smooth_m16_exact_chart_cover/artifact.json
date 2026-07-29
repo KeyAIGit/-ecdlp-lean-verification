@@ -1,0 +1,287 @@
+{
+  "artifact_id": "PKC-SMOOTH-M16-EXACT-CHART-COVER-001",
+  "binding_state": {
+    "artifact_sidecar": "artifact.sha256",
+    "digest_match": true,
+    "source_path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+    "source_sha256": "4f7b95453d8fafba3ec9cae0a9bbad5d8f782c6c0202f6e7cf37e17981b63019",
+    "source_status": "final"
+  },
+  "chart_cover_contract": {
+    "affine_chart_representative": "[X_i:1]",
+    "equation_families": {
+      "base": {
+        "count": 1,
+        "degree_upper_bound": 2
+      },
+      "final": {
+        "count": 1,
+        "degree_upper_bound": 2
+      },
+      "guard": {
+        "count": 0
+      },
+      "step": {
+        "count": 13,
+        "degree_upper_bound": 4
+      }
+    },
+    "exact_total_degree_claimed": false,
+    "fixed_mask_variable_count_formula": "14 - I.card",
+    "fixed_mask_variable_count_range": [
+      0,
+      14
+    ],
+    "fixed_mask_variable_index_type": "{i : Fin 14 // i notin I}",
+    "infinity_chart_representative": "[1:0]",
+    "infinity_mask_type": "Finset (Fin 14)",
+    "leaf_count": 16,
+    "logical_mask_count": 16384,
+    "logical_mask_count_formula": "2^14",
+    "mask_membership_semantics": "i in I iff slot i is represented by [1:0]",
+    "overall_degree_upper_bound": 4,
+    "production_mask_enumeration_required": false,
+    "production_mask_materialized": false,
+    "projective_slot_count": 14,
+    "stage": 14,
+    "total_equation_count_per_fixed_mask": 15,
+    "variables_per_affine_slot": 1,
+    "variables_per_infinity_slot": 0
+  },
+  "degree_fixture": {
+    "constant_pair_coordinate_degree": 0,
+    "derived_family_degree_ceilings": {
+      "base": 2,
+      "final": 2,
+      "step": 4
+    },
+    "h_argument_multidegree": [
+      2,
+      2,
+      2
+    ],
+    "literal_h_monomial_count": 9,
+    "variable_pair_coordinate_degree_upper_bound": 1,
+    "variable_pair_positions": {
+      "base": [
+        2
+      ],
+      "final": [
+        0
+      ],
+      "step": [
+        0,
+        2
+      ]
+    }
+  },
+  "depends_on": [
+    {
+      "binding_status": "final",
+      "digest_match": true,
+      "observed_sha256": "3445da55b44a71d0f40ee60206c90f2ef1798c28abd125542ce3acbeeb8e1d46",
+      "path": "experiments/engine/pkc_smooth_m16_guarded_projective_system/artifact.json",
+      "required_sha256": "3445da55b44a71d0f40ee60206c90f2ef1798c28abd125542ce3acbeeb8e1d46"
+    },
+    {
+      "binding_status": "final",
+      "digest_match": true,
+      "observed_sha256": "37feeef48e77437b44b6ae6dd4750782e19ecd824e3ea2e73b657e2fb8296fb9",
+      "path": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+      "required_sha256": "37feeef48e77437b44b6ae6dd4750782e19ecd824e3ea2e73b657e2fb8296fb9"
+    },
+    {
+      "binding_status": "final",
+      "digest_match": true,
+      "observed_sha256": "4f7b95453d8fafba3ec9cae0a9bbad5d8f782c6c0202f6e7cf37e17981b63019",
+      "path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "required_sha256": "4f7b95453d8fafba3ec9cae0a9bbad5d8f782c6c0202f6e7cf37e17981b63019"
+    }
+  ],
+  "downstream_open_boundary": {
+    "closed_here": [
+      "each infinity mask I gives a literal chart-polynomial system with 14-I.card scalar variables",
+      "each fixed-mask system has one base, thirteen step, and one final H equation",
+      "the family-specific total-degree ceilings are base two, step four, and final two",
+      "the existential cover over infinity masks is exactly equivalent to FrozenProjectiveChain at stage 14",
+      "the chart cover retains the infinity representative [1:0]",
+      "the chart cover is equivalent to the prior guarded system",
+      "the injective coefficient-map bridge from frozen RecS17 reaches the exact chart cover"
+    ],
+    "not_claimed": [
+      "enumeration or materialization of all 16384 production masks",
+      "base-field descent or rationality of intermediate witnesses",
+      "independence, relation yield, rank, solving degree, fill-in, memory, recovery, or total cost",
+      "a solver run, parameter sweep, exact-target search, or discrete-log execution",
+      "experiment authorization, hypothesis retention, route promotion, or route rejection"
+    ],
+    "remaining_blocker": "after the chart-cover proof, any solver-facing use still requires a separately authorized design for mask selection, relation yield and rank, solving, recovery, and complete cost"
+  },
+  "exactness_contract": {
+    "cover_quantifier": "exists I : Finset (Fin 14), exists x : ChartVar I -> K, FrozenChartPolynomialSystem q y I x",
+    "equivalence_direction": "iff",
+    "guarded_system_bridge": "FrozenGuardedProjectiveSystem q y iff FrozenChartPolynomialCover q y",
+    "infinity_representative": [
+      1,
+      0
+    ],
+    "infinity_retained": true,
+    "prior_chain": "FrozenProjectiveChain q 14 y",
+    "projective_zero_pair_admitted": false,
+    "representative_partition": "every valid projective slot is uniquely either [1:0] or [X:1]",
+    "target_statement": "FrozenProjectiveChain q 14 y iff FrozenChartPolynomialCover q y"
+  },
+  "finite_field_fixture": {
+    "affine_projective_point_count": 5,
+    "distinguished_infinity_pair": [
+      1,
+      0
+    ],
+    "field_prime": 5,
+    "infinity_projective_point_count": 1,
+    "mask_cardinality_chain_distribution": {
+      "0": 125,
+      "1": 75,
+      "2": 15,
+      "3": 1
+    },
+    "normalized_chain_count": 216,
+    "observed_reduced_mask_count": 8,
+    "per_fixed_mask_chain_count_formula": "5^(3-|I|)",
+    "production_mask_enumeration_executed": false,
+    "projective_point_count": 6,
+    "raw_nonzero_pair_count": 24,
+    "reduced_chain_slot_count": 3,
+    "reduced_mask_count_formula": "2^3",
+    "sample_production_variable_counts": {
+      "I.card=0": 14,
+      "I.card=1": 13,
+      "I.card=14": 0,
+      "I.card=3": 11
+    },
+    "scalar_multiples_per_projective_point": 4,
+    "zero_pair_rejected": true
+  },
+  "kind": "source_bound_non_run_certificate",
+  "producer_checks": {
+    "chart_cover_lean_source_materialized": true,
+    "discrete_log_executed": false,
+    "exact_target_search_executed": false,
+    "experiment_authorized": false,
+    "full_production_mask_family_enumerated": false,
+    "full_production_mask_family_materialized": false,
+    "parameter_sweep_executed": false,
+    "rank_estimated": false,
+    "relation_yield_estimated": false,
+    "solver_input_emitted": false,
+    "solver_executed": false
+  },
+  "proof_status": {
+    "card_chartEquation": "compiler_trusted_native_decide",
+    "card_chartVar": "kernel_checked",
+    "chartPolynomialEquation_base_totalDegree_le_two": "kernel_checked",
+    "chartPolynomialEquation_final_totalDegree_le_two": "kernel_checked",
+    "chartPolynomialEquation_step_totalDegree_le_four": "kernel_checked",
+    "chartPolynomialEquation_totalDegree_le_four": "kernel_checked",
+    "expanded_S17_polynomial": "not_claimed",
+    "frozenGuardedProjectiveSystem_iff_chartPolynomialCover": "kernel_checked",
+    "frozenProjectiveChain_iff_chartPolynomialCover": "kernel_checked",
+    "frozenRecS17_iff_chartPolynomialCover_over": "kernel_checked",
+    "mask_enumeration_theorem": "not_required",
+    "solving_rank_yield_cost_claim": "not_claimed"
+  },
+  "schema_version": 1,
+  "scope": {
+    "barrier": "B-PKC-M16-COMPLETE-COST-BRIDGE",
+    "cell": "CELL-M-PKC-SMOOTH-M16",
+    "cost_quantity": "CQ-SEMAEV-S17-SYSTEM-COST",
+    "excluded": [
+      "enumerating or materializing all 16384 production masks",
+      "solver, rank, yield, recovery, cost, or parameter-sweep work",
+      "base-field descent or witness rationality",
+      "experiment authorization, retention, promotion, or rejection"
+    ],
+    "included": [
+      "exact infinity-mask decomposition of fourteen projective slots",
+      "fourteen minus mask cardinality variables for each fixed mask",
+      "exactly fifteen H equations per fixed mask",
+      "base, step, and final degree ceilings two, four, and two",
+      "exact equivalence to the prior projective chain and guarded system",
+      "retention of the distinguished infinity representative [1:0]",
+      "independent reduced F5 chart-cover fixture"
+    ],
+    "task": "TASK-023"
+  },
+  "terminal_disposition": {
+    "assurance": "kernel_bound_non_run_certificate",
+    "authorization": "none",
+    "barrier_effect": "chart_guard_redundancy_removed_only_complete_cost_barrier_still_open",
+    "cell_status": "open_non_executable",
+    "cost_quantity_status": "partial",
+    "experiment_permission": "none",
+    "hypothesis_effect": "none",
+    "rank_status": "unpriced",
+    "representation_status": "exact_chart_polynomial_cover_closed",
+    "retention_disposition": "zero_retention_success",
+    "route_effect": "none",
+    "route_status": "open_parked",
+    "solving_cost_status": "unpriced",
+    "yield_status": "unpriced"
+  },
+  "theorem_bindings": {
+    "card_chartEquation": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.card_chartEquation",
+      "kernel_status": "compiler_trusted_native_decide",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "source_shape": "theorem"
+    },
+    "card_chartVar": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.card_chartVar",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "source_shape": "theorem"
+    },
+    "chartPolynomialEquation_base_totalDegree_le_two": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_base_totalDegree_le_two",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "source_shape": "theorem"
+    },
+    "chartPolynomialEquation_final_totalDegree_le_two": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_final_totalDegree_le_two",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "source_shape": "theorem"
+    },
+    "chartPolynomialEquation_step_totalDegree_le_four": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_step_totalDegree_le_four",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "source_shape": "theorem"
+    },
+    "chartPolynomialEquation_totalDegree_le_four": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_totalDegree_le_four",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "source_shape": "theorem"
+    },
+    "frozenGuardedProjectiveSystem_iff_chartPolynomialCover": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.frozenGuardedProjectiveSystem_iff_chartPolynomialCover",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "source_shape": "theorem"
+    },
+    "frozenProjectiveChain_iff_chartPolynomialCover": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chartPolynomialCover",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "source_shape": "theorem"
+    },
+    "frozenRecS17_iff_chartPolynomialCover_over": {
+      "declaration": "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_chartPolynomialCover_over",
+      "kernel_status": "kernel_checked",
+      "source_path": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "source_shape": "theorem"
+    }
+  }
+}

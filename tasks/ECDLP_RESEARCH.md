@@ -1276,3 +1276,129 @@ How to verify:
 - exhaustive finite-field guard fixture plus certificate fault tests
 - typed-evidence, decision-substrate, scientific-semantic,
   generated-fixpoint, and full CI gates
+
+### TASK-023 - Replace guarded projective redundancy by an exact chart cover
+
+Status: completed_non_executable_kernel_result
+Kind: theorem | research | review
+Hypothesis: none. This is an exact representation refinement of TASK-022,
+not a solver candidate, relation-yield claim, or cost experiment.
+Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
+Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
+Authorization: none
+Outcome: `closed_exact_theorem`
+Retention: `zero_retention_success`
+Completed on: 2026-07-29
+Artifact:
+- `experiments/engine/pkc_smooth_m16_exact_chart_cover/artifact.json`
+- ID `PKC-SMOOTH-M16-EXACT-CHART-COVER-001`
+- SHA-256 `934809fabbb8c98c5ed9356a0a1f3367a23f8fbc1bc86239069942537fd678ed`
+Source:
+- `Ecdlp/Proved/FrozenProjectiveChartSystem.lean`
+- SHA-256 `4f7b95453d8fafba3ec9cae0a9bbad5d8f782c6c0202f6e7cf37e17981b63019`
+Typed claim:
+- `SC-PKC-M16-EXACT-CHART-COVER-RESULT`
+Why it matters: TASK-022 gives an exact finite polynomial system, but its
+four `(U,V,A,B)` scalars and one guard per projective slot retain both
+projective-scale and guard-witness redundancy. Every valid projective pair
+over a field lies in exactly the needed two-chart cover: the infinity branch
+uses `[1:0]`, while the affine branch uses `[X:1]`. Selecting one branch for
+each of fourteen intermediate slots leaves, for a fixed mask `I`,
+exactly `14 - |I|` scalar variables and fifteen literal `H` equations.
+Decision boundary:
+- Work only with the already proved stage-14 frozen predicate, TASK-021
+  projective chain, and TASK-022 guarded system.
+- Use `InfinityMask := Finset (Fin 14)`. For `i` in the mask, fix the slot to
+  `[1:0]`; otherwise represent it by one scalar `[X_i:1]`.
+- Materialize a literal fixed-mask `MvPolynomial` family indexed by one base,
+  thirteen internal steps, and one final equation.
+- Prove exact equivalence between the chart-polynomial cover, the projective
+  chain, the guarded representation, and the injective base-change frozen
+  stage-14 predicate.
+- Prove only degree upper bounds: base at most two, internal step at most
+  four, final at most two, and hence a uniform ceiling of four.
+- Count variables and equations only as representation inventory. Do not
+  infer dimension, independence, rank, relation yield, or solving cost.
+- Do not enumerate or materialize all `2^14` masks in Lean. A finite-set
+  existential is the cover.
+- Do not emit solver input, run a solver, perform a parameter sweep, search an
+  exact target, or compute a discrete logarithm.
+Recorded result:
+- `InfinityMask := Finset (Fin 14)` selects the distinguished infinity
+  representative `[1:0]`; every other slot is represented by one affine
+  scalar `[X_i:1]`. Normalization is proved through a nonzero projective
+  scaling factor, so `[0:0]` is never introduced.
+- `FrozenChartPolynomialSystem` is a literal fixed-mask `MvPolynomial` family
+  indexed by `ChartEquation`. `card_chartEquation` records exactly fifteen
+  equations and uses `native_decide`; `card_chartVar` proves by an ordinary
+  kernel proof that a mask `I` has exactly `14 - I.card` variables.
+- `chartPolynomialEquation_base_totalDegree_le_two`,
+  `chartPolynomialEquation_step_totalDegree_le_four`, and
+  `chartPolynomialEquation_final_totalDegree_le_two` prove family-specific
+  upper bounds `2/4/2`. The uniform degree-four theorem is only a ceiling;
+  infinity substitutions or coefficient cancellation may lower a concrete
+  degree.
+- `frozenProjectiveChain_iff_chartPolynomialCover` proves exact equivalence
+  with the TASK-021 chain.
+  `frozenGuardedProjectiveSystem_iff_chartPolynomialCover` proves exact
+  equivalence with TASK-022 while removing its guard and projective-scale
+  redundancy branchwise.
+  `frozenRecS17_iff_chartPolynomialCover_over` binds the same cover to the
+  source frozen stage-14 predicate after the existing injective map into an
+  algebraically closed target. Target witnesses need not descend to the
+  source field.
+- The logical cover quantifies over `2^14` possible masks, but neither Lean
+  nor the certificate enumerates or materializes those 16384 branches.
+- The source target builds in Lean with 1941 jobs. A narrow axiom audit shows
+  only `propext`, `Classical.choice`, and `Quot.sound`, except that
+  `card_chartEquation` additionally discloses its `native_decide` marker.
+- The independent source-bound certificate validates all 24 nonzero F5
+  coordinate pairs, six projective points, 216 reduced three-slot chains,
+  all eight reduced masks, and the nine literal `H` exponent patterns. Its
+  final validator, eight tests, sidecar, and exactly 60 semantic mutations
+  pass.
+- This closes only exact chart/gauge representation redundancy. It does not
+  establish independent relations, dimension, relation yield, rank, solving
+  degree, fill-in, memory, recovery, runtime, or complete cost.
+- `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`;
+  `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`;
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open; the route remains
+  `open_parked`; no hypothesis, solver, experiment authorization, exact
+  target computation, cost claim, or route promotion is created.
+Inputs:
+- `Ecdlp/Proved/FrozenProjectiveGuardSystem.lean`
+- `experiments/engine/pkc_smooth_m16_guarded_projective_system/artifact.json`
+- `CELL-M-PKC-SMOOTH-M16`
+- `B-PKC-M16-COMPLETE-COST-BRIDGE`
+Expected output:
+- One kernel-checked chart-cover module with a literal fixed-mask polynomial
+  family and exact equivalence theorems.
+- Exact fixed-mask counts and degree ceilings, with any compiler-trusted
+  finite-cardinality fact explicitly disclosed.
+- One narrow source-bound non-run certificate if the theorem closes.
+Exit criteria:
+- `[1:0]` is retained, `[0:0]` is never introduced, and normalization uses
+  only a proved nonzero projective scale.
+- Every fixed mask has `14 - |I|` variables, exactly fifteen equations, and
+  degree ceilings `2/4/2`.
+- The chart-polynomial cover is iff the TASK-021 chain, TASK-022 guarded
+  system, and source frozen stage-14 predicate after the existing injective
+  algebraically closed base change.
+- `CELL-M-PKC-SMOOTH-M16` stays `open_non_executable`;
+  `CQ-SEMAEV-S17-SYSTEM-COST` stays `partial`;
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` stays open; no hypothesis, solver,
+  experiment authorization, cost claim, exact-target work, or route promotion
+  is created.
+Files allowed to edit:
+- one narrow chart-cover Lean module and direct import
+- one dedicated non-run TASK-023 certificate directory
+- directly affected canonical task, proof, evidence, and decision ledgers
+Files that must be regenerated:
+- only generated views directly affected by the final recorded result
+How to verify:
+- narrow and full Lean builds, built-source no-`sorry`, and exhaustive axiom
+  audit
+- exact source and artifact digest checks
+- chart-normalization fixtures plus certificate semantic fault tests
+- typed-evidence, decision-substrate, scientific-semantic,
+  generated-fixpoint, and full CI gates
