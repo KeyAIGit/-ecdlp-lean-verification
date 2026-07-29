@@ -4,9 +4,9 @@
   "source_hashes": {
     "policy_sha256": "04c74829a69d4380b25a1de83a120b41d20a3cde5687ee5ac812fad1ce36fc74",
     "hypothesis_generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-    "typed_evidence_state_sha256": "1174590f3b100c0f1f28f7f942d5924824ead83fd86f38a0cc9b917e858c0ead",
-    "research_claim_state_sha256": "99c0deb2600f9a0daa7502d83e9e1aeb9d3b2527c4c1281ba2d6d32df2b23846",
-    "decision_substrate_sha256": "0a51879086de6264521ec08d718943cf64992badd6bab85e3e4dcc20a8117e64",
+    "typed_evidence_state_sha256": "a5cd95bd9c550133e3e02287f89e28ce2099597c39accdbe164e37be3494d61a",
+    "research_claim_state_sha256": "916df842d15169f922a77312ded65a4c8021bbf49c92fff26c0490af4e7549db",
+    "decision_substrate_sha256": "7bc62987d108fb566e44bccebe684700b3abf3a31dd27076fb42779f42ada3b6",
     "hypotheses_sha256": "719eb78ba7a8e40101c14c92ac426a0028de9d7aa14e6ffc3735ecffa4615c5c",
     "outcome_events_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
     "historical_baseline_anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
@@ -1111,8 +1111,8 @@
     "generator_id": "ecdlp-hypothesis-generation-v0",
     "source_hashes": {
       "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-      "typed_evidence_state_sha256": "1174590f3b100c0f1f28f7f942d5924824ead83fd86f38a0cc9b917e858c0ead",
-      "research_claim_state_sha256": "99c0deb2600f9a0daa7502d83e9e1aeb9d3b2527c4c1281ba2d6d32df2b23846",
+      "typed_evidence_state_sha256": "a5cd95bd9c550133e3e02287f89e28ce2099597c39accdbe164e37be3494d61a",
+      "research_claim_state_sha256": "916df842d15169f922a77312ded65a4c8021bbf49c92fff26c0490af4e7549db",
       "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
@@ -1135,7 +1135,7 @@
       "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
       "target_id": "secp256k1-classical-single-target-plain",
       "counts": {
-        "source_claims": 27,
+        "source_claims": 28,
         "target_properties": 5,
         "mechanisms": 7,
         "cells": 7,
@@ -1147,10 +1147,10 @@
         "desk_decisions": 3
       },
       "source_hashes": {
-        "policy_sha256": "3255862b978539301aa8c38b1f75399f2d8ade606b25273c31c0b4e2d243224b",
-        "decision_substrate_sha256": "b00a1eec9c2a2fc0538b71a9e12c9f207bf5ac98af8c09d754f9616a785d5dd8",
+        "policy_sha256": "ff2d0dc1d8eccad6834efad8e1998e17589f7c449621f51e9029011e5b0e43de",
+        "decision_substrate_sha256": "206b49ebfdf9ead7e60ff6ca4d856cdb0bcc61bcd3b00501de952f3b5885fc35",
         "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-        "evidence_files_sha256": "6d45d039a07020683ab215c770637ef7b87dbbf2cd4063c9c69cf2bb5d29dcda",
+        "evidence_files_sha256": "82cace3df797816de202c5aae6cafd729fcdee04f8231175d2626e2ced99daf7",
         "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
       },
       "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
@@ -1178,15 +1178,15 @@
         "route_promotions": 0,
         "exact_target_runs": 0
       },
-      "state_sha256": "99c0deb2600f9a0daa7502d83e9e1aeb9d3b2527c4c1281ba2d6d32df2b23846"
+      "state_sha256": "916df842d15169f922a77312ded65a4c8021bbf49c92fff26c0490af4e7549db"
     },
     "seed_coverage": {
       "threshold": 12,
       "eligible_seed_count": 2,
       "overflow_triggered": false,
       "represented_seed_ids": [
-        "HGS-211B9635EC14",
-        "HGS-05E24F082460"
+        "HGS-0A38226AFD9B",
+        "HGS-2019CBE19099"
       ],
       "represented_cell_ids": [
         "CELL-M-PKC-AUXILIARY-CURVE",
@@ -1197,10 +1197,10 @@
     },
     "generated_seeds": [
       {
-        "seed_id": "HGS-211B9635EC14",
+        "seed_id": "HGS-0A38226AFD9B",
         "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
         "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-        "claim_state_digest": "99c0deb2600f9a0daa7502d83e9e1aeb9d3b2527c4c1281ba2d6d32df2b23846",
+        "claim_state_digest": "916df842d15169f922a77312ded65a4c8021bbf49c92fff26c0490af4e7549db",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1282,7 +1282,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "211b9635ec14174e2cc5c5e74002fa994c515969ef036e20b532e3a3c12213c0",
+        "deduplication_key": "0a38226afd9b21c9432894ce42b7cad29c6e2482ec35723d9e8060e08355459b",
         "proposal_packet": {
           "required_sections": [
             "new_premise",
@@ -1344,10 +1344,10 @@
         }
       },
       {
-        "seed_id": "HGS-05E24F082460",
+        "seed_id": "HGS-2019CBE19099",
         "cell_id": "CELL-M-PKC-SMOOTH-M16",
-        "typed_evidence_digest": "ee1673c7033f1d914dd9353ec1c5b4ea5bb9e16011d8aa92887f81b6f14b975c",
-        "claim_state_digest": "99c0deb2600f9a0daa7502d83e9e1aeb9d3b2527c4c1281ba2d6d32df2b23846",
+        "typed_evidence_digest": "8ab50f3f61c2566a04a0fee63084aef70f9d2d86e270af160f3f7867f5420467",
+        "claim_state_digest": "916df842d15169f922a77312ded65a4c8021bbf49c92fff26c0490af4e7549db",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1367,7 +1367,7 @@
           "status": "open",
           "intake_mode": "desk_cost_bridge",
           "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
-          "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and the end-to-end common-root corollary while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. TASK-020 kernel-checks the actual frozenC family, exact coefficient-map specialization with unit 1 and affine and [1:0] output branches, the universal output-degree bound, and the unconditional one-step common-projective-root equivalence. TASK-021 kernel-checks the exact declared-degree projective evaluation bridges and the universal all-stage frozen witness-chain equivalence, including the C16 chain with fourteen intermediate projective slots and infinity allowed at every level. TASK-022 kernel-checks the exact literal finite MvPolynomial family for the frozen stage-14 predicate after injective base change: one GuardVar assignment satisfies every GuardedEquation, with fourteen raw projective slots, 56 scalar variables, fifteen H equations, fourteen guards, and total degree at most four. It is equivalent to the recursive chain, not a parallel recursive syntax. The remaining mechanism gap is solver-ready chart or gauge handling that does not count guard and projective redundancy as independent relations, together with usable relation yield and rank, solving, recovery, and total cost.",
+          "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and the end-to-end common-root corollary while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. TASK-020 kernel-checks the actual frozenC family, exact coefficient-map specialization with unit 1 and affine and [1:0] output branches, the universal output-degree bound, and the unconditional one-step common-projective-root equivalence. TASK-021 kernel-checks the exact declared-degree projective evaluation bridges and the universal all-stage frozen witness-chain equivalence, including the C16 chain with fourteen intermediate projective slots and infinity allowed at every level. TASK-022 kernel-checks the exact literal finite MvPolynomial family for the frozen stage-14 predicate after injective base change: one GuardVar assignment satisfies every GuardedEquation, with fourteen raw projective slots, 56 scalar variables, fifteen H equations, fourteen guards, and total degree at most four. It is equivalent to the recursive chain, not a parallel recursive syntax. TASK-023 kernel-checks the exact affine/infinity chart-polynomial cover. Each fixed InfinityMask I has exactly 14 - I.card affine scalar variables, no guard equations, and fifteen literal H equations with degree ceilings 2/4/2; the cover is equivalent to the chain, guarded system, and source predicate after base change. The remaining mechanism gap is a separately authorized design for mask selection or finite-cover orchestration, together with usable relation yield and rank, solving, recovery, and total cost.",
           "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
           "cost_quantity": {
             "id": "CQ-SEMAEV-S17-SYSTEM-COST",
@@ -1387,6 +1387,7 @@
               "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
               "SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT",
               "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT",
+              "SC-PKC-M16-EXACT-CHART-COVER-RESULT",
               "SC-SEMAEV-RELATION-SEMANTICS"
             ]
           },
@@ -1421,6 +1422,7 @@
             }
           ],
           "source_claim_ids": [
+            "SC-PKC-M16-EXACT-CHART-COVER-RESULT",
             "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
             "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
             "SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT",
@@ -1436,7 +1438,7 @@
             "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
             "SC-SEMAEV-RELATION-SEMANTICS"
           ],
-          "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, deterministic control and secp256k1 GLV recovery checks, a frozen recursive projective S17 contract, kernel-checked fixed-degree projective resultant plus literal Sylvester unit-one and end-to-end common-root theorems, the actual frozenC specialization, the exact all-stage frozen projective witness chain, and an exact literal finite MvPolynomial family for the frozen stage-14 predicate after injective base change. One GuardVar assignment satisfies every GuardedEquation; this is not a parallel recursive syntax. The guarded family has fourteen raw projective slots, 56 scalar variables, fifteen H equations, fourteen guards, and total degree at most four. It is not an expanded direct S17 polynomial or a solver-ready chart/gauge reduction, and its counts do not establish independent dimensions or relations. The complete cost bridge remains open. CQ-SEMAEV-S17-SYSTEM-COST remains partial; solving cost, rank, and yield remain unpriced. The scoped result has zero_retention_success and does not justify a solver run, target computation, hypothesis retention, experiment authorization, cost inference, or route promotion."
+          "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, deterministic control and secp256k1 GLV recovery checks, a frozen recursive projective S17 contract, kernel-checked fixed-degree projective resultant plus literal Sylvester unit-one and end-to-end common-root theorems, the actual frozenC specialization, the exact all-stage frozen projective witness chain, an exact literal finite MvPolynomial family in guarded form, and an exact affine/infinity chart-polynomial cover for the frozen stage-14 predicate after injective base change. Each fixed InfinityMask I uses 14 - I.card affine variables, no guard equations, and fifteen H equations with degree ceilings 2/4/2; the existential cover is exact and retains [1:0]. The 2^14 logical masks are not enumerated or materialized. It is not an expanded direct S17 polynomial or a base-field descent theorem. It is not a mask-selection algorithm or a solver run, and its counts do not establish independent dimensions or relations. The complete cost bridge remains open. CQ-SEMAEV-S17-SYSTEM-COST remains partial; solving cost, rank, and yield remain unpriced. The scoped result has zero_retention_success and does not justify a production mask sweep, solver run, target computation, hypothesis retention, experiment authorization, cost inference, route rejection, or route promotion."
         },
         "target_feature": {
           "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
@@ -1464,7 +1466,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "05e24f082460b022392526c61289ae20e458b08fffacd077f6ca167ede95e95e",
+        "deduplication_key": "2019cbe19099d91a1e2fa34af460b2609d170ea6f06a2281c354ed43b39385c2",
         "proposal_packet": {
           "required_sections": [
             "new_premise",

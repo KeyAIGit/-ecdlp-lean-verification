@@ -18,6 +18,7 @@ ACTIVE = {
     "agent/research-engine-hypothesis-generation",
     "agent/glv-semaev-affine-closeout",
     "agent/task022-s17-materialization",
+    "agent/task023-chart-cover",
 }
 SUPERSEDED = {
     "agent/n7-certificate-generator",

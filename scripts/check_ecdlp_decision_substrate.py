@@ -36,6 +36,7 @@ MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
 MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
 CURRENT_PHASE = "evidence-bounded-desk-priority"
+COMPLETED_CHART_TASK_ID = "TASK-023"
 COMPLETED_GUARDED_TASK_ID = "TASK-022"
 COMPLETED_WITNESS_TASK_ID = "TASK-021"
 COMPLETED_SPECIALIZATION_TASK_ID = "TASK-020"
@@ -101,6 +102,18 @@ M16_GUARDED_CLAIM_ID = (
 )
 M16_GUARDED_SOURCE_SHA256 = (
     "37feeef48e77437b44b6ae6dd4750782e19ecd824e3ea2e73b657e2fb8296fb9"
+)
+M16_CHART_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_exact_chart_cover/artifact.json"
+)
+M16_CHART_ARTIFACT_SHA256 = (
+    "934809fabbb8c98c5ed9356a0a1f3367a23f8fbc1bc86239069942537fd678ed"
+)
+M16_CHART_ARTIFACT_ID = "PKC-SMOOTH-M16-EXACT-CHART-COVER-001"
+M16_CHART_CLAIM_ID = "SC-PKC-M16-EXACT-CHART-COVER-RESULT"
+M16_CHART_SOURCE_SHA256 = (
+    "4f7b95453d8fafba3ec9cae0a9bbad5d8f782c6c0202f6e7cf37e17981b63019"
 )
 M16_EXCEPTIONAL_ARTIFACT_PATH = (
     "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json"
@@ -320,6 +333,12 @@ def validate() -> list[str]:
         "29 equation-family members",
         "total degree at most four",
         "chart/gauge redundancy",
+        COMPLETED_CHART_TASK_ID,
+        "exact affine/infinity chart-polynomial cover",
+        "14 - I.card variables",
+        "fifteen literal H equations",
+        "degree ceilings 2/4/2",
+        "production mask enumeration",
     ):
         if binding not in phase_allowed:
             problems.append(f"phase_policy.allowed_work is missing {binding}")
@@ -334,6 +353,9 @@ def validate() -> list[str]:
         "guarded frozen representation",
         "expanded direct-S17 polynomial",
         "independent relation system",
+        COMPLETED_CHART_TASK_ID,
+        "production mask-selection algorithm",
+        "enumeration of all 2^14 masks",
     ):
         if binding not in phase_forbidden:
             problems.append(f"phase_policy.forbidden_work is missing {binding}")
@@ -522,10 +544,10 @@ def validate() -> list[str]:
         problems.append("next_phase_gate.reopen_requirements must be nonempty")
     reopen_text = "\n".join(reopen) if isinstance(reopen, list) else ""
     for binding in (
-        COMPLETED_GUARDED_TASK_ID,
-        "literal finite guarded MvPolynomial family",
-        "solver-ready chart or gauge handling",
-        "guard and projective redundancy",
+        COMPLETED_CHART_TASK_ID,
+        "exact affine/infinity chart-polynomial cover",
+        "mask selection or finite-cover orchestration",
+        "without enumerating all 2^14 masks by default",
         "usable yield, rank, solving, recovery, and total-cost models",
         "does not authorize an experiment or route promotion",
     ):
@@ -548,7 +570,13 @@ def validate() -> list[str]:
         "56 scalar variables",
         "29 equation-family members",
         "total degree at most four",
-        "chart/gauge redundancy",
+        COMPLETED_CHART_TASK_ID,
+        "exact affine/infinity chart-polynomial cover",
+        "14 - I.card",
+        "fifteen literal H equations",
+        "degree ceilings 2/4/2",
+        "2^14 logical masks are not enumerated or materialized",
+        "mask selection or finite-cover orchestration",
         "open_non_executable",
         "open_parked",
         "authorization remains false",
@@ -658,7 +686,7 @@ def validate() -> list[str]:
     )
     petit_next_action = petit_route.get("next_action", "")
     for binding in (
-        COMPLETED_GUARDED_TASK_ID,
+        COMPLETED_CHART_TASK_ID,
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
         DESK_PRIORITY_COST_ID,
@@ -702,6 +730,13 @@ def validate() -> list[str]:
             "R-PETIT-COMPOSED-MAPS must retain the TASK-022 guarded "
             "projective-system certificate as evidence"
         )
+    if M16_CHART_ARTIFACT_PATH not in petit_route.get(
+        "evidence_files", []
+    ):
+        problems.append(
+            "R-PETIT-COMPOSED-MAPS must retain the TASK-023 exact "
+            "chart-cover certificate as evidence"
+        )
     petit_current_evidence = petit_route.get("current_evidence", "")
     for binding in (
         "TASK-019 kernel-checks",
@@ -738,9 +773,19 @@ def validate() -> list[str]:
         M16_GUARDED_ARTIFACT_SHA256,
         M16_GUARDED_CLAIM_ID,
         M16_GUARDED_SOURCE_SHA256,
+        "TASK-023 now kernel-checks",
+        "exact affine/infinity chart-polynomial cover",
+        "14 - I.card",
+        "no guard equations",
+        "fifteen literal H equations",
+        "degree ceilings 2/4/2",
+        "2^14 logical masks are not enumerated or materialized",
+        M16_CHART_ARTIFACT_ID,
+        M16_CHART_ARTIFACT_SHA256,
+        M16_CHART_CLAIM_ID,
+        M16_CHART_SOURCE_SHA256,
         "open_non_executable",
-        "solver-ready chart or gauge handling",
-        "guard and projective redundancy",
+        "mask selection or finite-cover orchestration",
         "zero_retention_success",
         "CQ-SEMAEV-S17-SYSTEM-COST remains partial",
         "solving cost remain unpriced",
@@ -751,10 +796,12 @@ def validate() -> list[str]:
                 f"{binding}"
             )
     for binding in (
-        COMPLETED_GUARDED_TASK_ID,
-        "exact literal finite MvPolynomial family",
-        "solver-ready chart or gauge handling",
-        "guard and projective redundancy",
+        COMPLETED_CHART_TASK_ID,
+        "exact affine/infinity chart-polynomial cover",
+        "14 - I.card",
+        "degree ceilings 2/4/2",
+        "2^14 logical masks",
+        "mask-selection or finite-cover orchestration",
         "relation yield",
         "rank",
         "solving",
@@ -762,6 +809,7 @@ def validate() -> list[str]:
         "solver",
         "experiment",
         "hypothesis retention",
+        "route rejection",
         "route promotion",
         "cost claim",
         "cost inference",
@@ -951,6 +999,7 @@ def validate() -> list[str]:
         COMPLETED_SPECIALIZATION_TASK_ID,
         COMPLETED_WITNESS_TASK_ID,
         COMPLETED_GUARDED_TASK_ID,
+        COMPLETED_CHART_TASK_ID,
     ):
         if required_task not in tasks_text:
             problems.append(f"tasks/ECDLP_RESEARCH.md must contain {required_task}")
@@ -1239,6 +1288,68 @@ def validate() -> list[str]:
             problems.append(
                 f"{COMPLETED_GUARDED_TASK_ID} is missing binding {binding}"
             )
+    completed_chart_task = task_sections.get(COMPLETED_CHART_TASK_ID, "")
+    normalized_completed_chart_task = " ".join(completed_chart_task.split())
+    expected_completed_chart_lines = (
+        "Status: completed_non_executable_kernel_result",
+        "Kind: theorem | research | review",
+        f"Desk priority: `{DESK_PRIORITY_CELL_ID}` / `{DESK_PRIORITY_STUB_ID}`",
+        "Authorization: none",
+        "Outcome: `closed_exact_theorem`",
+        "Retention: `zero_retention_success`",
+        "Completed on: 2026-07-29",
+    )
+    for line in expected_completed_chart_lines:
+        if not re.search(
+            rf"^{re.escape(line)}$",
+            completed_chart_task,
+            flags=re.MULTILINE,
+        ):
+            problems.append(
+                f"{COMPLETED_CHART_TASK_ID} must contain {line!r}"
+            )
+    for binding in (
+        DESK_PRIORITY_CELL_ID,
+        DESK_PRIORITY_STUB_ID,
+        DESK_PRIORITY_COST_ID,
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+        M16_GUARDED_ARTIFACT_PATH,
+        M16_CHART_ARTIFACT_PATH,
+        M16_CHART_ARTIFACT_SHA256,
+        M16_CHART_ARTIFACT_ID,
+        M16_CHART_CLAIM_ID,
+        M16_CHART_SOURCE_SHA256,
+        "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+        "InfinityMask := Finset (Fin 14)",
+        "[1:0]",
+        "[X_i:1]",
+        "14 - I.card",
+        "fifteen",
+        "degree",
+        "2/4/2",
+        "FrozenChartPolynomialSystem",
+        "frozenProjectiveChain_iff_chartPolynomialCover",
+        "frozenGuardedProjectiveSystem_iff_chartPolynomialCover",
+        "frozenRecS17_iff_chartPolynomialCover_over",
+        "native_decide",
+        "2^14",
+        "neither Lean",
+        "open_non_executable",
+        "partial",
+        "open_parked",
+        "solver",
+        "experiment authorization",
+        "cost claim",
+        "route promotion",
+        "60 semantic mutations",
+    ):
+        if (
+            " ".join(binding.split()).casefold()
+            not in normalized_completed_chart_task.casefold()
+        ):
+            problems.append(
+                f"{COMPLETED_CHART_TASK_ID} is missing binding {binding}"
+            )
     active_hypotheses = [
         hypothesis_id
         for hypothesis_id, fields in hypotheses.items()
@@ -1280,6 +1391,7 @@ def validate() -> list[str]:
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
         COMPLETED_GUARDED_TASK_ID,
+        COMPLETED_CHART_TASK_ID,
     ):
         if binding not in next_tasks_text:
             problems.append(f"tasks/NEXT.md is missing desk-priority binding {binding}")
@@ -1575,6 +1687,56 @@ def validate() -> list[str]:
         if binding.casefold() not in guarded_closure_row.casefold():
             problems.append(
                 "TASK-022 closure row is missing binding "
+                f"{binding}"
+            )
+    chart_closure_row = next(
+        (
+            line
+            for line in decisions_log.splitlines()
+            if line.startswith("| 33 |")
+        ),
+        "",
+    )
+    for binding in (
+        COMPLETED_CHART_TASK_ID,
+        "closed_exact_theorem",
+        "zero_retention_success",
+        M16_CHART_ARTIFACT_PATH,
+        M16_CHART_ARTIFACT_SHA256,
+        M16_CHART_ARTIFACT_ID,
+        M16_CHART_CLAIM_ID,
+        M16_CHART_SOURCE_SHA256,
+        "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+        "kernel-checks",
+        "affine/infinity chart-polynomial cover",
+        "InfinityMask",
+        "[1:0]",
+        "[X_i:1]",
+        "14 - I.card",
+        "fifteen `H` equations",
+        "degree",
+        "2^14",
+        "neither enumerated nor materialized",
+        "native_decide",
+        "Lean.ofReduceBool",
+        "not_established",
+        "excluded_nonexperimental",
+        "open_non_executable",
+        "partial",
+        "unpriced",
+        "base-field descent",
+        "independent relations",
+        "open_parked",
+        "solver input",
+        "experiment authorization",
+        "cost claim",
+        "route promotion",
+        "60 semantic mutations",
+    ):
+        if binding.casefold() not in chart_closure_row.casefold():
+            problems.append(
+                "TASK-023 closure row is missing binding "
                 f"{binding}"
             )
 

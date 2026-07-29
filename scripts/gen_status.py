@@ -244,17 +244,24 @@ fourteen projective slots give 56 raw variables; fifteen literal `H` equations
 and fourteen nonzero-pair guards give 29 equation-family members, all of total
 degree at most four. This is the finite `MvPolynomial` family quantified over
 one assignment and every `GuardedEquation`, not a parallel recursive syntax.
-The remaining M16 gap is solver-ready chart or gauge handling without counting
-guard and projective redundancy as independent relations, plus relation yield,
-rank, solving, recovery, and total cost.
+`TASK-023` then kernel-checked an exact finite affine/infinity
+chart-polynomial cover. For each infinity mask `I`, selected slots are
+`[1:0]`, every other slot is `[X_i:1]`, and the fixed-mask system has exactly
+`14 - I.card` scalar variables and fifteen literal `H` equations with
+degree ceilings `2/4/2`. The existential cover is exactly equivalent to the
+stage-14 chain, the guarded system, and the source frozen predicate after
+the existing injective base change. The `2^14` logical masks were not
+enumerated or materialized. The remaining M16 gap requires a separately
+authorized design for mask selection or finite-cover orchestration, relation
+yield, rank, solving, recovery, and total cost.
 `TASK-008` remains parked because no hypothesis proposal has quality-cleared.
 
 The Engine's bounded-exploration capability is
 **{str(engine_gates['exploration_authorized']).lower()}**, while the current decision's experiment
 authorization is **{str(phase['experiments_authorized']).lower()}** and the promotion gate is
 **{str(engine_gates['promotion_authorized']).lower()}**. `GLV-SEMAEV-ITER-001` is complete; its
-certificates and kernel-checked identities authorize no hypothesis run. Closing `TASK-022`
-authorizes no direct-S17 expansion or evaluation, solver input or run, cost inference,
+certificates and kernel-checked identities authorize no hypothesis run. Closing `TASK-023`
+authorizes no direct-S17 expansion or evaluation, mask enumeration, solver input or run, cost inference,
 target computation, or route promotion. Any later experiment needs
 a new dated decision plus the normal fixed budgets, dependency order, and retained terminal
 outcome.

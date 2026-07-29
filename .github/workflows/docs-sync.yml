@@ -236,6 +236,11 @@ jobs:
           python3 experiments/engine/pkc_smooth_m16_guarded_projective_system/validate.py
           python3 experiments/engine/pkc_smooth_m16_guarded_projective_system/test_validate.py
           (cd experiments/engine/pkc_smooth_m16_guarded_projective_system && sha256sum -c artifact.sha256)
+      - name: PKC M16 exact chart-cover certificate
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_exact_chart_cover/validate.py --require-final-source-binding
+          python3 experiments/engine/pkc_smooth_m16_exact_chart_cover/test_validate.py
+          (cd experiments/engine/pkc_smooth_m16_exact_chart_cover && sha256sum -c artifact.sha256)
       - name: Claim-level truth-state gate
         run: |
           python3 scripts/research_claims.py --check

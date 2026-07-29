@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 27,
+                "source_claims": 28,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -316,6 +316,14 @@ class TypedEvidenceTests(unittest.TestCase):
         )
         self.assertIn(
             "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT",
+            m16["cost_quantity"]["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-EXACT-CHART-COVER-RESULT",
+            m16["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-EXACT-CHART-COVER-RESULT",
             m16["cost_quantity"]["source_claim_ids"],
         )
         self.assertFalse(
@@ -606,6 +614,70 @@ class TypedEvidenceTests(unittest.TestCase):
             "zero_retention_success",
         ):
             self.assertIn(token, guarded_claim["boundary"])
+        chart_claim = claims["SC-PKC-M16-EXACT-CHART-COVER-RESULT"]
+        self.assertEqual(
+            "experiments/engine/"
+            "pkc_smooth_m16_exact_chart_cover/artifact.json",
+            chart_claim["evidence_path"],
+        )
+        self.assertEqual(
+            "934809fabbb8c98c5ed9356a0a1f3367"
+            "a23f8fbc1bc86239069942537fd678ed",
+            chart_claim["artifact_sha256"],
+        )
+        self.assertEqual(
+            "certificate_replayed",
+            chart_claim["read_status"],
+        )
+        for token in (
+            "exact affine/infinity chart-polynomial cover",
+            "frozen stage-14 predicate",
+            "injective coefficient map",
+            "source Field k",
+            "algebraically closed target Field K",
+            "InfinityMask : Finset (Fin 14)",
+            "[1:0]",
+            "[X_i:1]",
+            "14 - I.card variables",
+            "exactly fifteen literal H equations",
+            "one base equation",
+            "thirteen internal step equations",
+            "one final equation",
+            "degree at most two",
+            "degree at most four",
+            "FrozenProjectiveChain",
+            "prior guarded projective system",
+            "never introduces [0:0]",
+        ):
+            self.assertIn(token, chart_claim["statement"])
+        for token in (
+            "kernel_bound_non_run_certificate",
+            "source_independence is not_established",
+            "calibration is excluded_nonexperimental",
+            "no base-field descent",
+            "2^14 logical masks are not enumerated or materialized",
+            "representation inventory",
+            "not independent dimensions or relations",
+            "upper bounds rather than exact-degree claims",
+            "card_chartEquation is compiler_trusted_native_decide",
+            "Lean.ofReduceBool",
+            "card_chartVar",
+            "open_non_executable",
+            "CQ-SEMAEV-S17-SYSTEM-COST remains partial",
+            "solving cost, rank, and yield remain unpriced",
+            "no expanded direct S17 polynomial",
+            "production mask sweep",
+            "solver input or run",
+            "relation independence",
+            "recovery or total-cost result",
+            "hypothesis retention",
+            "exact-target search",
+            "experiment authorization",
+            "route rejection",
+            "route promotion",
+            "zero_retention_success",
+        ):
+            self.assertIn(token, chart_claim["boundary"])
         barriers = {
             item["id"]: item for item in state["barriers"]
         }
@@ -639,6 +711,10 @@ class TypedEvidenceTests(unittest.TestCase):
             "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT",
             m16_barrier["source_claim_ids"],
         )
+        self.assertIn(
+            "SC-PKC-M16-EXACT-CHART-COVER-RESULT",
+            m16_barrier["source_claim_ids"],
+        )
         for token in (
             "TASK-019 kernel-checks",
             "zero forms",
@@ -655,7 +731,13 @@ class TypedEvidenceTests(unittest.TestCase):
             "29 equation-family members",
             "total degree at most four",
             "counts do not establish dimension",
-            "solver-ready chart or gauge handling",
+            "TASK-023 kernel-checks",
+            "exact affine/infinity chart-polynomial cover",
+            "14 - I.card variables",
+            "fifteen H equations",
+            "degree ceilings 2, 4, and 2",
+            "2^14 logical masks are not enumerated or materialized",
+            "mask selection or finite-cover orchestration",
         ):
             self.assertIn(token, m16_barrier["exact_scope"])
         self.assertNotIn(
@@ -669,10 +751,9 @@ class TypedEvidenceTests(unittest.TestCase):
         )
         reopening = " ".join(m16_barrier["reopening_conditions"])
         for token in (
-            "exact literal finite guarded MvPolynomial family",
-            "solver-ready chart or gauge handling",
-            "without treating guard and projective redundancy as "
-            "independent relations",
+            "exact TASK-023 affine/infinity chart-polynomial cover",
+            "mask selection or finite-cover orchestration",
+            "without enumerating all 2^14 masks by default",
             "usable yield and rank",
             "solving, recovery, and sparse-linear-algebra costs",
             "matched generic baseline",
@@ -703,7 +784,13 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertIn("TASK-022 kernel-checks", m16["relation_action"])
         self.assertIn("56 scalar variables", m16["relation_action"])
         self.assertIn(
-            "solver-ready chart or gauge handling",
+            "TASK-023 kernel-checks",
+            m16["relation_action"],
+        )
+        self.assertIn("14 - I.card affine scalar variables", m16["relation_action"])
+        self.assertIn("degree ceilings 2/4/2", m16["relation_action"])
+        self.assertIn(
+            "mask selection or finite-cover orchestration",
             m16["relation_action"],
         )
         self.assertIn(
@@ -719,9 +806,14 @@ class TypedEvidenceTests(unittest.TestCase):
             m16["boundary"],
         )
         self.assertIn(
-            "solver-ready chart/gauge reduction",
+            "exact affine/infinity chart-polynomial cover",
             m16["boundary"],
         )
+        self.assertIn(
+            "2^14 logical masks are not enumerated or materialized",
+            m16["boundary"],
+        )
+        self.assertIn("not a mask-selection algorithm", m16["boundary"])
         self.assertIn(
             "counts do not establish independent dimensions or relations",
             m16["boundary"],

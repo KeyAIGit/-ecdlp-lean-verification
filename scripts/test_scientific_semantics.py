@@ -402,8 +402,8 @@ class ScientificSemanticTests(unittest.TestCase):
             problems,
         )
         self.assertIn(
-            "M16 complete-cost reopening must require exact literal finite "
-            "guarded MvPolynomial family",
+            "M16 complete-cost reopening must require exact TASK-023 "
+            "affine/infinity chart-polynomial cover",
             problems,
         )
         for boundary in (
@@ -413,11 +413,16 @@ class ScientificSemanticTests(unittest.TestCase):
             "universal witness extraction",
             "universal all-stage witness chain",
             "TASK-022 guarded representation",
+            "TASK-023 chart-cover result",
             "raw variable count",
-            "open chart-or-gauge blocker",
+            "fixed-mask variable count",
+            "chart degree ceilings",
+            "open finite-cover blocker",
             "exact literal finite family",
+            "exact chart-cover result",
             "no direct-S17 overclaim",
-            "no chart-or-gauge overclaim",
+            "no production mask enumeration",
+            "no mask-selection overclaim",
             "no raw-count independence overclaim",
             "zero retention",
             "no hypothesis retention",
@@ -522,8 +527,8 @@ class ScientificSemanticTests(unittest.TestCase):
             problems,
         )
         self.assertIn(
-            "M16 complete-cost reopening must require exact literal finite "
-            "guarded MvPolynomial family",
+            "M16 complete-cost reopening must require exact TASK-023 "
+            "affine/infinity chart-polynomial cover",
             problems,
         )
         self.assertIn(
@@ -538,11 +543,16 @@ class ScientificSemanticTests(unittest.TestCase):
             "universal witness extraction",
             "universal all-stage witness chain",
             "TASK-022 guarded representation",
+            "TASK-023 chart-cover result",
             "raw variable count",
-            "open chart-or-gauge blocker",
+            "fixed-mask variable count",
+            "chart degree ceilings",
+            "open finite-cover blocker",
             "exact literal finite family",
+            "exact chart-cover result",
             "no direct-S17 overclaim",
-            "no chart-or-gauge overclaim",
+            "no production mask enumeration",
+            "no mask-selection overclaim",
             "no raw-count independence overclaim",
             "zero retention",
             "no hypothesis retention",
@@ -727,6 +737,136 @@ class ScientificSemanticTests(unittest.TestCase):
                     for problem in problems
                 )
             )
+
+    def test_m16_exact_chart_cover_cannot_drift(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim_id = "SC-PKC-M16-EXACT-CHART-COVER-RESULT"
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["source_claim_ids"].remove(claim_id)
+        cell["cost_quantity"]["source_claim_ids"].remove(claim_id)
+        cell["relation_action"] = "The chart theorem is still pending."
+        cell["boundary"] = "The route is executable and priced."
+        barrier = next(
+            item
+            for item in typed["barriers"]
+            if item["id"] == "B-PKC-M16-COMPLETE-COST-BRIDGE"
+        )
+        barrier["source_claim_ids"].remove(claim_id)
+        barrier["exact_scope"] = "The guarded system is solver-ready."
+        barrier["reopening_conditions"] = [
+            "Enumerate every mask and launch a solver."
+        ]
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == claim_id
+        )
+        claim["artifact_sha256"] = "0" * 64
+        claim["evidence_path"] = "wrong/artifact.json"
+        claim["statement"] = "One affine mask was sampled."
+        claim["boundary"] = "The route is priced, executable, and promoted."
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "M16 cell must retain its exact chart-cover kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 cost quantity must retain its exact chart-cover "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost barrier must retain its exact chart-cover "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 exact chart-cover artifact hash binding drifted",
+            problems,
+        )
+        self.assertIn(
+            "M16 exact chart-cover evidence path drifted",
+            problems,
+        )
+        for boundary in (
+            "exact chart cover",
+            "frozen stage-14 scope",
+            "injective coefficient map",
+            "source-field scope",
+            "target-field scope",
+            "infinity-mask type",
+            "projective infinity",
+            "affine representative",
+            "fixed-mask variable count",
+            "fixed-mask equation count",
+            "base family",
+            "step family",
+            "final family",
+            "endpoint degree ceiling",
+            "internal degree ceiling",
+            "projective-chain equivalence",
+            "guarded-system equivalence",
+            "zero-pair exclusion",
+            "kernel-bound non-run assurance",
+            "source independence",
+            "calibration",
+            "no base-field descent",
+            "no mask sweep",
+            "representation-count boundary",
+            "no-independence boundary",
+            "degree-bound scope",
+            "native trust",
+            "compiler-trust marker",
+            "ordinary variable-count proof",
+            "open non-executable cell",
+            "partial cost",
+            "unpriced costs",
+            "no direct-S17 claim",
+            "no production mask sweep",
+            "no solver input or run",
+            "no relation independence",
+            "no recovery or total cost",
+            "no hypothesis retention",
+            "no exact-target search",
+            "no experiment authorization",
+            "no route rejection",
+            "no route promotion",
+            "zero retention",
+        ):
+            self.assertTrue(
+                any(
+                    "M16 exact chart-cover claim must retain" in problem
+                    and boundary in problem
+                    for problem in problems
+                )
+            )
+        for boundary in (
+            "TASK-023 chart-cover result",
+            "exact chart-cover representation",
+            "fixed-mask variable count",
+            "fixed-mask equation count",
+            "family degree ceilings",
+            "no production mask enumeration",
+            "remaining finite-cover blocker",
+        ):
+            self.assertIn(
+                f"M16 complete-cost barrier must retain {boundary}",
+                problems,
+            )
+        for boundary in (
+            "TASK-023 chart-cover result",
+            "fixed-mask variable count",
+            "chart degree ceilings",
+            "open finite-cover blocker",
+            "exact chart-cover result",
+            "no production mask enumeration",
+            "no mask-selection overclaim",
+        ):
+            self.assertIn(f"M16 cell must retain {boundary}", problems)
 
     def test_shadow_intake_cannot_authorize_or_activate_glv(self) -> None:
         shadow = copy.deepcopy(self.shadow)

@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 303,
-  "ledger_reference_count": 557,
-  "ledger_named_declarations": 532,
+  "ledger_rows": 304,
+  "ledger_reference_count": 601,
+  "ledger_named_declarations": 576,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 870,
-  "distinct_qualified_names": 870,
-  "verified_md_citations": 532,
+  "declaration_count": 914,
+  "distinct_qualified_names": 914,
+  "verified_md_citations": 576,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -361,6 +361,13 @@
     "Ecdlp.DLEQ.chaum_pedersen_verify",
     "Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime",
     "Ecdlp.EDS.isEllSequence_of_rec_one",
+    "Ecdlp.FrozenProjectiveSemaev.ChartEquation",
+    "Ecdlp.FrozenProjectiveSemaev.ChartVar",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenChainVector",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenChartCover",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialCover",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialSystem",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenChartSystem",
     "Ecdlp.FrozenProjectiveSemaev.FrozenGuardedProjectiveSystem",
     "Ecdlp.FrozenProjectiveSemaev.FrozenProjectiveChain",
     "Ecdlp.FrozenProjectiveSemaev.GuardCoordinate",
@@ -368,15 +375,39 @@
     "Ecdlp.FrozenProjectiveSemaev.GuardedEquation",
     "Ecdlp.FrozenProjectiveSemaev.HValue_binaryConstant_binaryPair_eq",
     "Ecdlp.FrozenProjectiveSemaev.HValue_cycle",
+    "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_first_third_zero_iff",
+    "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_first_zero_iff",
+    "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_third_zero_iff",
+    "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_zero_iff",
+    "Ecdlp.FrozenProjectiveSemaev.HValue_rescale_zero_iff",
+    "Ecdlp.FrozenProjectiveSemaev.HValue_scale",
+    "Ecdlp.FrozenProjectiveSemaev.InfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.binaryConstantPair",
     "Ecdlp.FrozenProjectiveSemaev.binaryPair",
     "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic",
     "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic_isHomogeneous",
+    "Ecdlp.FrozenProjectiveSemaev.card_chartEquation",
+    "Ecdlp.FrozenProjectiveSemaev.card_chartVar",
     "Ecdlp.FrozenProjectiveSemaev.card_guardVar_fourteen",
     "Ecdlp.FrozenProjectiveSemaev.card_guarded_equations_fourteen",
+    "Ecdlp.FrozenProjectiveSemaev.chartConstantPolynomialPair",
+    "Ecdlp.FrozenProjectiveSemaev.chartCoordinates",
+    "Ecdlp.FrozenProjectiveSemaev.chartEquationValue",
+    "Ecdlp.FrozenProjectiveSemaev.chartPair",
+    "Ecdlp.FrozenProjectiveSemaev.chartPair_infinityMaskOf_eq_normalize",
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation",
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_base_totalDegree_le_two",
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_final_totalDegree_le_two",
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_step_totalDegree_le_four",
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_totalDegree_le_four",
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialPair",
+    "Ecdlp.FrozenProjectiveSemaev.coord_eq_projectiveScale_mul_normalize",
     "Ecdlp.FrozenProjectiveSemaev.dehomogenize_localProjectiveAt",
     "Ecdlp.FrozenProjectiveSemaev.dehomogenize_projectiveOutputAtOver",
     "Ecdlp.FrozenProjectiveSemaev.det_isHomogeneous_sum_row",
+    "Ecdlp.FrozenProjectiveSemaev.eval_chartConstantPolynomialPair",
+    "Ecdlp.FrozenProjectiveSemaev.eval_chartPolynomialEquation",
+    "Ecdlp.FrozenProjectiveSemaev.eval_chartPolynomialPair",
     "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt",
     "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_affine",
     "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt_infinity",
@@ -385,7 +416,16 @@
     "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_previousSliceAtOver_frozenC_infinity",
     "Ecdlp.FrozenProjectiveSemaev.eval_localProjectiveAt",
     "Ecdlp.FrozenProjectiveSemaev.eval_projectiveOutputAtOver",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_iff_chartSystem",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_normalize",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_chartCover",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialSystem_iff_chartSystem",
+    "Ecdlp.FrozenProjectiveSemaev.frozenGuardedProjectiveSystem_iff_chartPolynomialCover",
+    "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chainVector",
+    "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chartCover",
+    "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chartPolynomialCover",
     "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_guardedProjectiveSystem",
+    "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_chartPolynomialCover_over",
     "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_guardedProjectiveSystem_over",
     "Ecdlp.FrozenProjectiveSemaev.guardConstantCoordinate",
     "Ecdlp.FrozenProjectiveSemaev.guardEquation",
@@ -396,6 +436,7 @@
     "Ecdlp.FrozenProjectiveSemaev.guardedEquation_totalDegree_le_four",
     "Ecdlp.FrozenProjectiveSemaev.homogenize_localSliceAt",
     "Ecdlp.FrozenProjectiveSemaev.homogenize_previousSliceAtOver_frozenC",
+    "Ecdlp.FrozenProjectiveSemaev.infinityMaskOf",
     "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffOne",
     "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffOne_isHomogeneous",
     "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffTwo",
@@ -408,10 +449,13 @@
     "Ecdlp.FrozenProjectiveSemaev.localSliceAt_binaryPair_explicit",
     "Ecdlp.FrozenProjectiveSemaev.mapProjectivePair",
     "Ecdlp.FrozenProjectiveSemaev.mapProjectivePair_coord",
+    "Ecdlp.FrozenProjectiveSemaev.normalizeProjectivePair",
     "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_binaryConstantPair",
     "Ecdlp.FrozenProjectiveSemaev.previousSliceAtOver_frozenC_natDegree_le",
     "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver",
     "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver_frozenC_isHomogeneous",
+    "Ecdlp.FrozenProjectiveSemaev.projectiveScale",
+    "Ecdlp.FrozenProjectiveSemaev.projectiveScale_ne_zero",
     "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC16_eq_zero_iff_projectiveChain",
     "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_iff_projectiveChain",
     "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_zero",
@@ -8719,6 +8763,370 @@
           "line": 508
         }
       ]
+    },
+    {
+      "id": "ledger-303",
+      "claim": "Exact affine/infinity chart-polynomial cover of the frozen stage-14 `C16` predicate (an infinity mask `I : Finset (Fin 14)` represents every selected slot by `[1:0]` and every remaining slot by one affine scalar `[X_i:1]`. For each fixed mask, `ChartVar I` has exactly `14 - I.card` variables and `ChartEquation` has exactly fifteen literal `H` equations: one base equation of total degree at most two, thirteen internal equations of degree at most four, and one final equation of degree at most two. The existential finite chart cover is exactly equivalent to `FrozenProjectiveChain`, the TASK-022 guarded system, and, after the existing injective base change into an algebraically closed target field, the source frozen stage-14 predicate. Honest scope: `[1:0]` is retained and `[0:0]` is never introduced; the `2^14` logical masks are not enumerated or materialized. Counts are representation inventory, not independent dimensions or relations, and all degree statements are upper bounds. This theorem-only result claims no base-field descent, solver run or solver-readiness result, relation yield, rank, recovery, cost advantage, exact-target computation, or ECDLP attack. `card_chartEquation` is compiler-trusted through `native_decide`; `card_chartVar`, the equivalences, and the degree bounds use the standard Lean/Mathlib trust base)",
+      "theorem_cell": "`Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialCover`, `frozenProjectiveChain_iff_chartPolynomialCover`, `frozenGuardedProjectiveSystem_iff_chartPolynomialCover`, `frozenRecS17_iff_chartPolynomialCover_over`, `card_chartEquation`, `card_chartVar`, `chartPolynomialEquation_base_totalDegree_le_two`, `chartPolynomialEquation_step_totalDegree_le_four`, `chartPolynomialEquation_final_totalDegree_le_two`, `chartPolynomialEquation_totalDegree_le_four` and supporting declarations",
+      "declared_files": [
+        "Ecdlp/Proved/FrozenProjectiveChartSystem.lean"
+      ],
+      "method": "exact two-chart normalization + literal fixed-mask `MvPolynomial` family + TASK-021/TASK-022 equivalences + injective base change; `native_decide` only for `card_chartEquation",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialCover",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialCover",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 495
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chartPolynomialCover",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chartPolynomialCover",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 518
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenGuardedProjectiveSystem_iff_chartPolynomialCover",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenGuardedProjectiveSystem_iff_chartPolynomialCover",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 531
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_chartPolynomialCover_over",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_chartPolynomialCover_over",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 546
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.card_chartEquation",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.card_chartEquation",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 570
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.card_chartVar",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.card_chartVar",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 575
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_base_totalDegree_le_two",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_base_totalDegree_le_two",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 788
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_step_totalDegree_le_four",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_step_totalDegree_le_four",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 807
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_final_totalDegree_le_two",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_final_totalDegree_le_two",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 826
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_totalDegree_le_four",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_totalDegree_le_four",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 846
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.ChartEquation",
+          "resolution": "supporting-expansion",
+          "kind": "inductive",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 36
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.ChartVar",
+          "resolution": "supporting-expansion",
+          "kind": "abbrev",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 33
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenChainVector",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 268
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenChartCover",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 77
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialSystem",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 476
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenChartSystem",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 70
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_first_third_zero_iff",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 213
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_first_zero_iff",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 196
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_third_zero_iff",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 179
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_zero_iff",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 160
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.HValue_rescale_zero_iff",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 97
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.HValue_scale",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 86
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.InfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "abbrev",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 30
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.chartConstantPolynomialPair",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 399
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.chartCoordinates",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 250
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.chartEquationValue",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 54
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.chartPair",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 44
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.chartPair_infinityMaskOf_eq_normalize",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 255
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 415
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.chartPolynomialPair",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 406
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.coord_eq_projectiveScale_mul_normalize",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 141
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.eval_chartConstantPolynomialPair",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 446
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.eval_chartPolynomialEquation",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 456
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.eval_chartPolynomialPair",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 434
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_iff_chartSystem",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 355
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_normalize",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 335
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_chartCover",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 502
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialSystem_iff_chartSystem",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 485
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chainVector",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 277
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chartCover",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 374
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.infinityMaskOf",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 243
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.normalizeProjectivePair",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 109
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.projectiveScale",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 120
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.projectiveScale_ne_zero",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+          "line": 125
+        }
+      ]
     }
   ],
   "declarations": {
@@ -11809,6 +12217,55 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 45
     },
+    "Ecdlp.FrozenProjectiveSemaev.ChartEquation": {
+      "name": "ChartEquation",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "inductive",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 36
+    },
+    "Ecdlp.FrozenProjectiveSemaev.ChartVar": {
+      "name": "ChartVar",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 33
+    },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenChainVector": {
+      "name": "FrozenChainVector",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 268
+    },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenChartCover": {
+      "name": "FrozenChartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 77
+    },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialCover": {
+      "name": "FrozenChartPolynomialCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 495
+    },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialSystem": {
+      "name": "FrozenChartPolynomialSystem",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 476
+    },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenChartSystem": {
+      "name": "FrozenChartSystem",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 70
+    },
     "Ecdlp.FrozenProjectiveSemaev.FrozenGuardedProjectiveSystem": {
       "name": "FrozenGuardedProjectiveSystem",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -11864,6 +12321,55 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
       "line": 465
+    },
+    "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_first_third_zero_iff": {
+      "name": "HValue_normalize_first_third_zero_iff",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 213
+    },
+    "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_first_zero_iff": {
+      "name": "HValue_normalize_first_zero_iff",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 196
+    },
+    "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_third_zero_iff": {
+      "name": "HValue_normalize_third_zero_iff",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 179
+    },
+    "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_zero_iff": {
+      "name": "HValue_normalize_zero_iff",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 160
+    },
+    "Ecdlp.FrozenProjectiveSemaev.HValue_rescale_zero_iff": {
+      "name": "HValue_rescale_zero_iff",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 97
+    },
+    "Ecdlp.FrozenProjectiveSemaev.HValue_scale": {
+      "name": "HValue_scale",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 86
+    },
+    "Ecdlp.FrozenProjectiveSemaev.InfinityMask": {
+      "name": "InfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 30
     },
     "Ecdlp.FrozenProjectiveSemaev.ProjectivePair": {
       "name": "ProjectivePair",
@@ -11935,6 +12441,20 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
       "line": 160
     },
+    "Ecdlp.FrozenProjectiveSemaev.card_chartEquation": {
+      "name": "card_chartEquation",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 570
+    },
+    "Ecdlp.FrozenProjectiveSemaev.card_chartVar": {
+      "name": "card_chartVar",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 575
+    },
     "Ecdlp.FrozenProjectiveSemaev.card_guardVar_fourteen": {
       "name": "card_guardVar_fourteen",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -11949,6 +12469,83 @@
       "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
       "line": 56
     },
+    "Ecdlp.FrozenProjectiveSemaev.chartConstantPolynomialPair": {
+      "name": "chartConstantPolynomialPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 399
+    },
+    "Ecdlp.FrozenProjectiveSemaev.chartCoordinates": {
+      "name": "chartCoordinates",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 250
+    },
+    "Ecdlp.FrozenProjectiveSemaev.chartEquationValue": {
+      "name": "chartEquationValue",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 54
+    },
+    "Ecdlp.FrozenProjectiveSemaev.chartPair": {
+      "name": "chartPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 44
+    },
+    "Ecdlp.FrozenProjectiveSemaev.chartPair_infinityMaskOf_eq_normalize": {
+      "name": "chartPair_infinityMaskOf_eq_normalize",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 255
+    },
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation": {
+      "name": "chartPolynomialEquation",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 415
+    },
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_base_totalDegree_le_two": {
+      "name": "chartPolynomialEquation_base_totalDegree_le_two",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 788
+    },
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_final_totalDegree_le_two": {
+      "name": "chartPolynomialEquation_final_totalDegree_le_two",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 826
+    },
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_step_totalDegree_le_four": {
+      "name": "chartPolynomialEquation_step_totalDegree_le_four",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 807
+    },
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialEquation_totalDegree_le_four": {
+      "name": "chartPolynomialEquation_totalDegree_le_four",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 846
+    },
+    "Ecdlp.FrozenProjectiveSemaev.chartPolynomialPair": {
+      "name": "chartPolynomialPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 406
+    },
     "Ecdlp.FrozenProjectiveSemaev.coeff_map_C_natDegree": {
       "name": "coeff_map_C_natDegree",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -11962,6 +12559,13 @@
       "kind": "def",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 442
+    },
+    "Ecdlp.FrozenProjectiveSemaev.coord_eq_projectiveScale_mul_normalize": {
+      "name": "coord_eq_projectiveScale_mul_normalize",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 141
     },
     "Ecdlp.FrozenProjectiveSemaev.dehomogenize_localProjectiveAt": {
       "name": "dehomogenize_localProjectiveAt",
@@ -11983,6 +12587,27 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
       "line": 130
+    },
+    "Ecdlp.FrozenProjectiveSemaev.eval_chartConstantPolynomialPair": {
+      "name": "eval_chartConstantPolynomialPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 446
+    },
+    "Ecdlp.FrozenProjectiveSemaev.eval_chartPolynomialEquation": {
+      "name": "eval_chartPolynomialEquation",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 456
+    },
+    "Ecdlp.FrozenProjectiveSemaev.eval_chartPolynomialPair": {
+      "name": "eval_chartPolynomialPair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 434
     },
     "Ecdlp.FrozenProjectiveSemaev.eval_homogenize_localSliceAt": {
       "name": "eval_homogenize_localSliceAt",
@@ -12047,12 +12672,75 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 139
     },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_iff_chartSystem": {
+      "name": "frozenChainVector_iff_chartSystem",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 355
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_normalize": {
+      "name": "frozenChainVector_normalize",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 335
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_chartCover": {
+      "name": "frozenChartPolynomialCover_iff_chartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 502
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialSystem_iff_chartSystem": {
+      "name": "frozenChartPolynomialSystem_iff_chartSystem",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 485
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenGuardedProjectiveSystem_iff_chartPolynomialCover": {
+      "name": "frozenGuardedProjectiveSystem_iff_chartPolynomialCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 531
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chainVector": {
+      "name": "frozenProjectiveChain_iff_chainVector",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 277
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chartCover": {
+      "name": "frozenProjectiveChain_iff_chartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 374
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chartPolynomialCover": {
+      "name": "frozenProjectiveChain_iff_chartPolynomialCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 518
+    },
     "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_guardedProjectiveSystem": {
       "name": "frozenProjectiveChain_iff_guardedProjectiveSystem",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
       "line": 389
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_chartPolynomialCover_over": {
+      "name": "frozenRecS17_iff_chartPolynomialCover_over",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 546
     },
     "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_guardedProjectiveSystem_over": {
       "name": "frozenRecS17_iff_guardedProjectiveSystem_over",
@@ -12123,6 +12811,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
       "line": 416
+    },
+    "Ecdlp.FrozenProjectiveSemaev.infinityMaskOf": {
+      "name": "infinityMaskOf",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 243
     },
     "Ecdlp.FrozenProjectiveSemaev.leafPair": {
       "name": "leafPair",
@@ -12285,6 +12980,13 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 419
     },
+    "Ecdlp.FrozenProjectiveSemaev.normalizeProjectivePair": {
+      "name": "normalizeProjectivePair",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 109
+    },
     "Ecdlp.FrozenProjectiveSemaev.outputPair": {
       "name": "outputPair",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -12354,6 +13056,20 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
       "line": 379
+    },
+    "Ecdlp.FrozenProjectiveSemaev.projectiveScale": {
+      "name": "projectiveScale",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 120
+    },
+    "Ecdlp.FrozenProjectiveSemaev.projectiveScale_ne_zero": {
+      "name": "projectiveScale_ne_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
+      "line": 125
     },
     "Ecdlp.FrozenProjectiveSemaev.specialize": {
       "name": "specialize",

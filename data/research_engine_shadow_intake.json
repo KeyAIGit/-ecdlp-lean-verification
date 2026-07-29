@@ -4,8 +4,8 @@
   "status": "shadow_non_executing",
   "source_hashes": {
     "source_registry_sha256": "eea7bedf9c730f630538b16102586e7d6bf22dcd34e9c80990afd29db8b21aed",
-    "typed_evidence_state_sha256": "07107f962a833c28bda020da60fc0bf3416a69bd5551e156ea095ab50fae313b",
-    "research_claim_state_sha256": "99c0deb2600f9a0daa7502d83e9e1aeb9d3b2527c4c1281ba2d6d32df2b23846"
+    "typed_evidence_state_sha256": "958fb2ab57c165a5bd688df6f5c556075585ce5a5f3fa3f6daad4d9938d8b7b7",
+    "research_claim_state_sha256": "916df842d15169f922a77312ded65a4c8021bbf49c92fff26c0490af4e7549db"
   },
   "counts": {
     "proposal_stubs": 4,
@@ -97,6 +97,7 @@
         "cell:CELL-M-PKC-SMOOTH-M16",
         "data/source_claim_extracts/petit_kosters_messeng2016.json",
         "experiments/engine/pkc_smooth_desk_screen/artifact.json",
+        "experiments/engine/pkc_smooth_m16_exact_chart_cover/artifact.json",
         "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
         "experiments/engine/pkc_smooth_m16_frozen_cr_specialization/artifact.json",
         "experiments/engine/pkc_smooth_m16_frozen_projective_witness/artifact.json",

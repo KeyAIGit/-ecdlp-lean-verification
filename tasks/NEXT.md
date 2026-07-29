@@ -20,13 +20,13 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: none. `TASK-022` is completed; a successor must be
+Current central task: none. `TASK-023` is completed; a successor must be
 introduced by a new narrow task contract against the still-open complete-cost
 barrier before any further research execution.
 
 `TASK-010` is accepted at
 `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
-proposal-intake lane. Closing TASK-022 created no executable hypothesis,
+proposal-intake lane. Closing TASK-023 created no executable hypothesis,
 experiment authorization, or route promotion.
 
 Current scientific activation order:
@@ -73,9 +73,15 @@ Current scientific activation order:
    four. These are representation counts, not independent relation or solving
    claims. The M16 cell remains open and non-executable on chart/gauge
    redundancy, relation yield and rank, solving, recovery, and total cost.
-10. The auxiliary-curve cell stays parked until a primary source supplies a
+10. `TASK-023` completed the exact affine/infinity chart-polynomial cover.
+    Each fixed mask has `14 - |I|` variables, fifteen literal `H` equations,
+    and degree ceilings `2/4/2`. The cover is iff the projective chain, the
+    guarded system, and the frozen stage-14 source equation after the existing
+    injective algebraically closed base change. This is not a claim of
+    independent relations, solver readiness, yield, rank, recovery, or cost.
+11. The auxiliary-curve cell stays parked until a primary source supplies a
    finite search domain with a completeness criterion.
-11. Any later candidate, solver, or experiment still requires the normal
+12. Any later candidate, solver, or experiment still requires the normal
    review gates and a separate dated authorization.
 
 These entries freeze further engine-schema expansion by default. They do not

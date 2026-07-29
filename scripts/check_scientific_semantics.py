@@ -57,6 +57,14 @@ M16_GUARDED_ARTIFACT_PATH = (
 M16_GUARDED_ARTIFACT_SHA256 = (
     "3445da55b44a71d0f40ee60206c90f2ef1798c28abd125542ce3acbeeb8e1d46"
 )
+M16_CHART_CLAIM_ID = "SC-PKC-M16-EXACT-CHART-COVER-RESULT"
+M16_CHART_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_exact_chart_cover/artifact.json"
+)
+M16_CHART_ARTIFACT_SHA256 = (
+    "934809fabbb8c98c5ed9356a0a1f3367a23f8fbc1bc86239069942537fd678ed"
+)
 
 PETIT_WEIL_CONTRADICTIONS = (
     re.compile(
@@ -154,7 +162,7 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 27,
+        "source_claims": 28,
         "cells": 7,
         "seed_eligible_cells": 2,
         "desk_decisions": 3,
@@ -207,6 +215,10 @@ def validate_semantics(
         (
             M16_GUARDED_CLAIM_ID,
             "guarded projective-system kernel certificate",
+        ),
+        (
+            M16_CHART_CLAIM_ID,
+            "exact chart-cover kernel certificate",
         ),
     ):
         if claim_id not in m16_cell.get("source_claim_ids", []):
@@ -592,6 +604,88 @@ def validate_semantics(
             "M16 cost quantity must retain its guarded projective-system "
             "kernel certificate"
         )
+    chart_claim = typed_claims.get(M16_CHART_CLAIM_ID, {})
+    if chart_claim.get("read_status") != "certificate_replayed":
+        problems.append(
+            "M16 exact chart-cover assurance must remain certificate_replayed"
+        )
+    if chart_claim.get("artifact_sha256") != M16_CHART_ARTIFACT_SHA256:
+        problems.append("M16 exact chart-cover artifact hash binding drifted")
+    if chart_claim.get("evidence_path") != M16_CHART_ARTIFACT_PATH:
+        problems.append("M16 exact chart-cover evidence path drifted")
+    chart_statement = chart_claim.get("statement", "")
+    for token, label in (
+        ("exact affine/infinity chart-polynomial cover", "exact chart cover"),
+        ("frozen stage-14 predicate", "frozen stage-14 scope"),
+        ("injective coefficient map", "injective coefficient map"),
+        ("source Field k", "source-field scope"),
+        ("algebraically closed target Field K", "target-field scope"),
+        ("InfinityMask : Finset (Fin 14)", "infinity-mask type"),
+        ("[1:0]", "projective infinity"),
+        ("[X_i:1]", "affine representative"),
+        ("14 - I.card variables", "fixed-mask variable count"),
+        ("exactly fifteen literal H equations", "fixed-mask equation count"),
+        ("one base equation", "base family"),
+        ("thirteen internal step equations", "step family"),
+        ("one final equation", "final family"),
+        ("degree at most two", "endpoint degree ceiling"),
+        ("degree at most four", "internal degree ceiling"),
+        ("FrozenProjectiveChain", "projective-chain equivalence"),
+        ("prior guarded projective system", "guarded-system equivalence"),
+        ("never introduces [0:0]", "zero-pair exclusion"),
+    ):
+        if token not in chart_statement:
+            problems.append(
+                f"M16 exact chart-cover claim must retain {label}"
+            )
+    chart_boundary = chart_claim.get("boundary", "")
+    for token, label in (
+        (
+            "kernel_bound_non_run_certificate",
+            "kernel-bound non-run assurance",
+        ),
+        ("source_independence is not_established", "source independence"),
+        ("calibration is excluded_nonexperimental", "calibration"),
+        ("no base-field descent", "no base-field descent"),
+        ("2^14 logical masks are not enumerated or materialized", "no mask sweep"),
+        ("representation inventory", "representation-count boundary"),
+        (
+            "not independent dimensions or relations",
+            "no-independence boundary",
+        ),
+        (
+            "upper bounds rather than exact-degree claims",
+            "degree-bound scope",
+        ),
+        ("card_chartEquation is compiler_trusted_native_decide", "native trust"),
+        ("Lean.ofReduceBool", "compiler-trust marker"),
+        ("card_chartVar", "ordinary variable-count proof"),
+        ("open_non_executable", "open non-executable cell"),
+        ("CQ-SEMAEV-S17-SYSTEM-COST remains partial", "partial cost"),
+        ("solving cost, rank, and yield remain unpriced", "unpriced costs"),
+        ("no expanded direct S17 polynomial", "no direct-S17 claim"),
+        ("production mask sweep", "no production mask sweep"),
+        ("solver input or run", "no solver input or run"),
+        ("relation independence", "no relation independence"),
+        ("recovery or total-cost result", "no recovery or total cost"),
+        ("hypothesis retention", "no hypothesis retention"),
+        ("exact-target search", "no exact-target search"),
+        ("experiment authorization", "no experiment authorization"),
+        ("route rejection", "no route rejection"),
+        ("route promotion", "no route promotion"),
+        ("zero_retention_success", "zero retention"),
+    ):
+        if token not in chart_boundary:
+            problems.append(
+                f"M16 exact chart-cover claim must retain {label}"
+            )
+    if M16_CHART_CLAIM_ID not in m16_cell.get(
+        "cost_quantity", {}
+    ).get("source_claim_ids", []):
+        problems.append(
+            "M16 cost quantity must retain its exact chart-cover "
+            "kernel certificate"
+        )
     m16_barrier = typed_barriers.get(
         "B-PKC-M16-COMPLETE-COST-BRIDGE", {}
     )
@@ -643,6 +737,13 @@ def validate_semantics(
             "M16 complete-cost barrier must retain its guarded "
             "projective-system kernel certificate"
         )
+    if M16_CHART_CLAIM_ID not in m16_barrier.get(
+        "source_claim_ids", []
+    ):
+        problems.append(
+            "M16 complete-cost barrier must retain its exact chart-cover "
+            "kernel certificate"
+        )
     m16_scope = m16_barrier.get("exact_scope", "")
     for token, label in (
         ("TASK-019 kernel-checks", "TASK-019 kernel result"),
@@ -685,8 +786,32 @@ def validate_semantics(
             "raw-count independence boundary",
         ),
         (
-            "solver-ready chart or gauge handling",
-            "remaining chart-or-gauge blocker",
+            "TASK-023 kernel-checks",
+            "TASK-023 chart-cover result",
+        ),
+        (
+            "exact affine/infinity chart-polynomial cover",
+            "exact chart-cover representation",
+        ),
+        (
+            "14 - I.card variables",
+            "fixed-mask variable count",
+        ),
+        (
+            "fifteen H equations",
+            "fixed-mask equation count",
+        ),
+        (
+            "degree ceilings 2, 4, and 2",
+            "family degree ceilings",
+        ),
+        (
+            "2^14 logical masks are not enumerated or materialized",
+            "no production mask enumeration",
+        ),
+        (
+            "mask selection or finite-cover orchestration",
+            "remaining finite-cover blocker",
         ),
     ):
         if token not in m16_scope:
@@ -713,9 +838,9 @@ def validate_semantics(
         if isinstance(item, str)
     )
     for token in (
-        "exact literal finite guarded MvPolynomial family",
-        "solver-ready chart or gauge handling",
-        "without treating guard and projective redundancy as independent relations",
+        "exact TASK-023 affine/infinity chart-polynomial cover",
+        "mask selection or finite-cover orchestration",
+        "without enumerating all 2^14 masks by default",
         "usable yield and rank",
         "solving, recovery, and sparse-linear-algebra costs",
         "matched generic baseline",
@@ -770,8 +895,23 @@ def validate_semantics(
         ),
         (
             "relation_action",
-            "solver-ready chart or gauge handling",
-            "open chart-or-gauge blocker",
+            "TASK-023 kernel-checks",
+            "TASK-023 chart-cover result",
+        ),
+        (
+            "relation_action",
+            "14 - I.card affine scalar variables",
+            "fixed-mask variable count",
+        ),
+        (
+            "relation_action",
+            "degree ceilings 2/4/2",
+            "chart degree ceilings",
+        ),
+        (
+            "relation_action",
+            "mask selection or finite-cover orchestration",
+            "open finite-cover blocker",
         ),
         (
             "boundary",
@@ -790,8 +930,18 @@ def validate_semantics(
         ),
         (
             "boundary",
-            "solver-ready chart/gauge reduction",
-            "no chart-or-gauge overclaim",
+            "exact affine/infinity chart-polynomial cover",
+            "exact chart-cover result",
+        ),
+        (
+            "boundary",
+            "2^14 logical masks are not enumerated or materialized",
+            "no production mask enumeration",
+        ),
+        (
+            "boundary",
+            "not a mask-selection algorithm",
+            "no mask-selection overclaim",
         ),
         (
             "boundary",
