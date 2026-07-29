@@ -65,6 +65,14 @@ M16_CHART_ARTIFACT_PATH = (
 M16_CHART_ARTIFACT_SHA256 = (
     "934809fabbb8c98c5ed9356a0a1f3367a23f8fbc1bc86239069942537fd678ed"
 )
+M16_STRATA_CLAIM_ID = "SC-PKC-M16-INFINITY-STRATA-RESULT"
+M16_STRATA_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_infinity_strata/artifact.json"
+)
+M16_STRATA_ARTIFACT_SHA256 = (
+    "54b0f3c5f2f1880b1f805911df21b72e5427b18871f14907ac17a1d8b48bdd39"
+)
 
 PETIT_WEIL_CONTRADICTIONS = (
     re.compile(
@@ -162,7 +170,7 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 28,
+        "source_claims": 29,
         "cells": 7,
         "seed_eligible_cells": 2,
         "desk_decisions": 3,
@@ -686,6 +694,84 @@ def validate_semantics(
             "M16 cost quantity must retain its exact chart-cover "
             "kernel certificate"
         )
+    strata_claim = typed_claims.get(M16_STRATA_CLAIM_ID, {})
+    if strata_claim.get("read_status") != "certificate_replayed":
+        problems.append(
+            "M16 infinity-stratum assurance must remain certificate_replayed"
+        )
+    if strata_claim.get("artifact_sha256") != M16_STRATA_ARTIFACT_SHA256:
+        problems.append("M16 infinity-stratum artifact hash binding drifted")
+    if strata_claim.get("evidence_path") != M16_STRATA_ARTIFACT_PATH:
+        problems.append("M16 infinity-stratum evidence path drifted")
+    strata_statement = strata_claim.get("statement", "")
+    for token, label in (
+        ("TASK-023 stage-14 chart cover", "upstream exact chart cover"),
+        ("squared projective determinants", "local infinity identities"),
+        ("H([1:0],b,[1:0]) = b.v^2", "double-infinity identity"),
+        ("AffineInputFamily", "affine-input assumption"),
+        ("adjacent infinity slots are impossible", "separation necessity"),
+        ("endpoint determinant equations", "endpoint conditions"),
+        ("q.u / q.v", "forced-neighbor coordinate"),
+        ("AdmissibleInfinityMask", "necessary mask predicate"),
+        ("16384 total masks", "full logical mask count"),
+        ("987 separated masks", "separated mask count"),
+        ("both endpoint determinants are nonzero", "endpoint assumptions"),
+        ("377 masks", "interior mask count"),
+    ):
+        if token not in strata_statement:
+            problems.append(
+                f"M16 infinity-stratum claim must retain {label}"
+            )
+    strata_boundary = strata_claim.get("boundary", "")
+    for token, label in (
+        ("kernel_bound_non_run_certificate", "kernel-bound assurance"),
+        ("source_independence is not_established", "source independence"),
+        ("calibration is excluded_nonexperimental", "calibration"),
+        ("requires affine external inputs", "affine-input scope"),
+        (
+            "additionally requires both endpoint determinants",
+            "conditional endpoint scope",
+        ),
+        ("necessary, not sufficient or unique", "necessity boundary"),
+        ("not enumerated or materialized", "no production enumeration"),
+        ("logical cover inventory", "logical-count boundary"),
+        ("card_infinityMask", "full-count trust disclosure"),
+        ("card_separatedInfinityMask", "separated-count trust disclosure"),
+        (
+            "card_interiorSeparatedInfinityMask",
+            "interior-count trust disclosure",
+        ),
+        ("compiler_trusted_native_decide", "native trust"),
+        ("Lean.ofReduceBool", "compiler-trust marker"),
+        ("open_non_executable", "open non-executable cell"),
+        ("CQ-SEMAEV-S17-SYSTEM-COST remains partial", "partial cost"),
+        ("sufficient mask orchestration", "remaining mask blocker"),
+        ("no sufficient mask-selection algorithm", "no sufficiency overclaim"),
+        ("solver input or run", "no solver input or run"),
+        ("relation independence", "no relation independence"),
+        ("recovery or total-cost result", "no recovery or total cost"),
+        ("hypothesis retention", "no hypothesis retention"),
+        ("exact-target search", "no exact-target search"),
+        ("experiment authorization", "no experiment authorization"),
+        ("route rejection", "no route rejection"),
+        ("route promotion", "no route promotion"),
+        ("zero_retention_success", "zero retention"),
+    ):
+        if token not in strata_boundary:
+            problems.append(
+                f"M16 infinity-stratum claim must retain {label}"
+            )
+    if M16_STRATA_CLAIM_ID not in m16_cell.get(
+        "cost_quantity", {}
+    ).get("source_claim_ids", []):
+        problems.append(
+            "M16 cost quantity must retain its infinity-stratum "
+            "kernel certificate"
+        )
+    if M16_STRATA_CLAIM_ID not in m16_cell.get("source_claim_ids", []):
+        problems.append(
+            "M16 cell must retain its infinity-stratum kernel certificate"
+        )
     m16_barrier = typed_barriers.get(
         "B-PKC-M16-COMPLETE-COST-BRIDGE", {}
     )
@@ -742,6 +828,13 @@ def validate_semantics(
     ):
         problems.append(
             "M16 complete-cost barrier must retain its exact chart-cover "
+            "kernel certificate"
+        )
+    if M16_STRATA_CLAIM_ID not in m16_barrier.get(
+        "source_claim_ids", []
+    ):
+        problems.append(
+            "M16 complete-cost barrier must retain its infinity-stratum "
             "kernel certificate"
         )
     m16_scope = m16_barrier.get("exact_scope", "")
@@ -810,6 +903,26 @@ def validate_semantics(
             "no production mask enumeration",
         ),
         (
+            "TASK-024 kernel-checks",
+            "TASK-024 infinity-stratum result",
+        ),
+        (
+            "necessary infinity-stratum pruning",
+            "necessary mask pruning",
+        ),
+        (
+            "16384 masks to 987 separated masks",
+            "separated mask reduction",
+        ),
+        (
+            "377 interior masks",
+            "conditional interior mask count",
+        ),
+        (
+            "necessary, not sufficient or unique",
+            "necessity-only boundary",
+        ),
+        (
             "mask selection or finite-cover orchestration",
             "remaining finite-cover blocker",
         ),
@@ -839,8 +952,10 @@ def validate_semantics(
     )
     for token in (
         "exact TASK-023 affine/infinity chart-polynomial cover",
+        "completed TASK-024 necessary infinity-stratum filter",
         "mask selection or finite-cover orchestration",
         "without enumerating all 2^14 masks by default",
+        "without sweeping all 987 separated masks by default",
         "usable yield and rank",
         "solving, recovery, and sparse-linear-algebra costs",
         "matched generic baseline",
@@ -910,6 +1025,21 @@ def validate_semantics(
         ),
         (
             "relation_action",
+            "TASK-024 kernel-checks",
+            "TASK-024 infinity-stratum result",
+        ),
+        (
+            "relation_action",
+            "16384 masks to 987 separated masks",
+            "separated mask reduction",
+        ),
+        (
+            "relation_action",
+            "377 interior masks",
+            "conditional interior mask count",
+        ),
+        (
+            "relation_action",
             "mask selection or finite-cover orchestration",
             "open finite-cover blocker",
         ),
@@ -940,8 +1070,23 @@ def validate_semantics(
         ),
         (
             "boundary",
-            "not a mask-selection algorithm",
-            "no mask-selection overclaim",
+            "exact necessary infinity-stratum pruning",
+            "exact infinity-stratum result",
+        ),
+        (
+            "boundary",
+            "16384 masks to 987 separated masks",
+            "separated mask reduction",
+        ),
+        (
+            "boundary",
+            "377 interior masks",
+            "conditional interior mask count",
+        ),
+        (
+            "boundary",
+            "not a sufficient or unique mask-selection algorithm",
+            "no sufficiency overclaim",
         ),
         (
             "boundary",

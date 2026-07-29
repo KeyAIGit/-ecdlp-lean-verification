@@ -94,6 +94,7 @@ import Ecdlp.Proved.FrozenRecursiveProjectiveSemaev
 import Ecdlp.Proved.FrozenRecursiveProjectiveWitness
 import Ecdlp.Proved.FrozenProjectiveGuardSystem
 import Ecdlp.Proved.FrozenProjectiveChartSystem
+import Ecdlp.Proved.FrozenProjectiveInfinityStrata
 import Ecdlp.Proved.SevenNonResidue
 import Ecdlp.Proved.GlvSemaevSymmetry
 import Ecdlp.Proved.PointDecomposition

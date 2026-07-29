@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~265 distinct results / 304 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~266 distinct results / 305 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -146,7 +146,7 @@ exact `Θ` statements.
   *where the search lives and how it branches*; the cost lower bound itself stays in the open
   frontier, recorded here, not dressed as proved.
 
-  **Exact M16 representation frontier (TASK-023; theorem-only, non-run).**
+  **Exact M16 representation frontier (TASK-024; theorem-only, non-run).**
   TASK-022 first kernel-checked the exact 56-variable, 29-equation guarded
   representation. TASK-023 now replaces that raw projective-scale and
   guard-witness redundancy by an exact finite affine/infinity chart cover.
@@ -161,10 +161,20 @@ exact `Θ` statements.
   materialized. These are representation counts and upper bounds, not
   independent relations, rank, yield, solving behavior, or a base-field
   descent theorem.
+  TASK-024 then proves exact necessary conditions on those infinity masks.
+  For affine external inputs, two adjacent intermediate infinity slots would
+  force an external `v` coordinate to vanish. The exact logical cover therefore
+  restricts from 16384 masks to the 987 separated subsets of the fourteen-slot
+  path. Infinity at either boundary forces its endpoint projective determinant
+  to vanish; if both endpoint determinants are nonzero, slots 0 and 13 are
+  affine and the conditional cover has 377 masks. An isolated infinity also
+  fixes each existing affine neighbor to the normalized current-input
+  coordinate. These filters are necessary, not sufficient or unique, and the
+  mask families are not production-enumerated.
   `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`,
   `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`, and
-  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on separately authorized mask
-  selection or finite-cover orchestration, usable relation yield and rank,
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on a sufficient mask-selection
+  or finite-cover orchestration mechanism, usable relation yield and rank,
   solving, recovery, sparse linear algebra, and total work. No solver or
   experiment is authorized.
 

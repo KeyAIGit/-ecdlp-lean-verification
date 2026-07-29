@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 28,
+                "source_claims": 29,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -324,6 +324,14 @@ class TypedEvidenceTests(unittest.TestCase):
         )
         self.assertIn(
             "SC-PKC-M16-EXACT-CHART-COVER-RESULT",
+            m16["cost_quantity"]["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-INFINITY-STRATA-RESULT",
+            m16["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-INFINITY-STRATA-RESULT",
             m16["cost_quantity"]["source_claim_ids"],
         )
         self.assertFalse(
@@ -678,6 +686,63 @@ class TypedEvidenceTests(unittest.TestCase):
             "zero_retention_success",
         ):
             self.assertIn(token, chart_claim["boundary"])
+        strata_claim = claims["SC-PKC-M16-INFINITY-STRATA-RESULT"]
+        self.assertEqual(
+            "experiments/engine/"
+            "pkc_smooth_m16_infinity_strata/artifact.json",
+            strata_claim["evidence_path"],
+        )
+        self.assertEqual(
+            "54b0f3c5f2f1880b1f805911df21b72"
+            "e5427b18871f14907ac17a1d8b48bdd39",
+            strata_claim["artifact_sha256"],
+        )
+        self.assertEqual("certificate_replayed", strata_claim["read_status"])
+        for token in (
+            "TASK-023 stage-14 chart cover",
+            "squared projective determinants",
+            "H([1:0],b,[1:0]) = b.v^2",
+            "AffineInputFamily",
+            "adjacent infinity slots are impossible",
+            "endpoint determinant equations",
+            "q.u / q.v",
+            "AdmissibleInfinityMask",
+            "16384 total masks",
+            "987 separated masks",
+            "both endpoint determinants are nonzero",
+            "377 masks",
+        ):
+            self.assertIn(token, strata_claim["statement"])
+        for token in (
+            "kernel_bound_non_run_certificate",
+            "source_independence is not_established",
+            "calibration is excluded_nonexperimental",
+            "requires affine external inputs",
+            "additionally requires both endpoint determinants",
+            "necessary, not sufficient or unique",
+            "not enumerated or materialized",
+            "logical cover inventory",
+            "card_infinityMask",
+            "card_separatedInfinityMask",
+            "card_interiorSeparatedInfinityMask",
+            "compiler_trusted_native_decide",
+            "Lean.ofReduceBool",
+            "open_non_executable",
+            "CQ-SEMAEV-S17-SYSTEM-COST remains partial",
+            "sufficient mask orchestration",
+            "no sufficient mask-selection algorithm",
+            "production mask sweep",
+            "solver input or run",
+            "relation independence",
+            "recovery or total-cost result",
+            "hypothesis retention",
+            "exact-target search",
+            "experiment authorization",
+            "route rejection",
+            "route promotion",
+            "zero_retention_success",
+        ):
+            self.assertIn(token, strata_claim["boundary"])
         barriers = {
             item["id"]: item for item in state["barriers"]
         }
@@ -715,6 +780,10 @@ class TypedEvidenceTests(unittest.TestCase):
             "SC-PKC-M16-EXACT-CHART-COVER-RESULT",
             m16_barrier["source_claim_ids"],
         )
+        self.assertIn(
+            "SC-PKC-M16-INFINITY-STRATA-RESULT",
+            m16_barrier["source_claim_ids"],
+        )
         for token in (
             "TASK-019 kernel-checks",
             "zero forms",
@@ -737,6 +806,11 @@ class TypedEvidenceTests(unittest.TestCase):
             "fifteen H equations",
             "degree ceilings 2, 4, and 2",
             "2^14 logical masks are not enumerated or materialized",
+            "TASK-024 kernel-checks",
+            "necessary infinity-stratum pruning",
+            "16384 masks to 987 separated masks",
+            "377 interior masks",
+            "necessary, not sufficient or unique",
             "mask selection or finite-cover orchestration",
         ):
             self.assertIn(token, m16_barrier["exact_scope"])
@@ -752,8 +826,10 @@ class TypedEvidenceTests(unittest.TestCase):
         reopening = " ".join(m16_barrier["reopening_conditions"])
         for token in (
             "exact TASK-023 affine/infinity chart-polynomial cover",
+            "completed TASK-024 necessary infinity-stratum filter",
             "mask selection or finite-cover orchestration",
             "without enumerating all 2^14 masks by default",
+            "without sweeping all 987 separated masks by default",
             "usable yield and rank",
             "solving, recovery, and sparse-linear-algebra costs",
             "matched generic baseline",
@@ -789,6 +865,12 @@ class TypedEvidenceTests(unittest.TestCase):
         )
         self.assertIn("14 - I.card affine scalar variables", m16["relation_action"])
         self.assertIn("degree ceilings 2/4/2", m16["relation_action"])
+        self.assertIn("TASK-024 kernel-checks", m16["relation_action"])
+        self.assertIn(
+            "16384 masks to 987 separated masks",
+            m16["relation_action"],
+        )
+        self.assertIn("377 interior masks", m16["relation_action"])
         self.assertIn(
             "mask selection or finite-cover orchestration",
             m16["relation_action"],
@@ -813,7 +895,13 @@ class TypedEvidenceTests(unittest.TestCase):
             "2^14 logical masks are not enumerated or materialized",
             m16["boundary"],
         )
-        self.assertIn("not a mask-selection algorithm", m16["boundary"])
+        self.assertIn("exact necessary infinity-stratum pruning", m16["boundary"])
+        self.assertIn("16384 masks to 987 separated masks", m16["boundary"])
+        self.assertIn("377 interior masks", m16["boundary"])
+        self.assertIn(
+            "not a sufficient or unique mask-selection algorithm",
+            m16["boundary"],
+        )
         self.assertIn(
             "counts do not establish independent dimensions or relations",
             m16["boundary"],

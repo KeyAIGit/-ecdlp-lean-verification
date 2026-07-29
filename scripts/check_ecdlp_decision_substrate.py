@@ -36,6 +36,7 @@ MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
 MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
 CURRENT_PHASE = "evidence-bounded-desk-priority"
+COMPLETED_STRATA_TASK_ID = "TASK-024"
 COMPLETED_CHART_TASK_ID = "TASK-023"
 COMPLETED_GUARDED_TASK_ID = "TASK-022"
 COMPLETED_WITNESS_TASK_ID = "TASK-021"
@@ -339,6 +340,12 @@ def validate() -> list[str]:
         "fifteen literal H equations",
         "degree ceilings 2/4/2",
         "production mask enumeration",
+        COMPLETED_STRATA_TASK_ID,
+        "necessary infinity-stratum pruning",
+        "16384 masks",
+        "987 separated masks",
+        "377 interior masks",
+        "sufficiency",
     ):
         if binding not in phase_allowed:
             problems.append(f"phase_policy.allowed_work is missing {binding}")
@@ -356,6 +363,9 @@ def validate() -> list[str]:
         COMPLETED_CHART_TASK_ID,
         "production mask-selection algorithm",
         "enumeration of all 2^14 masks",
+        COMPLETED_STRATA_TASK_ID,
+        "necessary infinity-stratum filter",
+        "sufficient or unique mask selection",
     ):
         if binding not in phase_forbidden:
             problems.append(f"phase_policy.forbidden_work is missing {binding}")
@@ -544,10 +554,13 @@ def validate() -> list[str]:
         problems.append("next_phase_gate.reopen_requirements must be nonempty")
     reopen_text = "\n".join(reopen) if isinstance(reopen, list) else ""
     for binding in (
+        COMPLETED_STRATA_TASK_ID,
+        "necessary infinity-stratum filter",
         COMPLETED_CHART_TASK_ID,
         "exact affine/infinity chart-polynomial cover",
         "mask selection or finite-cover orchestration",
         "without enumerating all 2^14 masks by default",
+        "without sweeping all 987 separated masks by default",
         "usable yield, rank, solving, recovery, and total-cost models",
         "does not authorize an experiment or route promotion",
     ):

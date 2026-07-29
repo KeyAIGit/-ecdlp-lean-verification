@@ -1402,3 +1402,127 @@ How to verify:
 - chart-normalization fixtures plus certificate semantic fault tests
 - typed-evidence, decision-substrate, scientific-semantic,
   generated-fixpoint, and full CI gates
+
+### TASK-024 - Prove necessary infinity-stratum pruning
+
+Status: completed_non_executable_kernel_result
+Kind: theorem | research | review
+Hypothesis: none. This is a necessary-mask refinement of TASK-023, not a
+solver candidate, relation-yield claim, or cost experiment.
+Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
+Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
+Authorization: none
+Outcome: `closed_exact_theorem`
+Retention: `zero_retention_success`
+Completed on: 2026-07-29
+Artifact:
+- `experiments/engine/pkc_smooth_m16_infinity_strata/artifact.json`
+- ID `PKC-SMOOTH-M16-INFINITY-STRATA-001`
+- SHA-256 `54b0f3c5f2f1880b1f805911df21b72e5427b18871f14907ac17a1d8b48bdd39`
+Source:
+- `Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean`
+- SHA-256 `1314477f9821da87d2017837abca4fec957ae9998390a231e93532230129a22c`
+Typed claim:
+- `SC-PKC-M16-INFINITY-STRATA-RESULT`
+Why it matters: TASK-023 proves an exact cover over all `2^14 = 16384`
+affine/infinity masks but does not distinguish masks that cannot occur. The
+local triquadratic `H` identities at `[1:0]` expose exact necessary
+conditions. With affine external inputs, adjacent infinity slots would force
+an external projective `v` coordinate to vanish, so every solution mask is a
+separated subset of the fourteen-slot path. This reduces the exact logical
+cover to 987 masks without a solver or production enumeration.
+Decision boundary:
+- Work only with the TASK-023 chart system and its literal polynomial cover.
+- Prove all three one-infinity identities as squared projective
+  determinants, plus the two-recursive-endpoint identity
+  `H([1:0],q,[1:0]) = q.v^2`.
+- Under the explicit assumption that every external input is affine, prove
+  that no solution mask contains adjacent infinity slots.
+- Record the necessary endpoint determinant conditions for selected boundary
+  infinity slots.
+- Prove that nonzero endpoint determinants force slots 0 and 13 to be affine,
+  leaving the 377 separated masks on the twelve interior slots.
+- Prove that an isolated infinity slot forces an existing affine neighbor to
+  the normalized coordinate `q.u / q.v`.
+- Restrict the exact chart and chart-polynomial covers only by proved
+  necessary predicates. Do not claim the predicates are sufficient.
+- Do not enumerate the production mask family, emit solver input, run a
+  solver, estimate rank or relation yield, search an exact target, or compute
+  a discrete logarithm.
+Recorded result:
+- `HValue_third_infinity`, `HValue_first_infinity`, and
+  `HValue_middle_infinity` identify each one-infinity specialization with a
+  squared projective determinant.
+- `HValue_first_third_infinity` proves that two adjacent recursive infinity
+  slots expose the intervening input's `v` coordinate squared.
+- `frozenChartSystem_separatedInfinityMask` proves that affine external
+  inputs make every solution mask separated.
+- `frozenChartSystem_endpointCompatibleInfinityMask` records the exact
+  determinant equations forced by infinity at the first or last slot.
+- The left- and right-infinity neighbor theorems prove the normalized
+  coordinate forced on an affine neighbor.
+- `frozenChartCover_iff_admissibleChartCover` and
+  `frozenProjectiveChain_iff_admissibleChartPolynomialCover` prove that the
+  necessary-mask restriction loses no solution under the affine-input
+  assumption.
+- With nonzero endpoint determinants,
+  `frozenChartCover_iff_interiorChartCover` further removes both boundary
+  infinity slots.
+- `card_infinityMask`, `card_separatedInfinityMask`, and
+  `card_interiorSeparatedInfinityMask` record exact counts 16384, 987, and
+  377. These three facts use `native_decide`; the identities, necessity
+  results, forced-neighbor results, and cover equivalences use ordinary
+  kernel-checked proofs.
+- The source target builds in Lean with 1942 jobs. Its narrow axiom audit
+  contains only the standard `propext`, `Classical.choice`, and `Quot.sound`
+  dependencies for structural results, with the compiler-trust marker
+  separately disclosed for the three cardinalities.
+- The independent source-bound certificate derives both path counts by
+  recurrence, checks all four infinity identities and the forced-neighbor
+  fixture over F5 and F7, validates upstream and source hashes, and rejects
+  exactly 49 semantic mutations.
+- This closes only necessary infinity-mask pruning. It does not supply a
+  sufficient or unique mask selector, relation independence, yield, rank,
+  solving degree, fill-in, memory, recovery, runtime, or complete cost.
+- `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`;
+  `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`;
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open; the route remains
+  `open_parked`; no hypothesis, solver, experiment authorization, exact
+  target computation, cost claim, or route promotion is created.
+Inputs:
+- `Ecdlp/Proved/FrozenProjectiveChartSystem.lean`
+- `experiments/engine/pkc_smooth_m16_exact_chart_cover/artifact.json`
+- `CELL-M-PKC-SMOOTH-M16`
+- `B-PKC-M16-COMPLETE-COST-BRIDGE`
+Expected output:
+- One kernel-checked infinity-stratum module with exact local identities,
+  necessary mask constraints, forced-neighbor theorems, and exact restricted
+  cover equivalences.
+- Exact logical mask counts, with compiler trust explicitly disclosed.
+- One narrow source-bound non-run certificate.
+Exit criteria:
+- Affine external inputs imply separated masks, giving 987 rather than 16384
+  logical branches without production enumeration.
+- Nonzero endpoint determinants imply the conditional 377-mask interior
+  cover.
+- The pruned covers are exactly equivalent to TASK-023 under their stated
+  assumptions, and no sufficiency or solver claim is made.
+- `CELL-M-PKC-SMOOTH-M16` stays `open_non_executable`;
+  `CQ-SEMAEV-S17-SYSTEM-COST` stays `partial`;
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` stays open; no hypothesis, solver,
+  experiment authorization, cost claim, exact-target work, or route promotion
+  is created.
+Files allowed to edit:
+- one narrow infinity-stratum Lean module and direct import
+- one dedicated non-run TASK-024 certificate directory
+- directly affected canonical task, proof, evidence, and decision ledgers
+Files that must be regenerated:
+- only generated views directly affected by the final recorded result
+How to verify:
+- narrow and full Lean builds, built-source no-`sorry`, and exhaustive axiom
+  audit
+- exact source and artifact digest checks
+- independent path-count and F5/F7 identity fixtures plus certificate fault
+  tests
+- typed-evidence, decision-substrate, scientific-semantic,
+  generated-fixpoint, and full CI gates

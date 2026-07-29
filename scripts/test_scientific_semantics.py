@@ -422,7 +422,7 @@ class ScientificSemanticTests(unittest.TestCase):
             "exact chart-cover result",
             "no direct-S17 overclaim",
             "no production mask enumeration",
-            "no mask-selection overclaim",
+            "no sufficiency overclaim",
             "no raw-count independence overclaim",
             "zero retention",
             "no hypothesis retention",
@@ -552,7 +552,7 @@ class ScientificSemanticTests(unittest.TestCase):
             "exact chart-cover result",
             "no direct-S17 overclaim",
             "no production mask enumeration",
-            "no mask-selection overclaim",
+            "no sufficiency overclaim",
             "no raw-count independence overclaim",
             "zero retention",
             "no hypothesis retention",
@@ -851,6 +851,11 @@ class ScientificSemanticTests(unittest.TestCase):
             "fixed-mask equation count",
             "family degree ceilings",
             "no production mask enumeration",
+            "TASK-024 infinity-stratum result",
+            "necessary mask pruning",
+            "separated mask reduction",
+            "conditional interior mask count",
+            "necessity-only boundary",
             "remaining finite-cover blocker",
         ):
             self.assertIn(
@@ -861,12 +866,112 @@ class ScientificSemanticTests(unittest.TestCase):
             "TASK-023 chart-cover result",
             "fixed-mask variable count",
             "chart degree ceilings",
+            "TASK-024 infinity-stratum result",
+            "separated mask reduction",
+            "conditional interior mask count",
             "open finite-cover blocker",
             "exact chart-cover result",
             "no production mask enumeration",
-            "no mask-selection overclaim",
+            "exact infinity-stratum result",
+            "no sufficiency overclaim",
         ):
             self.assertIn(f"M16 cell must retain {boundary}", problems)
+
+    def test_m16_infinity_strata_cannot_drift(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim_id = "SC-PKC-M16-INFINITY-STRATA-RESULT"
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["source_claim_ids"].remove(claim_id)
+        cell["cost_quantity"]["source_claim_ids"].remove(claim_id)
+        barrier = next(
+            item
+            for item in typed["barriers"]
+            if item["id"] == "B-PKC-M16-COMPLETE-COST-BRIDGE"
+        )
+        barrier["source_claim_ids"].remove(claim_id)
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == claim_id
+        )
+        claim["artifact_sha256"] = "0" * 64
+        claim["evidence_path"] = "wrong/artifact.json"
+        claim["statement"] = "One infinity mask was sampled."
+        claim["boundary"] = "The filter is sufficient and authorizes a solver."
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "M16 cell must retain its infinity-stratum kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 cost quantity must retain its infinity-stratum "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost barrier must retain its infinity-stratum "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 infinity-stratum artifact hash binding drifted",
+            problems,
+        )
+        self.assertIn(
+            "M16 infinity-stratum evidence path drifted",
+            problems,
+        )
+        for boundary in (
+            "upstream exact chart cover",
+            "local infinity identities",
+            "double-infinity identity",
+            "affine-input assumption",
+            "separation necessity",
+            "endpoint conditions",
+            "forced-neighbor coordinate",
+            "necessary mask predicate",
+            "full logical mask count",
+            "separated mask count",
+            "endpoint assumptions",
+            "interior mask count",
+            "kernel-bound assurance",
+            "source independence",
+            "calibration",
+            "affine-input scope",
+            "conditional endpoint scope",
+            "necessity boundary",
+            "no production enumeration",
+            "logical-count boundary",
+            "full-count trust disclosure",
+            "separated-count trust disclosure",
+            "interior-count trust disclosure",
+            "native trust",
+            "compiler-trust marker",
+            "open non-executable cell",
+            "partial cost",
+            "remaining mask blocker",
+            "no sufficiency overclaim",
+            "no solver input or run",
+            "no relation independence",
+            "no recovery or total cost",
+            "no hypothesis retention",
+            "no exact-target search",
+            "no experiment authorization",
+            "no route rejection",
+            "no route promotion",
+            "zero retention",
+        ):
+            self.assertTrue(
+                any(
+                    "M16 infinity-stratum claim must retain" in problem
+                    and boundary in problem
+                    for problem in problems
+                )
+            )
 
     def test_shadow_intake_cannot_authorize_or_activate_glv(self) -> None:
         shadow = copy.deepcopy(self.shadow)

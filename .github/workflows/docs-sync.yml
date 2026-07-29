@@ -241,6 +241,11 @@ jobs:
           python3 experiments/engine/pkc_smooth_m16_exact_chart_cover/validate.py --require-final-source-binding
           python3 experiments/engine/pkc_smooth_m16_exact_chart_cover/test_validate.py
           (cd experiments/engine/pkc_smooth_m16_exact_chart_cover && sha256sum -c artifact.sha256)
+      - name: PKC M16 infinity-stratum certificate
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_infinity_strata/validate.py --require-final-source-binding
+          python3 experiments/engine/pkc_smooth_m16_infinity_strata/test_validate.py
+          (cd experiments/engine/pkc_smooth_m16_infinity_strata && sha256sum -c artifact.sha256)
       - name: Claim-level truth-state gate
         run: |
           python3 scripts/research_claims.py --check
