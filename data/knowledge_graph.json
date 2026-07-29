@@ -29,9 +29,9 @@
     "selected_explorations": 0,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1135,
+    "edges": 1137,
     "by_edge_type": {
-      "imports": 503,
+      "imports": 505,
       "member_of": 305,
       "grounded_in_source_claim": 48,
       "requires_foundation": 41,
@@ -11246,6 +11246,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.FrozenProjectiveInfinityBalancedPropagation",
+      "to": "Ecdlp.Proved.FrozenProjectiveInfinityStrata",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.FrozenProjectiveInfinityStrata",
       "to": "Ecdlp.Proved.FrozenProjectiveChartSystem",
       "type": "imports"
@@ -12768,6 +12773,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.FrozenProjectiveInfinityStrata",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FrozenProjectiveInfinityBalancedPropagation",
       "type": "imports"
     },
     {
