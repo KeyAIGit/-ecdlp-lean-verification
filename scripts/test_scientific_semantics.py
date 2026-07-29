@@ -402,8 +402,8 @@ class ScientificSemanticTests(unittest.TestCase):
             problems,
         )
         self.assertIn(
-            "M16 complete-cost reopening must retain the proved frozen "
-            "projective chain",
+            "M16 complete-cost reopening must require exact literal finite "
+            "guarded MvPolynomial family",
             problems,
         )
         for boundary in (
@@ -412,7 +412,13 @@ class ScientificSemanticTests(unittest.TestCase):
             "actual frozen family",
             "universal witness extraction",
             "universal all-stage witness chain",
-            "open direct-S17 representation bridge",
+            "TASK-022 guarded representation",
+            "raw variable count",
+            "open chart-or-gauge blocker",
+            "exact literal finite family",
+            "no direct-S17 overclaim",
+            "no chart-or-gauge overclaim",
+            "no raw-count independence overclaim",
             "zero retention",
             "no hypothesis retention",
             "no experiment authorization",
@@ -516,8 +522,8 @@ class ScientificSemanticTests(unittest.TestCase):
             problems,
         )
         self.assertIn(
-            "M16 complete-cost reopening must retain the proved frozen "
-            "projective chain",
+            "M16 complete-cost reopening must require exact literal finite "
+            "guarded MvPolynomial family",
             problems,
         )
         self.assertIn(
@@ -531,7 +537,13 @@ class ScientificSemanticTests(unittest.TestCase):
             "actual frozen family",
             "universal witness extraction",
             "universal all-stage witness chain",
-            "open direct-S17 representation bridge",
+            "TASK-022 guarded representation",
+            "raw variable count",
+            "open chart-or-gauge blocker",
+            "exact literal finite family",
+            "no direct-S17 overclaim",
+            "no chart-or-gauge overclaim",
+            "no raw-count independence overclaim",
             "zero retention",
             "no hypothesis retention",
             "no experiment authorization",
@@ -610,6 +622,106 @@ class ScientificSemanticTests(unittest.TestCase):
             self.assertTrue(
                 any(
                     "M16 frozen projective witness claim must retain"
+                    in problem
+                    and boundary in problem
+                    for problem in problems
+                )
+            )
+
+    def test_m16_guarded_projective_system_cannot_drift(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim_id = "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT"
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["source_claim_ids"].remove(claim_id)
+        cell["cost_quantity"]["source_claim_ids"].remove(claim_id)
+        barrier = next(
+            item
+            for item in typed["barriers"]
+            if item["id"] == "B-PKC-M16-COMPLETE-COST-BRIDGE"
+        )
+        barrier["source_claim_ids"].remove(claim_id)
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == claim_id
+        )
+        claim["artifact_sha256"] = "0" * 64
+        claim["evidence_path"] = "wrong/artifact.json"
+        claim["statement"] = "An affine sample was generated."
+        claim["boundary"] = "The route is priced, executable, and promoted."
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "M16 cell must retain its guarded projective-system kernel "
+            "certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 cost quantity must retain its guarded projective-system "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost barrier must retain its guarded "
+            "projective-system kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 guarded projective-system artifact hash binding drifted",
+            problems,
+        )
+        self.assertIn(
+            "M16 guarded projective-system evidence path drifted",
+            problems,
+        )
+        for boundary in (
+            "exact finite family",
+            "frozen stage-14 scope",
+            "injective coefficient map",
+            "source-field scope",
+            "target-field scope",
+            "one GuardVar assignment",
+            "every guarded equation",
+            "literal polynomial evaluation",
+            "raw slot coordinates",
+            "fourteen witness slots",
+            "raw variable count",
+            "literal H-equation count",
+            "guard count",
+            "raw equation-family count",
+            "degree upper bound",
+            "zero-pair exclusion",
+            "projective infinity",
+            "kernel-bound non-run assurance",
+            "source independence",
+            "calibration",
+            "no parallel recursive syntax",
+            "no base-field descent",
+            "raw-count boundary",
+            "no-independence boundary",
+            "degree-bound scope",
+            "native-decide disclosure",
+            "compiler-trust marker",
+            "open non-executable cell",
+            "partial cost",
+            "unpriced costs",
+            "no direct-S17 claim",
+            "no solver input or run",
+            "no chart or gauge reduction",
+            "no relation independence",
+            "no recovery or total cost",
+            "no hypothesis retention",
+            "no exact-target search",
+            "no experiment authorization",
+            "no route promotion",
+            "zero retention",
+        ):
+            self.assertTrue(
+                any(
+                    "M16 guarded projective-system claim must retain"
                     in problem
                     and boundary in problem
                     for problem in problems

@@ -20,13 +20,13 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: none. `TASK-021` is completed; a successor must be
+Current central task: none. `TASK-022` is completed; a successor must be
 introduced by a new narrow task contract against the still-open complete-cost
 barrier before any further research execution.
 
 `TASK-010` is accepted at
 `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
-proposal-intake lane. Closing TASK-021 created no executable hypothesis,
+proposal-intake lane. Closing TASK-022 created no executable hypothesis,
 experiment authorization, or route promotion.
 
 Current scientific activation order:
@@ -66,9 +66,16 @@ Current scientific activation order:
    fourteen valid projective intermediate slots; `[1:0]` is allowed and
    `[0:0]` is excluded at every level. The complete cost bridge remains open,
    and TASK-021 authorizes no S17 materialization, solver, or cost claim.
-9. The auxiliary-curve cell stays parked until a primary source supplies a
+9. `TASK-022` completed an exact guarded scalar representation of that frozen
+   stage-14 predicate after injective base change into an algebraically closed
+   target. The system has fourteen projective slots, 56 raw scalar variables,
+   fifteen literal `H` equations, fourteen guards, and total degree at most
+   four. These are representation counts, not independent relation or solving
+   claims. The M16 cell remains open and non-executable on chart/gauge
+   redundancy, relation yield and rank, solving, recovery, and total cost.
+10. The auxiliary-curve cell stays parked until a primary source supplies a
    finite search domain with a completeness criterion.
-10. Any later candidate, solver, or experiment still requires the normal
+11. Any later candidate, solver, or experiment still requires the normal
    review gates and a separate dated authorization.
 
 These entries freeze further engine-schema expansion by default. They do not

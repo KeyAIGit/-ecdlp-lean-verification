@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~263 distinct results / 302 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~264 distinct results / 303 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -145,6 +145,22 @@ exact `Θ` statements.
   kernel-checked results map
   *where the search lives and how it branches*; the cost lower bound itself stays in the open
   frontier, recorded here, not dressed as proved.
+
+  **Exact M16 representation frontier (TASK-022; theorem-only, non-run).**
+  After injective base change into an algebraically closed target,
+  `FrozenGuardedProjectiveSystem` is now kernel-checked as one literal finite
+  `MvPolynomial` family: an existential `GuardVar` assignment makes every
+  indexed `GuardedEquation` vanish, exactly iff the frozen stage-14 predicate
+  holds. Fourteen projective slots give 56 raw scalar variables; fifteen
+  literal `H` equations plus fourteen nonzero-pair guards give 29
+  equation-family members, all of total degree at most four. The guards exclude
+  `[0:0]` and retain `[1:0]`. This is not a parallel recursive syntax, expanded
+  direct `S17`, base-field descent theorem, or independent relation system.
+  `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`,
+  `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`, and
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on chart/gauge redundancy,
+  usable relation yield and rank, solving, recovery, sparse linear algebra, and
+  total work. No solver or experiment is authorized.
 
   **GLV–Semaev relation-generation experiments (partial negatives, not a no-go;
   `HYP_GLV_SEMAEV_001`; P0→P4).**

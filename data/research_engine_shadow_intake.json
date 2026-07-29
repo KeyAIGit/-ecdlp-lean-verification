@@ -4,8 +4,8 @@
   "status": "shadow_non_executing",
   "source_hashes": {
     "source_registry_sha256": "eea7bedf9c730f630538b16102586e7d6bf22dcd34e9c80990afd29db8b21aed",
-    "typed_evidence_state_sha256": "3c8be5f1e19f359db65b6f5d1eb9b51364bcac981ddcf4c715045917f5cde56e",
-    "research_claim_state_sha256": "749f3203d617c9aee9ed729d4638e13679e4014f99c9b13e5bdd940b5d9ea6cc"
+    "typed_evidence_state_sha256": "07107f962a833c28bda020da60fc0bf3416a69bd5551e156ea095ab50fae313b",
+    "research_claim_state_sha256": "99c0deb2600f9a0daa7502d83e9e1aeb9d3b2527c4c1281ba2d6d32df2b23846"
   },
   "counts": {
     "proposal_stubs": 4,
@@ -100,6 +100,7 @@
         "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
         "experiments/engine/pkc_smooth_m16_frozen_cr_specialization/artifact.json",
         "experiments/engine/pkc_smooth_m16_frozen_projective_witness/artifact.json",
+        "experiments/engine/pkc_smooth_m16_guarded_projective_system/artifact.json",
         "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json",
         "experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json",
         "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",

@@ -47,6 +47,16 @@ M16_WITNESS_ARTIFACT_PATH = (
 M16_WITNESS_ARTIFACT_SHA256 = (
     "89c645545d89334473d51654a41ff7ec2364857d034c64ce08d505337fa1e2d4"
 )
+M16_GUARDED_CLAIM_ID = (
+    "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT"
+)
+M16_GUARDED_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_guarded_projective_system/artifact.json"
+)
+M16_GUARDED_ARTIFACT_SHA256 = (
+    "3445da55b44a71d0f40ee60206c90f2ef1798c28abd125542ce3acbeeb8e1d46"
+)
 
 PETIT_WEIL_CONTRADICTIONS = (
     re.compile(
@@ -144,7 +154,7 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 26,
+        "source_claims": 27,
         "cells": 7,
         "seed_eligible_cells": 2,
         "desk_decisions": 3,
@@ -193,6 +203,10 @@ def validate_semantics(
         (
             M16_WITNESS_CLAIM_ID,
             "frozen projective witness kernel certificate",
+        ),
+        (
+            M16_GUARDED_CLAIM_ID,
+            "guarded projective-system kernel certificate",
         ),
     ):
         if claim_id not in m16_cell.get("source_claim_ids", []):
@@ -497,6 +511,87 @@ def validate_semantics(
             "M16 cost quantity must retain its frozen projective witness "
             "kernel certificate"
         )
+    guarded_claim = typed_claims.get(M16_GUARDED_CLAIM_ID, {})
+    if guarded_claim.get("read_status") != "certificate_replayed":
+        problems.append(
+            "M16 guarded projective-system assurance must remain "
+            "certificate_replayed"
+        )
+    if guarded_claim.get("artifact_sha256") != M16_GUARDED_ARTIFACT_SHA256:
+        problems.append(
+            "M16 guarded projective-system artifact hash binding drifted"
+        )
+    if guarded_claim.get("evidence_path") != M16_GUARDED_ARTIFACT_PATH:
+        problems.append(
+            "M16 guarded projective-system evidence path drifted"
+        )
+    guarded_statement = guarded_claim.get("statement", "")
+    for token, label in (
+        ("exact literal finite MvPolynomial family", "exact finite family"),
+        ("frozen stage-14 predicate", "frozen stage-14 scope"),
+        ("injective coefficient map", "injective coefficient map"),
+        ("source Field k", "source-field scope"),
+        ("algebraically closed target Field K", "target-field scope"),
+        ("∃ assignment : GuardVar → K", "one GuardVar assignment"),
+        ("∀ e : GuardedEquation", "every guarded equation"),
+        ("MvPolynomial.eval assignment", "literal polynomial evaluation"),
+        ("Four raw scalars U,V,A,B", "raw slot coordinates"),
+        ("fourteen projective witness slots", "fourteen witness slots"),
+        ("56 variables", "raw variable count"),
+        ("fifteen literal H equations", "literal H-equation count"),
+        ("fourteen guards", "guard count"),
+        ("29 equation-family members", "raw equation-family count"),
+        ("total degree at most four", "degree upper bound"),
+        ("exclude [0:0]", "zero-pair exclusion"),
+        ("retain [1:0]", "projective infinity"),
+    ):
+        if token not in guarded_statement:
+            problems.append(
+                f"M16 guarded projective-system claim must retain {label}"
+            )
+    guarded_boundary = guarded_claim.get("boundary", "")
+    for token, label in (
+        (
+            "kernel_bound_non_run_certificate",
+            "kernel-bound non-run assurance",
+        ),
+        ("source_independence is not_established", "source independence"),
+        ("calibration is excluded_nonexperimental", "calibration"),
+        ("not a parallel recursive syntax", "no parallel recursive syntax"),
+        ("no base-field descent", "no base-field descent"),
+        ("raw representation counts", "raw-count boundary"),
+        (
+            "not independent dimensions or relations",
+            "no-independence boundary",
+        ),
+        ("upper bound, not an exact-degree claim", "degree-bound scope"),
+        ("compiler_trusted_native_decide", "native-decide disclosure"),
+        ("Lean.ofReduceBool", "compiler-trust marker"),
+        ("open_non_executable", "open non-executable cell"),
+        ("CQ-SEMAEV-S17-SYSTEM-COST remains partial", "partial cost"),
+        ("solving cost, rank, and yield remain unpriced", "unpriced costs"),
+        ("no expanded direct S17 polynomial", "no direct-S17 claim"),
+        ("solver input or run", "no solver input or run"),
+        ("chart/gauge reduction", "no chart or gauge reduction"),
+        ("relation independence", "no relation independence"),
+        ("recovery or total-cost result", "no recovery or total cost"),
+        ("hypothesis retention", "no hypothesis retention"),
+        ("exact-target search", "no exact-target search"),
+        ("experiment authorization", "no experiment authorization"),
+        ("route promotion", "no route promotion"),
+        ("zero_retention_success", "zero retention"),
+    ):
+        if token not in guarded_boundary:
+            problems.append(
+                f"M16 guarded projective-system claim must retain {label}"
+            )
+    if M16_GUARDED_CLAIM_ID not in m16_cell.get(
+        "cost_quantity", {}
+    ).get("source_claim_ids", []):
+        problems.append(
+            "M16 cost quantity must retain its guarded projective-system "
+            "kernel certificate"
+        )
     m16_barrier = typed_barriers.get(
         "B-PKC-M16-COMPLETE-COST-BRIDGE", {}
     )
@@ -541,6 +636,13 @@ def validate_semantics(
             "M16 complete-cost barrier must retain its frozen projective "
             "witness kernel certificate"
         )
+    if M16_GUARDED_CLAIM_ID not in m16_barrier.get(
+        "source_claim_ids", []
+    ):
+        problems.append(
+            "M16 complete-cost barrier must retain its guarded "
+            "projective-system kernel certificate"
+        )
     m16_scope = m16_barrier.get("exact_scope", "")
     for token, label in (
         ("TASK-019 kernel-checks", "TASK-019 kernel result"),
@@ -563,8 +665,28 @@ def validate_semantics(
             "fourteen intermediate slots",
         ),
         (
-            "exact S17 representation and materialization",
-            "remaining representation blocker",
+            "TASK-022 kernel-checks",
+            "TASK-022 guarded representation",
+        ),
+        (
+            "56 scalar variables",
+            "raw variable count",
+        ),
+        (
+            "29 equation-family members",
+            "raw equation-family count",
+        ),
+        (
+            "total degree at most four",
+            "degree upper bound",
+        ),
+        (
+            "counts do not establish dimension",
+            "raw-count independence boundary",
+        ),
+        (
+            "solver-ready chart or gauge handling",
+            "remaining chart-or-gauge blocker",
         ),
     ):
         if token not in m16_scope:
@@ -590,12 +712,14 @@ def validate_semantics(
         for item in m16_barrier.get("reopening_conditions", [])
         if isinstance(item, str)
     )
-    if "proved frozen projective chain" not in reopening_text:
-        problems.append(
-            "M16 complete-cost reopening must retain the proved frozen "
-            "projective chain"
-        )
-    for token in ("exact S17 representation", "materializable system"):
+    for token in (
+        "exact literal finite guarded MvPolynomial family",
+        "solver-ready chart or gauge handling",
+        "without treating guard and projective redundancy as independent relations",
+        "usable yield and rank",
+        "solving, recovery, and sparse-linear-algebra costs",
+        "matched generic baseline",
+    ):
         if token not in reopening_text:
             problems.append(
                 f"M16 complete-cost reopening must require {token}"
@@ -635,14 +759,44 @@ def validate_semantics(
             "universal witness extraction",
         ),
         (
+            "relation_action",
+            "TASK-022 kernel-checks",
+            "TASK-022 guarded representation",
+        ),
+        (
+            "relation_action",
+            "56 scalar variables",
+            "raw variable count",
+        ),
+        (
+            "relation_action",
+            "solver-ready chart or gauge handling",
+            "open chart-or-gauge blocker",
+        ),
+        (
             "boundary",
             "all-stage frozen projective witness chain",
             "universal all-stage witness chain",
         ),
         (
             "boundary",
-            "direct S17 representation and materializable system bridge",
-            "open direct-S17 representation bridge",
+            "exact literal finite MvPolynomial family",
+            "exact literal finite family",
+        ),
+        (
+            "boundary",
+            "not an expanded direct S17 polynomial",
+            "no direct-S17 overclaim",
+        ),
+        (
+            "boundary",
+            "solver-ready chart/gauge reduction",
+            "no chart-or-gauge overclaim",
+        ),
+        (
+            "boundary",
+            "counts do not establish independent dimensions or relations",
+            "no raw-count independence overclaim",
         ),
         ("boundary", "zero_retention_success", "zero retention"),
         ("boundary", "hypothesis retention", "no hypothesis retention"),

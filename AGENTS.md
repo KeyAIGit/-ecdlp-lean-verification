@@ -148,9 +148,18 @@ branch from current `main`; preserve any unrelated local changes.
   hypotheses. `TASK-021` then kernel-checked the exact projective
   homogenization/evaluation bridge and universal witness-chain extraction
   `C16 → C2` for `CELL-M-PKC-SMOOTH-M16`: fourteen valid intermediate slots,
-  `[1:0]` allowed, and `[0:0]` excluded at every level. No successor task is
-  currently authorized. This result is not a selected hypothesis, candidate,
-  experiment, solver authorization, cost claim, or attack route.
+  `[1:0]` allowed, and `[0:0]` excluded at every level. `TASK-022` then
+  kernel-checked an exact literal finite `MvPolynomial` family for the frozen
+  stage-14 predicate after injective base change: one assignment satisfies
+  every indexed `GuardedEquation`; fourteen projective slots give 56 raw
+  scalar variables, while fifteen literal `H` equations and fourteen guards
+  give 29 equation-family members, all of total degree at most four. This is
+  not a parallel recursive syntax. The guards exclude `[0:0]` and retain
+  `[1:0]`; the two finite-cardinality facts use `native_decide`. The M16 cell
+  remains open and non-executable on chart/gauge redundancy, yield, rank,
+  solving, recovery, and total cost. No successor execution is currently
+  authorized. This result is not a selected hypothesis, candidate, solver
+  authorization, cost claim, or attack route.
 - `TASK-008` remains the parked proposal-intake lane. Intake does not bypass
   owner authorization or authorize promotion by itself.
 - The division-polynomial, torsion, Weil, Semaev, cost-model, lattice, isogeny,

@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 26,
+                "source_claims": 27,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -302,6 +302,22 @@ class TypedEvidenceTests(unittest.TestCase):
             "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
             m16["cost_quantity"]["source_claim_ids"],
         )
+        self.assertIn(
+            "SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT",
+            m16["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT",
+            m16["cost_quantity"]["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT",
+            m16["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT",
+            m16["cost_quantity"]["source_claim_ids"],
+        )
         self.assertFalse(
             any(
                 decision["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
@@ -527,6 +543,69 @@ class TypedEvidenceTests(unittest.TestCase):
             "route promotion",
         ):
             self.assertIn(token, witness_claim["boundary"])
+        guarded_claim = claims[
+            "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT"
+        ]
+        self.assertEqual(
+            "experiments/engine/"
+            "pkc_smooth_m16_guarded_projective_system/artifact.json",
+            guarded_claim["evidence_path"],
+        )
+        self.assertEqual(
+            "3445da55b44a71d0f40ee60206c90f2e"
+            "f1798c28abd125542ce3acbeeb8e1d46",
+            guarded_claim["artifact_sha256"],
+        )
+        self.assertEqual(
+            "certificate_replayed",
+            guarded_claim["read_status"],
+        )
+        for token in (
+            "exact literal finite MvPolynomial family",
+            "frozen stage-14 predicate",
+            "injective coefficient map",
+            "source Field k",
+            "algebraically closed target Field K",
+            "∃ assignment : GuardVar → K",
+            "∀ e : GuardedEquation",
+            "MvPolynomial.eval assignment",
+            "Four raw scalars U,V,A,B",
+            "fourteen projective witness slots",
+            "56 variables",
+            "fifteen literal H equations",
+            "fourteen guards",
+            "29 equation-family members",
+            "total degree at most four",
+            "exclude [0:0]",
+            "retain [1:0]",
+        ):
+            self.assertIn(token, guarded_claim["statement"])
+        for token in (
+            "kernel_bound_non_run_certificate",
+            "source_independence is not_established",
+            "calibration is excluded_nonexperimental",
+            "not a parallel recursive syntax",
+            "no base-field descent",
+            "raw representation counts",
+            "not independent dimensions or relations",
+            "upper bound, not an exact-degree claim",
+            "compiler_trusted_native_decide",
+            "Lean.ofReduceBool",
+            "open_non_executable",
+            "CQ-SEMAEV-S17-SYSTEM-COST remains partial",
+            "solving cost, rank, and yield remain unpriced",
+            "no expanded direct S17 polynomial",
+            "solver input or run",
+            "chart/gauge reduction",
+            "relation independence",
+            "recovery or total-cost result",
+            "hypothesis retention",
+            "exact-target search",
+            "experiment authorization",
+            "route promotion",
+            "zero_retention_success",
+        ):
+            self.assertIn(token, guarded_claim["boundary"])
         barriers = {
             item["id"]: item for item in state["barriers"]
         }
@@ -556,6 +635,10 @@ class TypedEvidenceTests(unittest.TestCase):
             "SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT",
             m16_barrier["source_claim_ids"],
         )
+        self.assertIn(
+            "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT",
+            m16_barrier["source_claim_ids"],
+        )
         for token in (
             "TASK-019 kernel-checks",
             "zero forms",
@@ -567,7 +650,12 @@ class TypedEvidenceTests(unittest.TestCase):
             "TASK-021 kernel-checks",
             "all-stage frozen projective witness-chain equivalence",
             "fourteen intermediate projective slots",
-            "exact S17 representation and materialization",
+            "TASK-022 kernel-checks",
+            "56 scalar variables",
+            "29 equation-family members",
+            "total degree at most four",
+            "counts do not establish dimension",
+            "solver-ready chart or gauge handling",
         ):
             self.assertIn(token, m16_barrier["exact_scope"])
         self.assertNotIn(
@@ -580,12 +668,16 @@ class TypedEvidenceTests(unittest.TestCase):
             m16_barrier["exact_scope"],
         )
         reopening = " ".join(m16_barrier["reopening_conditions"])
-        self.assertIn(
-            "proved frozen projective chain",
-            reopening,
-        )
-        self.assertIn("exact S17 representation", reopening)
-        self.assertIn("materializable system", reopening)
+        for token in (
+            "exact literal finite guarded MvPolynomial family",
+            "solver-ready chart or gauge handling",
+            "without treating guard and projective redundancy as "
+            "independent relations",
+            "usable yield and rank",
+            "solving, recovery, and sparse-linear-algebra costs",
+            "matched generic baseline",
+        ):
+            self.assertIn(token, reopening)
         self.assertNotIn(
             "Kernel-check the exact recursive frozen C_r specialization",
             reopening,
@@ -608,12 +700,30 @@ class TypedEvidenceTests(unittest.TestCase):
             "universal all-stage frozen witness-chain equivalence",
             m16["relation_action"],
         )
+        self.assertIn("TASK-022 kernel-checks", m16["relation_action"])
+        self.assertIn("56 scalar variables", m16["relation_action"])
+        self.assertIn(
+            "solver-ready chart or gauge handling",
+            m16["relation_action"],
+        )
         self.assertIn(
             "all-stage frozen projective witness chain",
             m16["boundary"],
         )
         self.assertIn(
-            "direct S17 representation and materializable system bridge",
+            "exact literal finite MvPolynomial family",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "not an expanded direct S17 polynomial",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "solver-ready chart/gauge reduction",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "counts do not establish independent dimensions or relations",
             m16["boundary"],
         )
         self.assertIn("zero_retention_success", m16["boundary"])

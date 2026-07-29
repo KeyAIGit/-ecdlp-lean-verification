@@ -36,6 +36,7 @@ MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
 MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
 CURRENT_PHASE = "evidence-bounded-desk-priority"
+COMPLETED_GUARDED_TASK_ID = "TASK-022"
 COMPLETED_WITNESS_TASK_ID = "TASK-021"
 COMPLETED_SPECIALIZATION_TASK_ID = "TASK-020"
 COMPLETED_RESULTANT_TASK_ID = "TASK-019"
@@ -84,6 +85,22 @@ M16_WITNESS_ARTIFACT_ID = (
 )
 M16_WITNESS_CLAIM_ID = (
     "SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT"
+)
+M16_GUARDED_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_guarded_projective_system/artifact.json"
+)
+M16_GUARDED_ARTIFACT_SHA256 = (
+    "3445da55b44a71d0f40ee60206c90f2ef1798c28abd125542ce3acbeeb8e1d46"
+)
+M16_GUARDED_ARTIFACT_ID = (
+    "PKC-SMOOTH-M16-GUARDED-PROJECTIVE-SYSTEM-001"
+)
+M16_GUARDED_CLAIM_ID = (
+    "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT"
+)
+M16_GUARDED_SOURCE_SHA256 = (
+    "37feeef48e77437b44b6ae6dd4750782e19ecd824e3ea2e73b657e2fb8296fb9"
 )
 M16_EXCEPTIONAL_ARTIFACT_PATH = (
     "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json"
@@ -296,6 +313,13 @@ def validate() -> list[str]:
         "projective homogenization/evaluation",
         "recursive projective witness chain",
         "universal C16-to-C2 extraction",
+        COMPLETED_GUARDED_TASK_ID,
+        "exact literal finite MvPolynomial family",
+        "injective base change",
+        "56 scalar variables",
+        "29 equation-family members",
+        "total degree at most four",
+        "chart/gauge redundancy",
     ):
         if binding not in phase_allowed:
             problems.append(f"phase_policy.allowed_work is missing {binding}")
@@ -306,6 +330,10 @@ def validate() -> list[str]:
         "direct-S17 equivalence",
         "solving-cost result",
         "execution authorization",
+        COMPLETED_GUARDED_TASK_ID,
+        "guarded frozen representation",
+        "expanded direct-S17 polynomial",
+        "independent relation system",
     ):
         if binding not in phase_forbidden:
             problems.append(f"phase_policy.forbidden_work is missing {binding}")
@@ -494,10 +522,11 @@ def validate() -> list[str]:
         problems.append("next_phase_gate.reopen_requirements must be nonempty")
     reopen_text = "\n".join(reopen) if isinstance(reopen, list) else ""
     for binding in (
-        COMPLETED_WITNESS_TASK_ID,
-        "frozen projective witness chain",
-        "exact S17 representation",
-        "materializable system",
+        COMPLETED_GUARDED_TASK_ID,
+        "literal finite guarded MvPolynomial family",
+        "solver-ready chart or gauge handling",
+        "guard and projective redundancy",
+        "usable yield, rank, solving, recovery, and total-cost models",
         "does not authorize an experiment or route promotion",
     ):
         if binding not in reopen_text:
@@ -514,6 +543,13 @@ def validate() -> list[str]:
         "exact projective homogenization/evaluation",
         "universal all-stage frozen witness-chain equivalence",
         "fourteen valid intermediate projective slots",
+        COMPLETED_GUARDED_TASK_ID,
+        "exact literal finite MvPolynomial family",
+        "56 scalar variables",
+        "29 equation-family members",
+        "total degree at most four",
+        "chart/gauge redundancy",
+        "open_non_executable",
         "open_parked",
         "authorization remains false",
     ):
@@ -622,7 +658,7 @@ def validate() -> list[str]:
     )
     petit_next_action = petit_route.get("next_action", "")
     for binding in (
-        COMPLETED_WITNESS_TASK_ID,
+        COMPLETED_GUARDED_TASK_ID,
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
         DESK_PRIORITY_COST_ID,
@@ -659,6 +695,13 @@ def validate() -> list[str]:
             "R-PETIT-COMPOSED-MAPS must retain the TASK-021 frozen "
             "projective witness certificate as evidence"
         )
+    if M16_GUARDED_ARTIFACT_PATH not in petit_route.get(
+        "evidence_files", []
+    ):
+        problems.append(
+            "R-PETIT-COMPOSED-MAPS must retain the TASK-022 guarded "
+            "projective-system certificate as evidence"
+        )
     petit_current_evidence = petit_route.get("current_evidence", "")
     for binding in (
         "TASK-019 kernel-checks",
@@ -677,13 +720,27 @@ def validate() -> list[str]:
         M16_SPECIALIZATION_ARTIFACT_ID,
         M16_SPECIALIZATION_ARTIFACT_SHA256,
         M16_SPECIALIZATION_CLAIM_ID,
-        "TASK-021 now kernel-checks",
+        "TASK-021 kernel-checks",
         "universal all-stage frozen witness-chain equivalence",
         "fourteen valid intermediate projective slots",
         M16_WITNESS_ARTIFACT_ID,
         M16_WITNESS_ARTIFACT_SHA256,
         M16_WITNESS_CLAIM_ID,
-        "direct S17 representation and materialization",
+        "TASK-022 now kernel-checks",
+        "exact literal finite MvPolynomial family",
+        "injective source-to-target field map",
+        "56 variables",
+        "29 equation-family members",
+        "total degree at most four",
+        "[0:0] is excluded",
+        "[1:0] is retained",
+        M16_GUARDED_ARTIFACT_ID,
+        M16_GUARDED_ARTIFACT_SHA256,
+        M16_GUARDED_CLAIM_ID,
+        M16_GUARDED_SOURCE_SHA256,
+        "open_non_executable",
+        "solver-ready chart or gauge handling",
+        "guard and projective redundancy",
         "zero_retention_success",
         "CQ-SEMAEV-S17-SYSTEM-COST remains partial",
         "solving cost remain unpriced",
@@ -694,11 +751,16 @@ def validate() -> list[str]:
                 f"{binding}"
             )
     for binding in (
-        COMPLETED_WITNESS_TASK_ID,
-        "exact frozen projective homogenization/evaluation",
-        "universal C16-to-C2 witness-chain binding",
-        "exact S17 representation",
-        "materializable system",
+        COMPLETED_GUARDED_TASK_ID,
+        "exact literal finite MvPolynomial family",
+        "solver-ready chart or gauge handling",
+        "guard and projective redundancy",
+        "relation yield",
+        "rank",
+        "solving",
+        "recovery",
+        "solver",
+        "experiment",
         "hypothesis retention",
         "route promotion",
         "cost claim",
@@ -888,6 +950,7 @@ def validate() -> list[str]:
         COMPLETED_RESULTANT_TASK_ID,
         COMPLETED_SPECIALIZATION_TASK_ID,
         COMPLETED_WITNESS_TASK_ID,
+        COMPLETED_GUARDED_TASK_ID,
     ):
         if required_task not in tasks_text:
             problems.append(f"tasks/ECDLP_RESEARCH.md must contain {required_task}")
@@ -1107,6 +1170,75 @@ def validate() -> list[str]:
             problems.append(
                 f"{COMPLETED_WITNESS_TASK_ID} is missing binding {binding}"
             )
+    completed_guarded_task = task_sections.get(COMPLETED_GUARDED_TASK_ID, "")
+    normalized_completed_guarded_task = " ".join(
+        completed_guarded_task.split()
+    )
+    expected_completed_guarded_lines = (
+        "Status: completed_non_executable_kernel_result",
+        "Kind: theorem | research | review",
+        f"Desk priority: `{DESK_PRIORITY_CELL_ID}` / `{DESK_PRIORITY_STUB_ID}`",
+        "Authorization: none",
+        "Outcome: `closed_exact_theorem`",
+        "Retention: `zero_retention_success`",
+        "Completed on: 2026-07-29",
+    )
+    for line in expected_completed_guarded_lines:
+        if not re.search(
+            rf"^{re.escape(line)}$",
+            completed_guarded_task,
+            flags=re.MULTILINE,
+        ):
+            problems.append(
+                f"{COMPLETED_GUARDED_TASK_ID} must contain {line!r}"
+            )
+    for binding in (
+        DESK_PRIORITY_CELL_ID,
+        DESK_PRIORITY_STUB_ID,
+        DESK_PRIORITY_COST_ID,
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+        M16_WITNESS_ARTIFACT_PATH,
+        M16_GUARDED_ARTIFACT_PATH,
+        M16_GUARDED_ARTIFACT_SHA256,
+        M16_GUARDED_ARTIFACT_ID,
+        M16_GUARDED_CLAIM_ID,
+        M16_GUARDED_SOURCE_SHA256,
+        "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+        "literal finite",
+        "∃ assignment : GuardVar → K",
+        "∀ e : GuardedEquation",
+        "MvPolynomial.eval assignment",
+        "not a parallel recursive syntax",
+        "Field k",
+        "injective",
+        "algebraically closed target field `K`",
+        "fourteen",
+        "56 raw variables",
+        "fifteen `H` equations",
+        "fourteen guards",
+        "total degree at most four",
+        "native_decide",
+        "Lean.ofReduceBool",
+        "[0:0]",
+        "[1:0]",
+        "base-field descent",
+        "chart/gauge",
+        "independent relations",
+        "open_non_executable",
+        "partial",
+        "open_parked",
+        "solver",
+        "experiment authorization",
+        "cost claim",
+        "route promotion",
+    ):
+        if (
+            " ".join(binding.split()).casefold()
+            not in normalized_completed_guarded_task.casefold()
+        ):
+            problems.append(
+                f"{COMPLETED_GUARDED_TASK_ID} is missing binding {binding}"
+            )
     active_hypotheses = [
         hypothesis_id
         for hypothesis_id, fields in hypotheses.items()
@@ -1147,7 +1279,7 @@ def validate() -> list[str]:
     for binding in (
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
-        COMPLETED_WITNESS_TASK_ID,
+        COMPLETED_GUARDED_TASK_ID,
     ):
         if binding not in next_tasks_text:
             problems.append(f"tasks/NEXT.md is missing desk-priority binding {binding}")
@@ -1389,6 +1521,60 @@ def validate() -> list[str]:
         if binding.casefold() not in witness_closure_row.casefold():
             problems.append(
                 "TASK-021 closure row is missing binding "
+                f"{binding}"
+            )
+    guarded_closure_row = next(
+        (
+            line
+            for line in decisions_log.splitlines()
+            if line.startswith("| 32 |")
+        ),
+        "",
+    )
+    for binding in (
+        COMPLETED_GUARDED_TASK_ID,
+        "closed_exact_theorem",
+        "zero_retention_success",
+        M16_GUARDED_ARTIFACT_PATH,
+        M16_GUARDED_ARTIFACT_SHA256,
+        M16_GUARDED_ARTIFACT_ID,
+        M16_GUARDED_CLAIM_ID,
+        M16_GUARDED_SOURCE_SHA256,
+        "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
+        "B-PKC-M16-COMPLETE-COST-BRIDGE",
+        "kernel-checks",
+        "literal finite guarded `MvPolynomial` family",
+        "∃ assignment : GuardVar → K",
+        "∀ e : GuardedEquation",
+        "not a parallel recursive syntax",
+        "injective field map",
+        "algebraically closed target",
+        "fourteen projective witness slots",
+        "56 raw scalar variables",
+        "fifteen literal `H` equations",
+        "fourteen guards",
+        "29 equation-family members",
+        "total degree at most four",
+        "native_decide",
+        "not_established",
+        "excluded_nonexperimental",
+        "open_non_executable",
+        "partial",
+        "unpriced",
+        "[0:0]",
+        "[1:0]",
+        "source field",
+        "independent relations",
+        "open_parked",
+        "solver input",
+        "experiment authorization",
+        "cost claim",
+        "route promotion",
+        "26 semantic mutations",
+    ):
+        if binding.casefold() not in guarded_closure_row.casefold():
+            problems.append(
+                "TASK-022 closure row is missing binding "
                 f"{binding}"
             )
 
