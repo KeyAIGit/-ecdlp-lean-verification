@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
   "snapshot": {
-    "captured_at": "2026-07-29T09:11:28-04:00",
+    "captured_at": "2026-07-29T10:39:56-04:00",
     "remote": "origin",
     "base_ref": "origin/main",
     "base_sha": "731b11d905d402b90f227a082b876456bb1016b1",
-    "real_remote_branch_count": 29,
-    "remote_names_sha256": "b91e9a0fc8f58e706ed7d37866c20050bf7c30e5ebafbe9c68d82416cfd32041",
+    "real_remote_branch_count": 30,
+    "remote_names_sha256": "0d93cb37f7baecedf0fdd0f87496b29ca71281fd810a3a5529743d33ef903c7d",
     "comparison": "git rev-list --left-right --count <main-tip>...<branch-tip>",
     "recording_note": "Tips are a dated observation. The active branch necessarily advances when this snapshot is committed; the gate compares the remote name set, not mutable tips."
   },
@@ -15,7 +15,8 @@
     "merge_now": false,
     "delete_now": false,
     "active_integrations": [
-      "agent/task022-s17-materialization"
+      "agent/task022-s17-materialization",
+      "agent/task023-chart-cover"
     ],
     "superseded_drafts": [
       "agent/n7-certificate-generator",
@@ -24,7 +25,7 @@
     "cleanup_gate": "Content comparison, reference scan, restore path, and explicit owner approval are required before deletion or closure."
   },
   "groups": {
-    "active_integration": 1,
+    "active_integration": 2,
     "candidate_queue": 2,
     "historical_unmerged": 23,
     "keep_default": 1,
@@ -132,10 +133,21 @@
     },
     {
       "name": "agent/task022-s17-materialization",
-      "tip": "61d094a3cb2cf5d154502b62f646f0e9ec1c801c",
+      "tip": "777b35738cb41f0da88ef479073c5140a15deb6d",
       "tip_date": "2026-07-29",
       "behind_main": 0,
-      "ahead_main": 2,
+      "ahead_main": 3,
+      "merged_by_ancestry": false,
+      "disposition": "active_integration",
+      "delete_now": false,
+      "next_action": "retain for the scoped draft integration; inventory does not authorize merge"
+    },
+    {
+      "name": "agent/task023-chart-cover",
+      "tip": "6f394b8bd564a70d1e6e7d83ee958e1988f69fd7",
+      "tip_date": "2026-07-29",
+      "behind_main": 0,
+      "ahead_main": 4,
       "merged_by_ancestry": false,
       "disposition": "active_integration",
       "delete_now": false,
