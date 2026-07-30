@@ -130,6 +130,12 @@ jobs:
           python3 experiments/engine/pkc_smooth_m16_infinity_strata/test_validate.py
           (cd experiments/engine/pkc_smooth_m16_infinity_strata && sha256sum -c artifact.sha256)
 
+      - name: Replay PKC M16 infinity-propagation certificate
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_infinity_propagation/validate.py --require-final-source-binding
+          python3 experiments/engine/pkc_smooth_m16_infinity_propagation/test_validate.py
+          (cd experiments/engine/pkc_smooth_m16_infinity_propagation && sha256sum -c artifact.sha256)
+
       - name: Check generated Research Engine state
         run: python3 scripts/build_research_engine_state.py --check
 

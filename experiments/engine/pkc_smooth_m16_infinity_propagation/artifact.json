@@ -1,0 +1,258 @@
+{
+  "artifact_id": "PKC-SMOOTH-M16-INFINITY-PROPAGATION-001",
+  "binding_state": {
+    "artifact_sidecar": "artifact.sha256",
+    "digest_match": true,
+    "source_path": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+    "source_sha256": "7f868aab5b946a55a213ce26a461477321d6387830eed218c414f1e62853b4b4",
+    "source_status": "final"
+  },
+  "depends_on": [
+    {
+      "digest_match": true,
+      "path": "experiments/engine/pkc_smooth_m16_infinity_strata/artifact.json",
+      "required_sha256": "54b0f3c5f2f1880b1f805911df21b72e5427b18871f14907ac17a1d8b48bdd39"
+    },
+    {
+      "digest_match": true,
+      "path": "Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean",
+      "required_sha256": "1314477f9821da87d2017837abca4fec957ae9998390a231e93532230129a22c"
+    },
+    {
+      "digest_match": true,
+      "path": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
+      "required_sha256": "5cffb444d95f7691f92bfbd094d945be7e97069edb244d5234fa06f359a852b9"
+    }
+  ],
+  "downstream_open_boundary": {
+    "closed_here": [
+      "distance-two infinity pairs force explicit consecutive-input projective determinant equations",
+      "distance-three infinity pairs force explicit three-input HValue equations",
+      "the exact conditional local mask counts are 129 after distance two, 69 after distance three, 60 for the independent boundary-only refinement, and 36 after the combined refinement",
+      "infinity at slot one or twelve forces its explicit boundary-near HValue equation",
+      "a projective frozen chain forces the corresponding frozen specialization to vanish over the original base field",
+      "each internal infinity slot forces an explicit frozen prefix obstruction to vanish",
+      "six prefix and six suffix obstructions cover all twelve internal slots with maximum frozen stage five",
+      "endpoint and balanced-obstruction nonvanishing force the infinity mask to be empty",
+      "under the named assumptions, both the chart cover and literal chart-polynomial cover are exactly equivalent to the single empty-mask affine chart",
+      "after an injective base change into an algebraically closed target, the source stage-14 equation is equivalent to the target empty-mask affine chart under balanced regularity assumptions stated in that target"
+    ],
+    "not_claimed": [
+      "symbolic nonzeroness, nonemptiness, density, probability, or genericity of any regular locus",
+      "sufficiency or realizability of any nonempty propagated mask",
+      "uniqueness of an affine-chart witness or uniqueness of a relation",
+      "enumeration or materialization of the production mask family",
+      "relation independence, yield, rank, solving degree, fill-in, memory, recovery, runtime, or total cost",
+      "a solver run, parameter sweep, exact-target search, discrete-log execution, or ECDLP shortcut",
+      "experiment authorization, hypothesis retention, route promotion, route rejection, or reduced ECDLP complexity",
+      "automatic establishment of mapped balanced regularity from source-field computation",
+      "descent of target affine-chart witnesses to the source field"
+    ],
+    "remaining_blocker": "the regular loci are conditional because symbolic nonzeroness and nonemptiness are not proved; relation yield and rank, solving, recovery, and complete cost also remain open"
+  },
+  "kind": "source_bound_non_run_certificate",
+  "local_propagation_fixture": {
+    "antecedent_witness_counts": {
+      "5": {
+        "boundary_prefix": 20,
+        "boundary_suffix": 25,
+        "distance_three": 20,
+        "distance_two": 5,
+        "prefix_stage_one": 105,
+        "suffix_stage_one": 125
+      },
+      "7": {
+        "boundary_prefix": 49,
+        "boundary_suffix": 56,
+        "distance_three": 49,
+        "distance_two": 7,
+        "prefix_stage_one": 434,
+        "suffix_stage_one": 483
+      },
+      "11": {
+        "boundary_prefix": 110,
+        "boundary_suffix": 121,
+        "distance_three": 110,
+        "distance_two": 11,
+        "prefix_stage_one": 1221,
+        "suffix_stage_one": 1331
+      }
+    },
+    "balanced_prefix_slots": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "balanced_suffix_slots": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "field_roles": {
+      "5": "nonsingular finite-field structural fixture",
+      "7": "raw HValue polynomial identity fixture only; characteristic 7 is singular for y^2=x^3+7",
+      "11": "nonsingular finite-field structural and nonvacuity fixture"
+    },
+    "fields": [
+      5,
+      7,
+      11
+    ],
+    "fixture_scope": "bounded structural implications only; frozen resultants and production masks are not enumerated",
+    "full_production_mask_enumeration_executed": false,
+    "hvalue_first_third_symmetry_exhaustive": true,
+    "mask_counts_derived_by_gap_recurrence": true,
+    "maximum_balanced_frozen_stage": 5,
+    "projective_points": "all [u:1] plus [1:0]",
+    "projective_zero_pair_admitted": false
+  },
+  "mask_propagation_contract": {
+    "affine_input_assumption": "forall n, (q n).v != 0",
+    "boundary_near_forced_conditions": {
+      "slot_1_infinity_implies": "HValue(q0,q1,q2)=0",
+      "slot_12_infinity_implies": "HValue(q14,q15,y)=0"
+    },
+    "boundary_propagated_mask_count": 60,
+    "boundary_propagated_mask_definition": "GapTwoInteriorInfinityMask and slots 1 and 12 absent",
+    "boundary_regular_assumption": "both boundary-near HValue expressions are nonzero",
+    "combined_boundary_gap_three_mask_count": 36,
+    "distance_three_forced_condition": "slots i and i+3 infinity imply HValue(q(i+2),q(i+3),q(i+4))=0",
+    "distance_three_input_range": "i : Fin 11",
+    "distance_three_regular_assumption": "forall i : Fin 11, HValue(q(i+2),q(i+3),q(i+4)) != 0",
+    "distance_two_forced_condition": "slots i and i+2 infinity imply projectiveDet(q(i+2),q(i+3))=0",
+    "distance_two_input_range": "i : Fin 12",
+    "distance_two_regular_assumption": "forall i : Fin 12, projectiveDet(q(i+2),q(i+3)) != 0",
+    "endpoint_nonzero_assumptions": {
+      "slot_0": "projectiveDet(q0,q1) != 0",
+      "slot_13": "projectiveDet(q15,y) != 0"
+    },
+    "gap_three_mask_count": 69,
+    "gap_three_mask_definition": "slots 0 and 13 absent and selected interior slots have mutual distance at least four",
+    "gap_two_mask_count": 129,
+    "gap_two_mask_definition": "slots 0 and 13 absent and selected interior slots have mutual distance at least three",
+    "interior_slot_count": 12,
+    "production_mask_family_materialized": false,
+    "projective_slot_count": 14,
+    "stage": 14,
+    "starting_interior_separated_mask_count": 377
+  },
+  "prefix_suffix_contract": {
+    "affine_chart_variable_count": 14,
+    "balanced_obstruction_count": 12,
+    "balanced_prefix_count": 6,
+    "balanced_suffix_count": 6,
+    "balanced_suffix_value": "specializeOver(id,reverseFrozenInputs(q,y),q(14-j),frozenC(j))",
+    "empty_mask_conclusion": "I = empty",
+    "endpoint_guards_required": true,
+    "generic_locus_claimed": false,
+    "maximum_balanced_frozen_stage": 5,
+    "one_way_resultant_direction": "FrozenProjectiveChain implies specializeOver(frozenC)=0 over any field",
+    "prefix_stage_zero_identity": "propagatedPrefixValue(q,0)=HValue(q0,q1,q2)",
+    "prefix_obstruction_count": 12,
+    "prefix_obstruction_value": "specializeOver(id,q,q(j+2),frozenC(j))",
+    "propagation_algebraic_closure_required": false,
+    "regular_locus_nonempty_proved": false,
+    "selected_internal_slot_consequence": "selected internal slot forces its corresponding prefix or suffix obstruction value to vanish",
+    "single_chart_mask": "empty",
+    "source_field_computation_establishes_mapped_regularity": false,
+    "source_stage_bridge": "specialize(q,y,frozenC(k,14))=0 iff mapped target FrozenAffineChartPolynomialCover",
+    "source_stage_bridge_algebraic_closure_required": true,
+    "source_stage_bridge_map_required_injective": true,
+    "source_stage_regular_assumptions_location": "mapped inputs and target in K",
+    "suffix_stage_zero_identity": "balancedSuffixValue(q,y,0)=HValue(q14,q15,y)",
+    "symbolic_polynomial_nonzeroness_proved": false,
+    "target_witness_descent_claimed": false,
+    "unique_witness_claimed": false
+  },
+  "producer_checks": {
+    "discrete_log_executed": false,
+    "exact_target_search_executed": false,
+    "experiment_authorized": false,
+    "full_production_mask_family_enumerated": false,
+    "parameter_sweep_executed": false,
+    "rank_estimated": false,
+    "relation_yield_estimated": false,
+    "solver_executed": false
+  },
+  "proof_status": {
+    "balanced_prefix_suffix_propagation": "kernel_checked",
+    "card_boundaryGapThreeInfinityMask": "compiler_trusted_native_decide",
+    "card_boundaryPropagatedInfinityMask": "compiler_trusted_native_decide",
+    "card_gapThreeInteriorInfinityMask": "compiler_trusted_native_decide",
+    "card_gapTwoInteriorInfinityMask": "compiler_trusted_native_decide",
+    "distance_three_propagation": "kernel_checked",
+    "distance_two_propagation": "kernel_checked",
+    "generic_or_nonempty_regular_locus": "not_claimed",
+    "one_way_base_field_resultant_propagation": "kernel_checked",
+    "single_affine_chart_equivalences": "kernel_checked",
+    "source_stage_affine_bridge": "kernel_checked",
+    "solver_rank_yield_cost_claim": "not_claimed"
+  },
+  "schema_version": 1,
+  "scope": {
+    "barrier": "B-PKC-M16-COMPLETE-COST-BRIDGE",
+    "cell": "CELL-M-PKC-SMOOTH-M16",
+    "cost_quantity": "CQ-SEMAEV-S17-SYSTEM-COST",
+    "task": "TASK-025"
+  },
+  "terminal_disposition": {
+    "assurance": "kernel_bound_non_run_certificate",
+    "authorization": "none",
+    "barrier_effect": "conditional_infinity_propagation_closed_only",
+    "cell_status": "open_non_executable",
+    "cost_quantity_status": "partial",
+    "experiment_permission": "none",
+    "generic_locus_status": "not_proved",
+    "hypothesis_effect": "none",
+    "mask_orchestration_status": "conditional_necessary_filter_and_empty_mask_equivalence_only",
+    "rank_status": "unpriced",
+    "representation_status": "conditional_single_affine_chart_exact",
+    "retention_disposition": "zero_retention_success",
+    "route_effect": "none",
+    "route_status": "open_parked",
+    "solving_cost_status": "unpriced",
+    "source_stage_bridge_status": "conditional_injective_algebraically_closed_target",
+    "yield_status": "unpriced"
+  },
+  "theorem_bindings": {
+    "HValue_swap_first_third": "Ecdlp.FrozenProjectiveSemaev.HValue_swap_first_third",
+    "card_boundaryGapThreeInfinityMask": "Ecdlp.FrozenProjectiveSemaev.card_boundaryGapThreeInfinityMask",
+    "card_boundaryPropagatedInfinityMask": "Ecdlp.FrozenProjectiveSemaev.card_boundaryPropagatedInfinityMask",
+    "card_gapThreeInteriorInfinityMask": "Ecdlp.FrozenProjectiveSemaev.card_gapThreeInteriorInfinityMask",
+    "card_gapTwoInteriorInfinityMask": "Ecdlp.FrozenProjectiveSemaev.card_gapTwoInteriorInfinityMask",
+    "frozenChainVector_prefix": "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_prefix",
+    "frozenChainVector_suffix": "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_suffix",
+    "frozenChartCover_iff_affineChartCover_of_balancedPropagatedRegular": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_affineChartCover_of_balancedPropagatedRegular",
+    "frozenChartCover_iff_affineChartCover_of_propagatedPrefixRegular": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_affineChartCover_of_propagatedPrefixRegular",
+    "frozenChartCover_iff_boundaryGapThreeChartCover": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_boundaryGapThreeChartCover",
+    "frozenChartCover_iff_boundaryPropagatedChartCover": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_boundaryPropagatedChartCover",
+    "frozenChartCover_iff_gapThreeInteriorChartCover": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_gapThreeInteriorChartCover",
+    "frozenChartCover_iff_gapTwoInteriorChartCover": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_gapTwoInteriorChartCover",
+    "frozenChartPolynomialCover_iff_affine_of_balancedPropagatedRegular": "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_affine_of_balancedPropagatedRegular",
+    "frozenChartPolynomialCover_iff_affine_of_propagatedPrefixRegular": "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_affine_of_propagatedPrefixRegular",
+    "frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular": "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular",
+    "frozenChartSystem_balancedPropagatedRegular_mask_eq_empty": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_balancedPropagatedRegular_mask_eq_empty",
+    "frozenChartSystem_balancedSuffixInfinity_forces_zero": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_balancedSuffixInfinity_forces_zero",
+    "frozenChartSystem_boundaryGapThreeInfinityMask": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_boundaryGapThreeInfinityMask",
+    "frozenChartSystem_boundaryPropagatedInfinityMask": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_boundaryPropagatedInfinityMask",
+    "frozenChartSystem_gapThreeInfinity_forces_HValue_zero": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapThreeInfinity_forces_HValue_zero",
+    "frozenChartSystem_gapThreeInteriorInfinityMask": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapThreeInteriorInfinityMask",
+    "frozenChartSystem_gapTwoInfinity_forces_det_zero": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInfinity_forces_det_zero",
+    "frozenChartSystem_gapTwoInteriorInfinityMask": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInteriorInfinityMask",
+    "frozenChartSystem_internalInfinity_forces_prefix_zero": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_internalInfinity_forces_prefix_zero",
+    "frozenChartSystem_propagatedPrefixRegular_mask_eq_empty": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_propagatedPrefixRegular_mask_eq_empty",
+    "frozenChartSystem_slotOneInfinity_forces_HValue_zero": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_slotOneInfinity_forces_HValue_zero",
+    "frozenChartSystem_slotTwelveInfinity_forces_HValue_zero": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_slotTwelveInfinity_forces_HValue_zero",
+    "frozenProjectiveChain_normalize_output_iff": "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_normalize_output_iff",
+    "balancedSuffixValue_zero": "Ecdlp.FrozenProjectiveSemaev.balancedSuffixValue_zero",
+    "propagatedPrefixValue_zero": "Ecdlp.FrozenProjectiveSemaev.propagatedPrefixValue_zero",
+    "specializeOver_frozenC_eq_zero_of_projectiveChain": "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_of_projectiveChain",
+    "taskSylvester_det_eq_zero_of_common_projective_root": "Ecdlp.FrozenProjectiveSemaev.taskSylvester_det_eq_zero_of_common_projective_root"
+  }
+}

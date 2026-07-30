@@ -174,7 +174,25 @@ branch from current `main`; preserve any unrelated local changes.
   cover equivalences use ordinary kernel proofs. This is a necessary filter,
   not a sufficient mask selector. The M16 cell remains open and
   non-executable on sufficient mask orchestration, yield, rank, solving,
-  recovery, and total cost. No successor execution is currently authorized.
+  recovery, and total cost.
+  `TASK-025` then proved exact conditional propagation from isolated infinity
+  slots. Distance-two and distance-three pairs force explicit determinant and
+  literal `HValue` equations. Under their named nonvanishing assumptions, the
+  377-mask family contracts cumulatively to 129, 69, and 36 logical candidate
+  masks; an independent boundary-only branch contracts 129 to 60. Six prefix
+  and six suffix obstruction values cover all twelve internal slots with
+  maximum frozen stage five. Their nonvanishing, together with affine inputs
+  and the endpoint guards, forces the empty infinity mask and makes the full
+  chart and chart-polynomial covers exactly equivalent to the one affine
+  chart. The propagation chain holds over any field; the final source
+  stage-14 bridge uses the existing injective map into an algebraically closed
+  target and proves no descent of target witnesses. Exactly four new count
+  theorems use `native_decide`; the propagation, one-way resultant, mask, and
+  cover theorems use ordinary kernel proofs. Symbolic nonzeroness,
+  nonemptiness, density or genericity, witness uniqueness, yield, rank,
+  solving, recovery, and cost remain unproved. The M16 cell therefore remains
+  open and non-executable, and no successor execution is currently
+  authorized.
   This result is not a selected hypothesis, candidate, solver authorization,
   cost claim, or attack route.
 - `TASK-008` remains the parked proposal-intake lane. Intake does not bypass

@@ -20,13 +20,13 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: none. `TASK-024` is completed; a successor must be
+Current central task: none. `TASK-025` is completed; a successor must be
 introduced by a new narrow task contract against the still-open complete-cost
 barrier before any further research execution.
 
 `TASK-010` is accepted at
 `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
-proposal-intake lane. Closing TASK-024 created no executable hypothesis,
+proposal-intake lane. Closing TASK-025 created no executable hypothesis,
 experiment authorization, or route promotion.
 
 Current scientific activation order:
@@ -85,9 +85,19 @@ Current scientific activation order:
     nonzero, the boundary slots are affine and the conditional cover has 377
     masks. These are necessary filters, not a sufficient mask selector,
     solver result, yield/rank result, or cost claim.
-12. The auxiliary-curve cell stays parked until a primary source supplies a
+12. `TASK-025` completed exact conditional infinity propagation. Named local
+    nonvanishing assumptions reduce the 377-mask family cumulatively to 129,
+    69, and 36 logical candidate masks; the independent boundary-only branch
+    reduces 129 to 60. Six prefix plus six suffix obstruction values, all at
+    frozen stage at most five, force the empty mask and hence the single
+    affine chart under explicit endpoint and balanced-regularity assumptions.
+    Propagation holds over any field, while the source-stage bridge uses the
+    existing injective algebraically closed target. Symbolic nonzeroness,
+    nonemptiness, genericity, witness uniqueness, yield, rank, solving, and
+    cost remain unproved. The M16 cell remains open and non-executable.
+13. The auxiliary-curve cell stays parked until a primary source supplies a
     finite search domain with a completeness criterion.
-13. Any later candidate, solver, or experiment still requires the normal
+14. Any later candidate, solver, or experiment still requires the normal
     review gates and a separate dated authorization.
 
 These entries freeze further engine-schema expansion by default. They do not

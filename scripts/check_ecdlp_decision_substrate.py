@@ -36,6 +36,7 @@ MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
 MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
 CURRENT_PHASE = "evidence-bounded-desk-priority"
+COMPLETED_PROPAGATION_TASK_ID = "TASK-025"
 COMPLETED_STRATA_TASK_ID = "TASK-024"
 COMPLETED_CHART_TASK_ID = "TASK-023"
 COMPLETED_GUARDED_TASK_ID = "TASK-022"
@@ -115,6 +116,34 @@ M16_CHART_ARTIFACT_ID = "PKC-SMOOTH-M16-EXACT-CHART-COVER-001"
 M16_CHART_CLAIM_ID = "SC-PKC-M16-EXACT-CHART-COVER-RESULT"
 M16_CHART_SOURCE_SHA256 = (
     "4f7b95453d8fafba3ec9cae0a9bbad5d8f782c6c0202f6e7cf37e17981b63019"
+)
+M16_STRATA_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_infinity_strata/artifact.json"
+)
+M16_STRATA_ARTIFACT_SHA256 = (
+    "54b0f3c5f2f1880b1f805911df21b72e5427b18871f14907ac17a1d8b48bdd39"
+)
+M16_STRATA_ARTIFACT_ID = "PKC-SMOOTH-M16-INFINITY-STRATA-001"
+M16_STRATA_CLAIM_ID = "SC-PKC-M16-INFINITY-STRATA-RESULT"
+M16_STRATA_SOURCE_SHA256 = (
+    "1314477f9821da87d2017837abca4fec957ae9998390a231e93532230129a22c"
+)
+M16_PROPAGATION_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_infinity_propagation/artifact.json"
+)
+M16_PROPAGATION_ARTIFACT_SHA256 = (
+    "9330603ba1f0af9ee4902c263200709e2ec6f8c50d8d7eaab3b55bcba78e388f"
+)
+M16_PROPAGATION_ARTIFACT_ID = (
+    "PKC-SMOOTH-M16-INFINITY-PROPAGATION-001"
+)
+M16_PROPAGATION_CLAIM_ID = (
+    "SC-PKC-M16-INFINITY-PROPAGATION-RESULT"
+)
+M16_PROPAGATION_SOURCE_SHA256 = (
+    "7f868aab5b946a55a213ce26a461477321d6387830eed218c414f1e62853b4b4"
 )
 M16_EXCEPTIONAL_ARTIFACT_PATH = (
     "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json"
@@ -346,6 +375,13 @@ def validate() -> list[str]:
         "987 separated masks",
         "377 interior masks",
         "sufficiency",
+        COMPLETED_PROPAGATION_TASK_ID,
+        "explicit infinity propagation",
+        "377 to 129 to 69 to 36",
+        "independent boundary-only refinement is 129 to 60",
+        "BalancedPropagatedRegular",
+        "mapped-target regularity",
+        "symbolic nonzeroness, nonemptiness, genericity",
     ):
         if binding not in phase_allowed:
             problems.append(f"phase_policy.allowed_work is missing {binding}")
@@ -366,6 +402,10 @@ def validate() -> list[str]:
         COMPLETED_STRATA_TASK_ID,
         "necessary infinity-stratum filter",
         "sufficient or unique mask selection",
+        COMPLETED_PROPAGATION_TASK_ID,
+        "conditional single-affine-chart theorem",
+        "symbolically nonzero, nonempty, dense, probable, or generic",
+        "automatic mapped-target regularity from source-field computation",
     ):
         if binding not in phase_forbidden:
             problems.append(f"phase_policy.forbidden_work is missing {binding}")
@@ -557,10 +597,14 @@ def validate() -> list[str]:
         COMPLETED_STRATA_TASK_ID,
         "necessary infinity-stratum filter",
         COMPLETED_CHART_TASK_ID,
-        "exact affine/infinity chart-polynomial cover",
-        "mask selection or finite-cover orchestration",
-        "without enumerating all 2^14 masks by default",
-        "without sweeping all 987 separated masks by default",
+        "exact TASK-023 cover",
+        COMPLETED_PROPAGATION_TASK_ID,
+        "conditional single-affine-chart theorem",
+        "symbolic nonzeroness and nonemptiness",
+        "mapped-target balanced regular locus",
+        "orchestration of its exceptional complement",
+        "without enumerating all 2^14 masks",
+        "987, 377, 129, 69, 60, or 36",
         "usable yield, rank, solving, recovery, and total-cost models",
         "does not authorize an experiment or route promotion",
     ):
@@ -589,7 +633,16 @@ def validate() -> list[str]:
         "fifteen literal H equations",
         "degree ceilings 2/4/2",
         "2^14 logical masks are not enumerated or materialized",
-        "mask selection or finite-cover orchestration",
+        COMPLETED_STRATA_TASK_ID,
+        "987 separated",
+        "377 interior masks",
+        COMPLETED_PROPAGATION_TASK_ID,
+        "377 to 129 to 69 to 36",
+        "boundary-only reduction 129 to 60",
+        "single empty-mask affine chart",
+        "mapped-target regularity",
+        "symbolic nonzeroness, nonemptiness, genericity",
+        "usable nonempty regular locus or orchestration of its exceptional complement",
         "open_non_executable",
         "open_parked",
         "authorization remains false",
@@ -699,7 +752,7 @@ def validate() -> list[str]:
     )
     petit_next_action = petit_route.get("next_action", "")
     for binding in (
-        COMPLETED_CHART_TASK_ID,
+        COMPLETED_PROPAGATION_TASK_ID,
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
         DESK_PRIORITY_COST_ID,
@@ -750,6 +803,20 @@ def validate() -> list[str]:
             "R-PETIT-COMPOSED-MAPS must retain the TASK-023 exact "
             "chart-cover certificate as evidence"
         )
+    if M16_STRATA_ARTIFACT_PATH not in petit_route.get(
+        "evidence_files", []
+    ):
+        problems.append(
+            "R-PETIT-COMPOSED-MAPS must retain the TASK-024 infinity-strata "
+            "certificate as evidence"
+        )
+    if M16_PROPAGATION_ARTIFACT_PATH not in petit_route.get(
+        "evidence_files", []
+    ):
+        problems.append(
+            "R-PETIT-COMPOSED-MAPS must retain the TASK-025 infinity-propagation "
+            "certificate as evidence"
+        )
     petit_current_evidence = petit_route.get("current_evidence", "")
     for binding in (
         "TASK-019 kernel-checks",
@@ -797,8 +864,29 @@ def validate() -> list[str]:
         M16_CHART_ARTIFACT_SHA256,
         M16_CHART_CLAIM_ID,
         M16_CHART_SOURCE_SHA256,
+        "TASK-024 kernel-checks",
+        "16384 masks to 987 separated masks",
+        "conditionally to 377 interior masks",
+        M16_STRATA_ARTIFACT_ID,
+        M16_STRATA_ARTIFACT_SHA256,
+        M16_STRATA_CLAIM_ID,
+        "TASK-025 kernel-checks",
+        "377 to 129 to 69 to 36",
+        "independent boundary-only refinement is 129 to 60",
+        "over any field",
+        "BalancedPropagatedRegular",
+        "single empty-mask affine chart",
+        M16_PROPAGATION_ARTIFACT_ID,
+        M16_PROPAGATION_ARTIFACT_SHA256,
+        M16_PROPAGATION_CLAIM_ID,
+        M16_PROPAGATION_SOURCE_SHA256,
+        "source-stage bridge requires injective base change",
+        "mapped-target balanced regularity",
+        "source-field computation does not automatically establish",
+        "Symbolic nonzeroness, nonemptiness, density, probability, genericity",
         "open_non_executable",
-        "mask selection or finite-cover orchestration",
+        "symbolic nonzeroness and nonemptiness of a usable regular locus",
+        "orchestration of its exceptional complement",
         "zero_retention_success",
         "CQ-SEMAEV-S17-SYSTEM-COST remains partial",
         "solving cost remain unpriced",
@@ -809,12 +897,18 @@ def validate() -> list[str]:
                 f"{binding}"
             )
     for binding in (
-        COMPLETED_CHART_TASK_ID,
-        "exact affine/infinity chart-polynomial cover",
-        "14 - I.card",
-        "degree ceilings 2/4/2",
-        "2^14 logical masks",
-        "mask-selection or finite-cover orchestration",
+        COMPLETED_STRATA_TASK_ID,
+        "16384 masks to 987 separated masks",
+        "conditionally to 377 interior masks",
+        COMPLETED_PROPAGATION_TASK_ID,
+        "377 to 129 to 69 to 36",
+        "boundary-only restriction is 129 to 60",
+        "BalancedPropagatedRegular",
+        "single empty-mask affine chart",
+        "symbolically nonzero, nonempty, dense, probable, or generic",
+        "mapped-target regularity",
+        "usable nonempty regular locus",
+        "orchestration of its exceptional complement",
         "relation yield",
         "rank",
         "solving",
@@ -1013,6 +1107,8 @@ def validate() -> list[str]:
         COMPLETED_WITNESS_TASK_ID,
         COMPLETED_GUARDED_TASK_ID,
         COMPLETED_CHART_TASK_ID,
+        COMPLETED_STRATA_TASK_ID,
+        COMPLETED_PROPAGATION_TASK_ID,
     ):
         if required_task not in tasks_text:
             problems.append(f"tasks/ECDLP_RESEARCH.md must contain {required_task}")
@@ -1405,6 +1501,8 @@ def validate() -> list[str]:
         DESK_PRIORITY_STUB_ID,
         COMPLETED_GUARDED_TASK_ID,
         COMPLETED_CHART_TASK_ID,
+        COMPLETED_STRATA_TASK_ID,
+        COMPLETED_PROPAGATION_TASK_ID,
     ):
         if binding not in next_tasks_text:
             problems.append(f"tasks/NEXT.md is missing desk-priority binding {binding}")

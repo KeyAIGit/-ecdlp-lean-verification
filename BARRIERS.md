@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~266 distinct results / 305 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~267 distinct results / 306 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -146,7 +146,7 @@ exact `Θ` statements.
   *where the search lives and how it branches*; the cost lower bound itself stays in the open
   frontier, recorded here, not dressed as proved.
 
-  **Exact M16 representation frontier (TASK-024; theorem-only, non-run).**
+  **Exact M16 representation frontier (through TASK-025; theorem-only, non-run).**
   TASK-022 first kernel-checked the exact 56-variable, 29-equation guarded
   representation. TASK-023 now replaces that raw projective-scale and
   guard-witness redundancy by an exact finite affine/infinity chart cover.
@@ -171,12 +171,33 @@ exact `Θ` statements.
   fixes each existing affine neighbor to the normalized current-input
   coordinate. These filters are necessary, not sufficient or unique, and the
   mask families are not production-enumerated.
+  TASK-025 propagates those forced coordinates. Infinity slots at distance two
+  force an explicit consecutive-input projective determinant to vanish, and
+  slots at distance three force a literal three-input `HValue` to vanish.
+  Under named local nonvanishing assumptions, the exact conditional logical
+  mask counts contract cumulatively from 377 to 129, 69, and 36; an independent
+  boundary-only refinement contracts 129 to 60. These counts describe
+  necessary candidate-mask families, not realizable masks. A one-way
+  projective-chain-to-`frozenC` implication over any field then gives explicit
+  prefix and suffix obstructions. Six prefix and six suffix values cover all
+  twelve internal slots with maximum frozen stage five. On the stated
+  affine-input, endpoint-nonzero, balanced-obstruction-nonzero locus, every
+  solution mask is empty and both complete covers are exactly the single
+  affine chart. The source stage-14 equation is linked to that target chart
+  only after the existing injective algebraically closed base change; target
+  witnesses are not proved to descend.
+  The regular locus remains conditional: symbolic nonzeroness, nonemptiness,
+  density, probability, and genericity are not proved. One chart does not
+  imply a unique witness, independent relation, usable yield or rank, solver
+  readiness, reduced solving degree, or reduced total cost. Exactly four new
+  mask-cardinality facts use `native_decide`; all propagation and cover
+  implications use the ordinary kernel/Mathlib trust base.
   `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`,
   `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`, and
-  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on a sufficient mask-selection
-  or finite-cover orchestration mechanism, usable relation yield and rank,
-  solving, recovery, sparse linear algebra, and total work. No solver or
-  experiment is authorized.
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on establishing a nonempty
+  source-checkable regular locus or otherwise orchestrating the remaining
+  finite cover, plus usable relation yield and rank, solving, recovery, sparse
+  linear algebra, and total work. No solver or experiment is authorized.
 
   **GLV–Semaev relation-generation experiments (partial negatives, not a no-go;
   `HYP_GLV_SEMAEV_001`; P0→P4).**
