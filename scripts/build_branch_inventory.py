@@ -20,6 +20,7 @@ ACTIVE = {
     "agent/task022-s17-materialization",
     "agent/task023-chart-cover",
     "agent/task024-infinity-strata",
+    "agent/task025-infinity-propagation",
 }
 SUPERSEDED = {
     "agent/n7-certificate-generator",

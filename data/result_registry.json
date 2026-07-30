@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 305,
-  "ledger_reference_count": 633,
-  "ledger_named_declarations": 608,
+  "ledger_rows": 306,
+  "ledger_reference_count": 694,
+  "ledger_named_declarations": 669,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 946,
-  "distinct_qualified_names": 946,
-  "verified_md_citations": 608,
+  "declaration_count": 1007,
+  "distinct_qualified_names": 1007,
+  "verified_md_citations": 669,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -363,19 +363,33 @@
     "Ecdlp.EDS.isEllSequence_of_rec_one",
     "Ecdlp.FrozenProjectiveSemaev.AdmissibleInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.AffineInputFamily",
+    "Ecdlp.FrozenProjectiveSemaev.BalancedPropagatedRegular",
+    "Ecdlp.FrozenProjectiveSemaev.BoundaryGapThreeInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.BoundaryHRegular",
+    "Ecdlp.FrozenProjectiveSemaev.BoundaryPropagatedInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.ChartEquation",
     "Ecdlp.FrozenProjectiveSemaev.ChartVar",
     "Ecdlp.FrozenProjectiveSemaev.EndpointCompatibleInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.FrozenAdmissibleChartCover",
     "Ecdlp.FrozenProjectiveSemaev.FrozenAdmissibleChartPolynomialCover",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenAffineChartCover",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenAffineChartPolynomialCover",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenBoundaryGapThreeChartCover",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenBoundaryPropagatedChartCover",
     "Ecdlp.FrozenProjectiveSemaev.FrozenChainVector",
     "Ecdlp.FrozenProjectiveSemaev.FrozenChartCover",
     "Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialCover",
     "Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialSystem",
     "Ecdlp.FrozenProjectiveSemaev.FrozenChartSystem",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenGapThreeInteriorChartCover",
+    "Ecdlp.FrozenProjectiveSemaev.FrozenGapTwoInteriorChartCover",
     "Ecdlp.FrozenProjectiveSemaev.FrozenGuardedProjectiveSystem",
     "Ecdlp.FrozenProjectiveSemaev.FrozenInteriorChartCover",
     "Ecdlp.FrozenProjectiveSemaev.FrozenProjectiveChain",
+    "Ecdlp.FrozenProjectiveSemaev.GapThreeHRegular",
+    "Ecdlp.FrozenProjectiveSemaev.GapThreeInteriorInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.GapTwoDetRegular",
+    "Ecdlp.FrozenProjectiveSemaev.GapTwoInteriorInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.GuardCoordinate",
     "Ecdlp.FrozenProjectiveSemaev.GuardVar",
     "Ecdlp.FrozenProjectiveSemaev.GuardedEquation",
@@ -390,17 +404,28 @@
     "Ecdlp.FrozenProjectiveSemaev.HValue_normalize_zero_iff",
     "Ecdlp.FrozenProjectiveSemaev.HValue_rescale_zero_iff",
     "Ecdlp.FrozenProjectiveSemaev.HValue_scale",
+    "Ecdlp.FrozenProjectiveSemaev.HValue_swap_first_third",
     "Ecdlp.FrozenProjectiveSemaev.HValue_third_infinity",
     "Ecdlp.FrozenProjectiveSemaev.InfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.InteriorSeparatedInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.PropagatedPrefixRegular",
     "Ecdlp.FrozenProjectiveSemaev.SeparatedInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.admissibleInfinityMask_interior",
+    "Ecdlp.FrozenProjectiveSemaev.balancedSuffixInfinitySlot",
+    "Ecdlp.FrozenProjectiveSemaev.balancedSuffixValue",
+    "Ecdlp.FrozenProjectiveSemaev.balancedSuffixValue_zero",
     "Ecdlp.FrozenProjectiveSemaev.binaryConstantPair",
     "Ecdlp.FrozenProjectiveSemaev.binaryPair",
     "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic",
     "Ecdlp.FrozenProjectiveSemaev.binaryQuadratic_isHomogeneous",
+    "Ecdlp.FrozenProjectiveSemaev.boundaryGapThreeInfinityMasks",
+    "Ecdlp.FrozenProjectiveSemaev.boundaryPropagatedInfinityMasks",
+    "Ecdlp.FrozenProjectiveSemaev.card_boundaryGapThreeInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.card_boundaryPropagatedInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.card_chartEquation",
     "Ecdlp.FrozenProjectiveSemaev.card_chartVar",
+    "Ecdlp.FrozenProjectiveSemaev.card_gapThreeInteriorInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.card_gapTwoInteriorInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.card_guardVar_fourteen",
     "Ecdlp.FrozenProjectiveSemaev.card_guarded_equations_fourteen",
     "Ecdlp.FrozenProjectiveSemaev.card_infinityMask",
@@ -434,24 +459,50 @@
     "Ecdlp.FrozenProjectiveSemaev.eval_projectiveOutputAtOver",
     "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_iff_chartSystem",
     "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_normalize",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_prefix",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_suffix",
     "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_admissibleChartCover",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_affineChartCover_of_balancedPropagatedRegular",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_affineChartCover_of_propagatedPrefixRegular",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_boundaryGapThreeChartCover",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_boundaryPropagatedChartCover",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_gapThreeInteriorChartCover",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_gapTwoInteriorChartCover",
     "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_interiorChartCover",
     "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_admissible",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_affine_of_balancedPropagatedRegular",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_affine_of_propagatedPrefixRegular",
     "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_chartCover",
     "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialSystem_iff_chartSystem",
     "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_admissibleInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_balancedPropagatedRegular_mask_eq_empty",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_balancedSuffixInfinity_forces_zero",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_boundaryGapThreeInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_boundaryPropagatedInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_endpointCompatibleInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapThreeInfinity_forces_HValue_zero",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapThreeInteriorInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInfinity_forces_det_zero",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInteriorInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_internalInfinity_forces_prefix_zero",
     "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_leftInfinity_forces_rightCoordinate",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_propagatedPrefixRegular_mask_eq_empty",
     "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_rightInfinity_forces_leftCoordinate",
     "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_separatedInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_slotOneInfinity_forces_HValue_zero",
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_slotTwelveInfinity_forces_HValue_zero",
     "Ecdlp.FrozenProjectiveSemaev.frozenGuardedProjectiveSystem_iff_chartPolynomialCover",
     "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_admissibleChartPolynomialCover",
     "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chainVector",
     "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chartCover",
     "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_chartPolynomialCover",
     "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_iff_guardedProjectiveSystem",
+    "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_normalize_output_iff",
+    "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular",
     "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_chartPolynomialCover_over",
     "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_guardedProjectiveSystem_over",
+    "Ecdlp.FrozenProjectiveSemaev.gapThreeInteriorInfinityMasks",
+    "Ecdlp.FrozenProjectiveSemaev.gapTwoInteriorInfinityMasks",
     "Ecdlp.FrozenProjectiveSemaev.guardConstantCoordinate",
     "Ecdlp.FrozenProjectiveSemaev.guardEquation",
     "Ecdlp.FrozenProjectiveSemaev.guardEquation_excludes_zero",
@@ -462,9 +513,14 @@
     "Ecdlp.FrozenProjectiveSemaev.homogenize_localSliceAt",
     "Ecdlp.FrozenProjectiveSemaev.homogenize_previousSliceAtOver_frozenC",
     "Ecdlp.FrozenProjectiveSemaev.infinityMaskOf",
+    "Ecdlp.FrozenProjectiveSemaev.instDecidableBoundaryGapThreeInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.instDecidableBoundaryPropagatedInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.instDecidableGapThreeInteriorInfinityMask",
+    "Ecdlp.FrozenProjectiveSemaev.instDecidableGapTwoInteriorInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.instDecidableInteriorSeparatedInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.instDecidableSeparatedInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.interiorSeparatedInfinityMasks",
+    "Ecdlp.FrozenProjectiveSemaev.internalInfinitySlot",
     "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffOne",
     "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffOne_isHomogeneous",
     "Ecdlp.FrozenProjectiveSemaev.localBinaryCoeffTwo",
@@ -487,15 +543,20 @@
     "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver_frozenC_isHomogeneous",
     "Ecdlp.FrozenProjectiveSemaev.projectiveScale",
     "Ecdlp.FrozenProjectiveSemaev.projectiveScale_ne_zero",
+    "Ecdlp.FrozenProjectiveSemaev.propagatedPrefixValue",
+    "Ecdlp.FrozenProjectiveSemaev.propagatedPrefixValue_zero",
+    "Ecdlp.FrozenProjectiveSemaev.reverseFrozenInputs",
     "Ecdlp.FrozenProjectiveSemaev.separatedInfinityMasks",
     "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC16_eq_zero_iff_projectiveChain",
     "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_iff_projectiveChain",
+    "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_of_projectiveChain",
     "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_zero",
     "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_eq_zero_iff_common_projective_root",
     "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over",
     "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_affine",
     "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_eq_zero_iff_common_projective_root",
     "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over_infinity",
+    "Ecdlp.FrozenProjectiveSemaev.taskSylvester_det_eq_zero_of_common_projective_root",
     "Ecdlp.FrozenProjectiveSemaev.taskSylvester_isHomogeneous_two_mul_left",
     "Ecdlp.GenericGroup.badSet_card_le",
     "Ecdlp.GenericGroup.bsgs_decomp",
@@ -9427,6 +9488,506 @@
           "line": 394
         }
       ]
+    },
+    {
+      "id": "ledger-305",
+      "claim": "Conditional propagation of isolated infinity slots and exact balanced single-affine-chart reduction (under affine external inputs and nonzero endpoint determinants, distance-two infinity pairs force explicit consecutive-input projective determinants and reduce the 377 interior separated masks to 129 under the named uniform determinant guards. Distance-three pairs force literal three-input `HValue` equations, giving 69 masks; adding the two boundary-near `HValue` guards gives 36. The independent boundary-only branch gives 60 from 129 and is not a distance-three result. Every internal infinity slot also forces an explicit lower-stage frozen prefix or suffix specialization to vanish. Six prefix and six suffix obstructions cover slots 1 through 12 with maximum frozen stage five. A projective frozen chain implies the corresponding frozen specialization over any field, so affine inputs, nonzero endpoints, and pointwise nonzero balanced obstructions force the infinity mask to be empty and make both the full chart cover and literal chart-polynomial cover exactly the single affine chart. After the existing injective algebraically closed base change, the source frozen stage-14 equation has the same conditional single-chart equivalence; target witnesses are not asserted to descend. Honest scope: the uniform local guards include endpoint-redundant cases and define a slightly smaller locus than the maximal one. Symbolic nonzeroness, nonemptiness, density, probability, and genericity of the balanced regular locus are not proved. One chart does not mean one witness, one relation, independent relations, solver readiness, improved yield or rank, lower solving degree, reduced memory/runtime/total cost, exact-target computation, reduced ECDLP complexity, or an ECDLP attack. The four mask cardinalities `129/69/60/36` are compiler-trusted through `native_decide`; the propagation, one-way resultant, mask-empty, cover-equivalence, and source-bridge theorems use the standard Lean/Mathlib trust base)",
+      "theorem_cell": "`Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInfinity_forces_det_zero`, `frozenChartCover_iff_gapTwoInteriorChartCover`, `card_gapTwoInteriorInfinityMask`, `frozenChartSystem_gapThreeInfinity_forces_HValue_zero`, `frozenChartCover_iff_gapThreeInteriorChartCover`, `card_gapThreeInteriorInfinityMask`, `frozenChartSystem_slotOneInfinity_forces_HValue_zero`, `frozenChartSystem_slotTwelveInfinity_forces_HValue_zero`, `frozenChartCover_iff_boundaryPropagatedChartCover`, `card_boundaryPropagatedInfinityMask`, `frozenChartCover_iff_boundaryGapThreeChartCover`, `card_boundaryGapThreeInfinityMask`, `specializeOver_frozenC_eq_zero_of_projectiveChain`, `propagatedPrefixValue_zero`, `balancedSuffixValue_zero`, `frozenChartSystem_internalInfinity_forces_prefix_zero`, `frozenChartSystem_balancedSuffixInfinity_forces_zero`, `frozenChartSystem_balancedPropagatedRegular_mask_eq_empty`, `frozenChartCover_iff_affineChartCover_of_balancedPropagatedRegular`, `frozenChartPolynomialCover_iff_affine_of_balancedPropagatedRegular`, `frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular` and supporting declarations",
+      "declared_files": [
+        "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean"
+      ],
+      "method": "exact local substitution + fixed-degree projective-resultant forward implication + balanced prefix/suffix frozen specializations + exact chart-cover restriction; `native_decide` only for the four mask cardinalities",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInfinity_forces_det_zero",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInfinity_forces_det_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 54
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_gapTwoInteriorChartCover",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_gapTwoInteriorChartCover",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 144
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.card_gapTwoInteriorInfinityMask",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.card_gapTwoInteriorInfinityMask",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 166
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapThreeInfinity_forces_HValue_zero",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapThreeInfinity_forces_HValue_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 175
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_gapThreeInteriorChartCover",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_gapThreeInteriorChartCover",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 312
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.card_gapThreeInteriorInfinityMask",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.card_gapThreeInteriorInfinityMask",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 334
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_slotOneInfinity_forces_HValue_zero",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_slotOneInfinity_forces_HValue_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 341
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_slotTwelveInfinity_forces_HValue_zero",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_slotTwelveInfinity_forces_HValue_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 373
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_boundaryPropagatedChartCover",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_boundaryPropagatedChartCover",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 455
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.card_boundaryPropagatedInfinityMask",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.card_boundaryPropagatedInfinityMask",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 477
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_boundaryGapThreeChartCover",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_boundaryGapThreeChartCover",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 524
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.card_boundaryGapThreeInfinityMask",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.card_boundaryGapThreeInfinityMask",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 547
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_of_projectiveChain",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_of_projectiveChain",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 657
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.propagatedPrefixValue_zero",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.propagatedPrefixValue_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 697
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.balancedSuffixValue_zero",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.balancedSuffixValue_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 886
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_internalInfinity_forces_prefix_zero",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_internalInfinity_forces_prefix_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 711
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_balancedSuffixInfinity_forces_zero",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_balancedSuffixInfinity_forces_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 909
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_balancedPropagatedRegular_mask_eq_empty",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_balancedPropagatedRegular_mask_eq_empty",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 966
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_affineChartCover_of_balancedPropagatedRegular",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_affineChartCover_of_balancedPropagatedRegular",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 1070
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_affine_of_balancedPropagatedRegular",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_affine_of_balancedPropagatedRegular",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 1090
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 1119
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.BalancedPropagatedRegular",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 900
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.BoundaryGapThreeInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 483
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.BoundaryHRegular",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 416
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.BoundaryPropagatedInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 406
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenAffineChartCover",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 1012
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenAffineChartPolynomialCover",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 1019
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenBoundaryGapThreeChartCover",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 518
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenBoundaryPropagatedChartCover",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 447
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenGapThreeInteriorChartCover",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 304
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.FrozenGapTwoInteriorChartCover",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 136
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.GapThreeHRegular",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 276
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.GapThreeInteriorInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 260
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.GapTwoDetRegular",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 109
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.GapTwoInteriorInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 41
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.HValue_swap_first_third",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 802
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.PropagatedPrefixRegular",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 705
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.balancedSuffixInfinitySlot",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 869
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.balancedSuffixValue",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 877
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.boundaryGapThreeInfinityMasks",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 542
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.boundaryPropagatedInfinityMasks",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 472
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_prefix",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 555
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_suffix",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 825
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_affineChartCover_of_propagatedPrefixRegular",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 1027
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_affine_of_propagatedPrefixRegular",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 1047
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_boundaryGapThreeInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 494
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_boundaryPropagatedInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 424
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapThreeInteriorInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 284
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInteriorInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 116
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_propagatedPrefixRegular_mask_eq_empty",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 765
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_normalize_output_iff",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 583
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.gapThreeInteriorInfinityMasks",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 329
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.gapTwoInteriorInfinityMasks",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 161
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.instDecidableBoundaryGapThreeInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "instance",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 487
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.instDecidableBoundaryPropagatedInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "instance",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 410
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.instDecidableGapThreeInteriorInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "instance",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 266
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.instDecidableGapTwoInteriorInfinityMask",
+          "resolution": "supporting-expansion",
+          "kind": "instance",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 46
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.internalInfinitySlot",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 682
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.propagatedPrefixValue",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 690
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.reverseFrozenInputs",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 813
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.FrozenProjectiveSemaev.taskSylvester_det_eq_zero_of_common_projective_root",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+          "line": 613
+        }
+      ]
     }
   ],
   "declarations": {
@@ -12531,6 +13092,34 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 45
     },
+    "Ecdlp.FrozenProjectiveSemaev.BalancedPropagatedRegular": {
+      "name": "BalancedPropagatedRegular",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 900
+    },
+    "Ecdlp.FrozenProjectiveSemaev.BoundaryGapThreeInfinityMask": {
+      "name": "BoundaryGapThreeInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 483
+    },
+    "Ecdlp.FrozenProjectiveSemaev.BoundaryHRegular": {
+      "name": "BoundaryHRegular",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 416
+    },
+    "Ecdlp.FrozenProjectiveSemaev.BoundaryPropagatedInfinityMask": {
+      "name": "BoundaryPropagatedInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 406
+    },
     "Ecdlp.FrozenProjectiveSemaev.ChartEquation": {
       "name": "ChartEquation",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -12565,6 +13154,34 @@
       "kind": "def",
       "file": "Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean",
       "line": 324
+    },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenAffineChartCover": {
+      "name": "FrozenAffineChartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 1012
+    },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenAffineChartPolynomialCover": {
+      "name": "FrozenAffineChartPolynomialCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 1019
+    },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenBoundaryGapThreeChartCover": {
+      "name": "FrozenBoundaryGapThreeChartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 518
+    },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenBoundaryPropagatedChartCover": {
+      "name": "FrozenBoundaryPropagatedChartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 447
     },
     "Ecdlp.FrozenProjectiveSemaev.FrozenChainVector": {
       "name": "FrozenChainVector",
@@ -12601,6 +13218,20 @@
       "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
       "line": 70
     },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenGapThreeInteriorChartCover": {
+      "name": "FrozenGapThreeInteriorChartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 304
+    },
+    "Ecdlp.FrozenProjectiveSemaev.FrozenGapTwoInteriorChartCover": {
+      "name": "FrozenGapTwoInteriorChartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 136
+    },
     "Ecdlp.FrozenProjectiveSemaev.FrozenGuardedProjectiveSystem": {
       "name": "FrozenGuardedProjectiveSystem",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -12621,6 +13252,34 @@
       "kind": "def",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
       "line": 547
+    },
+    "Ecdlp.FrozenProjectiveSemaev.GapThreeHRegular": {
+      "name": "GapThreeHRegular",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 276
+    },
+    "Ecdlp.FrozenProjectiveSemaev.GapThreeInteriorInfinityMask": {
+      "name": "GapThreeInteriorInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 260
+    },
+    "Ecdlp.FrozenProjectiveSemaev.GapTwoDetRegular": {
+      "name": "GapTwoDetRegular",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 109
+    },
+    "Ecdlp.FrozenProjectiveSemaev.GapTwoInteriorInfinityMask": {
+      "name": "GapTwoInteriorInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 41
     },
     "Ecdlp.FrozenProjectiveSemaev.GuardCoordinate": {
       "name": "GuardCoordinate",
@@ -12727,6 +13386,13 @@
       "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
       "line": 86
     },
+    "Ecdlp.FrozenProjectiveSemaev.HValue_swap_first_third": {
+      "name": "HValue_swap_first_third",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 802
+    },
     "Ecdlp.FrozenProjectiveSemaev.HValue_third_infinity": {
       "name": "HValue_third_infinity",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -12776,6 +13442,13 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 73
     },
+    "Ecdlp.FrozenProjectiveSemaev.PropagatedPrefixRegular": {
+      "name": "PropagatedPrefixRegular",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 705
+    },
     "Ecdlp.FrozenProjectiveSemaev.SeparatedInfinityMask": {
       "name": "SeparatedInfinityMask",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -12803,6 +13476,27 @@
       "kind": "def",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 149
+    },
+    "Ecdlp.FrozenProjectiveSemaev.balancedSuffixInfinitySlot": {
+      "name": "balancedSuffixInfinitySlot",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 869
+    },
+    "Ecdlp.FrozenProjectiveSemaev.balancedSuffixValue": {
+      "name": "balancedSuffixValue",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 877
+    },
+    "Ecdlp.FrozenProjectiveSemaev.balancedSuffixValue_zero": {
+      "name": "balancedSuffixValue_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 886
     },
     "Ecdlp.FrozenProjectiveSemaev.binaryConstantPair": {
       "name": "binaryConstantPair",
@@ -12832,6 +13526,34 @@
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
       "line": 160
     },
+    "Ecdlp.FrozenProjectiveSemaev.boundaryGapThreeInfinityMasks": {
+      "name": "boundaryGapThreeInfinityMasks",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 542
+    },
+    "Ecdlp.FrozenProjectiveSemaev.boundaryPropagatedInfinityMasks": {
+      "name": "boundaryPropagatedInfinityMasks",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 472
+    },
+    "Ecdlp.FrozenProjectiveSemaev.card_boundaryGapThreeInfinityMask": {
+      "name": "card_boundaryGapThreeInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 547
+    },
+    "Ecdlp.FrozenProjectiveSemaev.card_boundaryPropagatedInfinityMask": {
+      "name": "card_boundaryPropagatedInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 477
+    },
     "Ecdlp.FrozenProjectiveSemaev.card_chartEquation": {
       "name": "card_chartEquation",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -12845,6 +13567,20 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
       "line": 575
+    },
+    "Ecdlp.FrozenProjectiveSemaev.card_gapThreeInteriorInfinityMask": {
+      "name": "card_gapThreeInteriorInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 334
+    },
+    "Ecdlp.FrozenProjectiveSemaev.card_gapTwoInteriorInfinityMask": {
+      "name": "card_gapTwoInteriorInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 166
     },
     "Ecdlp.FrozenProjectiveSemaev.card_guardVar_fourteen": {
       "name": "card_guardVar_fourteen",
@@ -13098,12 +13834,68 @@
       "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
       "line": 335
     },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_prefix": {
+      "name": "frozenChainVector_prefix",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 555
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChainVector_suffix": {
+      "name": "frozenChainVector_suffix",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 825
+    },
     "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_admissibleChartCover": {
       "name": "frozenChartCover_iff_admissibleChartCover",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean",
       "line": 311
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_affineChartCover_of_balancedPropagatedRegular": {
+      "name": "frozenChartCover_iff_affineChartCover_of_balancedPropagatedRegular",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 1070
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_affineChartCover_of_propagatedPrefixRegular": {
+      "name": "frozenChartCover_iff_affineChartCover_of_propagatedPrefixRegular",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 1027
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_boundaryGapThreeChartCover": {
+      "name": "frozenChartCover_iff_boundaryGapThreeChartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 524
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_boundaryPropagatedChartCover": {
+      "name": "frozenChartCover_iff_boundaryPropagatedChartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 455
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_gapThreeInteriorChartCover": {
+      "name": "frozenChartCover_iff_gapThreeInteriorChartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 312
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_gapTwoInteriorChartCover": {
+      "name": "frozenChartCover_iff_gapTwoInteriorChartCover",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 144
     },
     "Ecdlp.FrozenProjectiveSemaev.frozenChartCover_iff_interiorChartCover": {
       "name": "frozenChartCover_iff_interiorChartCover",
@@ -13118,6 +13910,20 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean",
       "line": 333
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_affine_of_balancedPropagatedRegular": {
+      "name": "frozenChartPolynomialCover_iff_affine_of_balancedPropagatedRegular",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 1090
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_affine_of_propagatedPrefixRegular": {
+      "name": "frozenChartPolynomialCover_iff_affine_of_propagatedPrefixRegular",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 1047
     },
     "Ecdlp.FrozenProjectiveSemaev.frozenChartPolynomialCover_iff_chartCover": {
       "name": "frozenChartPolynomialCover_iff_chartCover",
@@ -13140,6 +13946,34 @@
       "file": "Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean",
       "line": 275
     },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_balancedPropagatedRegular_mask_eq_empty": {
+      "name": "frozenChartSystem_balancedPropagatedRegular_mask_eq_empty",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 966
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_balancedSuffixInfinity_forces_zero": {
+      "name": "frozenChartSystem_balancedSuffixInfinity_forces_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 909
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_boundaryGapThreeInfinityMask": {
+      "name": "frozenChartSystem_boundaryGapThreeInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 494
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_boundaryPropagatedInfinityMask": {
+      "name": "frozenChartSystem_boundaryPropagatedInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 424
+    },
     "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_endpointCompatibleInfinityMask": {
       "name": "frozenChartSystem_endpointCompatibleInfinityMask",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -13147,12 +13981,54 @@
       "file": "Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean",
       "line": 184
     },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapThreeInfinity_forces_HValue_zero": {
+      "name": "frozenChartSystem_gapThreeInfinity_forces_HValue_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 175
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapThreeInteriorInfinityMask": {
+      "name": "frozenChartSystem_gapThreeInteriorInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 284
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInfinity_forces_det_zero": {
+      "name": "frozenChartSystem_gapTwoInfinity_forces_det_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 54
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInteriorInfinityMask": {
+      "name": "frozenChartSystem_gapTwoInteriorInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 116
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_internalInfinity_forces_prefix_zero": {
+      "name": "frozenChartSystem_internalInfinity_forces_prefix_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 711
+    },
     "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_leftInfinity_forces_rightCoordinate": {
       "name": "frozenChartSystem_leftInfinity_forces_rightCoordinate",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean",
       "line": 216
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_propagatedPrefixRegular_mask_eq_empty": {
+      "name": "frozenChartSystem_propagatedPrefixRegular_mask_eq_empty",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 765
     },
     "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_rightInfinity_forces_leftCoordinate": {
       "name": "frozenChartSystem_rightInfinity_forces_leftCoordinate",
@@ -13167,6 +14043,20 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean",
       "line": 158
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_slotOneInfinity_forces_HValue_zero": {
+      "name": "frozenChartSystem_slotOneInfinity_forces_HValue_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 341
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_slotTwelveInfinity_forces_HValue_zero": {
+      "name": "frozenChartSystem_slotTwelveInfinity_forces_HValue_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 373
     },
     "Ecdlp.FrozenProjectiveSemaev.frozenGuardedProjectiveSystem_iff_chartPolynomialCover": {
       "name": "frozenGuardedProjectiveSystem_iff_chartPolynomialCover",
@@ -13210,6 +14100,20 @@
       "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
       "line": 389
     },
+    "Ecdlp.FrozenProjectiveSemaev.frozenProjectiveChain_normalize_output_iff": {
+      "name": "frozenProjectiveChain_normalize_output_iff",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 583
+    },
+    "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular": {
+      "name": "frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 1119
+    },
     "Ecdlp.FrozenProjectiveSemaev.frozenRecS17_iff_chartPolynomialCover_over": {
       "name": "frozenRecS17_iff_chartPolynomialCover_over",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -13223,6 +14127,20 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenProjectiveGuardSystem.lean",
       "line": 547
+    },
+    "Ecdlp.FrozenProjectiveSemaev.gapThreeInteriorInfinityMasks": {
+      "name": "gapThreeInteriorInfinityMasks",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 329
+    },
+    "Ecdlp.FrozenProjectiveSemaev.gapTwoInteriorInfinityMasks": {
+      "name": "gapTwoInteriorInfinityMasks",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 161
     },
     "Ecdlp.FrozenProjectiveSemaev.guardConstantCoordinate": {
       "name": "guardConstantCoordinate",
@@ -13294,6 +14212,34 @@
       "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
       "line": 243
     },
+    "Ecdlp.FrozenProjectiveSemaev.instDecidableBoundaryGapThreeInfinityMask": {
+      "name": "instDecidableBoundaryGapThreeInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 487
+    },
+    "Ecdlp.FrozenProjectiveSemaev.instDecidableBoundaryPropagatedInfinityMask": {
+      "name": "instDecidableBoundaryPropagatedInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 410
+    },
+    "Ecdlp.FrozenProjectiveSemaev.instDecidableGapThreeInteriorInfinityMask": {
+      "name": "instDecidableGapThreeInteriorInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 266
+    },
+    "Ecdlp.FrozenProjectiveSemaev.instDecidableGapTwoInteriorInfinityMask": {
+      "name": "instDecidableGapTwoInteriorInfinityMask",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 46
+    },
     "Ecdlp.FrozenProjectiveSemaev.instDecidableInteriorSeparatedInfinityMask": {
       "name": "instDecidableInteriorSeparatedInfinityMask",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -13314,6 +14260,13 @@
       "kind": "def",
       "file": "Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean",
       "line": 402
+    },
+    "Ecdlp.FrozenProjectiveSemaev.internalInfinitySlot": {
+      "name": "internalInfinitySlot",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 682
     },
     "Ecdlp.FrozenProjectiveSemaev.leafPair": {
       "name": "leafPair",
@@ -13588,6 +14541,27 @@
       "file": "Ecdlp/Proved/FrozenProjectiveChartSystem.lean",
       "line": 125
     },
+    "Ecdlp.FrozenProjectiveSemaev.propagatedPrefixValue": {
+      "name": "propagatedPrefixValue",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 690
+    },
+    "Ecdlp.FrozenProjectiveSemaev.propagatedPrefixValue_zero": {
+      "name": "propagatedPrefixValue_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 697
+    },
+    "Ecdlp.FrozenProjectiveSemaev.reverseFrozenInputs": {
+      "name": "reverseFrozenInputs",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 813
+    },
     "Ecdlp.FrozenProjectiveSemaev.separatedInfinityMasks": {
       "name": "separatedInfinityMasks",
       "namespace": "Ecdlp.FrozenProjectiveSemaev",
@@ -13622,6 +14596,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean",
       "line": 574
+    },
+    "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_eq_zero_of_projectiveChain": {
+      "name": "specializeOver_frozenC_eq_zero_of_projectiveChain",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 657
     },
     "Ecdlp.FrozenProjectiveSemaev.specializeOver_frozenC_zero": {
       "name": "specializeOver_frozenC_zero",
@@ -13699,6 +14680,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrozenRecursiveProjectiveSemaev.lean",
       "line": 379
+    },
+    "Ecdlp.FrozenProjectiveSemaev.taskSylvester_det_eq_zero_of_common_projective_root": {
+      "name": "taskSylvester_det_eq_zero_of_common_projective_root",
+      "namespace": "Ecdlp.FrozenProjectiveSemaev",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "line": 613
     },
     "Ecdlp.FrozenProjectiveSemaev.taskSylvester_isHomogeneous_two_mul_left": {
       "name": "taskSylvester_isHomogeneous_two_mul_left",

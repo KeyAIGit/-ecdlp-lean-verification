@@ -1526,3 +1526,154 @@ How to verify:
   tests
 - typed-evidence, decision-substrate, scientific-semantic,
   generated-fixpoint, and full CI gates
+
+### TASK-025 - Propagate infinity constraints to a conditional affine chart
+
+Status: completed_non_executable_kernel_result
+Kind: theorem | research | review
+Hypothesis: none. This is a bounded propagation refinement of TASK-024, not a
+solver candidate, relation-yield claim, or cost experiment.
+Desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`
+Cost quantity: `CQ-SEMAEV-S17-SYSTEM-COST`
+Authorization: none
+Outcome: `closed_exact_theorem`
+Retention: `zero_retention_success`
+Completed on: 2026-07-29
+Artifact:
+- `experiments/engine/pkc_smooth_m16_infinity_propagation/artifact.json`
+- ID `PKC-SMOOTH-M16-INFINITY-PROPAGATION-001`
+- SHA-256 `9330603ba1f0af9ee4902c263200709e2ec6f8c50d8d7eaab3b55bcba78e388f`
+Source:
+- `Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean`
+- SHA-256 `7f868aab5b946a55a213ce26a461477321d6387830eed218c414f1e62853b4b4`
+Typed claim:
+- `SC-PKC-M16-INFINITY-PROPAGATION-RESULT`
+Why it matters: TASK-024 conditionally leaves 377 interior separated masks
+and proves that every isolated infinity fixes its adjacent affine
+coordinates. TASK-025 substitutes those forced coordinates into the
+neighboring literal `H` equations, extracts explicit exceptional polynomial
+conditions, and proves that a precisely stated balanced nonvanishing condition
+makes the empty infinity mask complete. A one-chart conclusion means only one
+affine representation branch on that conditional locus, not one solution or
+an ECDLP shortcut.
+Decision boundary:
+- Work only with the exact TASK-023 chart system, TASK-024 infinity
+  identities and forced-neighbor theorems, and the existing literal `frozenC`
+  family.
+- Prove local distance-two propagation: two infinity slots at distance two
+  force the corresponding consecutive external-input projective determinant
+  to vanish.
+- Prove local distance-three propagation: two infinity slots at distance
+  three force the corresponding literal three-input `HValue` to vanish.
+- Under explicit nonzero endpoint and local exceptional-polynomial
+  assumptions, restrict the exact cover to the resulting mask predicates and
+  record exact logical mask counts with the compiler-trust boundary disclosed.
+  In particular, prove the cumulative conditional
+  `377 -> 129 -> 69 -> 36` reduction and the independent boundary-only
+  `129 -> 60` reduction without claiming that the remaining masks are
+  realizable.
+- Define explicit propagated prefix obstruction values by specializing the
+  existing literal frozen prefixes after substituting the affine coordinate
+  forced by an isolated infinity slot. Prove that selecting that infinity
+  slot forces its obstruction value to vanish.
+- Balance the global obstruction family into six prefix and six suffix
+  values, covering all twelve internal slots with maximum frozen stage five.
+- If pointwise nonvanishing of those twelve explicit obstruction values
+  excludes every infinity slot, prove that the complete chart and
+  chart-polynomial covers are exactly equivalent to the single empty-mask
+  affine chart.
+- Call this locus generic only if the relevant obstruction expressions are
+  also proved nonzero as symbolic polynomials. Otherwise record a conditional
+  affine locus and the exact symbolic-nonzeroness blocker; do not replace it
+  with an unsupported probability statement.
+- Do not enumerate or materialize the production mask family, expand direct
+  `S17`, emit solver input, run a solver or parameter sweep, estimate
+  yield/rank/cost, search an exact target, or compute a discrete logarithm.
+Recorded result:
+- `frozenChartSystem_gapTwoInfinity_forces_det_zero` proves over any field
+  that infinity at slots `i` and `i + 2` forces
+  `projectiveDet(q(i+2),q(i+3)) = 0`.
+- `frozenChartSystem_gapThreeInfinity_forces_HValue_zero` proves over any
+  field that infinity at slots `i` and `i + 3` forces the literal condition
+  `HValue(q(i+2),q(i+3),q(i+4)) = 0`. The slot-one and slot-twelve theorems
+  prove the two boundary-near literal `HValue` conditions.
+- Under the named affine-input, endpoint, and local nonvanishing assumptions,
+  the exact logical mask family contracts cumulatively
+  `377 -> 129 -> 69 -> 36`. The separately useful boundary-only refinement
+  contracts `129 -> 60`. These are candidate-mask family sizes, not counts of
+  realizable masks.
+- `card_gapTwoInteriorInfinityMask`,
+  `card_gapThreeInteriorInfinityMask`,
+  `card_boundaryPropagatedInfinityMask`, and
+  `card_boundaryGapThreeInfinityMask` are the four new compiler-trusted
+  `native_decide` count facts. The propagation identities, mask-necessity
+  theorems, one-way resultant argument, and cover equivalences use ordinary
+  Lean/Mathlib proofs.
+- `specializeOver_frozenC_eq_zero_of_projectiveChain` proves the one-way
+  projective-chain-to-literal-`frozenC` implication over any field. A
+  prefix-only family gives twelve obstructions with possible stages through
+  eleven; the balanced construction replaces it by six prefix and six suffix
+  values and keeps the maximum frozen stage at five.
+- With affine external inputs, nonzero endpoint determinants, and all twelve
+  balanced obstruction values nonzero, every solution mask is empty. Both
+  the semantic chart cover and the literal chart-polynomial cover are then
+  exactly equivalent to the single empty-mask affine chart.
+- `frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular`
+  binds the source stage-14 frozen equation to that target affine chart after
+  the existing injective map into an algebraically closed field. Algebraic
+  closure is needed only by the upstream source-equation/witness bridge; the
+  propagation and empty-mask theorems hold over every field. No target
+  witness descent to the source field is proved.
+- Symbolic nonzeroness, nonemptiness, density, probability, or genericity of
+  the regular locus is not proved. Neither are witness uniqueness, relation
+  independence, yield, rank, solver behavior, solving degree, fill-in,
+  memory, recovery, runtime, total cost, or an ECDLP shortcut.
+- The source-bound certificate validates the exact source and upstream
+  digests, independently derives the mask counts by recurrence, replays
+  finite-field propagation fixtures, and passes 7 tests covering 101
+  semantic mutations.
+- `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`;
+  `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`;
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open; the route remains
+  `open_parked`; no hypothesis, solver, experiment authorization, exact
+  target computation, cost claim, route rejection, or route promotion is
+  created. No successor execution is authorized by this closeout.
+Inputs:
+- `Ecdlp/Proved/FrozenProjectiveInfinityStrata.lean`
+- `Ecdlp/Proved/FrozenRecursiveProjectiveWitness.lean`
+- `experiments/engine/pkc_smooth_m16_infinity_strata/artifact.json`
+- `CELL-M-PKC-SMOOTH-M16`
+- `B-PKC-M16-COMPLETE-COST-BRIDGE`
+Expected output:
+- One narrow kernel-checked infinity-propagation module with explicit local
+  exceptional conditions and exact restricted-cover equivalences.
+- A conditional single all-affine-chart theorem only under explicit
+  obstruction nonvanishing assumptions.
+- One narrow source-bound non-run certificate if a theorem closes.
+Exit criteria:
+- Every claimed mask reduction is exact under named assumptions and loses no
+  solutions.
+- No generic-locus claim is made because symbolic nonzeroness and nonemptiness
+  of the explicit regularity conditions remain unproved.
+- "One chart" stays distinct from uniqueness of witnesses, relation
+  independence, solver readiness, or reduced ECDLP asymptotics.
+- `CELL-M-PKC-SMOOTH-M16` stays `open_non_executable`;
+  `CQ-SEMAEV-S17-SYSTEM-COST` stays `partial`;
+  `B-PKC-M16-COMPLETE-COST-BRIDGE` stays open; the route stays
+  `open_parked`; no experiment, hypothesis retention, solver authorization,
+  exact-target work, cost claim, route rejection, or route promotion is
+  created.
+Files allowed to edit:
+- one narrow infinity-propagation Lean module and direct import
+- one dedicated non-run TASK-025 certificate directory if a theorem closes
+- directly affected canonical task, proof, evidence, and decision ledgers
+Files that must be regenerated:
+- only generated views directly affected by the final recorded result
+How to verify:
+- narrow and full Lean builds, built-source no-`sorry`, and exhaustive axiom
+  audit
+- exact source, upstream, and artifact digest checks
+- independent finite-field propagation fixtures and certificate semantic
+  fault tests
+- typed-evidence, decision-substrate, scientific-semantic,
+  generated-fixpoint, and full CI gates

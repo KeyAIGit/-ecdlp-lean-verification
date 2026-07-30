@@ -257,20 +257,33 @@ slots are impossible, reducing the exact logical cover from 16384 masks to
 987 separated masks. When both endpoint determinants are nonzero, the
 conditional exact cover has 377 interior masks. Isolated infinity slots also
 force their existing affine neighbors to the normalized current-input
-coordinate. These predicates are necessary, not sufficient or unique. The
-remaining M16 gap requires a separately authorized sufficient design for mask
-selection or finite-cover orchestration, relation yield, rank, solving,
-recovery, and total cost.
+coordinate. These predicates are necessary, not sufficient or unique.
+`TASK-025` then kernel-checked explicit infinity propagation. The nested local
+mask family contracts conditionally from 377 to 129, then 69, then 36; the
+independent boundary-only refinement contracts 129 to 60 and is not the
+distance-three count. Over any field, each internal infinity slot forces one
+of six frozen prefix or six frozen suffix obstruction values to vanish, with
+maximum frozen stage five. Under affine-input, endpoint, and
+`BalancedPropagatedRegular` assumptions, every solution has the empty mask and
+both exact chart covers reduce to the single affine chart. The source-stage
+bridge still requires injective base change into an algebraically closed target
+and separately assumed mapped-target regularity. Symbolic nonzeroness,
+nonemptiness, density, probability, genericity, witness uniqueness, and
+source-to-target regularity transfer are not proved. The remaining M16 gap is
+a usable nonempty regular locus or separately authorized orchestration of its
+exceptional complement, followed by relation yield, rank, solving, recovery,
+and total cost.
 `TASK-008` remains parked because no hypothesis proposal has quality-cleared.
 
 The Engine's bounded-exploration capability is
 **{str(engine_gates['exploration_authorized']).lower()}**, while the current decision's experiment
 authorization is **{str(phase['experiments_authorized']).lower()}** and the promotion gate is
 **{str(engine_gates['promotion_authorized']).lower()}**. `GLV-SEMAEV-ITER-001` is complete; its
-certificates and kernel-checked identities authorize no hypothesis run. Closing `TASK-024`
-authorizes no direct-S17 expansion or evaluation, production mask enumeration,
-sufficient mask-selection claim, solver input or run, cost inference, target
-computation, or route promotion. Any later experiment needs
+certificates and kernel-checked identities authorize no hypothesis run. Closing `TASK-025`
+authorizes no claim of generic regularity, witness uniqueness, automatic
+mapped-target regularity, direct-S17 expansion or evaluation, production mask
+enumeration, solver input or run, cost inference, target computation, or route
+promotion. Any later experiment needs
 a new dated decision plus the normal fixed budgets, dependency order, and retained terminal
 outcome.
 

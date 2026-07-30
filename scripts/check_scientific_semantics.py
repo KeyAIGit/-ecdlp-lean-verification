@@ -73,6 +73,14 @@ M16_STRATA_ARTIFACT_PATH = (
 M16_STRATA_ARTIFACT_SHA256 = (
     "54b0f3c5f2f1880b1f805911df21b72e5427b18871f14907ac17a1d8b48bdd39"
 )
+M16_PROPAGATION_CLAIM_ID = "SC-PKC-M16-INFINITY-PROPAGATION-RESULT"
+M16_PROPAGATION_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_infinity_propagation/artifact.json"
+)
+M16_PROPAGATION_ARTIFACT_SHA256 = (
+    "9330603ba1f0af9ee4902c263200709e2ec6f8c50d8d7eaab3b55bcba78e388f"
+)
 
 PETIT_WEIL_CONTRADICTIONS = (
     re.compile(
@@ -170,7 +178,7 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 29,
+        "source_claims": 30,
         "cells": 7,
         "seed_eligible_cells": 2,
         "desk_decisions": 3,
@@ -772,6 +780,100 @@ def validate_semantics(
         problems.append(
             "M16 cell must retain its infinity-stratum kernel certificate"
         )
+    propagation_claim = typed_claims.get(M16_PROPAGATION_CLAIM_ID, {})
+    if propagation_claim.get("read_status") != "certificate_replayed":
+        problems.append(
+            "M16 infinity-propagation assurance must remain certificate_replayed"
+        )
+    if (
+        propagation_claim.get("artifact_sha256")
+        != M16_PROPAGATION_ARTIFACT_SHA256
+    ):
+        problems.append("M16 infinity-propagation artifact hash binding drifted")
+    if propagation_claim.get("evidence_path") != M16_PROPAGATION_ARTIFACT_PATH:
+        problems.append("M16 infinity-propagation evidence path drifted")
+    propagation_statement = propagation_claim.get("statement", "")
+    for token, label in (
+        ("TASK-023 chart cover after TASK-024", "upstream propagation scope"),
+        ("377 interior separated masks to 129", "distance-two count"),
+        ("distance-three HValue", "distance-three obstruction"),
+        ("nested family to 69", "distance-three count"),
+        ("leaves 36", "combined boundary count"),
+        ("129-mask distance-two family leaves 60", "boundary-only count"),
+        ("60 is not the distance-three count", "count-branch separation"),
+        ("FrozenProjectiveChain", "projective-chain premise"),
+        ("over any Field", "base-field propagation"),
+        ("six prefix and six suffix", "balanced obstruction split"),
+        ("maximum frozen stage five", "balanced stage ceiling"),
+        ("BalancedPropagatedRegular", "balanced regularity"),
+        ("every solution mask is empty", "empty-mask conclusion"),
+        ("single empty-mask affine chart", "single-chart conclusion"),
+        ("injective base change", "source-stage injective map"),
+        ("algebraically closed target", "source-stage target field"),
+        ("mapped target inputs and target", "mapped-target regularity location"),
+    ):
+        if token not in propagation_statement:
+            problems.append(
+                f"M16 infinity-propagation claim must retain {label}"
+            )
+    propagation_boundary = propagation_claim.get("boundary", "")
+    for token, label in (
+        ("kernel_bound_non_run_certificate", "kernel-bound assurance"),
+        ("source_independence is not_established", "source independence"),
+        ("calibration is excluded_nonexperimental", "calibration"),
+        ("card_gapTwoInteriorInfinityMask", "distance-two trust disclosure"),
+        ("card_gapThreeInteriorInfinityMask", "distance-three trust disclosure"),
+        (
+            "card_boundaryPropagatedInfinityMask",
+            "boundary-only trust disclosure",
+        ),
+        (
+            "card_boundaryGapThreeInfinityMask",
+            "combined-boundary trust disclosure",
+        ),
+        ("compiler_trusted_native_decide", "native trust"),
+        ("Lean.ofReduceBool", "compiler-trust marker"),
+        ("require no algebraic closure", "base-field scope"),
+        ("source-stage bridge still requires", "source-stage field boundary"),
+        ("Mapped-target balanced regularity", "mapped-target assumption"),
+        (
+            "not established automatically by source-field computation",
+            "no automatic regularity transfer",
+        ),
+        ("Symbolic nonzeroness", "no symbolic-nonzero overclaim"),
+        ("nonemptiness", "no nonempty-locus overclaim"),
+        ("genericity", "no generic-locus overclaim"),
+        ("does not prove uniqueness", "no uniqueness overclaim"),
+        ("descent of target witnesses", "no target-witness descent"),
+        ("not enumerated or materialized", "no production enumeration"),
+        ("open_non_executable", "open non-executable cell"),
+        ("CQ-SEMAEV-S17-SYSTEM-COST remains partial", "partial cost"),
+        ("relation independence", "no relation independence"),
+        ("yield", "no yield claim"),
+        ("rank", "no rank claim"),
+        ("solver input or run", "no solver input or run"),
+        ("reduced ECDLP complexity", "no complexity overclaim"),
+        ("hypothesis retention", "no hypothesis retention"),
+        ("experiment authorization", "no experiment authorization"),
+        ("route rejection", "no route rejection"),
+        ("route promotion", "no route promotion"),
+        ("zero_retention_success", "zero retention"),
+    ):
+        if token not in propagation_boundary:
+            problems.append(
+                f"M16 infinity-propagation claim must retain {label}"
+            )
+    if M16_PROPAGATION_CLAIM_ID not in m16_cell.get(
+        "cost_quantity", {}
+    ).get("source_claim_ids", []):
+        problems.append(
+            "M16 cost quantity must retain its infinity-propagation "
+            "kernel certificate"
+        )
+    if M16_PROPAGATION_CLAIM_ID not in m16_cell.get("source_claim_ids", []):
+        problems.append(
+            "M16 cell must retain its infinity-propagation kernel certificate"
+        )
     m16_barrier = typed_barriers.get(
         "B-PKC-M16-COMPLETE-COST-BRIDGE", {}
     )
@@ -835,6 +937,13 @@ def validate_semantics(
     ):
         problems.append(
             "M16 complete-cost barrier must retain its infinity-stratum "
+            "kernel certificate"
+        )
+    if M16_PROPAGATION_CLAIM_ID not in m16_barrier.get(
+        "source_claim_ids", []
+    ):
+        problems.append(
+            "M16 complete-cost barrier must retain its infinity-propagation "
             "kernel certificate"
         )
     m16_scope = m16_barrier.get("exact_scope", "")
@@ -923,8 +1032,48 @@ def validate_semantics(
             "necessity-only boundary",
         ),
         (
-            "mask selection or finite-cover orchestration",
-            "remaining finite-cover blocker",
+            "TASK-025 kernel-checks",
+            "TASK-025 propagation result",
+        ),
+        (
+            "377 to 129 after distance two",
+            "distance-two propagated count",
+        ),
+        (
+            "to 69 after distance three",
+            "distance-three propagated count",
+        ),
+        (
+            "to 36 after also excluding",
+            "combined propagated count",
+        ),
+        (
+            "separate boundary-only refinement contracts 129 to 60",
+            "independent boundary-only count",
+        ),
+        (
+            "Six prefix and six suffix",
+            "balanced obstruction split",
+        ),
+        (
+            "single affine chart",
+            "conditional single-chart result",
+        ),
+        (
+            "source-stage bridge still requires",
+            "source-stage algebraic-closure boundary",
+        ),
+        (
+            "source-field computation does not automatically establish",
+            "mapped-target regularity boundary",
+        ),
+        (
+            "Symbolic nonzeroness, nonemptiness",
+            "conditional-locus boundary",
+        ),
+        (
+            "usable regular locus or orchestrating its exceptional complement",
+            "remaining regular-locus blocker",
         ),
     ):
         if token not in m16_scope:
@@ -953,9 +1102,12 @@ def validate_semantics(
     for token in (
         "exact TASK-023 affine/infinity chart-polynomial cover",
         "completed TASK-024 necessary infinity-stratum filter",
-        "mask selection or finite-cover orchestration",
-        "without enumerating all 2^14 masks by default",
-        "without sweeping all 987 separated masks by default",
+        "completed TASK-025 conditional single-affine-chart theorem",
+        "symbolic nonzeroness and nonemptiness",
+        "mapped-target balanced regular locus",
+        "orchestration of its exceptional complement",
+        "without enumerating all 2^14 masks",
+        "987, 377, 129, 69, 60, or 36",
         "usable yield and rank",
         "solving, recovery, and sparse-linear-algebra costs",
         "matched generic baseline",
@@ -1040,8 +1192,53 @@ def validate_semantics(
         ),
         (
             "relation_action",
-            "mask selection or finite-cover orchestration",
-            "open finite-cover blocker",
+            "TASK-025 kernel-checks",
+            "TASK-025 propagation result",
+        ),
+        (
+            "relation_action",
+            "nested local reductions 377 to 129 to 69 to 36",
+            "nested local mask counts",
+        ),
+        (
+            "relation_action",
+            "independent boundary-only branch 129 to 60",
+            "independent boundary-only count",
+        ),
+        (
+            "relation_action",
+            "over any field",
+            "base-field propagation",
+        ),
+        (
+            "relation_action",
+            "BalancedPropagatedRegular",
+            "balanced regularity",
+        ),
+        (
+            "relation_action",
+            "single affine chart",
+            "conditional single-chart result",
+        ),
+        (
+            "relation_action",
+            "source-stage bridge additionally assumes",
+            "source-stage field boundary",
+        ),
+        (
+            "relation_action",
+            "source-field computation does not automatically establish",
+            "mapped-target regularity boundary",
+        ),
+        (
+            "relation_action",
+            "symbolic nonzeroness and nonemptiness",
+            "open regular-locus blocker",
+        ),
+        (
+            "relation_action",
+            "orchestration of its exceptional complement",
+            "open exceptional-complement blocker",
         ),
         (
             "boundary",
@@ -1085,12 +1282,52 @@ def validate_semantics(
         ),
         (
             "boundary",
-            "not a sufficient or unique mask-selection algorithm",
-            "no sufficiency overclaim",
+            "exact conditional infinity propagation",
+            "exact propagation result",
         ),
         (
             "boundary",
-            "counts do not establish independent dimensions or relations",
+            "377 to 129 to 69 to 36",
+            "nested local mask counts",
+        ),
+        (
+            "boundary",
+            "independent boundary-only branch 129 to 60",
+            "independent boundary-only count",
+        ),
+        (
+            "boundary",
+            "exact single empty-mask affine chart",
+            "conditional single-chart result",
+        ),
+        (
+            "boundary",
+            "not a unique witness",
+            "no witness-uniqueness overclaim",
+        ),
+        (
+            "boundary",
+            "source-stage bridge still requires",
+            "source-stage field boundary",
+        ),
+        (
+            "boundary",
+            "source-field computation does not automatically establish",
+            "mapped-target regularity boundary",
+        ),
+        (
+            "boundary",
+            "Symbolic nonzeroness, nonemptiness",
+            "conditional regular-locus boundary",
+        ),
+        (
+            "boundary",
+            "genericity are not proved",
+            "no genericity overclaim",
+        ),
+        (
+            "boundary",
+            "evidence of independent dimensions or relations",
             "no raw-count independence overclaim",
         ),
         ("boundary", "zero_retention_success", "zero retention"),

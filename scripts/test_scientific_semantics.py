@@ -417,12 +417,13 @@ class ScientificSemanticTests(unittest.TestCase):
             "raw variable count",
             "fixed-mask variable count",
             "chart degree ceilings",
-            "open finite-cover blocker",
+            "open regular-locus blocker",
             "exact literal finite family",
             "exact chart-cover result",
             "no direct-S17 overclaim",
             "no production mask enumeration",
-            "no sufficiency overclaim",
+            "no genericity overclaim",
+            "no witness-uniqueness overclaim",
             "no raw-count independence overclaim",
             "zero retention",
             "no hypothesis retention",
@@ -547,12 +548,13 @@ class ScientificSemanticTests(unittest.TestCase):
             "raw variable count",
             "fixed-mask variable count",
             "chart degree ceilings",
-            "open finite-cover blocker",
+            "open regular-locus blocker",
             "exact literal finite family",
             "exact chart-cover result",
             "no direct-S17 overclaim",
             "no production mask enumeration",
-            "no sufficiency overclaim",
+            "no genericity overclaim",
+            "no witness-uniqueness overclaim",
             "no raw-count independence overclaim",
             "zero retention",
             "no hypothesis retention",
@@ -856,7 +858,17 @@ class ScientificSemanticTests(unittest.TestCase):
             "separated mask reduction",
             "conditional interior mask count",
             "necessity-only boundary",
-            "remaining finite-cover blocker",
+            "TASK-025 propagation result",
+            "distance-two propagated count",
+            "distance-three propagated count",
+            "combined propagated count",
+            "independent boundary-only count",
+            "balanced obstruction split",
+            "conditional single-chart result",
+            "source-stage algebraic-closure boundary",
+            "mapped-target regularity boundary",
+            "conditional-locus boundary",
+            "remaining regular-locus blocker",
         ):
             self.assertIn(
                 f"M16 complete-cost barrier must retain {boundary}",
@@ -869,11 +881,24 @@ class ScientificSemanticTests(unittest.TestCase):
             "TASK-024 infinity-stratum result",
             "separated mask reduction",
             "conditional interior mask count",
-            "open finite-cover blocker",
+            "TASK-025 propagation result",
+            "nested local mask counts",
+            "independent boundary-only count",
+            "base-field propagation",
+            "balanced regularity",
+            "conditional single-chart result",
+            "source-stage field boundary",
+            "mapped-target regularity boundary",
+            "open regular-locus blocker",
+            "open exceptional-complement blocker",
             "exact chart-cover result",
             "no production mask enumeration",
             "exact infinity-stratum result",
-            "no sufficiency overclaim",
+            "exact propagation result",
+            "no witness-uniqueness overclaim",
+            "conditional regular-locus boundary",
+            "no genericity overclaim",
+            "no raw-count independence overclaim",
         ):
             self.assertIn(f"M16 cell must retain {boundary}", problems)
 
@@ -968,6 +993,117 @@ class ScientificSemanticTests(unittest.TestCase):
             self.assertTrue(
                 any(
                     "M16 infinity-stratum claim must retain" in problem
+                    and boundary in problem
+                    for problem in problems
+                )
+            )
+
+    def test_m16_infinity_propagation_cannot_drift(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim_id = "SC-PKC-M16-INFINITY-PROPAGATION-RESULT"
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["source_claim_ids"].remove(claim_id)
+        cell["cost_quantity"]["source_claim_ids"].remove(claim_id)
+        barrier = next(
+            item
+            for item in typed["barriers"]
+            if item["id"] == "B-PKC-M16-COMPLETE-COST-BRIDGE"
+        )
+        barrier["source_claim_ids"].remove(claim_id)
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == claim_id
+        )
+        claim["artifact_sha256"] = "0" * 64
+        claim["evidence_path"] = "wrong/artifact.json"
+        claim["statement"] = (
+            "The 60 masks are the distance-three family and one chart is unique."
+        )
+        claim["boundary"] = (
+            "The regular locus is generic, source regularity transfers "
+            "automatically, and a solver is authorized."
+        )
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "M16 cell must retain its infinity-propagation kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 cost quantity must retain its infinity-propagation "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 complete-cost barrier must retain its infinity-propagation "
+            "kernel certificate",
+            problems,
+        )
+        self.assertIn(
+            "M16 infinity-propagation artifact hash binding drifted",
+            problems,
+        )
+        self.assertIn(
+            "M16 infinity-propagation evidence path drifted",
+            problems,
+        )
+        for boundary in (
+            "upstream propagation scope",
+            "distance-two count",
+            "distance-three obstruction",
+            "distance-three count",
+            "combined boundary count",
+            "boundary-only count",
+            "count-branch separation",
+            "projective-chain premise",
+            "base-field propagation",
+            "balanced obstruction split",
+            "balanced stage ceiling",
+            "balanced regularity",
+            "empty-mask conclusion",
+            "single-chart conclusion",
+            "source-stage injective map",
+            "source-stage target field",
+            "mapped-target regularity location",
+            "kernel-bound assurance",
+            "source independence",
+            "calibration",
+            "distance-two trust disclosure",
+            "distance-three trust disclosure",
+            "boundary-only trust disclosure",
+            "combined-boundary trust disclosure",
+            "native trust",
+            "compiler-trust marker",
+            "base-field scope",
+            "source-stage field boundary",
+            "mapped-target assumption",
+            "no automatic regularity transfer",
+            "no symbolic-nonzero overclaim",
+            "no nonempty-locus overclaim",
+            "no generic-locus overclaim",
+            "no uniqueness overclaim",
+            "no target-witness descent",
+            "no production enumeration",
+            "open non-executable cell",
+            "partial cost",
+            "no relation independence",
+            "no yield claim",
+            "no rank claim",
+            "no solver input or run",
+            "no complexity overclaim",
+            "no hypothesis retention",
+            "no experiment authorization",
+            "no route rejection",
+            "no route promotion",
+            "zero retention",
+        ):
+            self.assertTrue(
+                any(
+                    "M16 infinity-propagation claim must retain" in problem
                     and boundary in problem
                     for problem in problems
                 )

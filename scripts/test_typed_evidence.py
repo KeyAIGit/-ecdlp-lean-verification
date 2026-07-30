@@ -44,7 +44,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 29,
+                "source_claims": 30,
                 "target_properties": 5,
                 "mechanisms": 7,
                 "cells": 7,
@@ -332,6 +332,14 @@ class TypedEvidenceTests(unittest.TestCase):
         )
         self.assertIn(
             "SC-PKC-M16-INFINITY-STRATA-RESULT",
+            m16["cost_quantity"]["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-INFINITY-PROPAGATION-RESULT",
+            m16["source_claim_ids"],
+        )
+        self.assertIn(
+            "SC-PKC-M16-INFINITY-PROPAGATION-RESULT",
             m16["cost_quantity"]["source_claim_ids"],
         )
         self.assertFalse(
@@ -743,6 +751,69 @@ class TypedEvidenceTests(unittest.TestCase):
             "zero_retention_success",
         ):
             self.assertIn(token, strata_claim["boundary"])
+        propagation_claim = claims[
+            "SC-PKC-M16-INFINITY-PROPAGATION-RESULT"
+        ]
+        self.assertEqual(
+            "experiments/engine/"
+            "pkc_smooth_m16_infinity_propagation/artifact.json",
+            propagation_claim["evidence_path"],
+        )
+        self.assertEqual(
+            "9330603ba1f0af9ee4902c263200709e2"
+            "ec6f8c50d8d7eaab3b55bcba78e388f",
+            propagation_claim["artifact_sha256"],
+        )
+        self.assertEqual(
+            "certificate_replayed",
+            propagation_claim["read_status"],
+        )
+        for token in (
+            "TASK-025 propagation",
+            "377 interior separated masks to 129",
+            "nested family to 69",
+            "leaves 36",
+            "boundary-near obstructions to the 129-mask",
+            "leaves 60",
+            "60 is not the distance-three count",
+            "over any Field",
+            "six prefix and six suffix values",
+            "maximum frozen stage five",
+            "BalancedPropagatedRegular",
+            "single empty-mask affine chart",
+            "injective base change into an algebraically closed target",
+            "mapped target inputs and target",
+        ):
+            self.assertIn(token, propagation_claim["statement"])
+        for token in (
+            "kernel_bound_non_run_certificate",
+            "source_independence is not_established",
+            "calibration is excluded_nonexperimental",
+            "card_gapTwoInteriorInfinityMask",
+            "card_gapThreeInteriorInfinityMask",
+            "card_boundaryPropagatedInfinityMask",
+            "card_boundaryGapThreeInfinityMask",
+            "compiler_trusted_native_decide",
+            "Lean.ofReduceBool",
+            "require no algebraic closure",
+            "source-stage bridge still requires",
+            "Mapped-target balanced regularity",
+            "not established automatically by source-field computation",
+            "Symbolic nonzeroness, nonemptiness, density, probability, and genericity",
+            "does not prove uniqueness",
+            "realizability of any nonempty propagated mask",
+            "descent of target witnesses",
+            "not enumerated or materialized",
+            "open_non_executable",
+            "CQ-SEMAEV-S17-SYSTEM-COST remains partial",
+            "relation independence, yield, rank, solving, recovery, and total cost",
+            "no solver input or run",
+            "experiment authorization",
+            "route rejection",
+            "route promotion",
+            "zero_retention_success",
+        ):
+            self.assertIn(token, propagation_claim["boundary"])
         barriers = {
             item["id"]: item for item in state["barriers"]
         }
@@ -784,6 +855,10 @@ class TypedEvidenceTests(unittest.TestCase):
             "SC-PKC-M16-INFINITY-STRATA-RESULT",
             m16_barrier["source_claim_ids"],
         )
+        self.assertIn(
+            "SC-PKC-M16-INFINITY-PROPAGATION-RESULT",
+            m16_barrier["source_claim_ids"],
+        )
         for token in (
             "TASK-019 kernel-checks",
             "zero forms",
@@ -811,7 +886,17 @@ class TypedEvidenceTests(unittest.TestCase):
             "16384 masks to 987 separated masks",
             "377 interior masks",
             "necessary, not sufficient or unique",
-            "mask selection or finite-cover orchestration",
+            "TASK-025 kernel-checks",
+            "377 to 129 after distance two",
+            "to 69 after distance three",
+            "to 36 after also excluding",
+            "separate boundary-only refinement contracts 129 to 60",
+            "Six prefix and six suffix",
+            "single affine chart",
+            "source-stage bridge still requires",
+            "source-field computation does not automatically establish",
+            "Symbolic nonzeroness, nonemptiness",
+            "usable regular locus or orchestrating its exceptional complement",
         ):
             self.assertIn(token, m16_barrier["exact_scope"])
         self.assertNotIn(
@@ -827,9 +912,12 @@ class TypedEvidenceTests(unittest.TestCase):
         for token in (
             "exact TASK-023 affine/infinity chart-polynomial cover",
             "completed TASK-024 necessary infinity-stratum filter",
-            "mask selection or finite-cover orchestration",
-            "without enumerating all 2^14 masks by default",
-            "without sweeping all 987 separated masks by default",
+            "completed TASK-025 conditional single-affine-chart theorem",
+            "symbolic nonzeroness and nonemptiness",
+            "mapped-target balanced regular locus",
+            "orchestration of its exceptional complement",
+            "without enumerating all 2^14 masks",
+            "987, 377, 129, 69, 60, or 36",
             "usable yield and rank",
             "solving, recovery, and sparse-linear-algebra costs",
             "matched generic baseline",
@@ -871,8 +959,29 @@ class TypedEvidenceTests(unittest.TestCase):
             m16["relation_action"],
         )
         self.assertIn("377 interior masks", m16["relation_action"])
+        self.assertIn("TASK-025 kernel-checks", m16["relation_action"])
+        self.assertIn("377 to 129 to 69 to 36", m16["relation_action"])
         self.assertIn(
-            "mask selection or finite-cover orchestration",
+            "independent boundary-only branch 129 to 60",
+            m16["relation_action"],
+        )
+        self.assertIn("over any field", m16["relation_action"])
+        self.assertIn("BalancedPropagatedRegular", m16["relation_action"])
+        self.assertIn("single affine chart", m16["relation_action"])
+        self.assertIn(
+            "injective base change into an algebraically closed target",
+            m16["relation_action"],
+        )
+        self.assertIn(
+            "balanced regularity for the mapped target data",
+            m16["relation_action"],
+        )
+        self.assertIn(
+            "symbolic nonzeroness and nonemptiness of a usable regular locus",
+            m16["relation_action"],
+        )
+        self.assertIn(
+            "orchestration of its exceptional complement",
             m16["relation_action"],
         )
         self.assertIn(
@@ -898,12 +1007,49 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertIn("exact necessary infinity-stratum pruning", m16["boundary"])
         self.assertIn("16384 masks to 987 separated masks", m16["boundary"])
         self.assertIn("377 interior masks", m16["boundary"])
+        self.assertIn("exact conditional infinity propagation", m16["boundary"])
         self.assertIn(
-            "not a sufficient or unique mask-selection algorithm",
+            "nested local reductions 377 to 129 to 69 to 36",
             m16["boundary"],
         )
         self.assertIn(
-            "counts do not establish independent dimensions or relations",
+            "independent boundary-only branch 129 to 60",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "exact single empty-mask affine chart",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "not a unique witness",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "direct propagation applies over any field",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "source-stage bridge still requires injective base change",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "separately assumed mapped-target regularity",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "Symbolic nonzeroness, nonemptiness, density, probability, and genericity",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "source-field computation does not automatically establish mapped regularity",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "not an expanded direct S17 polynomial",
+            m16["boundary"],
+        )
+        self.assertIn(
+            "evidence of independent dimensions or relations",
             m16["boundary"],
         )
         self.assertIn("zero_retention_success", m16["boundary"])

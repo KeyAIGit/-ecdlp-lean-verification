@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 305,
-    "ledger_rows": 305,
+    "theorems": 306,
+    "ledger_rows": 306,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -29,11 +29,11 @@
     "selected_explorations": 0,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1135,
+    "edges": 1139,
     "by_edge_type": {
-      "imports": 503,
-      "member_of": 305,
-      "grounded_in_source_claim": 48,
+      "imports": 505,
+      "member_of": 306,
+      "grounded_in_source_claim": 49,
       "requires_foundation": 41,
       "decision_grounded_in": 25,
       "supports": 24,
@@ -193,13 +193,14 @@
       "Mathlib exact homogenization + row-homogeneous Sylvester determinant + fixed-degree projective resultant induction": 1,
       "literal finite guarded `MvPolynomial` family + TASK-021 chain equivalence + injective base change; `native_decide` only for two finite-cardinality facts": 1,
       "exact two-chart normalization + literal fixed-mask `MvPolynomial` family + TASK-021/TASK-022 equivalences + injective base change; `native_decide` only for `card_chartEquation": 1,
-      "local projective `H` identities + exact TASK-023 cover restriction + path-independent-set counts; `native_decide` only for the three cardinalities": 1
+      "local projective `H` identities + exact TASK-023 cover restriction + path-independent-set counts; `native_decide` only for the three cardinalities": 1,
+      "exact local substitution + fixed-degree projective-resultant forward implication + balanced prefix/suffix frozen specializations + exact chart-cover restriction; `native_decide` only for the four mask cardinalities": 1
     },
     "by_area": {
       "curve-torsion": 152,
       "primality": 55,
       "other": 33,
-      "generic-hardness": 29,
+      "generic-hardness": 30,
       "protocol-soundness": 23,
       "attack-resistance": 7,
       "reduction": 5,
@@ -6324,6 +6325,26 @@
       "family_id": "family-other",
       "dependency_depth": 6,
       "gated": true
+    },
+    {
+      "id": "thm-305",
+      "name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInfinity_forces_det_zero`, `frozenChartCover_iff_gapTwoInteriorChartCover`, `card_gapTwoInteriorInfinityMask`, `frozenChartSystem_gapThreeInfinity_forces_HValue_zero`, `frozenChartCover_iff_gapThreeInteriorChartCover`, `card_gapThreeInteriorInfinityMask`, `frozenChartSystem_slotOneInfinity_forces_HValue_zero`, `frozenChartSystem_slotTwelveInfinity_forces_HValue_zero`, `frozenChartCover_iff_boundaryPropagatedChartCover`, `card_boundaryPropagatedInfinityMask`, `frozenChartCover_iff_boundaryGapThreeChartCover`, `card_boundaryGapThreeInfinityMask`, `specializeOver_frozenC_eq_zero_of_projectiveChain`, `propagatedPrefixValue_zero`, `balancedSuffixValue_zero`, `frozenChartSystem_internalInfinity_forces_prefix_zero`, `frozenChartSystem_balancedSuffixInfinity_forces_zero`, `frozenChartSystem_balancedPropagatedRegular_mask_eq_empty`, `frozenChartCover_iff_affineChartCover_of_balancedPropagatedRegular`, `frozenChartPolynomialCover_iff_affine_of_balancedPropagatedRegular`, `frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular` and supporting declarations",
+      "short_name": "frozenChartSystem_gapTwoInfinity_forces_det_zero`,",
+      "module": "Ecdlp.Proved.FrozenProjectiveInfinityPropagation",
+      "modules": [
+        "Ecdlp.Proved.FrozenProjectiveInfinityPropagation"
+      ],
+      "file": "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean",
+      "files": [
+        "Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean"
+      ],
+      "claim": "Conditional propagation of isolated infinity slots and exact balanced single-affine-chart reduction (under affine external inputs and nonzero endpoint determinants, distance-two infinity pairs force explicit consecutive-input projective determinants and reduce the 377 interior separated masks to 129 under the named uniform determinant guards. Distance-three pairs force literal three-input `HValue` equations, giving 69 masks; adding the two boundary-near `HValue` guards gives 36. The independent boundary-only branch gives 60 from 129 and is not a distance-three result. Every internal infinity slot also forces an explicit lower-stage frozen prefix or suffix specialization to vanish. Six prefix and six suffix obstructions cover slots 1 through 12 with maximum frozen stage five. A projective frozen chain implies the corresponding frozen specialization over any field, so affine inputs, nonzero endpoints, and pointwise nonzero balanced obstructions force the infinity mask to be empty and make both the full chart cover and literal chart-polynomial cover exactly the single affine chart. After the existing injective algebraically closed base change, the source frozen stage-14 equation has the same conditional single-chart equivalence; target witnesses are not asserted to descend. Honest scope: the uniform local guards include endpoint-redundant cases and define a slightly smaller locus than the maximal one. Symbolic nonzeroness, nonemptiness, density, probability, and genericity of the balanced regular locus are not proved. One chart does not mean one witness, one relation, independent relations, solver readiness, improved yield or rank, lower solving degree, reduced memory/runtime/total cost, exact-target computation, reduced ECDLP complexity, or an ECDLP attack. The four mask cardinalities `129/69/60/36` are compiler-trusted through `native_decide`; the propagation, one-way resultant, mask-empty, cover-equivalence, and source-bridge theorems use the standard Lean/Mathlib trust base)",
+      "method": "exact local substitution + fixed-degree projective-resultant forward implication + balanced prefix/suffix frozen specializations + exact chart-cover restriction; `native_decide` only for the four mask cardinalities",
+      "status": "proved",
+      "area": "generic-hardness",
+      "family_id": "family-generic-hardness",
+      "dependency_depth": 7,
+      "gated": true
     }
   ],
   "barriers": [
@@ -6970,6 +6991,7 @@
         "Maintain the completed TASK-022 non-run kernel binding for the exact literal finite MvPolynomial family of the frozen stage-14 predicate after injective base change: one GuardVar assignment satisfies every GuardedEquation, fourteen raw projective slots give 56 scalar variables, fifteen H equations plus fourteen nonzero-pair guards give 29 equation-family members, all of total degree at most four. This is not a parallel recursive syntax. Keep chart/gauge redundancy, relation independence, yield, rank, solving, recovery, cost, experiments, and route promotion downstream and non-authorizing.",
         "Maintain the completed TASK-023 non-run kernel binding for the exact affine/infinity chart-polynomial cover: each fixed InfinityMask I has exactly 14 - I.card variables and fifteen literal H equations with degree ceilings 2/4/2, and the existential cover is equivalent to the TASK-021 chain, TASK-022 guarded system, and source frozen stage-14 predicate after injective base change. Keep production mask enumeration, mask selection, relation independence, yield, rank, solving, recovery, cost, experiments, and route promotion downstream and non-authorizing.",
         "Maintain the completed TASK-024 non-run kernel binding for necessary infinity-stratum pruning: affine external inputs restrict the exact cover from 16384 masks to 987 separated masks, and nonzero endpoint determinants conditionally restrict it to 377 interior masks. Keep sufficiency, unique mask selection, production enumeration, relation independence, yield, rank, solving, recovery, cost, experiments, and route promotion downstream and non-authorizing.",
+        "Maintain the completed TASK-025 non-run kernel binding for explicit infinity propagation: the nested local mask counts are 377 to 129 to 69 to 36, while the independent boundary-only refinement is 129 to 60; over any field, six prefix and six suffix obstruction values cover all twelve internal infinity slots, and endpoint plus BalancedPropagatedRegular assumptions make the empty-mask affine chart exact. The source-stage bridge separately requires injective base change into an algebraically closed target and mapped-target regularity. Keep symbolic nonzeroness, nonemptiness, genericity, exceptional-complement orchestration, witness uniqueness, relation independence, yield, rank, solving, recovery, cost, experiments, and route promotion downstream and non-authorizing.",
         "Maintain canonical provenance and regenerate affected views without changing the recorded claim boundary."
       ],
       "forbidden_work": [
@@ -6983,6 +7005,7 @@
         "Treat the completed TASK-022 guarded frozen representation as an expanded direct-S17 polynomial, base-field descent theorem, independent relation system, solving-cost result, or execution authorization.",
         "Treat the completed TASK-023 exact chart cover as a production mask-selection algorithm, enumeration of all 2^14 masks, base-field descent theorem, independent relation system, solver run, solving-cost result, or execution authorization.",
         "Treat the completed TASK-024 necessary infinity-stratum filter as sufficient or unique mask selection, a production mask enumeration, an independent relation system, a solver run, a solving-cost result, or execution authorization.",
+        "Treat the completed TASK-025 conditional single-affine-chart theorem as proof that its balanced regular locus is symbolically nonzero, nonempty, dense, probable, or generic; as automatic mapped-target regularity from source-field computation; as witness uniqueness or target-witness descent; or as a production mask selector, solver result, cost result, ECDLP shortcut, or execution authorization.",
         "Treat a constant-factor result, structural identity, or toy measurement as a subgeneric attack.",
         "Delete or rewrite provenance-bearing assets without an inventory, reference scan, and documented restore path."
       ],
@@ -7507,10 +7530,10 @@
           "Composition, solving, and recovery costs improve the full attack."
         ],
         "known_cost": "No reliable project estimate; the existing six-variable toy presentation is explicitly non-faithful and descriptive.",
-        "current_evidence": "The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-curve realizations. In the second construction the auxiliary curve only shares the base field with the target; a self-isogeny of the auxiliary curve defines the root map. The paper explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. WCC 2017 adds bounded m=2 practicality evidence on selected small primes and a distinct p-plus-one trace extension; it cannot be transferred quantitatively to m=16 or substituted for the auxiliary curve. Historical P4 did not implement either PKC construction and remains only an inconclusive negative control; it is not evidence against the faithful route. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 independently replayed an exact set-theoretic homogeneous projective S3-tree bridge, every named exceptional lift and identity stratum, deterministic supplied-coordinate recovery, and raw and compressed secp256k1 GLV lift-sign checks. TASK-018 freezes the recursive projective S17 contract, including fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, coefficient-map and algebraic-closure reflection variants, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and its end-to-end common-root corollary. Formal-degree drops, zero forms, affine witnesses, and [1:0] are retained without primitive/content, monic, or actual-degree normalization. The TASK-019 non-run binding is PKC-SMOOTH-M16-PROJECTIVE-RESULTANT-KERNEL-001 with SHA-256 0b9d8b48953aae2defa28ade67992084cecca3a01b43490bc338a0fd5ce97c5a and typed claim SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT. TASK-020 kernel-checks the actual recursive frozen C_r family, exact same-field and coefficient-map successor specialization at formal degrees (2^(r-2),2), coefficient unit 1, affine [y:1] and infinity [1:0] output branches, the uniform predecessor output-degree bound, and the unconditional one-step resultant/common-projective-root equivalence. Its non-run binding is PKC-SMOOTH-M16-FROZEN-CR-SPECIALIZATION-001 with SHA-256 d025053b9f882c88086fd5f04bcbd9627c72987e263e9b55af6024794305acbe and typed claim SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT. TASK-021 kernel-checks exact declared-degree projective evaluation and the universal all-stage frozen witness-chain equivalence. At C16 the chain has fourteen valid intermediate projective slots, [1:0] is allowed throughout, and [0:0] is excluded. Its non-run binding is PKC-SMOOTH-M16-FROZEN-PROJECTIVE-WITNESS-001 with SHA-256 89c645545d89334473d51654a41ff7ec2364857d034c64ce08d505337fa1e2d4 and typed claim SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT. TASK-022 now kernel-checks an exact literal finite MvPolynomial family for the frozen stage-14 predicate after an injective source-to-target field map: one GuardVar assignment satisfies every GuardedEquation. This is exactly equivalent to the recursive chain, not a parallel recursive syntax. Four raw scalars U,V,A,B for each of fourteen projective witness slots give 56 variables; fifteen literal H equations and fourteen guards give 29 equation-family members; every equation has total degree at most four; [0:0] is excluded and [1:0] is retained. Its non-run binding is PKC-SMOOTH-M16-GUARDED-PROJECTIVE-SYSTEM-001 with SHA-256 3445da55b44a71d0f40ee60206c90f2ef1798c28abd125542ce3acbeeb8e1d46 and typed claim SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT. The source binding is 37feeef48e77437b44b6ae6dd4750782e19ecd824e3ea2e73b657e2fb8296fb9. TASK-023 now kernel-checks the exact affine/infinity chart-polynomial cover: each fixed InfinityMask I uses exactly 14 - I.card affine variables, no guard equations, and fifteen literal H equations with degree ceilings 2/4/2. The existential cover is equivalent to the projective chain, guarded system, and source frozen stage-14 predicate after the existing injective base change; [1:0] is retained and [0:0] is never introduced. The 2^14 logical masks are not enumerated or materialized. Its non-run binding is PKC-SMOOTH-M16-EXACT-CHART-COVER-001 with SHA-256 934809fabbb8c98c5ed9356a0a1f3367a23f8fbc1bc86239069942537fd678ed and typed claim SC-PKC-M16-EXACT-CHART-COVER-RESULT. The TASK-023 source binding is 4f7b95453d8fafba3ec9cae0a9bbad5d8f782c6c0202f6e7cf37e17981b63019. Assurance is kernel_bound_non_run_certificate, source independence is not_established, calibration is excluded_nonexperimental, and retention is zero_retention_success. The M16 cell remains open_non_executable. The exact remaining blocker is a separately authorized design for mask selection or finite-cover orchestration, followed by relation yield, rank, solving, recovery, and total cost. CQ-SEMAEV-S17-SYSTEM-COST remains partial while relation yield, rank, and solving cost remain unpriced.",
+        "current_evidence": "The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-curve realizations. In the second construction the auxiliary curve only shares the base field with the target; a self-isogeny of the auxiliary curve defines the root map. The paper explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. WCC 2017 adds bounded m=2 practicality evidence on selected small primes and a distinct p-plus-one trace extension; it cannot be transferred quantitatively to m=16 or substituted for the auxiliary curve. Historical P4 did not implement either PKC construction and remains only an inconclusive negative control; it is not evidence against the faithful route. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 independently replayed an exact set-theoretic homogeneous projective S3-tree bridge, every named exceptional lift and identity stratum, deterministic supplied-coordinate recovery, and raw and compressed secp256k1 GLV lift-sign checks. TASK-018 freezes the recursive projective S17 contract, including fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, coefficient-map and algebraic-closure reflection variants, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and its end-to-end common-root corollary. Formal-degree drops, zero forms, affine witnesses, and [1:0] are retained without primitive/content, monic, or actual-degree normalization. The TASK-019 non-run binding is PKC-SMOOTH-M16-PROJECTIVE-RESULTANT-KERNEL-001 with SHA-256 0b9d8b48953aae2defa28ade67992084cecca3a01b43490bc338a0fd5ce97c5a and typed claim SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT. TASK-020 kernel-checks the actual recursive frozen C_r family, exact same-field and coefficient-map successor specialization at formal degrees (2^(r-2),2), coefficient unit 1, affine [y:1] and infinity [1:0] output branches, the uniform predecessor output-degree bound, and the unconditional one-step resultant/common-projective-root equivalence. Its non-run binding is PKC-SMOOTH-M16-FROZEN-CR-SPECIALIZATION-001 with SHA-256 d025053b9f882c88086fd5f04bcbd9627c72987e263e9b55af6024794305acbe and typed claim SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT. TASK-021 kernel-checks exact declared-degree projective evaluation and the universal all-stage frozen witness-chain equivalence. At C16 the chain has fourteen valid intermediate projective slots, [1:0] is allowed throughout, and [0:0] is excluded. Its non-run binding is PKC-SMOOTH-M16-FROZEN-PROJECTIVE-WITNESS-001 with SHA-256 89c645545d89334473d51654a41ff7ec2364857d034c64ce08d505337fa1e2d4 and typed claim SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT. TASK-022 now kernel-checks an exact literal finite MvPolynomial family for the frozen stage-14 predicate after an injective source-to-target field map: one GuardVar assignment satisfies every GuardedEquation. This is exactly equivalent to the recursive chain, not a parallel recursive syntax. Four raw scalars U,V,A,B for each of fourteen projective witness slots give 56 variables; fifteen literal H equations and fourteen guards give 29 equation-family members; every equation has total degree at most four; [0:0] is excluded and [1:0] is retained. Its non-run binding is PKC-SMOOTH-M16-GUARDED-PROJECTIVE-SYSTEM-001 with SHA-256 3445da55b44a71d0f40ee60206c90f2ef1798c28abd125542ce3acbeeb8e1d46 and typed claim SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT. The source binding is 37feeef48e77437b44b6ae6dd4750782e19ecd824e3ea2e73b657e2fb8296fb9. TASK-023 now kernel-checks the exact affine/infinity chart-polynomial cover: each fixed InfinityMask I uses exactly 14 - I.card affine variables, no guard equations, and fifteen literal H equations with degree ceilings 2/4/2. The existential cover is equivalent to the projective chain, guarded system, and source frozen stage-14 predicate after the existing injective base change; [1:0] is retained and [0:0] is never introduced. The 2^14 logical masks are not enumerated or materialized. Its non-run binding is PKC-SMOOTH-M16-EXACT-CHART-COVER-001 with SHA-256 934809fabbb8c98c5ed9356a0a1f3367a23f8fbc1bc86239069942537fd678ed and typed claim SC-PKC-M16-EXACT-CHART-COVER-RESULT. The TASK-023 source binding is 4f7b95453d8fafba3ec9cae0a9bbad5d8f782c6c0202f6e7cf37e17981b63019. TASK-024 kernel-checks necessary infinity-stratum pruning from 16384 masks to 987 separated masks and conditionally to 377 interior masks. Its binding is PKC-SMOOTH-M16-INFINITY-STRATA-001 with SHA-256 54b0f3c5f2f1880b1f805911df21b72e5427b18871f14907ac17a1d8b48bdd39 and typed claim SC-PKC-M16-INFINITY-STRATA-RESULT. TASK-025 kernel-checks explicit infinity propagation: the nested conditional mask counts are 377 to 129 to 69 to 36, while the independent boundary-only refinement is 129 to 60. It also proves over any field that internal infinity forces an explicit frozen prefix or suffix obstruction to vanish and that endpoint plus BalancedPropagatedRegular assumptions make the exact chart cover the single empty-mask affine chart. Its binding is PKC-SMOOTH-M16-INFINITY-PROPAGATION-001 with SHA-256 9330603ba1f0af9ee4902c263200709e2ec6f8c50d8d7eaab3b55bcba78e388f and typed claim SC-PKC-M16-INFINITY-PROPAGATION-RESULT. The TASK-025 source binding is 7f868aab5b946a55a213ce26a461477321d6387830eed218c414f1e62853b4b4. Its source-stage bridge requires injective base change into an algebraically closed target and mapped-target balanced regularity; source-field computation does not automatically establish that regularity. Symbolic nonzeroness, nonemptiness, density, probability, genericity, and witness uniqueness are not proved. Assurance is kernel_bound_non_run_certificate, source independence is not_established, calibration is excluded_nonexperimental, and retention is zero_retention_success. The M16 cell remains open_non_executable. The exact remaining blocker is symbolic nonzeroness and nonemptiness of a usable regular locus or orchestration of its exceptional complement, followed by relation yield, rank, solving, recovery, and total cost. CQ-SEMAEV-S17-SYSTEM-COST remains partial while relation yield, rank, and solving cost remain unpriced.",
         "success_gate": "First reproduce the exact construction from a verified primary source, then compare it under the common evaluation contract.",
         "stop_condition": "Reject low-bit filters, redundant auxiliary variables, or presentation-only degree changes as substitutes for the cited construction.",
-        "next_action": "Keep the route parked. TASK-023 completed the exact affine/infinity chart-polynomial cover: each fixed mask has 14 - I.card variables and fifteen H equations with degree ceilings 2/4/2, while the 2^14 logical masks were not enumerated or materialized. TASK-024 then completed necessary infinity-stratum pruning with zero retained hypotheses: affine external inputs reduce the exact logical cover from 16384 masks to 987 separated masks, and nonzero endpoint determinants conditionally reduce it to 377 interior masks. The filters are not sufficient or unique, and no production family was enumerated. No successor execution is authorized. Any next task for CELL-M-PKC-SMOOTH-M16, RSI-D8BBA6340789, and CQ-SEMAEV-S17-SYSTEM-COST must narrowly establish a separately authorized and independently validated sufficient mask-selection or finite-cover orchestration design before relation yield, rank, solving, recovery, or cost work. Keep every production mask sweep, solver, experiment, hypothesis retention, route rejection, route promotion, cost claim, and cost inference closed. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.",
+        "next_action": "Keep the route parked. TASK-023 completed the exact affine/infinity chart-polynomial cover. TASK-024 reduced the logical family from 16384 masks to 987 separated masks and conditionally to 377 interior masks. TASK-025 then completed explicit propagation with zero retained hypotheses: the nested local restrictions are 377 to 129 to 69 to 36, while the independent boundary-only restriction is 129 to 60. Under endpoint and BalancedPropagatedRegular assumptions the exact cover is the single empty-mask affine chart. This is conditional target-field regularity, not a proof that the locus is symbolically nonzero, nonempty, dense, probable, or generic, and not witness uniqueness. The source-stage bridge requires injective base change into an algebraically closed target and mapped-target regularity that source-field computation does not automatically establish. No successor execution is authorized. Any next task for CELL-M-PKC-SMOOTH-M16, RSI-D8BBA6340789, and CQ-SEMAEV-S17-SYSTEM-COST must narrowly prove a usable nonempty regular locus or provide separately authorized orchestration of its exceptional complement before relation yield, rank, solving, recovery, or cost work. Keep every production mask sweep, solver, experiment, hypothesis retention, route rejection, route promotion, cost claim, and cost inference closed. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.",
         "authorized_experiment": false,
         "hypothesis_ids": [
           "HYP_GLV_SEMAEV_001"
@@ -7539,7 +7562,8 @@
           "experiments/engine/pkc_smooth_m16_frozen_projective_witness/artifact.json",
           "experiments/engine/pkc_smooth_m16_guarded_projective_system/artifact.json",
           "experiments/engine/pkc_smooth_m16_exact_chart_cover/artifact.json",
-          "experiments/engine/pkc_smooth_m16_infinity_strata/artifact.json"
+          "experiments/engine/pkc_smooth_m16_infinity_strata/artifact.json",
+          "experiments/engine/pkc_smooth_m16_infinity_propagation/artifact.json"
         ],
         "source_ids": [
           "petit_kosters_messeng2016",
@@ -9218,8 +9242,8 @@
       "generator_id": "ecdlp-hypothesis-generation-v0",
       "source_hashes": {
         "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-        "typed_evidence_state_sha256": "f87c27d0dd7f82844b857dbdb1d82c5c4730e1789d5fac80367fd3b4749b519b",
-        "research_claim_state_sha256": "7dc2399f8159ade23a6ef5f873e8909ec366c64a3a12fcdfe18ea706480bbf30",
+        "typed_evidence_state_sha256": "47d34fb69b096d42e321f8a8e3f3d252c0a05cd066225a136f65fe820d968f07",
+        "research_claim_state_sha256": "72fcc244376d5056da7bb9084b0c1fb20177ddd43c590e5ea493324eda0d3205",
         "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
       },
@@ -9242,7 +9266,7 @@
         "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
         "target_id": "secp256k1-classical-single-target-plain",
         "counts": {
-          "source_claims": 29,
+          "source_claims": 30,
           "target_properties": 5,
           "mechanisms": 7,
           "cells": 7,
@@ -9254,10 +9278,10 @@
           "desk_decisions": 3
         },
         "source_hashes": {
-          "policy_sha256": "0defbf56969ebe717f5fcec8d07cf90880023ac87b8feaed3f443afcef3e4878",
-          "decision_substrate_sha256": "a6c2d28de327eba1105a408577c56a7e9bde940c9dfdbbc1739bd4ef13eabf7c",
+          "policy_sha256": "b28e955fade48c7e8f30699ad137e8ee3cefe3aca2186ccce960489d8199fd04",
+          "decision_substrate_sha256": "c3ef36d2d7bc7603566bfbc2cac70eb0a8882925a695093d1eb96eeb10e00786",
           "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-          "evidence_files_sha256": "6783892b811acbbe1a5c1f46267f34b456d978c7bacfe589025372da6fd891f6",
+          "evidence_files_sha256": "71b527927a514cee8171b5b9a9dcc432313cdfe51fa7960dc1155f628c8025b8",
           "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
         },
         "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
@@ -9285,15 +9309,15 @@
           "route_promotions": 0,
           "exact_target_runs": 0
         },
-        "state_sha256": "7dc2399f8159ade23a6ef5f873e8909ec366c64a3a12fcdfe18ea706480bbf30"
+        "state_sha256": "72fcc244376d5056da7bb9084b0c1fb20177ddd43c590e5ea493324eda0d3205"
       },
       "seed_coverage": {
         "threshold": 12,
         "eligible_seed_count": 2,
         "overflow_triggered": false,
         "represented_seed_ids": [
-          "HGS-55799AC16805",
-          "HGS-F2D9EA0ADA2D"
+          "HGS-6552FB14B46F",
+          "HGS-8BEFB3156EC3"
         ],
         "represented_cell_ids": [
           "CELL-M-PKC-AUXILIARY-CURVE",
@@ -9304,10 +9328,10 @@
       },
       "generated_seeds": [
         {
-          "seed_id": "HGS-55799AC16805",
+          "seed_id": "HGS-6552FB14B46F",
           "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
           "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-          "claim_state_digest": "7dc2399f8159ade23a6ef5f873e8909ec366c64a3a12fcdfe18ea706480bbf30",
+          "claim_state_digest": "72fcc244376d5056da7bb9084b0c1fb20177ddd43c590e5ea493324eda0d3205",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9389,7 +9413,7 @@
             "experiments/p4_petit/README.md",
             "experiments/p4_petit/RESULTS.md"
           ],
-          "deduplication_key": "55799ac1680577472e688584f8e699f7b59df70328d55c838a3314b6a3ca67d3",
+          "deduplication_key": "6552fb14b46fe2d96aa7af1a730a56a072514112cfc56a46ddb14852f0b7e2a9",
           "proposal_packet": {
             "required_sections": [
               "new_premise",
@@ -9451,10 +9475,10 @@
           }
         },
         {
-          "seed_id": "HGS-F2D9EA0ADA2D",
+          "seed_id": "HGS-8BEFB3156EC3",
           "cell_id": "CELL-M-PKC-SMOOTH-M16",
-          "typed_evidence_digest": "6e44a21fc04a607cac0e80f25d62160d9d3d1a7a9829aaefddbc389fb6f2aa54",
-          "claim_state_digest": "7dc2399f8159ade23a6ef5f873e8909ec366c64a3a12fcdfe18ea706480bbf30",
+          "typed_evidence_digest": "180bd1dd2be5f4ed04530ff962865bb4ae3aac1438f4499e05dde06e9104bcfe",
+          "claim_state_digest": "72fcc244376d5056da7bb9084b0c1fb20177ddd43c590e5ea493324eda0d3205",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9474,7 +9498,7 @@
             "status": "open",
             "intake_mode": "desk_cost_bridge",
             "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
-            "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and the end-to-end common-root corollary while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. TASK-020 kernel-checks the actual frozenC family, exact coefficient-map specialization with unit 1 and affine and [1:0] output branches, the universal output-degree bound, and the unconditional one-step common-projective-root equivalence. TASK-021 kernel-checks the exact declared-degree projective evaluation bridges and the universal all-stage frozen witness-chain equivalence, including the C16 chain with fourteen intermediate projective slots and infinity allowed at every level. TASK-022 kernel-checks the exact literal finite MvPolynomial family for the frozen stage-14 predicate after injective base change: one GuardVar assignment satisfies every GuardedEquation, with fourteen raw projective slots, 56 scalar variables, fifteen H equations, fourteen guards, and total degree at most four. It is equivalent to the recursive chain, not a parallel recursive syntax. TASK-023 kernel-checks the exact affine/infinity chart-polynomial cover. Each fixed InfinityMask I has exactly 14 - I.card affine scalar variables, no guard equations, and fifteen literal H equations with degree ceilings 2/4/2; the cover is equivalent to the chain, guarded system, and source predicate after base change. TASK-024 kernel-checks necessary infinity-stratum pruning: affine external inputs restrict the exact cover from 16384 masks to 987 separated masks, while nonzero endpoint determinants conditionally restrict it to 377 interior masks. Isolated infinity slots force existing affine neighbors to q.u / q.v. The remaining mechanism gap is a separately authorized sufficient design for mask selection or finite-cover orchestration, together with usable relation yield and rank, solving, recovery, and total cost.",
+            "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and the end-to-end common-root corollary while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. TASK-020 kernel-checks the actual frozenC family, exact coefficient-map specialization with unit 1 and affine and [1:0] output branches, the universal output-degree bound, and the unconditional one-step common-projective-root equivalence. TASK-021 kernel-checks the exact declared-degree projective evaluation bridges and the universal all-stage frozen witness-chain equivalence, including the C16 chain with fourteen intermediate projective slots and infinity allowed at every level. TASK-022 kernel-checks the exact literal finite MvPolynomial family for the frozen stage-14 predicate after injective base change: one GuardVar assignment satisfies every GuardedEquation, with fourteen raw projective slots, 56 scalar variables, fifteen H equations, fourteen guards, and total degree at most four. It is equivalent to the recursive chain, not a parallel recursive syntax. TASK-023 kernel-checks the exact affine/infinity chart-polynomial cover. Each fixed InfinityMask I has exactly 14 - I.card affine scalar variables, no guard equations, and fifteen literal H equations with degree ceilings 2/4/2; the cover is equivalent to the chain, guarded system, and source predicate after base change. TASK-024 kernel-checks necessary infinity-stratum pruning: affine external inputs restrict the exact cover from 16384 masks to 987 separated masks, while nonzero endpoint determinants conditionally restrict it to 377 interior masks. Isolated infinity slots force existing affine neighbors to q.u / q.v. TASK-025 kernel-checks the nested local reductions 377 to 129 to 69 to 36, with the independent boundary-only branch 129 to 60, and proves over any field that an internal infinity forces an explicit frozen prefix or suffix obstruction to vanish. Under affine inputs, endpoint nonvanishing, and BalancedPropagatedRegular (the twelve balanced obstruction nonvanishing conditions), every solution uses the empty mask and the exact chart cover is the single affine chart. The source-stage bridge additionally assumes injective base change into an algebraically closed target and balanced regularity for the mapped target data; source-field computation does not automatically establish that mapped-target regularity. The remaining mechanism gap is symbolic nonzeroness and nonemptiness of a usable regular locus or orchestration of its exceptional complement, together with usable relation yield and rank, solving, recovery, and total cost.",
             "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
             "cost_quantity": {
               "id": "CQ-SEMAEV-S17-SYSTEM-COST",
@@ -9496,6 +9520,7 @@
                 "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT",
                 "SC-PKC-M16-EXACT-CHART-COVER-RESULT",
                 "SC-PKC-M16-INFINITY-STRATA-RESULT",
+                "SC-PKC-M16-INFINITY-PROPAGATION-RESULT",
                 "SC-SEMAEV-RELATION-SEMANTICS"
               ]
             },
@@ -9535,6 +9560,7 @@
               "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",
               "SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT",
               "SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT",
+              "SC-PKC-M16-INFINITY-PROPAGATION-RESULT",
               "SC-PKC-M16-INFINITY-STRATA-RESULT",
               "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
               "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
@@ -9547,7 +9573,7 @@
               "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
               "SC-SEMAEV-RELATION-SEMANTICS"
             ],
-            "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, deterministic control and secp256k1 GLV recovery checks, a frozen recursive projective S17 contract, kernel-checked fixed-degree projective resultant plus literal Sylvester unit-one and end-to-end common-root theorems, the actual frozenC specialization, the exact all-stage frozen projective witness chain, an exact literal finite MvPolynomial family in guarded form, an exact affine/infinity chart-polynomial cover for the frozen stage-14 predicate after injective base change, and exact necessary infinity-stratum pruning. Each fixed InfinityMask I uses 14 - I.card affine variables, no guard equations, and fifteen H equations with degree ceilings 2/4/2; the existential cover is exact and retains [1:0]. Affine external inputs reduce the exact logical cover from 16384 masks to 987 separated masks, and nonzero endpoint determinants conditionally reduce it to 377 interior masks. The 2^14 logical masks are not enumerated or materialized, and neither are the pruned families. It is not an expanded direct S17 polynomial or a base-field descent theorem. The pruning is not a sufficient or unique mask-selection algorithm or a solver run, and its counts do not establish independent dimensions or relations. The complete cost bridge remains open. CQ-SEMAEV-S17-SYSTEM-COST remains partial; solving cost, rank, and yield remain unpriced. The scoped result has zero_retention_success and does not justify a production mask sweep, solver run, target computation, hypothesis retention, experiment authorization, cost inference, route rejection, or route promotion."
+            "boundary": "This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, deterministic control and secp256k1 GLV recovery checks, a frozen recursive projective S17 contract, kernel-checked fixed-degree projective resultant plus literal Sylvester unit-one and end-to-end common-root theorems, the actual frozenC specialization, the exact all-stage frozen projective witness chain, an exact literal finite MvPolynomial family in guarded form, an exact affine/infinity chart-polynomial cover for the frozen stage-14 predicate after injective base change, exact necessary infinity-stratum pruning, and exact conditional infinity propagation. Each fixed InfinityMask I uses 14 - I.card affine variables, no guard equations, and fifteen H equations with degree ceilings 2/4/2; the existential cover is exact and retains [1:0]. Affine external inputs reduce the exact logical cover from 16384 masks to 987 separated masks, and nonzero endpoint determinants conditionally reduce it to 377 interior masks. TASK-025 gives the nested local reductions 377 to 129 to 69 to 36 and the independent boundary-only branch 129 to 60. Under endpoint and BalancedPropagatedRegular assumptions it proves an exact single empty-mask affine chart, not a unique witness. The direct propagation applies over any field, but the source-stage bridge still requires injective base change into an algebraically closed target and separately assumed mapped-target regularity. Symbolic nonzeroness, nonemptiness, density, probability, and genericity are not proved, and source-field computation does not automatically establish mapped regularity. The 2^14 logical masks are not enumerated or materialized, and neither are the pruned families. It is not an expanded direct S17 polynomial, an unconditional base-field descent theorem, a solver run, or evidence of independent dimensions or relations. The complete cost bridge remains open. CQ-SEMAEV-S17-SYSTEM-COST remains partial; solving cost, rank, and yield remain unpriced. The scoped result has zero_retention_success and does not justify a production mask sweep, solver run, target computation, hypothesis retention, experiment authorization, cost inference, route rejection, or route promotion."
           },
           "target_feature": {
             "id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
@@ -9575,7 +9601,7 @@
             "experiments/p4_petit/README.md",
             "experiments/p4_petit/RESULTS.md"
           ],
-          "deduplication_key": "f2d9ea0ada2d0f7632fd00277f5b7ee1eca5d32b188d1ccb1aaff14950f606ee",
+          "deduplication_key": "8befb3156ec3c2e3820188d1efc1daac93256034fd5a931ada4ff490a826fc9e",
           "proposal_packet": {
             "required_sections": [
               "new_premise",
@@ -9967,6 +9993,7 @@
           "experiments/engine/pkc_smooth_m16_frozen_cr_specialization/artifact.json",
           "experiments/engine/pkc_smooth_m16_frozen_projective_witness/artifact.json",
           "experiments/engine/pkc_smooth_m16_guarded_projective_system/artifact.json",
+          "experiments/engine/pkc_smooth_m16_infinity_propagation/artifact.json",
           "experiments/engine/pkc_smooth_m16_infinity_strata/artifact.json",
           "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json",
           "experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json",
@@ -10386,7 +10413,7 @@
     "state_source": "data/typed_evidence_state.json",
     "policy_source": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
     "counts": {
-      "source_claims": 29,
+      "source_claims": 30,
       "target_properties": 5,
       "mechanisms": 7,
       "cells": 7,
@@ -10398,10 +10425,10 @@
       "desk_decisions": 3
     },
     "source_hashes": {
-      "policy_sha256": "0defbf56969ebe717f5fcec8d07cf90880023ac87b8feaed3f443afcef3e4878",
-      "decision_substrate_sha256": "a6c2d28de327eba1105a408577c56a7e9bde940c9dfdbbc1739bd4ef13eabf7c",
+      "policy_sha256": "b28e955fade48c7e8f30699ad137e8ee3cefe3aca2186ccce960489d8199fd04",
+      "decision_substrate_sha256": "c3ef36d2d7bc7603566bfbc2cac70eb0a8882925a695093d1eb96eeb10e00786",
       "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-      "evidence_files_sha256": "6783892b811acbbe1a5c1f46267f34b456d978c7bacfe589025372da6fd891f6",
+      "evidence_files_sha256": "71b527927a514cee8171b5b9a9dcc432313cdfe51fa7960dc1155f628c8025b8",
       "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
     },
     "trust_boundary": {
@@ -10546,7 +10573,7 @@
           }
         ],
         "seed_eligible": true,
-        "evidence_digest": "6e44a21fc04a607cac0e80f25d62160d9d3d1a7a9829aaefddbc389fb6f2aa54",
+        "evidence_digest": "180bd1dd2be5f4ed04530ff962865bb4ae3aac1438f4499e05dde06e9104bcfe",
         "authorization": "none"
       },
       {
@@ -11243,6 +11270,11 @@
     {
       "from": "Ecdlp.Proved.FrozenProjectiveGuardSystem",
       "to": "Ecdlp.Proved.FrozenRecursiveProjectiveWitness",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FrozenProjectiveInfinityPropagation",
+      "to": "Ecdlp.Proved.FrozenProjectiveInfinityStrata",
       "type": "imports"
     },
     {
@@ -12768,6 +12800,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.FrozenProjectiveInfinityStrata",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FrozenProjectiveInfinityPropagation",
       "type": "imports"
     },
     {
@@ -14766,6 +14803,11 @@
       "type": "member_of"
     },
     {
+      "from": "thm-305",
+      "to": "family-generic-hardness",
+      "type": "member_of"
+    },
+    {
       "from": "thm-065",
       "to": "secp-parameters",
       "type": "supports",
@@ -15917,6 +15959,11 @@
     },
     {
       "from": "CELL-M-PKC-SMOOTH-M16",
+      "to": "SC-PKC-M16-INFINITY-PROPAGATION-RESULT",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-PKC-SMOOTH-M16",
       "to": "SC-PKC-M16-INFINITY-STRATA-RESULT",
       "type": "grounded_in_source_claim"
     },
@@ -16144,12 +16191,12 @@
       "type": "binds_unresolved_question"
     },
     {
-      "from": "HGS-55799AC16805",
+      "from": "HGS-6552FB14B46F",
       "to": "CELL-M-PKC-AUXILIARY-CURVE",
       "type": "generated_from_cell"
     },
     {
-      "from": "HGS-F2D9EA0ADA2D",
+      "from": "HGS-8BEFB3156EC3",
       "to": "CELL-M-PKC-SMOOTH-M16",
       "type": "generated_from_cell"
     },

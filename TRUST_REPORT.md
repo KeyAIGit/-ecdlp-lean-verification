@@ -2,7 +2,7 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `305 ledger rows / ~266 distinct kernel-verified
+**Scope of the verified body.** `306 ledger rows / ~267 distinct kernel-verified
 results`. A row may group several supporting declarations; the exact expansion is
 generated in `data/result_registry.json`. The built surface has **0 `sorry`, 0
 `admit`, and 0 custom axioms**. Open target stems are explicitly outside the built
@@ -128,6 +128,16 @@ ring-identity curve invariants. Representative theorems (file → theorem):
   theorems, and the admissible/interior cover equivalences (the identities,
   necessary-mask results, and exact cover restrictions are standard
   kernel/Mathlib proofs)
+- `Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean` →
+  `frozenChartSystem_gapTwoInfinity_forces_det_zero`,
+  `frozenChartSystem_gapThreeInfinity_forces_HValue_zero`, the two
+  boundary-near propagation theorems,
+  `specializeOver_frozenC_eq_zero_of_projectiveChain`, the prefix/suffix and
+  empty-mask theorems, the conditional single-affine-chart equivalences, and
+  `frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular`
+  (the local implications and the one-way resultant propagation hold over any
+  field; the final source bridge reuses the injective algebraically closed
+  target assumption; none of these structural results uses `native_decide`)
 
 ### (b) `native_decide` / compiler-trusted — TCB INCLUDES the Lean compiler
 
@@ -168,6 +178,14 @@ kernel reduction could feasibly check. Exact `file:line → theorem`:
   `card_interiorSeparatedInfinityMask` (the exact logical mask counts 16384,
   987, and 377 only; the infinity identities, necessity and forced-neighbor
   results, and cover equivalences do not use `native_decide`)
+- `Ecdlp/Proved/FrozenProjectiveInfinityPropagation.lean` →
+  `card_gapTwoInteriorInfinityMask`,
+  `card_gapThreeInteriorInfinityMask`,
+  `card_boundaryPropagatedInfinityMask`,
+  `card_boundaryGapThreeInfinityMask` (the exact logical candidate-mask counts
+  129, 69, 60, and 36 only; the local propagation, base-field one-way
+  resultant argument, balanced obstruction, empty-mask, and affine-cover
+  theorems do not use `native_decide`)
 
 ### (c) Mathlib + `native_decide` MIX — kernel proof skeleton, compiler-checked leaves
 
@@ -225,7 +243,7 @@ Distinguishing *machine-enforced* (a red build blocks merge) from *documentation
 | `Ensure no incomplete proofs remain` | `grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/` — fails if `sorry`/`admit` text appears in any **built** `.lean` file. `Ecdlp/Targets/` (open stems) is excluded by design. | **MACHINE-ENFORCED**, with the documented scope limit that it is a *text* grep over built files and deliberately skips `Targets/`. |
 | `Ensure no built file imports an open target stem` | `grep` for `import Ecdlp.Targets` outside `Targets/`. Closes the hole where a built file could pull a `sorry`-bearing stem into the build graph (since `sorry` is only a warning). | **MACHINE-ENFORCED.** This is the guard that makes the previous grep sound. |
 | `Fetch prebuilt Mathlib cache` + `Build and verify ALL proofs` — `lake build` | The **kernel** re-checks every built proof term. A `sorry` that reached the build graph, or any type error, fails here. | **MACHINE-ENFORCED.** This is the core verification: a green `lake build` means the kernel accepted every built theorem. |
-| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 305 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
+| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 306 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
 | `Typecheck open target stems (non-blocking)` | `lake env lean` over `Ecdlp/Targets/*.lean`; `continue-on-error: true`. | **DOCUMENTATION/INFO ONLY.** A stem failing to typecheck emits a warning, never blocks. |
 | `Featherless API smoke test`, `Prover target attempt`, report upload | All `continue-on-error: true` and skipped on PRs. | **DOCUMENTATION/INFO ONLY.** Prover orchestration; cannot affect the verification verdict. |
 

@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **305 ledger rows / ~266 distinct kernel-verified results** (39 rows are
+- **306 ledger rows / ~267 distinct kernel-verified results** (39 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
@@ -17,6 +17,14 @@
   not a logical axiom. This is machine-enforced by the axiom-audit CI gate
   (`Ecdlp/AxiomAudit.lean` + `scripts/check_axioms.py`), which fails the build if
   any other axiom (or a `sorryAx`) appears in a result's transitive dependencies.
+- **TASK-025 is a conditional representation theorem, not an ECDLP
+  algorithm.** Explicit local nonvanishing conditions reduce the 377 logical
+  infinity masks to 129, 69, and 36, while an independent boundary-only
+  refinement gives 60. Stronger balanced nonvanishing conditions force the
+  empty mask and hence one affine chart, but their symbolic nonzeroness,
+  nonemptiness, and genericity are not proved. The result proves no unique
+  witness, relation yield or rank, solver improvement, runtime or memory
+  reduction, total-cost bound, or secp256k1 discrete-log shortcut.
 
 ## 1. Honest framing (one paragraph)
 
