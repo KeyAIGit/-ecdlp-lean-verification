@@ -159,7 +159,9 @@ jobs:
       - name: Research-question funnel aggregate
         run: python3 scripts/hypothesis_funnel.py
       - name: Knowledge graph (data/knowledge_graph.json + .md)
-        run: python3 scripts/build_knowledge_graph.py
+        run: |
+          python3 scripts/test_build_knowledge_graph.py
+          python3 scripts/build_knowledge_graph.py
       - name: Coverage report (COVERAGE.md)
         run: python3 scripts/coverage_report.py
       - name: Canonical snapshot (STATUS.md)
