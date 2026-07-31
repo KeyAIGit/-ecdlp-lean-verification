@@ -56,6 +56,14 @@
       "reason": "Manual warm Lean/CAS precheck; never a trust root."
     },
     {
+      "file": ".github/workflows/hypothesis-drafter-server.yml",
+      "class": "hypothesis_generation",
+      "trigger_policy": "manual_only",
+      "disposition": "keep_conditional",
+      "spends_external_budget": true,
+      "reason": "Explicitly dispatched external-host drafting of at most 30 untrusted, non-executable fragments after a zero-token Featherless probe; cannot clear Engine gates."
+    },
+    {
       "file": ".github/workflows/server-bootstrap.yml",
       "class": "proof_infrastructure",
       "trigger_policy": "manual_only",
