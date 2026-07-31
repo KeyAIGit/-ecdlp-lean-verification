@@ -14,12 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "repo" / "BRANCH_INVENTORY.json"
 REMOTE = "origin"
 
-ACTIVE = {
-    "agent/e4-composite-torsion-structure",
-    "agent/e4-current-main-port-v2",
-    "claude/secp256k1-hypothesis-forge",
-    "research/pkc-sextic-twist-cm-screen",
-}
+ACTIVE: set[str] = set()
 SUPERSEDED = {
     "agent/n7-certificate-generator",
 }
