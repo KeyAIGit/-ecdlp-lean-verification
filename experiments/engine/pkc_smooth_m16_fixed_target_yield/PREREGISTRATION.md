@@ -61,7 +61,8 @@ receives only the public toy point `R`.
 
 `H_NEW`
 
-: A representation-aware GLV-orbit structure makes the fixed-target
+: For the same paired public target in each `(curve, seed)` block, a
+  representation-aware GLV-orbit structure makes the fixed-target
   balanced-regular subfamily persist differently from a matched plain base.
 
 `H_KNOWN`
@@ -143,12 +144,18 @@ yield.
 
 ## 7. Target and trial separation
 
-For each `(curve, arm, seed)` cell:
+For each `(curve, seed)` pair, both factor-base arms share one public target:
 
-- the target is generated from a domain-separated stream;
-- the public target point and its commitment are frozen before leaves;
-- the target scalar is discarded from, and inaccessible to, the trial
-  sampler;
+- the target setup uses the same frozen SHA-256 counter construction with
+  the literal arm component `PAIRED_TARGET` and role `target`, draws exactly
+  one nonzero subgroup scalar as `randbelow(n - 1) + 1`, and publishes
+  `R = [r]G`;
+- the identical public target point is placed in both arm cells, while each
+  target commitment separately binds that arm's already frozen factor base;
+- the public target points and commitments are frozen before leaves;
+- the setup scalar may be reconstructed transiently by the independent
+  readiness check, but is absent from the configuration and transcript and
+  is never passed to the trial sampler;
 - the sampler receives only curve data, the frozen factor base, public `R`,
   and a separately derived leaf stream;
 - leaves are sampled with replacement;
@@ -266,7 +273,15 @@ Secondary metrics:
 - curve additions, doublings, field inversions where instrumented;
 - CPU time, wall time, and peak RSS;
 - seed dispersion;
-- orbit-closed minus plain `theta` with intervals.
+- paired per-seed orbit-closed minus plain `theta`, including both
+  denominators;
+- pooled orbit-closed minus plain `theta` with Wilson intervals, reported as
+  a descriptive frozen-grid summary rather than as five independent
+  target/base replications;
+- for the permutation control, first average the 16 binary labels within
+  each accepted relation, then aggregate those relation-level means; the 16
+  permutations are never counted as 16 independent relations;
+- shuffled-target and random-label control rates by curve, arm, and seed.
 
 Required artifact controls:
 
@@ -309,20 +324,27 @@ Return `PROMOTE_TO_SOLVER_SLOPE_TEST` only if:
 
 1. all six `(curve, arm)` cells have at least 100 independently replayed
    accepted relations;
-2. for both arms at `m = 21` and `m = 23`, the 95% Wilson lower bound for
-   `theta` is at least 0.90;
-3. there is no decline greater than 0.05 between `m = 21` and `m = 23` that
-   remains unexplained by the reported intervals;
+2. for the `GLV_ORBIT_CLOSED` arm at `m = 21` and `m = 23`, the 95% Wilson
+   lower bound for `theta` is at least 0.90;
+3. the orbit-closed arm has no decline greater than 0.05 between `m = 21`
+   and `m = 23` that remains unexplained by the reported intervals;
 4. all curve, relation, target-ordering, hash, and semantic-mutation checks
    pass.
 
 Promotion means only that `HYP-M16-SOLVER-SLOPE-001` may be proposed.
+The plain arm is a mechanism control; requiring it to pass the same 0.90
+gate would make a positive orbit-minus-plain `H_NEW` delta mathematically
+unreachable.
 
 ### Known local simplification
 
 Return `CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION` when the promotion
-regularity gates pass but the arm difference is less than 0.05 and the
-intervals overlap at the two larger sizes.
+regularity gates pass, the plain arm also has Wilson lower bound at least
+0.90 at both larger sizes, and the absolute arm difference is less than
+0.05 with overlapping intervals there. A consistent smaller paired
+difference remains a bounded implementation/representation effect, not an
+asymptotic mechanism. This classification still opens only the same one
+solver-slope-test proposal; it does not retain `H_NEW`.
 
 This is the expected null classification, not an attack success.
 
@@ -332,10 +354,24 @@ Retain `H_NEW` only as
 `POTENTIALLY NOVEL / NOVELTY UNVERIFIED` when:
 
 - the promotion gates pass;
-- `GLV_ORBIT_CLOSED` exceeds `PLAIN_MATCHED` by at least 0.10 with
-  nonoverlapping intervals on at least two sizes;
-- the delta survives shuffled-target, order, and independent-validator
-  controls.
+- the paired-target identity check passes in every arm/seed block;
+- `GLV_ORBIT_CLOSED` exceeds `PLAIN_MATCHED` by at least 0.10 in the pooled
+  descriptive estimate with nonoverlapping intervals on at least two sizes;
+- on each of those sizes, at least four of the five paired seed-level
+  differences are positive, and every seed-level numerator and denominator
+  is reported rather than treated as an independent relation row;
+- on each of those sizes, both shuffled-target arms have at least 100
+  accepted controls and the paired pooled shuffled-target arm difference is
+  positive and at least 0.05;
+- on each of those sizes, the arm difference between the aggregated
+  relation-level 16-permutation means is positive and at least 0.05, with at
+  least four of five paired seed-level differences positive;
+- on each of those sizes and arms, the random-label fraction lies in
+  `[0.35, 0.65]`, and the absolute paired pooled arm difference is below
+  0.15;
+- all of these quantities are independently replayed. A failed control
+  blocks `H_NEW` retention but does not by itself change the primary
+  fixed-target regularity decision.
 
 This signal still does not promote an attack route.
 
@@ -410,13 +446,26 @@ Upstream bindings:
 
 ## 15. Required repository artifacts
 
-After separate authorization, the execution branch may add only:
+Before execution authorization, one readiness branch may add only:
 
 - `curve_table.json`;
+- `experiment_config.json`, including the frozen ordered-base commitments and
+  public target commitments;
 - `run.py`;
 - `validate.py` with no producer imports;
 - `test_validate.py`;
-- immutable raw transcript;
+- directly required CI wiring.
+
+That readiness branch must contain no trial transcript, summary, result,
+terminal scientific decision, or other outcome-derived field. A later dated
+authorization must bind the merged readiness commit and SHA-256 digests of
+the preregistration, curve table, experiment configuration, producer, and
+validator before the producer can sample one primary leaf.
+
+After that separate authorization, the execution branch may add only:
+
+- immutable raw transcript and run manifest;
+- independently validated summary;
 - `artifact.json`;
 - `artifact.sha256`;
 - `RESULTS.md`;

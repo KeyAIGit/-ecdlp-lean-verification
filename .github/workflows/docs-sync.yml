@@ -251,6 +251,11 @@ jobs:
           python3 experiments/engine/pkc_smooth_m16_infinity_propagation/validate.py --require-final-source-binding
           python3 experiments/engine/pkc_smooth_m16_infinity_propagation/test_validate.py
           (cd experiments/engine/pkc_smooth_m16_infinity_propagation && sha256sum -c artifact.sha256)
+      - name: Preregistered M16 fixed-target experiment readiness
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/run.py --check-readiness
+          python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/validate.py --readiness
+          python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/test_validate.py
       - name: Claim-level truth-state gate
         run: |
           python3 scripts/research_claims.py --check

@@ -1,0 +1,763 @@
+{
+  "schema_version": "keyai-m16-fixed-target-config-v1",
+  "hypothesis_id": "HYP-M16-FIXED-TARGET-YIELD-001",
+  "task_id": "TASK-026",
+  "route_id": "R-GLV-SEMAEV",
+  "cell_id": "CELL-M-PKC-SMOOTH-M16",
+  "preregistration_sha256": "e41164b1e8950aab60849e567949a230d592652d9b7ae2484eaed5dff7518cc5",
+  "curve_table_sha256": "a59ed1a8b597bc5d512438d09fbb4c970fff74dd704f8f88be4f7224775f5e0d",
+  "curve_ids": [
+    "E7-P262153-N262567",
+    "E7-P1048783-N1050337",
+    "E7-P16777711-N5591281"
+  ],
+  "arms": [
+    "GLV_ORBIT_CLOSED",
+    "PLAIN_MATCHED"
+  ],
+  "seeds": [
+    101,
+    211,
+    307,
+    401,
+    503
+  ],
+  "trials_per_seed": {
+    "E7-P262153-N262567": 10000,
+    "E7-P1048783-N1050337": 40000,
+    "E7-P16777711-N5591281": 250000
+  },
+  "factor_base_size": 384,
+  "relation_arity": 16,
+  "sampled_leaves_per_trial": 15,
+  "permutation_controls": 16,
+  "prng": {
+    "algorithm": "sha256-counter-rejection-v1",
+    "prefix_hex": "4b455941492d4859502d4d31362d46495845442d5441524745542d5949454c442d3030312f7368613235362d636f756e7465722d763100",
+    "counter_bytes": 16,
+    "counter_endian": "big",
+    "domain_length_bytes": 4,
+    "domain_length_endian": "big",
+    "digest_integer_endian": "big",
+    "randbelow": "reject x >= 2^256-(2^256 mod bound), return x mod bound",
+    "domain_template": "HYP-M16-FIXED-TARGET-YIELD-001/{curve_id}/{arm}/{seed}/{role}"
+  },
+  "factor_base_contract": {
+    "scalar_draw": "randbelow(n-1)+1",
+    "point_sign_storage": "the generated affine point is stored; a trial sign is sampled separately",
+    "unique_x_required": true,
+    "orbit_closed_order": [
+      "P",
+      "phi(P)",
+      "phi^2(P)"
+    ],
+    "plain_orbit_relations": "counted but retained",
+    "commitment": "SHA256(canonical compact sorted-key JSON plus LF of arm, cell_id, curve_id, ordered points, seed, and statement)"
+  },
+  "chronology_contract": {
+    "base_manifest_frozen_sequence": 1,
+    "targets_committed_sequence": 2,
+    "leaves_started_sequence": 3,
+    "target_scalar_recorded": false,
+    "target_generation_seed_exposed_to_sampler": false
+  },
+  "target_generation_contract": {
+    "arm_domain_literal": "PAIRED_TARGET",
+    "role": "target",
+    "scalar_draw": "randbelow(n-1)+1",
+    "scalar_persisted": false,
+    "same_public_point_in_both_arms": true,
+    "runtime_sampler_inputs": [
+      "curve",
+      "ordered factor base",
+      "public target point",
+      "leaf stream"
+    ],
+    "commitment": "SHA256(canonical compact sorted-key JSON plus LF of base_commitment, cell_id, point, and statement)"
+  },
+  "base_manifest": [
+    {
+      "cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S101",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 101,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "f334d2f275ccce14290abee2e60cff1f82ccb404dfede0e12810e899d3bfa855"
+    },
+    {
+      "cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S211",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 211,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "b2d1075c6ab3b7193aa71098e6fafa4cf2c715c590d84d3035973d10f075052b"
+    },
+    {
+      "cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S307",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 307,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "0e6a8e18610db7915a3100dc22a0d9aeaf112278bea8db26d76c890838f46784"
+    },
+    {
+      "cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S401",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 401,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "b4ba6867ee75b25ff42cbe73c73b78023b3aa9477e055a8c6a4a3b3c10e83f93"
+    },
+    {
+      "cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S503",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 503,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "5f8e2ca66faf89002ed40485c942c78692e18e87268c15329039114c41d22d03"
+    },
+    {
+      "cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S101",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "PLAIN_MATCHED",
+      "seed": 101,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "1c9d4c5b91794851f823f99eda8cef938e77f54b75736e139daba86d16712eed"
+    },
+    {
+      "cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S211",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "PLAIN_MATCHED",
+      "seed": 211,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "018768c4b253ed87c064569f4488e9dc90293f81be96da8bc5e9cd540ff9b11a"
+    },
+    {
+      "cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S307",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "PLAIN_MATCHED",
+      "seed": 307,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "874a14abce5018cd6bdcb118d3f7cfe32f17176cc27d923ac1c67eb74d648cdd"
+    },
+    {
+      "cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S401",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "PLAIN_MATCHED",
+      "seed": 401,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "84b98b02b21debee910a1f00c36ab18b81078cbd57d4dc867c23c16dc80c3d4a"
+    },
+    {
+      "cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S503",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "PLAIN_MATCHED",
+      "seed": 503,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "1c9dc3885fad474b9b1f049afa041839f359637088afea6b7004d3f1f52de687"
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S101",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 101,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "2b95e93429fff1d4c05aac057e9e13d0dc7ae249df31b3ee8e113823bb8af28d"
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S211",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 211,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "9b93099a8cdd48985b0c25e0b02cbd220a1417498b7dfb77d15b3b8ff04eb287"
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S307",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 307,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "0cbd55f02bbda3df5f4ea2c5b67145aa2786f06aa05065252019fe0c264a1b2a"
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S401",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 401,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "a242e09b1a401eafe320427ff453d3d312575253a0910c09da0aa4e5d8744973"
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S503",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 503,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "afe890f01556cfa9d35ba4aef0cff727274957c6ee8e4ee891785e9b93a9eaae"
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S101",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "PLAIN_MATCHED",
+      "seed": 101,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "fb2da930321db831507534d0220cb48c176b5265e358694a4717ae56349833cf"
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S211",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "PLAIN_MATCHED",
+      "seed": 211,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "ec286f9c1a6abad4c07c2fff5e30c53d96ad4cf03c4595960b5dee5b6fa738e9"
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S307",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "PLAIN_MATCHED",
+      "seed": 307,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "f6bdecd1b676075018585ea19699bc56f224e78829913818e229ff3ae407ec87"
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S401",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "PLAIN_MATCHED",
+      "seed": 401,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "6c0d9747b397a42d6146c1558d50a783244bfe5cd05488fe208690d2f41850d4"
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S503",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "PLAIN_MATCHED",
+      "seed": 503,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "5e987a722846732358cfb9fc01fe9d89189903bb840b078bd3d5d8c2991447e5"
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S101",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 101,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "50cc8adf7bfec02ac4969b1162f80441688c28db9ac31c55e9f42f3c73413e1e"
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S211",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 211,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "89dbca375f2a1594953110bc59d402368779e60fd9a017a65eb2e857a0ae10e2"
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S307",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 307,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "273d6513d9890181eb8115ddec42f3f807d0a6d2b260237907680e77d1434296"
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S401",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 401,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "1f89c3fef896e8184e041c3ce68b83562f69fd2d4d593d1a53e3dd82a0433dae"
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S503",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 503,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "bd9c9762135758817a4827c9526e1aed766f4eb9cda4a4066ae2bfbeeee6a352"
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S101",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "PLAIN_MATCHED",
+      "seed": 101,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "867225df6b4607b3370d2ce27df02409c09588cc98bdf21aaa0a813d5a403641"
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S211",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "PLAIN_MATCHED",
+      "seed": 211,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "175925d72a96abb70413843dfcf7e7541b53d25b934ac5bb3efa850990c9def3"
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S307",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "PLAIN_MATCHED",
+      "seed": 307,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "cabf6adeb87c16a6e10700c810d95dcfb33a5fd9e04aa8e807e5cba1bc4da906"
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S401",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "PLAIN_MATCHED",
+      "seed": 401,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "a58b1ec2d8da15f7236a76809e50fd70c5751438a6855af9f55ecf240c549f4a"
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S503",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "PLAIN_MATCHED",
+      "seed": 503,
+      "frozen_sequence": 1,
+      "ordered_base_sha256": "f0ec211f16fa5537ff53e696b14b4d1b057bdd23d1346d5ae10e062d19efa6c1"
+    }
+  ],
+  "targets": [
+    {
+      "cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S101",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 101,
+      "base_commitment": "f334d2f275ccce14290abee2e60cff1f82ccb404dfede0e12810e899d3bfa855",
+      "point": {"x": 128000, "y": 107333},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "8a2d9f236b78eb243a895f24b7a72761fe617a1da4e8482705bf6710ca952bb5",
+      "shuffled_target_cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S211",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S211",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 211,
+      "base_commitment": "b2d1075c6ab3b7193aa71098e6fafa4cf2c715c590d84d3035973d10f075052b",
+      "point": {"x": 183057, "y": 190343},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "d0faa2cd56a1fdaddcb8adf2cde1aa339219d48f8693f5aeb9374b23c993c12d",
+      "shuffled_target_cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S307",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S307",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 307,
+      "base_commitment": "0e6a8e18610db7915a3100dc22a0d9aeaf112278bea8db26d76c890838f46784",
+      "point": {"x": 182077, "y": 59378},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "ca5a659ecd7a4c51000576d090f9f62df5ed5546a6c98d9310e4b9e1cdaffd2d",
+      "shuffled_target_cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S401",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S401",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 401,
+      "base_commitment": "b4ba6867ee75b25ff42cbe73c73b78023b3aa9477e055a8c6a4a3b3c10e83f93",
+      "point": {"x": 234615, "y": 201527},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "b69fa42ed473cf018acb78da6405516525cf6fbbf6570e4958001d439f12036d",
+      "shuffled_target_cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S503",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S503",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 503,
+      "base_commitment": "5f8e2ca66faf89002ed40485c942c78692e18e87268c15329039114c41d22d03",
+      "point": {"x": 177747, "y": 143103},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "5d87b20777feb54897bfa842890c2e71536c6c1610fcf9fbd9f01a9e1451c7b5",
+      "shuffled_target_cell_id": "E7-P262153-N262567--GLV_ORBIT_CLOSED--S101",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S101",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "PLAIN_MATCHED",
+      "seed": 101,
+      "base_commitment": "1c9d4c5b91794851f823f99eda8cef938e77f54b75736e139daba86d16712eed",
+      "point": {"x": 128000, "y": 107333},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "479912547722e4ddfb0a00d041d26483d43be5c3e3dc9112c6986bd88f58da32",
+      "shuffled_target_cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S211",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S211",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "PLAIN_MATCHED",
+      "seed": 211,
+      "base_commitment": "018768c4b253ed87c064569f4488e9dc90293f81be96da8bc5e9cd540ff9b11a",
+      "point": {"x": 183057, "y": 190343},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "5652a1420ee83feaab569ac4f380ea8ad7bde5d7ac6a777e24b3131f36cb9ea3",
+      "shuffled_target_cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S307",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S307",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "PLAIN_MATCHED",
+      "seed": 307,
+      "base_commitment": "874a14abce5018cd6bdcb118d3f7cfe32f17176cc27d923ac1c67eb74d648cdd",
+      "point": {"x": 182077, "y": 59378},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "678641660b1f6c1ea088891d847f5cb8933e0461e8ed0160ac936010f23ab88d",
+      "shuffled_target_cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S401",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S401",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "PLAIN_MATCHED",
+      "seed": 401,
+      "base_commitment": "84b98b02b21debee910a1f00c36ab18b81078cbd57d4dc867c23c16dc80c3d4a",
+      "point": {"x": 234615, "y": 201527},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "3995a13a47e1b42eedf1acece98c05d08f0a727b8180e9ab0255c06d1752fae3",
+      "shuffled_target_cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S503",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S503",
+      "curve_id": "E7-P262153-N262567",
+      "arm": "PLAIN_MATCHED",
+      "seed": 503,
+      "base_commitment": "1c9dc3885fad474b9b1f049afa041839f359637088afea6b7004d3f1f52de687",
+      "point": {"x": 177747, "y": 143103},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "6c703b14c947d8f7249d1e8fb19acfb357f879f6a6d24f9fb11d0b4e31da5158",
+      "shuffled_target_cell_id": "E7-P262153-N262567--PLAIN_MATCHED--S101",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S101",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 101,
+      "base_commitment": "2b95e93429fff1d4c05aac057e9e13d0dc7ae249df31b3ee8e113823bb8af28d",
+      "point": {"x": 52954, "y": 229702},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "b772424b44f472f48a05820d29d60ce660c2d635e76a6fc49972f4a31b0db767",
+      "shuffled_target_cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S211",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S211",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 211,
+      "base_commitment": "9b93099a8cdd48985b0c25e0b02cbd220a1417498b7dfb77d15b3b8ff04eb287",
+      "point": {"x": 672008, "y": 131624},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "14d9686e251d92195f5e161795530826d41778bda8e783d40bd7af02faf6f8e3",
+      "shuffled_target_cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S307",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S307",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 307,
+      "base_commitment": "0cbd55f02bbda3df5f4ea2c5b67145aa2786f06aa05065252019fe0c264a1b2a",
+      "point": {"x": 258373, "y": 617359},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "b551afab21752489ec01bdfeda39a25371cb5f8d4075ee7e0cd03b93f4e81d7b",
+      "shuffled_target_cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S401",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S401",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 401,
+      "base_commitment": "a242e09b1a401eafe320427ff453d3d312575253a0910c09da0aa4e5d8744973",
+      "point": {"x": 190514, "y": 14063},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "e5d8d7f46b19352817892f8d07a3bca5c3c8fb6a90f2789b69c20f7a7a8751d9",
+      "shuffled_target_cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S503",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S503",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 503,
+      "base_commitment": "afe890f01556cfa9d35ba4aef0cff727274957c6ee8e4ee891785e9b93a9eaae",
+      "point": {"x": 340813, "y": 927754},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "c1dc295486e2900115bc0a1728d044f11b0b34eb68d44dadc80bdbb2ab6cc486",
+      "shuffled_target_cell_id": "E7-P1048783-N1050337--GLV_ORBIT_CLOSED--S101",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S101",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "PLAIN_MATCHED",
+      "seed": 101,
+      "base_commitment": "fb2da930321db831507534d0220cb48c176b5265e358694a4717ae56349833cf",
+      "point": {"x": 52954, "y": 229702},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "ec4c7c7c4ab34e80447d53e6e9055b673fa22cfa00fce8d00ec9ddafa33f6bb5",
+      "shuffled_target_cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S211",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S211",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "PLAIN_MATCHED",
+      "seed": 211,
+      "base_commitment": "ec286f9c1a6abad4c07c2fff5e30c53d96ad4cf03c4595960b5dee5b6fa738e9",
+      "point": {"x": 672008, "y": 131624},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "7bebb26a7a59cfe28d925f10c2cc963bc08890c4787a73c927bbaf83cad88350",
+      "shuffled_target_cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S307",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S307",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "PLAIN_MATCHED",
+      "seed": 307,
+      "base_commitment": "f6bdecd1b676075018585ea19699bc56f224e78829913818e229ff3ae407ec87",
+      "point": {"x": 258373, "y": 617359},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "263e6c62eb606e00a755fe0adbc6bbfad09d6a6a1727be3ffd4fd35ef5a88bd8",
+      "shuffled_target_cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S401",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S401",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "PLAIN_MATCHED",
+      "seed": 401,
+      "base_commitment": "6c0d9747b397a42d6146c1558d50a783244bfe5cd05488fe208690d2f41850d4",
+      "point": {"x": 190514, "y": 14063},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "3020843348743ea93393cfa3ec6c9c58f28015a14ffa991f84d6150e037a6049",
+      "shuffled_target_cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S503",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S503",
+      "curve_id": "E7-P1048783-N1050337",
+      "arm": "PLAIN_MATCHED",
+      "seed": 503,
+      "base_commitment": "5e987a722846732358cfb9fc01fe9d89189903bb840b078bd3d5d8c2991447e5",
+      "point": {"x": 340813, "y": 927754},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "d5188b26a4f610a98ff2e2a5a1b8b7693408f9fc55a2790d0366a8dc20149b1f",
+      "shuffled_target_cell_id": "E7-P1048783-N1050337--PLAIN_MATCHED--S101",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S101",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 101,
+      "base_commitment": "50cc8adf7bfec02ac4969b1162f80441688c28db9ac31c55e9f42f3c73413e1e",
+      "point": {"x": 10556329, "y": 7852141},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "d8e9cda09aea4e1e5007a9797d99b2d7f4e13dba5e7116b2275c6aa5f8cee48f",
+      "shuffled_target_cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S211",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S211",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 211,
+      "base_commitment": "89dbca375f2a1594953110bc59d402368779e60fd9a017a65eb2e857a0ae10e2",
+      "point": {"x": 425826, "y": 13730828},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "5146ec8437677e35d6737dff112c006af65ca62054de98a85f22df8273416a14",
+      "shuffled_target_cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S307",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S307",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 307,
+      "base_commitment": "273d6513d9890181eb8115ddec42f3f807d0a6d2b260237907680e77d1434296",
+      "point": {"x": 10534455, "y": 14922959},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "d641111639fd887e610e80b9145fe99224594f34c7390b94ffb87862064e6c16",
+      "shuffled_target_cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S401",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S401",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 401,
+      "base_commitment": "1f89c3fef896e8184e041c3ce68b83562f69fd2d4d593d1a53e3dd82a0433dae",
+      "point": {"x": 7610539, "y": 9188969},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "1051c369d027b7d24f676e21d11ece2bdae665a87b0b2831df6c24c46cb451c5",
+      "shuffled_target_cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S503",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S503",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "GLV_ORBIT_CLOSED",
+      "seed": 503,
+      "base_commitment": "bd9c9762135758817a4827c9526e1aed766f4eb9cda4a4066ae2bfbeeee6a352",
+      "point": {"x": 5104338, "y": 13224445},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "fb9262df1e008c386f7be5b2e4d2ce3e1b909d22c916671d5b79ea61daeb3217",
+      "shuffled_target_cell_id": "E7-P16777711-N5591281--GLV_ORBIT_CLOSED--S101",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S101",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "PLAIN_MATCHED",
+      "seed": 101,
+      "base_commitment": "867225df6b4607b3370d2ce27df02409c09588cc98bdf21aaa0a813d5a403641",
+      "point": {"x": 10556329, "y": 7852141},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "333a9ab3b7c4fac3ae84009efaaf1405e49e29d26e2cbff21577310e875ddccb",
+      "shuffled_target_cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S211",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S211",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "PLAIN_MATCHED",
+      "seed": 211,
+      "base_commitment": "175925d72a96abb70413843dfcf7e7541b53d25b934ac5bb3efa850990c9def3",
+      "point": {"x": 425826, "y": 13730828},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "d4c79268828b7bd059a2224a399bd20fa8d0754bc714be3e10ee13a01b30ee8d",
+      "shuffled_target_cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S307",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S307",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "PLAIN_MATCHED",
+      "seed": 307,
+      "base_commitment": "cabf6adeb87c16a6e10700c810d95dcfb33a5fd9e04aa8e807e5cba1bc4da906",
+      "point": {"x": 10534455, "y": 14922959},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "bddc49e69047c3fcf05c503f0b70a6ac0bade0dd8ec133878ddbe855a988447a",
+      "shuffled_target_cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S401",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S401",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "PLAIN_MATCHED",
+      "seed": 401,
+      "base_commitment": "a58b1ec2d8da15f7236a76809e50fd70c5751438a6855af9f55ecf240c549f4a",
+      "point": {"x": 7610539, "y": 9188969},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "ebced9365560df7ac104544ddf9dcb3519c490b5ba54652e26ae0c95d132de4b",
+      "shuffled_target_cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S503",
+      "frozen_sequence": 2
+    },
+    {
+      "cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S503",
+      "curve_id": "E7-P16777711-N5591281",
+      "arm": "PLAIN_MATCHED",
+      "seed": 503,
+      "base_commitment": "f0ec211f16fa5537ff53e696b14b4d1b057bdd23d1346d5ae10e062d19efa6c1",
+      "point": {"x": 5104338, "y": 13224445},
+      "statement": "target-frozen-before-leaf-stream-v1",
+      "commitment": "61d2966c6998397af3575a3649677f9eab181b4c17215b14a49c60b3a9f245bd",
+      "shuffled_target_cell_id": "E7-P16777711-N5591281--PLAIN_MATCHED--S101",
+      "frozen_sequence": 2
+    }
+  ],
+  "label_contract": {
+    "prefix_ranges": [
+      [0, 3],
+      [0, 4],
+      [0, 5],
+      [0, 6],
+      [0, 7],
+      [0, 8]
+    ],
+    "suffix_ranges_after_target": [
+      [14, 16],
+      [13, 16],
+      [12, 16],
+      [11, 16],
+      [10, 16],
+      [9, 16]
+    ],
+    "signed_zero_rule": "start with {O}; replace states by unique S+P and S-P; obstruction is nonzero iff O is absent",
+    "balanced_regular": "all six prefix_nonzero and all six suffix_nonzero",
+    "affine_regular": "balanced_regular and both endpoint_nonzero labels"
+  },
+  "controls": {
+    "constructed_target_per_cell": 1,
+    "constructed_target_in_primary": false,
+    "constructed_target_role_template": "constructed-control/{attempt}",
+    "random_label_role": "random-label",
+    "shuffled_target_mapping": "next seed cyclically within the same curve and arm",
+    "fresh_held_out_seeds": true
+  },
+  "decision_thresholds": {
+    "minimum_accepted_per_curve_arm": 100,
+    "promotion_orbit_theta_wilson95_lower": 0.9,
+    "promotion_orbit_maximum_unexplained_m21_to_m23_decline": 0.05,
+    "kill_orbit_theta_wilson95_upper": 0.8,
+    "known_local_plain_theta_wilson95_lower": 0.9,
+    "known_local_maximum_absolute_arm_delta": 0.05,
+    "known_local_requires_interval_overlap": true,
+    "h_new": {
+      "minimum_qualifying_sizes": 2,
+      "primary_pooled_orbit_minus_plain_minimum": 0.1,
+      "primary_intervals_nonoverlapping": true,
+      "minimum_positive_paired_seeds_per_size": 4,
+      "shuffled_minimum_accepted_per_arm_size": 100,
+      "shuffled_pooled_orbit_minus_plain_minimum": 0.05,
+      "permutation_mean_orbit_minus_plain_minimum": 0.05,
+      "permutation_minimum_positive_paired_seeds_per_size": 4,
+      "random_label_rate_interval": [0.35, 0.65],
+      "random_label_maximum_absolute_arm_delta": 0.15,
+      "failed_control_blocks_h_new_only": true
+    }
+  },
+  "resource_budget": {
+    "max_primary_trials": 3000000,
+    "max_cpu_hours": 4,
+    "max_peak_rss_gib": 4,
+    "max_wall_hours": 24
+  },
+  "authorization_contract": {
+    "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
+    "singleton_key": "bounded_experiment_authorization",
+    "required_status": "approved",
+    "promotion_authorized": false
+  },
+  "output_contract": {
+    "manifest": "run_manifest.json",
+    "raw_jsonl": "raw/transcript.jsonl",
+    "summary": "summary.json",
+    "validated_artifact": "artifact.json",
+    "validated_sidecar": "artifact.sha256",
+    "canonical_json": "UTF-8, sorted keys, compact separators, one trailing LF",
+    "event_order": [
+      "run_header",
+      "base",
+      "target",
+      "constructed_control",
+      "accepted",
+      "shuffled_accepted",
+      "cell_summary",
+      "run_summary"
+    ]
+  }
+}

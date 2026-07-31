@@ -1,0 +1,90 @@
+{
+  "schema_version": "keyai-m16-fixed-target-curve-table-v1",
+  "hypothesis_id": "HYP-M16-FIXED-TARGET-YIELD-001",
+  "curve_family": {
+    "a": 0,
+    "b": 7,
+    "equation": "y^2 = x^3 + 7",
+    "field": "prime"
+  },
+  "order_certificate_contract": {
+    "method": "prime_subgroup_hasse_unique_multiple",
+    "checks": [
+      "p and n are prime",
+      "G is a nonidentity point on E_7",
+      "[n]G is the identity, hence ord(G)=n",
+      "n^2 > 16*p, hence the Hasse interval has width strictly less than n",
+      "(declared_order-(p+1))^2 <= 4*p",
+      "declared_order = cofactor*n"
+    ],
+    "conclusion": "The unique multiple of n in the Hasse interval is declared_order, so #E(F_p)=declared_order exactly."
+  },
+  "curves": [
+    {
+      "curve_id": "E7-P262153-N262567",
+      "p": 262153,
+      "field_bits": 19,
+      "declared_order": 262567,
+      "n": 262567,
+      "m": 19,
+      "cofactor": 1,
+      "generator": {
+        "x": 1,
+        "y": 135720
+      },
+      "beta": 217087,
+      "lambda": 191707,
+      "certificate": {
+        "hasse_deviation": 413,
+        "hasse_deviation_squared": 170569,
+        "four_p": 1048612,
+        "n_squared": 68941429489,
+        "sixteen_p": 4194448
+      }
+    },
+    {
+      "curve_id": "E7-P1048783-N1050337",
+      "p": 1048783,
+      "field_bits": 21,
+      "declared_order": 1050337,
+      "n": 1050337,
+      "m": 21,
+      "cofactor": 1,
+      "generator": {
+        "x": 1,
+        "y": 558043
+      },
+      "beta": 858341,
+      "lambda": 484979,
+      "certificate": {
+        "hasse_deviation": 1553,
+        "hasse_deviation_squared": 2411809,
+        "four_p": 4195132,
+        "n_squared": 1103207813569,
+        "sixteen_p": 16780528
+      }
+    },
+    {
+      "curve_id": "E7-P16777711-N5591281",
+      "p": 16777711,
+      "field_bits": 25,
+      "declared_order": 16773843,
+      "n": 5591281,
+      "m": 23,
+      "cofactor": 3,
+      "generator": {
+        "x": 8760145,
+        "y": 10159998
+      },
+      "beta": 3243663,
+      "lambda": 4073091,
+      "certificate": {
+        "hasse_deviation": -3869,
+        "hasse_deviation_squared": 14969161,
+        "four_p": 67110844,
+        "n_squared": 31262423220961,
+        "sixteen_p": 268443376
+      }
+    }
+  ]
+}
