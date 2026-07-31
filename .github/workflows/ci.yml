@@ -139,6 +139,12 @@ jobs:
       - name: Replay M16 solver-slope regime barrier
         run: python3 scripts/certs/m16_solver_slope_regime_check.py
 
+      - name: Replay HYP-SELECT-004 hundred-candidate screen
+        run: python3 scripts/certs/hyp_select_004_screen_check.py
+
+      - name: Replay torus prime-trace exactness gate
+        run: python3 experiments/torus_prime_trace_exactness/validate.py
+
       - name: Replay completed M16 fixed-target experiment
         run: |
           python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/replay_completed.py
