@@ -44,11 +44,36 @@ class HypothesisRankerTests(unittest.TestCase):
         self.assertEqual(self.state["activation"]["observed"]["eligible_labels"], 0)
 
     def test_migrated_reviews_are_not_training_labels(self) -> None:
-        self.assertEqual(len(self.state["labels"]), 3)
+        self.assertEqual(len(self.state["labels"]), 6)
         for label in self.state["labels"]:
             self.assertFalse(label["training_eligible"])
             self.assertIn("independence_not_established", label["exclusion_reasons"])
             self.assertIn("historical_migration", label["exclusion_reasons"])
+
+    def test_only_current_root_reviews_bind_current_selection(self) -> None:
+        current_root = self.funnel["bulk_contract"]["merkle_root_sha256"]
+        current = [
+            item
+            for item in self.ledger
+            if item["batch_merkle_root_sha256"] == current_root
+        ]
+        historical = [
+            item
+            for item in self.ledger
+            if item["batch_merkle_root_sha256"] != current_root
+        ]
+        self.assertEqual(3, len(current))
+        self.assertEqual(3, len(historical))
+        self.assertEqual(
+            {
+                "HFR-2026-07-31-004",
+                "HFR-2026-07-31-005",
+                "HFR-2026-07-31-006",
+            },
+            {
+                item["review_record"]["review_id"] for item in current
+            },
+        )
 
     def test_untrained_model_emits_no_scores_or_reordering(self) -> None:
         self.assertTrue(
@@ -83,7 +108,7 @@ class HypothesisRankerTests(unittest.TestCase):
             review["reviewer"]["role"] = "independent-scientific-review"
             entry["review_record_sha256"] = "fixture"
         labels = review_labels(ledger, self.spec)
-        self.assertEqual(sum(item["training_eligible"] for item in labels), 3)
+        self.assertEqual(sum(item["training_eligible"] for item in labels), 6)
         native_outcomes = len(load_json(ENGINE_STATE_PATH).get("native_outcomes", []))
         activation = activation_report(labels, native_outcomes, self.spec)
         self.assertFalse(activation["ready_for_training"])

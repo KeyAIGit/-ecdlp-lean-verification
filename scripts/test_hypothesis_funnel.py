@@ -207,7 +207,7 @@ class FunnelTests(unittest.TestCase):
         self.assertFalse(self.state["bulk_contract"]["exact_target_execution"])
         for key in ("authorized", "route_promotions", "experiment_events"):
             self.assertEqual(self.state["counts"][key], 0)
-        self.assertEqual(self.state["counts"]["final_research_bets"], 3)
+        self.assertEqual(self.state["counts"]["final_research_bets"], 2)
         self.assertEqual(self.state["counts"]["review_records"], 3)
         self.assertEqual(self.state["counts"]["independent_review_records"], 0)
         self.assertEqual(
@@ -333,6 +333,18 @@ class FunnelTests(unittest.TestCase):
         }
         policy["review_decisions"] = [decision]
         with self.assertRaisesRegex(ValueError, "proposal_sha256"):
+            compile_review_decisions(self.state["review_queue"], policy)
+
+    def test_typed_desk_decision_binding_is_checked(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        decision = next(
+            item
+            for item in policy["review_decisions"]
+            if item["review_id"] == "HFR-2026-07-31-006"
+        )
+        decision["canonical_binding"]["decision_id"] = "EDD-2099-01-01-999"
+        policy["review_decisions"] = [decision]
+        with self.assertRaisesRegex(ValueError, "binding is unknown"):
             compile_review_decisions(self.state["review_queue"], policy)
 
     def test_instance_ids_use_at_least_128_bits(self) -> None:

@@ -369,14 +369,14 @@
   },
   "review_decisions": [
     {
-      "review_id": "HFR-2026-07-31-001",
+      "review_id": "HFR-2026-07-31-004",
       "semantic_signature_sha256": "0b684c64bb245ea31915392fc03df47d12089c6ce877fe54b789dd91e2014717",
       "verdict": "retain_non_executable_research_bet",
       "portfolio_role": "primary_existing_proposal",
       "reviewed_at": "2026-07-31",
       "reviewer": {
-        "actor_id": "codex-hyp-select-005-repair",
-        "role": "portfolio-review-migration"
+        "actor_id": "codex-torus-factor-base-audit",
+        "role": "portfolio-review-evidence-refresh-migration"
       },
       "independence": {
         "source": false,
@@ -392,7 +392,7 @@
       },
       "decision_protocol": {
         "claim": "Bind this seed to the existing HYP-M16-SOLVER-SLOPE-001 proposal and review its source-faithful end-to-end cost question.",
-        "basis": "Current main permits formulation and review of exactly this non-executable proposal after TASK-026, while solver scaling, rank, recovery, and total cost remain open.",
+        "basis": "The current p-plus-one evidence update does not change the existing non-executable M16 proposal: solver scaling, rank, recovery, and total cost remain open.",
         "counterargument": "The seed is not a new hypothesis and its source claim overstates what is known; TASK-026 already made the GLV-specific explanation bounded negative.",
         "decisive_test": "Five digest-bound reviews of the frozen M16 proposal, beginning with the zero-compute regime, yield, recovery, rank, and common-cost gates.",
         "verdict": "Retain only as the existing primary review target; no solver or experiment is authorized."
@@ -405,14 +405,14 @@
       ]
     },
     {
-      "review_id": "HFR-2026-07-31-002",
+      "review_id": "HFR-2026-07-31-005",
       "semantic_signature_sha256": "0739acd53e94775217d0c66ebe09d77fff73a653644c8de2db3a8bfab6933986",
       "verdict": "retain_non_executable_research_bet",
       "portfolio_role": "walk_barrier",
       "reviewed_at": "2026-07-31",
       "reviewer": {
-        "actor_id": "codex-hyp-select-005-repair",
-        "role": "portfolio-review-migration"
+        "actor_id": "codex-torus-factor-base-audit",
+        "role": "portfolio-review-evidence-refresh-migration"
       },
       "independence": {
         "source": false,
@@ -438,14 +438,14 @@
       ]
     },
     {
-      "review_id": "HFR-2026-07-31-003",
+      "review_id": "HFR-2026-07-31-006",
       "semantic_signature_sha256": "04a8e74464d44704a7e36a545778addec93b395f6467146314c296a3c578cf36",
-      "verdict": "retain_non_executable_research_bet",
-      "portfolio_role": "known_mechanism_watchlist",
+      "verdict": "reject_known_or_unsupported",
+      "portfolio_role": "desk_rejected_low_degree_instance",
       "reviewed_at": "2026-07-31",
       "reviewer": {
-        "actor_id": "codex-hyp-select-005-repair",
-        "role": "portfolio-review-migration"
+        "actor_id": "codex-torus-factor-base-audit",
+        "role": "portfolio-review-evidence-refresh-migration"
       },
       "independence": {
         "source": false,
@@ -453,21 +453,24 @@
         "context": false
       },
       "canonical_binding": {
-        "kind": "none",
-        "reason": "The p+1 trace construction is a source-ingestion watchlist item, not a canonical proposal."
+        "kind": "typed_evidence_desk_decision",
+        "cell_id": "CELL-M-WCC-PPLUS1-TRACE-M67",
+        "decision_id": "EDD-2026-07-31-001",
+        "route_id": "R-PETIT-COMPOSED-MAPS"
       },
       "decision_protocol": {
-        "claim": "Resolve whether a source-faithful p+1 norm-one trace factor base has viable lift, relation, recovery, and total-cost parameters.",
-        "basis": "The trace construction is a real published mechanism and is independent of the p-1 M16 factor base.",
-        "counterargument": "A logarithmic circuit can hide full algebraic degree, and compact representation alone gives no exponent gain.",
-        "decisive_test": "Complete primary-source ingestion and an exact applicability certificate before any solver: divisor, trace map, lift fibers, arity, recovery, and end-to-end cost.",
-        "verdict": "Retain on the watchlist with no novelty or solver claim."
+        "claim": "Screen the source-backed low-degree power-of-two p+1 trace construction at relation arity six or seven, while treating the submitted large-prime replacement as a separate incomplete proposal.",
+        "basis": "WCC 2017 already gives the trace mechanism, and the replayed secp256k1 certificate leaves only nine power-of-two trace roots against the exact arity-seven balance threshold 345156162942.",
+        "counterargument": "This arithmetic screen does not rule out a distinct bounded-degree Dickson, rational-map, or arithmetic-circuit construction using the large prime factors of p+1.",
+        "decisive_test": "The current instance is decided at desk by the full-text source extract, exact factorization and trace-orbit count, independent replay, and fault injection; a new variant must supply map, radical, recovery, and full-cost contracts before review.",
+        "verdict": "Reject the exact low-degree m=6/7 instantiation and the submitted unpriced large-prime memo; keep the parent route open_parked and authorize no experiment."
       },
       "limitations": [
         "known prior-art mechanism",
-        "critical primary literature remains unread",
-        "unmerged historical branch is not canonical evidence",
-        "no viable cost bridge yet",
+        "the broader nonsplit-torus route is not closed",
+        "an alternative large-prime circuit is not disproved",
+        "no global novelty or solving-degree claim",
+        "no viable cost bridge or experiment authorization",
         "this migrated review is not independent in source, model family, or context"
       ]
     }

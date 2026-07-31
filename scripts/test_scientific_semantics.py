@@ -37,6 +37,38 @@ class ScientificSemanticTests(unittest.TestCase):
     def test_canonical_semantics_agree(self) -> None:
         self.assertEqual([], self.validate())
 
+    def test_torus_seeds_remain_non_executable_and_route_open(self) -> None:
+        funnel = load_json("data/hypothesis_funnel_state.json")
+        queue = {item["base_id"]: item for item in funnel["review_queue"]}
+        for base_id in ("H4-E05", "H4-E25"):
+            candidate = queue[base_id]
+            self.assertFalse(candidate["scope"]["executable"])
+            self.assertIn("exact_mechanism_missing", candidate["warnings"])
+        retained_base_ids = {
+            item["base_id"] for item in funnel["final_research_bets"]
+        }
+        self.assertTrue({"H4-E05", "H4-E25"}.isdisjoint(retained_base_ids))
+        self.assertTrue(
+            all(
+                not item[field]
+                for item in funnel["final_research_bets"]
+                for field in (
+                    "executable",
+                    "admissible",
+                    "recommended",
+                    "authorized",
+                    "route_promotion",
+                )
+            )
+        )
+        route = next(
+            item
+            for item in self.decisions["routes"]
+            if item["id"] == "R-PETIT-COMPOSED-MAPS"
+        )
+        self.assertEqual("open_parked", route["status"])
+        self.assertFalse(route["authorized_experiment"])
+
     def test_petit_weil_contradiction_fails_gate(self) -> None:
         attacks = copy.deepcopy(self.attacks)
         petit = next(

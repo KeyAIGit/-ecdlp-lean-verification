@@ -211,6 +211,11 @@ jobs:
         run: |
           python3 experiments/engine/pkc_smooth_desk_screen/generate.py --check
           python3 experiments/engine/pkc_smooth_desk_screen/validate.py
+      - name: PKC nonsplit-torus desk-screen gate
+        run: |
+          python3 experiments/engine/pkc_nonsplit_torus_desk_screen/generate.py --check
+          python3 experiments/engine/pkc_nonsplit_torus_desk_screen/validate.py
+          python3 experiments/engine/pkc_nonsplit_torus_desk_screen/test_validate.py
       - name: PKC sextic-twist CM arithmetic-certificate gate
         run: |
           python3 experiments/pkc_sextic_twist_cm_screen/generate.py --check
@@ -306,6 +311,7 @@ jobs:
           python3 scripts/test_hypothesis_space_funnel.py
       - name: Hypothesis ranker shadow gate
         run: |
+          python3 scripts/sync_hypothesis_review_ledger.py --check
           python3 scripts/hypothesis_ranker.py --check
           python3 scripts/test_hypothesis_ranker.py
           python3 scripts/train_hypothesis_ranker.py --check-ready

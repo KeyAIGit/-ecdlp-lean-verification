@@ -172,6 +172,7 @@ PKC_SMOOTH_ARITY = {
     "M-PKC-SMOOTH-M4": 4,
     "M-PKC-SMOOTH-M16": 16,
 }
+WCC_PPLUS1_TRACE_ARITY = {"M-WCC-PPLUS1-TRACE-M67": 7}
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -598,6 +599,30 @@ def validate_policy(
             for ref in refs
         ):
             problems.append(f"{label} uses non-decisive source claims")
+        if prop_id == "TP-SECP-PPLUS1-TRACE-ROOT-CEILING":
+            expected_claims = ["SC-SECP-PPLUS1-TORUS-DESK-SCREEN"]
+            if refs != expected_claims:
+                problems.append(
+                    f"{label}.source_claim_ids must bind the torus desk screen"
+                )
+            else:
+                claim = next(
+                    item for item in claims if item.get("id") == expected_claims[0]
+                )
+                try:
+                    artifact = load_json(ROOT / claim["evidence_path"])
+                    certified_value = artifact["p_plus_one_factorization"][
+                        "largest_power_of_two_trace_root_count"
+                    ]
+                except (KeyError, OSError, TypeError, ValueError, json.JSONDecodeError):
+                    problems.append(
+                        f"{label} cannot read its certified integer value"
+                    )
+                else:
+                    if value != certified_value:
+                        problems.append(
+                            f"{label}.value differs from the replayed certificate"
+                        )
     if len(property_ids) != len(set(property_ids)):
         problems.append("target property ids must be unique")
     property_id_set = set(property_ids)
@@ -767,6 +792,23 @@ def validate_policy(
                     f"{label} must use both recomputed thresholds "
                     f"ceil(p^(1/{arity})) and ceil(({arity}!*p)^(1/{arity})): "
                     f"{sorted(expected_thresholds)}"
+                )
+        if mechanism_id in WCC_PPLUS1_TRACE_ARITY:
+            arity = WCC_PPLUS1_TRACE_ARITY[mechanism_id]
+            expected_threshold = ceil_nth_root(
+                factorial(arity) * SECP256K1_P, arity
+            )
+            if (
+                len(requirements) != 1
+                or requirement_properties
+                != ["TP-SECP-PPLUS1-TRACE-ROOT-CEILING"]
+                or requirements[0].get("operator") != "gte"
+                or requirements[0].get("expected") != expected_threshold
+            ):
+                problems.append(
+                    f"{label} must use the recomputed arity-{arity} "
+                    "relation-yield threshold "
+                    f"ceil(({arity}!*p)^(1/{arity})): {expected_threshold}"
                 )
         seed_axes = mechanism.get("seed_axes")
         if _exact_keys(seed_axes, SEED_AXIS_FIELDS, f"{label}.seed_axes", problems):
