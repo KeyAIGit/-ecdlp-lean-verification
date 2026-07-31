@@ -71,6 +71,12 @@ jobs:
           python3 experiments/engine/pkc_smooth_desk_screen/generate.py --check
           python3 experiments/engine/pkc_smooth_desk_screen/validate.py
 
+      - name: Replay PKC sextic-twist CM arithmetic certificate
+        run: |
+          python3 experiments/pkc_sextic_twist_cm_screen/generate.py --check
+          python3 experiments/pkc_sextic_twist_cm_screen/validate.py
+          python3 experiments/pkc_sextic_twist_cm_screen/test_validate.py
+
       - name: Replay PKC M16 symbolic desk certificate
         run: |
           python3 experiments/engine/pkc_smooth_m16_symbolic_desk/generate.py --check
