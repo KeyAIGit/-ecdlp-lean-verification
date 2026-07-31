@@ -14,6 +14,13 @@ Canonical start order:
 
 ## Active tasks
 
+Execution lock for the `one-bounded-decision-experiment` phase: only
+`TASK-026` is executable or receives experimental compute. The ML
+qualification contracts, `TASK-013`, and `TASK-008` remain available as
+maintenance/intake references but are non-executable until TASK-026 reaches
+an independently validated terminal state or a later dated decision changes
+the allocation.
+
 ### ML-P0 qualification under TASK-013
 
 State: active_engineering_qualification
@@ -159,7 +166,7 @@ exploration/promotion flags.
 
 ### TASK-013 - Build and calibrate Research Engine v0
 
-Status: active
+Status: maintenance_non_executable_during_task026
 Kind: research | data | experiment | ops
 Hypothesis: engine-level selection policy; bounded candidates remain tied to
 their named hypotheses
@@ -187,7 +194,7 @@ Expected output:
   produce at most three non-executable hypothesis drafts per cycle.
 - Eight-outcome result taxonomy, with formal `proved` separated from empirical
   `supported`, and a five-class gap taxonomy.
-- All nine hypotheses and historical runs normalized without rewriting
+- All ten hypotheses and historical runs normalized without rewriting
   provenance.
 - Deterministic selector with boolean hard rejection, preregistered expected
   information gain per normalized budget, dependency order, and retrospective
@@ -257,7 +264,7 @@ How to verify:
 
 ### TASK-008 - Maintain evidence-gated candidate intake
 
-Status: active
+Status: maintenance_non_executable_during_task026
 Kind: research | data | ops
 Hypothesis: none; intake evaluates proposals before hypothesis promotion
 Why it matters: New progress must enter through source-pinned mathematical
@@ -1677,3 +1684,109 @@ How to verify:
   fault tests
 - typed-evidence, decision-substrate, scientific-semantic,
   generated-fixpoint, and full CI gates
+
+### TASK-026 - Measure fixed-target balanced-regular yield on frozen toy E7 subgroups
+
+Status: active_authorized_bounded_experiment
+Kind: experiment | research | review
+Hypothesis: `HYP-M16-FIXED-TARGET-YIELD-001`
+Decision: `HYP-SELECT-002`
+Authorization:
+`AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01`
+Authorization source commit:
+`0b1b36851aa0f82c3a1bd587d385775923153d9c`
+Model: classical representation-aware, synthetic toy data only
+Route state: `R-PETIT-COMPOSED-MAPS` remains `open_parked`; the
+`GLV_ORBIT_CLOSED` arm is a matched ablation, not the parent route
+Promotion: false
+Why it matters: TASK-025 proves that explicit endpoint and balanced
+nonvanishing assumptions reduce the exact projective cover to one affine
+chart, but it does not show that fixed-before-sampling targets admit enough
+such relations to make that chart usable. This task performs the cheapest
+precommitted test that can kill that continuation before any solver work.
+It does not test a secp256k1 key, a faithful PKC factor base, solver scaling,
+rank, recovery, or total ECDLP cost.
+Decision boundary:
+- Execute only the canonical singleton authorization in
+  `repo/ECDLP_DECISION_SUBSTRATE.json`.
+- Use exactly the three frozen `E_7` toy subgroup rows, two frozen arms, five
+  frozen seeds, 384 stored coordinates, and the exact target-before-leaves
+  chronology in `experiment_config.json`.
+- Use only self-generated public toy targets. The target scalar is never
+  exposed to or recorded by the runtime sampler.
+- Cap the run at 3,000,000 primary trials, four CPU-hours, 4 GiB peak RSS,
+  and 24 wall-clock hours. A completely replayed resource-capped prefix is a
+  valid `PAUSE_INCONCLUSIVE` outcome and must be retained.
+- Independently validate the raw transcript, frozen commitments, arithmetic,
+  TASK-025 endpoint and balanced-regular labels, controls, summary, terminal
+  decision, resource receipt, and authorization binding.
+- Accept only the preregistered terminal values
+  `PROMOTE_TO_SOLVER_SLOPE_TEST`,
+  `CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION`,
+  `KILL_AFFINE_M16_CONTINUATION`, `PAUSE_INCONCLUSIVE`, or
+  `REJECT_AS_ARTIFACT`.
+- Even `PROMOTE_TO_SOLVER_SLOPE_TEST` only permits a later proposal for
+  `HYP-M16-SOLVER-SLOPE-001`; it does not authorize that solver test.
+- Do not edit the five hash-bound source files, alter seeds or thresholds,
+  run a solver, expand direct `S17`, target secp256k1, infer a 256-bit slope,
+  promote the route, or discard an unfavorable result.
+Bound source hashes:
+- `PREREGISTRATION.md`:
+  `e41164b1e8950aab60849e567949a230d592652d9b7ae2484eaed5dff7518cc5`
+- `curve_table.json`:
+  `a59ed1a8b597bc5d512438d09fbb4c970fff74dd704f8f88be4f7224775f5e0d`
+- `experiment_config.json`:
+  `34265beeba540ab03a5c738519eef7acaf1504a96a2f6e73b993c8af773a7c64`
+- `run.py`:
+  `7fe8bc7d4aff18e42fbfbb9c03ae9e5cec4bacc4c39eb00fb718096dd163384a`
+- `validate.py`:
+  `9f89bd4f1708f94235ff9f3c76de7db4dd7b05d42911e118b21d5f9592639d7c`
+Inputs:
+- `notes/reviews/HYP_SELECT_002.md`
+- `experiments/engine/pkc_smooth_m16_fixed_target_yield/PREREGISTRATION.md`
+- `experiments/engine/pkc_smooth_m16_fixed_target_yield/curve_table.json`
+- `experiments/engine/pkc_smooth_m16_fixed_target_yield/experiment_config.json`
+- `experiments/engine/pkc_smooth_m16_fixed_target_yield/run.py`
+- `experiments/engine/pkc_smooth_m16_fixed_target_yield/validate.py`
+- the exact singleton in `repo/ECDLP_DECISION_SUBSTRATE.json`
+Expected output:
+- `experiments/engine/pkc_smooth_m16_fixed_target_yield/run_manifest.json`
+- `experiments/engine/pkc_smooth_m16_fixed_target_yield/raw/transcript.jsonl`
+- `experiments/engine/pkc_smooth_m16_fixed_target_yield/summary.json`
+- validator-owned
+  `experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.json`
+- validator-owned
+  `experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.sha256`
+- one outcome report and append-only decision/hypothesis transition entries
+  that state what was and was not resolved
+Exit criteria:
+- Producer and independent validator both replay the exact approved singleton
+  and all five readiness-source hashes before any primary trial is written.
+- The run stops at the first scientific or resource terminal and preserves
+  every completed cell plus at most one independently replayable partial
+  final cell.
+- The validator emits the canonical artifact only after complete replay and
+  the artifact sidecar verifies.
+- The outcome is classified by the exact Section 13 preregistration rules;
+  controls may block `H_NEW` but cannot silently rewrite the primary
+  fixed-target decision.
+- The route stays `open_parked`, selected attack route stays null, native
+  bounded exploration and promotion remain closed, and no result is
+  described as a secp256k1 attack or complexity improvement.
+Files allowed to edit:
+- only canonical outcome paths under
+  `experiments/engine/pkc_smooth_m16_fixed_target_yield/`
+- directly affected append-only hypothesis, task, evidence, and decision
+  ledgers after validation
+- generated views required by those final source changes
+Files that must not be edited:
+- the five hash-bound source files listed above
+- Lean theorem sources
+- route definitions or promotion gates during execution
+How to verify:
+- `python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/run.py --check-authorization`
+- `python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/validate.py --authorization`
+- `python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/test_validate.py`
+- after execution, independent full replay plus `sha256sum -c artifact.sha256`
+- decision-substrate, scientific-semantic, generated-fixpoint, artifact,
+  branch-inventory, and full CI gates

@@ -79,6 +79,18 @@ promotion experiments authorized =
 **false**, selected attack route =
 **none**.
 
+The decision layer contains exactly one approved bounded authorization:
+**`AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01`** for
+**`HYP-M16-FIXED-TARGET-YIELD-001` / `TASK-026`**. It is bound to readiness
+commit **`0b1b36851aa0f82c3a1bd587d385775923153d9c`**, five SHA-256-pinned source files, three synthetic
+`E_7` toy subgroups, **3000000 primary trials**,
+**4 CPU-hours**,
+**4 GiB peak RSS**, and
+**24 wall-hours**. Real-world and secp256k1
+targets are forbidden; promotion is **false**.
+This singleton is external to the native Engine queue and authorizes no rerun, solver,
+route promotion, exact-target work, or 256-bit extrapolation.
+
 The `build_now` foundations are `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`.
 They make future candidates comparable and independently checkable; the completed structural
 work did not activate a parked experiment hypothesis. The formal gaps `E[n] ≅ (ℤ/n)²`,
@@ -88,7 +100,7 @@ but none is automatically next merely because Mathlib lacks it. Route selection 
 when new evidence satisfies a recorded reconsideration trigger and the proposal gate.
 
 ## Research Engine v0
-The engine normalizes **9 hypotheses** and retains
+The engine normalizes **10 hypotheses** and retains
 **8 outcome events**:
 **8 migrated historical** and
 **0 native**. Its historical
@@ -178,13 +190,14 @@ and total cost.
 
 The Engine's bounded-exploration capability is
 **true**, while the current decision's experiment
-authorization is **false** and the promotion gate is
+authorization is **true** and the promotion gate is
 **false**. `GLV-SEMAEV-ITER-001` is complete; its
-certificates and kernel-checked identities authorize no hypothesis run. Closing `TASK-025`
-authorizes no claim of generic regularity, witness uniqueness, automatic
+certificates and kernel-checked identities did not themselves authorize a hypothesis run. The
+later HYP-SELECT-002 decision authorizes only the exact TASK-026 singleton above. Closing
+`TASK-025` authorizes no claim of generic regularity, witness uniqueness, automatic
 mapped-target regularity, direct-S17 expansion or evaluation, production mask
-enumeration, solver input or run, cost inference, target computation, or route
-promotion. Any later experiment needs
+enumeration, solver input or run, cost inference, secp256k1 target computation, or
+route promotion. Any different or repeated experiment needs
 a new dated decision plus the normal fixed budgets, dependency order, and retained terminal
 outcome.
 

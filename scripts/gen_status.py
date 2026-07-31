@@ -68,6 +68,7 @@ def main() -> int:
     meta = fm["meta"]
     total = meta.get("corpus_claims", sum(ss.values()))
     phase = decisions["phase_policy"]
+    authorization = decisions["bounded_experiment_authorization"]
     selection = decisions["route_selection"]
     selected_structural = selection.get("selected_route_ids", [])
     promoted_routes = selection.get("promoted_route_ids", [])
@@ -178,6 +179,18 @@ promotion experiments authorized =
 **{str(phase['promotion_experiments_authorized']).lower()}**, selected attack route =
 **{phase['selected_attack_route'] or 'none'}**.
 
+The decision layer contains exactly one approved bounded authorization:
+**`{authorization['authorization_id']}`** for
+**`{authorization['hypothesis_id']}` / `{authorization['task_id']}`**. It is bound to readiness
+commit **`{authorization['source_commit']}`**, five SHA-256-pinned source files, three synthetic
+`E_7` toy subgroups, **{authorization['resource_budget']['max_primary_trials']} primary trials**,
+**{authorization['resource_budget']['max_cpu_hours']} CPU-hours**,
+**{authorization['resource_budget']['max_peak_rss_gib']} GiB peak RSS**, and
+**{authorization['resource_budget']['max_wall_hours']} wall-hours**. Real-world and secp256k1
+targets are forbidden; promotion is **{str(authorization['promotion_authorized']).lower()}**.
+This singleton is external to the native Engine queue and authorizes no rerun, solver,
+route promotion, exact-target work, or 256-bit extrapolation.
+
 The `build_now` foundations are {", ".join(f"`{item['id']}`" for item in build_now)}.
 They make future candidates comparable and independently checkable; the completed structural
 work did not activate a parked experiment hypothesis. The formal gaps `E[n] ≅ (ℤ/n)²`,
@@ -279,11 +292,12 @@ The Engine's bounded-exploration capability is
 **{str(engine_gates['exploration_authorized']).lower()}**, while the current decision's experiment
 authorization is **{str(phase['experiments_authorized']).lower()}** and the promotion gate is
 **{str(engine_gates['promotion_authorized']).lower()}**. `GLV-SEMAEV-ITER-001` is complete; its
-certificates and kernel-checked identities authorize no hypothesis run. Closing `TASK-025`
-authorizes no claim of generic regularity, witness uniqueness, automatic
+certificates and kernel-checked identities did not themselves authorize a hypothesis run. The
+later HYP-SELECT-002 decision authorizes only the exact TASK-026 singleton above. Closing
+`TASK-025` authorizes no claim of generic regularity, witness uniqueness, automatic
 mapped-target regularity, direct-S17 expansion or evaluation, production mask
-enumeration, solver input or run, cost inference, target computation, or route
-promotion. Any later experiment needs
+enumeration, solver input or run, cost inference, secp256k1 target computation, or
+route promotion. Any different or repeated experiment needs
 a new dated decision plus the normal fixed budgets, dependency order, and retained terminal
 outcome.
 

@@ -1591,8 +1591,8 @@ def parse_hypotheses(path: Path = HYPOTHESES_PATH) -> dict[str, dict[str, str]]:
     """Parse only the stable top-level fields needed for cross-registry checks."""
     text = path.read_text(encoding="utf-8")
     pattern = re.compile(
-        r"^  - id: (?P<id>[A-Z0-9_]+)\s*$"
-        r"(?P<body>.*?)(?=^  - id: [A-Z0-9_]+\s*$|\Z)",
+        r"^  - id: (?P<id>[A-Z0-9][A-Z0-9_-]*)\s*$"
+        r"(?P<body>.*?)(?=^  - id: [A-Z0-9][A-Z0-9_-]*\s*$|\Z)",
         flags=re.MULTILINE | re.DOTALL,
     )
     parsed: dict[str, dict[str, str]] = {}
@@ -1812,8 +1812,15 @@ def validate_policy(
         "proposal_intake_promotion_closed",
         "evidence_bounded_desk_priority_promotion_closed",
     }
+    bounded_authorization = decisions.get("bounded_experiment_authorization")
+    external_bounded_singleton = (
+        isinstance(bounded_authorization, dict)
+        and bounded_authorization.get("status") == "approved"
+    )
     expected_current_exploration = not (
-        structural_pause or current_exploration_pause
+        structural_pause
+        or current_exploration_pause
+        or external_bounded_singleton
     )
     if (
         phase_policy.get("bounded_exploration_authorized")
@@ -1916,7 +1923,24 @@ def validate_policy(
             problems.append(f"{hypothesis_id}: source_status differs from HYPOTHESES.yaml")
         if item.get("direction") != source.get("direction"):
             problems.append(f"{hypothesis_id}: direction differs from HYPOTHESES.yaml")
-        if item.get("normalized_outcome") not in outcome_ids:
+        is_external_authorized_not_run = (
+            external_bounded_singleton
+            and hypothesis_id == bounded_authorization.get("hypothesis_id")
+            and item.get("engine_state")
+            == "external_bounded_authorization_not_native_candidate"
+        )
+        if (
+            is_external_authorized_not_run
+            and item.get("normalized_outcome") is not None
+        ):
+            problems.append(
+                f"{hypothesis_id}: authorized but unexecuted singleton must "
+                "have no normalized outcome"
+            )
+        elif (
+            not is_external_authorized_not_run
+            and item.get("normalized_outcome") not in outcome_ids
+        ):
             problems.append(f"{hypothesis_id}: invalid normalized outcome")
         if not set(item.get("route_ids", [])) <= route_ids:
             problems.append(f"{hypothesis_id}: unknown route id")
@@ -1981,6 +2005,29 @@ def validate_policy(
     if len(candidate_ids) != len(set(candidate_ids)) or None in candidate_ids:
         problems.append("candidate ids must be present and unique")
     candidate_id_set = set(candidate_ids)
+    if external_bounded_singleton:
+        external_hypothesis_id = bounded_authorization.get("hypothesis_id")
+        external_normalization = [
+            item
+            for item in normalized
+            if item.get("id") == external_hypothesis_id
+        ]
+        if len(external_normalization) != 1 or external_normalization[0].get(
+            "engine_state"
+        ) != "external_bounded_authorization_not_native_candidate":
+            problems.append(
+                "approved external bounded authorization must map to exactly "
+                "one external_bounded_authorization_not_native_candidate "
+                "hypothesis normalization"
+            )
+        if any(
+            candidate.get("hypothesis_id") == external_hypothesis_id
+            for candidate in candidates
+        ):
+            problems.append(
+                "external bounded authorization must not create a native "
+                "Research Engine candidate"
+            )
     selection_value = policy.get("selection_value")
     if not isinstance(selection_value, dict) or set(selection_value) != {
         "admissibility",

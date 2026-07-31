@@ -20,14 +20,21 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: none. `TASK-025` is completed; a successor must be
-introduced by a new narrow task contract against the still-open complete-cost
-barrier before any further research execution.
+Current central task: `TASK-026`. Execute only
+`AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01`, the exact fail-closed
+fixed-target toy diagnostic for `HYP-M16-FIXED-TARGET-YIELD-001`. Its five
+source files are bound to readiness commit
+`0b1b36851aa0f82c3a1bd587d385775923153d9c`; they must not be edited during
+execution.
 
 `TASK-010` is accepted at
 `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
-proposal-intake lane. Closing TASK-025 created no executable hypothesis,
-experiment authorization, or route promotion.
+proposal-intake lane. TASK-025 itself created no authorization; the later
+HYP-SELECT-002 decision authorizes only TASK-026.
+`R-PETIT-COMPOSED-MAPS` remains `open_parked`; `R-GLV-SEMAEV` is also
+unchanged and parked because the orbit-closed arm is only a matched
+ablation. The selected attack route remains null, and native bounded exploration
+plus every promotion gate remain closed.
 
 Current scientific activation order:
 
@@ -97,11 +104,20 @@ Current scientific activation order:
     cost remain unproved. The M16 cell remains open and non-executable.
 13. The auxiliary-curve cell stays parked until a primary source supplies a
     finite search domain with a completeness criterion.
-14. Any later candidate, solver, or experiment still requires the normal
-    review gates and a separate dated authorization.
+14. `TASK-026` is the sole active experiment. It measures fixed-before-
+    sampling balanced-regular relation yield on three frozen synthetic `E_7`
+    toy subgroups, two matched arms, and five seeds, under a ceiling of
+    3,000,000 primary trials, four CPU-hours, 4 GiB peak RSS, and 24 wall
+    hours. Its independent validator must preserve positive, negative,
+    artifact-rejected, inconclusive, and resource-capped outcomes.
+15. Any solver, exact-target work, route promotion, different candidate, or
+    follow-on experiment still requires a new review and separate dated
+    authorization. Even the TASK-026 promotion terminal only opens a proposal
+    for one later solver-slope test.
 
-These entries freeze further engine-schema expansion by default. They do not
-authorize a solver, a route promotion, or an exact-target computation.
+These entries freeze further engine-schema expansion by default. TASK-026
+authorizes no solver, route promotion, exact-target computation, or
+secp256k1 extrapolation.
 
 Most recent completed bounded structural binding:
 `RS-2026-07-24-001` / `GLV-SEMAEV-ITER-001` / `R-GLV-SEMAEV` /

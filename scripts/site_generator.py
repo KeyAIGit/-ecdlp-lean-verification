@@ -292,6 +292,7 @@ def build_index(
     engine: dict,
 ) -> str:
     selection = decisions["route_selection"]
+    authorization = decisions["bounded_experiment_authorization"]
     selected_structural = selection.get("selected_route_ids", [])
     promoted_routes = selection.get("promoted_route_ids", [])
     routes = decisions["routes"]
@@ -357,8 +358,10 @@ def build_index(
       <div class="hero__signal" aria-label="Current reference decision">
         <span>Live decision graph</span>
         <strong>{len(routes)} evaluated / {len(selected_structural)} structural completed / {len(promoted_routes)} promoted</strong>
-        <span>{engine["counts"]["selected_explorations"]} experiments selected</span>
+        <span>{engine["counts"]["selected_explorations"]} native experiments selected /
+          1 exact synthetic-toy run authorized</span>
         <code>{esc(selection["decision_id"])}</code>
+        <code>{esc(authorization["authorization_id"])}</code>
       </div>
     </div>
     <script type="application/json" id="route-visual-data">{route_visual}</script>
@@ -376,8 +379,8 @@ def build_index(
         <div class="live-metric__label">distinct results</div></div>
       <div class="live-metric"><div class="live-metric__value">{len(routes)}</div>
         <div class="live-metric__label">routes evaluated</div></div>
-      <div class="live-metric"><div class="live-metric__value">{engine["counts"]["selected_explorations"]}</div>
-        <div class="live-metric__label">selected experiments</div></div>
+      <div class="live-metric"><div class="live-metric__value">1</div>
+        <div class="live-metric__label">exact toy authorization</div></div>
     </div>
   </section>
 
@@ -546,6 +549,7 @@ def build_dashboard(
     tasks: list[dict[str, str]],
 ) -> str:
     selection = decisions["route_selection"]
+    authorization = decisions["bounded_experiment_authorization"]
     selected_structural = selection.get("selected_route_ids", [])
     promoted_routes = selection.get("promoted_route_ids", [])
     routes = decisions["routes"]
@@ -613,10 +617,11 @@ def build_dashboard(
     )
     if not engine_sequence_html:
         engine_sequence_html = (
-            '<div class="empty-state"><strong>No experiment clears every '
-            "scientific gate.</strong><p>The queue remains empty until an exact "
-            "mechanism and an independent raw-artifact validator are both "
-            "available.</p></div>"
+            '<div class="empty-state"><strong>No native Engine candidate clears every '
+            "scientific gate.</strong><p>The native queue remains empty; the exact "
+            "external TASK-026 singleton is governed by the decision substrate. A future "
+            "native candidate still requires both an exact mechanism and an "
+            "independent raw-artifact validator.</p></div>"
         )
     intake_candidates = [
         candidate
@@ -677,9 +682,9 @@ def build_dashboard(
         (
             "Decision state",
             f"{len(selected_structural)} structural route completed / "
-            f"{len(promoted_routes)} promoted / 0 experiments authorized",
+            f"{len(promoted_routes)} promoted / 1 exact toy run authorized",
             ["repo/ECDLP_DECISION_SUBSTRATE.json", "scripts/check_ecdlp_decision_substrate.py"],
-            "closed",
+            "blue",
         ),
         (
             "Research Engine gates",
@@ -745,7 +750,7 @@ def build_dashboard(
         <div class="workspace-metric"><div class="workspace-metric__value">{len(routes)}</div><div class="workspace-metric__label">routes evaluated</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">{engine_counts["typed_evidence_cells"]}</div><div class="workspace-metric__label">typed cells</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">{engine_counts["generated_hypothesis_seeds"]}</div><div class="workspace-metric__label">generated seeds</div></div>
-        <div class="workspace-metric"><div class="workspace-metric__value">{engine_counts["selected_explorations"]}</div><div class="workspace-metric__label">selected experiments</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">1</div><div class="workspace-metric__label">exact toy authorization</div></div>
       </div>
     </div>
   </section>
@@ -766,16 +771,19 @@ def build_dashboard(
         <p>The decision layer controls what work is justified; proof volume does not select an attack route.</p></div>
         {status_badge("blue", product["current_stage"]["label"])}</div>
       <article class="decision-band">
-        <div class="decision-band__state"><span>{esc(selection["decision_id"])}</span><strong>Structural selection</strong></div>
-        <div class="decision-band__copy"><h3>The bounded structural question is resolved; no experiment is authorized.</h3>
-          <p>{esc(selection["gate_result"])} Proposal intake remains open, while toy runs,
-            direct secp256k1 work, and promotion remain closed.</p></div>
+        <div class="decision-band__state"><span>{esc(authorization["authorization_id"])}</span><strong>Exact toy authorization</strong></div>
+        <div class="decision-band__copy"><h3>One hash-bound synthetic-toy diagnostic is authorized.</h3>
+          <p>{esc(authorization["hypothesis_id"])} / {esc(authorization["task_id"])} only:
+            {authorization["resource_budget"]["max_primary_trials"]} primary trials across
+            {len(authorization["scope"]["curve_ids"])} frozen E_7 toy subgroups. Native Engine
+            selection, direct secp256k1 work, solvers, and promotion remain closed.
+            Structural selection {esc(selection["decision_id"])} remains unchanged.</p></div>
       </article>
       <div class="panel-heading"><div><h2>Research Engine v0 queue</h2>
         <p>{engine_counts["selected_explorations"]} selected;
           {engine_counts["ready_explorations"]} ready. Positive toy evidence is supported,
           never proved; threat-model scope, route decision, and evidence remain separate.</p></div>
-        {status_badge("amber", "No run authorized")}</div>
+        {status_badge("amber", "Native queue closed")}</div>
       <div class="surface" style="margin-bottom:22px"><div class="surface__body">{engine_sequence_html}</div></div>
 {engine_intake_section}
 {generation_section}
@@ -836,7 +844,8 @@ def build_dashboard(
           <div class="surface__body">
             <ul class="compact-list">
               <li><strong>Engine exploration capability</strong><span>{str(engine_gates["exploration_authorized"]).lower()}</span></li>
-              <li><strong>Current experiment authorization</strong><span>{str(phase_policy["experiments_authorized"]).lower()}</span></li>
+              <li><strong>Exact decision experiment</strong><span>{str(phase_policy["experiments_authorized"]).lower()} · {esc(authorization["authorization_id"])}</span></li>
+              <li><strong>Native decision exploration</strong><span>{str(phase_policy["bounded_exploration_authorized"]).lower()}</span></li>
               <li><strong>Structural routes</strong><span>{esc(", ".join(selected_structural) or "none")}</span></li>
               <li><strong>Promotion experiments</strong><span>{str(engine_gates["promotion_authorized"]).lower()}</span></li>
               <li><strong>Promoted route</strong><span>{esc(phase_policy["selected_attack_route"] or "none")}</span></li>
@@ -865,6 +874,7 @@ def build_dashboard(
 def build_explore(product: dict, stats: dict, decisions: dict, engine: dict) -> str:
     routes = decisions["routes"]
     selection = decisions["route_selection"]
+    authorization = decisions["bounded_experiment_authorization"]
     selected_structural = selection.get("selected_route_ids", [])
     promoted_routes = selection.get("promoted_route_ids", [])
     counts = Counter(route["status"] for route in routes)
@@ -935,7 +945,8 @@ def build_explore(product: dict, stats: dict, decisions: dict, engine: dict) -> 
           Search by mechanism, scope, evidence, or next action.</p></div>
       <aside class="decision-inline"><strong>{esc(selection["decision_id"])} · Structural selection</strong>
         <span>{len(selected_structural)} structural route completed; {len(promoted_routes)} promoted;
-          0 experiments authorized.</span></aside>
+          1 exact synthetic-toy run authorized under
+          {esc(authorization["authorization_id"])}; 0 native experiments selected.</span></aside>
     </div>
   </section>
 

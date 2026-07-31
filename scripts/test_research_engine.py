@@ -909,12 +909,92 @@ class ResearchEngineTests(unittest.TestCase):
                 }
         return policy
 
-    def test_policy_covers_all_nine_hypotheses(self) -> None:
+    def test_policy_covers_all_ten_hypotheses(self) -> None:
         self.assertEqual(
             [],
             validate_policy(self.policy, self.decisions, self.hypotheses),
         )
-        self.assertEqual(9, len(self.policy["hypothesis_normalization"]))
+        self.assertEqual(10, len(self.policy["hypothesis_normalization"]))
+
+    def test_external_singleton_is_not_a_native_engine_candidate(self) -> None:
+        hypothesis_id = "HYP-M16-FIXED-TARGET-YIELD-001"
+        self.assertIn(hypothesis_id, self.hypotheses)
+        normalized = next(
+            item
+            for item in self.policy["hypothesis_normalization"]
+            if item["id"] == hypothesis_id
+        )
+        self.assertEqual(
+            "external_bounded_authorization_not_native_candidate",
+            normalized["engine_state"],
+        )
+        self.assertIsNone(normalized["normalized_outcome"])
+        self.assertEqual(
+            ["R-PETIT-COMPOSED-MAPS"],
+            normalized["route_ids"],
+        )
+        self.assertFalse(
+            any(
+                candidate["hypothesis_id"] == hypothesis_id
+                for candidate in self.policy["candidate_proposals"]
+            )
+        )
+        self.assertEqual(
+            0,
+            sum(
+                candidate["authorization"] == "intake"
+                for candidate in self.policy["candidate_proposals"]
+            ),
+        )
+        self.assertEqual(
+            0,
+            sum(
+                candidate["authorization"] == "exploration"
+                for candidate in self.policy["candidate_proposals"]
+            ),
+        )
+        self.assertEqual(
+            24,
+            self.policy["gates"]["exploration"]["limits"]["max_field_bits"],
+        )
+        selection = select_candidates(self.policy)
+        self.assertEqual([], selection["selected_sequence"])
+
+        policy = copy.deepcopy(self.policy)
+        external = next(
+            item
+            for item in policy["hypothesis_normalization"]
+            if item["id"] == hypothesis_id
+        )
+        external["normalized_outcome"] = "inconclusive"
+        problems = validate_policy(policy, self.decisions, self.hypotheses)
+        self.assertIn(
+            f"{hypothesis_id}: authorized but unexecuted singleton must "
+            "have no normalized outcome",
+            problems,
+        )
+
+    def test_hypothesis_parser_accepts_hyphenated_ids(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            registry = Path(directory) / "HYPOTHESES.yaml"
+            registry.write_text(
+                "hypotheses:\n"
+                "  - id: HYP-ONE-001\n"
+                "    title: \"First\"\n"
+                "    direction: \"experiment\"\n"
+                "    status: \"active\"\n"
+                "  - id: HYP_TWO_002\n"
+                "    title: \"Second\"\n"
+                "    direction: \"formalization\"\n"
+                "    status: \"parked\"\n",
+                encoding="utf-8",
+            )
+            parsed = parse_hypotheses(registry)
+        self.assertEqual(
+            {"HYP-ONE-001", "HYP_TWO_002"},
+            set(parsed),
+        )
+        self.assertEqual("active", parsed["HYP-ONE-001"]["status"])
 
     def test_legacy_candidate_gates_cannot_be_self_cleared(self) -> None:
         policy = copy.deepcopy(self.policy)

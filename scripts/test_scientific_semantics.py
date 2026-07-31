@@ -1121,21 +1121,99 @@ class ScientificSemanticTests(unittest.TestCase):
             problems,
         )
 
-    def test_task016_phase_cannot_reopen_sanitation_or_authorization(self) -> None:
+    def test_phase_cannot_reopen_sanitation_or_native_exploration(self) -> None:
         decisions = copy.deepcopy(self.decisions)
         decisions["phase_policy"]["phase"] = "research-engine-v0.2-sanitation"
         decisions["phase_policy"]["bounded_exploration_authorized"] = True
         decisions["maintenance_cycle"]["status"] = "active_remediation_draft"
         problems = self.validate(decisions=decisions)
         self.assertIn(
-            "current phase must remain evidence-bounded desk priority",
+            "current phase must remain one bounded decision experiment",
             problems,
         )
         self.assertIn(
-            "current phase must authorize zero bounded experiments",
+            "native decision bounded exploration must remain unauthorized",
             problems,
         )
         self.assertIn("TASK-010 maintenance cycle boundary drifted", problems)
+
+    def test_singleton_cannot_drift_or_authorize_promotion(self) -> None:
+        decisions = copy.deepcopy(self.decisions)
+        authorization = decisions["bounded_experiment_authorization"]
+        authorization["scope"]["secp256k1_targets_forbidden"] = False
+        authorization["resource_budget"]["max_primary_trials"] += 1
+        authorization["sha256_bindings"]["run_py"] = "0" * 64
+        authorization["promotion_authorized"] = True
+        decisions["phase_policy"]["promotion_experiments_authorized"] = True
+        problems = self.validate(decisions=decisions)
+        self.assertIn(
+            "bounded experiment authorization scope drifted", problems
+        )
+        self.assertIn(
+            "bounded experiment authorization resource_budget drifted",
+            problems,
+        )
+        self.assertIn(
+            "bounded experiment authorization sha256_bindings drifted",
+            problems,
+        )
+        self.assertIn(
+            "bounded experiment authorization promotion_authorized drifted",
+            problems,
+        )
+        self.assertIn(
+            "decision promotion must remain unauthorized", problems
+        )
+
+    def test_singleton_route_must_match_typed_cell_parent(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["route_id"] = "R-GLV-SEMAEV"
+        problems = self.validate(typed=typed)
+        self.assertIn(
+            "bounded experiment authorization route must match its canonical "
+            "typed-evidence cell route",
+            problems,
+        )
+
+    def test_singleton_does_not_open_native_route_claim_or_lifecycle_gates(
+        self,
+    ) -> None:
+        decisions = copy.deepcopy(self.decisions)
+        route = next(
+            item
+            for item in decisions["routes"]
+            if item["id"] == "R-GLV-SEMAEV"
+        )
+        route["authorized_experiment"] = True
+        claims = copy.deepcopy(self.claims)
+        claims["authorization"]["experiments"] = 1
+        lifecycle = copy.deepcopy(self.lifecycle)
+        lifecycle["authorization"]["experiments"] = 1
+        engine = copy.deepcopy(self.engine)
+        engine["counts"]["selected_explorations"] = 1
+        problems = self.validate(
+            decisions=decisions,
+            claims=claims,
+            lifecycle=lifecycle,
+            engine=engine,
+        )
+        self.assertIn(
+            "no route may inherit the decision-level authorization", problems
+        )
+        self.assertIn("claim state authorization boundary drifted", problems)
+        self.assertIn(
+            "v0.2 lifecycle authorization boundary drifted", problems
+        )
+        self.assertTrue(
+            any(
+                "selected_explorations" in problem for problem in problems
+            )
+        )
 
 
 if __name__ == "__main__":

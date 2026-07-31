@@ -2,19 +2,19 @@
   "schema_version": "0.1-generated",
   "engine_id": "ecdlp-research-engine-v0",
   "source_hashes": {
-    "policy_sha256": "04c74829a69d4380b25a1de83a120b41d20a3cde5687ee5ac812fad1ce36fc74",
+    "policy_sha256": "3f8419750cc2ce68a83cfe27979919d76ca12a0f47e527d2d4e03d9c727cedbf",
     "hypothesis_generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-    "typed_evidence_state_sha256": "47d34fb69b096d42e321f8a8e3f3d252c0a05cd066225a136f65fe820d968f07",
-    "research_claim_state_sha256": "72fcc244376d5056da7bb9084b0c1fb20177ddd43c590e5ea493324eda0d3205",
-    "decision_substrate_sha256": "2c422e831320dd5407b1c1ce460d5fd81bb8493f5c6e2505461749997d22158c",
-    "hypotheses_sha256": "719eb78ba7a8e40101c14c92ac426a0028de9d7aa14e6ffc3735ecffa4615c5c",
+    "typed_evidence_state_sha256": "caf6646bad2d80d7ac34e64cd856c4d82b431ff6eaa188038bad396de72446fa",
+    "research_claim_state_sha256": "65d4cefb6b79f8c3d6f84f1878ea2b90c2ec3873fd74612e58c8126d65a0283a",
+    "decision_substrate_sha256": "3d900afbba15c74d1492003dfe8c93889f51416e15d7d18fa2d979d826684c83",
+    "hypotheses_sha256": "7df9ef78c2f134346befbc0662d86c78eb1002eacdd1e4655fbb65babad1d7ef",
     "outcome_events_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3",
     "historical_baseline_anchor_sha256": "d9de2351a499d395d09005199aac73744c1bf212ff9759ceed5d229d076ca7a3"
   },
   "gate_status": {
     "exploration_authorized": true,
     "promotion_authorized": false,
-    "current_decision_experiment_authorized": false,
+    "current_decision_experiment_authorized": true,
     "current_decision_bounded_exploration_authorized": false,
     "structural_work_authorized": false,
     "exploration_limits": {
@@ -56,7 +56,7 @@
     ]
   },
   "counts": {
-    "normalized_hypotheses": 9,
+    "normalized_hypotheses": 10,
     "outcome_events": 8,
     "candidate_proposals": 6,
     "generated_hypothesis_seeds": 2,
@@ -373,6 +373,22 @@
         "REO-2026-07-24-007",
         "REO-2026-07-24-008"
       ]
+    },
+    {
+      "id": "HYP-M16-FIXED-TARGET-YIELD-001",
+      "direction": "experiment",
+      "source_status": "active",
+      "normalized_outcome": null,
+      "verifier_scope": "The exact TASK-026 singleton is bound by the decision substrate to the committed readiness package, three synthetic E_7 toy subgroups, thirty frozen cells, independent replay, and fixed resource limits. No terminal scientific outcome exists yet.",
+      "engine_state": "external_bounded_authorization_not_native_candidate",
+      "route_ids": [
+        "R-PETIT-COMPOSED-MAPS"
+      ],
+      "rationale": "This enabling test is authorized once by the decision substrate outside the frozen Research Engine v0.2 candidate queue. It tests fixed-target availability of the TASK-025 regular affine locus on the canonical Petit-composed-map cell. The GLV-orbit arm is a matched ablation, not a second route binding; the test does not reopen the rejected coordinatewise-cube quotient, select a native Engine candidate, or promote an attack route.",
+      "reopening_condition": "After the exact singleton reaches a validated terminal state, retain that outcome and follow only its preregistered next step; any rerun, solver-slope test, changed threshold, new curve, or larger budget requires a new hypothesis id or dated authorization.",
+      "outcome_event_count": 0,
+      "outcome_counts": {},
+      "outcome_event_ids": []
     },
     {
       "id": "HYP_WARD_EDS_001",
@@ -1111,8 +1127,8 @@
     "generator_id": "ecdlp-hypothesis-generation-v0",
     "source_hashes": {
       "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-      "typed_evidence_state_sha256": "47d34fb69b096d42e321f8a8e3f3d252c0a05cd066225a136f65fe820d968f07",
-      "research_claim_state_sha256": "72fcc244376d5056da7bb9084b0c1fb20177ddd43c590e5ea493324eda0d3205",
+      "typed_evidence_state_sha256": "caf6646bad2d80d7ac34e64cd856c4d82b431ff6eaa188038bad396de72446fa",
+      "research_claim_state_sha256": "65d4cefb6b79f8c3d6f84f1878ea2b90c2ec3873fd74612e58c8126d65a0283a",
       "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
@@ -1148,7 +1164,7 @@
       },
       "source_hashes": {
         "policy_sha256": "b28e955fade48c7e8f30699ad137e8ee3cefe3aca2186ccce960489d8199fd04",
-        "decision_substrate_sha256": "c3ef36d2d7bc7603566bfbc2cac70eb0a8882925a695093d1eb96eeb10e00786",
+        "decision_substrate_sha256": "63d10475713bcdb80bfef482325dc95bf96c60619472c1beb5fdd6576392d8b3",
         "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
         "evidence_files_sha256": "71b527927a514cee8171b5b9a9dcc432313cdfe51fa7960dc1155f628c8025b8",
         "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
@@ -1178,15 +1194,15 @@
         "route_promotions": 0,
         "exact_target_runs": 0
       },
-      "state_sha256": "72fcc244376d5056da7bb9084b0c1fb20177ddd43c590e5ea493324eda0d3205"
+      "state_sha256": "65d4cefb6b79f8c3d6f84f1878ea2b90c2ec3873fd74612e58c8126d65a0283a"
     },
     "seed_coverage": {
       "threshold": 12,
       "eligible_seed_count": 2,
       "overflow_triggered": false,
       "represented_seed_ids": [
-        "HGS-6552FB14B46F",
-        "HGS-8BEFB3156EC3"
+        "HGS-E1097B75224C",
+        "HGS-5E19F2C164BE"
       ],
       "represented_cell_ids": [
         "CELL-M-PKC-AUXILIARY-CURVE",
@@ -1197,10 +1213,10 @@
     },
     "generated_seeds": [
       {
-        "seed_id": "HGS-6552FB14B46F",
+        "seed_id": "HGS-E1097B75224C",
         "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
         "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-        "claim_state_digest": "72fcc244376d5056da7bb9084b0c1fb20177ddd43c590e5ea493324eda0d3205",
+        "claim_state_digest": "65d4cefb6b79f8c3d6f84f1878ea2b90c2ec3873fd74612e58c8126d65a0283a",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1282,7 +1298,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "6552fb14b46fe2d96aa7af1a730a56a072514112cfc56a46ddb14852f0b7e2a9",
+        "deduplication_key": "e1097b75224c2217a1336a566115d0837c3be3e6bf328644880dbb2debcb59ba",
         "proposal_packet": {
           "required_sections": [
             "new_premise",
@@ -1344,10 +1360,10 @@
         }
       },
       {
-        "seed_id": "HGS-8BEFB3156EC3",
+        "seed_id": "HGS-5E19F2C164BE",
         "cell_id": "CELL-M-PKC-SMOOTH-M16",
         "typed_evidence_digest": "180bd1dd2be5f4ed04530ff962865bb4ae3aac1438f4499e05dde06e9104bcfe",
-        "claim_state_digest": "72fcc244376d5056da7bb9084b0c1fb20177ddd43c590e5ea493324eda0d3205",
+        "claim_state_digest": "65d4cefb6b79f8c3d6f84f1878ea2b90c2ec3873fd74612e58c8126d65a0283a",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1470,7 +1486,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "8befb3156ec3c2e3820188d1efc1daac93256034fd5a931ada4ff490a826fc9e",
+        "deduplication_key": "5e19f2c164becebaf138413371e53e33f650e62f9bcc0bd5edc96288ca19c897",
         "proposal_packet": {
           "required_sections": [
             "new_premise",

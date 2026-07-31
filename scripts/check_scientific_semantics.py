@@ -8,6 +8,18 @@ import re
 from pathlib import Path
 from typing import Any
 
+from check_ecdlp_decision_substrate import (
+    BOUNDED_AUTHORIZATION_BINDINGS,
+    BOUNDED_AUTHORIZATION_BUDGET,
+    BOUNDED_AUTHORIZATION_CELL_ID,
+    BOUNDED_AUTHORIZATION_HYPOTHESIS_ID,
+    BOUNDED_AUTHORIZATION_ID,
+    BOUNDED_AUTHORIZATION_KEY,
+    BOUNDED_AUTHORIZATION_ROUTE_ID,
+    BOUNDED_AUTHORIZATION_SCOPE,
+    BOUNDED_AUTHORIZATION_SOURCE_COMMIT,
+    BOUNDED_AUTHORIZATION_TASK_ID,
+)
 from research_claims import validate_and_build as validate_claim_policy
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -1419,20 +1431,123 @@ def validate_semantics(
 
     phase = decisions.get("phase_policy", {})
     execution = decisions.get("execution_gates", {})
-    if phase.get("phase") != "evidence-bounded-desk-priority":
-        problems.append("current phase must remain evidence-bounded desk priority")
+    authorization = decisions.get(BOUNDED_AUTHORIZATION_KEY)
+    expected_authorization_fields = {
+        "status",
+        "hypothesis_id",
+        "task_id",
+        "route_id",
+        "cell_id",
+        "promotion_authorized",
+        "authorization_id",
+        "source_commit",
+        "authorized_utc",
+        "sha256_bindings",
+        "resource_budget",
+        "scope",
+    }
+    if not isinstance(authorization, dict):
+        problems.append("exact bounded experiment authorization must be present")
+        authorization = {}
+    if set(authorization) != expected_authorization_fields:
+        problems.append("bounded experiment authorization field set drifted")
+    expected_authorization = {
+        "status": "approved",
+        "hypothesis_id": BOUNDED_AUTHORIZATION_HYPOTHESIS_ID,
+        "task_id": BOUNDED_AUTHORIZATION_TASK_ID,
+        "route_id": BOUNDED_AUTHORIZATION_ROUTE_ID,
+        "cell_id": BOUNDED_AUTHORIZATION_CELL_ID,
+        "promotion_authorized": False,
+        "authorization_id": BOUNDED_AUTHORIZATION_ID,
+        "source_commit": BOUNDED_AUTHORIZATION_SOURCE_COMMIT,
+        "sha256_bindings": {
+            key: digest
+            for key, (_, digest) in BOUNDED_AUTHORIZATION_BINDINGS.items()
+        },
+        "resource_budget": BOUNDED_AUTHORIZATION_BUDGET,
+        "scope": BOUNDED_AUTHORIZATION_SCOPE,
+    }
+    for field, expected in expected_authorization.items():
+        if authorization.get(field) != expected:
+            problems.append(
+                f"bounded experiment authorization {field} drifted"
+            )
+    if authorization.get("route_id") != m16_cell.get("route_id"):
+        problems.append(
+            "bounded experiment authorization route must match its canonical "
+            "typed-evidence cell route"
+        )
+    authorized_route = routes.get(str(authorization.get("route_id")), {})
+    if authorization.get("hypothesis_id") not in authorized_route.get(
+        "hypothesis_ids", []
+    ):
+        problems.append(
+            "bounded experiment hypothesis must be registered on its "
+            "canonical parent route"
+        )
+    if not re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z",
+        str(authorization.get("authorized_utc", "")),
+    ):
+        problems.append("bounded experiment authorization timestamp drifted")
+    if phase.get("phase") != "one-bounded-decision-experiment":
+        problems.append(
+            "current phase must remain one bounded decision experiment"
+        )
+    if phase.get("experiments_authorized") is not (
+        authorization.get("status") == "approved"
+    ):
+        problems.append(
+            "decision experiment flag must equal exact singleton approval"
+        )
     if phase.get("bounded_exploration_authorized") is not False:
-        problems.append("current phase must authorize zero bounded experiments")
+        problems.append(
+            "native decision bounded exploration must remain unauthorized"
+        )
+    if phase.get("promotion_experiments_authorized") is not False:
+        problems.append("decision promotion must remain unauthorized")
+    if phase.get("selected_attack_route") is not None:
+        problems.append("exact singleton cannot select an attack route")
     if execution.get("exploration", {}).get("authorized") is not False:
-        problems.append("current execution gate must keep exploration closed")
+        problems.append(
+            "native execution gate must remain closed outside the singleton"
+        )
+    if execution.get("promotion", {}).get("authorized") is not False:
+        problems.append("execution promotion gate must remain closed")
     if any(route.get("authorized_experiment") for route in routes.values()):
-        problems.append("no route may authorize an experiment")
+        problems.append("no route may inherit the decision-level authorization")
     if claim_state.get("authorization") != {
         "experiments": 0,
         "route_promotions": 0,
         "exact_target_runs": 0,
     }:
         problems.append("claim state authorization boundary drifted")
+    engine_gate_status = engine_state.get("gate_status", {})
+    if engine_gate_status.get(
+        "current_decision_experiment_authorized"
+    ) is not True:
+        problems.append(
+            "engine view must expose the external decision-level singleton"
+        )
+    if engine_gate_status.get(
+        "current_decision_bounded_exploration_authorized"
+    ) is not False:
+        problems.append(
+            "engine view must keep native decision exploration closed"
+        )
+    if engine_gate_status.get("promotion_authorized") is not False:
+        problems.append("engine promotion authorization boundary drifted")
+    for count_name in (
+        "authorized_exploration_candidates",
+        "selected_explorations",
+        "ready_explorations",
+        "terminal_native_outcomes",
+    ):
+        if engine_state.get("counts", {}).get(count_name) != 0:
+            problems.append(
+                f"external singleton must not change native Engine count "
+                f"{count_name}"
+            )
     generation = engine_state.get("hypothesis_generation", {})
     if any(
         seed.get("authorization") != "none"
@@ -1522,7 +1637,8 @@ def main() -> int:
         return 1
     print(
         "scientific-semantic gate passed: Petit/Weil, GLV child/route, "
-        "assurance, source read status, shadow intake, and zero authorization agree."
+        "assurance, source read status, shadow intake, one exact decision-level "
+        "toy authorization, and zero native/route/promotion authorization agree."
     )
     return 0
 
