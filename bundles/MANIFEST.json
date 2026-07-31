@@ -59,7 +59,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 77792
+        "bytes": 78471
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -181,7 +181,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 77792
+        "bytes": 78471
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -265,7 +265,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 166458
+        "bytes": 167032
       },
       {
         "path": "BARRIERS.md",
@@ -501,7 +501,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 77792
+        "bytes": 78471
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -585,7 +585,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 166458
+        "bytes": 167032
       },
       {
         "path": "BARRIERS.md",
@@ -771,7 +771,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 667569
+        "bytes": 669334
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

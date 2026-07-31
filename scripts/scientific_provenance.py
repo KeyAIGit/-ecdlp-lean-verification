@@ -60,7 +60,9 @@ def git_ref_commit(ref: Any, *, root: Path = ROOT) -> str | None:
     return value if result.returncode == 0 and COMMIT_ID.fullmatch(value) else None
 
 
-def validation_problems(policy: dict[str, Any] | None = None) -> list[str]:
+def validation_problems(
+    policy: dict[str, Any] | None = None, *, root: Path = ROOT
+) -> list[str]:
     policy = policy or load_policy()
     problems: list[str] = []
     if policy.get("schema_version") != "0.1":
@@ -69,8 +71,13 @@ def validation_problems(policy: dict[str, Any] | None = None) -> list[str]:
     if not isinstance(protected, dict):
         return problems + ["scientific provenance protected_main must be an object"]
     anchor = protected.get("commit")
-    if not git_commit_exists(anchor):
+    if not git_commit_exists(anchor, root=root):
         problems.append("scientific provenance protected_main commit does not resolve")
+    recorded_ref = protected.get("recorded_ref")
+    if not isinstance(recorded_ref, str) or not recorded_ref.startswith("refs/"):
+        problems.append(
+            "scientific provenance protected_main recorded_ref must be a ref name"
+        )
     refs = policy.get("immutable_evidence_refs")
     if not isinstance(refs, list):
         return problems + ["immutable_evidence_refs must be an array"]
@@ -91,9 +98,9 @@ def validation_problems(policy: dict[str, Any] | None = None) -> list[str]:
             problems.append(f"{label}.ref is duplicated")
         else:
             seen.add(ref)
-        if not git_commit_exists(commit):
+        if not git_commit_exists(commit, root=root):
             problems.append(f"{label}.commit does not resolve")
-        resolved = git_ref_commit(ref)
+        resolved = git_ref_commit(ref, root=root)
         if resolved is not None and resolved != commit:
             problems.append(f"{label}.ref does not resolve to its pinned commit")
         if not isinstance(item.get("purpose"), str) or not item["purpose"].strip():

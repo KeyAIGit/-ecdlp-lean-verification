@@ -60,7 +60,7 @@
     "outcome_events": 9,
     "candidate_proposals": 6,
     "generated_hypothesis_seeds": 2,
-    "submitted_hypothesis_proposals": 0,
+    "submitted_hypothesis_proposals": 1,
     "quality_cleared_hypothesis_proposals": 0,
     "retained_hypothesis_drafts": 0,
     "typed_evidence_cells": 7,
@@ -1186,7 +1186,7 @@
       "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
       "typed_evidence_state_sha256": "bc1ee18931a51364c2122120bdf50a039b67b747f006996795cb4767d87ab63f",
       "research_claim_state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
-      "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "proposals_sha256": "581cf3109a9f2bfdaeacf895664e816ab22f0f47a72140385dab1c69d04d0a34",
       "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "trust_boundary": {
@@ -1197,7 +1197,7 @@
     },
     "counts": {
       "generated_seeds": 2,
-      "submitted_proposals": 0,
+      "submitted_proposals": 1,
       "adversarial_reviews": 0,
       "quality_cleared_proposals": 0,
       "retained_hypothesis_drafts": 0,
@@ -1605,7 +1605,24 @@
         }
       }
     ],
-    "proposal_intake": [],
+    "proposal_intake": [
+      {
+        "proposal_id": "HGP-M16-SOLVER-SLOPE-001",
+        "seed_id": "HGS-DC5FF2FC9E71",
+        "cell_id": "CELL-M-PKC-SMOOTH-M16",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "title": "HYP-M16-SOLVER-SLOPE-001: conditional source-faithful attempt and complete-cost slope",
+        "proposal_sha256": "0212ce7acafe39c2afde448789d151bfc400cc7e2fe55dbd29dae9f518605f9a",
+        "review_roles_present": [],
+        "review_independence": "not_reviewed",
+        "blockers": [
+          "adversarial_review_incomplete",
+          "review_independence_unestablished"
+        ],
+        "disposition": "needs_revision",
+        "authorization": "none"
+      }
+    ],
     "collision_groups": {
       "premise_fingerprints": [],
       "mechanism_signatures": [],

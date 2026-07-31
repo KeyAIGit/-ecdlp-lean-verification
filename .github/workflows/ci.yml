@@ -136,6 +136,9 @@ jobs:
           python3 experiments/engine/pkc_smooth_m16_infinity_propagation/test_validate.py
           (cd experiments/engine/pkc_smooth_m16_infinity_propagation && sha256sum -c artifact.sha256)
 
+      - name: Replay M16 solver-slope regime barrier
+        run: python3 scripts/certs/m16_solver_slope_regime_check.py
+
       - name: Replay completed M16 fixed-target experiment
         run: |
           python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/replay_completed.py

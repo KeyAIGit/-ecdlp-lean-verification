@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "purpose": "External works cited across the substrate, with provenance (where_used) computed from the hand-authored docs. Companion to result_registry.json (theorem-name provenance).",
   "scan_scope": "**/*.md excluding .git, .lake, archive, data, node_modules, platform",
-  "source_count": 28,
+  "source_count": 29,
   "sources": [
     {
       "id": "amadori_pintore_sala2018",
@@ -25,8 +25,36 @@
       "where_used": [
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/reviews/HYP_SELECT_002.md",
+        "notes/reviews/HYP_SELECT_003.md",
         "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
         "tasks/ECDLP_RESEARCH.md"
+      ]
+    },
+    {
+      "id": "corrigan_gibbs_henzinger_wu2026",
+      "title": "The Structured Generic-Group Model",
+      "authors": [
+        "Henry Corrigan-Gibbs",
+        "Alexandra Henzinger",
+        "David J. Wu"
+      ],
+      "year": 2026,
+      "venue": "EUROCRYPT 2026",
+      "url": "https://eprint.iacr.org/2026/384",
+      "doi": null,
+      "aliases": [
+        "Corrigan-Gibbs",
+        "Structured Generic-Group Model",
+        "SGGM"
+      ],
+      "role": "Primary source for the partial-operation structured generic-group model, its constrained-label lower bound, and the exact model assumptions audited by HYP-SGGM-MODEL-MAP-001.",
+      "full_text_status": "full_text_inspected",
+      "note": "The full 36-page author manuscript was inspected through the author-hosted PDF. The repository operation map is a scoped application audit, not a claim that the published lower bound already covers the M16 relation interface.",
+      "where_used": [
+        "VERIFIED.md",
+        "notes/reviews/HYP_SELECT_002.md",
+        "notes/reviews/HYP_SELECT_003.md",
+        "notes/reviews/HYP_SGGM_MODEL_MAP_001.md"
       ]
     },
     {
@@ -241,6 +269,7 @@
         "experiments/engine/pkc_smooth_m16_fixed_target_yield/PREREGISTRATION.md",
         "experiments/engine/pkc_smooth_m16_fixed_target_yield/RESULTS.md",
         "experiments/engine/pkc_smooth_m16_semantic_bridge/README.md",
+        "experiments/engine/pkc_smooth_m16_solver_slope/MECHANISM_DESIGN.md",
         "experiments/engine/pkc_smooth_m16_symbolic_desk/README.md",
         "experiments/glv_diagonal_obstruction/README.md",
         "experiments/glv_semaev_symmetry/README.md",
@@ -276,6 +305,8 @@
         "notes/reviews/FBL_PURE_CORPUS.md",
         "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
         "notes/reviews/HYP_SELECT_002.md",
+        "notes/reviews/HYP_SELECT_003.md",
+        "notes/reviews/HYP_SGGM_MODEL_MAP_001.md",
         "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md",
         "notes/reviews/PR246_DISPOSITION.md",
         "notes/reviews/RESEARCH_ENGINE_V0_2_BASELINE_AUDIT.md",
@@ -449,6 +480,7 @@
         "experiments/p4_petit/RESULTS.md",
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/reviews/HYP_SELECT_002.md",
+        "notes/reviews/HYP_SELECT_003.md",
         "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
         "tasks/ECDLP_RESEARCH.md"
       ]
@@ -502,12 +534,15 @@
         "PUBLISHABLE_UNITS.md",
         "README.md",
         "VERIFIED.md",
+        "experiments/engine/pkc_smooth_m16_solver_slope/MECHANISM_DESIGN.md",
+        "experiments/engine/pkc_smooth_m16_solver_slope/VALIDATOR_DESIGN.md",
         "experiments/engine/pkc_smooth_m16_symbolic_desk/README.md",
         "experiments/ml_structure_probe/README.md",
         "experiments/ml_structure_probe/reports/p1_toy_scaling/QUALIFICATION_SUMMARY.md",
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/RESEARCH_MAP.md",
         "notes/SECURITY_SCOPE.md",
+        "notes/reviews/HYP_SELECT_003.md",
         "tasks/ECDLP_RESEARCH.md"
       ]
     },
@@ -618,6 +653,7 @@
         "notes/UPSTREAM_SCAN.md",
         "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
         "notes/reviews/HYP_SELECT_002.md",
+        "notes/reviews/HYP_SELECT_003.md",
         "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md",
         "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
         "tasks/ECDLP_RESEARCH.md"

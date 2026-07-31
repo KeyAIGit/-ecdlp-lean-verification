@@ -20,7 +20,7 @@
     "typed_seed_eligible_cells": 2,
     "typed_desk_decisions": 3,
     "hypothesis_axis_nodes": 9,
-    "source_index_nodes": 28,
+    "source_index_nodes": 29,
     "research_engine_intake_candidates": 0,
     "research_engine_outcomes": 9,
     "research_engine_v02_candidates": 0,
@@ -30,9 +30,9 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1143,
+    "edges": 1145,
     "by_edge_type": {
-      "imports": 505,
+      "imports": 507,
       "member_of": 306,
       "grounded_in_source_claim": 49,
       "requires_foundation": 41,
@@ -136,7 +136,7 @@
       "secp256k1_n_prime` + Mathlib (`IsAddCyclic.card_addOrderOf_eq_totient`, `ZMod.card`, `Nat.totient_prime`)": 1,
       "Mathlib field algebra (`field_simp`, `linear_combination`)": 1,
       "Mathlib field algebra": 1,
-      "Mathlib (`Point.neg_some`, `div_neg`, `linear_combination`)": 1,
+      "Mathlib (`Point.neg_some`, `div_neg`, `linear_combination`) + secp256k1 nonzero/two-torsion certificates": 1,
       "Mathlib (`Lagrange.eq_interpolate`)": 1,
       "Mathlib (`IsCyclic.card_orderOf_eq_totient`)": 1,
       "Mathlib field algebra (`linear_combination`)": 1,
@@ -4855,7 +4855,7 @@
     },
     {
       "id": "thm-232",
-      "name": "Ecdlp.Curve.secp256k1_pointX_neg`, `secp256k1_pointX_neg_zsmul_add`, `Ecdlp.Schnorr.ecdsa_sibling_signing_equation`, `ecdsa_sibling_scalars",
+      "name": "Ecdlp.Curve.secp256k1_pointX_neg`, `secp256k1_pointX_not_injective`, `secp256k1_pointX_neg_zsmul_add`, `Ecdlp.Schnorr.ecdsa_sibling_signing_equation`, `ecdsa_sibling_scalars",
       "short_name": "secp256k1_pointX_neg`,",
       "module": "Ecdlp.Proved.EcdsaMalleability",
       "modules": [
@@ -4865,12 +4865,12 @@
       "files": [
         "Ecdlp/Proved/EcdsaMalleability.lean"
       ],
-      "claim": "ECDSA signature malleability — the algebraic core of BIP-62 rule 5 / BIP-146 low-`s` (every signature `(r,s)` has a sibling `(r,−s)` verifying the same message/key: `ecdsa_sibling_signing_equation` — the signing identity holds for `(−s,−k)`; `ecdsa_sibling_scalars` — `u/(−s) = −(u/s)` negates both verifier scalars; `secp256k1_pointX_neg` — point negation fixes the `x`-coordinate (`−(x,y)=(x,−y)`, `a₁=a₃=0`); `secp256k1_pointX_neg_zsmul_add` — the negated verification point has the same `pointX`. Honest scope: identity-level algebra, no `Verify` predicate, no hash/DER level, no `ZMod p → ZMod n` reduction of `x`. Field lemmas pure-kernel; curve lemma under `[Fact p.Prime]` (discharged via Pratt ⇒ compiler-trusted transitively))",
-      "method": "Mathlib (`Point.neg_some`, `div_neg`, `linear_combination`)",
+      "claim": "ECDSA signature malleability — the algebraic core of BIP-62 rule 5 / BIP-146 low-`s`; noninjectivity of the secp256k1 `x`-projection (every signature `(r,s)` has a sibling `(r,−s)` verifying the same message/key: `ecdsa_sibling_signing_equation` — the signing identity holds for `(−s,−k)`; `ecdsa_sibling_scalars` — `u/(−s) = −(u/s)` negates both verifier scalars; `secp256k1_pointX_neg` — point negation fixes the `x`-coordinate (`−(x,y)=(x,−y)`, `a₁=a₃=0`); `secp256k1_pointX_not_injective` — the concrete witnesses `G` and `−G` have equal `pointX` but are distinct because `G` is nonzero and secp256k1 has no nonzero two-torsion; `secp256k1_pointX_neg_zsmul_add` — the negated verification point has the same `pointX`. Honest scope: identity-level algebra and one representation boundary, no `Verify` predicate, no hash/DER level, no `ZMod p → ZMod n` reduction of `x`, no SGGM lower-bound instantiation, and no ECDLP speedup. Field lemmas pure-kernel; closed repository instantiations of the parameterized coordinate lemmas inherit compiler-trusted primality facts, while `secp256k1_pointX_not_injective` directly inherits `Lean.ofReduceBool` from the no-two-torsion computational certificate in `CurveCardinalityExact.lean`)",
+      "method": "Mathlib (`Point.neg_some`, `div_neg`, `linear_combination`) + secp256k1 nonzero/two-torsion certificates",
       "status": "proved",
       "area": "primality",
       "family_id": "family-primality",
-      "dependency_depth": 2,
+      "dependency_depth": 10,
       "gated": true
     },
     {
@@ -8245,7 +8245,7 @@
       "outcome_events": 9,
       "candidate_proposals": 6,
       "generated_hypothesis_seeds": 2,
-      "submitted_hypothesis_proposals": 0,
+      "submitted_hypothesis_proposals": 1,
       "quality_cleared_hypothesis_proposals": 0,
       "retained_hypothesis_drafts": 0,
       "typed_evidence_cells": 7,
@@ -9340,7 +9340,7 @@
         "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
         "typed_evidence_state_sha256": "bc1ee18931a51364c2122120bdf50a039b67b747f006996795cb4767d87ab63f",
         "research_claim_state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
-        "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "proposals_sha256": "581cf3109a9f2bfdaeacf895664e816ab22f0f47a72140385dab1c69d04d0a34",
         "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
       },
       "trust_boundary": {
@@ -9351,7 +9351,7 @@
       },
       "counts": {
         "generated_seeds": 2,
-        "submitted_proposals": 0,
+        "submitted_proposals": 1,
         "adversarial_reviews": 0,
         "quality_cleared_proposals": 0,
         "retained_hypothesis_drafts": 0,
@@ -9759,7 +9759,24 @@
           }
         }
       ],
-      "proposal_intake": [],
+      "proposal_intake": [
+        {
+          "proposal_id": "HGP-M16-SOLVER-SLOPE-001",
+          "seed_id": "HGS-DC5FF2FC9E71",
+          "cell_id": "CELL-M-PKC-SMOOTH-M16",
+          "route_id": "R-PETIT-COMPOSED-MAPS",
+          "title": "HYP-M16-SOLVER-SLOPE-001: conditional source-faithful attempt and complete-cost slope",
+          "proposal_sha256": "0212ce7acafe39c2afde448789d151bfc400cc7e2fe55dbd29dae9f518605f9a",
+          "review_roles_present": [],
+          "review_independence": "not_reviewed",
+          "blockers": [
+            "adversarial_review_incomplete",
+            "review_independence_unestablished"
+          ],
+          "disposition": "needs_revision",
+          "authorization": "none"
+        }
+      ],
       "collision_groups": {
         "premise_fingerprints": [],
         "mechanism_signatures": [],
@@ -10366,6 +10383,11 @@
       {
         "id": "amadori_pintore_sala2018",
         "title": "On the Discrete Logarithm Problem for Prime-Field Elliptic Curves",
+        "full_text_status": "full_text_inspected"
+      },
+      {
+        "id": "corrigan_gibbs_henzinger_wu2026",
+        "title": "The Structured Generic-Group Model",
         "full_text_status": "full_text_inspected"
       },
       {
@@ -11181,6 +11203,16 @@
     {
       "from": "Ecdlp.Proved.EcdsaMalleability",
       "to": "Ecdlp.Proved.Secp256k1Curve",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.EcdsaMalleability",
+      "to": "Ecdlp.Proved.CurveTorsion",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.EcdsaMalleability",
+      "to": "Ecdlp.Proved.CurveCardinalityExact",
       "type": "imports"
     },
     {

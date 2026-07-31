@@ -1,0 +1,371 @@
+{
+  "schema_version": "0.1",
+  "proposal_id": "HGP-M16-SOLVER-SLOPE-001",
+  "seed_id": "HGS-DC5FF2FC9E71",
+  "cell_id": "CELL-M-PKC-SMOOTH-M16",
+  "typed_evidence_digest": "180bd1dd2be5f4ed04530ff962865bb4ae3aac1438f4499e05dde06e9104bcfe",
+  "created_on": "2026-07-30",
+  "proposer_id": "codex-hyp-select-003-root",
+  "route_id": "R-PETIT-COMPOSED-MAPS",
+  "threat_model": "classical-single-target-plain",
+  "title": "HYP-M16-SOLVER-SLOPE-001: conditional source-faithful attempt and complete-cost slope",
+  "hypothesis_statement": "Conditional on first freezing a safe synthetic regime in which exact tuple yield validates the Petit k=16 balance approximation, the multiplicative-subgroup membership circuit x^D = 1 coupled to the recursive arity-16 Semaev relation has a growing causal reduction in expected solver work per attempted relation system that survives reciprocal yield, exact recovery, rank, sparse linear algebra, and equal-success single-target accounting. The current 12-24-bit policy ladder is calibration-only and makes no exponent claim.",
+  "new_premise": "With one fixed synthetic DLP target Q and fresh committed relation points R_j = [alpha_j]G + [beta_j]Q, the source-composed arity-16 membership circuit retains a growing sparse-elimination advantage in expected work per attempted system over separated literal, multiplicative-coset, root-histogram, and randomized-DAG controls; after exact signed recovery and rank, that advantage also survives complete single-target cost.",
+  "premise_counterfactual": "If the composed multiplicative-subgroup circuit supplies only a known representation constant, then one or more separated causal controls reproduce the local reduction, exact repetition/yield accounting or rank erases it, the paired slope gap does not remain negative, or complete equal-success work retains square-root growth.",
+  "premise_fingerprint": "7469c8d28e54bdc746d34d495c7e2c8c210dc906f09954595dff79580c0637ec",
+  "mechanism_identity": {
+    "transformation_class": "source-faithful-m16-composed-membership-s3",
+    "information_source_class": "multiplicative-subgroup-membership-circuit",
+    "target_semantics_class": "fixed-q-varying-committed-relation-points",
+    "recovery_class": "signed-base-field-relation-replay",
+    "changed_cost_term": "per-attempt-solver-and-complete-single-target-slope",
+    "precomputation_class": "fully-priced-attack-setup-family-search-separated",
+    "amortization_class": "none-single-target"
+  },
+  "mechanism_signature": "d4da48358d6f555fd4e4058272008c9f46fc84bfebd92867fa7f5cb51413defc",
+  "mechanism_contract": {
+    "source_objects": [
+      "arity-16 relation attempts for one fixed synthetic Q with fresh committed alpha_j, beta_j, and R_j",
+      "multiplicative-subgroup coordinate sets H_D defined by x^D = 1"
+    ],
+    "target_objects": [
+      "independently recovered factor-base rows retaining alpha_j and beta_j",
+      "a complete single-target cost ledger through rank and sparse linear algebra"
+    ],
+    "transformation": {
+      "kind": "source_faithful_composed_membership_recursive_s3",
+      "exact_map": "Fix Q = [z]G once. For each attempt j, sample and commit alpha_j, beta_j, and R_j = [alpha_j]G + [beta_j]Q before solver randomness; map sixteen leaves satisfying x_i^D = 1 and a frozen complete projective presentation into the recursive S3 relation for R_j; recover a canonical row (c_1j,...,c_Uj,-beta_j) with right-hand side alpha_j, replay rank, solve for z, and verify [z]G = Q.",
+      "domain": "Preregistered safe synthetic cofactor-one prime-order curve blocks (p,E,q,G,Q,D), D dividing p-1, an exact repetition/yield bridge justifying the declared balance regime, fresh committed relation streams, exact membership representations, separated causal controls, and one frozen exceptional-completeness policy.",
+      "codomain": "Validated recovered relation rows with complete setup, solving, rejection, rank, linear-algebra, and verification cost records."
+    },
+    "fixed_target_semantics": {
+      "target_slot": "Q is the fixed DLP target; each terminal equation uses the attempt-specific R_j",
+      "target_action": "Commit Q before the experiment and commit fresh alpha_j, beta_j, R_j before each attempt's solver randomness. Within one curve block preserve Q and the entire coefficient/point stream across arms; a cross-family control preserves scalar and coefficient semantics but necessarily uses new curve points.",
+      "same_target_preserved": true
+    },
+    "exceptional_locus": {
+      "definition": "Endpoint-zero or balanced-obstruction failures, infinity slots, invalid projective pairs, failed base-field lifts, extension-only intermediates, identity prefixes, rational two-torsion, repeated/tangent fibers, duplicate relations, and rank-deficient rows.",
+      "treatment": "unresolved"
+    },
+    "orbit_stabilizer": {
+      "acting_group": "Optional order-three GLV coordinate action used only as a constant-factor ablation.",
+      "stabilizer": "Computed exactly for each accepted coordinate tuple; no fixed-target orbit identification is assumed.",
+      "orbit_size_law": "At most three and independent of the field-size exponent, so it cannot be the proposal's cost-changing lever."
+    },
+    "relation_semantics": {
+      "source_relation": "For attempt j, sixteen signed factor-base leaves sum with multiplicity to R_j or -R_j; a negative terminal is normalized by negating the complete row.",
+      "target_relation": "The canonical row verifies sum_i c_ij*lambda_i - beta_j*z = alpha_j modulo q, rank is recomputed over Z/qZ, and the recovered z must satisfy [z]G = Q.",
+      "equivalence_status": "specified_unproved"
+    },
+    "recovery_map": {
+      "forward": "Encode variable factor-base x-coordinates, the complete membership representation, recursive projective witnesses, attempt-specific committed R_j, solver trace, and raw candidate assignments.",
+      "inverse": "Lift every finite leaf over the base field, retain sign and identity states with backpointers, replay ordered transitions, require terminal R_j or -R_j, normalize the complete row, retain alpha_j and beta_j, aggregate duplicate columns, verify the group relation, replay rank, and verify [z]G = Q.",
+      "excluded_components": [
+        "invalid projective assignments",
+        "external non-lifts",
+        "extension-only intermediates",
+        "unrecovered exceptional fibers"
+      ],
+      "spurious_solution_policy": "Reject and classify every candidate that fails membership, projective validity, base-field lift, signed transition, terminal target, or complete group-relation replay; no failed candidate enters yield or rank."
+    },
+    "implementation_identity": {
+      "implementation_path": "experiments/engine/pkc_smooth_m16_solver_slope/MECHANISM_DESIGN.md",
+      "sha256": "322bde02f588f6fa4ed8a923c12983fb379f8ac474f1a7ad2730432a3acb5702"
+    },
+    "cost_changing_mechanism": {
+      "quantity": "Three separately reported one-sided slope margins: expected per-attempt solver work versus 7/16, equal-success complete single-target work versus 1/2, and paired source-minus-control slope versus zero.",
+      "causal_bridge": "The low-degree multiplicative-subgroup circuit is conjectured to preserve sparse elimination structure after coupling to recursive S3, reducing expected work for every attempted system including failures and timeouts. Literal, coset, root-histogram, and randomized-DAG controls separate root algebra from representation topology.",
+      "growth_law": "In a separately justified regime, require U95(s_attempt) < 7/16, U95(s_total) < 1/2, and U95(s_source-s_control) < 0 for every causal control. The current <=24-bit ladder is not such a regime.",
+      "non_orbit_lever": "Multiplicative-subgroup circuit structure after exact recovery, not the finite order-three GLV orbit."
+    },
+    "source_ids": [
+      "amadori_pintore_sala2018",
+      "petit_kosters_messeng2016"
+    ]
+  },
+  "prediction_contract": {
+    "metric": {
+      "name": "minimum_positive_three_margin",
+      "unit": "slope margin in log2(PFPO) per declared size bit",
+      "recomputation": "After an exact regime is separately authorized, compute M = min(7/16 - U95(s_attempt), 1/2 - U95(s_total), min_c(-U95(s_source-s_c))). Here s_attempt includes failed and timed-out attempted systems versus field bits, s_total includes complete equal-success single-target PFPO versus subgroup bits, and c ranges over every frozen causal control. Report every component; use the preregistered 1/64 guard band to avoid an equality-only promotion. The current 12-24-bit ladder is calibration-only and cannot produce a supported exponent outcome."
+    },
+    "matched_baseline": {
+      "baseline_id": "UNIMPLEMENTED-DESIGN-ONLY-separated-literal-coset-root-histogram-dag-and-cross-family-controls",
+      "implementation_digest": "c3fdd0712290b7fbbcf5376730c8250c4d24e069278727679cacd73cc47eed32",
+      "matching_variables": [
+        "within_curve_p_E_q_G_Q",
+        "committed_alpha_beta_R_stream",
+        "solver_and_monomial_order",
+        "seed",
+        "equal_success_probability",
+        "PFPO_accounting",
+        "resource_cap"
+      ]
+    },
+    "tested_sizes": [
+      12,
+      15,
+      18,
+      21,
+      24
+    ],
+    "expected_direction": "increase",
+    "minimum_material_effect": 0.015625,
+    "decision_threshold": {
+      "operator": "ge",
+      "value": 0.015625
+    },
+    "stop_rule": {
+      "condition": "Non-executable sentinel: stop at proposal review. The <=24-bit ladder is calibration-only because D is at most 20. Any future experiment must replace this one-instance sentinel with a new immutable cap after a larger safe regime, relation/rank dimensions, timeout rule, implementations, and controls are frozen.",
+      "maximum_instances": 1
+    },
+    "falsifying_outcomes": [
+      "a separated causal control reproduces the growing source slope advantage",
+      "U95 expected per-attempt solver slope is at least 7/16 in a justified balance regime",
+      "U95 equal-success complete single-target slope is at least 1/2",
+      "U95 source-minus-control slope is nonnegative for any frozen causal control",
+      "only a constant-factor improvement remains after complete accounting"
+    ]
+  },
+  "cost_contract": {
+    "online": {
+      "cpu_hours": 0,
+      "gpu_hours": 0
+    },
+    "offline": {
+      "cpu_hours": 0,
+      "gpu_hours": 0
+    },
+    "wall_time_hours": 0,
+    "peak_memory_gb": 0,
+    "storage_gb": 0,
+    "workers": 1,
+    "money_usd": 0,
+    "implementation_hours": 24,
+    "reviewer_hours": 10,
+    "preprocessing": {
+      "included_in_totals": true,
+      "description": "For adversarial work after public p,E,G,Q are fixed, every factor-base construction, membership representation, solver preprocessing step, attempted system including failures/timeouts, recovery table, rank step, sparse linear-algebra step, and validation operation is included. Experimental curve/control-family search is recorded separately and is not misclassified as attack work."
+    },
+    "amortization": {
+      "class": "none_single_target",
+      "target_count": 1,
+      "per_target_cost_included": true
+    },
+    "success_probability": 0.5,
+    "shared_setup": {
+      "setup_id": null,
+      "hours": 0,
+      "expected_reuse": 1
+    }
+  },
+  "validator_contract": {
+    "status": "design_only_unverified",
+    "raw_artifact_format": {
+      "media_type": "application/json",
+      "schema_id": "planned-pkc-m16-source-faithful-slope-artifacts-v1"
+    },
+    "recomputed_decisive_claim": {
+      "claim_id": "planned-m16-relation-stream-regime-and-three-margin-decision",
+      "procedure": "Reconstruct curves, Q, every alpha_j, beta_j, R_j, factor bases, controls, exceptional policy, polynomial evaluations, signed row recovery, equations with the z column, duplicate collapse, rank, candidate z verification, PFPO receipts, exact repetition/yield diagnostics, and all three preregistered one-sided slope margins from primitive records."
+    },
+    "implementation": {
+      "path": "experiments/engine/pkc_smooth_m16_solver_slope/VALIDATOR_DESIGN.md",
+      "sha256": "7484668e73004125670c8badf1d84fede01314b9cd6cd69028cf5a8ca52ccbf2"
+    },
+    "prohibited_producer_fields": [
+      "claimed_outcome",
+      "claimed_exponent",
+      "claimed_relation",
+      "claimed_rank",
+      "claimed_speedup"
+    ],
+    "independence": {
+      "path_independent": false,
+      "artifact_independent": false,
+      "source_independent": false,
+      "producer_identity": "unimplemented-m16-slope-producer",
+      "validator_identity": "unimplemented-independent-m16-slope-validator",
+      "same_model": null,
+      "same_session": null,
+      "shared_context": null
+    },
+    "independence_evidence": {
+      "path": {
+        "status": "planned",
+        "evidence_id": null,
+        "sha256": null
+      },
+      "artifact": {
+        "status": "planned",
+        "evidence_id": null,
+        "sha256": null
+      },
+      "source": {
+        "status": "planned",
+        "evidence_id": null,
+        "sha256": null
+      }
+    },
+    "source_review_requirements": [
+      "one blind digest-bound cryptanalysis-skeptic review from a different family",
+      "one blind digest-bound prior-art review from a different family",
+      "one independent validator fault-injection attestation before execution"
+    ]
+  },
+  "novelty_scope": {
+    "new_to_repository": true,
+    "new_to_reviewed_corpus": true,
+    "global_novelty": "unverified",
+    "rationale": "The repository previously named a possible solver-slope follow-up, but did not contain this corrected source-faithful premise separating fixed Q from varying committed R_j, per-attempt solver work from complete work, causal controls, exact repetition/yield regime, rank recovery of z, and three decision margins. No global novelty is claimed."
+  },
+  "nearest_prior_art": [
+    {
+      "source_id": "petit_kosters_messeng2016",
+      "primary": true,
+      "reference": "Petit, Kosters, and Messeng, Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over Prime Fields, PKC 2016",
+      "locator": "Algorithm 1 and Sections 3.1-3.3, especially the relation-yield and total-cost discussion",
+      "overlap": "Defines the composed factor base, one fixed DLP target Q, fresh R_j = [alpha_j]G + [beta_j]Q relation attempts, the partial total-cost expression, and the heuristic balance used by this proposal.",
+      "difference": "The proposal requires exact repetition/yield diagnostics, complete exceptional semantics, signed rows retaining alpha_j and beta_j, separated causal controls, independent rank/key verification, a common PFPO unit, and three finite-size decision margins rather than assuming the generalized-root term.",
+      "evidence_file": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+    },
+    {
+      "source_id": "amadori_pintore_sala2018",
+      "primary": true,
+      "reference": "Amadori, Pintore, and Sala, On the Discrete Logarithm Problem for Prime-Field Elliptic Curves, 2018",
+      "locator": "Sections 3-4 and the stated T approximately T-prime assumption",
+      "overlap": "Studies a related prime-field summation-polynomial pipeline and reports small toy systems while leaving the decisive single-system cost poorly understood.",
+      "difference": "The proposal tests the exact arity-16 composed-subgroup route with full single-target recovery and cost controls; it does not assume equality of unresolved solver terms or infer a cryptographic-scale advantage from 11-22-bit experiments.",
+      "evidence_file": "data/source_claim_extracts/amadori_pintore_sala2018.json"
+    }
+  ],
+  "exact_mechanism": {
+    "map": "Fix one synthetic Q = [z]G. For each attempt j commit alpha_j, beta_j, and R_j = [alpha_j]G + [beta_j]Q before solver randomness; map sixteen x_i satisfying x_i^D = 1 through one frozen complete recursive projective S3 presentation, recover the canonical row (c_1j,...,c_Uj,-beta_j) with right-hand side alpha_j, replay rank, solve for z, and verify [z]G = Q.",
+    "domain": "Safe synthetic cofactor-one prime-order curve blocks with D dividing p-1, exact tuple/yield accounting that justifies any balance claim, a measured usable factor base, fixed Q, varying committed relation points, separated causal controls, one complete exceptional-locus policy, and no real-world target.",
+    "codomain": "Independently verified relation/rank/linear-algebra records and a complete single-target work measurement for every frozen arm.",
+    "relation_semantics": "A retained normalized row means recovered signed factor-base points sum to R_j and verifies sum_i c_ij*lambda_i - beta_j*z = alpha_j modulo q; polynomial satisfaction without group replay is rejected.",
+    "fixed_target_semantics": "Q is fixed and committed once. Fresh alpha_j, beta_j, and R_j are committed per attempt. Within-curve arms share the exact stream; cross-family controls share hidden-scalar and coefficient semantics but necessarily use new curve points.",
+    "exceptional_locus": "Before execution, either an input-level theorem proves every solution lies in the regular chart or the full projective cover is constructed and charged. Witness-level postchecks alone are insufficient.",
+    "recovery_map": "Lift leaves, replay signed transitions with identity states and backpointers, normalize a terminal -R_j by negating the complete row, retain alpha_j and beta_j, aggregate duplicate columns, verify the relation, replay rank, and verify [z]G = Q.",
+    "implementation_identity": "The current digest binds a design note only and the baseline id is explicitly UNIMPLEMENTED-DESIGN-ONLY. No producer, solver wrapper, baseline executable, validator executable, or input generator exists; compute remains zero."
+  },
+  "non_generic_information_source": "The mechanism consumes explicit prime-field coordinates, the multiplicative-subgroup predicate x^D = 1, its low-degree exponentiation circuit, and the recursive Semaev polynomial representation; none is exposed by a classical black-box group oracle.",
+  "null_model": "After separated controls for literal representation, multiplicative cosets, root/lift histogram, DAG topology, curve family, coefficient stream, solver, order, seed, and equal-success accounting, the source-composed presentation has no uniquely growing per-attempt or complete-work advantage.",
+  "competing_mechanism": "Generic sparse-DAG layout, product-tree root distribution, favorable monomial ordering, repetition/stabilizers at D approximately k, or finite GLV aliases may explain a local constant without multiplicative-subgroup algebra changing the exponent.",
+  "cost_bridge": {
+    "baseline": "Pollard rho at the same group order, fixed Q, 50 percent target success, and PFPO unit; within-curve literal, coset, root-histogram, and DAG controls share the committed relation stream, while non-j0 is a separately normalized curve-family block.",
+    "changed_term": "Expected PFPO per attempted polynomial system is tested against 7/16 in a justified balance regime; complete equal-success single-target PFPO is tested against 1/2; paired source-minus-control slopes test causality.",
+    "online_cost": "Count every committed relation attempt including failures and timeouts, polynomial solving, base-field recovery and rejection, row normalization with alpha_j and beta_j, incremental rank, sparse linear algebra, candidate z recovery, and [z]G = Q verification.",
+    "offline_cost": "For the attack ledger, count factor-base construction, membership representation, solver preprocessing, reusable matrices, and recovery tables after p,E,G,Q are fixed. Report experimental curve/control-family search separately.",
+    "memory_cost": "Record peak RSS, polynomial and monomial inventory, largest matrix rows, columns, nonzeros and fill, retained relation storage, and sparse linear-algebra memory.",
+    "parallelism": "Freeze identical worker counts, report aggregate work and critical-path time, and give no parallel speedup credit without charging every worker.",
+    "precomputation": "All attack setup after the public curve and Q are fixed is timed, hashed, and charged in full because the threat model permits one target; experimental family search remains a separately reported feasibility cost.",
+    "amortization_scope": "No multi-target, wallet, nonce, preprocessing-oracle, or reusable-setup amortization is credited.",
+    "scaling_claim": "Only in a separately justified source regime at fixed k=16 require U95(s_attempt) below 7/16, U95(s_total) below 1/2, and U95(source-minus-control) below zero for every causal control. The <=24-bit ladder is calibration-only because D is at most 20."
+  },
+  "falsifiable_prediction": "If the mechanism is causal in a justified source regime, exact independent replay passes, U95(s_attempt) is below 7/16, U95(s_total) is below 1/2, and U95(s_source-s_control) is below zero for every separated causal control. No <=24-bit observation alone satisfies this prediction.",
+  "matched_baseline": "Within a curve block share p,E,q,G,Q, the complete committed alpha_j,beta_j,R_j stream, solver/order, seed, PFPO, success rule, workers, and cap. Separate literal, coset, root-histogram, and same-DAG controls instead of claiming one impossible perfectly matched random set. Cross-family controls share p when possible and scalar/coefficient semantics, not the same points.",
+  "stop_condition": "The current proposal stops at review with zero compute and a one-instance non-executable sentinel. The <=24-bit ladder is inapplicable for exponent inference. A future superseding proposal must freeze a larger safe regime and cap; implementation mismatch invalidates a run, missing regime is inapplicable, and wide intervals are inconclusive.",
+  "outcome_matrix": {
+    "supported": "After higher-precedence implementation, applicability, resource, and artifact checks pass, independent replay and z verification pass and all three preregistered positive margins are at least 1/64; display as SUPPORTED_TOY_ONLY.",
+    "falsified": "After higher-precedence checks pass, a preregistered equivalence test with adequate precision shows that a causal control reproduces the source effect, or only the bounded composed-vs-unfactored encoding constant remains; subtype KNOWN_REPRESENTATION_EFFECT.",
+    "bounded_negative": "No equivalence-based falsified classification applies, but an exact adequately powered run fails one cost threshold or causal-gap criterion, including rank or linear algebra erasing the gain.",
+    "inapplicable": "No safe family satisfies the source regime, exact yield, relation stream, complete exceptional policy, control, rank, and validator contract; the present <=24-bit ladder is already inapplicable for exponent inference.",
+    "inconclusive": "Use after implementation, applicability, and resource checks when an artifact invalidates causal interpretation or valid intervals/censoring remain underpowered; artifact cases carry subtype ARTIFACT.",
+    "resource_exhausted": "After implementation and applicability checks pass, a separately authorized immutable cap is reached before a decisive classification."
+  },
+  "validator_plan": {
+    "decisive_claim": "Recompute fixed-Q/varying-R_j semantics, exact repetition/yield, relation recovery, independent rank and z verification, every PFPO term, separated controls, and all three preregistered slope margins.",
+    "raw_artifacts": "Curve/subgroup/Q certificates, alpha_j,beta_j,R_j commitments, root/lift histograms and membership representations, exceptional-policy evidence, canonical systems, solver traces including timeouts, raw assignments, recovery rows, rank/z transcripts, linear-algebra input/output, PFPO vectors, timestamps, memory receipts, and hashes.",
+    "independent_method": "Use separately authored finite-field and elliptic-curve arithmetic, recovery, matrix parsing, rank, and statistics without importing producer transformation or claimed-summary code; treat solver output as adversarial.",
+    "failure_labels": "Precedence: INVALID_IMPLEMENTATION with no scientific outcome; then INAPPLICABLE; RESOURCE_EXHAUSTED; INCONCLUSIVE/ARTIFACT; FALSIFIED/KNOWN_REPRESENTATION_EFFECT; SUPPORTED/SUPPORTED_TOY_ONLY; BOUNDED_NEGATIVE; otherwise INCONCLUSIVE."
+  },
+  "toy_scope": {
+    "curve_family": "synthetic cofactor-one prime-order toy curves at <=24 bits for regime auditing, recovery fault injection, and calibration only; this scope cannot support the M16 exponent claim and any larger ladder requires a new policy and proposal",
+    "max_field_bits": 24,
+    "forbidden_targets": [
+      "secp256k1",
+      "wallet keys",
+      "third-party public keys",
+      "real assets"
+    ]
+  },
+  "claim_boundary": "This is a design-only, non-executable proposal with a zero-compute disposition. Exact bounds classify the <=24-bit ladder as unsuitable for M16 exponent inference. It establishes no larger family, solver result, rank result, scaling law, asymptotic improvement, secp256k1 extrapolation, key recovery, attack, route promotion, or global novelty.",
+  "evidence_inputs": [
+    "data/source_claim_extracts/amadori_pintore_sala2018.json",
+    "data/source_claim_extracts/petit_kosters_messeng2016.json",
+    "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
+    "experiments/engine/pkc_smooth_m16_fixed_target_yield/RESULTS.md",
+    "experiments/engine/pkc_smooth_m16_infinity_propagation/artifact.json",
+    "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
+    "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
+  ],
+  "evidence_manifest": [
+    {
+      "path": "data/source_claim_extracts/amadori_pintore_sala2018.json",
+      "sha256": "2be52f00616042670952c70186f2d3f5de0bb70612fb1ddb481403765f19cf1a",
+      "relation": "bounds",
+      "locator": "Primary-source extract for the one-system variant, its unresolved solver comparison, toy-size boundary, and non-sub-Pollard conclusion.",
+      "source_id": "amadori_pintore_sala2018",
+      "primary": true
+    },
+    {
+      "path": "data/source_claim_extracts/petit_kosters_messeng2016.json",
+      "sha256": "f8839553f6935ed5cd331369cc13d91124373750c757b28eeca3ee773835f14f",
+      "relation": "supports",
+      "locator": "Primary-source extract for the smooth-subgroup factor base, heuristic relation yield, balance condition, and complete-cost boundary.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": true
+    },
+    {
+      "path": "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
+      "sha256": "578db732807a452e26de03dcd338d62c25a7d90490a62bbf427b1f96c3a869cf",
+      "relation": "bounds",
+      "locator": "Repository-pinned recovery dispositions, leaf-lift types, local transitions, and exceptional-fiber semantics that a future producer must preserve.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": false
+    },
+    {
+      "path": "experiments/engine/pkc_smooth_m16_fixed_target_yield/RESULTS.md",
+      "sha256": "f7562cf4c6010b71ab35046b6682850921313e3721197f51a50b0ea1c050fbaa",
+      "relation": "bounds",
+      "locator": "TASK-026 terminal known-local-simplification result and explicit boundary that the residual sampler is not a source-faithful factor-base or solver experiment.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": false
+    },
+    {
+      "path": "experiments/engine/pkc_smooth_m16_infinity_propagation/artifact.json",
+      "sha256": "9330603ba1f0af9ee4902c263200709e2ec6f8c50d8d7eaab3b55bcba78e388f",
+      "relation": "bounds",
+      "locator": "Exact conditional single-affine-chart bridge and its non-genericity, non-yield, non-solver, and non-cost boundaries.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": false
+    },
+    {
+      "path": "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
+      "sha256": "963eea60097807ae0aa66a5d881b0c34bf0497ade53ed4d37d38861a73887c19",
+      "relation": "bounds",
+      "locator": "Exact base-field lift, sign, identity-prefix, extension-only, and recovery obligations for the recursive relation presentation.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": false
+    },
+    {
+      "path": "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json",
+      "sha256": "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7",
+      "relation": "supports",
+      "locator": "Exact secp256k1 desk representation counts, x^D = 1 membership circuit, usable-lift-count formula, recovery inventory, and warnings against treating counts as solver bounds.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": false
+    }
+  ],
+  "provenance": {
+    "generation_method": "model_assisted",
+    "generator": "OpenAI Codex",
+    "generator_family": "gpt-5-codex",
+    "generator_version": "2026-07-30",
+    "session_id": "hyp-select-003-root-20260730",
+    "context_sha256": "ca2772a5b286432111f8eefcda2dcb5ab0c10660b3684cbf18ec6f671508b688",
+    "source_commit": "bc2f04a71d168b34bce3d68c1d7cef33b4af9e4e",
+    "prompt_sha256": "1788c90119148f376b0aa6f228aaedb1ac4a1d803bd74a654b7180326cbf2161"
+  }
+}

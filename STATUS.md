@@ -118,7 +118,7 @@ outcomes**. Before synthesis, the typed evidence layer materializes
 Its **3 desk decisions** are non-experimental and authorize
 nothing. The generation layer currently emits
 **2 source-grounded seeds**, with
-**0 submitted proposals**,
+**1 submitted proposals**,
 **0 quality-cleared proposals**, and
 **0 retained non-executable drafts**.
 Creative output is untrusted and zero retained drafts is a valid cycle result.

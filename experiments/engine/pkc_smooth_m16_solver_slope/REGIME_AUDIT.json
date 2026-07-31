@@ -1,0 +1,52 @@
+{
+  "schema_version": "0.1",
+  "artifact_id": "M16-SOLVER-SLOPE-REGIME-AUDIT-001",
+  "created_on": "2026-07-30",
+  "hypothesis_id": "HYP-M16-SOLVER-SLOPE-001",
+  "status": "exact_integer_barrier_certificate",
+  "fixed_arity": 16,
+  "assumptions": {
+    "field_bit_definition": "ell_p = ceil(log2 p), hence p <= 2^ell_p - 1",
+    "balance_upper_half": "D^16 <= 2 * 16! * p",
+    "integer_D": true
+  },
+  "rows": [
+    {
+      "field_bits": 12,
+      "max_p": 4095,
+      "max_D": 11,
+      "D_less_than_k": true
+    },
+    {
+      "field_bits": 15,
+      "max_p": 32767,
+      "max_D": 13,
+      "D_less_than_k": true
+    },
+    {
+      "field_bits": 18,
+      "max_p": 262143,
+      "max_D": 15,
+      "D_less_than_k": true
+    },
+    {
+      "field_bits": 21,
+      "max_p": 2097151,
+      "max_D": 17,
+      "D_less_than_k": false
+    },
+    {
+      "field_bits": 24,
+      "max_p": 16777215,
+      "max_D": 20,
+      "D_less_than_k": false
+    }
+  ],
+  "derived": [
+    "The first three proposed rows force D < k = 16.",
+    "Every proposed row has D <= 20, so D is not large relative to k.",
+    "Because U <= D, the first three rows also force U < k and every 16-leaf tuple repeats a factor-base x-column.",
+    "The 12-24-bit ladder does not identify the large-factor-base yield approximation or its 7/16 M16 exponent interpretation."
+  ],
+  "claim_boundary": "This certificate is an exact feasibility barrier for the named ladder and balance window. It does not prove that no larger safe synthetic regime exists, does not lower-bound a solver, and does not refute every asymptotic summation-polynomial variant."
+}

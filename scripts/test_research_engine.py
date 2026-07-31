@@ -22,6 +22,7 @@ from hypothesis_generation_lib import (
     git_file_sha256,
     mechanism_signature,
     premise_fingerprint,
+    proposal_integrity_problems,
     proposal_sha256,
     sha256_json,
 )
@@ -63,6 +64,7 @@ from research_engine_lib import (
 from scientific_provenance import (
     repository_text_sha256,
     scientific_source_commit_allowed,
+    validation_problems as scientific_provenance_validation_problems,
 )
 
 
@@ -615,7 +617,7 @@ class ResearchEngineTests(unittest.TestCase):
             policy = {
                 "schema_version": "0.1",
                 "protected_main": {
-                    "ref": "refs/heads/main",
+                    "recorded_ref": "refs/heads/main",
                     "commit": protected_main,
                     "recorded_on": "2026-07-25",
                 },
@@ -631,6 +633,53 @@ class ResearchEngineTests(unittest.TestCase):
                     protected_main, policy, root=root
                 )
             )
+
+            bad_policy = {
+                **policy,
+                "protected_main": {
+                    **policy["protected_main"],
+                    "recorded_ref": "main",
+                },
+            }
+            self.assertTrue(
+                any(
+                    "protected_main recorded_ref must be a ref name"
+                    in problem
+                    for problem in scientific_provenance_validation_problems(
+                        bad_policy, root=root
+                    )
+                )
+            )
+            self.assertTrue(
+                scientific_source_commit_allowed(
+                    protected_main, bad_policy, root=root
+                )
+            )
+
+    def test_materialized_proposal_integrity_bindings_reject_mutations(self) -> None:
+        proposal_path = (
+            PROPOSALS_DIR / "HGP-M16-SOLVER-SLOPE-001.json"
+        )
+        proposal = json.loads(proposal_path.read_text(encoding="utf-8"))
+        self.assertEqual([], proposal_integrity_problems(proposal))
+
+        mutations = []
+        for path in (
+            ("mechanism_contract", "implementation_identity", "sha256"),
+            ("validator_contract", "implementation", "sha256"),
+            ("prediction_contract", "matched_baseline", "implementation_digest"),
+            ("provenance", "context_sha256"),
+            ("provenance", "prompt_sha256"),
+        ):
+            changed = copy.deepcopy(proposal)
+            target = changed
+            for key in path[:-1]:
+                target = target[key]
+            target[path[-1]] = "0" * 64
+            mutations.append(changed)
+
+        for changed in mutations:
+            self.assertTrue(proposal_integrity_problems(changed))
 
     def generation_reviews(self, proposal: dict) -> list[tuple[Path, dict]]:
         roles = self.generation_policy["quality_gate"][

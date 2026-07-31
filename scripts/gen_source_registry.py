@@ -71,6 +71,32 @@ SOURCES: list[dict] = [
         "note": None,
     },
     {
+        "id": "corrigan_gibbs_henzinger_wu2026",
+        "title": "The Structured Generic-Group Model",
+        "authors": [
+            "Henry Corrigan-Gibbs",
+            "Alexandra Henzinger",
+            "David J. Wu",
+        ],
+        "year": 2026,
+        "venue": "EUROCRYPT 2026",
+        "url": "https://eprint.iacr.org/2026/384",
+        "doi": None,
+        "aliases": [
+            "Corrigan-Gibbs",
+            "Structured Generic-Group Model",
+            "SGGM",
+        ],
+        "role": "Primary source for the partial-operation structured generic-group "
+                "model, its constrained-label lower bound, and the exact model "
+                "assumptions audited by HYP-SGGM-MODEL-MAP-001.",
+        "full_text_status": "full_text_inspected",
+        "note": "The full 36-page author manuscript was inspected through the "
+                "author-hosted PDF. The repository operation map is a scoped "
+                "application audit, not a claim that the published lower bound "
+                "already covers the M16 relation interface.",
+    },
+    {
         "id": "takhanov2024",
         "title": "Intractability of Learning the Discrete Logarithm with "
                  "Gradient-Based Methods",
