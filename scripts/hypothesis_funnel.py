@@ -570,6 +570,39 @@ def validate_canonical_binding(binding: dict[str, Any]) -> None:
         if not isinstance(binding.get("reason"), str) or not binding["reason"].strip():
             raise ValueError("unbound review decision requires a reason")
         return
+    if kind == "typed_evidence_desk_decision":
+        required = {"kind", "cell_id", "decision_id", "route_id"}
+        if set(binding) != required:
+            raise ValueError("desk-decision binding fields do not match the contract")
+        state = json.loads(
+            (ROOT / "data" / "typed_evidence_state.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        cell = next(
+            (
+                item
+                for item in state.get("cells", [])
+                if item.get("cell_id") == binding["cell_id"]
+            ),
+            None,
+        )
+        decision = next(
+            (
+                item
+                for item in state.get("desk_decisions", [])
+                if item.get("decision_id") == binding["decision_id"]
+            ),
+            None,
+        )
+        if cell is None or decision is None:
+            raise ValueError("canonical desk-decision binding is unknown")
+        for key in ("cell_id", "route_id"):
+            if decision.get(key) != binding[key]:
+                raise ValueError(f"canonical desk-decision binding mismatch: {key}")
+        if cell.get("route_id") != binding["route_id"]:
+            raise ValueError("canonical desk-decision binding mismatch: route_id")
+        return
     if kind != "research_engine_proposal":
         raise ValueError(f"unknown canonical binding kind: {kind}")
     required = {"kind", "proposal_id", "proposal_sha256", "cell_id", "route_id"}

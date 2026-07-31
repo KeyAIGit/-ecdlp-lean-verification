@@ -6,18 +6,18 @@
   "baseline_commit": "907646a170cf60572cc2549456c4a4dc65e11c86",
   "source_bindings": {
     "generation_policy_path": "repo/HYPOTHESIS_SPACE_V2.json",
-    "generation_policy_sha256": "83b087518555aef122836f62f04dd569c52f27fc4a703da4bf2151073727dcb8",
-    "evidence_snapshot_sha256": "18d166ec81c0c61f60fab6d74c0ae2b69df274bed66255ade7bb2811cdd743eb",
-    "parent_policy_sha256": "9d1c2b2bff28775ae39eeed8f4ac9f89a70858931909013e900c08eee364968a",
-    "parent_state_sha256": "04b5c8cb522c9eb416f4bd3936d5c559f17fdaafbba5866dfbd7e3eea00b2d0c",
+    "generation_policy_sha256": "5e919d36921978370706c8ea0a087710deef4e1c7e5fb2e1174fd73249feb30f",
+    "evidence_snapshot_sha256": "8defc167349858eb5755122d0b79f6f85b69e938e8b6c25a0e07ceb168c30c75",
+    "parent_policy_sha256": "5b46038f2cd679b5b65985df6780786fbc9e826490dc3d0b0a5fefea942681b9",
+    "parent_state_sha256": "85e285c195adcc268a22182b3a15974dbd6d35dc6651637e89c433775acba4c4",
     "parent_generation_policy_sha256": "4db7a5653e5f930899e513f2f4ccbcf6b99f88a5d839b39d8a05424126657d82",
-    "parent_merkle_root_sha256": "9db58a99db5aafb50b501e2e0654444994f201fba38ec089d5fd5233e7e5d5a8",
+    "parent_merkle_root_sha256": "30ccc4af1cced508d7249be519bb541658ba972025fbac127fe2d1c8302221ef",
     "evidence_input_sha256": {
-      "data/hypothesis_review_ledger.jsonl": "6af41979b2489bbcd228212d7ac91949452f227840f0e946368ddbc8c69639ff",
+      "data/hypothesis_review_ledger.jsonl": "1c20302bfb22dbd146b8fe4ad0b8983eed91e175d6e98ea2a25badd0e79f0939",
       "data/research_claim_state.json": "75e69cdb98bccc43639f09e351c1ebe022860151e7ca95a09363a0eee7812c49",
-      "data/research_engine_state.json": "8297b750db5c93618c75de479f0c2d6f94a790cd98c647e4eb3506a7ea835eec",
-      "data/research_engine_v02_state.json": "ce5f29035693c24a8ac802849894bc623b99f0f5ed21eb3d3c92f00c7f403b38",
-      "data/typed_evidence_state.json": "14232c46c9742b431c87ae95afcc3ad5cf686d81c919e7f450728bb89f5a5016"
+      "data/research_engine_state.json": "d5e5b39d205273e5005935d49c5bf64a1188891061681c0cb2af67d596716934",
+      "data/research_engine_v02_state.json": "565cb6ee244eeb571ebb948f7d4000e33956fb5196e90fdba44fd5c5376d4ba7",
+      "data/typed_evidence_state.json": "2b26569421251b45965906649d2723ca793242921f6f0cd230ec21ded6101f04"
     }
   },
   "bulk_contract": {
@@ -32,24 +32,24 @@
     "exact_target_execution": false,
     "stream_digest_version": "rfc6962-binary-leaf-v2",
     "coverage_merkle_root_sha256": "dff1e8cb52594158fc94556cbef3025be647fab310132c34ee58aed3b8399207",
-    "instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+    "instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
     "challenge_indices": [
-      5095,
-      198415,
-      280448,
-      318681,
-      328397,
-      475081,
-      493336,
-      646541,
-      662614,
-      716687,
-      789948,
-      791781,
-      795400,
-      820845,
-      975869,
-      985080
+      65190,
+      88542,
+      99893,
+      106469,
+      159295,
+      331135,
+      360634,
+      372725,
+      518183,
+      553299,
+      662081,
+      724199,
+      801472,
+      857341,
+      868527,
+      969801
     ]
   },
   "counts": {
@@ -450,12 +450,12 @@
   },
   "review_queue": [
     {
-      "seed_id": "HQS2-C57E51712F94FEC004EED93F87F6D24B",
+      "seed_id": "HQS2-8958A6EBB0B41219B9AA2944B87CA89A",
       "scientific_signature_sha256": "5e00bee67c739724face0f417bfcc5b360cb03980494b89b7f7e3a0fb12fbcde",
       "semantic_signature_sha256": "5e00bee67c739724face0f417bfcc5b360cb03980494b89b7f7e3a0fb12fbcde",
-      "evaluation_instance_sha256": "c57e51712f94fec004eed93f87f6d24b14d804594791747ebadd9971032a0a6a",
+      "evaluation_instance_sha256": "8958a6ebb0b41219b9aa2944b87ca89a000c7d1bf57d4504c0a832136e3abce9",
       "batch_occurrence_ordinal": 65010,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-007",
       "family": "algebraic-preprocessing",
@@ -503,12 +503,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-33EC9348FF6BF4886E34D8A1C86FF29F",
+      "seed_id": "HQS2-FACAEF8D4BAA384CC95269975A91C6F9",
       "scientific_signature_sha256": "893d23dfc0983e99eee21898d89323cafb2231325f82f31d3da7401e9bc2059e",
       "semantic_signature_sha256": "893d23dfc0983e99eee21898d89323cafb2231325f82f31d3da7401e9bc2059e",
-      "evaluation_instance_sha256": "33ec9348ff6bf4886e34d8a1c86ff29fc0f34b9c351765090e21b5b8e2c64363",
+      "evaluation_instance_sha256": "facaef8d4baa384cc95269975a91c6f9fda94413a45e37e33529f6acf7c80b0f",
       "batch_occurrence_ordinal": 5000,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-001",
       "family": "structured-generic-group",
@@ -557,12 +557,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-65D720F6E125EE396CC2A3142A2FB1AE",
+      "seed_id": "HQS2-32CB2CF5374D435541095DEBE69FB9CF",
       "scientific_signature_sha256": "152b4a0a91e5b2408d2d7fbfa3150da243b755d8eaba14bf7834adac0241d981",
       "semantic_signature_sha256": "152b4a0a91e5b2408d2d7fbfa3150da243b755d8eaba14bf7834adac0241d981",
-      "evaluation_instance_sha256": "65d720f6e125ee396cc2a3142a2fb1aed1c7a3f58257a654c7392b77e289774e",
+      "evaluation_instance_sha256": "32cb2cf5374d435541095debe69fb9cfc6e18049f66cee79d4837c7f3eed0d70",
       "batch_occurrence_ordinal": 141700,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-015",
       "family": "coordinate-ablation",
@@ -610,12 +610,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-67E00CB39F5A1389F4F04F320A7DBB1B",
+      "seed_id": "HQS2-68AA94A3E9E8C41EF40E29A3D6949B0B",
       "scientific_signature_sha256": "b737a6c09a70d315b2cb668cbd75236f6604f3b2e5b53280b0b3fe94dd8d2fa3",
       "semantic_signature_sha256": "b737a6c09a70d315b2cb668cbd75236f6604f3b2e5b53280b0b3fe94dd8d2fa3",
-      "evaluation_instance_sha256": "67e00cb39f5a1389f4f04f320a7dbb1ba858ed469108ef200ba6a001603d1026",
+      "evaluation_instance_sha256": "68aa94a3e9e8c41ef40e29a3d6949b0b97e0d23c06d1a7066a2b178420c0b7a5",
       "batch_occurrence_ordinal": 15000,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-002",
       "family": "x-only-operation",
@@ -662,12 +662,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-654D37380E4BD924C6ED565D70FD3862",
+      "seed_id": "HQS2-0E482EC058F25E39115DAF484D9775C5",
       "scientific_signature_sha256": "914862090411eeb19c6dc37d68cd0a745f2e165de97ce6f30b146eda81623885",
       "semantic_signature_sha256": "914862090411eeb19c6dc37d68cd0a745f2e165de97ce6f30b146eda81623885",
-      "evaluation_instance_sha256": "654d37380e4bd924c6ed565d70fd3862c8a1796ebe4b6b276f918bf9f68eb8d3",
+      "evaluation_instance_sha256": "0e482ec058f25e39115daf484d9775c5a21e51550abbef1d17daf9b5dc6d1bfd",
       "batch_occurrence_ordinal": 25000,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-003",
       "family": "glv-quotient",
@@ -715,12 +715,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-C2CD28BDAA26FE2F98446EA81305E929",
+      "seed_id": "HQS2-FBE259FFEAA88A101638DE16DF5D8C23",
       "scientific_signature_sha256": "c36cbbd49df17d2b0814b31e267755d50f65ab0457dc5e5ebf0b7800e566b154",
       "semantic_signature_sha256": "c36cbbd49df17d2b0814b31e267755d50f65ab0457dc5e5ebf0b7800e566b154",
-      "evaluation_instance_sha256": "c2cd28bdaa26fe2f98446ea81305e929536be03696546111cc3de43c36430e2f",
+      "evaluation_instance_sha256": "fbe259ffeaa88a101638de16df5d8c231defa3d80519e114dba4111dbbf97054",
       "batch_occurrence_ordinal": 35000,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-004",
       "family": "genericity-trace",
@@ -768,12 +768,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-196B398D93CC903EDCF435F5390E7202",
+      "seed_id": "HQS2-8BB4AEF8537CEFA7B9334FBC8E5A8EEF",
       "scientific_signature_sha256": "e69b9fa0a33bbe91ae03b94391e9e8e760b12f99d129ce149c9381916392489e",
       "semantic_signature_sha256": "e69b9fa0a33bbe91ae03b94391e9e8e760b12f99d129ce149c9381916392489e",
-      "evaluation_instance_sha256": "196b398d93cc903edcf435f5390e72024165abfa7758c2a7a1530f873ef0e320",
+      "evaluation_instance_sha256": "8bb4aef8537cefa7b9334fbc8e5a8eef5c3a2d16d3ae67bcc9eba75cbea6b9cb",
       "batch_occurrence_ordinal": 45001,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-005",
       "family": "exceptional-density",
@@ -821,12 +821,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-D782EABD2352B7528A41F794D67AD8F4",
+      "seed_id": "HQS2-CD35381C866440CC412BEC1B199D34E2",
       "scientific_signature_sha256": "a15633e77acde948f1b169bad1ba78f46ff208f1a66e72d3e4965f57b0c9ad4b",
       "semantic_signature_sha256": "a15633e77acde948f1b169bad1ba78f46ff208f1a66e72d3e4965f57b0c9ad4b",
-      "evaluation_instance_sha256": "d782eabd2352b7528a41f794d67ad8f4565fae6e4e42b66620b87b5eca8ff263",
+      "evaluation_instance_sha256": "cd35381c866440cc412bec1b199d34e2f036286ae8853f49ceb9012c190bb878",
       "batch_occurrence_ordinal": 55001,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-006",
       "family": "generic-preprocessing",
@@ -873,12 +873,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-BA4C7B71E4E20771F12C8F826D5DCEBF",
+      "seed_id": "HQS2-9507CE47F3FFF97EFABD5DB99215BAC4",
       "scientific_signature_sha256": "1670d7093588e349a3a58796da0eb92e8e7bf0bc0b68d1e4827f6aa5ffc6e7f1",
       "semantic_signature_sha256": "1670d7093588e349a3a58796da0eb92e8e7bf0bc0b68d1e4827f6aa5ffc6e7f1",
-      "evaluation_instance_sha256": "ba4c7b71e4e20771f12c8f826d5dcebf73ad4995a65d3668a7c5cb21f8d5b57f",
+      "evaluation_instance_sha256": "9507ce47f3fff97efabd5db99215bac48088ca61f33755537bb64a5fd36a374a",
       "batch_occurrence_ordinal": 75001,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-008",
       "family": "vow-frontier",
@@ -925,12 +925,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-0FE3A45EBC3AEFAA4ACB3D2704305653",
+      "seed_id": "HQS2-76F718BD576B9D395940C65031ED25A2",
       "scientific_signature_sha256": "b881e42a0ae0f1a7ba5527cf61b43bb5d634cd96717ba6076b7d776686195430",
       "semantic_signature_sha256": "b881e42a0ae0f1a7ba5527cf61b43bb5d634cd96717ba6076b7d776686195430",
-      "evaluation_instance_sha256": "0fe3a45ebc3aefaa4acb3d270430565391f9ddceabdca5b78fdf923e5bd4de06",
+      "evaluation_instance_sha256": "76f718bd576b9d395940c65031ed25a2c6ac3b8c635d40aedb2594414d2ca5f7",
       "batch_occurrence_ordinal": 134001,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-014",
       "family": "induced-subset",
@@ -979,12 +979,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-DE638717A7775FD9C52793169E3AEE18",
+      "seed_id": "HQS2-4507FD3CA88B9651A9F1A11761F7E289",
       "scientific_signature_sha256": "ea99759e4a06acdbf20cf62fa42e1dcf151f076a25bc92ecee07a50dfded4488",
       "semantic_signature_sha256": "ea99759e4a06acdbf20cf62fa42e1dcf151f076a25bc92ecee07a50dfded4488",
-      "evaluation_instance_sha256": "de638717a7775fd9c52793169e3aee186565652fb4e19a01e1407a581da17df8",
+      "evaluation_instance_sha256": "4507fd3ca88b9651a9f1a11761f7e289f26e47f60ab70dcb5ba3bed56fabaab2",
       "batch_occurrence_ordinal": 164001,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-017",
       "family": "rayleigh-null",
@@ -1031,12 +1031,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-05798926CDD0EB10AD6A82C34CFE8CC5",
+      "seed_id": "HQS2-97E1CE550B2032698A5AF42726965BAE",
       "scientific_signature_sha256": "94662b35405c24c28ca7852048be6aa4abb99bd0cbec6b1bbb07494b6bf4ca61",
       "semantic_signature_sha256": "94662b35405c24c28ca7852048be6aa4abb99bd0cbec6b1bbb07494b6bf4ca61",
-      "evaluation_instance_sha256": "05798926cdd0eb10ad6a82c34cfe8cc5b3d2d83903d4756a5d043c43f8d5a1d5",
+      "evaluation_instance_sha256": "97e1ce550b2032698a5af42726965bae96d53a8b700568c42888bcb272932759",
       "batch_occurrence_ordinal": 174001,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-018",
       "family": "collision-rank",
@@ -1084,12 +1084,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-21374D0A228BB54BBE6324651A236223",
+      "seed_id": "HQS2-7FDFBEFD9F62753A253CC710DBD8A0E1",
       "scientific_signature_sha256": "af838cc29598e1246dac90f1888733e1b844f311c2ec70a85edfebb513458221",
       "semantic_signature_sha256": "af838cc29598e1246dac90f1888733e1b844f311c2ec70a85edfebb513458221",
-      "evaluation_instance_sha256": "21374d0a228bb54bbe6324651a2362231476f1709be24ff27454db2f60340fb4",
+      "evaluation_instance_sha256": "7fdfbefd9f62753a253cc710dbd8a0e1280a4684fd83a246a8475a24471bd079",
       "batch_occurrence_ordinal": 184002,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-019",
       "family": "semaev-yield",
@@ -1138,12 +1138,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-6D7901D2AA02966A210212C9F650D0A2",
+      "seed_id": "HQS2-1040A5A4150B4C458A7287FB6AC6B8FB",
       "scientific_signature_sha256": "51d881bf7239c3235e3c9cf3830b710b9844cee6de6ca290dbd3dca1a817ee43",
       "semantic_signature_sha256": "51d881bf7239c3235e3c9cf3830b710b9844cee6de6ca290dbd3dca1a817ee43",
-      "evaluation_instance_sha256": "6d7901d2aa02966a210212c9f650d0a266aa65f09bb08ce3bcd7e16c8916f0a0",
+      "evaluation_instance_sha256": "1040a5a4150b4c458a7287fb6ac6b8fb00a7a1ba9b771d62b85c6dcfa2cc59e6",
       "batch_occurrence_ordinal": 204002,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-021",
       "family": "sum-product",
@@ -1191,12 +1191,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-E63F71B51BCD7C03607CE030DDFB2B90",
+      "seed_id": "HQS2-71BCAA9383D944DC221ECE3A6BAAC1BC",
       "scientific_signature_sha256": "79c33c92781791229997e106ddfe27b376b38f027cbf6c07af93586575db9d29",
       "semantic_signature_sha256": "79c33c92781791229997e106ddfe27b376b38f027cbf6c07af93586575db9d29",
-      "evaluation_instance_sha256": "e63f71b51bcd7c03607ce030ddfb2b90ca5c27f5812b6bd856c0f9e4ec3cc7a3",
+      "evaluation_instance_sha256": "71bcaa9383d944dc221ece3a6baac1bc86653adf3911b8824d48e8c11e2f7b01",
       "batch_occurrence_ordinal": 214002,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-022",
       "family": "relation-incidence",
@@ -1244,12 +1244,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-4E9FE59F6B4CC8E327E28BFCEB1CD88F",
+      "seed_id": "HQS2-5F95175AE6F4EB7D5382850A5BDB66CD",
       "scientific_signature_sha256": "a01af3dfd3701cfe51a6e5947147679d5ec106019d307bb09d5e323060996d5d",
       "semantic_signature_sha256": "a01af3dfd3701cfe51a6e5947147679d5ec106019d307bb09d5e323060996d5d",
-      "evaluation_instance_sha256": "4e9fe59f6b4cc8e327e28bfceb1cd88f9c69ff2db5c5b75f5790dacb5b960e2f",
+      "evaluation_instance_sha256": "5f95175ae6f4eb7d5382850a5bdb66cdc32817d7f0d4f45e5469d349bf434406",
       "batch_occurrence_ordinal": 224002,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-023",
       "family": "exceptional-mask-density",
@@ -1297,12 +1297,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-33F8FE08567E053582381EA60E6AFBD3",
+      "seed_id": "HQS2-C074F3EFFA8ADED36A14D011C16C771B",
       "scientific_signature_sha256": "b297fd70d115c5c4d27eb752feab970e5e4be5788f89e1318ee69a4e5228e38f",
       "semantic_signature_sha256": "b297fd70d115c5c4d27eb752feab970e5e4be5788f89e1318ee69a4e5228e38f",
-      "evaluation_instance_sha256": "33f8fe08567e053582381ea60e6afbd3014c5eef37f9b21cf62fc8ba51a6f104",
+      "evaluation_instance_sha256": "c074f3effa8aded36a14d011c16c771b57888a5a26126dab0a3264a2e9f9b29d",
       "batch_occurrence_ordinal": 244002,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-025",
       "family": "guessed-nonce-bits",
@@ -1349,12 +1349,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-F63CBC0E646C2C670E1D6B0B3E5C96F1",
+      "seed_id": "HQS2-9BEB1D80CB447CBE361A8D627B0CBDB2",
       "scientific_signature_sha256": "808b7d185326c8d1e79e693fe3cc7e269eea864ec2bb1022a4a9daaf4d214b35",
       "semantic_signature_sha256": "808b7d185326c8d1e79e693fe3cc7e269eea864ec2bb1022a4a9daaf4d214b35",
-      "evaluation_instance_sha256": "f63cbc0e646c2c670e1d6b0b3e5c96f1527dad5b93ff2e313392cb6600c9652f",
+      "evaluation_instance_sha256": "9beb1d80cb447cbe361a8d627b0cbdb200fb4afc5e8451c2268d371e5de13ecc",
       "batch_occurrence_ordinal": 83012,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-009",
       "family": "multi-target",
@@ -1402,12 +1402,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-C86E39801F7FCCA61FAE6E5D019F5722",
+      "seed_id": "HQS2-2075C602992728BCBF1A07903950C3AE",
       "scientific_signature_sha256": "82fdf80dccf378ed124f371b7e1e318866c152be15d0b9f3df3c31093729365c",
       "semantic_signature_sha256": "82fdf80dccf378ed124f371b7e1e318866c152be15d0b9f3df3c31093729365c",
-      "evaluation_instance_sha256": "c86e39801f7fcca61fae6e5d019f5722f44ffe60b0d7ef50fe0d1116a2def626",
+      "evaluation_instance_sha256": "2075c602992728bcbf1a07903950c3aee8e0311460dd301d83891c81ee1bc2e7",
       "batch_occurrence_ordinal": 93013,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-010",
       "family": "orbit-cycle-escape",
@@ -1454,12 +1454,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-52B695E5F1315D9471C5B60C5014D48A",
+      "seed_id": "HQS2-7961531464CD5A900AAEEA5622AC3DC5",
       "scientific_signature_sha256": "4a1d10b8a479e02cef855356365fcf749ab010aed074961f43063e4fe7dc27c3",
       "semantic_signature_sha256": "4a1d10b8a479e02cef855356365fcf749ab010aed074961f43063e4fe7dc27c3",
-      "evaluation_instance_sha256": "52b695e5f1315d9471c5b60c5014d48ad4916014668f6b9073d6555af6bdacc2",
+      "evaluation_instance_sha256": "7961531464cd5a900aaeea5622ac3dc5770c61bd6a7e8b468e9e2a5c680df1a2",
       "batch_occurrence_ordinal": 103013,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-011",
       "family": "glv-walk-scheduling",
@@ -1507,12 +1507,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-F4BFC6C774D1165DB915EE8C5F369B47",
+      "seed_id": "HQS2-6D62702E90C7F8D47C4ABAAC841FB3FB",
       "scientific_signature_sha256": "028b88055f304bad3755fb4448cedc08b9cd427cd4787be5af036c3f30a2c2fe",
       "semantic_signature_sha256": "028b88055f304bad3755fb4448cedc08b9cd427cd4787be5af036c3f30a2c2fe",
-      "evaluation_instance_sha256": "f4bfc6c774d1165db915ee8c5f369b47093eea93f0b6971c1881c3b6b0c280fc",
+      "evaluation_instance_sha256": "6d62702e90c7f8d47c4abaac841fb3fb494ca8edfbcceab06f6366557115838a",
       "batch_occurrence_ordinal": 113013,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-012",
       "family": "arithmetic-radding",
@@ -1559,12 +1559,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-FBFE211B29D616BA90AA3B595629CE11",
+      "seed_id": "HQS2-1AA60527E9C2E29F8B298E6AFF3695E6",
       "scientific_signature_sha256": "35fe845f02f99daa97e4d88d30d63a40634fe3cb76a8499535d9b4e25171506d",
       "semantic_signature_sha256": "35fe845f02f99daa97e4d88d30d63a40634fe3cb76a8499535d9b4e25171506d",
-      "evaluation_instance_sha256": "fbfe211b29d616ba90aa3b595629ce112f205379ab1ea253b3c610d797a12439",
+      "evaluation_instance_sha256": "1aa60527e9c2e29f8b298e6aff3695e69853587f3c992d3552ed50b44c49da70",
       "batch_occurrence_ordinal": 123013,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-013",
       "family": "character-partition",
@@ -1612,12 +1612,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-C84C5100601A7DD3085EA4FF6F17CC48",
+      "seed_id": "HQS2-D5B52507C19DB9B0AFB7E24F1E976C2E",
       "scientific_signature_sha256": "e1f43e0ad1a1a2fee29880845a456b5a0e199956456278fbc93741007ae3d3d5",
       "semantic_signature_sha256": "e1f43e0ad1a1a2fee29880845a456b5a0e199956456278fbc93741007ae3d3d5",
-      "evaluation_instance_sha256": "c84c5100601a7dd3085ea4ff6f17cc484024bffe4f40c27f6451402aff561aca",
+      "evaluation_instance_sha256": "d5b52507c19db9b0afb7e24f1e976c2eea0f9f57ea8f8286bcdf0b612494939e",
       "batch_occurrence_ordinal": 153013,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-016",
       "family": "exception-aware-walk",
@@ -1664,12 +1664,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-78ED777F4AB5D55154D086DF85465865",
+      "seed_id": "HQS2-5C29F48B8357E7975E46F56ED18406D5",
       "scientific_signature_sha256": "9d856786c42f3fcb87e70d555420a582ac6aa7f2bb66ca89b40b1ab1321068cf",
       "semantic_signature_sha256": "9d856786c42f3fcb87e70d555420a582ac6aa7f2bb66ca89b40b1ab1321068cf",
-      "evaluation_instance_sha256": "78ed777f4ab5d55154d086df85465865573511f02bbe38ba1fb21d22448aca6e",
+      "evaluation_instance_sha256": "5c29f48b8357e7975e46f56ed18406d5d9fbbec352b6850e09a1b3b98b42f2f9",
       "batch_occurrence_ordinal": 313005,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-032",
       "family": "lean-glv-orbit",
@@ -1717,12 +1717,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-57F5140C3454706F6534CCD06AAC39D4",
+      "seed_id": "HQS2-4F7DC58404E3C46A477BB379832702E4",
       "scientific_signature_sha256": "3323722534233945840a9c8bc56952cdc8ab8b8e7acad75eb1afc33c2adb0258",
       "semantic_signature_sha256": "3323722534233945840a9c8bc56952cdc8ab8b8e7acad75eb1afc33c2adb0258",
-      "evaluation_instance_sha256": "57f5140c3454706f6534ccd06aac39d41f9ff643ec95318345ba29b28758e7d1",
+      "evaluation_instance_sha256": "4f7dc58404e3c46a477bb379832702e4a6d1fb6b260afa27c10f71ad64d5c7ef",
       "batch_occurrence_ordinal": 323005,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-033",
       "family": "end-to-end-exponent",
@@ -1771,12 +1771,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-2352266DEC7AA303AE35A775D0C484F8",
+      "seed_id": "HQS2-3A04D32DA04D555651B916787DF29497",
       "scientific_signature_sha256": "bff10209c1778c3d91800aac593cdf431312b4a4052bddcfcfa44e9940f06ada",
       "semantic_signature_sha256": "bff10209c1778c3d91800aac593cdf431312b4a4052bddcfcfa44e9940f06ada",
-      "evaluation_instance_sha256": "2352266dec7aa303ae35a775d0c484f8b17a54cf2b71c456ce22f653022bf5bb",
+      "evaluation_instance_sha256": "3a04d32da04d555651b916787df29497da5358a01b1a06825a4488ebfe77d1cb",
       "batch_occurrence_ordinal": 271703,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-028",
       "family": "ml-solver-predictor",
@@ -1823,12 +1823,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-A9315ABC8721F54DB78CD96275EF956B",
+      "seed_id": "HQS2-C18DB1251656B96EA02CF801012C6313",
       "scientific_signature_sha256": "2f9de3c484689680388c28cee051c17116965ccdf94a8a8f6920963bd8ab6c3b",
       "semantic_signature_sha256": "2f9de3c484689680388c28cee051c17116965ccdf94a8a8f6920963bd8ab6c3b",
-      "evaluation_instance_sha256": "a9315abc8721f54db78cd96275ef956b0b51fe4012597993ed8d7a1381362021",
+      "evaluation_instance_sha256": "c18db1251656b96ea02cf801012c63132185e871548041bd73d8fb144133bfc9",
       "batch_occurrence_ordinal": 281704,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-029",
       "family": "ml-counterexample-search",
@@ -1875,12 +1875,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-AD5DD0970A526A10FAC8C9B6949F4ECE",
+      "seed_id": "HQS2-BE332B7B2E8B29E0AF8557B1A85ACC8F",
       "scientific_signature_sha256": "7ed894dc3c6d5cb12fed4f71f592b88d9a7fe02a1551c1e43f57fe5a6df35b74",
       "semantic_signature_sha256": "7ed894dc3c6d5cb12fed4f71f592b88d9a7fe02a1551c1e43f57fe5a6df35b74",
-      "evaluation_instance_sha256": "ad5dd0970a526a10fac8c9b6949f4ece5320d8c6a2a31720a45f423248d4db0a",
+      "evaluation_instance_sha256": "be332b7b2e8b29e0af8557b1a85acc8fb7ca25a799a14ed4ee468d463933756c",
       "batch_occurrence_ordinal": 291704,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-030",
       "family": "ml-relation-invariant",
@@ -1927,12 +1927,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-8F5FD68EE3F74B2278D0D5656C9E756B",
+      "seed_id": "HQS2-6A3AFEEC42F84AA52EC3C8DA237B606C",
       "scientific_signature_sha256": "bf7af06e6b6df4c7054e7d0460c66e370bc6ad61081e0c88ecfd5ffb74dcd519",
       "semantic_signature_sha256": "bf7af06e6b6df4c7054e7d0460c66e370bc6ad61081e0c88ecfd5ffb74dcd519",
-      "evaluation_instance_sha256": "8f5fd68ee3f74b2278d0d5656c9e756b357f86ef9db0ffe688fb807de56b7fd0",
+      "evaluation_instance_sha256": "6a3afeec42f84aa52ec3c8da237b606c078f006452cf41e4859aeb394ba93a2d",
       "batch_occurrence_ordinal": 301704,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "ALG-031",
       "family": "mechanism-registry",
@@ -1980,12 +1980,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-C38DC88EC93D3421ED686FCD286F3A4E",
+      "seed_id": "HQS2-CC59F4D63A8EDD9CCCE580BEC1FFAEA9",
       "scientific_signature_sha256": "b4b3aa1915e764e725be1c2df47c3bae9f62802136f84cacd3df285c5b32f6a5",
       "semantic_signature_sha256": "b4b3aa1915e764e725be1c2df47c3bae9f62802136f84cacd3df285c5b32f6a5",
-      "evaluation_instance_sha256": "c38dc88ec93d3421ed686fcd286f3a4e0469dc362fbed4ad1472070badaf0cfe",
+      "evaluation_instance_sha256": "cc59f4d63a8edd9ccce580bec1ffaea9d21cb60819846d8c4b23e243748d83e8",
       "batch_occurrence_ordinal": 481704,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "H4-E16",
       "family": "regular-locus-density",
@@ -2033,12 +2033,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-93E605F2BF5180FACB66FA912B16BD1B",
+      "seed_id": "HQS2-CA85A65D85217CA55246082F1D710F05",
       "scientific_signature_sha256": "1c9a65eea3f77ecdeaa51ee1d1eb909b10971e0370c3b0209dd356335f661cfa",
       "semantic_signature_sha256": "1c9a65eea3f77ecdeaa51ee1d1eb909b10971e0370c3b0209dd356335f661cfa",
-      "evaluation_instance_sha256": "93e605f2bf5180facb66fa912b16bd1beb9f4bc0c41e9a1dd9e8cec184dcc223",
+      "evaluation_instance_sha256": "ca85a65d85217ca55246082f1d710f05905402b177d36aa5df6ac26e5365316e",
       "batch_occurrence_ordinal": 511704,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "H4-E19",
       "family": "monodromy-rank",
@@ -2086,12 +2086,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-3FEF95E06D31DB673E988C679B9FAA84",
+      "seed_id": "HQS2-6EB4B9ABDCE7938791DD28E5FD2AEE0C",
       "scientific_signature_sha256": "30a06bab07ff7541f0f7dda29f714de8f446eeae3e4667c3489d39628a7e6a7e",
       "semantic_signature_sha256": "30a06bab07ff7541f0f7dda29f714de8f446eeae3e4667c3489d39628a7e6a7e",
-      "evaluation_instance_sha256": "3fef95e06d31db673e988c679b9faa8433d755c2ea64f8feb4364b6d7c023c20",
+      "evaluation_instance_sha256": "6eb4b9abdce7938791dd28e5fd2aee0cb355cf1850f60d409aa9497866d28f0f",
       "batch_occurrence_ordinal": 521704,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "H4-E20",
       "family": "relation-uniformity",
@@ -2139,12 +2139,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-724EBBCD704B127C71124EEB729F3B0B",
+      "seed_id": "HQS2-419A31A93B20EF3C2DADFC2E917A4147",
       "scientific_signature_sha256": "7c2431b82bde6b7b85b217aec8c23fb7e7aff017603d099b026dfa0ce2c2649a",
       "semantic_signature_sha256": "7c2431b82bde6b7b85b217aec8c23fb7e7aff017603d099b026dfa0ce2c2649a",
-      "evaluation_instance_sha256": "724ebbcd704b127c71124eeb729f3b0bb03bfeebe96c715960fc98c8926ae9b4",
+      "evaluation_instance_sha256": "419a31a93b20ef3c2dadfc2e917a414785b88066cba73bb8338b4e8f33742fa4",
       "batch_occurrence_ordinal": 578705,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "H4-E25",
       "family": "norm-one-dickson-circuit",
@@ -2193,12 +2193,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-84B0479F01C8D34C244718C59DD08722",
+      "seed_id": "HQS2-1E306F13F86AE79AA40E773EA11EF620",
       "scientific_signature_sha256": "ad6c63ce937ffca9fb6546155beb5de7e98a50f00c393ebf3c42a200c8506fe3",
       "semantic_signature_sha256": "ad6c63ce937ffca9fb6546155beb5de7e98a50f00c393ebf3c42a200c8506fe3",
-      "evaluation_instance_sha256": "84b0479f01c8d34c244718c59dd0872248493c3f23547bd3d96ab7de2b9099b7",
+      "evaluation_instance_sha256": "1e306f13f86ae79aa40e773ea11ef6204c993b6e966ada47c548fec5dd9c6fb7",
       "batch_occurrence_ordinal": 918705,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "HCS-025",
       "family": "division-polynomial-invariants",
@@ -2246,12 +2246,12 @@
       "route_promotion": false
     },
     {
-      "seed_id": "HQS2-2BDCFBF0FC2475D1767DE2C79751697B",
+      "seed_id": "HQS2-5259B3F30284899AABAC9BAE6329D3C9",
       "scientific_signature_sha256": "ed5f1e34c29bf49a9668425510394305cbcf46057ddaca40f660a30d0e05ed09",
       "semantic_signature_sha256": "ed5f1e34c29bf49a9668425510394305cbcf46057ddaca40f660a30d0e05ed09",
-      "evaluation_instance_sha256": "2bdcfbf0fc2475d1767de2c79751697b8070b9f00d48599529236484f424cc69",
+      "evaluation_instance_sha256": "5259b3f30284899aabac9bae6329d3c9367bf615558b8323dfed67c52c8fe9eb",
       "batch_occurrence_ordinal": 928705,
-      "space_instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "space_instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "scientific_identity": "research_question_challenge_cell",
       "base_id": "HCS-026",
       "family": "infinity-density",
@@ -2313,17 +2313,17 @@
     "reason": "Wall-clock throughput is hardware-dependent; the benchmark reports the target without weakening deterministic correctness gates."
   },
   "feedback_context": {
-    "review_records": 3,
+    "review_records": 6,
     "independent_review_records": 0,
     "review_records_by_base": {
       "ALG-014": {
-        "review_records": 1
+        "review_records": 2
       },
       "H4-E05": {
-        "review_records": 1
+        "review_records": 2
       },
       "H4-E28": {
-        "review_records": 1
+        "review_records": 2
       }
     },
     "outcome_events": 9,

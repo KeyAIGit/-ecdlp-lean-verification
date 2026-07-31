@@ -56,16 +56,16 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 30,
-                "target_properties": 5,
-                "mechanisms": 7,
-                "cells": 7,
+                "source_claims": 31,
+                "target_properties": 6,
+                "mechanisms": 8,
+                "cells": 8,
                 "open_cells": 3,
                 "property_resolution_cells": 1,
-                "decided_inapplicable_cells": 2,
+                "decided_inapplicable_cells": 3,
                 "decided_closed_cells": 1,
                 "seed_eligible_cells": 2,
-                "desk_decisions": 3,
+                "desk_decisions": 4,
             },
             state["counts"],
         )
@@ -1120,6 +1120,72 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertTrue(
             expected.isdisjoint(
                 cells["CELL-M-PKC-AUXILIARY-CURVE"]["source_claim_ids"]
+            )
+        )
+
+    def test_wcc_pplus1_m67_is_a_scoped_desk_rejection(self) -> None:
+        problems, state = self.build()
+        self.assertEqual([], problems)
+        cells = {item["cell_id"]: item for item in state["cells"]}
+        cell = cells["CELL-M-WCC-PPLUS1-TRACE-M67"]
+        self.assertEqual("decided_inapplicable", cell["status"])
+        self.assertFalse(cell["seed_eligible"])
+        self.assertEqual("none", cell["authorization"])
+        requirement = cell["requirement_results"][0]
+        self.assertEqual(
+            {
+                "property_id": "TP-SECP-PPLUS1-TRACE-ROOT-CEILING",
+                "property_status": "certificate_replayed",
+                "operator": "gte",
+                "expected": 345156162942,
+                "actual": 9,
+                "verdict": "violated",
+                "source_claim_ids": [
+                    "SC-SECP-PPLUS1-TORUS-DESK-SCREEN"
+                ],
+                "rationale": requirement["rationale"],
+            },
+            requirement,
+        )
+        decision = next(
+            item
+            for item in state["desk_decisions"]
+            if item["cell_id"] == cell["cell_id"]
+        )
+        self.assertEqual("inapplicable", decision["classification"])
+        self.assertEqual("none", decision["route_effect"])
+        self.assertIn("route remains open_parked", cell["boundary"])
+
+    def test_wcc_pplus1_threshold_is_recomputed(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        mechanism = next(
+            item
+            for item in policy["mechanisms"]
+            if item["id"] == "M-WCC-PPLUS1-TRACE-M67"
+        )
+        mechanism["requires_all"][0]["expected"] -= 1
+        problems, _ = self.build(policy=policy)
+        self.assertTrue(
+            any(
+                "must use the recomputed arity-7 relation-yield threshold"
+                in item
+                for item in problems
+            )
+        )
+
+    def test_wcc_pplus1_property_is_bound_to_certificate(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        property_record = next(
+            item
+            for item in policy["target_properties"]
+            if item["id"] == "TP-SECP-PPLUS1-TRACE-ROOT-CEILING"
+        )
+        property_record["value"] = 10
+        problems, _ = self.build(policy=policy)
+        self.assertTrue(
+            any(
+                ".value differs from the replayed certificate" in item
+                for item in problems
             )
         )
 

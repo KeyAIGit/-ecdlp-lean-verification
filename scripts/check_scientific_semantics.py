@@ -190,10 +190,10 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 30,
-        "cells": 7,
+        "source_claims": 31,
+        "cells": 8,
         "seed_eligible_cells": 2,
-        "desk_decisions": 3,
+        "desk_decisions": 4,
     }
     for field, expected in expected_typed_counts.items():
         if typed_counts.get(field) != expected:
@@ -203,6 +203,30 @@ def validate_semantics(
     m16_cell = cells.get("CELL-M-PKC-SMOOTH-M16", {})
     if m16_cell.get("status") != "open":
         problems.append("M16 scoped blocker must leave the cell open")
+    torus_cell = cells.get("CELL-M-WCC-PPLUS1-TRACE-M67", {})
+    if torus_cell.get("status") != "decided_inapplicable":
+        problems.append("WCC p-plus-one m6/7 cell must remain inapplicable")
+    if torus_cell.get("route_id") != "R-PETIT-COMPOSED-MAPS":
+        problems.append("WCC p-plus-one m6/7 cell must retain the Petit route")
+    if torus_cell.get("authorization") != "none":
+        problems.append("WCC p-plus-one m6/7 cell cannot authorize work")
+    torus_requirements = torus_cell.get("requirement_results", [])
+    if len(torus_requirements) != 1 or any(
+        (
+            item.get("property_id"),
+            item.get("expected"),
+            item.get("actual"),
+            item.get("verdict"),
+        )
+        != (
+            "TP-SECP-PPLUS1-TRACE-ROOT-CEILING",
+            345156162942,
+            9,
+            "violated",
+        )
+        for item in torus_requirements
+    ):
+        problems.append("WCC p-plus-one m6/7 typed requirement drifted")
     if m16_cell.get("seed_eligible") is not True:
         problems.append("M16 scoped blocker must leave the cell seed-eligible")
     if m16_cell.get("cost_quantity_status") != "partial":

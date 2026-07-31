@@ -15,10 +15,10 @@
     "research_engine_candidates": 6,
     "generated_hypothesis_seeds": 2,
     "quality_cleared_hypothesis_proposals": 0,
-    "typed_evidence_cells": 7,
-    "typed_decided_cells": 3,
+    "typed_evidence_cells": 8,
+    "typed_decided_cells": 4,
     "typed_seed_eligible_cells": 2,
-    "typed_desk_decisions": 3,
+    "typed_desk_decisions": 4,
     "hypothesis_axis_nodes": 9,
     "source_index_nodes": 29,
     "research_engine_intake_candidates": 0,
@@ -34,11 +34,11 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1167,
+    "edges": 1182,
     "by_edge_type": {
       "imports": 525,
       "member_of": 307,
-      "grounded_in_source_claim": 49,
+      "grounded_in_source_claim": 57,
       "requires_foundation": 41,
       "supports": 27,
       "decision_grounded_in": 25,
@@ -47,17 +47,17 @@
       "detailed_by": 15,
       "extends_frontier": 15,
       "frontier_of": 13,
-      "requires_target_property": 9,
+      "requires_target_property": 10,
       "records_outcome_for": 9,
       "updates_hypothesis": 9,
       "records_route_evidence": 9,
+      "instantiates_mechanism": 8,
+      "evaluates_route": 8,
+      "must_change_cost_quantity": 8,
+      "binds_target_feature": 8,
+      "binds_mechanism_primitive": 8,
+      "binds_unresolved_question": 8,
       "blocked_by": 7,
-      "instantiates_mechanism": 7,
-      "evaluates_route": 7,
-      "must_change_cost_quantity": 7,
-      "binds_target_feature": 7,
-      "binds_mechanism_primitive": 7,
-      "binds_unresolved_question": 7,
       "tests_hypothesis": 6,
       "explores_route": 6,
       "governs_hypothesis": 4,
@@ -8286,10 +8286,10 @@
       "submitted_hypothesis_proposals": 1,
       "quality_cleared_hypothesis_proposals": 0,
       "retained_hypothesis_drafts": 0,
-      "typed_evidence_cells": 7,
+      "typed_evidence_cells": 8,
       "typed_seed_eligible_cells": 2,
-      "typed_desk_decisions": 3,
-      "typed_decided_cells": 3,
+      "typed_desk_decisions": 4,
+      "typed_decided_cells": 4,
       "intake_candidates": 0,
       "authorized_exploration_candidates": 0,
       "closed_candidates": 6,
@@ -9376,7 +9376,7 @@
       "generator_id": "ecdlp-hypothesis-generation-v0",
       "source_hashes": {
         "generation_policy_sha256": "cb61708d473f667ee2b9d4bdba8199ac87de4fa079e3ca41bf6ddc42fe612054",
-        "typed_evidence_state_sha256": "bc1ee18931a51364c2122120bdf50a039b67b747f006996795cb4767d87ab63f",
+        "typed_evidence_state_sha256": "09cb8c4f032d4d1314189cf0b2cbd912654cada60c4905e91b3092b63a46f503",
         "research_claim_state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
         "proposals_sha256": "581cf3109a9f2bfdaeacf895664e816ab22f0f47a72140385dab1c69d04d0a34",
         "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
@@ -9393,30 +9393,30 @@
         "adversarial_reviews": 0,
         "quality_cleared_proposals": 0,
         "retained_hypothesis_drafts": 0,
-        "typed_evidence_cells": 7,
+        "typed_evidence_cells": 8,
         "typed_seed_eligible_cells": 2
       },
       "typed_evidence": {
         "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
         "target_id": "secp256k1-classical-single-target-plain",
         "counts": {
-          "source_claims": 30,
-          "target_properties": 5,
-          "mechanisms": 7,
-          "cells": 7,
+          "source_claims": 31,
+          "target_properties": 6,
+          "mechanisms": 8,
+          "cells": 8,
           "open_cells": 3,
           "property_resolution_cells": 1,
-          "decided_inapplicable_cells": 2,
+          "decided_inapplicable_cells": 3,
           "decided_closed_cells": 1,
           "seed_eligible_cells": 2,
-          "desk_decisions": 3
+          "desk_decisions": 4
         },
         "source_hashes": {
-          "policy_sha256": "b28e955fade48c7e8f30699ad137e8ee3cefe3aca2186ccce960489d8199fd04",
+          "policy_sha256": "12e191edb2f8c94da2eec0c94701ab4bd1847f1cd0f6202ddfe86eb19d7f2915",
           "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
           "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-          "evidence_files_sha256": "71b527927a514cee8171b5b9a9dcc432313cdfe51fa7960dc1155f628c8025b8",
-          "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
+          "evidence_files_sha256": "dbc79d963123a330014049bb9eaf70c2bf1218bbd19d7e801b1594f14a4b1855",
+          "desk_decisions_sha256": "1e66e8b2f3e196736c2196042817a23632b7760b02dbd1663408f81359dad608"
         },
         "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
         "authorization": "none"
@@ -10448,24 +10448,24 @@
       "exact_target_execution": false,
       "stream_digest_version": "rfc6962-binary-leaf-v2",
       "coverage_merkle_root_sha256": "dff1e8cb52594158fc94556cbef3025be647fab310132c34ee58aed3b8399207",
-      "instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
       "challenge_indices": [
-        5095,
-        198415,
-        280448,
-        318681,
-        328397,
-        475081,
-        493336,
-        646541,
-        662614,
-        716687,
-        789948,
-        791781,
-        795400,
-        820845,
-        975869,
-        985080
+        65190,
+        88542,
+        99893,
+        106469,
+        159295,
+        331135,
+        360634,
+        372725,
+        518183,
+        553299,
+        662081,
+        724199,
+        801472,
+        857341,
+        868527,
+        969801
       ]
     },
     "coverage_boundary": "Coverage is complete only for this frozen finite Cartesian projection. It is not coverage of all ECDLP ideas or literature.",
@@ -10821,7 +10821,7 @@
           "mechanism_type_mismatch": 4000,
           "test_type_mismatch": 1080
         },
-        "review_records": 1,
+        "review_records": 2,
         "independent_review_records": 0
       }
     ]
@@ -10980,23 +10980,23 @@
     "state_source": "data/typed_evidence_state.json",
     "policy_source": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
     "counts": {
-      "source_claims": 30,
-      "target_properties": 5,
-      "mechanisms": 7,
-      "cells": 7,
+      "source_claims": 31,
+      "target_properties": 6,
+      "mechanisms": 8,
+      "cells": 8,
       "open_cells": 3,
       "property_resolution_cells": 1,
-      "decided_inapplicable_cells": 2,
+      "decided_inapplicable_cells": 3,
       "decided_closed_cells": 1,
       "seed_eligible_cells": 2,
-      "desk_decisions": 3
+      "desk_decisions": 4
     },
     "source_hashes": {
-      "policy_sha256": "b28e955fade48c7e8f30699ad137e8ee3cefe3aca2186ccce960489d8199fd04",
+      "policy_sha256": "12e191edb2f8c94da2eec0c94701ab4bd1847f1cd0f6202ddfe86eb19d7f2915",
       "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
       "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-      "evidence_files_sha256": "71b527927a514cee8171b5b9a9dcc432313cdfe51fa7960dc1155f628c8025b8",
-      "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
+      "evidence_files_sha256": "dbc79d963123a330014049bb9eaf70c2bf1218bbd19d7e801b1594f14a4b1855",
+      "desk_decisions_sha256": "1e66e8b2f3e196736c2196042817a23632b7760b02dbd1663408f81359dad608"
     },
     "trust_boundary": {
       "claim_acceptance": "A source claim is usable for a decisive screen only when its exact locator and evidence artifact are recorded with a decisive read status.",
@@ -11206,6 +11206,30 @@
         "seed_eligible": false,
         "evidence_digest": "df74b0ffe0c2386fc7311c8fb9d278672c2a72c63480d30c4e81199b5e6c5f56",
         "authorization": "none"
+      },
+      {
+        "cell_id": "CELL-M-WCC-PPLUS1-TRACE-M67",
+        "mechanism_id": "M-WCC-PPLUS1-TRACE-M67",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "status": "decided_inapplicable",
+        "cost_quantity_id": "CQ-PRIME-FIELD-RELATION-TOTAL",
+        "requirement_results": [
+          {
+            "property_id": "TP-SECP-PPLUS1-TRACE-ROOT-CEILING",
+            "property_status": "certificate_replayed",
+            "operator": "gte",
+            "expected": 345156162942,
+            "actual": 9,
+            "verdict": "violated",
+            "source_claim_ids": [
+              "SC-SECP-PPLUS1-TORUS-DESK-SCREEN"
+            ],
+            "rationale": "Even the weaker arity-seven relation-yield balance requires ceil((7! times p)^(1/7)) trace coordinates; arity six requires more, so failure here screens both submitted arities."
+          }
+        ],
+        "seed_eligible": false,
+        "evidence_digest": "b0eb203deef0f8412243bc03d466bb508b89cf98ab2aa13bc2a387468b177941",
+        "authorization": "none"
       }
     ],
     "desk_decision_index": [
@@ -11224,6 +11248,12 @@
       {
         "decision_id": "EDD-2026-07-25-003",
         "cell_id": "CELL-M-PKC-SMOOTH-M4",
+        "classification": "inapplicable",
+        "authorization": "none"
+      },
+      {
+        "decision_id": "EDD-2026-07-31-001",
+        "cell_id": "CELL-M-WCC-PPLUS1-TRACE-M67",
         "classification": "inapplicable",
         "authorization": "none"
       }
@@ -16883,6 +16913,82 @@
     {
       "from": "CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND",
       "to": "U-PRIME-FIELD-RELATION-EXPONENT",
+      "type": "binds_unresolved_question"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "M-WCC-PPLUS1-TRACE-M67",
+      "type": "instantiates_mechanism"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "R-PETIT-COMPOSED-MAPS",
+      "type": "evaluates_route"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "CQ-PRIME-FIELD-RELATION-TOTAL",
+      "type": "must_change_cost_quantity"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "TP-SECP-PPLUS1-TRACE-ROOT-CEILING",
+      "type": "requires_target_property",
+      "verdict": "violated"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "SC-AMADORI-PRIME-FIELD-VARIANT",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "SC-PKC-RELATION-YIELD",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "SC-PKC-SMOOTH-SUBGROUP",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "SC-SECP-PPLUS1-TORUS-DESK-SCREEN",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "SC-SEMAEV-RELATION-SEMANTICS",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "SC-WCC2017-PMINUS1-M2-PRACTICAL-LIMIT",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "SC-WCC2017-PPLUS1-TRACE-EXTENSION",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
+      "type": "binds_target_feature"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "MP-GENERALIZED-ROOT-RECOVERY",
+      "type": "binds_mechanism_primitive"
+    },
+    {
+      "from": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "to": "U-PETIT-GENERALIZED-ROOT-COST",
       "type": "binds_unresolved_question"
     },
     {

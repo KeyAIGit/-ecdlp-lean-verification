@@ -4,7 +4,7 @@
   "source_hashes": {
     "policy_sha256": "98cd94709ff77ff3491e56cbf10422f796cfa34a7797997d9c7c8683f0c03c3a",
     "hypothesis_generation_policy_sha256": "cb61708d473f667ee2b9d4bdba8199ac87de4fa079e3ca41bf6ddc42fe612054",
-    "typed_evidence_state_sha256": "bc1ee18931a51364c2122120bdf50a039b67b747f006996795cb4767d87ab63f",
+    "typed_evidence_state_sha256": "09cb8c4f032d4d1314189cf0b2cbd912654cada60c4905e91b3092b63a46f503",
     "research_claim_state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
     "decision_substrate_sha256": "0d3dd95e3079d5ad21db2c1f517ba8e29b1e170e61c9dbc8a2dfcb7d56745879",
     "hypotheses_sha256": "12f0df0623f2a104389cb191da565e69bacbf926b305d3f298051d7bc7489afb",
@@ -63,10 +63,10 @@
     "submitted_hypothesis_proposals": 1,
     "quality_cleared_hypothesis_proposals": 0,
     "retained_hypothesis_drafts": 0,
-    "typed_evidence_cells": 7,
+    "typed_evidence_cells": 8,
     "typed_seed_eligible_cells": 2,
-    "typed_desk_decisions": 3,
-    "typed_decided_cells": 3,
+    "typed_desk_decisions": 4,
+    "typed_decided_cells": 4,
     "intake_candidates": 0,
     "authorized_exploration_candidates": 0,
     "closed_candidates": 6,
@@ -1184,7 +1184,7 @@
     "generator_id": "ecdlp-hypothesis-generation-v0",
     "source_hashes": {
       "generation_policy_sha256": "cb61708d473f667ee2b9d4bdba8199ac87de4fa079e3ca41bf6ddc42fe612054",
-      "typed_evidence_state_sha256": "bc1ee18931a51364c2122120bdf50a039b67b747f006996795cb4767d87ab63f",
+      "typed_evidence_state_sha256": "09cb8c4f032d4d1314189cf0b2cbd912654cada60c4905e91b3092b63a46f503",
       "research_claim_state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
       "proposals_sha256": "581cf3109a9f2bfdaeacf895664e816ab22f0f47a72140385dab1c69d04d0a34",
       "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
@@ -1201,30 +1201,30 @@
       "adversarial_reviews": 0,
       "quality_cleared_proposals": 0,
       "retained_hypothesis_drafts": 0,
-      "typed_evidence_cells": 7,
+      "typed_evidence_cells": 8,
       "typed_seed_eligible_cells": 2
     },
     "typed_evidence": {
       "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
       "target_id": "secp256k1-classical-single-target-plain",
       "counts": {
-        "source_claims": 30,
-        "target_properties": 5,
-        "mechanisms": 7,
-        "cells": 7,
+        "source_claims": 31,
+        "target_properties": 6,
+        "mechanisms": 8,
+        "cells": 8,
         "open_cells": 3,
         "property_resolution_cells": 1,
-        "decided_inapplicable_cells": 2,
+        "decided_inapplicable_cells": 3,
         "decided_closed_cells": 1,
         "seed_eligible_cells": 2,
-        "desk_decisions": 3
+        "desk_decisions": 4
       },
       "source_hashes": {
-        "policy_sha256": "b28e955fade48c7e8f30699ad137e8ee3cefe3aca2186ccce960489d8199fd04",
+        "policy_sha256": "12e191edb2f8c94da2eec0c94701ab4bd1847f1cd0f6202ddfe86eb19d7f2915",
         "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
         "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-        "evidence_files_sha256": "71b527927a514cee8171b5b9a9dcc432313cdfe51fa7960dc1155f628c8025b8",
-        "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
+        "evidence_files_sha256": "dbc79d963123a330014049bb9eaf70c2bf1218bbd19d7e801b1594f14a4b1855",
+        "desk_decisions_sha256": "1e66e8b2f3e196736c2196042817a23632b7760b02dbd1663408f81359dad608"
       },
       "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
       "authorization": "none"

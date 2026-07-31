@@ -3,11 +3,11 @@
   "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
   "target_id": "secp256k1-classical-single-target-plain",
   "source_hashes": {
-    "policy_sha256": "b28e955fade48c7e8f30699ad137e8ee3cefe3aca2186ccce960489d8199fd04",
+    "policy_sha256": "12e191edb2f8c94da2eec0c94701ab4bd1847f1cd0f6202ddfe86eb19d7f2915",
     "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
     "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-    "evidence_files_sha256": "71b527927a514cee8171b5b9a9dcc432313cdfe51fa7960dc1155f628c8025b8",
-    "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
+    "evidence_files_sha256": "dbc79d963123a330014049bb9eaf70c2bf1218bbd19d7e801b1594f14a4b1855",
+    "desk_decisions_sha256": "1e66e8b2f3e196736c2196042817a23632b7760b02dbd1663408f81359dad608"
   },
   "trust_boundary": {
     "claim_acceptance": "A source claim is usable for a decisive screen only when its exact locator and evidence artifact are recorded with a decisive read status.",
@@ -16,16 +16,16 @@
     "authorization_boundary": "Typed cells, generated seeds, and desk decisions authorize no experiment, target computation, route promotion, or security claim."
   },
   "counts": {
-    "source_claims": 30,
-    "target_properties": 5,
-    "mechanisms": 7,
-    "cells": 7,
+    "source_claims": 31,
+    "target_properties": 6,
+    "mechanisms": 8,
+    "cells": 8,
     "open_cells": 3,
     "property_resolution_cells": 1,
-    "decided_inapplicable_cells": 2,
+    "decided_inapplicable_cells": 3,
     "decided_closed_cells": 1,
     "seed_eligible_cells": 2,
-    "desk_decisions": 3
+    "desk_decisions": 4
   },
   "source_claims": [
     {
@@ -429,6 +429,22 @@
       "evidence_path": "Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean"
     },
     {
+      "id": "SC-SECP-PPLUS1-TORUS-DESK-SCREEN",
+      "source_id": "repo:certificate",
+      "source_type": "certificate",
+      "citation": "KeyAI deterministic secp256k1 p-plus-one nonsplit-torus desk screen.",
+      "read_status": "certificate_replayed",
+      "url": null,
+      "artifact_sha256": "eefaee6ba8bdde453b77958899b0911d32a8fcf83c4b709645aeed29b41c05b2",
+      "locator": {
+        "kind": "certificate_field",
+        "value": "p_plus_one_factorization and smooth_composition_screen"
+      },
+      "statement": "Exact integer arithmetic factors secp256k1 p+1 as 2^4 times a 23-bit prime times a 46-bit prime times a 184-bit cofactor; consequently its largest power-of-two divisor is exactly 16, while the submitted m=6 and m=7 trace candidate uses the 46-bit prime itself as one unpriced map-degree step.",
+      "boundary": "The certificate screens the published low-degree N=2^r trace instantiation and the specific submitted direct prime-factor chain. It does not prove that no alternative bounded-degree arithmetic circuit, Dickson presentation, rational map, or nonsplit-torus mechanism exists.",
+      "evidence_path": "experiments/engine/pkc_nonsplit_torus_desk_screen/artifact.json"
+    },
+    {
       "id": "SC-SECP-PRIME-FIELD",
       "source_id": "sec2_v2",
       "source_type": "public_constant",
@@ -559,6 +575,18 @@
         "SC-SECP-PMINUS1-FACTORIZATION",
         "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
         "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
+      ]
+    },
+    {
+      "id": "TP-SECP-PPLUS1-TRACE-ROOT-CEILING",
+      "label": "Power-of-two p+1 trace-root ceiling",
+      "value_type": "integer",
+      "value": 9,
+      "status": "certificate_replayed",
+      "statement": "The largest power-of-two subgroup available from secp256k1 p+1 has order 16 and exactly 9 inversion-orbit trace coordinates.",
+      "scope": "Coordinate-root ceiling for the published WCC 2017 low-degree p-plus-one trace construction specialized to N equal to a power of two. Elliptic-curve lift success is a separate condition and cannot increase this coordinate count.",
+      "source_claim_ids": [
+        "SC-SECP-PPLUS1-TORUS-DESK-SCREEN"
       ]
     },
     {
@@ -1286,6 +1314,87 @@
       "seed_eligible": false,
       "boundary": "This is a parked desired-property record, not a mechanism. A prose idea, solver benchmark, or lower polynomial degree cannot emit a seed without the complete cost and recovery bridge.",
       "authorization": "none"
+    },
+    {
+      "cell_id": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "mechanism_id": "M-WCC-PPLUS1-TRACE-M67",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "threat_model": "classical-single-target-plain",
+      "status": "decided_inapplicable",
+      "scope": "Screen the published WCC 2017 low-degree N=2^r p-plus-one trace construction at relation arity six or seven for the secp256k1 base field.",
+      "construction": "Take N-th roots of unity in the quadratic extension, trace alpha to alpha plus alpha inverse in the prime field, and use the source's low-degree power-of-two presentation as the factor-base coordinate set.",
+      "relation_action": "Compile the trace-coordinate factor-base constraint into a Semaev relation system; the arity-seven relation-yield balance gives the weaker of the m=6 and m=7 size requirements.",
+      "changed_quantity": "Factor-base size and total prime-field relation-generation cost under the source's low-degree power-of-two trace presentation.",
+      "cost_quantity_id": "CQ-PRIME-FIELD-RELATION-TOTAL",
+      "cost_quantity_status": "partial",
+      "cost_quantity": {
+        "id": "CQ-PRIME-FIELD-RELATION-TOTAL",
+        "label": "Total prime-field relation-generation cost",
+        "definition": "Online and offline cost of obtaining enough independently validated full relations, including factor-base construction, polynomial solving, recovery, and linear algebra.",
+        "baseline": "The generic square-root attack and the matched plain Semaev pipeline must both be priced under the same threat model.",
+        "measurement": "Record scaling across field sizes with matched baselines and retain every preprocessing, memory, parallelism, and amortization term.",
+        "status": "partial",
+        "source_claim_ids": [
+          "SC-PKC-SMOOTH-SUBGROUP",
+          "SC-PKC-RELATION-YIELD",
+          "SC-SEMAEV-RELATION-SEMANTICS",
+          "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND",
+          "SC-AMADORI-PRIME-FIELD-VARIANT",
+          "SC-WCC2017-PMINUS1-M2-PRACTICAL-LIMIT",
+          "SC-WCC2017-PPLUS1-TRACE-EXTENSION"
+        ]
+      },
+      "requirement_results": [
+        {
+          "property_id": "TP-SECP-PPLUS1-TRACE-ROOT-CEILING",
+          "property_status": "certificate_replayed",
+          "operator": "gte",
+          "expected": 345156162942,
+          "actual": 9,
+          "verdict": "violated",
+          "source_claim_ids": [
+            "SC-SECP-PPLUS1-TORUS-DESK-SCREEN"
+          ],
+          "rationale": "Even the weaker arity-seven relation-yield balance requires ceil((7! times p)^(1/7)) trace coordinates; arity six requires more, so failure here screens both submitted arities."
+        }
+      ],
+      "barrier_ids": [],
+      "source_claim_ids": [
+        "SC-AMADORI-PRIME-FIELD-VARIANT",
+        "SC-PKC-RELATION-YIELD",
+        "SC-PKC-SMOOTH-SUBGROUP",
+        "SC-SECP-PPLUS1-TORUS-DESK-SCREEN",
+        "SC-SEMAEV-RELATION-SEMANTICS",
+        "SC-WCC2017-PMINUS1-M2-PRACTICAL-LIMIT",
+        "SC-WCC2017-PPLUS1-TRACE-EXTENSION",
+        "SC-YOKOYAMA-NAIVE-SEMAEV-LOWER-BOUND"
+      ],
+      "source_ids": [
+        "amadori_pintore_sala2018",
+        "petit_kosters_messeng2016",
+        "repo:certificate",
+        "repo:kernel",
+        "yokota_kudo_yasuda2017_wcc",
+        "yokoyama_yasuda_takahashi_kogure2020"
+      ],
+      "evidence_paths": [
+        "Ecdlp/Proved/SemaevFour.lean",
+        "data/source_claim_extracts/amadori_pintore_sala2018.json",
+        "data/source_claim_extracts/petit_kosters_messeng2016.json",
+        "data/source_claim_extracts/yokota_kudo_yasuda2017_wcc.json",
+        "data/source_claim_extracts/yokoyama_yasuda_takahashi_kogure2020.json",
+        "experiments/engine/pkc_nonsplit_torus_desk_screen/artifact.json"
+      ],
+      "evidence_digest": "b0eb203deef0f8412243bc03d466bb508b89cf98ab2aa13bc2a387468b177941",
+      "seed_axes": {
+        "target_feature_id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
+        "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",
+        "uncertainty_id": "U-PETIT-GENERALIZED-ROOT-COST"
+      },
+      "intake_mode": "none",
+      "seed_eligible": false,
+      "boundary": "This cell rejects only the source-backed low-degree N=2^r m=6/7 instantiation. Nine trace coordinates are an upper bound on candidate x-coordinates, not an assertion that all nine lift to curve points. A large-prime Dickson, arithmetic-circuit, or rational-map variant is a different proposal and remains incomplete until it supplies an exact bounded-degree map, radical or saturation semantics, complete recovery, and a full cost bridge. The route remains open_parked and no experiment is authorized.",
+      "authorization": "none"
     }
   ],
   "desk_decisions": [
@@ -1382,6 +1491,37 @@
       "calibration": "excluded_nonexperimental",
       "reopening_conditions": [
         "A different arity or construction must receive its own typed applicability and total-cost analysis; the arity-four screen does not close the route."
+      ]
+    },
+    {
+      "schema_version": "0.1",
+      "decision_id": "EDD-2026-07-31-001",
+      "decided_on": "2026-07-31",
+      "cell_id": "CELL-M-WCC-PPLUS1-TRACE-M67",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "classification": "inapplicable",
+      "scope": "mechanism_instance_only",
+      "rationale": "The published low-degree WCC p-plus-one trace construction uses N equal to a power of two. For secp256k1 the largest such subgroup has order 16 and only 9 trace-coordinate roots, far below the exact arity-seven balance threshold 345156162942; arity six requires still more. Elliptic-curve lifting cannot increase that coordinate count. The submitted large-prime replacement is not this low-degree mechanism and lacks an exact priced map and recovery contract.",
+      "evidence_claim_ids": [
+        "SC-WCC2017-PPLUS1-TRACE-EXTENSION",
+        "SC-PKC-RELATION-YIELD",
+        "SC-SECP-PPLUS1-TORUS-DESK-SCREEN"
+      ],
+      "property_verdicts": [
+        {
+          "property_id": "TP-SECP-PPLUS1-TRACE-ROOT-CEILING",
+          "operator": "gte",
+          "expected": 345156162942,
+          "actual": 9,
+          "verdict": "violated"
+        }
+      ],
+      "route_effect": "none",
+      "authorization": "none",
+      "calibration": "excluded_nonexperimental",
+      "reopening_conditions": [
+        "Submit a distinct large-prime or mixed-factor mechanism with an exact bounded-degree map or arithmetic circuit, radical or saturation treatment, complete recovery semantics, and an independently checked full cost bridge.",
+        "Identify a source-verified p-plus-one trace construction beyond the WCC 2017 power-of-two presentation whose required target property secp256k1 actually satisfies."
       ]
     }
   ],

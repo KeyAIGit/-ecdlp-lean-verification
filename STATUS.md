@@ -112,10 +112,10 @@ Its historical
 no-reopen guard matched four frozen cases; this is not predictive EIG calibration. Predictive
 calibration currently contains **0 native
 outcomes**. Before synthesis, the typed evidence layer materializes
-**7 mechanism/property cells**:
-**3 decided at desk** and
+**8 mechanism/property cells**:
+**4 decided at desk** and
 **2 eligible to emit a bounded research question**.
-Its **3 desk decisions** are non-experimental and authorize
+Its **4 desk decisions** are non-experimental and authorize
 nothing. The generation layer currently emits
 **2 source-grounded seeds**, with
 **1 submitted proposals**,

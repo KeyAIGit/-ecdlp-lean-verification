@@ -490,6 +490,22 @@
       "statement": "The source constructs a factor-base coordinate set from N-th roots of unity in the quadratic extension and the field trace when p+1 has a large smooth factor, with its low-degree experiments specialized to m=2.",
       "boundary": "This extension-field trace construction is not the PKC 2016 auxiliary elliptic curve and self-isogeny construction. Its 5.6-10.1-bit measurements do not resolve the auxiliary-curve property or its typed cell.",
       "evidence_path": "data/source_claim_extracts/yokota_kudo_yasuda2017_wcc.json"
+    },
+    {
+      "id": "SC-SECP-PPLUS1-TORUS-DESK-SCREEN",
+      "source_id": "repo:certificate",
+      "source_type": "certificate",
+      "citation": "KeyAI deterministic secp256k1 p-plus-one nonsplit-torus desk screen.",
+      "read_status": "certificate_replayed",
+      "url": null,
+      "artifact_sha256": "eefaee6ba8bdde453b77958899b0911d32a8fcf83c4b709645aeed29b41c05b2",
+      "locator": {
+        "kind": "certificate_field",
+        "value": "p_plus_one_factorization and smooth_composition_screen"
+      },
+      "statement": "Exact integer arithmetic factors secp256k1 p+1 as 2^4 times a 23-bit prime times a 46-bit prime times a 184-bit cofactor; consequently its largest power-of-two divisor is exactly 16, while the submitted m=6 and m=7 trace candidate uses the 46-bit prime itself as one unpriced map-degree step.",
+      "boundary": "The certificate screens the published low-degree N=2^r trace instantiation and the specific submitted direct prime-factor chain. It does not prove that no alternative bounded-degree arithmetic circuit, Dickson presentation, rational map, or nonsplit-torus mechanism exists.",
+      "evidence_path": "experiments/engine/pkc_nonsplit_torus_desk_screen/artifact.json"
     }
   ],
   "target_properties": [
@@ -517,6 +533,18 @@
         "SC-SECP-PMINUS1-FACTORIZATION",
         "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
         "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING"
+      ]
+    },
+    {
+      "id": "TP-SECP-PPLUS1-TRACE-ROOT-CEILING",
+      "label": "Power-of-two p+1 trace-root ceiling",
+      "value_type": "integer",
+      "value": 9,
+      "status": "certificate_replayed",
+      "statement": "The largest power-of-two subgroup available from secp256k1 p+1 has order 16 and exactly 9 inversion-orbit trace coordinates.",
+      "scope": "Coordinate-root ceiling for the published WCC 2017 low-degree p-plus-one trace construction specialized to N equal to a power of two. Elliptic-curve lift success is a separate condition and cannot increase this coordinate count.",
+      "source_claim_ids": [
+        "SC-SECP-PPLUS1-TORUS-DESK-SCREEN"
       ]
     },
     {
@@ -925,6 +953,39 @@
         "uncertainty_id": "U-PETIT-GENERALIZED-ROOT-COST"
       },
       "boundary": "The first output is a bounded arithmetic construction or no-instance record plus a complete precomputation estimate, not an ECDLP experiment."
+    },
+    {
+      "id": "M-WCC-PPLUS1-TRACE-M67",
+      "label": "WCC low-degree p-plus-one trace construction at arity six or seven",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "threat_model": "classical-single-target-plain",
+      "status": "published",
+      "scope": "Screen the published WCC 2017 low-degree N=2^r p-plus-one trace construction at relation arity six or seven for the secp256k1 base field.",
+      "construction": "Take N-th roots of unity in the quadratic extension, trace alpha to alpha plus alpha inverse in the prime field, and use the source's low-degree power-of-two presentation as the factor-base coordinate set.",
+      "relation_action": "Compile the trace-coordinate factor-base constraint into a Semaev relation system; the arity-seven relation-yield balance gives the weaker of the m=6 and m=7 size requirements.",
+      "changed_quantity": "Factor-base size and total prime-field relation-generation cost under the source's low-degree power-of-two trace presentation.",
+      "cost_quantity_id": "CQ-PRIME-FIELD-RELATION-TOTAL",
+      "source_claim_ids": [
+        "SC-WCC2017-PPLUS1-TRACE-EXTENSION",
+        "SC-PKC-RELATION-YIELD",
+        "SC-SECP-PPLUS1-TORUS-DESK-SCREEN"
+      ],
+      "requires_all": [
+        {
+          "property_id": "TP-SECP-PPLUS1-TRACE-ROOT-CEILING",
+          "operator": "gte",
+          "expected": 345156162942,
+          "rationale": "Even the weaker arity-seven relation-yield balance requires ceil((7! times p)^(1/7)) trace coordinates; arity six requires more, so failure here screens both submitted arities."
+        }
+      ],
+      "barrier_ids": [],
+      "intake_mode": "none",
+      "seed_axes": {
+        "target_feature_id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
+        "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",
+        "uncertainty_id": "U-PETIT-GENERALIZED-ROOT-COST"
+      },
+      "boundary": "This cell rejects only the source-backed low-degree N=2^r m=6/7 instantiation. Nine trace coordinates are an upper bound on candidate x-coordinates, not an assertion that all nine lift to curve points. A large-prime Dickson, arithmetic-circuit, or rational-map variant is a different proposal and remains incomplete until it supplies an exact bounded-degree map, radical or saturation semantics, complete recovery, and a full cost bridge. The route remains open_parked and no experiment is authorized."
     },
     {
       "id": "M-PRIME-FIELD-SEMAEV-ENDTOEND",

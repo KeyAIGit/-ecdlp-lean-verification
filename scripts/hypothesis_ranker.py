@@ -84,6 +84,8 @@ def validate_current_review_bindings(
         item["review_record"]["review_id"]: item
         for item in ledger
         if item["funnel_id"] == policy["funnel_id"]
+        and item["batch_merkle_root_sha256"]
+        == funnel_state["bulk_contract"]["merkle_root_sha256"]
     }
     if set(current_reviews) != set(current_ledger):
         raise ValueError("current funnel reviews and persistent ledger have drifted")
@@ -95,10 +97,6 @@ def validate_current_review_bindings(
         entry = current_ledger[review_id]
         if entry["review_record"] != review:
             raise ValueError("persistent review record differs from current policy")
-        if entry["batch_merkle_root_sha256"] != funnel_state["bulk_contract"][
-            "merkle_root_sha256"
-        ]:
-            raise ValueError("persistent review batch root mismatch")
         candidate = queue.get(review["semantic_signature_sha256"])
         if candidate is None:
             raise ValueError("current review is outside the current queue")

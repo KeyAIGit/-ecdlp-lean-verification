@@ -1,0 +1,400 @@
+{
+  "arity_rows": [
+    {
+      "m": 2,
+      "paper_balance_threshold": "481231938336009023090067544955250113855",
+      "selected": null,
+      "size_and_conservative_linear_algebra_screen": "no_candidate"
+    },
+    {
+      "m": 3,
+      "paper_balance_threshold": "88567974649812873577190203",
+      "selected": null,
+      "size_and_conservative_linear_algebra_screen": "no_candidate"
+    },
+    {
+      "m": 4,
+      "paper_balance_threshold": "40829356287426834431",
+      "selected": null,
+      "size_and_conservative_linear_algebra_screen": "no_candidate"
+    },
+    {
+      "m": 5,
+      "paper_balance_threshold": "6738636456598581",
+      "selected": null,
+      "size_and_conservative_linear_algebra_screen": "no_candidate"
+    },
+    {
+      "m": 6,
+      "paper_balance_threshold": "20901072148594",
+      "selected": {
+        "group_order": "45422601869677",
+        "maximum_prime_degree_step": 45422601869677,
+        "nominal_linear_algebra_work": "515803190152818835323955921",
+        "prime_degree_steps": [
+          45422601869677
+        ],
+        "trace_root_count": "22711300934839",
+        "yield_margin": "1810228786245"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 7,
+      "paper_balance_threshold": "345156162942",
+      "selected": {
+        "group_order": "45422601869677",
+        "maximum_prime_degree_step": 45422601869677,
+        "nominal_linear_algebra_work": "515803190152818835323955921",
+        "prime_degree_steps": [
+          45422601869677
+        ],
+        "trace_root_count": "22711300934839",
+        "yield_margin": "22366144771897"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 8,
+      "paper_balance_threshold": "16167762716",
+      "selected": {
+        "group_order": "45422601869677",
+        "maximum_prime_degree_step": 45422601869677,
+        "nominal_linear_algebra_work": "515803190152818835323955921",
+        "prime_degree_steps": [
+          45422601869677
+        ],
+        "trace_root_count": "22711300934839",
+        "yield_margin": "22695133172123"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 9,
+      "paper_balance_threshold": "1514894665",
+      "selected": {
+        "group_order": "45422601869677",
+        "maximum_prime_degree_step": 45422601869677,
+        "nominal_linear_algebra_work": "515803190152818835323955921",
+        "prime_degree_steps": [
+          45422601869677
+        ],
+        "trace_root_count": "22711300934839",
+        "yield_margin": "22709786040174"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 10,
+      "paper_balance_threshold": "230326651",
+      "selected": {
+        "group_order": "45422601869677",
+        "maximum_prime_degree_step": 45422601869677,
+        "nominal_linear_algebra_work": "515803190152818835323955921",
+        "prime_degree_steps": [
+          45422601869677
+        ],
+        "trace_root_count": "22711300934839",
+        "yield_margin": "22711070608188"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 11,
+      "paper_balance_threshold": "49751153",
+      "selected": {
+        "group_order": "117154192",
+        "maximum_prime_degree_step": 7322137,
+        "nominal_linear_algebra_work": "3431276292947409",
+        "prime_degree_steps": [
+          2,
+          7322137
+        ],
+        "trace_root_count": "58577097",
+        "yield_margin": "8825944"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 12,
+      "paper_balance_threshold": "13974448",
+      "selected": {
+        "group_order": "29288548",
+        "maximum_prime_degree_step": 7322137,
+        "nominal_linear_algebra_work": "214454790275625",
+        "prime_degree_steps": [
+          2,
+          7322137
+        ],
+        "trace_root_count": "14644275",
+        "yield_margin": "669827"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 13,
+      "paper_balance_threshold": "4801551",
+      "selected": {
+        "group_order": "14644274",
+        "maximum_prime_degree_step": 7322137,
+        "nominal_linear_algebra_work": "53613704891044",
+        "prime_degree_steps": [
+          2,
+          7322137
+        ],
+        "trace_root_count": "7322138",
+        "yield_margin": "2520587"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 14,
+      "paper_balance_threshold": "1931997",
+      "selected": {
+        "group_order": "7322137",
+        "maximum_prime_degree_step": 7322137,
+        "nominal_linear_algebra_work": "13403426222761",
+        "prime_degree_steps": [
+          7322137
+        ],
+        "trace_root_count": "3661069",
+        "yield_margin": "1729072"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 15,
+      "paper_balance_threshold": "881750",
+      "selected": {
+        "group_order": "7322137",
+        "maximum_prime_degree_step": 7322137,
+        "nominal_linear_algebra_work": "13403426222761",
+        "prime_degree_steps": [
+          7322137
+        ],
+        "trace_root_count": "3661069",
+        "yield_margin": "2779319"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 16,
+      "paper_balance_threshold": "445676",
+      "selected": {
+        "group_order": "7322137",
+        "maximum_prime_degree_step": 7322137,
+        "nominal_linear_algebra_work": "13403426222761",
+        "prime_degree_steps": [
+          7322137
+        ],
+        "trace_root_count": "3661069",
+        "yield_margin": "3215393"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 17,
+      "paper_balance_threshold": "244965",
+      "selected": {
+        "group_order": "7322137",
+        "maximum_prime_degree_step": 7322137,
+        "nominal_linear_algebra_work": "13403426222761",
+        "prime_degree_steps": [
+          7322137
+        ],
+        "trace_root_count": "3661069",
+        "yield_margin": "3416104"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 18,
+      "paper_balance_threshold": "144360",
+      "selected": {
+        "group_order": "7322137",
+        "maximum_prime_degree_step": 7322137,
+        "nominal_linear_algebra_work": "13403426222761",
+        "prime_degree_steps": [
+          7322137
+        ],
+        "trace_root_count": "3661069",
+        "yield_margin": "3516709"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 19,
+      "paper_balance_threshold": "90199",
+      "selected": {
+        "group_order": "7322137",
+        "maximum_prime_degree_step": 7322137,
+        "nominal_linear_algebra_work": "13403426222761",
+        "prime_degree_steps": [
+          7322137
+        ],
+        "trace_root_count": "3661069",
+        "yield_margin": "3570870"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    },
+    {
+      "m": 20,
+      "paper_balance_threshold": "59223",
+      "selected": {
+        "group_order": "7322137",
+        "maximum_prime_degree_step": 7322137,
+        "nominal_linear_algebra_work": "13403426222761",
+        "prime_degree_steps": [
+          7322137
+        ],
+        "trace_root_count": "3661069",
+        "yield_margin": "3601846"
+      },
+      "size_and_conservative_linear_algebra_screen": "candidate_exists"
+    }
+  ],
+  "artifact_id": "PKC-NONSPLIT-TORUS-DESK-SCREEN-001",
+  "assessment": {
+    "broader_nonsplit_torus_trace_question": "known_prior_art_application_inconclusive_exact_mechanism_and_cost_bridge_missing",
+    "experiment_authorized": false,
+    "reason": "The arithmetic trace set exists, but the submitted candidate repackages known WCC 2017 prior art, uses large prime-degree factors, misstates the exhaustive arity screen, and supplies neither a faithful radical low-degree presentation nor recovery and full-cost contracts.",
+    "reopening_conditions": [
+      "an exact Dickson or rational-map presentation with bounded local degrees",
+      "radical or saturation treatment for repeated trace roots",
+      "complete forward and inverse recovery semantics",
+      "a full offline and online cost bridge against matched baselines",
+      "independent source-level prior-art review",
+      "a source-checked delta beyond the WCC 2017 trace construction"
+    ],
+    "route_promoted": false,
+    "route_status": "open_parked",
+    "submitted_candidate": "rejected_missing_exact_low_degree_mechanism",
+    "submitted_size_leg": "retracted_not_cleared"
+  },
+  "audit_findings": {
+    "classification_correction": "G_a, G_m and the nonsplit one-dimensional torus exhaust the connected one-dimensional affine linear algebraic groups over F_p, not all connected one-dimensional algebraic groups; elliptic curves are omitted by the broader wording.",
+    "exact_surviving_arities_under_size_and_conservative_linear_algebra_only": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "submitted_focus_arities": [
+      6,
+      7
+    ],
+    "submitted_table_is_exhaustive": false
+  },
+  "inputs": {
+    "conservative_linear_algebra_cap": "85070591730234615865843651857942052864",
+    "m_max": 20,
+    "m_min": 2,
+    "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+    "p_formula": "2^256 - 2^32 - 977"
+  },
+  "kind": "deterministic_desk_arithmetic",
+  "p_plus_one_factorization": {
+    "finite_factor_primality": {
+      "45422601869677": "deterministic_u64_miller_rabin_pass",
+      "7322137": "deterministic_u64_miller_rabin_pass"
+    },
+    "identity": "p + 1 = 2^4 * 7322137 * 45422601869677 * 21759506893163426790183529804034058295931507131047955271",
+    "identity_replayed": true,
+    "known_divisors_excluding_remaining_cofactor": [
+      "1",
+      "2",
+      "4",
+      "8",
+      "16",
+      "7322137",
+      "14644274",
+      "29288548",
+      "58577096",
+      "117154192",
+      "45422601869677",
+      "90845203739354",
+      "181690407478708",
+      "363380814957416",
+      "726761629914832",
+      "332590513786231139749",
+      "665181027572462279498",
+      "1330362055144924558996",
+      "2660724110289849117992",
+      "5321448220579698235984"
+    ],
+    "known_factor_powers": [
+      {
+        "exponent": 4,
+        "prime": 2
+      },
+      {
+        "exponent": 1,
+        "prime": 7322137
+      },
+      {
+        "exponent": 1,
+        "prime": 45422601869677
+      }
+    ],
+    "largest_power_of_two_divisor": 16,
+    "largest_power_of_two_trace_root_count": 9,
+    "remaining_cofactor": "21759506893163426790183529804034058295931507131047955271",
+    "remaining_cofactor_primality": "not_claimed_by_this_artifact"
+  },
+  "prior_art": {
+    "classification": "confirmed_prior_art",
+    "locator": "Section 4.1, equations (9)-(10); Section 4.2; Section 5",
+    "scope": "The source already constructs a p-plus-one nonsplit-torus root-of-unity trace factor base. Its implemented low-degree variant uses N=2^r and m=2; it does not validate the submitted large-prime m=6,7 instantiation.",
+    "source_claim_id": "SC-WCC2017-PPLUS1-TRACE-EXTENSION",
+    "source_id": "yokota_kudo_yasuda2017_wcc"
+  },
+  "schema_version": "1.0",
+  "scope": {
+    "excluded": [
+      "Groebner or solver execution",
+      "secp256k1 relation search",
+      "novelty claim",
+      "proof that every torus-based mechanism is impossible",
+      "experiment authorization",
+      "route promotion"
+    ],
+    "included": [
+      "exact p+1 factorization identity",
+      "u64 primality of the 23-bit and 46-bit displayed factors",
+      "trace inversion-orbit cardinality",
+      "paper-balance threshold enumeration for m=2..20",
+      "prime-degree steps forced by the submitted factor chain",
+      "claim-level prior-art binding to WCC 2017"
+    ]
+  },
+  "smooth_composition_screen": {
+    "boundary": "This does not prove that no low-degree arithmetic-circuit or rational-map presentation exists. It proves that the submitted memo did not supply one and that its claimed direct PKC factor chain contains a 46-bit prime-degree step at m=6 and m=7.",
+    "its_trace_root_count": 9,
+    "its_trace_root_count_below_45422601869677": 58577097,
+    "largest_divisor_with_all_prime_steps_below_45422601869677": 117154192,
+    "largest_divisor_with_all_prime_steps_below_7322137": 16,
+    "pkc_source_rule": "In the Section 3.3 factor chain, each prime factor p_i of the subgroup order becomes a map x -> x^(p_i); low degree therefore requires every p_i to be explicitly priced.",
+    "submitted_m6_m7_is_B_smooth_for_every_B_at_most_step": false,
+    "submitted_m6_m7_maximum_prime_degree_step": 45422601869677,
+    "submitted_m6_m7_order": "45422601869677"
+  },
+  "trace_model": {
+    "coordinate": "t(alpha) = alpha + alpha^(-1)",
+    "dickson_identity": "D_d(t(alpha),1) - 2 = alpha^d + alpha^(-d) - 2",
+    "identification": "t(alpha) = t(alpha^(-1))",
+    "multiplicity_boundary": "D_d(x,1)-2 has degree d but only (d+gcd(d,2))/2 distinct trace roots; non-endpoint roots are repeated. A radical presentation and recovery contract are separate obligations.",
+    "root_count_formula": "(|H| + gcd(|H|,2))/2",
+    "torus": "T(F_p) = {alpha in F_(p^2)^* : alpha^(p+1) = 1}"
+  }
+}

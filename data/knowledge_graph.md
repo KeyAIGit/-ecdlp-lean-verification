@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every ledger row below cites kernel-checked declarations (no `sorry`, no custom axioms).
 
-**307 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **7 typed evidence cells** · **3 desk-decided cells** · **2 research-question seeds** · **4 shadow proposal stubs** · **0 bounded explorations selected** · **1 exact decision-level toy authorization** · **9 retained outcomes** · **1167 edges**
+**307 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **8 typed evidence cells** · **4 desk-decided cells** · **2 research-question seeds** · **4 shadow proposal stubs** · **0 bounded explorations selected** · **1 exact decision-level toy authorization** · **9 retained outcomes** · **1182 edges**
 
 > A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline counts; `data/result_registry.json` owns declaration-level resolution.
 
@@ -10,7 +10,7 @@ By proof method: Mathlib (106), Mathlib + native_decide (31), native_decide (20)
 
 By research area: curve-torsion (153), primality (55), other (33), generic-hardness (30), protocol-soundness (23), attack-resistance (7), reduction (5), params (1)
 
-By edge type: imports (525), member_of (307), grounded_in_source_claim (49), requires_foundation (41), supports (27), decision_grounded_in (25), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), requires_target_property (9), records_outcome_for (9), updates_hypothesis (9), records_route_evidence (9), blocked_by (7), instantiates_mechanism (7), evaluates_route (7), must_change_cost_quantity (7), binds_target_feature (7), binds_mechanism_primitive (7), binds_unresolved_question (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (4), bounded_by_research_barrier (4), follows_up_cell (3), depends_on_candidate (3), generated_from_cell (2), follows_up_source (1)
+By edge type: imports (525), member_of (307), grounded_in_source_claim (57), requires_foundation (41), supports (27), decision_grounded_in (25), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), requires_target_property (10), records_outcome_for (9), updates_hypothesis (9), records_route_evidence (9), instantiates_mechanism (8), evaluates_route (8), must_change_cost_quantity (8), binds_target_feature (8), binds_mechanism_primitive (8), binds_unresolved_question (8), blocked_by (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (4), bounded_by_research_barrier (4), follows_up_cell (3), depends_on_candidate (3), generated_from_cell (2), follows_up_source (1)
 
 ## secp256k1 route decisions
 
@@ -77,6 +77,7 @@ Cells are regenerated joins over mechanisms, target properties, source claims, s
 | **CELL-M-PKC-SMOOTH-M16** | `R-PETIT-COMPOSED-MAPS` | `open` | `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=satisfied, `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=satisfied | `CQ-SEMAEV-S17-SYSTEM-COST` | true |
 | **CELL-M-PKC-SMOOTH-M4** | `R-PETIT-COMPOSED-MAPS` | `decided_inapplicable` | `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=violated, `TP-SECP-PMINUS1-SMOOTH-DIVISOR`=violated | `CQ-PKC-GENERALIZED-ROOT-COST` | false |
 | **CELL-M-PRIME-FIELD-SEMAEV-ENDTOEND** | `R-PRIME-FIELD-INDEX-CALCULUS` | `open` | `TP-SECP-PRIME-FIELD-COORDINATES`=satisfied | `CQ-PRIME-FIELD-RELATION-TOTAL` | false |
+| **CELL-M-WCC-PPLUS1-TRACE-M67** | `R-PETIT-COMPOSED-MAPS` | `decided_inapplicable` | `TP-SECP-PPLUS1-TRACE-ROOT-CEILING`=violated | `CQ-PRIME-FIELD-RELATION-TOTAL` | false |
 
 ## Finite hypothesis-space projection
 
