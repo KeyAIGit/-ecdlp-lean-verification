@@ -54,6 +54,7 @@
         "VERIFIED.md",
         "notes/reviews/HYP_SELECT_002.md",
         "notes/reviews/HYP_SELECT_003.md",
+        "notes/reviews/HYP_SELECT_005.md",
         "notes/reviews/HYP_SGGM_MODEL_MAP_001.md"
       ]
     },
@@ -306,12 +307,14 @@
         "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
         "notes/reviews/HYP_SELECT_002.md",
         "notes/reviews/HYP_SELECT_003.md",
+        "notes/reviews/HYP_SELECT_005.md",
         "notes/reviews/HYP_SGGM_MODEL_MAP_001.md",
         "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md",
         "notes/reviews/PR246_DISPOSITION.md",
         "notes/reviews/RESEARCH_ENGINE_V0_2_BASELINE_AUDIT.md",
         "notes/reviews/RESEARCH_ENGINE_V0_2_ORACLE_INTAKE.md",
         "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
+        "repo/HYPOTHESIS_SELECTION_CONSTITUTION_V3.md",
         "tasks/ECDLP_RESEARCH.md",
         "tasks/NEXT.md"
       ]
@@ -654,8 +657,10 @@
         "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
         "notes/reviews/HYP_SELECT_002.md",
         "notes/reviews/HYP_SELECT_003.md",
+        "notes/reviews/HYP_SELECT_005.md",
         "notes/reviews/OPUS5_RESEARCH_ENGINE_SCIENTIFIC_HANDOFF.md",
         "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
+        "repo/HYPOTHESIS_SELECTION_CONSTITUTION_V3.md",
         "tasks/ECDLP_RESEARCH.md"
       ]
     },

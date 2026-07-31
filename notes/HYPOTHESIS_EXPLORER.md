@@ -73,3 +73,54 @@ historical workflows. It is not the canonical search or mapping path and cannot
 authorize a proposal or experiment. The canonical current path is the typed
 evidence state, generated seed layer, shadow intake, and graph projection listed
 above.
+
+## Ranking-model boundary
+
+`scripts/hypothesis_ranker.py` is the automatic ranking-model boundary. Its
+small specification and parameter artifact are stored in Git; a generated state
+binds them to the current funnel and review-record digests. Large language-model
+weights are never repository artifacts. If a future model is too large for the
+one-megabyte ranker limit, Git stores only its external URI, license,
+reproduction metadata, and SHA-256.
+
+Reviewed labels persist in `data/hypothesis_review_ledger.jsonl`. Each append-only
+record binds the review digest, batch Merkle root, semantic signature, and frozen
+feature snapshot, so a later batch may change its queue without erasing or
+silently reinterpreting earlier supervision.
+
+The current model is deliberately untrained. Three migrated portfolio reviews
+exist, but all three record source, model-family, and context independence as
+false. Consequently they are preserved as research provenance and excluded
+from training. Activation requires at least 30 eligible independent labels,
+both positive and negative examples, five families, two reviewers, three native
+outcomes, and frozen-family holdout validation.
+
+`scripts/train_hypothesis_ranker.py` implements deterministic L2-regularized
+logistic training and leave-one-family-out validation using only the Python
+standard library. Its CI mode reports the unmet gate and exits without writing
+weights. This keeps the training path continuously tested while preventing a
+synthetic or undersized dataset from creating an apparently learned model.
+
+Even after those gates pass, ranker v0 remains shadow-only. It may compare
+ordering quality against future outcomes, but it cannot alter deterministic hard
+gates, recommend or authorize an experiment, promote a route, or target a real
+secp256k1 key.
+
+## Model-assisted draft boundary
+
+`scripts/hypothesis_model_drafter.py` is the optional middle layer between the
+deterministic review queue and full scientific contracts. By default it performs
+no API calls and emits only digest-bound request packets. A live call requires
+both `--live` and `HYPOTHESIS_DRAFTER_LIVE=1`; every response remains an
+`untrusted_proposal_fragment` with zero authorization and cannot satisfy any
+review-independence axis.
+
+The preferred provider is the existing Featherless subscription, with direct
+DeepSeek and Moonshot/Kimi APIs retained only as explicit fallbacks. Model
+weights are never downloaded to the laptop or committed to Git. On 2026-07-31,
+the repository secret was present but all three GitHub-hosted prover jobs were
+blocked before inference by Featherless/Cloudflare HTTP 403 code 1010. The
+manual `Featherless API probe` workflow now fails honestly and publishes a
+sanitized zero-token plan/model report; it no longer turns an API failure into a
+green scientific signal. Featherless may still be used from a future server or
+another host after that host passes the same probe.

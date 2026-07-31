@@ -36,7 +36,6 @@ jobs:
 
       - name: Run prover smoke test for ${{ matrix.model }}
         id: prover
-        continue-on-error: true
         env:
           FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
           INPUT_ATTEMPTS: ${{ inputs.attempts }}

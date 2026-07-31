@@ -72,7 +72,9 @@
     "authorization_effect": "none"
   },
   "source_review_ids": [],
+  "mechanism_assurance_evidence": [],
   "validator_independence_evidence": [],
+  "validator_implementation_evidence": [],
   "quality_cleared_draft_bindings": [],
   "portfolio_max_candidates": 12,
   "max_selected_per_cycle": 3,

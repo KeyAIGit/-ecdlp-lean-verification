@@ -9337,7 +9337,7 @@
       "schema_version": "0.1-generated",
       "generator_id": "ecdlp-hypothesis-generation-v0",
       "source_hashes": {
-        "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
+        "generation_policy_sha256": "cb61708d473f667ee2b9d4bdba8199ac87de4fa079e3ca41bf6ddc42fe612054",
         "typed_evidence_state_sha256": "bc1ee18931a51364c2122120bdf50a039b67b747f006996795cb4767d87ab63f",
         "research_claim_state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
         "proposals_sha256": "581cf3109a9f2bfdaeacf895664e816ab22f0f47a72140385dab1c69d04d0a34",
@@ -9771,6 +9771,7 @@
           "review_independence": "not_reviewed",
           "blockers": [
             "adversarial_review_incomplete",
+            "missing_exact_mechanism",
             "review_independence_unestablished"
           ],
           "disposition": "needs_revision",

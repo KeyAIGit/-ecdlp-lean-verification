@@ -42,7 +42,9 @@ jobs:
       # Research OS gate: fail when generated machine views, canonical status,
       # public counters, active tasks, or hypotheses drift apart.
       - name: Check Research OS consistency
-        run: python3 scripts/check_status_consistency.py
+        run: |
+          python3 scripts/check_status_consistency.py
+          python3 scripts/test_build_knowledge_graph.py
 
       - name: Check product model and public-claim boundary
         run: python3 scripts/check_product_model.py
@@ -164,6 +166,16 @@ jobs:
         run: |
           python3 scripts/build_research_shadow_intake.py --check
           python3 scripts/test_research_shadow_intake.py
+
+      - name: Replay 100k research-question funnel
+        run: |
+          python3 scripts/hypothesis_funnel.py --check
+          python3 scripts/test_hypothesis_funnel.py
+
+      - name: Check model-assisted proposal drafter boundary
+        run: |
+          python3 scripts/hypothesis_model_drafter.py --limit 10 > /dev/null
+          python3 scripts/test_hypothesis_model_drafter.py
 
       - name: Replay GLV diagonal-action obstruction certificate
         run: |

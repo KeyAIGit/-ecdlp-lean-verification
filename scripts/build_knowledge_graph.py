@@ -77,16 +77,24 @@ def lean_path(module: str) -> Path | None:
     return p if p.exists() else None
 
 
+def stable_repo_path(path: Path, root: Path = ROOT) -> str:
+    """Return a case-sensitive, platform-independent repository path key."""
+    return path.relative_to(root).as_posix()
+
+
 def parse_imports() -> dict[str, list[str]]:
     """module -> list of Ecdlp.* modules it imports (intra-project edges only)."""
     edges: dict[str, list[str]] = {}
-    # sorted() makes the module order (hence the emitted edge order) deterministic:
-    # bare glob() yields filesystem order, which differs between machines/CI and made
-    # data/knowledge_graph.json non-reproducible (docs-sync drift).
+    # Path ordering follows the host path flavor. WindowsPath compares names
+    # case-insensitively, while PosixPath does not, so sort by a normalized string.
     lean_files = sorted(
-        path
-        for path in ROOT.glob("Ecdlp/**/*.lean")
-        if "Targets" not in path.parts and not path.name.endswith("AxiomAudit.lean")
+        (
+            path
+            for path in ROOT.glob("Ecdlp/**/*.lean")
+            if "Targets" not in path.parts
+            and not path.name.endswith("AxiomAudit.lean")
+        ),
+        key=stable_repo_path,
     ) + [ROOT / "Ecdlp.lean"]
     for f in lean_files:
         if not f.exists():

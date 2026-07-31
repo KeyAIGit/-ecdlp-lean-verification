@@ -29,6 +29,8 @@ name: Docs sync
 #     data/research_engine_state.json          (build_research_engine_state.py)
 #     data/research_engine_v02_state.json      (build_research_engine_v02_state.py)
 #     data/research_engine_shadow_intake.json  (build_research_shadow_intake.py)
+#     data/hypothesis_funnel_state.json        (hypothesis_funnel.py)
+#     data/hypothesis_ranker_state.json        (hypothesis_ranker.py)
 #     repo/ECDLP_DECISION_SUBSTRATE.md         (build_ecdlp_decision_view.py)
 #     bundles/MANIFEST.json                    (export_agent_bundle.py)
 #     dashboard.html, index.html, explore.html, pilot.html (build_dashboard.py -> site_generator.py)
@@ -118,6 +120,8 @@ env:
     data/research_engine_state.json
     data/research_engine_v02_state.json
     data/research_engine_shadow_intake.json
+    data/hypothesis_funnel_state.json
+    data/hypothesis_ranker_state.json
     repo/ECDLP_DECISION_SUBSTRATE.md
     bundles/MANIFEST.json
     dashboard.html
@@ -155,8 +159,14 @@ jobs:
         run: python3 scripts/build_research_engine_v02_state.py
       - name: Research Engine shadow intake
         run: python3 scripts/build_research_shadow_intake.py
+      - name: Research-question funnel aggregate
+        run: python3 scripts/hypothesis_funnel.py
+      - name: Hypothesis ranker shadow state
+        run: python3 scripts/hypothesis_ranker.py
       - name: Knowledge graph (data/knowledge_graph.json + .md)
-        run: python3 scripts/build_knowledge_graph.py
+        run: |
+          python3 scripts/test_build_knowledge_graph.py
+          python3 scripts/build_knowledge_graph.py
       - name: Coverage report (COVERAGE.md)
         run: python3 scripts/coverage_report.py
       - name: Canonical snapshot (STATUS.md)
@@ -275,6 +285,20 @@ jobs:
         run: |
           python3 scripts/build_research_shadow_intake.py --check
           python3 scripts/test_research_shadow_intake.py
+      - name: Research-question funnel gate
+        run: |
+          python3 scripts/hypothesis_funnel.py --check
+          python3 scripts/test_hypothesis_funnel.py
+      - name: Hypothesis ranker shadow gate
+        run: |
+          python3 scripts/hypothesis_ranker.py --check
+          python3 scripts/test_hypothesis_ranker.py
+          python3 scripts/train_hypothesis_ranker.py --check-ready
+          python3 scripts/test_train_hypothesis_ranker.py
+      - name: Model-assisted proposal drafter shadow gate
+        run: |
+          python3 scripts/hypothesis_model_drafter.py --limit 10 > /dev/null
+          python3 scripts/test_hypothesis_model_drafter.py
       - name: GLV diagonal-action obstruction certificate
         run: |
           python3 experiments/glv_diagonal_obstruction/generate.py --check

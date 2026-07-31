@@ -19,6 +19,8 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
+from hypothesis_model_drafter import classify_http_error
+
 API_URL = "https://api.featherless.ai/v1/chat/completions"
 TARGET_FILE = Path("ProverSmoke.lean")
 SUCCESS_FILE = Path("prover-smoke-success.lean")
@@ -111,6 +113,11 @@ def call_model(api_key: str, model: str, attempt: int) -> str:
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
+            "User-Agent": "KeyAI-Prover-Smoke/0.1",
+            "HTTP-Referer": (
+                "https://github.com/KeyAIGit/-ecdlp-lean-verification"
+            ),
+            "X-Title": "KeyAI Prover Smoke Test",
         },
         method="POST",
     )
@@ -119,7 +126,10 @@ def call_model(api_key: str, model: str, attempt: int) -> str:
             body = response.read().decode("utf-8")
     except urllib.error.HTTPError as exc:
         error_body = exc.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"Featherless HTTP {exc.code}: {error_body}") from exc
+        classification = classify_http_error(exc.code, error_body)
+        raise RuntimeError(
+            f"Featherless HTTP {exc.code} ({classification})"
+        ) from exc
 
     try:
         payload = json.loads(body)
@@ -159,7 +169,18 @@ def main() -> int:
     last_error = ""
     for attempt in range(1, args.attempts + 1):
         print(f"Attempt {attempt}/{args.attempts} with {args.model}")
-        raw = call_model(api_key, args.model, attempt)
+        try:
+            raw = call_model(api_key, args.model, attempt)
+        except RuntimeError as exc:
+            diagnostic = str(exc)
+            with REPORT_FILE.open("a", encoding="utf-8") as report:
+                report.write(
+                    "## Provider failure\n\n"
+                    f"`{diagnostic}`\n\n"
+                    "No model output or Lean candidate was produced.\n"
+                )
+            print(diagnostic, file=sys.stderr)
+            return 3
         candidate = clean_candidate(raw)
         print("Candidate proof body:")
         print(candidate)

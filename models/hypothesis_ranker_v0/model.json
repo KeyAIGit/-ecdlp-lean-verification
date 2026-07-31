@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "model_id": "HYPOTHESIS-RANKER-SHADOW-V0-UNTRAINED",
+  "model_kind": "linear_logistic_ranker",
+  "status": "inactive_insufficient_independent_labels",
+  "trained": false,
+  "feature_names": [
+    "exactness",
+    "mechanism",
+    "barrier_escape",
+    "discrimination",
+    "falsifiability",
+    "scaling",
+    "strategic_value"
+  ],
+  "normalization": null,
+  "bias": null,
+  "weights": null,
+  "training_snapshot": null,
+  "validation": null,
+  "selection_influence": false,
+  "authorization_capability": false
+}

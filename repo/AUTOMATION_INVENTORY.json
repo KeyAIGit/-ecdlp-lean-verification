@@ -136,12 +136,20 @@
       "reason": "Useful only when changing the integration or its secret."
     },
     {
+      "file": ".github/workflows/featherless-api-probe.yml",
+      "class": "integration_smoke",
+      "trigger_policy": "manual_only",
+      "disposition": "keep_conditional",
+      "spends_external_budget": false,
+      "reason": "Zero-token plan and preferred-model probe that fails visibly on network, secret, or plan rejection."
+    },
+    {
       "file": ".github/workflows/prover-smoke-test.yml",
       "class": "integration_smoke",
       "trigger_policy": "manual_only",
-      "disposition": "review_for_retirement",
+      "disposition": "park",
       "spends_external_budget": true,
-      "reason": "Self-test surface duplicates newer manual prover workflows."
+      "reason": "GitHub-hosted runners are currently blocked by Featherless/Cloudflare 1010; the workflow now fails honestly instead of masking the provider step."
     },
     {
       "file": ".github/workflows/prover-target-attempt.yml",

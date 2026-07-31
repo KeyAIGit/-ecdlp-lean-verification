@@ -81,6 +81,23 @@ GENERATION_REVIEW_ROLES = {
     "validator_design",
 }
 
+MECHANISM_ASSURANCE_TOPICS = (
+    "relation_equivalence",
+    "exceptional_locus",
+    "recovery_map",
+    "cost_changing_bridge",
+)
+
+MECHANISM_ASSURANCE_STATUSES = {
+    "lean_kernel",
+    "certificate_replayed",
+    "independent_reproduction",
+    "empirical_native",
+    "historical_migration",
+    "literature_only",
+    "specified_unproved",
+}
+
 ADDITIVE_COSTS = (
     "compute_hours",
     "storage_gb",
@@ -163,6 +180,17 @@ def _require_keys(
     ]
 
 
+def _reject_extra_keys(
+    value: Any,
+    allowed: Iterable[str],
+    label: str,
+) -> list[str]:
+    if not isinstance(value, dict):
+        return []
+    extra = sorted(set(value) - set(allowed))
+    return [f"{label}: unexpected {key}" for key in extra]
+
+
 def _validate_string_list(
     value: Any,
     label: str,
@@ -181,10 +209,36 @@ def _validate_string_list(
     return problems
 
 
+def mechanism_assurance_claims(contract: Any) -> dict[str, str]:
+    """Digest the exact claim payload covered by each assurance binding."""
+    if not isinstance(contract, dict):
+        return {}
+    payloads = {
+        "relation_equivalence": {
+            "transformation": contract.get("transformation"),
+            "fixed_target_semantics": contract.get("fixed_target_semantics"),
+            "relation_semantics": contract.get("relation_semantics"),
+        },
+        "exceptional_locus": contract.get("exceptional_locus"),
+        "recovery_map": contract.get("recovery_map"),
+        "cost_changing_bridge": {
+            "orbit_stabilizer": contract.get("orbit_stabilizer"),
+            "cost_changing_mechanism": contract.get(
+                "cost_changing_mechanism"
+            ),
+        },
+    }
+    return {
+        topic: sha256_json(payload)
+        for topic, payload in payloads.items()
+    }
+
+
 def validate_mechanism_contract(
     contract: Any,
     *,
     require_assured: bool = False,
+    evidence_registry: list[dict[str, Any]] | None = None,
 ) -> list[str]:
     label = "mechanism_contract"
     required = (
@@ -199,10 +253,12 @@ def validate_mechanism_contract(
         "implementation_identity",
         "cost_changing_mechanism",
         "source_ids",
+        "assurance_bindings",
     )
     problems = _require_keys(contract, required, label)
     if not isinstance(contract, dict):
         return problems
+    problems += _reject_extra_keys(contract, required, label)
 
     problems += _validate_string_list(
         contract.get("source_objects"), f"{label}.source_objects", nonempty=True
@@ -215,9 +271,13 @@ def validate_mechanism_contract(
     )
 
     transformation = contract.get("transformation")
+    transformation_keys = ("kind", "exact_map", "domain", "codomain")
     problems += _require_keys(
-        transformation, ("kind", "exact_map", "domain", "codomain"),
+        transformation, transformation_keys,
         f"{label}.transformation",
+    )
+    problems += _reject_extra_keys(
+        transformation, transformation_keys, f"{label}.transformation"
     )
     if isinstance(transformation, dict):
         for key in ("kind", "exact_map", "domain", "codomain"):
@@ -225,9 +285,13 @@ def validate_mechanism_contract(
                 problems.append(f"{label}.transformation.{key}: empty")
 
     fixed = contract.get("fixed_target_semantics")
+    fixed_keys = ("target_slot", "target_action", "same_target_preserved")
     problems += _require_keys(
-        fixed, ("target_slot", "target_action", "same_target_preserved"),
+        fixed, fixed_keys,
         f"{label}.fixed_target_semantics",
+    )
+    problems += _reject_extra_keys(
+        fixed, fixed_keys, f"{label}.fixed_target_semantics"
     )
     if isinstance(fixed, dict):
         for key in ("target_slot", "target_action"):
@@ -239,9 +303,13 @@ def validate_mechanism_contract(
             )
 
     exceptional = contract.get("exceptional_locus")
+    exceptional_keys = ("definition", "treatment")
     problems += _require_keys(
-        exceptional, ("definition", "treatment"),
+        exceptional, exceptional_keys,
         f"{label}.exceptional_locus",
+    )
+    problems += _reject_extra_keys(
+        exceptional, exceptional_keys, f"{label}.exceptional_locus"
     )
     if isinstance(exceptional, dict):
         if not _is_nonempty_string(exceptional.get("definition")):
@@ -255,9 +323,13 @@ def validate_mechanism_contract(
             problems.append(f"{label}.exceptional_locus.treatment: invalid")
 
     orbit = contract.get("orbit_stabilizer")
+    orbit_keys = ("acting_group", "stabilizer", "orbit_size_law")
     problems += _require_keys(
-        orbit, ("acting_group", "stabilizer", "orbit_size_law"),
+        orbit, orbit_keys,
         f"{label}.orbit_stabilizer",
+    )
+    problems += _reject_extra_keys(
+        orbit, orbit_keys, f"{label}.orbit_stabilizer"
     )
     if isinstance(orbit, dict):
         for key in ("acting_group", "stabilizer", "orbit_size_law"):
@@ -265,9 +337,17 @@ def validate_mechanism_contract(
                 problems.append(f"{label}.orbit_stabilizer.{key}: empty")
 
     semantics = contract.get("relation_semantics")
+    semantics_keys = (
+        "source_relation",
+        "target_relation",
+        "equivalence_status",
+    )
     problems += _require_keys(
-        semantics, ("source_relation", "target_relation", "equivalence_status"),
+        semantics, semantics_keys,
         f"{label}.relation_semantics",
+    )
+    problems += _reject_extra_keys(
+        semantics, semantics_keys, f"{label}.relation_semantics"
     )
     if isinstance(semantics, dict):
         for key in ("source_relation", "target_relation"):
@@ -291,10 +371,19 @@ def validate_mechanism_contract(
             )
 
     recovery = contract.get("recovery_map")
+    recovery_keys = (
+        "forward",
+        "inverse",
+        "excluded_components",
+        "spurious_solution_policy",
+    )
     problems += _require_keys(
         recovery,
-        ("forward", "inverse", "excluded_components", "spurious_solution_policy"),
+        recovery_keys,
         f"{label}.recovery_map",
+    )
+    problems += _reject_extra_keys(
+        recovery, recovery_keys, f"{label}.recovery_map"
     )
     if isinstance(recovery, dict):
         for key in ("forward", "inverse", "spurious_solution_policy"):
@@ -306,8 +395,14 @@ def validate_mechanism_contract(
         )
 
     implementation = contract.get("implementation_identity")
+    implementation_keys = ("implementation_path", "sha256")
     problems += _require_keys(
-        implementation, ("implementation_path", "sha256"),
+        implementation, implementation_keys,
+        f"{label}.implementation_identity",
+    )
+    problems += _reject_extra_keys(
+        implementation,
+        implementation_keys,
         f"{label}.implementation_identity",
     )
     if isinstance(implementation, dict):
@@ -319,9 +414,18 @@ def validate_mechanism_contract(
             problems.append(f"{label}.implementation_identity.sha256: invalid")
 
     bridge = contract.get("cost_changing_mechanism")
+    bridge_keys = (
+        "quantity",
+        "causal_bridge",
+        "growth_law",
+        "non_orbit_lever",
+    )
     problems += _require_keys(
-        bridge, ("quantity", "causal_bridge", "growth_law", "non_orbit_lever"),
+        bridge, bridge_keys,
         f"{label}.cost_changing_mechanism",
+    )
+    problems += _reject_extra_keys(
+        bridge, bridge_keys, f"{label}.cost_changing_mechanism"
     )
     if isinstance(bridge, dict):
         for key in ("quantity", "causal_bridge", "growth_law"):
@@ -332,6 +436,78 @@ def validate_mechanism_contract(
             problems.append(
                 f"{label}.cost_changing_mechanism.non_orbit_lever: invalid"
             )
+
+    bindings = contract.get("assurance_bindings")
+    problems += _require_keys(
+        bindings, MECHANISM_ASSURANCE_TOPICS, f"{label}.assurance_bindings"
+    )
+    problems += _reject_extra_keys(
+        bindings, MECHANISM_ASSURANCE_TOPICS, f"{label}.assurance_bindings"
+    )
+    claim_digests = mechanism_assurance_claims(contract)
+    registry_by_id = {
+        item.get("evidence_id"): item
+        for item in (evidence_registry or [])
+        if isinstance(item, dict)
+        and _is_nonempty_string(item.get("evidence_id"))
+    }
+    if isinstance(bindings, dict):
+        for topic in MECHANISM_ASSURANCE_TOPICS:
+            item = bindings.get(topic)
+            item_label = f"{label}.assurance_bindings.{topic}"
+            item_keys = ("assurance", "evidence_id", "claim_sha256")
+            problems += _require_keys(item, item_keys, item_label)
+            problems += _reject_extra_keys(item, item_keys, item_label)
+            if not isinstance(item, dict):
+                continue
+            assurance = item.get("assurance")
+            evidence_id = item.get("evidence_id")
+            claim_sha = item.get("claim_sha256")
+            if assurance not in MECHANISM_ASSURANCE_STATUSES:
+                problems.append(f"{item_label}.assurance: invalid")
+                continue
+            if assurance == "specified_unproved":
+                if evidence_id is not None or claim_sha is not None:
+                    problems.append(
+                        f"{item_label}: unproved binding must not claim evidence"
+                    )
+                if require_assured:
+                    problems.append(
+                        f"{item_label}: assured evidence is required"
+                    )
+                continue
+            if not _is_nonempty_string(evidence_id):
+                problems.append(f"{item_label}.evidence_id: empty")
+                continue
+            if not _is_sha256(claim_sha):
+                problems.append(f"{item_label}.claim_sha256: invalid")
+                continue
+            if claim_sha != claim_digests.get(topic):
+                problems.append(f"{item_label}.claim_sha256: claim mismatch")
+            registry_item = registry_by_id.get(evidence_id)
+            if registry_item is None:
+                problems.append(f"{item_label}: evidence_id is not registered")
+                continue
+            for key, expected in (
+                ("topic", topic),
+                ("assurance", assurance),
+                ("claim_sha256", claim_sha),
+            ):
+                if registry_item.get(key) != expected:
+                    problems.append(f"{item_label}: registry {key} does not match")
+
+        relation_binding = bindings.get("relation_equivalence")
+        if isinstance(relation_binding, dict) and isinstance(semantics, dict):
+            expected_relation_assurance = {
+                "proved": "lean_kernel",
+                "certificate_replayed": "certificate_replayed",
+                "specified_unproved": "specified_unproved",
+            }.get(semantics.get("equivalence_status"))
+            if relation_binding.get("assurance") != expected_relation_assurance:
+                problems.append(
+                    f"{label}.relation_semantics.equivalence_status: "
+                    "does not match the relation assurance binding"
+                )
     return sorted(set(problems))
 
 
@@ -350,21 +526,32 @@ def validate_prediction_contract(contract: Any) -> list[str]:
     problems = _require_keys(contract, required, label)
     if not isinstance(contract, dict):
         return problems
+    problems += _reject_extra_keys(contract, required, label)
 
     metric = contract.get("metric")
+    metric_keys = ("name", "unit", "recomputation")
     problems += _require_keys(
-        metric, ("name", "unit", "recomputation"), f"{label}.metric"
+        metric, metric_keys, f"{label}.metric"
     )
+    problems += _reject_extra_keys(metric, metric_keys, f"{label}.metric")
     if isinstance(metric, dict):
         for key in ("name", "unit", "recomputation"):
             if not _is_nonempty_string(metric.get(key)):
                 problems.append(f"{label}.metric.{key}: empty")
 
     baseline = contract.get("matched_baseline")
+    baseline_keys = (
+        "baseline_id",
+        "implementation_digest",
+        "matching_variables",
+    )
     problems += _require_keys(
         baseline,
-        ("baseline_id", "implementation_digest", "matching_variables"),
+        baseline_keys,
         f"{label}.matched_baseline",
+    )
+    problems += _reject_extra_keys(
+        baseline, baseline_keys, f"{label}.matched_baseline"
     )
     if isinstance(baseline, dict):
         if not _is_nonempty_string(baseline.get("baseline_id")):
@@ -384,6 +571,10 @@ def validate_prediction_contract(contract: Any) -> list[str]:
         problems.append(f"{label}.tested_sizes: expected nonempty array")
     elif any(not isinstance(size, int) or isinstance(size, bool) or size < 1 for size in sizes):
         problems.append(f"{label}.tested_sizes: positive integers required")
+    elif len(sizes) != len(set(sizes)):
+        problems.append(f"{label}.tested_sizes: duplicate entries")
+    elif sizes != sorted(sizes):
+        problems.append(f"{label}.tested_sizes: must be strictly increasing")
 
     if contract.get("expected_direction") not in {
         "increase",
@@ -396,22 +587,40 @@ def validate_prediction_contract(contract: Any) -> list[str]:
         problems.append(f"{label}.minimum_material_effect: must be positive")
 
     threshold = contract.get("decision_threshold")
+    threshold_keys = ("operator", "value")
     problems += _require_keys(
-        threshold, ("operator", "value"), f"{label}.decision_threshold"
+        threshold, threshold_keys, f"{label}.decision_threshold"
     )
-    if isinstance(threshold, dict) and threshold.get("operator") not in {
-        "lt",
-        "le",
-        "gt",
-        "ge",
-        "outside_interval",
-    }:
-        problems.append(f"{label}.decision_threshold.operator: invalid")
+    problems += _reject_extra_keys(
+        threshold, threshold_keys, f"{label}.decision_threshold"
+    )
+    if isinstance(threshold, dict):
+        operator = threshold.get("operator")
+        value = threshold.get("value")
+        if operator not in {"lt", "le", "gt", "ge", "outside_interval"}:
+            problems.append(f"{label}.decision_threshold.operator: invalid")
+        elif operator == "outside_interval":
+            if (
+                not isinstance(value, list)
+                or len(value) != 2
+                or any(not _number_at_least(item, -math.inf) for item in value)
+                or not value[0] < value[1]
+            ):
+                problems.append(
+                    f"{label}.decision_threshold.value: "
+                    "ordered numeric interval required"
+                )
+        elif not _number_at_least(value, -math.inf):
+            problems.append(
+                f"{label}.decision_threshold.value: finite number required"
+            )
 
     stop = contract.get("stop_rule")
+    stop_keys = ("condition", "maximum_instances")
     problems += _require_keys(
-        stop, ("condition", "maximum_instances"), f"{label}.stop_rule"
+        stop, stop_keys, f"{label}.stop_rule"
     )
+    problems += _reject_extra_keys(stop, stop_keys, f"{label}.stop_rule")
     if isinstance(stop, dict):
         if not _is_nonempty_string(stop.get("condition")):
             problems.append(f"{label}.stop_rule.condition: empty")
@@ -436,7 +645,11 @@ def _number_at_least(value: Any, minimum: float) -> bool:
     )
 
 
-def validate_cost_contract(contract: Any) -> list[str]:
+def validate_cost_contract(
+    contract: Any,
+    *,
+    require_execution: bool = False,
+) -> list[str]:
     label = "cost_contract"
     required = (
         "online",
@@ -456,12 +669,15 @@ def validate_cost_contract(contract: Any) -> list[str]:
     problems = _require_keys(contract, required, label)
     if not isinstance(contract, dict):
         return problems
+    problems += _reject_extra_keys(contract, required, label)
 
     for phase in ("online", "offline"):
         item = contract.get(phase)
+        compute_keys = ("cpu_hours", "gpu_hours")
         problems += _require_keys(
-            item, ("cpu_hours", "gpu_hours"), f"{label}.{phase}"
+            item, compute_keys, f"{label}.{phase}"
         )
+        problems += _reject_extra_keys(item, compute_keys, f"{label}.{phase}")
         if isinstance(item, dict):
             for key in ("cpu_hours", "gpu_hours"):
                 if not _number_at_least(item.get(key), 0):
@@ -489,9 +705,13 @@ def validate_cost_contract(contract: Any) -> list[str]:
         problems.append(f"{label}.success_probability: invalid")
 
     preprocessing = contract.get("preprocessing")
+    preprocessing_keys = ("included_in_totals", "description")
     problems += _require_keys(
-        preprocessing, ("included_in_totals", "description"),
+        preprocessing, preprocessing_keys,
         f"{label}.preprocessing",
+    )
+    problems += _reject_extra_keys(
+        preprocessing, preprocessing_keys, f"{label}.preprocessing"
     )
     if isinstance(preprocessing, dict):
         if preprocessing.get("included_in_totals") is not True:
@@ -502,9 +722,13 @@ def validate_cost_contract(contract: Any) -> list[str]:
             problems.append(f"{label}.preprocessing.description: empty")
 
     amortization = contract.get("amortization")
+    amortization_keys = ("class", "target_count", "per_target_cost_included")
     problems += _require_keys(
-        amortization, ("class", "target_count", "per_target_cost_included"),
+        amortization, amortization_keys,
         f"{label}.amortization",
+    )
+    problems += _reject_extra_keys(
+        amortization, amortization_keys, f"{label}.amortization"
     )
     if isinstance(amortization, dict):
         amortization_class = amortization.get("class")
@@ -532,11 +756,18 @@ def validate_cost_contract(contract: Any) -> list[str]:
             problems.append(
                 f"{label}.amortization.per_target_cost_included: expected bool"
             )
+        elif require_execution and amortization.get("per_target_cost_included") is not True:
+            problems.append(
+                f"{label}.amortization.per_target_cost_included: "
+                "must be true for execution"
+            )
 
     shared = contract.get("shared_setup")
+    shared_keys = ("setup_id", "hours", "expected_reuse")
     problems += _require_keys(
-        shared, ("setup_id", "hours", "expected_reuse"), f"{label}.shared_setup"
+        shared, shared_keys, f"{label}.shared_setup"
     )
+    problems += _reject_extra_keys(shared, shared_keys, f"{label}.shared_setup")
     if isinstance(shared, dict):
         setup_id = shared.get("setup_id")
         if setup_id is not None and not _is_nonempty_string(setup_id):
@@ -546,6 +777,25 @@ def validate_cost_contract(contract: Any) -> list[str]:
         reuse = shared.get("expected_reuse")
         if not isinstance(reuse, int) or isinstance(reuse, bool) or reuse < 1:
             problems.append(f"{label}.shared_setup.expected_reuse: invalid")
+
+    if require_execution:
+        compute_total = 0.0
+        for phase in ("online", "offline"):
+            item = contract.get(phase)
+            if isinstance(item, dict):
+                for key in ("cpu_hours", "gpu_hours"):
+                    value = item.get(key)
+                    if _number_at_least(value, 0):
+                        compute_total += float(value)
+        if compute_total <= 0:
+            problems.append(
+                f"{label}: bounded execution must price positive compute"
+            )
+        for key in ("wall_time_hours", "peak_memory_gb", "storage_gb"):
+            if not _number_at_least(contract.get(key), 0) or contract.get(key) <= 0:
+                problems.append(
+                    f"{label}.{key}: must be positive for execution"
+                )
     return sorted(set(problems))
 
 
@@ -554,6 +804,7 @@ def validate_validator_contract(
     *,
     require_ready: bool = True,
     evidence_registry: list[dict[str, Any]] | None = None,
+    implementation_registry: list[dict[str, Any]] | None = None,
 ) -> list[str]:
     label = "validator_contract"
     required = (
@@ -569,6 +820,7 @@ def validate_validator_contract(
     problems = _require_keys(contract, required, label)
     if not isinstance(contract, dict):
         return problems
+    problems += _reject_extra_keys(contract, required, label)
     status = contract.get("status")
     if status not in {
         "design_only_unverified",
@@ -579,8 +831,12 @@ def validate_validator_contract(
         problems.append(f"{label}.status: validator is not evidence-bound ready")
 
     artifact = contract.get("raw_artifact_format")
+    artifact_keys = ("media_type", "schema_id")
     problems += _require_keys(
-        artifact, ("media_type", "schema_id"), f"{label}.raw_artifact_format"
+        artifact, artifact_keys, f"{label}.raw_artifact_format"
+    )
+    problems += _reject_extra_keys(
+        artifact, artifact_keys, f"{label}.raw_artifact_format"
     )
     if isinstance(artifact, dict):
         for key in ("media_type", "schema_id"):
@@ -588,9 +844,13 @@ def validate_validator_contract(
                 problems.append(f"{label}.raw_artifact_format.{key}: empty")
 
     claim = contract.get("recomputed_decisive_claim")
+    claim_keys = ("claim_id", "procedure")
     problems += _require_keys(
-        claim, ("claim_id", "procedure"),
+        claim, claim_keys,
         f"{label}.recomputed_decisive_claim",
+    )
+    problems += _reject_extra_keys(
+        claim, claim_keys, f"{label}.recomputed_decisive_claim"
     )
     if isinstance(claim, dict):
         for key in ("claim_id", "procedure"):
@@ -600,14 +860,29 @@ def validate_validator_contract(
                 )
 
     implementation = contract.get("implementation")
+    implementation_keys = ("path", "sha256")
     problems += _require_keys(
-        implementation, ("path", "sha256"), f"{label}.implementation"
+        implementation, implementation_keys, f"{label}.implementation"
+    )
+    problems += _reject_extra_keys(
+        implementation, implementation_keys, f"{label}.implementation"
     )
     if isinstance(implementation, dict):
         if not _is_nonempty_string(implementation.get("path")):
             problems.append(f"{label}.implementation.path: empty")
         if not _is_sha256(implementation.get("sha256")):
             problems.append(f"{label}.implementation.sha256: invalid")
+        if status == "ready_evidence_bound":
+            registered = any(
+                isinstance(item, dict)
+                and item.get("path") == implementation.get("path")
+                and item.get("sha256") == implementation.get("sha256")
+                for item in (implementation_registry or [])
+            )
+            if not registered:
+                problems.append(
+                    f"{label}.implementation: implementation is not registered"
+                )
 
     problems += _validate_string_list(
         contract.get("prohibited_producer_fields"),
@@ -632,6 +907,9 @@ def validate_validator_contract(
         "shared_context",
     )
     problems += _require_keys(
+        independence, independence_keys, f"{label}.independence"
+    )
+    problems += _reject_extra_keys(
         independence, independence_keys, f"{label}.independence"
     )
     if isinstance(independence, dict):
@@ -687,6 +965,11 @@ def validate_validator_contract(
         ("path", "artifact", "source"),
         f"{label}.independence_evidence",
     )
+    problems += _reject_extra_keys(
+        axis_evidence,
+        ("path", "artifact", "source"),
+        f"{label}.independence_evidence",
+    )
     registry_by_id = {
         item.get("evidence_id"): item
         for item in (evidence_registry or [])
@@ -706,6 +989,9 @@ def validate_validator_contract(
                 item,
                 ("status", "evidence_id", "sha256"),
                 item_label,
+            )
+            problems += _reject_extra_keys(
+                item, ("status", "evidence_id", "sha256"), item_label
             )
             if not isinstance(item, dict):
                 continue
@@ -1337,6 +1623,11 @@ def validate_snapshot(
         problems += validate_mechanism_contract(
             snapshot.get("mechanism_contract"),
             require_assured=True,
+            evidence_registry=(
+                policy.get("mechanism_assurance_evidence", [])
+                if isinstance(policy, dict)
+                else []
+            ),
         )
     if lane_id == "validator":
         problems += validate_validator_contract(
@@ -1346,16 +1637,28 @@ def validate_snapshot(
                 if isinstance(policy, dict)
                 else []
             ),
+            implementation_registry=(
+                policy.get("validator_implementation_evidence", [])
+                if isinstance(policy, dict)
+                else []
+            ),
         )
     if lane_id == "bounded_experiment":
         problems += validate_prediction_contract(
             snapshot.get("prediction_contract")
         )
-        problems += validate_cost_contract(snapshot.get("cost_contract"))
+        problems += validate_cost_contract(
+            snapshot.get("cost_contract"), require_execution=True
+        )
         problems += validate_validator_contract(
             snapshot.get("validator_contract"),
             evidence_registry=(
                 policy.get("validator_independence_evidence", [])
+                if isinstance(policy, dict)
+                else []
+            ),
+            implementation_registry=(
+                policy.get("validator_implementation_evidence", [])
                 if isinstance(policy, dict)
                 else []
             ),
@@ -1420,6 +1723,7 @@ def derive_gates(
     mechanism_problems = validate_mechanism_contract(
         snapshot.get("mechanism_contract"),
         require_assured=True,
+        evidence_registry=policy.get("mechanism_assurance_evidence", []),
     )
     if lane_id in {"mechanism", "bounded_experiment"} and mechanism_problems:
         gates.add("missing_exact_mechanism")
@@ -1440,13 +1744,18 @@ def derive_gates(
     )
     if lane_id == "bounded_experiment" and prediction_problems:
         gates.add("missing_falsifiable_prediction")
-    cost_problems = validate_cost_contract(snapshot.get("cost_contract"))
+    cost_problems = validate_cost_contract(
+        snapshot.get("cost_contract"), require_execution=True
+    )
     if lane_id == "bounded_experiment" and cost_problems:
         gates.add("missing_full_cost_contract")
     validator_problems = validate_validator_contract(
         snapshot.get("validator_contract"),
         evidence_registry=policy.get(
             "validator_independence_evidence", []
+        ),
+        implementation_registry=policy.get(
+            "validator_implementation_evidence", []
         ),
     )
     if lane_id in {"validator", "bounded_experiment"} and validator_problems:

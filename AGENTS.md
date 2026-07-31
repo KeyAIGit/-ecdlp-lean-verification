@@ -221,7 +221,8 @@ The layered proof-search system. The agent is never the final authority — **Le
 **Layers.** (1) *Planner* — picks targets, splits hard goals into lemmas, sets attempt
 budgets, reads Lean errors and chooses repair strategy. (2) *Prover models* — the
 Featherless tier (Pythagoras-4B → Goedel-32B → Kimina-8B escalation) is **dead from CI**
-(Cloudflare bot-block of GitHub runners, verified 2026-07-15; 0 proofs ever accepted) and
+(Cloudflare HTTP 403 code 1010 on GitHub runners, reverified 2026-07-31;
+0 proofs ever accepted) and
 may only work from the warm server; in practice proofs come from the zero-cost tactic
 ladder + human/AI-assisted formalization. (3) *Verifier* — `lake build` / `lake env lean`;
 a theorem is accepted only if Lean verifies it with no `sorry`. (4) *Ledger* —

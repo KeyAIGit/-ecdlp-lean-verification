@@ -84,8 +84,10 @@ for a future automated reasoner (the north star). `--check` mode fails CI on dri
 ## What is deliberately NOT automated
 - **Unreviewed merge to `main`.** Promotion automation opens a PR; a delegated maintainer
   evaluates its evidence and green CI before merging. The workflow never auto-merges its own output.
-- **The Featherless model tiers.** Plan currently blocks API access (HTTP 403
-  `upgrade_required`); the Tier-0 tactic ladder + the agent drafters cover the search for now.
+- **The Featherless model tiers.** GitHub-hosted runners are blocked before inference
+  by Cloudflare HTTP 403 code 1010 (reverified 2026-07-31). The secret is present, but
+  this runner result neither validates nor rejects the subscription/key. The tiers stay
+  parked until a non-GitHub host passes `scripts/featherless_api_probe.py`.
 - **The rented server.** At 4 GB it OOMs on `import Mathlib`; not cost-effective yet. The
   GitHub Actions → server bridge (`server-run.yml`) stays ready for a ≥8 GB box if needed.
 

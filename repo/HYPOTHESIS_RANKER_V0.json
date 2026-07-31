@@ -1,0 +1,87 @@
+{
+  "schema_version": "0.1",
+  "ranker_id": "HYPOTHESIS-RANKER-SHADOW-V0",
+  "status": "shadow_untrained",
+  "purpose": "Provide a reproducible learning boundary for ranking non-executable research-question seeds without allowing synthetic labels or the model itself to authorize research.",
+  "feature_contract": {
+    "numeric": [
+      "exactness",
+      "mechanism",
+      "barrier_escape",
+      "discrimination",
+      "falsifiability",
+      "scaling",
+      "strategic_value"
+    ],
+    "categorical_context_only": [
+      "type",
+      "family",
+      "mechanism_obligation_id",
+      "cost_bridge_id",
+      "decisive_test_id"
+    ],
+    "forbidden_features": [
+      "seed_id",
+      "signature_instance_sha256",
+      "source_hard_gate",
+      "source_portfolio",
+      "source_canonical",
+      "reviewer_identity",
+      "authorization",
+      "route_promotion"
+    ]
+  },
+  "label_contract": {
+    "persistent_ledger": "data/hypothesis_review_ledger.jsonl",
+    "append_only_identity": "label_id plus review_record_sha256 plus frozen candidate feature snapshot",
+    "positive": ["retain_non_executable_research_bet"],
+    "negative": ["reject_known_or_unsupported"],
+    "excluded": [
+      "merge_into_retained",
+      "defer_insufficient_evidence",
+      "deterministic_hard_gate",
+      "synthetic_label",
+      "historical_migration",
+      "structural_truth_update"
+    ],
+    "required_independence_axes": ["source", "model_family", "context"],
+    "immutable_identity": "review_record_sha256"
+  },
+  "activation_gate": {
+    "minimum_eligible_labels": 30,
+    "minimum_positive_labels": 5,
+    "minimum_negative_labels": 10,
+    "minimum_distinct_families": 5,
+    "minimum_distinct_reviewers": 2,
+    "minimum_native_outcomes": 3,
+    "required_validation": "frozen-family-holdout",
+    "selection_influence_before_gate": false
+  },
+  "training_algorithm": {
+    "name": "deterministic_l2_logistic_v1",
+    "iterations": 2000,
+    "learning_rate": 0.05,
+    "l2_penalty": 0.01,
+    "normalization": "population_z_score_with_unit_floor"
+  },
+  "validation_gate": {
+    "protocol": "leave_one_family_out",
+    "minimum_holdout_coverage": 0.8,
+    "minimum_balanced_accuracy": 0.55,
+    "minimum_auc": 0.55,
+    "selection_influence_after_pass": false
+  },
+  "model_artifact": {
+    "path": "models/hypothesis_ranker_v0/model.json",
+    "format": "canonical-json-linear-ranker-v1",
+    "maximum_git_bytes": 1048576,
+    "large_artifact_policy": "Store large checkpoints outside Git and commit only URI, digest, license, and reproduction metadata."
+  },
+  "inference_contract": {
+    "fallback_when_untrained": "no_learned_score",
+    "selection_influence": false,
+    "authorization_capability": false,
+    "route_promotion_capability": false,
+    "exact_target_capability": false
+  }
+}

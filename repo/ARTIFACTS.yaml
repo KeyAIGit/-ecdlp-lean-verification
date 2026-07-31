@@ -65,6 +65,7 @@ classes:
       - data/attack_registry.json
       - data/source_claim_extracts/
       - data/research_decisions.md
+      - data/hypothesis_review_ledger.jsonl
       - data/README.md
     owner: frontier
     hand_edit: mixed
@@ -116,6 +117,8 @@ classes:
       - data/research_engine_state.json
       - data/research_engine_v02_state.json
       - data/research_engine_shadow_intake.json
+      - data/hypothesis_funnel_state.json
+      - data/hypothesis_ranker_state.json
       - repo/ECDLP_DECISION_SUBSTRATE.md
       - Ecdlp/LedgerAxiomAudit.lean
     owner: generators
@@ -137,6 +140,8 @@ classes:
       - scripts/build_research_engine_state.py
       - scripts/build_research_engine_v02_state.py
       - scripts/build_research_shadow_intake.py
+      - scripts/hypothesis_funnel.py
+      - scripts/hypothesis_ranker.py
       - scripts/build_ecdlp_decision_view.py
       - scripts/gen_axiom_audit.py
     gates:
@@ -149,6 +154,12 @@ classes:
       - scripts/build_research_engine_state.py --check
       - scripts/build_research_engine_v02_state.py --check
       - scripts/build_research_shadow_intake.py --check
+      - scripts/hypothesis_funnel.py --check
+      - scripts/test_hypothesis_funnel.py
+      - scripts/hypothesis_ranker.py --check
+      - scripts/test_hypothesis_ranker.py
+      - scripts/train_hypothesis_ranker.py --check-ready
+      - scripts/test_train_hypothesis_ranker.py
       - scripts/build_typed_evidence_state.py --check
       - scripts/test_typed_evidence.py
       - scripts/test_research_claims.py
@@ -199,6 +210,10 @@ classes:
       - repo/ECDLP_DECISION_SUBSTRATE.json
       - repo/RESEARCH_ENGINE_V0.json
       - repo/HYPOTHESIS_GENERATION_V0.json
+      - repo/HYPOTHESIS_FUNNEL_V1.json
+      - repo/HYPOTHESIS_RANKER_V0.json
+      - repo/HYPOTHESIS_MODEL_DRAFTER_V0.json
+      - repo/HYPOTHESIS_SELECTION_CONSTITUTION_V3.md
       - repo/ECDLP_TYPED_EVIDENCE_V0.json
       - repo/RESEARCH_CLAIMS_V0.json
       - repo/RESEARCH_ENGINE_LIFECYCLE_V0.json
@@ -209,6 +224,8 @@ classes:
       - repo/AUTOMATION_INVENTORY.json
       - repo/BRANCH_INVENTORY.json
       - repo/FINAL_REVIEW_PACKET.md
+      - data/hyp_select_004_raw_100.tsv
+      - models/hypothesis_ranker_v0/model.json
       - bundles/README.md
       - domains/
     owner: operations
@@ -237,6 +254,7 @@ classes:
       - prompts/
       - requirements.txt
       - .gitignore
+      - .gitattributes
     owner: automation
     hand_edit: true
     generated: false
