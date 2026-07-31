@@ -150,6 +150,7 @@ def build_prompt(record: dict[str, Any], required_fields: list[str]) -> str:
         "mechanism_obligation": record["mechanism_obligation"],
         "cost_bridge": record["cost_bridge"],
         "decisive_test": record["decisive_test"],
+        "adversarial_challenge": record.get("adversarial_challenge"),
         "scope": record["scope"],
         "warnings": record["warnings"],
     }

@@ -15,15 +15,13 @@ OUTPUT = ROOT / "repo" / "BRANCH_INVENTORY.json"
 REMOTE = "origin"
 
 ACTIVE = {
-    "agent/research-engine-hypothesis-generation",
-    "agent/glv-semaev-affine-closeout",
-    "agent/task022-s17-materialization",
-    "agent/task023-chart-cover",
-    "agent/task024-infinity-strata",
+    "agent/e4-composite-torsion-structure",
+    "agent/hyp-select-006-million-scale",
+    "claude/secp256k1-hypothesis-forge",
+    "research/pkc-sextic-twist-cm-screen",
 }
 SUPERSEDED = {
     "agent/n7-certificate-generator",
-    "claude/research-engine-review",
 }
 CANDIDATE_QUEUES = {"prover/candidates", "server/candidates"}
 

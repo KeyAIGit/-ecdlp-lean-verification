@@ -118,6 +118,8 @@ classes:
       - data/research_engine_v02_state.json
       - data/research_engine_shadow_intake.json
       - data/hypothesis_funnel_state.json
+      - data/hypothesis_space_state.json
+      - data/hypothesis_space_map.json
       - data/hypothesis_ranker_state.json
       - repo/ECDLP_DECISION_SUBSTRATE.md
       - Ecdlp/LedgerAxiomAudit.lean
@@ -141,6 +143,7 @@ classes:
       - scripts/build_research_engine_v02_state.py
       - scripts/build_research_shadow_intake.py
       - scripts/hypothesis_funnel.py
+      - scripts/hypothesis_space_funnel.py
       - scripts/hypothesis_ranker.py
       - scripts/build_ecdlp_decision_view.py
       - scripts/gen_axiom_audit.py
@@ -156,6 +159,8 @@ classes:
       - scripts/build_research_shadow_intake.py --check
       - scripts/hypothesis_funnel.py --check
       - scripts/test_hypothesis_funnel.py
+      - scripts/hypothesis_space_funnel.py --check
+      - scripts/test_hypothesis_space_funnel.py
       - scripts/hypothesis_ranker.py --check
       - scripts/test_hypothesis_ranker.py
       - scripts/train_hypothesis_ranker.py --check-ready
@@ -211,6 +216,7 @@ classes:
       - repo/RESEARCH_ENGINE_V0.json
       - repo/HYPOTHESIS_GENERATION_V0.json
       - repo/HYPOTHESIS_FUNNEL_V1.json
+      - repo/HYPOTHESIS_SPACE_V2.json
       - repo/HYPOTHESIS_RANKER_V0.json
       - repo/HYPOTHESIS_MODEL_DRAFTER_V0.json
       - repo/HYPOTHESIS_SELECTION_CONSTITUTION_V3.md

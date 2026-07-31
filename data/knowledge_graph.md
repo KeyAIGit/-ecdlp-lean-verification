@@ -112,6 +112,33 @@ The typed mechanism and cell are part of scientific identity. The three synthesi
 
 > Current desk priority: `CELL-M-PKC-SMOOTH-M16` / `RSI-D8BBA6340789`. The auxiliary-curve cell remains parked pending a finite source-defined search domain. Authorization remains `none`.
 
+### Million-cell adversarial projection
+
+Coverage is complete only for this frozen finite Cartesian projection. It is not coverage of all ECDLP ideas or literature.
+
+The frozen projection contains **1,000,000** typed challenge cells: **768,880 cold**, **231,120 warm**, and **0 hot**. Only **35** bounded records reach the review queue; authorization remains `none`.
+
+| region temperature | meaning |
+|---|---|
+| **cold** | A typed cell rejected by at least one deterministic structural gate. |
+| **warm** | A structurally coherent research-question cell that still lacks an assured exact mechanism and independent source review. |
+| **hot** | A cell with an assured mechanism, cost bridge, and independent review. This generator cannot create hot cells. |
+
+| leading warm family | kind | warm cells | cold cells |
+|---|---|---:|---:|
+| `collision-rank` | `BARRIER` | 3456 | 6544 |
+| `complete-cost` | `BARRIER` | 3456 | 6544 |
+| `elimination-width` | `BARRIER` | 3456 | 6544 |
+| `end-to-end-exponent` | `BARRIER` | 3456 | 6544 |
+| `endomorphism-ring` | `BARRIER` | 3456 | 6544 |
+| `exceptional-density` | `BARRIER` | 3456 | 6544 |
+| `exceptional-mask-density` | `BARRIER` | 3456 | 6544 |
+| `generic-preprocessing` | `BARRIER` | 3456 | 6544 |
+| `genericity-trace` | `BARRIER` | 3456 | 6544 |
+| `glv-quotient` | `BARRIER` | 3456 | 6544 |
+| `guessed-nonce-bits` | `BARRIER` | 3456 | 6544 |
+| `induced-subset` | `BARRIER` | 3456 | 6544 |
+
 ## Research Engine v0
 
 The engine may schedule cheap, preregistered toy-curve exploration within the declared budget. It cannot promote a route, authorize exact-target work, or support a secp256k1 complexity claim.
