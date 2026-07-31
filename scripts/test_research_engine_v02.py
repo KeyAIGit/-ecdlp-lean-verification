@@ -15,6 +15,7 @@ from research_engine_v02 import (
     cost_vector,
     derive_gates,
     expected_information_gain,
+    mechanism_assurance_claims,
     optimize_portfolio,
     run_engine,
     score_snapshot,
@@ -113,6 +114,7 @@ def policy(
         "primary_threat_model": "classical-single-target-plain",
         "authorized_owner_roles": ["project_owner"],
         "source_review_ids": ["SR-INDEPENDENT-001"],
+        "mechanism_assurance_evidence": mechanism_assurance_registry(),
         "validator_independence_evidence": [
             {
                 "evidence_id": "VE-PATH-001",
@@ -150,6 +152,12 @@ def policy(
                 "shared_context": False,
                 "attested_by": "independent-human-reviewer",
             },
+        ],
+        "validator_implementation_evidence": [
+            {
+                "path": "fixtures/independent-validator.py",
+                "sha256": "3" * 64,
+            }
         ],
         "quality_cleared_draft_bindings": (
             quality_bindings
@@ -196,7 +204,7 @@ def scenario(q: float) -> dict:
 
 
 def mechanism_contract() -> dict:
-    return {
+    contract = {
         "source_objects": ["toy relations"],
         "target_objects": ["validated relation records"],
         "transformation": {
@@ -242,6 +250,43 @@ def mechanism_contract() -> dict:
         },
         "source_ids": ["fixture-source"]
     }
+    claims = mechanism_assurance_claims(contract)
+    contract["assurance_bindings"] = {
+        "relation_equivalence": {
+            "assurance": "certificate_replayed",
+            "evidence_id": "ME-RELATION-001",
+            "claim_sha256": claims["relation_equivalence"],
+        },
+        "exceptional_locus": {
+            "assurance": "certificate_replayed",
+            "evidence_id": "ME-EXCEPTIONAL-001",
+            "claim_sha256": claims["exceptional_locus"],
+        },
+        "recovery_map": {
+            "assurance": "independent_reproduction",
+            "evidence_id": "ME-RECOVERY-001",
+            "claim_sha256": claims["recovery_map"],
+        },
+        "cost_changing_bridge": {
+            "assurance": "independent_reproduction",
+            "evidence_id": "ME-COST-001",
+            "claim_sha256": claims["cost_changing_bridge"],
+        },
+    }
+    return contract
+
+
+def mechanism_assurance_registry() -> list[dict]:
+    bindings = mechanism_contract()["assurance_bindings"]
+    return [
+        {
+            "evidence_id": item["evidence_id"],
+            "topic": topic,
+            "assurance": item["assurance"],
+            "claim_sha256": item["claim_sha256"],
+        }
+        for topic, item in bindings.items()
+    ]
 
 
 def prediction_contract(q: float = 0.8) -> dict:
@@ -831,6 +876,72 @@ class ResearchEngineV02Tests(unittest.TestCase):
         snapshot, reviewed_policy = bind_as_quality_reviewed(snapshot)
         self.assertIn(
             "missing_exact_mechanism",
+            derive_gates(snapshot, reviewed_policy),
+        )
+
+    def test_self_asserted_proved_prose_without_registered_claim_is_rejected(
+        self,
+    ) -> None:
+        snapshot = candidate("FORGED-PROVED-PROSE")
+        relation = snapshot["mechanism_contract"]["relation_semantics"]
+        relation["source_relation"] = "x"
+        relation["target_relation"] = "x"
+        relation["equivalence_status"] = "proved"
+        binding = snapshot["mechanism_contract"]["assurance_bindings"][
+            "relation_equivalence"
+        ]
+        binding["assurance"] = "lean_kernel"
+        binding["evidence_id"] = "ME-FORGED-LEAN-001"
+        binding["claim_sha256"] = "f" * 64
+        snapshot, reviewed_policy = bind_as_quality_reviewed(snapshot)
+        self.assertIn(
+            "missing_exact_mechanism",
+            derive_gates(snapshot, reviewed_policy),
+        )
+
+    def test_prediction_threshold_requires_a_numeric_value(self) -> None:
+        snapshot = candidate("BANANA-THRESHOLD")
+        snapshot["prediction_contract"]["decision_threshold"][
+            "value"
+        ] = "banana"
+        snapshot, reviewed_policy = bind_as_quality_reviewed(snapshot)
+        self.assertIn(
+            "missing_falsifiable_prediction",
+            derive_gates(snapshot, reviewed_policy),
+        )
+
+    def test_prediction_rejects_duplicate_sizes_and_extra_fields(self) -> None:
+        snapshot = candidate("PREDICTION-SCHEMA-DRIFT")
+        snapshot["prediction_contract"]["tested_sizes"] = [8, 8, 16]
+        snapshot["prediction_contract"]["metric"]["decorative"] = "x"
+        snapshot, reviewed_policy = bind_as_quality_reviewed(snapshot)
+        problems = validate_snapshot(snapshot, reviewed_policy)
+        self.assertTrue(any("duplicate entries" in problem for problem in problems))
+        self.assertTrue(any("unexpected decorative" in problem for problem in problems))
+
+    def test_ready_validator_requires_registered_implementation(self) -> None:
+        snapshot = candidate("FAKE-VALIDATOR-HASH")
+        snapshot["validator_contract"]["implementation"]["sha256"] = "9" * 64
+        snapshot, reviewed_policy = bind_as_quality_reviewed(snapshot)
+        self.assertIn(
+            "missing_independent_validator",
+            derive_gates(snapshot, reviewed_policy),
+        )
+
+    def test_bounded_experiment_cannot_claim_zero_execution_cost(self) -> None:
+        snapshot = candidate("ZERO-EXECUTION-COST")
+        snapshot["cost_contract"].update(
+            {
+                "online": {"cpu_hours": 0, "gpu_hours": 0},
+                "offline": {"cpu_hours": 0, "gpu_hours": 0},
+                "wall_time_hours": 0,
+                "peak_memory_gb": 0,
+                "storage_gb": 0,
+            }
+        )
+        snapshot, reviewed_policy = bind_as_quality_reviewed(snapshot)
+        self.assertIn(
+            "missing_full_cost_contract",
             derive_gates(snapshot, reviewed_policy),
         )
 

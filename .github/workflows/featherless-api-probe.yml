@@ -1,0 +1,37 @@
+name: Featherless API probe
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Probe plan and preferred models without generating tokens
+        env:
+          FEATHERLESS_API_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+        run: python3 scripts/featherless_api_probe.py
+
+      - name: Publish sanitized probe report
+        if: always()
+        run: |
+          if [ -f featherless-api-probe.json ]; then
+            echo '## Featherless API probe' >> "$GITHUB_STEP_SUMMARY"
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat featherless-api-probe.json >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload sanitized probe report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: featherless-api-probe
+          path: featherless-api-probe.json
+          if-no-files-found: error

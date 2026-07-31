@@ -53,19 +53,25 @@
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
         "reason": "source-grounded seed axes, proposal quality gates, and adversarial review contract",
         "exists": true,
-        "bytes": 15431
+        "bytes": 15469
+      },
+      {
+        "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
+        "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
+        "exists": true,
+        "bytes": 2402
       },
       {
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 78471
+        "bytes": 78508
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
         "reason": "immutable candidate lifecycle, portfolio, calibration, and owner-authorization boundary",
         "exists": true,
-        "bytes": 3109
+        "bytes": 3190
       },
       {
         "path": "data/research_engine_v02_state.json",
@@ -175,19 +181,25 @@
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
         "reason": "source-grounded seed axes, proposal quality gates, and adversarial review contract",
         "exists": true,
-        "bytes": 15431
+        "bytes": 15469
+      },
+      {
+        "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
+        "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
+        "exists": true,
+        "bytes": 2402
       },
       {
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 78471
+        "bytes": 78508
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
         "reason": "immutable candidate lifecycle, portfolio, calibration, and owner-authorization boundary",
         "exists": true,
-        "bytes": 3109
+        "bytes": 3190
       },
       {
         "path": "data/research_engine_v02_state.json",
@@ -259,7 +271,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 16132
+        "bytes": 16143
       },
       {
         "path": "VERIFIED.md",
@@ -337,7 +349,7 @@
         "path": "experiments/engine/mechanism_contract.schema.json",
         "reason": "exact map, fixed-target, recovery, and cost-changing mechanism contract",
         "exists": true,
-        "bytes": 4266
+        "bytes": 5518
       },
       {
         "path": "experiments/engine/prediction_contract.schema.json",
@@ -495,19 +507,25 @@
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
         "reason": "source-grounded seed axes, proposal quality gates, and adversarial review contract",
         "exists": true,
-        "bytes": 15431
+        "bytes": 15469
+      },
+      {
+        "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
+        "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
+        "exists": true,
+        "bytes": 2402
       },
       {
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 78471
+        "bytes": 78508
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
         "reason": "immutable candidate lifecycle, portfolio, calibration, and owner-authorization boundary",
         "exists": true,
-        "bytes": 3109
+        "bytes": 3190
       },
       {
         "path": "data/research_engine_v02_state.json",
@@ -579,7 +597,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 16132
+        "bytes": 16143
       },
       {
         "path": "VERIFIED.md",
@@ -657,7 +675,7 @@
         "path": "experiments/engine/mechanism_contract.schema.json",
         "reason": "exact map, fixed-target, recovery, and cost-changing mechanism contract",
         "exists": true,
-        "bytes": 4266
+        "bytes": 5518
       },
       {
         "path": "experiments/engine/prediction_contract.schema.json",
@@ -771,7 +789,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 669334
+        "bytes": 669373
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

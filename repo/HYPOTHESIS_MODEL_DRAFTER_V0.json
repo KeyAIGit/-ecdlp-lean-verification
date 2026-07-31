@@ -1,0 +1,75 @@
+{
+  "schema_version": "0.1",
+  "drafter_id": "keyai-hypothesis-model-drafter-v0",
+  "status": "shadow_non_executing",
+  "purpose": "Turn a small deterministic review queue into untrusted proposal fragments. The model may suggest missing mechanism fields; it cannot clear a scientific gate, review itself, authorize work, or create an experiment event.",
+  "source_state": "data/hypothesis_funnel_state.json",
+  "limits": {
+    "max_queue_items": 30,
+    "max_live_calls": 30,
+    "max_completion_tokens": 1800,
+    "max_concurrency": 1
+  },
+  "providers": {
+    "featherless": {
+      "base_url": "https://api.featherless.ai/v1",
+      "secret_env": "FEATHERLESS_API_KEY",
+      "preferred_models": [
+        "deepseek-ai/DeepSeek-V4-Flash",
+        "deepseek-ai/DeepSeek-V4-Pro",
+        "moonshotai/Kimi-K2.6",
+        "zai-org/GLM-5.1"
+      ],
+      "billing": "existing_flat_subscription",
+      "github_hosted_status": "blocked_cloudflare_1010_reverified_2026-07-31",
+      "non_github_host_status": "unverified"
+    },
+    "deepseek_direct": {
+      "base_url": "https://api.deepseek.com",
+      "secret_env": "DEEPSEEK_API_KEY",
+      "preferred_models": ["deepseek-chat"],
+      "billing": "request_priced_fallback",
+      "github_hosted_status": "not_retested_in_this_change"
+    },
+    "moonshot_direct": {
+      "base_url": "https://api.moonshot.ai/v1",
+      "secret_env": "KIMI_API_KEY",
+      "preferred_models": ["kimi-k2.6"],
+      "billing": "request_priced_fallback",
+      "github_hosted_status": "not_retested_in_this_change"
+    }
+  },
+  "output_contract": {
+    "scientific_identity": "untrusted_proposal_fragment",
+    "required_fields": [
+      "abstain",
+      "new_premise",
+      "exact_map",
+      "fixed_target_semantics",
+      "recovery_map",
+      "cost_changing_quantity",
+      "falsifiable_prediction",
+      "missing_evidence",
+      "claim_boundary"
+    ],
+    "prohibited_claims": [
+      "global novelty",
+      "proved",
+      "certificate replayed",
+      "independent validation",
+      "route promotion",
+      "experiment authorization",
+      "secp256k1 break"
+    ]
+  },
+  "safety": {
+    "live_calls_default": false,
+    "all_outputs_executable": false,
+    "admissible_count": 0,
+    "recommended_count": 0,
+    "authorized_count": 0,
+    "route_promotions": 0,
+    "exact_target_execution": false,
+    "self_review_satisfies_independence": false
+  }
+}

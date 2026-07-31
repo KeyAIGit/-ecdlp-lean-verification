@@ -23,6 +23,8 @@ from scientific_provenance import (
 from research_contract_binding import scientific_contract_digests
 from research_claims import load_and_build as load_research_claim_state
 from research_engine_v02 import (
+    MECHANISM_ASSURANCE_STATUSES,
+    MECHANISM_ASSURANCE_TOPICS,
     validate_cost_contract,
     validate_mechanism_contract,
     validate_prediction_contract,
@@ -52,6 +54,7 @@ GENERATION_POLICY_FIELDS = {
     "fingerprint_contract",
     "compatibility_rule",
     "quality_gate",
+    "mechanism_assurance_evidence",
     "known_premises",
     "axes",
 }
@@ -563,6 +566,37 @@ def validate_generation_policy(
             problems.append("at most three generated proposals may clear per cycle")
         if limits.get("max_toy_field_bits", 99) > 24:
             problems.append("hypothesis generation toy scope may not exceed 24 bits")
+
+    assurance_records = policy.get("mechanism_assurance_evidence")
+    if not isinstance(assurance_records, list):
+        problems.append("mechanism_assurance_evidence must be an array")
+        assurance_records = []
+    assurance_ids: list[str] = []
+    for index, record in enumerate(assurance_records):
+        label = f"mechanism_assurance_evidence[{index}]"
+        if not _exact_keys(
+            record,
+            {"evidence_id", "topic", "assurance", "claim_sha256"},
+            label,
+            problems,
+        ):
+            continue
+        evidence_id = record.get("evidence_id")
+        if not _nonempty_text(evidence_id):
+            problems.append(f"{label}.evidence_id must be nonempty")
+        else:
+            assurance_ids.append(evidence_id)
+        if record.get("topic") not in MECHANISM_ASSURANCE_TOPICS:
+            problems.append(f"{label}.topic is invalid")
+        if record.get("assurance") not in (
+            MECHANISM_ASSURANCE_STATUSES - {"specified_unproved"}
+        ):
+            problems.append(f"{label}.assurance is not evidence-bearing")
+        claim_sha = record.get("claim_sha256")
+        if not isinstance(claim_sha, str) or HASH_ID.fullmatch(claim_sha) is None:
+            problems.append(f"{label}.claim_sha256 is invalid")
+    if len(assurance_ids) != len(set(assurance_ids)):
+        problems.append("mechanism assurance evidence ids must be unique")
 
     typed_contract = policy.get("typed_evidence_contract")
     if _exact_keys(
@@ -1204,7 +1238,12 @@ def _proposal_blockers(
         blockers.add("missing_fixed_target_semantics")
     if not _substantive_text(proposal.get("non_generic_information_source")):
         blockers.add("missing_non_generic_information_source")
-    if validate_mechanism_contract(proposal.get("mechanism_contract")):
+    structured_mechanism = proposal.get("mechanism_contract")
+    if validate_mechanism_contract(
+        structured_mechanism,
+        require_assured=True,
+        evidence_registry=policy.get("mechanism_assurance_evidence", []),
+    ):
         blockers.add("missing_exact_mechanism")
 
     cost = proposal.get("cost_bridge", {})

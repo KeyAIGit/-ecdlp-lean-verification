@@ -50,6 +50,8 @@ _SMALL = [
      "generated claim-level truth state and calibration-exclusion boundary"),
     ("repo/HYPOTHESIS_GENERATION_V0.json",
      "source-grounded seed axes, proposal quality gates, and adversarial review contract"),
+    ("repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
+     "bounded provider policy for untrusted, non-executable model-assisted proposal fragments"),
     ("data/research_engine_state.json",
      "generated dual-gate state, selected sequence, and retained outcome summaries"),
     ("repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -169,6 +171,7 @@ Ground rules:
 - `repo/ECDLP_TYPED_EVIDENCE_V0.json` owns claim-level target-property and mechanism applicability screens.
 - `repo/RESEARCH_CLAIMS_V0.json` owns exact child-claim dispositions and assurance; a child result never closes its route by implication.
 - `repo/HYPOTHESIS_GENERATION_V0.json` owns non-executable seed and proposal-quality compilation.
+- `repo/HYPOTHESIS_MODEL_DRAFTER_V0.json` owns optional model drafting; its output is untrusted and non-executable.
 - `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json` owns immutable candidate lifecycle and portfolio selection.
 - `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json` owns the 19 required regression cases.
 - `repo/PRODUCT_MODEL.json` owns product rhetoric, current capability, and MVP boundaries.

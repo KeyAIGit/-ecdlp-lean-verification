@@ -212,6 +212,7 @@ classes:
       - repo/HYPOTHESIS_GENERATION_V0.json
       - repo/HYPOTHESIS_FUNNEL_V1.json
       - repo/HYPOTHESIS_RANKER_V0.json
+      - repo/HYPOTHESIS_MODEL_DRAFTER_V0.json
       - repo/HYPOTHESIS_SELECTION_CONSTITUTION_V3.md
       - repo/ECDLP_TYPED_EVIDENCE_V0.json
       - repo/RESEARCH_CLAIMS_V0.json

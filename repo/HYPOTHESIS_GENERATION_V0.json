@@ -154,6 +154,7 @@
     "zero_retention_allowed": true,
     "overflow_rule": "If more than three proposals clear every quality gate, retain none automatically and require an explicit comparative portfolio decision; do not silently truncate or rank by model confidence."
   },
+  "mechanism_assurance_evidence": [],
   "known_premises": [
     {
       "id": "KP-GLV-INDEPENDENT-CUBES",

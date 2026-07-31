@@ -172,6 +172,11 @@ jobs:
           python3 scripts/hypothesis_funnel.py --check
           python3 scripts/test_hypothesis_funnel.py
 
+      - name: Check model-assisted proposal drafter boundary
+        run: |
+          python3 scripts/hypothesis_model_drafter.py --limit 10 > /dev/null
+          python3 scripts/test_hypothesis_model_drafter.py
+
       - name: Replay GLV diagonal-action obstruction certificate
         run: |
           python3 experiments/glv_diagonal_obstruction/generate.py --check

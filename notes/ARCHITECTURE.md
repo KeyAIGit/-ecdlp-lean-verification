@@ -26,7 +26,7 @@ flowchart TB
     CAS["CAS: PARI / sympy"]
   end
 
-  FEATHER["Featherless API<br/>(plan blocks inference - 403)"]
+  FEATHER["Featherless API<br/>(GitHub runner blocked - 403/1010)"]
 
   C -- "git push" --> REPO
   REPO -- "push triggers" --> CI
@@ -59,7 +59,9 @@ by automation except via reviewed candidate PRs.
 
 - **Dev sandbox ↔ server:** the sandbox cannot reach the server (egress blocked), so
   all server work goes through GitHub Actions runners, which do have network access.
-- **Featherless:** wired in but its subscription plan lacks API access (HTTP 403), so
-  the model tiers are idle; Tier-0 + hand-written proofs carry the work today.
+- **Featherless:** the repository secret and integration are present, but GitHub-hosted
+  runners are blocked before inference by Cloudflare HTTP 403 code 1010 (reverified
+  2026-07-31). This does not establish that the subscription or key is invalid. The
+  model tiers remain idle until a non-GitHub host passes the zero-token API probe.
 - **Google Drive:** not in the active pipeline. The claim corpus it once held now
   lives in `data/`; nothing writes back to Drive, so it does not grow.

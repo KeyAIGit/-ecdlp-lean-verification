@@ -295,6 +295,10 @@ jobs:
           python3 scripts/test_hypothesis_ranker.py
           python3 scripts/train_hypothesis_ranker.py --check-ready
           python3 scripts/test_train_hypothesis_ranker.py
+      - name: Model-assisted proposal drafter shadow gate
+        run: |
+          python3 scripts/hypothesis_model_drafter.py --limit 10 > /dev/null
+          python3 scripts/test_hypothesis_model_drafter.py
       - name: GLV diagonal-action obstruction certificate
         run: |
           python3 experiments/glv_diagonal_obstruction/generate.py --check

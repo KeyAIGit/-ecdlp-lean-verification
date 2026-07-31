@@ -15,7 +15,8 @@
     "recovery_map",
     "implementation_identity",
     "cost_changing_mechanism",
-    "source_ids"
+    "source_ids",
+    "assurance_bindings"
   ],
   "properties": {
     "source_objects": {
@@ -123,6 +124,47 @@
       "minItems": 1,
       "uniqueItems": true,
       "items": {"type": "string", "minLength": 1}
+    },
+    "assurance_bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relation_equivalence",
+        "exceptional_locus",
+        "recovery_map",
+        "cost_changing_bridge"
+      ],
+      "properties": {
+        "relation_equivalence": {"$ref": "#/$defs/assuranceBinding"},
+        "exceptional_locus": {"$ref": "#/$defs/assuranceBinding"},
+        "recovery_map": {"$ref": "#/$defs/assuranceBinding"},
+        "cost_changing_bridge": {"$ref": "#/$defs/assuranceBinding"}
+      }
+    }
+  },
+  "$defs": {
+    "assuranceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assurance", "evidence_id", "claim_sha256"],
+      "properties": {
+        "assurance": {
+          "enum": [
+            "lean_kernel",
+            "certificate_replayed",
+            "independent_reproduction",
+            "empirical_native",
+            "historical_migration",
+            "literature_only",
+            "specified_unproved"
+          ]
+        },
+        "evidence_id": {"type": ["string", "null"], "minLength": 1},
+        "claim_sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
     }
   }
 }

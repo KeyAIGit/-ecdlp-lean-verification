@@ -67,6 +67,7 @@ from scientific_provenance import (
     scientific_source_commit_allowed,
     validation_problems as scientific_provenance_validation_problems,
 )
+from research_engine_v02 import mechanism_assurance_claims
 
 
 class ResearchEngineTests(unittest.TestCase):
@@ -580,8 +581,51 @@ class ResearchEngineTests(unittest.TestCase):
                 "prompt_sha256": "0" * 64,
             },
         }
+        mechanism = proposal["mechanism_contract"]
+        mechanism["relation_semantics"][
+            "equivalence_status"
+        ] = "certificate_replayed"
+        claims = mechanism_assurance_claims(mechanism)
+        mechanism["assurance_bindings"] = {
+            "relation_equivalence": {
+                "assurance": "certificate_replayed",
+                "evidence_id": "ME-FIXTURE-RELATION",
+                "claim_sha256": claims["relation_equivalence"],
+            },
+            "exceptional_locus": {
+                "assurance": "certificate_replayed",
+                "evidence_id": "ME-FIXTURE-EXCEPTIONAL",
+                "claim_sha256": claims["exceptional_locus"],
+            },
+            "recovery_map": {
+                "assurance": "independent_reproduction",
+                "evidence_id": "ME-FIXTURE-RECOVERY",
+                "claim_sha256": claims["recovery_map"],
+            },
+            "cost_changing_bridge": {
+                "assurance": "independent_reproduction",
+                "evidence_id": "ME-FIXTURE-COST",
+                "claim_sha256": claims["cost_changing_bridge"],
+            },
+        }
         proposal["mechanism_signature"] = mechanism_signature(proposal)
         return proposal
+
+    def generation_policy_with_assurance(
+        self, proposal: dict
+    ) -> dict:
+        policy = copy.deepcopy(self.generation_policy)
+        bindings = proposal["mechanism_contract"]["assurance_bindings"]
+        policy["mechanism_assurance_evidence"] = [
+            {
+                "evidence_id": item["evidence_id"],
+                "topic": topic,
+                "assurance": item["assurance"],
+                "claim_sha256": item["claim_sha256"],
+            }
+            for topic, item in bindings.items()
+        ]
+        return policy
 
     def test_deleted_pre_squash_source_commit_is_not_reproducible(self) -> None:
         with tempfile.TemporaryDirectory(prefix="engine-provenance-") as tmp:
@@ -3023,8 +3067,9 @@ class ResearchEngineTests(unittest.TestCase):
         proposal_records = [
             (PROPOSALS_DIR / "HGP-FIXTURE-001.json", proposal)
         ]
+        generation_policy = self.generation_policy_with_assurance(proposal)
         problems, state = build_generation_state(
-            self.generation_policy,
+            generation_policy,
             self.decisions,
             self.policy,
             proposal_records,
@@ -3552,8 +3597,11 @@ class ResearchEngineTests(unittest.TestCase):
                 (PROPOSALS_DIR / f"{proposal_id}.json", proposal)
             )
             review_records.extend(self.generation_reviews(proposal))
+        generation_policy = self.generation_policy_with_assurance(
+            proposal_records[0][1]
+        )
         problems, state = build_generation_state(
-            self.generation_policy,
+            generation_policy,
             self.decisions,
             self.policy,
             proposal_records,

@@ -105,3 +105,22 @@ Even after those gates pass, ranker v0 remains shadow-only. It may compare
 ordering quality against future outcomes, but it cannot alter deterministic hard
 gates, recommend or authorize an experiment, promote a route, or target a real
 secp256k1 key.
+
+## Model-assisted draft boundary
+
+`scripts/hypothesis_model_drafter.py` is the optional middle layer between the
+deterministic review queue and full scientific contracts. By default it performs
+no API calls and emits only digest-bound request packets. A live call requires
+both `--live` and `HYPOTHESIS_DRAFTER_LIVE=1`; every response remains an
+`untrusted_proposal_fragment` with zero authorization and cannot satisfy any
+review-independence axis.
+
+The preferred provider is the existing Featherless subscription, with direct
+DeepSeek and Moonshot/Kimi APIs retained only as explicit fallbacks. Model
+weights are never downloaded to the laptop or committed to Git. On 2026-07-31,
+the repository secret was present but all three GitHub-hosted prover jobs were
+blocked before inference by Featherless/Cloudflare HTTP 403 code 1010. The
+manual `Featherless API probe` workflow now fails honestly and publishes a
+sanitized zero-token plan/model report; it no longer turns an API failure into a
+green scientific signal. Featherless may still be used from a future server or
+another host after that host passes the same probe.
