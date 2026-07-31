@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Validate a dated snapshot against the current remote branch-name set."""
+"""Validate a dated branch snapshot and optionally require a live-name match."""
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import re
@@ -22,11 +23,22 @@ ALLOWED = {
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--require-live-match",
+        action="store_true",
+        help=(
+            "fail when the current remote branch-name set differs from the "
+            "dated snapshot"
+        ),
+    )
+    args = parser.parse_args()
     data = json.loads(INVENTORY.read_text(encoding="utf-8"))
     snapshot = data.get("snapshot", {})
     policy = data.get("policy", {})
     branches = data.get("branches", [])
     errors: list[str] = []
+    warnings: list[str] = []
 
     def check(condition: bool, message: str) -> None:
         if not condition:
@@ -44,8 +56,20 @@ def main() -> int:
         "snapshot branch count does not match branch entries",
     )
     check(policy.get("snapshot_only") is True, "inventory must be snapshot-only")
+    check(
+        policy.get("live_remote_name_drift") == "warn",
+        "dated snapshot policy must classify later remote-name drift as a warning",
+    )
     check(policy.get("merge_now") is False, "branch policy must forbid merge_now")
     check(policy.get("delete_now") is False, "branch policy must forbid delete_now")
+    recorded_names = sorted(names) if all(isinstance(name, str) for name in names) else []
+    recorded_names_hash = hashlib.sha256(
+        "\n".join(recorded_names).encode("utf-8")
+    ).hexdigest()
+    check(
+        recorded_names_hash == snapshot.get("remote_names_sha256"),
+        "snapshot branch-name digest does not match its recorded entries",
+    )
 
     counts = Counter(branch.get("disposition") for branch in branches)
     check(set(counts) <= ALLOWED, "unsupported branch disposition")
@@ -106,24 +130,29 @@ def main() -> int:
         stderr=subprocess.PIPE,
         text=True,
     )
-    check(result.returncode == 0, "remote branch names could not be queried")
-    if result.returncode == 0:
+    if result.returncode != 0:
+        message = "current remote branch names could not be queried"
+        if args.require_live_match:
+            errors.append(message)
+        else:
+            warnings.append(message)
+    else:
         remote_names = sorted(
             line.split()[1].removeprefix("refs/heads/")
             for line in result.stdout.splitlines()
             if line.strip()
         )
-        names_hash = hashlib.sha256(
-            "\n".join(remote_names).encode("utf-8")
-        ).hexdigest()
-        check(
-            remote_names == sorted(names),
-            "remote branch name set differs from the dated snapshot",
-        )
-        check(
-            names_hash == snapshot.get("remote_names_sha256"),
-            "remote branch-name digest differs from snapshot",
-        )
+        if remote_names != recorded_names:
+            added = sorted(set(remote_names) - set(recorded_names))
+            removed = sorted(set(recorded_names) - set(remote_names))
+            message = (
+                "current remote branch names differ from the dated snapshot"
+                f" (added={added or 'none'}, removed={removed or 'none'})"
+            )
+            if args.require_live_match:
+                errors.append(message)
+            else:
+                warnings.append(message)
 
     if errors:
         print("branch-inventory check FAILED:", file=sys.stderr)
@@ -131,8 +160,10 @@ def main() -> int:
             print(f"- {error}", file=sys.stderr)
         return 1
 
+    for warning in warnings:
+        print(f"branch-inventory warning: {warning}", file=sys.stderr)
     print(
-        f"branch-inventory check OK: {len(branches)} remote heads; "
+        f"branch-inventory snapshot OK: {len(branches)} recorded remote heads; "
         f"{counts['active_integration']} active, "
         f"{counts['superseded_draft']} superseded, "
         f"{counts['candidate_queue']} candidate; no merge/deletion authorized"

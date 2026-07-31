@@ -20,7 +20,6 @@ ACTIVE = {
     "agent/task022-s17-materialization",
     "agent/task023-chart-cover",
     "agent/task024-infinity-strata",
-    "agent/task026-fixed-target-yield-outcome",
 }
 SUPERSEDED = {
     "agent/n7-certificate-generator",
@@ -134,13 +133,16 @@ def build() -> dict:
                 "git rev-list --left-right --count <main-tip>...<branch-tip>"
             ),
             "recording_note": (
-                "Tips are a dated observation. The active branch necessarily "
-                "advances when this snapshot is committed; the gate compares "
-                "the remote name set, not mutable tips."
+                "Tips and branch names are a dated observation. The integrity "
+                "gate validates the committed snapshot itself and reports later "
+                "live remote-name drift without rewriting history; use "
+                "check_branch_inventory.py --require-live-match for an explicit "
+                "strict comparison."
             ),
         },
         "policy": {
             "snapshot_only": True,
+            "live_remote_name_drift": "warn",
             "merge_now": False,
             "delete_now": False,
             "active_integrations": sorted(ACTIVE & set(heads)),
