@@ -192,6 +192,7 @@ classes:
       - ROADMAP.md
       - tasks/
       - experiments/HYPOTHESES.yaml
+      - data/hyp_select_004_raw_100.tsv
       - REPOSITORY_ARCHITECTURE.md
       - repo/ARTIFACTS.yaml
       - repo/CLEANUP_PLAN.md
