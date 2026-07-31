@@ -1,0 +1,208 @@
+name: Draft hypothesis proposals on external host
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Pinned Featherless model"
+        required: true
+        type: choice
+        default: deepseek-ai/DeepSeek-V4-Flash
+        options:
+          - deepseek-ai/DeepSeek-V4-Flash
+          - deepseek-ai/DeepSeek-V4-Pro
+          - moonshotai/Kimi-K2.6
+          - zai-org/GLM-5.1
+      limit:
+        description: "Maximum non-executable proposal fragments"
+        required: true
+        type: choice
+        default: "10"
+        options:
+          - "5"
+          - "10"
+          - "20"
+          - "30"
+      confirmation:
+        description: "Type NON_EXECUTABLE_DRAFTS_ONLY"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hypothesis-drafter-external-host
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Validate explicit dispatch and required secrets
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+          HOST: ${{ secrets.SERVER_HOST }}
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          FEATHERLESS_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+        run: |
+          set -euo pipefail
+          if [ "$CONFIRMATION" != "NON_EXECUTABLE_DRAFTS_ONLY" ]; then
+            echo "::error::Confirmation must be NON_EXECUTABLE_DRAFTS_ONLY"
+            exit 1
+          fi
+          if [ -z "$HOST" ] || [ -z "$SSH_KEY" ] || [ -z "$FEATHERLESS_KEY" ]; then
+            echo "::error::SERVER_HOST, SSH_PRIVATE_KEY, and FEATHERLESS_API_KEY are required"
+            exit 1
+          fi
+
+      - name: Install SSH key
+        env:
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Provision the Featherless key without logging it
+        env:
+          HOST: ${{ secrets.SERVER_HOST }}
+          SUSER: ${{ secrets.SERVER_USER }}
+          FEATHERLESS_KEY: ${{ secrets.FEATHERLESS_API_KEY }}
+          RUN_KEY: ${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          U="${SUSER:-root}"
+          ssh -i ~/.ssh/id_ed25519 \
+            -o StrictHostKeyChecking=accept-new \
+            -o ConnectTimeout=20 \
+            "$U@$HOST" \
+            "umask 077; mkdir -p '.keyai-drafter/$RUN_KEY'; cat > '.keyai-drafter/$RUN_KEY/featherless.key'" \
+            <<< "$FEATHERLESS_KEY"
+
+      - name: Probe Featherless and draft the bounded review queue
+        env:
+          HOST: ${{ secrets.SERVER_HOST }}
+          SUSER: ${{ secrets.SERVER_USER }}
+          RUN_KEY: ${{ github.run_id }}-${{ github.run_attempt }}
+          COMMIT_SHA: ${{ github.sha }}
+          MODEL: ${{ inputs.model }}
+          LIMIT: ${{ inputs.limit }}
+        run: |
+          set -euo pipefail
+          U="${SUSER:-root}"
+          ssh -i ~/.ssh/id_ed25519 \
+            -o StrictHostKeyChecking=accept-new \
+            -o ConnectTimeout=20 \
+            "$U@$HOST" bash -s -- "$RUN_KEY" "$COMMIT_SHA" "$MODEL" "$LIMIT" <<'REMOTE'
+          set -euo pipefail
+          RUN_KEY="$1"
+          COMMIT_SHA="$2"
+          MODEL="$3"
+          LIMIT="$4"
+          BASE="$HOME/.keyai-drafter/$RUN_KEY"
+          REPO="$BASE/repo"
+          trap 'rm -f "$BASE/featherless.key"' EXIT
+          rm -rf "$REPO"
+          git clone --quiet --filter=blob:none \
+            https://github.com/KeyAIGit/-ecdlp-lean-verification.git "$REPO"
+          git -C "$REPO" fetch --quiet origin "$COMMIT_SHA"
+          git -C "$REPO" checkout --quiet --detach "$COMMIT_SHA"
+          export FEATHERLESS_API_KEY="$(cat "$BASE/featherless.key")"
+          python3 "$REPO/scripts/featherless_api_probe.py" \
+            --model "$MODEL" --output "$BASE/probe.json"
+          export HYPOTHESIS_DRAFTER_LIVE=1
+          python3 "$REPO/scripts/hypothesis_model_drafter.py" \
+            --provider featherless \
+            --model "$MODEL" \
+            --limit "$LIMIT" \
+            --live \
+            --output "$BASE/drafts.json"
+          (cd "$BASE" && sha256sum drafts.json > drafts.sha256)
+          REMOTE
+
+      - name: Retrieve sanitized probe and untrusted drafts
+        env:
+          HOST: ${{ secrets.SERVER_HOST }}
+          SUSER: ${{ secrets.SERVER_USER }}
+          RUN_KEY: ${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          U="${SUSER:-root}"
+          mkdir -p remote-drafter-output
+          for NAME in probe.json drafts.json drafts.sha256; do
+            scp -i ~/.ssh/id_ed25519 \
+              -o StrictHostKeyChecking=accept-new \
+              -o ConnectTimeout=20 \
+              "$U@$HOST:.keyai-drafter/$RUN_KEY/$NAME" \
+              "remote-drafter-output/$NAME"
+          done
+
+      - name: Summarize the non-executable batch
+        run: |
+          (cd remote-drafter-output && sha256sum -c drafts.sha256)
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          probe = json.loads(Path("remote-drafter-output/probe.json").read_text())
+          drafts = json.loads(Path("remote-drafter-output/drafts.json").read_text())
+          if probe.get("status") != "ready":
+              raise SystemExit("Featherless probe did not finish ready")
+          if drafts.get("status") != "untrusted_non_executing_draft_batch":
+              raise SystemExit("drafter status escaped the non-executing boundary")
+          if drafts.get("provider") != "featherless" or drafts.get("live") is not True:
+              raise SystemExit("unexpected provider or dry-run artifact")
+          request_count = drafts.get("request_count")
+          if not isinstance(request_count, int) or not 1 <= request_count <= 30:
+              raise SystemExit("request count escaped the bounded policy")
+          for field in ("admissible", "recommended", "authorized"):
+              if drafts.get(field) != 0:
+                  raise SystemExit(f"{field} must remain zero")
+          responses = drafts.get("responses", [])
+          if not isinstance(responses, list) or len(responses) != request_count:
+              raise SystemExit("response count does not match the request count")
+          if any(
+              item.get("authorization") != "none"
+              or item.get("executable") is not False
+              for item in responses
+          ):
+              raise SystemExit("a response escaped the non-executable boundary")
+          contract_clear = sum(not item.get("contract_problems") for item in responses)
+          summary = Path(os.environ["GITHUB_STEP_SUMMARY"])
+          with summary.open("a", encoding="utf-8") as handle:
+              handle.write("## External-host hypothesis drafting\n\n")
+              handle.write(f"- Probe status: `{probe.get('status')}`\n")
+              handle.write(f"- Model: `{drafts.get('model')}`\n")
+              handle.write(f"- Responses: `{len(responses)}`\n")
+              handle.write(f"- Contract-clear fragments: `{contract_clear}`\n")
+              handle.write("- Admissible / recommended / authorized: `0 / 0 / 0`\n")
+              handle.write("- Output remains untrusted and non-executable.\n")
+          PY
+
+      - name: Upload the non-executable batch
+        uses: actions/upload-artifact@v4
+        with:
+          name: hypothesis-drafter-${{ github.run_id }}-${{ github.run_attempt }}
+          path: remote-drafter-output/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Remove the remote run directory
+        if: always()
+        env:
+          HOST: ${{ secrets.SERVER_HOST }}
+          SUSER: ${{ secrets.SERVER_USER }}
+          RUN_KEY: ${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          U="${SUSER:-root}"
+          if [ -n "$HOST" ]; then
+            ssh -i ~/.ssh/id_ed25519 \
+              -o StrictHostKeyChecking=accept-new \
+              -o ConnectTimeout=20 \
+              "$U@$HOST" "rm -rf '.keyai-drafter/$RUN_KEY'" || true
+          fi
