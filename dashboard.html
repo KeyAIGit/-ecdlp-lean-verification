@@ -52,7 +52,7 @@
         <div class="workspace-metric"><div class="workspace-metric__value">17</div><div class="workspace-metric__label">routes evaluated</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">7</div><div class="workspace-metric__label">typed cells</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">2</div><div class="workspace-metric__label">generated seeds</div></div>
-        <div class="workspace-metric"><div class="workspace-metric__value">1</div><div class="workspace-metric__label">exact toy authorization</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">1</div><div class="workspace-metric__label">completed exact toy run</div></div>
       </div>
     </div>
   </section>
@@ -73,12 +73,14 @@
         <p>The decision layer controls what work is justified; proof volume does not select an attack route.</p></div>
         <span class="status status--blue">Reference deployment</span></div>
       <article class="decision-band">
-        <div class="decision-band__state"><span>AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01</span><strong>Exact toy authorization</strong></div>
-        <div class="decision-band__copy"><h3>One hash-bound synthetic-toy diagnostic is authorized.</h3>
+        <div class="decision-band__state"><span>AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01</span><strong>Consumed toy run</strong></div>
+        <div class="decision-band__copy"><h3>One hash-bound synthetic-toy diagnostic completed.</h3>
           <p>HYP-M16-FIXED-TARGET-YIELD-001 / TASK-026 only:
             3000000 primary trials across
-            3 frozen E_7 toy subgroups. Native Engine
-            selection, direct secp256k1 work, solvers, and promotion remain closed.
+            3 frozen E_7 toy subgroups. Terminal:
+            CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION; rerun authorized:
+            false. Native Engine selection,
+            direct secp256k1 work, solvers, and promotion remain closed.
             Structural selection RS-2026-07-24-001 remains unchanged.</p></div>
       </article>
       <div class="panel-heading"><div><h2>Research Engine v0 queue</h2>
@@ -99,12 +101,12 @@
         <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ECDLP_TYPED_EVIDENCE_V0.json">Open evidence</a></div>
       <div class="surface" style="margin-bottom:22px"><div class="surface__body"><article class="task-row">
   <div class="task-row__top"><div><h4>Can this target-property cell be decided without an ECDLP run: Construct or rule out a fully priced auxiliary-curve instance over the secp256k1 base field under the exact PKC 2016 conditions. The answer must instantiate or refute the typed construction and price every named precomputation term.</h4>
-    <small>HGS-E1097B75224C · CELL-M-PKC-AUXILIARY-CURVE · R-PETIT-COMPOSED-MAPS</small>
+    <small>HGS-2F4C661E5578 · CELL-M-PKC-AUXILIARY-CURVE · R-PETIT-COMPOSED-MAPS</small>
     <p>The first output is a bounded arithmetic construction or no-instance record plus a complete precomputation estimate, not an ECDLP experiment.</p></div>
     <span class="status status--amber">Property resolution</span></div>
 </article><article class="task-row">
   <div class="task-row__top"><div><h4>Can an exact desk derivation price Total construction, representation, solving, and recovery cost of the corresponding S17 system. against the declared baseline before any solver run?</h4>
-    <small>HGS-5E19F2C164BE · CELL-M-PKC-SMOOTH-M16 · R-PETIT-COMPOSED-MAPS</small>
+    <small>HGS-DC5FF2FC9E71 · CELL-M-PKC-SMOOTH-M16 · R-PETIT-COMPOSED-MAPS</small>
     <p>This open desk-cost cell has exact input presentations, an exact set-theoretic projective-tree bridge on the stated nonsingular characteristic domain, a complete named exceptional-fiber classification, deterministic control and secp256k1 GLV recovery checks, a frozen recursive projective S17 contract, kernel-checked fixed-degree projective resultant plus literal Sylvester unit-one and end-to-end common-root theorems, the actual frozenC specialization, the exact all-stage frozen projective witness chain, an exact literal finite MvPolynomial family in guarded form, an exact affine/infinity chart-polynomial cover for the frozen stage-14 predicate after injective base change, exact necessary infinity-stratum pruning, and exact conditional infinity propagation. Each fixed InfinityMask I uses 14 - I.card affine variables, no guard equations, and fifteen H equations with degree ceilings 2/4/2; the existential cover is exact and retains [1:0]. Affine external inputs reduce the exact logical cover from 16384 masks to 987 separated masks, and nonzero endpoint determinants conditionally reduce it to 377 interior masks. TASK-025 gives the nested local reductions 377 to 129 to 69 to 36 and the independent boundary-only branch 129 to 60. Under endpoint and BalancedPropagatedRegular assumptions it proves an exact single empty-mask affine chart, not a unique witness. The direct propagation applies over any field, but the source-stage bridge still requires injective base change into an algebraically closed target and separately assumed mapped-target regularity. Symbolic nonzeroness, nonemptiness, density, probability, and genericity are not proved, and source-field computation does not automatically establish mapped regularity. The 2^14 logical masks are not enumerated or materialized, and neither are the pruned families. It is not an expanded direct S17 polynomial, an unconditional base-field descent theorem, a solver run, or evidence of independent dimensions or relations. The complete cost bridge remains open. CQ-SEMAEV-S17-SYSTEM-COST remains partial; solving cost, rank, and yield remain unpriced. The scoped result has zero_retention_success and does not justify a production mask sweep, solver run, target computation, hypothesis retention, experiment authorization, cost inference, route rejection, or route promotion.</p></div>
     <span class="status status--amber">Desk cost</span></div>
 </article></div></div>
@@ -117,10 +119,6 @@
           <div class="surface__head"><div><h3>Split work queues</h3><p>17 research / 2 product contracts</p></div>
             <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/tasks/NEXT.md">Open source</a></div>
           <div class="surface__body"><article class="task-row">
-  <div class="task-row__top"><div><h4>TASK-026 · Measure fixed-target balanced-regular yield on frozen toy E7 subgroups</h4>
-    <small>ECDLP research</small>
-    <p>TASK-025 proves that explicit endpoint and balanced nonvanishing assumptions reduce the exact projective cover to one affine chart, but it does not show that fixed-before-sampling targets admit enough such relations to make that chart usable. This task performs the cheapest precommitted test that can kill that continuation before any solver work. It does not test a secp256k1 key, a faithful PKC factor base, solver scaling, rank, recovery, or total ECDLP cost.</p></div><span class="status status--blue">Active</span></div>
-</article><article class="task-row">
   <div class="task-row__top"><div><h4>TASK-011 · Validate the external product pilot</h4>
     <small>KeyAI product</small>
     <p>The secp256k1 repository demonstrates an owner-operated research-state loop. It does not establish that another team has the same pain, can use the contracts, or will return.</p></div><span class="status status--blue">Active</span></div>
@@ -198,7 +196,7 @@
   <td><span class="status status--open_parked">Open, parked</span></td>
   <td>classical-single-target-plain</td>
   <td>P2</td>
-  <td>Keep the route parked. TASK-023 completed the exact affine/infinity chart-polynomial cover. TASK-024 reduced the logical family from 16384 masks to 987 separated masks and conditionally to 377 interior masks. TASK-025 then completed explicit propagation with zero retained hypotheses: the nested local restrictions are 377 to 129 to 69 to 36, while the independent boundary-only restriction is 129 to 60. Under endpoint and BalancedPropagatedRegular assumptions the exact cover is the single empty-mask affine chart. This is conditional target-field regularity, not a proof that the locus is symbolically nonzero, nonempty, dense, probable, or generic, and not witness uniqueness. The source-stage bridge requires injective base change into an algebraically closed target and mapped-target regularity that source-field computation does not automatically establish. TASK-025 itself authorized no successor execution; the later HYP-SELECT-002 decision authorizes exactly the external TASK-026 synthetic-toy singleton and nothing else. Any other next task for CELL-M-PKC-SMOOTH-M16, RSI-D8BBA6340789, and CQ-SEMAEV-S17-SYSTEM-COST must narrowly prove a usable nonempty regular locus or provide separately authorized orchestration of its exceptional complement before relation yield, rank, solving, recovery, or cost work. Keep every production mask sweep, solver, experiment other than the exact TASK-026 singleton, hypothesis retention, route rejection, route promotion, cost claim, and cost inference closed. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.</td>
+  <td>Keep the route parked. TASK-023 through TASK-025 completed the exact chart cover, necessary infinity-stratum filters, and conditional single-affine-chart propagation. TASK-026 then consumed its one external synthetic-toy authorization: all 3000000 trials completed, 911 exact relations were accepted, 907 were affine regular, and all six curve-arm regularity gates passed. REO-2026-07-31-001 records the result. This supports the bounded enabling claim that the named regular locus is usable in the frozen toy construction. Matched orbit/plain controls retained no H_NEW qualifying size, so the GLV-specific explanation is bounded negative and the terminal is CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION. The result is not source-faithful PKC relation generation, rank, solver scaling, recovery, total cost, 256-bit persistence, or an ECDLP improvement. Only formulate and review a source-faithful, non-executable HYP-M16-SOLVER-SLOPE-001 proposal with end-to-end metrics and scaling death criteria. Keep every TASK-026 rerun, production mask sweep, solver, experiment, route rejection, route promotion, cost claim, and exact-target inference closed until a separate dated authorization. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.</td>
 </tr><tr>
   <td><strong>Elliptic divisibility sequences and division-polynomial re-encodings</strong><small>R-EDS-DIVISION-POLYNOMIAL</small></td>
   <td><span class="status status--open_parked">Open, parked</span></td>
@@ -390,7 +388,7 @@
   <div class="surface__head"><div><h3>Canonical counts</h3><p>306 ledger rows / ~267 distinct</p></div><span class="status status--closed">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/data/stats.json">data/stats.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_status_consistency.py">scripts/check_status_consistency.py</a></div>
 </article><article class="surface">
-  <div class="surface__head"><div><h3>Decision state</h3><p>1 structural route completed / 0 promoted / 1 exact toy run authorized</p></div><span class="status status--blue">OK</span></div>
+  <div class="surface__head"><div><h3>Decision state</h3><p>1 structural route completed / 0 promoted / 1 exact toy run completed</p></div><span class="status status--blue">OK</span></div>
   <div class="surface__body"><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/ECDLP_DECISION_SUBSTRATE.json">repo/ECDLP_DECISION_SUBSTRATE.json</a><a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/scripts/check_ecdlp_decision_substrate.py">scripts/check_ecdlp_decision_substrate.py</a></div>
 </article><article class="surface">
   <div class="surface__head"><div><h3>Research Engine gates</h3><p>7 typed cells / 2 seeds / 0 bounded experiments</p></div><span class="status status--blue">OK</span></div>
@@ -408,11 +406,11 @@
           <div class="surface__body"><ul class="plain-list"><li>A materially different phase-preserving quotient, birational construction, or relation mechanism supplies exact fixed-target semantics, recovery, orbit tags, excluded components, and a falsifiable full-cost prediction.</li><li>An independently replayable counter-certificate or proof identifies an error in the frozen S3/S4 polynomial formulas or coordinatewise classification, the S4 resultant/fixed-target construction, or their assumptions.</li><li>A formal cost theorem combines the finite target orbit with a new mechanism and proves a nonconstant full-pipeline gain rather than attributing asymptotic value to orbit size alone.</li></ul></div>
         </article>
         <article class="surface">
-          <div class="surface__head"><div><h3>Operating policy</h3><p>one-bounded-decision-experiment</p></div></div>
+          <div class="surface__head"><div><h3>Operating policy</h3><p>post-task026-decision-review</p></div></div>
           <div class="surface__body">
             <ul class="compact-list">
               <li><strong>Engine exploration capability</strong><span>true</span></li>
-              <li><strong>Exact decision experiment</strong><span>true · AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01</span></li>
+              <li><strong>Exact decision experiment</strong><span>false · consumed AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01</span></li>
               <li><strong>Native decision exploration</strong><span>false</span></li>
               <li><strong>Structural routes</strong><span>R-GLV-SEMAEV</span></li>
               <li><strong>Promotion experiments</strong><span>false</span></li>
@@ -499,7 +497,7 @@
 </article><article class="task-row">
   <div class="task-row__top"><div><h4>TASK-026 · Measure fixed-target balanced-regular yield on frozen toy E7 subgroups</h4>
     <small>ECDLP research</small>
-    <p>TASK-025 proves that explicit endpoint and balanced nonvanishing assumptions reduce the exact projective cover to one affine chart, but it does not show that fixed-before-sampling targets admit enough such relations to make that chart usable. This task performs the cheapest precommitted test that can kill that continuation before any solver work. It does not test a secp256k1 key, a faithful PKC factor base, solver scaling, rank, recovery, or total ECDLP cost.</p></div><span class="status status--blue">Active</span></div>
+    <p>TASK-025 proves that explicit endpoint and balanced nonvanishing assumptions reduce the exact projective cover to one affine chart, but it does not show that fixed-before-sampling targets admit enough such relations to make that chart usable. This task performs the cheapest precommitted test that can kill that continuation before any solver work. It does not test a secp256k1 key, a faithful PKC factor base, solver scaling, rank, recovery, or total ECDLP cost.</p></div><span class="status status--gray">Completed Independently Validated Terminal</span></div>
 </article><article class="task-row">
   <div class="task-row__top"><div><h4>TASK-011 · Validate the external product pilot</h4>
     <small>KeyAI product</small>

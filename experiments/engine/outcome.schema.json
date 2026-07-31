@@ -281,7 +281,8 @@
         "source_kind": {
           "enum": [
             "historical_migration",
-            "native_engine_run"
+            "native_engine_run",
+            "external_bounded_decision_run"
           ]
         },
         "source_commit": {
@@ -327,7 +328,10 @@
           "provenance": {
             "properties": {
               "source_kind": {
-                "const": "native_engine_run"
+                "enum": [
+                  "native_engine_run",
+                  "external_bounded_decision_run"
+                ]
               }
             }
           }

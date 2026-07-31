@@ -38,7 +38,7 @@ STRUCTURAL_FOUNDATION_ID = "F-SEMAEV-ELIMINATION"
 MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
 MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
-CURRENT_PHASE = "one-bounded-decision-experiment"
+CURRENT_PHASE = "post-task026-decision-review"
 BOUNDED_AUTHORIZATION_KEY = "bounded_experiment_authorization"
 BOUNDED_AUTHORIZATION_ID = (
     "AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01"
@@ -94,6 +94,18 @@ BOUNDED_AUTHORIZATION_SCOPE = {
     "real_world_targets_forbidden": True,
     "secp256k1_targets_forbidden": True,
 }
+BOUNDED_TERMINAL_EVENT_ID = "REO-2026-07-31-001"
+BOUNDED_TERMINAL_STATUS = "CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION"
+BOUNDED_TERMINAL_OUTCOME = "supported"
+BOUNDED_TERMINAL_ARTIFACT = (
+    "experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.json"
+)
+BOUNDED_TERMINAL_ARTIFACT_SHA256 = (
+    "21a95ea4ea71c02d0199c331e549ca2e4ec2fbf7c1d8d70fe6651bea292d6413"
+)
+BOUNDED_TERMINAL_EVENT = (
+    "experiments/engine/outcomes/REO-2026-07-31-001.json"
+)
 COMPLETED_PROPAGATION_TASK_ID = "TASK-025"
 COMPLETED_STRATA_TASK_ID = "TASK-024"
 COMPLETED_CHART_TASK_ID = "TASK-023"
@@ -368,6 +380,12 @@ def validate_bounded_authorization(
         "authorization_id",
         "source_commit",
         "authorized_utc",
+        "completed_utc",
+        "terminal_event_id",
+        "terminal_status",
+        "normalized_outcome",
+        "validated_artifact_sha256",
+        "rerun_authorized",
         "sha256_bindings",
         "resource_budget",
         "scope",
@@ -379,7 +397,7 @@ def validate_bounded_authorization(
         )
 
     expected_identity = {
-        "status": "approved",
+        "status": "consumed",
         "hypothesis_id": BOUNDED_AUTHORIZATION_HYPOTHESIS_ID,
         "task_id": BOUNDED_AUTHORIZATION_TASK_ID,
         "route_id": BOUNDED_AUTHORIZATION_ROUTE_ID,
@@ -387,6 +405,11 @@ def validate_bounded_authorization(
         "promotion_authorized": False,
         "authorization_id": BOUNDED_AUTHORIZATION_ID,
         "source_commit": BOUNDED_AUTHORIZATION_SOURCE_COMMIT,
+        "terminal_event_id": BOUNDED_TERMINAL_EVENT_ID,
+        "terminal_status": BOUNDED_TERMINAL_STATUS,
+        "normalized_outcome": BOUNDED_TERMINAL_OUTCOME,
+        "validated_artifact_sha256": BOUNDED_TERMINAL_ARTIFACT_SHA256,
+        "rerun_authorized": False,
         "resource_budget": BOUNDED_AUTHORIZATION_BUDGET,
         "scope": BOUNDED_AUTHORIZATION_SCOPE,
     }
@@ -396,27 +419,39 @@ def validate_bounded_authorization(
                 f"{BOUNDED_AUTHORIZATION_KEY}.{field} must be {expected!r}"
             )
 
-    timestamp = authorization.get("authorized_utc")
-    if not isinstance(timestamp, str) or not re.fullmatch(
-        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", timestamp
-    ):
-        problems.append(
-            f"{BOUNDED_AUTHORIZATION_KEY}.authorized_utc must be canonical UTC"
-        )
-    else:
+    parsed_timestamps: dict[str, datetime] = {}
+    for timestamp_field in ("authorized_utc", "completed_utc"):
+        timestamp = authorization.get(timestamp_field)
+        if not isinstance(timestamp, str) or not re.fullmatch(
+            r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", timestamp
+        ):
+            problems.append(
+                f"{BOUNDED_AUTHORIZATION_KEY}.{timestamp_field} must be "
+                "canonical UTC"
+            )
+            continue
         try:
             parsed = datetime.strptime(
                 timestamp, "%Y-%m-%dT%H:%M:%SZ"
             ).replace(tzinfo=timezone.utc)
         except ValueError:
             problems.append(
-                f"{BOUNDED_AUTHORIZATION_KEY}.authorized_utc is invalid"
+                f"{BOUNDED_AUTHORIZATION_KEY}.{timestamp_field} is invalid"
             )
         else:
+            parsed_timestamps[timestamp_field] = parsed
             if parsed > datetime.now(timezone.utc):
                 problems.append(
-                    f"{BOUNDED_AUTHORIZATION_KEY}.authorized_utc is in the future"
+                    f"{BOUNDED_AUTHORIZATION_KEY}.{timestamp_field} is in the "
+                    "future"
                 )
+    if (
+        parsed_timestamps.get("authorized_utc")
+        and parsed_timestamps.get("completed_utc")
+        and parsed_timestamps["completed_utc"]
+        < parsed_timestamps["authorized_utc"]
+    ):
+        problems.append("bounded authorization completion precedes approval")
 
     bindings = authorization.get("sha256_bindings")
     expected_hashes = {
@@ -449,6 +484,33 @@ def validate_bounded_authorization(
             problems.append(
                 f"authorization source-commit hash drifted: {key}"
             )
+
+    terminal_artifact = ROOT / BOUNDED_TERMINAL_ARTIFACT
+    if not terminal_artifact.is_file():
+        problems.append("bounded terminal artifact is absent")
+    elif sha256_bytes(terminal_artifact.read_bytes()) != (
+        BOUNDED_TERMINAL_ARTIFACT_SHA256
+    ):
+        problems.append("bounded terminal artifact hash drifted")
+    terminal_event_path = ROOT / BOUNDED_TERMINAL_EVENT
+    if not terminal_event_path.is_file():
+        problems.append("bounded terminal event is absent")
+    else:
+        terminal_event = load_json(terminal_event_path)
+        expected_terminal = {
+            "event_id": BOUNDED_TERMINAL_EVENT_ID,
+            "candidate_id": BOUNDED_AUTHORIZATION_ID,
+            "hypothesis_id": BOUNDED_AUTHORIZATION_HYPOTHESIS_ID,
+            "route_id": BOUNDED_AUTHORIZATION_ROUTE_ID,
+            "outcome": BOUNDED_TERMINAL_OUTCOME,
+        }
+        for field, expected in expected_terminal.items():
+            if terminal_event.get(field) != expected:
+                problems.append(
+                    f"bounded terminal event {field} must be {expected!r}"
+                )
+        if terminal_event.get("stop_condition", {}).get("triggered") is not True:
+            problems.append("bounded terminal event must trigger its stop condition")
 
     source_substrate_payload = git_file_bytes(
         BOUNDED_AUTHORIZATION_SOURCE_COMMIT,
@@ -557,18 +619,15 @@ def validate() -> list[str]:
         )
     if data["phase_policy"].get("phase") != CURRENT_PHASE:
         problems.append(f"the current phase must be {CURRENT_PHASE}")
-    if data["phase_policy"].get("experiments_authorized") is not True:
-        problems.append(
-            "experiments_authorized must be true only for the exact decision-level "
-            "singleton"
-        )
+    if data["phase_policy"].get("experiments_authorized") is not False:
+        problems.append("completed singleton must leave experiments_authorized=false")
     if (
         data["phase_policy"].get("experiments_authorized")
         is not (authorization.get("status") == "approved")
     ):
         problems.append(
-            "decision-level experiments_authorized must equal the exact singleton "
-            "approval state"
+        "decision-level experiments_authorized must equal the exact singleton "
+        "approval state"
         )
     if data["phase_policy"].get("bounded_exploration_authorized") is not False:
         problems.append(
@@ -585,10 +644,11 @@ def validate() -> list[str]:
         "five source hashes",
         "three frozen E_7 toy subgroup rows",
         "thirty frozen cells",
-        "3000000-primary-trial ceiling",
+        "3000000 completed primary trials",
         "independent validator",
-        "Retain every completed, negative, inconclusive, artifact-rejected, or "
-        "resource-exhausted terminal outcome",
+        BOUNDED_TERMINAL_EVENT_ID,
+        BOUNDED_TERMINAL_ARTIFACT_SHA256,
+        "HYP-M16-SOLVER-SLOPE-001",
     ):
         if binding not in phase_allowed:
             problems.append(
@@ -634,7 +694,7 @@ def validate() -> list[str]:
             problems.append(f"phase_policy.allowed_work is missing {binding}")
     phase_forbidden = "\n".join(data["phase_policy"].get("forbidden_work", []))
     for binding in (
-        "other than the exact TASK-026 singleton",
+        "Repeat TASK-026",
         "exact-target secp256k1 work",
         "promotion experiment",
     ):
@@ -677,7 +737,7 @@ def validate() -> list[str]:
         execution_gates.get("exploration", {}).get("cannot_do", [])
     )
     if (
-        "only current authorization is the exact TASK-026 singleton"
+        "TASK-026 singleton is consumed"
         not in exploration_cannot_do
     ):
         problems.append(
@@ -843,11 +903,11 @@ def validate() -> list[str]:
     next_gate = data.get("next_phase_gate", {})
     if (
         next_gate.get("current_mode")
-        != "one_bounded_decision_experiment_promotion_closed"
+        != "post_task026_proposal_only_promotion_closed"
     ):
         problems.append(
             "next_phase_gate.current_mode must be "
-            "one_bounded_decision_experiment_promotion_closed"
+            "post_task026_proposal_only_promotion_closed"
         )
     reopen = next_gate.get("reopen_requirements")
     if not isinstance(reopen, list) or not reopen:
@@ -857,7 +917,7 @@ def validate() -> list[str]:
         BOUNDED_AUTHORIZATION_TASK_ID,
         "independently validate",
         "HYP-M16-SOLVER-SLOPE-001",
-        "No TASK-026 terminal promotes a route",
+        "no TASK-026 terminal promotes a route",
         "authorizes a solver",
         "secp256k1 extrapolation",
     ):
@@ -880,7 +940,7 @@ def validate() -> list[str]:
         "selected_attack_route remains null",
         "route-level and native bounded-exploration authorization remain false",
         "promotion authorization remains false",
-        "authorizes a solver",
+        "authorizes no solver",
         "direct secp256k1 target work",
         "ECDLP complexity improvement",
     ):
@@ -974,7 +1034,7 @@ def validate() -> list[str]:
                 continue
             status = hypotheses[hypothesis_id].get("status")
             expected_status = (
-                "active"
+                "closed"
                 if (
                     hypothesis_id == BOUNDED_AUTHORIZATION_HYPOTHESIS_ID
                     and route_id == BOUNDED_AUTHORIZATION_ROUTE_ID
@@ -1000,9 +1060,9 @@ def validate() -> list[str]:
     for binding in (
         COMPLETED_PROPAGATION_TASK_ID,
         BOUNDED_AUTHORIZATION_TASK_ID,
-        DESK_PRIORITY_CELL_ID,
-        DESK_PRIORITY_STUB_ID,
-        DESK_PRIORITY_COST_ID,
+        BOUNDED_TERMINAL_EVENT_ID,
+        BOUNDED_TERMINAL_STATUS,
+        "HYP-M16-SOLVER-SLOPE-001",
     ):
         if binding not in petit_next_action:
             problems.append(
@@ -1144,29 +1204,19 @@ def validate() -> list[str]:
                 f"{binding}"
             )
     for binding in (
-        COMPLETED_STRATA_TASK_ID,
-        "16384 masks to 987 separated masks",
-        "conditionally to 377 interior masks",
-        COMPLETED_PROPAGATION_TASK_ID,
-        "377 to 129 to 69 to 36",
-        "boundary-only restriction is 129 to 60",
-        "BalancedPropagatedRegular",
-        "single empty-mask affine chart",
-        "symbolically nonzero, nonempty, dense, probable, or generic",
-        "mapped-target regularity",
-        "usable nonempty regular locus",
-        "orchestration of its exceptional complement",
-        "relation yield",
+        "3000000 trials",
+        "911 exact relations",
+        "907 were affine regular",
+        "no H_NEW qualifying size",
+        "source-faithful PKC relation generation",
         "rank",
-        "solving",
+        "solver scaling",
         "recovery",
-        "solver",
-        "experiment",
-        "hypothesis retention",
-        "route rejection",
+        "total cost",
+        "256-bit persistence",
+        "TASK-026 rerun",
         "route promotion",
-        "cost claim",
-        "cost inference",
+        "exact-target",
     ):
         if binding not in petit_next_action:
             problems.append(
@@ -1273,10 +1323,9 @@ def validate() -> list[str]:
         for hypothesis_id, fields in experiment_hypotheses.items()
         if fields.get("status") == "active"
     ]
-    if active_experiments != [BOUNDED_AUTHORIZATION_HYPOTHESIS_ID]:
+    if active_experiments:
         problems.append(
-            "exactly the external bounded singleton hypothesis may be active "
-            "without route promotion; found: "
+            "the consumed external singleton leaves no active experiment; found: "
             + ", ".join(sorted(active_experiments))
         )
     completed_structural_hypotheses = [
@@ -1404,13 +1453,17 @@ def validate() -> list[str]:
         problems.append("TASK-010 must be completed_accepted")
     task_026 = task_sections.get(BOUNDED_AUTHORIZATION_TASK_ID, "")
     for binding in (
-        "Status: active_authorized_bounded_experiment",
+        "Status: completed_independently_validated_terminal",
         f"Hypothesis: `{BOUNDED_AUTHORIZATION_HYPOTHESIS_ID}`",
         f"`{BOUNDED_AUTHORIZATION_ID}`",
         f"`{BOUNDED_AUTHORIZATION_SOURCE_COMMIT}`",
         "Model: classical representation-aware, synthetic toy data only",
         f"Route state: `{BOUNDED_AUTHORIZATION_ROUTE_ID}` remains `open_parked`",
         "Promotion: false",
+        f"Outcome event: `{BOUNDED_TERMINAL_EVENT_ID}`",
+        f"Terminal: `{BOUNDED_TERMINAL_STATUS}`",
+        "Authorization state: consumed; rerun authorized: false",
+        BOUNDED_TERMINAL_ARTIFACT_SHA256,
         "three frozen `E_7` toy subgroup rows",
         "3,000,000 primary trials",
         "four CPU-hours",
@@ -1744,9 +1797,9 @@ def validate() -> list[str]:
     )
     expected_bounded_hypothesis = {
         "direction": "experiment",
-        "status": "active",
+        "status": "closed",
         "hypothesis_type": "ENABLING",
-        "lifecycle_state": "ACTIVE",
+        "lifecycle_state": "PROMOTED",
         "task_id": BOUNDED_AUTHORIZATION_TASK_ID,
         "route_id": BOUNDED_AUTHORIZATION_ROUTE_ID,
         "cell_id": BOUNDED_AUTHORIZATION_CELL_ID,
@@ -1764,9 +1817,9 @@ def validate() -> list[str]:
                 f"{BOUNDED_AUTHORIZATION_HYPOTHESIS_ID}.{field} must be "
                 f"{expected!r}"
             )
-    if active_hypotheses != [BOUNDED_AUTHORIZATION_HYPOTHESIS_ID]:
+    if active_hypotheses:
         problems.append(
-            "exactly the decision-level bounded hypothesis must be active; "
+            "the consumed singleton must leave no active hypothesis; "
             f"found {active_hypotheses}"
         )
     for hypothesis_id in active_hypotheses:
@@ -1798,7 +1851,7 @@ def validate() -> list[str]:
     if maintenance.get("historical_outcomes_mutable") is not False:
         problems.append("maintenance cycle must preserve historical outcomes")
     if (
-        f"Current central task: `{BOUNDED_AUTHORIZATION_TASK_ID}`."
+        "Current central decision: formulate and review, but do not execute,"
         not in next_tasks_text
     ):
         problems.append(
@@ -1807,7 +1860,8 @@ def validate() -> list[str]:
     for binding in (
         BOUNDED_AUTHORIZATION_ID,
         BOUNDED_AUTHORIZATION_HYPOTHESIS_ID,
-        BOUNDED_AUTHORIZATION_SOURCE_COMMIT,
+        BOUNDED_TERMINAL_EVENT_ID,
+        BOUNDED_TERMINAL_STATUS,
         f"`{BOUNDED_AUTHORIZATION_ROUTE_ID}` remains",
         "`R-GLV-SEMAEV` is also",
         "selected attack route remains null",
@@ -2193,8 +2247,9 @@ def main() -> int:
     print(
         "decision-substrate check OK: "
         f"{len(data['routes'])} routes, {len(data['foundations'])} foundations, "
-        "1 completed bounded structural route, 1 exact decision-level synthetic-toy "
-        "experiment authorization, 0 native/route authorizations, 0 promoted routes."
+        "1 completed bounded structural route, 1 consumed decision-level "
+        "synthetic-toy experiment record, 0 current experiment authorizations, "
+        "0 native/route authorizations, 0 promoted routes."
     )
     return 0
 

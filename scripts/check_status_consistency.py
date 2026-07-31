@@ -256,13 +256,13 @@ def main() -> int:
         and f"{selected_explorations} selected;" in dashboard
         and f"{len(selected_structural)} structural route completed" in explore
         and f"{len(promoted_routes)} promoted" in explore
-        and "1 exact synthetic-toy run authorized" in explore
+        and "1 exact synthetic-toy run completed" in explore
         and "0 native experiments selected" in explore,
         "public reference views must distinguish the exact singleton from the "
         "empty native exploration queue",
     )
     check(
-        "One hash-bound synthetic-toy diagnostic is authorized." in dashboard
+        "One hash-bound synthetic-toy diagnostic completed." in dashboard
         and "Native queue closed" in dashboard
         and authorization_id in dashboard
         and "repo/RESEARCH_ENGINE_V0.json" in dashboard
@@ -396,11 +396,11 @@ def main() -> int:
         and engine.get("gate_status", {}).get(
             "current_decision_experiment_authorized"
         )
-        == True
+        == False
         and decisions.get("phase_policy", {}).get(
             "experiments_authorized"
         )
-        == True
+        == False
         and decisions.get("phase_policy", {}).get(
             "bounded_exploration_authorized"
         )
@@ -441,7 +441,7 @@ def main() -> int:
         "STATUS.md must expose singleton identity, source, budget, and safety scope",
     )
     check(
-        "Exact decision experiment authorized: **true**" in decision_view
+        "Exact decision experiment authorized: **false**" in decision_view
         and "Native bounded exploration authorized: **false**"
         in decision_view
         and "Promotion experiments authorized: **false**" in decision_view

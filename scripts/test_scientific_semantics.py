@@ -1128,7 +1128,7 @@ class ScientificSemanticTests(unittest.TestCase):
         decisions["maintenance_cycle"]["status"] = "active_remediation_draft"
         problems = self.validate(decisions=decisions)
         self.assertIn(
-            "current phase must remain one bounded decision experiment",
+            "current phase must be post-task026-decision-review",
             problems,
         )
         self.assertIn(

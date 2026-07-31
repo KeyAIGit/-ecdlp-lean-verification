@@ -634,7 +634,7 @@ def build() -> dict:
                     decisions.get("bounded_experiment_authorization"), dict
                 )
                 and decisions["bounded_experiment_authorization"].get("status")
-                == "approved"
+                in {"approved", "consumed"}
             ),
             "selected_structural_routes": len(
                 decisions["route_selection"].get("selected_route_ids", [])
@@ -849,7 +849,7 @@ def render_markdown(graph: dict) -> str:
         f"Selected attack route: **{phase['selected_attack_route'] or 'none'}**."
     )
     lines.append("")
-    lines.append("### Exact bounded experiment authorization")
+    lines.append("### Exact bounded experiment record")
     lines.append("")
     lines.append(
         f"**{authorization['authorization_id']}** is "
@@ -859,7 +859,10 @@ def render_markdown(graph: dict) -> str:
         f"`{authorization['route_id']}` / "
         f"`{authorization['cell_id']}`. It binds readiness commit "
         f"`{authorization['source_commit']}` and "
-        f"**{len(authorization['sha256_bindings'])} source hashes**."
+        f"**{len(authorization['sha256_bindings'])} source hashes**. "
+        f"Terminal: `{authorization['terminal_status']}` in "
+        f"`{authorization['terminal_event_id']}`; rerun authorized: "
+        f"**{str(authorization['rerun_authorized']).lower()}**."
     )
     lines.append("")
     lines.append(

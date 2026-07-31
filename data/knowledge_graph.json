@@ -22,7 +22,7 @@
     "hypothesis_axis_nodes": 9,
     "source_index_nodes": 28,
     "research_engine_intake_candidates": 0,
-    "research_engine_outcomes": 8,
+    "research_engine_outcomes": 9,
     "research_engine_v02_candidates": 0,
     "shadow_proposal_stubs": 4,
     "shadow_parked_ideas": 1,
@@ -30,7 +30,7 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1140,
+    "edges": 1143,
     "by_edge_type": {
       "imports": 505,
       "member_of": 306,
@@ -44,9 +44,9 @@
       "extends_frontier": 15,
       "frontier_of": 13,
       "requires_target_property": 9,
-      "records_outcome_for": 8,
-      "updates_hypothesis": 8,
-      "records_route_evidence": 8,
+      "records_outcome_for": 9,
+      "updates_hypothesis": 9,
+      "records_route_evidence": 9,
       "blocked_by": 7,
       "instantiates_mechanism": 7,
       "evaluates_route": 7,
@@ -6974,13 +6974,13 @@
       }
     ],
     "phase_policy": {
-      "phase": "one-bounded-decision-experiment",
-      "experiments_authorized": true,
+      "phase": "post-task026-decision-review",
+      "experiments_authorized": false,
       "bounded_exploration_authorized": false,
       "promotion_experiments_authorized": false,
       "selected_attack_route": null,
       "allowed_work": [
-        "Execute exactly AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01 for TASK-026 with the five source hashes, three frozen E_7 toy subgroup rows, thirty frozen cells, 3000000-primary-trial ceiling, independent validator, and resource bounds recorded by the singleton. Retain every completed, negative, inconclusive, artifact-rejected, or resource-exhausted terminal outcome.",
+        "Retain and independently replay the consumed AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01 / TASK-026 bundle: five source hashes, three frozen E_7 toy subgroup rows, thirty frozen cells, 3000000 completed primary trials, independent validator, terminal event REO-2026-07-31-001, and validator artifact SHA-256 21a95ea4ea71c02d0199c331e549ca2e4ec2fbf7c1d8d70fe6651bea292d6413. The only new research work admitted is a source-faithful, non-executable HYP-M16-SOLVER-SLOPE-001 proposal with explicit end-to-end scaling and death criteria.",
         "Maintain and independently replay the completed GLV-SEMAEV-ITER-001 certificates and kernel-checked theorem package.",
         "Maintain the accepted Research Engine v0.2 lifecycle and its non-executable generation plane.",
         "Ingest WCC 2017 as a separate inspected source while CANS 2018 remains full-text unread.",
@@ -6997,7 +6997,7 @@
         "Maintain canonical provenance and regenerate affected views without changing the recorded claim boundary."
       ],
       "forbidden_work": [
-        "Run any hypothesis experiment other than the exact TASK-026 singleton, any general solver sweep, exact-target secp256k1 work, expensive scaling, or promotion experiment.",
+        "Repeat TASK-026 or run any hypothesis experiment, general solver sweep, exact-target secp256k1 work, expensive scaling, or promotion experiment without a separate dated authorization.",
         "Expand or evaluate direct S17, treat the guarded frozen representation as solver-ready, price solving from its raw variable and equation counts, or run Sage, msolve, F4, a solver, or a parameter sweep while CQ-SEMAEV-S17-SYSTEM-COST remains partial.",
         "Activate an auxiliary-curve search before a primary source supplies a finite family or search domain with a completeness criterion.",
         "Transfer WCC 2017 m=2 toy timings, speedups, or practical-limit conclusions to secp256k1 m=16 or to cryptographic scaling.",
@@ -7015,7 +7015,7 @@
       "merge_rule": "The owner delegated merge authority on 2026-07-22. Merge only from a clean branch after required CI is green, the diff has a documented scope and rollback path, and no unresolved blocking finding is known."
     },
     "bounded_experiment_authorization": {
-      "status": "approved",
+      "status": "consumed",
       "hypothesis_id": "HYP-M16-FIXED-TARGET-YIELD-001",
       "task_id": "TASK-026",
       "route_id": "R-PETIT-COMPOSED-MAPS",
@@ -7024,6 +7024,12 @@
       "authorization_id": "AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01",
       "source_commit": "0b1b36851aa0f82c3a1bd587d385775923153d9c",
       "authorized_utc": "2026-07-31T02:12:19Z",
+      "completed_utc": "2026-07-31T02:31:47Z",
+      "terminal_event_id": "REO-2026-07-31-001",
+      "terminal_status": "CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION",
+      "normalized_outcome": "supported",
+      "validated_artifact_sha256": "21a95ea4ea71c02d0199c331e549ca2e4ec2fbf7c1d8d70fe6651bea292d6413",
+      "rerun_authorized": false,
       "sha256_bindings": {
         "preregistration": "e41164b1e8950aab60849e567949a230d592652d9b7ae2484eaed5dff7518cc5",
         "curve_table": "a59ed1a8b597bc5d512438d09fbb4c970fff74dd704f8f88be4f7224775f5e0d",
@@ -7571,7 +7577,7 @@
         "current_evidence": "The official PKC 2016 primary source has now been inspected. It defines the faithful prime-field factor base F={(x,y):L(x)=0}, with L a composition of low-degree rational maps, and gives p-1-smooth-subgroup and auxiliary-curve realizations. In the second construction the auxiliary curve only shares the base field with the target; a self-isogeny of the auxiliary curve defines the root map. The paper explicitly leaves the asymptotic complexity of the resulting generalized root-finding problem open. WCC 2017 adds bounded m=2 practicality evidence on selected small primes and a distinct p-plus-one trace extension; it cannot be transferred quantitatively to m=16 or substituted for the auxiliary curve. Historical P4 did not implement either PKC construction and remains only an inconclusive negative control; it is not evidence against the faithful route. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 independently replayed an exact set-theoretic homogeneous projective S3-tree bridge, every named exceptional lift and identity stratum, deterministic supplied-coordinate recovery, and raw and compressed secp256k1 GLV lift-sign checks. TASK-018 freezes the recursive projective S17 contract, including fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, coefficient-map and algebraic-closure reflection variants, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and its end-to-end common-root corollary. Formal-degree drops, zero forms, affine witnesses, and [1:0] are retained without primitive/content, monic, or actual-degree normalization. The TASK-019 non-run binding is PKC-SMOOTH-M16-PROJECTIVE-RESULTANT-KERNEL-001 with SHA-256 0b9d8b48953aae2defa28ade67992084cecca3a01b43490bc338a0fd5ce97c5a and typed claim SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT. TASK-020 kernel-checks the actual recursive frozen C_r family, exact same-field and coefficient-map successor specialization at formal degrees (2^(r-2),2), coefficient unit 1, affine [y:1] and infinity [1:0] output branches, the uniform predecessor output-degree bound, and the unconditional one-step resultant/common-projective-root equivalence. Its non-run binding is PKC-SMOOTH-M16-FROZEN-CR-SPECIALIZATION-001 with SHA-256 d025053b9f882c88086fd5f04bcbd9627c72987e263e9b55af6024794305acbe and typed claim SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT. TASK-021 kernel-checks exact declared-degree projective evaluation and the universal all-stage frozen witness-chain equivalence. At C16 the chain has fourteen valid intermediate projective slots, [1:0] is allowed throughout, and [0:0] is excluded. Its non-run binding is PKC-SMOOTH-M16-FROZEN-PROJECTIVE-WITNESS-001 with SHA-256 89c645545d89334473d51654a41ff7ec2364857d034c64ce08d505337fa1e2d4 and typed claim SC-PKC-M16-FROZEN-PROJECTIVE-WITNESS-RESULT. TASK-022 now kernel-checks an exact literal finite MvPolynomial family for the frozen stage-14 predicate after an injective source-to-target field map: one GuardVar assignment satisfies every GuardedEquation. This is exactly equivalent to the recursive chain, not a parallel recursive syntax. Four raw scalars U,V,A,B for each of fourteen projective witness slots give 56 variables; fifteen literal H equations and fourteen guards give 29 equation-family members; every equation has total degree at most four; [0:0] is excluded and [1:0] is retained. Its non-run binding is PKC-SMOOTH-M16-GUARDED-PROJECTIVE-SYSTEM-001 with SHA-256 3445da55b44a71d0f40ee60206c90f2ef1798c28abd125542ce3acbeeb8e1d46 and typed claim SC-PKC-M16-GUARDED-PROJECTIVE-SYSTEM-RESULT. The source binding is 37feeef48e77437b44b6ae6dd4750782e19ecd824e3ea2e73b657e2fb8296fb9. TASK-023 now kernel-checks the exact affine/infinity chart-polynomial cover: each fixed InfinityMask I uses exactly 14 - I.card affine variables, no guard equations, and fifteen literal H equations with degree ceilings 2/4/2. The existential cover is equivalent to the projective chain, guarded system, and source frozen stage-14 predicate after the existing injective base change; [1:0] is retained and [0:0] is never introduced. The 2^14 logical masks are not enumerated or materialized. Its non-run binding is PKC-SMOOTH-M16-EXACT-CHART-COVER-001 with SHA-256 934809fabbb8c98c5ed9356a0a1f3367a23f8fbc1bc86239069942537fd678ed and typed claim SC-PKC-M16-EXACT-CHART-COVER-RESULT. The TASK-023 source binding is 4f7b95453d8fafba3ec9cae0a9bbad5d8f782c6c0202f6e7cf37e17981b63019. TASK-024 kernel-checks necessary infinity-stratum pruning from 16384 masks to 987 separated masks and conditionally to 377 interior masks. Its binding is PKC-SMOOTH-M16-INFINITY-STRATA-001 with SHA-256 54b0f3c5f2f1880b1f805911df21b72e5427b18871f14907ac17a1d8b48bdd39 and typed claim SC-PKC-M16-INFINITY-STRATA-RESULT. TASK-025 kernel-checks explicit infinity propagation: the nested conditional mask counts are 377 to 129 to 69 to 36, while the independent boundary-only refinement is 129 to 60. It also proves over any field that internal infinity forces an explicit frozen prefix or suffix obstruction to vanish and that endpoint plus BalancedPropagatedRegular assumptions make the exact chart cover the single empty-mask affine chart. Its binding is PKC-SMOOTH-M16-INFINITY-PROPAGATION-001 with SHA-256 9330603ba1f0af9ee4902c263200709e2ec6f8c50d8d7eaab3b55bcba78e388f and typed claim SC-PKC-M16-INFINITY-PROPAGATION-RESULT. The TASK-025 source binding is 7f868aab5b946a55a213ce26a461477321d6387830eed218c414f1e62853b4b4. Its source-stage bridge requires injective base change into an algebraically closed target and mapped-target balanced regularity; source-field computation does not automatically establish that regularity. Symbolic nonzeroness, nonemptiness, density, probability, genericity, and witness uniqueness are not proved. Assurance is kernel_bound_non_run_certificate, source independence is not_established, calibration is excluded_nonexperimental, and retention is zero_retention_success. The M16 cell remains open_non_executable. The exact remaining blocker is symbolic nonzeroness and nonemptiness of a usable regular locus or orchestration of its exceptional complement, followed by relation yield, rank, solving, recovery, and total cost. CQ-SEMAEV-S17-SYSTEM-COST remains partial while relation yield, rank, and solving cost remain unpriced.",
         "success_gate": "First reproduce the exact construction from a verified primary source, then compare it under the common evaluation contract.",
         "stop_condition": "Reject low-bit filters, redundant auxiliary variables, or presentation-only degree changes as substitutes for the cited construction.",
-        "next_action": "Keep the route parked. TASK-023 completed the exact affine/infinity chart-polynomial cover. TASK-024 reduced the logical family from 16384 masks to 987 separated masks and conditionally to 377 interior masks. TASK-025 then completed explicit propagation with zero retained hypotheses: the nested local restrictions are 377 to 129 to 69 to 36, while the independent boundary-only restriction is 129 to 60. Under endpoint and BalancedPropagatedRegular assumptions the exact cover is the single empty-mask affine chart. This is conditional target-field regularity, not a proof that the locus is symbolically nonzero, nonempty, dense, probable, or generic, and not witness uniqueness. The source-stage bridge requires injective base change into an algebraically closed target and mapped-target regularity that source-field computation does not automatically establish. TASK-025 itself authorized no successor execution; the later HYP-SELECT-002 decision authorizes exactly the external TASK-026 synthetic-toy singleton and nothing else. Any other next task for CELL-M-PKC-SMOOTH-M16, RSI-D8BBA6340789, and CQ-SEMAEV-S17-SYSTEM-COST must narrowly prove a usable nonempty regular locus or provide separately authorized orchestration of its exceptional complement before relation yield, rank, solving, recovery, or cost work. Keep every production mask sweep, solver, experiment other than the exact TASK-026 singleton, hypothesis retention, route rejection, route promotion, cost claim, and cost inference closed. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.",
+        "next_action": "Keep the route parked. TASK-023 through TASK-025 completed the exact chart cover, necessary infinity-stratum filters, and conditional single-affine-chart propagation. TASK-026 then consumed its one external synthetic-toy authorization: all 3000000 trials completed, 911 exact relations were accepted, 907 were affine regular, and all six curve-arm regularity gates passed. REO-2026-07-31-001 records the result. This supports the bounded enabling claim that the named regular locus is usable in the frozen toy construction. Matched orbit/plain controls retained no H_NEW qualifying size, so the GLV-specific explanation is bounded negative and the terminal is CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION. The result is not source-faithful PKC relation generation, rank, solver scaling, recovery, total cost, 256-bit persistence, or an ECDLP improvement. Only formulate and review a source-faithful, non-executable HYP-M16-SOLVER-SLOPE-001 proposal with end-to-end metrics and scaling death criteria. Keep every TASK-026 rerun, production mask sweep, solver, experiment, route rejection, route promotion, cost claim, and exact-target inference closed until a separate dated authorization. Keep the auxiliary-curve cell parked until a primary source supplies a finite family or search domain with a completeness criterion.",
         "authorized_experiment": false,
         "hypothesis_ids": [
           "HYP_GLV_SEMAEV_001",
@@ -7602,7 +7608,10 @@
           "experiments/engine/pkc_smooth_m16_guarded_projective_system/artifact.json",
           "experiments/engine/pkc_smooth_m16_exact_chart_cover/artifact.json",
           "experiments/engine/pkc_smooth_m16_infinity_strata/artifact.json",
-          "experiments/engine/pkc_smooth_m16_infinity_propagation/artifact.json"
+          "experiments/engine/pkc_smooth_m16_infinity_propagation/artifact.json",
+          "experiments/engine/pkc_smooth_m16_fixed_target_yield/RESULTS.md",
+          "experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.json",
+          "experiments/engine/outcomes/REO-2026-07-31-001.json"
         ],
         "source_ids": [
           "petit_kosters_messeng2016",
@@ -8190,7 +8199,7 @@
     "gate_status": {
       "exploration_authorized": true,
       "promotion_authorized": false,
-      "current_decision_experiment_authorized": true,
+      "current_decision_experiment_authorized": false,
       "current_decision_bounded_exploration_authorized": false,
       "structural_work_authorized": false,
       "exploration_limits": {
@@ -8233,7 +8242,7 @@
     },
     "counts": {
       "normalized_hypotheses": 10,
-      "outcome_events": 8,
+      "outcome_events": 9,
       "candidate_proposals": 6,
       "generated_hypothesis_seeds": 2,
       "submitted_hypothesis_proposals": 0,
@@ -8253,11 +8262,12 @@
       "hard_rejected_candidates": 6,
       "outcomes_by_source": {
         "historical_migration": 8,
-        "native_engine_run": 0
+        "native_engine_run": 0,
+        "external_bounded_decision_run": 1
       },
       "outcomes_by_taxonomy": {
         "proved": 0,
-        "supported": 0,
+        "supported": 1,
         "historical_structural_confirmation": 1,
         "falsified": 0,
         "bounded_negative": 2,
@@ -8408,10 +8418,11 @@
     },
     "calibration": {
       "historical_outcomes_excluded": 8,
+      "external_bounded_outcomes_excluded": 1,
       "scored_native_outcomes": 0,
       "mean_brier_score": null,
       "records": [],
-      "note": "Historical migrations are excluded because their priors and likelihoods were not frozen before observation."
+      "note": "Historical migrations are excluded because their priors and likelihoods were not frozen before observation. External bounded decision runs are excluded because they are not native selected Engine candidates."
     },
     "normalized_hypotheses": [
       {
@@ -8552,18 +8563,22 @@
       {
         "id": "HYP-M16-FIXED-TARGET-YIELD-001",
         "direction": "experiment",
-        "source_status": "active",
-        "normalized_outcome": null,
-        "verifier_scope": "The exact TASK-026 singleton is bound by the decision substrate to the committed readiness package, three synthetic E_7 toy subgroups, thirty frozen cells, independent replay, and fixed resource limits. No terminal scientific outcome exists yet.",
-        "engine_state": "external_bounded_authorization_not_native_candidate",
+        "source_status": "closed",
+        "normalized_outcome": "supported",
+        "verifier_scope": "The consumed TASK-026 singleton completed exactly 3000000 primary trials across three frozen synthetic E_7 toy subgroups and thirty cells. Independent raw replay supports only the exact enabling availability claim. The terminal is CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION: matched GLV-orbit/plain controls retain no H_NEW qualifying size. No native candidate, solver, rank, recovery, secp256k1, scaling, route-promotion, or ECDLP-complexity claim follows.",
+        "engine_state": "external_bounded_terminal_not_native_candidate",
         "route_ids": [
           "R-PETIT-COMPOSED-MAPS"
         ],
-        "rationale": "This enabling test is authorized once by the decision substrate outside the frozen Research Engine v0.2 candidate queue. It tests fixed-target availability of the TASK-025 regular affine locus on the canonical Petit-composed-map cell. The GLV-orbit arm is a matched ablation, not a second route binding; the test does not reopen the rejected coordinatewise-cube quotient, select a native Engine candidate, or promote an attack route.",
-        "reopening_condition": "After the exact singleton reaches a validated terminal state, retain that outcome and follow only its preregistered next step; any rerun, solver-slope test, changed threshold, new curve, or larger budget requires a new hypothesis id or dated authorization.",
-        "outcome_event_count": 0,
-        "outcome_counts": {},
-        "outcome_event_ids": []
+        "rationale": "The external decision-level test reached a validated terminal outside the frozen Research Engine v0.2 candidate queue. It supports bounded fixed-target availability of the TASK-025 regular affine locus on the canonical Petit-composed-map cell, while its GLV-orbit ablation shows no new-mechanism advantage over matched plain controls. It does not reopen the rejected coordinatewise-cube quotient, select a native Engine candidate, or promote an attack route.",
+        "reopening_condition": "Do not rerun this singleton. Only formulate one separately reviewed, source-faithful HYP-M16-SOLVER-SLOPE-001 proposal with end-to-end metrics and scaling death criteria; any execution, changed threshold, new curve, or larger budget requires a new hypothesis decision and dated authorization.",
+        "outcome_event_count": 1,
+        "outcome_counts": {
+          "supported": 1
+        },
+        "outcome_event_ids": [
+          "REO-2026-07-31-001"
+        ]
       },
       {
         "id": "HYP_WARD_EDS_001",
@@ -8740,6 +8755,29 @@
         "decision_delta": {
           "effect": "retained_history",
           "statement": "Retain the scoped historical evidence; no automatic route decision follows."
+        }
+      },
+      {
+        "event_id": "REO-2026-07-31-001",
+        "candidate_id": "AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01",
+        "hypothesis_id": "HYP-M16-FIXED-TARGET-YIELD-001",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "outcome": "supported",
+        "source_kind": "external_bounded_decision_run",
+        "claim_boundary": "Fixed-before-sampling TASK-025 balanced-regular relation availability and matched GLV-orbit versus plain controls only; no solver, faithful PKC factor base, rank, recovery, secp256k1 target, scaling law, or ECDLP-complexity claim.",
+        "evidence_files": [
+          "experiments/engine/pkc_smooth_m16_fixed_target_yield/PREREGISTRATION.md",
+          "experiments/engine/pkc_smooth_m16_fixed_target_yield/RESULTS.md",
+          "experiments/engine/pkc_smooth_m16_fixed_target_yield/run_manifest.json",
+          "experiments/engine/pkc_smooth_m16_fixed_target_yield/raw/transcript.jsonl",
+          "experiments/engine/pkc_smooth_m16_fixed_target_yield/summary.json",
+          "experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.json",
+          "experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.sha256"
+        ],
+        "reopening_condition": "Do not reopen this fixed-target yield run. A new HYP-M16-SOLVER-SLOPE-001 proposal must define a source-faithful relation family, end-to-end solver metrics, controls, scaling kill criteria, and a separate dated authorization.",
+        "decision_delta": {
+          "effect": "external_bounded_result_retained",
+          "statement": "Retain the exact decision-authorized result outside native selection and calibration; no automatic promotion follows."
         }
       }
     ],
@@ -9175,15 +9213,18 @@
         "evidence_axis": {
           "engine_disposition": "open_with_scoped_uncertainty",
           "outcome_counts": {
-            "inconclusive": 1
+            "inconclusive": 1,
+            "supported": 1
           }
         },
         "event_ids": [
-          "REO-2026-07-24-007"
+          "REO-2026-07-24-007",
+          "REO-2026-07-31-001"
         ],
         "route_review_trigger_event_ids": [],
         "reopening_conditions": [
-          "Supply a mathematically faithful prime-field mechanism and an independently validated decisive solver metric."
+          "Supply a mathematically faithful prime-field mechanism and an independently validated decisive solver metric.",
+          "Do not reopen this fixed-target yield run. A new HYP-M16-SOLVER-SLOPE-001 proposal must define a source-faithful relation family, end-to-end solver metrics, controls, scaling kill criteria, and a separate dated authorization."
         ]
       },
       {
@@ -9297,8 +9338,8 @@
       "generator_id": "ecdlp-hypothesis-generation-v0",
       "source_hashes": {
         "generation_policy_sha256": "a97da575998c9e8812c79f8ae727239be012c1aca0d51ef689fd9e08839930ea",
-        "typed_evidence_state_sha256": "caf6646bad2d80d7ac34e64cd856c4d82b431ff6eaa188038bad396de72446fa",
-        "research_claim_state_sha256": "65d4cefb6b79f8c3d6f84f1878ea2b90c2ec3873fd74612e58c8126d65a0283a",
+        "typed_evidence_state_sha256": "bc1ee18931a51364c2122120bdf50a039b67b747f006996795cb4767d87ab63f",
+        "research_claim_state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
         "proposals_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
       },
@@ -9334,7 +9375,7 @@
         },
         "source_hashes": {
           "policy_sha256": "b28e955fade48c7e8f30699ad137e8ee3cefe3aca2186ccce960489d8199fd04",
-          "decision_substrate_sha256": "63d10475713bcdb80bfef482325dc95bf96c60619472c1beb5fdd6576392d8b3",
+          "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
           "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
           "evidence_files_sha256": "71b527927a514cee8171b5b9a9dcc432313cdfe51fa7960dc1155f628c8025b8",
           "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
@@ -9364,15 +9405,15 @@
           "route_promotions": 0,
           "exact_target_runs": 0
         },
-        "state_sha256": "65d4cefb6b79f8c3d6f84f1878ea2b90c2ec3873fd74612e58c8126d65a0283a"
+        "state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b"
       },
       "seed_coverage": {
         "threshold": 12,
         "eligible_seed_count": 2,
         "overflow_triggered": false,
         "represented_seed_ids": [
-          "HGS-E1097B75224C",
-          "HGS-5E19F2C164BE"
+          "HGS-2F4C661E5578",
+          "HGS-DC5FF2FC9E71"
         ],
         "represented_cell_ids": [
           "CELL-M-PKC-AUXILIARY-CURVE",
@@ -9383,10 +9424,10 @@
       },
       "generated_seeds": [
         {
-          "seed_id": "HGS-E1097B75224C",
+          "seed_id": "HGS-2F4C661E5578",
           "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
           "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-          "claim_state_digest": "65d4cefb6b79f8c3d6f84f1878ea2b90c2ec3873fd74612e58c8126d65a0283a",
+          "claim_state_digest": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9468,7 +9509,7 @@
             "experiments/p4_petit/README.md",
             "experiments/p4_petit/RESULTS.md"
           ],
-          "deduplication_key": "e1097b75224c2217a1336a566115d0837c3be3e6bf328644880dbb2debcb59ba",
+          "deduplication_key": "2f4c661e5578e1ef46f01ac8eb3759ec9bf5fa4e1e8047f5b113608bf724ee75",
           "proposal_packet": {
             "required_sections": [
               "new_premise",
@@ -9530,10 +9571,10 @@
           }
         },
         {
-          "seed_id": "HGS-5E19F2C164BE",
+          "seed_id": "HGS-DC5FF2FC9E71",
           "cell_id": "CELL-M-PKC-SMOOTH-M16",
           "typed_evidence_digest": "180bd1dd2be5f4ed04530ff962865bb4ae3aac1438f4499e05dde06e9104bcfe",
-          "claim_state_digest": "65d4cefb6b79f8c3d6f84f1878ea2b90c2ec3873fd74612e58c8126d65a0283a",
+          "claim_state_digest": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9656,7 +9697,7 @@
             "experiments/p4_petit/README.md",
             "experiments/p4_petit/RESULTS.md"
           ],
-          "deduplication_key": "5e19f2c164becebaf138413371e53e33f650e62f9bcc0bd5edc96288ca19c897",
+          "deduplication_key": "dc5ff2fc9e71400c0d347a9bd13297629c0c0c79119b8e1cfeaac89a50f8f4fd",
           "proposal_packet": {
             "required_sections": [
               "new_premise",
@@ -10481,7 +10522,7 @@
     },
     "source_hashes": {
       "policy_sha256": "b28e955fade48c7e8f30699ad137e8ee3cefe3aca2186ccce960489d8199fd04",
-      "decision_substrate_sha256": "63d10475713bcdb80bfef482325dc95bf96c60619472c1beb5fdd6576392d8b3",
+      "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
       "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
       "evidence_files_sha256": "71b527927a514cee8171b5b9a9dcc432313cdfe51fa7960dc1155f628c8025b8",
       "desk_decisions_sha256": "3310027be8ef173a4b4ee619ddbd80e80fefeb0e5477cbc6c6c89f2651e478bb"
@@ -16251,12 +16292,12 @@
       "type": "binds_unresolved_question"
     },
     {
-      "from": "HGS-E1097B75224C",
+      "from": "HGS-2F4C661E5578",
       "to": "CELL-M-PKC-AUXILIARY-CURVE",
       "type": "generated_from_cell"
     },
     {
-      "from": "HGS-5E19F2C164BE",
+      "from": "HGS-DC5FF2FC9E71",
       "to": "CELL-M-PKC-SMOOTH-M16",
       "type": "generated_from_cell"
     },
@@ -16473,6 +16514,21 @@
     {
       "from": "REO-2026-07-24-008",
       "to": "R-GLV-SEMAEV",
+      "type": "records_route_evidence"
+    },
+    {
+      "from": "REO-2026-07-31-001",
+      "to": "AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01",
+      "type": "records_outcome_for"
+    },
+    {
+      "from": "REO-2026-07-31-001",
+      "to": "HYP-M16-FIXED-TARGET-YIELD-001",
+      "type": "updates_hypothesis"
+    },
+    {
+      "from": "REO-2026-07-31-001",
+      "to": "R-PETIT-COMPOSED-MAPS",
       "type": "records_route_evidence"
     }
   ]

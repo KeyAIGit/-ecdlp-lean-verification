@@ -20,17 +20,18 @@ Canonical start order:
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
 
-Current central task: `TASK-026`. Execute only
-`AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01`, the exact fail-closed
-fixed-target toy diagnostic for `HYP-M16-FIXED-TARGET-YIELD-001`. Its five
-source files are bound to readiness commit
-`0b1b36851aa0f82c3a1bd587d385775923153d9c`; they must not be edited during
-execution.
+Current central decision: formulate and review, but do not execute,
+`HYP-M16-SOLVER-SLOPE-001`. `TASK-026` completed once under
+`AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01`; independent replay recorded
+`REO-2026-07-31-001` with terminal
+`CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION`. The authorization is consumed and
+permits no rerun. Its completed parent hypothesis is
+`HYP-M16-FIXED-TARGET-YIELD-001`.
 
 `TASK-010` is accepted at
 `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
 proposal-intake lane. TASK-025 itself created no authorization; the later
-HYP-SELECT-002 decision authorizes only TASK-026.
+HYP-SELECT-002 singleton was consumed by TASK-026.
 `R-PETIT-COMPOSED-MAPS` remains `open_parked`; `R-GLV-SEMAEV` is also
 unchanged and parked because the orbit-closed arm is only a matched
 ablation. The selected attack route remains null, and native bounded exploration
@@ -104,20 +105,18 @@ Current scientific activation order:
     cost remain unproved. The M16 cell remains open and non-executable.
 13. The auxiliary-curve cell stays parked until a primary source supplies a
     finite search domain with a completeness criterion.
-14. `TASK-026` is the sole active experiment. It measures fixed-before-
-    sampling balanced-regular relation yield on three frozen synthetic `E_7`
-    toy subgroups, two matched arms, and five seeds, under a ceiling of
-    3,000,000 primary trials, four CPU-hours, 4 GiB peak RSS, and 24 wall
-    hours. Its independent validator must preserve positive, negative,
-    artifact-rejected, inconclusive, and resource-capped outcomes.
-15. Any solver, exact-target work, route promotion, different candidate, or
-    follow-on experiment still requires a new review and separate dated
-    authorization. Even the TASK-026 promotion terminal only opens a proposal
-    for one later solver-slope test.
+14. `TASK-026` is complete: all 3,000,000 trials and 30 cells finished,
+    independent replay passed, the primary enabling availability claim is
+    supported, and the GLV-specific `H_NEW` branch is bounded negative under
+    the matched controls. The exact bundle and unfavorable branch are retained.
+15. Only a source-faithful `HYP-M16-SOLVER-SLOPE-001` proposal may now be
+    written and reviewed. Any solver, exact-target work, route promotion,
+    different candidate, or follow-on experiment requires a new review and
+    separate dated authorization.
 
-These entries freeze further engine-schema expansion by default. TASK-026
-authorizes no solver, route promotion, exact-target computation, or
-secp256k1 extrapolation.
+These entries freeze further engine-schema expansion by default. The consumed
+TASK-026 authorization permits no rerun, solver, route promotion, exact-target
+computation, or secp256k1 extrapolation.
 
 Most recent completed bounded structural binding:
 `RS-2026-07-24-001` / `GLV-SEMAEV-ITER-001` / `R-GLV-SEMAEV` /

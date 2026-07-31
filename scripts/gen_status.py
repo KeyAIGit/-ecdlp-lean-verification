@@ -179,7 +179,7 @@ promotion experiments authorized =
 **{str(phase['promotion_experiments_authorized']).lower()}**, selected attack route =
 **{phase['selected_attack_route'] or 'none'}**.
 
-The decision layer contains exactly one approved bounded authorization:
+The decision layer retains exactly one consumed bounded experiment record:
 **`{authorization['authorization_id']}`** for
 **`{authorization['hypothesis_id']}` / `{authorization['task_id']}`**. It is bound to readiness
 commit **`{authorization['source_commit']}`**, five SHA-256-pinned source files, three synthetic
@@ -188,8 +188,11 @@ commit **`{authorization['source_commit']}`**, five SHA-256-pinned source files,
 **{authorization['resource_budget']['max_peak_rss_gib']} GiB peak RSS**, and
 **{authorization['resource_budget']['max_wall_hours']} wall-hours**. Real-world and secp256k1
 targets are forbidden; promotion is **{str(authorization['promotion_authorized']).lower()}**.
-This singleton is external to the native Engine queue and authorizes no rerun, solver,
-route promotion, exact-target work, or 256-bit extrapolation.
+It completed as **`{authorization['terminal_status']}`** in
+**`{authorization['terminal_event_id']}`** with normalized enabling outcome
+**`{authorization['normalized_outcome']}`**. The matched GLV-specific `H_NEW` branch was not
+retained. This singleton is external to the native Engine queue and its consumed authorization
+allows no rerun, solver, route promotion, exact-target work, or 256-bit extrapolation.
 
 The `build_now` foundations are {", ".join(f"`{item['id']}`" for item in build_now)}.
 They make future candidates comparable and independently checkable; the completed structural
@@ -202,8 +205,10 @@ when new evidence satisfies a recorded reconsideration trigger and the proposal 
 ## Research Engine v0
 The engine normalizes **{engine_counts['normalized_hypotheses']} hypotheses** and retains
 **{engine_counts['outcome_events']} outcome events**:
-**{engine_counts['outcomes_by_source']['historical_migration']} migrated historical** and
-**{engine_counts['outcomes_by_source']['native_engine_run']} native**. Its historical
+**{engine_counts['outcomes_by_source']['historical_migration']} migrated historical**,
+**{engine_counts['outcomes_by_source']['native_engine_run']} native**, and
+**{engine_counts['outcomes_by_source'].get('external_bounded_decision_run', 0)} external bounded**.
+Its historical
 no-reopen guard matched four frozen cases; this is not predictive EIG calibration. Predictive
 calibration currently contains **{engine['calibration']['scored_native_outcomes']} native
 outcomes**. Before synthesis, the typed evidence layer materializes
@@ -293,7 +298,8 @@ The Engine's bounded-exploration capability is
 authorization is **{str(phase['experiments_authorized']).lower()}** and the promotion gate is
 **{str(engine_gates['promotion_authorized']).lower()}**. `GLV-SEMAEV-ITER-001` is complete; its
 certificates and kernel-checked identities did not themselves authorize a hypothesis run. The
-later HYP-SELECT-002 decision authorizes only the exact TASK-026 singleton above. Closing
+later HYP-SELECT-002 decision authorized only the exact TASK-026 singleton above; that singleton
+has now been consumed and independently validated. Closing
 `TASK-025` authorizes no claim of generic regularity, witness uniqueness, automatic
 mapped-target regularity, direct-S17 expansion or evaluation, production mask
 enumeration, solver input or run, cost inference, secp256k1 target computation, or

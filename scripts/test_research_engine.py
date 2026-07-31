@@ -57,6 +57,7 @@ from research_engine_lib import (
     validate_pure_validator_source,
     validate_historical_scope_guards,
     validate_historical_outcome_baseline,
+    validate_external_bounded_sequence,
     validate_retrospective,
 )
 from scientific_provenance import (
@@ -925,10 +926,10 @@ class ResearchEngineTests(unittest.TestCase):
             if item["id"] == hypothesis_id
         )
         self.assertEqual(
-            "external_bounded_authorization_not_native_candidate",
+            "external_bounded_terminal_not_native_candidate",
             normalized["engine_state"],
         )
-        self.assertIsNone(normalized["normalized_outcome"])
+        self.assertEqual("supported", normalized["normalized_outcome"])
         self.assertEqual(
             ["R-PETIT-COMPOSED-MAPS"],
             normalized["route_ids"],
@@ -966,12 +967,207 @@ class ResearchEngineTests(unittest.TestCase):
             for item in policy["hypothesis_normalization"]
             if item["id"] == hypothesis_id
         )
-        external["normalized_outcome"] = "inconclusive"
+        external["normalized_outcome"] = "bounded_negative"
         problems = validate_policy(policy, self.decisions, self.hypotheses)
         self.assertIn(
-            f"{hypothesis_id}: authorized but unexecuted singleton must "
-            "have no normalized outcome",
+            f"{hypothesis_id}: consumed external singleton outcome must "
+            "match its terminal authorization",
             problems,
+        )
+
+    def test_external_bounded_outcome_is_exactly_authorization_bound(self) -> None:
+        path, event = next(
+            item
+            for item in self.outcomes
+            if item[1].get("provenance", {}).get("source_kind")
+            == "external_bounded_decision_run"
+        )
+        self.assertEqual("supported", event["outcome"])
+        self.assertEqual(
+            [],
+            validate_outcome(
+                path,
+                event,
+                self.policy,
+                self.decisions,
+                self.hypotheses,
+            ),
+        )
+
+        wrong_identity = copy.deepcopy(event)
+        wrong_identity["hypothesis_id"] = "HYP_GLV_SEMAEV_001"
+        problems = validate_outcome(
+            path,
+            wrong_identity,
+            self.policy,
+            self.decisions,
+            self.hypotheses,
+        )
+        self.assertTrue(
+            any("hypothesis_id differs from bounded authorization" in item
+                for item in problems),
+            msg=problems,
+        )
+
+        wrong_manifest = copy.deepcopy(event)
+        wrong_manifest["provenance"]["run_manifest_sha256"] = "0" * 64
+        problems = validate_outcome(
+            path,
+            wrong_manifest,
+            self.policy,
+            self.decisions,
+            self.hypotheses,
+        )
+        self.assertTrue(
+            any("run_manifest_sha256 mismatch" in item for item in problems),
+            msg=problems,
+        )
+
+        wrong_bindings = copy.deepcopy(self.decisions)
+        wrong_bindings["bounded_experiment_authorization"][
+            "sha256_bindings"
+        ]["run_py"] = "0" * 64
+        problems = validate_outcome(
+            path,
+            event,
+            self.policy,
+            wrong_bindings,
+            self.hypotheses,
+        )
+        self.assertTrue(
+            any("run_manifest bindings differ from authorization" in item
+                for item in problems),
+            msg=problems,
+        )
+
+        with patch(
+            "research_engine_lib.git_commit_exists",
+            return_value=False,
+        ):
+            problems = validate_outcome(
+                path,
+                event,
+                self.policy,
+                self.decisions,
+                self.hypotheses,
+            )
+        self.assertTrue(
+            any("source_commit is not reproducible" in item for item in problems),
+            msg=problems,
+        )
+
+    def test_external_bounded_outcome_is_scope_budget_and_stop_bound(self) -> None:
+        path, source_event = next(
+            item
+            for item in self.outcomes
+            if item[1].get("provenance", {}).get("source_kind")
+            == "external_bounded_decision_run"
+        )
+        cases = [
+            (
+                "field_bits",
+                lambda event: event["scope"].update({"field_bits": [19]}),
+                "field_bits differ from authorized curve table",
+            ),
+            (
+                "target_kind",
+                lambda event: event["scope"].update(
+                    {"target_kind": "operational"}
+                ),
+                "must have toy target_kind",
+            ),
+            (
+                "wall_budget",
+                lambda event: event["budget"].update(
+                    {"wall_time_seconds": 25 * 3600}
+                ),
+                "exceeds wall-time budget",
+            ),
+            (
+                "stop",
+                lambda event: event["stop_condition"].update(
+                    {"triggered": False}
+                ),
+                "must consume its stop condition",
+            ),
+        ]
+        for name, mutate, expected in cases:
+            with self.subTest(name=name):
+                event = copy.deepcopy(source_event)
+                mutate(event)
+                problems = validate_outcome(
+                    path,
+                    event,
+                    self.policy,
+                    self.decisions,
+                    self.hypotheses,
+                )
+                self.assertTrue(
+                    any(expected in item for item in problems),
+                    msg=problems,
+                )
+
+    def test_external_bounded_outcome_is_not_native_or_calibrated(self) -> None:
+        state = build_state(
+            self.policy,
+            self.decisions,
+            self.hypotheses,
+            self.outcomes,
+        )
+        event = state["external_bounded_outcomes"][0]
+        self.assertEqual(
+            "external_bounded_decision_run",
+            event["source_kind"],
+        )
+        self.assertEqual([], state["native_outcomes"])
+        self.assertEqual(0, state["calibration"]["scored_native_outcomes"])
+        self.assertEqual(
+            1,
+            state["calibration"]["external_bounded_outcomes_excluded"],
+        )
+        self.assertIn(
+            "not native selected Engine candidates",
+            state["calibration"]["note"],
+        )
+        self.assertEqual(
+            1,
+            state["counts"]["outcomes_by_source"][
+                "external_bounded_decision_run"
+            ],
+        )
+        self.assertEqual(
+            "external_bounded_result_retained",
+            event["decision_delta"]["effect"],
+        )
+        route = next(
+            item
+            for item in state["route_evidence_state"]
+            if item["route_id"] == event["route_id"]
+        )
+        self.assertEqual([], route["route_review_trigger_event_ids"])
+        self.assertFalse(state["gate_status"]["promotion_authorized"])
+
+    def test_external_bounded_authorization_is_single_use(self) -> None:
+        path, event = next(
+            item
+            for item in self.outcomes
+            if item[1].get("provenance", {}).get("source_kind")
+            == "external_bounded_decision_run"
+        )
+        duplicate = copy.deepcopy(event)
+        duplicate["event_id"] = "REO-2026-07-31-002"
+        duplicate["recorded_on"] = "2026-07-31"
+        problems = validate_external_bounded_sequence(
+            self.decisions,
+            [
+                (path, event),
+                (Path("REO-2026-07-31-002.json"), duplicate),
+            ],
+        )
+        self.assertTrue(
+            any("singleton authorization is already consumed" in item
+                for item in problems),
+            msg=problems,
         )
 
     def test_hypothesis_parser_accepts_hyphenated_ids(self) -> None:
@@ -1173,12 +1369,12 @@ class ResearchEngineTests(unittest.TestCase):
         state = build_state(
             self.policy, self.decisions, self.hypotheses, self.outcomes
         )
-        self.assertEqual(8, state["counts"]["outcome_events"])
+        self.assertEqual(9, state["counts"]["outcome_events"])
         self.assertEqual(
             1, state["counts"]["outcomes_by_taxonomy"]["resource_exhausted"]
         )
         self.assertEqual(1, state["counts"]["outcomes_by_taxonomy"]["inapplicable"])
-        self.assertEqual(0, state["counts"]["outcomes_by_taxonomy"]["supported"])
+        self.assertEqual(1, state["counts"]["outcomes_by_taxonomy"]["supported"])
         self.assertEqual(
             1,
             state["counts"]["outcomes_by_taxonomy"][

@@ -14,12 +14,13 @@ Canonical start order:
 
 ## Active tasks
 
-Execution lock for the `one-bounded-decision-experiment` phase: only
-`TASK-026` is executable or receives experimental compute. The ML
-qualification contracts, `TASK-013`, and `TASK-008` remain available as
-maintenance/intake references but are non-executable until TASK-026 reaches
-an independently validated terminal state or a later dated decision changes
-the allocation.
+Execution lock for the `post-task026-decision-review` phase: no experiment is
+executable or receives compute. `TASK-026` has reached its independently
+validated terminal state and its singleton authorization is consumed. The
+only admitted successor work is formulation and review of a source-faithful,
+non-executable `HYP-M16-SOLVER-SLOPE-001` proposal; execution still requires
+a separate dated authorization. The ML qualification contracts, `TASK-013`,
+and `TASK-008` remain maintenance/intake references.
 
 ### ML-P0 qualification under TASK-013
 
@@ -1687,7 +1688,7 @@ How to verify:
 
 ### TASK-026 - Measure fixed-target balanced-regular yield on frozen toy E7 subgroups
 
-Status: active_authorized_bounded_experiment
+Status: completed_independently_validated_terminal
 Kind: experiment | research | review
 Hypothesis: `HYP-M16-FIXED-TARGET-YIELD-001`
 Decision: `HYP-SELECT-002`
@@ -1699,6 +1700,22 @@ Model: classical representation-aware, synthetic toy data only
 Route state: `R-PETIT-COMPOSED-MAPS` remains `open_parked`; the
 `GLV_ORBIT_CLOSED` arm is a matched ablation, not the parent route
 Promotion: false
+Outcome event: `REO-2026-07-31-001`
+Normalized outcome: `supported` for the exact enabling availability claim
+Terminal: `CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION`
+Authorization state: consumed; rerun authorized: false
+Validator artifact:
+`experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.json`
+SHA-256:
+`21a95ea4ea71c02d0199c331e549ca2e4ec2fbf7c1d8d70fe6651bea292d6413`
+Observed result: all 3,000,000 primary trials and all 30 cells completed.
+The run accepted 911 exact relations, of which 907 were affine regular.
+Every curve-arm regularity gate passed. Orbit-minus-plain theta differences
+were `-0.006987`, `-0.006329`, and `0.000000`; their intervals overlapped at
+all three sizes and no size qualified for `H_NEW`. Thus the primary enabling
+availability claim is supported, while the GLV-specific new-mechanism
+explanation is bounded negative. This is not a solver, rank, recovery,
+secp256k1, scaling, or ECDLP-complexity result.
 Why it matters: TASK-025 proves that explicit endpoint and balanced
 nonvanishing assumptions reduce the exact projective cover to one affine
 chart, but it does not show that fixed-before-sampling targets admit enough

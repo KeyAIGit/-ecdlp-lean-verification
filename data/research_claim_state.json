@@ -4,7 +4,7 @@
   "status": "non_executable_truth_state",
   "source_hashes": {
     "claim_policy_sha256": "0a4594677afd38a9fb0987fb5ccc1a3e2149f647d8cb11f58ec2acd5b01503ad",
-    "decision_substrate_sha256": "63d10475713bcdb80bfef482325dc95bf96c60619472c1beb5fdd6576392d8b3"
+    "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d"
   },
   "counts": {
     "routes_represented": 1,

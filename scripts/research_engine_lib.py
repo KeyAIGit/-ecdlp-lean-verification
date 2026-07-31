@@ -8,6 +8,7 @@ import hashlib
 import json
 import math
 import re
+import subprocess
 import sys
 from collections import Counter, defaultdict
 from datetime import date
@@ -248,6 +249,22 @@ RUN_VALIDATION_ARTIFACT_FIELDS = {
     "independent",
     "decisive_claim",
 }
+EXTERNAL_BOUNDED_MANIFEST_FIELDS = {
+    "schema_version",
+    "run_id",
+    "authorization_id",
+    "authorization_source_commit",
+    "hypothesis_id",
+    "bindings",
+    "chronology",
+}
+EXTERNAL_BOUNDED_BINDING_FILES = {
+    "preregistration": "PREREGISTRATION.md",
+    "curve_table": "curve_table.json",
+    "experiment_config": "experiment_config.json",
+    "run_py": "run.py",
+    "validate_py": "validate.py",
+}
 INSTANCE_RESULT_FIELDS = {
     "schema_version",
     "result_id",
@@ -440,6 +457,36 @@ def git_json(commit: str, relative: str) -> dict[str, Any] | None:
     return value if isinstance(value, dict) else None
 
 
+def authorized_git_file_bytes(commit: Any, relative: Any) -> bytes | None:
+    """Read a file from an exact decision-authorized commit.
+
+    External bounded decision runs are deliberately outside the native Engine
+    provenance policy.  Their source commit is instead pinned by the decision
+    substrate, so reproducibility here means that the pinned commit resolves
+    and contains the exact authorization-bound bytes.
+    """
+
+    if (
+        not isinstance(commit, str)
+        or not COMMIT_ID.fullmatch(commit)
+        or not git_commit_exists(commit)
+        or not isinstance(relative, str)
+        or not relative
+    ):
+        return None
+    relative_path = Path(relative)
+    if relative_path.is_absolute() or ".." in relative_path.parts:
+        return None
+    completed = subprocess.run(
+        ["git", "show", f"{commit}:{relative_path.as_posix()}"],
+        cwd=ROOT,
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+    )
+    return completed.stdout if completed.returncode == 0 else None
+
+
 def repo_file(relative: Any) -> Path | None:
     if not isinstance(relative, str) or not relative:
         return None
@@ -477,6 +524,10 @@ def content_sha256(payload: bytes) -> str:
 
 def file_sha256(path: Path) -> str:
     return content_sha256(path.read_bytes())
+
+
+def exact_file_sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def expanded_preregistration_matrix(candidate: dict[str, Any]) -> list[dict[str, Any]]:
@@ -1811,11 +1862,17 @@ def validate_policy(
     ) in {
         "proposal_intake_promotion_closed",
         "evidence_bounded_desk_priority_promotion_closed",
+        "post_task026_proposal_only_promotion_closed",
     }
     bounded_authorization = decisions.get("bounded_experiment_authorization")
     external_bounded_singleton = (
         isinstance(bounded_authorization, dict)
-        and bounded_authorization.get("status") == "approved"
+        and bounded_authorization.get("status") in {"approved", "consumed"}
+    )
+    bounded_authorization_status = (
+        bounded_authorization.get("status")
+        if isinstance(bounded_authorization, dict)
+        else None
     )
     expected_current_exploration = not (
         structural_pause
@@ -1924,10 +1981,16 @@ def validate_policy(
         if item.get("direction") != source.get("direction"):
             problems.append(f"{hypothesis_id}: direction differs from HYPOTHESES.yaml")
         is_external_authorized_not_run = (
-            external_bounded_singleton
+            bounded_authorization_status == "approved"
             and hypothesis_id == bounded_authorization.get("hypothesis_id")
             and item.get("engine_state")
             == "external_bounded_authorization_not_native_candidate"
+        )
+        is_external_consumed_terminal = (
+            bounded_authorization_status == "consumed"
+            and hypothesis_id == bounded_authorization.get("hypothesis_id")
+            and item.get("engine_state")
+            == "external_bounded_terminal_not_native_candidate"
         )
         if (
             is_external_authorized_not_run
@@ -1938,7 +2001,17 @@ def validate_policy(
                 "have no normalized outcome"
             )
         elif (
+            is_external_consumed_terminal
+            and item.get("normalized_outcome")
+            != bounded_authorization.get("normalized_outcome")
+        ):
+            problems.append(
+                f"{hypothesis_id}: consumed external singleton outcome must "
+                "match its terminal authorization"
+            )
+        elif (
             not is_external_authorized_not_run
+            and not is_external_consumed_terminal
             and item.get("normalized_outcome") not in outcome_ids
         ):
             problems.append(f"{hypothesis_id}: invalid normalized outcome")
@@ -2007,6 +2080,11 @@ def validate_policy(
     candidate_id_set = set(candidate_ids)
     if external_bounded_singleton:
         external_hypothesis_id = bounded_authorization.get("hypothesis_id")
+        external_engine_state = (
+            "external_bounded_terminal_not_native_candidate"
+            if bounded_authorization_status == "consumed"
+            else "external_bounded_authorization_not_native_candidate"
+        )
         external_normalization = [
             item
             for item in normalized
@@ -2014,11 +2092,10 @@ def validate_policy(
         ]
         if len(external_normalization) != 1 or external_normalization[0].get(
             "engine_state"
-        ) != "external_bounded_authorization_not_native_candidate":
+        ) != external_engine_state:
             problems.append(
-                "approved external bounded authorization must map to exactly "
-                "one external_bounded_authorization_not_native_candidate "
-                "hypothesis normalization"
+                "external bounded authorization must map to exactly one "
+                f"{external_engine_state} hypothesis normalization"
             )
         if any(
             candidate.get("hypothesis_id") == external_hypothesis_id
@@ -2846,6 +2923,522 @@ def validate_policy(
     return problems
 
 
+def validate_external_bounded_outcome(
+    event: dict[str, Any],
+    policy: dict[str, Any],
+    decisions: dict[str, Any],
+    scope: dict[str, Any],
+    budget: dict[str, Any],
+    stop: dict[str, Any],
+    provenance: dict[str, Any],
+    label: str,
+) -> list[str]:
+    """Validate a decision-authorized receipt without making it native."""
+
+    problems: list[str] = []
+    authorization = decisions.get("bounded_experiment_authorization")
+    if not isinstance(authorization, dict):
+        return [
+            f"{label}: external bounded event needs a decision authorization"
+        ]
+    authorization_status = authorization.get("status")
+    if authorization_status not in {"approved", "consumed"}:
+        problems.append(
+            f"{label}: bounded experiment authorization is neither approved "
+            "nor consumed"
+        )
+    if authorization_status == "consumed":
+        if authorization.get("terminal_event_id") != event.get("event_id"):
+            problems.append(
+                f"{label}: consumed authorization terminal_event_id differs"
+            )
+        if authorization.get("normalized_outcome") != event.get("outcome"):
+            problems.append(
+                f"{label}: consumed authorization normalized_outcome differs"
+            )
+        if authorization.get("rerun_authorized") is not False:
+            problems.append(
+                f"{label}: consumed authorization must forbid reruns"
+            )
+    if authorization.get("promotion_authorized") is not False:
+        problems.append(
+            f"{label}: bounded experiment authorization must not authorize promotion"
+        )
+
+    for event_field, authorization_field in {
+        "candidate_id": "authorization_id",
+        "hypothesis_id": "hypothesis_id",
+        "route_id": "route_id",
+    }.items():
+        if event.get(event_field) != authorization.get(authorization_field):
+            problems.append(
+                f"{label}: {event_field} differs from bounded authorization"
+            )
+
+    candidate_ids = {
+        candidate.get("id") for candidate in policy.get("candidate_proposals", [])
+    }
+    if event.get("candidate_id") in candidate_ids:
+        problems.append(
+            f"{label}: external bounded authorization must not be a native candidate"
+        )
+
+    source_commit = provenance.get("source_commit")
+    if source_commit != authorization.get("source_commit"):
+        problems.append(
+            f"{label}: source_commit differs from bounded authorization"
+        )
+    source_reproducible = git_commit_exists(source_commit)
+    if not source_reproducible:
+        problems.append(
+            f"{label}: bounded authorization source_commit is not reproducible"
+        )
+
+    authorization_scope = authorization.get("scope")
+    if not isinstance(authorization_scope, dict):
+        authorization_scope = {}
+        problems.append(f"{label}: bounded authorization scope must be an object")
+    if authorization_scope.get("kind") != "synthetic_toy_only":
+        problems.append(
+            f"{label}: bounded authorization must remain synthetic-toy-only"
+        )
+    if authorization_scope.get("real_world_targets_forbidden") is not True:
+        problems.append(
+            f"{label}: bounded authorization must forbid real-world targets"
+        )
+    if authorization_scope.get("secp256k1_targets_forbidden") is not True:
+        problems.append(
+            f"{label}: bounded authorization must forbid secp256k1 targets"
+        )
+    if scope.get("target_kind") != "toy":
+        problems.append(f"{label}: external bounded event must have toy target_kind")
+    authorized_family = authorization_scope.get("curve_family")
+    event_family = scope.get("curve_family")
+    if (
+        not _nonempty_text(authorized_family)
+        or not _nonempty_text(event_family)
+        or str(authorized_family).casefold() not in str(event_family).casefold()
+    ):
+        problems.append(
+            f"{label}: outcome curve family does not identify the authorized family"
+        )
+    if "secp256k1" in str(event_family).casefold():
+        problems.append(
+            f"{label}: external bounded event cannot target secp256k1"
+        )
+
+    route = next(
+        (
+            item
+            for item in decisions.get("routes", [])
+            if item.get("id") == event.get("route_id")
+        ),
+        {},
+    )
+    if scope.get("threat_model") not in route.get("threat_models", []):
+        problems.append(
+            f"{label}: outcome threat model is not declared by its route"
+        )
+
+    manifest_relative = provenance.get("run_manifest")
+    manifest_path = repo_file(manifest_relative)
+    manifest: dict[str, Any] = {}
+    if manifest_path is None:
+        problems.append(
+            f"{label}: external bounded event needs an existing run_manifest"
+        )
+    else:
+        try:
+            manifest_path.relative_to(
+                (ROOT / "experiments" / "engine").resolve()
+            )
+        except ValueError:
+            problems.append(
+                f"{label}: external bounded run_manifest must live under "
+                "experiments/engine"
+            )
+        if manifest_path.name != "run_manifest.json":
+            problems.append(
+                f"{label}: external bounded run_manifest must be run_manifest.json"
+            )
+        manifest_hash = provenance.get("run_manifest_sha256")
+        if (
+            not isinstance(manifest_hash, str)
+            or not HASH_ID.fullmatch(manifest_hash)
+        ):
+            problems.append(
+                f"{label}: external bounded event needs run_manifest_sha256"
+            )
+        elif exact_file_sha256(manifest_path) != manifest_hash:
+            problems.append(f"{label}: run_manifest_sha256 mismatch")
+        try:
+            loaded_manifest = load_json(manifest_path)
+        except (OSError, json.JSONDecodeError):
+            problems.append(f"{label}: external bounded run_manifest is malformed")
+        else:
+            if isinstance(loaded_manifest, dict):
+                manifest = loaded_manifest
+            else:
+                problems.append(
+                    f"{label}: external bounded run_manifest must be an object"
+                )
+
+    authorization_bindings = authorization.get("sha256_bindings")
+    if not isinstance(authorization_bindings, dict):
+        authorization_bindings = {}
+        problems.append(
+            f"{label}: authorization sha256_bindings must be an object"
+        )
+    expected_bindings = {
+        f"{key}_sha256": digest
+        for key, digest in authorization_bindings.items()
+    }
+    approved_authorization_snapshot = {
+        key: authorization.get(key)
+        for key in (
+            "hypothesis_id",
+            "task_id",
+            "route_id",
+            "cell_id",
+            "promotion_authorized",
+            "authorization_id",
+            "source_commit",
+            "authorized_utc",
+            "sha256_bindings",
+            "resource_budget",
+            "scope",
+        )
+    }
+    approved_authorization_snapshot["status"] = "approved"
+    if manifest:
+        _exact_keys(
+            manifest,
+            EXTERNAL_BOUNDED_MANIFEST_FIELDS,
+            f"{label}.run_manifest",
+            problems,
+        )
+        for field, expected in {
+            "authorization_id": authorization.get("authorization_id"),
+            "run_id": authorization.get("authorization_id"),
+            "authorization_source_commit": source_commit,
+            "hypothesis_id": authorization.get("hypothesis_id"),
+        }.items():
+            if manifest.get(field) != expected:
+                problems.append(
+                    f"{label}: run_manifest.{field} differs from authorization"
+                )
+        if manifest.get("bindings") != expected_bindings:
+            problems.append(
+                f"{label}: run_manifest bindings differ from authorization"
+            )
+
+    bundle_dir = manifest_path.parent if manifest_path is not None else None
+    curve_table: dict[str, Any] = {}
+    if bundle_dir is not None:
+        try:
+            bundle_relative = bundle_dir.resolve().relative_to(ROOT.resolve())
+        except ValueError:
+            bundle_relative = None
+        for binding, filename in EXTERNAL_BOUNDED_BINDING_FILES.items():
+            expected = authorization_bindings.get(binding)
+            if not isinstance(expected, str) or not HASH_ID.fullmatch(expected):
+                problems.append(
+                    f"{label}: authorization has invalid {binding} binding"
+                )
+                continue
+            source_path = bundle_dir / filename
+            if not source_path.is_file():
+                problems.append(
+                    f"{label}: authorization-bound file is absent: {filename}"
+                )
+            elif exact_file_sha256(source_path) != expected:
+                problems.append(
+                    f"{label}: authorization-bound working-tree hash drifted: "
+                    f"{binding}"
+                )
+            if bundle_relative is None:
+                continue
+            git_relative = (bundle_relative / filename).as_posix()
+            payload = (
+                authorized_git_file_bytes(source_commit, git_relative)
+                if source_reproducible
+                else None
+            )
+            if payload is None and source_reproducible:
+                problems.append(
+                    f"{label}: source_commit lacks bound file: {git_relative}"
+                )
+            elif (
+                payload is not None
+                and hashlib.sha256(payload).hexdigest() != expected
+            ):
+                problems.append(
+                    f"{label}: source-commit hash drifted: {binding}"
+                )
+        curve_path = bundle_dir / EXTERNAL_BOUNDED_BINDING_FILES["curve_table"]
+        if curve_path.is_file():
+            try:
+                loaded_curves = load_json(curve_path)
+            except (OSError, json.JSONDecodeError):
+                problems.append(f"{label}: authorized curve table is malformed")
+            else:
+                if isinstance(loaded_curves, dict):
+                    curve_table = loaded_curves
+
+    curves = curve_table.get("curves") if curve_table else None
+    if not isinstance(curves, list) or not curves:
+        problems.append(f"{label}: authorized curve table has no curves")
+    else:
+        curve_ids = [
+            item.get("curve_id") for item in curves if isinstance(item, dict)
+        ]
+        if curve_ids != authorization_scope.get("curve_ids"):
+            problems.append(
+                f"{label}: curve table ids differ from bounded authorization"
+            )
+        table_bits = sorted(
+            {
+                item.get("field_bits")
+                for item in curves
+                if isinstance(item, dict)
+                and isinstance(item.get("field_bits"), int)
+                and not isinstance(item.get("field_bits"), bool)
+            }
+        )
+        if scope.get("field_bits") != table_bits:
+            problems.append(
+                f"{label}: outcome field_bits differ from authorized curve table"
+            )
+        max_bits = authorization_scope.get("max_field_bits")
+        if (
+            not isinstance(max_bits, int)
+            or isinstance(max_bits, bool)
+            or not table_bits
+            or max(table_bits) > max_bits
+        ):
+            problems.append(
+                f"{label}: authorized curve table exceeds field-size budget"
+            )
+
+    authorization_budget = authorization.get("resource_budget")
+    if not isinstance(authorization_budget, dict):
+        authorization_budget = {}
+        problems.append(f"{label}: authorization resource budget must be an object")
+    wall_seconds = budget.get("wall_time_seconds")
+    peak_bytes = budget.get("peak_memory_bytes")
+    max_wall_hours = authorization_budget.get("max_wall_hours")
+    max_peak_gib = authorization_budget.get("max_peak_rss_gib")
+    if (
+        isinstance(wall_seconds, (int, float))
+        and not isinstance(wall_seconds, bool)
+        and isinstance(max_wall_hours, (int, float))
+        and wall_seconds > max_wall_hours * 3600
+    ):
+        problems.append(f"{label}: external run exceeds wall-time budget")
+    if (
+        isinstance(peak_bytes, int)
+        and not isinstance(peak_bytes, bool)
+        and isinstance(max_peak_gib, (int, float))
+        and peak_bytes > max_peak_gib * 1024**3
+    ):
+        problems.append(f"{label}: external run exceeds peak-memory budget")
+    if budget.get("parallel_workers") != 1:
+        problems.append(
+            f"{label}: external singleton must record one parallel worker"
+        )
+    if budget.get("status") == "historical_not_recorded":
+        problems.append(
+            f"{label}: external bounded event must record resource use"
+        )
+    if stop.get("triggered") is not True:
+        problems.append(
+            f"{label}: external bounded terminal must consume its stop condition"
+        )
+
+    artifact: dict[str, Any] = {}
+    summary: dict[str, Any] = {}
+    if bundle_dir is not None:
+        for filename, destination in (
+            ("artifact.json", "artifact"),
+            ("summary.json", "summary"),
+        ):
+            bundle_path = bundle_dir / filename
+            if not bundle_path.is_file():
+                problems.append(
+                    f"{label}: external bounded bundle is missing {filename}"
+                )
+                continue
+            try:
+                value = load_json(bundle_path)
+            except (OSError, json.JSONDecodeError):
+                problems.append(
+                    f"{label}: external bounded {filename} is malformed"
+                )
+                continue
+            if not isinstance(value, dict):
+                problems.append(
+                    f"{label}: external bounded {filename} must be an object"
+                )
+            elif destination == "artifact":
+                artifact = value
+            else:
+                summary = value
+
+        artifact_path = bundle_dir / "artifact.json"
+        sidecar_path = bundle_dir / "artifact.sha256"
+        if artifact_path.is_file():
+            if not sidecar_path.is_file():
+                problems.append(
+                    f"{label}: external bounded artifact sidecar is missing"
+                )
+            else:
+                sidecar = sidecar_path.read_text(encoding="utf-8").strip().split()
+                if sidecar != [exact_file_sha256(artifact_path), "artifact.json"]:
+                    problems.append(
+                        f"{label}: external bounded artifact sidecar mismatch"
+                    )
+
+    if artifact:
+        for field, expected in {
+            "hypothesis_id": event.get("hypothesis_id"),
+            "route_id": event.get("route_id"),
+            "run_id": event.get("candidate_id"),
+        }.items():
+            if artifact.get(field) != expected:
+                problems.append(
+                    f"{label}: artifact.{field} differs from outcome"
+                )
+        artifact_bindings = artifact.get("bindings", {})
+        if artifact_bindings.get("authorization") != (
+            approved_authorization_snapshot
+        ):
+            problems.append(
+                f"{label}: artifact authorization differs from decision substrate"
+            )
+        if artifact_bindings.get("producer_inputs") != expected_bindings:
+            problems.append(
+                f"{label}: artifact producer bindings differ from authorization"
+            )
+        if artifact.get("validation", {}).get("status") != "PASS":
+            problems.append(
+                f"{label}: external bounded artifact is not independently valid"
+            )
+        claim_boundary = artifact.get("claim_boundary", {})
+        for field in (
+            "promotion_authorized",
+            "real_world_targets_used",
+            "secp256k1_targets_used",
+            "secp256k1_attack_claim",
+            "secp256k1_key_recovery_claim",
+            "asymptotic_improvement_claim",
+        ):
+            if claim_boundary.get(field) is not False:
+                problems.append(
+                    f"{label}: artifact claim boundary must keep {field}=false"
+                )
+        if artifact.get("h_new_retained") is not False:
+            problems.append(f"{label}: external bounded artifact retained H_NEW")
+        if event.get("outcome") == "supported" and (
+            artifact.get("terminal_status")
+            != "CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION"
+            or artifact.get("opens_solver_slope_proposal") is not True
+            or artifact.get("decision_metrics", {}).get(
+                "primary_promotion_gates_pass"
+            )
+            is not True
+        ):
+            problems.append(
+                f"{label}: supported external outcome lacks its exact enabling "
+                "terminal"
+            )
+        if authorization_status == "consumed":
+            if authorization.get("terminal_status") != artifact.get(
+                "terminal_status"
+            ):
+                problems.append(
+                    f"{label}: consumed authorization terminal_status differs"
+                )
+            artifact_digest = (
+                exact_file_sha256(bundle_dir / "artifact.json")
+                if bundle_dir is not None
+                and (bundle_dir / "artifact.json").is_file()
+                else None
+            )
+            if authorization.get("validated_artifact_sha256") != artifact_digest:
+                problems.append(
+                    f"{label}: consumed authorization artifact digest differs"
+                )
+
+    if summary:
+        if summary.get("hypothesis_id") != event.get("hypothesis_id"):
+            problems.append(
+                f"{label}: summary hypothesis differs from outcome"
+            )
+        if summary.get("run_id") != event.get("candidate_id"):
+            problems.append(f"{label}: summary run_id differs from outcome")
+        if summary.get("bindings") != expected_bindings:
+            problems.append(
+                f"{label}: summary bindings differ from authorization"
+            )
+        trials = summary.get("totals", {}).get("primary_trials")
+        max_trials = authorization_budget.get("max_primary_trials")
+        if (
+            not isinstance(trials, int)
+            or isinstance(trials, bool)
+            or not isinstance(max_trials, int)
+            or trials > max_trials
+        ):
+            problems.append(
+                f"{label}: external run exceeds or omits primary-trial budget"
+            )
+        usage = summary.get("resource_usage", {})
+        for field, limit in {
+            "cpu_hours": authorization_budget.get("max_cpu_hours"),
+            "peak_rss_gib": authorization_budget.get("max_peak_rss_gib"),
+            "wall_hours": authorization_budget.get("max_wall_hours"),
+        }.items():
+            value = usage.get(field)
+            if (
+                not isinstance(value, (int, float))
+                or isinstance(value, bool)
+                or not isinstance(limit, (int, float))
+                or value < 0
+                or value > limit
+            ):
+                problems.append(
+                    f"{label}: external run exceeds or omits {field} budget"
+                )
+        if (
+            isinstance(wall_seconds, (int, float))
+            and not isinstance(wall_seconds, bool)
+            and isinstance(usage.get("wall_hours"), (int, float))
+            and not math.isclose(
+                wall_seconds,
+                usage["wall_hours"] * 3600,
+                rel_tol=1e-9,
+                abs_tol=1e-6,
+            )
+        ):
+            problems.append(
+                f"{label}: outcome wall time differs from producer summary"
+            )
+        if (
+            isinstance(peak_bytes, int)
+            and not isinstance(peak_bytes, bool)
+            and isinstance(usage.get("peak_rss_gib"), (int, float))
+            and peak_bytes != round(usage["peak_rss_gib"] * 1024**3)
+        ):
+            problems.append(
+                f"{label}: outcome peak memory differs from producer summary"
+            )
+        if artifact and artifact.get("resource_usage") != usage:
+            problems.append(
+                f"{label}: artifact resource usage differs from summary"
+            )
+
+    return problems
+
+
 def validate_outcome(
     path: Path,
     event: dict[str, Any],
@@ -3050,11 +3643,13 @@ def validate_outcome(
                 "path-distinct, artifact-recomputed, decisive validation"
             )
         source_kind = event.get("provenance", {}).get("source_kind")
-        if event.get("outcome") == "supported" and source_kind != (
-            "native_engine_run"
-        ):
+        if event.get("outcome") == "supported" and source_kind not in {
+            "native_engine_run",
+            "external_bounded_decision_run",
+        }:
             problems.append(
-                f"{label}: supported is reserved for preregistered native runs"
+                f"{label}: supported is reserved for preregistered native runs "
+                "or decision-authorized bounded runs"
             )
         if event.get("outcome") == "historical_structural_confirmation" and (
             source_kind != "historical_migration"
@@ -3122,6 +3717,7 @@ def validate_outcome(
         if provenance.get("source_kind") not in {
             "historical_migration",
             "native_engine_run",
+            "external_bounded_decision_run",
         }:
             problems.append(f"{label}: invalid provenance source_kind")
         commit = provenance.get("source_commit")
@@ -3240,6 +3836,19 @@ def validate_outcome(
                 problems.append(
                     f"{label}: native terminal event must trigger its stop condition"
                 )
+        if source_kind == "external_bounded_decision_run":
+            problems.extend(
+                validate_external_bounded_outcome(
+                    event,
+                    policy,
+                    decisions,
+                    scope if isinstance(scope, dict) else {},
+                    budget if isinstance(budget, dict) else {},
+                    stop if isinstance(stop, dict) else {},
+                    provenance,
+                    label,
+                )
+            )
     return problems
 
 
@@ -3494,6 +4103,35 @@ def validate_native_sequence(
     return problems
 
 
+def validate_external_bounded_sequence(
+    decisions: dict[str, Any],
+    outcomes: list[tuple[Path, dict[str, Any]]],
+) -> list[str]:
+    """Consume an approved bounded authorization at most once."""
+
+    problems: list[str] = []
+    external = [
+        (path, event)
+        for path, event in outcomes
+        if event.get("provenance", {}).get("source_kind")
+        == "external_bounded_decision_run"
+    ]
+    authorization = decisions.get("bounded_experiment_authorization", {})
+    authorization_id = authorization.get("authorization_id")
+    if len(external) > 1:
+        problems.append(
+            f"{authorization_id}: multiple external bounded terminal events; "
+            "the singleton authorization is already consumed"
+        )
+    for path, event in external:
+        if event.get("candidate_id") != authorization_id:
+            problems.append(
+                f"{path.name}: external event does not consume the approved "
+                "bounded authorization"
+            )
+    return problems
+
+
 def validate_retrospective(
     policy: dict[str, Any],
     outcomes: list[dict[str, Any]],
@@ -3576,6 +4214,11 @@ def build_calibration(
             event["provenance"]["source_kind"] == "historical_migration"
             for event in outcomes
         ),
+        "external_bounded_outcomes_excluded": sum(
+            event["provenance"]["source_kind"]
+            == "external_bounded_decision_run"
+            for event in outcomes
+        ),
         "scored_native_outcomes": len(records),
         "mean_brier_score": (
             round(
@@ -3588,7 +4231,9 @@ def build_calibration(
         "records": records,
         "note": (
             "Historical migrations are excluded because their priors and "
-            "likelihoods were not frozen before observation."
+            "likelihoods were not frozen before observation. External bounded "
+            "decision runs are excluded because they are not native selected "
+            "Engine candidates."
         ),
     }
 
@@ -3597,12 +4242,21 @@ def decision_delta_for_event(
     event: dict[str, Any],
     candidate: dict[str, Any] | None,
 ) -> dict[str, str]:
-    if event["provenance"]["source_kind"] == "historical_migration":
+    source_kind = event["provenance"]["source_kind"]
+    if source_kind == "historical_migration":
         return {
             "effect": "retained_history",
             "statement": (
                 "Retain the scoped historical evidence; no automatic route "
                 "decision follows."
+            ),
+        }
+    if source_kind == "external_bounded_decision_run":
+        return {
+            "effect": "external_bounded_result_retained",
+            "statement": (
+                "Retain the exact decision-authorized result outside native "
+                "selection and calibration; no automatic promotion follows."
             ),
         }
     outcome = event["outcome"]
@@ -3872,6 +4526,9 @@ def build_state(
                     "historical_migration", 0
                 ),
                 "native_engine_run": source_counts.get("native_engine_run", 0),
+                "external_bounded_decision_run": source_counts.get(
+                    "external_bounded_decision_run", 0
+                ),
             },
             "outcomes_by_taxonomy": {
                 outcome["id"]: outcome_counts.get(outcome["id"], 0)
@@ -3895,6 +4552,11 @@ def build_state(
             event
             for event in event_summaries
             if event["source_kind"] == "native_engine_run"
+        ],
+        "external_bounded_outcomes": [
+            event
+            for event in event_summaries
+            if event["source_kind"] == "external_bounded_decision_run"
         ],
         "route_evidence_state": route_states,
         "route_axis_contract": {
@@ -4040,6 +4702,7 @@ def validate_all() -> tuple[list[str], dict[str, Any]]:
         )
     )
     problems.extend(validate_native_sequence(policy, decisions, outcomes))
+    problems.extend(validate_external_bounded_sequence(decisions, outcomes))
     state = build_state(
         policy,
         decisions,

@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every ledger row below cites kernel-checked declarations (no `sorry`, no custom axioms).
 
-**306 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **7 typed evidence cells** · **3 desk-decided cells** · **2 research-question seeds** · **4 shadow proposal stubs** · **0 bounded explorations selected** · **1 exact decision-level toy authorization** · **8 retained outcomes** · **1140 edges**
+**306 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **7 typed evidence cells** · **3 desk-decided cells** · **2 research-question seeds** · **4 shadow proposal stubs** · **0 bounded explorations selected** · **1 exact decision-level toy authorization** · **9 retained outcomes** · **1143 edges**
 
 > A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline counts; `data/result_registry.json` owns declaration-level resolution.
 
@@ -10,17 +10,17 @@ By proof method: Mathlib (106), Mathlib + native_decide (31), native_decide (20)
 
 By research area: curve-torsion (152), primality (55), other (33), generic-hardness (30), protocol-soundness (23), attack-resistance (7), reduction (5), params (1)
 
-By edge type: imports (505), member_of (306), grounded_in_source_claim (49), requires_foundation (41), decision_grounded_in (25), supports (24), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), requires_target_property (9), records_outcome_for (8), updates_hypothesis (8), records_route_evidence (8), blocked_by (7), instantiates_mechanism (7), evaluates_route (7), must_change_cost_quantity (7), binds_target_feature (7), binds_mechanism_primitive (7), binds_unresolved_question (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (4), bounded_by_research_barrier (4), follows_up_cell (3), depends_on_candidate (3), generated_from_cell (2), follows_up_source (1)
+By edge type: imports (505), member_of (306), grounded_in_source_claim (49), requires_foundation (41), decision_grounded_in (25), supports (24), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), requires_target_property (9), records_outcome_for (9), updates_hypothesis (9), records_route_evidence (9), blocked_by (7), instantiates_mechanism (7), evaluates_route (7), must_change_cost_quantity (7), binds_target_feature (7), binds_mechanism_primitive (7), binds_unresolved_question (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (4), bounded_by_research_barrier (4), follows_up_cell (3), depends_on_candidate (3), generated_from_cell (2), follows_up_source (1)
 
 ## secp256k1 route decisions
 
 This target-specific layer is generated from `repo/ECDLP_DECISION_SUBSTRATE.json`. It does not replace the attack evidence registry or the formal release map.
 
-Phase: **one-bounded-decision-experiment**. Exact decision experiment authorized: **true**. Native bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Structural routes: **R-GLV-SEMAEV**. Promoted routes: **none**. Selected attack route: **none**.
+Phase: **post-task026-decision-review**. Exact decision experiment authorized: **false**. Native bounded exploration authorized: **false**. Promotion experiments authorized: **false**. Structural routes: **R-GLV-SEMAEV**. Promoted routes: **none**. Selected attack route: **none**.
 
-### Exact bounded experiment authorization
+### Exact bounded experiment record
 
-**AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01** is `approved` for `HYP-M16-FIXED-TARGET-YIELD-001` / `TASK-026` / `R-PETIT-COMPOSED-MAPS` / `CELL-M-PKC-SMOOTH-M16`. It binds readiness commit `0b1b36851aa0f82c3a1bd587d385775923153d9c` and **5 source hashes**.
+**AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01** is `consumed` for `HYP-M16-FIXED-TARGET-YIELD-001` / `TASK-026` / `R-PETIT-COMPOSED-MAPS` / `CELL-M-PKC-SMOOTH-M16`. It binds readiness commit `0b1b36851aa0f82c3a1bd587d385775923153d9c` and **5 source hashes**. Terminal: `CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION` in `REO-2026-07-31-001`; rerun authorized: **false**.
 
 Scope: `synthetic_toy_only`, `E_7`, 3 frozen toy subgroups, maximum **25 field bits**. Budget: **3000000 primary trials**, **4 CPU-hours**, **4 GiB**, **24 wall-hours**.
 
@@ -98,8 +98,8 @@ The typed mechanism and cell are part of scientific identity. The three synthesi
 
 | seed | typed mechanism and cell | target feature | mechanism primitive | unresolved question | status |
 |---|---|---|---|---|---|
-| **HGS-E1097B75224C** | `M-PKC-AUXILIARY-CURVE` / `CELL-M-PKC-AUXILIARY-CURVE` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `property_resolution_required`, authorization `none` |
-| **HGS-5E19F2C164BE** | `M-PKC-SMOOTH-M16` / `CELL-M-PKC-SMOOTH-M16` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `desk_cost_bridge_required`, authorization `none` |
+| **HGS-2F4C661E5578** | `M-PKC-AUXILIARY-CURVE` / `CELL-M-PKC-AUXILIARY-CURVE` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `property_resolution_required`, authorization `none` |
+| **HGS-DC5FF2FC9E71** | `M-PKC-SMOOTH-M16` / `CELL-M-PKC-SMOOTH-M16` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `desk_cost_bridge_required`, authorization `none` |
 
 | shadow stub | anchor | kind | executable | authorized |
 |---|---|---|---:|---:|
@@ -124,7 +124,7 @@ Exploration gate: **true**. Promotion gate: **false**. Historical no-reopen guar
 
 Blocked intake candidates: **0**. Intake is retained research memory, not permission to execute.
 
-Retained outcomes: `proved`=0, `supported`=0, `historical_structural_confirmation`=1, `falsified`=0, `bounded_negative`=2, `inapplicable`=1, `inconclusive`=3, `resource_exhausted`=1.
+Retained outcomes: `proved`=0, `supported`=1, `historical_structural_confirmation`=1, `falsified`=0, `bounded_negative`=2, `inapplicable`=1, `inconclusive`=3, `resource_exhausted`=1.
 
 > Promotion boundary: Generated evidence may close, park, or reopen exploration candidates. It may not promote a route, authorize exact-target work, or make a public complexity claim without a dated decision-substrate change.
 
