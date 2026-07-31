@@ -6,7 +6,7 @@ purpose: >
   claims of success; they are testable directions with exit criteria so agents
   can decide whether to prove, experiment, document, or freeze a route.
 status_vocabulary:
-  active: "Current non-experimental work tied to an active task."
+  active: "Current work tied to an active task; an experiment is executable only under a separate exact authorization."
   closed: "Exit criteria met; retained as durable decision evidence."
   parked: "No work is authorized until resume_after is satisfied."
 
@@ -269,6 +269,52 @@ hypotheses:
       - "BREAKTHROUGH (continue + move identities to Lean) only if a stable T(p) = p^(1/2 - eps), eps>0, with a theoretical explanation of the scaling."
       - "CLOSED FOR THIS PREMISE: the coordinatewise quotient is algebraically wrong for diagonal phase, and finite orbit compression is only a constant factor."
       - "Either way: a reproducible benchmark note + a BARRIERS.md / no-go registry entry; Lean only on a positive, explained result."
+
+  - id: HYP-M16-FIXED-TARGET-YIELD-001
+    title: "Fixed-target usability of the balanced-regular M16 affine locus"
+    direction: "experiment"
+    hypothesis_type: "ENABLING"
+    status: "active"
+    lifecycle_state: "ACTIVE"
+    task_id: "TASK-026"
+    route_id: "R-PETIT-COMPOSED-MAPS"
+    cell_id: "CELL-M-PKC-SMOOTH-M16"
+    authorization_class: "external_bounded_singleton"
+    authorization_id: "AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01"
+    native_engine_candidate: false
+    owner: "experiments"
+    exact_test: "experiments/engine/pkc_smooth_m16_fixed_target_yield/PREREGISTRATION.md"
+    claim: >
+      On the three frozen synthetic E_7 toy subgroups, exact ordered
+      16-coordinate relations for paired public targets committed before leaf
+      sampling contain an endpoint-nonzero BalancedPropagatedRegular
+      subfamily whose conditional frequency does not meet the preregistered
+      collapse rule. This is an enabling claim about availability of the
+      TASK-025 affine chart, not an ECDLP attack, solver result, asymptotic
+      improvement, or secp256k1 claim.
+    why_it_matters: >
+      TASK-025 makes the full conditional chart cover exactly equivalent to
+      one affine chart on its named regular locus. This singleton test decides
+      whether that locus is available for independently replayed fixed-target
+      toy relations often enough to justify one source-faithful solver-slope
+      proposal, or whether the affine M16 continuation should stop.
+    evidence_for:
+      - "TASK-025 kernel-checks the exact empty-mask affine-chart reduction under endpoint and BalancedPropagatedRegular assumptions."
+      - "The readiness package freezes three E_7 toy subgroups, paired public targets, matched 384-coordinate orbit/plain arms, five seeds, exact replay, and semantic-mutation tests before any outcome exists."
+    evidence_against:
+      - "TASK-025 proves no symbolic nonzeroness, nonemptiness, density, probability, relation yield, rank, recovery, solver slope, or total-cost improvement."
+      - "Finite GLV orbit closure normally changes constants; the factor bases in this test are not the source-faithful PKC x^D-1 family."
+      - "Toy regularity may be target-construction, implementation, or small-field behavior and cannot be extrapolated to 256 bits."
+    tests:
+      - "Execute only the exact decision-substrate singleton: three frozen E_7 toy subgroups, GLV_ORBIT_CLOSED versus PLAIN_MATCHED arms, five seeds, and at most 3000000 primary trials."
+      - "Commit each paired public target before leaves and keep its scalar outside the sampler, raw transcript, configuration, and summary."
+      - "Independently replay every accepted relation, endpoint and twelve obstruction labels, 16-permutation control, curve/base/target commitments, chronology, hashes, and terminal classification."
+      - "Retain negative, inconclusive, artifact-rejected, and resource-exhausted terminal evidence; do not create a native Research Engine v0.2 candidate or authorize route promotion."
+    exit_criteria:
+      - "PROMOTE_TO_SOLVER_SLOPE_TEST only under the frozen Section 13 gate; this permits one separately preregistered source-faithful solver-slope proposal and no attack-route promotion."
+      - "CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION when the regularity gate passes but orbit/plain controls support only a local representation effect."
+      - "KILL_AFFINE_M16_CONTINUATION when an orbit-arm 95% Wilson upper bound is below 0.80 at m=21 or m=23 with at least 100 accepted rows, or only constructed-target controls succeed."
+      - "PAUSE_INCONCLUSIVE or REJECT_AS_ARTIFACT exactly as preregistered; every terminal state must update the hypothesis ledger and preserve the evidence."
 
   - id: HYP_WARD_EDS_001
     title: "Ward elliptic divisibility sequences as a structural probe of torsion/apparition on prime-field toy curves"

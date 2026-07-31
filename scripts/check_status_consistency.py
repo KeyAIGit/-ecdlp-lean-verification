@@ -64,6 +64,7 @@ def main() -> int:
     pilot_protocol = read_json("repo/PILOT_PROTOCOL.json")
     status = read_text("STATUS.md")
     knowledge_graph_md = read_text("data/knowledge_graph.md")
+    decision_view = read_text("repo/ECDLP_DECISION_SUBSTRATE.md")
     index = read_text("index.html")
     dashboard = read_text("dashboard.html")
     explore = read_text("explore.html")
@@ -88,6 +89,8 @@ def main() -> int:
     frontier_rows = frontier.get("meta", {}).get("verified_ledger_rows")
     status_summary = frontier.get("status_summary", {})
     route_selection = decisions.get("route_selection", {})
+    authorization = decisions.get("bounded_experiment_authorization", {})
+    authorization_id = authorization.get("authorization_id")
 
     check(isinstance(ledger_rows, int) and ledger_rows > 0,
           "data/stats.json must expose a positive integer ledger_rows")
@@ -249,20 +252,25 @@ def main() -> int:
         "dashboard and explore must expose the canonical structural decision",
     )
     check(
-        f"{selected_explorations} experiments selected" in index
+        f"{selected_explorations} native experiments selected" in index
         and f"{selected_explorations} selected;" in dashboard
         and f"{len(selected_structural)} structural route completed" in explore
         and f"{len(promoted_routes)} promoted" in explore
-        and "0 experiments authorized" in explore,
-        "public reference views must expose the selected bounded exploration count",
+        and "1 exact synthetic-toy run authorized" in explore
+        and "0 native experiments selected" in explore,
+        "public reference views must distinguish the exact singleton from the "
+        "empty native exploration queue",
     )
     check(
-        "The bounded structural question is resolved; no experiment is authorized." in dashboard
-        and "No run authorized" in dashboard
+        "One hash-bound synthetic-toy diagnostic is authorized." in dashboard
+        and "Native queue closed" in dashboard
+        and authorization_id in dashboard
         and "repo/RESEARCH_ENGINE_V0.json" in dashboard
         and "repo/HYPOTHESIS_GENERATION_V0.json" in dashboard
+        and "Native decision exploration" in dashboard
         and "Promotion experiments" in dashboard,
-        "dashboard must distinguish the exploration and promotion gates",
+        "dashboard must distinguish the exact singleton, native exploration, "
+        "and promotion gates",
     )
     check(
         f"**{generated_hypothesis_seeds} source-grounded seeds**" in status
@@ -332,11 +340,22 @@ def main() -> int:
         == engine.get("counts", {}).get("selected_explorations"),
         "knowledge graph selected exploration count must match research_engine_state.json",
     )
+    check(
+        graph_counts.get("decision_level_bounded_authorizations") == 1,
+        "knowledge graph must expose exactly one decision-level authorization",
+    )
     check(graph.get("schema_version") == "4.0",
           "data/knowledge_graph.json must use Research Engine-aware schema 4.0")
     check(
         graph.get("decision_substrate", {}).get("route_selection") == route_selection,
         "knowledge graph route selection must match ECDLP_DECISION_SUBSTRATE.json",
+    )
+    check(
+        graph.get("decision_substrate", {}).get(
+            "bounded_experiment_authorization"
+        )
+        == authorization,
+        "knowledge graph bounded authorization must match the decision substrate",
     )
     graph_engine = graph.get("research_engine", {})
     check(
@@ -374,6 +393,14 @@ def main() -> int:
     check(
         engine.get("gate_status", {}).get("exploration_authorized")
         == True
+        and engine.get("gate_status", {}).get(
+            "current_decision_experiment_authorized"
+        )
+        == True
+        and decisions.get("phase_policy", {}).get(
+            "experiments_authorized"
+        )
+        == True
         and decisions.get("phase_policy", {}).get(
             "bounded_exploration_authorized"
         )
@@ -383,13 +410,43 @@ def main() -> int:
             "promotion_experiments_authorized"
         )
         == False,
-        "the Engine must retain exploration capability while the current "
-        "structural decision authorizes no experiment and both layers keep "
-        "promotion closed",
+        "the Engine capability, exact decision singleton, closed native "
+        "decision queue, and closed promotion gate must remain distinct",
     )
     check(
         route_selection.get("decision_id") in status,
         "STATUS.md must expose the current route-selection decision",
+    )
+    check(
+        isinstance(authorization_id, str)
+        and authorization_id in status
+        and authorization_id in decision_view
+        and authorization_id in knowledge_graph_md
+        and authorization_id in index
+        and authorization_id in dashboard
+        and authorization_id in explore,
+        "all generated decision surfaces must expose the exact singleton id",
+    )
+    check(
+        authorization.get("hypothesis_id") in status
+        and authorization.get("task_id") in status
+        and authorization.get("source_commit") in status
+        and str(
+            authorization.get("resource_budget", {}).get(
+                "max_primary_trials"
+            )
+        )
+        in status
+        and "Real-world and secp256k1" in status,
+        "STATUS.md must expose singleton identity, source, budget, and safety scope",
+    )
+    check(
+        "Exact decision experiment authorized: **true**" in decision_view
+        and "Native bounded exploration authorized: **false**"
+        in decision_view
+        and "Promotion experiments authorized: **false**" in decision_view
+        and "**Promotion authorized:** **false**" in decision_view,
+        "decision view must separate singleton, native, and promotion gates",
     )
     edge_types = graph_counts.get("by_edge_type", {})
     for edge_type in (

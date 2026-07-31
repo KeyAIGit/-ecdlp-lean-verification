@@ -8,9 +8,12 @@ independently of their cited Lean or literature evidence.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import re
+import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -35,7 +38,62 @@ STRUCTURAL_FOUNDATION_ID = "F-SEMAEV-ELIMINATION"
 MAINTENANCE_CYCLE_ID = "RESEARCH-ENGINE-V0.2-SANITATION-001"
 MAINTENANCE_TASK_ID = "TASK-010"
 MAINTENANCE_ACCEPTANCE_COMMIT = "85f85d4ca0b9dba323bfdd05ce8750d6db4732ac"
-CURRENT_PHASE = "evidence-bounded-desk-priority"
+CURRENT_PHASE = "one-bounded-decision-experiment"
+BOUNDED_AUTHORIZATION_KEY = "bounded_experiment_authorization"
+BOUNDED_AUTHORIZATION_ID = (
+    "AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01"
+)
+BOUNDED_AUTHORIZATION_SOURCE_COMMIT = (
+    "0b1b36851aa0f82c3a1bd587d385775923153d9c"
+)
+BOUNDED_AUTHORIZATION_HYPOTHESIS_ID = (
+    "HYP-M16-FIXED-TARGET-YIELD-001"
+)
+BOUNDED_AUTHORIZATION_TASK_ID = "TASK-026"
+BOUNDED_AUTHORIZATION_ROUTE_ID = "R-PETIT-COMPOSED-MAPS"
+BOUNDED_AUTHORIZATION_CELL_ID = "CELL-M-PKC-SMOOTH-M16"
+BOUNDED_AUTHORIZATION_BINDINGS = {
+    "preregistration": (
+        "experiments/engine/pkc_smooth_m16_fixed_target_yield/"
+        "PREREGISTRATION.md",
+        "e41164b1e8950aab60849e567949a230d592652d9b7ae2484eaed5dff7518cc5",
+    ),
+    "curve_table": (
+        "experiments/engine/pkc_smooth_m16_fixed_target_yield/curve_table.json",
+        "a59ed1a8b597bc5d512438d09fbb4c970fff74dd704f8f88be4f7224775f5e0d",
+    ),
+    "experiment_config": (
+        "experiments/engine/pkc_smooth_m16_fixed_target_yield/"
+        "experiment_config.json",
+        "34265beeba540ab03a5c738519eef7acaf1504a96a2f6e73b993c8af773a7c64",
+    ),
+    "run_py": (
+        "experiments/engine/pkc_smooth_m16_fixed_target_yield/run.py",
+        "7fe8bc7d4aff18e42fbfbb9c03ae9e5cec4bacc4c39eb00fb718096dd163384a",
+    ),
+    "validate_py": (
+        "experiments/engine/pkc_smooth_m16_fixed_target_yield/validate.py",
+        "9f89bd4f1708f94235ff9f3c76de7db4dd7b05d42911e118b21d5f9592639d7c",
+    ),
+}
+BOUNDED_AUTHORIZATION_BUDGET = {
+    "max_primary_trials": 3_000_000,
+    "max_cpu_hours": 4,
+    "max_peak_rss_gib": 4,
+    "max_wall_hours": 24,
+}
+BOUNDED_AUTHORIZATION_SCOPE = {
+    "kind": "synthetic_toy_only",
+    "curve_family": "E_7",
+    "curve_ids": [
+        "E7-P262153-N262567",
+        "E7-P1048783-N1050337",
+        "E7-P16777711-N5591281",
+    ],
+    "max_field_bits": 25,
+    "real_world_targets_forbidden": True,
+    "secp256k1_targets_forbidden": True,
+}
 COMPLETED_PROPAGATION_TASK_ID = "TASK-025"
 COMPLETED_STRATA_TASK_ID = "TASK-024"
 COMPLETED_CHART_TASK_ID = "TASK-023"
@@ -265,6 +323,159 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def sha256_bytes(payload: bytes) -> str:
+    return hashlib.sha256(payload).hexdigest()
+
+
+def git_file_bytes(commit: str, relative: str) -> bytes | None:
+    """Read one readiness-bound file without trusting the working tree."""
+
+    completed = subprocess.run(
+        ["git", "show", f"{commit}:{relative}"],
+        cwd=ROOT,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+    return completed.stdout if completed.returncode == 0 else None
+
+
+def validate_bounded_authorization(
+    data: dict, problems: list[str]
+) -> dict:
+    """Validate the sole decision-level exception to the closed run gates.
+
+    This is intentionally a singleton with an exact field set.  It does not
+    mutate the Research Engine, route, lifecycle, claim, or promotion gates.
+    The experiment producer independently repeats these checks before it can
+    execute.
+    """
+
+    authorization = data.get(BOUNDED_AUTHORIZATION_KEY)
+    if not isinstance(authorization, dict):
+        problems.append(
+            f"{BOUNDED_AUTHORIZATION_KEY} must be the exact approved object"
+        )
+        return {}
+
+    expected_fields = {
+        "status",
+        "hypothesis_id",
+        "task_id",
+        "route_id",
+        "cell_id",
+        "promotion_authorized",
+        "authorization_id",
+        "source_commit",
+        "authorized_utc",
+        "sha256_bindings",
+        "resource_budget",
+        "scope",
+    }
+    if set(authorization) != expected_fields:
+        problems.append(
+            f"{BOUNDED_AUTHORIZATION_KEY} field set must be exactly "
+            f"{sorted(expected_fields)}"
+        )
+
+    expected_identity = {
+        "status": "approved",
+        "hypothesis_id": BOUNDED_AUTHORIZATION_HYPOTHESIS_ID,
+        "task_id": BOUNDED_AUTHORIZATION_TASK_ID,
+        "route_id": BOUNDED_AUTHORIZATION_ROUTE_ID,
+        "cell_id": BOUNDED_AUTHORIZATION_CELL_ID,
+        "promotion_authorized": False,
+        "authorization_id": BOUNDED_AUTHORIZATION_ID,
+        "source_commit": BOUNDED_AUTHORIZATION_SOURCE_COMMIT,
+        "resource_budget": BOUNDED_AUTHORIZATION_BUDGET,
+        "scope": BOUNDED_AUTHORIZATION_SCOPE,
+    }
+    for field, expected in expected_identity.items():
+        if authorization.get(field) != expected:
+            problems.append(
+                f"{BOUNDED_AUTHORIZATION_KEY}.{field} must be {expected!r}"
+            )
+
+    timestamp = authorization.get("authorized_utc")
+    if not isinstance(timestamp, str) or not re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", timestamp
+    ):
+        problems.append(
+            f"{BOUNDED_AUTHORIZATION_KEY}.authorized_utc must be canonical UTC"
+        )
+    else:
+        try:
+            parsed = datetime.strptime(
+                timestamp, "%Y-%m-%dT%H:%M:%SZ"
+            ).replace(tzinfo=timezone.utc)
+        except ValueError:
+            problems.append(
+                f"{BOUNDED_AUTHORIZATION_KEY}.authorized_utc is invalid"
+            )
+        else:
+            if parsed > datetime.now(timezone.utc):
+                problems.append(
+                    f"{BOUNDED_AUTHORIZATION_KEY}.authorized_utc is in the future"
+                )
+
+    bindings = authorization.get("sha256_bindings")
+    expected_hashes = {
+        key: digest
+        for key, (_, digest) in BOUNDED_AUTHORIZATION_BINDINGS.items()
+    }
+    if bindings != expected_hashes:
+        problems.append(
+            f"{BOUNDED_AUTHORIZATION_KEY}.sha256_bindings must match the "
+            "five frozen readiness files"
+        )
+
+    for key, (relative, digest) in BOUNDED_AUTHORIZATION_BINDINGS.items():
+        path = ROOT / relative
+        if not path.is_file():
+            problems.append(f"authorization-bound file is absent: {relative}")
+            continue
+        if sha256_bytes(path.read_bytes()) != digest:
+            problems.append(
+                f"authorization-bound working-tree hash drifted: {key}"
+            )
+        source_payload = git_file_bytes(
+            BOUNDED_AUTHORIZATION_SOURCE_COMMIT, relative
+        )
+        if source_payload is None:
+            problems.append(
+                f"authorization source commit lacks bound file: {relative}"
+            )
+        elif sha256_bytes(source_payload) != digest:
+            problems.append(
+                f"authorization source-commit hash drifted: {key}"
+            )
+
+    source_substrate_payload = git_file_bytes(
+        BOUNDED_AUTHORIZATION_SOURCE_COMMIT,
+        DECISIONS.relative_to(ROOT).as_posix(),
+    )
+    if source_substrate_payload is None:
+        problems.append("authorization source commit is not inspectable")
+    else:
+        try:
+            source_substrate = json.loads(source_substrate_payload)
+        except json.JSONDecodeError:
+            problems.append("authorization source substrate is malformed")
+        else:
+            source_authorization = source_substrate.get(
+                BOUNDED_AUTHORIZATION_KEY
+            )
+            if (
+                isinstance(source_authorization, dict)
+                and source_authorization.get("status") == "approved"
+            ):
+                problems.append(
+                    "authorization source commit already contained an approved "
+                    "singleton"
+                )
+    return authorization
+
+
 def ids_are_unique(items: list[dict], label: str, problems: list[str]) -> set[str]:
     ids = [item.get("id") for item in items]
     if None in ids:
@@ -277,8 +488,8 @@ def ids_are_unique(items: list[dict], label: str, problems: list[str]) -> set[st
 def parse_hypotheses() -> dict[str, dict[str, str]]:
     text = HYPOTHESES.read_text(encoding="utf-8")
     pattern = re.compile(
-        r"^  - id: (?P<id>[A-Z0-9_]+)\s*$"
-        r"(?P<body>.*?)(?=^  - id: [A-Z0-9_]+\s*$|\Z)",
+        r"^  - id: (?P<id>[A-Z0-9_-]+)\s*$"
+        r"(?P<body>.*?)(?=^  - id: [A-Z0-9_-]+\s*$|\Z)",
         flags=re.MULTILINE | re.DOTALL,
     )
     parsed: dict[str, dict[str, str]] = {}
@@ -287,6 +498,15 @@ def parse_hypotheses() -> dict[str, dict[str, str]]:
         for name in (
             "direction",
             "status",
+            "hypothesis_type",
+            "lifecycle_state",
+            "task_id",
+            "route_id",
+            "cell_id",
+            "authorization_class",
+            "authorization_id",
+            "native_engine_candidate",
+            "exact_test",
             "resume_after",
             "structural_lane",
             "structural_decision_id",
@@ -326,6 +546,7 @@ def validate() -> list[str]:
     source_ids = {source["id"] for source in source_data["sources"]}
     threat_ids = ids_are_unique(data.get("threat_models", []), "threat_models", problems)
     hypotheses = parse_hypotheses()
+    authorization = validate_bounded_authorization(data, problems)
 
     primary_models = [
         model["id"] for model in data["threat_models"] if model.get("primary")
@@ -336,17 +557,43 @@ def validate() -> list[str]:
         )
     if data["phase_policy"].get("phase") != CURRENT_PHASE:
         problems.append(f"the current phase must be {CURRENT_PHASE}")
-    if data["phase_policy"].get("experiments_authorized") is not False:
-        problems.append("experiments_authorized must remain false")
+    if data["phase_policy"].get("experiments_authorized") is not True:
+        problems.append(
+            "experiments_authorized must be true only for the exact decision-level "
+            "singleton"
+        )
+    if (
+        data["phase_policy"].get("experiments_authorized")
+        is not (authorization.get("status") == "approved")
+    ):
+        problems.append(
+            "decision-level experiments_authorized must equal the exact singleton "
+            "approval state"
+        )
     if data["phase_policy"].get("bounded_exploration_authorized") is not False:
         problems.append(
-            "bounded_exploration_authorized must be false after the structural iteration"
+            "native bounded_exploration_authorized must remain false"
         )
     if data["phase_policy"].get("promotion_experiments_authorized") is not False:
         problems.append("promotion experiments must remain unauthorized")
     if data["phase_policy"].get("selected_attack_route") is not None:
         problems.append("completed structural selection must keep selected_attack_route=null")
     phase_allowed = "\n".join(data["phase_policy"].get("allowed_work", []))
+    for binding in (
+        BOUNDED_AUTHORIZATION_ID,
+        BOUNDED_AUTHORIZATION_TASK_ID,
+        "five source hashes",
+        "three frozen E_7 toy subgroup rows",
+        "thirty frozen cells",
+        "3000000-primary-trial ceiling",
+        "independent validator",
+        "Retain every completed, negative, inconclusive, artifact-rejected, or "
+        "resource-exhausted terminal outcome",
+    ):
+        if binding not in phase_allowed:
+            problems.append(
+                f"phase_policy.allowed_work is missing authorization binding {binding}"
+            )
     for binding in (
         COMPLETED_SPECIALIZATION_TASK_ID,
         "actual frozen recursive C_r specialization",
@@ -387,6 +634,15 @@ def validate() -> list[str]:
             problems.append(f"phase_policy.allowed_work is missing {binding}")
     phase_forbidden = "\n".join(data["phase_policy"].get("forbidden_work", []))
     for binding in (
+        "other than the exact TASK-026 singleton",
+        "exact-target secp256k1 work",
+        "promotion experiment",
+    ):
+        if binding not in phase_forbidden:
+            problems.append(
+                f"phase_policy.forbidden_work is missing singleton boundary {binding}"
+            )
+    for binding in (
         COMPLETED_WITNESS_TASK_ID,
         "frozen projective witness chain",
         "direct-S17 equivalence",
@@ -412,17 +668,21 @@ def validate() -> list[str]:
     execution_gates = data.get("execution_gates", {})
     if execution_gates.get("exploration", {}).get("authorized") is not False:
         problems.append(
-            "execution_gates.exploration must remain closed after the structural iteration"
+            "execution_gates.exploration must remain closed; the decision singleton "
+            "is not native Engine authorization"
         )
     if execution_gates.get("promotion", {}).get("authorized") is not False:
         problems.append("execution_gates.promotion must remain closed")
     exploration_cannot_do = "\n".join(
         execution_gates.get("exploration", {}).get("cannot_do", [])
     )
-    if "without a new dated authorization" not in exploration_cannot_do:
+    if (
+        "only current authorization is the exact TASK-026 singleton"
+        not in exploration_cannot_do
+    ):
         problems.append(
-            "execution_gates.exploration.cannot_do must require new dated "
-            "authorization"
+            "execution_gates.exploration.cannot_do must preserve the exact singleton "
+            "boundary"
         )
     if execution_gates.get("exploration", {}).get("policy_source") != (
         "repo/RESEARCH_ENGINE_V0.json"
@@ -583,30 +843,23 @@ def validate() -> list[str]:
     next_gate = data.get("next_phase_gate", {})
     if (
         next_gate.get("current_mode")
-        != "evidence_bounded_desk_priority_promotion_closed"
+        != "one_bounded_decision_experiment_promotion_closed"
     ):
         problems.append(
             "next_phase_gate.current_mode must be "
-            "evidence_bounded_desk_priority_promotion_closed"
+            "one_bounded_decision_experiment_promotion_closed"
         )
     reopen = next_gate.get("reopen_requirements")
     if not isinstance(reopen, list) or not reopen:
         problems.append("next_phase_gate.reopen_requirements must be nonempty")
     reopen_text = "\n".join(reopen) if isinstance(reopen, list) else ""
     for binding in (
-        COMPLETED_STRATA_TASK_ID,
-        "necessary infinity-stratum filter",
-        COMPLETED_CHART_TASK_ID,
-        "exact TASK-023 cover",
-        COMPLETED_PROPAGATION_TASK_ID,
-        "conditional single-affine-chart theorem",
-        "symbolic nonzeroness and nonemptiness",
-        "mapped-target balanced regular locus",
-        "orchestration of its exceptional complement",
-        "without enumerating all 2^14 masks",
-        "987, 377, 129, 69, 60, or 36",
-        "usable yield, rank, solving, recovery, and total-cost models",
-        "does not authorize an experiment or route promotion",
+        BOUNDED_AUTHORIZATION_TASK_ID,
+        "independently validate",
+        "HYP-M16-SOLVER-SLOPE-001",
+        "No TASK-026 terminal promotes a route",
+        "authorizes a solver",
+        "secp256k1 extrapolation",
     ):
         if binding not in reopen_text:
             problems.append(
@@ -614,38 +867,22 @@ def validate() -> list[str]:
             )
     next_gate_decision = next_gate.get("decision", "")
     for binding in (
-        COMPLETED_SPECIALIZATION_TASK_ID,
-        "actual recursive frozen C_r specialization",
-        "uniform predecessor output-degree bound",
-        "unconditional one-step resultant/common-projective-root equivalence",
-        COMPLETED_WITNESS_TASK_ID,
-        "exact projective homogenization/evaluation",
-        "universal all-stage frozen witness-chain equivalence",
-        "fourteen valid intermediate projective slots",
-        COMPLETED_GUARDED_TASK_ID,
-        "exact literal finite MvPolynomial family",
-        "56 scalar variables",
-        "29 equation-family members",
-        "total degree at most four",
-        COMPLETED_CHART_TASK_ID,
-        "exact affine/infinity chart-polynomial cover",
-        "14 - I.card",
-        "fifteen literal H equations",
-        "degree ceilings 2/4/2",
-        "2^14 logical masks are not enumerated or materialized",
-        COMPLETED_STRATA_TASK_ID,
-        "987 separated",
-        "377 interior masks",
         COMPLETED_PROPAGATION_TASK_ID,
-        "377 to 129 to 69 to 36",
-        "boundary-only reduction 129 to 60",
-        "single empty-mask affine chart",
-        "mapped-target regularity",
-        "symbolic nonzeroness, nonemptiness, genericity",
-        "usable nonempty regular locus or orchestration of its exceptional complement",
-        "open_non_executable",
+        "HYP-SELECT-002",
+        BOUNDED_AUTHORIZATION_HYPOTHESIS_ID,
+        BOUNDED_AUTHORIZATION_ID,
+        BOUNDED_AUTHORIZATION_TASK_ID,
+        "three frozen synthetic E_7 toy subgroups",
+        "thirty frozen cells",
+        "3000000 primary trials",
+        BOUNDED_AUTHORIZATION_SOURCE_COMMIT,
         "open_parked",
-        "authorization remains false",
+        "selected_attack_route remains null",
+        "route-level and native bounded-exploration authorization remain false",
+        "promotion authorization remains false",
+        "authorizes a solver",
+        "direct secp256k1 target work",
+        "ECDLP complexity improvement",
     ):
         if binding not in next_gate_decision:
             problems.append(f"next_phase_gate.decision is missing {binding}")
@@ -736,9 +973,18 @@ def validate() -> list[str]:
                 problems.append(f"{route_id}: unknown hypothesis {hypothesis_id}")
                 continue
             status = hypotheses[hypothesis_id].get("status")
-            if status != "parked":
+            expected_status = (
+                "active"
+                if (
+                    hypothesis_id == BOUNDED_AUTHORIZATION_HYPOTHESIS_ID
+                    and route_id == BOUNDED_AUTHORIZATION_ROUTE_ID
+                )
+                else "parked"
+            )
+            if status != expected_status:
                 problems.append(
-                    f"{route_id}: {hypothesis_id} must be parked, found {status!r}"
+                    f"{route_id}: {hypothesis_id} must be {expected_status}, "
+                    f"found {status!r}"
                 )
 
     if completed_structural_routes != [STRUCTURAL_ROUTE_ID]:
@@ -753,6 +999,7 @@ def validate() -> list[str]:
     petit_next_action = petit_route.get("next_action", "")
     for binding in (
         COMPLETED_PROPAGATION_TASK_ID,
+        BOUNDED_AUTHORIZATION_TASK_ID,
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
         DESK_PRIORITY_COST_ID,
@@ -1026,9 +1273,10 @@ def validate() -> list[str]:
         for hypothesis_id, fields in experiment_hypotheses.items()
         if fields.get("status") == "active"
     ]
-    if active_experiments:
+    if active_experiments != [BOUNDED_AUTHORIZATION_HYPOTHESIS_ID]:
         problems.append(
-            "experiment hypotheses must remain parked at the promotion level: "
+            "exactly the external bounded singleton hypothesis may be active "
+            "without route promotion; found: "
             + ", ".join(sorted(active_experiments))
         )
     completed_structural_hypotheses = [
@@ -1109,6 +1357,7 @@ def validate() -> list[str]:
         COMPLETED_CHART_TASK_ID,
         COMPLETED_STRATA_TASK_ID,
         COMPLETED_PROPAGATION_TASK_ID,
+        BOUNDED_AUTHORIZATION_TASK_ID,
     ):
         if required_task not in tasks_text:
             problems.append(f"tasks/ECDLP_RESEARCH.md must contain {required_task}")
@@ -1153,6 +1402,32 @@ def validate() -> list[str]:
         r"^Status: completed_accepted$", task_010, flags=re.MULTILINE
     ):
         problems.append("TASK-010 must be completed_accepted")
+    task_026 = task_sections.get(BOUNDED_AUTHORIZATION_TASK_ID, "")
+    for binding in (
+        "Status: active_authorized_bounded_experiment",
+        f"Hypothesis: `{BOUNDED_AUTHORIZATION_HYPOTHESIS_ID}`",
+        f"`{BOUNDED_AUTHORIZATION_ID}`",
+        f"`{BOUNDED_AUTHORIZATION_SOURCE_COMMIT}`",
+        "Model: classical representation-aware, synthetic toy data only",
+        f"Route state: `{BOUNDED_AUTHORIZATION_ROUTE_ID}` remains `open_parked`",
+        "Promotion: false",
+        "three frozen `E_7` toy subgroup rows",
+        "3,000,000 primary trials",
+        "four CPU-hours",
+        "4 GiB peak RSS",
+        "24 wall-clock hours",
+        "self-generated public toy targets",
+        "faithful PKC factor base",
+        "secp256k1",
+        "independent validator",
+        "PAUSE_INCONCLUSIVE",
+        "REJECT_AS_ARTIFACT",
+        "HYP-M16-SOLVER-SLOPE-001",
+    ):
+        if binding not in task_026:
+            problems.append(
+                f"{BOUNDED_AUTHORIZATION_TASK_ID} is missing binding {binding}"
+            )
     completed_desk_task = task_sections.get(COMPLETED_DESK_TASK_ID, "")
     expected_completed_desk_lines = (
         "Status: completed_non_executable_scoped_blocker",
@@ -1464,6 +1739,36 @@ def validate() -> list[str]:
         for hypothesis_id, fields in hypotheses.items()
         if fields.get("status") == "active"
     ]
+    bounded_hypothesis = hypotheses.get(
+        BOUNDED_AUTHORIZATION_HYPOTHESIS_ID, {}
+    )
+    expected_bounded_hypothesis = {
+        "direction": "experiment",
+        "status": "active",
+        "hypothesis_type": "ENABLING",
+        "lifecycle_state": "ACTIVE",
+        "task_id": BOUNDED_AUTHORIZATION_TASK_ID,
+        "route_id": BOUNDED_AUTHORIZATION_ROUTE_ID,
+        "cell_id": BOUNDED_AUTHORIZATION_CELL_ID,
+        "authorization_class": "external_bounded_singleton",
+        "authorization_id": BOUNDED_AUTHORIZATION_ID,
+        "native_engine_candidate": "false",
+        "exact_test": (
+            "experiments/engine/pkc_smooth_m16_fixed_target_yield/"
+            "PREREGISTRATION.md"
+        ),
+    }
+    for field, expected in expected_bounded_hypothesis.items():
+        if bounded_hypothesis.get(field) != expected:
+            problems.append(
+                f"{BOUNDED_AUTHORIZATION_HYPOTHESIS_ID}.{field} must be "
+                f"{expected!r}"
+            )
+    if active_hypotheses != [BOUNDED_AUTHORIZATION_HYPOTHESIS_ID]:
+        problems.append(
+            "exactly the decision-level bounded hypothesis must be active; "
+            f"found {active_hypotheses}"
+        )
     for hypothesis_id in active_hypotheses:
         if hypothesis_id not in tasks_text:
             problems.append(
@@ -1492,10 +1797,27 @@ def validate() -> list[str]:
         problems.append("maintenance cycle must not promote a route")
     if maintenance.get("historical_outcomes_mutable") is not False:
         problems.append("maintenance cycle must preserve historical outcomes")
-    if "Current central task: none." not in next_tasks_text:
+    if (
+        f"Current central task: `{BOUNDED_AUTHORIZATION_TASK_ID}`."
+        not in next_tasks_text
+    ):
         problems.append(
-            "tasks/NEXT.md must record that no successor task is authorized"
+            "tasks/NEXT.md must expose the exact authorized central task"
         )
+    for binding in (
+        BOUNDED_AUTHORIZATION_ID,
+        BOUNDED_AUTHORIZATION_HYPOTHESIS_ID,
+        BOUNDED_AUTHORIZATION_SOURCE_COMMIT,
+        f"`{BOUNDED_AUTHORIZATION_ROUTE_ID}` remains",
+        "`R-GLV-SEMAEV` is also",
+        "selected attack route remains null",
+        "native bounded",
+        "promotion",
+    ):
+        if binding not in next_tasks_text:
+            problems.append(
+                f"tasks/NEXT.md is missing bounded authorization binding {binding}"
+            )
     for binding in (
         DESK_PRIORITY_CELL_ID,
         DESK_PRIORITY_STUB_ID,
@@ -1871,8 +2193,8 @@ def main() -> int:
     print(
         "decision-substrate check OK: "
         f"{len(data['routes'])} routes, {len(data['foundations'])} foundations, "
-        "1 completed bounded structural route, 0 hypothesis experiments, "
-        "0 promoted routes."
+        "1 completed bounded structural route, 1 exact decision-level synthetic-toy "
+        "experiment authorization, 0 native/route authorizations, 0 promoted routes."
     )
     return 0
 

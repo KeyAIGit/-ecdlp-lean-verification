@@ -102,6 +102,55 @@ Inputs:
                 queue_id="test",
             )
 
+    def test_exact_singleton_is_distinct_from_native_and_promotion_gates(
+        self,
+    ) -> None:
+        product = site_generator.load_json(site_generator.PRODUCT_PATH)
+        pilot = site_generator.load_json(site_generator.PILOT_PATH)
+        stats = site_generator.load_json(site_generator.STATS_PATH)
+        frontier = site_generator.load_json(site_generator.FRONTIER_PATH)
+        decisions = site_generator.load_json(site_generator.DECISION_PATH)
+        formal = site_generator.load_json(site_generator.FORMAL_PATH)
+        graph = site_generator.load_json(site_generator.GRAPH_PATH)
+        engine = site_generator.load_json(site_generator.ENGINE_PATH)
+        authorization_id = decisions[
+            "bounded_experiment_authorization"
+        ]["authorization_id"]
+
+        index = site_generator.build_index(
+            product,
+            pilot,
+            stats,
+            frontier,
+            decisions,
+            formal,
+            engine,
+        )
+        dashboard = site_generator.build_dashboard(
+            product,
+            stats,
+            frontier,
+            decisions,
+            formal,
+            graph,
+            engine,
+            site_generator.parse_tasks(),
+        )
+        explore = site_generator.build_explore(
+            product, stats, decisions, engine
+        )
+
+        self.assertIn(authorization_id, index)
+        self.assertIn(authorization_id, dashboard)
+        self.assertIn(authorization_id, explore)
+        self.assertIn("1 exact synthetic-toy run authorized", index)
+        self.assertIn("Native decision exploration", dashboard)
+        self.assertIn("Promotion experiments", dashboard)
+        self.assertNotIn(
+            "no experiment is authorized", dashboard.casefold()
+        )
+        self.assertNotIn("0 experiments authorized", explore.casefold())
+
 
 if __name__ == "__main__":
     unittest.main()

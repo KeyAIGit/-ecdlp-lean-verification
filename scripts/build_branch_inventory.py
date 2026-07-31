@@ -21,7 +21,6 @@ ACTIVE = {
     "agent/task023-chart-cover",
     "agent/task024-infinity-strata",
     "agent/hyp-select-002-authorization",
-    "agent/hyp-select-002-route-binding-correction",
 }
 SUPERSEDED = {
     "agent/n7-certificate-generator",

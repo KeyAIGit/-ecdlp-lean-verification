@@ -46,6 +46,7 @@ def source_link(source_id: str, sources: dict[str, dict]) -> str:
 def render(data: dict, sources: dict[str, dict]) -> str:
     target = data["target_problem"]
     policy = data["phase_policy"]
+    authorization = data["bounded_experiment_authorization"]
     selection = data["route_selection"]
     selected_structural = selection.get("selected_route_ids", [])
     promoted = selection.get("promoted_route_ids", [])
@@ -59,7 +60,9 @@ def render(data: dict, sources: dict[str, dict]) -> str:
         "",
         f"Given {', '.join(target['inputs'])}, **{target['output']}**",
         "",
-        f"Current phase: **{policy['phase']}**. Bounded exploration authorized: "
+        f"Current phase: **{policy['phase']}**. Exact decision experiment "
+        f"authorized: **{str(policy['experiments_authorized']).lower()}**. "
+        f"Native bounded exploration authorized: "
         f"**{str(policy['bounded_exploration_authorized']).lower()}**. Promotion "
         f"experiments authorized: "
         f"**{str(policy['promotion_experiments_authorized']).lower()}**. "
@@ -69,10 +72,51 @@ def render(data: dict, sources: dict[str, dict]) -> str:
         f"({refs(selected_structural)}). Promoted routes: **{len(promoted)}** "
         f"({refs(promoted)}).",
         "",
+        "## Exact bounded experiment authorization",
+        "",
+        f"Authorization **{authorization['authorization_id']}** is "
+        f"**{authorization['status']}** for exactly hypothesis "
+        f"**{authorization['hypothesis_id']}**, task "
+        f"**{authorization['task_id']}**, route "
+        f"**{authorization['route_id']}**, and cell "
+        f"**{authorization['cell_id']}**.",
+        "",
+        f"- **Readiness source commit:** `{authorization['source_commit']}`",
+        f"- **Authorized UTC:** `{authorization['authorized_utc']}`",
+        f"- **Scope:** `{authorization['scope']['kind']}` on "
+        f"`{authorization['scope']['curve_family']}` curves "
+        f"{refs(authorization['scope']['curve_ids'])}; maximum field size "
+        f"**{authorization['scope']['max_field_bits']} bits**",
+        f"- **Primary-trial ceiling:** "
+        f"**{authorization['resource_budget']['max_primary_trials']}**",
+        f"- **Resource ceilings:** "
+        f"**{authorization['resource_budget']['max_cpu_hours']} CPU-hours**, "
+        f"**{authorization['resource_budget']['max_peak_rss_gib']} GiB peak RSS**, "
+        f"**{authorization['resource_budget']['max_wall_hours']} wall-hours**",
+        f"- **Real-world targets forbidden:** "
+        f"**{str(authorization['scope']['real_world_targets_forbidden']).lower()}**",
+        f"- **secp256k1 targets forbidden:** "
+        f"**{str(authorization['scope']['secp256k1_targets_forbidden']).lower()}**",
+        f"- **Promotion authorized:** "
+        f"**{str(authorization['promotion_authorized']).lower()}**",
+        "",
+        "The five readiness files are content-bound:",
+        "",
+    ]
+    for name, digest in authorization["sha256_bindings"].items():
+        lines.append(f"- `{name}`: `{digest}`")
+    lines.extend(
+        [
+        "",
+        "This singleton is external to the native Research Engine candidate "
+        "queue. It does not authorize another experiment, a solver, route "
+        "promotion, exact-target work, or a secp256k1 extrapolation.",
+        "",
         "The formal-result map, attack encyclopedia, and this decision layer are "
         "deliberately distinct:",
         "",
-    ]
+        ]
+    )
     for key, path in data["canonical_ownership"].items():
         lines.append(f"- **{key}:** `{path}`")
 

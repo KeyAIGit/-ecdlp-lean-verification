@@ -629,6 +629,13 @@ def build() -> dict:
             ],
             "shadow_parked_ideas": shadow_intake["counts"]["parked_ideas"],
             "selected_explorations": engine["counts"]["selected_explorations"],
+            "decision_level_bounded_authorizations": int(
+                isinstance(
+                    decisions.get("bounded_experiment_authorization"), dict
+                )
+                and decisions["bounded_experiment_authorization"].get("status")
+                == "approved"
+            ),
             "selected_structural_routes": len(
                 decisions["route_selection"].get("selected_route_ids", [])
             ),
@@ -656,6 +663,9 @@ def build() -> dict:
             "target_problem": decisions["target_problem"],
             "threat_models": decisions["threat_models"],
             "phase_policy": decisions["phase_policy"],
+            "bounded_experiment_authorization": decisions.get(
+                "bounded_experiment_authorization"
+            ),
             "route_selection": decisions["route_selection"],
             "routes": decisions["routes"],
             "foundations": decisions["foundations"],
@@ -792,6 +802,8 @@ def render_markdown(graph: dict) -> str:
         f"**{c['generated_hypothesis_seeds']} research-question seeds** · "
         f"**{c['shadow_proposal_stubs']} shadow proposal stubs** · "
         f"**{c['selected_explorations']} bounded explorations selected** · "
+        f"**{c['decision_level_bounded_authorizations']} exact decision-level "
+        "toy authorization** · "
         f"**{c['research_engine_outcomes']} retained outcomes** · "
         f"**{c['edges']} edges**"
     )
@@ -813,6 +825,7 @@ def render_markdown(graph: dict) -> str:
 
     decisions = graph["decision_substrate"]
     phase = decisions["phase_policy"]
+    authorization = decisions["bounded_experiment_authorization"]
     selection = decisions["route_selection"]
     lines.append("## secp256k1 route decisions")
     lines.append("")
@@ -823,7 +836,9 @@ def render_markdown(graph: dict) -> str:
     )
     lines.append("")
     lines.append(
-        f"Phase: **{phase['phase']}**. Bounded exploration authorized: "
+        f"Phase: **{phase['phase']}**. Exact decision experiment authorized: "
+        f"**{str(phase['experiments_authorized']).lower()}**. "
+        f"Native bounded exploration authorized: "
         f"**{str(phase['bounded_exploration_authorized']).lower()}**. "
         f"Promotion experiments authorized: "
         f"**{str(phase['promotion_experiments_authorized']).lower()}**. "
@@ -832,6 +847,38 @@ def render_markdown(graph: dict) -> str:
         f"Promoted routes: "
         f"**{', '.join(selection.get('promoted_route_ids', [])) or 'none'}**. "
         f"Selected attack route: **{phase['selected_attack_route'] or 'none'}**."
+    )
+    lines.append("")
+    lines.append("### Exact bounded experiment authorization")
+    lines.append("")
+    lines.append(
+        f"**{authorization['authorization_id']}** is "
+        f"`{authorization['status']}` for "
+        f"`{authorization['hypothesis_id']}` / "
+        f"`{authorization['task_id']}` / "
+        f"`{authorization['route_id']}` / "
+        f"`{authorization['cell_id']}`. It binds readiness commit "
+        f"`{authorization['source_commit']}` and "
+        f"**{len(authorization['sha256_bindings'])} source hashes**."
+    )
+    lines.append("")
+    lines.append(
+        f"Scope: `{authorization['scope']['kind']}`, "
+        f"`{authorization['scope']['curve_family']}`, "
+        f"{len(authorization['scope']['curve_ids'])} frozen toy subgroups, "
+        f"maximum **{authorization['scope']['max_field_bits']} field bits**. "
+        f"Budget: **{authorization['resource_budget']['max_primary_trials']} "
+        "primary trials**, "
+        f"**{authorization['resource_budget']['max_cpu_hours']} CPU-hours**, "
+        f"**{authorization['resource_budget']['max_peak_rss_gib']} GiB**, "
+        f"**{authorization['resource_budget']['max_wall_hours']} wall-hours**."
+    )
+    lines.append("")
+    lines.append(
+        "This external singleton is not a native Engine candidate or route "
+        "authorization. Real-world and secp256k1 targets are forbidden; "
+        f"promotion authorized: "
+        f"**{str(authorization['promotion_authorized']).lower()}**."
     )
     lines.append("")
     lines.append(
