@@ -79,7 +79,7 @@ promotion experiments authorized =
 **false**, selected attack route =
 **none**.
 
-The decision layer contains exactly one approved bounded authorization:
+The decision layer retains exactly one consumed bounded experiment record:
 **`AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01`** for
 **`HYP-M16-FIXED-TARGET-YIELD-001` / `TASK-026`**. It is bound to readiness
 commit **`0b1b36851aa0f82c3a1bd587d385775923153d9c`**, five SHA-256-pinned source files, three synthetic
@@ -88,8 +88,11 @@ commit **`0b1b36851aa0f82c3a1bd587d385775923153d9c`**, five SHA-256-pinned sourc
 **4 GiB peak RSS**, and
 **24 wall-hours**. Real-world and secp256k1
 targets are forbidden; promotion is **false**.
-This singleton is external to the native Engine queue and authorizes no rerun, solver,
-route promotion, exact-target work, or 256-bit extrapolation.
+It completed as **`CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION`** in
+**`REO-2026-07-31-001`** with normalized enabling outcome
+**`supported`**. The matched GLV-specific `H_NEW` branch was not
+retained. This singleton is external to the native Engine queue and its consumed authorization
+allows no rerun, solver, route promotion, exact-target work, or 256-bit extrapolation.
 
 The `build_now` foundations are `F-EVALUATION-CONTRACT`, `F-BENCHMARK-ORACLE`.
 They make future candidates comparable and independently checkable; the completed structural
@@ -101,9 +104,11 @@ when new evidence satisfies a recorded reconsideration trigger and the proposal 
 
 ## Research Engine v0
 The engine normalizes **10 hypotheses** and retains
-**8 outcome events**:
-**8 migrated historical** and
-**0 native**. Its historical
+**9 outcome events**:
+**8 migrated historical**,
+**0 native**, and
+**1 external bounded**.
+Its historical
 no-reopen guard matched four frozen cases; this is not predictive EIG calibration. Predictive
 calibration currently contains **0 native
 outcomes**. Before synthesis, the typed evidence layer materializes
@@ -190,10 +195,11 @@ and total cost.
 
 The Engine's bounded-exploration capability is
 **true**, while the current decision's experiment
-authorization is **true** and the promotion gate is
+authorization is **false** and the promotion gate is
 **false**. `GLV-SEMAEV-ITER-001` is complete; its
 certificates and kernel-checked identities did not themselves authorize a hypothesis run. The
-later HYP-SELECT-002 decision authorizes only the exact TASK-026 singleton above. Closing
+later HYP-SELECT-002 decision authorized only the exact TASK-026 singleton above; that singleton
+has now been consumed and independently validated. Closing
 `TASK-025` authorizes no claim of generic regularity, witness uniqueness, automatic
 mapped-target regularity, direct-S17 expansion or evaluation, production mask
 enumeration, solver input or run, cost inference, secp256k1 target computation, or

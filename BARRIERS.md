@@ -197,7 +197,16 @@ exact `Θ` statements.
   `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on establishing a nonempty
   source-checkable regular locus or otherwise orchestrating the remaining
   finite cover, plus usable relation yield and rank, solving, recovery, sparse
-  linear algebra, and total work. No solver or experiment is authorized.
+  linear algebra, and total work. TASK-026 now resolves one bounded subquestion:
+  on the three frozen synthetic `E_7` toy subgroups, fixed-before-sampling
+  relations did reach the named affine regular locus (911 accepted exact
+  relations, 907 affine regular; all six curve-arm gates passed). The matched
+  GLV-orbit/plain differences were `-0.006987`, `-0.006329`, and `0.000000`
+  with overlapping intervals and no `H_NEW`-qualifying size, so this is a
+  known local simplification, not evidence of a GLV-specific mechanism.
+  Source-faithful PKC relation construction, independence, rank, solver
+  degree/memory/slope, recovery, end-to-end cost, and 256-bit persistence all
+  remain open. The singleton is consumed; no solver or experiment is authorized.
 
   **GLV–Semaev relation-generation experiments (partial negatives, not a no-go;
   `HYP_GLV_SEMAEV_001`; P0→P4).**

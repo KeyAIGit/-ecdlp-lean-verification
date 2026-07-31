@@ -965,11 +965,20 @@ class ValidatorTests(unittest.TestCase):
 
     def test_pre_execution_gate_rejects_present_outcome(self) -> None:
         config = validator.load_json(validator.CONFIG_PATH)
-        original_artifact = validator.ARTIFACT_PATH
-        with tempfile.TemporaryDirectory(dir=validator.HERE) as temporary:
-            artifact = Path(temporary) / "artifact.json"
-            validator.ARTIFACT_PATH = artifact
-            try:
+        with tempfile.TemporaryDirectory() as temporary:
+            isolated_here = Path(temporary)
+            artifact = isolated_here / "artifact.json"
+            with (
+                mock.patch.object(validator, "HERE", isolated_here),
+                mock.patch.object(
+                    validator, "ARTIFACT_PATH", artifact
+                ),
+                mock.patch.object(
+                    validator,
+                    "SIDECAR_PATH",
+                    isolated_here / "artifact.sha256",
+                ),
+            ):
                 validator.check_no_outcomes(config, validator.Replay())
                 artifact.write_text("{}\n", encoding="utf-8")
                 self.assert_rejected(
@@ -977,8 +986,6 @@ class ValidatorTests(unittest.TestCase):
                         config, validator.Replay()
                     )
                 )
-            finally:
-                validator.ARTIFACT_PATH = original_artifact
 
     def test_execute_writes_nothing_before_full_preflight(self) -> None:
         producer = load_producer()

@@ -72,7 +72,7 @@ def render(data: dict, sources: dict[str, dict]) -> str:
         f"({refs(selected_structural)}). Promoted routes: **{len(promoted)}** "
         f"({refs(promoted)}).",
         "",
-        "## Exact bounded experiment authorization",
+        "## Exact bounded experiment record",
         "",
         f"Authorization **{authorization['authorization_id']}** is "
         f"**{authorization['status']}** for exactly hypothesis "
@@ -83,6 +83,15 @@ def render(data: dict, sources: dict[str, dict]) -> str:
         "",
         f"- **Readiness source commit:** `{authorization['source_commit']}`",
         f"- **Authorized UTC:** `{authorization['authorized_utc']}`",
+        f"- **Completed UTC:** `{authorization['completed_utc']}`",
+        f"- **Terminal event:** `{authorization['terminal_event_id']}`",
+        f"- **Terminal:** `{authorization['terminal_status']}`",
+        f"- **Normalized enabling outcome:** "
+        f"`{authorization['normalized_outcome']}`",
+        f"- **Validated artifact SHA-256:** "
+        f"`{authorization['validated_artifact_sha256']}`",
+        f"- **Rerun authorized:** "
+        f"**{str(authorization['rerun_authorized']).lower()}**",
         f"- **Scope:** `{authorization['scope']['kind']}` on "
         f"`{authorization['scope']['curve_family']}` curves "
         f"{refs(authorization['scope']['curve_ids'])}; maximum field size "

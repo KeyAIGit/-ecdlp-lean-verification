@@ -296,15 +296,15 @@
     {
       "id": "HYP-M16-FIXED-TARGET-YIELD-001",
       "direction": "experiment",
-      "source_status": "active",
-      "normalized_outcome": null,
-      "verifier_scope": "The exact TASK-026 singleton is bound by the decision substrate to the committed readiness package, three synthetic E_7 toy subgroups, thirty frozen cells, independent replay, and fixed resource limits. No terminal scientific outcome exists yet.",
-      "engine_state": "external_bounded_authorization_not_native_candidate",
+      "source_status": "closed",
+      "normalized_outcome": "supported",
+      "verifier_scope": "The consumed TASK-026 singleton completed exactly 3000000 primary trials across three frozen synthetic E_7 toy subgroups and thirty cells. Independent raw replay supports only the exact enabling availability claim. The terminal is CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION: matched GLV-orbit/plain controls retain no H_NEW qualifying size. No native candidate, solver, rank, recovery, secp256k1, scaling, route-promotion, or ECDLP-complexity claim follows.",
+      "engine_state": "external_bounded_terminal_not_native_candidate",
       "route_ids": [
         "R-PETIT-COMPOSED-MAPS"
       ],
-      "rationale": "This enabling test is authorized once by the decision substrate outside the frozen Research Engine v0.2 candidate queue. It tests fixed-target availability of the TASK-025 regular affine locus on the canonical Petit-composed-map cell. The GLV-orbit arm is a matched ablation, not a second route binding; the test does not reopen the rejected coordinatewise-cube quotient, select a native Engine candidate, or promote an attack route.",
-      "reopening_condition": "After the exact singleton reaches a validated terminal state, retain that outcome and follow only its preregistered next step; any rerun, solver-slope test, changed threshold, new curve, or larger budget requires a new hypothesis id or dated authorization."
+      "rationale": "The external decision-level test reached a validated terminal outside the frozen Research Engine v0.2 candidate queue. It supports bounded fixed-target availability of the TASK-025 regular affine locus on the canonical Petit-composed-map cell, while its GLV-orbit ablation shows no new-mechanism advantage over matched plain controls. It does not reopen the rejected coordinatewise-cube quotient, select a native Engine candidate, or promote an attack route.",
+      "reopening_condition": "Do not rerun this singleton. Only formulate one separately reviewed, source-faithful HYP-M16-SOLVER-SLOPE-001 proposal with end-to-end metrics and scaling death criteria; any execution, changed threshold, new curve, or larger budget requires a new hypothesis decision and dated authorization."
     },
     {
       "id": "HYP_WARD_EDS_001",

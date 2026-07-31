@@ -136,11 +136,11 @@ jobs:
           python3 experiments/engine/pkc_smooth_m16_infinity_propagation/test_validate.py
           (cd experiments/engine/pkc_smooth_m16_infinity_propagation && sha256sum -c artifact.sha256)
 
-      - name: Check authorized M16 fixed-target experiment gate
+      - name: Replay completed M16 fixed-target experiment
         run: |
-          python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/run.py --check-authorization
-          python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/validate.py --authorization
+          python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/replay_completed.py
           python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/test_validate.py
+          (cd experiments/engine/pkc_smooth_m16_fixed_target_yield && sha256sum -c artifact.sha256)
 
       - name: Check generated Research Engine state
         run: python3 scripts/build_research_engine_state.py --check

@@ -274,8 +274,8 @@ hypotheses:
     title: "Fixed-target usability of the balanced-regular M16 affine locus"
     direction: "experiment"
     hypothesis_type: "ENABLING"
-    status: "active"
-    lifecycle_state: "ACTIVE"
+    status: "closed"
+    lifecycle_state: "PROMOTED"
     task_id: "TASK-026"
     route_id: "R-PETIT-COMPOSED-MAPS"
     cell_id: "CELL-M-PKC-SMOOTH-M16"
@@ -284,6 +284,12 @@ hypotheses:
     native_engine_candidate: false
     owner: "experiments"
     exact_test: "experiments/engine/pkc_smooth_m16_fixed_target_yield/PREREGISTRATION.md"
+    normalized_outcome: "supported"
+    engine_state: "external_bounded_terminal_not_native_candidate"
+    terminal_event_id: "REO-2026-07-31-001"
+    terminal_status: "CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION"
+    promotion_scope: "proposal_only_non_executable"
+    result_artifact: "experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.json"
     claim: >
       On the three frozen synthetic E_7 toy subgroups, exact ordered
       16-coordinate relations for paired public targets committed before leaf
@@ -301,10 +307,12 @@ hypotheses:
     evidence_for:
       - "TASK-025 kernel-checks the exact empty-mask affine-chart reduction under endpoint and BalancedPropagatedRegular assumptions."
       - "The readiness package freezes three E_7 toy subgroups, paired public targets, matched 384-coordinate orbit/plain arms, five seeds, exact replay, and semantic-mutation tests before any outcome exists."
+      - "REPRODUCED: the consumed singleton completed all 3000000 primary trials; 911 exact relations were accepted, 907 were affine regular, and all six toy curve-arm aggregates passed the preregistered regularity gates."
     evidence_against:
       - "TASK-025 proves no symbolic nonzeroness, nonemptiness, density, probability, relation yield, rank, recovery, solver slope, or total-cost improvement."
       - "Finite GLV orbit closure normally changes constants; the factor bases in this test are not the source-faithful PKC x^D-1 family."
       - "Toy regularity may be target-construction, implementation, or small-field behavior and cannot be extrapolated to 256 bits."
+      - "REPRODUCED: orbit-minus-plain theta differences were -0.006987, -0.006329, and 0.000000 with overlapping intervals and zero H_NEW-qualifying sizes; the GLV-specific new-mechanism explanation was not retained."
     tests:
       - "Execute only the exact decision-substrate singleton: three frozen E_7 toy subgroups, GLV_ORBIT_CLOSED versus PLAIN_MATCHED arms, five seeds, and at most 3000000 primary trials."
       - "Commit each paired public target before leaves and keep its scalar outside the sampler, raw transcript, configuration, and summary."
@@ -315,6 +323,7 @@ hypotheses:
       - "CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION when the regularity gate passes but orbit/plain controls support only a local representation effect."
       - "KILL_AFFINE_M16_CONTINUATION when an orbit-arm 95% Wilson upper bound is below 0.80 at m=21 or m=23 with at least 100 accepted rows, or only constructed-target controls succeed."
       - "PAUSE_INCONCLUSIVE or REJECT_AS_ARTIFACT exactly as preregistered; every terminal state must update the hypothesis ledger and preserve the evidence."
+      - "REALIZED: CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION. The primary enabling availability claim is supported, the GLV-specific H_NEW branch is bounded negative, the singleton is consumed, and only a separately reviewed non-executable HYP-M16-SOLVER-SLOPE-001 proposal may now be formulated."
 
   - id: HYP_WARD_EDS_001
     title: "Ward elliptic divisibility sequences as a structural probe of torsion/apparition on prime-field toy curves"

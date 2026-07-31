@@ -1442,6 +1442,12 @@ def validate_semantics(
         "authorization_id",
         "source_commit",
         "authorized_utc",
+        "completed_utc",
+        "terminal_event_id",
+        "terminal_status",
+        "normalized_outcome",
+        "validated_artifact_sha256",
+        "rerun_authorized",
         "sha256_bindings",
         "resource_budget",
         "scope",
@@ -1452,7 +1458,7 @@ def validate_semantics(
     if set(authorization) != expected_authorization_fields:
         problems.append("bounded experiment authorization field set drifted")
     expected_authorization = {
-        "status": "approved",
+        "status": "consumed",
         "hypothesis_id": BOUNDED_AUTHORIZATION_HYPOTHESIS_ID,
         "task_id": BOUNDED_AUTHORIZATION_TASK_ID,
         "route_id": BOUNDED_AUTHORIZATION_ROUTE_ID,
@@ -1460,6 +1466,14 @@ def validate_semantics(
         "promotion_authorized": False,
         "authorization_id": BOUNDED_AUTHORIZATION_ID,
         "source_commit": BOUNDED_AUTHORIZATION_SOURCE_COMMIT,
+        "terminal_event_id": "REO-2026-07-31-001",
+        "terminal_status": "CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION",
+        "normalized_outcome": "supported",
+        "validated_artifact_sha256": (
+            "21a95ea4ea71c02d0199c331e549ca2e4ec2fbf7c1d8d70fe"
+            "6651bea292d6413"
+        ),
+        "rerun_authorized": False,
         "sha256_bindings": {
             key: digest
             for key, (_, digest) in BOUNDED_AUTHORIZATION_BINDINGS.items()
@@ -1490,10 +1504,8 @@ def validate_semantics(
         str(authorization.get("authorized_utc", "")),
     ):
         problems.append("bounded experiment authorization timestamp drifted")
-    if phase.get("phase") != "one-bounded-decision-experiment":
-        problems.append(
-            "current phase must remain one bounded decision experiment"
-        )
+    if phase.get("phase") != "post-task026-decision-review":
+        problems.append("current phase must be post-task026-decision-review")
     if phase.get("experiments_authorized") is not (
         authorization.get("status") == "approved"
     ):
@@ -1525,9 +1537,9 @@ def validate_semantics(
     engine_gate_status = engine_state.get("gate_status", {})
     if engine_gate_status.get(
         "current_decision_experiment_authorized"
-    ) is not True:
+    ) is not False:
         problems.append(
-            "engine view must expose the external decision-level singleton"
+            "engine view must expose that the external singleton is consumed"
         )
     if engine_gate_status.get(
         "current_decision_bounded_exploration_authorized"
@@ -1637,8 +1649,9 @@ def main() -> int:
         return 1
     print(
         "scientific-semantic gate passed: Petit/Weil, GLV child/route, "
-        "assurance, source read status, shadow intake, one exact decision-level "
-        "toy authorization, and zero native/route/promotion authorization agree."
+        "assurance, source read status, shadow intake, one consumed "
+        "decision-level toy result, and zero current native/route/promotion "
+        "authorization agree."
     )
     return 0
 

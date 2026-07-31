@@ -143,7 +143,7 @@ Inputs:
         self.assertIn(authorization_id, index)
         self.assertIn(authorization_id, dashboard)
         self.assertIn(authorization_id, explore)
-        self.assertIn("1 exact synthetic-toy run authorized", index)
+        self.assertIn("1 exact synthetic-toy run completed", index)
         self.assertIn("Native decision exploration", dashboard)
         self.assertIn("Promotion experiments", dashboard)
         self.assertNotIn(

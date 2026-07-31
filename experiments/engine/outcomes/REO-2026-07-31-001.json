@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "event_id": "REO-2026-07-31-001",
+  "recorded_on": "2026-07-31",
+  "candidate_id": "AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01",
+  "hypothesis_id": "HYP-M16-FIXED-TARGET-YIELD-001",
+  "route_id": "R-PETIT-COMPOSED-MAPS",
+  "outcome": "supported",
+  "scope": {
+    "target_kind": "toy",
+    "curve_family": "three frozen synthetic E_7 subgroups",
+    "field_bits": [
+      19,
+      21,
+      25
+    ],
+    "threat_model": "classical-single-target-plain",
+    "claim_boundary": "Fixed-before-sampling TASK-025 balanced-regular relation availability and matched GLV-orbit versus plain controls only; no solver, faithful PKC factor base, rank, recovery, secp256k1 target, scaling law, or ECDLP-complexity claim."
+  },
+  "summary": "The preregistered regularity gates passed on all six toy curve-arm aggregates, so one separately reviewed solver-slope proposal may be formulated. GLV-specific H_NEW was not retained: the orbit-minus-plain theta differences were -0.006987, -0.006329, and 0.000000 with overlapping intervals and zero qualifying sizes. The validated terminal is CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION.",
+  "evidence_files": [
+    "experiments/engine/pkc_smooth_m16_fixed_target_yield/PREREGISTRATION.md",
+    "experiments/engine/pkc_smooth_m16_fixed_target_yield/RESULTS.md",
+    "experiments/engine/pkc_smooth_m16_fixed_target_yield/run_manifest.json",
+    "experiments/engine/pkc_smooth_m16_fixed_target_yield/raw/transcript.jsonl",
+    "experiments/engine/pkc_smooth_m16_fixed_target_yield/summary.json",
+    "experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.json",
+    "experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.sha256"
+  ],
+  "validation": {
+    "status": "passed",
+    "independence": {
+      "path": "verified_distinct",
+      "artifact": "raw_recomputed",
+      "source": "shared_components",
+      "source_review_id": null
+    },
+    "decisive_claim_validated": true,
+    "evidence_files": [
+      "experiments/engine/pkc_smooth_m16_fixed_target_yield/validate.py",
+      "experiments/engine/pkc_smooth_m16_fixed_target_yield/test_validate.py",
+      "experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.json"
+    ]
+  },
+  "budget": {
+    "status": "within_budget",
+    "wall_time_seconds": 244.7782653380018,
+    "peak_memory_bytes": 25718784,
+    "parallel_workers": 1
+  },
+  "stop_condition": {
+    "triggered": true,
+    "statement": "The complete frozen 3,000,000-trial grid reached the preregistered CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION terminal; the single-use authorization is consumed and no rerun is permitted."
+  },
+  "residual_uncertainty": [
+    "The experiment did not use the source-faithful PKC 2016 factor-base construction.",
+    "Relation independence, matrix rank, polynomial solving degree, memory growth, recovery, and end-to-end cost remain unmeasured.",
+    "The three toy subgroup sizes do not establish persistence at 256 bits.",
+    "No GLV-specific new mechanism survived the matched controls."
+  ],
+  "reopening_condition": "Do not reopen this fixed-target yield run. A new HYP-M16-SOLVER-SLOPE-001 proposal must define a source-faithful relation family, end-to-end solver metrics, controls, scaling kill criteria, and a separate dated authorization.",
+  "provenance": {
+    "source_kind": "external_bounded_decision_run",
+    "source_commit": "0b1b36851aa0f82c3a1bd587d385775923153d9c",
+    "migration_note": null,
+    "run_manifest": "experiments/engine/pkc_smooth_m16_fixed_target_yield/run_manifest.json",
+    "run_manifest_sha256": "1b1a056fb3566c1869ae0c10ffbe43200c32d030878900e6a5dd22281509c31c"
+  }
+}

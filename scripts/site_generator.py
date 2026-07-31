@@ -359,7 +359,7 @@ def build_index(
         <span>Live decision graph</span>
         <strong>{len(routes)} evaluated / {len(selected_structural)} structural completed / {len(promoted_routes)} promoted</strong>
         <span>{engine["counts"]["selected_explorations"]} native experiments selected /
-          1 exact synthetic-toy run authorized</span>
+          1 exact synthetic-toy run completed</span>
         <code>{esc(selection["decision_id"])}</code>
         <code>{esc(authorization["authorization_id"])}</code>
       </div>
@@ -380,7 +380,7 @@ def build_index(
       <div class="live-metric"><div class="live-metric__value">{len(routes)}</div>
         <div class="live-metric__label">routes evaluated</div></div>
       <div class="live-metric"><div class="live-metric__value">1</div>
-        <div class="live-metric__label">exact toy authorization</div></div>
+        <div class="live-metric__label">completed exact toy run</div></div>
     </div>
   </section>
 
@@ -682,7 +682,7 @@ def build_dashboard(
         (
             "Decision state",
             f"{len(selected_structural)} structural route completed / "
-            f"{len(promoted_routes)} promoted / 1 exact toy run authorized",
+            f"{len(promoted_routes)} promoted / 1 exact toy run completed",
             ["repo/ECDLP_DECISION_SUBSTRATE.json", "scripts/check_ecdlp_decision_substrate.py"],
             "blue",
         ),
@@ -750,7 +750,7 @@ def build_dashboard(
         <div class="workspace-metric"><div class="workspace-metric__value">{len(routes)}</div><div class="workspace-metric__label">routes evaluated</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">{engine_counts["typed_evidence_cells"]}</div><div class="workspace-metric__label">typed cells</div></div>
         <div class="workspace-metric"><div class="workspace-metric__value">{engine_counts["generated_hypothesis_seeds"]}</div><div class="workspace-metric__label">generated seeds</div></div>
-        <div class="workspace-metric"><div class="workspace-metric__value">1</div><div class="workspace-metric__label">exact toy authorization</div></div>
+        <div class="workspace-metric"><div class="workspace-metric__value">1</div><div class="workspace-metric__label">completed exact toy run</div></div>
       </div>
     </div>
   </section>
@@ -771,12 +771,14 @@ def build_dashboard(
         <p>The decision layer controls what work is justified; proof volume does not select an attack route.</p></div>
         {status_badge("blue", product["current_stage"]["label"])}</div>
       <article class="decision-band">
-        <div class="decision-band__state"><span>{esc(authorization["authorization_id"])}</span><strong>Exact toy authorization</strong></div>
-        <div class="decision-band__copy"><h3>One hash-bound synthetic-toy diagnostic is authorized.</h3>
+        <div class="decision-band__state"><span>{esc(authorization["authorization_id"])}</span><strong>Consumed toy run</strong></div>
+        <div class="decision-band__copy"><h3>One hash-bound synthetic-toy diagnostic completed.</h3>
           <p>{esc(authorization["hypothesis_id"])} / {esc(authorization["task_id"])} only:
             {authorization["resource_budget"]["max_primary_trials"]} primary trials across
-            {len(authorization["scope"]["curve_ids"])} frozen E_7 toy subgroups. Native Engine
-            selection, direct secp256k1 work, solvers, and promotion remain closed.
+            {len(authorization["scope"]["curve_ids"])} frozen E_7 toy subgroups. Terminal:
+            {esc(authorization["terminal_status"])}; rerun authorized:
+            {str(authorization["rerun_authorized"]).lower()}. Native Engine selection,
+            direct secp256k1 work, solvers, and promotion remain closed.
             Structural selection {esc(selection["decision_id"])} remains unchanged.</p></div>
       </article>
       <div class="panel-heading"><div><h2>Research Engine v0 queue</h2>
@@ -844,7 +846,7 @@ def build_dashboard(
           <div class="surface__body">
             <ul class="compact-list">
               <li><strong>Engine exploration capability</strong><span>{str(engine_gates["exploration_authorized"]).lower()}</span></li>
-              <li><strong>Exact decision experiment</strong><span>{str(phase_policy["experiments_authorized"]).lower()} · {esc(authorization["authorization_id"])}</span></li>
+              <li><strong>Exact decision experiment</strong><span>{str(phase_policy["experiments_authorized"]).lower()} · consumed {esc(authorization["authorization_id"])}</span></li>
               <li><strong>Native decision exploration</strong><span>{str(phase_policy["bounded_exploration_authorized"]).lower()}</span></li>
               <li><strong>Structural routes</strong><span>{esc(", ".join(selected_structural) or "none")}</span></li>
               <li><strong>Promotion experiments</strong><span>{str(engine_gates["promotion_authorized"]).lower()}</span></li>
@@ -945,7 +947,7 @@ def build_explore(product: dict, stats: dict, decisions: dict, engine: dict) -> 
           Search by mechanism, scope, evidence, or next action.</p></div>
       <aside class="decision-inline"><strong>{esc(selection["decision_id"])} · Structural selection</strong>
         <span>{len(selected_structural)} structural route completed; {len(promoted_routes)} promoted;
-          1 exact synthetic-toy run authorized under
+          1 exact synthetic-toy run completed under
           {esc(authorization["authorization_id"])}; 0 native experiments selected.</span></aside>
     </div>
   </section>
