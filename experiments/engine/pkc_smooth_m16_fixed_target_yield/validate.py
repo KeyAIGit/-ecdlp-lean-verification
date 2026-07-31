@@ -13,8 +13,11 @@ A fully replayed resource-capped bundle is validation ``PASS`` with scientific
 terminal ``PAUSE_INCONCLUSIVE`` and an explicit cause.
 
 The readiness branch contains this validator before any outcome-producing run.
-The small ``readiness_fixture`` mode is available only through the Python API
-with ``allow_fixture=True``; the command line never accepts it as evidence.
+After a separately merged authorization, ``--authorization`` independently
+replays the complete canonical pre-execution gate without writing output or
+sampling a primary trial.  The small ``readiness_fixture`` mode is available
+only through the Python API with ``allow_fixture=True``; the command line never
+accepts it as evidence.
 """
 
 from __future__ import annotations
@@ -2752,6 +2755,25 @@ def check_upstream_files(replay: Replay) -> None:
         replay.exact(f"upstream {relative}", file_sha256(path), expected_digest)
 
 
+def check_no_outcomes(config: dict[str, Any], replay: Replay) -> None:
+    output = config["output_contract"]
+    forbidden = [
+        path for path in (
+            ARTIFACT_PATH,
+            SIDECAR_PATH,
+            HERE / "RESULTS.md",
+            HERE / output["manifest"],
+            HERE / output["summary"],
+            HERE / output["raw_jsonl"],
+        ) if path.exists()
+    ]
+    replay.require(
+        not forbidden,
+        "pre-execution branch contains outcome files: "
+        + ", ".join(str(path.relative_to(HERE)) for path in forbidden),
+    )
+
+
 def readiness_check(
     *,
     curve_table_path: Path = CURVE_TABLE_PATH,
@@ -2783,22 +2805,7 @@ def readiness_check(
     replay.exact("readiness target cell count", len(targets), 30)
     check_upstream_files(replay)
 
-    output = config["output_contract"]
-    forbidden = [
-        path for path in (
-            ARTIFACT_PATH,
-            SIDECAR_PATH,
-            HERE / "RESULTS.md",
-            HERE / output["manifest"],
-            HERE / output["summary"],
-            HERE / output["raw_jsonl"],
-        ) if path.exists()
-    ]
-    replay.require(
-        not forbidden,
-        "readiness branch contains outcome files: "
-        + ", ".join(str(path.relative_to(HERE)) for path in forbidden),
-    )
+    check_no_outcomes(config, replay)
     substrate = load_json(REPO_ROOT / config["authorization_contract"]["path"])
     authorization = substrate.get(
         config["authorization_contract"]["singleton_key"]
@@ -2917,16 +2924,18 @@ def check_committed_bytes(
     )
 
 
-def check_canonical_authorization(
+def check_approved_authorization(
     *,
-    manifest: dict[str, Any],
     config: dict[str, Any],
     config_path: Path,
     curve_table_path: Path,
     replay: Replay,
     substrate_path: Path | None = None,
     check_git_history: bool = True,
-) -> None:
+    authorization_not_after: datetime | None = None,
+) -> dict[str, Any]:
+    """Independently validate the immutable pre-execution singleton."""
+
     if substrate_path is None:
         substrate_path = REPO_ROOT / config["authorization_contract"]["path"]
     substrate = load_json(substrate_path)
@@ -2938,6 +2947,24 @@ def check_canonical_authorization(
         isinstance(authorization, dict),
         "canonical approved authorization is absent",
     )
+    replay.exact(
+        "authorization field set",
+        set(authorization),
+        {
+            "status",
+            "hypothesis_id",
+            "task_id",
+            "route_id",
+            "cell_id",
+            "promotion_authorized",
+            "authorization_id",
+            "source_commit",
+            "authorized_utc",
+            "sha256_bindings",
+            "resource_budget",
+            "scope",
+        },
+    )
     for key, expected in {
         "status": "approved",
         "hypothesis_id": HYPOTHESIS_ID,
@@ -2945,8 +2972,6 @@ def check_canonical_authorization(
         "route_id": ROUTE_ID,
         "cell_id": RESEARCH_CELL_ID,
         "promotion_authorized": False,
-        "authorization_id": manifest["authorization_id"],
-        "source_commit": manifest["authorization_source_commit"],
         "resource_budget": config["resource_budget"],
         "scope": {
             "kind": "synthetic_toy_only",
@@ -2958,20 +2983,25 @@ def check_canonical_authorization(
         },
     }.items():
         replay.exact(f"authorization.{key}", authorization.get(key), expected)
-    replay.exact(
-        "authorization/manifest run id",
-        manifest["run_id"],
-        authorization["authorization_id"],
+    replay.require(
+        isinstance(authorization.get("authorization_id"), str)
+        and bool(authorization["authorization_id"]),
+        "authorization.authorization_id must be a nonempty string",
+    )
+    replay.require(
+        isinstance(authorization.get("source_commit"), str)
+        and re.fullmatch(r"[0-9a-f]{40}", authorization["source_commit"])
+        is not None,
+        "authorization.source_commit must be an exact lowercase Git SHA",
     )
     authorized = parse_utc_timestamp(
         authorization.get("authorized_utc"), "authorization.authorized_utc", replay
     )
-    started = parse_utc_timestamp(
-        manifest["chronology"].get("run_started_utc"),
-        "authorization run_started_utc",
-        replay,
-    )
-    replay.require(authorized <= started, "run began before authorization")
+    if authorization_not_after is not None:
+        replay.require(
+            authorized <= authorization_not_after,
+            "authorization timestamp is in the future",
+        )
     bound_paths = {
         "preregistration": HERE / "PREREGISTRATION.md",
         "curve_table": curve_table_path,
@@ -2979,33 +3009,24 @@ def check_canonical_authorization(
         "run_py": HERE / "run.py",
         "validate_py": Path(__file__).resolve(),
     }
+    bindings = authorization.get("sha256_bindings")
+    replay.require(
+        isinstance(bindings, dict),
+        "authorization.sha256_bindings must be an object",
+    )
     replay.exact(
         "authorization sha256 binding keys",
-        set(authorization.get("sha256_bindings", {})),
+        set(bindings),
         set(bound_paths),
     )
     for key, path in bound_paths.items():
         replay.exact(
             f"authorization.sha256_bindings.{key}",
-            authorization["sha256_bindings"].get(key),
+            bindings.get(key),
             file_sha256(path),
         )
-    replay.exact(
-        "authorization manifest bindings",
-        manifest["bindings"],
-        {
-            "preregistration_sha256":
-                authorization["sha256_bindings"]["preregistration"],
-            "curve_table_sha256":
-                authorization["sha256_bindings"]["curve_table"],
-            "experiment_config_sha256":
-                authorization["sha256_bindings"]["experiment_config"],
-            "run_py_sha256": authorization["sha256_bindings"]["run_py"],
-            "validate_py_sha256": authorization["sha256_bindings"]["validate_py"],
-        },
-    )
     if not check_git_history:
-        return
+        return authorization
     source_commit = authorization["source_commit"]
     try:
         head = subprocess.run(
@@ -3020,11 +3041,16 @@ def check_canonical_authorization(
             cwd=REPO_ROOT,
             check=False,
         ).returncode
-    except subprocess.CalledProcessError as exc:
+    except (OSError, subprocess.CalledProcessError) as exc:
         raise ValidationFailure("cannot inspect authorization ancestry") from exc
     replay.require(source_commit != head, "authorization source is not pre-approval")
     replay.exact("authorization source ancestry", ancestry, 0)
-    substrate_relative = substrate_path.relative_to(REPO_ROOT).as_posix()
+    try:
+        substrate_relative = substrate_path.relative_to(REPO_ROOT).as_posix()
+    except ValueError as exc:
+        raise ValidationFailure(
+            "canonical authorization substrate is outside the repository"
+        ) from exc
     check_committed_bytes(
         substrate_path,
         git_file_bytes(head, substrate_relative),
@@ -3038,11 +3064,17 @@ def check_canonical_authorization(
             hashlib.sha256(git_file_bytes(source_commit, relative)).hexdigest(),
             file_sha256(path),
         )
-    source_substrate = json.loads(
-        git_file_bytes(source_commit, substrate_relative)
+    source_substrate = json.loads(git_file_bytes(source_commit, substrate_relative))
+    replay.require(
+        isinstance(source_substrate, dict),
+        "readiness-source authorization substrate must be an object",
     )
     source_authorization = source_substrate.get(
         config["authorization_contract"]["singleton_key"]
+    )
+    replay.require(
+        source_authorization is None or isinstance(source_authorization, dict),
+        "readiness-source authorization singleton is malformed",
     )
     replay.require(
         not (
@@ -3051,6 +3083,114 @@ def check_canonical_authorization(
         ),
         "readiness source already contained approved authorization",
     )
+    return authorization
+
+
+def check_canonical_authorization(
+    *,
+    manifest: dict[str, Any],
+    config: dict[str, Any],
+    config_path: Path,
+    curve_table_path: Path,
+    replay: Replay,
+    substrate_path: Path | None = None,
+    check_git_history: bool = True,
+) -> None:
+    authorization = check_approved_authorization(
+        config=config,
+        config_path=config_path,
+        curve_table_path=curve_table_path,
+        replay=replay,
+        substrate_path=substrate_path,
+        check_git_history=check_git_history,
+    )
+    replay.exact(
+        "authorization/manifest authorization id",
+        manifest["authorization_id"],
+        authorization["authorization_id"],
+    )
+    replay.exact(
+        "authorization/manifest source commit",
+        manifest["authorization_source_commit"],
+        authorization["source_commit"],
+    )
+    replay.exact(
+        "authorization/manifest run id",
+        manifest["run_id"],
+        authorization["authorization_id"],
+    )
+    authorized = parse_utc_timestamp(
+        authorization["authorized_utc"],
+        "authorization.authorized_utc",
+        replay,
+    )
+    started = parse_utc_timestamp(
+        manifest["chronology"].get("run_started_utc"),
+        "authorization run_started_utc",
+        replay,
+    )
+    replay.require(authorized <= started, "run began before authorization")
+    replay.exact(
+        "authorization manifest bindings",
+        manifest["bindings"],
+        {
+            "preregistration_sha256":
+                authorization["sha256_bindings"]["preregistration"],
+            "curve_table_sha256":
+                authorization["sha256_bindings"]["curve_table"],
+            "experiment_config_sha256":
+                authorization["sha256_bindings"]["experiment_config"],
+            "run_py_sha256": authorization["sha256_bindings"]["run_py"],
+            "validate_py_sha256": authorization["sha256_bindings"]["validate_py"],
+        },
+    )
+
+
+def authorization_check(
+    *,
+    curve_table_path: Path = CURVE_TABLE_PATH,
+    config_path: Path = CONFIG_PATH,
+) -> dict[str, Any]:
+    """Replay the canonical approved gate without consuming trial streams."""
+
+    replay = Replay()
+    replay.exact(
+        "authorization canonical curve-table path",
+        curve_table_path.resolve(),
+        CURVE_TABLE_PATH.resolve(),
+    )
+    replay.exact(
+        "authorization canonical config path",
+        config_path.resolve(),
+        CONFIG_PATH.resolve(),
+    )
+    curves = check_curve_table(load_json(curve_table_path), replay)
+    config = load_json(config_path)
+    bases, targets = check_config(
+        config,
+        curves,
+        replay,
+        curve_table_path=curve_table_path,
+        preregistration_path=HERE / "PREREGISTRATION.md",
+    )
+    replay.exact("authorization base cell count", len(bases), 30)
+    replay.exact("authorization target cell count", len(targets), 30)
+    check_upstream_files(replay)
+    check_no_outcomes(config, replay)
+    authorization = check_approved_authorization(
+        config=config,
+        config_path=config_path,
+        curve_table_path=curve_table_path,
+        replay=replay,
+        authorization_not_after=datetime.now(timezone.utc),
+    )
+    return {
+        "validation_status": "AUTHORIZATION_PASS",
+        "checks": replay.checks,
+        "authorization_id": authorization["authorization_id"],
+        "source_commit": authorization["source_commit"],
+        "outcomes_present": False,
+    }
 
 
 def terminal_report(
@@ -3420,10 +3560,19 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--summary", type=Path, default=SUMMARY_PATH)
     parser.add_argument("--artifact", type=Path, default=ARTIFACT_PATH)
     parser.add_argument("--sidecar", type=Path, default=SIDECAR_PATH)
-    parser.add_argument(
+    phase = parser.add_mutually_exclusive_group()
+    phase.add_argument(
         "--readiness",
         action="store_true",
         help="validate frozen inputs and require outcome files to be absent",
+    )
+    phase.add_argument(
+        "--authorization",
+        action="store_true",
+        help=(
+            "independently verify the exact canonical approved gate while "
+            "requiring outcome files to be absent"
+        ),
     )
     parser.add_argument(
         "--write-artifact",
@@ -3435,9 +3584,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
     try:
-        if args.readiness and args.write_artifact:
+        if (args.readiness or args.authorization) and args.write_artifact:
             raise ValidationFailure(
-                "--write-artifact is forbidden in readiness mode"
+                "--write-artifact is forbidden in pre-execution modes"
             )
         if args.write_artifact:
             check_canonical_emission_paths(
@@ -3451,6 +3600,11 @@ def main(argv: Sequence[str] | None = None) -> int:
             )
         if args.readiness:
             report = readiness_check(
+                curve_table_path=args.curve_table,
+                config_path=args.config,
+            )
+        elif args.authorization:
+            report = authorization_check(
                 curve_table_path=args.curve_table,
                 config_path=args.config,
             )
@@ -3495,6 +3649,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
     if args.readiness:
         print(f"READINESS_PASS: {report['checks']} independent checks")
+    elif args.authorization:
+        print(
+            "AUTHORIZATION_PASS: "
+            f"{report['checks']} independent checks; "
+            f"authorization_id={report['authorization_id']}; "
+            f"source_commit={report['source_commit']}; "
+            "outcomes_present=false"
+        )
     else:
         if report["validation_status"] == "INCONCLUSIVE":
             print(

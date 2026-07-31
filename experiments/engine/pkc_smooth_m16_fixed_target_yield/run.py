@@ -4,8 +4,10 @@
 The producer uses exact prime-field arithmetic and deterministic SHA-256
 counter streams.  It never receives or records a target scalar.  The only CLI
 operation available before a separately merged authorization is
-``--check-readiness``; ``--execute`` checks the canonical singleton
-authorization before creating output or sampling one primary trial.
+``--check-readiness``.  After that authorization, ``--check-authorization``
+replays the complete pre-execution gate without writing output or sampling a
+primary trial; ``--execute`` checks the same canonical singleton before
+creating output or sampling one primary trial.
 
 This module is deliberately self-contained.  The independent validator must
 not import it.
@@ -859,6 +861,67 @@ def check_readiness(
     }
 
 
+def check_authorization(
+    config_path: Path = DEFAULT_CONFIG,
+    curve_table_path: Path = DEFAULT_CURVE_TABLE,
+) -> dict[str, Any]:
+    """Replay the exact approved gate without creating scientific outcomes."""
+
+    gate_time = datetime.now(timezone.utc)
+    (
+        config,
+        curve_rows,
+        targets,
+        bases,
+        authorization,
+    ) = authorized_preflight(
+        config_path,
+        curve_table_path,
+        authorization_not_after=gate_time,
+    )
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "curve_count": len(curve_rows),
+        "cell_count": len(targets),
+        "factor_base_points_checked": sum(
+            len(build.points) for build in bases.values()
+        ),
+        "authorization_state": authorization["status"],
+        "authorization_id": authorization["authorization_id"],
+        "source_commit": authorization["source_commit"],
+        "outcomes_present": False,
+    }
+
+
+def authorized_preflight(
+    config_path: Path,
+    curve_table_path: Path,
+    *,
+    authorization_not_after: datetime,
+) -> tuple[
+    dict[str, Any],
+    dict[str, dict[str, Any]],
+    list[dict[str, Any]],
+    dict[str, BaseBuild],
+    dict[str, Any],
+]:
+    """Complete every immutable gate before execution may write one byte."""
+
+    table = load_json(curve_table_path)
+    curve_rows = verify_curve_table(table)
+    config = load_json(config_path)
+    targets = verify_config(config, curve_rows, config_path, curve_table_path)
+    bases = reconstruct_and_verify_bases(config, curve_rows)
+    no_outcomes_present(config)
+    authorization = require_execution_authorization(
+        config,
+        config_path,
+        curve_table_path,
+        authorization_not_after=authorization_not_after,
+    )
+    return config, curve_rows, targets, bases, authorization
+
+
 def signed_zero_exists(curve: Curve, points: list[Point]) -> bool:
     states: set[Point] = {None}
     for point in points:
@@ -1148,6 +1211,8 @@ def require_execution_authorization(
     config: dict[str, Any],
     config_path: Path,
     curve_table_path: Path,
+    *,
+    authorization_not_after: datetime,
 ) -> dict[str, Any]:
     if config_path.resolve() != DEFAULT_CONFIG.resolve():
         raise AuthorizationError("execution requires the canonical config path")
@@ -1164,6 +1229,24 @@ def require_execution_authorization(
     if not isinstance(authorization, dict):
         raise AuthorizationError(
             "canonical singleton authorization is absent"
+        )
+    expected_keys = {
+        "status",
+        "hypothesis_id",
+        "task_id",
+        "route_id",
+        "cell_id",
+        "promotion_authorized",
+        "authorization_id",
+        "source_commit",
+        "authorized_utc",
+        "sha256_bindings",
+        "resource_budget",
+        "scope",
+    }
+    if set(authorization) != expected_keys:
+        raise AuthorizationError(
+            "authorization singleton has an unexpected field set"
         )
     expected_identity = {
         "status": "approved",
@@ -1201,6 +1284,8 @@ def require_execution_authorization(
         parsed_authorized_utc
     ):
         raise AuthorizationError("authorized_utc is not canonical UTC")
+    if parsed_authorized_utc > authorization_not_after:
+        raise AuthorizationError("authorization timestamp is in the future")
     current_head = current_git_head()
     require_strict_ancestor(source_commit, current_head)
     substrate_relative = DEFAULT_AUTHORIZATION_SUBSTRATE.relative_to(
@@ -1354,17 +1439,25 @@ def execute_authorized(
     output_dir: Path,
 ) -> dict[str, Any]:
     """Execute the frozen grid only after the exact canonical gate passes."""
-    table = load_json(curve_table_path)
-    curve_rows = verify_curve_table(table)
-    config = load_json(config_path)
-    targets = verify_config(config, curve_rows, config_path, curve_table_path)
-    authorization = require_execution_authorization(
-        config, config_path, curve_table_path
-    )
     if output_dir.resolve() != HERE.resolve():
         raise AuthorizationError(
             "authorized execution requires the canonical experiment directory"
         )
+    started_wall = time.monotonic()
+    started_cpu = time.process_time()
+    started_instant = datetime.now(timezone.utc)
+    started_utc = started_instant.isoformat().replace("+00:00", "Z")
+    (
+        config,
+        curve_rows,
+        targets,
+        base_builds,
+        authorization,
+    ) = authorized_preflight(
+        config_path,
+        curve_table_path,
+        authorization_not_after=started_instant,
+    )
     output_paths = [
         output_dir / config["output_contract"]["manifest"],
         output_dir / config["output_contract"]["raw_jsonl"],
@@ -1383,9 +1476,6 @@ def execute_authorized(
     output_dir.mkdir(parents=True, exist_ok=True)
     raw_path = output_dir / config["output_contract"]["raw_jsonl"]
     raw_path.parent.mkdir(parents=True, exist_ok=True)
-    started_wall = time.monotonic()
-    started_cpu = time.process_time()
-    started_utc = utc_now()
     run_id = authorization["authorization_id"]
     manifest = {
         "schema_version": SCHEMA_VERSION,
@@ -1409,7 +1499,6 @@ def execute_authorized(
     }
     write_json(output_dir / config["output_contract"]["manifest"], manifest)
 
-    base_builds = reconstruct_and_verify_bases(config, curve_rows)
     target_by_cell = {target["cell_id"]: target for target in targets}
     total_operations = OperationCounts()
     for built in base_builds.values():
@@ -1761,6 +1850,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="verify frozen inputs without sampling a primary trial",
     )
     mode.add_argument(
+        "--check-authorization",
+        action="store_true",
+        help=(
+            "verify the exact canonical approved gate without writing output "
+            "or sampling a primary trial"
+        ),
+    )
+    mode.add_argument(
         "--execute",
         action="store_true",
         help="execute only after exact canonical authorization",
@@ -1783,13 +1880,18 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     try:
-        if args.check_readiness:
+        if args.check_readiness or args.check_authorization:
             if args.output_dir is not None:
                 raise ReadinessError(
-                    "--check-readiness does not accept --output-dir"
+                    "pre-execution checks do not accept --output-dir"
                 )
-            result = check_readiness(args.config, args.curve_table)
-            print("READINESS_PASS " + json.dumps(result, sort_keys=True))
+            if args.check_readiness:
+                result = check_readiness(args.config, args.curve_table)
+                prefix = "READINESS_PASS"
+            else:
+                result = check_authorization(args.config, args.curve_table)
+                prefix = "AUTHORIZATION_PASS"
+            print(prefix + " " + json.dumps(result, sort_keys=True))
             return 0
         if args.output_dir is None:
             raise AuthorizationError("--execute requires --output-dir")

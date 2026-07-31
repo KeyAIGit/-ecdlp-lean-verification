@@ -5,12 +5,15 @@ from __future__ import annotations
 
 import copy
 import ast
+from datetime import datetime, timezone
 import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import sys
 import tempfile
 import unittest
+from unittest import mock
 
 
 HERE = Path(__file__).resolve().parent
@@ -20,6 +23,19 @@ if SPEC is None or SPEC.loader is None:
     raise RuntimeError("could not load validator")
 validator = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(validator)
+
+
+def load_producer():
+    path = HERE / "run.py"
+    spec = importlib.util.spec_from_file_location(
+        "m16_fixed_target_producer_test", path
+    )
+    if spec is None or spec.loader is None:
+        raise RuntimeError("could not load producer")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
 
 
 ZERO_OPERATIONS = {
@@ -852,6 +868,88 @@ class ValidatorTests(unittest.TestCase):
                 substrate_path=substrate,
                 check_git_history=False,
             )
+            checked = validator.check_approved_authorization(
+                config=config,
+                config_path=validator.CONFIG_PATH,
+                curve_table_path=validator.CURVE_TABLE_PATH,
+                replay=validator.Replay(),
+                substrate_path=substrate,
+                check_git_history=False,
+            )
+            self.assertEqual(
+                checked["authorization_id"], manifest["authorization_id"]
+            )
+            future = copy.deepcopy(authorization)
+            future["authorized_utc"] = "2099-01-01T00:00:00Z"
+            substrate.write_text(
+                json.dumps({"bounded_experiment_authorization": future}),
+                encoding="utf-8",
+            )
+            self.assert_rejected(
+                lambda: validator.check_approved_authorization(
+                    config=config,
+                    config_path=validator.CONFIG_PATH,
+                    curve_table_path=validator.CURVE_TABLE_PATH,
+                    replay=validator.Replay(),
+                    substrate_path=substrate,
+                    check_git_history=False,
+                    authorization_not_after=datetime.now(timezone.utc),
+                )
+            )
+            unexpected = copy.deepcopy(authorization)
+            unexpected["notes"] = "must not broaden the exact singleton"
+            substrate.write_text(
+                json.dumps(
+                    {"bounded_experiment_authorization": unexpected}
+                ),
+                encoding="utf-8",
+            )
+            self.assert_rejected(
+                lambda: validator.check_approved_authorization(
+                    config=config,
+                    config_path=validator.CONFIG_PATH,
+                    curve_table_path=validator.CURVE_TABLE_PATH,
+                    replay=validator.Replay(),
+                    substrate_path=substrate,
+                    check_git_history=False,
+                )
+            )
+            malformed_source = copy.deepcopy(authorization)
+            malformed_source["source_commit"] = "A" * 40
+            substrate.write_text(
+                json.dumps(
+                    {"bounded_experiment_authorization": malformed_source}
+                ),
+                encoding="utf-8",
+            )
+            self.assert_rejected(
+                lambda: validator.check_approved_authorization(
+                    config=config,
+                    config_path=validator.CONFIG_PATH,
+                    curve_table_path=validator.CURVE_TABLE_PATH,
+                    replay=validator.Replay(),
+                    substrate_path=substrate,
+                    check_git_history=False,
+                )
+            )
+            malformed_bindings = copy.deepcopy(authorization)
+            malformed_bindings["sha256_bindings"] = []
+            substrate.write_text(
+                json.dumps(
+                    {"bounded_experiment_authorization": malformed_bindings}
+                ),
+                encoding="utf-8",
+            )
+            self.assert_rejected(
+                lambda: validator.check_approved_authorization(
+                    config=config,
+                    config_path=validator.CONFIG_PATH,
+                    curve_table_path=validator.CURVE_TABLE_PATH,
+                    replay=validator.Replay(),
+                    substrate_path=substrate,
+                    check_git_history=False,
+                )
+            )
             substrate.write_text("{}\n", encoding="utf-8")
             self.assert_rejected(
                 lambda: validator.check_canonical_authorization(
@@ -864,6 +962,41 @@ class ValidatorTests(unittest.TestCase):
                     check_git_history=False,
                 )
             )
+
+    def test_pre_execution_gate_rejects_present_outcome(self) -> None:
+        config = validator.load_json(validator.CONFIG_PATH)
+        original_artifact = validator.ARTIFACT_PATH
+        with tempfile.TemporaryDirectory(dir=validator.HERE) as temporary:
+            artifact = Path(temporary) / "artifact.json"
+            validator.ARTIFACT_PATH = artifact
+            try:
+                validator.check_no_outcomes(config, validator.Replay())
+                artifact.write_text("{}\n", encoding="utf-8")
+                self.assert_rejected(
+                    lambda: validator.check_no_outcomes(
+                        config, validator.Replay()
+                    )
+                )
+            finally:
+                validator.ARTIFACT_PATH = original_artifact
+
+    def test_execute_writes_nothing_before_full_preflight(self) -> None:
+        producer = load_producer()
+        with (
+            mock.patch.object(
+                producer,
+                "authorized_preflight",
+                side_effect=producer.AuthorizationError("preflight fault"),
+            ),
+            mock.patch.object(producer, "write_json") as write_json,
+            self.assertRaises(producer.AuthorizationError),
+        ):
+            producer.execute_authorized(
+                producer.DEFAULT_CONFIG,
+                producer.DEFAULT_CURVE_TABLE,
+                producer.HERE,
+            )
+        write_json.assert_not_called()
 
     def test_uncommitted_authorization_bytes_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
