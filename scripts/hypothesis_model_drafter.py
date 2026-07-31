@@ -23,6 +23,31 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 POLICY_PATH = ROOT / "repo" / "HYPOTHESIS_MODEL_DRAFTER_V0.json"
 USER_AGENT = "KeyAI-Research-Engine/0.1"
+ALLOWED_PROVIDER_IDENTITIES = {
+    "featherless": (
+        "https://api.featherless.ai/v1",
+        "FEATHERLESS_API_KEY",
+    ),
+    "deepseek_direct": (
+        "https://api.deepseek.com",
+        "DEEPSEEK_API_KEY",
+    ),
+    "moonshot_direct": (
+        "https://api.moonshot.ai/v1",
+        "KIMI_API_KEY",
+    ),
+}
+FRAGMENT_FIELDS = (
+    "abstain",
+    "new_premise",
+    "exact_map",
+    "fixed_target_semantics",
+    "recovery_map",
+    "cost_changing_quantity",
+    "falsifiable_prediction",
+    "missing_evidence",
+    "claim_boundary",
+)
 
 
 def canonical_json_bytes(value: Any) -> bytes:
@@ -73,9 +98,46 @@ def validate_policy(policy: dict[str, Any]) -> None:
         raise ValueError("model drafter concurrency must remain one")
     if not 1 <= limits.get("max_completion_tokens", 0) <= 2000:
         raise ValueError("max_completion_tokens must remain within 1..2000")
-    required = set(policy.get("output_contract", {}).get("required_fields", []))
-    if "abstain" not in required or "claim_boundary" not in required:
-        raise ValueError("output contract is incomplete")
+    providers = policy.get("providers")
+    if not isinstance(providers, dict) or set(providers) != set(
+        ALLOWED_PROVIDER_IDENTITIES
+    ):
+        raise ValueError("provider set is not the pinned allowlist")
+    for provider_id, (base_url, secret_env) in ALLOWED_PROVIDER_IDENTITIES.items():
+        provider = providers[provider_id]
+        if not isinstance(provider, dict):
+            raise ValueError(f"provider {provider_id} must be an object")
+        if (
+            provider.get("base_url") != base_url
+            or provider.get("secret_env") != secret_env
+        ):
+            raise ValueError(
+                f"provider {provider_id} identity is not pinned"
+            )
+        models = provider.get("preferred_models")
+        if (
+            not isinstance(models, list)
+            or not 1 <= len(models) <= 4
+            or not all(
+                isinstance(model, str) and model.strip()
+                for model in models
+            )
+            or len(models) != len(set(models))
+        ):
+            raise ValueError(f"provider {provider_id} model allowlist is invalid")
+
+    output_contract = policy.get("output_contract", {})
+    required = output_contract.get("required_fields")
+    if required != list(FRAGMENT_FIELDS):
+        raise ValueError("output contract fields are not the pinned contract")
+    prohibited = output_contract.get("prohibited_claims")
+    if (
+        not isinstance(prohibited, list)
+        or not prohibited
+        or not all(isinstance(item, str) and item.strip() for item in prohibited)
+        or len(prohibited) != len(set(prohibited))
+    ):
+        raise ValueError("prohibited claims must be a nonempty unique list")
 
 
 def build_prompt(record: dict[str, Any], required_fields: list[str]) -> str:
@@ -142,7 +204,11 @@ def build_request_packets(
     return packets
 
 
-def parse_fragment(text: str, required_fields: list[str]) -> tuple[dict[str, Any] | None, list[str]]:
+def parse_fragment(
+    text: str,
+    required_fields: list[str],
+    prohibited_claims: list[str] | None = None,
+) -> tuple[dict[str, Any] | None, list[str]]:
     cleaned = re.sub(
         r"^```(?:json)?\s*|\s*```$", "", text.strip(), flags=re.IGNORECASE
     )
@@ -157,8 +223,28 @@ def parse_fragment(text: str, required_fields: list[str]) -> tuple[dict[str, Any
         problems.append("response_fields_do_not_match_contract")
     if not isinstance(value.get("abstain"), bool):
         problems.append("abstain_is_not_boolean")
-    if not isinstance(value.get("missing_evidence"), list):
+    missing = value.get("missing_evidence")
+    if not isinstance(missing, list):
         problems.append("missing_evidence_is_not_array")
+    elif (
+        not all(isinstance(item, str) and item.strip() for item in missing)
+        or len(missing) != len(set(missing))
+    ):
+        problems.append("missing_evidence_items_are_invalid")
+    for field in required_fields:
+        if field in {"abstain", "missing_evidence"}:
+            continue
+        if not isinstance(value.get(field), str) or not value[field].strip():
+            problems.append(f"{field}_is_not_nonempty_text")
+    folded = json.dumps(value, ensure_ascii=True, sort_keys=True).casefold()
+    for claim in prohibited_claims or []:
+        if claim.casefold() in folded:
+            normalized = re.sub(
+                r"[^a-z0-9]+", "_", claim.casefold()
+            ).strip("_")
+            problems.append(
+                "prohibited_claim:" + normalized
+            )
     return value, problems
 
 
@@ -277,7 +363,11 @@ def main() -> int:
                 prompt=packet["prompt"],
                 max_tokens=policy["limits"]["max_completion_tokens"],
             )
-            fragment, problems = parse_fragment(raw, required)
+            fragment, problems = parse_fragment(
+                raw,
+                required,
+                policy["output_contract"]["prohibited_claims"],
+            )
             output["responses"].append(
                 {
                     "request_sha256": packet["request_sha256"],

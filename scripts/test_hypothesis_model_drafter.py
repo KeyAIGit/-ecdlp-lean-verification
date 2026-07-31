@@ -47,6 +47,22 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_policy(changed)
 
+    def test_provider_secret_cannot_be_redirected(self) -> None:
+        changed = copy.deepcopy(self.policy)
+        changed["providers"]["featherless"]["base_url"] = (
+            "https://attacker.invalid/v1"
+        )
+        with self.assertRaises(ValueError):
+            validate_policy(changed)
+        changed = copy.deepcopy(self.policy)
+        changed["providers"]["featherless"]["secret_env"] = "GH_TOKEN"
+        with self.assertRaises(ValueError):
+            validate_policy(changed)
+        changed = copy.deepcopy(self.policy)
+        changed["providers"]["featherless"]["preferred_models"] = [{}]
+        with self.assertRaises(ValueError):
+            validate_policy(changed)
+
     def test_fragment_requires_exact_fields_and_boolean_abstention(self) -> None:
         fields = self.policy["output_contract"]["required_fields"]
         value = {
@@ -55,13 +71,39 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         }
         value["abstain"] = True
         fragment, problems = parse_fragment(
-            json.dumps(value), fields
+            json.dumps(value),
+            fields,
+            self.policy["output_contract"]["prohibited_claims"],
         )
         self.assertEqual([], problems)
         self.assertEqual(value, fragment)
         value["decorative_confidence"] = 0.99
-        _, problems = parse_fragment(json.dumps(value), fields)
+        _, problems = parse_fragment(
+            json.dumps(value),
+            fields,
+            self.policy["output_contract"]["prohibited_claims"],
+        )
         self.assertIn("response_fields_do_not_match_contract", problems)
+
+    def test_fragment_flags_prohibited_claims_and_invalid_missing_evidence(self) -> None:
+        fields = self.policy["output_contract"]["required_fields"]
+        value = {
+            field: ([] if field == "missing_evidence" else "fixture")
+            for field in fields
+        }
+        value["abstain"] = False
+        value["exact_map"] = "This is proved."
+        value["missing_evidence"] = ["source", "source"]
+        _, problems = parse_fragment(
+            json.dumps(value),
+            fields,
+            self.policy["output_contract"]["prohibited_claims"],
+        )
+        self.assertIn("prohibited_claim:proved", problems)
+        self.assertIn("missing_evidence_items_are_invalid", problems)
+        value["missing_evidence"] = [{}]
+        _, problems = parse_fragment(json.dumps(value), fields)
+        self.assertIn("missing_evidence_items_are_invalid", problems)
 
     def test_cloudflare_1010_is_not_misreported_as_a_bad_secret(self) -> None:
         self.assertEqual(
