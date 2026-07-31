@@ -175,6 +175,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1_pointGroupEquiv
 #print axioms Ecdlp.Curve.secp256k1_pointX_neg
 #print axioms Ecdlp.Curve.secp256k1_pointX_neg_zsmul_add
+#print axioms Ecdlp.Curve.secp256k1_pointX_not_injective
 #print axioms Ecdlp.Curve.secp256k1_point_group_equiv_exists
 #print axioms Ecdlp.Curve.secp256k1_point_group_no_proper_subgroup
 #print axioms Ecdlp.Curve.secp256k1_point_isAddCyclic

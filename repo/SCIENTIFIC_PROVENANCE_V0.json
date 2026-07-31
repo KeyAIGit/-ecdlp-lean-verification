@@ -1,15 +1,15 @@
 {
   "schema_version": "0.1",
   "protected_main": {
-    "ref": "refs/heads/main",
-    "commit": "fed55d84675fd96e5f40204b9f5f49baa8c01172",
-    "recorded_on": "2026-07-25"
+    "recorded_ref": "refs/remotes/origin/main",
+    "commit": "bc2f04a71d168b34bce3d68c1d7cef33b4af9e4e",
+    "recorded_on": "2026-07-30"
   },
   "immutable_evidence_refs": [],
-  "rule": "A scientific source_commit must be an ancestor of the recorded protected-main commit or equal the commit pinned by an explicitly registered immutable evidence ref.",
+  "rule": "A scientific source_commit must be an ancestor of the pinned commit in the recorded protected-main snapshot or equal the commit pinned by an explicitly registered immutable evidence ref. recorded_ref names where the snapshot was observed; it is historical metadata, not a mutable ref that must continue resolving to the old commit.",
   "limits": [
     "Git object existence alone is not scientific provenance.",
     "A deleted source branch is not an immutable evidence ref.",
-    "Updating protected_main is an explicit repository-governance change."
+    "Updating the protected_main snapshot is an explicit repository-governance change."
   ]
 }

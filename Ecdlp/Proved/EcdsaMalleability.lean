@@ -1,5 +1,7 @@
 import Mathlib
 import Ecdlp.Proved.Secp256k1Curve
+import Ecdlp.Proved.CurveTorsion
+import Ecdlp.Proved.CurveCardinalityExact
 
 /-!
 # ECDSA signature malleability — the algebraic core of BIP-146 low-`s`
@@ -32,11 +34,15 @@ real verifier's `ZMod p → ZMod n` reduction of the `x`-coordinate before compa
 DER/encoding-level malleability, or uniqueness after low-`s` normalization.
 
 Trust note: no `native_decide` appears in this file, and the field-side lemmas are
-pure-kernel. The curve-side lemma `secp256k1_pointX_neg_zsmul_add` is stated under
+pure-kernel. The curve-coordinate lemmas `secp256k1_pointX_neg` and
+`secp256k1_pointX_neg_zsmul_add` are stated under
 `[Fact (Nat.Prime Secp256k1.p)]` (the repo convention); discharging that fact downstream
-uses the Pratt certificate (`Secp256k1PrimeP.lean`), which relies on `native_decide` — so
-*instantiated* curve-side results inherit the concrete curve layer's compiler-trusted base
-(`Lean.ofReduceBool`), exactly as every other concrete secp256k1 point-level result here.
+uses the Pratt certificate (`Secp256k1PrimeP.lean`), which relies on `native_decide`.
+The concrete theorem `secp256k1_pointX_not_injective` additionally invokes
+`secp256k1_no_nonzero_two_torsion`, whose certificate in
+`CurveCardinalityExact.lean` directly uses `native_decide`. Consequently that theorem,
+and instantiated concrete curve-side results generally, inherit `Lean.ofReduceBool`;
+the claim is not pure-kernel.
 -/
 
 namespace Ecdlp.Curve
@@ -65,6 +71,28 @@ theorem secp256k1_pointX_neg (P : secp256k1.toAffine.Point) :
   cases P with
   | zero => rfl
   | some x y h => rw [Point.neg_some]; rfl
+
+/-- **The secp256k1 `x`-coordinate projection is not injective.** The concrete
+points `G` and `-G` have the same `pointX`, but they are distinct: equality
+would make `G` a nonzero two-torsion point. This is a narrow representation
+boundary, not an ECDLP algorithm or a claim that every structured generic-group
+model must use `pointX` as its label map. -/
+theorem secp256k1_pointX_not_injective :
+    ¬ Function.Injective pointX := by
+  intro hInjective
+  have hneg : -secp256k1_G = secp256k1_G :=
+    hInjective (secp256k1_pointX_neg secp256k1_G)
+  have htwo : (2 : ℕ) • secp256k1_G = 0 := by
+    calc
+      (2 : ℕ) • secp256k1_G =
+          secp256k1_G + secp256k1_G := two_nsmul secp256k1_G
+      _ = secp256k1_G + (-secp256k1_G) :=
+        congrArg
+          (fun P : secp256k1.toAffine.Point => secp256k1_G + P)
+          hneg.symm
+      _ = 0 := add_neg_cancel secp256k1_G
+  exact secp256k1_G_ne_zero
+    (secp256k1_no_nonzero_two_torsion secp256k1_G htwo)
 
 /-- **Negating both verification scalars negates the verification point — and keeps its
 `x`-coordinate.** For any `c₁ c₂ : ℤ` and points `G P`:

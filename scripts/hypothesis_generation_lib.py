@@ -387,6 +387,99 @@ def git_file_sha256(commit: str, relative: str) -> str | None:
     return hashlib.sha256(payload).hexdigest() if payload is not None else None
 
 
+def _working_tree_text_sha256(relative: Any) -> str | None:
+    if not isinstance(relative, str):
+        return None
+    path = ROOT / relative
+    if not path.is_file():
+        return None
+    payload = path.read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def proposal_integrity_problems(
+    proposal: dict[str, Any], label: str = "proposal"
+) -> list[str]:
+    """Bind a materialized proposal design to its local notes and provenance.
+
+    Synthetic regression fixtures intentionally use non-materialized
+    ``planned/`` paths; those remain shape tests. Once the declared mechanism
+    path exists, every locally defined digest becomes executable rather than
+    decorative.
+    """
+    problems: list[str] = []
+    mechanism = proposal.get("mechanism_contract", {}).get(
+        "implementation_identity", {}
+    )
+    mechanism_path = mechanism.get("implementation_path")
+    mechanism_digest = _working_tree_text_sha256(mechanism_path)
+    if mechanism_digest is None:
+        return problems
+    if mechanism.get("sha256") != mechanism_digest:
+        problems.append(f"{label}: mechanism design digest is stale or invalid")
+
+    validator = proposal.get("validator_contract", {}).get("implementation", {})
+    validator_digest = _working_tree_text_sha256(validator.get("path"))
+    if validator_digest is None:
+        problems.append(f"{label}: materialized validator design is missing")
+    elif validator.get("sha256") != validator_digest:
+        problems.append(f"{label}: validator design digest is stale or invalid")
+
+    prediction = proposal.get("prediction_contract", {})
+    baseline = prediction.get("matched_baseline", {})
+    baseline_id = baseline.get("baseline_id")
+    sentinel_prefix = "UNIMPLEMENTED-DESIGN-ONLY-"
+    if isinstance(baseline_id, str) and baseline_id.startswith(sentinel_prefix):
+        sentinel = (
+            "UNIMPLEMENTED-DESIGN-ONLY:"
+            + baseline_id.removeprefix(sentinel_prefix)
+        )
+        expected = hashlib.sha256(sentinel.encode("utf-8")).hexdigest()
+        if baseline.get("implementation_digest") != expected:
+            problems.append(
+                f"{label}: unimplemented baseline sentinel digest is invalid"
+            )
+
+    manifest = proposal.get("evidence_manifest", [])
+    if isinstance(manifest, list) and all(isinstance(item, dict) for item in manifest):
+        records = sorted(
+            (
+                f"{item.get('path')}:{item.get('sha256')}"
+                for item in manifest
+            )
+        )
+        context_digest = hashlib.sha256("\n".join(records).encode("utf-8")).hexdigest()
+        provenance = proposal.get("provenance", {})
+        if provenance.get("context_sha256") != context_digest:
+            problems.append(f"{label}: context_sha256 is stale or invalid")
+
+    context_path = (ROOT / str(mechanism_path)).parent / "PROPOSAL_CONTEXT.md"
+    if not context_path.is_file():
+        problems.append(f"{label}: materialized proposal context is missing")
+    else:
+        context_text = context_path.read_text(encoding="utf-8")
+        proposal_id = proposal.get("proposal_id")
+        if f"Proposal: `{proposal_id}`" not in context_text:
+            problems.append(f"{label}: proposal context id does not match")
+        quoted = [
+            line[2:]
+            for line in context_text.splitlines()
+            if line.startswith("> ")
+        ]
+        if not quoted:
+            problems.append(f"{label}: canonical proposal prompt is missing")
+        else:
+            prompt_digest = hashlib.sha256(
+                " ".join(quoted).encode("utf-8")
+            ).hexdigest()
+            if (
+                proposal.get("provenance", {}).get("prompt_sha256")
+                != prompt_digest
+            ):
+                problems.append(f"{label}: prompt_sha256 is stale or invalid")
+    return problems
+
+
 def normalize_premise(value: str) -> str:
     return " ".join(value.casefold().split())
 
@@ -1519,6 +1612,8 @@ def validate_proposals(
                 provenance.get("prompt_sha256"), str
             ) or HASH_ID.fullmatch(provenance["prompt_sha256"]) is None:
                 problems.append(f"{label}: prompt_sha256 must be lowercase 64-hex")
+
+        problems.extend(proposal_integrity_problems(proposal, label))
 
         duplicate_fingerprints = set(known_fingerprints)
         fingerprint = proposal.get("premise_fingerprint")

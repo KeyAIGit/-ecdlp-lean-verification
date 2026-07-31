@@ -7,12 +7,14 @@ hybrid workflow, but its output is untrusted.
 Every JSON file must satisfy `../hypothesis_proposal.schema.json` and the
 stronger deterministic checks in `scripts/hypothesis_generation_lib.py`.
 The declared premise fingerprint is recomputed, evidence paths must resolve,
-the mechanism signature is recomputed from the full transformation and cost
-identity, and every evidence digest must match the named file at the frozen
-source commit. Each primary-source id must already belong to the selected
-route. The proposal must state a premise counterfactual, null model, competing
-mechanism, complete outcome matrix, and stay inside the plain single-target
-threat model and toy-only scope. Novelty is split into
+and the mechanism signature is recomputed from the route, threat model, and
+the seven normalized `mechanism_identity` fields. It is a collision guard for
+that declared identity, not a digest of every prose contract or cost field.
+Every evidence digest must match the named file at the frozen source commit.
+Each primary-source id must already belong to the selected route. The proposal
+must state a premise counterfactual, null model, competing mechanism, complete
+outcome matrix, and stay inside the plain single-target threat model and
+toy-only scope. Novelty is split into
 `new_to_repository`, `new_to_reviewed_corpus`, and globally `unverified`; the
 last status cannot be promoted by this Engine.
 

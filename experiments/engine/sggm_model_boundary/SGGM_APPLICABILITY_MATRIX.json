@@ -1,0 +1,217 @@
+{
+  "schema_version": "0.1",
+  "artifact_id": "SGGM-APPLICABILITY-MATRIX-001",
+  "created_on": "2026-07-30",
+  "hypothesis_id": "HYP-SGGM-MODEL-MAP-001",
+  "status": "non_executable_barrier_artifact",
+  "field_semantics": {
+    "candidate_sigma_injective": "Whether this row itself proposes the SGGM labeling sigma and, if so, whether that labeling is injective. Null means not a sigma proposal.",
+    "candidate_star_axioms": "Properties of a proposed free partial binary star only. Null means the row is not a star proposal or the property is not proved. These fields never describe mere determinism of unary readouts or the charged group oracle.",
+    "delta": "The constrained-label density in the published model; null means no bound is supplied."
+  },
+  "model": {
+    "source": "Corrigan-Gibbs, Henzinger, and Wu, The Structured Generic-Group Model, EUROCRYPT 2026",
+    "source_url": "https://www.cs.utexas.edu/~dwu4/papers/SGGM.pdf",
+    "required_labeling": "an injective sigma : Z_n -> L",
+    "structured_operation": "a partial single-valued binary function star : L x L -> L",
+    "required_algebra": [
+      "associativity on defined products",
+      "commutativity",
+      "identity",
+      "unique factorization into star-primes"
+    ],
+    "cost_measure": "Each group addition is a charged group-oracle query. Negation and known-scalar multiplication are derived using charged queries (typically O(log q) for scalar multiplication), not free primitives. Only star and local computation are free.",
+    "lower_bound_scope": "a hard distribution of structured labelings, not automatically one fixed concrete coordinate encoding",
+    "prime_order_bound": "Omega(min(sqrt(q), 1/delta)) under the paper's exact assumptions"
+  },
+  "operations": [
+    {
+      "operation": "elliptic-curve point addition; derived negation and known-scalar multiplication",
+      "input_type": "full group points or their injective labels",
+      "output_type": "full group point or label",
+      "classic_generic_group": "addition is one charged group-oracle query; negation and known-scalar multiplication are derived from charged queries",
+      "candidate_sggm_role": "group oracle, not candidate free star",
+      "candidate_sigma_injective": null,
+      "candidate_star_axioms": {
+        "single_valued": null,
+        "associative": null,
+        "commutative": null,
+        "identity": null,
+        "unique_factorization": null
+      },
+      "delta": null,
+      "first_failed_assumption": null,
+      "disposition": "inside the charged generic-oracle interface"
+    },
+    {
+      "operation": "affine coordinate read",
+      "input_type": "full elliptic-curve point",
+      "output_type": "field coordinates",
+      "classic_generic_group": "unavailable",
+      "candidate_sggm_role": "representation leakage, not a binary star",
+      "candidate_sigma_injective": null,
+      "candidate_star_axioms": {
+        "single_valued": null,
+        "associative": null,
+        "commutative": null,
+        "identity": null,
+        "unique_factorization": null
+      },
+      "delta": null,
+      "first_failed_assumption": "no explicit structured-label simulation is supplied",
+      "disposition": "outside both the current repository GGM theorem and a proved SGGM instantiation"
+    },
+    {
+      "operation": "candidate subgroup labeling sigma(a) = pointX([a]G)",
+      "input_type": "scalar a in Z/qZ, identified with the point [a]G in the prime-order subgroup",
+      "output_type": "Option field element",
+      "classic_generic_group": "unavailable",
+      "candidate_sggm_role": "candidate label map",
+      "candidate_sigma_injective": false,
+      "candidate_star_axioms": {
+        "single_valued": null,
+        "associative": null,
+        "commutative": null,
+        "identity": null,
+        "unique_factorization": null
+      },
+      "delta": null,
+      "first_failed_assumption": "sigma must be injective, but the distinct scalar/point witnesses corresponding to G and -G have the same pointX",
+      "disposition": "this direct x-only subgroup labeling is refuted"
+    },
+    {
+      "operation": "factor-base membership x^D = 1",
+      "input_type": "field coordinate",
+      "output_type": "boolean",
+      "classic_generic_group": "unavailable",
+      "candidate_sggm_role": "extra unary predicate, not a binary star",
+      "candidate_sigma_injective": null,
+      "candidate_star_axioms": {
+        "single_valued": null,
+        "associative": null,
+        "commutative": null,
+        "identity": null,
+        "unique_factorization": null
+      },
+      "delta": null,
+      "first_failed_assumption": "no compatible binary star construction or structured-label distribution is defined",
+      "disposition": "not captured by the published theorem as currently represented"
+    },
+    {
+      "operation": "S3 or projective H Kummer-output relation",
+      "input_type": "two Kummer inputs and one candidate output",
+      "output_type": "boolean relation",
+      "classic_generic_group": "unavailable",
+      "candidate_sggm_role": "naive candidate for the graph of star",
+      "candidate_sigma_injective": null,
+      "candidate_star_axioms": {
+        "single_valued": false,
+        "associative": null,
+        "commutative": null,
+        "identity": null,
+        "unique_factorization": null
+      },
+      "delta": null,
+      "first_failed_assumption": "generic outputs encode both x(P+Q) and x(P-Q), so the relation does not define one star output",
+      "disposition": "this proposed star fails the published single-valued interface"
+    },
+    {
+      "operation": "recursive S3/S17 relation tree",
+      "input_type": "sixteen leaves, fourteen projective intermediates, fixed target",
+      "output_type": "existential relation witness",
+      "classic_generic_group": "unavailable",
+      "candidate_sggm_role": "naive iterated-star proposal",
+      "candidate_sigma_injective": null,
+      "candidate_star_axioms": {
+        "single_valued": false,
+        "associative": null,
+        "commutative": null,
+        "identity": null,
+        "unique_factorization": null
+      },
+      "delta": null,
+      "first_failed_assumption": "the existential relation tree is not itself a partial binary star; no alternative star or algebraic-axiom proof is supplied",
+      "disposition": "naive iterated-star assignment fails; broader faithful simulation remains unestablished"
+    },
+    {
+      "operation": "infinity masks, propagation, and exceptional-polynomial predicates",
+      "input_type": "one projective relation presentation",
+      "output_type": "chart and obstruction classification",
+      "classic_generic_group": "unavailable",
+      "candidate_sggm_role": "solver-representation predicates, not a binary star",
+      "candidate_sigma_injective": null,
+      "candidate_star_axioms": {
+        "single_valued": null,
+        "associative": null,
+        "commutative": null,
+        "identity": null,
+        "unique_factorization": null
+      },
+      "delta": null,
+      "first_failed_assumption": "no structured-label operation or constrained-label density is induced",
+      "disposition": "local chart reduction is not an SGGM escape or SGGM lower-bound instance"
+    },
+    {
+      "operation": "base-field lift, sign recovery, and exact relation replay",
+      "input_type": "Kummer coordinates and projective witness",
+      "output_type": "signed elliptic-curve relation or rejection",
+      "classic_generic_group": "unavailable",
+      "candidate_sggm_role": "extra recovery computation, not a binary star",
+      "candidate_sigma_injective": null,
+      "candidate_star_axioms": {
+        "single_valued": null,
+        "associative": null,
+        "commutative": null,
+        "identity": null,
+        "unique_factorization": null
+      },
+      "delta": null,
+      "first_failed_assumption": "the recovery interface is not a partial binary star; no star-prime or unique-factorization interpretation is defined",
+      "disposition": "must be modeled and priced separately"
+    },
+    {
+      "operation": "GLV endomorphism phi",
+      "input_type": "full point or affine coordinate",
+      "output_type": "full point or affine coordinate",
+      "classic_generic_group": "known scalar multiplication only after the subgroup eigenvalue is supplied",
+      "candidate_sggm_role": "unary representation operation, not a binary star",
+      "candidate_sigma_injective": null,
+      "candidate_star_axioms": {
+        "single_valued": null,
+        "associative": null,
+        "commutative": null,
+        "identity": null,
+        "unique_factorization": null
+      },
+      "delta": null,
+      "first_failed_assumption": "the published structural interface is binary star, while phi is unary and equals known scalar multiplication on the subgroup",
+      "disposition": "finite-orbit constant structure, not a direct exponent-changing SGGM mechanism"
+    },
+    {
+      "operation": "relation normalization, rank, and sparse linear algebra",
+      "input_type": "recovered relation rows",
+      "output_type": "factor-base logarithms and candidate target logarithm",
+      "classic_generic_group": "free local computation after relations",
+      "candidate_sggm_role": "local postprocessing, not a binary star",
+      "candidate_sigma_injective": null,
+      "candidate_star_axioms": {
+        "single_valued": null,
+        "associative": null,
+        "commutative": null,
+        "identity": null,
+        "unique_factorization": null
+      },
+      "delta": null,
+      "first_failed_assumption": "none at this stage; relation acquisition remains the unmodeled bottleneck",
+      "disposition": "does not by itself establish model applicability"
+    }
+  ],
+  "conclusions": {
+    "known": "The published SGGM theorem applies only after an explicit structured label space, injective structured labeling, compatible partial star, and theorem-specific distribution are supplied.",
+    "reproduced": "Repository theorems establish secp256k1_pointX_not_injective using the distinct witnesses G and -G, and the M16 projective bridge records two-output Kummer addition semantics.",
+    "derived": "The naive assignments sigma(a) = pointX([a]G) and star = the Kummer-output S3/H relation fail injectivity and single-valuedness respectively.",
+    "refuted": "The published SGGM lower bound applies through the specific naive sigma(a) = pointX([a]G), star = Kummer-output S3/H map.",
+    "unknown": "Whether any other injective label space and partial star faithfully simulate the complete M16 pipeline and satisfy the published theorem, or whether a relational extension admits a comparable useful lower bound."
+  },
+  "claim_boundary": "This artifact proves no lower bound against representation-aware secp256k1 ECDLP, no solver lower bound, and no attack. It refutes one naive model map only; broader SGGM applicability remains unestablished."
+}
