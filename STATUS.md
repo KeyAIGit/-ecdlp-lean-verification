@@ -11,9 +11,9 @@
 ## Verified asset (the ledger)
 | metric | value | source |
 |---|---|---|
-| ledger rows | **306** | `VERIFIED.md` → `data/stats.json` |
-| distinct results | **~267** | `data/stats.json` |
-| proved modules | **175** | `data/stats.json` |
+| ledger rows | **307** | `VERIFIED.md` → `data/stats.json` |
+| distinct results | **~268** | `data/stats.json` |
+| proved modules | **179** | `data/stats.json` |
 | `sorry` | **0** | axiom-audit + no-sorry gate |
 | custom axioms | **0** | axiom-audit gate |
 

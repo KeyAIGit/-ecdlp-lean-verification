@@ -51,13 +51,19 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.secp256k1Bar_five_nsmul_eq_zero_iff
 #print axioms Ecdlp.Curve.secp256k1Bar_five_torsion_ncard
 #print axioms Ecdlp.Curve.secp256k1Bar_five_torsion_structure
+#print axioms Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff
+#print axioms Ecdlp.Curve.secp256k1Bar_four_torsion_card
+#print axioms Ecdlp.Curve.secp256k1Bar_four_torsion_ncard
+#print axioms Ecdlp.Curve.secp256k1Bar_four_torsion_structure
 #print axioms Ecdlp.Curve.secp256k1Bar_seven_nsmul_eq_zero_iff
 #print axioms Ecdlp.Curve.secp256k1Bar_seven_torsion_ncard
 #print axioms Ecdlp.Curve.secp256k1Bar_seven_torsion_structure
 #print axioms Ecdlp.Curve.secp256k1Bar_three_nsmul_eq_zero_iff
 #print axioms Ecdlp.Curve.secp256k1Bar_three_torsion_ncard
 #print axioms Ecdlp.Curve.secp256k1Bar_three_torsion_structure
+#print axioms Ecdlp.Curve.secp256k1Bar_torsionBy_four_card
 #print axioms Ecdlp.Curve.secp256k1Bar_torsionBy_three_card
+#print axioms Ecdlp.Curve.secp256k1Bar_two_nsmul_coords
 #print axioms Ecdlp.Curve.secp256k1Bar_two_nsmul_eq_zero_iff
 #print axioms Ecdlp.Curve.secp256k1Bar_two_torsion_ncard
 #print axioms Ecdlp.Curve.secp256k1Bar_two_torsion_structure
@@ -612,6 +618,7 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.TaskSylvester.det_taskSylvester_eq_zero_iff_common_projective_root
 #print axioms Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose
 #print axioms Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd
+#print axioms Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion
 #print axioms Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq
 #print axioms Ecdlp.Torsion.torsionBy_dvd_le
 #print axioms Ecdlp.Torsion.torsionBy_eq_ker_nsmul

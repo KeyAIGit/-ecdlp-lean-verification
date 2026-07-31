@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 306,
-  "ledger_reference_count": 695,
-  "ledger_named_declarations": 670,
+  "ledger_rows": 307,
+  "ledger_reference_count": 702,
+  "ledger_named_declarations": 677,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1008,
-  "distinct_qualified_names": 1008,
-  "verified_md_citations": 670,
+  "declaration_count": 1015,
+  "distinct_qualified_names": 1015,
+  "verified_md_citations": 677,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -119,13 +119,19 @@
     "Ecdlp.Curve.secp256k1Bar_five_nsmul_eq_zero_iff",
     "Ecdlp.Curve.secp256k1Bar_five_torsion_ncard",
     "Ecdlp.Curve.secp256k1Bar_five_torsion_structure",
+    "Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff",
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_card",
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard",
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_structure",
     "Ecdlp.Curve.secp256k1Bar_seven_nsmul_eq_zero_iff",
     "Ecdlp.Curve.secp256k1Bar_seven_torsion_ncard",
     "Ecdlp.Curve.secp256k1Bar_seven_torsion_structure",
     "Ecdlp.Curve.secp256k1Bar_three_nsmul_eq_zero_iff",
     "Ecdlp.Curve.secp256k1Bar_three_torsion_ncard",
     "Ecdlp.Curve.secp256k1Bar_three_torsion_structure",
+    "Ecdlp.Curve.secp256k1Bar_torsionBy_four_card",
     "Ecdlp.Curve.secp256k1Bar_torsionBy_three_card",
+    "Ecdlp.Curve.secp256k1Bar_two_nsmul_coords",
     "Ecdlp.Curve.secp256k1Bar_two_nsmul_eq_zero_iff",
     "Ecdlp.Curve.secp256k1Bar_two_torsion_ncard",
     "Ecdlp.Curve.secp256k1Bar_two_torsion_structure",
@@ -680,6 +686,7 @@
     "Ecdlp.TaskSylvester.det_taskSylvester_eq_zero_iff_common_projective_root",
     "Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose",
     "Ecdlp.Torsion.mem_torsionBy_iff_addOrderOf_dvd",
+    "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
     "Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq",
     "Ecdlp.Torsion.torsionBy_dvd_le",
     "Ecdlp.Torsion.torsionBy_eq_ker_nsmul",
@@ -5918,7 +5925,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/FourTorsionCount.lean",
-          "line": 51
+          "line": 52
         }
       ]
     },
@@ -7867,7 +7874,7 @@
     },
     {
       "id": "ledger-291",
-      "claim": "#E[2](𝔽̄_p) = 4` and `E[2] ≅ (ℤ/2)²` — N13 at `n = 2`, completing the family to `n ∈ {2,3,5,7}` (`secp256k1Bar_two_torsion_structure` + the closure characterization `secp256k1Bar_two_nsmul_eq_zero_iff`: `2•P = O ⟺ y = 0`. Structurally the `n = 2` N13 instance — no multiplication formula: `2•P = O ⟺ P = −P ⟺ y = negY = −y ⟺ y = 0` (`char ≠ 2`), and `y = 0` on the curve forces `x³+7 = 0`. So `E[2] = {O} ∪ {(x,0) : X³+7-root}`, an explicit 4-element finset (no `±y` split — `y = 0` is forced), `1 + 3 = 4 = 2²`; N10(iii) at prime 2 classifies. The even companion of the odd family)",
+      "claim": "#E[2](𝔽̄_p) = 4` and `E[2] ≅ (ℤ/2)²` — N13 at `n = 2`, completing the small-prime subfamily `n ∈ {2,3,5,7}` (`secp256k1Bar_two_torsion_structure` + the closure characterization `secp256k1Bar_two_nsmul_eq_zero_iff`: `2•P = O ⟺ y = 0`. Structurally the `n = 2` N13 instance — no multiplication formula: `2•P = O ⟺ P = −P ⟺ y = negY = −y ⟺ y = 0` (`char ≠ 2`), and `y = 0` on the curve forces `x³+7 = 0`. So `E[2] = {O} ∪ {(x,0) : X³+7-root}`, an explicit 4-element finset (no `±y` split — `y = 0` is forced), `1 + 3 = 4 = 2²`; N10(iii) at prime 2 classifies. The even companion of the odd family)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1Bar_two_torsion_structure`, `secp256k1Bar_two_nsmul_eq_zero_iff`, `secp256k1Bar_two_torsion_ncard`",
       "declared_files": [
         "Ecdlp/Proved/TwoTorsionStructure.lean"
@@ -7903,6 +7910,77 @@
     },
     {
       "id": "ledger-292",
+      "claim": "#E[4](𝔽̄_p) = 16` and `E[4] ≅ (ℤ/4)²` — N13 at `n = 4`, the first composite torsion-structure case (`secp256k1Bar_four_torsion_structure`: the closure doubling formula supplies `secp256k1Bar_two_nsmul_coords`; the closure bridge gives `4•P=0 ⟺ ψ₄(P)=0`; the explicit split `E[4]=E[2] ⊔ P₄` counts `4 + 6·2 = 16`; the internal two-torsion is identified with ambient `E[2]`, hence has card 4; and `nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion` classifies the resulting finite abelian group. The result is existence of an additive equivalence, not a canonical basis. Honest scope: concrete `n=4` only; the uniform composite-`n` theorem remains open)",
+      "theorem_cell": "`Ecdlp.Curve.secp256k1Bar_two_nsmul_coords`, `Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff`, `Ecdlp.Curve.secp256k1Bar_four_torsion_ncard`, `Ecdlp.Curve.secp256k1Bar_four_torsion_card`, `Ecdlp.Curve.secp256k1Bar_torsionBy_four_card`, `Ecdlp.Curve.secp256k1Bar_four_torsion_structure`, `Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion`",
+      "declared_files": [
+        "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+        "Ecdlp/Proved/FourTorsionBridgeBar.lean",
+        "Ecdlp/Proved/FourTorsionStructure.lean",
+        "Ecdlp/Proved/FourTorsionClassification.lean"
+      ],
+      "method": "closure doubling + division-polynomial bridge + separability/coprimality + finite-set card algebra + composite-order classification",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_two_nsmul_coords",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_two_nsmul_coords",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+          "line": 116
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionBridgeBar.lean",
+          "line": 55
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+          "line": 386
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_four_torsion_card",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_four_torsion_card",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+          "line": 412
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_torsionBy_four_card",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_torsionBy_four_card",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+          "line": 418
+        },
+        {
+          "cited": "Ecdlp.Curve.secp256k1Bar_four_torsion_structure",
+          "canonical_name": "Ecdlp.Curve.secp256k1Bar_four_torsion_structure",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+          "line": 481
+        },
+        {
+          "cited": "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
+          "canonical_name": "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FourTorsionClassification.lean",
+          "line": 18
+        }
+      ]
+    },
+    {
+      "id": "ledger-293",
       "claim": "W3 evaluation layer completed at the fraction level — `evalFracAt` + the Miller-representative nonvanishing (`evalFracAt h a b := evalAt h a / evalAt h b` with the representation-independence core `evalFracAt_well_defined` (cross-multiplication `a₁b₂ = a₂b₁` + nonvanishing denominators ⟹ equal values — transported through the ring hom `evalAt`, no domain instance needed), Miller-loop multiplicativity `evalFracAt_mul`, unit facts (`evalAt_unit_ne_zero`: coordinate-ring units never vanish at rational points; `evalFracAt_unit_mul`), and the bridge to the localization layer `evalRatAt_eq_evalFracAt` (an `a/b` presentation of a rational function regular at `P` evaluates identically under the residue map). Plus the secp256k1 Miller-layer theorem `secp256k1_miller_eval_scaling`: the W2 Miller-function representative ambiguity is a globally nonvanishing unit factor at every rational point — the well-definedness seed for the eventual `eₙ`. Honest scope: extracting an `a/b` presentation from an abstract `FunctionField` element is the documented next rung; curve-agnostic sections PR-able)",
       "theorem_cell": "`Ecdlp.Weil.evalFracAt_well_defined`, `evalFracAt_mul`, `evalAt_unit_ne_zero`, `evalRatAt_eq_evalFracAt`, `secp256k1_miller_eval_scaling`",
       "declared_files": [
@@ -7954,7 +8032,7 @@
       ]
     },
     {
-      "id": "ledger-293",
+      "id": "ledger-294",
       "claim": "Function-field `a/b` extraction — every rational function is a quotient of regular functions (`functionField_exists_num_den`: every `f` in the curve's function field (`FractionRing F[E]`, definitionally) equals `algebraMap a / algebraMap b` with `b ≠ 0` — via `IsLocalization.surj` on the nonZeroDivisors localization; with the division-free form (`functionField_exists_mul_num_den`), cross-multiplication faithfulness of two presentations (`functionField_num_den_cross`), nonzero-numerator (`functionField_num_ne_zero`), the weld to `evalFracAt` (`evalFracAt_num_den_well_defined`: presentations regular at `P` evaluate equally), and the Miller instantiation `secp256k1_miller_function_num_den` (the W2 generator `f_P` = an explicit quotient `↑a/↑b`, and the fractional ideal is generated by that quotient). Honest scope: the extraction controls `b ≠ 0` but not *where* `b` vanishes — choosing a presentation with `b(P) ≠ 0` for `f` regular at `P` is the documented next rung, then `f_P(D_Q)` and W4)",
       "theorem_cell": "`Ecdlp.Weil.functionField_exists_num_den`, `functionField_num_den_cross`, `evalFracAt_num_den_well_defined`, `secp256k1_miller_function_num_den`",
       "declared_files": [
@@ -7998,7 +8076,7 @@
       ]
     },
     {
-      "id": "ledger-294",
+      "id": "ledger-295",
       "claim": "W3 closed at the function-field level — `RegularAt` and evaluation of abstract elements (`FunctionFieldRegular.lean`: the `RegularAt` predicate (`∃ a b, evalAt b ≠ 0 ∧ f = a/b`), the unique value `evalReg` with its defining lemmas, and the two-way bridge to the localization: an element of `Localization.AtPrime (XYIdeal P)` maps to a `RegularAt` function (via `IsLocalization.surj` + `evalAt_ker` rewriting `b ∉ XYIdeal ⟺ evalAt b ≠ 0`), and conversely a regular presentation determines a localization element (`IsLocalization.mk'`), with the payoff weld `evalRatAt = evalReg` on the overlap. With this, every abstract function-field element regular at `P` has a well-defined value at `P` — the W3 evaluation half is closed end-to-end (`evalAt → evalRatAt → evalFracAt → a/b extraction → RegularAt`); next: `f_P(D_Q)` divisor evaluation and W4 reciprocity)",
       "theorem_cell": "`Ecdlp.Weil.RegularAt`, `evalReg`, `evalRatAt_eq_evalReg` (+ 14 supporting)",
       "declared_files": [
@@ -8154,7 +8232,7 @@
       ]
     },
     {
-      "id": "ledger-295",
+      "id": "ledger-296",
       "claim": "Weil ladder W3e-1 — divisor evaluation `f((Q)−(O))` is multiplicative in the function (`divEval_mul`: for `f, g` regular at both `Q` and `O`, `divEval (f·g) = divEval f · divEval g`, where `divEval f := evalReg f Q / evalReg f O` is the value of `f` at the degree-0 divisor `(Q)−(O)`; via the pointwise multiplicativity `evalReg_mul` — `evalReg (f·g) = evalReg f · evalReg g` at a point, from `evalReg_eq` + `evalFracAt_mul`. The homomorphism property that makes `f_P(D_Q)` a map `E → μₙ` in the Weil pairing; first evaluation-half rung of `notes/WEIL_LADDER.md`)",
       "theorem_cell": "`Ecdlp.Weil.divEval_mul`, `evalReg_mul`",
       "declared_files": [
@@ -8182,7 +8260,7 @@
       ]
     },
     {
-      "id": "ledger-296",
+      "id": "ledger-297",
       "claim": "Weil ladder W3e-2 — how the Miller representative enters `divEval`, and conditional representative-independence (`divEval_smul_unit`: for `g = u·f` with `u` a unit of `F[E]` and `f, g` regular at `Q, O`, `divEval g = (u(Q)/u(O)) · divEval f` — the entire dependence of `divEval` on the choice of Miller function is the single ratio `u(Q)/u(O)`, from the pointwise `evalReg_smul_unit` = `evalReg (u·f) = u(P)·evalReg f` via `evalFracAt_unit_mul`; and `divEval_smul_unit_eq`: if additionally `u(Q) = u(O)` the ratio is `1`, so `divEval g = divEval f`. secp256k1 forms `secp256k1_divEval_miller_rep_scaling`/`_indep` apply this to the `secp256k1_miller_function_unique` ambiguity. Honest scope: unconditional independence needs `u(Q)=u(O)`, i.e. that units of `F[E]` are constants — absent from Mathlib v4.31, carried as an explicit hypothesis, not proved)",
       "theorem_cell": "`Ecdlp.Weil.divEval_smul_unit`, `divEval_smul_unit_eq`, `evalReg_smul_unit`",
       "declared_files": [
@@ -8218,7 +8296,7 @@
       ]
     },
     {
-      "id": "ledger-297",
+      "id": "ledger-298",
       "claim": "Weil ladder W3e-3 — the raw pairing value's domain (support-disjointness bridge) + the `divEval` unit law (`secp256k1_miller_jointly_regular`: a Miller function `f` for `(P,n)` has a fixed presentation `a/b`, and at any two points `A, B` where the single denominator `b` does not vanish — i.e. `A, B` off `supp(div f)` — `f` is regular at both, the joint-regularity hypothesis `divEval hA hB` consumes, from one geometric condition; and `divEval_one`/`evalReg_one`: `divEval 1 ((A)−(B)) = 1`, which with `divEval_mul` makes `divEval` a monoid hom on the functions regular at both points. Closes the reachable W3-evaluation scaffolding. Honest scope: this packages the raw value's domain + algebra; it does not assemble `eₙ(P,Q)` — that needs Weil reciprocity, the frozen W4 no-go, since the base point `O ∈ supp(div f_P)`)",
       "theorem_cell": "`Ecdlp.Weil.secp256k1_miller_jointly_regular`, `divEval_one`",
       "declared_files": [
@@ -8246,7 +8324,7 @@
       ]
     },
     {
-      "id": "ledger-298",
+      "id": "ledger-299",
       "claim": "7` is a quadratic non-residue modulo `p`; no affine secp256k1 point over `𝔽_p` has `x=0` (`secp256k1_seven_not_isSquare`: Euler's criterion contradicts the closed witness `7^(p/2) ≠ 1`; `secp256k1_x_ne_zero`: substituting `x=0` into `y²=x³+7` would exhibit `7` as a square)",
       "theorem_cell": "`Ecdlp.Curve.secp256k1_seven_ne_zero`, `secp256k1_seven_pow_ne_one`, `secp256k1_seven_not_isSquare`, `secp256k1_x_ne_zero`",
       "declared_files": [
@@ -8290,7 +8368,7 @@
       ]
     },
     {
-      "id": "ledger-299",
+      "id": "ledger-300",
       "claim": "Fixed-formal-degree projective resultant and literal TASK-018 Sylvester convention (for positive declared degrees over an algebraically closed field, under explicit actual-degree bounds, `Res(f,g;m,n)=0` iff the fixed-degree homogenizations share a non-irrelevant projective root. Zero forms and degree drops are included: affine roots use `[x:1]`, while simultaneous degree drop is witnessed by `[1:0]`; `[0:0]` is excluded. The mapped and injective-base-change forms retain the formal degrees. The literal TASK-018 matrix — first `n` shifted descending rows of `f`, then `m` of `g`, with descending columns — is exactly a simultaneous row/column reversal of Mathlib's transposed Sylvester matrix, so its determinant equals the fixed resultant with coefficient unit exactly `1`, without primitive/content normalization. Honest scope: the general coefficient-map theorem is not the specialization theorem for the frozen recursive `C_r`; neither that specialization nor the universal reverse `C16 → C2` implication is proved here)",
       "theorem_cell": "`Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root`, `map_fixedDegree_resultant_eq_zero_iff_common_projective_root`, `fixedDegree_resultant_eq_zero_iff_common_projective_root_over`; `Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose`, `det_taskSylvester_eq_resultant`, `det_taskSylvester_eq_zero_iff_common_projective_root`",
       "declared_files": [
@@ -8351,7 +8429,7 @@
       ]
     },
     {
-      "id": "ledger-300",
+      "id": "ledger-301",
       "claim": "Frozen recursive projective `C_r` specialization, uniform output degree, and one-step reverse interface (`frozenC R s = C_(s+2)` is the literal TASK-018 left-fold recursion. After every coefficient map and valid projective leaf specialization, each successor equals the exact literal Sylvester determinant at fixed formal degrees `(2^(s+1),2)` with coefficient unit `1`; separate corollaries cover affine output `[y:1]` and infinity `[1:0]`. The predecessor output degree is uniformly at most `2^(s+1)`: the determinant has two rows constant in the new output and `2^(s+1)` rows of degree at most two. Hence, over an algebraically closed field, every frozen successor vanishes iff its predecessor and local `H` slice share a non-irrelevant projective root, without a residual degree hypothesis. Honest scope: this is a one-step witness interface, not yet the recursive witness-chain induction `C16 → C2`, a direct-S17 equivalence, or a solving-cost claim)",
       "theorem_cell": "`Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over`, `specialize_frozenC_succ_over_affine`, `specialize_frozenC_succ_over_infinity`, `previousSliceAtOver_frozenC_natDegree_le`, `specialize_frozenC_succ_eq_zero_iff_common_projective_root`, `specialize_frozenC_succ_over_eq_zero_iff_common_projective_root`",
       "declared_files": [
@@ -8411,7 +8489,7 @@
       ]
     },
     {
-      "id": "ledger-301",
+      "id": "ledger-302",
       "claim": "Universal frozen `C16 → C2` projective witness-chain extraction (the actual universal binary output of `frozenC k s` is homogeneous of declared degree `2^(s+1)`, so its predecessor homogenization evaluates exactly as direct projective specialization for every valid `[U:V]`; the local degree-two homogenization evaluates exactly as literal `H`. Over an algebraically closed target field, vanishing of every mapped `frozenC k s` is iff a minimal left-associated `FrozenProjectiveChain`; at `s = 14`, `C16` uses leaves `q 0` through `q 15` and fourteen valid intermediate projective slots. `[0:0]` is excluded by type and `[1:0]` is allowed at every level. Honest scope: witnesses live in the algebraically closed target; no base-field descent, direct-S17, `RatCat`, `Recover`, system-materialization, rank, yield, or cost result is claimed)",
       "theorem_cell": "`Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver_frozenC_isHomogeneous`, `homogenize_previousSliceAtOver_frozenC`, `eval_homogenize_previousSliceAtOver_frozenC`, `homogenize_localSliceAt`, `eval_homogenize_localSliceAt`, `specializeOver_frozenC_eq_zero_iff_projectiveChain`, `specializeOver_frozenC16_eq_zero_iff_projectiveChain` and supporting declarations",
       "declared_files": [
@@ -8719,7 +8797,7 @@
       ]
     },
     {
-      "id": "ledger-302",
+      "id": "ledger-303",
       "claim": "Exact guarded scalar representation of the frozen stage-14 `C16` predicate (over a source field `k`, an injective coefficient map into an algebraically closed field `K` carries `specialize q y (frozenC k 14) = 0` iff the literal finite polynomial family `∃ assignment : GuardVar → K, ∀ e : GuardedEquation, MvPolynomial.eval assignment (guardedEquation q y e) = 0` holds. Four raw scalar coordinates `(U,V,A,B)` for each of fourteen intermediate projective slots give 56 variables; fifteen literal `H` equations plus fourteen guards `AU+BV−1=0` give 29 equation-family members. Every equation has total degree at most four. The guards exclude `[0:0]` and retain `[1:0]`. Honest scope: target witnesses need not descend to `k`; 56 variables and 29 equations are raw counts, not independent dimensions or relations. This is one literal finite `MvPolynomial` family equivalent to the recursive chain, not a parallel recursive syntax, expanded direct `S17`, solver input, rank/yield result, solving-cost claim, or ECDLP attack. The two finite-cardinality facts are compiler-trusted through `native_decide`; the equivalence and degree-bound theorems use the standard Lean/Mathlib trust base)",
       "theorem_cell": "`Ecdlp.FrozenProjectiveSemaev.guardEquation`, `FrozenGuardedProjectiveSystem`, `frozenProjectiveChain_iff_guardedProjectiveSystem`, `frozenRecS17_iff_guardedProjectiveSystem_over`, `guardedEquation_totalDegree_le_four`, `card_guardVar_fourteen`, `card_guarded_equations_fourteen` and supporting declarations",
       "declared_files": [
@@ -8867,7 +8945,7 @@
       ]
     },
     {
-      "id": "ledger-303",
+      "id": "ledger-304",
       "claim": "Exact affine/infinity chart-polynomial cover of the frozen stage-14 `C16` predicate (an infinity mask `I : Finset (Fin 14)` represents every selected slot by `[1:0]` and every remaining slot by one affine scalar `[X_i:1]`. For each fixed mask, `ChartVar I` has exactly `14 - I.card` variables and `ChartEquation` has exactly fifteen literal `H` equations: one base equation of total degree at most two, thirteen internal equations of degree at most four, and one final equation of degree at most two. The existential finite chart cover is exactly equivalent to `FrozenProjectiveChain`, the TASK-022 guarded system, and, after the existing injective base change into an algebraically closed target field, the source frozen stage-14 predicate. Honest scope: `[1:0]` is retained and `[0:0]` is never introduced; the `2^14` logical masks are not enumerated or materialized. Counts are representation inventory, not independent dimensions or relations, and all degree statements are upper bounds. This theorem-only result claims no base-field descent, solver run or solver-readiness result, relation yield, rank, recovery, cost advantage, exact-target computation, or ECDLP attack. `card_chartEquation` is compiler-trusted through `native_decide`; `card_chartVar`, the equivalences, and the degree bounds use the standard Lean/Mathlib trust base)",
       "theorem_cell": "`Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialCover`, `frozenProjectiveChain_iff_chartPolynomialCover`, `frozenGuardedProjectiveSystem_iff_chartPolynomialCover`, `frozenRecS17_iff_chartPolynomialCover_over`, `card_chartEquation`, `card_chartVar`, `chartPolynomialEquation_base_totalDegree_le_two`, `chartPolynomialEquation_step_totalDegree_le_four`, `chartPolynomialEquation_final_totalDegree_le_two`, `chartPolynomialEquation_totalDegree_le_four` and supporting declarations",
       "declared_files": [
@@ -9231,7 +9309,7 @@
       ]
     },
     {
-      "id": "ledger-304",
+      "id": "ledger-305",
       "claim": "Necessary infinity-stratum pruning of the exact stage-14 chart cover (the three one-infinity specializations of the local triquadratic `H` are squared projective determinants, while `H([1:0],q,[1:0]) = q.v^2`. Hence, when all external inputs are affine, adjacent intermediate infinity slots are impossible and the exact chart cover restricts from all `2^14 = 16384` masks to the 987 separated subsets of the fourteen-slot path. Selected boundary infinities satisfy exact endpoint determinant equations; if both endpoint determinants are nonzero, slots 0 and 13 are affine and the conditional exact cover has 377 masks. An isolated infinity slot also forces each existing affine neighbor to the normalized current-input coordinate. Honest scope: the predicates are proved necessary, not sufficient or unique; the 987 and 377 families are logical cover counts and are not production-enumerated. This theorem-only result claims no mask-selection algorithm, independent relations, relation yield, rank, solver readiness or run, recovery, memory, runtime, total-cost advantage, exact-target computation, or ECDLP attack. The three cardinalities are compiler-trusted through `native_decide`; the identities, necessity and forced-neighbor theorems, and cover equivalences use the standard Lean/Mathlib trust base)",
       "theorem_cell": "`Ecdlp.FrozenProjectiveSemaev.HValue_third_infinity`, `HValue_first_infinity`, `HValue_middle_infinity`, `HValue_first_third_infinity`, `frozenChartSystem_separatedInfinityMask`, `frozenChartSystem_endpointCompatibleInfinityMask`, `frozenChartSystem_leftInfinity_forces_rightCoordinate`, `frozenChartSystem_rightInfinity_forces_leftCoordinate`, `frozenChartCover_iff_admissibleChartCover`, `frozenProjectiveChain_iff_admissibleChartPolynomialCover`, `frozenChartCover_iff_interiorChartCover`, `card_infinityMask`, `card_separatedInfinityMask`, `card_interiorSeparatedInfinityMask` and supporting declarations",
       "declared_files": [
@@ -9499,7 +9577,7 @@
       ]
     },
     {
-      "id": "ledger-305",
+      "id": "ledger-306",
       "claim": "Conditional propagation of isolated infinity slots and exact balanced single-affine-chart reduction (under affine external inputs and nonzero endpoint determinants, distance-two infinity pairs force explicit consecutive-input projective determinants and reduce the 377 interior separated masks to 129 under the named uniform determinant guards. Distance-three pairs force literal three-input `HValue` equations, giving 69 masks; adding the two boundary-near `HValue` guards gives 36. The independent boundary-only branch gives 60 from 129 and is not a distance-three result. Every internal infinity slot also forces an explicit lower-stage frozen prefix or suffix specialization to vanish. Six prefix and six suffix obstructions cover slots 1 through 12 with maximum frozen stage five. A projective frozen chain implies the corresponding frozen specialization over any field, so affine inputs, nonzero endpoints, and pointwise nonzero balanced obstructions force the infinity mask to be empty and make both the full chart cover and literal chart-polynomial cover exactly the single affine chart. After the existing injective algebraically closed base change, the source frozen stage-14 equation has the same conditional single-chart equivalence; target witnesses are not asserted to descend. Honest scope: the uniform local guards include endpoint-redundant cases and define a slightly smaller locus than the maximal one. Symbolic nonzeroness, nonemptiness, density, probability, and genericity of the balanced regular locus are not proved. One chart does not mean one witness, one relation, independent relations, solver readiness, improved yield or rank, lower solving degree, reduced memory/runtime/total cost, exact-target computation, reduced ECDLP complexity, or an ECDLP attack. The four mask cardinalities `129/69/60/36` are compiler-trusted through `native_decide`; the propagation, one-way resultant, mask-empty, cover-equivalence, and source-bridge theorems use the standard Lean/Mathlib trust base)",
       "theorem_cell": "`Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInfinity_forces_det_zero`, `frozenChartCover_iff_gapTwoInteriorChartCover`, `card_gapTwoInteriorInfinityMask`, `frozenChartSystem_gapThreeInfinity_forces_HValue_zero`, `frozenChartCover_iff_gapThreeInteriorChartCover`, `card_gapThreeInteriorInfinityMask`, `frozenChartSystem_slotOneInfinity_forces_HValue_zero`, `frozenChartSystem_slotTwelveInfinity_forces_HValue_zero`, `frozenChartCover_iff_boundaryPropagatedChartCover`, `card_boundaryPropagatedInfinityMask`, `frozenChartCover_iff_boundaryGapThreeChartCover`, `card_boundaryGapThreeInfinityMask`, `specializeOver_frozenC_eq_zero_of_projectiveChain`, `propagatedPrefixValue_zero`, `balancedSuffixValue_zero`, `frozenChartSystem_internalInfinity_forces_prefix_zero`, `frozenChartSystem_balancedSuffixInfinity_forces_zero`, `frozenChartSystem_balancedPropagatedRegular_mask_eq_empty`, `frozenChartCover_iff_affineChartCover_of_balancedPropagatedRegular`, `frozenChartPolynomialCover_iff_affine_of_balancedPropagatedRegular`, `frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular` and supporting declarations",
       "declared_files": [
@@ -10784,6 +10862,34 @@
       "file": "Ecdlp/Proved/FiveTorsionStructure.lean",
       "line": 391
     },
+    "Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff": {
+      "name": "secp256k1Bar_four_nsmul_eq_zero_iff",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionBridgeBar.lean",
+      "line": 55
+    },
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_card": {
+      "name": "secp256k1Bar_four_torsion_card",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 412
+    },
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard": {
+      "name": "secp256k1Bar_four_torsion_ncard",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 386
+    },
+    "Ecdlp.Curve.secp256k1Bar_four_torsion_structure": {
+      "name": "secp256k1Bar_four_torsion_structure",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 481
+    },
     "Ecdlp.Curve.secp256k1Bar_isCoprime_Φ_ΨSq": {
       "name": "secp256k1Bar_isCoprime_Φ_ΨSq",
       "namespace": "Ecdlp.Curve",
@@ -10931,6 +11037,13 @@
       "file": "Ecdlp/Proved/FiveTorsionStructure.lean",
       "line": 374
     },
+    "Ecdlp.Curve.secp256k1Bar_torsionBy_four_card": {
+      "name": "secp256k1Bar_torsionBy_four_card",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionStructure.lean",
+      "line": 418
+    },
     "Ecdlp.Curve.secp256k1Bar_torsionBy_seven_card": {
       "name": "secp256k1Bar_torsionBy_seven_card",
       "namespace": "Ecdlp.Curve",
@@ -10951,6 +11064,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/TwoTorsionStructure.lean",
       "line": 283
+    },
+    "Ecdlp.Curve.secp256k1Bar_two_nsmul_coords": {
+      "name": "secp256k1Bar_two_nsmul_coords",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+      "line": 116
     },
     "Ecdlp.Curve.secp256k1Bar_two_nsmul_eq_zero_iff": {
       "name": "secp256k1Bar_two_nsmul_eq_zero_iff",
@@ -11356,7 +11476,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/FourTorsionCount.lean",
-      "line": 51
+      "line": 52
     },
     "Ecdlp.Curve.secp256k1_frobenius_norm": {
       "name": "secp256k1_frobenius_norm",
@@ -16173,6 +16293,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/Torsion.lean",
       "line": 39
+    },
+    "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion": {
+      "name": "nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
+      "namespace": "Ecdlp.Torsion",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FourTorsionClassification.lean",
+      "line": 18
     },
     "Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_card_eq_sq": {
       "name": "nonempty_addEquiv_zmod_prod_of_card_eq_sq",

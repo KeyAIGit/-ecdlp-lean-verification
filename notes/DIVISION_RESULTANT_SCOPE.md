@@ -199,9 +199,10 @@ claim that any one of them states the exact fixed-size Mathlib resultant identit
 Mathlib supplies the recursive division polynomials, their map theorem, degree bounds,
 and the Sylvester-resultant API. It does not supply the arbitrary-index theorem
 identifying `ψ_r = 0` with nonidentity `r`-torsion in every relevant characteristic.
-The repository contains only the verified per-index bridges for `r in {2,3,5,7}`. The
-conditional theorem isolates this absence exactly, rather than assuming the desired
-coprimality or resultant statement itself.
+The repository contains verified per-index bridges for prime `r in {2,3,5,7}`, plus a
+separate even composite bridge at `r = 4`. The conditional arbitrary-index theorem
+isolates the remaining absence exactly, rather than assuming the desired coprimality
+or resultant statement itself.
 
 The repository also proves that Mathlib's normalized EDS satisfies Ward's elliptic
 recurrence. That recurrence alone is not a formal strong-divisibility theorem for these

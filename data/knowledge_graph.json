@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 306,
-    "ledger_rows": 306,
+    "theorems": 307,
+    "ledger_rows": 307,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -34,14 +34,14 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1145,
+    "edges": 1167,
     "by_edge_type": {
-      "imports": 507,
-      "member_of": 306,
+      "imports": 525,
+      "member_of": 307,
       "grounded_in_source_claim": 49,
       "requires_foundation": 41,
+      "supports": 27,
       "decision_grounded_in": 25,
-      "supports": 24,
       "depends_on": 18,
       "evaluated_under": 18,
       "detailed_by": 15,
@@ -186,6 +186,7 @@
       "landed `x(4P)` + `y(2P)`/`y(3P)` formulas + Mathlib `ψ_even`/`ψ_four": 1,
       "Mathlib (`Separable`, `Separable.map`, `IsAlgClosed.splits`, `nodup_roots`) + Bézout native_decide": 1,
       "closure 2-torsion (`y=0`) + `CubicSeparable` roots + N10(iii)": 1,
+      "closure doubling + division-polynomial bridge + separability/coprimality + finite-set card algebra + composite-order classification": 1,
       "evalAt`/`evalRatAt` layer + `secp256k1_miller_function_unique` (W2)": 1,
       "IsLocalization.surj`/`IsFractionRing.injective` (source-verified) + `evalFracAt` layer + W2": 1,
       "IsLocalization.{surj,lift,mk'}`/`Ideal.primeCompl` (source-verified) + the W3 eval layer": 1,
@@ -202,7 +203,7 @@
       "exact local substitution + fixed-degree projective-resultant forward implication + balanced prefix/suffix frozen specializations + exact chart-cover restriction; `native_decide` only for the four mask cardinalities": 1
     },
     "by_area": {
-      "curve-torsion": 152,
+      "curve-torsion": 153,
       "primality": 55,
       "other": 33,
       "generic-hardness": 30,
@@ -6061,7 +6062,7 @@
       "files": [
         "Ecdlp/Proved/TwoTorsionStructure.lean"
       ],
-      "claim": "#E[2](𝔽̄_p) = 4` and `E[2] ≅ (ℤ/2)²` — N13 at `n = 2`, completing the family to `n ∈ {2,3,5,7}` (`secp256k1Bar_two_torsion_structure` + the closure characterization `secp256k1Bar_two_nsmul_eq_zero_iff`: `2•P = O ⟺ y = 0`. Structurally the `n = 2` N13 instance — no multiplication formula: `2•P = O ⟺ P = −P ⟺ y = negY = −y ⟺ y = 0` (`char ≠ 2`), and `y = 0` on the curve forces `x³+7 = 0`. So `E[2] = {O} ∪ {(x,0) : X³+7-root}`, an explicit 4-element finset (no `±y` split — `y = 0` is forced), `1 + 3 = 4 = 2²`; N10(iii) at prime 2 classifies. The even companion of the odd family)",
+      "claim": "#E[2](𝔽̄_p) = 4` and `E[2] ≅ (ℤ/2)²` — N13 at `n = 2`, completing the small-prime subfamily `n ∈ {2,3,5,7}` (`secp256k1Bar_two_torsion_structure` + the closure characterization `secp256k1Bar_two_nsmul_eq_zero_iff`: `2•P = O ⟺ y = 0`. Structurally the `n = 2` N13 instance — no multiplication formula: `2•P = O ⟺ P = −P ⟺ y = negY = −y ⟺ y = 0` (`char ≠ 2`), and `y = 0` on the curve forces `x³+7 = 0`. So `E[2] = {O} ∪ {(x,0) : X³+7-root}`, an explicit 4-element finset (no `±y` split — `y = 0` is forced), `1 + 3 = 4 = 2²`; N10(iii) at prime 2 classifies. The even companion of the odd family)",
       "method": "closure 2-torsion (`y=0`) + `CubicSeparable` roots + N10(iii)",
       "status": "proved",
       "area": "primality",
@@ -6071,6 +6072,32 @@
     },
     {
       "id": "thm-292",
+      "name": "Ecdlp.Curve.secp256k1Bar_two_nsmul_coords`, `Ecdlp.Curve.secp256k1Bar_four_nsmul_eq_zero_iff`, `Ecdlp.Curve.secp256k1Bar_four_torsion_ncard`, `Ecdlp.Curve.secp256k1Bar_four_torsion_card`, `Ecdlp.Curve.secp256k1Bar_torsionBy_four_card`, `Ecdlp.Curve.secp256k1Bar_four_torsion_structure`, `Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
+      "short_name": "secp256k1Bar_two_nsmul_coords`,",
+      "module": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "modules": [
+        "Ecdlp.Proved.DoublingPointFormulaBar",
+        "Ecdlp.Proved.FourTorsionBridgeBar",
+        "Ecdlp.Proved.FourTorsionStructure",
+        "Ecdlp.Proved.FourTorsionClassification"
+      ],
+      "file": "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+      "files": [
+        "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+        "Ecdlp/Proved/FourTorsionBridgeBar.lean",
+        "Ecdlp/Proved/FourTorsionStructure.lean",
+        "Ecdlp/Proved/FourTorsionClassification.lean"
+      ],
+      "claim": "#E[4](𝔽̄_p) = 16` and `E[4] ≅ (ℤ/4)²` — N13 at `n = 4`, the first composite torsion-structure case (`secp256k1Bar_four_torsion_structure`: the closure doubling formula supplies `secp256k1Bar_two_nsmul_coords`; the closure bridge gives `4•P=0 ⟺ ψ₄(P)=0`; the explicit split `E[4]=E[2] ⊔ P₄` counts `4 + 6·2 = 16`; the internal two-torsion is identified with ambient `E[2]`, hence has card 4; and `nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion` classifies the resulting finite abelian group. The result is existence of an additive equivalence, not a canonical basis. Honest scope: concrete `n=4` only; the uniform composite-`n` theorem remains open)",
+      "method": "closure doubling + division-polynomial bridge + separability/coprimality + finite-set card algebra + composite-order classification",
+      "status": "proved",
+      "area": "curve-torsion",
+      "family_id": "family-curve-torsion",
+      "dependency_depth": 9,
+      "gated": true
+    },
+    {
+      "id": "thm-293",
       "name": "Ecdlp.Weil.evalFracAt_well_defined`, `evalFracAt_mul`, `evalAt_unit_ne_zero`, `evalRatAt_eq_evalFracAt`, `secp256k1_miller_eval_scaling",
       "short_name": "evalFracAt_well_defined`,",
       "module": "Ecdlp.Proved.FunctionFieldEval",
@@ -6090,7 +6117,7 @@
       "gated": true
     },
     {
-      "id": "thm-293",
+      "id": "thm-294",
       "name": "Ecdlp.Weil.functionField_exists_num_den`, `functionField_num_den_cross`, `evalFracAt_num_den_well_defined`, `secp256k1_miller_function_num_den",
       "short_name": "functionField_exists_num_den`,",
       "module": "Ecdlp.Proved.FunctionFieldRepr",
@@ -6110,7 +6137,7 @@
       "gated": true
     },
     {
-      "id": "thm-294",
+      "id": "thm-295",
       "name": "Ecdlp.Weil.RegularAt`, `evalReg`, `evalRatAt_eq_evalReg` (+ 14 supporting)",
       "short_name": "RegularAt`,",
       "module": "Ecdlp.Proved.FunctionFieldRegular",
@@ -6130,7 +6157,7 @@
       "gated": true
     },
     {
-      "id": "thm-295",
+      "id": "thm-296",
       "name": "Ecdlp.Weil.divEval_mul`, `evalReg_mul",
       "short_name": "divEval_mul`,",
       "module": "Ecdlp.Proved.WeilDivisorEval",
@@ -6150,7 +6177,7 @@
       "gated": true
     },
     {
-      "id": "thm-296",
+      "id": "thm-297",
       "name": "Ecdlp.Weil.divEval_smul_unit`, `divEval_smul_unit_eq`, `evalReg_smul_unit",
       "short_name": "divEval_smul_unit`,",
       "module": "Ecdlp.Proved.WeilDivisorRepIndep",
@@ -6170,7 +6197,7 @@
       "gated": true
     },
     {
-      "id": "thm-297",
+      "id": "thm-298",
       "name": "Ecdlp.Weil.secp256k1_miller_jointly_regular`, `divEval_one",
       "short_name": "secp256k1_miller_jointly_regular`,",
       "module": "Ecdlp.Proved.WeilMillerEval",
@@ -6190,7 +6217,7 @@
       "gated": true
     },
     {
-      "id": "thm-298",
+      "id": "thm-299",
       "name": "Ecdlp.Curve.secp256k1_seven_ne_zero`, `secp256k1_seven_pow_ne_one`, `secp256k1_seven_not_isSquare`, `secp256k1_x_ne_zero",
       "short_name": "secp256k1_seven_ne_zero`,",
       "module": "Ecdlp.Proved.SevenNonResidue",
@@ -6210,7 +6237,7 @@
       "gated": true
     },
     {
-      "id": "thm-299",
+      "id": "thm-300",
       "name": "Ecdlp.ProjectiveResultant.fixedDegree_resultant_eq_zero_iff_common_projective_root`, `map_fixedDegree_resultant_eq_zero_iff_common_projective_root`, `fixedDegree_resultant_eq_zero_iff_common_projective_root_over`; `Ecdlp.TaskSylvester.taskSylvester_eq_reindex_transpose`, `det_taskSylvester_eq_resultant`, `det_taskSylvester_eq_zero_iff_common_projective_root",
       "short_name": "fixedDegree_resultant_eq_zero_iff_common_projective_root`,",
       "module": "Ecdlp.Proved.FixedDegreeProjectiveResultant",
@@ -6232,7 +6259,7 @@
       "gated": true
     },
     {
-      "id": "thm-300",
+      "id": "thm-301",
       "name": "Ecdlp.FrozenProjectiveSemaev.specialize_frozenC_succ_over`, `specialize_frozenC_succ_over_affine`, `specialize_frozenC_succ_over_infinity`, `previousSliceAtOver_frozenC_natDegree_le`, `specialize_frozenC_succ_eq_zero_iff_common_projective_root`, `specialize_frozenC_succ_over_eq_zero_iff_common_projective_root",
       "short_name": "specialize_frozenC_succ_over`,",
       "module": "Ecdlp.Proved.FrozenRecursiveProjectiveSemaev",
@@ -6252,7 +6279,7 @@
       "gated": true
     },
     {
-      "id": "thm-301",
+      "id": "thm-302",
       "name": "Ecdlp.FrozenProjectiveSemaev.projectiveOutputAtOver_frozenC_isHomogeneous`, `homogenize_previousSliceAtOver_frozenC`, `eval_homogenize_previousSliceAtOver_frozenC`, `homogenize_localSliceAt`, `eval_homogenize_localSliceAt`, `specializeOver_frozenC_eq_zero_iff_projectiveChain`, `specializeOver_frozenC16_eq_zero_iff_projectiveChain` and supporting declarations",
       "short_name": "projectiveOutputAtOver_frozenC_isHomogeneous`,",
       "module": "Ecdlp.Proved.FrozenRecursiveProjectiveWitness",
@@ -6272,7 +6299,7 @@
       "gated": true
     },
     {
-      "id": "thm-302",
+      "id": "thm-303",
       "name": "Ecdlp.FrozenProjectiveSemaev.guardEquation`, `FrozenGuardedProjectiveSystem`, `frozenProjectiveChain_iff_guardedProjectiveSystem`, `frozenRecS17_iff_guardedProjectiveSystem_over`, `guardedEquation_totalDegree_le_four`, `card_guardVar_fourteen`, `card_guarded_equations_fourteen` and supporting declarations",
       "short_name": "guardEquation`,",
       "module": "Ecdlp.Proved.FrozenProjectiveGuardSystem",
@@ -6292,7 +6319,7 @@
       "gated": true
     },
     {
-      "id": "thm-303",
+      "id": "thm-304",
       "name": "Ecdlp.FrozenProjectiveSemaev.FrozenChartPolynomialCover`, `frozenProjectiveChain_iff_chartPolynomialCover`, `frozenGuardedProjectiveSystem_iff_chartPolynomialCover`, `frozenRecS17_iff_chartPolynomialCover_over`, `card_chartEquation`, `card_chartVar`, `chartPolynomialEquation_base_totalDegree_le_two`, `chartPolynomialEquation_step_totalDegree_le_four`, `chartPolynomialEquation_final_totalDegree_le_two`, `chartPolynomialEquation_totalDegree_le_four` and supporting declarations",
       "short_name": "FrozenChartPolynomialCover`,",
       "module": "Ecdlp.Proved.FrozenProjectiveChartSystem",
@@ -6312,7 +6339,7 @@
       "gated": true
     },
     {
-      "id": "thm-304",
+      "id": "thm-305",
       "name": "Ecdlp.FrozenProjectiveSemaev.HValue_third_infinity`, `HValue_first_infinity`, `HValue_middle_infinity`, `HValue_first_third_infinity`, `frozenChartSystem_separatedInfinityMask`, `frozenChartSystem_endpointCompatibleInfinityMask`, `frozenChartSystem_leftInfinity_forces_rightCoordinate`, `frozenChartSystem_rightInfinity_forces_leftCoordinate`, `frozenChartCover_iff_admissibleChartCover`, `frozenProjectiveChain_iff_admissibleChartPolynomialCover`, `frozenChartCover_iff_interiorChartCover`, `card_infinityMask`, `card_separatedInfinityMask`, `card_interiorSeparatedInfinityMask` and supporting declarations",
       "short_name": "HValue_third_infinity`,",
       "module": "Ecdlp.Proved.FrozenProjectiveInfinityStrata",
@@ -6332,7 +6359,7 @@
       "gated": true
     },
     {
-      "id": "thm-305",
+      "id": "thm-306",
       "name": "Ecdlp.FrozenProjectiveSemaev.frozenChartSystem_gapTwoInfinity_forces_det_zero`, `frozenChartCover_iff_gapTwoInteriorChartCover`, `card_gapTwoInteriorInfinityMask`, `frozenChartSystem_gapThreeInfinity_forces_HValue_zero`, `frozenChartCover_iff_gapThreeInteriorChartCover`, `card_gapThreeInteriorInfinityMask`, `frozenChartSystem_slotOneInfinity_forces_HValue_zero`, `frozenChartSystem_slotTwelveInfinity_forces_HValue_zero`, `frozenChartCover_iff_boundaryPropagatedChartCover`, `card_boundaryPropagatedInfinityMask`, `frozenChartCover_iff_boundaryGapThreeChartCover`, `card_boundaryGapThreeInfinityMask`, `specializeOver_frozenC_eq_zero_of_projectiveChain`, `propagatedPrefixValue_zero`, `balancedSuffixValue_zero`, `frozenChartSystem_internalInfinity_forces_prefix_zero`, `frozenChartSystem_balancedSuffixInfinity_forces_zero`, `frozenChartSystem_balancedPropagatedRegular_mask_eq_empty`, `frozenChartCover_iff_affineChartCover_of_balancedPropagatedRegular`, `frozenChartPolynomialCover_iff_affine_of_balancedPropagatedRegular`, `frozenRecS17_iff_affineChartPolynomialCover_over_of_balancedPropagatedRegular` and supporting declarations",
       "short_name": "frozenChartSystem_gapTwoInfinity_forces_det_zero`,",
       "module": "Ecdlp.Proved.FrozenProjectiveInfinityPropagation",
@@ -6702,7 +6729,7 @@
       },
       {
         "id": "small-torsion-family",
-        "title": "Closed E[n] structure for n in {2,3,5,7} and fixed multiplication rungs through 5",
+        "title": "Exact closure E[n] structure for n in {2,3,4,5,7}, including the first composite case n=4",
         "status": "closed",
         "release_disposition": "closed",
         "family_ids": [
@@ -6714,10 +6741,17 @@
         "blocker_ids": [],
         "anchors": [
           "Ecdlp.Curve.secp256k1Bar_two_torsion_structure",
+          "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard",
+          "Ecdlp.Curve.secp256k1Bar_four_torsion_structure",
+          "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion",
           "Ecdlp.Curve.secp256k1Bar_seven_torsion_structure"
         ],
         "evidence_files": [
           "Ecdlp/Proved/TwoTorsionStructure.lean",
+          "Ecdlp/Proved/DoublingPointFormulaBar.lean",
+          "Ecdlp/Proved/FourTorsionBridgeBar.lean",
+          "Ecdlp/Proved/FourTorsionClassification.lean",
+          "Ecdlp/Proved/FourTorsionStructure.lean",
           "Ecdlp/Proved/SevenTorsionStructure.lean"
         ]
       },
@@ -11616,6 +11650,21 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "to": "Ecdlp.Proved.MultiplicationFormula",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "to": "Ecdlp.Proved.MultiplicationYFormula",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.EcdsaMalleability",
       "to": "Ecdlp.Proved.Secp256k1Curve",
       "type": "imports"
@@ -11776,6 +11825,26 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "to": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "to": "Ecdlp.Proved.TwoTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "to": "Ecdlp.Proved.FiveTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionClassification",
+      "to": "Ecdlp.Proved.TorsionStructure",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.FourTorsionCount",
       "to": "Ecdlp.Proved.FourTorsionBridge",
       "type": "imports"
@@ -11798,6 +11867,41 @@
     {
       "from": "Ecdlp.Proved.FourTorsionCount",
       "to": "Ecdlp.Proved.TwoTorsionCount",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomial",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionPolynomialSeparable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.CoprimePsi2PrePsi4",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.DivisionResultantTransport",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.TwoTorsionStructure",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FourTorsionStructure",
+      "to": "Ecdlp.Proved.FourTorsionClassification",
       "type": "imports"
     },
     {
@@ -13147,6 +13251,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FourTorsionClassification",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.DivisionPolynomialEvalBridge",
       "type": "imports"
     },
@@ -13682,6 +13791,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.DoublingPointFormulaBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.MultiplicationYTripleFormula",
       "type": "imports"
     },
@@ -13743,6 +13857,16 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.FourTorsionBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FourTorsionBridgeBar",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FourTorsionStructure",
       "type": "imports"
     },
     {
@@ -15292,12 +15416,12 @@
     },
     {
       "from": "thm-294",
-      "to": "family-primality",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {
       "from": "thm-295",
-      "to": "family-other",
+      "to": "family-primality",
       "type": "member_of"
     },
     {
@@ -15307,12 +15431,12 @@
     },
     {
       "from": "thm-297",
-      "to": "family-curve-torsion",
+      "to": "family-other",
       "type": "member_of"
     },
     {
       "from": "thm-298",
-      "to": "family-other",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {
@@ -15347,6 +15471,11 @@
     },
     {
       "from": "thm-305",
+      "to": "family-other",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-306",
       "to": "family-generic-hardness",
       "type": "member_of"
     },
@@ -15471,6 +15600,24 @@
       "anchor": "Ecdlp.Curve.secp256k1Bar_two_torsion_structure"
     },
     {
+      "from": "thm-292",
+      "to": "small-torsion-family",
+      "type": "supports",
+      "anchor": "Ecdlp.Curve.secp256k1Bar_four_torsion_ncard"
+    },
+    {
+      "from": "thm-292",
+      "to": "small-torsion-family",
+      "type": "supports",
+      "anchor": "Ecdlp.Curve.secp256k1Bar_four_torsion_structure"
+    },
+    {
+      "from": "thm-292",
+      "to": "small-torsion-family",
+      "type": "supports",
+      "anchor": "Ecdlp.Torsion.nonempty_addEquiv_zmod_four_prod_of_card_and_two_torsion"
+    },
+    {
       "from": "thm-287",
       "to": "small-torsion-family",
       "type": "supports",
@@ -15493,7 +15640,7 @@
       "type": "depends_on"
     },
     {
-      "from": "thm-297",
+      "from": "thm-298",
       "to": "weil-w1-w3",
       "type": "supports",
       "anchor": "Ecdlp.Weil.secp256k1_miller_jointly_regular"
@@ -15572,7 +15719,7 @@
       "type": "blocked_by"
     },
     {
-      "from": "thm-295",
+      "from": "thm-296",
       "to": "weil-w4-w5",
       "type": "supports",
       "anchor": "Ecdlp.Weil.divEval_mul"
