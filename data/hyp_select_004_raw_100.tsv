@@ -1,0 +1,101 @@
+id	family	type	hard_gate	portfolio	canonical	short_claim
+H4-E01	semaev-tree	ATTACK	REFORMULATE	DEFERRED	-	Balanced S3 trees have a lower elimination-width slope than caterpillar trees.
+H4-E02	signed-coordinates	ATTACK	PASS	DEFERRED	-	Signed group-law systems have a lower solving slope than exact x-only Semaev systems.
+H4-E03	one-system-index-calculus	ATTACK	REFORMULATE	DEFERRED	-	A single Amadori-style system beats relation collection plus sparse linear algebra end to end.
+H4-E04	hybrid-resultant	ATTACK	PASS	DEFERRED	-	A frozen-leaf resultant or GCD split has a lower full-cost slope than joint Groebner solving.
+H4-E05	nonsplit-torus-trace	ATTACK	REFORMULATE	SHORTLIST	HYP-PPLUS1-TRACE-RELATION-001	A p+1 norm-one-torus trace factor base supports a lower-arity relation pipeline with sub-Pollard total cost.
+H4-E06	coset-factor-base	ATTACK	PASS	DEFERRED	-	A union of multiplicative cosets with a shared circuit beats one subgroup of equal cardinality.
+H4-E07	additive-energy	ATTACK	PASS	DEFERRED	-	A target-independent factor base with high elliptic additive energy yields more independent relations per unit cost.
+H4-E08	large-prime-variant	ATTACK	REFORMULATE	DEFERRED	-	Partial relations and graph recombination reduce prime-field Semaev relation-collection cost.
+H4-E09	auxiliary-curve	ATTACK	REFORMULATE	DEFERRED	-	A bounded CM auxiliary-curve search finds a smooth-order factor and usable self-isogeny chain.
+H4-E10	multihomogeneous-groebner	ATTACK	PASS	DEFERRED	-	Block-multihomogeneous F4 has a lower Macaulay slope than total-degree F4 on the same systems.
+H4-E11	toric-elimination	ATTACK	PASS	DEFERRED	-	Sparse resultant complexity follows mixed volume and preserves a growing gap over dense elimination.
+H4-E12	exceptional-saturation	ATTACK	PASS	DEFERRED	-	Saturating exceptional components before solving lowers degree-of-regularity slope end to end.
+H4-E13	hybrid-variable-fixing	ATTACK	PASS	DEFERRED	-	A preregistered enumeration-versus-solving split lowers the optimized full-cost exponent.
+H4-E14	rational-univariate	ATTACK	REFORMULATE	DEFERRED	-	A correct zero-dimensional RUR solves relation fibers with lower slope than F4.
+H4-E15	specialization-degree-drop	ATTACK	PASS	DEFERRED	-	Factor-base specialization cancels leading coefficients often enough to lower elimination slope.
+H4-E16	regular-locus-density	ENABLING	PASS	MERGED	HYP-SEMAEV-RELATION-INCIDENCE-001	The source-faithful regular affine locus has non-collapsing density across field sizes.
+H4-E17	repetition-stabilizer	BARRIER	PASS	DEFERRED	-	Naive D^k/k! yield is valid only when D/k grows, quantifying toy-scale bias.
+H4-E18	singular-locus	BARRIER	PASS	DEFERRED	-	Jacobian-rank-deficient strata causally control Groebner blow-up and saturation slope.
+H4-E19	monodromy-rank	ENABLING	REFORMULATE	DEFERRED	-	Transitive generic-fiber monodromy implies asymptotically independent relation rows.
+H4-E20	relation-uniformity	ENABLING	PASS	MERGED	HYP-SEMAEV-RELATION-INCIDENCE-001	Corrected target-fiber counts are asymptotically uniform after repetition adjustment.
+H4-E21	exceptional-relations	ATTACK	PASS	DEFERRED	-	Tangent and infinity strata yield cheaper independent rows than the regular locus.
+H4-E22	artificial-weil-restriction	ATTACK	KILL	KILLED	-	Artificial extension and Weil restriction reduce the prime-field ECDLP solving exponent.
+H4-E23	pseudo-mersenne-bit-descent	ATTACK	REFORMULATE	DEFERRED	-	The sparse modulus produces a bounded-regularity Boolean carry system for Semaev relations.
+H4-E24	twist-frobenius-descent	ATTACK	KILL	KILLED	-	A quadratic twist and Frobenius constraints shrink a prime-field relation system.
+H4-E25	norm-one-dickson-circuit	ENABLING	PASS	SHORTLIST	HYP-TORUS-CIRCUIT-FIDELITY-001	An arbitrary-order norm-one trace set has an exact reduced bounded-fiber O(log N) circuit.
+H4-E26	cm-norm-shell	ATTACK	KILL	KILLED	-	Small CM norm shells define an accessible factor base without knowing scalar coordinates.
+H4-E27	glv-trace-norm	ATTACK	KILL	KILLED	-	GLV trace and norm invariants retain phase while reducing relation dimension.
+H4-E28	pminus1-m16	ATTACK	REFORMULATE	MERGED	HYP-SEMAEV-RELATION-INCIDENCE-001	The p-1 M16 circuit has per-attempt and end-to-end exponent below known thresholds.
+H4-E29	addition-chain-causality	ATTACK	PASS	DEFERRED	-	A subgroup exponentiation DAG has a growing advantage over root, coset, and randomized-DAG controls.
+H4-E30	multiplication-map-factor-base	ATTACK	KILL	KILLED	-	A low-degree multiplication map creates a larger easy factor base in the prime-order group.
+H4-E31	diagonal-c3-quotient	ATTACK	KILL	KILLED	-	The full diagonal C3 invariant ring changes the ECDLP solving exponent.
+H4-E32	structured-factor-base-bound	BARRIER	PASS	DEFERRED	-	A conditional Groebner lower bound extends to subgroup and torus factor bases under a checkable Hilbert condition.
+H4-E33	elimination-width	BARRIER	PASS	DEFERRED	-	Every exact S3 tree with membership constraints has linear elimination width or equivalent exponential fill.
+H4-E34	complete-cost	BARRIER	PASS	MERGED	HYP-END-TO-END-COST-BRIDGE-001	Yield, rank, recovery, and sparse linear algebra restore the full exponent for tested relation pipelines.
+HCS-001	j0-invariantization	ATTACK	KILL	KILLED	-	Replacing x by x cubed lowers degree-of-regularity slope after recovery.
+HCS-002	glv-relation-yield	ATTACK	KILL	KILLED	-	GLV closure changes the relation-generation exponent rather than a bounded constant.
+HCS-003	glv-rank-amplification	ATTACK	KILL	KILLED	-	One order-three GLV orbit yields a number of independent rows growing with m.
+HCS-004	higher-dimensional-glv	ATTACK	KILL	KILLED	-	secp256k1 has more than two independent efficient endomorphisms for higher-dimensional scalar splitting.
+HCS-005	endomorphism-ring	BARRIER	KILL	KILLED	-	Hidden endomorphisms outside the known CM ring provide a new subgroup oracle.
+HCS-006	growing-cm-shell	ATTACK	REFORMULATE	DEFERRED	-	Growing low-norm CM endomorphism sets give superconstant useful partition gain.
+HCS-007	cm-residue-map	ATTACK	KILL	KILLED	-	An explicit CM residue-module map exposes the secret scalar without an equivalent DLP basis.
+HCS-008	glv-scalar-split	ATTACK	KILL	KILLED	-	The standard two-dimensional GLV split lowers the ECDLP exponent.
+HCS-009	c6-rho	ATTACK	KILL	KILLED	-	Quotienting rho by the full order-six automorphism group lowers the exponent.
+HCS-010	isogeny-representation	ATTACK	PASS	SHORTLIST	HYP-ISOGENY-REPRESENTATION-SLOPE-001	A low-degree isogenous presentation has a persistently lower matched relation-system slope.
+HCS-011	anomalous-isogeny	ATTACK	KILL	KILLED	-	An Fp-isogeny sends secp256k1 to an anomalous curve.
+HCS-012	pairing-friendly-isogeny	ATTACK	KILL	KILLED	-	An Fp-isogenous presentation has a smaller embedding degree.
+HCS-013	twist-transfer	ATTACK	KILL	KILLED	-	An Fp twist carries the prime-order subgroup through a bounded invertible map.
+HCS-014	frobenius-twist	ATTACK	KILL	KILLED	-	An Fp2 twist exposes a Frobenius mechanism stronger than a bounded automorphism.
+HCS-015	kummer-x-only	ATTACK	KILL	KILLED	-	x-only differential arithmetic lowers the ECDLP exponent.
+HCS-016	c6-xcube-quotient	ATTACK	KILL	KILLED	-	The x-cubed quotient supplies an ordinary group law with an exponent gain.
+HCS-017	quotient-batch-circuit	ATTACK	REFORMULATE	DEFERRED	-	A shared quotient circuit verifies many relation candidates in sublinear total field work.
+HCS-018	nonanomalous-smart-lift	ATTACK	KILL	KILLED	-	A p-adic Smart-style lift solves the nonanomalous secp256k1 subgroup.
+HCS-019	multiple-padiclifts	ATTACK	KILL	KILLED	-	Several Hensel lifts cancel unknown corrections and expose a linear equation in the secret.
+HCS-020	cm-canonical-lift	ATTACK	KILL	KILLED	-	A CM canonical lift gives a computable logarithm on prime-to-p torsion.
+HCS-021	frobenius-characteristic	ATTACK	KILL	KILLED	-	The Frobenius characteristic equation supplies a target-dependent scalar constraint.
+HCS-022	modulus-carry-leakage	ATTACK	KILL	KILLED	-	The closeness of p and n exposes path-independent scalar carries in reduced point coordinates.
+HCS-023	cm-mov	ATTACK	KILL	KILLED	-	j-invariant zero forces a small MOV embedding degree.
+HCS-024	auxiliary-torsion-crt	ATTACK	KILL	KILLED	-	Small auxiliary torsion recovers residues of the secret for CRT reconstruction.
+HCS-025	division-polynomial-invariants	ENABLING	REFORMULATE	DEFERRED	-	C3 factorization of division polynomials lowers complete elimination slope.
+HCS-026	infinity-density	ENABLING	KILL	KILLED	-	Isolated-infinity propagation produces a GLV-specific scalable regular-locus advantage.
+HCS-027	torsion-locus-disjointness	BARRIER	KILL	KILLED	-	Another coprime torsion-locus theorem directly changes attack allocation.
+HCS-028	eds-feature-recovery	ATTACK	REFORMULATE	DEFERRED	-	A polynomial-size set of EDS features permits sub-square-root scalar recovery.
+HCS-029	eds-homomorphism	ATTACK	KILL	KILLED	-	An EDS ratio gives a nontrivial homomorphism from the prime subgroup into Fp-star.
+HCS-030	coordinate-character-shift	ATTACK	PASS	SHORTLIST	HYP-COORDINATE-HIDDEN-SHIFT-001	A shifted coordinate-character sequence has a computable sparse spectrum enabling sub-square-root recovery.
+HCS-031	coordinate-linear-complexity	ATTACK	PASS	MERGED	HYP-COORDINATE-HIDDEN-SHIFT-001	The x-coordinate or character sequence has sub-square-root linear complexity usable for shift recovery.
+HCS-032	pseudo-mersenne-field	ATTACK	KILL	KILLED	-	Fast reduction modulo the fixed pseudo-Mersenne prime changes the group-operation exponent.
+HCS-033	no-character-hom	BARRIER	PASS	DEFERRED	-	Every direct homomorphism from the prime-order subgroup to Fp-star is trivial.
+ALG-001	structured-generic-group	BARRIER	PASS	SHORTLIST	HYP-SGGM-SPARSE-APPLICABILITY-001	Sparse coordinate structure fits SGGM with a density bound preserving the square-root exponent.
+ALG-002	x-only-operation	BARRIER	PASS	DEFERRED	-	No total binary operation on x-coordinates represents point addition.
+ALG-003	glv-quotient	BARRIER	PASS	MERGED	HYP-SGGM-SPARSE-APPLICABILITY-001	The GLV and negation quotient has constant-size orbits and preserves rho exponent one-half.
+ALG-004	genericity-trace	BARRIER	REFORMULATE	DEFERRED	-	Relabeling-invariant program traces admit a classical generic-group simulation.
+ALG-005	exceptional-density	BARRIER	PASS	MERGED	HYP-SGGM-SPARSE-APPLICABILITY-001	Subexponential-degree exceptional polynomials mark too sparse a set to change the exponent.
+ALG-006	generic-preprocessing	BARRIER	PASS	DEFERRED	-	Generic preprocessing obeys the known time-memory-success tradeoff.
+ALG-007	algebraic-preprocessing	ATTACK	REFORMULATE	DEFERRED	-	Coordinate endpoint tables beat the generic preprocessing tradeoff on new targets.
+ALG-008	vow-frontier	BARRIER	PASS	DEFERRED	-	Parallel collision engineering changes constants but not the square-root exponent.
+ALG-009	multi-target	ATTACK	KILL	KILLED	-	Amortization over many targets is a single-target ECDLP improvement.
+ALG-010	orbit-cycle-escape	ATTACK	PASS	DEFERRED	-	Random orbit re-expansion reaches the ideal quotient constant without an exponent change.
+ALG-011	glv-walk-scheduling	ATTACK	REFORMULATE	DEFERRED	-	State-dependent GLV scheduling produces an exponent gain rather than a partition constant.
+ALG-012	arithmetic-radding	ATTACK	PASS	DEFERRED	-	Arithmetic-aware r-adding reduces wall-clock cost at unchanged collision law.
+ALG-013	character-partition	ATTACK	PASS	MERGED	HYP-COORDINATE-HIDDEN-SHIFT-001	A coordinate-character partition creates a usable-collision hazard above birthday scaling.
+ALG-014	induced-subset	BARRIER	PASS	SHORTLIST	HYP-INDUCED-SUBSET-CONSERVATION-001	Return time cancels the birthday gain of an induced walk on a special subset.
+ALG-015	coordinate-ablation	ENABLING	PASS	MERGED	HYP-COORDINATE-HIDDEN-SHIFT-001	A genuine coordinate mechanism survives isomorphic models and admissible coordinate randomization.
+ALG-016	exception-aware-walk	ATTACK	PASS	DEFERRED	-	Routing exceptional walk states reduces failed steps without changing stationarity.
+ALG-017	rayleigh-null	BARRIER	PASS	DEFERRED	-	Usable first-collision times follow the random-mapping null after correct quotienting.
+ALG-018	collision-rank	BARRIER	PASS	MERGED	HYP-END-TO-END-COST-BRIDGE-001	Raw collision gains need not improve independent rank per group operation.
+ALG-019	semaev-yield	BARRIER	PASS	SHORTLIST	HYP-SEMAEV-RELATION-INCIDENCE-001	Structured factor-base relation counts have random-variety main scale without exponent surplus.
+ALG-020	root-unity-glv	BARRIER	PASS	MERGED	HYP-SEMAEV-RELATION-INCIDENCE-001	GLV closure of a root-of-unity base contributes only bounded orbit multiplicity.
+ALG-021	sum-product	BARRIER	REFORMULATE	DEFERRED	-	A bridge to finite-field sum-product expansion forbids simultaneous additive and multiplicative closure.
+ALG-022	relation-incidence	BARRIER	PASS	MERGED	HYP-SEMAEV-RELATION-INCIDENCE-001	A character-sum incidence bound makes the relation-count error too small for exponent gain.
+ALG-023	exceptional-mask-density	BARRIER	PASS	MERGED	HYP-SGGM-SPARSE-APPLICABILITY-001	Low-degree exceptional-mask support has negligible generic density.
+ALG-024	nonce-hnp	ADJACENT	PASS	ADJACENT	-	Four genuinely leaked nonce bits permit key recovery in a measurable HNP phase region.
+ALG-025	guessed-nonce-bits	BARRIER	PASS	ADJACENT	-	Guessing independent missing nonce bits cancels the lattice advantage exponentially.
+ALG-026	noisy-hnp-map	ADJACENT	PASS	ADJACENT	-	A certified noisy-HNP phase diagram maps leakage, signatures, noise, and BKZ cost.
+ALG-027	dwave-no-leakage	ADJACENT	KILL	KILLED	-	Quantum annealing replaces absent nonce information in a lattice attack.
+ALG-028	ml-solver-predictor	ENABLING	PASS	DEFERRED	-	Held-out system invariants predict solver cost and improve compute allocation end to end.
+ALG-029	ml-counterexample-search	ENABLING	PASS	DEFERRED	-	Active learning finds exact counterexamples to scaling laws faster than uniform sampling.
+ALG-030	ml-relation-invariant	ENABLING	PASS	DEFERRED	-	Interpretable ML discovers an exact relation invariant surviving held-out curve controls.
+ALG-031	mechanism-registry	ENABLING	REFORMULATE	DEFERRED	-	A frozen mechanism registry detects duplicated proposals and hidden model changes.
+ALG-032	lean-glv-orbit	BARRIER	PASS	MERGED	HYP-SGGM-SPARSE-APPLICABILITY-001	Every nonzero prime-subgroup point has a six-element GLV-negation orbit.
+ALG-033	end-to-end-exponent	BARRIER	PASS	SHORTLIST	HYP-END-TO-END-COST-BRIDGE-001	Attack exponent is bounded by the maximum of attempt-yield, linear-algebra, and recovery exponents.
