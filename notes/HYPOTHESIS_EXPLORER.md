@@ -74,6 +74,28 @@ authorize a proposal or experiment. The canonical current path is the typed
 evidence state, generated seed layer, shadow intake, and graph projection listed
 above.
 
+## Million-cell screening map
+
+`scripts/hypothesis_space_funnel.py` extends the frozen 100k funnel with ten
+adversarial challenge obligations. It streams exactly 1,000,000 typed cells into
+`data/hypothesis_space_state.json` and the aggregate hot/warm/cold projection in
+`data/hypothesis_space_map.json`. It does not materialize a million prose rows or
+make any model call.
+
+The cells are combinations of a research-question anchor, mechanism obligation,
+cost bridge, decisive test, and adversarial challenge. They are not one million
+independently invented hypotheses. The typed tuple is injective, but typed
+identity does not prove semantic novelty. Cold cells fail a deterministic
+structural gate; warm cells still need an assured mechanism and independent
+review; only that later evidence could create a hot cell. The generator itself
+is structurally unable to create hot, admissible, recommended, authorized, or
+executable state.
+
+The committed map is cumulative at the level that remains honest and small:
+counts, rejection reasons, family regions, challenge coverage, bounded samples,
+and a Merkle root. Raw million-row output is intentionally absent. Model-assisted
+drafting consumes only the bounded review queue emitted by this layer.
+
 ## Ranking-model boundary
 
 `scripts/hypothesis_ranker.py` is the automatic ranking-model boundary. Its

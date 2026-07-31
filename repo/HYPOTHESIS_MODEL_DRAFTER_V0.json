@@ -3,7 +3,7 @@
   "drafter_id": "keyai-hypothesis-model-drafter-v0",
   "status": "shadow_non_executing",
   "purpose": "Turn a small deterministic review queue into untrusted proposal fragments. The model may suggest missing mechanism fields; it cannot clear a scientific gate, review itself, authorize work, or create an experiment event.",
-  "source_state": "data/hypothesis_funnel_state.json",
+  "source_state": "data/hypothesis_space_state.json",
   "limits": {
     "max_queue_items": 30,
     "max_live_calls": 30,

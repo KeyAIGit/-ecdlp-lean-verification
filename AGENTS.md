@@ -9,6 +9,7 @@ delegated but bounded; the kernel/CI remains the sole judge).
 For a small-context start, read `STATUS.md`, then
 `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/RESEARCH_ENGINE_V0.json`,
 `repo/HYPOTHESIS_GENERATION_V0.json`,
+`repo/HYPOTHESIS_SPACE_V2.json`,
 `data/research_engine_state.json`, `repo/PRODUCT_MODEL.json`,
 `repo/PILOT_PROTOCOL.json`, then use `tasks/NEXT.md` to choose
 `tasks/ECDLP_RESEARCH.md` or `tasks/KEYAI_PRODUCT.md`; load
@@ -123,6 +124,12 @@ branch from current `main`; preserve any unrelated local changes.
   hypothesis, or authorize execution.
 - Generated seeds and quality-cleared drafts are non-executable. Creative model
   output is untrusted; zero retained drafts is a valid cycle result.
+- `HYP-SELECT-006-1M` is the current bulk screening layer. It enumerates one
+  million typed challenge cells without model calls, writes only aggregate
+  hot/warm/cold coverage plus a bounded review queue, and proves typed tuple
+  uniqueness only. The cells are not one million scientific hypotheses, and the
+  generator cannot create hot, admissible, recommended, authorized, executable,
+  or route-promoting state.
 - `TASK-010` and `RESEARCH-ENGINE-V0.2-SANITATION-001` are accepted at
   `85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. The lifecycle remains
   non-executing and authorizes no route promotion.

@@ -136,6 +136,7 @@ concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofRed
 | `repo/ECDLP_DECISION_SUBSTRATE.json` | exact target, threat models, route dispositions, evidence gates, and foundation priority |
 | `repo/ECDLP_TYPED_EVIDENCE_V0.json` · `data/typed_evidence_state.json` | typed source claims, target properties, mechanisms, barriers, cost quantities, regenerated cells, and non-experimental desk decisions |
 | `repo/RESEARCH_ENGINE_V0.json` · `repo/HYPOTHESIS_GENERATION_V0.json` · `data/research_engine_state.json` | bounded generation/selector policies and generated proposal, exploration, and outcome state |
+| `repo/HYPOTHESIS_SPACE_V2.json` · `data/hypothesis_space_map.json` | million-cell typed screening policy and aggregate evidence-bounded hot/warm/cold map; cells are questions, not independent hypotheses |
 | `repo/PRODUCT_MODEL.json` | product category, current stage, public claim boundary, and MVP evidence gate |
 | `scripts/site_generator.py` | generates the product site, operator workspace, and canonical route explorer |
 | `experiments/framework/` · `experiments/engine/` | candidate-neutral validation, generated-proposal intake, adversarial reviews, and append-only outcomes |
@@ -174,6 +175,7 @@ not authorship. License and the final author list are set by the maintainer.
 `STATUS.md` (canonical snapshot) · `repo/ECDLP_DECISION_SUBSTRATE.json` (route decisions) ·
 `repo/RESEARCH_ENGINE_V0.json` (bounded exploration policy) ·
 `data/research_engine_state.json` (generated engine state) ·
+`data/hypothesis_space_map.json` (aggregate million-cell screening map) ·
 `ROADMAP.md` (strategy & program) · `VERIFIED.md`
 (the ledger) · `BARRIERS.md` (the no-go map) · `TRUST_REPORT.md` (what "verified" rests
 on) · `PUBLISHABLE_UNITS.md` (the 3 standalone results) · `notes/INDEX.md` (research

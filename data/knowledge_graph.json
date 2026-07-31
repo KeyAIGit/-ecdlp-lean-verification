@@ -26,6 +26,10 @@
     "research_engine_v02_candidates": 0,
     "shadow_proposal_stubs": 4,
     "shadow_parked_ideas": 1,
+    "typed_screening_cells": 1000000,
+    "typed_screening_cold": 768880,
+    "typed_screening_warm": 231120,
+    "typed_screening_hot": 0,
     "selected_explorations": 0,
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
@@ -10375,6 +10379,416 @@
           "experiments/p4_petit/RESULTS.md"
         ],
         "status": "active"
+      }
+    ]
+  },
+  "hypothesis_space": {
+    "policy_source": "repo/HYPOTHESIS_SPACE_V2.json",
+    "state_source": "data/hypothesis_space_state.json",
+    "map_source": "data/hypothesis_space_map.json",
+    "space_id": "HYP-SELECT-006-1M",
+    "status": "shadow_non_executing",
+    "counts": {
+      "attempts": 1000000,
+      "typed_cells": 1000000,
+      "cold": 768880,
+      "warm": 231120,
+      "hot": 0,
+      "pareto_records_before_review_queue": 4064,
+      "review_queue": 35,
+      "admissible": 0,
+      "recommended": 0,
+      "authorized": 0,
+      "route_promotions": 0,
+      "experiment_events": 0
+    },
+    "bulk_contract": {
+      "attempt_count": 1000000,
+      "full_universe_count": 1000000,
+      "raw_signatures_materialized": false,
+      "typed_tuple_uniqueness_checked": true,
+      "semantic_novelty_proved": false,
+      "language_model_calls": 0,
+      "authorization": "none",
+      "route_promotion": false,
+      "exact_target_execution": false,
+      "stream_digest_version": "rfc6962-binary-leaf-v2",
+      "coverage_merkle_root_sha256": "dff1e8cb52594158fc94556cbef3025be647fab310132c34ee58aed3b8399207",
+      "instance_root_sha256": "272bcc9e877fc4ae86789cbb55d1362830e4e8f77b95ee027d6e25a202e52404",
+      "challenge_indices": [
+        5095,
+        198415,
+        280448,
+        318681,
+        328397,
+        475081,
+        493336,
+        646541,
+        662614,
+        716687,
+        789948,
+        791781,
+        795400,
+        820845,
+        975869,
+        985080
+      ]
+    },
+    "coverage_boundary": "Coverage is complete only for this frozen finite Cartesian projection. It is not coverage of all ECDLP ideas or literature.",
+    "temperature_legend": {
+      "cold": "A typed cell rejected by at least one deterministic structural gate.",
+      "warm": "A structurally coherent research-question cell that still lacks an assured exact mechanism and independent source review.",
+      "hot": "A cell with an assured mechanism, cost bridge, and independent review. This generator cannot create hot cells."
+    },
+    "region_count": 100,
+    "leading_warm_regions": [
+      {
+        "family": "collision-rank",
+        "type": "BARRIER",
+        "base_ids": [
+          "ALG-018"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 0,
+        "independent_review_records": 0
+      },
+      {
+        "family": "complete-cost",
+        "type": "BARRIER",
+        "base_ids": [
+          "H4-E34"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 0,
+        "independent_review_records": 0
+      },
+      {
+        "family": "elimination-width",
+        "type": "BARRIER",
+        "base_ids": [
+          "H4-E33"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 0,
+        "independent_review_records": 0
+      },
+      {
+        "family": "end-to-end-exponent",
+        "type": "BARRIER",
+        "base_ids": [
+          "ALG-033"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 0,
+        "independent_review_records": 0
+      },
+      {
+        "family": "endomorphism-ring",
+        "type": "BARRIER",
+        "base_ids": [
+          "HCS-005"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 0,
+        "independent_review_records": 0
+      },
+      {
+        "family": "exceptional-density",
+        "type": "BARRIER",
+        "base_ids": [
+          "ALG-005"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 0,
+        "independent_review_records": 0
+      },
+      {
+        "family": "exceptional-mask-density",
+        "type": "BARRIER",
+        "base_ids": [
+          "ALG-023"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 0,
+        "independent_review_records": 0
+      },
+      {
+        "family": "generic-preprocessing",
+        "type": "BARRIER",
+        "base_ids": [
+          "ALG-006"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 0,
+        "independent_review_records": 0
+      },
+      {
+        "family": "genericity-trace",
+        "type": "BARRIER",
+        "base_ids": [
+          "ALG-004"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 0,
+        "independent_review_records": 0
+      },
+      {
+        "family": "glv-quotient",
+        "type": "BARRIER",
+        "base_ids": [
+          "ALG-003"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 0,
+        "independent_review_records": 0
+      },
+      {
+        "family": "guessed-nonce-bits",
+        "type": "BARRIER",
+        "base_ids": [
+          "ALG-025"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 0,
+        "independent_review_records": 0
+      },
+      {
+        "family": "induced-subset",
+        "type": "BARRIER",
+        "base_ids": [
+          "ALG-014"
+        ],
+        "cells": 10000,
+        "cold": 6544,
+        "warm": 3456,
+        "hot": 0,
+        "retained_by_challenge": {
+          "G01-THREAT-MODEL": 432,
+          "G02-TARGET-PROPERTY": 432,
+          "G03-PRIOR-ART": 432,
+          "G06-PRECOMPUTATION": 432,
+          "G07-END-TO-END-COST": 432,
+          "G08-SCALING-SEPARATION": 432,
+          "G09-VALIDATOR-INDEPENDENCE": 432,
+          "G10-REOPENING-PREMISE": 432
+        },
+        "primary_rejections": {
+          "challenge_type_mismatch": 864,
+          "cost_type_mismatch": 600,
+          "mechanism_type_mismatch": 4000,
+          "test_type_mismatch": 1080
+        },
+        "review_records": 1,
+        "independent_review_records": 0
       }
     ]
   },

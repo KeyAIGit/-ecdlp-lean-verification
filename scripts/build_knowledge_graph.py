@@ -45,6 +45,8 @@ RESEARCH_ENGINE_V02_STATE = ROOT / "data" / "research_engine_v02_state.json"
 RESEARCH_SHADOW_INTAKE = ROOT / "data" / "research_engine_shadow_intake.json"
 TYPED_EVIDENCE_STATE = ROOT / "data" / "typed_evidence_state.json"
 HYPOTHESIS_GENERATION_POLICY = ROOT / "repo" / "HYPOTHESIS_GENERATION_V0.json"
+HYPOTHESIS_SPACE_STATE = ROOT / "data" / "hypothesis_space_state.json"
+HYPOTHESIS_SPACE_MAP = ROOT / "data" / "hypothesis_space_map.json"
 SOURCE_REGISTRY = ROOT / "data" / "source_registry.json"
 
 
@@ -292,6 +294,14 @@ def build() -> dict:
     generation_policy = json.loads(
         HYPOTHESIS_GENERATION_POLICY.read_text(encoding="utf-8")
     )
+    hypothesis_space = json.loads(
+        HYPOTHESIS_SPACE_STATE.read_text(encoding="utf-8")
+    )
+    hypothesis_map = json.loads(HYPOTHESIS_SPACE_MAP.read_text(encoding="utf-8"))
+    leading_warm_regions = sorted(
+        hypothesis_map["regions"],
+        key=lambda item: (-item["warm"], item["family"]),
+    )[:12]
     source_registry = json.loads(SOURCE_REGISTRY.read_text(encoding="utf-8"))
     family_by_area = {family["area"]: family["id"] for family in substrate["families"]}
     built_modules = set(imports.get("Ecdlp", []))  # what Ecdlp.lean gates
@@ -636,6 +646,10 @@ def build() -> dict:
                 "proposal_stubs"
             ],
             "shadow_parked_ideas": shadow_intake["counts"]["parked_ideas"],
+            "typed_screening_cells": hypothesis_space["counts"]["typed_cells"],
+            "typed_screening_cold": hypothesis_space["counts"]["cold"],
+            "typed_screening_warm": hypothesis_space["counts"]["warm"],
+            "typed_screening_hot": hypothesis_space["counts"]["hot"],
             "selected_explorations": engine["counts"]["selected_explorations"],
             "decision_level_bounded_authorizations": int(
                 isinstance(
@@ -733,6 +747,19 @@ def build() -> dict:
             "unresolved_questions": generation_policy["axes"][
                 "unresolved_questions"
             ],
+        },
+        "hypothesis_space": {
+            "policy_source": "repo/HYPOTHESIS_SPACE_V2.json",
+            "state_source": "data/hypothesis_space_state.json",
+            "map_source": "data/hypothesis_space_map.json",
+            "space_id": hypothesis_space["space_id"],
+            "status": hypothesis_space["status"],
+            "counts": hypothesis_space["counts"],
+            "bulk_contract": hypothesis_space["bulk_contract"],
+            "coverage_boundary": hypothesis_map["coverage_boundary"],
+            "temperature_legend": hypothesis_map["temperature_legend"],
+            "region_count": len(hypothesis_map["regions"]),
+            "leading_warm_regions": leading_warm_regions,
         },
         "source_index": {
             "registry_source": "data/source_registry.json",
@@ -1020,6 +1047,36 @@ def render_markdown(graph: dict) -> str:
         "`RSI-D8BBA6340789`. The auxiliary-curve cell remains parked pending "
         "a finite source-defined search domain. Authorization remains `none`."
     )
+    lines.append("")
+
+    space = graph["hypothesis_space"]
+    counts = space["counts"]
+    lines.append("### Million-cell adversarial projection")
+    lines.append("")
+    lines.append(space["coverage_boundary"])
+    lines.append("")
+    lines.append(
+        f"The frozen projection contains **{counts['typed_cells']:,}** typed "
+        f"challenge cells: **{counts['cold']:,} cold**, "
+        f"**{counts['warm']:,} warm**, and **{counts['hot']:,} hot**. "
+        f"Only **{counts['review_queue']}** bounded records reach the review queue; "
+        "authorization remains `none`."
+    )
+    lines.append("")
+    lines.append("| region temperature | meaning |")
+    lines.append("|---|---|")
+    for temperature in ("cold", "warm", "hot"):
+        lines.append(
+            f"| **{temperature}** | {space['temperature_legend'][temperature]} |"
+        )
+    lines.append("")
+    lines.append("| leading warm family | kind | warm cells | cold cells |")
+    lines.append("|---|---|---:|---:|")
+    for region in space["leading_warm_regions"]:
+        lines.append(
+            f"| `{region['family']}` | `{region['type']}` | "
+            f"{region['warm']} | {region['cold']} |"
+        )
     lines.append("")
 
     gates = engine["gate_status"]
