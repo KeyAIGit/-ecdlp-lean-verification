@@ -16,7 +16,7 @@ REMOTE = "origin"
 
 ACTIVE = {
     "agent/e4-composite-torsion-structure",
-    "agent/hyp-select-006-million-scale",
+    "agent/e4-current-main-port-v2",
     "claude/secp256k1-hypothesis-forge",
     "research/pkc-sextic-twist-cm-screen",
 }
