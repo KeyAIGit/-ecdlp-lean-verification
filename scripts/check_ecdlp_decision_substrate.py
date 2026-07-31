@@ -339,6 +339,12 @@ def sha256_bytes(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
+def portable_text_sha256(payload: bytes) -> str:
+    text = payload.decode("utf-8")
+    canonical = text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+    return sha256_bytes(canonical)
+
+
 def git_file_bytes(commit: str, relative: str) -> bytes | None:
     """Read one readiness-bound file without trusting the working tree."""
 
@@ -469,7 +475,7 @@ def validate_bounded_authorization(
         if not path.is_file():
             problems.append(f"authorization-bound file is absent: {relative}")
             continue
-        if sha256_bytes(path.read_bytes()) != digest:
+        if portable_text_sha256(path.read_bytes()) != digest:
             problems.append(
                 f"authorization-bound working-tree hash drifted: {key}"
             )
@@ -488,7 +494,7 @@ def validate_bounded_authorization(
     terminal_artifact = ROOT / BOUNDED_TERMINAL_ARTIFACT
     if not terminal_artifact.is_file():
         problems.append("bounded terminal artifact is absent")
-    elif sha256_bytes(terminal_artifact.read_bytes()) != (
+    elif portable_text_sha256(terminal_artifact.read_bytes()) != (
         BOUNDED_TERMINAL_ARTIFACT_SHA256
     ):
         problems.append("bounded terminal artifact hash drifted")

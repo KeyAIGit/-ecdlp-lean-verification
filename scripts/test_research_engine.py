@@ -42,6 +42,7 @@ from research_engine_lib import (
     brier_score,
     build_validator_request,
     build_state,
+    content_sha256,
     execute_pure_validator,
     expected_information_gain,
     expanded_preregistration_matrix,
@@ -109,6 +110,12 @@ class ResearchEngineTests(unittest.TestCase):
                 repository_text_sha256(lf),
                 repository_text_sha256(crlf),
             )
+
+    def test_authorization_text_hash_is_checkout_eol_independent(self) -> None:
+        self.assertEqual(
+            content_sha256(b'{"status":"frozen"}\n'),
+            content_sha256(b'{"status":"frozen"}\r\n'),
+        )
 
     def generation_proposal(self, seed: dict, proposal_id: str) -> dict:
         premise = (

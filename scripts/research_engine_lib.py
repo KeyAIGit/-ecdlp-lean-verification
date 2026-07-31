@@ -3069,7 +3069,7 @@ def validate_external_bounded_outcome(
             problems.append(
                 f"{label}: external bounded event needs run_manifest_sha256"
             )
-        elif exact_file_sha256(manifest_path) != manifest_hash:
+        elif file_sha256(manifest_path) != manifest_hash:
             problems.append(f"{label}: run_manifest_sha256 mismatch")
         try:
             loaded_manifest = load_json(manifest_path)
@@ -3151,7 +3151,7 @@ def validate_external_bounded_outcome(
                 problems.append(
                     f"{label}: authorization-bound file is absent: {filename}"
                 )
-            elif exact_file_sha256(source_path) != expected:
+            elif file_sha256(source_path) != expected:
                 problems.append(
                     f"{label}: authorization-bound working-tree hash drifted: "
                     f"{binding}"
@@ -3293,7 +3293,7 @@ def validate_external_bounded_outcome(
                 )
             else:
                 sidecar = sidecar_path.read_text(encoding="utf-8").strip().split()
-                if sidecar != [exact_file_sha256(artifact_path), "artifact.json"]:
+                if sidecar != [file_sha256(artifact_path), "artifact.json"]:
                     problems.append(
                         f"{label}: external bounded artifact sidecar mismatch"
                     )
@@ -3359,7 +3359,7 @@ def validate_external_bounded_outcome(
                     f"{label}: consumed authorization terminal_status differs"
                 )
             artifact_digest = (
-                exact_file_sha256(bundle_dir / "artifact.json")
+                file_sha256(bundle_dir / "artifact.json")
                 if bundle_dir is not None
                 and (bundle_dir / "artifact.json").is_file()
                 else None
