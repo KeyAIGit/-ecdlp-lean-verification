@@ -30,7 +30,7 @@ from typing import Any, Iterable, TextIO
 
 HYPOTHESIS_ID = "HYP-M16-FIXED-TARGET-YIELD-001"
 TASK_ID = "TASK-026"
-ROUTE_ID = "R-GLV-SEMAEV"
+ROUTE_ID = "R-PETIT-COMPOSED-MAPS"
 CELL_ID = "CELL-M-PKC-SMOOTH-M16"
 SCHEMA_VERSION = "keyai-m16-fixed-target-producer-v1"
 RAW_SCHEMA_VERSION = "keyai-m16-fixed-target-raw-v1"

@@ -2,7 +2,7 @@
   "schema_version": "keyai-m16-fixed-target-config-v1",
   "hypothesis_id": "HYP-M16-FIXED-TARGET-YIELD-001",
   "task_id": "TASK-026",
-  "route_id": "R-GLV-SEMAEV",
+  "route_id": "R-PETIT-COMPOSED-MAPS",
   "cell_id": "CELL-M-PKC-SMOOTH-M16",
   "preregistration_sha256": "e41164b1e8950aab60849e567949a230d592652d9b7ae2484eaed5dff7518cc5",
   "curve_table_sha256": "a59ed1a8b597bc5d512438d09fbb4c970fff74dd704f8f88be4f7224775f5e0d",

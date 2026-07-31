@@ -295,9 +295,11 @@ Status: `SCREENED / PREREGISTERED`, not yet executable
     constructed-target control succeeds.
 18. Promotion criterion:
     all six curve/arm cells have at least 100 accepted rows, independent
-    replay passes, both larger sizes pass the preregistered Wilson lower
-    bound in both arms, and no unexplained decline exceeds 0.05. Promotion is
-    only to `HYP-M16-SOLVER-SLOPE-001`.
+    replay passes, the `GLV_ORBIT_CLOSED` arm passes the preregistered Wilson
+    lower bound at both larger sizes, and its unexplained decline does not
+    exceed 0.05. The plain arm is the paired mechanism control and is not an
+    additional promotion threshold. Promotion is only to
+    `HYP-M16-SOLVER-SLOPE-001`.
 19. Maximum budget:
     three million trials, four CPU-hours, 4 GiB peak RAM, and one working
     day.
@@ -480,8 +482,9 @@ bound is below 0.80 at `m=21` or `m=23`, or only constructed-target controls
 succeed
 
 Promotion criterion: all six cells have at least 100 accepted rows,
-independent replay passes, both arms at `m=21,23` have Wilson lower bound at
-least 0.90, and no unexplained decline exceeds 0.05; promotion only to the
+independent replay passes, the orbit arm at `m=21,23` has Wilson lower bound
+at least 0.90, and its unexplained decline does not exceed 0.05; the plain arm
+remains the paired mechanism control, and promotion is only to the
 solver-slope test
 
 Maximum budget before review: four CPU-hours, 4 GiB peak RAM, one working day
