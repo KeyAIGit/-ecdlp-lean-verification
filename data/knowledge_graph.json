@@ -12066,6 +12066,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.Secp256k1Params",
+      "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.Secp256k1PMinusOneSmoothness",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -12073,11 +12078,6 @@
     {
       "from": "Ecdlp.Proved.Secp256k1PMinusOneSmoothness",
       "to": "Ecdlp.Proved.Secp256k1PrimeP",
-      "type": "imports"
-    },
-    {
-      "from": "Ecdlp.Proved.Secp256k1Params",
-      "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
     },
     {

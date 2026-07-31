@@ -118,6 +118,7 @@ env:
     data/research_engine_state.json
     data/research_engine_v02_state.json
     data/research_engine_shadow_intake.json
+    data/hypothesis_funnel_state.json
     repo/ECDLP_DECISION_SUBSTRATE.md
     bundles/MANIFEST.json
     dashboard.html
@@ -155,6 +156,8 @@ jobs:
         run: python3 scripts/build_research_engine_v02_state.py
       - name: Research Engine shadow intake
         run: python3 scripts/build_research_shadow_intake.py
+      - name: Research-question funnel aggregate
+        run: python3 scripts/hypothesis_funnel.py
       - name: Knowledge graph (data/knowledge_graph.json + .md)
         run: python3 scripts/build_knowledge_graph.py
       - name: Coverage report (COVERAGE.md)
@@ -275,6 +278,10 @@ jobs:
         run: |
           python3 scripts/build_research_shadow_intake.py --check
           python3 scripts/test_research_shadow_intake.py
+      - name: Research-question funnel gate
+        run: |
+          python3 scripts/hypothesis_funnel.py --check
+          python3 scripts/test_hypothesis_funnel.py
       - name: GLV diagonal-action obstruction certificate
         run: |
           python3 experiments/glv_diagonal_obstruction/generate.py --check

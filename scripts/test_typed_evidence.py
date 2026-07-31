@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import copy
+import tempfile
 import unittest
+from pathlib import Path
 
 from typed_evidence_lib import (
     DECISIONS_PATH,
@@ -13,6 +15,7 @@ from typed_evidence_lib import (
     build_state,
     load_json,
     load_records,
+    sha256_file,
 )
 
 
@@ -38,6 +41,15 @@ class TypedEvidenceTests(unittest.TestCase):
             if desk_records is not None
             else copy.deepcopy(self.desk_records),
         )
+
+    def test_text_artifact_hash_is_line_ending_independent(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            lf = root / "lf.json"
+            crlf = root / "crlf.json"
+            lf.write_bytes(b'{\n  "value": 1\n}\n')
+            crlf.write_bytes(b'{\r\n  "value": 1\r\n}\r\n')
+            self.assertEqual(sha256_file(lf), sha256_file(crlf))
 
     def test_canonical_state_is_valid_and_non_authorizing(self) -> None:
         problems, state = self.build()

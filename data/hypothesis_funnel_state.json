@@ -1,0 +1,1830 @@
+{
+  "schema_version": "1.0-generated",
+  "funnel_id": "HYP-SELECT-005-100K",
+  "status": "shadow_non_executing",
+  "scientific_identity": "research_question_signature_funnel",
+  "baseline_commit": "1f4464e7d5fb0bcdff9fd5f5bf09fa4a557ea41a",
+  "source_bindings": {
+    "input_pool_path": "data/hyp_select_004_raw_100.tsv",
+    "input_pool_sha256": "c6874df026b5d1dda5c9ad0f6680c92fb355be8303898924128dd2fda48ceea9",
+    "evidence_snapshot_sha256": "0e066233c61b84403e052b1b6c4fe7dc41db74388058eb9c386c844e930ed588",
+    "evidence_input_sha256": {
+      "data/attack_registry.json": "96bc878e6e78712ee5410b723615475a043d5c019b44b6a96c261ff6eccd1101",
+      "data/research_claim_state.json": "75e69cdb98bccc43639f09e351c1ebe022860151e7ca95a09363a0eee7812c49",
+      "data/source_registry.json": "f6dc2944328d45b114edffd8f933b9225212fb514beac1dad84a7349b87cb06e",
+      "data/typed_evidence_state.json": "14232c46c9742b431c87ae95afcc3ad5cf686d81c919e7f450728bb89f5a5016",
+      "experiments/HYPOTHESES.yaml": "12f0df0623f2a104389cb191da565e69bacbf926b305d3f298051d7bc7489afb",
+      "notes/reviews/HYP_SELECT_003.md": "0cef4ab8696e1932716f8d0a20f24778c7bec6f13baa9a05e12a5d41f134688b",
+      "repo/ECDLP_DECISION_SUBSTRATE.json": "df246ede77b391d731754b389feb55a7b775df2b8b07cf7399d301a1efa3f672",
+      "repo/HYPOTHESIS_SELECTION_CONSTITUTION_V3.md": "529386198b967c2d45fbff70a4806bb1c7d830fb22eabbd3630b8128f0687605"
+    },
+    "generation_policy_path": "repo/HYPOTHESIS_FUNNEL_V1.json",
+    "generation_policy_sha256": "93d1ec53310571b0f8355a58aa3135409e42daaa8e24b7b1f6bb4b2823e8b221",
+    "constitution_sha256": "529386198b967c2d45fbff70a4806bb1c7d830fb22eabbd3630b8128f0687605"
+  },
+  "bulk_contract": {
+    "attempt_count": 100000,
+    "full_universe_count": 100000,
+    "raw_signatures_materialized": false,
+    "language_model_calls": 0,
+    "authorization": "none",
+    "route_promotion": false,
+    "exact_target_execution": false,
+    "stream_digest_version": "sha256-chain-v1",
+    "merkle_root_sha256": "529d10a7556a28e0409600465f867e2d28a17ca2bcc1d66daf6eb7de0136a34a",
+    "challenge_indices": [
+      578,
+      3516,
+      4355,
+      5040,
+      24802,
+      25480,
+      39178,
+      50912,
+      51517,
+      54307,
+      77688,
+      78255,
+      79675,
+      87193,
+      93800,
+      95040
+    ]
+  },
+  "counts": {
+    "attempts": 100000,
+    "semantic_normal_forms": 100000,
+    "semantic_index_rows": 100000,
+    "structurally_retained": 26520,
+    "rejected": 73480,
+    "pareto_records_before_review_queue": 635,
+    "review_queue": 29,
+    "final_research_bets": 9,
+    "admissible": 0,
+    "recommended": 0,
+    "authorized": 0,
+    "route_promotions": 0,
+    "experiment_events": 0
+  },
+  "counts_by_type": {
+    "ADJACENT": 3000,
+    "ATTACK": 60000,
+    "BARRIER": 26000,
+    "ENABLING": 11000
+  },
+  "rejection_histogram": {
+    "attack_without_scaling_bridge": 24000,
+    "barrier_without_scoped_mechanism": 13000,
+    "cost_type_mismatch": 20900,
+    "enabling_without_dependency_bridge": 4400,
+    "forbidden_type": 3000,
+    "known_closed_pattern_unreopened": 4000,
+    "mechanism_type_mismatch": 29800,
+    "test_type_mismatch": 40400
+  },
+  "warning_histogram": {
+    "exact_mechanism_missing": 100000,
+    "historical_canonical_cluster": 22000,
+    "historical_kill_label": 33000,
+    "historical_reformulate_label": 18000,
+    "historical_shortlist_label": 8000,
+    "novelty_unverified": 100000,
+    "source_independence_unestablished": 100000
+  },
+  "rejection_samples": {
+    "attack_without_scaling_bridge": [
+      {
+        "seed_id": "HQS1-0001B825FCEE91005EAC4ADDEDA01E76",
+        "base_id": "HCS-028",
+        "family": "eds-feature-recovery",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M08-STRUCTURAL-INVARIANT",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE"
+      },
+      {
+        "seed_id": "HQS1-000544B331D16B4B7B5E00F4AA754F87",
+        "base_id": "HCS-013",
+        "family": "twist-transfer",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+        "cost_bridge_id": "C09-BARRIER-COVERAGE",
+        "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE"
+      },
+      {
+        "seed_id": "HQS1-00078A1FD460DCEE5C01CDC496F4ABA1",
+        "base_id": "HCS-013",
+        "family": "twist-transfer",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+        "cost_bridge_id": "C09-BARRIER-COVERAGE",
+        "decisive_test_id": "T06-CAUSAL-CONTROLS"
+      }
+    ],
+    "barrier_without_scoped_mechanism": [
+      {
+        "seed_id": "HQS1-000738E846352EDD7DFC2A6D4B895EF3",
+        "base_id": "ALG-018",
+        "family": "collision-rank",
+        "type": "BARRIER",
+        "mechanism_obligation_id": "M10-VALIDATED-INTERFACE",
+        "cost_bridge_id": "C06-PRECOMPUTATION",
+        "decisive_test_id": "T05-SLOPE-SEPARATION"
+      },
+      {
+        "seed_id": "HQS1-000AAAFF1C257DBF71BF0D6A1F29018D",
+        "base_id": "ALG-023",
+        "family": "exceptional-mask-density",
+        "type": "BARRIER",
+        "mechanism_obligation_id": "M10-VALIDATED-INTERFACE",
+        "cost_bridge_id": "C06-PRECOMPUTATION",
+        "decisive_test_id": "T06-CAUSAL-CONTROLS"
+      },
+      {
+        "seed_id": "HQS1-00101425643302D368C3E8084B7454D1",
+        "base_id": "ALG-021",
+        "family": "sum-product",
+        "type": "BARRIER",
+        "mechanism_obligation_id": "M02-FAITHFUL-RECOVERY",
+        "cost_bridge_id": "C05-RECOVERY",
+        "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE"
+      }
+    ],
+    "cost_type_mismatch": [
+      {
+        "seed_id": "HQS1-0001B825FCEE91005EAC4ADDEDA01E76",
+        "base_id": "HCS-028",
+        "family": "eds-feature-recovery",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M08-STRUCTURAL-INVARIANT",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE"
+      },
+      {
+        "seed_id": "HQS1-000461CA67E50C136D0E66A096D8B520",
+        "base_id": "ALG-027",
+        "family": "dwave-no-leakage",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M03-FIXED-TARGET",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T07-RECOVERY-ROUNDTRIP"
+      },
+      {
+        "seed_id": "HQS1-0004B2CB5C3DF9BE2F0D23B9061AF9EE",
+        "base_id": "ALG-026",
+        "family": "noisy-hnp-map",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M03-FIXED-TARGET",
+        "cost_bridge_id": "C09-BARRIER-COVERAGE",
+        "decisive_test_id": "T10-KERNEL-PACKAGE"
+      }
+    ],
+    "enabling_without_dependency_bridge": [
+      {
+        "seed_id": "HQS1-0005A55A9DAE6B290AED9089DB714FF2",
+        "base_id": "H4-E19",
+        "family": "monodromy-rank",
+        "type": "ENABLING",
+        "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T06-CAUSAL-CONTROLS"
+      },
+      {
+        "seed_id": "HQS1-0013610428FBF409F9F7202DC12F9512",
+        "base_id": "HCS-026",
+        "family": "infinity-density",
+        "type": "ENABLING",
+        "mechanism_obligation_id": "M06-REDUCTION",
+        "cost_bridge_id": "C02-RELATION-YIELD",
+        "decisive_test_id": "T07-RECOVERY-ROUNDTRIP"
+      },
+      {
+        "seed_id": "HQS1-0018D856032DF8C6205958CBB3A4B3C2",
+        "base_id": "HCS-026",
+        "family": "infinity-density",
+        "type": "ENABLING",
+        "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+        "cost_bridge_id": "C08-END-TO-END",
+        "decisive_test_id": "T04-MATCHED-TOY-LADDER"
+      }
+    ],
+    "forbidden_type": [
+      {
+        "seed_id": "HQS1-000461CA67E50C136D0E66A096D8B520",
+        "base_id": "ALG-027",
+        "family": "dwave-no-leakage",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M03-FIXED-TARGET",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T07-RECOVERY-ROUNDTRIP"
+      },
+      {
+        "seed_id": "HQS1-0004B2CB5C3DF9BE2F0D23B9061AF9EE",
+        "base_id": "ALG-026",
+        "family": "noisy-hnp-map",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M03-FIXED-TARGET",
+        "cost_bridge_id": "C09-BARRIER-COVERAGE",
+        "decisive_test_id": "T10-KERNEL-PACKAGE"
+      },
+      {
+        "seed_id": "HQS1-000E72879E52A5F68C10EA982909C708",
+        "base_id": "ALG-027",
+        "family": "dwave-no-leakage",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M01-EXACT-MAP",
+        "cost_bridge_id": "C05-RECOVERY",
+        "decisive_test_id": "T10-KERNEL-PACKAGE"
+      }
+    ],
+    "known_closed_pattern_unreopened": [
+      {
+        "seed_id": "HQS1-000132CCEB5280F012696B75F2DF7CD2",
+        "base_id": "HCS-008",
+        "family": "glv-scalar-split",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M10-VALIDATED-INTERFACE",
+        "cost_bridge_id": "C03-ALGEBRAIC-SOLVING",
+        "decisive_test_id": "T05-SLOPE-SEPARATION"
+      },
+      {
+        "seed_id": "HQS1-000D0D7459C9C453BE3BBCCD81DC0829",
+        "base_id": "HCS-003",
+        "family": "glv-rank-amplification",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M09-REENCODING-CHECK",
+        "cost_bridge_id": "C07-RESOURCE-ENVELOPE",
+        "decisive_test_id": "T09-BOUNDARY-COUNTEREXAMPLE"
+      },
+      {
+        "seed_id": "HQS1-000FBB7646192AF24B8A61E1A662BBD3",
+        "base_id": "HCS-003",
+        "family": "glv-rank-amplification",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M03-FIXED-TARGET",
+        "cost_bridge_id": "C05-RECOVERY",
+        "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE"
+      }
+    ],
+    "mechanism_type_mismatch": [
+      {
+        "seed_id": "HQS1-000461CA67E50C136D0E66A096D8B520",
+        "base_id": "ALG-027",
+        "family": "dwave-no-leakage",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M03-FIXED-TARGET",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T07-RECOVERY-ROUNDTRIP"
+      },
+      {
+        "seed_id": "HQS1-0004B2CB5C3DF9BE2F0D23B9061AF9EE",
+        "base_id": "ALG-026",
+        "family": "noisy-hnp-map",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M03-FIXED-TARGET",
+        "cost_bridge_id": "C09-BARRIER-COVERAGE",
+        "decisive_test_id": "T10-KERNEL-PACKAGE"
+      },
+      {
+        "seed_id": "HQS1-0005A55A9DAE6B290AED9089DB714FF2",
+        "base_id": "H4-E19",
+        "family": "monodromy-rank",
+        "type": "ENABLING",
+        "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T06-CAUSAL-CONTROLS"
+      }
+    ],
+    "test_type_mismatch": [
+      {
+        "seed_id": "HQS1-0004018C89DE65A7623C1D422C9FF3D4",
+        "base_id": "H4-E08",
+        "family": "large-prime-variant",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M06-REDUCTION",
+        "cost_bridge_id": "C06-PRECOMPUTATION",
+        "decisive_test_id": "T09-BOUNDARY-COUNTEREXAMPLE"
+      },
+      {
+        "seed_id": "HQS1-000461CA67E50C136D0E66A096D8B520",
+        "base_id": "ALG-027",
+        "family": "dwave-no-leakage",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M03-FIXED-TARGET",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T07-RECOVERY-ROUNDTRIP"
+      },
+      {
+        "seed_id": "HQS1-0004B2CB5C3DF9BE2F0D23B9061AF9EE",
+        "base_id": "ALG-026",
+        "family": "noisy-hnp-map",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M03-FIXED-TARGET",
+        "cost_bridge_id": "C09-BARRIER-COVERAGE",
+        "decisive_test_id": "T10-KERNEL-PACKAGE"
+      }
+    ]
+  },
+  "review_queue": [
+    {
+      "seed_id": "HQS1-ABDC9E7FE78EEE148CD2C778CDD1025C",
+      "semantic_signature_sha256": "fad500591ed9909e76aab7a56433d17982049ca348ce6f03587fb77731c5fb17",
+      "signature_instance_sha256": "abdc9e7fe78eee148cd2c778cdd1025ca7fcc630fcb46f2eb1e063eef8423b1c",
+      "base_id": "HCS-010",
+      "family": "isogeny-representation",
+      "type": "ATTACK",
+      "short_claim": "A low-degree isogenous presentation has a persistently lower matched relation-system slope.",
+      "mechanism_obligation_id": "M06-REDUCTION",
+      "mechanism_obligation": "Specify a reduction and price both directions",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 5,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-ISOGENY-REPRESENTATION-SLOPE-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-AF3D59D7A69DEA15F1B26A59052EE1EE",
+      "semantic_signature_sha256": "2b9debd461182cb7727015e62f8db5cb5234abda6efb079e62f071d438e0e53f",
+      "signature_instance_sha256": "af3d59d7a69dea15f1b26a59052ee1ee9565ea0acfb7ab0746ce4d8e365099f1",
+      "base_id": "HCS-030",
+      "family": "coordinate-character-shift",
+      "type": "ATTACK",
+      "short_claim": "A shifted coordinate-character sequence has a computable sparse spectrum enabling sub-square-root recovery.",
+      "mechanism_obligation_id": "M06-REDUCTION",
+      "mechanism_obligation": "Specify a reduction and price both directions",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 5,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-COORDINATE-HIDDEN-SHIFT-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-64D6E4ED21BBC4BD41AC802368CA6DAF",
+      "semantic_signature_sha256": "04a8e74464d44704a7e36a545778addec93b395f6467146314c296a3c578cf36",
+      "signature_instance_sha256": "64d6e4ed21bbc4bd41ac802368ca6daf493d3e6e1b3fd2c4f096b48cd57595ba",
+      "base_id": "H4-E05",
+      "family": "nonsplit-torus-trace",
+      "type": "ATTACK",
+      "short_claim": "A p+1 norm-one-torus trace factor base supports a lower-arity relation pipeline with sub-Pollard total cost.",
+      "mechanism_obligation_id": "M06-REDUCTION",
+      "mechanism_obligation": "Specify a reduction and price both directions",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 5,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "REFORMULATE",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-PPLUS1-TRACE-RELATION-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_reformulate_label",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-08FC7B2D175E376A4B51DAD5B342D877",
+      "semantic_signature_sha256": "3c1dd6d438bf0938e31fe5bd0692dfabdc9b75d479baf3d49b6316ba1e28e86c",
+      "signature_instance_sha256": "08fc7b2d175e376a4b51dad5b342d8776e1ed849428390c80289dc214aba697f",
+      "base_id": "HCS-031",
+      "family": "coordinate-linear-complexity",
+      "type": "ATTACK",
+      "short_claim": "The x-coordinate or character sequence has sub-square-root linear complexity usable for shift recovery.",
+      "mechanism_obligation_id": "M06-REDUCTION",
+      "mechanism_obligation": "Specify a reduction and price both directions",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 5,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "MERGED",
+      "source_canonical": "HYP-COORDINATE-HIDDEN-SHIFT-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-432E7C5F838D028C0856898703E403A4",
+      "semantic_signature_sha256": "5abee7511f330e6bf2241a866b7e633791cde0ce07005fb44cc827de6603a7b5",
+      "signature_instance_sha256": "432e7c5f838d028c0856898703e403a484c005cd9eef1d67d5b9ff20c0325c23",
+      "base_id": "ALG-013",
+      "family": "character-partition",
+      "type": "ATTACK",
+      "short_claim": "A coordinate-character partition creates a usable-collision hazard above birthday scaling.",
+      "mechanism_obligation_id": "M06-REDUCTION",
+      "mechanism_obligation": "Specify a reduction and price both directions",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 5,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "MERGED",
+      "source_canonical": "HYP-COORDINATE-HIDDEN-SHIFT-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-1A2C703A752AB404C9E2D08F824B6521",
+      "semantic_signature_sha256": "0b684c64bb245ea31915392fc03df47d12089c6ce877fe54b789dd91e2014717",
+      "signature_instance_sha256": "1a2c703a752ab404c9e2d08f824b652139a47ff795edac23f2388b02db01bcfc",
+      "base_id": "H4-E28",
+      "family": "pminus1-m16",
+      "type": "ATTACK",
+      "short_claim": "The p-1 M16 circuit has per-attempt and end-to-end exponent below known thresholds.",
+      "mechanism_obligation_id": "M06-REDUCTION",
+      "mechanism_obligation": "Specify a reduction and price both directions",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 5,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "REFORMULATE",
+      "source_portfolio": "MERGED",
+      "source_canonical": "HYP-SEMAEV-RELATION-INCIDENCE-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_reformulate_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-1B136EF8F395C9BE9D5C04B8EDF7E07C",
+      "semantic_signature_sha256": "0efd6833d347d7cb9c92e532dd841647350b43696704b464a87174e46492a5da",
+      "signature_instance_sha256": "1b136ef8f395c9be9d5c04b8edf7e07c6f2855097bf09d6a07fc93f556c08eea",
+      "base_id": "H4-E07",
+      "family": "additive-energy",
+      "type": "ATTACK",
+      "short_claim": "A target-independent factor base with high elliptic additive energy yields more independent relations per unit cost.",
+      "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
+      "mechanism_obligation": "Name the representation information unavailable to a generic-group algorithm",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 3,
+        "mechanism": 5,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-2D6D54BEC21F348B82FFCC7C486721BC",
+      "semantic_signature_sha256": "b38275020791a29f33d15ed5d95d63defd50d61045f4203fd794855b41be452e",
+      "signature_instance_sha256": "2d6d54bec21f348b82ffcc7c486721bc94fa8330eb566090b84a282f1bb66637",
+      "base_id": "H4-E04",
+      "family": "hybrid-resultant",
+      "type": "ATTACK",
+      "short_claim": "A frozen-leaf resultant or GCD split has a lower full-cost slope than joint Groebner solving.",
+      "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
+      "mechanism_obligation": "Name the representation information unavailable to a generic-group algorithm",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 3,
+        "mechanism": 5,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-3A34B12074B4941074A6DE19B0154642",
+      "semantic_signature_sha256": "d7eaac3ac9e6cb28009c4fbf3ba88aa29712131619e9c6bad97d98d2ba3fa5d4",
+      "signature_instance_sha256": "3a34b12074b4941074a6de19b01546421c6c20fd20a1bed9406dce21f184b614",
+      "base_id": "H4-E02",
+      "family": "signed-coordinates",
+      "type": "ATTACK",
+      "short_claim": "Signed group-law systems have a lower solving slope than exact x-only Semaev systems.",
+      "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
+      "mechanism_obligation": "Name the representation information unavailable to a generic-group algorithm",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 3,
+        "mechanism": 5,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-5B14F2DFE28FCB318D6314526AC2FCF8",
+      "semantic_signature_sha256": "c70b77f3fd8095563ed48051c014b296923ac230bf4570c5ff9a16ceee162666",
+      "signature_instance_sha256": "5b14f2dfe28fcb318d6314526ac2fcf8af7846cc68f359bcbae8ab2e9e086720",
+      "base_id": "H4-E15",
+      "family": "specialization-degree-drop",
+      "type": "ATTACK",
+      "short_claim": "Factor-base specialization cancels leading coefficients often enough to lower elimination slope.",
+      "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
+      "mechanism_obligation": "Name the representation information unavailable to a generic-group algorithm",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 3,
+        "mechanism": 5,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-5CE04C85575EC7C1479FD555CB61556E",
+      "semantic_signature_sha256": "64410f8a107bba98c4a0ae795c537f6775ca79d4e4d8dc9cdd11bafce4f0fa04",
+      "signature_instance_sha256": "5ce04c85575ec7c1479fd555cb61556e99af5ad37c8f2a1b1f5c2f613b5c45e1",
+      "base_id": "H4-E29",
+      "family": "addition-chain-causality",
+      "type": "ATTACK",
+      "short_claim": "A subgroup exponentiation DAG has a growing advantage over root, coset, and randomized-DAG controls.",
+      "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
+      "mechanism_obligation": "Name the representation information unavailable to a generic-group algorithm",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 3,
+        "mechanism": 5,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-606837AA144B0408258254F33CCE5B38",
+      "semantic_signature_sha256": "98385406ff980e3c071505ad1affc7311c4541ba373054f334ccf0808a780d65",
+      "signature_instance_sha256": "606837aa144b0408258254f33cce5b385f851d4cf070c18ba0b9e78e0386afb8",
+      "base_id": "ALG-012",
+      "family": "arithmetic-radding",
+      "type": "ATTACK",
+      "short_claim": "Arithmetic-aware r-adding reduces wall-clock cost at unchanged collision law.",
+      "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
+      "mechanism_obligation": "Name the representation information unavailable to a generic-group algorithm",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 3,
+        "mechanism": 5,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-0F66909024099BE4E8AA6F5B2C76165F",
+      "semantic_signature_sha256": "815543ae1f8caa932e72a3ffaa979a3334f375acca09035742a4c367f658fca4",
+      "signature_instance_sha256": "0f66909024099be4e8aa6f5b2c76165f1f7751073fd526a90a732a7465184162",
+      "base_id": "ALG-001",
+      "family": "structured-generic-group",
+      "type": "BARRIER",
+      "short_claim": "Sparse coordinate structure fits SGGM with a density bound preserving the square-root exponent.",
+      "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+      "mechanism_obligation": "State a scoped barrier with hypotheses and reopening condition",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 4,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-SGGM-SPARSE-APPLICABILITY-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-152789DAF4DCF18DCE5D2AB949261907",
+      "semantic_signature_sha256": "9d674d4019cd1fd99bf6bdad0b0cf749a3a818d138963e228b1a6fbaca73eff0",
+      "signature_instance_sha256": "152789daf4dcf18dce5d2ab9492619071fdeb821cd8fce03a49d941801963982",
+      "base_id": "ALG-033",
+      "family": "end-to-end-exponent",
+      "type": "BARRIER",
+      "short_claim": "Attack exponent is bounded by the maximum of attempt-yield, linear-algebra, and recovery exponents.",
+      "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+      "mechanism_obligation": "State a scoped barrier with hypotheses and reopening condition",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T10-KERNEL-PACKAGE",
+      "decisive_test": "Formalize only the decision-changing theorem package",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 4,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-END-TO-END-COST-BRIDGE-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-18315184F7578ED755F531EF50AAF60D",
+      "semantic_signature_sha256": "0739acd53e94775217d0c66ebe09d77fff73a653644c8de2db3a8bfab6933986",
+      "signature_instance_sha256": "18315184f7578ed755f531ef50aaf60d4e84b26f1b8a7f6697be1318401e1245",
+      "base_id": "ALG-014",
+      "family": "induced-subset",
+      "type": "BARRIER",
+      "short_claim": "Return time cancels the birthday gain of an induced walk on a special subset.",
+      "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+      "mechanism_obligation": "State a scoped barrier with hypotheses and reopening condition",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T09-BOUNDARY-COUNTEREXAMPLE",
+      "decisive_test": "Search the exact boundary for a minimal counterexample",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 4,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-INDUCED-SUBSET-CONSERVATION-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-215DF9F00F61AB08D340BBB7EEF2C2A6",
+      "semantic_signature_sha256": "c156d108398f4b256ea2faf8f02c7570da56c2f388eaa01b28f575508e3d50e1",
+      "signature_instance_sha256": "215df9f00f61ab08d340bbb7eef2c2a69cb619b20b2372d5d4d4309cbb5e3b04",
+      "base_id": "ALG-019",
+      "family": "semaev-yield",
+      "type": "BARRIER",
+      "short_claim": "Structured factor-base relation counts have random-variety main scale without exponent surplus.",
+      "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+      "mechanism_obligation": "State a scoped barrier with hypotheses and reopening condition",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 4,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-SEMAEV-RELATION-INCIDENCE-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-00E73CC2F375852D9D89F45179498369",
+      "semantic_signature_sha256": "677e1b4f14347b494517a8a2562386b5ab39f3d185751405ce6967883a0def2d",
+      "signature_instance_sha256": "00e73cc2f375852d9d89f451794983694715ff672f708a36ed5b9b2616f4cba1",
+      "base_id": "H4-E34",
+      "family": "complete-cost",
+      "type": "BARRIER",
+      "short_claim": "Yield, rank, recovery, and sparse linear algebra restore the full exponent for tested relation pipelines.",
+      "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+      "mechanism_obligation": "State a scoped barrier with hypotheses and reopening condition",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 4,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "MERGED",
+      "source_canonical": "HYP-END-TO-END-COST-BRIDGE-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-01FB70DB4B4F0257531D7802B44033C2",
+      "semantic_signature_sha256": "e86dc577051e1259ba6f374142a831ac9fab442801c95e57eec6348bf7be40e5",
+      "signature_instance_sha256": "01fb70db4b4f0257531d7802b44033c2b51ac8ea54a56eb1102b305a661207bd",
+      "base_id": "ALG-032",
+      "family": "lean-glv-orbit",
+      "type": "BARRIER",
+      "short_claim": "Every nonzero prime-subgroup point has a six-element GLV-negation orbit.",
+      "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+      "mechanism_obligation": "State a scoped barrier with hypotheses and reopening condition",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 4,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "MERGED",
+      "source_canonical": "HYP-SGGM-SPARSE-APPLICABILITY-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-0AADF803634BB283C8E262ED605E8602",
+      "semantic_signature_sha256": "f379fa4162244ca2478511076d57adb8f72696be031e915e9564c1f6e94a6f49",
+      "signature_instance_sha256": "0aadf803634bb283c8e262ed605e86022c3b778bbe28a2f7ec34b51f5ed0b714",
+      "base_id": "H4-E25",
+      "family": "norm-one-dickson-circuit",
+      "type": "ENABLING",
+      "short_claim": "An arbitrary-order norm-one trace set has an exact reduced bounded-fiber O(log N) circuit.",
+      "mechanism_obligation_id": "M09-REENCODING-CHECK",
+      "mechanism_obligation": "Prove separation from a known representation or reduction",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 4,
+        "mechanism": 3,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-TORUS-CIRCUIT-FIDELITY-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-0D37FC5C29F47D49885FE893307DD086",
+      "semantic_signature_sha256": "20f5d7acb6d070560132035450a51cc7fba54ea5daf0a17aaf317e3cd0f98cc0",
+      "signature_instance_sha256": "0d37fc5c29f47d49885fe893307dd0864ce1af7b74b659599dc583e45bda1273",
+      "base_id": "ALG-015",
+      "family": "coordinate-ablation",
+      "type": "ENABLING",
+      "short_claim": "A genuine coordinate mechanism survives isomorphic models and admissible coordinate randomization.",
+      "mechanism_obligation_id": "M09-REENCODING-CHECK",
+      "mechanism_obligation": "Prove separation from a known representation or reduction",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T01-DESK-THEOREM",
+      "decisive_test": "Paper proof with an explicit counterexample search",
+      "dimensions": {
+        "exactness": 4,
+        "mechanism": 3,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "MERGED",
+      "source_canonical": "HYP-COORDINATE-HIDDEN-SHIFT-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-10622A7F9F18A904EF36A51EDA50AA7C",
+      "semantic_signature_sha256": "8871d1b637e1cec61dce67ffce91846002a93e30848b5aa80ea915e5fd1bf762",
+      "signature_instance_sha256": "10622a7f9f18a904ef36a51eda50aa7c47232dd90f1c9c4c51ab6997650bbf48",
+      "base_id": "H4-E20",
+      "family": "relation-uniformity",
+      "type": "ENABLING",
+      "short_claim": "Corrected target-fiber counts are asymptotically uniform after repetition adjustment.",
+      "mechanism_obligation_id": "M09-REENCODING-CHECK",
+      "mechanism_obligation": "Prove separation from a known representation or reduction",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T10-KERNEL-PACKAGE",
+      "decisive_test": "Formalize only the decision-changing theorem package",
+      "dimensions": {
+        "exactness": 4,
+        "mechanism": 3,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "MERGED",
+      "source_canonical": "HYP-SEMAEV-RELATION-INCIDENCE-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-11F59136FBC5BDA8CC5AF50A09FB9818",
+      "semantic_signature_sha256": "0d5b1055585b7cd98d8f022580c2a977c3c05d044d466e9118cf95c8d5dc9ecf",
+      "signature_instance_sha256": "11f59136fbc5bda8cc5af50a09fb981831d62377d0639b11500b08ebfcff8260",
+      "base_id": "H4-E16",
+      "family": "regular-locus-density",
+      "type": "ENABLING",
+      "short_claim": "The source-faithful regular affine locus has non-collapsing density across field sizes.",
+      "mechanism_obligation_id": "M09-REENCODING-CHECK",
+      "mechanism_obligation": "Prove separation from a known representation or reduction",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 4,
+        "mechanism": 3,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "MERGED",
+      "source_canonical": "HYP-SEMAEV-RELATION-INCIDENCE-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-0B2EC8CF6677C69E9B4803A6438DF0DB",
+      "semantic_signature_sha256": "875d382ddda6c3d346b152300783e56d0128ee0c76c7b23680d018cfbd9f56b2",
+      "signature_instance_sha256": "0b2ec8cf6677c69e9b4803a6438df0db60af00059cab7022bb0a7f64042c3de6",
+      "base_id": "ALG-030",
+      "family": "ml-relation-invariant",
+      "type": "ENABLING",
+      "short_claim": "Interpretable ML discovers an exact relation invariant surviving held-out curve controls.",
+      "mechanism_obligation_id": "M09-REENCODING-CHECK",
+      "mechanism_obligation": "Prove separation from a known representation or reduction",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T01-DESK-THEOREM",
+      "decisive_test": "Paper proof with an explicit counterexample search",
+      "dimensions": {
+        "exactness": 4,
+        "mechanism": 3,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-0C6AA57CC8784EC6237177B176F7AF0C",
+      "semantic_signature_sha256": "d90264fca96a92939f41866397b9f9d962f52272a1a1eb360b4c9fcc9c614be6",
+      "signature_instance_sha256": "0c6aa57cc8784ec6237177b176f7af0c5dc8d2952656c97527602da0c49b971b",
+      "base_id": "ALG-028",
+      "family": "ml-solver-predictor",
+      "type": "ENABLING",
+      "short_claim": "Held-out system invariants predict solver cost and improve compute allocation end to end.",
+      "mechanism_obligation_id": "M09-REENCODING-CHECK",
+      "mechanism_obligation": "Prove separation from a known representation or reduction",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T01-DESK-THEOREM",
+      "decisive_test": "Paper proof with an explicit counterexample search",
+      "dimensions": {
+        "exactness": 4,
+        "mechanism": 3,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-585D74DCC13ADE56D8F1BB808C1C9AA5",
+      "semantic_signature_sha256": "99716f68e292ded6b0694810eb11afd1c46edb236e38a570a2fbf80b70a43615",
+      "signature_instance_sha256": "585d74dcc13ade56d8f1bb808c1c9aa5f6c90cc29836b37f7f32a8ce17e332fd",
+      "base_id": "ALG-029",
+      "family": "ml-counterexample-search",
+      "type": "ENABLING",
+      "short_claim": "Active learning finds exact counterexamples to scaling laws faster than uniform sampling.",
+      "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+      "mechanism_obligation": "Separate the proposed lever from representation and solver engineering",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T10-KERNEL-PACKAGE",
+      "decisive_test": "Formalize only the decision-changing theorem package",
+      "dimensions": {
+        "exactness": 3,
+        "mechanism": 4,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-18B0956D3C767784D3FB8E70A486882A",
+      "semantic_signature_sha256": "1afa951efafbfcb607708b8b122ba223ff6923a6c4edb516398ba4179187b0a4",
+      "signature_instance_sha256": "18b0956d3c767784d3fb8e70a486882a3111b0400c2f5a23a49ab7c69940afdd",
+      "base_id": "ALG-031",
+      "family": "mechanism-registry",
+      "type": "ENABLING",
+      "short_claim": "A frozen mechanism registry detects duplicated proposals and hidden model changes.",
+      "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+      "mechanism_obligation": "Separate the proposed lever from representation and solver engineering",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 3,
+        "mechanism": 4,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "REFORMULATE",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_reformulate_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-28BA84A3980AD0D96B50B7F2C982D28B",
+      "semantic_signature_sha256": "fe5f77d00f5091ea569807f53377275d2984b133854db9d7bfb5c6e25a5097a3",
+      "signature_instance_sha256": "28ba84a3980ad0d96b50b7f2c982d28bdebe2f9802aeb38115998f2619562619",
+      "base_id": "H4-E19",
+      "family": "monodromy-rank",
+      "type": "ENABLING",
+      "short_claim": "Transitive generic-fiber monodromy implies asymptotically independent relation rows.",
+      "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+      "mechanism_obligation": "Separate the proposed lever from representation and solver engineering",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T01-DESK-THEOREM",
+      "decisive_test": "Paper proof with an explicit counterexample search",
+      "dimensions": {
+        "exactness": 3,
+        "mechanism": 4,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "REFORMULATE",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_reformulate_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-3CC5CEB5F6C6865BDCFA7023E1F8E112",
+      "semantic_signature_sha256": "a09592450c2ddb38e8bd6d3449c61366842694e6b0b8bfc3e94d09835960c95d",
+      "signature_instance_sha256": "3cc5ceb5f6c6865bdcfa7023e1f8e112979af83f5017a6837f72a842aee891b4",
+      "base_id": "HCS-025",
+      "family": "division-polynomial-invariants",
+      "type": "ENABLING",
+      "short_claim": "C3 factorization of division polynomials lowers complete elimination slope.",
+      "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+      "mechanism_obligation": "Separate the proposed lever from representation and solver engineering",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 3,
+        "mechanism": 4,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "REFORMULATE",
+      "source_portfolio": "DEFERRED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_reformulate_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    },
+    {
+      "seed_id": "HQS1-50B97114D5EF612235E5FF16D423F779",
+      "semantic_signature_sha256": "086751e9408bb6874301e93593c5b66cd348c9adf63cae825db2a9fb9f30e0e5",
+      "signature_instance_sha256": "50b97114d5ef612235e5ff16d423f779e84f1477ed4afad3cacafa59fd077224",
+      "base_id": "HCS-026",
+      "family": "infinity-density",
+      "type": "ENABLING",
+      "short_claim": "Isolated-infinity propagation produces a GLV-specific scalable regular-locus advantage.",
+      "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+      "mechanism_obligation": "Separate the proposed lever from representation and solver engineering",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 3,
+        "mechanism": 4,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "KILL",
+      "source_portfolio": "KILLED",
+      "source_canonical": "-",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_kill_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ]
+    }
+  ],
+  "final_research_bets": [
+    {
+      "seed_id": "HQS1-1A2C703A752AB404C9E2D08F824B6521",
+      "semantic_signature_sha256": "0b684c64bb245ea31915392fc03df47d12089c6ce877fe54b789dd91e2014717",
+      "signature_instance_sha256": "1a2c703a752ab404c9e2d08f824b652139a47ff795edac23f2388b02db01bcfc",
+      "attempt_index": 60571,
+      "base_id": "H4-E28",
+      "family": "pminus1-m16",
+      "type": "ATTACK",
+      "short_claim": "The p-1 M16 circuit has per-attempt and end-to-end exponent below known thresholds.",
+      "mechanism_obligation_id": "M06-REDUCTION",
+      "mechanism_obligation": "Specify a reduction and price both directions",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 5,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "REFORMULATE",
+      "source_portfolio": "MERGED",
+      "source_canonical": "HYP-SEMAEV-RELATION-INCIDENCE-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_reformulate_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ],
+      "review_decision": {
+        "seed_id": "HQS1-1A2C703A752AB404C9E2D08F824B6521",
+        "verdict": "retain_non_executable_research_bet",
+        "portfolio_role": "primary_existing_proposal",
+        "decision_protocol": {
+          "claim": "Bind this seed to the existing HYP-M16-SOLVER-SLOPE-001 proposal and review its source-faithful end-to-end cost question.",
+          "basis": "Current main permits formulation and review of exactly this non-executable proposal after TASK-026, while solver scaling, rank, recovery, and total cost remain open.",
+          "counterargument": "The seed is not a new hypothesis and its source claim overstates what is known; TASK-026 already made the GLV-specific explanation bounded negative.",
+          "decisive_test": "Five digest-bound reviews of the frozen M16 proposal, beginning with the zero-compute regime, yield, recovery, rank, and common-cost gates.",
+          "verdict": "Retain only as the existing primary review target; no solver or experiment is authorized."
+        },
+        "limitations": [
+          "not a newly generated mechanism",
+          "exact mechanism assurance is incomplete",
+          "no source-independent review",
+          "no scaling or ECDLP improvement established"
+        ]
+      },
+      "scientific_identity": "non_executable_research_bet",
+      "executable": false,
+      "admissible": false,
+      "recommended": false,
+      "authorized": false,
+      "route_promotion": false
+    },
+    {
+      "seed_id": "HQS1-0F66909024099BE4E8AA6F5B2C76165F",
+      "semantic_signature_sha256": "815543ae1f8caa932e72a3ffaa979a3334f375acca09035742a4c367f658fca4",
+      "signature_instance_sha256": "0f66909024099be4e8aa6f5b2c76165f1f7751073fd526a90a732a7465184162",
+      "attempt_index": 471,
+      "base_id": "ALG-001",
+      "family": "structured-generic-group",
+      "type": "BARRIER",
+      "short_claim": "Sparse coordinate structure fits SGGM with a density bound preserving the square-root exponent.",
+      "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+      "mechanism_obligation": "State a scoped barrier with hypotheses and reopening condition",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 4,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-SGGM-SPARSE-APPLICABILITY-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ],
+      "review_decision": {
+        "seed_id": "HQS1-0F66909024099BE4E8AA6F5B2C76165F",
+        "verdict": "retain_non_executable_research_bet",
+        "portfolio_role": "hedge_barrier",
+        "decision_protocol": {
+          "claim": "Determine whether the allowed sparse coordinate operations admit a faithful structured-generic-group simulation with the required density bound.",
+          "basis": "A successful mapping would place a square-root barrier over a broad representation-aware family; a failed axiom would identify an exact escape obligation.",
+          "counterargument": "The current x-only naive map is refuted and no broader simulation has been specified, so applicability cannot be assumed.",
+          "decisive_test": "Construct the labels, partial operation, distributions, density, and simulation, then return either all satisfied axioms or the first minimal counterexample.",
+          "verdict": "Retain as an orthogonal desk barrier, not as an attack."
+        },
+        "limitations": [
+          "model applicability is unknown",
+          "does not itself produce an ECDLP algorithm",
+          "novelty unverified"
+        ]
+      },
+      "scientific_identity": "non_executable_research_bet",
+      "executable": false,
+      "admissible": false,
+      "recommended": false,
+      "authorized": false,
+      "route_promotion": false
+    },
+    {
+      "seed_id": "HQS1-215DF9F00F61AB08D340BBB7EEF2C2A6",
+      "semantic_signature_sha256": "c156d108398f4b256ea2faf8f02c7570da56c2f388eaa01b28f575508e3d50e1",
+      "signature_instance_sha256": "215df9f00f61ab08d340bbb7eef2c2a69cb619b20b2372d5d4d4309cbb5e3b04",
+      "attempt_index": 18401,
+      "base_id": "ALG-019",
+      "family": "semaev-yield",
+      "type": "BARRIER",
+      "short_claim": "Structured factor-base relation counts have random-variety main scale without exponent surplus.",
+      "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+      "mechanism_obligation": "State a scoped barrier with hypotheses and reopening condition",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 4,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-SEMAEV-RELATION-INCIDENCE-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ],
+      "review_decision": {
+        "seed_id": "HQS1-215DF9F00F61AB08D340BBB7EEF2C2A6",
+        "verdict": "retain_non_executable_research_bet",
+        "portfolio_role": "enabler_primary",
+        "decision_protocol": {
+          "claim": "Derive a fixed-target relation-incidence law for the exact structured factor base used by the primary proposal.",
+          "basis": "Relation yield is an open exponent term and can close a family before any solver run.",
+          "counterargument": "TASK-026 is only bounded toy evidence and does not imply an asymptotic random-variety law or row independence.",
+          "decisive_test": "Count ordered tuples and multisets with repetitions, stabilizers, exceptional fibers, and target-fiber variance, then bridge the count to independent relation yield.",
+          "verdict": "Retain as the primary proposal's enabling barrier."
+        },
+        "limitations": [
+          "must be narrowed to one exact factor-base family",
+          "relation count is not relation rank",
+          "no asymptotic law established"
+        ]
+      },
+      "scientific_identity": "non_executable_research_bet",
+      "executable": false,
+      "admissible": false,
+      "recommended": false,
+      "authorized": false,
+      "route_promotion": false
+    },
+    {
+      "seed_id": "HQS1-152789DAF4DCF18DCE5D2AB949261907",
+      "semantic_signature_sha256": "9d674d4019cd1fd99bf6bdad0b0cf749a3a818d138963e228b1a6fbaca73eff0",
+      "signature_instance_sha256": "152789daf4dcf18dce5d2ab9492619071fdeb821cd8fce03a49d941801963982",
+      "attempt_index": 32409,
+      "base_id": "ALG-033",
+      "family": "end-to-end-exponent",
+      "type": "BARRIER",
+      "short_claim": "Attack exponent is bounded by the maximum of attempt-yield, linear-algebra, and recovery exponents.",
+      "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+      "mechanism_obligation": "State a scoped barrier with hypotheses and reopening condition",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T10-KERNEL-PACKAGE",
+      "decisive_test": "Formalize only the decision-changing theorem package",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 4,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-END-TO-END-COST-BRIDGE-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ],
+      "review_decision": {
+        "seed_id": "HQS1-152789DAF4DCF18DCE5D2AB949261907",
+        "verdict": "retain_non_executable_research_bet",
+        "portfolio_role": "cross_route_barrier",
+        "decision_protocol": {
+          "claim": "Freeze a common accounting identity for acquisition, solving, recovery, rank, sparse linear algebra, preprocessing, and equal-success probability.",
+          "basis": "The identity prevents a local gain from being relabeled as an end-to-end exponent gain after cost moves to another stage.",
+          "counterargument": "A max-of-exponents slogan is insufficient without dependence, tail, memory, and success assumptions.",
+          "decisive_test": "Produce a conditional theorem and replayable cost certificate with every assumption and reopening condition explicit.",
+          "verdict": "Retain as a cross-route barrier and merge duplicate complete-cost seeds into it."
+        },
+        "limitations": [
+          "conditional accounting theorem only",
+          "does not prove any individual route slow",
+          "requires source-specific instantiation"
+        ]
+      },
+      "scientific_identity": "non_executable_research_bet",
+      "executable": false,
+      "admissible": false,
+      "recommended": false,
+      "authorized": false,
+      "route_promotion": false
+    },
+    {
+      "seed_id": "HQS1-18315184F7578ED755F531EF50AAF60D",
+      "semantic_signature_sha256": "0739acd53e94775217d0c66ebe09d77fff73a653644c8de2db3a8bfab6933986",
+      "signature_instance_sha256": "18315184f7578ed755f531ef50aaf60d4e84b26f1b8a7f6697be1318401e1245",
+      "attempt_index": 13478,
+      "base_id": "ALG-014",
+      "family": "induced-subset",
+      "type": "BARRIER",
+      "short_claim": "Return time cancels the birthday gain of an induced walk on a special subset.",
+      "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+      "mechanism_obligation": "State a scoped barrier with hypotheses and reopening condition",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T09-BOUNDARY-COUNTEREXAMPLE",
+      "decisive_test": "Search the exact boundary for a minimal counterexample",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 4,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-INDUCED-SUBSET-CONSERVATION-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ],
+      "review_decision": {
+        "seed_id": "HQS1-18315184F7578ED755F531EF50AAF60D",
+        "verdict": "retain_non_executable_research_bet",
+        "portfolio_role": "walk_barrier",
+        "decision_protocol": {
+          "claim": "Identify when return time cancels a birthday gain obtained by restricting a walk to a special subset.",
+          "basis": "A scoped theorem could cheaply reject many subset-walk reencodings without executing them.",
+          "counterargument": "The claim can fail for a genuinely closed transition rule or a subset with an independent information source.",
+          "decisive_test": "State the chain and stationarity assumptions, derive Kac or return-time accounting, and exhibit the smallest counterexample outside the theorem scope.",
+          "verdict": "Retain as a scoped barrier, not a universal no-go."
+        },
+        "limitations": [
+          "does not cover every structured walk",
+          "requires an exact transition model",
+          "no attack consequence by itself"
+        ]
+      },
+      "scientific_identity": "non_executable_research_bet",
+      "executable": false,
+      "admissible": false,
+      "recommended": false,
+      "authorized": false,
+      "route_promotion": false
+    },
+    {
+      "seed_id": "HQS1-AF3D59D7A69DEA15F1B26A59052EE1EE",
+      "semantic_signature_sha256": "2b9debd461182cb7727015e62f8db5cb5234abda6efb079e62f071d438e0e53f",
+      "signature_instance_sha256": "af3d59d7a69dea15f1b26a59052ee1ee9565ea0acfb7ab0746ce4d8e365099f1",
+      "attempt_index": 96501,
+      "base_id": "HCS-030",
+      "family": "coordinate-character-shift",
+      "type": "ATTACK",
+      "short_claim": "A shifted coordinate-character sequence has a computable sparse spectrum enabling sub-square-root recovery.",
+      "mechanism_obligation_id": "M06-REDUCTION",
+      "mechanism_obligation": "Specify a reduction and price both directions",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 5,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-COORDINATE-HIDDEN-SHIFT-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ],
+      "review_decision": {
+        "seed_id": "HQS1-AF3D59D7A69DEA15F1B26A59052EE1EE",
+        "verdict": "retain_non_executable_research_bet",
+        "portfolio_role": "orthogonal_watchlist",
+        "decision_protocol": {
+          "claim": "Test whether the fixed-target sequence f(k)=chi(x([k]G)) exposes a sparse-spectrum shift-recovery mechanism unavailable to a generic-group algorithm.",
+          "basis": "The observable is representation-aware and orthogonal to Semaev solving.",
+          "counterargument": "Sparse spectrum, low linear complexity, affordable preprocessing, and a sub-square-root recovery algorithm are all currently desired properties rather than results.",
+          "decisive_test": "Freeze the access model and recovery algorithm, then prove a character-sum or spectrum bound that either supports the mechanism or closes the cluster.",
+          "verdict": "Retain for reformulation and prior-art review; do not promote to hedge yet."
+        },
+        "limitations": [
+          "exact recovery algorithm missing",
+          "preprocessing cost unpriced",
+          "nearest prior art not fully audited",
+          "novelty unverified"
+        ]
+      },
+      "scientific_identity": "non_executable_research_bet",
+      "executable": false,
+      "admissible": false,
+      "recommended": false,
+      "authorized": false,
+      "route_promotion": false
+    },
+    {
+      "seed_id": "HQS1-64D6E4ED21BBC4BD41AC802368CA6DAF",
+      "semantic_signature_sha256": "04a8e74464d44704a7e36a545778addec93b395f6467146314c296a3c578cf36",
+      "signature_instance_sha256": "64d6e4ed21bbc4bd41ac802368ca6daf493d3e6e1b3fd2c4f096b48cd57595ba",
+      "attempt_index": 37501,
+      "base_id": "H4-E05",
+      "family": "nonsplit-torus-trace",
+      "type": "ATTACK",
+      "short_claim": "A p+1 norm-one-torus trace factor base supports a lower-arity relation pipeline with sub-Pollard total cost.",
+      "mechanism_obligation_id": "M06-REDUCTION",
+      "mechanism_obligation": "Specify a reduction and price both directions",
+      "cost_bridge_id": "C01-ONLINE-EXPONENT",
+      "cost_bridge": "Online work exponent at equal success probability",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 5,
+        "mechanism": 5,
+        "barrier_escape": 4,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "REFORMULATE",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-PPLUS1-TRACE-RELATION-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_reformulate_label",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ],
+      "review_decision": {
+        "seed_id": "HQS1-64D6E4ED21BBC4BD41AC802368CA6DAF",
+        "verdict": "retain_non_executable_research_bet",
+        "portfolio_role": "known_mechanism_watchlist",
+        "decision_protocol": {
+          "claim": "Resolve whether a source-faithful p+1 norm-one trace factor base has viable lift, relation, recovery, and total-cost parameters.",
+          "basis": "The trace construction is a real published mechanism and is independent of the p-1 M16 factor base.",
+          "counterargument": "A logarithmic circuit can hide full algebraic degree, and compact representation alone gives no exponent gain.",
+          "decisive_test": "Complete primary-source ingestion and an exact applicability certificate before any solver: divisor, trace map, lift fibers, arity, recovery, and end-to-end cost.",
+          "verdict": "Retain on the watchlist with no novelty or solver claim."
+        },
+        "limitations": [
+          "known prior-art mechanism",
+          "critical primary literature remains unread",
+          "unmerged historical branch is not canonical evidence",
+          "no viable cost bridge yet"
+        ]
+      },
+      "scientific_identity": "non_executable_research_bet",
+      "executable": false,
+      "admissible": false,
+      "recommended": false,
+      "authorized": false,
+      "route_promotion": false
+    },
+    {
+      "seed_id": "HQS1-0AADF803634BB283C8E262ED605E8602",
+      "semantic_signature_sha256": "f379fa4162244ca2478511076d57adb8f72696be031e915e9564c1f6e94a6f49",
+      "signature_instance_sha256": "0aadf803634bb283c8e262ed605e86022c3b778bbe28a2f7ec34b51f5ed0b714",
+      "attempt_index": 57871,
+      "base_id": "H4-E25",
+      "family": "norm-one-dickson-circuit",
+      "type": "ENABLING",
+      "short_claim": "An arbitrary-order norm-one trace set has an exact reduced bounded-fiber O(log N) circuit.",
+      "mechanism_obligation_id": "M09-REENCODING-CHECK",
+      "mechanism_obligation": "Prove separation from a known representation or reduction",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE",
+      "decisive_test": "Exact symbolic certificate plus independent replay",
+      "dimensions": {
+        "exactness": 4,
+        "mechanism": 3,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "SHORTLIST",
+      "source_canonical": "HYP-TORUS-CIRCUIT-FIDELITY-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "historical_shortlist_label",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ],
+      "review_decision": {
+        "seed_id": "HQS1-0AADF803634BB283C8E262ED605E8602",
+        "verdict": "retain_non_executable_research_bet",
+        "portfolio_role": "trace_enabler_watchlist",
+        "decision_protocol": {
+          "claim": "Certify the reduced Dickson or trace circuit, its fibers, and the algebraic degree hidden by its compact description.",
+          "basis": "This is the cheapest exact prerequisite for the p+1 trace watchlist item.",
+          "counterargument": "An O(log N) circuit description may eliminate back to a polynomial of degree on the order of N and provide no solver advantage.",
+          "decisive_test": "Replay reducedness, saturation, exceptional fibers, recovery, eliminated degree, and same-DAG controls.",
+          "verdict": "Retain only as an enabling desk certificate."
+        },
+        "limitations": [
+          "not an attack",
+          "circuit size is not solving degree",
+          "depends on source-faithful p+1 applicability"
+        ]
+      },
+      "scientific_identity": "non_executable_research_bet",
+      "executable": false,
+      "admissible": false,
+      "recommended": false,
+      "authorized": false,
+      "route_promotion": false
+    },
+    {
+      "seed_id": "HQS1-10622A7F9F18A904EF36A51EDA50AA7C",
+      "semantic_signature_sha256": "8871d1b637e1cec61dce67ffce91846002a93e30848b5aa80ea915e5fd1bf762",
+      "signature_instance_sha256": "10622a7f9f18a904ef36a51eda50aa7c47232dd90f1c9c4c51ab6997650bbf48",
+      "attempt_index": 52879,
+      "base_id": "H4-E20",
+      "family": "relation-uniformity",
+      "type": "ENABLING",
+      "short_claim": "Corrected target-fiber counts are asymptotically uniform after repetition adjustment.",
+      "mechanism_obligation_id": "M09-REENCODING-CHECK",
+      "mechanism_obligation": "Prove separation from a known representation or reduction",
+      "cost_bridge_id": "C08-END-TO-END",
+      "cost_bridge": "End-to-end work in one common unit against the matched baseline",
+      "decisive_test_id": "T10-KERNEL-PACKAGE",
+      "decisive_test": "Formalize only the decision-changing theorem package",
+      "dimensions": {
+        "exactness": 4,
+        "mechanism": 3,
+        "barrier_escape": 5,
+        "discrimination": 5,
+        "falsifiability": 5,
+        "scaling": 5,
+        "strategic_value": 5
+      },
+      "source_hard_gate": "PASS",
+      "source_portfolio": "MERGED",
+      "source_canonical": "HYP-SEMAEV-RELATION-INCIDENCE-001",
+      "warnings": [
+        "exact_mechanism_missing",
+        "historical_canonical_cluster",
+        "novelty_unverified",
+        "source_independence_unestablished"
+      ],
+      "review_decision": {
+        "seed_id": "HQS1-10622A7F9F18A904EF36A51EDA50AA7C",
+        "verdict": "retain_non_executable_research_bet",
+        "portfolio_role": "merge_into_primary_enabler",
+        "decision_protocol": {
+          "claim": "Determine fixed-target fiber uniformity after exact repetition and stabilizer corrections.",
+          "basis": "This can turn the relation-incidence question into the yield term required by M16 cost accounting.",
+          "counterargument": "Toy regular-locus availability does not establish source-faithful density, asymptotic uniformity, or independent rows.",
+          "decisive_test": "Derive exact target-fiber moments for the frozen factor base and compare them with the corrected null law.",
+          "verdict": "Retain but merge operationally into the Semaev-yield enabler rather than allocating an independent experiment."
+        },
+        "limitations": [
+          "not an independent attack",
+          "must not double-count the relation-incidence seed",
+          "rank remains a separate obligation"
+        ]
+      },
+      "scientific_identity": "non_executable_research_bet",
+      "executable": false,
+      "admissible": false,
+      "recommended": false,
+      "authorized": false,
+      "route_promotion": false
+    }
+  ],
+  "memory_contract": {
+    "raw_record_retention": 0,
+    "merkle_frontier_max_nodes": 17,
+    "sqlite_semantic_index_on_disk": true,
+    "per_rejection_samples": 3,
+    "review_queue_limit": 60,
+    "final_bet_limit": 10
+  },
+  "boundaries": [
+    "A structurally retained signature is still only a research-question seed.",
+    "The historical source labels are advisory and are not scientific gates.",
+    "No lexical or typed digest proves semantic novelty.",
+    "Every retained item still lacks an assured exact mechanism and independent source review.",
+    "No output is executable, admissible, recommended, authorized, or route-promoting."
+  ]
+}

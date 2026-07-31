@@ -165,6 +165,11 @@ jobs:
           python3 scripts/build_research_shadow_intake.py --check
           python3 scripts/test_research_shadow_intake.py
 
+      - name: Replay 100k research-question funnel
+        run: |
+          python3 scripts/hypothesis_funnel.py --check
+          python3 scripts/test_hypothesis_funnel.py
+
       - name: Replay GLV diagonal-action obstruction certificate
         run: |
           python3 experiments/glv_diagonal_obstruction/generate.py --check
