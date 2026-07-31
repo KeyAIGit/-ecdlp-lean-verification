@@ -101,6 +101,7 @@ class Operator:
     id: str
     label: str
     compatible_types: tuple[str, ...]
+    capabilities: tuple[str, ...]
     dimensions: dict[str, int]
 
 
@@ -149,7 +150,8 @@ def load_operators(raw: list[dict[str, Any]], label: str) -> list[Operator]:
         Operator(
             id=item["id"],
             label=item["label"],
-            compatible_types=tuple(item["compatible_types"]),
+            compatible_types=tuple(sorted(item["compatible_types"])),
+            capabilities=tuple(sorted(item.get("capabilities", []))),
             dimensions={key: int(value) for key, value in item["dimensions"].items()},
         )
         for item in raw
@@ -195,10 +197,19 @@ def load_base_questions(policy: dict[str, Any]) -> list[dict[str, str]]:
     return sorted(rows, key=lambda row: row["id"])
 
 
-def generation_policy_digest(policy: dict[str, Any]) -> str:
+def canonical_generation_policy(policy: dict[str, Any]) -> dict[str, Any]:
     frozen = copy.deepcopy(policy)
     frozen["review_decisions"] = []
-    return sha256_json(frozen)
+    for key in ("mechanism_obligations", "cost_bridges", "decisive_tests"):
+        for item in frozen[key]:
+            item["compatible_types"] = sorted(item["compatible_types"])
+            item["capabilities"] = sorted(item.get("capabilities", []))
+        frozen[key] = sorted(frozen[key], key=lambda item: item["id"])
+    return frozen
+
+
+def generation_policy_digest(policy: dict[str, Any]) -> str:
+    return sha256_json(canonical_generation_policy(policy))
 
 
 def evidence_snapshot(policy: dict[str, Any]) -> tuple[dict[str, str], str]:
@@ -236,6 +247,33 @@ def metric_vector(
     return {name: combined[name] for name in names}
 
 
+def generated_scope(policy: dict[str, Any]) -> dict[str, Any]:
+    safety = policy["safety"]
+    return {
+        "lane": "research_question_seed",
+        "threat_model": safety["primary_threat_model"],
+        "execution_target": None,
+        "field_bits": None,
+        "executable": False,
+    }
+
+
+def unsafe_scope_rejections(
+    scope: dict[str, Any], policy: dict[str, Any]
+) -> list[str]:
+    safety = policy["safety"]
+    target = scope.get("execution_target")
+    field_bits = scope.get("field_bits")
+    unsafe = (
+        scope.get("lane") != "research_question_seed"
+        or scope.get("threat_model") != safety["primary_threat_model"]
+        or scope.get("executable") is not False
+        or target in set(safety["forbidden_targets"])
+        or (field_bits is not None and field_bits > safety["max_toy_field_bits"])
+    )
+    return ["unsafe_or_exact_target_scope"] if unsafe else []
+
+
 def known_pattern_rejections(
     base: dict[str, str],
     mechanism: Operator,
@@ -259,6 +297,7 @@ def derive_rejections(
     cost: Operator,
     test: Operator,
     policy: dict[str, Any],
+    scope: dict[str, Any] | None = None,
 ) -> list[str]:
     kind = base["type"]
     reasons: list[str] = []
@@ -273,30 +312,18 @@ def derive_rejections(
         reasons.append("test_type_mismatch")
 
     if kind == "ATTACK":
-        if cost.dimensions.get("scaling", 0) < 4:
+        if "attack_scaling_obligation" not in cost.capabilities:
             reasons.append("attack_without_scaling_bridge")
-        if test.dimensions.get("discrimination", 0) < 4:
+        if "attack_discriminating_test" not in test.capabilities:
             reasons.append("attack_without_discriminating_test")
     elif kind == "BARRIER":
-        if mechanism.id not in {
-            "M04-NONGENERIC-SOURCE",
-            "M05-SCOPED-BARRIER",
-            "M06-REDUCTION",
-            "M08-STRUCTURAL-INVARIANT",
-            "M09-REENCODING-CHECK",
-        }:
+        if "barrier_mechanism" not in mechanism.capabilities:
             reasons.append("barrier_without_scoped_mechanism")
     elif kind == "ENABLING":
-        if mechanism.id not in {
-            "M01-EXACT-MAP",
-            "M02-FAITHFUL-RECOVERY",
-            "M03-FIXED-TARGET",
-            "M07-CAUSAL-ABLATION",
-            "M09-REENCODING-CHECK",
-            "M10-VALIDATED-INTERFACE",
-        }:
+        if "enabling_mechanism" not in mechanism.capabilities:
             reasons.append("enabling_without_dependency_bridge")
 
+    reasons.extend(unsafe_scope_rejections(scope or generated_scope(policy), policy))
     reasons.extend(known_pattern_rejections(base, mechanism, policy))
     return sorted(set(reasons))
 
@@ -346,8 +373,8 @@ def insert_pareto(
         if existing["dimensions"] == record["dimensions"]
     ]
     if len(same) >= equal_limit:
-        worst = max(same, key=lambda item: item["seed_id"])
-        if record["seed_id"] >= worst["seed_id"]:
+        worst = max(same, key=stable_record_key)
+        if stable_record_key(record) >= stable_record_key(worst):
             archive[:] = kept
             return
         kept.remove(worst)
@@ -380,23 +407,16 @@ def retain_smallest_sample(
     del values[limit:]
 
 
-def source_priority(record: dict[str, Any]) -> tuple[Any, ...]:
-    portfolio_order = {
-        "SHORTLIST": 0,
-        "MERGED": 1,
-        "DEFERRED": 2,
-        "ADJACENT": 3,
-        "KILLED": 4,
-    }
-    gate_order = {"PASS": 0, "REFORMULATE": 1, "KILL": 2}
+def stable_record_key(record: dict[str, Any]) -> str:
+    return record["semantic_signature_sha256"]
+
+
+def review_priority(record: dict[str, Any]) -> tuple[Any, ...]:
     dimensions = record["dimensions"]
     return (
-        portfolio_order.get(record["source_portfolio"], 9),
-        gate_order.get(record["source_hard_gate"], 9),
-        0 if record["source_canonical"] != "-" else 1,
         -min(dimensions.values()),
         tuple(-dimensions[key] for key in sorted(dimensions)),
-        record["seed_id"],
+        stable_record_key(record),
     )
 
 
@@ -420,7 +440,7 @@ def choose_review_queue(
         if kind not in types:
             types.append(kind)
     for kind in types:
-        ordered.extend(sorted(per_type[kind], key=source_priority))
+        ordered.extend(sorted(per_type[kind], key=review_priority))
 
     queue: list[dict[str, Any]] = []
     base_counts: Counter[str] = Counter()
@@ -449,34 +469,89 @@ def compile_review_decisions(
     queue: list[dict[str, Any]],
     policy: dict[str, Any],
 ) -> list[dict[str, Any]]:
-    queue_by_id = {item["seed_id"]: item for item in queue}
+    queue_by_signature = {
+        item["semantic_signature_sha256"]: item for item in queue
+    }
     decisions = policy["review_decisions"]
-    if len(decisions) > policy["portfolio"]["max_final_research_bets"]:
-        raise ValueError("review_decisions exceeds max_final_research_bets")
-    if len({item["seed_id"] for item in decisions}) != len(decisions):
-        raise ValueError("review_decisions contains duplicate seed ids")
+    signatures = [item.get("semantic_signature_sha256") for item in decisions]
+    if len(set(signatures)) != len(decisions):
+        raise ValueError("review_decisions contains duplicate semantic signatures")
+    review_ids = [item.get("review_id") for item in decisions]
+    if len(set(review_ids)) != len(decisions):
+        raise ValueError("review_decisions contains duplicate review ids")
+    if not set(signatures).issubset(queue_by_signature):
+        extra = sorted(set(signatures) - set(queue_by_signature))
+        raise ValueError(
+            "review_decisions references signatures outside the review queue: "
+            f"extra={extra}"
+        )
 
     retained: list[dict[str, Any]] = []
     for decision in decisions:
         required = {
-            "seed_id",
+            "review_id",
+            "semantic_signature_sha256",
             "verdict",
             "portfolio_role",
+            "reviewed_at",
+            "reviewer",
+            "independence",
+            "canonical_binding",
             "decision_protocol",
             "limitations",
         }
         missing = sorted(required - set(decision))
         if missing:
             raise ValueError(f"review decision missing keys: {missing}")
-        if decision["seed_id"] not in queue_by_id:
-            raise ValueError(
-                f"review decision references a seed outside the review queue: "
-                f"{decision['seed_id']}"
-            )
+        if not isinstance(decision["review_id"], str) or not decision[
+            "review_id"
+        ].strip():
+            raise ValueError("review decision has an empty review_id")
+        reviewer = decision["reviewer"]
+        if set(reviewer) != {"actor_id", "role"} or not all(
+            isinstance(value, str) and value.strip() for value in reviewer.values()
+        ):
+            raise ValueError("review decision has invalid reviewer provenance")
+        independence = decision["independence"]
+        if set(independence) != {"source", "model_family", "context"} or not all(
+            isinstance(value, bool) for value in independence.values()
+        ):
+            raise ValueError("review decision has invalid independence record")
+        protocol = decision["decision_protocol"]
+        protocol_keys = {
+            "claim",
+            "basis",
+            "counterargument",
+            "decisive_test",
+            "verdict",
+        }
+        if set(protocol) != protocol_keys or not all(
+            isinstance(value, str) and value.strip() for value in protocol.values()
+        ):
+            raise ValueError("review decision has an incomplete decision_protocol")
+        limitations = decision["limitations"]
+        if not isinstance(limitations, list) or not limitations or not all(
+            isinstance(value, str) and value.strip() for value in limitations
+        ):
+            raise ValueError("review decision must retain nonempty limitations")
+        validate_canonical_binding(decision["canonical_binding"])
+
+        allowed_verdicts = {
+            "retain_non_executable_research_bet",
+            "merge_into_retained",
+            "defer_insufficient_evidence",
+            "reject_known_or_unsupported",
+        }
+        if decision["verdict"] not in allowed_verdicts:
+            raise ValueError(f"unknown review verdict: {decision['verdict']}")
         if decision["verdict"] != "retain_non_executable_research_bet":
             continue
-        record = copy.deepcopy(queue_by_id[decision["seed_id"]])
+        record = copy.deepcopy(
+            queue_by_signature[decision["semantic_signature_sha256"]]
+        )
         record["review_decision"] = copy.deepcopy(decision)
+        record["review_decision"]["resolved_seed_id"] = record["seed_id"]
+        record["review_record_sha256"] = sha256_json(decision)
         record["scientific_identity"] = "non_executable_research_bet"
         record["executable"] = False
         record["admissible"] = False
@@ -484,7 +559,35 @@ def compile_review_decisions(
         record["authorized"] = False
         record["route_promotion"] = False
         retained.append(record)
+    if len(retained) > policy["portfolio"]["max_final_research_bets"]:
+        raise ValueError("retained review decisions exceed max_final_research_bets")
     return retained
+
+
+def validate_canonical_binding(binding: dict[str, Any]) -> None:
+    kind = binding.get("kind")
+    if kind == "none":
+        if not isinstance(binding.get("reason"), str) or not binding["reason"].strip():
+            raise ValueError("unbound review decision requires a reason")
+        return
+    if kind != "research_engine_proposal":
+        raise ValueError(f"unknown canonical binding kind: {kind}")
+    required = {"kind", "proposal_id", "proposal_sha256", "cell_id", "route_id"}
+    if set(binding) != required:
+        raise ValueError("proposal binding fields do not match the contract")
+    state = json.loads(
+        (ROOT / "data" / "research_engine_state.json").read_text(encoding="utf-8")
+    )
+    proposals = state.get("hypothesis_generation", {}).get("proposal_intake", [])
+    match = next(
+        (item for item in proposals if item.get("proposal_id") == binding["proposal_id"]),
+        None,
+    )
+    if match is None:
+        raise ValueError(f"canonical proposal is unknown: {binding['proposal_id']}")
+    for key in ("proposal_sha256", "cell_id", "route_id"):
+        if match.get(key) != binding[key]:
+            raise ValueError(f"canonical proposal binding mismatch: {key}")
 
 
 def public_candidate(record: dict[str, Any]) -> dict[str, Any]:
@@ -506,6 +609,7 @@ def public_candidate(record: dict[str, Any]) -> dict[str, Any]:
         "source_hard_gate",
         "source_portfolio",
         "source_canonical",
+        "scope",
         "warnings",
     )
     return {key: copy.deepcopy(record[key]) for key in keys}
@@ -525,6 +629,7 @@ def run_funnel(
     policy: dict[str, Any] | None = None,
     *,
     attempt_limit: int | None = None,
+    compile_reviews: bool = True,
 ) -> dict[str, Any]:
     policy = copy.deepcopy(policy or load_policy())
     bases = load_base_questions(policy)
@@ -609,9 +714,12 @@ def run_funnel(
                 "source_hard_gate": base["hard_gate"],
                 "source_portfolio": base["portfolio"],
                 "source_canonical": base["canonical"],
+                "scope": generated_scope(policy),
             }
 
-            rejections = derive_rejections(base, mechanism, cost, test, policy)
+            rejections = derive_rejections(
+                base, mechanism, cost, test, policy, record["scope"]
+            )
             cursor = database.execute(
                 "INSERT OR IGNORE INTO signatures(digest, first_attempt) VALUES (?, ?)",
                 (semantic_digest, attempt_index),
@@ -678,10 +786,12 @@ def run_funnel(
     ]
     queue = choose_review_queue(candidates, policy)
     public_queue = [public_candidate(item) for item in queue]
-    review_policy = copy.deepcopy(policy)
-    if attempt_limit is not None:
-        review_policy["review_decisions"] = []
-    final_bets = compile_review_decisions(queue, review_policy)
+    reviews_compiled = compile_reviews and attempt_limit is None
+    final_bets = compile_review_decisions(queue, policy) if reviews_compiled else []
+    review_records = policy["review_decisions"] if reviews_compiled else []
+    independent_review_records = sum(
+        all(record["independence"].values()) for record in review_records
+    )
     root = merkle.root()
 
     state = {
@@ -725,6 +835,9 @@ def run_funnel(
             "rejected": disposition_counts["rejected"],
             "pareto_records_before_review_queue": len(candidates),
             "review_queue": len(public_queue),
+            "review_records": len(review_records),
+            "independent_review_records": independent_review_records,
+            "unreviewed_queue_items": len(public_queue) - len(review_records),
             "final_research_bets": len(final_bets),
             "admissible": 0,
             "recommended": 0,
@@ -754,6 +867,7 @@ def run_funnel(
             "A structurally retained signature is still only a research-question seed.",
             "The historical source labels are advisory and are not scientific gates.",
             "No lexical or typed digest proves semantic novelty.",
+            "A portfolio review record is not independent unless source, model-family, and context independence are all recorded true.",
             "Every retained item still lacks an assured exact mechanism and independent source review.",
             "No output is executable, admissible, recommended, authorized, or route-promoting."
         ],

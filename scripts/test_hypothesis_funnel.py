@@ -8,6 +8,7 @@ import hashlib
 import json
 import tempfile
 import unittest
+from dataclasses import replace
 from pathlib import Path
 
 from hypothesis_funnel import (
@@ -19,10 +20,14 @@ from hypothesis_funnel import (
     canonical_lf_sha256,
     compile_review_decisions,
     derive_rejections,
+    generation_policy_digest,
+    generated_scope,
     load_base_questions,
     load_operators,
     load_policy,
+    review_priority,
     run_funnel,
+    unsafe_scope_rejections,
 )
 
 
@@ -40,6 +45,29 @@ def naive_merkle(payloads: list[bytes]) -> str:
         return node(tree(items[:split]), tree(items[split:]))
 
     return tree(payloads).hex() if payloads else hashlib.sha256(b"").hexdigest()
+
+
+def valid_review(
+    item: dict[str, object], index: int, *, verdict: str = "retain_non_executable_research_bet"
+) -> dict[str, object]:
+    return {
+        "review_id": f"TEST-REVIEW-{index:03d}",
+        "semantic_signature_sha256": item["semantic_signature_sha256"],
+        "verdict": verdict,
+        "portfolio_role": "fixture",
+        "reviewed_at": "2026-07-31",
+        "reviewer": {"actor_id": "test-reviewer", "role": "fixture"},
+        "independence": {"source": False, "model_family": False, "context": False},
+        "canonical_binding": {"kind": "none", "reason": "test fixture"},
+        "decision_protocol": {
+            "claim": "fixture claim",
+            "basis": "fixture basis",
+            "counterargument": "fixture counterargument",
+            "decisive_test": "fixture decisive test",
+            "verdict": "fixture verdict",
+        },
+        "limitations": ["fixture limitation"],
+    }
 
 
 class FunnelTests(unittest.TestCase):
@@ -179,7 +207,13 @@ class FunnelTests(unittest.TestCase):
         self.assertFalse(self.state["bulk_contract"]["exact_target_execution"])
         for key in ("authorized", "route_promotions", "experiment_events"):
             self.assertEqual(self.state["counts"][key], 0)
-        self.assertEqual(self.state["counts"]["final_research_bets"], 9)
+        self.assertEqual(self.state["counts"]["final_research_bets"], 3)
+        self.assertEqual(self.state["counts"]["review_records"], 3)
+        self.assertEqual(self.state["counts"]["independent_review_records"], 0)
+        self.assertEqual(
+            self.state["counts"]["unreviewed_queue_items"],
+            self.state["counts"]["review_queue"] - 3,
+        )
         self.assertLessEqual(
             len(self.state["final_research_bets"]),
             self.policy["portfolio"]["max_final_research_bets"],
@@ -210,47 +244,95 @@ class FunnelTests(unittest.TestCase):
     def test_final_bet_limit_fails_closed(self) -> None:
         queue = self.state["review_queue"]
         policy = copy.deepcopy(self.policy)
-        exemplar = {
-            "verdict": "retain_non_executable_research_bet",
-            "portfolio_role": "unallocated",
-            "decision_protocol": {
-                "claim": "fixture",
-                "basis": "fixture",
-                "counterargument": "fixture",
-                "decisive_test": "fixture",
-                "verdict": "fixture",
-            },
-            "limitations": ["fixture"],
-        }
-        decisions = []
-        for index in range(11):
-            decision = copy.deepcopy(exemplar)
-            decision["seed_id"] = queue[index % len(queue)]["seed_id"]
-            if index >= len(queue):
-                decision["seed_id"] = f"HQS1-{'F' * 31}{index:X}"
-            decisions.append(decision)
-        policy["review_decisions"] = decisions
-        with self.assertRaisesRegex(ValueError, "exceeds"):
+        policy["review_decisions"] = [
+            valid_review(item, index) for index, item in enumerate(queue[:11])
+        ]
+        with self.assertRaisesRegex(ValueError, "exceed"):
             compile_review_decisions(queue, policy)
 
-    def test_review_binding_cannot_reference_an_outside_seed(self) -> None:
+    def test_review_binding_cannot_reference_an_outside_signature(self) -> None:
         policy = copy.deepcopy(self.policy)
-        policy["review_decisions"] = [
-            {
-                "seed_id": f"HQS1-{'F' * 32}",
-                "verdict": "retain_non_executable_research_bet",
-                "portfolio_role": "unallocated",
-                "decision_protocol": {
-                    "claim": "fixture",
-                    "basis": "fixture",
-                    "counterargument": "fixture",
-                    "decisive_test": "fixture",
-                    "verdict": "fixture",
-                },
-                "limitations": ["fixture"],
-            }
-        ]
+        decision = valid_review(self.state["review_queue"][0], 0)
+        decision["semantic_signature_sha256"] = "f" * 64
+        policy["review_decisions"] = [decision]
         with self.assertRaisesRegex(ValueError, "outside the review queue"):
+            compile_review_decisions(self.state["review_queue"], policy)
+
+    def test_operator_order_is_not_scientific_identity(self) -> None:
+        changed = copy.deepcopy(self.policy)
+        for key in ("mechanism_obligations", "cost_bridges", "decisive_tests"):
+            changed[key].reverse()
+            for operator in changed[key]:
+                operator["compatible_types"].reverse()
+                operator["capabilities"].reverse()
+        self.assertEqual(
+            generation_policy_digest(self.policy), generation_policy_digest(changed)
+        )
+        original = run_funnel(self.policy, attempt_limit=2500)
+        reordered = run_funnel(changed, attempt_limit=2500)
+        self.assertEqual(
+            original["bulk_contract"]["merkle_root_sha256"],
+            reordered["bulk_contract"]["merkle_root_sha256"],
+        )
+        self.assertEqual(original["review_queue"], reordered["review_queue"])
+
+    def test_historical_labels_do_not_rank_the_queue(self) -> None:
+        original = copy.deepcopy(self.state["review_queue"][0])
+        changed = copy.deepcopy(original)
+        changed["source_hard_gate"] = "KILL"
+        changed["source_portfolio"] = "KILLED"
+        changed["source_canonical"] = "fabricated-historical-label"
+        self.assertEqual(review_priority(original), review_priority(changed))
+
+    def test_unsafe_or_exact_target_scope_is_rejected(self) -> None:
+        scope = generated_scope(self.policy)
+        scope["execution_target"] = "secp256k1-private-key"
+        self.assertEqual(
+            unsafe_scope_rejections(scope, self.policy),
+            ["unsafe_or_exact_target_scope"],
+        )
+        scope = generated_scope(self.policy)
+        scope["field_bits"] = self.policy["safety"]["max_toy_field_bits"] + 1
+        self.assertEqual(
+            unsafe_scope_rejections(scope, self.policy),
+            ["unsafe_or_exact_target_scope"],
+        )
+
+    def test_dimension_scores_cannot_clear_an_attack_gate(self) -> None:
+        base = next(row for row in load_base_questions(self.policy) if row["type"] == "ATTACK")
+        mechanisms = load_operators(self.policy["mechanism_obligations"], "mechanisms")
+        costs = load_operators(self.policy["cost_bridges"], "costs")
+        tests = load_operators(self.policy["decisive_tests"], "tests")
+        mechanism = next(item for item in mechanisms if "ATTACK" in item.compatible_types)
+        cost = next(item for item in costs if "attack_scaling_obligation" not in item.capabilities)
+        test = next(item for item in tests if "attack_discriminating_test" in item.capabilities)
+        inflated = replace(cost, dimensions={key: 99 for key in cost.dimensions})
+        reasons = derive_rejections(base, mechanism, inflated, test, self.policy)
+        self.assertIn("attack_without_scaling_bridge", reasons)
+
+    def test_prose_only_review_record_fails_closed(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        decision = valid_review(self.state["review_queue"][0], 0)
+        decision["decision_protocol"] = {"claim": "plausible prose only"}
+        policy["review_decisions"] = [decision]
+        with self.assertRaisesRegex(ValueError, "incomplete decision_protocol"):
+            compile_review_decisions(self.state["review_queue"], policy)
+
+    def test_canonical_proposal_binding_is_digest_checked(self) -> None:
+        queue_item = next(
+            item for item in self.state["review_queue"] if item["base_id"] == "H4-E28"
+        )
+        policy = copy.deepcopy(self.policy)
+        decision = valid_review(queue_item, 0)
+        decision["canonical_binding"] = {
+            "kind": "research_engine_proposal",
+            "proposal_id": "HGP-M16-SOLVER-SLOPE-001",
+            "proposal_sha256": "0" * 64,
+            "cell_id": "CELL-M-PKC-SMOOTH-M16",
+            "route_id": "R-PETIT-COMPOSED-MAPS",
+        }
+        policy["review_decisions"] = [decision]
+        with self.assertRaisesRegex(ValueError, "proposal_sha256"):
             compile_review_decisions(self.state["review_queue"], policy)
 
     def test_instance_ids_use_at_least_128_bits(self) -> None:

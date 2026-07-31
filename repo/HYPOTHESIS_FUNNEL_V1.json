@@ -54,7 +54,7 @@
     "expected_signatures": 100000,
     "materialize_raw_signatures": false,
     "identity_version": "canonical-json-sha256-v1",
-    "stream_digest_version": "sha256-chain-v1"
+    "stream_digest_version": "rfc6962-merkle-v1"
   },
   "safety": {
     "primary_threat_model": "classical-single-target-plain",
@@ -81,60 +81,70 @@
       "id": "M01-EXACT-MAP",
       "label": "Specify an exact map with domain and codomain",
       "compatible_types": ["ATTACK", "ENABLING"],
+      "capabilities": ["enabling_mechanism"],
       "dimensions": {"exactness": 5, "mechanism": 4, "barrier_escape": 2}
     },
     {
       "id": "M02-FAITHFUL-RECOVERY",
       "label": "Specify forward and inverse recovery with excluded components",
       "compatible_types": ["ATTACK", "ENABLING"],
+      "capabilities": ["enabling_mechanism"],
       "dimensions": {"exactness": 5, "mechanism": 4, "barrier_escape": 3}
     },
     {
       "id": "M03-FIXED-TARGET",
       "label": "Specify fixed-target semantics and exceptional locus",
       "compatible_types": ["ATTACK", "BARRIER", "ENABLING"],
+      "capabilities": ["barrier_mechanism", "enabling_mechanism"],
       "dimensions": {"exactness": 4, "mechanism": 4, "barrier_escape": 3}
     },
     {
       "id": "M04-NONGENERIC-SOURCE",
       "label": "Name the representation information unavailable to a generic-group algorithm",
       "compatible_types": ["ATTACK", "BARRIER"],
+      "capabilities": ["barrier_mechanism"],
       "dimensions": {"exactness": 3, "mechanism": 5, "barrier_escape": 5}
     },
     {
       "id": "M05-SCOPED-BARRIER",
       "label": "State a scoped barrier with hypotheses and reopening condition",
       "compatible_types": ["BARRIER"],
+      "capabilities": ["barrier_mechanism"],
       "dimensions": {"exactness": 5, "mechanism": 4, "barrier_escape": 5}
     },
     {
       "id": "M06-REDUCTION",
       "label": "Specify a reduction and price both directions",
       "compatible_types": ["ATTACK", "BARRIER"],
+      "capabilities": ["barrier_mechanism"],
       "dimensions": {"exactness": 5, "mechanism": 5, "barrier_escape": 4}
     },
     {
       "id": "M07-CAUSAL-ABLATION",
       "label": "Separate the proposed lever from representation and solver engineering",
       "compatible_types": ["ATTACK", "ENABLING"],
+      "capabilities": ["enabling_mechanism"],
       "dimensions": {"exactness": 3, "mechanism": 4, "barrier_escape": 4}
     },
     {
       "id": "M08-STRUCTURAL-INVARIANT",
       "label": "Identify a structural invariant controlling the claimed effect",
       "compatible_types": ["ATTACK", "BARRIER"],
+      "capabilities": ["barrier_mechanism"],
       "dimensions": {"exactness": 4, "mechanism": 5, "barrier_escape": 4}
     },
     {
       "id": "M09-REENCODING-CHECK",
       "label": "Prove separation from a known representation or reduction",
       "compatible_types": ["BARRIER", "ENABLING"],
+      "capabilities": ["barrier_mechanism", "enabling_mechanism"],
       "dimensions": {"exactness": 4, "mechanism": 3, "barrier_escape": 5}
     },
     {
       "id": "M10-VALIDATED-INTERFACE",
       "label": "Freeze a producer-independent mechanism interface",
       "compatible_types": ["ATTACK", "ENABLING"],
+      "capabilities": ["enabling_mechanism"],
       "dimensions": {"exactness": 4, "mechanism": 4, "barrier_escape": 3}
     }
   ],
@@ -143,60 +153,70 @@
       "id": "C01-ONLINE-EXPONENT",
       "label": "Online work exponent at equal success probability",
       "compatible_types": ["ATTACK", "BARRIER"],
+      "capabilities": ["attack_scaling_obligation"],
       "dimensions": {"scaling": 5, "strategic_value": 5, "cost_risk": 5}
     },
     {
       "id": "C02-RELATION-YIELD",
       "label": "Relation yield and attempts per independent relation",
       "compatible_types": ["ATTACK", "BARRIER"],
+      "capabilities": ["attack_scaling_obligation"],
       "dimensions": {"scaling": 4, "strategic_value": 5, "cost_risk": 4}
     },
     {
       "id": "C03-ALGEBRAIC-SOLVING",
       "label": "Solving degree, fill-in, memory, and failed attempts",
       "compatible_types": ["ATTACK", "BARRIER", "ENABLING"],
+      "capabilities": ["attack_scaling_obligation"],
       "dimensions": {"scaling": 4, "strategic_value": 4, "cost_risk": 5}
     },
     {
       "id": "C04-LINEAR-ALGEBRA",
       "label": "Relation rank and sparse linear-algebra cost",
       "compatible_types": ["ATTACK", "BARRIER", "ENABLING"],
+      "capabilities": ["attack_scaling_obligation"],
       "dimensions": {"scaling": 4, "strategic_value": 4, "cost_risk": 4}
     },
     {
       "id": "C05-RECOVERY",
       "label": "Recovery branches, rejected components, and validation",
       "compatible_types": ["ATTACK", "ENABLING"],
+      "capabilities": [],
       "dimensions": {"scaling": 3, "strategic_value": 4, "cost_risk": 3}
     },
     {
       "id": "C06-PRECOMPUTATION",
       "label": "Offline work, amortization class, and hidden preprocessing",
       "compatible_types": ["ATTACK", "BARRIER", "ENABLING"],
+      "capabilities": [],
       "dimensions": {"scaling": 4, "strategic_value": 4, "cost_risk": 4}
     },
     {
       "id": "C07-RESOURCE-ENVELOPE",
       "label": "CPU, memory, storage, money, wall time, and review effort",
       "compatible_types": ["ATTACK", "BARRIER", "ENABLING"],
+      "capabilities": [],
       "dimensions": {"scaling": 2, "strategic_value": 3, "cost_risk": 2}
     },
     {
       "id": "C08-END-TO-END",
       "label": "End-to-end work in one common unit against the matched baseline",
       "compatible_types": ["ATTACK", "BARRIER", "ENABLING"],
+      "capabilities": ["attack_scaling_obligation"],
       "dimensions": {"scaling": 5, "strategic_value": 5, "cost_risk": 5}
     },
     {
       "id": "C09-BARRIER-COVERAGE",
       "label": "Fraction of a named mechanism family closed by the result",
       "compatible_types": ["BARRIER"],
+      "capabilities": [],
       "dimensions": {"scaling": 3, "strategic_value": 5, "cost_risk": 2}
     },
     {
       "id": "C10-INFORMATION-GAIN",
       "label": "Expected uncertainty reduction per bounded desk or review cost",
       "compatible_types": ["BARRIER", "ENABLING"],
+      "capabilities": [],
       "dimensions": {"scaling": 2, "strategic_value": 5, "cost_risk": 1}
     }
   ],
@@ -205,60 +225,70 @@
       "id": "T01-DESK-THEOREM",
       "label": "Paper proof with an explicit counterexample search",
       "compatible_types": ["BARRIER", "ENABLING"],
+      "capabilities": [],
       "dimensions": {"discrimination": 5, "falsifiability": 5, "review_cost": 2}
     },
     {
       "id": "T02-SYMBOLIC-CERTIFICATE",
       "label": "Exact symbolic certificate plus independent replay",
       "compatible_types": ["ATTACK", "BARRIER", "ENABLING"],
+      "capabilities": ["attack_discriminating_test"],
       "dimensions": {"discrimination": 5, "falsifiability": 5, "review_cost": 3}
     },
     {
       "id": "T03-ARTIFACT-REPLAY",
       "label": "Producer-independent recomputation from raw artifacts",
       "compatible_types": ["BARRIER", "ENABLING"],
+      "capabilities": [],
       "dimensions": {"discrimination": 4, "falsifiability": 5, "review_cost": 3}
     },
     {
       "id": "T04-MATCHED-TOY-LADDER",
       "label": "Preregistered matched toy ladder, never the exact target",
       "compatible_types": ["ATTACK", "ENABLING"],
+      "capabilities": ["attack_discriminating_test"],
       "dimensions": {"discrimination": 4, "falsifiability": 4, "review_cost": 4}
     },
     {
       "id": "T05-SLOPE-SEPARATION",
       "label": "Confidence-bounded slope separation across justified sizes",
       "compatible_types": ["ATTACK", "BARRIER"],
+      "capabilities": ["attack_discriminating_test"],
       "dimensions": {"discrimination": 5, "falsifiability": 4, "review_cost": 5}
     },
     {
       "id": "T06-CAUSAL-CONTROLS",
       "label": "Matched null, representation, and solver-engineering controls",
       "compatible_types": ["ATTACK", "BARRIER", "ENABLING"],
+      "capabilities": ["attack_discriminating_test"],
       "dimensions": {"discrimination": 5, "falsifiability": 4, "review_cost": 4}
     },
     {
       "id": "T07-RECOVERY-ROUNDTRIP",
       "label": "Round-trip every retained relation with independent EC arithmetic",
       "compatible_types": ["ATTACK", "ENABLING"],
+      "capabilities": ["attack_discriminating_test"],
       "dimensions": {"discrimination": 4, "falsifiability": 5, "review_cost": 3}
     },
     {
       "id": "T08-PRIMARY-SOURCE-AUDIT",
       "label": "Claim-level primary-source and nearest-prior-art audit",
       "compatible_types": ["BARRIER", "ENABLING"],
+      "capabilities": [],
       "dimensions": {"discrimination": 4, "falsifiability": 4, "review_cost": 2}
     },
     {
       "id": "T09-BOUNDARY-COUNTEREXAMPLE",
       "label": "Search the exact boundary for a minimal counterexample",
       "compatible_types": ["BARRIER"],
+      "capabilities": [],
       "dimensions": {"discrimination": 5, "falsifiability": 5, "review_cost": 2}
     },
     {
       "id": "T10-KERNEL-PACKAGE",
       "label": "Formalize only the decision-changing theorem package",
       "compatible_types": ["BARRIER", "ENABLING"],
+      "capabilities": [],
       "dimensions": {"discrimination": 5, "falsifiability": 5, "review_cost": 5}
     }
   ],
@@ -323,7 +353,7 @@
       "pareto_frontier",
       "dimension_minimum",
       "dimension_vector",
-      "stable_seed_id"
+      "stable_semantic_signature"
     ],
     "dimension_names": [
       "exactness",
@@ -339,9 +369,27 @@
   },
   "review_decisions": [
     {
-      "seed_id": "HQS1-1A2C703A752AB404C9E2D08F824B6521",
+      "review_id": "HFR-2026-07-31-001",
+      "semantic_signature_sha256": "0b684c64bb245ea31915392fc03df47d12089c6ce877fe54b789dd91e2014717",
       "verdict": "retain_non_executable_research_bet",
       "portfolio_role": "primary_existing_proposal",
+      "reviewed_at": "2026-07-31",
+      "reviewer": {
+        "actor_id": "codex-hyp-select-005-repair",
+        "role": "portfolio-review-migration"
+      },
+      "independence": {
+        "source": false,
+        "model_family": false,
+        "context": false
+      },
+      "canonical_binding": {
+        "kind": "research_engine_proposal",
+        "proposal_id": "HGP-M16-SOLVER-SLOPE-001",
+        "proposal_sha256": "0212ce7acafe39c2afde448789d151bfc400cc7e2fe55dbd29dae9f518605f9a",
+        "cell_id": "CELL-M-PKC-SMOOTH-M16",
+        "route_id": "R-PETIT-COMPOSED-MAPS"
+      },
       "decision_protocol": {
         "claim": "Bind this seed to the existing HYP-M16-SOLVER-SLOPE-001 proposal and review its source-faithful end-to-end cost question.",
         "basis": "Current main permits formulation and review of exactly this non-executable proposal after TASK-026, while solver scaling, rank, recovery, and total cost remain open.",
@@ -352,65 +400,29 @@
       "limitations": [
         "not a newly generated mechanism",
         "exact mechanism assurance is incomplete",
-        "no source-independent review",
+        "this migrated review is not independent in source, model family, or context",
         "no scaling or ECDLP improvement established"
       ]
     },
     {
-      "seed_id": "HQS1-0F66909024099BE4E8AA6F5B2C76165F",
-      "verdict": "retain_non_executable_research_bet",
-      "portfolio_role": "hedge_barrier",
-      "decision_protocol": {
-        "claim": "Determine whether the allowed sparse coordinate operations admit a faithful structured-generic-group simulation with the required density bound.",
-        "basis": "A successful mapping would place a square-root barrier over a broad representation-aware family; a failed axiom would identify an exact escape obligation.",
-        "counterargument": "The current x-only naive map is refuted and no broader simulation has been specified, so applicability cannot be assumed.",
-        "decisive_test": "Construct the labels, partial operation, distributions, density, and simulation, then return either all satisfied axioms or the first minimal counterexample.",
-        "verdict": "Retain as an orthogonal desk barrier, not as an attack."
-      },
-      "limitations": [
-        "model applicability is unknown",
-        "does not itself produce an ECDLP algorithm",
-        "novelty unverified"
-      ]
-    },
-    {
-      "seed_id": "HQS1-215DF9F00F61AB08D340BBB7EEF2C2A6",
-      "verdict": "retain_non_executable_research_bet",
-      "portfolio_role": "enabler_primary",
-      "decision_protocol": {
-        "claim": "Derive a fixed-target relation-incidence law for the exact structured factor base used by the primary proposal.",
-        "basis": "Relation yield is an open exponent term and can close a family before any solver run.",
-        "counterargument": "TASK-026 is only bounded toy evidence and does not imply an asymptotic random-variety law or row independence.",
-        "decisive_test": "Count ordered tuples and multisets with repetitions, stabilizers, exceptional fibers, and target-fiber variance, then bridge the count to independent relation yield.",
-        "verdict": "Retain as the primary proposal's enabling barrier."
-      },
-      "limitations": [
-        "must be narrowed to one exact factor-base family",
-        "relation count is not relation rank",
-        "no asymptotic law established"
-      ]
-    },
-    {
-      "seed_id": "HQS1-152789DAF4DCF18DCE5D2AB949261907",
-      "verdict": "retain_non_executable_research_bet",
-      "portfolio_role": "cross_route_barrier",
-      "decision_protocol": {
-        "claim": "Freeze a common accounting identity for acquisition, solving, recovery, rank, sparse linear algebra, preprocessing, and equal-success probability.",
-        "basis": "The identity prevents a local gain from being relabeled as an end-to-end exponent gain after cost moves to another stage.",
-        "counterargument": "A max-of-exponents slogan is insufficient without dependence, tail, memory, and success assumptions.",
-        "decisive_test": "Produce a conditional theorem and replayable cost certificate with every assumption and reopening condition explicit.",
-        "verdict": "Retain as a cross-route barrier and merge duplicate complete-cost seeds into it."
-      },
-      "limitations": [
-        "conditional accounting theorem only",
-        "does not prove any individual route slow",
-        "requires source-specific instantiation"
-      ]
-    },
-    {
-      "seed_id": "HQS1-18315184F7578ED755F531EF50AAF60D",
+      "review_id": "HFR-2026-07-31-002",
+      "semantic_signature_sha256": "0739acd53e94775217d0c66ebe09d77fff73a653644c8de2db3a8bfab6933986",
       "verdict": "retain_non_executable_research_bet",
       "portfolio_role": "walk_barrier",
+      "reviewed_at": "2026-07-31",
+      "reviewer": {
+        "actor_id": "codex-hyp-select-005-repair",
+        "role": "portfolio-review-migration"
+      },
+      "independence": {
+        "source": false,
+        "model_family": false,
+        "context": false
+      },
+      "canonical_binding": {
+        "kind": "none",
+        "reason": "No canonical proposal exists; this is a scoped barrier research bet only."
+      },
       "decision_protocol": {
         "claim": "Identify when return time cancels a birthday gain obtained by restricting a walk to a special subset.",
         "basis": "A scoped theorem could cheaply reject many subset-walk reencodings without executing them.",
@@ -421,31 +433,29 @@
       "limitations": [
         "does not cover every structured walk",
         "requires an exact transition model",
-        "no attack consequence by itself"
+        "no attack consequence by itself",
+        "this migrated review is not independent in source, model family, or context"
       ]
     },
     {
-      "seed_id": "HQS1-AF3D59D7A69DEA15F1B26A59052EE1EE",
-      "verdict": "retain_non_executable_research_bet",
-      "portfolio_role": "orthogonal_watchlist",
-      "decision_protocol": {
-        "claim": "Test whether the fixed-target sequence f(k)=chi(x([k]G)) exposes a sparse-spectrum shift-recovery mechanism unavailable to a generic-group algorithm.",
-        "basis": "The observable is representation-aware and orthogonal to Semaev solving.",
-        "counterargument": "Sparse spectrum, low linear complexity, affordable preprocessing, and a sub-square-root recovery algorithm are all currently desired properties rather than results.",
-        "decisive_test": "Freeze the access model and recovery algorithm, then prove a character-sum or spectrum bound that either supports the mechanism or closes the cluster.",
-        "verdict": "Retain for reformulation and prior-art review; do not promote to hedge yet."
-      },
-      "limitations": [
-        "exact recovery algorithm missing",
-        "preprocessing cost unpriced",
-        "nearest prior art not fully audited",
-        "novelty unverified"
-      ]
-    },
-    {
-      "seed_id": "HQS1-64D6E4ED21BBC4BD41AC802368CA6DAF",
+      "review_id": "HFR-2026-07-31-003",
+      "semantic_signature_sha256": "04a8e74464d44704a7e36a545778addec93b395f6467146314c296a3c578cf36",
       "verdict": "retain_non_executable_research_bet",
       "portfolio_role": "known_mechanism_watchlist",
+      "reviewed_at": "2026-07-31",
+      "reviewer": {
+        "actor_id": "codex-hyp-select-005-repair",
+        "role": "portfolio-review-migration"
+      },
+      "independence": {
+        "source": false,
+        "model_family": false,
+        "context": false
+      },
+      "canonical_binding": {
+        "kind": "none",
+        "reason": "The p+1 trace construction is a source-ingestion watchlist item, not a canonical proposal."
+      },
       "decision_protocol": {
         "claim": "Resolve whether a source-faithful p+1 norm-one trace factor base has viable lift, relation, recovery, and total-cost parameters.",
         "basis": "The trace construction is a real published mechanism and is independent of the p-1 M16 factor base.",
@@ -457,41 +467,8 @@
         "known prior-art mechanism",
         "critical primary literature remains unread",
         "unmerged historical branch is not canonical evidence",
-        "no viable cost bridge yet"
-      ]
-    },
-    {
-      "seed_id": "HQS1-0AADF803634BB283C8E262ED605E8602",
-      "verdict": "retain_non_executable_research_bet",
-      "portfolio_role": "trace_enabler_watchlist",
-      "decision_protocol": {
-        "claim": "Certify the reduced Dickson or trace circuit, its fibers, and the algebraic degree hidden by its compact description.",
-        "basis": "This is the cheapest exact prerequisite for the p+1 trace watchlist item.",
-        "counterargument": "An O(log N) circuit description may eliminate back to a polynomial of degree on the order of N and provide no solver advantage.",
-        "decisive_test": "Replay reducedness, saturation, exceptional fibers, recovery, eliminated degree, and same-DAG controls.",
-        "verdict": "Retain only as an enabling desk certificate."
-      },
-      "limitations": [
-        "not an attack",
-        "circuit size is not solving degree",
-        "depends on source-faithful p+1 applicability"
-      ]
-    },
-    {
-      "seed_id": "HQS1-10622A7F9F18A904EF36A51EDA50AA7C",
-      "verdict": "retain_non_executable_research_bet",
-      "portfolio_role": "merge_into_primary_enabler",
-      "decision_protocol": {
-        "claim": "Determine fixed-target fiber uniformity after exact repetition and stabilizer corrections.",
-        "basis": "This can turn the relation-incidence question into the yield term required by M16 cost accounting.",
-        "counterargument": "Toy regular-locus availability does not establish source-faithful density, asymptotic uniformity, or independent rows.",
-        "decisive_test": "Derive exact target-fiber moments for the frozen factor base and compare them with the corrected null law.",
-        "verdict": "Retain but merge operationally into the Semaev-yield enabler rather than allocating an independent experiment."
-      },
-      "limitations": [
-        "not an independent attack",
-        "must not double-count the relation-incidence seed",
-        "rank remains a separate obligation"
+        "no viable cost bridge yet",
+        "this migrated review is not independent in source, model family, or context"
       ]
     }
   ]
