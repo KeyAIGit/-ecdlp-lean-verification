@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import copy
 import unittest
+from unittest.mock import patch
 
 from build_untrusted_evidence_intake import (
     CONTRACT_PATH,
@@ -89,14 +90,22 @@ class UntrustedEvidenceIntakeTests(unittest.TestCase):
     def test_invalid_source_hash_is_rejected(self) -> None:
         mutated = copy.deepcopy(self.contract)
         mutated["sources"][0]["sha256"] = "0" * 64
-        with self.assertRaisesRegex(IntakeError, "source hash mismatch"):
-            build_state(mutated)
+        with patch(
+            "build_untrusted_evidence_intake.validate_protected_main_receipt"
+        ):
+            with self.assertRaisesRegex(IntakeError, "source hash mismatch"):
+                build_state(mutated)
 
     def test_invalid_source_git_blob_hash_is_rejected(self) -> None:
         mutated = copy.deepcopy(self.contract)
         mutated["sources"][0]["git_blob_sha1"] = "0" * 40
-        with self.assertRaisesRegex(IntakeError, "source Git blob hash mismatch"):
-            build_state(mutated)
+        with patch(
+            "build_untrusted_evidence_intake.validate_protected_main_receipt"
+        ):
+            with self.assertRaisesRegex(
+                IntakeError, "source Git blob hash mismatch"
+            ):
+                build_state(mutated)
 
     def test_parsing_contract_semantics_are_closed(self) -> None:
         for field in ("join_rule", "source_status_rule"):
