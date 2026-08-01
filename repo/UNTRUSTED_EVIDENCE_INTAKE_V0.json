@@ -1,0 +1,107 @@
+{
+  "schema_version": "0.1",
+  "contract_id": "untrusted-evidence-intake-v0",
+  "intake_id": "OPUS-ECDLP-SCREEN-ATLAS-2026-07-26",
+  "status": "quarantined_untrusted_snapshot",
+  "source_directory": "archive/untrusted_intake/OPUS-ECDLP-SCREEN-ATLAS-2026-07-26",
+  "output_path": "data/untrusted_evidence_intake/OPUS-ECDLP-SCREEN-ATLAS-2026-07-26.json",
+  "sources": [
+    {
+      "path": "all_mechanisms.json",
+      "media_type": "application/json",
+      "sha256": "e27564dd79b9e25d7f36b044bc7eb1b83c0564aeb97f45aaca774c96045122e8",
+      "git_blob_sha1": "4f00154dcfd6cbde81352ece9485d62694536932"
+    },
+    {
+      "path": "all_properties.json",
+      "media_type": "application/json",
+      "sha256": "2718c06084c9b9e741ef7d634fd6c5b7e759ba8956e082820cd1108778f0aae4",
+      "git_blob_sha1": "a94d56e90b5e7c1ce59852cc60d718c78cae21b9"
+    },
+    {
+      "path": "ECDLP_SCREEN_ATLAS_REPORT.md",
+      "media_type": "text/markdown",
+      "sha256": "76369293bc275eaa8352fc234436ed2f4f515fc4958f15f66bb7bb5e8894f479",
+      "git_blob_sha1": "b5ae4d63a8b8d097809f48618b52db9e565ef0e2"
+    }
+  ],
+  "expected_observations": {
+    "mechanisms": 35,
+    "properties": 223,
+    "requirement_strings": 122,
+    "free_text_requirement_strings": 110,
+    "tp_like_requirement_strings": 12,
+    "tp_like_reference_occurrences": 15,
+    "unique_tp_like_references": 6,
+    "unique_orphan_tp_like_references": 6,
+    "declared_integer_values": 81,
+    "declared_boolean_values": 62,
+    "declared_integer_parse_violations": 16,
+    "declared_boolean_parse_violations": 4,
+    "declared_type_parse_violations": 20,
+    "mechanism_full_text_read_rows": 19,
+    "report_claimed_full_text_read_rows": 20,
+    "verified_join_rows": 0
+  },
+  "parsing_contract": {
+    "duplicate_json_keys": "reject",
+    "non_finite_numbers": "reject",
+    "property_values": "retain_as_raw_strings_without_type_coercion",
+    "boolean_lexemes_for_parseability_only": [
+      "false",
+      "true"
+    ],
+    "tp_like_reference_pattern": "(?<![A-Za-z0-9_-])(TP-[A-Z0-9][A-Z0-9-]*)(?![A-Za-z0-9_-])",
+    "join_rule": "A verified join requires typed requirement IDs that resolve to property IDs and a machine-readable verdict matrix. This snapshot has neither.",
+    "source_status_rule": "source_verified is an untrusted source-authored annotation, not evidence that a primary artifact was obtained or read."
+  },
+  "authority_ceiling": {
+    "direct_canonical_imports": 0,
+    "scientific_outcomes": 0,
+    "ranker_labels": 0,
+    "route_closures": 0,
+    "authorization": 0,
+    "typed_evidence_updates": 0,
+    "attack_registry_updates": 0,
+    "decision_updates": 0,
+    "claim_updates": 0,
+    "outcome_updates": 0
+  },
+  "canonical_write_prohibited": [
+    "data/attack_registry.json",
+    "repo/ECDLP_TYPED_EVIDENCE_V0.json",
+    "repo/ECDLP_DECISION_SUBSTRATE.json",
+    "repo/RESEARCH_CLAIMS_V0.json",
+    "repo/RESEARCH_ENGINE_V0.json",
+    "experiments/engine/outcomes"
+  ],
+  "protected_main_receipt": {
+    "mode": "freeze_after_first_protected_main_acceptance",
+    "protected_ref": "origin/main",
+    "contract_path": "repo/UNTRUSTED_EVIDENCE_INTAKE_V0.json",
+    "frozen_fields": [
+      "intake_id",
+      "status",
+      "source_directory",
+      "output_path",
+      "sources",
+      "expected_observations",
+      "parsing_contract",
+      "authority_ceiling",
+      "canonical_write_prohibited",
+      "required_state",
+      "protected_main_receipt"
+    ]
+  },
+  "required_state": {
+    "intake_status": "quarantined_untrusted_snapshot",
+    "join_status": "not_present",
+    "verified_join": false,
+    "safe_for_scientific_selection": false,
+    "safe_for_calibration": false,
+    "safe_for_authorization": false
+  },
+  "regenerate": "python3 scripts/build_untrusted_evidence_intake.py",
+  "check": "python3 scripts/build_untrusted_evidence_intake.py --check",
+  "test": "python3 scripts/test_untrusted_evidence_intake.py"
+}

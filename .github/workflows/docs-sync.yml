@@ -29,6 +29,7 @@ name: Docs sync
 #     data/research_engine_state.json          (build_research_engine_state.py)
 #     data/research_engine_v02_state.json      (build_research_engine_v02_state.py)
 #     data/research_engine_shadow_intake.json  (build_research_shadow_intake.py)
+#     data/untrusted_evidence_intake/*.json     (build_untrusted_evidence_intake.py)
 #     data/hypothesis_funnel_state.json        (hypothesis_funnel.py)
 #     data/hypothesis_space_state.json         (hypothesis_space_funnel.py)
 #     data/hypothesis_space_map.json           (hypothesis_space_funnel.py)
@@ -49,6 +50,8 @@ on:
       - 'VERIFIED.md'
       - 'data/KG_CLAIM_FORMALIZATION_v1.csv'
       - 'data/corpus_coverage_overrides.json'
+      - 'data/untrusted_evidence_intake/**'
+      - 'archive/untrusted_intake/**'
       - 'STATUS.md'
       - 'tasks/**'
       - 'experiments/**'
@@ -76,6 +79,8 @@ on:
       - 'VERIFIED.md'
       - 'data/KG_CLAIM_FORMALIZATION_v1.csv'
       - 'data/corpus_coverage_overrides.json'
+      - 'data/untrusted_evidence_intake/**'
+      - 'archive/untrusted_intake/**'
       - 'STATUS.md'
       - 'tasks/**'
       - 'experiments/**'
@@ -124,6 +129,7 @@ env:
     data/research_engine_state.json
     data/research_engine_v02_state.json
     data/research_engine_shadow_intake.json
+    data/untrusted_evidence_intake/OPUS-ECDLP-SCREEN-ATLAS-2026-07-26.json
     data/hypothesis_funnel_state.json
     data/hypothesis_space_state.json
     data/hypothesis_space_map.json
@@ -167,6 +173,8 @@ jobs:
         run: python3 scripts/build_research_engine_v02_state.py
       - name: Research Engine shadow intake
         run: python3 scripts/build_research_shadow_intake.py
+      - name: Quarantined untrusted evidence intake
+        run: python3 scripts/build_untrusted_evidence_intake.py
       - name: Research-question funnel aggregate
         run: python3 scripts/hypothesis_funnel.py
       - name: Million-cell research-question space
@@ -317,6 +325,10 @@ jobs:
         run: |
           python3 scripts/build_research_shadow_intake.py --check
           python3 scripts/test_research_shadow_intake.py
+      - name: Quarantined untrusted-intake gate
+        run: |
+          python3 scripts/build_untrusted_evidence_intake.py --check
+          python3 scripts/test_untrusted_evidence_intake.py
       - name: Research-question funnel gate
         run: |
           python3 scripts/hypothesis_funnel.py --check
@@ -394,6 +406,7 @@ jobs:
           echo "  python3 scripts/build_research_engine_state.py"
           echo "  python3 scripts/build_research_engine_v02_state.py"
           echo "  python3 scripts/build_research_shadow_intake.py"
+          echo "  python3 scripts/build_untrusted_evidence_intake.py"
           echo "  python3 scripts/hypothesis_funnel.py"
           echo "  python3 scripts/hypothesis_space_funnel.py"
           echo "  python3 scripts/hypothesis_space_run_ledger.py"

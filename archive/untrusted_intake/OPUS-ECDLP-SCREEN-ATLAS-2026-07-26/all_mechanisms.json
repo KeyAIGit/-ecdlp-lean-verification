@@ -1,0 +1,474 @@
+[
+ {
+  "id": "GEN-LB-SHOUP-NECHAEV",
+  "family": "generic / black-box lower bound (threat model: CLASSICAL, generic-group, single-target)",
+  "source": "V. Shoup, \"Lower Bounds for Discrete Logarithms and Related Problems\", EUROCRYPT'97, LNCS 1233, 256-266; V. I. Nechaev, Math. Notes 55(2):165-172 (1994). Statement read verbatim in A. Enge, \"Discrete logarithms in curves over finite fields\", arXiv:0712.3916, Sec. 1.2: \"If the only operations permitted are additions in the group and N is prime, then Omega(sqrt(N)) operations are needed to compute discrete logarithms with a non-negligible probability. To bypass this lower bound, an algorithm needs to take into account the particular representation of the group elements.\"",
+  "source_verified": "secondhand",
+  "requires": [
+   "group order N prime (secp256k1: n prime, VERIFIED by my own sympy isprime on the public constant)",
+   "algorithm may use only the group operation plus a unique canonical encoding of elements",
+   "classical computation \u2014 the bound is explicitly FALSE against Shor (see QUANT-SHOR)",
+   "this is a BARRIER, not an attack: it bounds only algorithms that ignore the representation, so it says nothing about index calculus, transfers, or any mechanism below that reads coordinates"
+  ],
+  "changed_quantity": "Nothing is gained; it sets the floor. Omega(sqrt(n)) group operations. Computed for secp256k1: sqrt(n) = 2^128.000 exactly (n = 115792089237316195423570985008687907852837564279074904382605163141518161494337, 256 bits, prime, cofactor h = 1 so #E = n and there is no proper subgroup at all).",
+  "growth_lever": "fixed/constant as a *mechanism* (no gain). The barrier itself scales as sqrt(N) in the group order. There is no relation-preserving subgroup here \u2014 the model forbids reading the representation, so no coordinatewise symmetry can act. The FGHR discriminator (relation-preserving subgroup order as a function of m) is not applicable: no m exists."
+ },
+ {
+  "id": "GEN-BSGS",
+  "family": "generic square-root, deterministic (threat model: CLASSICAL, single-target)",
+  "source": "D. Shanks (1971/1972). Complexity read verbatim in Enge, arXiv:0712.3916, Sec. 1.1: baby-step giant-step \"performs O(sqrt(N)) group operations and requires storage space for O(sqrt(N)) elements\".",
+  "source_verified": "secondhand",
+  "requires": [
+   "known group order N",
+   "canonical unique encoding so baby steps can be hash-table looked up (Enge stresses this: without it the search degrades to O(N))",
+   "Theta(sqrt(N)) MEMORY \u2014 this is the binding practical constraint"
+  ],
+  "changed_quantity": "Deterministic ~2*sqrt(n) group ops with sqrt(n) storage. Computed for secp256k1: 2^129.0 operations and 2^128 stored group elements.",
+  "growth_lever": "fixed/constant. Meets the Shoup/Nechaev wall exactly; no algebraic structure of secp256k1 enters. No m-indexed relation-preserving subgroup."
+ },
+ {
+  "id": "GEN-RHO-PARALLEL",
+  "family": "generic square-root, low-memory + parallel (threat model: CLASSICAL, single-target)",
+  "source": "J. M. Pollard, \"Monte Carlo methods for index computation (mod p)\", Math. Comp. 32(143):918-924 (1978); P. C. van Oorschot and M. J. Wiener, \"Parallel collision search with cryptanalytic applications\", J. Cryptology 12(1):1-28 (1999). Both described in Enge, arXiv:0712.3916, Sec. 1.1 (distinguished points, constant storage, linear parallelisation).",
+  "source_verified": "secondhand",
+  "requires": [
+   "canonical encoding (for the pseudo-random walk and the distinguished-point predicate)",
+   "nothing else \u2014 this is the mechanism that actually applies to secp256k1"
+  ],
+  "changed_quantity": "Expected sqrt(pi*n/4) group operations with O(1) storage; van Oorschot-Wiener distinguished points give linear speedup in the number of processors. Computed for secp256k1: 2^127.826.",
+  "growth_lever": "fixed/constant. The only levers are processor count (linear, not asymptotic) and the automorphism factor of GEN-RHO-AUT below. No m-indexed relation-preserving subgroup."
+ },
+ {
+  "id": "GEN-RHO-AUT",
+  "family": "generic square-root + curve automorphism speedup \u2014 THE DISCRIMINATOR ROW (threat model: CLASSICAL, single-target)",
+  "source": "M. Wiener and R. Zuccherato, \"Faster Attacks on Elliptic Curve Cryptosystems\", SAC'98, LNCS 1556; I. Duursma, P. Gaudry, F. Morain, \"Speeding up the discrete log computation on curves with automorphisms\", ASIACRYPT'99; R. Gallant, R. Lambert, S. Vanstone, Math. Comp. 69 (2000); D. J. Bernstein, T. Lange, P. Schwabe, \"On the correct use of the negation map in the Pollard rho method\", IACR ePrint 2011/003 (fruitless cycles).",
+  "source_verified": "abstract_only",
+  "requires": [
+   "an efficiently computable automorphism group Aut(E) of order w acting on the target subgroup, so the walk can be defined on orbits",
+   "the orbit map must be computable without knowing the discrete log (true for [-1] and for the GLV eigenvalue map)",
+   "fruitless-cycle mitigation (Bernstein-Lange-Schwabe) or the practical gain is lost",
+   "secp256k1 inputs I COMPUTED: a = 0 so j-invariant = 1728*4a^3/(4a^3+27b^2) = 0; p mod 3 = 1, hence |Aut(E)| = 6 (mu_6, generated by [-1] and the order-3 GLV endomorphism). beta = 0x851695d49a83f8ef919bb86153cbcb16630fb68aed0a766a3ec693d68e6afa40 with beta^3 = 1 mod p, lambda = 0xac9c52b33fa3cf1f5ad9e3fd77ed9ba4a880b9fc8ec739c2e0cfc810b51283ce with lambda^3 = 1 mod n; I verified (beta*Gx, Gy) is on the curve for the standard generator G."
+  ],
+  "changed_quantity": "Speedup by exactly sqrt(w) where w = |Aut(E)| = orbit size. Computed for secp256k1: negation alone w = 2 gives sqrt(2) = 1.4142 -> 2^127.326; the full mu_6 gives sqrt(6) = 2.4495 -> 2^126.533. A ~1.3-bit constant reduction. Nothing else.",
+  "growth_lever": "FIXED/CONSTANT \u2014 this is the exact case the FGHR discriminator is meant to separate. The relation-preserving subgroup here IS Aut(E) = mu_6, of order 6, and 6 is CONSTANT in every parameter: it does not grow with the field size, the group order, or any decomposition index m. Contrast the FGHR 2-torsion index-calculus gain 2^(omega(m-1)), where the relation-preserving subgroup has order growing with the Semaev index m. |Aut(E)| is never the right discriminator; the relation-preserving subgroup order as a function of m is, and here that function is the constant 6. No asymptotic Groebner/solving-degree consequence follows from j = 0."
+ },
+ {
+  "id": "GEN-POHLIG-HELLMAN",
+  "family": "generic, group-order decomposition (threat model: CLASSICAL, single-target)",
+  "source": "S. C. Pohlig and M. E. Hellman, IEEE Trans. Inform. Theory 24(1):106-110 (1978). Complexity read verbatim in Enge, arXiv:0712.3916, Sec. 1.1: O(sum over p^e || N of e*sqrt(p)) group operations, and \"the maximal level of security reachable ... depends essentially on the largest prime factor of the group order\".",
+  "source_verified": "secondhand",
+  "requires": [
+   "#E composite, ideally smooth \u2014 a proper subgroup to project into",
+   "secp256k1 inputs I COMPUTED: n is prime and the cofactor is 1, so #E(F_p) = n is prime. There is no proper non-trivial subgroup. The largest prime factor of the group order IS the group order."
+  ],
+  "changed_quantity": "Reduces cost from sqrt(N) to sum e*sqrt(p) over prime powers. Computed gain for secp256k1: exactly 1 (no change). Unconditionally dead \u2014 this is a structural predicate on #E, not a heuristic.",
+  "growth_lever": "fixed/constant = 1. The lever would be the largest prime factor of #E as a fraction of #E; for secp256k1 that ratio is 1. No m-indexed relation-preserving subgroup."
+ },
+ {
+  "id": "GEN-MULTI-TARGET",
+  "family": "generic, batch / multi-instance (threat model: CLASSICAL, MANY targets in the SAME group \u2014 not the plain single-target model)",
+  "source": "F. Kuhn and R. Struik, \"Random Walks Revisited: Extensions of Pollard's Rho Algorithm for Computing Multiple Discrete Logarithms\", SAC 2001, LNCS 2259; matching generic lower bound in A. Yun, \"Generic Hardness of the Multiple Discrete Logarithm Problem\", IACR ePrint 2014/637; D. J. Bernstein and T. Lange, \"Non-uniform cracks in the concrete: the power of free precomputation\", ASIACRYPT 2013 (ePrint 2012/318).",
+  "source_verified": "abstract_only",
+  "requires": [
+   "m >= 2 discrete-log instances to the SAME base in the SAME group",
+   "willingness to pay total work above sqrt(N) in exchange for lower per-target cost",
+   "this changes the accounting unit, not the group: the first target still costs Theta(sqrt(N))"
+  ],
+  "changed_quantity": "Total ~sqrt(m*N) for m targets, i.e. amortized sqrt(N/m) per target. Computed for secp256k1: m = 2^10 -> total 2^133.0, per-target 2^123.0; m = 2^20 -> total 2^138.0, per-target 2^118.0; m = 2^32 -> total 2^144.0, per-target 2^112.0. Total work never drops below 2^128.",
+  "growth_lever": "Gain grows as sqrt(m) in the NUMBER OF TARGETS m. Critically, this m is a count of problem instances, NOT an algebraic index and NOT a relation-preserving subgroup \u2014 there is no subgroup acting on relations here at all. Yun's matching Omega(sqrt(mN)) generic bound says this lever is exhausted; it cannot compound with any curve property."
+ },
+ {
+  "id": "GEN-PREPROCESSING",
+  "family": "generic with preprocessing / non-uniform (threat model: CLASSICAL, NON-UNIFORM \u2014 unbounded offline work producing group-specific advice; not the plain uniform model)",
+  "source": "H. Corrigan-Gibbs and D. Kogan, \"The Discrete-Logarithm Problem with Preprocessing\", EUROCRYPT 2018 (IACR ePrint 2017/1113): any generic DL algorithm with an S-bit advice string, online time T, success probability eps, in a group of prime order N must satisfy S*T^2 = Omega~(eps*N), tight up to log factors. Framing: Bernstein-Lange, ePrint 2012/318.",
+  "source_verified": "abstract_only",
+  "requires": [
+   "the group must be FIXED and publicly known in advance so advice can be precomputed for it (secp256k1 qualifies \u2014 it is a fixed standardized curve)",
+   "S bits of storage carried into the online phase",
+   "a threat model that does not charge the adversary for offline work \u2014 Bernstein-Lange's point is that the usual 2^128 claim for a named 256-bit curve is a uniform-model claim"
+  ],
+  "changed_quantity": "Online time T = sqrt(N/S) at advice size S (the bound is tight). Computed for secp256k1: S = 2^60 -> T = 2^98.0; S = 2^80 -> T = 2^88.0; S = 2^100 -> T = 2^78.0; S = 2^128 -> T = 2^64.0. Offline cost to build the advice is not counted in this model.",
+  "growth_lever": "Gain grows as sqrt(S) in the ADVICE SIZE S \u2014 a storage/model parameter, not a curve property and not a relation-preserving subgroup. The lever saturates against S*T^2 = Omega~(N); nothing about secp256k1's algebra moves it."
+ },
+ {
+  "id": "GEN-INTERVAL-KANGAROO",
+  "family": "generic, restricted-exponent / interval DLP (threat model: CLASSICAL, single-target WITH a promise that the scalar lies in a known short interval \u2014 not the plain model)",
+  "source": "J. M. Pollard, \"Kangaroos, Monopoly and discrete logarithms\", J. Cryptology 13(4):437-447 (2000); S. D. Galbraith, J. M. Pollard, R. S. Ruprai, \"Computing discrete logarithms in an interval\", Math. Comp. 82(282):1181-1195 (2013); S. D. Galbraith and R. S. Ruprai, PKC 2010. Constants read verbatim in A. Fowler, \"Kangaroo Methods for Solving the Interval Discrete Logarithm Problem\", arXiv:1501.07019 (Univ. of Auckland, supervisor Galbraith), Ch. 1-4.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "the discrete log is promised to lie in an interval of width W much smaller than n (leakage, protocol design, or a short-exponent choice must supply this)",
+   "for the 1.36*sqrt(W) variant, fast group inversion (elliptic curves qualify)",
+   "O(log W) memory for kangaroo; sqrt(W) memory for the 4/3*sqrt(W) BSGS variant"
+  ],
+  "changed_quantity": "Fowler, full text: van Oorschot-Wiener kangaroo (2+o(1))sqrt(W); Galbraith-Pollard-Ruprai three-kangaroo (1.818+o(1))sqrt(W) and four-kangaroo (1.714+o(1))sqrt(W); Galbraith-Ruprai with fast inversion (1.36+o(1))sqrt(W); Pollard BSGS 4/3*sqrt(W) with sqrt(W) memory; Fowler's own new seven-kangaroo (1.7195+o(1))sqrt(W). Computed for secp256k1 at 1.714*sqrt(W): W = 2^128 -> 2^64.8; W = 2^192 -> 2^96.8; W = 2^256 (full range) -> 2^128.8, i.e. WORSE than plain rho when there is no interval promise.",
+  "growth_lever": "Gain grows as sqrt(n/W) \u2014 the lever is the WIDTH OF THE LEAKED/PROMISED INTERVAL, an input-distribution property of the protocol, not a property of the curve. No relation-preserving subgroup; the constant-factor improvements (2 -> 1.818 -> 1.714 -> 1.36) are a closed race with no asymptotic component."
+ },
+ {
+  "id": "TRF-PAIRING-MOV-FR-TATE",
+  "family": "transfer: pairing embedding into a finite field (threat model: CLASSICAL, single-target)",
+  "source": "A. Menezes, T. Okamoto, S. Vanstone, \"Reducing elliptic curve logarithms to logarithms in a finite field\", IEEE Trans. Inform. Theory 39(5):1639-1646 (1993); G. Frey and H.-G. Rueck, Math. Comp. 62(206):865-874 (1994); R. Balasubramanian and N. Koblitz, J. Cryptology 11 (1998). Family membership condition read verbatim in Enge, arXiv:0712.3916, Sec. 1.2 (\"supersingular and other curves with a low embedding degree into the multiplicative group of a finite field\"). The Weil (MOV) and Tate-Lichtenbaum (Frey-Rueck) routes are governed by the SAME single obstruction, so they are one row.",
+  "source_verified": "abstract_only",
+  "requires": [
+   "small embedding degree k = min{ k : n divides p^k - 1 }, small enough that L(1/3) index calculus in F_{p^k} beats sqrt(n)",
+   "an n-torsion point over F_{p^k} to pair against, and a non-degenerate pairing value",
+   "secp256k1 inputs I COMPUTED: k = ord_n(p) = 19298681539552699237261830834781317975472927379845817397100860523586360249056, a 254-bit number, and it is EXACTLY (n-1)/6 \u2014 the maximum possible up to the factor 6 forced by mu_6. I checked directly that p^k != 1 mod n for every k <= 2000. Also computed: t = p+1-n = 432420386565659656852420866390673177327 is nonzero mod p, so E is ORDINARY, not supersingular. (A search-engine summary I retrieved claimed secp256k1 \"is said to be super-singular\" \u2014 that is FALSE and my own computation refutes it.)"
+  ],
+  "changed_quantity": "Would replace sqrt(n) by subexponential L_{p^k}(1/3) IF k were small. Computed for secp256k1: the target field F_{p^k} has about k*256 = 2^261.4 BITS, so the transfer maps a 2^128 problem into an astronomically larger one. Gain: none; the mechanism is worse than doing nothing.",
+  "growth_lever": "Gain grows only as the embedding degree k SHRINKS (it is a property of the fixed curve, computed once). k is not an index over which any relation-preserving subgroup grows \u2014 there is no m here. secp256k1 sits at essentially the maximal k."
+ },
+ {
+  "id": "TRF-WEIL-DESCENT-GHS",
+  "family": "transfer: Weil restriction / cover attack (threat model: CLASSICAL, single-target)",
+  "source": "G. Frey, Fq5 proceedings (2001); P. Gaudry, F. Hess, N. P. Smart, \"Constructive and destructive facets of Weil descent on elliptic curves\", J. Cryptology 15(1):19-46 (2002); C. Diem, \"The GHS attack in odd characteristic\", J. Ramanujan Math. Soc. 18(1):1-32 (2003); A. Menezes and E. Teske, AAECC 17 (2006); F. Hess, \"Weil descent attacks\", in Advances in Elliptic Curve Cryptography (2005). Family condition read verbatim in Enge, arXiv:0712.3916, Sec. 1.2 (\"elliptic curves that may be embedded by Weil descent into the Jacobian of a hyperelliptic curve of low genus\").",
+  "source_verified": "abstract_only",
+  "requires": [
+   "THE BASE FIELD MUST BE AN EXTENSION F_{q^l} with l > 1 \u2014 Weil restriction of scalars to F_q needs a proper subfield to descend to",
+   "the resulting cover must have genus small enough for L(1/2) Jacobian index calculus to beat sqrt(n) (GHS: genus roughly 2^(l-1), so l cannot be too large either)",
+   "secp256k1 input I COMPUTED: the base field is F_p with p = 2^256 - 2^32 - 977 and I verified p is PRIME. A prime field has no proper subfield. The mechanism has literally no input."
+  ],
+  "changed_quantity": "Would replace sqrt(n) by L(1/2) (or O(q^(2-2/g)) for small genus g) index calculus in a Jacobian. Computed for secp256k1: extension degree l = 1, so the gain is exactly 1 and the construction does not exist.",
+  "growth_lever": "Gain grows with the EXTENSION DEGREE l of the base field (through the genus of the cover, roughly 2^(l-1)), then collapses again once the genus outruns the index calculus. This IS a genuine l-indexed lever \u2014 which is precisely why it is worth naming: the parameter that makes Weil descent asymptotic is the field extension degree, and for secp256k1 it is pinned at 1. Note the requirement is on the FIELD, not the group order (see TRF-COVER-PRIME-ORDER)."
+ },
+ {
+  "id": "TRF-COVER-PRIME-ORDER",
+  "family": "transfer: cover attack that survives prime group order (threat model: CLASSICAL, single-target) \u2014 included to isolate what the requirement really is",
+  "source": "\"Cover attacks for elliptic curves with prime order\", arXiv:2012.07173 (2020): a transfer over cubic extension fields F_{q^3} built from an F_q-rational (l,l,l)-isogeny.",
+  "source_verified": "abstract_only",
+  "requires": [
+   "base field a CUBIC EXTENSION F_{q^3}",
+   "an F_q-rational (l,l,l)-isogeny to build the cover",
+   "notably it does NOT require composite group order \u2014 prime order is no defence against this family"
+  ],
+  "changed_quantity": "A transfer to a higher-genus Jacobian over F_q for curves of prime order over F_{q^3}. For secp256k1: gain 1 \u2014 the base field is prime, so there is no cubic (or any) extension structure.",
+  "growth_lever": "Same l-indexed field-extension lever as GHS, specialised to l = 3. The point of this row is diagnostic: primality of n (GEN-POHLIG-HELLMAN) and primality of p (TRF-WEIL-DESCENT-GHS) are DIFFERENT defences, and only the latter blocks descent. secp256k1 has both."
+ },
+ {
+  "id": "TRF-ANOMALOUS-SSSA",
+  "family": "transfer: p-adic / formal-group lifting on anomalous curves (threat model: CLASSICAL, single-target)",
+  "source": "I. A. Semaev, \"Evaluation of discrete logarithms in a group of p-torsion points of an elliptic curve in characteristic p\", Math. Comp. 67(221):353-356 (1998); T. Satoh and K. Araki, Comment. Math. Univ. St. Pauli 47(1):81-92 (1998); N. P. Smart, \"The discrete logarithm problem on elliptic curves of trace one\", J. Cryptology 12(3):193-196 (1999) \u2014 abstract retrieved: \"an elementary technique which leads to a linear algorithm\". Family condition read verbatim in Enge, arXiv:0712.3916, Sec. 1.2 (\"subgroups of order p defined over a finite field F_q of characteristic p, that may be embedded into the additive group (F_q,+)\").",
+  "source_verified": "abstract_only",
+  "requires": [
+   "#E(F_p) = p exactly, i.e. Frobenius trace t = 1 (\"anomalous\"), so that the group has order equal to the characteristic and the formal-group / elliptic logarithm becomes a computable isomorphism onto (F_p,+)",
+   "secp256k1 input I COMPUTED: t = p + 1 - n = 432420386565659656852420866390673177327, a 129-bit number, so t != 1 and #E = n != p. n - p = -432420386565659656852420866390673177326. The predicate fails by a 129-bit margin, not marginally."
+  ],
+  "changed_quantity": "When it applies: POLYNOMIAL (Smart: linear) time \u2014 total break. For secp256k1: gain 1, the mechanism has no input.",
+  "growth_lever": "Not graded \u2014 this is an ALL-OR-NOTHING PREDICATE on the trace, not a lever with a growth rate. There is no m, no relation-preserving subgroup, and no partial version: t = 1 or the construction does not exist. Any narrative that treats 'p-adic lifting' as a continuum toward secp256k1 is mis-modelling this family."
+ },
+ {
+  "id": "TRF-XEDNI-GLOBAL-LIFT",
+  "family": "global lifting to Q / xedni calculus (threat model: CLASSICAL, single-target) \u2014 a documented NEGATIVE",
+  "source": "J. H. Silverman, \"The Xedni Calculus and the Elliptic Curve Discrete Logarithm Problem\", Designs, Codes and Cryptography 20(1):5-40 (2000); M. J. Jacobson, N. Koblitz, J. H. Silverman, A. Stein, E. Teske, \"Analysis of the Xedni Calculus Attack\", Designs, Codes and Cryptography 20(1):41-64 (2000).",
+  "source_verified": "abstract_only",
+  "requires": [
+   "lift r points of E(F_p) to Q and fit an elliptic curve over Q through all of them",
+   "the lifted points must be linearly DEPENDENT, i.e. the lifted curve must have rank < r",
+   "JKSST conclusion retrieved: \"asymptotically the algorithm is virtually certain to fail, because of an absolute bound on the size of the coefficients of a relation satisfied by the lifted points\", and \"even for smaller values of p experiments show that the odds against finding a suitable lifting are prohibitively high\""
+  ],
+  "changed_quantity": "Nothing. Empirically and asymptotically worse than generic. No secp256k1-specific computation is needed because the obstruction is a height/coefficient bound independent of the curve.",
+  "growth_lever": "NEGATIVE growth \u2014 the failure probability increases with p. No relation-preserving subgroup. This row exists so the map does not leave a blank where a refuted mechanism belongs; 'not tried recently' must not be read as 'open'."
+ },
+ {
+  "id": "ISOG-JMV-SELF-REDUCTION",
+  "family": "isogeny / endomorphism-ring transfer and random self-reducibility (threat model: CLASSICAL, single-target)",
+  "source": "S. D. Galbraith, \"Constructing isogenies between elliptic curves over finite fields\", LMS J. Comput. Math. 2:118-138 (1999); S. D. Galbraith, F. Hess, N. P. Smart, \"Extending the GHS Weil Descent Attack\", EUROCRYPT 2002, LNCS 2332, 29-44 (uses isogenies to walk to a GHS-vulnerable curve); D. Jao, S. Miller, R. Venkatesan, \"Do All Elliptic Curves of the Same Order Have the Same Difficulty of Discrete Log?\", ASIACRYPT 2005, arXiv:math/0411378 \u2014 read in full: Theorem 1.1 (GRH: the l-isogeny graph on each LEVEL is an expander) and Corollary 1.2 (polylog(q) random reducibility WITHIN a level).",
+  "source_verified": "full_text_read",
+  "requires": [
+   "JMV Corollary 1.2 applies only WITHIN one level (curves with the same End(E)), and only under GRH; the paper is explicit that a cross-level equivalence \"may be false for more fundamental reasons\"",
+   "to cross levels one needs the conductor gap c_pi to be POLYNOMIALLY SMOOTH, because Kohel's vertical-isogeny algorithm costs O(l^4) in the largest prime l dividing the conductor difference",
+   "for this to be an ATTACK rather than a reduction, the isogeny class must contain a curve that is weak under some OTHER mechanism (that is exactly how Galbraith-Hess-Smart used it: isogeny-walk into GHS range)",
+   "secp256k1 inputs I COMPUTED: t^2 - 4p = -3 * v^2 with v = 303414439467246543595250775667605759171, so the CM field is Q(sqrt(-3)) with fundamental discriminant D_K = -3; j = 0 means End(E) = O_K = Z[zeta_3] (the MAXIMAL order), i.e. the curve sits at the top of the volcano. Class number h(-3) = 1, so THE TOP LEVEL CONTAINS EXACTLY ONE CURVE \u2014 the JMV expander graph there is a single vertex and the reduction is vacuous. c_pi = v is squarefree with factorization 3 * 79 * 349 * 2698097 * 1359580455984873519493666411; the largest prime factor is 91 bits, giving Kohel cost O(l^4) = 2^360.5, which is NOT polynomially smooth. I also computed the full level structure: 32 levels (one per divisor of v), level sizes h(u^2 * -3) running 1, 1, 26, 78, 116, 348, 9048, ... up to 99571827855075622415708833963083157920 at the bottom, total isogeny class size 134850961945423580155083382856384651226 ~ 2^126.7."
+  ],
+  "changed_quantity": "As a REDUCTION: proves difficulty is uniform across a level (a defence). As an ATTACK: nothing here, because (a) the level containing secp256k1 has one vertex, (b) the conductor gap is not smooth so Kohel-style descent to the populated lower levels costs ~2^360, and (c) no curve in the class is known to be weak under any other mechanism (all share the same t, hence the same non-anomalous trace and the same huge embedding degree, and all are over the same prime field so GHS is still unavailable).",
+  "growth_lever": "Gain = 1. There is no m-indexed relation-preserving subgroup. The two levers that would matter are (i) existence of a weak curve in the isogeny class and (ii) smoothness of the conductor gap P(c_pi); for secp256k1 (i) is absent under every mechanism in this table and (ii) is computed at 91 bits. Note this is an area where a small CM discriminant makes the curve MORE isolated at the top level, not less."
+ },
+ {
+  "id": "ISOG-ENDRING-COMPUTE",
+  "family": "enabling subroutine for isogeny transfer: computing End(E) / locating the volcano level (threat model: CLASSICAL)",
+  "source": "G. Bisson and A. V. Sutherland, \"Computing the endomorphism ring of an ordinary elliptic curve over a finite field\", arXiv:0902.4670 (2009) \u2014 read in full: heuristic subexponential L[1/2, sqrt(3)/2](q) for Algorithm 1 and L[1/2+o(1),1](|D_E|) + L[1/3,c_f](q) for Algorithm 2, both Las Vegas, both assuming GRH plus further heuristics; also D. Kohel's thesis (1996), O(q^(1/3+eps)) under GRH.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "an ordinary curve (secp256k1 is ordinary: I computed t != 0 mod p)",
+   "factorization of 4q - t^2 (Bisson-Sutherland: this is the L[1/3,c_f] term)",
+   "GRH plus the paper's Heuristics 1-4"
+  ],
+  "changed_quantity": "Determines the conductor u and hence End(E) in subexponential time. For secp256k1 this is not even needed: j = 0 forces End(E) = Z[zeta_3] by inspection, and I computed D_K = -3, u = 1. Solves no discrete log by itself \u2014 it is a positioning subroutine for ISOG-JMV-SELF-REDUCTION.",
+  "growth_lever": "Subexponential in log q / log|D_E|. Not a DLP gain at all; listed so that the isogeny row's prerequisites are not silently assumed to be free. No relation-preserving subgroup."
+ },
+ {
+  "id": "EDS-LAUTER-STANGE-NETS",
+  "family": "elliptic divisibility sequences / elliptic nets (threat model: CLASSICAL, single-target)",
+  "source": "K. E. Lauter and K. E. Stange, \"The elliptic curve discrete logarithm problem and equivalent hard problems for elliptic divisibility sequences\", SAC 2008, arXiv:0803.0728 \u2014 read in full (Theorem 1 and Sections 5-10); R. Shipsey, \"Elliptic Divisibility Sequences\", PhD thesis, Goldsmiths, Univ. of London (2001); K. E. Stange, \"The Tate pairing via elliptic nets\", PAIRING 2007; M. Ward, Amer. J. Math. 70 (1948).",
+  "source_verified": "full_text_read",
+  "requires": [
+   "Lauter-Stange Theorem 1 hypotheses: K = F_q of characteristic != 2; ord(P) >= 4; and throughout Sections 5-8, ord(P) COPRIME TO q-1 (needed even to define phi), plus phi(P) a primitive root (Thm 10) or a quadratic non-residue (Prop 3 / Cor 2) for the residuosity route",
+   "secp256k1 inputs I COMPUTED: char = p != 2; n > 3; n odd; gcd(n, p-1) = 1 \u2014 so the coprimality hypothesis HOLDS and the equivalence genuinely applies to secp256k1",
+   "the paper's own escape hatch: the MOV/Frey-Rueck degeneration happens exactly when m = q-1. I computed n != p-1 (n - (p-1) = -432420386565659656852420866390673177325), so that route does not open"
+  ],
+  "changed_quantity": "NOTHING is gained. Theorem 1 is an EQUIVALENCE: ECDLP, EDS Association (non-perfectly-periodic), EDS Residue (non-perfectly-periodic), and Width-3 EDS Discrete Log (perfectly periodic) are solvable in sub-exponential time if and only if one another are. The paper's own reduction costs are polynomial: O((log q)^3) and O((log q)^4). Cor. 2: an oracle for the quadratic residuosity of W_{E,P}(k) would give the ECDLP in O((log q)(T(q) + (log q)^3)) \u2014 but no such oracle is known, and the authors state \"as yet we have no evidence to suggest that the ratio of quadratic residues among the terms is not 1/2 in general\".",
+  "growth_lever": "Gain = 1 by construction \u2014 an equivalence cannot have a growth lever. The only place a lever could appear is a statistical BIAS in the quadratic residuosity of EDS terms; the authors report no such bias. No relation-preserving subgroup and no m. This family is a reformulation surface, not a speedup surface."
+ },
+ {
+  "id": "CM-SMALL-DISCRIMINANT",
+  "family": "CM-specific / small |D| (threat model: CLASSICAL, single-target)",
+  "source": "D_K = -3 COMPUTED BY ME from the public constants (t^2-4p = -3*v^2, squarefree part 3, and 3 = 3 mod 4 so D_K = -3); j = 0 computed. Literature basis for the only known consequence: Duursma-Gaudry-Morain, ASIACRYPT'99, and Wiener-Zuccherato SAC'98 (see GEN-RHO-AUT). Volcano/class-group structure: Bisson-Sutherland arXiv:0902.4670 (full text) and Jao-Miller-Venkatesan arXiv:math/0411378 (full text).",
+  "source_verified": "secondhand",
+  "requires": [
+   "for the automorphism speedup: |D| in {-3, -4} specifically (that is the only way |Aut(E)| exceeds 2) \u2014 secp256k1 has D_K = -3, so it does qualify, and the consequence is exactly GEN-RHO-AUT",
+   "for anything asymptotic: NOT_FOUND_IN_SOURCES_CHECKED \u2014 none of the sources I actually read (Enge arXiv:0712.3916, JMV arXiv:math/0411378, Bisson-Sutherland arXiv:0902.4670, Lauter-Stange arXiv:0803.0728) contains a mechanism converting small |D| into an asymptotic ECDLP gain over a PRIME field. Absence from these four is not novelty and not a proof of impossibility.",
+   "CORRECTION OF A RETRIEVED ERROR: a search-engine summary I fetched asserted secp256k1 \"is said to be super-singular\". That is false. I computed t = 432420386565659656852420866390673177327, t != 0 mod p, so E is ORDINARY. Supersingularity would have made the MOV row live (k <= 6); it does not."
+  ],
+  "changed_quantity": "The only established consequence for secp256k1 is the sqrt(6) constant of GEN-RHO-AUT (2^127.826 -> 2^126.533). Secondary structural consequences I computed, both of which cut AGAINST an attacker: h(-3) = 1 makes the top volcano level a single vertex (kills JMV's within-level spreading argument as a source of weak neighbours), and D_K = -3 forces the huge embedding degree k = (n-1)/6 rather than a small one.",
+  "growth_lever": "fixed/constant. |D| is a single fixed integer for a fixed curve; it indexes no family and no relation-preserving subgroup. This row is the strongest temptation to violate the FGHR discriminator \u2014 'j = 0 gives extra symmetry' is true but the symmetry group has order 6 and does not grow, so no solving-degree or asymptotic Groebner consequence follows."
+ },
+ {
+  "id": "IMPL-HNP-LATTICE-NONCE",
+  "family": "implementation / side-channel: Hidden Number Problem via lattice reduction (threat model: NOT ECDLP AT ALL \u2014 many-signature, partial-nonce-leakage against ECDSA; the group is untouched)",
+  "source": "D. Boneh and R. Venkatesan, \"Hardness of Computing the Most Significant Bits of Secret Keys in Diffie-Hellman and Related Schemes\", CRYPTO'96 (LLL/Babai nearest-plane solves HNP w.p. >= 1/2 when the number of known bits per sample exceeds sqrt(log q) + log log q); N. A. Howgrave-Graham and N. P. Smart (2001); P. Q. Nguyen and I. E. Shparlinski, \"The Insecurity of the Elliptic Curve Digital Signature Algorithm with Partially Known Nonces\", Des. Codes Cryptogr. 30(2) (2003) and J. Cryptology 15(3) (2002); J. Breitner and N. Heninger, \"Biased Nonce Sense: Lattice Attacks against Weak ECDSA Signatures in Cryptocurrencies\", FC 2019 (ePrint 2019/023).",
+  "source_verified": "abstract_only",
+  "requires": [
+   "MANY (EC)DSA signatures under the SAME long-term key \u2014 the plain ECDLP model gives you one public key and no signatures, so this mechanism is out of that model entirely",
+   "per-signature nonces that are biased or partially known. Nguyen-Shparlinski retrieved: roughly log^{1/2} q bits of MSB/LSB leakage per signature with a number of signatures linear in log q; down to log log q bits at running time q^{O(1/log log q)}; down to two bits in polynomial time GIVEN an exact CVP oracle for the infinity norm; arbitrary consecutive bits need twice as many",
+   "the leakage must come from somewhere real: a broken RNG, a timing/power channel, or nonce reuse"
+  ],
+  "changed_quantity": "Recovers the long-term key in polynomial time from leakage, bypassing the 2^128 wall entirely \u2014 but it never touches the discrete logarithm. RFC 6979 deterministic nonce derivation removes the input. Nothing about n, p, j, D, or k enters.",
+  "growth_lever": "Gain grows with BITS OF NONCE LEAKAGE per signature times NUMBER OF SIGNATURES \u2014 both protocol/implementation quantities. No relation-preserving subgroup, no m, and no curve property whatsoever. Listing it in an ECDLP atlas is correct only if the threat-model boundary is stated loudly, which is why it is stated here."
+ },
+ {
+  "id": "IMPL-BLEICHENBACHER-FFT",
+  "family": "implementation / side-channel: Bleichenbacher FFT bias attack (threat model: NOT ECDLP \u2014 sub-bit nonce bias across very many ECDSA signatures)",
+  "source": "D. Bleichenbacher, IEEE P1363 working-group contribution (2000), unpublished; D. F. Aranha et al., \"LadderLeak\" (ACM CCS 2020); G. De Micheli, R. Piau, C. Pierrot (2020). I could NOT obtain any of these texts \u2014 WebFetch was 403-blocked org-wide for eprint.iacr.org, iacr.org, link.springer.com and direct arxiv.org, and Elicit API access was denied.",
+  "source_verified": "not_obtained",
+  "requires": [
+   "UNVERIFIED \u2014 I did not read a source. The commonly-stated requirement is a very large number of signatures with a nonce bias far below one bit, traded against exponentially growing signature counts and FFT table size. Treat every quantitative claim in this row as UNVERIFIED.",
+   "same threat-model exclusion as IMPL-HNP-LATTICE-NONCE: needs signatures, not just a public key"
+  ],
+  "changed_quantity": "UNVERIFIED. Claimed to tolerate much smaller bias than lattice/HNP at the cost of far more signatures. No secp256k1-specific number is asserted here because I have no verified source.",
+  "growth_lever": "UNVERIFIED. Believed to trade signature count against bias size; no curve property enters and no relation-preserving subgroup exists. Included so the map has no blank sector, explicitly flagged as unread."
+ },
+ {
+  "id": "QUANT-SHOR-ECDLP",
+  "family": "quantum period finding (threat model: QUANTUM \u2014 fault-tolerant quantum computer; the classical generic Omega(sqrt(n)) bound explicitly does not apply)",
+  "source": "P. W. Shor, FOCS 1994 / SIAM J. Comput. 26(5):1484-1509 (1997); J. Proos and C. Zalka, \"Shor's discrete logarithm quantum algorithm for elliptic curves\", QIC 3(4):317-344, arXiv:quant-ph/0301141 \u2014 read in full; M. Roetteler, M. Naehrig, K. M. Svore, K. Lauter, \"Quantum Resource Estimates for Computing Elliptic Curve Discrete Logarithms\", ASIACRYPT 2017, arXiv:1706.06752 \u2014 read in full (and it names secp256k1 explicitly in its intro); D. Litinski, \"How to compute a 256-bit elliptic curve private key with only 50 million Toffoli gates\", arXiv:2306.08585 \u2014 read in full; E. Gouzien, D. Ruiz, F.-M. Le Regent, J. Guillaud, N. Sangouard, arXiv:2302.06639 (cited by Litinski, NOT read by me).",
+  "source_verified": "full_text_read",
+  "requires": [
+   "a large fault-tolerant quantum computer \u2014 none exists",
+   "known prime group order (Proos-Zalka, Sec. 2.2.2, assume the base has known prime order; true for secp256k1 and w.l.o.g. anyway via Pohlig-Hellman)",
+   "reversible modular inversion over F_p (Proos-Zalka: extended Euclid; Roetteler et al.: binary GCD / Kaliski; Litinski: the dominant cost, 26n^2 + 2n Toffoli per inversion)",
+   "no property of secp256k1 beyond its 256-bit size matters \u2014 j = 0, D = -3, k, and t are all irrelevant here"
+  ],
+  "changed_quantity": "Polynomial time. Verbatim from the three full texts, all for n = 256-bit prime fields: Proos-Zalka Table, ECC n = 256 -> about 1500 (1800 without register sharing) logical qubits, roughly 6.0*10^9 time units of 1-qubit additions, with total qubits ~5n + 8*sqrt(n) + 4*log2(n) and time ~205n^2 + 615n^(3/2) n-bit additions. Roetteler-Naehrig-Svore-Lauter: at most 9n + 2*ceil(log2 n) + 10 qubits and at most 448*n^3*log2(n) + 4090*n^3 Toffoli gates; simulated for 256 bits: 2330 logical qubits, 1.26*10^11 Toffoli, Toffoli depth 1.16*10^11 (versus RSA-3072 at 6146 qubits and 1.86*10^13 Toffoli \u2014 ECC is the EASIER quantum target at matched classical security). Litinski: (44 + 65/k)*10^6 Toffoli per key with k parallel instances, asymptotically 44 million Toffoli per key, 3000 logical memory qubits per instance (6000 logical qubits total); active-volume architecture at 10-microsecond code cycle, 10% of threshold, d = 24: one key per 9.7 minutes on 6000 modules of 1152 physical qubits; strict 2D-local baseline: one key per 38 hours (d = 28, 9.4 million physical qubits at 1-microsecond cycle), or 160 days at a 1-ms cycle.",
+  "growth_lever": "Cost is O(n^3) in the BIT LENGTH n of the field, with O(n) qubits. Litinski, verbatim: \"doubling the key size results in a twofold increase in footprint and an eightfold increase in Toffoli count and active volume\". The lever is hardware scale and key length, not any algebraic structure \u2014 there is no relation-preserving subgroup and no m. This is the one row in the table whose gain is unbounded, and it is unbounded because it leaves the classical threat model, not because it found structure in secp256k1."
+ },
+ {
+  "id": "IC-01-semaev-2004-bounded-integer-factorbase",
+  "family": "prime-field index calculus / Semaev factor base (conditional)",
+  "source": "I. Semaev, \"Summation polynomials and the discrete logarithm problem on elliptic curves\", IACR ePrint 2004/031, dated 5 Feb 2004. \u00a72 Theorem 1 (definition, recursion, degree, irreducibility of f_n); \u00a73 \"The Discrete Logarithm Problem\" (eqns (5),(6),(7) and the complexity sentence).",
+  "source_verified": "full_text_read",
+  "requires": [
+   "TP-CHAR-NOT-2-3 + short Weierstrass: E/F_p given by Y^2 = X^3 + AX + B, char K != 2,3 (\u00a72 eq.(1)). secp256k1 y^2=x^3+7 over p=2^256-2^32-977 satisfies this (p verified prime by Miller-Rabin; p mod 4 = 3, p mod 3 = 1).",
+   "NO curve-structure hypothesis beyond the above. This is the ONLY mechanism in the family whose stated hypotheses secp256k1 actually satisfies.",
+   "AN ORACLE THAT DOES NOT EXIST: an algorithm running in time t_{p,n} that returns bounded solutions x_1..x_n (integers < p^{1/n+delta}, or rationals with numerator/denominator < p^{1/(2n)+delta}) of f_{n+1}(x_1,...,x_n,x) = 0 mod p and of f_m(x_1,...,x_m) = 0 mod p. Semaev supplies no such algorithm and closes \u00a73 with: \"The exciting question arising here is whether or not it is true for (5) and (7)?\"",
+   "Factor base = {P in E(F_p) : x(P) < p^{1/n+delta} as an integer in [0,p-1]}. This set carries NO field/vector-space/subgroup structure; Semaev's Remark 2 states the Weil-descent variant is for F_{2^l}, i.e. it is unavailable over a prime field.",
+   "Trivial solutions of f_m (x_1,x_1,x_2,x_2,...) must be excluded."
+  ],
+  "changed_quantity": "Replaces the generic O(p^{1/2}) bound by the CONDITIONAL count t_{p,n}*p^{1/n+delta} + p^{2/n+2delta}. Establishes deg_{X_i} f_n = 2^{n-2} exactly, f_n symmetric, absolutely irreducible, with leading form f_{n-1}^2 * X_n^{2^{n-2}}. Nothing about the target curve is changed; the mechanism relocates the hardness into a lattice/bounded-root problem.",
+  "growth_lever": "NOT a curve symmetry. The gain exponent is 1/n in the number of summands n, i.e. it improves with n only if t_{p,n} stays sub-p^{1/2}; Semaev only claims \"even for some exponential t_{p,n}\" this may beat Pollard for n >= 5. Relation-preserving group actually present in the system: S_n (variable permutation, order n!) plus the [-1] involution already quotiented out by working in x-coordinates. Order n! * 2 -- grows with n but is the trivial decomposition symmetry, carries no curve information, and is exploited by every later paper. NO torsion or automorphism subgroup enters."
+ },
+ {
+  "id": "IC-02-gaudry-2009-weil-restriction-decomposition",
+  "family": "extension-field decomposition index calculus (abelian-variety / Weil restriction)",
+  "source": "P. Gaudry, \"Index calculus for abelian varieties of small dimension and the elliptic curve discrete logarithm problem\", J. Symbolic Computation 44(12):1690-1702, 2009; author preprint HAL inria-00337631 (29 Aug 2008). \u00a72.2 factor base, \u00a72.3 relations, Heuristic result 3, \u00a73 Heuristic result 4, \u00a73.2-\u00a73.3 degrees, \u00a74.2 pros/cons.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "E defined over F_{q^n} with n >= 2 FIXED and SMALL, q -> infinity (Heuristic result 4: \"Let n >= 2 be a fixed integer and let q be a prime or a prime power that we let grow to infinity ... the constant depends on n\"). A PROPER SUBFIELD F_q of the field of definition is structurally required.",
+   "FAILS ON TP-PRIME-FIELD: secp256k1 is defined over the prime field F_p (p = 2^256-2^32-977, verified prime), so n = 1; there is no proper subfield, the Weil restriction is 1-dimensional and the factor-base construction is empty. Not a quantitative shortfall -- the construction does not type-check.",
+   "Factor base F = A \u2229 H_2 \u2229 ... \u2229 H_n with H_i the hyperplane x_i = 0, i.e. F = {P in E(F_{q^n}) : x(P) in F_q}, after a random linear change of the x_i. F must be absolutely irreducible (re-randomise otherwise) and not contained in a strict abelian subvariety.",
+   "Heuristic Bertini / Weil-bound assumption: #F = q + O(sqrt q); heuristic large-prime combinatorics for the Theriault / two-large-primes variant."
+  ],
+  "changed_quantity": "Heuristic total time \u00d5(q^{2-2/n}) versus \u00d5(q^{n/2}) for Pollard rho (so a genuine asymptotic gain from n = 3 upward: q^{4/3} vs q^{3/2}). Relation cost: a system of n equations in n unknowns over F_q from S_{n+1} (degree 2^{n-1} per variable); symmetrisation in e_1..e_n \"reduces the degree of the ideal by a n! factor\"; generic lex-GB univariate degree 2^{n(n-1)}.",
+  "growth_lever": "Lever = the extension degree n, NOT any curve symmetry. The only relation-preserving group used is S_n (order n!, from permuting the n summands); Gaudry states the relation probability is 1/n! and that the n! factor \"is negligible compared to a polynomial in 2^{n(n-1)}\". Hard ceiling stated verbatim in \u00a74.2: \"If n is large, our attack does not allow to enlarge the factor basis: the limiting cost is not the n! ... but the 2^{n(n-1)} that is inherent to the decomposition method.\""
+ },
+ {
+  "id": "IC-03-diem-2011-subexponential",
+  "family": "extension-field decomposition index calculus (subexponential regime)",
+  "source": "C. Diem, \"On the discrete logarithm problem in elliptic curves\", Compositio Math. 147 (2011) 75-104; author preprint dated 9 Aug 2010, math.uni-leipzig.de/~diem/preprints/dlp-ell-curves.pdf (retrieved via Wayback). Abstract Results 1-3, main Theorem, \u00a72.1 Props 2.1/2.3/2.5, Def 2.2/2.4.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "E over K = F_{q^n} with a FINITE FIELD EXTENSION K|k of degree n >= 2 and a chosen k-basis b_1..b_n. The factor base is phi^{-1}(P^1(k)) for a degree-2 covering phi : E -> P^1_K with phi \u2218 [-1] = phi. A subfield k strictly inside K is structurally required.",
+   "Subexponentiality requires n -> infinity with n/log(q) -> 0 (Result 1); the e^{O(log(q^n)^{2/3})} case requires a*sqrt(log q) <= n <= b*sqrt(log q) (Result 3). The main Theorem is e^{O(max(log q, n^2))}.",
+   "FAILS ON TP-PRIME-FIELD: for secp256k1 the only subfield of F_p is F_p itself, forcing n = 1; the decomposition problem, the system S^{(1)}..S^{(n)} in (P^1_k)^n, and the whole subexponential regime (n -> infinity) are all vacuous. Diem's results are statements about SEQUENCES of fields F_{q_i^{n_i}} with n_i -> infinity; a single fixed prime field is not in any such sequence.",
+   "Prop 2.5 intersection-theory bound: <= n! * d^n isolated points, d = 2^{n-1}; randomized solver in Poly(n! * d^n * log q)."
+  ],
+  "changed_quantity": "Expected running time e^{O(max(log q, n^2))} for ECDLP over F_{q^n}; hence (q^n)^{o(1)} whenever n -> infinity and n/log q -> 0, and e^{O(log(q^n)^{2/3})} in the balanced regime. Establishes multihomogeneous summation polynomials S_{phi,m} of multidegree (2^{m-2},...,2^{m-2}) computable in expected Poly(e^{m^2} log q).",
+  "growth_lever": "Lever = the extension degree n growing with log q. NO curve symmetry is used beyond phi \u2218 [-1] = phi (the fixed order-2 quotient already implicit in x-coordinates) and the S_n permutation factor inside the n! * d^n Bezout bound. Fixed with respect to any torsion or automorphism subgroup of E."
+ },
+ {
+  "id": "IC-04-petit-quisquater-2012-weil-descent-firstfall",
+  "family": "small-characteristic Weil-descent index calculus (first-fall-degree analysis)",
+  "source": "C. Petit, J.-J. Quisquater, \"On Polynomial Systems Arising from a Weil Descent\", ASIACRYPT 2012, LNCS 7658:451-466; IACR ePrint 2012/146 (retrieved via Wayback). \u00a74 Problem (1) and System (3), \u00a74.7 Assumption 1 / Props 2,3, \u00a75 Assumption 2 and Prop 4.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "K = F_{2^n} (results stated in char 2; the authors say \"most of our results can be easily extended to other characteristics\", meaning F_{p^n} with p SMALL and n large -- never n = 1).",
+   "A random F_2-VECTOR SUBSPACE V of F_{2^n} of dimension n' with m*n' \u2248 n and n' >= t. The Weil descent onto the ground field is the mechanism: variables x_ij in F_2 with FIELD EQUATIONS x_ij^2 - x_ij = 0 added, giving System (3) [f]_1 = ... = [f]_n = 0.",
+   "FAILS ON TP-PRIME-FIELD: over F_p with p a 256-bit prime there is no proper F_p-subspace of F_p of dimension < 1, no descent variables x_ij, and no field equations of small degree to add. The paper's own factor base is a vector space, not a set of small integers.",
+   "Assumption 2 (a curve-specific instance of Assumption 1): for E/F_{2^n}, random V of dim n', random R, the system from S_{m+1}(x_1..x_m, x(R)) has D_reg = D_firstfall + o(1) with high probability. This assumption is explicitly flagged elsewhere in the literature as unproven and false in general."
+  ],
+  "changed_quantity": "Under Assumption 2, degree of regularity collapses to \u2248 m*t (first fall) instead of the generic bound, giving GB cost O(n^{omega*D}) / block-GB O((n')^{omega*D}) with D \u2248 m*t; and Prop 4: ECDLP over F_{2^n} in O(2^{c n^{2/3} log n}) with c = 2*omega/3, subexponential, HOLDING EVEN WHEN n IS PRIME. Estimated crossover with generic methods at n \u2248 2000.",
+  "growth_lever": "Lever = the extension degree n -> infinity with the balance parameter alpha = 2/3 (n' \u2248 n^alpha, m \u2248 n^{1-alpha}). Fixed with respect to curve symmetry: no torsion point, no automorphism, no isogeny appears anywhere. The whole gain comes from F_2-linearity of the constraint set, which a prime field does not provide."
+ },
+ {
+  "id": "IC-05-pkc2016-i-p-minus-1-smooth",
+  "family": "prime-field index calculus, PKC 2016 framework, instance (i) p-1 smooth",
+  "source": "C. Petit, M. Kosters, A. Messeng, \"Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over Prime Fields\", PKC 2016, LNCS 9615:3-18 (Springer PDF). \u00a73.1 conditions on L, Algorithm 1 and System (4), \u00a73.2 partial analysis, \u00a73.3 \"Attack When p-1 Has a Large Smooth Factor\".",
+  "source_verified": "full_text_read",
+  "requires": [
+   "E/F_p arbitrary -- there is NO hypothesis on the curve. The hypothesis is entirely on the PRIME p.",
+   "p - 1 = r * prod_{i=1..n'} p_i with all p_i <= B and prod_{i=1..n'} p_i \u2248 p^{1/m}, for a decomposition length m chosen with (deg L)^m \u2248 m! * p. V is then the subgroup G <= F_p^* of order prod p_i (or a coset aG); L_j(x) = x^{p_j} for j < n', L_{n'}(x) = 1 - x^{p_{n'}}.",
+   "Condition 1 of \u00a73.1: #{x in F_p : L(x) = 0} \u2248 p^{1/m}. Condition 2: L must factor as a composition of LOW-DEGREE maps L_j, so that the large-degree constraint L(x)=0 becomes System (4) of low-degree equations solvable by Gr\u00f6bner bases.",
+   "FAILS QUANTITATIVELY ON TP-P1-SMOOTH-19 FOR secp256k1 (computed, not recalled): p - 1 = 2 * 3 * 7 * 13441 * C where C is a 237-bit prime (Miller-Rabin). The LARGEST B-smooth divisor of p-1, for ANY B, is 2*3*7*13441 = 564522 = 2^19.11. Solving p^{1/m} = 2^19.11 gives m = 13.40, so requirement (i) needs m >= 14 -- while the largest summation polynomial ever computed is S_8 (FHJRV 2014), and S_15 would have degree 2^13 = 8192 in each of 14 variables. For contrast, NIST P-224 (which the paper singles out) has p-1 = 2^96 * 3 * 5 * 17 * 257 * 641 * 65537 * 274177 * 6700417 * 67280421310721, 2-adic valuation 96 versus 1 for secp256k1.",
+   "Note the framework's genealogy stated in the paper: Diem/Gaudry implicitly use L(x) = x^q - x; char-2 attacks use the linearized polynomial of a vector space; Semaev implicitly uses L(x) = prod_{alpha<B}(x - alpha). secp256k1's p admits none of the first two."
+  ],
+  "changed_quantity": "Total cost P(p,m) + m! * p / (deg L)^{m-1} * T(E,m,L) + (deg L)^omega. The mechanism converts Semaev's structureless bounded-integer factor base into one cut out by a COMPOSABLE low-degree map, making relation search an actual algorithm. Beats generic algorithms only if one can solve T(E,m,L) faster than p^{1/2 - 1/m}.",
+  "growth_lever": "FIXED / no curve symmetry at all. The only symmetry mentioned is \"modulo symmetries, namely permutations of the x_i1\" (S_m). The lever is arithmetic of p (the size of the smooth part of p-1) plus the UNQUANTIFIED Gr\u00f6bner cost T. Authors' own verdict, verbatim: \"Proving meaningful complexity bounds for our algorithms appears very challenging today ... it is not clear yet whether the special structure introduced in this paper leads to asymptotic improvements with respect to generic discrete logarithm algorithms\" and \"At the moment all attacks are outperformed by generic discrete logarithm algorithms for practically relevant parameters.\""
+ },
+ {
+  "id": "IC-06-pkc2016-ii-auxiliary-isogeny",
+  "family": "prime-field index calculus, PKC 2016 framework, instance (ii) auxiliary curve / isogeny",
+  "source": "C. Petit, M. Kosters, A. Messeng, PKC 2016, LNCS 9615:3-18. \u00a73.4 \"Generalization to Arbitrary p\" + Lemma 1; \u00a73.5 \"Finding an Auxiliary Curve\" (random selection, Table 1, complex multiplication / Cornacchia).",
+  "source_verified": "full_text_read",
+  "requires": [
+   "Knowledge of an AUXILIARY curve E'/F_p over the SAME prime field, a priori unrelated to the target E, with #E'(F_p) = N = r * prod_{i=1..n'} p_i, all p_i <= B, prod p_i \u2248 p^{1/m}.",
+   "A subgroup H <= E'(F_p) of order prod p_i and the quotient isogeny phi : E' -> E'/H, written as a composition phi_{n'} \u2218 ... \u2218 phi_1 with deg phi_i = p_i, each computed by Velu. L_j = xi_j/psi_j^2, L_{n'} = xi_{n'}/psi_{n'}^2 - chi where chi is the x-coordinate of a NON-2-TORSION point in the image of phi (Lemma 1 needs this so that a kernel coset has pairwise distinct x-coordinates).",
+   "V = x-coordinates of the points of a coset of H on E'. NOTE: the target curve E contributes nothing but its summation polynomial -- the mechanism is indifferent to j(E), Aut(E), the CM discriminant, and the torsion of E. So TP-J0-AUT6 and TP-CM-D3 for secp256k1 are simply not in the requirement signature.",
+   "Precomputation cost, computed for |p| = 256 from the paper's own model: random-curve search with B = 2 needs about p^{1/m} trials = 2^85.3 (m=3), 2^64.0 (m=4), 2^51.2 (m=5); the paper's Table 1 for |p|=256 gives 2^128/2^86/2^64/2^52 at B=2 down to 2^105.8/2^66.3/2^47.2/2^36.0 at B=17. The CM route needs a solution of x^2 - D y^2 = 4p with |D| small enough for a Hilbert class polynomial (Sutherland, |D| up to ~10^13)."
+  ],
+  "changed_quantity": "Removes the p-1 smoothness hypothesis, so the framework applies to ARBITRARY p including secp256k1's. Same cost formula P(p,m) + m! p (deg L)^{1-m} T(E,m,L) + (deg L)^omega, with the burden shifted into P(p,m). Since the factor base has size deg L \u2248 p^{1/m}, the linear-algebra term (deg L)^omega \u2248 p^{omega/m} dominates the p^{1/m} precomputation, so precomputation is not the binding constraint -- T(E,m,L) is.",
+  "growth_lever": "FIXED / no curve symmetry. The isogeny here is a FACTOR-BASE-DEFINING device on an auxiliary curve, not a symmetry acting on relations: it does not act on the decomposition R = P_1 + ... + P_m at all, so it contributes no relation-preserving subgroup and no per-coordinate group whose order grows with m. Same open-complexity caveat as instance (i)."
+ },
+ {
+  "id": "IC-07-amadori-pintore-sala-2018",
+  "family": "prime-field index calculus, single-Gr\u00f6bner-basis variant",
+  "source": "A. Amadori, F. Pintore, M. Sala, \"On the discrete logarithm problem for prime-field elliptic curves\", preprint dated 21 June 2017 = IACR ePrint 2017/609 (retrieved via Wayback); published Finite Fields and Their Applications 51 (2018) 168-182. \u00a73 \"Our proposal\", \u00a73.1 Systems (9)/(11), \u00a73.2 complexity analysis, \u00a73.3 experiments.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "E/F_p with #E(F_p) = r PRIME (stated hypothesis: \"having a prime number of rational points\"). SATISFIED by secp256k1: #E(F_p) = n is prime (Miller-Rabin verified) with cofactor 1.",
+   "A decomposition constant m and a final factor-base size s with s^m \u2248 p. The factor base is NOT fixed in advance: it is built on the fly as F = {R_i = u_i P + v_i Q}, so each collected point is trivially its own relation.",
+   "A partition {F_i} of F into m parts of roughly equal size, giving V_i = x(F_i) and f_i(X_i) = prod_{v in V_i}(X_i - v); System (11) is S_m(X_1..X_m) = 0 together with f_1(X_1) = ... = f_m(X_m) = 0. This DELIBERATELY BREAKS the S_m symmetry (disjoint bases, P_i or -P_i in F_i only).",
+   "No hypothesis on j(E), Aut(E), torsion, CM, or the smoothness of p-1 -- so unlike PKC 2016 instance (i) the signature is met by secp256k1. The barrier is purely the cost of the single Gr\u00f6bner basis."
+  ],
+  "changed_quantity": "Collapses the number of Gr\u00f6bner basis computations from ~s (one per relation) to EXACTLY ONE, and eliminates the linear-algebra stage entirely (replaced by a 'relation solving' stage). Total cost p * m^m / s^m * T(E,m,V) versus Petit et al.'s p * m! / s^{m-1} * T'(E,m,V). Outperforms PKC 2016 once s*(m!) > m^m, i.e. from bit-size of p equal to {7,14,24,37,52,70} for m = {3,4,5,6,7,8}.",
+  "growth_lever": "FIXED, and in one respect ANTI-growing. The disjoint-base construction removes the S_m symmetry, so relation probability improves by m!/m^m^{-1}-style bookkeeping but the penalty m^m/m! \u2248 e^m grows exponentially in m; the compensating lever is the extra factor s = p^{1/m} of factor-base size, not any group action. No torsion, automorphism, or isogeny subgroup enters -- there is no subgroup whose order grows with m. The authors state the limit verbatim: \"In order to reach an improvement with respect to algorithms for generic cyclic groups, this complexity should be smaller than p^{1/2}. We do not claim this result.\""
+ },
+ {
+  "id": "IC-08-kudo-cans-2018-hybrid",
+  "family": "prime-field index calculus, acceleration of Amadori et al. + explicit limitation",
+  "source": "M. Kudo, Y. Yokota, Y. Takahashi, M. Yasuda, \"Acceleration of Index Calculus for Solving ECDLP over Prime Fields and Its Limitation\", CANS 2018, LNCS 11124:377-393, Springer, doi 10.1007/978-3-030-00434-7_19. Springer landing page abstract read verbatim; full text PAYWALLED and NOT obtained. Independent characterisation of its result taken from Yokoyama-Yasuda-Takahashi-Kogure, J. Math. Cryptol. 14(1):460-485 (2020), \u00a71, reference [22], whose full text I did read.",
+  "source_verified": "abstract_only",
+  "requires": [
+   "Inherits the entire requirement signature of IC-07 (Amadori et al.): E/F_p, prime group order, on-the-fly factor base, per-variable vanishing polynomials f_i, one Gr\u00f6bner basis. Verbatim from the abstract: \"In 2018, Amadori et al. proposed a new variant of index calculus to solve the elliptic curve discrete logarithm problem (ECDLP), using Semaev's summation polynomials ... In this paper, we provide several improvements to accelerate to solve systems of multivariate equations arising in the variant.\"",
+   "The hybrid method: a mix of exhaustive search over a chosen subset of variables and Gr\u00f6bner bases on the remainder. This requires enough spare field-operation budget to pay the exhaustive-search multiplier q^k, so it constrains parameters rather than the curve.",
+   "Use of \"symmetries of summation polynomials\" -- from the abstract, unquantified. I could NOT verify from the full text which group this is; on the Amadori et al. base the S_m symmetry is deliberately broken by the disjoint sub-bases, so the symmetry in question is presumably partial. MARK AS UNVERIFIED.",
+   "No curve-structure hypothesis is visible in the abstract; nothing about torsion, automorphisms, CM, or p-1 smoothness."
+  ],
+  "changed_quantity": "Practical acceleration of the multivariate solve inside the Amadori et al. variant (hybrid exhaustive-search/Gr\u00f6bner split plus summation-polynomial symmetries), together with a complexity analysis that the authors themselves frame as a LIMITATION: \"we show experimental results of our improvements, and give their complexity analysis to discuss a limitation of our acceleration in both theory and practice.\" Independently, Yokoyama et al. 2020 \u00a71 report: \"An experimental study by [22] showed that both methods of [1, 27] do not outperform generic algorithms such as the rho method for solving ECDLP over prime fields\" ([1] = Amadori et al., [27] = Petit et al., [22] = this paper).",
+  "growth_lever": "FIXED, as far as can be established without the full text. The hybrid method is a constant-vs-exponent trade (exhaustive search on k variables multiplies cost by q^k while lowering the GB degree), not a group action; no relation-preserving subgroup whose order grows with m is claimed in the abstract. Treat the growth lever as NOT ESTABLISHED rather than as established-fixed."
+ },
+ {
+  "id": "IC-09-fghr-2014-2torsion-coxeter-symmetrization",
+  "family": "symmetrisation of the PDP by a rational 2-torsion translation (Coxeter group D_n)",
+  "source": "J.-C. Faugere, P. Gaudry, L. Huot, G. Renault, \"Using symmetries in the index calculus for elliptic curves discrete logarithm\", J. Cryptology 27(4):595-635, 2014; IACR ePrint 2012/199 (full 40-page version). Theorem 1.1 and \u00a71.2-1.3; \u00a72.3.1 twisted Edwards, \u00a72.3.2 twisted Jacobi intersections; \u00a74.1.1-4.1.2 including condition (10) and the explicit Weierstrass exclusion; Proposition 3.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "Theorem 1.1 hypothesis: \"E an elliptic curve defined over a NON BINARY field F_{q^n} where n > 1\". An extension field is required -- n is simultaneously the extension degree and the number of summands in the PDP.",
+   "E must admit a TWISTED EDWARDS or TWISTED JACOBI INTERSECTIONS model. Twisted Edwards is isomorphic to the Montgomery family and \"these curves always have a rational 2-torsion point T2 = (0,-1)\"; the twisted Jacobi intersections family \"contains all curves having three rational 2-torsion points\", i.e. full rational 2-torsion (Z/2)^2. So a RATIONAL point of order 2 is a hard prerequisite.",
+   "Condition (10): the factor base must be invariant under P -> P + T2, i.e. the c-coordinate of P + T2 must be a rational function of the c-coordinate of P (case F = F_0) or an affine map beta*c + gamma with beta in F_q (case F = F_i).",
+   "EXPLICIT NEGATIVE RESULT IN THE PAPER, verbatim (\u00a74.1.2): \"For Weierstrass representation, the 2-torsion points of E(F_{q^n}) are T2 = (X,0) where X is a root of X^3 + a_4 X + a_6 = 0 ... In this representation, we project the PDP on x-coordinate. As the x-coordinate of the point P (+) T2 does not verify any of the equalities in (10), the 2-torsion points cannot be used to decrease the factor base. Moreover, the action of the 2-torsion points is not easy to handle in the polynomial systems solving process.\"",
+   "FAILS ON BOTH TP-PRIME-FIELD AND TP-NO-2TORSION FOR secp256k1 (computed): (a) n = 1, no extension; (b) #E(F_p)[2] = 1 -- x^3 + 7 has ZERO roots in F_p, verified by the cubic-residue test pow((-7) mod p, (p-1)/3, p) != 1 (p \u2261 1 mod 3), consistent with #E(F_p) = n being odd. secp256k1 therefore has no Montgomery, twisted Edwards, or Jacobi-intersections model over F_p at all. The paper's own \u00a71.3 says so directly: \"This work has no implication on the ECDLP instances recommended by the NIST, since they are defined over prime finite fields of high characteristic or binary fields of prime degree extension.\""
+  ],
+  "changed_quantity": "PDP complexity bound: proven \u00d5(n * 2^{3(n-1)^2}) via FGLM, heuristic \u00d5(n^2 * 2^{omega(n-1)^2}). Relative to the S_n-only baseline this DIVIDES the change-of-ordering bound and the degree-bound for the degrevlex Gr\u00f6bner basis by 2^{omega(n-1)} (2^{3(n-1)} in the proven case). Number of solutions of the system reduced by |D_n| = 2^{n-1} * n! instead of only n!. Concretely: twisted Edwards / twisted Jacobi over F_{q^5} with log2 q = 64, ~2^160 generic operations versus ~2^130 with this method.",
+  "growth_lever": "GROWS -- and this is the canonical positive example of the discriminator. The relation-preserving group is the dihedral Coxeter group D_n = (Z/2)^{n-1} \u22ca S_n of ORDER 2^{n-1} * n!, where n is the number of summands. It grows because the 2-torsion translation acts INDEPENDENTLY on each of the n coordinates, subject only to the parity constraint that an even number of signs flip (verbatim: \"any sign change on an even number of variables is allowed\"), giving 2^{n-1} decompositions of the SAME point R from one decomposition. The order of E[2] itself is FIXED (2 or 4) and is NOT the relevant quantity; the growing object is the per-coordinate subgroup (Z/2)^{n-1} of the coordinate space. Proposition 3 makes the coordinatewise statement precise: f^R_{n+1} lies in the invariant ring F_{q^n}[c_1..c_n]^{D_n}."
+ },
+ {
+  "id": "IC-10-fhjrv-2014-torsion-equivariant-symmetrization",
+  "family": "generalised torsion symmetrisation via equivariant morphisms E -> P^1",
+  "source": "J.-C. Faugere, L. Huot, A. Joux, G. Renault, V. Vitse, \"Symmetrized summation polynomials: using small order torsion points to speed up elliptic curve index calculus\", EUROCRYPT 2014, LNCS 8441:40-57; HAL hal-00935050 (retrieved via Wayback). \u00a73.1-3.3 (Props 3, 4), \u00a73.2 factor-base reduction, \u00a74 (Props 5, 7, 8), Props 13/14 invariant rings.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "E over an extension field F_{q^n} with n > 2 (\"an extension F_{q^n} of degree n > 2 of F_q\"). Factor base F = {P in E : phi(P) in P^1(F_q)}, again requiring a proper subfield.",
+   "A rational torsion point T of small order m AND an EQUIVARIANT morphism phi : E -> P^1 with phi \u2218 tau_T = f_T \u2218 phi where f_T in PGL_2(F_q) has order EXACTLY m. Prop 3: this forces m | deg(phi). For index calculus f_T must lie in PGL_2(F_q) (not just PGL_2(F_{q^n})) so that the invariant generators lie in F_q(X_1..X_n).",
+   "Prop 4 -- HARD CLASSIFICATION OF WHICH SUBGROUPS CAN BE USED: if G <= E(K) admits an injective chi : G -> PGL_2(K), then G is one of (1) E[2], (2) cyclic <T> with ord(T) coprime to char K, (3) E[char K]. Nothing else works, because the only finite commutative subgroups of PGL_2 of order prime to the characteristic are cyclic or (Z/2)^2.",
+   "Prop 8 (char != 2, degree-2 phi, m = 2), the practically important case: there exist T in E(K)[2] and a degree-2 phi with phi(P+T) = -phi(P) and phi(-P) = phi(P) IF AND ONLY IF there exists T' in E[4] with x(T') in K; then T = [2]T' and E has a model y^2 = x^3 + a x^2 + b x with T = (0,0) and b a SQUARE in K.",
+   "FAILS ON TP-PRIME-FIELD AND TP-NO-2TORSION FOR secp256k1 (computed): n = 1 kills the framework outright; and independently the Prop 8 criterion needs T in E(F_p)[2], but #E(F_p)[2] = 1 (x^3 + 7 has no root in F_p; #E(F_p) = n odd). The Prop 4 alternatives also fail: an odd prime group order n means E(F_p) has no rational point of any small order m > 1, and E[char] = E[p] is not F_p-rational for an ordinary curve."
+  ],
+  "changed_quantity": "Factor base divided by m (by 8 when m = 2 with full 2-torsion plus [-1] equivariance), hence linear algebra sped up by m^2 (m = 2..8 respectively); summation polynomials become SPARSE when written in generators of the invariant ring K[X_1..X_n]^G / invariant field K(X_1..X_n)^G; this made the 7th and 8th symmetrized summation polynomials computable for the first time (previous record: the 6th). Cost paid: the decomposition probability for a random R DROPS by m^{n-1}.",
+  "growth_lever": "GROWS. The relation-preserving group is G = (Z/mZ)^{n-1} \u22ca S_n, of ORDER m^{n-1} * n!, stated verbatim in \u00a73.3. Mechanism of the growth: if sum_i P_i = O then sum_i (P_i + [k_i]T) = O for ANY k_1..k_n with m | sum k_i -- the exponents k_i are INDEPENDENT PER COORDINATE, constrained only by one linear condition, which is exactly why the subgroup order is m^{n-1} rather than m. |E[m](K)| is FIXED at m (or m^2); it is not the growing quantity. This is the precise form of the discriminator: what must grow with the number of summands is the relation-preserving subgroup of the coordinate space, not the order of the curve symmetry."
+ },
+ {
+  "id": "IC-11-gebregiyorgis-2016-disjoint-factor-bases",
+  "family": "symmetry breaking in the factor base (binary Edwards curves)",
+  "source": "S. W. Gebregiyorgis, \"Algorithms for the Elliptic Curve Discrete Logarithm and the Approximate Common Divisor Problem\", PhD thesis, University of Auckland, January 2016 (supervisor S. D. Galbraith). Chapter 3, \u00a73.4 \"Breaking symmetry in the factor base\"; \u00a73.7 splitting method. Related published work: Galbraith-Gebregiyorgis, INDOCRYPT 2014.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "E a binary Edwards curve over F_{2^n}; F_{2^n} in polynomial basis; V the F_2-subspace with basis {1, theta, ..., theta^{l-1}}, with #V^m \u2248 2^n. An extension field of small characteristic is required throughout.",
+   "m pairwise disjoint translates V + v_i, giving disjoint factor bases F_i = {P in E(F_{2^n}) : t(P) in V + v_i} with t(x,y) = x + y, and the decomposition constrained to R = P_1 + ... + P_m with P_i in F_i.",
+   "FAILS ON TP-PRIME-FIELD for secp256k1: the construction is a coset decomposition of an F_2-vector space; F_p has no such structure."
+  ],
+  "changed_quantity": "Raises the decomposition probability from ~1/m! to ~1 (heuristically 2^{lm}/2^n \u2248 1 for n \u2248 lm), at the price of a factor base m times larger and a harder polynomial system (more variables: e.g. for m=4 the invariant s_2's top term moves from theta^{4l-4} to theta^{4l+4}, +8 variables). Net stated speed-up m!/m = (m-1)!, with linear algebra cost UP by m^2.",
+  "growth_lever": "FIXED trade, and the group used SHRINKS rather than grows: disjoint bases DESTROY the S_m action on the decomposition (\"one does not have the action by the symmetric group S_m\") while the summation polynomial itself remains S_m-invariant. The net (m-1)! is a combinatorial bookkeeping factor, not a subgroup order that grows with a curve invariant. No torsion or automorphism subgroup is involved."
+ },
+ {
+  "id": "IC-12-gebregiyorgis-2016-automorphism-negative",
+  "family": "curve AUTOMORPHISM (order 3) as a PDP symmetry -- the explicit negative control for the discriminator",
+  "source": "S. W. Gebregiyorgis, PhD thesis, University of Auckland, January 2016. Chapter 4 \"The DLP for Supersingular Ternary Curves\", \u00a74.1 (endomorphism psi = phi + 1), \u00a74.2 (group G = Z_3 x S_m, factor-base reduction), \u00a74.3 (invariant ring computation in Singular via Kemper's algorithm, and the conclusion).",
+  "source_verified": "full_text_read",
+  "requires": [
+   "E : y^2 = x^3 - x + 1 supersingular over F_{3^n}; the endomorphism psi = phi + 1 (phi = Frobenius) acting as (x,y) -> (x+1, y), of ORDER 3, satisfying x^2 - 5x + 7. Factor base defined as a vector subspace of F_{3^n} of dimension l, chosen so that (x,y) in F implies (x+1,y),(x+2,y) in F.",
+   "THE DECISIVE STRUCTURAL DIFFERENCE, verbatim (\u00a74.3): \"Unlike the action of low order torsion points, the action of H on this relation is both on the sum R and the points of the factor base summing to R. In other words, we get another valid relation for a DIFFERENT element Q which is related to R. Note that in the case of the action of low order torsion points for the same R we get different relations.\" The automorphism acts DIAGONALLY -- the same j is added to every x_i AND to x(R) -- so the group is Z_3, not (Z/3)^{m-1}.",
+   "APPLIES BY ANALOGY TO TP-J0-AUT6 FOR secp256k1 (computed): j(E) = 0, |mu_6(F_p)| = gcd(6, p-1) = 6 so |Aut_{F_p}(E)| = 6; the automorphisms (x,y) -> (u^2 x, u^3 y) with u^6 = 1 induce on the x-coordinate only the mu_3 action x -> beta x with beta^3 = 1 (beta = 0x7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee, verified beta^3 = 1 mod p), the GLV endomorphism, matched by lambda^3 = 1 mod n (lambda = 0xac9c52b33fa3cf1f5ad9e3fd77ed9ba4a880b9fc8ec739c2e0cfc810b51283ce). This action is DIAGONAL on the summand coordinates exactly as psi is here, giving a relation-preserving subgroup of order 3 (6 with [-1], which acts trivially on x) INDEPENDENT of m. CM discriminant computed as -3 with conductor f = 303414439467246543595250775667605759171 ((4p - t^2)/3 verified to be a perfect square, t = 432420386565659656852420866390673177327).",
+   "MARK: the analogy is mine; Gebregiyorgis's experiment is on F_{3^n}, not on a prime-field j=0 curve. The general principle (automorphisms give factor-base reduction but hurt the PDP) is what the thesis states; its transfer to secp256k1 is NOT_FOUND_IN_SOURCES_CHECKED as an explicit computation."
+  ],
+  "changed_quantity": "Factor base divided by 3 (by 6 including [-1]), hence relations needed divided by 3 (6) and linear algebra divided by 9 (36). But the point decomposition problem itself gets WORSE. Verbatim conclusion: \"the invariant variable S1 no more lies in our chosen subspace for the factor base but instead lies in F_{3^n} ... the number of variables in the resulting system is increased and the resulting system is relatively harder to solve which cannot be compensated due to the group action ... We conclude that an automorphism of an elliptic curve can speed up the point decomposition problem by reducing the factor base ... But an automorphism of an elliptic curve is worse in the actual polynomial system solving.\" Also, from the chapter's opening: \"our approach is worse than just forgetting the automorphism.\"",
+  "growth_lever": "FIXED at |Aut| = 3 (or 6 with [-1]) -- INDEPENDENT of m. The relation-preserving group is G = Z_3 x S_m of order 3 * m!, so the automorphism contributes a CONSTANT factor 3 while the torsion mechanisms of IC-09/IC-10 contribute 2^{m-1} / m^{m-1}. This is the negative control that isolates the discriminator: the automorphism acts diagonally (one parameter j shared by all coordinates and by R), whereas a torsion translation acts with m independent parameters k_i subject to one linear relation. Cross-check from Galbraith-Gaudry, \"Recent progress on the ECDLP\" (eprint 2015/1022, \u00a710.1, full text read): \"Some further obstacles to the method are that Aut(E) is very small compared with Aut(P^1).\""
+ },
+ {
+  "id": "IC-13-joux-vitse-n-minus-1-variant",
+  "family": "Vitse: (n-1)-summand overdetermined decomposition",
+  "source": "A. Joux, V. Vitse, \"Elliptic Curve Discrete Logarithm Problem over Small Degree Extension Fields\", J. Cryptology 26(1):119-143, 2013; IACR ePrint 2010/157 (retrieved via Wayback). \u00a72.2 \"Our version\", eqn (5) and estimate (6); \u00a76 conclusion; abstract Theorem 1.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "E over F_{q^n} with n >= 5 and log q <= O(n^3) (abstract: \"improving the overall asymptotic complexity when log q <= c n^3\"; \u00a72.2: \"our approach is actually relevant only for n >= 5\" because of an unavoidable q^2 factor). Extension field required.",
+   "The same Gaudry/Diem factor base F = {P in E(F_{q^n}) : x(P) in F_q} obtained by Weil restriction.",
+   "Decomposition into n-1 rather than n factor-base points: [a]P + [b]Q = \u00b1P_1 \u00b1 ... \u00b1 P_{n-1}, using S_n instead of S_{n+1}, so the system is n equations in n-1 variables of total degree 2^{n-2} -- OVERDETERMINED, hence generically inconsistent and solvable from a degrevlex Gr\u00f6bner basis alone (no FGLM elimination).",
+   "FAILS ON TP-PRIME-FIELD for secp256k1: n = 1, so there is no (n-1)-summand variant and no factor base."
+  ],
+  "changed_quantity": "Relation probability drops to O(1/(q (n-1)!)); relation-search cost O((n-1)! q^2 Poly((n-1)! 2^{(n-1)(n-2)} log q)). Critically, the solution set of Gaudry-Diem's system generically contains 2^{n(n-1)} points requiring an elimination-order basis, whereas the overdetermined system generically has an empty solution set and, when a decomposition exists, usually a single point -- so a degrevlex basis suffices. Also introduces an F4 variant exploiting the shared shape of the systems to remove reductions to zero.",
+  "growth_lever": "FIXED trade-off (one fewer summand); the underlying lever is still the extension degree n. The relation-preserving group remains only S_{n-1}. No torsion, automorphism, or isogeny subgroup enters."
+ },
+ {
+  "id": "IC-14-joux-vitse-cover-and-decomposition",
+  "family": "Vitse: cover-and-decomposition (GHS + decomposition, composite extension degree)",
+  "source": "A. Joux, V. Vitse, \"Cover and Decomposition Index Calculus on Elliptic Curves made practical. Application to a previously unreachable curve over F_{p^6}\", EUROCRYPT 2012, LNCS 7237:9-26; IACR ePrint 2011/020 (retrieved via Wayback). Abstract; \u00a72.1 Weil descent / GHS conorm-norm; \u00a72.2 decomposition attack; \u00a73 explicit combination.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "E over F_{p^d} with the extension degree d COMPOSITE, d = d_1 d_2 with an intermediate field: \"This attack applies, at least theoretically, to all composite degree extension fields, and is particularly well-suited for curves defined over F_{p^6}.\"",
+   "Step 1 requires a GHS-type cover pi : C -> E defined over the intermediate field with the conorm-norm map's kernel not meeting the target subgroup; step 2 requires a decomposition index calculus on Jac(C) over the smaller field.",
+   "FAILS ON TP-PRIME-FIELD for secp256k1: the base field is F_p with p prime; the extension degree is 1, which is not composite, and there is no intermediate field for the cover. The mechanism has nothing to descend."
+  ],
+  "changed_quantity": "Made a 149-bit subgroup of a curve over a 151-bit degree-6 extension field practically attackable, which no previously known algorithm could do. Combines \u00d5(p^{2-2/g}) Jacobian index calculus with \u00d5(p^{2-2/n}) decomposition. Per Galbraith-Gaudry (eprint 2015/1022, \u00a79.5, full text read), the same authors later combined GHS to a genus-3 curve over F_{p^2} with an under-determined Nagao-like decomposition plus sieving for a 149-bit subgroup over F_{p^6}.",
+  "growth_lever": "FIXED per instance; the lever is the FACTORISATION STRUCTURE of the extension degree d, not any curve symmetry. No relation-preserving subgroup grows with the number of summands."
+ },
+ {
+  "id": "IC-15-yokoyama-2020-lower-bound",
+  "family": "LOWER BOUND on Semaev's naive index calculus (not an attack)",
+  "source": "K. Yokoyama, M. Yasuda, Y. Takahashi, J. Kogure, \"Complexity bounds on Semaev's naive index calculus method for ECDLP\", J. Math. Cryptol. 14(1):460-485 (2020), doi 10.1515/jmc-2019-0029, CC-BY open access (published PDF retrieved via Wayback). Def 1; \u00a72.1 Steps 1-3 and estimate (5); \u00a74.1.1 Lemma 6; \u00a74.1.2 Assumption 7; \u00a74.1.3 Prop 9 and estimate (17); \u00a74.2 Conjecture 10 / Assumption 11.",
+  "source_verified": "full_text_read",
+  "requires": [
+   "Applies to E over an ARBITRARY finite field F_q (prime or not) in short Weierstrass form, with E(F_q) = <P> cyclic of prime order n. secp256k1 IS IN SCOPE: F_p prime, #E(F_p) = n prime, cofactor 1 (all verified by computation).",
+   "The 'naive' setting only: factor base B = {(x,y) in E(F_q) : x in V} for a randomly chosen V \u2282 F_q with d = #V \u2248 #B = t, and the ideal I_m(a,b) = <F(x_1), ..., F(x_m), S_{m+1}(x_1,...,x_m, x(aP+bQ))> where F is a degree-d factor of x^q - x. It does NOT cover the PKC 2016 composable-map factor bases or the extension-field Weil-descent systems.",
+   "Assumption 7 (for almost every a,b, I_m(a,b) is almost NS(Syz)-semi-normal) plus Remark 8; and for \u00a74.2, Conjecture 10 and Assumption 11 on genericity of non-zero coefficients. The paper reports experimental validation over prime fields F_p with p up to 25 bits.",
+   "Lemma 6 needs d > delta = 2^{m-1}, i.e. the factor base larger than the per-variable degree of S_{m+1} -- the cryptographically relevant regime."
+  ],
+  "changed_quantity": "Prop 9: computing a Gr\u00f6bner basis of I_m(a,b) requires AT LEAST (m d^{m-1})^{1-eps} field operations for almost every a,b, for ANY algorithm using S-polynomials. Estimate (17): the total cost of naive index calculus is at least m! q t^{1-m} C + Lin(t), which exceeds q^{(m-1)/m (1-eps)}. Reframes Gr\u00f6bner basis computation for this ideal as an extension of the extended Euclidean algorithm / subresultant PRS.",
+  "growth_lever": "ANTI-LEVER: the LOWER bound GROWS with the number of summands m, as q^{(m-1)/m} (computed: 0.500, 0.667, 0.750, 0.800, 0.833, 0.857, 0.875 for m = 2..8), so it meets rho's q^{1/2} only at m = 2 and exceeds it for every m >= 3. Conclusion verbatim: \"we prove that the naive index calculus method cannot be more efficient than the rho method over an arbitrary finite field. Moreover, based on our experimental observations, it cannot be more efficient than even the brute force method.\" This is the closest thing in the family to a proved (modulo Assumption 7) obstruction on exactly the prime-field configuration secp256k1 sits in."
+ }
+]

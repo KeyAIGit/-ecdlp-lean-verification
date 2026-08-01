@@ -1,0 +1,3794 @@
+{
+  "schema_version": "0.1-generated",
+  "intake_id": "OPUS-ECDLP-SCREEN-ATLAS-2026-07-26",
+  "intake_status": "quarantined_untrusted_snapshot",
+  "source_assurance": "untrusted_external_snapshot",
+  "source_artifacts": [
+    {
+      "path": "archive/untrusted_intake/OPUS-ECDLP-SCREEN-ATLAS-2026-07-26/all_mechanisms.json",
+      "media_type": "application/json",
+      "sha256": "e27564dd79b9e25d7f36b044bc7eb1b83c0564aeb97f45aaca774c96045122e8",
+      "git_blob_sha1": "4f00154dcfd6cbde81352ece9485d62694536932",
+      "bytes": 78657
+    },
+    {
+      "path": "archive/untrusted_intake/OPUS-ECDLP-SCREEN-ATLAS-2026-07-26/all_properties.json",
+      "media_type": "application/json",
+      "sha256": "2718c06084c9b9e741ef7d634fd6c5b7e759ba8956e082820cd1108778f0aae4",
+      "git_blob_sha1": "a94d56e90b5e7c1ce59852cc60d718c78cae21b9",
+      "bytes": 131435
+    },
+    {
+      "path": "archive/untrusted_intake/OPUS-ECDLP-SCREEN-ATLAS-2026-07-26/ECDLP_SCREEN_ATLAS_REPORT.md",
+      "media_type": "text/markdown",
+      "sha256": "76369293bc275eaa8352fc234436ed2f4f515fc4958f15f66bb7bb5e8894f479",
+      "git_blob_sha1": "b5ae4d63a8b8d097809f48618b52db9e565ef0e2",
+      "bytes": 19869
+    }
+  ],
+  "source_set_sha256": "13ae78088586732265517fcfeaf5ebd05de0a37b830926c6e345aca6ebc07a0f",
+  "observations": {
+    "mechanisms": 35,
+    "properties": 223,
+    "requirement_strings": 122,
+    "free_text_requirement_strings": 110,
+    "tp_like_requirement_strings": 12,
+    "tp_like_reference_occurrences": 15,
+    "unique_tp_like_references": 6,
+    "unique_orphan_tp_like_references": 6,
+    "declared_integer_values": 81,
+    "declared_boolean_values": 62,
+    "declared_integer_parse_violations": 16,
+    "declared_boolean_parse_violations": 4,
+    "declared_type_parse_violations": 20,
+    "mechanism_full_text_read_rows": 19,
+    "report_claimed_full_text_read_rows": 20,
+    "verified_join_rows": 0
+  },
+  "join_assessment": {
+    "join_status": "not_present",
+    "verified_join": false,
+    "reason": "Only 12 of 122 requirement strings contain TP-like references; all six unique references are orphaned, and the source has no machine-readable verdict matrix.",
+    "resolved_reference_occurrences": 0,
+    "unique_orphan_references": [
+      "TP-CHAR-NOT-2-3",
+      "TP-CM-D3",
+      "TP-J0-AUT6",
+      "TP-NO-2TORSION",
+      "TP-P1-SMOOTH-19",
+      "TP-PRIME-FIELD"
+    ],
+    "screen_matrix_present": false,
+    "verdict_field_present": false
+  },
+  "source_read_status_assessment": {
+    "source_authored_counts": {
+      "abstract_only": 10,
+      "full_text_read": 19,
+      "not_obtained": 1,
+      "secondhand": 5
+    },
+    "report_claimed_full_text_read_rows": 20,
+    "mechanism_rows_marked_full_text_read": 19,
+    "artifact_bound_primary_reading_verified": 0,
+    "boundary": "The source_verified field is retained as an untrusted annotation; it is not upgraded to source assurance."
+  },
+  "validation_findings": {
+    "declared_type_parse_violations": [
+      {
+        "property_id": "TP-014",
+        "json_pointer": "/TP-014/value",
+        "declared_type": "integer",
+        "raw_value": "k_emb > 100 (bound only). Exact value computed here: 19298681539552699237261830834781317975472927379845817397100860523586360249056 (254 bits) = (n-1)/6",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-015",
+        "json_pointer": "/TP-015/value",
+        "declared_type": "integer",
+        "raw_value": "t = 432420386565659656852420866390673177327 (!= 1)",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-022",
+        "json_pointer": "/TP-022/value",
+        "declared_type": "boolean",
+        "raw_value": "true (7 is a QNR); also 7 is a cubic non-residue; and -7 IS a quadratic residue",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-032",
+        "json_pointer": "/TP-032/value",
+        "declared_type": "integer",
+        "raw_value": "relation-preserving subgroup order = 3, constant in m",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-045",
+        "json_pointer": "/TP-045/value",
+        "declared_type": "integer",
+        "raw_value": "19298681539552699237261830834781317975472927379845817397100860523586360249056 (254 bits) = (n-1)/6",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-046",
+        "json_pointer": "/TP-046/value",
+        "declared_type": "integer",
+        "raw_value": "extension degree over the prime field = 1",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-A06",
+        "json_pointer": "/TP-A06/value",
+        "declared_type": "integer",
+        "raw_value": "6, CONSTANT in m",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-A07",
+        "json_pointer": "/TP-A07/value",
+        "declared_type": "integer",
+        "raw_value": "1 for every m",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-CM08",
+        "json_pointer": "/TP-CM08/value",
+        "declared_type": "integer",
+        "raw_value": "303414439467246543595250775667605759171 (= v, 128 bits)",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-D01",
+        "json_pointer": "/TP-D01/value",
+        "declared_type": "integer",
+        "raw_value": "340282366920938463463374607431768211455 (log2 = 128.0)",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-D06",
+        "json_pointer": "/TP-D06/value",
+        "declared_type": "integer",
+        "raw_value": "115792089237316195423570985008687907852837564279074904382605163141518161494337 (= n itself, 256 bits)",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-E04",
+        "json_pointer": "/TP-E04/value",
+        "declared_type": "integer",
+        "raw_value": "True",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-E10",
+        "json_pointer": "/TP-E10/value",
+        "declared_type": "boolean",
+        "raw_value": "False for every k in 1..12",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-F10",
+        "json_pointer": "/TP-F10/value",
+        "declared_type": "integer",
+        "raw_value": "4294968273 = 0x1000003d1 = 2^32 + 977",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-FR04",
+        "json_pointer": "/TP-FR04/value",
+        "declared_type": "boolean",
+        "raw_value": "True (|t| = 432420386565659656852420866390673177327 vs 2*isqrt(p) = 680564733841876926926749214863536422910)",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-G12",
+        "json_pointer": "/TP-G12/value",
+        "declared_type": "integer",
+        "raw_value": "432420386565659656852420866394968145599 (129 bits)",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-NM07",
+        "json_pointer": "/TP-NM07/value",
+        "declared_type": "integer",
+        "raw_value": "300138238832024867917999963054617969808 (128 bits, log2 ratio to isqrt(n) = -0.1811)",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-TW06",
+        "json_pointer": "/TP-TW06/value",
+        "declared_type": "integer",
+        "raw_value": "114286177161 = 3^2 * 13^2 * 3319 * 22639",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-TW10",
+        "json_pointer": "/TP-TW10/value",
+        "declared_type": "integer",
+        "raw_value": "1 (only #E itself, i.e. n)",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      },
+      {
+        "property_id": "TP-W01",
+        "json_pointer": "/TP-W01/value",
+        "declared_type": "boolean",
+        "raw_value": "False (F_p is a prime field with no proper subfield)",
+        "reason": "raw string is not a standalone lexical value of the declared type"
+      }
+    ],
+    "orphan_tp_like_references": [
+      "TP-CHAR-NOT-2-3",
+      "TP-CM-D3",
+      "TP-J0-AUT6",
+      "TP-NO-2TORSION",
+      "TP-P1-SMOOTH-19",
+      "TP-PRIME-FIELD"
+    ],
+    "unsupported_coercions_performed": 0
+  },
+  "authority": {
+    "direct_canonical_imports": 0,
+    "scientific_outcomes": 0,
+    "ranker_labels": 0,
+    "route_closures": 0,
+    "authorization": 0,
+    "typed_evidence_updates": 0,
+    "attack_registry_updates": 0,
+    "decision_updates": 0,
+    "claim_updates": 0,
+    "outcome_updates": 0
+  },
+  "safety": {
+    "safe_for_scientific_selection": false,
+    "safe_for_calibration": false,
+    "safe_for_authorization": false,
+    "canonical_write_prohibited": [
+      "data/attack_registry.json",
+      "repo/ECDLP_TYPED_EVIDENCE_V0.json",
+      "repo/ECDLP_DECISION_SUBSTRATE.json",
+      "repo/RESEARCH_CLAIMS_V0.json",
+      "repo/RESEARCH_ENGINE_V0.json",
+      "experiments/engine/outcomes"
+    ],
+    "negative_dependency_scan": {
+      "status": "passed",
+      "prohibited_consumer_references": [],
+      "scan_roots": [
+        "scripts",
+        "repo",
+        "data",
+        ".github/workflows"
+      ]
+    },
+    "boundary": "Every mechanism, property, requirement, heat label, source status, and conclusion remains an untrusted annotation pending a separate producer, independent replay, and canonical review."
+  },
+  "mechanism_envelopes": [
+    {
+      "mechanism_id": "CM-SMALL-DISCRIMINANT",
+      "json_pointer": "/16",
+      "canonical_record_sha256": "3ef941e3c869fd1af18e09c982ab1f9ce6aedd08586fb219cb32232f19e1a33f",
+      "source_status_annotation": "secondhand",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "EDS-LAUTER-STANGE-NETS",
+      "json_pointer": "/15",
+      "canonical_record_sha256": "4a796218bb76cb64567275b6495a8430c247a6a26eb91c946e403f2cfd1bcd8a",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "GEN-BSGS",
+      "json_pointer": "/1",
+      "canonical_record_sha256": "246e3e6b211bf8427d5d15696f531ec9753befecb78a366e40d47460d2fa973e",
+      "source_status_annotation": "secondhand",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "GEN-INTERVAL-KANGAROO",
+      "json_pointer": "/7",
+      "canonical_record_sha256": "390b7bd41dde953a27543b86c924d0dcab04ab954ddca3b8419f529528019721",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "GEN-LB-SHOUP-NECHAEV",
+      "json_pointer": "/0",
+      "canonical_record_sha256": "631fadbb03eb539844b9d6e0be2eec6d9e2eb418cb812e4cc23e259936fe25e1",
+      "source_status_annotation": "secondhand",
+      "requirement_count": 4,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "GEN-MULTI-TARGET",
+      "json_pointer": "/5",
+      "canonical_record_sha256": "592f5d353e1726666897eaee726006b515e3ae19e81bb89d878fae40bfd63f3a",
+      "source_status_annotation": "abstract_only",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "GEN-POHLIG-HELLMAN",
+      "json_pointer": "/4",
+      "canonical_record_sha256": "b23eb62c60df943f595a556ceb927a6d77831be1b3a297eac981952a0ffa3640",
+      "source_status_annotation": "secondhand",
+      "requirement_count": 2,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "GEN-PREPROCESSING",
+      "json_pointer": "/6",
+      "canonical_record_sha256": "e37c756e83bd87e3eaf1678ed11d1efe7c6fc4c179a562f8573a88146ec741bb",
+      "source_status_annotation": "abstract_only",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "GEN-RHO-AUT",
+      "json_pointer": "/3",
+      "canonical_record_sha256": "0a1c2564444118f2ba3187a7f4ea2fb790dd5b898143610b543d3f33a797b073",
+      "source_status_annotation": "abstract_only",
+      "requirement_count": 4,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "GEN-RHO-PARALLEL",
+      "json_pointer": "/2",
+      "canonical_record_sha256": "6107fb7fe73da9dffdd1b090fb66997a9a1f7bdbb75ca07a1a0898a197ac6d95",
+      "source_status_annotation": "secondhand",
+      "requirement_count": 2,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-01-semaev-2004-bounded-integer-factorbase",
+      "json_pointer": "/20",
+      "canonical_record_sha256": "736f42ef6e4092e25e95e06a996936cb12a4f687ab061c6e36f15329c429500d",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 5,
+      "tp_like_references": [
+        "TP-CHAR-NOT-2-3"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-02-gaudry-2009-weil-restriction-decomposition",
+      "json_pointer": "/21",
+      "canonical_record_sha256": "befab34d07a070731564606ecf3e0318c2f47c8a87e8c073521d5d1839d4ce09",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 4,
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-03-diem-2011-subexponential",
+      "json_pointer": "/22",
+      "canonical_record_sha256": "bebdae11653271388f12eff18696e3868a3fc9a09c9ea073fe504c469935013a",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 4,
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-04-petit-quisquater-2012-weil-descent-firstfall",
+      "json_pointer": "/23",
+      "canonical_record_sha256": "8b64f7aa34f7b942d7c8dcc160f00e0779840a283c5bd93e191f9b97f4803710",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 4,
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-05-pkc2016-i-p-minus-1-smooth",
+      "json_pointer": "/24",
+      "canonical_record_sha256": "4720c619034fc07af74d37a98ad3c2c29946f35ab0b68a47c4ca06a613d9cdf3",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 5,
+      "tp_like_references": [
+        "TP-P1-SMOOTH-19"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-06-pkc2016-ii-auxiliary-isogeny",
+      "json_pointer": "/25",
+      "canonical_record_sha256": "98f302ef7c5370f86bb93231548faa26e18afc9064ea8367dd95130001e1c603",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 4,
+      "tp_like_references": [
+        "TP-CM-D3",
+        "TP-J0-AUT6"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-07-amadori-pintore-sala-2018",
+      "json_pointer": "/26",
+      "canonical_record_sha256": "6fbda0c4f0e250dd4a78848d6add71043944f4660b8d7994cab51db5ae982ba5",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 4,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-08-kudo-cans-2018-hybrid",
+      "json_pointer": "/27",
+      "canonical_record_sha256": "8d759a47faecbf759ae191529b66dd9f89a5a598a8bf528ccbc09c59fb44da0f",
+      "source_status_annotation": "abstract_only",
+      "requirement_count": 4,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-09-fghr-2014-2torsion-coxeter-symmetrization",
+      "json_pointer": "/28",
+      "canonical_record_sha256": "c0bc61b02e6a3829f96c768ca71f259b186506bb6cb2315926b050fcfd8f82b7",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 5,
+      "tp_like_references": [
+        "TP-NO-2TORSION",
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-10-fhjrv-2014-torsion-equivariant-symmetrization",
+      "json_pointer": "/29",
+      "canonical_record_sha256": "6432b7a66dbf3269f8395060d9754211950ffa84b242ad481d915d21cd237b3c",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 5,
+      "tp_like_references": [
+        "TP-NO-2TORSION",
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-11-gebregiyorgis-2016-disjoint-factor-bases",
+      "json_pointer": "/30",
+      "canonical_record_sha256": "25137caece5fc4c18117a692aa1471d747d68cfc88be3ab1c0a42c73b3b77cb5",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 3,
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-12-gebregiyorgis-2016-automorphism-negative",
+      "json_pointer": "/31",
+      "canonical_record_sha256": "63992c3753cf017ef0f087d907a74eb2109fa3bbe9a63a75acf77f109a3a2960",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 4,
+      "tp_like_references": [
+        "TP-J0-AUT6"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-13-joux-vitse-n-minus-1-variant",
+      "json_pointer": "/32",
+      "canonical_record_sha256": "b28ab26e9a0a1e83ab3a95c01085364614e4b1320ee605aaa4816cbd1778f78a",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 4,
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-14-joux-vitse-cover-and-decomposition",
+      "json_pointer": "/33",
+      "canonical_record_sha256": "ab9445d3139bfd41f8b3c8cd360da2877479be23cf149a53c7c475282be4f589",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 3,
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IC-15-yokoyama-2020-lower-bound",
+      "json_pointer": "/34",
+      "canonical_record_sha256": "910fe0bbcaff2b1da7be3614a0cb48a5b37476d550889f7bef7b28c4262bd542",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 4,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IMPL-BLEICHENBACHER-FFT",
+      "json_pointer": "/18",
+      "canonical_record_sha256": "e6c4eac5382b56c0d3b6b3967e73026a61cf0ef0ecbb8bb3ae21340a9dea4669",
+      "source_status_annotation": "not_obtained",
+      "requirement_count": 2,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "IMPL-HNP-LATTICE-NONCE",
+      "json_pointer": "/17",
+      "canonical_record_sha256": "ca7d4bd69633bab268f16196c68059b459e5f3e292debd14a23160d5072d0493",
+      "source_status_annotation": "abstract_only",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "ISOG-ENDRING-COMPUTE",
+      "json_pointer": "/14",
+      "canonical_record_sha256": "032fc90fffdfccb4c55ca8aa68fcb53dc7a627f2ee20c6c257c03a6c9fadde93",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "ISOG-JMV-SELF-REDUCTION",
+      "json_pointer": "/13",
+      "canonical_record_sha256": "28e7c8d2963e25f521915ed34d2f89df0efb810f51ec2a20e85888816941c44d",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 4,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "QUANT-SHOR-ECDLP",
+      "json_pointer": "/19",
+      "canonical_record_sha256": "37acec59d86ac55b819fab03bd8a3a1edd601910d31508d50ad3715147cc8bb7",
+      "source_status_annotation": "full_text_read",
+      "requirement_count": 4,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "TRF-ANOMALOUS-SSSA",
+      "json_pointer": "/11",
+      "canonical_record_sha256": "255931351f94afdc61dff734d2f1b4066152290a3fbcb3370ac98a60dad504c1",
+      "source_status_annotation": "abstract_only",
+      "requirement_count": 2,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "TRF-COVER-PRIME-ORDER",
+      "json_pointer": "/10",
+      "canonical_record_sha256": "12b8735f7b1e03d40b560ea4672ab0b9eab9ac86933ed65b7f7e065a590f9541",
+      "source_status_annotation": "abstract_only",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "TRF-PAIRING-MOV-FR-TATE",
+      "json_pointer": "/8",
+      "canonical_record_sha256": "84b0418492ca669e6f7e1751ff6b6d86457e88e72aec0d388d22d3323c25b779",
+      "source_status_annotation": "abstract_only",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "TRF-WEIL-DESCENT-GHS",
+      "json_pointer": "/9",
+      "canonical_record_sha256": "c89f54777add016b8b621b6ab898fe88ff84f3759784f8236c8e4c91c87c9a40",
+      "source_status_annotation": "abstract_only",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    },
+    {
+      "mechanism_id": "TRF-XEDNI-GLOBAL-LIFT",
+      "json_pointer": "/12",
+      "canonical_record_sha256": "95994e7f865d9395f1570e6308d499bb3a87fa366a2a732627a99f0a8cc824b3",
+      "source_status_annotation": "abstract_only",
+      "requirement_count": 3,
+      "tp_like_references": [],
+      "classification": "untrusted_mechanism_envelope",
+      "judgment_fields": [
+        "family",
+        "source",
+        "source_verified",
+        "requires",
+        "changed_quantity",
+        "growth_lever"
+      ]
+    }
+  ],
+  "property_candidates": [
+    {
+      "property_id": "TP-001",
+      "json_pointer": "/TP-001",
+      "canonical_record_sha256": "240eb0073b14f56a8ff9db6c7c1abf4a65929f07a2ad73dd8c24ecc9f1241312",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-002",
+      "json_pointer": "/TP-002",
+      "canonical_record_sha256": "6bb85f2db961553dd4b5e8201fa52c8ef6c0c7bdee4c481f512338fb9dbb73af",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-003",
+      "json_pointer": "/TP-003",
+      "canonical_record_sha256": "2826f3ee2db0bb784acf8060499fbd009aee9cb63ac88955410cddbdcc222b6a",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-004",
+      "json_pointer": "/TP-004",
+      "canonical_record_sha256": "cbcf41106738d1fda718facaee293b93799aba88c751111fc295138ceec4db07",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-005",
+      "json_pointer": "/TP-005",
+      "canonical_record_sha256": "146cc9314991ef1839175678dda328518c7f90b4d926ae656d6e25aec29cfb6c",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-006",
+      "json_pointer": "/TP-006",
+      "canonical_record_sha256": "787b11b995395ab3cbc4c32cf6e2013b6ebd2edea50ab4b57dd3ba99993f7d68",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-007",
+      "json_pointer": "/TP-007",
+      "canonical_record_sha256": "f5cede9110204f5033af4fed398e4c310eedfca92e5100914a31070c6749a725",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-008",
+      "json_pointer": "/TP-008",
+      "canonical_record_sha256": "6629feb2989c13395d00f93fa4a846ea6ef42973222ebb0f51c1aa5b21ba1602",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-009",
+      "json_pointer": "/TP-009",
+      "canonical_record_sha256": "4b8b78207831beb25efa8eab32f4dea8f9181150c783d87dbad75eec7d5df22e",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-010",
+      "json_pointer": "/TP-010",
+      "canonical_record_sha256": "ed5eb6a23d294944cfd330ee832934254ca1c91c4a872154a7ae9235cbac842b",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-011",
+      "json_pointer": "/TP-011",
+      "canonical_record_sha256": "7167c083f2497fc0a54fd605c2afc3b4cf32b89f2fe3819f17b490b1d31f1df3",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-012",
+      "json_pointer": "/TP-012",
+      "canonical_record_sha256": "99a8426c67baac60ba86004e3fbc0ce9099b09613259e7e922b508e6c4da05ed",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-013",
+      "json_pointer": "/TP-013",
+      "canonical_record_sha256": "383994373f26f95864266ca7ced1dddfd413f78993c2f6d4658da15e585c3c36",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-014",
+      "json_pointer": "/TP-014",
+      "canonical_record_sha256": "a0de5366ac2d945b66feabc09c27f79add14112c0229988837d7dcd37a21de9f",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-015",
+      "json_pointer": "/TP-015",
+      "canonical_record_sha256": "ef59db61ebb640ab271dece3631eac727ef411af8a2072b8fba6ce60900abe0d",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-016",
+      "json_pointer": "/TP-016",
+      "canonical_record_sha256": "ec28fcb2c51ac5da18d3a19811318fcd5c7335e78854c262da7623454495780f",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-017",
+      "json_pointer": "/TP-017",
+      "canonical_record_sha256": "5e7bbea5a6f92d1e0b44fa0c2136ff9b02403009de178f0776512181175ae03b",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-018",
+      "json_pointer": "/TP-018",
+      "canonical_record_sha256": "78a3c2ea32bedfe29e7412ea5e1562e443563e605ded7c3bce8f05d3d5e3f66a",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-019",
+      "json_pointer": "/TP-019",
+      "canonical_record_sha256": "4f04a8f930888fee38a19e53c2a6f945568968c3c8f98093b053077cf2ae7eca",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-020",
+      "json_pointer": "/TP-020",
+      "canonical_record_sha256": "6651f3e9da334721532807dba99af0d0ab071a3724736bcaa85d819403c3e2dc",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-021",
+      "json_pointer": "/TP-021",
+      "canonical_record_sha256": "2dd3214ab215d150be9b62234496b486906546844ec3110248c0990d0ae70bbc",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-022",
+      "json_pointer": "/TP-022",
+      "canonical_record_sha256": "039c862696a3212f8c4f09bcf705cc6f408fc5a8f20704b44cf4af509d07b688",
+      "declared_type": "boolean",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-023",
+      "json_pointer": "/TP-023",
+      "canonical_record_sha256": "8f0c5bdfee49015a7cfcbb040a5621f75237c1e215155c7a9791e2e89894e90a",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-024",
+      "json_pointer": "/TP-024",
+      "canonical_record_sha256": "aacf1da00b505c4302b53230cc1469cea82eeb2c3b0977797fe59d2cb3875cdd",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-025",
+      "json_pointer": "/TP-025",
+      "canonical_record_sha256": "e6f9f67a219ec2ac6c97ef09e109b0aa44aed9f6de01ceba916150b539470879",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-026",
+      "json_pointer": "/TP-026",
+      "canonical_record_sha256": "48108f5f92191df4392c8e285dc939299b249d65afd7e5ffc489d4df9daca7eb",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-027",
+      "json_pointer": "/TP-027",
+      "canonical_record_sha256": "a32c0c9925c3a79d06cc3d9c69118c7a60ff8166c1a3953888d82018cff303c4",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-028",
+      "json_pointer": "/TP-028",
+      "canonical_record_sha256": "c10f39b3d4b5aa1c78becdb67edde2c0a4d158cb600de0fb6abf5fff5f3842d7",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-029",
+      "json_pointer": "/TP-029",
+      "canonical_record_sha256": "5973396331f5b9202e12841acb9f45764e5ad62afa3570ca154c16862f0d9951",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-030",
+      "json_pointer": "/TP-030",
+      "canonical_record_sha256": "d0c1156de0afb24252e0adcc2e6250f459b09804a458fed6daa91672b9baae16",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-031",
+      "json_pointer": "/TP-031",
+      "canonical_record_sha256": "d12817341a7b673d0e52a760970f6301fe6770602b5bdcafd9620c5daad6bf46",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-032",
+      "json_pointer": "/TP-032",
+      "canonical_record_sha256": "0d70170757787b53dcbd0e6c83414c577a3f8003020d63975319baa0c240f825",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-033",
+      "json_pointer": "/TP-033",
+      "canonical_record_sha256": "e788a3ede45a9ad1bf99cb7f7aed2316a30d855cd8af2468d937d41062e4f2e8",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-034",
+      "json_pointer": "/TP-034",
+      "canonical_record_sha256": "bc19bf1c3b245a91f8fcdbb5c4bc2f1ac756da2ac67aa13bcd25f389342d9bc2",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-035",
+      "json_pointer": "/TP-035",
+      "canonical_record_sha256": "ce8a1b6da7f9dadd5671cf83e4d644aeaedc95ad8723206601d0fac2082b4f17",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-036",
+      "json_pointer": "/TP-036",
+      "canonical_record_sha256": "edf35157920006ea53efcabd267c55e9b91e0ec52d3fd9fd53c9a4895785f4c3",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-037",
+      "json_pointer": "/TP-037",
+      "canonical_record_sha256": "0fb94c3c09bc7bb35b44d3fe3899d3437b190b198f1ee763b9963a58718f5317",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-038",
+      "json_pointer": "/TP-038",
+      "canonical_record_sha256": "38b52d30518352dc4629e2e99e3bff0ff9929e257c5bab0f45c53b9eba21a7fe",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-039",
+      "json_pointer": "/TP-039",
+      "canonical_record_sha256": "577e86595feec3a772bd2504572d16b75f9e746d3b190e7d1a88c517314ab114",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-040",
+      "json_pointer": "/TP-040",
+      "canonical_record_sha256": "2832be8722cc49a4920679f35b1f2f42c09f548d48a057a582f8ad1ee3428505",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-041",
+      "json_pointer": "/TP-041",
+      "canonical_record_sha256": "44b8c9b39530c0d8aba49aecfa4acf39b95de446a88012b30710edbae6840692",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-042",
+      "json_pointer": "/TP-042",
+      "canonical_record_sha256": "b8b9f4a2168e2f910807b040051814cae12be0479b37323f6b9208967ab51bfc",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-043",
+      "json_pointer": "/TP-043",
+      "canonical_record_sha256": "068358c01a20ffe93169cc59f8941eae0e4ae9f1c834fc292ddf1faa71f1bde2",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-044",
+      "json_pointer": "/TP-044",
+      "canonical_record_sha256": "3d9e2f7163b6ddd49104bfee1a3580092c4495a3ff2c77274266c2a89e933400",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-045",
+      "json_pointer": "/TP-045",
+      "canonical_record_sha256": "9918b7b07bb49f70b5c812d9178a725fc9b93b96d6e0ffc3a9b7fe154ffd52b1",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-046",
+      "json_pointer": "/TP-046",
+      "canonical_record_sha256": "1e8e28c046a40ae67700d63e2e26e0d66d4ca39851249a48f41b8ebd591cca84",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-047",
+      "json_pointer": "/TP-047",
+      "canonical_record_sha256": "76dd99a684ac7e2efcd33909e6fcc7fd0e405c837d1918284310a5c705db37f3",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-048",
+      "json_pointer": "/TP-048",
+      "canonical_record_sha256": "cdbac6322f5fff1b6ac3fa87f6cfbb021570b84ade06e8fe5ef010bd3e13170a",
+      "declared_type": "unknown",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-049",
+      "json_pointer": "/TP-049",
+      "canonical_record_sha256": "1e4c9cd377da5762eed85287937730d83195b2b830783cc47fc403b63e9f9aa4",
+      "declared_type": "unknown",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-050",
+      "json_pointer": "/TP-050",
+      "canonical_record_sha256": "34cda7433a78bf6f40af41cc4b2f5a838a751c33b5dc5841fbd82a070855067f",
+      "declared_type": "unknown",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-051",
+      "json_pointer": "/TP-051",
+      "canonical_record_sha256": "955e656efb946425b3e280f99f6aa4e7d626bcb3e42e9cd9dcd45102d00d15a6",
+      "declared_type": "unknown",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-052",
+      "json_pointer": "/TP-052",
+      "canonical_record_sha256": "911449840c3b5f25f24805ecf26d33d4d0171e789defdb26276c9f248489da30",
+      "declared_type": "unknown",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A01",
+      "json_pointer": "/TP-A01",
+      "canonical_record_sha256": "3b6a4fc82d60233d9ee04dbe2a9dd8beb2c7ac33e1b4ae09b1811d1de2fa5a08",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A02",
+      "json_pointer": "/TP-A02",
+      "canonical_record_sha256": "40bc6eef402fc62546ce5a662d96685e91cbd2046ff2b193108623711c060f14",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A03",
+      "json_pointer": "/TP-A03",
+      "canonical_record_sha256": "4a692f00b01b55b45fe686319f726dc4dcd4541e4f71dea04cffca7a26ac1e47",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A04",
+      "json_pointer": "/TP-A04",
+      "canonical_record_sha256": "8acd7a192e373df672c27d8ad4c66b0743c39396991d10a54a3eb1bf41086de5",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A05",
+      "json_pointer": "/TP-A05",
+      "canonical_record_sha256": "831f3b107e43631a0121c139871cb46095086b5d187a72e0e02846d05acb1679",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A06",
+      "json_pointer": "/TP-A06",
+      "canonical_record_sha256": "99a9e2c38b0cd273fc6732c659d48efa3994f2e713aafc934ee0d1c6f6a0bdc6",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A07",
+      "json_pointer": "/TP-A07",
+      "canonical_record_sha256": "c587ca43cad4510d0f72ddf3c551e523bfa0e981905a7447cb5855b92f0d2a4a",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A08",
+      "json_pointer": "/TP-A08",
+      "canonical_record_sha256": "766474f5479269d844667a6267acdffaf12d387ed6a011e730f44f8fe13d7294",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A09",
+      "json_pointer": "/TP-A09",
+      "canonical_record_sha256": "6cb11d9e0f2e59a9c23db689a6ff99f126757c8aa40b61e66f5995c93c6a28cb",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-001",
+      "json_pointer": "/TP-A5-001",
+      "canonical_record_sha256": "71fef0f149f44ad626e945c310a258e6d7ebdd11e2196e966be874353d37ecdb",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-002",
+      "json_pointer": "/TP-A5-002",
+      "canonical_record_sha256": "799baba80600919cc464d46b3cc7fe03a0e86abea0fe74668ae99f50e7eca3c0",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-003",
+      "json_pointer": "/TP-A5-003",
+      "canonical_record_sha256": "b35730782c3bfc641f0fee998eddd996100bb4589265340fc3359a7ef32342d5",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-004",
+      "json_pointer": "/TP-A5-004",
+      "canonical_record_sha256": "a021dd112bfacee0f636cc7158c87b9d1fdd8b442bb3d68e4e9c0ebc283cd66b",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-005",
+      "json_pointer": "/TP-A5-005",
+      "canonical_record_sha256": "43986819efe18aaab9d4e662f45c05e1e2b67074f9bf50cfe3c711037be9d79d",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-006",
+      "json_pointer": "/TP-A5-006",
+      "canonical_record_sha256": "4290c501f21fe6b5467efef9bed7a06020392b64f901b8df462de5618affcaf4",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-007",
+      "json_pointer": "/TP-A5-007",
+      "canonical_record_sha256": "4560fbd6df8a2a388257f4cf43265ca4eaa26313c8d1ef57d1b60dd0e808ced3",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-008",
+      "json_pointer": "/TP-A5-008",
+      "canonical_record_sha256": "154c0c3cf8d9b515962008c985127d94a50f4224ff348700d08866b4e8f8bafc",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-009",
+      "json_pointer": "/TP-A5-009",
+      "canonical_record_sha256": "dfa5d3a70fcf811e101a36dae0900227d8be3e3d869f0bf0f4275b8dd998be46",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "literature_attested",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-010",
+      "json_pointer": "/TP-A5-010",
+      "canonical_record_sha256": "1e05e07ea854745693e95f5026a86eec4fed39ca58b836cf30a1c2de0dfe9875",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-011",
+      "json_pointer": "/TP-A5-011",
+      "canonical_record_sha256": "1717c3c0fb64737174d190f5b92e5610dc9ceedd37d9a892891eb4c7613b9a5a",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-012",
+      "json_pointer": "/TP-A5-012",
+      "canonical_record_sha256": "ead8d890c1dea221bcc403b101efc2ba1a59c82d4b20167ad996189c09604bc6",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-013",
+      "json_pointer": "/TP-A5-013",
+      "canonical_record_sha256": "b3480cb9c0aa1784eaa7f4eafead884d7ff79ba409c16278a4af1760a56e85b0",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-014",
+      "json_pointer": "/TP-A5-014",
+      "canonical_record_sha256": "ece6fe23a715312d3b5b2b72e9812f3a02021610122b7d09a082615bb410ef6d",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-015",
+      "json_pointer": "/TP-A5-015",
+      "canonical_record_sha256": "829e2db848b7b04271f37aafa43f10d4823fa07e5fff279844134ea1aba6caad",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-016",
+      "json_pointer": "/TP-A5-016",
+      "canonical_record_sha256": "d66f3f22b0c40995c04b3212cd956623df4179d3b97b1ad474f68a6583a64071",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-017",
+      "json_pointer": "/TP-A5-017",
+      "canonical_record_sha256": "ed78f6c17d2e5e15c3094de7d4aad763d59d374bf5787afc453531ad331000f7",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-018",
+      "json_pointer": "/TP-A5-018",
+      "canonical_record_sha256": "83ce4b820676ae21bb259a9577ddcb7212526ffe449647c9f26c8007c6d1ca41",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-019",
+      "json_pointer": "/TP-A5-019",
+      "canonical_record_sha256": "ec445f4a489b9126936e2432b5f40d49b9fdb5b6508cad1cc45e8ed7e4dea6f1",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-020",
+      "json_pointer": "/TP-A5-020",
+      "canonical_record_sha256": "bacdf5f62552f601f9f4b9cc533aaaf8804ccfb36e2b3e12159dcc85e9a75ba4",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-021",
+      "json_pointer": "/TP-A5-021",
+      "canonical_record_sha256": "b045d9f7903defb6ce2d6d82db5913c0a01be136150d838ce93323c5f10e931f",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-022",
+      "json_pointer": "/TP-A5-022",
+      "canonical_record_sha256": "b054fe360c86ac0fdb1ee9c1c53070148219167e846de6ae349428796c08f1f6",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-023",
+      "json_pointer": "/TP-A5-023",
+      "canonical_record_sha256": "ac4d5dad0d2a440337d38a71f41b419d493653f4441249213be4ca6bd91dc481",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-024",
+      "json_pointer": "/TP-A5-024",
+      "canonical_record_sha256": "a1bdf663bedb3404b3856cf708e557362f7b169769c6b9436dc8c680927cc2c3",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "kernel_verified_in_repo",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-025",
+      "json_pointer": "/TP-A5-025",
+      "canonical_record_sha256": "613a6d2b282da6fa94fc4d938b25d5e19fd10bf541fac84314f2e787dd228f05",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-026",
+      "json_pointer": "/TP-A5-026",
+      "canonical_record_sha256": "672105f053632a3fd0e3ab394d3bbcaf24efee7a4e14b60518b841a5c13274c3",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-027",
+      "json_pointer": "/TP-A5-027",
+      "canonical_record_sha256": "bf5c480ddc160791593a9524ab84d12746647735587646e1fb40518dc49b88ec",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-028",
+      "json_pointer": "/TP-A5-028",
+      "canonical_record_sha256": "4aa610da15d0062afeaf52892cb3e3101b7da3aaf5f1b6b5283fd2caee70061d",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "unknown",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-029",
+      "json_pointer": "/TP-A5-029",
+      "canonical_record_sha256": "b225cd46961d2f9f9b3394a65775958f0b48b6f5bc55b267a486d7544e0254d4",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-A5-030",
+      "json_pointer": "/TP-A5-030",
+      "canonical_record_sha256": "454dea51e61557d650a5a1454bffe57b756691941c706c3a675824f1d1233826",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-C01",
+      "json_pointer": "/TP-C01",
+      "canonical_record_sha256": "97a65ca2390ba93080faf94747121131edab42ac6384e049e5b6c4af331afb87",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-C02",
+      "json_pointer": "/TP-C02",
+      "canonical_record_sha256": "ad8d1f819145442a39a9b22416f2d98e4060e0c59aa1ff2fc521c31ba6b3d6da",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-C03",
+      "json_pointer": "/TP-C03",
+      "canonical_record_sha256": "0d532db8fa62163b547e7246095d85f938b62a5cbe2f9fdfb457c82b7e118c2e",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-C04",
+      "json_pointer": "/TP-C04",
+      "canonical_record_sha256": "18fbfd43590c94ad847f54cc81ae2e2e7bb743336ec02d92c81510a216f40bd6",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-C05",
+      "json_pointer": "/TP-C05",
+      "canonical_record_sha256": "8e87d4cd5444473b64ff4d2d9186a4810aeabdc0b8285cdf74af7db1b27372fd",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-C06",
+      "json_pointer": "/TP-C06",
+      "canonical_record_sha256": "96ce4874aa47f1a135a0948993fb966e1425de1698c45db2714a1a8a56debe3a",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-C07",
+      "json_pointer": "/TP-C07",
+      "canonical_record_sha256": "b4adb414c8e629180f907f86c5eb6485a626d8738b31fddaf2969471f4672c76",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-C08",
+      "json_pointer": "/TP-C08",
+      "canonical_record_sha256": "c5d05733db2505f8f1c384364a13f64a25ac903939c1622d565b2cbfb1c1aac9",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-C09",
+      "json_pointer": "/TP-C09",
+      "canonical_record_sha256": "2513ade3a32a70f592996641afab30a1345a02a5ce89050a55f1522928327fb1",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-C10",
+      "json_pointer": "/TP-C10",
+      "canonical_record_sha256": "d4aa8ff833252020acf370a34ee0ce8eb79c97f21bb7b8545a05faac0fb9f38a",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-C11",
+      "json_pointer": "/TP-C11",
+      "canonical_record_sha256": "a284cac379f3164ece3575128b868cf3e1c2f7d57a3a4256674d8c0410c2c192",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM01",
+      "json_pointer": "/TP-CM01",
+      "canonical_record_sha256": "c62b3a98c092cadcfde3de42a7498e9f7088c267922a490a8dd81927fdc627ec",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM02",
+      "json_pointer": "/TP-CM02",
+      "canonical_record_sha256": "81d3c69162fb74cf56c1f767bf4f6d7276efe98946b362d0d567b403ddb9c71f",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM03",
+      "json_pointer": "/TP-CM03",
+      "canonical_record_sha256": "d03b36dea9999e65ef03e8e333dd780dff4a5ae050be88a11216e1db32638b00",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM04",
+      "json_pointer": "/TP-CM04",
+      "canonical_record_sha256": "447e48b162cde00d8cc0accf794a4186c4a458aaaaea6d3834b923a6f35c2bd2",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM05",
+      "json_pointer": "/TP-CM05",
+      "canonical_record_sha256": "a88b0596487c477407a959ac7edaec2c9babe39ffd363dbc732626df070b308b",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM06",
+      "json_pointer": "/TP-CM06",
+      "canonical_record_sha256": "e78935631d1d93020fc150249182febbd281968fd2bcbc514f71e665b87cd91b",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM07",
+      "json_pointer": "/TP-CM07",
+      "canonical_record_sha256": "46ca6aee7572442e804e67fbc872076b80f69b501e582014da4a329d7e77d98c",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM08",
+      "json_pointer": "/TP-CM08",
+      "canonical_record_sha256": "1c020b628f156c79e3aba9a7879912199f9e34c3aea9818e7b1e0dac623f5172",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM09",
+      "json_pointer": "/TP-CM09",
+      "canonical_record_sha256": "bc70956bc3f249a7b3cf9e30ec33a54404226f6cfba6964fabffa144ffbb895c",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM10",
+      "json_pointer": "/TP-CM10",
+      "canonical_record_sha256": "b3702766b81f7ed45f9dc99cc64c0624b147274a93a7b5be76fc23795a428e69",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM11",
+      "json_pointer": "/TP-CM11",
+      "canonical_record_sha256": "334c50ba0fbfb8909a705a9259a43e307fa81c0bcdfa31f3792222056b10d132",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-CM12",
+      "json_pointer": "/TP-CM12",
+      "canonical_record_sha256": "471864e2d0b96de0e81f2f897b8ddad5cc652f40e484886a3aebf6d11ef98bdd",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-D01",
+      "json_pointer": "/TP-D01",
+      "canonical_record_sha256": "ab5207a9914fbf214b13dee11369fa981db0371f5180d8d5b0068705da01f75f",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-D02",
+      "json_pointer": "/TP-D02",
+      "canonical_record_sha256": "7f96835c15496bc2fc43645fc37a91640900a7876e4eae24719def305720fa63",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-D03",
+      "json_pointer": "/TP-D03",
+      "canonical_record_sha256": "acfdd5b398ec3b42587d96733acc7a2c6ae87f2f6800c699665310a053d94a5d",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-D04",
+      "json_pointer": "/TP-D04",
+      "canonical_record_sha256": "91737c01da751ebbfad1c6ee96feec9c04b984e8d773e61b2c32f17d630b409b",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-D05",
+      "json_pointer": "/TP-D05",
+      "canonical_record_sha256": "1acf97fa3420b2f267a482d9d00737555ed5aa821ffbfd835c770240587c4e51",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-D06",
+      "json_pointer": "/TP-D06",
+      "canonical_record_sha256": "e531e65a802e8397a1f6ea01963c9431488f0702b3af3fdc517633b379956e24",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-D07",
+      "json_pointer": "/TP-D07",
+      "canonical_record_sha256": "6f46130942e91897426e564636a55e0dac40115d4a0b4a785d84b56f763b4ea3",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-D08",
+      "json_pointer": "/TP-D08",
+      "canonical_record_sha256": "62479bf5840d550547b408ca02a587154b44926e5cfcae57461f5f6ad2458b25",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-E01",
+      "json_pointer": "/TP-E01",
+      "canonical_record_sha256": "78e93d871f733883efc578a77d5616918666659e4dee166aa7ba7c052007be42",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-E02",
+      "json_pointer": "/TP-E02",
+      "canonical_record_sha256": "1eee012d9cb033c5328ae530b4edc9958a4022b4de485dd3370d94efd33c99ff",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-E03",
+      "json_pointer": "/TP-E03",
+      "canonical_record_sha256": "eb587eec54a5e7c387bed801cc31b354f9fdd1b8f4ac48b09a8d4de701c100ec",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-E04",
+      "json_pointer": "/TP-E04",
+      "canonical_record_sha256": "2ec5eb2d45ae0b670356993e69251cd1f16f88f7979ad8b806350e9513154bb2",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-E05",
+      "json_pointer": "/TP-E05",
+      "canonical_record_sha256": "8e5e98a1ce496e7a105c59beb59b6f48203641582e40d801fc6c489191c17a48",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-E06",
+      "json_pointer": "/TP-E06",
+      "canonical_record_sha256": "6ce9eb78924f468ce0bc72d19e99e10f10310c3abe8cedbff767c1f0c3cd1791",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-E07",
+      "json_pointer": "/TP-E07",
+      "canonical_record_sha256": "1300c895dc0ed31272d597da3ccfb32846e8290d938d159443ed5c52abd7bb71",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-E08",
+      "json_pointer": "/TP-E08",
+      "canonical_record_sha256": "065a74542828804b4c326ffed24b89fefde521fee37fbfa79ce735d68c87137a",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-E09",
+      "json_pointer": "/TP-E09",
+      "canonical_record_sha256": "da6b82762569a407ff9bf18d5680140a051b7aa632aec2ad1db3f3704732cd0c",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-E10",
+      "json_pointer": "/TP-E10",
+      "canonical_record_sha256": "d6d42dee93706a9806f2dbc2cc72a44e27b6c7008464834ae72b0a722e661f9f",
+      "declared_type": "boolean",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-E11",
+      "json_pointer": "/TP-E11",
+      "canonical_record_sha256": "75ce795003856c0fd8c7bbd45b05e7f751f2a21715eecaed02b2becfae8565ce",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F01",
+      "json_pointer": "/TP-F01",
+      "canonical_record_sha256": "71654991d958d7d0df5cb40973e189c934f2024cc50da9a6987cee8b33346120",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F02",
+      "json_pointer": "/TP-F02",
+      "canonical_record_sha256": "a3b5653a0f23f3d7e5107de8dbdcc958ee35e4bb64bfd3a933c5297d868a1f3d",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F03",
+      "json_pointer": "/TP-F03",
+      "canonical_record_sha256": "fde674df7c97fdf33a9791fa0557093023ee6d0824db5093c4c4a5f337ae273f",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F04",
+      "json_pointer": "/TP-F04",
+      "canonical_record_sha256": "c769a1becaccc3f1ccd883924fb4c5bc3d723e08d3dabd8ad68aaacb2dbe6e2f",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F05",
+      "json_pointer": "/TP-F05",
+      "canonical_record_sha256": "0d063883905b66184a1edb8dc243b3f66a870bff5907ab49d134d27cba3c069c",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F06",
+      "json_pointer": "/TP-F06",
+      "canonical_record_sha256": "a649243147c53965bad9c946c18aaf1637bb5a8fe613a44cefd105279fee4f9e",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F07",
+      "json_pointer": "/TP-F07",
+      "canonical_record_sha256": "b89e6605c295dea61dbb4d9dad7b012fb853c6c1b81c3d58730d30628d4c1d72",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F08",
+      "json_pointer": "/TP-F08",
+      "canonical_record_sha256": "0658f693b266e1526a9465a1cfae1f0e7c11c506bdbf740a9ba90bd6b04ed475",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F09",
+      "json_pointer": "/TP-F09",
+      "canonical_record_sha256": "01f52f45e8c3083a5d2dcc83962d9964e76409aecd02ca183cf1a1e4d4478274",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F10",
+      "json_pointer": "/TP-F10",
+      "canonical_record_sha256": "0fd6782aed2e5072833fda97fca1199080adcd798a9212cf3163610c8528042a",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F11",
+      "json_pointer": "/TP-F11",
+      "canonical_record_sha256": "5490145704a3a256545b45fdc48bb22bc5cf4d7be76aa1c69a16785d8c1442dc",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F12",
+      "json_pointer": "/TP-F12",
+      "canonical_record_sha256": "bd0f30c7024aa78a57b56fff28b1f1260ec9102c0c0e8efd6ea52932215fc18a",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F13",
+      "json_pointer": "/TP-F13",
+      "canonical_record_sha256": "ddfc3fe7d233cbbb807c8e982466add23c46e125320861b5172a018f0a46e171",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F14",
+      "json_pointer": "/TP-F14",
+      "canonical_record_sha256": "57a53a89960298c635e26cce2381d89aef6db5e22cc5a090e571d3aa9b94fe2a",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F15",
+      "json_pointer": "/TP-F15",
+      "canonical_record_sha256": "4e329da57726b7e7a9a2720644bc25476f358ee1e1be32a262b56fa9903f89f8",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F16",
+      "json_pointer": "/TP-F16",
+      "canonical_record_sha256": "0b3701e4874b6785a601816717fc7383b5e8d538608ece440713bb633b28a98f",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F17",
+      "json_pointer": "/TP-F17",
+      "canonical_record_sha256": "5408fdeb5aff492a381be1379245cbe7dc530760d29f2b92a887431cbd906e01",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F18",
+      "json_pointer": "/TP-F18",
+      "canonical_record_sha256": "eea07b9f290c50a5c0d59a4d12f8131916ff728bad3fb5484e370ae2d19477bb",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F19",
+      "json_pointer": "/TP-F19",
+      "canonical_record_sha256": "9b8310f54e04502a4b9f7a0fa8776c9a742fa3fa0dc4c8200d504de6d4df38c6",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F20",
+      "json_pointer": "/TP-F20",
+      "canonical_record_sha256": "8fe2a3f8cef1f5ffcaa6a8333046b31a0b27206419af08846291674afa54011d",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F21",
+      "json_pointer": "/TP-F21",
+      "canonical_record_sha256": "8a4389a4787f1a5b4016cdb0f1d369ea91dccfba9261d46ce67cd9099ccd736a",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F22",
+      "json_pointer": "/TP-F22",
+      "canonical_record_sha256": "50abca2bc49989c57801a718375a475ad11095a52d213b37cda95224a3ba280d",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F23",
+      "json_pointer": "/TP-F23",
+      "canonical_record_sha256": "9dfdf05dc839084774d2820316bb24dfd9b6a1097199302d95e93be8a1c20625",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F24",
+      "json_pointer": "/TP-F24",
+      "canonical_record_sha256": "2b105b4a8ee3773ebb8b1d1ed594862ee5b128a21d9b184624202d0478a0c891",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-F25",
+      "json_pointer": "/TP-F25",
+      "canonical_record_sha256": "7442a73f07eec6a3b2c7632f755f79c8427a92fefd44ee84875f915dec422263",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-FR01",
+      "json_pointer": "/TP-FR01",
+      "canonical_record_sha256": "db6e760079965eaeef27d92ff85be4844b9fa0a7fef4229f9974edcb50abef63",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-FR02",
+      "json_pointer": "/TP-FR02",
+      "canonical_record_sha256": "7b31d7fdf53ce7a3c547c46b65cec70eab8c707dd00cd6c4621e07f490eb4959",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-FR03",
+      "json_pointer": "/TP-FR03",
+      "canonical_record_sha256": "81053dc39018078e788742ad0f750cb641cda537cee3e44ac03c041d2bfd50a1",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-FR04",
+      "json_pointer": "/TP-FR04",
+      "canonical_record_sha256": "421d75034ddeb7a9429298a54db5728522e1f3a854150900339d8204f340decb",
+      "declared_type": "boolean",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-FR05",
+      "json_pointer": "/TP-FR05",
+      "canonical_record_sha256": "d924b742ef74325675da74efc217bd44493491e9655803da8b8e523930dc6003",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-FR06",
+      "json_pointer": "/TP-FR06",
+      "canonical_record_sha256": "41afd67a66adbc5663d9192ab2376c8cc928e0011385fe8a3c46cbc163e2bd40",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-FR07",
+      "json_pointer": "/TP-FR07",
+      "canonical_record_sha256": "8508f8d6ae44f5c9f629090099bc5463ebcb5b1cf26eebdee24b5c90216c99c9",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-FR08",
+      "json_pointer": "/TP-FR08",
+      "canonical_record_sha256": "b04976bbf61f141684e54c63f68b4495e8427d8fb58787cba43b947e30822826",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-FR09",
+      "json_pointer": "/TP-FR09",
+      "canonical_record_sha256": "67f1fd5c149e4b910f12dfe681f2072568471030a6cee82fec612976e8ce13f3",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-FR10",
+      "json_pointer": "/TP-FR10",
+      "canonical_record_sha256": "504a3fe6b7303fb94709a0f0e24c160785f7c9388fe7b6564cc5c29ce9d82eb3",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G01",
+      "json_pointer": "/TP-G01",
+      "canonical_record_sha256": "3a07b00a27a33f1a3510753a43c5be658721973f0e8a066524a00bef0ee92925",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G02",
+      "json_pointer": "/TP-G02",
+      "canonical_record_sha256": "bd15f23498a0eab335e95c42af40326d534ecee9d2a10154820e7f95e2e919bc",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G03",
+      "json_pointer": "/TP-G03",
+      "canonical_record_sha256": "227ddef47b0f42f4dc3878100442bcf333d094f31ced49e39e372320bf3af78d",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G04",
+      "json_pointer": "/TP-G04",
+      "canonical_record_sha256": "00686a18cfb7ea895cbd59b4da1881099a8a9b8b2e3dfec9f5edeeebad2beb76",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G05",
+      "json_pointer": "/TP-G05",
+      "canonical_record_sha256": "782ec5b0968a9616d826c9d0b0d38c57909ee883f2b10276fb0a2376d9fa80af",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G06",
+      "json_pointer": "/TP-G06",
+      "canonical_record_sha256": "bbf4869cc8aae4cd614525c99aeec24d7e998aad0f82c84fdb005e674d744bba",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G07",
+      "json_pointer": "/TP-G07",
+      "canonical_record_sha256": "76788b553c06423445671d2a762340512562a1be845888a8bf2161c6ccfd3923",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G08",
+      "json_pointer": "/TP-G08",
+      "canonical_record_sha256": "adaa542ceaef1c33d25a90222eaeb5d3507ff6cbd2638b537a08b02e3601a549",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G09",
+      "json_pointer": "/TP-G09",
+      "canonical_record_sha256": "0f58a8571323522b8e301e9315cca0797ea7236e51bd2bef3d529b58bd6edb7c",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G10",
+      "json_pointer": "/TP-G10",
+      "canonical_record_sha256": "94f6932c32cb3516a60b0562c0d10015b1d7c0e6c852afc7cf29f4429fda866a",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G11",
+      "json_pointer": "/TP-G11",
+      "canonical_record_sha256": "44c98cd31a3c2a6cfe27b11acb14bb124127d8a1858902b8af94ba9f1c34a95a",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G12",
+      "json_pointer": "/TP-G12",
+      "canonical_record_sha256": "6b292b62e7a10281b347f8e80637c1ab1c307036fdb77e93ef2c75bb46958a95",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-G13",
+      "json_pointer": "/TP-G13",
+      "canonical_record_sha256": "4b5340b06b8f4ec5fd2a0dab9cd80e986a440cb935c9753f777940116c905cdc",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NM01",
+      "json_pointer": "/TP-NM01",
+      "canonical_record_sha256": "d767eab72b824ba910d4a5d4c5f331e712c1e411a6acfb3b52522744b0de8237",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NM02",
+      "json_pointer": "/TP-NM02",
+      "canonical_record_sha256": "5d62f40725e3b45dec9dc18481a67ba4cb4318aede8b3af6abc087cd9b335df0",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NM03",
+      "json_pointer": "/TP-NM03",
+      "canonical_record_sha256": "658204e5b53dd300a4dad1a0d867a8069f4c813715508024eda274285a3d5bd3",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NM04",
+      "json_pointer": "/TP-NM04",
+      "canonical_record_sha256": "525713890be15144a187b65538fdbf16c4244bea8d52ead17e024675105c1d8e",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NM05",
+      "json_pointer": "/TP-NM05",
+      "canonical_record_sha256": "86735305b655d9ec6f862cc2e79535db6b3750832471f992625c884fc45c751a",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NM06",
+      "json_pointer": "/TP-NM06",
+      "canonical_record_sha256": "14c5b27b70ae7d6af38b0e354d83ebd09e569d5754c66ce5432d875ad641d508",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NM07",
+      "json_pointer": "/TP-NM07",
+      "canonical_record_sha256": "806d29fa96893a9f4057c436f204caa668c2ca77767bd2193b6ddf7390cbc773",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NP01",
+      "json_pointer": "/TP-NP01",
+      "canonical_record_sha256": "9f2f45e7bdf9115d7bc3dfa416d66df0c9adef53fbc9362997795c5c27556eb3",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NP02",
+      "json_pointer": "/TP-NP02",
+      "canonical_record_sha256": "4baebd5a7b8eace85282fdcfd4d5ae77eb789b55514c3e9ac22168a7f309bb5c",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NP03",
+      "json_pointer": "/TP-NP03",
+      "canonical_record_sha256": "cdd837cb9dbe4a381b816df7a8112b179c47b45cb26f6c65e1ecdb85bfa091ab",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NP04",
+      "json_pointer": "/TP-NP04",
+      "canonical_record_sha256": "0c8ade0798faec2cd389d8b235cfe227db70748f68876ef36fac6086a9e2b5e9",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-NP05",
+      "json_pointer": "/TP-NP05",
+      "canonical_record_sha256": "a7c27388120a66580b0dfc40436953305d0dce06a80cb497f3db65de77ed23db",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-PM01",
+      "json_pointer": "/TP-PM01",
+      "canonical_record_sha256": "e2438ee029057098119ea03fcd6f0f6e8d52210fac50d31ae77e10150d6d3862",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-PM02",
+      "json_pointer": "/TP-PM02",
+      "canonical_record_sha256": "37b34a55382c60f4ec1e979c8021066a4849507f702a1bb8c4f423713eb6b5ae",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-PM03",
+      "json_pointer": "/TP-PM03",
+      "canonical_record_sha256": "2e6c021a5fa9a53456f8fe033dea9045fd73edf8326cdd79da1a711a7b89fcea",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-PM04",
+      "json_pointer": "/TP-PM04",
+      "canonical_record_sha256": "ec934d6225e637b9c817d907e2dac0fa5a67a227d87abe13b8b4ac6e4f044d43",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-PM05",
+      "json_pointer": "/TP-PM05",
+      "canonical_record_sha256": "d9da853644497440dca21bdffe54ebeb8c94cdb0ec763f2bd83b42b40c05c099",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-PP01",
+      "json_pointer": "/TP-PP01",
+      "canonical_record_sha256": "6a024a5e3207ac8062f539825bebe7857da845c882f730502a5f51a142ed7258",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-PP02",
+      "json_pointer": "/TP-PP02",
+      "canonical_record_sha256": "04516a3c393e0207475cab93500df1af2d4abfead75a9fe374c2445bfb16a166",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-PP03",
+      "json_pointer": "/TP-PP03",
+      "canonical_record_sha256": "7a25df8ea5286779fe045810fb7fd6d55c97b35017e7633fd37dc7cfd03435c3",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-PP04",
+      "json_pointer": "/TP-PP04",
+      "canonical_record_sha256": "5707ead063300b5acf6d5ef52a9def844d38172b7be3f9b572a4eb555eab1442",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-PP05",
+      "json_pointer": "/TP-PP05",
+      "canonical_record_sha256": "d37d2b7ca2450a46f150caf609041d680e59db1c64e7060ff24c06f65500cef4",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-T01",
+      "json_pointer": "/TP-T01",
+      "canonical_record_sha256": "07c6d6bd83d05084ade911469487681362c1775bae555c09a3086437c2c5e1c9",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-T02",
+      "json_pointer": "/TP-T02",
+      "canonical_record_sha256": "c93bb1d51f6e9ec8d993d5e261ad037208d59791f9a8ee0e95fc6397ed6b77fe",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-T03",
+      "json_pointer": "/TP-T03",
+      "canonical_record_sha256": "8382b9bf1c480dc8dcd70e02c3084fba6392c21aab311e79a0a491716d974a29",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-T04",
+      "json_pointer": "/TP-T04",
+      "canonical_record_sha256": "3e588d664bba7f200698b793ab704a15484f9847a33df3ab292741a81cf27431",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-T05",
+      "json_pointer": "/TP-T05",
+      "canonical_record_sha256": "2d899ae9a2113ba11f78910288e2be7fa613b676ae4302e28c0387f8fcba6512",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-T06",
+      "json_pointer": "/TP-T06",
+      "canonical_record_sha256": "24ef4f7e53e351579de9fef967571d31804e75cfc5670d8d1bf81290f3fac8e6",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-T07",
+      "json_pointer": "/TP-T07",
+      "canonical_record_sha256": "8d8982e03249280000573bfe70d478f55c0b97139fc2bc0615e3611856b97297",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-T08",
+      "json_pointer": "/TP-T08",
+      "canonical_record_sha256": "5e54db4d32afe7678f5a6846471557b098b6dbb084141efb73ad35b739327d94",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-T09",
+      "json_pointer": "/TP-T09",
+      "canonical_record_sha256": "4c70e210b1bbdcc12eb77cec5ffeaf489018aad6aa02e76516e287bb1aacb409",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-TW01",
+      "json_pointer": "/TP-TW01",
+      "canonical_record_sha256": "94ff9a241f3b94c61f19663456fef8f759065d711274747e8848a61e4edfe737",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-TW02",
+      "json_pointer": "/TP-TW02",
+      "canonical_record_sha256": "92230bb430d76416dfa9d1e2938e79030200e89cdff6fd8040aba4bf3808b1f0",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-TW03",
+      "json_pointer": "/TP-TW03",
+      "canonical_record_sha256": "b3fc69d194e96be922bc99c8d77e831a9481bbc5914b282d7d8460876ef3ad50",
+      "declared_type": "boolean",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-TW04",
+      "json_pointer": "/TP-TW04",
+      "canonical_record_sha256": "edd5b93f393914a9c83aa0e80d4cb0ce8c16fdd600cbb8d4b8ba261a96124480",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-TW05",
+      "json_pointer": "/TP-TW05",
+      "canonical_record_sha256": "3d38b731a9240df3147d0b2ce551c83670572fd79a20656efd7cb87bcaff3c39",
+      "declared_type": "integer",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-TW06",
+      "json_pointer": "/TP-TW06",
+      "canonical_record_sha256": "909d7800f073adb3ac60c605dc9615e77f662a671d4bce983fac4ee3022dfdc5",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-TW07",
+      "json_pointer": "/TP-TW07",
+      "canonical_record_sha256": "8c2090511797108c82b1237524da65abbc19aa34133eab1ab462d915d675d3ea",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-TW08",
+      "json_pointer": "/TP-TW08",
+      "canonical_record_sha256": "eb5751cfc25385a6422604a74a15e7ba5ec3a17acf1e19b5c5a8bc08e9949545",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-TW09",
+      "json_pointer": "/TP-TW09",
+      "canonical_record_sha256": "636d948139b437111664f6041196f7338f7778569dbc36b709ace1e5542da22c",
+      "declared_type": "string",
+      "declared_type_parseable": true,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-TW10",
+      "json_pointer": "/TP-TW10",
+      "canonical_record_sha256": "7b4bb9b342c5937312ce74343305ca83002b78e4516a5a8c258477c1dffc7bce",
+      "declared_type": "integer",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    },
+    {
+      "property_id": "TP-W01",
+      "json_pointer": "/TP-W01",
+      "canonical_record_sha256": "d20a8ad942d346e4757ceb795da70e42f1089b93f2d75e5e14aafe78c26f3e8f",
+      "declared_type": "boolean",
+      "declared_type_parseable": false,
+      "source_status_annotation": "computed_here",
+      "classification": "untrusted_property_candidate"
+    }
+  ],
+  "requirement_annotations": [
+    {
+      "mechanism_id": "GEN-LB-SHOUP-NECHAEV",
+      "json_pointer": "/0/requires/0",
+      "raw_sha256": "e28936e0a02a8a7e6e6faafc1094cd6c2d452480263c5da1033f9e1579d03294",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-LB-SHOUP-NECHAEV",
+      "json_pointer": "/0/requires/1",
+      "raw_sha256": "eba1bb23e8a732a3af19d19226ed5fa1639897bced10da52565ea28c9c3c5289",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-LB-SHOUP-NECHAEV",
+      "json_pointer": "/0/requires/2",
+      "raw_sha256": "5de9ac780a69ae638161286fb4c6d3df9dbc5f43229decca393c9fc2c18a3f72",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-LB-SHOUP-NECHAEV",
+      "json_pointer": "/0/requires/3",
+      "raw_sha256": "788aabe14fcb6b7bf22b0e32a37d21a25addab154dc2ff4654b81cf112eb1175",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-BSGS",
+      "json_pointer": "/1/requires/0",
+      "raw_sha256": "06b99fd5827abc606622bb2e200906388c010b0078a3d1f5cff092d1396c18a5",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-BSGS",
+      "json_pointer": "/1/requires/1",
+      "raw_sha256": "9a6133b0295b33a1ec4500a4d9c81a5b4aaffe1963704b92c21af769fd5e8d43",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-BSGS",
+      "json_pointer": "/1/requires/2",
+      "raw_sha256": "cc281f29c1cf95c50a4afdcd34475b94d856b4d540e8c7ebd83f271b87f7af99",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-RHO-PARALLEL",
+      "json_pointer": "/2/requires/0",
+      "raw_sha256": "6b567f5a7d7386ae7ab8253d6ba5964e82157d4be967286e0b78f280639e34ac",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-RHO-PARALLEL",
+      "json_pointer": "/2/requires/1",
+      "raw_sha256": "5779a71b49c0daffec1eb4d630e3e65885d261b2e1a2db98efdd0fdecc8864e1",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-RHO-AUT",
+      "json_pointer": "/3/requires/0",
+      "raw_sha256": "c7b558b0d9184867968474ba5a09a3e928b35f6b0b7227b629b94f0d9945464f",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-RHO-AUT",
+      "json_pointer": "/3/requires/1",
+      "raw_sha256": "056120fef278568e8fcb7a17535a88fd6f53f0cee755b06756cf5efdc9c2e163",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-RHO-AUT",
+      "json_pointer": "/3/requires/2",
+      "raw_sha256": "cbdc91495b629dc770e800bfd63474182b43cd5145261e6db5f77feae17b84c7",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-RHO-AUT",
+      "json_pointer": "/3/requires/3",
+      "raw_sha256": "2339e42b48c51e1e884d0615bc35a6cf876a6625b2da9cce0938da1392e37099",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-POHLIG-HELLMAN",
+      "json_pointer": "/4/requires/0",
+      "raw_sha256": "5c5dbd67334f6159b5fdfede6bc57b9a45c369d73af2a93b1190fd8f8f991838",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-POHLIG-HELLMAN",
+      "json_pointer": "/4/requires/1",
+      "raw_sha256": "535d69228dba598f42289b6cde038902907078c3e4b0b67e7f0629549d501d33",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-MULTI-TARGET",
+      "json_pointer": "/5/requires/0",
+      "raw_sha256": "66fc7753ba1e94486eba4ed10936f3b8f3fc7c06aa7bb730a6ca18e71b5a8ec5",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-MULTI-TARGET",
+      "json_pointer": "/5/requires/1",
+      "raw_sha256": "448d1992b9bc337301eca2315296340dd6d27156f642b06097a36ecfc8effd4b",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-MULTI-TARGET",
+      "json_pointer": "/5/requires/2",
+      "raw_sha256": "9b31f09bda90b945b0fb52a781c1554fa0db0a42b57ef0afce08f406c9a8a9f7",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-PREPROCESSING",
+      "json_pointer": "/6/requires/0",
+      "raw_sha256": "2be666e1426b1634c2560b73ac2cb14c2e5dc5c0ab34317c2d4ebb3a6f3ecd93",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-PREPROCESSING",
+      "json_pointer": "/6/requires/1",
+      "raw_sha256": "97e9c0c3428193ed01d0ceaa011972b7aa225ed12632b3f824a979d1485b70ce",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-PREPROCESSING",
+      "json_pointer": "/6/requires/2",
+      "raw_sha256": "65b678f5bc2a9c46763b0088da3182ec9c4e10f0b79ddb3c799d545029ab0b43",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-INTERVAL-KANGAROO",
+      "json_pointer": "/7/requires/0",
+      "raw_sha256": "2210731e8e5467f127a3bb16873016cdcc8a06ccab279409e81f0a5d6f5a5a1a",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-INTERVAL-KANGAROO",
+      "json_pointer": "/7/requires/1",
+      "raw_sha256": "bd8efed164dbd9505f486a54883fa6dbd42e28340de567ab95baa20d5d1b92af",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "GEN-INTERVAL-KANGAROO",
+      "json_pointer": "/7/requires/2",
+      "raw_sha256": "628f1f37d9ba2739cabe69746ff17a59457298d1ad9bcfe7c7920849c6bc42bc",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-PAIRING-MOV-FR-TATE",
+      "json_pointer": "/8/requires/0",
+      "raw_sha256": "c774c4cc6cfaf8f56c0f04f27440b296f5540d562e9a9e983edbd75288048959",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-PAIRING-MOV-FR-TATE",
+      "json_pointer": "/8/requires/1",
+      "raw_sha256": "0edee5e4572c1b0e51f33ecc85ede57585c1a39fad9b6e60052af0ba8858ea88",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-PAIRING-MOV-FR-TATE",
+      "json_pointer": "/8/requires/2",
+      "raw_sha256": "6124aae20ce93d15ecf19bafdd7b344d166acd548f890475d8089c7761ad7bbf",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-WEIL-DESCENT-GHS",
+      "json_pointer": "/9/requires/0",
+      "raw_sha256": "df478021ed144226ba1dbd6ef0a4b3dd0119c888d7f137cb6f85b528a68da280",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-WEIL-DESCENT-GHS",
+      "json_pointer": "/9/requires/1",
+      "raw_sha256": "1f606687665f1dbacf1e220c3156972f50af514b3061ecc562fd51e2bc5b086c",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-WEIL-DESCENT-GHS",
+      "json_pointer": "/9/requires/2",
+      "raw_sha256": "d964cd217f9b66d993c273ba07385985f934ed927c672b5cc6f9607a7cc28917",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-COVER-PRIME-ORDER",
+      "json_pointer": "/10/requires/0",
+      "raw_sha256": "d5d09a24fada6561d9437ef46f0dd0ea92f08468c1254aee40425658195327de",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-COVER-PRIME-ORDER",
+      "json_pointer": "/10/requires/1",
+      "raw_sha256": "0c43d2f2365422bfb957ea453b3416c7546ffcbf097f86a8b15bddd947a21c4a",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-COVER-PRIME-ORDER",
+      "json_pointer": "/10/requires/2",
+      "raw_sha256": "1062ba65a914dce17ce575080fe5cec66186c277c2b12b26fdd4afcef011d7d7",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-ANOMALOUS-SSSA",
+      "json_pointer": "/11/requires/0",
+      "raw_sha256": "8478f122305ebbefffef60cfc7426a52ef54f71ad327f9fd5e3d1f741b861bdb",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-ANOMALOUS-SSSA",
+      "json_pointer": "/11/requires/1",
+      "raw_sha256": "06db96ec4f8c037e31938b245b8a006b51173cb0e0b3bfaca1b1140aaefb3c98",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-XEDNI-GLOBAL-LIFT",
+      "json_pointer": "/12/requires/0",
+      "raw_sha256": "66edb93f7ab26cac511c64ab3fb590351d2f36f835564c87dc5e7d80c8c394dd",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-XEDNI-GLOBAL-LIFT",
+      "json_pointer": "/12/requires/1",
+      "raw_sha256": "6febfd2c4c37fa44a114e2f9f4625e7fcf464c40552783c22063ed2a4cb5c217",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "TRF-XEDNI-GLOBAL-LIFT",
+      "json_pointer": "/12/requires/2",
+      "raw_sha256": "8466fe5209aeb0ff856767e6c027bb4df9a18b491d76609bf611c759c1d66afe",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "ISOG-JMV-SELF-REDUCTION",
+      "json_pointer": "/13/requires/0",
+      "raw_sha256": "ef054ce4e507f2e44ee3ba8fa0e55716d1b1c0f88c4d225eb37de91fdd9ee52a",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "ISOG-JMV-SELF-REDUCTION",
+      "json_pointer": "/13/requires/1",
+      "raw_sha256": "a151153ae25fa71071499db8edd1e8732cb229a486c5b0cfc0f9210f8a7cf6a5",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "ISOG-JMV-SELF-REDUCTION",
+      "json_pointer": "/13/requires/2",
+      "raw_sha256": "c94a2c471bfcc564e6fdb60fdf84f868883905f3da4b4767655cd938b4cc0551",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "ISOG-JMV-SELF-REDUCTION",
+      "json_pointer": "/13/requires/3",
+      "raw_sha256": "8479ef447665f8e9ed200162af4aa17f7898fe90c43069675c67312f5ce840e4",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "ISOG-ENDRING-COMPUTE",
+      "json_pointer": "/14/requires/0",
+      "raw_sha256": "637ca45f101476175e28e4e5c5283d204cb1d0318d79da54e26d21fc304423ad",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "ISOG-ENDRING-COMPUTE",
+      "json_pointer": "/14/requires/1",
+      "raw_sha256": "cc866cb2f8efc3b2e401906250ceba5ce146af741427b4ac0a1232661ac4184b",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "ISOG-ENDRING-COMPUTE",
+      "json_pointer": "/14/requires/2",
+      "raw_sha256": "129e8c00d273aa084b01df6c13b470ea9f66830921548cbccd3a88d87c925363",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "EDS-LAUTER-STANGE-NETS",
+      "json_pointer": "/15/requires/0",
+      "raw_sha256": "ccb497e9c665970faf8e41fb276f1c6f401197ea5a02a63753211b0d3575c73a",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "EDS-LAUTER-STANGE-NETS",
+      "json_pointer": "/15/requires/1",
+      "raw_sha256": "12fc70e801800de048dbc1829346aeef2c1dc0674082bc30c3091fabf6028a7f",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "EDS-LAUTER-STANGE-NETS",
+      "json_pointer": "/15/requires/2",
+      "raw_sha256": "f2ebd41da8333518857ea426717087fc62366b1fe97e4bfc686b93949f22d61e",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "CM-SMALL-DISCRIMINANT",
+      "json_pointer": "/16/requires/0",
+      "raw_sha256": "46aee53e76652eb0aa985b450d476221dca9faaeb3375b762dd7d51baede239c",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "CM-SMALL-DISCRIMINANT",
+      "json_pointer": "/16/requires/1",
+      "raw_sha256": "6133a9b96e344ac1e40db9f2e751624f2583530219009830ea74bfcb10e17615",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "CM-SMALL-DISCRIMINANT",
+      "json_pointer": "/16/requires/2",
+      "raw_sha256": "1540d8342e8acdfafb9d1215d3d3d8cbf5fdbe8df93ab7a89e4f4e5a9bc1014e",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IMPL-HNP-LATTICE-NONCE",
+      "json_pointer": "/17/requires/0",
+      "raw_sha256": "3ffc009a7902c370f3525d16568ecbda4ddb07a254d58d8909fcf677e5b6aae2",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IMPL-HNP-LATTICE-NONCE",
+      "json_pointer": "/17/requires/1",
+      "raw_sha256": "f9958b2194d27267c26104f40fd584425e96e72a128f25bb82800c3ed0d72f8d",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IMPL-HNP-LATTICE-NONCE",
+      "json_pointer": "/17/requires/2",
+      "raw_sha256": "054b889e6acf1eb770b6f9e6e4ba68251d23ef3b36abce28725f91e0a9eb45fb",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IMPL-BLEICHENBACHER-FFT",
+      "json_pointer": "/18/requires/0",
+      "raw_sha256": "c1d52be5eb0a123d3d65277da4ee61ff39768b7a87cebeaefd331435d493e364",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IMPL-BLEICHENBACHER-FFT",
+      "json_pointer": "/18/requires/1",
+      "raw_sha256": "4bf679dfc2b4bf4443b1a2cf275b2b857d85e393b1096e50e896109572b6965e",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "QUANT-SHOR-ECDLP",
+      "json_pointer": "/19/requires/0",
+      "raw_sha256": "bbd56b1281a352211e940b28f49662b09197002d763deda93939bd51e3dc2a3b",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "QUANT-SHOR-ECDLP",
+      "json_pointer": "/19/requires/1",
+      "raw_sha256": "7e042790d0b7fd79efa2f3eee7c8cb220614aff3a8ec90b3de9659f2db8a202e",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "QUANT-SHOR-ECDLP",
+      "json_pointer": "/19/requires/2",
+      "raw_sha256": "57e7831da5ae8b389ec7985fe9657d6a351120da78cd66c78741748a5a53ac1b",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "QUANT-SHOR-ECDLP",
+      "json_pointer": "/19/requires/3",
+      "raw_sha256": "5442a6636bfc9872d858bba2875b60300bb74cfa3717c2fff9bd4e87d9526abe",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-01-semaev-2004-bounded-integer-factorbase",
+      "json_pointer": "/20/requires/0",
+      "raw_sha256": "a8f6323c5f222c0c727b0008225885a77fad3ddeaecc2468537eae7c7c3b68f8",
+      "tp_like_references": [
+        "TP-CHAR-NOT-2-3"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-01-semaev-2004-bounded-integer-factorbase",
+      "json_pointer": "/20/requires/1",
+      "raw_sha256": "cd8c07fb65d62acd80ecd1ba1d67ec7e9892bb59d67c2706afc0e80cdbe0bac8",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-01-semaev-2004-bounded-integer-factorbase",
+      "json_pointer": "/20/requires/2",
+      "raw_sha256": "a23fc37d6f5d2e66d16efc623be097a37c9a70dc23d8686dd8622837e9bb2923",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-01-semaev-2004-bounded-integer-factorbase",
+      "json_pointer": "/20/requires/3",
+      "raw_sha256": "dc77d9374d4afbf226322478d3be55bf76599aba57f2258fe11136b0d8fe26d8",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-01-semaev-2004-bounded-integer-factorbase",
+      "json_pointer": "/20/requires/4",
+      "raw_sha256": "10b17f51e4db0b7b2730020abb979890108167c4b7357cb5c151986922c9bb9e",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-02-gaudry-2009-weil-restriction-decomposition",
+      "json_pointer": "/21/requires/0",
+      "raw_sha256": "de2cf6d3651aa9b69154c794334081e13de637ca003b561d61492c4c03c52d37",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-02-gaudry-2009-weil-restriction-decomposition",
+      "json_pointer": "/21/requires/1",
+      "raw_sha256": "076854bf91b48cdac5de70d7ee92e131f050edab486506345ce40d1f9384fe72",
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-02-gaudry-2009-weil-restriction-decomposition",
+      "json_pointer": "/21/requires/2",
+      "raw_sha256": "e444fe81422eb1828b627af38f30fbdcb0a4459127db2d5a96a75183754c5d57",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-02-gaudry-2009-weil-restriction-decomposition",
+      "json_pointer": "/21/requires/3",
+      "raw_sha256": "290bd743b0001ea25fcef8bf0806b9941f6b7b211d9087c7889de38277c4f540",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-03-diem-2011-subexponential",
+      "json_pointer": "/22/requires/0",
+      "raw_sha256": "e3eb107c7dfaf558bfd9d06ed0a7ac67eb9cf7d7a1a72eb2e21df3e4200343f6",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-03-diem-2011-subexponential",
+      "json_pointer": "/22/requires/1",
+      "raw_sha256": "8645cd30728996aad5c3ebd49e3e585034f526da0e45a051935fbd833b519d6e",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-03-diem-2011-subexponential",
+      "json_pointer": "/22/requires/2",
+      "raw_sha256": "bb9088329e0ad01088f209559c92bb499ae99e3173629a151dcbdb9e8cd6d53a",
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-03-diem-2011-subexponential",
+      "json_pointer": "/22/requires/3",
+      "raw_sha256": "8bf237be98494f31bc9fb0e9b41591e3071960aaa09543c2d622f5b0301ff954",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-04-petit-quisquater-2012-weil-descent-firstfall",
+      "json_pointer": "/23/requires/0",
+      "raw_sha256": "a91bb97d99f53433074f45bc33090715c84fae26496c9b909a2bb84886e3cc2a",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-04-petit-quisquater-2012-weil-descent-firstfall",
+      "json_pointer": "/23/requires/1",
+      "raw_sha256": "9b15e8fd0e2a6c2f4b6273b7149f7b2923db9e6ea84d906b39974b16dc325d11",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-04-petit-quisquater-2012-weil-descent-firstfall",
+      "json_pointer": "/23/requires/2",
+      "raw_sha256": "4882b4ab4e11d7ee2cae6de49757b62248674ee6e38e2a799d8582f684561a33",
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-04-petit-quisquater-2012-weil-descent-firstfall",
+      "json_pointer": "/23/requires/3",
+      "raw_sha256": "8d83d1228812d9d0ae0820290ce451631f8832a8cac36d817a9a69525651bdb2",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-05-pkc2016-i-p-minus-1-smooth",
+      "json_pointer": "/24/requires/0",
+      "raw_sha256": "3d070e9270979f8354c0a8942eba10e4d4ff0d4595558e850b4dffb7cdeda3be",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-05-pkc2016-i-p-minus-1-smooth",
+      "json_pointer": "/24/requires/1",
+      "raw_sha256": "b8f96437fb89d58c7d6ef9a723d545733ad4b18de7ceb297892a97c9d0b3474d",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-05-pkc2016-i-p-minus-1-smooth",
+      "json_pointer": "/24/requires/2",
+      "raw_sha256": "98309dd410fcf5bbb641c54a0e3570675d213ef5bf19f6015703218e1fa99ce4",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-05-pkc2016-i-p-minus-1-smooth",
+      "json_pointer": "/24/requires/3",
+      "raw_sha256": "970ef9b6a862b85e002bb5291efbc871e4524e1e08aa8c8f13f88c20adb92cb8",
+      "tp_like_references": [
+        "TP-P1-SMOOTH-19"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-05-pkc2016-i-p-minus-1-smooth",
+      "json_pointer": "/24/requires/4",
+      "raw_sha256": "3a256ec9042eb71595c90a52892d01100d81bb171a775fa6d68d076965333115",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-06-pkc2016-ii-auxiliary-isogeny",
+      "json_pointer": "/25/requires/0",
+      "raw_sha256": "3cd1bbb3ed313211c4411916fd56b307710ba1f4d2c73735b5663134e43355f2",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-06-pkc2016-ii-auxiliary-isogeny",
+      "json_pointer": "/25/requires/1",
+      "raw_sha256": "4a2dfd003e55d9c6413ebc7ec40ea122823abdcc2db3b3f9ec1f5a6ea12e998f",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-06-pkc2016-ii-auxiliary-isogeny",
+      "json_pointer": "/25/requires/2",
+      "raw_sha256": "bfe521e47f69c2b8f37b1fac753bd8b10cf68f70497f08d3f2cf8713232846a2",
+      "tp_like_references": [
+        "TP-J0-AUT6",
+        "TP-CM-D3"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-06-pkc2016-ii-auxiliary-isogeny",
+      "json_pointer": "/25/requires/3",
+      "raw_sha256": "8c377b0e69b9321a5853d70ca6c6de3e680d2bcd6ee2d4a528fabd6f41b93a75",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-07-amadori-pintore-sala-2018",
+      "json_pointer": "/26/requires/0",
+      "raw_sha256": "effcb33362c06e1e2eb8215bcf86c93f1b04ea1e76174c630097b7cda9945224",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-07-amadori-pintore-sala-2018",
+      "json_pointer": "/26/requires/1",
+      "raw_sha256": "c331af91ab5bbb49a0fc70e6a1954e3bedc20a03e83980536f55ae264336274a",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-07-amadori-pintore-sala-2018",
+      "json_pointer": "/26/requires/2",
+      "raw_sha256": "38ea22f5e66a9dc34c291121e3fd4eb6ea5d4a362be648a4480231187895c753",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-07-amadori-pintore-sala-2018",
+      "json_pointer": "/26/requires/3",
+      "raw_sha256": "4e6246c0f4ed2db40f6163d5271b88e11aa78ceebb64d8f2fdba9e2584ab833d",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-08-kudo-cans-2018-hybrid",
+      "json_pointer": "/27/requires/0",
+      "raw_sha256": "a55f1411e17bc72d3a242f7f5caeb012b1f861995cf7cfd59920b8743f4821ce",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-08-kudo-cans-2018-hybrid",
+      "json_pointer": "/27/requires/1",
+      "raw_sha256": "4395acb8e12f1d8e6728337bf3715f0f563243cddb68b0114ce29fa251ec01ac",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-08-kudo-cans-2018-hybrid",
+      "json_pointer": "/27/requires/2",
+      "raw_sha256": "abca6e8df99e59efdd1ffaf11e2c8748bc6d1dbc4cf781fbc0eee5380098a149",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-08-kudo-cans-2018-hybrid",
+      "json_pointer": "/27/requires/3",
+      "raw_sha256": "15a876c5eed88b288f5d1e62f6600cc9e7a5aad84edf04055f27c7a5ae0de364",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-09-fghr-2014-2torsion-coxeter-symmetrization",
+      "json_pointer": "/28/requires/0",
+      "raw_sha256": "01ea2f3d0b72be8a432ed4304c2c40af598fb4c99582dbb4f4f106e585059305",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-09-fghr-2014-2torsion-coxeter-symmetrization",
+      "json_pointer": "/28/requires/1",
+      "raw_sha256": "6f77246ef1bf7addcef3839cf43a4a74d3ca104b2be177054005c9f65ced3b77",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-09-fghr-2014-2torsion-coxeter-symmetrization",
+      "json_pointer": "/28/requires/2",
+      "raw_sha256": "e1889a7b3d3f02e5453e2d145edf775f8b067104dc510c5977b58df028adfc92",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-09-fghr-2014-2torsion-coxeter-symmetrization",
+      "json_pointer": "/28/requires/3",
+      "raw_sha256": "91cbb6a54223dbdaece125196578b73d175d214e2d13809367c63533212dc2f4",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-09-fghr-2014-2torsion-coxeter-symmetrization",
+      "json_pointer": "/28/requires/4",
+      "raw_sha256": "b450111d56c3c7afe790818d86f73819e20c57ad7ba65d9bc41a52a7a1376180",
+      "tp_like_references": [
+        "TP-PRIME-FIELD",
+        "TP-NO-2TORSION"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-10-fhjrv-2014-torsion-equivariant-symmetrization",
+      "json_pointer": "/29/requires/0",
+      "raw_sha256": "a0c25d36e961831cbf3785b9786311c813f936e03e4649a11c5315f98c51dfa8",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-10-fhjrv-2014-torsion-equivariant-symmetrization",
+      "json_pointer": "/29/requires/1",
+      "raw_sha256": "86efc59404aeeda0b025fd26d93a4ad172f9fb333e4c1d34fe83579c261efd19",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-10-fhjrv-2014-torsion-equivariant-symmetrization",
+      "json_pointer": "/29/requires/2",
+      "raw_sha256": "fdea01f8c186b1745c8c53104b94ab8a26011cd937f209343cabf46a6cc18e91",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-10-fhjrv-2014-torsion-equivariant-symmetrization",
+      "json_pointer": "/29/requires/3",
+      "raw_sha256": "e330766740c2d93f737baaea89aaa01c916b78690d156eaa7d1c500457a3b5e0",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-10-fhjrv-2014-torsion-equivariant-symmetrization",
+      "json_pointer": "/29/requires/4",
+      "raw_sha256": "0ba2569e22d38e0fdf80b90ae22551a9e84c0d7aa7f6f79ab7cbf977b85e0db7",
+      "tp_like_references": [
+        "TP-PRIME-FIELD",
+        "TP-NO-2TORSION"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-11-gebregiyorgis-2016-disjoint-factor-bases",
+      "json_pointer": "/30/requires/0",
+      "raw_sha256": "bc8841deea31ffad284202e59c1d5790e7350aa85736e406bb76ea6fd0392c66",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-11-gebregiyorgis-2016-disjoint-factor-bases",
+      "json_pointer": "/30/requires/1",
+      "raw_sha256": "5cc591da68b1e948ca83c1a15e0b1135a5b278a573513e92396e4e0acf2b9805",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-11-gebregiyorgis-2016-disjoint-factor-bases",
+      "json_pointer": "/30/requires/2",
+      "raw_sha256": "0dd1f223e6e9f9c2e7bf8591242c560c27ca11088f91753f2c38307f6b8e4fcc",
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-12-gebregiyorgis-2016-automorphism-negative",
+      "json_pointer": "/31/requires/0",
+      "raw_sha256": "b2f349e2f2186681c4a470044624d5df6e7757fcecaba5959528da9c5c0a47a9",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-12-gebregiyorgis-2016-automorphism-negative",
+      "json_pointer": "/31/requires/1",
+      "raw_sha256": "41d4770dad60b029e851568ebe801c77293c9e3ad4337265c68de4e87f249a1d",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-12-gebregiyorgis-2016-automorphism-negative",
+      "json_pointer": "/31/requires/2",
+      "raw_sha256": "23258e2303f111ee85a5354583b9b5ccba2f2a36f3e2361a4cb253f889aabb48",
+      "tp_like_references": [
+        "TP-J0-AUT6"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-12-gebregiyorgis-2016-automorphism-negative",
+      "json_pointer": "/31/requires/3",
+      "raw_sha256": "75fc4d04f41455aeaeb43bec6230ee1d362dd34d33f287e70c3b2b0f0e506bcb",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-13-joux-vitse-n-minus-1-variant",
+      "json_pointer": "/32/requires/0",
+      "raw_sha256": "c3021727d139e93b70d062340c423b4c548765c6aa822f5d5c141b55a3482515",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-13-joux-vitse-n-minus-1-variant",
+      "json_pointer": "/32/requires/1",
+      "raw_sha256": "4eefff7ff9dafca102097c7c81efe207708c1bd6bdbaf426d2584099a52e8557",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-13-joux-vitse-n-minus-1-variant",
+      "json_pointer": "/32/requires/2",
+      "raw_sha256": "4eba11a0271f19c61ee939870a844a186fcd8a1f08b41c4eebc4bf07dfcfda27",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-13-joux-vitse-n-minus-1-variant",
+      "json_pointer": "/32/requires/3",
+      "raw_sha256": "7b6469393cba188802ebf5621340ee56f4e226517d064533659eefd6980bef5f",
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-14-joux-vitse-cover-and-decomposition",
+      "json_pointer": "/33/requires/0",
+      "raw_sha256": "08dc58d18d1f86101b4e75844bc50707c98d56a9b1070262dd713f53dcf79a9c",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-14-joux-vitse-cover-and-decomposition",
+      "json_pointer": "/33/requires/1",
+      "raw_sha256": "f8c46e08b2a93b06d903f4d8b93a44cd942509baaad7ff5f221ffdf4fcc5a83a",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-14-joux-vitse-cover-and-decomposition",
+      "json_pointer": "/33/requires/2",
+      "raw_sha256": "68d0c1749760215e3a95c0cfa4bc9f4b728052d6e47bd044938781964b15a2ae",
+      "tp_like_references": [
+        "TP-PRIME-FIELD"
+      ],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-15-yokoyama-2020-lower-bound",
+      "json_pointer": "/34/requires/0",
+      "raw_sha256": "8fa23b2dfe75a0ee2d51dc2017e4c9b3b15774417f0d7e69f32d7765b09ede17",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-15-yokoyama-2020-lower-bound",
+      "json_pointer": "/34/requires/1",
+      "raw_sha256": "75813e62f62143a9b4463e28690f7e1273b85dc58f5e6b1b661e075c546b14bb",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-15-yokoyama-2020-lower-bound",
+      "json_pointer": "/34/requires/2",
+      "raw_sha256": "b1ff30ec81a9ea92a3c1a901a2aacead6b1c7457816517eed326a11450e8644b",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    },
+    {
+      "mechanism_id": "IC-15-yokoyama-2020-lower-bound",
+      "json_pointer": "/34/requires/3",
+      "raw_sha256": "98335026227e9a2b7fb6eca0b487b96d9231b42837d6fd7ac6ad693bb098056f",
+      "tp_like_references": [],
+      "classification": "untrusted_free_text_requirement"
+    }
+  ],
+  "report_envelope": {
+    "bytes": 19869,
+    "lines": 230,
+    "claimed_full_text_read_rows": 20
+  },
+  "canonical_import_plan": {
+    "direct_imports": 0,
+    "scientific_outcomes": 0,
+    "ranker_labels": 0,
+    "route_closures": 0,
+    "authorization": 0,
+    "next_step": "Replay individual public properties or extract claim-level source anchors in separate reviewed work; never bulk-promote this snapshot."
+  }
+}

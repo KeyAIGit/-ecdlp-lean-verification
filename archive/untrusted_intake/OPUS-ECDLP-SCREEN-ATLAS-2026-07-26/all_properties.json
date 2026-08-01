@@ -1,0 +1,1786 @@
+{
+ "TP-F01": {
+  "id": "TP-F01",
+  "statement": "p (secp256k1 base field prime), decimal",
+  "value": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "p = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F; print(p)"
+ },
+ "TP-F02": {
+  "id": "TP-F02",
+  "statement": "bit length of p",
+  "value": "256",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "p.bit_length()"
+ },
+ "TP-F03": {
+  "id": "TP-F03",
+  "statement": "p is prime",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "sympy.isprime(p)  (BPSW; no ECPP certificate produced)"
+ },
+ "TP-F04": {
+  "id": "TP-F04",
+  "statement": "p mod 3",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "p % 3"
+ },
+ "TP-F05": {
+  "id": "TP-F05",
+  "statement": "p mod 4",
+  "value": "3",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "p % 4"
+ },
+ "TP-F06": {
+  "id": "TP-F06",
+  "statement": "p mod 8",
+  "value": "7",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "p % 8"
+ },
+ "TP-F07": {
+  "id": "TP-F07",
+  "statement": "p mod 12",
+  "value": "7",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "p % 12"
+ },
+ "TP-F08": {
+  "id": "TP-F08",
+  "statement": "p mod 6",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "p % 6"
+ },
+ "TP-F09": {
+  "id": "TP-F09",
+  "statement": "p has the special form 2^256 - 2^32 - 977",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "p == 2**256 - 2**32 - 977"
+ },
+ "TP-F10": {
+  "id": "TP-F10",
+  "statement": "c = 2^256 - p (pseudo-Mersenne / Crandall offset)",
+  "value": "4294968273 = 0x1000003d1 = 2^32 + 977",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "2**256 - p ; hex(2**256-p) ; check == 2**32+977"
+ },
+ "TP-F11": {
+  "id": "TP-F11",
+  "statement": "bit length of c = 2^256 - p",
+  "value": "33",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "(2**256-p).bit_length()"
+ },
+ "TP-F12": {
+  "id": "TP-F12",
+  "statement": "factorization of c = 2^256 - p",
+  "value": "3 * 1431656091",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "sympy.factorint(2**256-p) -> {3:1, 1431656091:1}; note 977 is prime but c itself is not 977-related as a factor"
+ },
+ "TP-F13": {
+  "id": "TP-F13",
+  "statement": "977 is prime",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "sympy.isprime(977)"
+ },
+ "TP-F14": {
+  "id": "TP-F14",
+  "statement": "SNFS-style polynomial representation of p: f(x) = x^8 - x - 977 with root x = 2^32",
+  "value": "True (coefficients [1,0,0,0,0,0,0,-1,-977], max |coeff| = 977, 10 bits)",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "(2**32)**8 - 2**32 - 977 == p ; signed base-2^32 digit expansion of p"
+ },
+ "TP-F15": {
+  "id": "TP-F15",
+  "statement": "degree-2 representation of p: p = X^2 - 4294968273 at X = 2^128",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "(2**128)**2 - 4294968273 == p"
+ },
+ "TP-F16": {
+  "id": "TP-F16",
+  "statement": "degree-4 representation of p in base 2^64: signed digits",
+  "value": "[1, 0, 0, 0, -4294968273] (max |coeff| 33 bits)",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "signed base-2^64 digit expansion of p"
+ },
+ "TP-F17": {
+  "id": "TP-F17",
+  "statement": "extension degree of F_p over its prime field",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "p is prime (isprime(p)) => F_p is the prime field, degree 1"
+ },
+ "TP-F18": {
+  "id": "TP-F18",
+  "statement": "proper subfields of F_p",
+  "value": "none",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "subfield lattice of F_{q^d} = divisors of d; d = 1 here, so only F_p itself"
+ },
+ "TP-F19": {
+  "id": "TP-F19",
+  "statement": "p is a safe prime ((p-1)/2 prime)",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "sympy.isprime((p-1)//2)"
+ },
+ "TP-F20": {
+  "id": "TP-F20",
+  "statement": "square roots mod p are computable by a single exponentiation (p == 3 mod 4)",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "p % 4 == 3 => sqrt(x) = x^((p+1)/4)"
+ },
+ "TP-F21": {
+  "id": "TP-F21",
+  "statement": "Legendre symbol (-1/p)",
+  "value": "-1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "sympy.legendre_symbol(-1, p)"
+ },
+ "TP-F22": {
+  "id": "TP-F22",
+  "statement": "Legendre symbol (2/p)",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "sympy.legendre_symbol(2, p)"
+ },
+ "TP-F23": {
+  "id": "TP-F23",
+  "statement": "Legendre symbol (3/p)",
+  "value": "-1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "sympy.legendre_symbol(3, p)"
+ },
+ "TP-F24": {
+  "id": "TP-F24",
+  "statement": "Legendre symbol (-3/p) (nonzero => cube roots of unity exist in F_p)",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "sympy.legendre_symbol(-3, p)"
+ },
+ "TP-F25": {
+  "id": "TP-F25",
+  "statement": "smallest quadratic nonresidue mod p",
+  "value": "3",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "first u>=2 with pow(u,(p-1)//2,p) != 1"
+ },
+ "TP-PM01": {
+  "id": "TP-PM01",
+  "statement": "full factorization of p-1",
+  "value": "2 * 3 * 7 * 13441 * 205115282021455665897114700593932402728804164701536103180137503955397371",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "trial division to 10^6 then sympy.isprime on the 237-bit cofactor; product re-verified == p-1 and every factor isprime"
+ },
+ "TP-PM02": {
+  "id": "TP-PM02",
+  "statement": "largest prime factor of p-1 (bit length)",
+  "value": "237",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "max(factors).bit_length()"
+ },
+ "TP-PM03": {
+  "id": "TP-PM03",
+  "statement": "number of prime factors of p-1 (omega distinct / Omega with multiplicity)",
+  "value": "omega=5, Omega=5",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "len(fs) and sum(fs.values())"
+ },
+ "TP-PM04": {
+  "id": "TP-PM04",
+  "statement": "2^32-smooth part of p-1",
+  "value": "564522",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "prod q^e over prime powers of p-1 with q <= 2**32"
+ },
+ "TP-PM05": {
+  "id": "TP-PM05",
+  "statement": "p-1 is 2^64-smooth",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "max(factors of p-1) <= 2**64"
+ },
+ "TP-PP01": {
+  "id": "TP-PP01",
+  "statement": "full factorization of p+1",
+  "value": "2^4 * 7322137 * 45422601869677 * 21759506893163426790183529804034058295931507131047955271",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "trial division + Brent rho + sympy ECM; product re-verified == p+1 and every factor isprime"
+ },
+ "TP-PP02": {
+  "id": "TP-PP02",
+  "statement": "largest prime factor of p+1 (bit length)",
+  "value": "184",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "max(factors).bit_length()"
+ },
+ "TP-PP03": {
+  "id": "TP-PP03",
+  "statement": "number of prime factors of p+1",
+  "value": "omega=4, Omega=7",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "len(fs) and sum(fs.values())"
+ },
+ "TP-PP04": {
+  "id": "TP-PP04",
+  "statement": "2^32-smooth part of p+1",
+  "value": "117154192",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "prod q^e with q <= 2**32"
+ },
+ "TP-PP05": {
+  "id": "TP-PP05",
+  "statement": "p+1 is 2^64-smooth",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "max(factors of p+1) <= 2**64"
+ },
+ "TP-G01": {
+  "id": "TP-G01",
+  "statement": "n (group order of E(F_p)), decimal",
+  "value": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "n = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141"
+ },
+ "TP-G02": {
+  "id": "TP-G02",
+  "statement": "bit length of n",
+  "value": "256",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "n.bit_length()"
+ },
+ "TP-G03": {
+  "id": "TP-G03",
+  "statement": "n is prime",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "sympy.isprime(n)  (BPSW)"
+ },
+ "TP-G04": {
+  "id": "TP-G04",
+  "statement": "generator G lies on y^2 = x^3 + 7 over F_p",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "(Gy*Gy - Gx**3 - 7) % p == 0 with the standard SEC G"
+ },
+ "TP-G05": {
+  "id": "TP-G05",
+  "statement": "n*G = point at infinity (order of G is exactly n)",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "double-and-add scalar mult implemented from scratch: mul(n,G) is None; also mul(n-1,G) == -G; n prime and G != O => ord(G) = n"
+ },
+ "TP-G06": {
+  "id": "TP-G06",
+  "statement": "cofactor h, PROVED not assumed",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "n | #E (from ord(G)=n). Hasse interval [p+1-2*isqrt(p)-2, p+1+2*isqrt(p)+2] has length 1361129467683753853853498429727072845824 (131 bits) < n, and enumerating multiples m*n inside it yields exactly m=1 => #E = n, h = 1"
+ },
+ "TP-G07": {
+  "id": "TP-G07",
+  "statement": "#E(F_p) = h*n",
+  "value": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "h*n with h=1 proved in TP-G06"
+ },
+ "TP-G08": {
+  "id": "TP-G08",
+  "statement": "n mod 4",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "n % 4"
+ },
+ "TP-G09": {
+  "id": "TP-G09",
+  "statement": "n mod 3",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "n % 3"
+ },
+ "TP-G10": {
+  "id": "TP-G10",
+  "statement": "n mod 6",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "n % 6"
+ },
+ "TP-G11": {
+  "id": "TP-G11",
+  "statement": "n < p",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "n < p ; p - n = 432420386565659656852420866390673177326"
+ },
+ "TP-G12": {
+  "id": "TP-G12",
+  "statement": "2^256 - n (n is NOT pseudo-Mersenne)",
+  "value": "432420386565659656852420866394968145599 (129 bits)",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "2**256 - n ; bit_length()"
+ },
+ "TP-G13": {
+  "id": "TP-G13",
+  "statement": "n is a safe prime ((n-1)/2 prime)",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "sympy.isprime((n-1)//2)"
+ },
+ "TP-NM01": {
+  "id": "TP-NM01",
+  "statement": "full factorization of n-1",
+  "value": "2^6 * 3 * 149 * 631 * 107361793816595537 * 174723607534414371449 * 341948486974166000522343609283189",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "trial division + Brent rho + sympy ECM (109s); product re-verified == n-1 and every factor isprime"
+ },
+ "TP-NM02": {
+  "id": "TP-NM02",
+  "statement": "largest prime factor of n-1 (bit length)",
+  "value": "109",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "max(factors).bit_length()"
+ },
+ "TP-NM03": {
+  "id": "TP-NM03",
+  "statement": "number of prime factors of n-1",
+  "value": "omega=7, Omega=12",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "len(fs) and sum(fs.values())"
+ },
+ "TP-NM04": {
+  "id": "TP-NM04",
+  "statement": "2^32-smooth part of n-1",
+  "value": "18051648",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "prod q^e with q <= 2**32"
+ },
+ "TP-NM05": {
+  "id": "TP-NM05",
+  "statement": "n-1 is 2^64-smooth",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "max(factors of n-1) <= 2**64"
+ },
+ "TP-NM06": {
+  "id": "TP-NM06",
+  "statement": "number of divisors of n-1",
+  "value": "448",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "product of (e+1) over the verified factorization"
+ },
+ "TP-NM07": {
+  "id": "TP-NM07",
+  "statement": "divisor of n-1 closest to sqrt(n) (raw divisor-lattice datum; no attack complexity asserted)",
+  "value": "300138238832024867917999963054617969808 (128 bits, log2 ratio to isqrt(n) = -0.1811)",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "enumerate all 448 divisors, min over |d - isqrt(n)|"
+ },
+ "TP-NP01": {
+  "id": "TP-NP01",
+  "statement": "full factorization of n+1",
+  "value": "2 * 13 * 83 * 45751 * 509879 * 2300168931843757888934889794142140465088020300168077349902139959",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "trial division to 10^6 then sympy.isprime on the 211-bit cofactor; product re-verified == n+1"
+ },
+ "TP-NP02": {
+  "id": "TP-NP02",
+  "statement": "largest prime factor of n+1 (bit length)",
+  "value": "211",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "max(factors).bit_length()"
+ },
+ "TP-NP03": {
+  "id": "TP-NP03",
+  "statement": "number of prime factors of n+1",
+  "value": "omega=6, Omega=6",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "len(fs) and sum(fs.values())"
+ },
+ "TP-NP04": {
+  "id": "TP-NP04",
+  "statement": "2^32-smooth part of n+1",
+  "value": "50340689170382",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "prod q^e with q <= 2**32"
+ },
+ "TP-NP05": {
+  "id": "TP-NP05",
+  "statement": "number of divisors of n+1; divisor closest to sqrt(n)",
+  "value": "64 divisors; closest = 50340689170382 (46 bits, log2 ratio -82.48)",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "enumerate all divisors, min over |d - isqrt(n)|"
+ },
+ "TP-C01": {
+  "id": "TP-C01",
+  "statement": "curve coefficient a",
+  "value": "0",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "given by SEC parameters; used throughout"
+ },
+ "TP-C02": {
+  "id": "TP-C02",
+  "statement": "curve coefficient b",
+  "value": "7",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "given by SEC parameters; used throughout"
+ },
+ "TP-C03": {
+  "id": "TP-C03",
+  "statement": "j-invariant of E",
+  "value": "0",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "j = 1728*4a^3 * inverse(4a^3+27b^2) mod p, with a=0 => numerator 0 => j=0"
+ },
+ "TP-C04": {
+  "id": "TP-C04",
+  "statement": "discriminant Delta = -16(4a^3+27b^2) as an integer",
+  "value": "-21168",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "-16*(4*0**3 + 27*7**2)"
+ },
+ "TP-C05": {
+  "id": "TP-C05",
+  "statement": "discriminant Delta mod p (nonzero => E nonsingular)",
+  "value": "115792089237316195423570985008687907853269984665640564039457584007908834650495",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "(-16*(4*a**3+27*b**2)) % p ; checked != 0"
+ },
+ "TP-C06": {
+  "id": "TP-C06",
+  "statement": "is 7 a quadratic residue mod p",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "sympy.legendre_symbol(7, p) == -1"
+ },
+ "TP-C07": {
+  "id": "TP-C07",
+  "statement": "does a rational point with x = 0 exist on E(F_p)",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "x=0 forces y^2 = b = 7; legendre_symbol(7,p) = -1 => no solution"
+ },
+ "TP-C08": {
+  "id": "TP-C08",
+  "statement": "Legendre symbol (-7/p)",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "sympy.legendre_symbol(-7, p)"
+ },
+ "TP-C09": {
+  "id": "TP-C09",
+  "statement": "is -7 a cube mod p (equivalently: does x^3 + 7 have a root in F_p)",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "pow((-7) % p, (p-1)//3, p) != 1 (valid test since p % 3 == 1)"
+ },
+ "TP-C10": {
+  "id": "TP-C10",
+  "statement": "x^3 + 7 is irreducible over F_p (so 2-torsion x-coordinates generate F_p^3)",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "p%3==1 and -7 not a cube => cubic with no root => irreducible"
+ },
+ "TP-C11": {
+  "id": "TP-C11",
+  "statement": "quadratic twist curve equation (using smallest nonresidue u=3)",
+  "value": "y^2 = x^3 + 189",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "y^2 = x^3 + b*u^3 with u=3 the smallest quadratic nonresidue mod p; 7*27 = 189"
+ },
+ "TP-T01": {
+  "id": "TP-T01",
+  "statement": "group structure of E(F_p)",
+  "value": "Z/n, cyclic of prime order n",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "#E = n proved prime (TP-G03) and #E = n proved (TP-G06) => cyclic of prime order"
+ },
+ "TP-T02": {
+  "id": "TP-T02",
+  "statement": "rational torsion subgroup E(F_p)_tors",
+  "value": "Z/n (the whole group; E(F_p) is finite)",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "over a finite field the whole group is torsion; structure from TP-T01"
+ },
+ "TP-T03": {
+  "id": "TP-T03",
+  "statement": "order of rational 2-torsion subgroup E(F_p)[2]",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "math.gcd(2, n) = 1 (n odd prime); independently: x^3+7 has no root in F_p (TP-C09)"
+ },
+ "TP-T04": {
+  "id": "TP-T04",
+  "statement": "order of rational 3-torsion subgroup E(F_p)[3]",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "math.gcd(3, n) = 1; also psi_3 = 3x^4+84x = 3x(x^3+28), root x=0 needs 7 a QR (false), and x^3=-28 branch cannot give a subgroup of a prime-order group of order n != 3"
+ },
+ "TP-T05": {
+  "id": "TP-T05",
+  "statement": "order of rational 4-torsion subgroup E(F_p)[4]",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "E(F_p) cyclic of odd prime order n => no element of order 2 or 4"
+ },
+ "TP-T06": {
+  "id": "TP-T06",
+  "statement": "third division polynomial for a=0,b=7",
+  "value": "psi_3 = 3x^4 + 84x = 3x(x^3 + 28)",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "psi_3 = 3x^4 + 6a x^2 + 12b x - a^2 evaluated at a=0, b=7"
+ },
+ "TP-T07": {
+  "id": "TP-T07",
+  "statement": "is -28 a cube mod p (the nontrivial psi_3 branch)",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "pow((-28) % p, (p-1)//3, p) == 1"
+ },
+ "TP-T08": {
+  "id": "TP-T08",
+  "statement": "smallest extension over which full 2-torsion E[2] is rational",
+  "value": "F_p^3 (4 divides #E(F_p^3))",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "roots of x^3+7 lie in F_p^3 (TP-C10); verified #E(F_p^3) % 4 == 0 via Lucas recursion"
+ },
+ "TP-T09": {
+  "id": "TP-T09",
+  "statement": "is full n-torsion E[n] rational over F_p",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "E[n] = (Z/n)^2 rational requires embedding degree k = 1; computed k = (n-1)/6, a 254-bit number (TP-E02)"
+ },
+ "TP-FR01": {
+  "id": "TP-FR01",
+  "statement": "trace of Frobenius t = p + 1 - n",
+  "value": "432420386565659656852420866390673177327",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "t = p + 1 - h*n with h=1"
+ },
+ "TP-FR02": {
+  "id": "TP-FR02",
+  "statement": "t in hex",
+  "value": "0x14551231950b75fc4402da1722fc9baef",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "hex(t)"
+ },
+ "TP-FR03": {
+  "id": "TP-FR03",
+  "statement": "bit length of t",
+  "value": "129",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "t.bit_length()"
+ },
+ "TP-FR04": {
+  "id": "TP-FR04",
+  "statement": "Hasse bound satisfied: |t| <= 2*sqrt(p)",
+  "value": "True (|t| = 432420386565659656852420866390673177327 vs 2*isqrt(p) = 680564733841876926926749214863536422910)",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "abs(t) <= 2*math.isqrt(p) + 2"
+ },
+ "TP-FR05": {
+  "id": "TP-FR05",
+  "statement": "factorization of t",
+  "value": "673 * 642526577363535894282943337876185999",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "trial division + isprime on 119-bit cofactor; product re-verified == t"
+ },
+ "TP-FR06": {
+  "id": "TP-FR06",
+  "statement": "t mod 3",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "t % 3"
+ },
+ "TP-FR07": {
+  "id": "TP-FR07",
+  "statement": "E is anomalous (n == p, i.e. t == 1)",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "n == p is False; t == 1 is False (t is 129 bits)"
+ },
+ "TP-FR08": {
+  "id": "TP-FR08",
+  "statement": "E is supersingular (p | t)",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "t % p != 0 (t < p and t != 0)"
+ },
+ "TP-FR09": {
+  "id": "TP-FR09",
+  "statement": "E is ordinary",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "gcd(t,p)=1 since 0 < t < p => ordinary"
+ },
+ "TP-FR10": {
+  "id": "TP-FR10",
+  "statement": "t^2 - 4p (discriminant of Z[pi])",
+  "value": "-276180966231670251052810340486134462307742726569900724701098994184861751821723",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "t*t - 4*p ; 258 bits, negative"
+ },
+ "TP-CM01": {
+  "id": "TP-CM01",
+  "statement": "4p = t^2 + 3v^2 holds (the j=0 / Eisenstein Cornacchia relation)",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "(4p - t^2) % 3 == 0 and integer_nthroot((4p-t^2)//3, 2) is exact; verified 4*p == t*t + 3*v*v"
+ },
+ "TP-CM02": {
+  "id": "TP-CM02",
+  "statement": "v where 4p = t^2 + 3v^2",
+  "value": "303414439467246543595250775667605759171",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "v = isqrt((4*p - t*t)//3), exactness verified"
+ },
+ "TP-CM03": {
+  "id": "TP-CM03",
+  "statement": "bit length of v",
+  "value": "128",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "v.bit_length()"
+ },
+ "TP-CM04": {
+  "id": "TP-CM04",
+  "statement": "CM fundamental discriminant D_K",
+  "value": "-3",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "t^2 - 4p == v^2 * (-3) verified exactly; -3 is squarefree and == 1 mod 4, hence fundamental"
+ },
+ "TP-CM05": {
+  "id": "TP-CM05",
+  "statement": "CM field K = Q(sqrt(t^2-4p))",
+  "value": "Q(sqrt(-3)) = Q(zeta_3), the Eisenstein field",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "from TP-CM04: t^2-4p = -3 * v^2, so Q(sqrt(t^2-4p)) = Q(sqrt(-3))"
+ },
+ "TP-CM06": {
+  "id": "TP-CM06",
+  "statement": "class number h(K) of the CM field Q(sqrt(-3))",
+  "value": "1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "exhaustive enumeration of reduced binary quadratic forms (A,B,C) of discriminant -3 with |B|<=A<=C: exactly one, (1,1,1)"
+ },
+ "TP-CM07": {
+  "id": "TP-CM07",
+  "statement": "|D_K| = 3 is the smallest possible for an imaginary quadratic field",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "fundamental discriminants are -3,-4,-7,...; -3 has minimal absolute value"
+ },
+ "TP-CM08": {
+  "id": "TP-CM08",
+  "statement": "conductor f of Z[pi] in the maximal order O_K = Z[zeta_3]",
+  "value": "303414439467246543595250775667605759171 (= v, 128 bits)",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "disc(Z[pi]) = t^2-4p = f^2 * D_K with D_K = -3 => f^2 = (t^2-4p)/(-3) = v^2 => f = v; verified t*t-4*p == v*v*(-3)"
+ },
+ "TP-CM09": {
+  "id": "TP-CM09",
+  "statement": "factorization of the conductor f = v",
+  "value": "3 * 79 * 349 * 2698097 * 1359580455984873519493666411",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "trial division + Brent rho + sympy ECM; product re-verified == v, all factors isprime; largest 91 bits"
+ },
+ "TP-CM10": {
+  "id": "TP-CM10",
+  "statement": "class number of the order Z[pi] of conductor f=v",
+  "value": "99571827855075622415708833963083157920",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "h(O_f) = h_K * f / [O_K^*:O_f^*] * prod_{q|f} (1 - (D_K/q)/q), with h_K=1, [O_K^*:O_f^*]=3 (mu_6 -> {+-1}), Kronecker symbols (-3/q) computed by sympy.jacobi_symbol over the verified factorization of v"
+ },
+ "TP-CM11": {
+  "id": "TP-CM11",
+  "statement": "Kronecker symbols (-3/q) for primes q dividing v",
+  "value": "{3: 0, 79: 1, 349: 1, 2698097: 1, 1359580455984873519493666411: 1}",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "sympy.jacobi_symbol(-3, q) for each q in the verified factorization of v"
+ },
+ "TP-CM12": {
+  "id": "TP-CM12",
+  "statement": "End(E) contains Z[zeta_3] (CM by the Eisenstein integers)",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "j = 0 and p % 3 == 1 => the order-3 automorphism (x,y) -> (beta*x, y) with beta^3=1 is defined over F_p; verified (beta*Gx, Gy) satisfies the curve equation"
+ },
+ "TP-E01": {
+  "id": "TP-E01",
+  "statement": "smallest k in 1..200 with n | p^k - 1",
+  "value": "NONE (no such k <= 200)",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "loop k=1..200 accumulating pk = pk*p % n; never equals 1"
+ },
+ "TP-E02": {
+  "id": "TP-E02",
+  "statement": "exact embedding degree k = multiplicative order of p mod n",
+  "value": "19298681539552699237261830834781317975472927379845817397100860523586360249056",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "start from n-1 (verified factorization TP-NM01), for each prime q | n-1 divide out while pow(p, order//q, n) == 1"
+ },
+ "TP-E03": {
+  "id": "TP-E03",
+  "statement": "bit length of the embedding degree",
+  "value": "254",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "k.bit_length()"
+ },
+ "TP-E04": {
+  "id": "TP-E04",
+  "statement": "embedding degree equals (n-1)/6 exactly",
+  "value": "True",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "(n-1) // k == 6; and pow(p,(n-1)//6,n)==1 while pow(p,(n-1)//12,n)!=1 and pow(p,(n-1)//18,n)!=1"
+ },
+ "TP-E05": {
+  "id": "TP-E05",
+  "statement": "p is a quadratic residue mod n",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "pow(p,(n-1)//2,n) == 1"
+ },
+ "TP-E06": {
+  "id": "TP-E06",
+  "statement": "p is a cube mod n",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "pow(p,(n-1)//3,n) == 1"
+ },
+ "TP-E07": {
+  "id": "TP-E07",
+  "statement": "p is a sixth power mod n",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "pow(p,(n-1)//6,n) == 1"
+ },
+ "TP-E08": {
+  "id": "TP-E08",
+  "statement": "n divides p-1",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "(p-1) % n != 0"
+ },
+ "TP-E09": {
+  "id": "TP-E09",
+  "statement": "n divides p+1",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "(p+1) % n != 0"
+ },
+ "TP-E10": {
+  "id": "TP-E10",
+  "statement": "n^2 divides #E(F_p^k) for any k in 1..12",
+  "value": "False for every k in 1..12",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "#E(F_p^k) = p^k + 1 - s_k with s_0=2, s_1=t, s_k = t*s_{k-1} - p*s_{k-2}; checked (p^k+1-s_k) % n^2 for k=1..12"
+ },
+ "TP-E11": {
+  "id": "TP-E11",
+  "statement": "n divides #E(F_p^k) for every k in 1..12",
+  "value": "True",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "same Lucas recursion; (p^k+1-s_k) % n == 0 for all k tested"
+ },
+ "TP-W01": {
+  "id": "TP-W01",
+  "statement": "Weil descent / GHS has a base field to descend to",
+  "value": "False (F_p is a prime field with no proper subfield)",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "isprime(p) => extension degree 1 => subfield lattice is trivial (TP-F17, TP-F18)"
+ },
+ "TP-TW01": {
+  "id": "TP-TW01",
+  "statement": "quadratic twist order 2p + 2 - n",
+  "value": "115792089237316195423570985008687907853702405052206223696310004874299507848991",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "2*p + 2 - n; verified == p + 1 + t and n + twist == 2p+2"
+ },
+ "TP-TW02": {
+  "id": "TP-TW02",
+  "statement": "bit length of the twist order",
+  "value": "257",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "(2*p+2-n).bit_length()"
+ },
+ "TP-TW03": {
+  "id": "TP-TW03",
+  "statement": "twist order is prime",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "sympy.isprime(2*p+2-n) is False"
+ },
+ "TP-TW04": {
+  "id": "TP-TW04",
+  "statement": "full factorization of the twist order 2p+2-n",
+  "value": "3^2 * 13^2 * 3319 * 22639 * 1013176677300131846900870239606035638738100997248092069256697437031",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "trial division to 10^6 then isprime on the 220-bit cofactor; product re-verified == 2p+2-n"
+ },
+ "TP-TW05": {
+  "id": "TP-TW05",
+  "statement": "largest prime subgroup of the quadratic twist (bit length)",
+  "value": "220",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "max(factors).bit_length()"
+ },
+ "TP-TW06": {
+  "id": "TP-TW06",
+  "statement": "twist cofactor",
+  "value": "114286177161 = 3^2 * 13^2 * 3319 * 22639",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "(2p+2-n) // largest_prime_factor"
+ },
+ "TP-TW07": {
+  "id": "TP-TW07",
+  "statement": "generic rho work on the twist's largest prime subgroup, log2",
+  "value": "109.63",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "log2(largest twist prime)/2 = 219.26/2"
+ },
+ "TP-TW08": {
+  "id": "TP-TW08",
+  "statement": "the six sextic-twist traces of the j=0 curve",
+  "value": "+/-432420386565659656852420866390673177327, +/-671331852483699643819086596696745227420, +/-238911465918039986966665730306072050093",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "traces +-t, +-(t+3v)/2, +-(t-3v)/2 from 4p = t^2+3v^2; each verified integral and Hasse-admissible (|trace| <= 2*isqrt(p)+2); the six traces sum to 0"
+ },
+ "TP-TW09": {
+  "id": "TP-TW09",
+  "statement": "the six sextic-twist orders p+1-trace",
+  "value": "115792089237316195423570985008687907852837564279074904382605163141518161494337 (= n); 115792089237316195423570985008687907853702405052206223696310004874299507848991 (= quadratic twist); 115792089237316195423570985008687907852598652813156864395638497411212089444244; 115792089237316195423570985008687907853941316518124263683276670604605579899084; 115792089237316195423570985008687907853508896131558604026424249738214906721757; 115792089237316195423570985008687907853031073199722524052490918277602762621571",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "p+1-trace for each of the six traces; sum verified == 6*(p+1)"
+ },
+ "TP-TW10": {
+  "id": "TP-TW10",
+  "statement": "how many of the six sextic twist orders are prime",
+  "value": "1 (only #E itself, i.e. n)",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "sympy.isprime applied to each of the six orders"
+ },
+ "TP-A01": {
+  "id": "TP-A01",
+  "statement": "|Aut(E)| over F_p for j = 0",
+  "value": "6",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "Aut(E) = mu_6(F_p) for j=0, p>3; |mu_6(F_p)| = math.gcd(6, p-1) = 6; verified by exhibiting u = g^((p-1)/6) with pow(u,6,p)==1 and pow(u,3,p)!=1 and pow(u,2,p)!=1"
+ },
+ "TP-A02": {
+  "id": "TP-A02",
+  "statement": "primitive cube root of unity beta in F_p (GLV endomorphism (x,y) -> (beta*x, y))",
+  "value": "60197513588986302554485582024885075108884032450952339817679072026166228089408",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "beta = u^2 mod p; verified pow(beta,3,p)==1, beta != 1, and (beta*Gx, Gy) satisfies y^2 = x^3 + 7"
+ },
+ "TP-A03": {
+  "id": "TP-A03",
+  "statement": "GLV scalar lambda with lambda*G = (beta*Gx, Gy)",
+  "value": "78074008874160198520644763525212887401909906723592317393988542598630163514318",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "cube roots of 1 mod n via g^((n-1)/3); tested each by from-scratch scalar multiplication against (beta*Gx, Gy); verified pow(lam,3,n)==1"
+ },
+ "TP-A04": {
+  "id": "TP-A04",
+  "statement": "the other primitive cube root of unity mod n",
+  "value": "37718080363155996902926221483475020450927657555482586988616620542887997980018",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "square of the first cube root mod n"
+ },
+ "TP-A05": {
+  "id": "TP-A05",
+  "statement": "GLV short lattice basis for {(x,y) : x + y*lambda == 0 mod n}",
+  "value": "v1 = (303414439467246543595250775667605759171, -64502973549206556628585045361533709077) [128 bits]; v2 = (64502973549206556628585045361533709077, 367917413016453100223835821029139468248) [129 bits]",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "extended Euclid on (n, lambda), taking the first remainders below isqrt(n); each verified (x + y*lam) % n == 0. Note v1[0] equals the CM value v of TP-CM02 exactly"
+ },
+ "TP-A06": {
+  "id": "TP-A06",
+  "statement": "order of the diagonal Aut(E) action on m-tuples that preserves the relation P_1 + ... + P_m = O",
+  "value": "6, CONSTANT in m",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "for zeta in Aut(E) = mu_6, diag(zeta) sends sum P_i to zeta(sum P_i), so it preserves the sum-zero relation; the group has order |Aut(E)| = gcd(6, p-1) = 6, a value with no m-dependence"
+ },
+ "TP-A07": {
+  "id": "TP-A07",
+  "statement": "order of the FGHR-style rational 2-torsion translation group on m-tuples over the base field F_p",
+  "value": "1 for every m",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "the group is (#E(F_p)[2])^(m-1); #E(F_p)[2] = gcd(2, n) = 1 (TP-T03), so 1^(m-1) = 1 for all m"
+ },
+ "TP-A08": {
+  "id": "TP-A08",
+  "statement": "discriminator: relation-preserving subgroup order as a function of m for secp256k1 over F_p",
+  "value": "O(1) (6 from diagonal Aut, 1 from rational 2-torsion); no computed subgroup here grows with m",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "TP-A06 and TP-A07; both orders are computed constants independent of m. NO solving-degree or ECDLP consequence is inferred from this row"
+ },
+ "TP-A09": {
+  "id": "TP-A09",
+  "statement": "provenance of the FGHR 2^(omega(m-1)) gain figure",
+  "value": "UNVERIFIED - taken from the task brief, not fetched or checked by me",
+  "value_type": "string",
+  "status": "unknown",
+  "how_obtained": "no literature was fetched during ATLAS-1; flagged rather than asserted"
+ },
+ "TP-D01": {
+  "id": "TP-D01",
+  "statement": "BSGS / sqrt(n) baseline",
+  "value": "340282366920938463463374607431768211455 (log2 = 128.0)",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "integer_nthroot(n,2)[0]; log2(n)/2"
+ },
+ "TP-D02": {
+  "id": "TP-D02",
+  "statement": "Pollard rho expected group operations sqrt(pi*n/4), log2",
+  "value": "127.8257",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "0.5*log2(pi/4) + 0.5*log2(n)"
+ },
+ "TP-D03": {
+  "id": "TP-D03",
+  "statement": "Pollard rho log2 with negation-map equivalence classes (size 2)",
+  "value": "127.3257",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "TP-D02 minus 0.5*log2(2)"
+ },
+ "TP-D04": {
+  "id": "TP-D04",
+  "statement": "Pollard rho log2 with full Aut(E) equivalence classes (size 6)",
+  "value": "126.5333",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "TP-D02 minus 0.5*log2(6)"
+ },
+ "TP-D05": {
+  "id": "TP-D05",
+  "statement": "Pohlig-Hellman gain",
+  "value": "none (n is prime, cofactor 1, single subgroup)",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "n prime (TP-G03) and h = 1 proved (TP-G06) => the only nontrivial subgroup is the whole group"
+ },
+ "TP-D06": {
+  "id": "TP-D06",
+  "statement": "largest prime factor of the group order #E(F_p)",
+  "value": "115792089237316195423570985008687907852837564279074904382605163141518161494337 (= n itself, 256 bits)",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "#E = n and n is prime"
+ },
+ "TP-D07": {
+  "id": "TP-D07",
+  "statement": "MOV / Frey-Ruck transfer is feasible (embedding degree small)",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "k = (n-1)/6 is a 254-bit number (TP-E02, TP-E04); no k <= 200 works (TP-E01)"
+ },
+ "TP-D08": {
+  "id": "TP-D08",
+  "statement": "Smart / anomalous-curve (p-adic) transfer is feasible",
+  "value": "False",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "requires #E == p, i.e. t == 1; computed t is a 129-bit number (TP-FR07)"
+ },
+ "TP-001": {
+  "id": "TP-001",
+  "statement": "p is prime (secp256k1 base field characteristic)",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Primality.secp256k1_p_prime \u2014 /home/user/-ecdlp-lean-verification/Ecdlp/Proved/Secp256k1PrimeP.lean:193 (Nat.lucas_primality Pratt chain, 10 recursive nodes, witness a=3). Independently recomputed: sympy.isprime(p) -> True."
+ },
+ "TP-002": {
+  "id": "TP-002",
+  "statement": "n is prime (group order)",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Primality.secp256k1_n_prime \u2014 Ecdlp/Proved/Secp256k1PrimeN.lean:184 (Pratt chain, 10 nodes). Independently recomputed: sympy.isprime(n) -> True."
+ },
+ "TP-003": {
+  "id": "TP-003",
+  "statement": "#E(F_p) = n exactly (no Hasse, no Schoof)",
+  "value": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+  "value_type": "integer",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_card_point_eq_n : Nat.card secp256k1.toAffine.Point = Secp256k1.n \u2014 Ecdlp/Proved/CurveCardinalityExact.lean:172. Supporting rungs in same file: secp256k1_card_point_le (:59, #E <= 2p+1), secp256k1_no_nonzero_two_torsion (:136); plus Ecdlp.Curve.secp256k1_n_dvd_card_point (Ecdlp/Proved/CurveCardinality.lean:37)."
+ },
+ "TP-004": {
+  "id": "TP-004",
+  "statement": "cofactor h = #E/n = 1",
+  "value": "1",
+  "value_type": "integer",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Immediate from Ecdlp.Curve.secp256k1_card_point_eq_n (CurveCardinalityExact.lean:172) together with Ecdlp.Curve.secp256k1_grp_card = n (Ecdlp/Proved/SubgroupOrder.lean:24) and Ecdlp.Curve.secp256k1_grp_eq_top : secp256k1Grp = TOP (Ecdlp/Proved/CurveFullGroup.lean:38). Abstract index identity: Ecdlp.Proved.cofactor_card_mul_index (Ecdlp/Proved/Cofactor.lean:18). NOTE: no theorem literally named '...cofactor_eq_one' exists; h=1 is the conjunction of #E=n and #<G>=n."
+ },
+ "TP-005": {
+  "id": "TP-005",
+  "statement": "E(F_p) is cyclic and isomorphic to Z/n; <G> is the whole group",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_point_group_equiv_exists : Nonempty (ZMod n \u2243+ E.Point) \u2014 Ecdlp/Proved/PointGroupEquiv.lean:68; Ecdlp.Curve.secp256k1_grp_eq_top \u2014 Ecdlp/Proved/CurveFullGroup.lean:38; Ecdlp.Curve.secp256k1_grp_isAddCyclic \u2014 Ecdlp/Proved/SubgroupOrder.lean:28."
+ },
+ "TP-006": {
+  "id": "TP-006",
+  "statement": "E(F_p) has no proper nontrivial subgroup (no small-subgroup / Pohlig-Hellman target)",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_point_group_no_proper_subgroup \u2014 Ecdlp/Proved/PointGroupSimple.lean:32; Ecdlp.Curve.secp256k1_nonzero_point_generates \u2014 same file :42; scalar-side mirror Ecdlp.Curve.secp256k1_scalar_no_proper_subgroup \u2014 Ecdlp/Proved/ScalarGroupStructure.lean:20."
+ },
+ "TP-007": {
+  "id": "TP-007",
+  "statement": "GLV field eigenvalue beta has multiplicative order exactly 3 in F_p^*",
+  "value": "3",
+  "value_type": "integer",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_beta_orderOf : orderOf (beta : ZMod p) = 3 \u2014 Ecdlp/Proved/Secp256k1Order.lean:18. Literal support Secp256k1.beta_is_cube_root / beta_field_eigenvalue \u2014 Ecdlp/Secp256k1Verified.lean. Independently recomputed: sympy.n_order(beta,p) -> 3."
+ },
+ "TP-008": {
+  "id": "TP-008",
+  "statement": "GLV scalar eigenvalue lambda has multiplicative order exactly 3 in (Z/n)^*",
+  "value": "3",
+  "value_type": "integer",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_lambda_orderOf : orderOf (lam : ZMod n) = 3 \u2014 Ecdlp/Proved/Secp256k1Order.lean:32. Literal support Secp256k1.lambda_is_cube_root / glv_lambda_eigenvalue / lambda_ne_one \u2014 Ecdlp/Secp256k1Verified.lean. Independently recomputed: sympy.n_order(lam,n) -> 3."
+ },
+ "TP-009": {
+  "id": "TP-009",
+  "statement": "F_p contains exactly 3 cube roots of unity",
+  "value": "3",
+  "value_type": "integer",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_three_cube_roots_of_unity : (Polynomial.nthRootsFinset 3 (1 : ZMod p)).card = 3 \u2014 Ecdlp/Proved/Secp256k1Order.lean:48."
+ },
+ "TP-010": {
+  "id": "TP-010",
+  "statement": "The GLV endomorphism on points has order exactly 3 (phi^3 = id, phi != id, phi^2+phi+1 = 0)",
+  "value": "3",
+  "value_type": "integer",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.glvPoint_cube_eq_id \u2014 Ecdlp/Proved/GlvAutomorphism.lean:31; Ecdlp.Curve.secp256k1_glv_cube_relation \u2014 Ecdlp/Proved/GlvCubeRelation.lean:34; Ecdlp.Curve.glvHom_minpoly \u2014 Ecdlp/Proved/GlvMinPoly.lean:42; Ecdlp.Curve.secp256k1_glvHom_ne_id \u2014 Ecdlp/Proved/GlvOrderThree.lean:53."
+ },
+ "TP-011": {
+  "id": "TP-011",
+  "statement": "GLV endomorphism acts as the scalar [lambda] on the whole point group (unconditionally)",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_glvPoint_eq_lam_on_zmultiples \u2014 Ecdlp/Proved/GlvSubgroupEigenvalue.lean:27; unconditional whole-group form Ecdlp.Curve.secp256k1_glvHom_eq_zsmul_unconditional \u2014 Ecdlp/Proved/CurveFullGroup.lean:61."
+ },
+ "TP-012": {
+  "id": "TP-012",
+  "statement": "GLV no-go: the endomorphism preserves the DLP exponent (same scalar on base and target)",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_glv_preserves_dlog \u2014 Ecdlp/Proved/GlvNoGo.lean:49; Ecdlp.Curve.secp256k1_glv_single_scalar \u2014 same file :59."
+ },
+ "TP-013": {
+  "id": "TP-013",
+  "statement": "GLV fixed locus: phi(P)=P iff x=0, and any such P is 3-torsion",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_glvPoint_fixed_iff \u2014 Ecdlp/Proved/GlvFixedLocus.lean:39; Ecdlp.Curve.secp256k1_glvPoint_fixed_three_torsion \u2014 same file :59; orbit facts Ecdlp/Proved/GlvOrbit.lean:54,68."
+ },
+ "TP-014": {
+  "id": "TP-014",
+  "statement": "embedding degree bound: p^k != 1 (mod n) for all 1 <= k <= 100, i.e. k_emb > 100",
+  "value": "k_emb > 100 (bound only). Exact value computed here: 19298681539552699237261830834781317975472927379845817397100860523586360249056 (254 bits) = (n-1)/6",
+  "value_type": "integer",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "BOUND is kernel-verified: Ecdlp.Curve.secp256k1_embedding_degree_gt_100 : forall j, j < 100 -> p^(j+1) % n != 1 \u2014 Ecdlp/Proved/EmbeddingDegree.lean:32. EXACT value is NOT in the repo; computed here with sympy: n_order(p % n, n) -> 19298681539552699237261830834781317975472927379845817397100860523586360249056; (n-1) % k == 0 and (n-1)//k == 6."
+ },
+ "TP-015": {
+  "id": "TP-015",
+  "statement": "not anomalous: trace t = p+1-n != 1 (Smart/SSSA inapplicable)",
+  "value": "t = 432420386565659656852420866390673177327 (!= 1)",
+  "value_type": "integer",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous, conjunct .2.1 \u2014 Ecdlp/Proved/TraceOfFrobenius.lean:42. Scope lemma Ecdlp.Curve.anomalous_iff_trace_one \u2014 Ecdlp/Proved/AnomalousScope.lean:23. Recomputed: t = p+1-n = 432420386565659656852420866390673177327."
+ },
+ "TP-016": {
+  "id": "TP-016",
+  "statement": "not supersingular / ordinary: t != 0",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous, conjunct .1 \u2014 Ecdlp/Proved/TraceOfFrobenius.lean:42. Recomputed: t != 0 and t % p != 0."
+ },
+ "TP-017": {
+  "id": "TP-017",
+  "statement": "Hasse consistency: t^2 <= 4p",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_trace_ordinary_nonanomalous, conjunct .2.2 \u2014 Ecdlp/Proved/TraceOfFrobenius.lean:42. Recomputed: t*t < 4*p -> True."
+ },
+ "TP-018": {
+  "id": "TP-018",
+  "statement": "CM data: Frobenius pi = a + b*omega with N(pi)=a^2-ab+b^2=p, Tr(pi)=2a-b=t, 4p = t^2 + 3b^2 (discriminant -3, j=0 CM by Z[zeta_3])",
+  "value": "a=367917413016453100223835821029139468249, b=303414439467246543595250775667605759171",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_frobenius_norm (:57), secp256k1_frobenius_trace (:63), secp256k1_four_p_eq_trace_sq (:70) \u2014 Ecdlp/Proved/FrobeniusCM.lean (constants frobA/frobB are private defs at :50,:53). Recomputed in python: A*A-A*B+B*B == p True; 2*A-B == t True; 4*p == t*t+3*B*B True."
+ },
+ "TP-019": {
+  "id": "TP-019",
+  "statement": "j-invariant of secp256k1 is 0 (c4 = 0, Delta != 0, c6 = -6048)",
+  "value": "0",
+  "value_type": "integer",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_j_eq_zero \u2014 Ecdlp/Proved/Secp256k1Curve.lean:47; secp256k1_c4_eq_zero :30; secp256k1_Delta_ne_zero :27; Ecdlp.Curve.secp256k1_c6 = -6048 and secp256k1_c_relation \u2014 Ecdlp/Proved/Invariants.lean:21,33. Recomputed: Delta of y^2=x^3+7 is -16*(27*49) = -21168, nonzero mod p."
+ },
+ "TP-020": {
+  "id": "TP-020",
+  "statement": "-7 is not a cube in F_p (Euler cubic-residue witness (-7)^((p-1)/3) != 1)",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_neg7_pow_ne_one \u2014 Ecdlp/Proved/CurveCardinalityExact.lean:49 (native_decide). Recomputed: pow(-7 % p,(p-1)//3,p) != 1 -> True."
+ },
+ "TP-021": {
+  "id": "TP-021",
+  "statement": "no rational 2-torsion: the only P in E(F_p) with 2P=O is O",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_no_nonzero_two_torsion \u2014 Ecdlp/Proved/CurveCardinalityExact.lean:136; characterisation Ecdlp.Curve.secp256k1_two_nsmul_eq_zero_iff (2P=0 iff y=0) \u2014 Ecdlp/Proved/TwoTorsionPoint.lean:35; Psi2Sq root necessity Ecdlp.Curve.secp256k1_Psi2Sq_root_of_two_torsion \u2014 Ecdlp/Proved/TwoTorsion.lean:26. Recomputed: x^3 = -7 has no solution in F_p because -7 is a cubic non-residue and p = 1 mod 3."
+ },
+ "TP-022": {
+  "id": "TP-022",
+  "statement": "7 is a quadratic non-residue mod p",
+  "value": "true (7 is a QNR); also 7 is a cubic non-residue; and -7 IS a quadratic residue",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "NOT PROVED IN REPO at origin/main. Grep of every built file under Ecdlp/ for the exponent (p-1)/2, 'legendre', 'jacobi', 'quadratic residue', 'nonresidue' returns nothing; the only residue theorem about 7 is the CUBIC one (TP-020). Computed here: pow(7,(p-1)//2,p)==1 -> False (QNR); pow(7,(p-1)//3,p)==1 -> False (cubic non-residue); pow(-7%p,(p-1)//2,p)==1 -> True. CHEAP-TO-FORMALIZE (single closed native_decide over literals, same size class as secp256k1_neg7_pow_ne_one)."
+ },
+ "TP-023": {
+  "id": "TP-023",
+  "statement": "p = 2^256 - 2^32 - 977; p mod 4 = 3; p mod 3 = 1; p mod 12 = 7; 3 | (p-1); 3 | (n-1)",
+  "value": "p mod 4 = 3, p mod 3 = 1, p mod 12 = 7",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Secp256k1.p_special_form \u2014 Ecdlp/Secp256k1Verified.lean:8; Ecdlp.Curve.p_mod_four \u2014 Ecdlp/Proved/Secp256k1Params.lean:8; Ecdlp.Curve.three_dvd_p_sub_one :11; Ecdlp.Curve.three_dvd_n_sub_one :15; Ecdlp.Curve.p_mod_three and p_mod_twelve \u2014 Ecdlp/Proved/SqrtThreeModFour.lean:53,49. Recomputed: p%4=3, p%3=1, p%12=7, p == 2**256-2**32-977 -> True."
+ },
+ "TP-024": {
+  "id": "TP-024",
+  "statement": "n > 2^255 (generic-bound instantiation), and ceil(sqrt n) <= 2^128+1",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n \u2014 Ecdlp/Proved/Secp256k1GenericSecurity.lean:28; Ecdlp.GenericGroup.secp256k1_bsgs_steps_le \u2014 same file :56; Ecdlp.GenericGroup.secp256k1_generic_security (2^127 < q) \u2014 same file :36. Recomputed: n.bit_length() == 256 and n > 2**255."
+ },
+ "TP-025": {
+  "id": "TP-025",
+  "statement": "quadratic-twist order factorization: 2p+2-n = 3^2 * 13^2 * 3319 * 22639 * Q with Q a 220-bit prime",
+  "value": "2p+2-n = 115792089237316195423570985008687907853702405052206223696310004874299507848991 = 3^2*13^2*3319*22639*1013176677300131846900870239606035638738100997248092069256697437031",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_twist_order_factorization \u2014 Ecdlp/Proved/TwistSecurity.lean:229; Ecdlp.Curve.secp256k1_twist_maxprime_prime :222 (Pratt chain, 10 nodes at :46-190); Ecdlp.Curve.secp256k1_twist_security_profile :244 (adds 2^219 < Q < 2^220 and 1 < 3^2*13^2*3319*22639). Recomputed with sympy: factorint(2*p+2-n) == {3:2,13:2,3319:1,22639:1,Q:1}; isprime(Q) True; Q.bit_length()==220; 2**219 < Q < 2**220 True; smooth cofactor 3^2*13^2*3319*22639 == 114286177161."
+ },
+ "TP-026": {
+  "id": "TP-026",
+  "statement": "S3 Semaev polynomial: complete forward+reverse characterization of the chord/tangent relation",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Semaev.S3_eq_zero_iff \u2014 Ecdlp/Proved/SemaevThree.lean:146; secp256k1 instance Ecdlp.Semaev.secp256k1_semaev_three_iff :273; forward branches S3_eq_zero_of_chord :68, S3_eq_zero_of_tangent :97; reverse S3_root_of_eq_zero :116; group-law level Ecdlp.Semaev.secp256k1_semaev_three_point :201 and secp256k1_semaev_three_point_double :237."
+ },
+ "TP-027": {
+  "id": "TP-027",
+  "statement": "S3 is symmetric in its three x-arguments",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Semaev.S3_symm12 (ASCII for S\u2083_symm\u2081\u2082) \u2014 Ecdlp/Proved/SemaevThree.lean:48; S\u2083_symm\u2082\u2083 :53; also Ecdlp.Semaev.S\u2083poly_symm \u2014 Ecdlp/Proved/SemaevFour.lean:47."
+ },
+ "TP-028": {
+  "id": "TP-028",
+  "statement": "S4 = Res_X(S3,S3): both directions (common root => S4=0, and S4=0 => a common root exists)",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Semaev.S\u2084_eq_zero_of_common_root \u2014 Ecdlp/Proved/SemaevFour.lean:81; Ecdlp.Semaev.S\u2084_common_root_of_eq_zero :140; generic engine Ecdlp.Semaev.resultant_eq_zero_of_common_root :56 (any m,n over a commutative ring); secp256k1 instances secp256k1_semaev_four_of_common_root :189 and secp256k1_semaev_four_common_root_of_eq_zero :199; factorization lemma S\u2083poly_master_factor :113."
+ },
+ "TP-029": {
+  "id": "TP-029",
+  "statement": "S4 symmetries: block swap and within-block transpositions",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Semaev.S\u2084_block_swap \u2014 Ecdlp/Proved/SemaevFour.lean:90; S\u2084_symm\u2081\u2082 :95; S\u2084_symm\u2083\u2084 :103."
+ },
+ "TP-030": {
+  "id": "TP-030",
+  "statement": "Semaev fan-out: deg_{x3} S3 = 2, so at most 2 completions per factor-base coordinate",
+  "value": "2",
+  "value_type": "integer",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Semaev.secp256k1_S\u2083poly_natDegree = 2 \u2014 Ecdlp/Proved/SemaevDegree.lean:43; Ecdlp.Semaev.secp256k1_decomposition_completions_le_two \u2014 same file :54; generic bound Ecdlp.Semaev.S\u2083poly_natDegree_le \u2014 Ecdlp/Proved/SemaevFour.lean:43."
+ },
+ "TP-031": {
+  "id": "TP-031",
+  "statement": "point decomposition on the Mathlib group law implies the Semaev relation",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Semaev.secp256k1_point_decomposition_semaev \u2014 Ecdlp/Proved/PointDecomposition.lean:47; Ecdlp.Semaev.secp256k1_point_decomposition_semaev_double :66."
+ },
+ "TP-032": {
+  "id": "TP-032",
+  "statement": "GLV/Semaev diagonal symmetry: S3 is beta-covariant and S4 is invariant under the DIAGONAL mu_3 action; target/fibre transport laws",
+  "value": "relation-preserving subgroup order = 3, constant in m",
+  "value_type": "integer",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Semaev.S\u2083_diagonal_cube_covariance \u2014 Ecdlp/Proved/GlvSemaevSymmetry.lean:105; S\u2083_diagonal_cube_zero_iff :117; S\u2084_diagonal_cube_invariant :134; S\u2084_glv_target_transport :194; S\u2084_glv_fibre_transport :235; glv_target_ne_self :244; secp256k1 instances :269,:279,:289,:320,:331,:350; list/3-point transport Ecdlp.Curve.secp256k1_glv_list_sum_eq_iff :366 and secp256k1_glv_three_point_sum_eq_iff :384. DISCRIMINATOR CHECK computed here (not in repo): brute-forced the subgroup of mu_3^m preserving {S_m = 0} on toy curves y^2=x^3+b over F_1009 (b=11), F_307 (b=5), F_2011 (b=3), for m=3 (exhaustive over 27 group elements, 8000 sample points incl. on-locus points) and m=4 (6000 samples). Result in all six cases: the relation-preserving subgroup is exactly the DIAGONAL, order 3, for both m=3 and m=4 \u2014 i.e. |relation-preserving subgroup| = 3 = O(1), NOT growing with m."
+ },
+ "TP-033": {
+  "id": "TP-033",
+  "statement": "division polynomials at b=7: Psi2Sq = 4X^3+28, Psi3 = 3X^4+84X, prePsi4 = 2X^6+280X^3-784; b-invariants b2=b4=b8=0, b6=28",
+  "value": "Psi2Sq = 4X^3+28; Psi3 = 3X^4+84X",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_\u03a8\u2082Sq \u2014 Ecdlp/Proved/DivisionPolynomial.lean:50; secp256k1_\u03a8\u2083 :59; secp256k1_b\u2082/b\u2084/b\u2086/b\u2088 :30,34,38,42. Recomputed symbolically with sympy from the standard recursion for y^2=x^3+7: psi3 = 3x^4+84x, psi2^2 reduced = 4x^3+28, psi4/(2y) = 2x^6+280x^3-784 \u2014 all match."
+ },
+ "TP-034": {
+  "id": "TP-034",
+  "statement": "division-polynomial degrees: deg Psi2Sq=3, deg Psi3=4, deg prePsi9=40, deg prePsi11=60, deg prePsi13=84; generic odd-m degree (m^2-1)/2",
+  "value": "3,4,40,60,84; generic (m^2-1)/2",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_\u03a8\u2082Sq_natDegree and secp256k1_\u03a8\u2083_natDegree \u2014 Ecdlp/Proved/DivisionPolynomialDegree.lean:22,50; secp256k1_pre\u03a8\u2089_natDegree \u2014 Ecdlp/Proved/CompressedDivisionPoly.lean:272; secp256k1_pre\u03a8\u2081\u2081_natDegree \u2014 Ecdlp/Proved/ElevenTorsion.lean:34; secp256k1_pre\u03a8\u2081\u2083_natDegree \u2014 Ecdlp/Proved/ThirteenTorsion.lean:32; generic Ecdlp.Curve.secp256k1_odd_pre\u03a8_natDegree \u2014 Ecdlp/Proved/OddTorsionBound.lean:27. Recomputed: (m^2-1)/2 for m=3,5,7,9,11,13 = 4,12,24,40,60,84."
+ },
+ "TP-035": {
+  "id": "TP-035",
+  "statement": "division polynomials psi_m are separable/squarefree over F_p for m in {3,4,5,7}, with exact root counts 4/6/12/24 over the algebraic closure",
+  "value": "4,6,12,24",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Separability: Ecdlp.Curve.secp256k1_\u03a8\u2083_separable / secp256k1_pre\u03a8\u2084_separable / secp256k1_pre\u03a8\u2085_separable / secp256k1_pre\u03a8\u2087_separable \u2014 Ecdlp/Proved/DivisionPolynomialSeparable.lean:48,53,57,61. Root counts (+Nodup): same file :83,:96,:108,:120. Squarefreeness certificates: secp256k1_isCoprime_\u03a8\u2083_derivative / pre\u03a8\u2084 / pre\u03a8\u2085 / pre\u03a8\u2087 \u2014 Ecdlp/Proved/DivisionPolynomialSquarefree.lean:74,125,186,286. Cubic base case: secp256k1_cubic_separable \u2014 Ecdlp/Proved/CubicSeparable.lean:75."
+ },
+ "TP-036": {
+  "id": "TP-036",
+  "statement": "torsion-locus disjointness: psi_a and psi_b are coprime over F_p[X] for the pairs (2,3),(2,4),(2,5),(2,7),(3,4),(3,5),(3,7),(4,5),(4,7),(5,7); and Phi_n \u22a5 PsiSq_n for all n",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_isCoprime_\u03a8\u2082Sq_\u03a8\u2083 / _\u03a8\u2082Sq_pre\u03a8\u2084 / _\u03a8\u2082Sq_pre\u03a8\u2085 / _\u03a8\u2082Sq_pre\u03a8\u2087 / _\u03a8\u2083_pre\u03a8\u2084 / _\u03a8\u2083_pre\u03a8\u2085 / _\u03a8\u2083_pre\u03a8\u2087 / _pre\u03a8\u2084_pre\u03a8\u2085 / _pre\u03a8\u2084_pre\u03a8\u2087 / _pre\u03a8\u2085_pre\u03a8\u2087 \u2014 Ecdlp/Proved/CoprimePsi2Psi3.lean, CoprimePsi2PrePsi4.lean, CoprimePsi2Psi5.lean, CoprimePsi2Psi7.lean, CoprimePsi3PrePsi4.lean, CoprimePsi3Psi5.lean, CoprimePsi3Psi7.lean, CoprimePsi4Psi5.lean, CoprimePsi4Psi7.lean, CoprimePsi5Psi7.lean (explicit CAS Bezout certificates). Also Ecdlp.Curve.secp256k1_isCoprime_\u03a6_\u03a8Sq (all n : Z) \u2014 Ecdlp/Proved/DivisionPolynomialCoprime.lean:79, and closure version :100."
+ },
+ "TP-037": {
+  "id": "TP-037",
+  "statement": "GLV cube-compression of division polynomials: Psi3 = X*R(X^3), prePsi5 = R(X^3) deg R=4, prePsi7 = R(X^3) deg R=8, and general covariance criteria",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_\u03a8\u2083_compressed / secp256k1_pre\u03a8\u2085_compressed / secp256k1_pre\u03a8\u2087_compressed \u2014 Ecdlp/Proved/CompressedDivisionPoly.lean:221,237,253; general criteria exists_comp_X_pow_of_invariant :187, exists_X_mul_comp_of_covariant :199, pre\u03a8'_compressed_of_invariant :288, pre\u03a8'_compressed_of_covariant :301; conditional 11/13/9 versions :315,:326,:337."
+ },
+ "TP-038": {
+  "id": "TP-038",
+  "statement": "full l-torsion structure over the algebraic closure: E-bar[l] \u2245 (Z/l)^2 with cardinality l^2, for l in {2,3,5,7}",
+  "value": "4, 9, 25, 49",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1Bar_two_torsion_structure \u2014 Ecdlp/Proved/TwoTorsionStructure.lean:301 (ncard :270, card 4); secp256k1Bar_three_torsion_structure \u2014 Ecdlp/Proved/ThreeTorsionStructure.lean:390 (ncard 9 :357); secp256k1Bar_five_torsion_structure \u2014 Ecdlp/Proved/FiveTorsionStructure.lean:391 (ncard 25 :358); secp256k1Bar_seven_torsion_structure \u2014 Ecdlp/Proved/SevenTorsionStructure.lean:386 (ncard 49 :354). Generic engine Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_divpoly_data \u2014 Ecdlp/Proved/TorsionCounting.lean:151."
+ },
+ "TP-039": {
+  "id": "TP-039",
+  "statement": "order-l membership test via division polynomials for l in {2,3,5,7}, with explicit polynomials for l=3 and l=5",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_smallprime_addOrderOf \u2014 Ecdlp/Proved/SmallPrimeTorsion.lean:36; explicit forms secp256k1_addOrderOf_three_iff_poly (3x^4+84x=0) :64 and secp256k1_addOrderOf_five_iff_poly (5x^12+2660x^9-11760x^6-548800x^3-614656=0) :71. Recomputed symbolically: the l=5 polynomial equals psi_5 reduced for a=0,b=7 \u2014 sympy check returned exact match."
+ },
+ "TP-040": {
+  "id": "TP-040",
+  "statement": "curve is smooth / a Mathlib EllipticCurve; base point G is on the curve, nonsingular, and has additive order exactly n",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_projective_nonsingular \u2014 Ecdlp/Proved/CurveSmoothness.lean:156 (general curveB_toProjective_nonsingular :121); Ecdlp.Curve.secp256k1_\u0394_ne_zero \u2014 Ecdlp/Proved/Secp256k1Curve.lean:27; secp256k1_generator_equation :54; secp256k1_generator_nonsingular :70; Ecdlp.Curve.secp256k1_generator_addOrderOf = n \u2014 Ecdlp/Proved/GeneratorOrder.lean:48. Recomputed: (Gy^2 - Gx^3 - 7) % p == 0."
+ },
+ "TP-041": {
+  "id": "TP-041",
+  "statement": "classical attack-resistance profile as a single conjunction (#E=n, n prime, t!=0, t!=1, t^2<=4p, k_emb>100)",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Ecdlp.Curve.secp256k1_classical_security_profile \u2014 Ecdlp/Proved/ClassicalSecurityProfile.lean:53."
+ },
+ "TP-042": {
+  "id": "TP-042",
+  "statement": "p-1 smooth-divisor ceiling: every 13441-smooth divisor of p-1 divides 564522 (~2^19.11)",
+  "value": "p-1 = 2*3*7*13441*C with C = 205115282021455665897114700593932402728804164701536103180137503955397371 (237-bit prime); smooth part 564522 = 2^19.11",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "NOT PRESENT AT origin/main (fed55d8): `git ls-tree origin/main Ecdlp/Proved/` has no Secp256k1PMinusOneSmoothness.lean; grep for 'smooth' over all built Lean files returns only curve-smoothness (Jacobian) hits. IT EXISTS ONLY ON THE UNMERGED LOCAL BRANCH claude/screen-facts-pminus1-smoothness (HEAD 6ced84a) as Ecdlp.Curve.secp256k1_smooth_divisor_dvd_smooth_part / secp256k1_smooth_divisor_le / secp256k1_p_sub_one_factorization in Ecdlp/Proved/Secp256k1PMinusOneSmoothness.lean. Recomputed: sympy.factorint(p-1, limit=1e7) -> {2:1,3:1,7:1,13441:1,C:1}; isprime(C) True, C.bit_length()==237; smooth part 2*3*7*13441 == 564522, log2 == 19.11. CHEAP-TO-FORMALIZE: closed arithmetic over literals; the 237-bit cofactor is ALREADY a Pratt node (Ecdlp.Primality.pr_2051152820...5397371, Ecdlp/Proved/Secp256k1PrimeP.lean:147)."
+ },
+ "TP-043": {
+  "id": "TP-043",
+  "statement": "complete factorization of n-1 and its smooth part (Cheon-style auxiliary-divisor screen on the order-n subgroup)",
+  "value": "n-1 = 2^6 * 3 * 149 * 631 * 107361793816595537 * 174723607534414371449 * 341948486974166000522343609283189; smooth part (<1e7) = 18051648 = 2^24.11",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "NOT PROVED AS A FACTORIZATION THEOREM at origin/main \u2014 grep of Ecdlp/ finds no statement of the form 'Secp256k1.n - 1 = ...'. Computed with sympy.factorint(n-1). NOTE cheap-to-formalize: EVERY prime factor is already a kernel-verified Pratt node in Ecdlp/Proved/Secp256k1PrimeN.lean (theorem pr_107361793816595537, pr_174723607534414371449, pr_341948486974166000522343609283189), so only one closed native_decide product identity plus a coprimality argument is missing \u2014 the same shape as TP-042."
+ },
+ "TP-044": {
+  "id": "TP-044",
+  "statement": "complete factorization of n+1 and its smooth part (the other half of the Cheon auxiliary-divisor screen)",
+  "value": "n+1 = 2 * 13 * 83 * 45751 * 509879 * 2300168931843757888934889794142140465088020300168077349902139959 (211-bit prime); smooth part = 50340689170382 = 2^45.52",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "NOT PROVED at origin/main (no n+1 statement anywhere in Ecdlp/). Computed with sympy.factorint(n+1, limit=1e7) then isprime on the 211-bit cofactor -> True; product identity re-verified in python. MODERATE-TO-CHEAP to formalize: needs one new Pratt certificate for the 211-bit cofactor (the repo already generates these via scripts/pratt_certificate.py) plus a closed product identity. The attack registry explicitly flags this as 'unknown' (multi-target-precomputation, property 'n-1 / n+1 carry a large usable divisor d')."
+ },
+ "TP-045": {
+  "id": "TP-045",
+  "statement": "exact embedding degree k_emb = ord_n(p) (as opposed to the k>100 bound)",
+  "value": "19298681539552699237261830834781317975472927379845817397100860523586360249056 (254 bits) = (n-1)/6",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "Repo proves only the bound (TP-014). Computed with sympy.n_order(p % n, n); verified (n-1) % k == 0 and (n-1)//k == 6. CHEAP-TO-FORMALIZE given TP-043: proving ord_n(p) = k needs p^k = 1 mod n (one native_decide) plus p^(k/q) != 1 mod n for each of the 7 prime divisors q of n-1 \u2014 all closed 256-bit modular exponentiations of the same size class as the existing Pratt witnesses, and n-1's factorization is already fully Pratt-certified."
+ },
+ "TP-046": {
+  "id": "TP-046",
+  "statement": "F_p has no proper subfield / secp256k1's base field is not a proper extension (the Weil-descent / GHS inapplicability screen)",
+  "value": "extension degree over the prime field = 1",
+  "value_type": "integer",
+  "status": "computed_here",
+  "how_obtained": "NOT PROVED as a theorem at origin/main. The repo's own attack_registry.json entry TRANSFER-WEIL-DESCENT labels this 'RESISTED-BY-CONSTRUCTION (structural; weakest formal backing)' and cites only Ecdlp.Primality.secp256k1_p_prime as evidence \u2014 i.e. the subfield-triviality step is prose, not kernel-checked. Computed here: p is prime, so F_p is a prime field and [F_p : F_p] = 1. CHEAP-TO-FORMALIZE: over ZMod p with [Fact p.Prime], 'every Subfield (ZMod p) = TOP' follows from the prime subfield being generated by 1; no new arithmetic."
+ },
+ "TP-047": {
+  "id": "TP-047",
+  "statement": "E(F_p) has no rational l-torsion for any prime l != n (rational torsion is trivial except at n)",
+  "value": "true",
+  "value_type": "boolean",
+  "status": "computed_here",
+  "how_obtained": "NOT NAMED as a theorem at origin/main; grep found no such statement. It is an immediate corollary of two things the repo DOES prove: Ecdlp.Curve.secp256k1_card_point_eq_n (CurveCardinalityExact.lean:172) and Ecdlp.Primality.secp256k1_n_prime, via Lagrange. The l=2 instance IS proved separately (TP-021, secp256k1_no_nonzero_two_torsion). CHEAP-TO-FORMALIZE: a two-line Lagrange corollary; no new arithmetic. Flagging it because a factor-base / torsion-sieve mechanism would predicate on it directly and would currently have to re-derive it."
+ },
+ "TP-048": {
+  "id": "TP-048",
+  "statement": "full n-torsion structure E-bar[n] \u2245 (Z/n)^2 (the Weil-pairing prerequisite)",
+  "value": "unknown",
+  "value_type": "unknown",
+  "status": "unknown",
+  "how_obtained": "NOT PROVED at origin/main. The repo has the l in {2,3,5,7} instances (TP-038) and a generic engine (Ecdlp.Torsion.nonempty_addEquiv_zmod_prod_of_divpoly_data, TorsionCounting.lean:151), but no statement for general l or for l = n. Repo task list shows this as open ('Split-PR 4: E[l] \u2245 (Z/l)^2 structure family'). DEEP: needs the general division-polynomial/torsion bridge, not closed literal arithmetic."
+ },
+ "TP-049": {
+  "id": "TP-049",
+  "statement": "a computable Weil or Tate pairing E[n] x E[n] -> mu_n exists (the MOV/Frey-Ruck mechanism itself)",
+  "value": "unknown",
+  "value_type": "unknown",
+  "status": "unknown",
+  "how_obtained": "NOT PROVED and BLOCKED-FOUNDATION at origin/main. attack_registry.json PAIRING-TRANSFER-MOV-FR-TATE marks this 'NOT FORMALIZED / blocked-foundation (no pairing in Mathlib)'; the repo has only Weil foundation rungs (Ecdlp/Proved/WeilDivisorClass.lean, WeilDivisorEval.lean, WeilMillerEval.lean, MillerDivisionPolynomialBridge.lean). DEEP. Note the SCREEN against this mechanism (embedding degree, TP-014) is already kernel-verified, so the missing mechanism does not block the screen."
+ },
+ "TP-050": {
+  "id": "TP-050",
+  "statement": "any relation-preserving symmetry subgroup of the m-th Semaev variety whose order GROWS with m (the only discriminator that can yield an asymptotic Groebner gain)",
+  "value": "unknown for secp256k1; for the coordinatewise mu_3 (GLV) action the relation-preserving subgroup has order 3, constant in m",
+  "value_type": "unknown",
+  "status": "computed_here",
+  "how_obtained": "NO SUCH THEOREM at origin/main, and none is claimed: every GLV/Semaev symmetry theorem in Ecdlp/Proved/GlvSemaevSymmetry.lean is about the FIXED order-3 diagonal action (S\u2084_diagonal_cube_invariant :134 etc.), whose order does not depend on m. attack_registry.json IC-3 classifies the GLV-symmetry factor base as 'scoped-negative' on exactly this ground. Computed here (toy-scale, python brute force): the subgroup of mu_3^m preserving {S_m = 0} for y^2 = x^3 + b over F_1009 (b=11), F_307 (b=5), F_2011 (b=3) is exactly the diagonal \u2014 order 3 at m=3 (exhaustive over all 27 elements, 8000 test points including on-locus solutions) and order 3 at m=4 (6000 random test points). So the relation-preserving order is O(1) in m for this action, which is the wrong shape for an asymptotic gain. Whether some OTHER relation-preserving subgroup of secp256k1's S_m grows with m is UNKNOWN and not screened by anything in the repo."
+ },
+ "TP-051": {
+  "id": "TP-051",
+  "statement": "any cost model / complexity semantics in which a solving degree or relation-generation cost could be stated",
+  "value": "unknown",
+  "value_type": "unknown",
+  "status": "unknown",
+  "how_obtained": "NOT PRESENT at origin/main. attack_registry.json records this as BARRIERS.md B1 ('no cost model in Mathlib', frontier_map.json foundations.cost_model = missing_from_mathlib), and the same gap blocks the multi-target/preprocessing trade-off exponent and quantum resource estimates. DEEP / out of scope for the kernel layer. Consequence for the atlas: no mechanism's asymptotic claim can currently be discharged by a repo theorem \u2014 only its target-property PREDICATES can be."
+ },
+ "TP-052": {
+  "id": "TP-052",
+  "statement": "lattice reduction (LLL/BKZ/CVP) needed by the HNP / biased-nonce route",
+  "value": "unknown",
+  "value_type": "unknown",
+  "status": "unknown",
+  "how_obtained": "NOT PRESENT at origin/main (BARRIERS.md B2, ~24 claims). The repo proves only the downstream algebra: Ecdlp.Schnorr.ecdsa_known_nonce_recovers_key \u2014 Ecdlp/Proved/EcdsaKeyRecovery.lean:58 and ecdsa_nonce_reuse_recovers :40. DEEP, and orthogonal to curve properties (it targets nonce generation, not the group)."
+ },
+ "TP-A5-001": {
+  "id": "TP-A5-001",
+  "statement": "Scope of the closed coordinatewise u_i = x_i^3 quotient premise (IC-3 / R-GLV-SEMAEV bounded negative).",
+  "value": "CLOSED: for a Semaev relation system in m factor-base x-coordinates over a field containing a primitive cube root beta, the substitution u_i = x_i^3 applied INDEPENDENTLY per coordinate is the invariant map of the coordinatewise group C3^m, not of the diagonal C3 that the curve automorphism phi(x,y)=(beta*x,y) actually induces on a simultaneous relation; on the locus where all coordinates are nonzero its fibres are full C3^m orbits of size 3^m while diagonal orbits have size 3, so it merges exactly 3^(m-1) distinct diagonal orbits and destroys relative phase. EXPLICITLY NOT CLOSED: (a) any quotient that retains relative phase (the third Veronese / mixed invariants x_i*x_j^2, x1x2x3 lie in the diagonal invariant ring but not in K[x_i^3]); (b) rational or localized coordinate systems on a dense chart, which the repo README itself says 'can give a smaller rational coordinate system'; (c) any birational or non-scalar mechanism; (d) any Groebner/F4 complexity lower bound; (e) the whole R-GLV-SEMAEV route, which remains status open_parked, not disproved.",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quote, experiments/glv_diagonal_obstruction/README.md @origin/main: 'It is the invariant map for the larger coordinatewise group `C3^m`. The curve automorphism acts diagonally, as one copy of `C3`. On the dense locus where every coordinate is nonzero, the coordinatewise map therefore merges `3^(m-1)` distinct diagonal orbits.' and 'This generator count does not prove that every rational or localized formulation must use more variables'. Independently recomputed: on E: y^2=x^3+11 over F_1009 (beta=374), restricted to a beta-stable 45-element subset of the on-curve x-locus, I counted diagonal-C3 orbits vs x_i^3 fibres on m-tuples: m=2 -> 675/225 = 3.0; m=3 -> 30375/3375 = 9.0; m=4 -> 1366875/50625 = 27.0, i.e. exactly 3^(m-1). Script /tmp/claude-0/-home-user--ecdlp-lean-verification/bf775e24-fac8-5915-9aa5-9fbf3dc61ffd/scratchpad/atlas (inline python, itertools.product over the beta-stable subset, orbit rep = min over t of tuple(beta^t*v))."
+ },
+ "TP-A5-002": {
+  "id": "TP-A5-002",
+  "statement": "Scope of what the frozen F_1009 diagonal-obstruction witness (483 vs 1449) actually measures.",
+  "value": "CLOSED / VERIFIED: I exactly reproduce the frozen counts on E: y^2=x^3+11 over F_1009 with beta=374 - 967 points, 483 on-curve x-coordinates, 0 is not among them, 483 ordered pairs on the single-generator graph x2 = beta*x1, 1449 ordered pairs with x1^3 = x2^3, 966 extra. CRITICAL SCOPE THE TABLE DOES NOT STATE: this witness lives at m=1, where the diagonal C3 and the coordinatewise C3^1 are the SAME group; I computed that the full-orbit relation (x2 = beta^t*x1 for some t) also gives exactly 1449, identical to the cube-fibre count, and the m=1 orbit ratio is 1, not 3. So the 3x gap in the table is one selected group element's graph versus the full orbit equivalence - it demonstrates loss of the ORBIT TAG (which power of beta), not the 3^(m-1) merging of distinct diagonal orbits, which is trivial at m=1 and only becomes nonzero at m>=2. EXPLICITLY NOT CLOSED: the finite witness is not evidence for the m>=2 orbit-merging claim; that claim is a separate general algebra statement (independently confirmed in TP-A5-001) and is not what these three numbers measure.",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quote, experiments/glv_diagonal_obstruction/README.md @origin/main table: '| Graph of the diagonal action `x_2 = beta x_1` | 483 |' and '| Coordinatewise equality `x_1^3 = x_2^3` | 1449 |'. Recomputed in python: X = {x : exists y, y^2 = x^3+11 mod 1009}; len(X)=483; total affine points 966 so |E|=967; 0 in X is False; sum(x2 == beta*x1) over X x X = 483; sum(any(x2 == beta^t*x1 for t in 0..2)) = 1449; sum(pow(x1,3,1009)==pow(x2,3,1009)) = 1449; difference 966; m=1 diagonal orbits = 161 = cube fibres = 161 (ratio 1.0)."
+ },
+ "TP-A5-003": {
+  "id": "TP-A5-003",
+  "statement": "Scope of the faithful diagonal C3 quotient (third Veronese subring) - what is OPEN, not closed.",
+  "value": "NOT CLOSED / OPEN. The exact quotient by the diagonal C3 is the third Veronese subring R^(diag C3) = span of monomials of total degree = 0 mod 3, minimally generated by the C(m+2,3) monomials of degree exactly 3 modulo a toric ideal of quadratic binomials; it is strictly larger than K[x_1^3,...,x_m^3] and is NOT a polynomial ring for m >= 2. No result in BARRIERS.md, attack_registry.json, ECDLP_DECISION_SUBSTRATE.json or notes/GLV_SEMAEV_ITERATION_001.md closes this quotient: the closed negative is only about the coordinatewise map. What is additionally missing (recorded, not proved): (i) an exact recovery map from Veronese coordinates back to relations, (ii) fixed-target semantics in those coordinates, (iii) orbit tags and excluded components, (iv) a falsifiable full-cost prediction, (v) an independent raw-artifact validator. Also explicitly recorded as a FORMAL GAP: 'the general third-Veronese invariant-ring statement is documented but not yet kernel-checked'.",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quotes, notes/GLV_SEMAEV_ITERATION_001.md @origin/main sec. 'Invariant rings, named precisely': 'The diagonal invariant ring is spanned by the monomials of total degree `= 0 (mod 3)` and is minimally generated by the `C(m+2,3)` monomials of degree exactly `3`, modulo a toric ideal generated by quadratic binomials; it is **not** a polynomial ring for `m >= 2`.' and 'The **mixed** degree-three invariants ... retain exactly the relative phase that `u_i = x_i^3` loses.' Gap quote from data/attack_registry.json IC-3 open_escape_routes: 'FORMAL GAP: the general third-Veronese invariant-ring statement is documented but not yet kernel-checked'. Recomputed: C(m+2,3) for m=1..6 = 1,4,10,20,35,56 (math.comb); m=2 toric relations b^2-ac, bc-ad, c^2-bd with a=X1^3,b=X1^2X2,c=X1X2^2,d=X2^3 each expand to 0 (sympy.expand -> [True,True,True])."
+ },
+ "TP-A5-004": {
+  "id": "TP-A5-004",
+  "statement": "Scope of the closed S3/S4 coordinatewise-C3 semi-invariant classification (GLV-SEMAEV-ITER-001).",
+  "value": "CLOSED, and independently reproduced by me: over a field containing a primitive cube root beta, the only coordinatewise scalings (beta^e1 x1,...) that are scalar-covariant are H3 = {((t,t,t), beta^t)} for S3 and H4 = {((t,t,t,t), 1)} for S4. I reproduce exactly 3 survivors / 78 rejections of 81 (S3) and 3 survivors / 240 rejections of 243 (S4), and every rejected pair carries an obstructing x-monomial whose integer coefficient is +/-1, so the classification is uniform in EVERY characteristic in which a primitive cube root exists (I confirmed char 2 leaves both survivor sets unchanged). EXPLICITLY NOT CLOSED: (a) 'Failure of scalar polynomial covariance is weaker than inequality of geometric zero sets; a radical or absolute-irreducibility bridge would be required for that stronger statement' - so geometric automorphisms of the zero VARIETY are unclassified; (b) non-scalar multipliers (only unit scalars beta^t were tested); (c) non-monomial / birational substitutions; (d) actions on S_m for m >= 5; (e) any complexity consequence.",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quote, notes/GLV_SEMAEV_ITERATION_001.md @origin/main: 'H3 = { ((t,t,t), beta^t) : t in Z/3Z }  H4 = { ((t,t,t,t), 1) : t in Z/3Z }' and 'This result does not imply that all geometric zero-variety automorphisms are classified. Failure of scalar polynomial covariance is weaker than inequality of geometric zero sets'. Independent re-derivation (scratchpad/atlas/a5_sem2.py, a5_sem3.py): built S3 from the standard a=0 formula (X1-X2)^2X3^2 - 2((X1+X2)X1X2+2b)X3 + ((X1X2)^2-4b(X1+X2)), built S4 as the 4x4 Sylvester determinant, checked it equals sympy.resultant AND equals the repo's Lean `quadraticResultant` closed formula (both True); then used the exact criterion 'S(beta^e x)=beta^t S(x) iff e.a = t mod 3 for every x-monomial with nonzero coefficient' (valid because Z[beta]/(beta^2+beta+1) is a domain). Results: S3 survivors [[0,0,0],0],[[1,1,1],1],[[2,2,2],2], rejected 78; S4 survivors [[0,0,0,0],0],[[1,1,1,1],0],[[2,2,2,2],0], rejected 240; all rejected have a pure +/-1 monomial witness (True); char-2 survivor sets identical."
+ },
+ "TP-A5-005": {
+  "id": "TP-A5-005",
+  "statement": "Scope of the closed fixed-target scaling premise (nonzero affine targets).",
+  "value": "CLOSED: for F_r(x1,x2,x3) := S4(x1,x2,x3,r) with r a NONZERO field element and characteristic outside {2,3}, the only coordinatewise C3 scaling of the three factor-base coordinates that is a scalar covariance is the identity; every nonidentity diagonal scaling TRANSPORTS the problem to a different target (fibre direction r -> beta*r, i.e. R -> phi(R)), it does not preserve it. I reproduce this exhaustively: 81 (exponent, character) pairs, exactly 1 survivor (identity), 80 rejections, and for each rejection the gcd over r of the obstructing coefficients is either 1 (no r rescues it) or r (only r=0 rescues it) - so no genericity hypothesis on r is needed and no exceptional characteristic beyond {2,3} exists. EXPLICITLY NOT CLOSED: (a) targets at the point at infinity, which have no x-coordinate and lie outside every statement; (b) the r=0 slice (see TP-A5-006); (c) NON-SCALAR multipliers and BIRATIONAL/non-monomial automorphisms - the classification tested only unit scalars beta^t applied coordinatewise; (d) any claim that target batching cannot help, since 'Ruling out every nonlinear batching or amortization mechanism would require a separate formal full-cost theorem'.",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quotes, notes/GLV_SEMAEV_ITERATION_001.md @origin/main: 'for **every** `r != 0`, and for **every** characteristic outside `{2,3}`, the only fixed-target scalar covariance is the identity'; 'Scope caveat: `r` ranges over field elements, hence over **affine** targets only. A target at the point at infinity has no `x`-coordinate and lies outside every statement in this note.'; 'Ruling out every nonlinear batching or amortization mechanism would require a separate formal full-cost theorem.' Recomputed (a5_sem2.py/a5_sem3.py): classify(S4.subs(x4,r), (x1,x2,x3)) -> survivors [[[0,0,0],0]], rejected 80; distinct gcds of obstructing coefficients over r = {'1','r'}; all 80 pairs carry a pure-r witness with integer coefficient in {1,2,4}."
+ },
+ "TP-A5-006": {
+  "id": "TP-A5-006",
+  "statement": "Scope of the r = 0 exceptional locus of the fixed-target obstruction, and its inhabitedness on secp256k1.",
+  "value": "CLOSED AT POLYNOMIAL LEVEL for characteristic outside {2,3}: the r=0 slice S4(x1,x2,x3,0) is preserved by exactly the diagonal C3 with multiplier 1 (I reproduce 3 survivors, 78 rejections; identical survivor set in char 5,7,11,13). CHARACTERISTIC 2 IS A GENUINE EXCEPTION and is stronger than the note states: I computed that in char 2 ALL 27 coordinatewise exponent tuples acquire a character, i.e. the full C3^3 becomes a semi-invariance group of the zero slice. CHARACTERISTIC 3 is vacuous because x^3-1 = (x-1)^3 mod 3, so a field of char 3 has no primitive cube root. NEWLY SETTLED HERE FOR secp256k1 (the note explicitly leaves it open): the exceptional locus is UNINHABITED on secp256k1 - a rational affine point with x=0 needs y^2 = b = 7, and I computed the Legendre symbol (7|p) = -1, so no such point exists. Therefore every rational affine target on secp256k1 has r != 0 and the fixed-target obstruction of TP-A5-005 applies without exception. This strengthens a negative; it is not progress toward any recovery.",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quotes, notes/GLV_SEMAEV_ITERATION_001.md @origin/main: 'The slice `r=0` is preserved by the full diagonal `C3` (multiplier `1`) and is the **complete** exceptional locus in characteristic outside `{2,3}`'; 'Characteristic 2 is a real excluded case: the zero slice can degenerate and acquire a larger stabilizer.'; 'Whether that locus is *inhabited* on a given curve is a separate arithmetic question - it needs a rational point `(0,y)` with `y^2 = b` - and is **not** settled here.' Same caveat in Ecdlp/Proved/GlvSemaevSymmetry.lean docstring of `secp256k1_glv_fixed_target_moves`. Recomputed (a5_sem3.py): r0_slice survivors char 0/5/7/11/13 = [[0,0,0],0],[[1,1,1],0],[[2,2,2],0] (3 survivors, 78 rejected); char 2 -> 27 survivors. sympy.factor_list(B**3-1, modulus=3) = (1,[(B-1,3)]). sympy.legendre_symbol(7, p) = -1 with p = 0xFFFF...FC2F (a5_basic.py key 'legendre_7_p')."
+ },
+ "TP-A5-007": {
+  "id": "TP-A5-007",
+  "statement": "Kernel-verified vs certificate-only boundary inside the GLV-Semaev package (what the Lean kernel actually judges).",
+  "value": "KERNEL-VERIFIED (14 declarations, Ecdlp/Proved/GlvSemaevSymmetry.lean, Lean v4.31.0 / Mathlib fabf563a): only the DIAGONAL identities and their consequences - S3_diagonal_cube_covariance, S3_diagonal_cube_zero_iff, S4_diagonal_cube_invariant, S4_glv_target_transport, S4_glv_fibre_transport, glv_target_ne_self, the secp256k1 specializations, secp256k1_glv_fixed_target_moves (hypothesis r != 0), and secp256k1_glv_list_sum_eq_iff / _three_point_sum_eq_iff. EXPLICITLY NOT KERNEL-VERIFIED, stated by the module itself: 'These identities establish the diagonal action only; they do not classify the full coordinatewise stabilizer and do not assert invariance of a generic fixed-target slice' and 'that classification remains certificate-backed'. So the FULL 27/81-action classification and the every-nonzero-r fixed-target result are SymPy-certificate + independent-validator results, not kernel theorems. A future candidate must not cite the exhaustive classification as kernel-verified, and must not treat the diagonal Lean theorems as covering non-diagonal actions.",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Read Ecdlp/Proved/GlvSemaevSymmetry.lean @origin/main in full (git cat-file). Module docstring quote: 'These identities establish the diagonal action only; they do not classify the full coordinatewise stabilizer and do not assert invariance of a generic fixed-target slice.' Section quote: 'They do **not** classify the full coordinatewise stabilizer of a fixed-target slice; that classification remains certificate-backed (see `experiments/glv_semaev_symmetry/`)'. Cross-checked against notes/GLV_SEMAEV_ITERATION_001.md: 'The symbolic stabilizer classification remains certificate-backed rather than being overstated as a kernel theorem.' Theorem names grep-confirmed present at origin/main under Ecdlp/Proved/GlvSemaevSymmetry.lean."
+ },
+ "TP-A5-008": {
+  "id": "TP-A5-008",
+  "statement": "Scope of the Weil-descent / GHS no-go over the prime field F_p (TRANSFER-WEIL-DESCENT).",
+  "value": "CLOSED BY CONSTRUCTION, WITH THE WEAKEST KERNEL BACKING IN THE MAP: secp256k1 is defined over the prime field F_p, [F_p:F_p]=1, so there is no proper subfield and the standard Weil restriction / GHS cover construction has no descent target. EXPLICITLY NOT CLOSED: (a) there is NO dedicated Lean theorem 'F_p prime => no Weil descent'; the resistance rests on Ecdlp.Primality.secp256k1_p_prime PLUS a documented structural argument, and the registry self-flags this ('the only in-source mentions of Weil restriction are docstrings in SemaevDegree.lean and PointDecomposition.lean, not theorems'); (b) it excludes 'the standard extension-field descent setup, not every possible algebraic-geometric reformulation over a prime field'; (c) it says NOTHING about prime-field factor-base constructions that deliberately avoid Weil descent - see TP-A5-009, where the primary source states its own goal as 'completely avoid the Weil descent methodology'; (d) the mechanism itself (Weil restriction, GHS covers, genus-g Jacobian index calculus) is absent from Mathlib, so even the attack cannot be stated formally.",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Quotes, data/attack_registry.json @origin/main TRANSFER-WEIL-DESCENT: 'HONESTY: there is NO dedicated Lean no-go \"F_p prime => no Weil descent\"; the inference is documented (BARRIERS.md B3, PUBLISHABLE_UNITS.md) but NOT machine-checked.' and flag 'WEAKEST BACKING (self-flagged, carried)'. Quote, repo/ECDLP_DECISION_SUBSTRATE.json R-WEIL-DESCENT anti_overclaim: 'This excludes the standard extension-field descent setup, not every possible algebraic-geometric reformulation over a prime field.' Kernel anchor Ecdlp.Primality.secp256k1_p_prime grep-confirmed; p primality independently recomputed (sympy.isprime(p) = True, p = 2^256-2^32-977 confirmed by direct equality)."
+ },
+ "TP-A5-009": {
+  "id": "TP-A5-009",
+  "statement": "Scope of the Petit-Kosters-Messeng (PKC 2016) prime-field factor base: OPEN, and NOT excluded by the Weil-descent no-go.",
+  "value": "NOT CLOSED / OPEN, and I verified this against the fetched primary text, not from memory. The faithful construction is F = {(x,y) in E(K) : L(x)=0} with L a large-degree rational map that is a COMPOSITION of small-degree rational maps L_j, so the single high-degree constraint is replaced by the low-degree chain x2=L1(x), x3=L2(x2), ..., L_n'(x_n')=0, solved with Semaev summation polynomials plus Groebner bases. The paper's own words: 'The complexity of our algorithms remains an open problem' and 'One idea in that direction is to completely avoid the Weil descent methodology.' So the prime-field absence of Weil restriction does NOT exclude this route. EXPLICITLY NOT CLOSED and NOT evidence against it: the repo's historical P4 experiment implements NEITHER source construction ('NOT faithful Petit', |F|=4, m=2, one 16-bit toy prime) and is an 'inconclusive negative control'; its measured numbers (d_reg 7 vs 9 but ~100x larger Macaulay matrix and ~4300x slower) say nothing about the faithful construction. Additionally NOT closed: whether ANY prime-field factor-base construction beats the raw degree-|F| f_F in actual cost.",
+  "value_type": "string",
+  "status": "literature_attested",
+  "how_obtained": "Fetched primary source: https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf (HTTP 200, 431067 bytes, 6 pages), text extracted with pypdf to scratchpad/atlas/pdf5/pkc2016.txt. Verbatim: 'The factor bases in our algorithms are of the form F :={(x,y) in E(K)| L(x) = 0}, where L is a large-degree rational map. We additionally require that L is a composition of small-degree rational maps Lj'; 'The complexity of our algorithms remains an open problem.'; 'One idea in that direction is to completely avoid the Weil descent methodology.' Repo side, quote from repo/ECDLP_DECISION_SUBSTRATE.json R-PETIT-COMPOSED-MAPS: 'Historical P4 did not implement either construction and remains only an inconclusive negative control; it is not evidence against the faithful route.'"
+ },
+ "TP-A5-010": {
+  "id": "TP-A5-010",
+  "statement": "Target-applicability screen of PKC 2016 instance 1 (p-1 smooth) against secp256k1 - a computed inapplicability, with instance 2 left open.",
+  "value": "INSTANCE 1 (p-1-smooth) IS INAPPLICABLE TO secp256k1, computed here. The construction requires p-1 = r * prod(p_i) with all p_i < B and prod(p_i) ~ p^(1/m). I factored p-1 = 2 * 3 * 7 * 13441 * P, with P = 205115282021455665897114700593932402728804164701536103180137503955397371 a 237-bit prime. Every divisor of p-1 either divides 564522 (= 2*3*7*13441, about 2^19.11) or is divisible by the 237-bit prime P and is therefore not smooth. Required prod(p_i) ~ p^(1/m) is 2^128 at m=2 and 2^32 at m=8, so the deficit is 108.9 bits (m=2), 66.2 (m=3), 44.9 (m=4), 32.1 (m=5), 23.6 (m=6), 17.5 (m=7), 12.9 (m=8) - the requirement fails for every m in range. EXPLICITLY NOT CLOSED: (a) INSTANCE 2, the auxiliary-curve + Velu-isogeny construction, needs an auxiliary curve over the SAME field with a large smooth subgroup and is NOT screened by this computation - the decision substrate calls it 'a genuinely open mechanism'; (b) Amadori-Pintore-Sala's separate one-Groebner-basis variant; (c) the asymptotic complexity of either, which the source leaves open.",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Requirement quoted from the fetched PKC 2016 text: 'In the first instance, we assume that p- 1 has a large divisor which is smooth' and sec. 3.3 'Let us first assume that p- 1 = r*prod p_i where the pi are not necessarily distinct primes, all smaller than B, and prod p_i ~ p^(1/m)'. Computed (scratchpad/atlas a5_screen.json): sympy.factorint(p-1) = {2:1, 3:1, 7:1, 13441:1, 205115282021455665897114700593932402728804164701536103180137503955397371:1}; that factor has bit_length 237 and sympy.isprime = True; smooth part = 564522, log2 = 19.107; log2(p)/m for m=2..8 = 128.0, 85.33, 64.0, 51.2, 42.67, 36.57, 32.0; deficits as listed. Instance-2 openness quoted from repo/ECDLP_DECISION_SUBSTRATE.json R-PETIT-COMPOSED-MAPS next_action: 'Treat the auxiliary-isogeny construction as a genuinely open mechanism only after it supplies exact recovery semantics and a falsifiable prediction'."
+ },
+ "TP-A5-011": {
+  "id": "TP-A5-011",
+  "statement": "The correct discriminator for whether a curve symmetry can give an asymptotic Groebner gain: relation-preserving subgroup order as a function of m, not |Aut(E)|.",
+  "value": "CLOSED AS A REASONING RULE, and instantiated computationally here. A rational order-l torsion point T gives coordinatewise translations P_i -> P_i + k_i T that preserve the relation sum(P_i) = R exactly when sum(k_i) = 0 mod l; that relation-preserving subgroup has order l^(m-1) and GROWS with m. The GLV scalar action is sum-compatible only on the diagonal, whose order is 3 for every m. I verified the torsion mechanism directly on E: y^2 = x^3 - x over F_101 (order 104, rational 2-torsion {(0,0),(1,0),(100,0)}): across m = 2,3,4,5 and 300 random relations each, even-weight translations preserved the relation in 9000/9000 checks and odd-weight translations broke it in 9000/9000. CONSEQUENCE FOR SCOPING FUTURE CANDIDATES: the repo is explicit that 'Fixed order of a curve symmetry alone therefore proves no constant-factor ceiling' and 'No claim is made that a fixed-order curve symmetry cannot change a Groebner solving degree.' Any rejection of a future candidate must therefore be argued from ITS relation-preserving subgroup order as a function of m, never from |Aut(E)| = 6 or from orbit size 3.",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quotes, notes/GLV_SEMAEV_ITERATION_001.md @origin/main: 'translation by a rational order-`m` torsion point may be applied independently to the free coordinates subject to `sum k_i = 0 mod m`. For rational 2-torsion this gives an even-weight subgroup of order `2^(n-1)`, which grows with the number of relation variables. The GLV scalar action is different: it is sum-compatible only on the diagonal, whose order remains three. Fixed order of a curve symmetry alone therefore proves no constant-factor ceiling'; and Claim boundary: 'No claim is made that a fixed-order curve symmetry cannot change a Groebner solving degree.' Recomputed (scratchpad/atlas a5_torsion.json): affine EC arithmetic over F_101 for y^2=x^3-x; for each m in 2..5, 300 random m-tuples, all 2^m translation weight vectors tested; even-weight preserved/broken = 600/0, 1200/0, 2400/0, 4800/0; odd-weight preserved/broken = 0/600, 0/1200, 0/2400, 0/4800."
+ },
+ "TP-A5-012": {
+  "id": "TP-A5-012",
+  "statement": "Scope of the secp256k1 rational-2-torsion screen against the FGHR/FHJRV torsion-translation mechanism.",
+  "value": "CLOSED FOR THE DIRECT MECHANISM ON secp256k1 ONLY: E(F_p)[2] = {O}, so there is no rational order-2 point and the direct rational-2-torsion symmetrization cannot be instantiated on the target curve. I recomputed this: a nonzero 2-torsion point needs a root of x^3 + 7 in F_p, i.e. -7 must be a cube; (-7)^((p-1)/3) mod p != 1, so no root exists. EXPLICITLY NOT CLOSED, in the repo's own words: 'This target-specific screen does not exclude auxiliary curves or extension fields.' It also does not exclude rational l-torsion for other l (unscreened here), does not exclude non-rational torsion used through an extension, and is not an argument that torsion symmetrization is generally useless - it is only a statement that this particular input is absent on secp256k1.",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Quote, notes/GLV_SEMAEV_ITERATION_001.md @origin/main: 'The direct rational-2-torsion mechanism is unavailable on secp256k1 over `F_p`: the kernel-checked theorem `Ecdlp.Curve.secp256k1_no_nonzero_two_torsion` proves `E(F_p)[2] = {O}`. This target-specific screen does not exclude auxiliary curves or extension fields.' Theorem name grep-confirmed at origin/main in Ecdlp/Proved/CurveCardinalityExact.lean. Recomputed (a5_basic.py): pow((-7) % p, (p-1)//3, p) != 1 -> 'minus7_is_cube_mod_p': false, hence 'E_has_nonzero_2torsion': false."
+ },
+ "TP-A5-013": {
+  "id": "TP-A5-013",
+  "statement": "Scope of the generic-group Omega(sqrt n) lower bound (GEN-GENERIC-001 / R-GENERIC-LOWER-BOUND).",
+  "value": "CLOSED WITHIN A NARROW MODEL: for a prime-order group, any CLASSICAL algorithm that touches the group only through generic encoding/operation oracles must form at least sqrt(n) elements; instantiated for secp256k1 as 2^127 < q. I recomputed the arithmetic: n is prime, isqrt(n) = 2^128 - 1 and n is not a perfect square so ceil(sqrt n) = 2^128 > 2^127. EXPLICITLY NOT CLOSED: (a) NON-generic algorithms that read the (x,y) encoding are outside the model - for F_p^x index calculus provably beats Omega(sqrt p), and for prime-field EC 'no such algorithm is known but its non-existence is unproven'; (b) it is CLASSICAL-ONLY and false against Shor; (c) even inside the model only the FIXED-TRANSCRIPT affine-collision core is formalized - 'the full adaptive Shoup/Nechaev oracle-query theorem is NOT formalized'; (d) there is no cost/step semantics at all, only the arithmetic relation p <= q*q. It is therefore not an unconditional hardness statement about secp256k1.",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Quotes, BARRIERS.md @origin/main: 'It is **not** unconditional - it says nothing about non-generic attacks that read the point encoding ... and it is **classical-only** - Shor solves ECDLP in quantum polynomial time.' data/attack_registry.json GEN-GENERIC-001 flag: 'only the fixed-transcript affine-collision core is proved; the full adaptive Shoup/Nechaev oracle-query theorem is NOT formalized (GenericGroupBound.lean docstring).' Anchors Ecdlp.GenericGroup.generic_dlog_sqrt_bound / secp256k1_generic_security grep-confirmed. Recomputed (a5_basic.py): sympy.isprime(n)=True; integer_nthroot(n,2) = (340282366920938463463374607431768211455, False) = (2^128-1, not exact), so ceil(sqrt n)=2^128; 2^127 < ceil(sqrt n) True."
+ },
+ "TP-A5-014": {
+  "id": "TP-A5-014",
+  "statement": "Scope of the Pohlig-Hellman elimination (GEN-PH-004) - the only unconditional no-go in the map.",
+  "value": "CLOSED UNCONDITIONALLY for the plain single-target model: n is prime and #E(F_p) = n (cofactor 1), so the group has no proper nontrivial subgroup and the PH projection has no valid target; PH degenerates to a single order-n DLP = Theta(sqrt n). I recomputed both premises independently of Schoof: n is prime; the base point G lies on y^2=x^3+7 and [n]G = O so n divides #E; and the Hasse interval [p+1-2*floor(sqrt p)-2, p+1+2*floor(sqrt p)+2] contains exactly ONE multiple of n, namely n itself - so #E = n is forced. EXPLICITLY NOT CLOSED / NOT IMPLIED: this is an arithmetic fact about one attack family; it 'does not by itself prove hardness against non-generic attacks'. Adjacent but distinct objects (Cheon p-1/p+1 on a different modulus) are NOT covered by it.",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Quote, repo/ECDLP_DECISION_SUBSTRATE.json R-POHLIG-HELLMAN anti_overclaim: 'Prime order rules out this decomposition route; it does not by itself prove hardness against non-generic attacks.' Kernel anchors Ecdlp.Primality.secp256k1_n_prime and Ecdlp.Curve.secp256k1_card_point_eq_n grep-confirmed at origin/main. Recomputed (a5_basic.py): isprime(n)=True; G on curve True; [n]G = point at infinity True (double-and-add over F_p); Hasse window [115792089237316195423570985008687907852589419931798687112530834793045298248752, 115792089237316195423570985008687907853950549399482440966384333222772371094576] contains exactly the single multiple of n equal to n -> 'cardE_forced_equals_n': true."
+ },
+ "TP-A5-015": {
+  "id": "TP-A5-015",
+  "statement": "Scope of the MOV / Frey-Ruck / Tate pairing-transfer exclusion (PAIRING-TRANSFER-MOV-FR-TATE).",
+  "value": "CLOSED FOR k <= 100 BY THE KERNEL, and I computed the exact value: the embedding degree of secp256k1 is exactly ord(p mod n) = (n-1)/6 = 19298681539552699237261830834781317975472927379845817397100860523586360249056 (about 2^253.4), and I separately confirmed p^k != 1 mod n for every 1 <= k <= 100. So no low-degree transfer target exists; a transfer would land in a field of astronomically larger size than the direct Theta(sqrt n) attack. EXPLICITLY NOT CLOSED: (a) the KERNEL-certified frontier ends at k = 100 - the exact value above is my computation, not a Lean theorem; (b) the pairing MECHANISM itself (e_n : E[n] x E[n] -> mu_n, Miller evaluation, final exponentiation, Weil reciprocity) is absent from Mathlib and cannot be stated, so this is a resistance/formalization map, not a proof that every conceivable pairing-based reduction is impossible; (c) the substrate's own anti-overclaim: 'it is not a theorem that every conceivable pairing-based reduction is impossible.'",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quote, repo/ECDLP_DECISION_SUBSTRATE.json R-PAIRING-TRANSFER anti_overclaim: 'The proved bound excludes low-degree practical transfer in the audited model; it is not a theorem that every conceivable pairing-based reduction is impossible.' Registry boundary quote: 'Verified frontier ENDS at k=100; k>100 not kernel-certified (only externally known large).' Kernel anchor Ecdlp.Curve.secp256k1_embedding_degree_gt_100 grep-confirmed. Recomputed (a5_basic.py): all(pow(p,k,n) != 1 for k in 1..100) = True; exact multiplicative order of p mod n obtained by factoring n-1 = 2^6*3*149*631*107361793816595537*174723607534414371449*341948486974166000522343609283189 (sympy.factorint) and dividing out -> ord = (n-1)/6 as stated."
+ },
+ "TP-A5-016": {
+  "id": "TP-A5-016",
+  "statement": "Scope of the anomalous-curve / p-adic lifting exclusion (PADIC-LIFTING-SSSA).",
+  "value": "CLOSED FOR THE ANOMALOUS ROUTE ONLY: Smart/Satoh-Araki/Semaev needs #E(F_p) = p, equivalently trace t = 1. I recomputed t = p + 1 - n = 432420386565659656852420866390673177327 (129 bits): t != 1 and t != 0 (so secp256k1 is ordinary, not supersingular) and t^2 <= 4p (Hasse holds). Since #E = n != p (TP-A5-014), the exclusion is unconditional, not conditional on a pinned order. EXPLICITLY NOT CLOSED: (a) xedni calculus and general lifting are only EMPIRICALLY worse than generic - the lifting-probability barrier is unformalized because there is no cost model; (b) 'a novel efficient global lift for ordinary curves' is listed as an open escape route; (c) the p-adic mechanism (formal group, canonical lift) is entirely unformalized; (d) the substrate's anti-overclaim: 'Ruling out the anomalous-curve attack does not rule out unrelated lifting or representation-specific algorithms.'",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Quote, repo/ECDLP_DECISION_SUBSTRATE.json R-ANOMALOUS-PADIC anti_overclaim: 'Ruling out the anomalous-curve attack does not rule out unrelated lifting or representation-specific algorithms.' data/attack_registry.json PADIC-LIFTING-SSSA open_escape_routes: 'OPEN (but empirically negative): a novel efficient global lift for ordinary curves; the xedni/lifting-probability barrier is unformalized'. Kernel anchors Ecdlp.Curve.anomalous_iff_trace_one and secp256k1_trace_ordinary_nonanomalous grep-confirmed. Recomputed (a5_basic.py): t = p+1-n = 432420386565659656852420866390673177327, bit_length 129, t!=0 True, t!=1 True, t*t <= 4*p True, n != p True."
+ },
+ "TP-A5-017": {
+  "id": "TP-A5-017",
+  "statement": "Scope of the GLV no-go on the discrete-log exponent (GEN-GLV-003 / GlvNoGo).",
+  "value": "CLOSED FOR ONE MAP USED ONE WAY: the order-3 GLV endomorphism applied to a DLP instance carries (P, Q=[m]P) to (phi P, [m] phi P) with the SAME unknown m and a single scalar k satisfying k^2+k+1=0 acting identically on base and target, so it introduces no new equation on the secret and buys at most the orbit constant. I verified the underlying structure: p = 1 mod 3; beta^3 = 1 and beta^2+beta+1 = 0 mod p; lambda^3 = 1 and lambda^2+lambda+1 = 0 mod n; and (beta*Gx, Gy) equals [lambda]G exactly. EXPLICITLY NOT CLOSED, quoted from the repo: 'SCOPED no-go, NOT universal: GlvNoGo proves only THIS map used THIS way preserves the exponent. \"CM-by-Z[zeta_3] gives no asymptotic advantage\" is BELIEVED, not a theorem.' Also not closed: the ~sqrt(3)/sqrt(6) rho constants (no cost model), and whether GLV-invariant RELATION GENERATION changes prime-field index-calculus asymptotics (mathematically open, operationally parked).",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Quote, data/attack_registry.json @origin/main GEN-GLV-003 open_escape_routes: 'SCOPED no-go, NOT universal: GlvNoGo proves only THIS map used THIS way preserves the exponent. \"CM-by-Z[zeta_3] gives no asymptotic advantage\" is BELIEVED, not a theorem (GlvNoGo.lean docstring).' Anchors Ecdlp.Curve.secp256k1_glv_preserves_dlog and secp256k1_glv_single_scalar grep-confirmed in Ecdlp/Proved/GlvNoGo.lean. Recomputed (a5_basic.py): p % 3 = 1; pow(beta,3,p) = 1; (beta^2+beta+1) % p = 0; pow(lam,3,n) = 1; (lam^2+lam+1) % n = 0; (beta*Gx % p, Gy) == scalar_mul(lam, G) -> True."
+ },
+ "TP-A5-018": {
+  "id": "TP-A5-018",
+  "statement": "Scope of the prime-field index-calculus / Semaev barrier (IC-1, IC-2, BARRIERS.md B3) - what is a theorem and what is a heuristic.",
+  "value": "NOT A NO-GO. What IS closed (kernel): S3 is fully characterized in both directions, S4 is built as a resultant with both directions, point decomposition implies a Semaev relation on Mathlib's actual group law, and deg S3 = 2 per variable so each factor-base coordinate has at most 2 completions. I independently confirmed the degree facts (deg S3 = 2 per variable; deg S4 = 4 per variable, total degree 12) and validated both polynomials against real EC arithmetic (116,050 forward S3 vanishing checks over F_101 and F_307 with b=7, 0 failures; 795 forward S4 checks, 0 failures). What is EXPLICITLY NOT CLOSED, in the repo's own words: 'that this bounded-fan-out plus factor-base balance yields *no* subexponential algorithm over F_p' is 'NOT a theorem here'; 'a *proof* would settle the open hardness conjecture and is **not** claimed'; the no-Weil-restriction argument is 'the studied heuristic behind prime-field ECDLP staying Theta(sqrt n)'. Also open: solving degree for m >= 3 with an external Groebner engine, behaviour at non-toy primes, S5 and beyond, and deg S4 = 4 as a Lean theorem (recorded as an unbuilt node).",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quotes, BARRIERS.md @origin/main B3: 'What remains genuinely open (NOT a theorem here): that this bounded-fan-out plus factor-base balance yields *no* subexponential algorithm over F_p.'; 'This is the studied heuristic behind prime-field ECDLP staying Theta(sqrt n) - but a *proof* would settle the open hardness conjecture and is **not** claimed.' Independently recomputed (a5_sem2.py, a5_ecval.py): sympy degrees deg_x_i S3 = [2,2,2], deg_x_i S4 = [4,4,4,4], total_degree(S4) = 12; my S4 equals the repo Lean `quadraticResultant` formula instantiated at the S3poly slice coefficients (True); EC validation over F_101 (101 affine points) gave 10100 forward S3 zeros / 0 failures and 397 S4 zeros / 0 failures, over F_307 (326 affine points) 105950 / 0 and 398 / 0."
+ },
+ "TP-A5-019": {
+  "id": "TP-A5-019",
+  "statement": "Scope of the P0-P4 experiment family as evidence (experiments-scaling layer).",
+  "value": "CLOSED ONLY AS REPRODUCIBLE PARTIAL NEGATIVES AT TOY SCALE. What they establish: relation sets from S3/S4 solving replay exactly against real ec_add with zero spurious roots; GLV/u=x^3 orbit closure buys a constant ~3x storage and leaves the yield law c*B_eff^2/p with B-exponent 2 unchanged; the u=x^3 and composed-map presentations lower a d_reg NUMBER but pay it back as a 15-20x (P3) or ~100x (P4) larger Macaulay matrix and 80x / 4300x slower time on the SAME variety. EXPLICITLY NOT ESTABLISHED, quoted: 'an exact/general degree-of-regularity law, the best prime-field factor-base encoding, a materially different phase-preserving formulation, a faithful Petit construction, or any asymptotic advantage/no-advantage result'; the O(|F|^{m-1}*solve) loops 'are **not** subexponential index-calculus algorithms'; P3's m>=3 degree-of-regularity is 'an UNVALIDATED pure-Python Macaulay-matrix proxy (a capped lower bound >15)' never cross-checked with Singular/Sage/msolve; all measurements are 16/20/24-bit toy curves. Two legacy 24-bit P0 rows used cofactor-3 curves with an ambient-E(F_p) base and are geometry/yield sanity data, NOT valid subgroup-log relations. Critically: 'equality-replay alone cannot establish a complexity no-go.'",
+  "value_type": "string",
+  "status": "unknown",
+  "how_obtained": "Quotes, BARRIERS.md @origin/main B3 GLV-Semaev section: 'What it does not establish (open): an exact/general degree-of-regularity law, the best prime-field factor-base encoding, a materially different phase-preserving formulation, a faithful Petit construction, or any asymptotic advantage/no-advantage result.'; 'equality-replay alone cannot establish a complexity no-go.'; '(Two legacy 24-bit rows used cofactor-3 curves with an ambient-`E(F_p)` base - geometry/yield sanity data, not valid subgroup-log relations...)'. Also data/attack_registry.json flags: 'EXPERIMENTAL CAVEAT (not Lean): P3's degree_of_regularity for m>=3 is an UNVALIDATED pure-Python Macaulay-matrix proxy'. Status marked unknown because I did not re-run P0-P4; I quote their recorded scope only."
+ },
+ "TP-A5-020": {
+  "id": "TP-A5-020",
+  "statement": "Scope of the Weil-reciprocity frozen no-go (ladder rung W4-1).",
+  "value": "CLOSED AS A FORMALIZATION NO-GO, NOT AS MATHEMATICS. What is closed: the landed Weil layer rides on Mathlib's toClass : W.Point -> Additive (ClassGroup W.CoordinateRing); passing to divisor classes forgets exactly the F*-valued products f(div g), g(div f) that reciprocity equates, so ClassGroup - necessary for W1/W2 - is provably insufficient for W4 and 'cannot be leveraged into a special case'; there is 'no reachable non-vacuous special case'. Three specific Mathlib objects are absent at v4.31 and on master: (1) a differential residue on a function field plus sum_P res_P omega = 0; (2) a tame/local symbol (f,g)_v and its product formula; (3) a Divisor type with degree and a valuation family covering ALL closed points including the place at infinity O (HeightOneSpectrum covers only the affine coordinate ring). A native_decide instance is also blocked because the Miller function is produced non-constructively via ClassGroup.mk_eq_one_iff. EXPLICITLY NOT CLOSED: Weil reciprocity itself is TRUE mathematics - nothing here is a mathematical no-go; W4-2 and all of W5 are parked, not refuted; and the loop explicitly routes to the independent rung W3e-3, so the ladder is not dead. Also: building the pairing 'would add **no** security fact about secp256k1 that the embedding-degree bound does not already give.'",
+  "value_type": "string",
+  "status": "unknown",
+  "how_obtained": "Quotes, BARRIERS.md @origin/main: 'the reciprocity crux resists an honest cycle: it is a genuine Mathlib gap with **no reachable non-vacuous special case**'; 'passing to classes forgets exactly the `F*`-valued products `f(div g)`, `g(div f)` that reciprocity equates, so `toClass`/`ClassGroup` ... is provably insufficient for W4'; 'Mathlib's `HeightOneSpectrum` valuations cover only the affine coordinate ring, missing `O`'; 'the repo's Miller function is produced non-constructively (`ClassGroup.mk_eq_one_iff`), so `divEval f_P` does not reduce to a `ZMod p` computation.' Status unknown: this is a documented formalization-frontier claim about Mathlib source trees that I did not re-audit."
+ },
+ "TP-A5-021": {
+  "id": "TP-A5-021",
+  "statement": "Scope of the N7-uniform x([n]P) = Phi_n/PsiSq_n wall after the 2026-07-19 adversarial correction.",
+  "value": "CLOSED AS A MAPPED WALL, WITH ONE PRIOR CLAIM RETRACTED. What is closed: base leaves n=0..4 of normEDSRec' are all sorry-free and server-verified; the omega-free reformulation removes the need for an omega_n object, the divide-by-2 obstruction and a universal ring; the induction skeleton elaborates in the kernel; the eval bridge transports PsiSq_n.eval x and Phi_n.eval x to the scalar w_n. What was RETRACTED: three abstracted step-lemmas (odd_x_algebra, even_y_algebra, odd_y_algebra) were found to be UNDER-HYPOTHESIZED and their universally quantified forms 'are literally false: flipping Yk -> -Yk realises (-kP)+(k+1)P=P'; they must be restated to thread the Carrier y-coupling, not merely sorry-filled. A second retraction: the two even_x doubling identities are true and CAS-certified for k=1..8 but 'are **not a finite certificate**' - closing them needs a strong induction over the elliptic net. EXPLICITLY NOT CLOSED: the torsion bridge nsmul_eq_zero_iff_psi_evalEval_zero, which the scout found is 'circular with the still-open uniform x-map' - proving the bridge needs the x-coordinatisation whose non-degeneracy needs the bridge; the single unblock route is a joint strengthening of Carrier, 'a **single multi-cycle refactor of the induction**, not a mergeable single-cycle brick'. Per-n formulas beyond n=4 are declared ledger inflation and are not to be minted.",
+  "value_type": "string",
+  "status": "unknown",
+  "how_obtained": "Quotes, BARRIERS.md @origin/main N7 subsection: 'an adversarial audit found that three of the abstracted step-lemmas - `odd_x_algebra`, `even_y_algebra`, `odd_y_algebra` - are *under-hypothesized* ... the universally-quantified forms are literally false: flipping `Yk -> -Yk` realises `(-kP)+(k+1)P=P`'; 'a deeper audit found they are **not a finite certificate**'; '(c) the uniform bridge is **circular with the still-open uniform x-map**'; 'That is a **single multi-cycle refactor of the induction**, not a mergeable single-cycle brick; per-`n` formulas beyond `n=4` are ledger inflation and are not to be minted.' Status unknown: a Lean-frontier status claim I did not rebuild (no local toolchain, and the repo is read-only for me)."
+ },
+ "TP-A5-022": {
+  "id": "TP-A5-022",
+  "statement": "Scope of the point-counting closure for secp256k1 versus the general Schoof/Hasse gap.",
+  "value": "CLOSED FOR secp256k1 ONLY, BY A CURVE-SPECIFIC CERTIFICATE: #E(F_p) = n is a kernel theorem obtained from n | #E plus #E <= 2p+1 < 3n plus E[2] = {O} - no Hasse and no Schoof. I reproduced the same style of argument arithmetically (see TP-A5-014) and confirmed the E[2] = {O} input by computing that x^3+7 has no root in F_p. EXPLICITLY NOT CLOSED: the general Schoof/Hasse machinery is absent from Mathlib, so other curves remain open, and specifically 'P-256, whose j != 0 blocks this certificate route' cannot use it. So the certificate is not a general point-counting capability and must not be cited as one.",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Quote, BARRIERS.md @origin/main: '**Point counting** - **closed for secp256k1**: `#E(F_p) = n` is now a kernel theorem (`CurveCardinalityExact.lean` - a curve-specific certificate, `n | #E` plus `#E <= 2p+1 < 3n` plus `E[2] = {O}`, no Hasse/Schoof needed). The general Schoof/Hasse machinery is still absent from Mathlib, so other curves (e.g. P-256, whose `j != 0` blocks this certificate route) remain open.' Anchors secp256k1_card_point_eq_n and secp256k1_no_nonzero_two_torsion grep-confirmed. Recomputed (a5_basic.py): 'minus7_is_cube_mod_p': false so x^3+7 has no F_p root; 'cardE_forced_equals_n': true."
+ },
+ "TP-A5-023": {
+  "id": "TP-A5-023",
+  "statement": "Scope of the missing-foundation barriers B1 (cost model), B2 (lattice reduction, quantum circuits) and what sidesteps them.",
+  "value": "CLOSED AS A FOUNDATION MAP: Lean/Mathlib has no group-operation/oracle-query cost framework (B1, ~54 claims), no lattice-reduction theory (B2, ~24 claims), and no quantum-circuit cost model (B2, ~38 claims); consequently exact Theta running times, distinguished-point parallel speedups, batch/preprocessing S*T^2 ~ n trade-offs, Cheon exponents, HNP reductions, and Shor resource statements cannot be stated faithfully - only structural corollaries. EXPLICITLY NOT CLOSED / IMPORTANT ESCAPE: the barrier is about EXPRESSIBILITY, not truth, and it has already been sidestepped twice - the generic Omega(sqrt p) lower bound and the MOV/Smart resistance facts were reached by finding an information-theoretic core that needs no cost model. The substrate names the same sidestep as a live candidate for the Corrigan-Gibbs-Kogan preprocessing lower bound. So 'blocked on B1/B2' must NOT be read as 'this question is closed'; it means no faithful Lean statement exists yet by the direct route.",
+  "value_type": "string",
+  "status": "unknown",
+  "how_obtained": "Quotes, BARRIERS.md @origin/main B1: 'Lean has no framework for \"number of group operations\" / oracle-query cost, so these cannot be stated faithfully, only their *structural* corollaries.' data/attack_registry.json shared-blocker edge: 'The generic Omega(sqrt n) and MOV/Smart resistance facts were reached by sidestepping the cost model with an information-theoretic core; the trade-off/lattice/quantum families have no such sidestep and remain blocked-foundation.' multi-target-precomputation open_escape_routes: 'the generic preprocessing lower bound (Corrigan-Gibbs-Kogan S*T^2 >~ n) is a candidate for the same information-theoretic cost-model sidestep'. Status unknown: an upstream-absence claim, dated 2026-07-22, that I did not re-audit against Mathlib source."
+ },
+ "TP-A5-024": {
+  "id": "TP-A5-024",
+  "statement": "Scope of the lattice/HNP biased-nonce ECDSA family (lattice-hnp-biased-nonce-ecdsa) - a different threat model, not an ECDLP barrier.",
+  "value": "CLOSED AS OUT-OF-MODEL FOR THE PRIMARY OBJECTIVE: the attack targets NONCE GENERATION, not the group; the curve's Theta(sqrt n) hardness is untouched and correct deterministic nonces (RFC 6979) remove the attack's input entirely. Only the LAST MILE is formalized (known/reused nonce => private key, pure field identities with no adversary or probability). EXPLICITLY NOT CLOSED: the FIRST MILE (bias -> HNP lattice -> nonce reconstruction) is blocked on missing LLL/BKZ/CVP in Mathlib, so nothing about how much bias suffices is proved here; and the family is a real-world key-recovery class that a scoping decision must keep in the separate 'implementation-leakage' threat model, never counted as evidence about plain ECDLP hardness in either direction.",
+  "value_type": "string",
+  "status": "kernel_verified_in_repo",
+  "how_obtained": "Quotes, data/attack_registry.json @origin/main lattice-hnp-biased-nonce-ecdsa: 'targets NONCE GENERATION, not the group; curve hardness Theta(sqrt n) is untouched ... implementation property, not curve property'; verdict 'Real-world attack but NOT a curve break: verified last-mile algebra, blocked first-mile (B2, no lattice reduction).' repo/ECDLP_DECISION_SUBSTRATE.json R-HNP-NONCE-LEAKAGE anti_overclaim: 'Recovering keys from bad nonces demonstrates an implementation or protocol failure, not a generic ECDLP solver.' Anchors Ecdlp.Schnorr.ecdsa_known_nonce_recovers_key / ecdsa_nonce_reuse_recovers cited at Ecdlp/Proved/EcdsaKeyRecovery.lean."
+ },
+ "TP-A5-025": {
+  "id": "TP-A5-025",
+  "statement": "Scope of the quantum boundary (quantum-shor-ecdlp / R-QUANTUM-SHOR).",
+  "value": "NOT A BARRIER AT ALL - it is the explicit failure boundary of the classical results. Shor solves ECDLP in quantum polynomial time and no curve property defeats it; every classical bound in this substrate is scoped to exclude it. What is CLOSED here: only that the repo makes no quantum claim and formalizes none (no quantum circuit cost model in Mathlib, declared out of scope). EXPLICITLY NOT A REPO RESULT: the resource figure (835 logical qubits, 2^30.63 Toffoli gates for secp256k1, Luo et al. 2026, arXiv:2607.13816) is EXTERNAL literature, is a LOGICAL-resource estimate only, and 'does not establish available fault-tolerant hardware'. I did not fetch that preprint, so I record the figure as repo-attested and UNVERIFIED by me.",
+  "value_type": "string",
+  "status": "unknown",
+  "how_obtained": "Quotes, data/attack_registry.json @origin/main flag: 'EXTERNAL (not a repo result): Luo et al. 2026 (arXiv:2607.13816) report a space-optimized secp256k1 circuit estimate of 835 logical qubits and 2^30.63 Toffoli gates. ... Quantum resource claims are not machine-checked repo facts.' repo/ECDLP_DECISION_SUBSTRATE.json R-QUANTUM-SHOR anti_overclaim: 'This is a separate computational threat model and a future resource risk, not a classical secp256k1 break or evidence of current operational capability.' I did NOT fetch arXiv:2607.13816; the figures are UNVERIFIED by me."
+ },
+ "TP-A5-026": {
+  "id": "TP-A5-026",
+  "statement": "Scope of the multi-target / precomputation / Cheon exclusion, and the n +/- 1 divisor structure the registry flags as an honest UNKNOWN.",
+  "value": "CLOSED FOR THE PRIMARY THREAT MODEL: the primary objective is 'classical-single-target-plain' - one arbitrary pair (P,Q), no leakage, no auxiliary powers, no interval promise - and Cheon requires an oracle emitting g^(alpha^i), which is strictly more input than that model supplies; batch and preprocessing never drop a single 256-bit target below Theta(sqrt n). I FILLED the registry's honest UNKNOWN row by computing the divisor structure it says was 'NOT measured in this substrate': n-1 = 2^6 * 3 * 149 * 631 * 107361793816595537 * 174723607534414371449 * 341948486974166000522343609283189 (largest prime factor about 2^108), and n+1 = 2 * 13 * 83 * 45751 * 509879 * 2300168931843757888934889794142140465088020300168077349902139959. This changes NOTHING about applicability: the auxiliary-power premise is absent from the primary model, so the row stays not-applicable. EXPLICITLY NOT CLOSED: the exact trade-off exponents cannot be stated in Lean at all (B1, no cost model); and a genuine batch of many same-group targets plus a cost model, or an oracle leaking g^(alpha^i), would revive the family under a DIFFERENT declared threat model.",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quote, data/attack_registry.json @origin/main flag: 'UNKNOWN (honest): the n+/-1 divisor structure a Cheon exponent would need is NOT measured in this substrate ... Marked unknown, not guessed.' Threat model quoted from repo/ECDLP_DECISION_SUBSTRATE.json threat_models[classical-single-target-plain]: 'One arbitrary public pair (P,Q) on secp256k1, no leakage, no auxiliary powers, no useful interval promise, and no attacker-chosen invalid inputs.' Computed (a5_screen.json): sympy.factorint(n-1) and sympy.factorint(n+1) as listed; each factor returned by sympy's complete factorization."
+ },
+ "TP-A5-027": {
+  "id": "TP-A5-027",
+  "statement": "Scope of the operational closure recorded by the decision substrate (RS-2026-07-24-001) - a policy state, not a mathematical result.",
+  "value": "CLOSED OPERATIONALLY, NOT MATHEMATICALLY. selected_attack_route is null, promoted_route_ids is empty, every route's authorized_experiment is false, experiments_authorized and bounded_exploration_authorized are both false, and R-GLV-SEMAEV / R-PRIME-FIELD-INDEX-CALCULUS / R-PETIT-COMPOSED-MAPS / R-EDS-DIVISION-POLYNOMIAL all carry status open_parked whose vocabulary entry reads: 'The mathematical direction is not globally disproved, but no execution is authorized.' The current mode is proposal_intake_promotion_closed. WHAT THIS DOES NOT MEAN: parked is not refuted; a candidate must not be rejected as 're-treading a closed premise' merely because its route is parked. Reopening requires a MATERIALLY DIFFERENT phase-preserving quotient / birational construction / other exact mechanism plus fixed-target behavior, recovery map, orbit tags, excluded components, a falsifiable full-cost prediction, an independent raw-artifact validator, and a new dated decision. Only the coordinatewise-cube premise and the nonzero-affine fixed-target scaling premise are substantively closed (TP-A5-001, TP-A5-005).",
+  "value_type": "string",
+  "status": "unknown",
+  "how_obtained": "Quotes, repo/ECDLP_DECISION_SUBSTRATE.json @origin/main: route_status_vocabulary.open_parked = 'The mathematical direction is not globally disproved, but no execution is authorized.'; next_phase_gate.reopen_requirements[0] = 'Supply a materially different phase-preserving quotient, birational construction, or other exact mechanism; the independent coordinatewise-cube premise is closed.'; phase_policy.selected_attack_route = null, experiments_authorized = false; route_selection.gate_result = 'No route or hypothesis is promoted, no solver run is authorized, and the primary ECDLP objective remains unchanged.' Status unknown: a policy state read from the file, not a computed or kernel fact."
+ },
+ "TP-A5-028": {
+  "id": "TP-A5-028",
+  "statement": "Scope rule: absence of a result from this repository (or from the sources checked) is not evidence of novelty; and one named prior-art overlap remains unverified.",
+  "value": "CLOSED AS A STANDING RULE: 'Absence of a result from this repository is explicitly **not** evidence of novelty.' The GLV-Semaev note further states that the diagonal-only observation and the fixed-target obstruction 'are **already in print**' and that none of its mathematics 'is a new attack idea, a new technique, or new invariant theory'. EXPLICITLY NOT CLOSED - THE OPEN NOVELTY GATE: Kudo-Yokota-Takahashi-Yasuda, 'Acceleration of Index Calculus for Solving ECDLP over Prime Fields and Its Limitation', CANS 2018, is recorded as 'the **most likely overlap** with the fixed-target result' but its full paper 'was not inspected'. I did not fetch it either. I also could NOT fetch the Gebregiyorgis 2016 thesis, the Duursma-Gaudry-Morain 1999 paper, Sturmfels 1993/2008, Tsakou-Ionica 2021, FGHR 2014 (ePrint 2012/199) or FHJRV EUROCRYPT 2014 - eprint.iacr.org returned HTTP 403 through the proxy. Every prior-art attribution in the note other than PKC 2016 is therefore repo-attested and UNVERIFIED by me. The ONLY literature claim I verified from primary text is PKC 2016 (TP-A5-009, TP-A5-010).",
+  "value_type": "string",
+  "status": "unknown",
+  "how_obtained": "Quotes, notes/GLV_SEMAEV_ITERATION_001.md @origin/main: 'Absence of a result from this repository is explicitly **not** evidence of novelty.'; 'the Springer metadata and abstract are available, but no open primary manuscript was confirmed and the full paper was not inspected. Its abstract states *\"We also make use of symmetries of summation polynomials ... discuss a limitation of our acceleration\"*, making it the **most likely overlap** with the fixed-target result.' Fetch attempts by me: https://eprint.iacr.org/2014/1002 and https://eprint.iacr.org/2012/199 both returned HTTP 403 via curl and via WebFetch; https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf returned HTTP 200 and was read."
+ },
+ "TP-A5-029": {
+  "id": "TP-A5-029",
+  "statement": "Scope of the FGHR Prop. 2 pseudo-reflection caveat - a live trap for any future cost argument on this route.",
+  "value": "CLOSED AS A PROHIBITION: the Faugere-Gaudry-Huot-Renault cost statement (their Prop. 2) assumes G is a pseudo-reflection group. The diagonal scalar C3 is NOT one for m >= 2, because a scalar zeta*I_m has all m eigenvalues != 1 whereas a pseudo-reflection has exactly one. I verified the linear-algebra fact directly: the diagonal action matrix on m coordinates is zeta*I_m, whose eigenvalue zeta != 1 has multiplicity m, so rank(zeta*I_m - I_m) = m, not 1. Therefore Prop. 2 MUST NOT be applied to the GLV diagonal action and no numerical cost ceiling derived from it may appear. EXPLICITLY NOT CLOSED: this is a prohibition on one citation, not a proof that no cost theorem exists for the diagonal action; a correctly derived cost statement for a non-pseudo-reflection group is simply absent, not impossible.",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quote, notes/GLV_SEMAEV_ITERATION_001.md @origin/main: '**Applicability caveat:** their **Prop. 2** cost statement assumes `G` is a *pseudo-reflection group*. The diagonal scalar `C3` is **not** one for `m >= 2` - a scalar `zeta*I_m` has all `m` eigenvalues `!= 1`, whereas a pseudo-reflection has exactly one. Prop. 2 must therefore **not** be applied here'. Verified by direct linear algebra: for the m x m matrix zeta*I_m with zeta a primitive cube root, zeta*I_m - I_m = (zeta-1)*I_m which has full rank m for every m >= 1 since zeta != 1; a pseudo-reflection is by definition a finite-order element whose fixed space has codimension 1, i.e. rank 1. The FGHR paper itself was NOT fetched (eprint 403), so the attribution of Prop. 2 is repo-attested only."
+ },
+ "TP-A5-030": {
+  "id": "TP-A5-030",
+  "statement": "Scope of the fibre-direction correction in the GLV target-transport law - a recorded error class, not a barrier.",
+  "value": "CLOSED AS A CORRECTION: the polynomial identity carries the INVERSE exponent on the target, S4(beta*x1,beta*x2,beta*x3, r) = S4(x1,x2,x3, beta^2 * r), while the induced map on solution FIBRES sends a solution at target r to a solution at target beta*r, i.e. it carries the problem for R to the problem for phi(R), NOT phi^2(R). Reading the exponent of the identity as the direction of the fibre map is a genuine error, which is why the Lean theorem S4_glv_fibre_transport derives the direction from full diagonal invariance instead. I independently confirmed both halves symbolically: the transport identity to beta^(-1) r holds exactly (reduction mod beta^2+beta+1 gives 0) and the same identity with beta^(+1) r is FALSE. WHAT IS NOT CLOSED BY IT: the consequence is only that at most three linked target fibres (R, phi(R), phi^2(R)) are available; 'The orbit size is constant, so this result alone establishes no nonconstant reduction', and separately S4(...,xR)=0 does not encode one fixed sign since x(R)=x(-R).",
+  "value_type": "string",
+  "status": "computed_here",
+  "how_obtained": "Quotes, notes/GLV_SEMAEV_ITERATION_001.md @origin/main: 'Reading the exponent of the identity as the direction of the fiber map is an error; `S4_glv_fibre_transport` in the Lean module therefore derives the fiber direction from full diagonal invariance rather than from the transport identity.'; 'The orbit size is constant, so this result alone establishes no nonconstant reduction.' Cross-checked against the Lean docstring in Ecdlp/Proved/GlvSemaevSymmetry.lean. Recomputed (a5_sem2.py): with beta reduced modulo beta^2+beta+1, expand(S4(b*x1,b*x2,b*x3,r) - S4(x1,x2,x3,beta^2*r)) reduces to 0 -> 'transport_to_beta^-1_r': true; the beta^(+1) variant does not -> 'transport_to_beta^+1_r_is_false': true; full diagonal invariance S4(beta*x_i all four) - S4 reduces to 0 -> true; S3 diagonal multiplier is exactly beta -> true."
+ }
+}
