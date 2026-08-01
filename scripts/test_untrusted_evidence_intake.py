@@ -11,9 +11,12 @@ from build_untrusted_evidence_intake import (
     ROOT,
     IntakeError,
     analyze_atlas,
+    append_only_receipt_problems,
     build_state,
+    forbidden_consumer_references,
     load_json_strict,
     loads_strict,
+    scan_forbidden_consumers,
     validate_contract,
     validation_problems,
 )
@@ -68,6 +71,12 @@ class UntrustedEvidenceIntakeTests(unittest.TestCase):
         self.assertFalse(self.state["safety"]["safe_for_scientific_selection"])
         self.assertFalse(self.state["safety"]["safe_for_calibration"])
         self.assertFalse(self.state["safety"]["safe_for_authorization"])
+        self.assertEqual(
+            [],
+            self.state["safety"]["negative_dependency_scan"][
+                "prohibited_consumer_references"
+            ],
+        )
 
     def test_duplicate_json_keys_are_rejected(self) -> None:
         with self.assertRaisesRegex(IntakeError, "duplicate JSON key"):
@@ -82,6 +91,43 @@ class UntrustedEvidenceIntakeTests(unittest.TestCase):
         mutated["sources"][0]["sha256"] = "0" * 64
         with self.assertRaisesRegex(IntakeError, "source hash mismatch"):
             build_state(mutated)
+
+    def test_invalid_source_git_blob_hash_is_rejected(self) -> None:
+        mutated = copy.deepcopy(self.contract)
+        mutated["sources"][0]["git_blob_sha1"] = "0" * 40
+        with self.assertRaisesRegex(IntakeError, "source Git blob hash mismatch"):
+            build_state(mutated)
+
+    def test_parsing_contract_semantics_are_closed(self) -> None:
+        for field in ("join_rule", "source_status_rule"):
+            with self.subTest(field=field):
+                mutated = copy.deepcopy(self.contract)
+                mutated["parsing_contract"][field] = "trust the source annotation"
+                with self.assertRaisesRegex(
+                    IntakeError, "parsing_contract semantics drifted"
+                ):
+                    validate_contract(mutated)
+
+    def test_protected_main_receipt_freezes_reviewed_source_fields(self) -> None:
+        current = copy.deepcopy(self.contract)
+        current["sources"][0]["sha256"] = "0" * 64
+        self.assertIn(
+            "protected-main receipt drifted: sources",
+            append_only_receipt_problems(current, self.contract),
+        )
+
+    def test_quarantine_reference_in_scientific_consumer_is_rejected(self) -> None:
+        references = forbidden_consumer_references(
+            {
+                "scripts/hypothesis_ranker.py": (
+                    'Path("data/untrusted_evidence_intake/atlas.json").read_text()'
+                )
+            }
+        )
+        self.assertEqual(["scripts/hypothesis_ranker.py"], references)
+
+    def test_current_tree_has_no_scientific_consumer_reference(self) -> None:
+        self.assertEqual([], scan_forbidden_consumers())
 
     def test_generated_source_hash_drift_is_rejected(self) -> None:
         mutated = copy.deepcopy(self.state)
@@ -152,8 +198,16 @@ class UntrustedEvidenceIntakeTests(unittest.TestCase):
         self.assertEqual(223, len(self.state["property_candidates"]))
         self.assertEqual(122, len(self.state["requirement_annotations"]))
         for record in self.state["mechanism_envelopes"]:
-            self.assertRegex(record["raw_record_sha256"], r"^[0-9a-f]{64}$")
+            self.assertRegex(
+                record["canonical_record_sha256"], r"^[0-9a-f]{64}$"
+            )
+            self.assertNotIn("raw_record_sha256", record)
             self.assertEqual("untrusted_mechanism_envelope", record["classification"])
+        for record in self.state["property_candidates"]:
+            self.assertRegex(
+                record["canonical_record_sha256"], r"^[0-9a-f]{64}$"
+            )
+            self.assertNotIn("raw_record_sha256", record)
 
 
 if __name__ == "__main__":

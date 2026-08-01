@@ -2,7 +2,7 @@
 
 Date: 2026-08-01
 Input snapshot date: 2026-07-26
-Base commit: `1e7ca8b22b4fd630ae9f9a62c0f824dd14c994a4`
+Base commit: `773932223d5584f65cbd0a581c602dc415b0b93c`
 
 ## Disposition
 
@@ -22,7 +22,15 @@ Safety result:
 The original files are preserved byte-for-byte under
 `archive/untrusted_intake/OPUS-ECDLP-SCREEN-ATLAS-2026-07-26/`. The generated
 index in `data/untrusted_evidence_intake/` contains JSON pointers and hashes,
-not upgraded claims.
+not upgraded claims. Each source is bound by both SHA-256 and its Git blob ID.
+After the first protected-main acceptance, the reviewed source fields are
+compared with the `origin/main` receipt and cannot be silently rewritten.
+
+The intake gate also scans code, policy, generated-data, and workflow roots for
+quarantine references. Only the builder, its tests, artifact registry,
+fixpoint gate, generated quarantine output, and invoking workflows are allowed
+to name this layer. A ranker, selector, canonical claim builder, or other
+scientific consumer that starts reading it makes the gate fail closed.
 
 ## Reproduced Structure
 

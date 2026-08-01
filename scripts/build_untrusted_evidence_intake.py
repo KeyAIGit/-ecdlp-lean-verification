@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import subprocess
 import sys
 from collections import Counter
 from pathlib import Path
@@ -13,6 +14,108 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTRACT_PATH = ROOT / "repo" / "UNTRUSTED_EVIDENCE_INTAKE_V0.json"
+
+CONTRACT_FIELDS = {
+    "schema_version",
+    "contract_id",
+    "intake_id",
+    "status",
+    "source_directory",
+    "output_path",
+    "sources",
+    "expected_observations",
+    "parsing_contract",
+    "authority_ceiling",
+    "canonical_write_prohibited",
+    "protected_main_receipt",
+    "required_state",
+    "regenerate",
+    "check",
+    "test",
+}
+SOURCE_FIELDS = {"path", "media_type", "sha256", "git_blob_sha1"}
+PARSING_CONTRACT = {
+    "duplicate_json_keys": "reject",
+    "non_finite_numbers": "reject",
+    "property_values": "retain_as_raw_strings_without_type_coercion",
+    "boolean_lexemes_for_parseability_only": ["false", "true"],
+    "tp_like_reference_pattern": (
+        r"(?<![A-Za-z0-9_-])(TP-[A-Z0-9][A-Z0-9-]*)(?![A-Za-z0-9_-])"
+    ),
+    "join_rule": (
+        "A verified join requires typed requirement IDs that resolve to property "
+        "IDs and a machine-readable verdict matrix. This snapshot has neither."
+    ),
+    "source_status_rule": (
+        "source_verified is an untrusted source-authored annotation, not evidence "
+        "that a primary artifact was obtained or read."
+    ),
+}
+EXPECTED_OBSERVATION_FIELDS = {
+    "mechanisms",
+    "properties",
+    "requirement_strings",
+    "free_text_requirement_strings",
+    "tp_like_requirement_strings",
+    "tp_like_reference_occurrences",
+    "unique_tp_like_references",
+    "unique_orphan_tp_like_references",
+    "declared_integer_values",
+    "declared_boolean_values",
+    "declared_integer_parse_violations",
+    "declared_boolean_parse_violations",
+    "declared_type_parse_violations",
+    "mechanism_full_text_read_rows",
+    "report_claimed_full_text_read_rows",
+    "verified_join_rows",
+}
+REQUIRED_STATE_FIELDS = {
+    "intake_status",
+    "join_status",
+    "verified_join",
+    "safe_for_scientific_selection",
+    "safe_for_calibration",
+    "safe_for_authorization",
+}
+PROTECTED_RECEIPT_FIELDS = {
+    "mode",
+    "protected_ref",
+    "contract_path",
+    "frozen_fields",
+}
+PROTECTED_FROZEN_FIELDS = (
+    "intake_id",
+    "status",
+    "source_directory",
+    "output_path",
+    "sources",
+    "expected_observations",
+    "parsing_contract",
+    "authority_ceiling",
+    "canonical_write_prohibited",
+    "required_state",
+    "protected_main_receipt",
+)
+QUARANTINE_REFERENCE_TOKENS = {
+    "untrusted_evidence_intake",
+    "build_untrusted_evidence_intake",
+}
+QUARANTINE_REFERENCE_SCAN_ROOTS = (
+    "scripts",
+    "repo",
+    "data",
+    ".github/workflows",
+)
+QUARANTINE_REFERENCE_ALLOWLIST = {
+    ".github/workflows/ci.yml",
+    ".github/workflows/docs-sync.yml",
+    "data/untrusted_evidence_intake/OPUS-ECDLP-SCREEN-ATLAS-2026-07-26.json",
+    "repo/ARTIFACTS.yaml",
+    "repo/UNTRUSTED_EVIDENCE_INTAKE_V0.json",
+    "scripts/build_untrusted_evidence_intake.py",
+    "scripts/check_generated_fixpoint.py",
+    "scripts/test_untrusted_evidence_intake.py",
+}
 
 MECHANISM_FIELDS = {
     "id",
@@ -77,6 +180,104 @@ def sha256_json(value: Any) -> str:
     return sha256_bytes(canonical_json(value).encode("ascii"))
 
 
+def git_blob_sha1(payload: bytes) -> str:
+    header = f"blob {len(payload)}\0".encode("ascii")
+    return hashlib.sha1(header + payload).hexdigest()
+
+
+def _git_file_bytes(root: Path, ref: str, relative: str) -> bytes | None:
+    result = subprocess.run(
+        ["git", "show", f"{ref}:{relative}"],
+        cwd=root,
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+    )
+    return result.stdout if result.returncode == 0 else None
+
+
+def append_only_receipt_problems(
+    contract: dict[str, Any], baseline: dict[str, Any] | None
+) -> list[str]:
+    """Compare one intake with its first protected-main receipt."""
+    if baseline is None:
+        return []
+    receipt = contract["protected_main_receipt"]
+    problems: list[str] = []
+    if baseline.get("intake_id") != contract.get("intake_id"):
+        return ["protected main already contains a different intake receipt"]
+    for field in receipt["frozen_fields"]:
+        if baseline.get(field) != contract.get(field):
+            problems.append(f"protected-main receipt drifted: {field}")
+    return problems
+
+
+def validate_protected_main_receipt(
+    contract: dict[str, Any], *, root: Path = ROOT
+) -> None:
+    receipt = contract["protected_main_receipt"]
+    payload = _git_file_bytes(
+        root, receipt["protected_ref"], receipt["contract_path"]
+    )
+    baseline = None
+    if payload is not None:
+        try:
+            baseline = loads_strict(
+                payload.decode("utf-8"), label="protected-main intake receipt"
+            )
+        except UnicodeError as error:
+            raise IntakeError(
+                f"protected-main intake receipt is not UTF-8: {error}"
+            ) from error
+        _require(
+            isinstance(baseline, dict),
+            "protected-main intake receipt must be an object",
+        )
+    problems = append_only_receipt_problems(contract, baseline)
+    _require(not problems, "; ".join(problems))
+
+
+def forbidden_consumer_references(
+    documents: dict[str, str],
+    *,
+    allowlist: set[str] = QUARANTINE_REFERENCE_ALLOWLIST,
+) -> list[str]:
+    """Find quarantine references outside the intake implementation surface."""
+    problems: list[str] = []
+    for relative, content in sorted(documents.items()):
+        normalized = relative.replace("\\", "/")
+        if normalized in allowlist:
+            continue
+        folded = content.casefold()
+        if any(token in folded for token in QUARANTINE_REFERENCE_TOKENS):
+            problems.append(normalized)
+    return problems
+
+
+def scan_forbidden_consumers(*, root: Path = ROOT) -> list[str]:
+    documents: dict[str, str] = {}
+    for scan_root in QUARANTINE_REFERENCE_SCAN_ROOTS:
+        directory = root / scan_root
+        if not directory.is_dir():
+            continue
+        for path in directory.rglob("*"):
+            if not path.is_file() or path.suffix.lower() not in {
+                ".json",
+                ".py",
+                ".yaml",
+                ".yml",
+            }:
+                continue
+            relative = path.relative_to(root).as_posix()
+            try:
+                documents[relative] = path.read_text(encoding="utf-8")
+            except UnicodeError as error:
+                raise IntakeError(
+                    f"consumer scan cannot decode UTF-8 file {relative}: {error}"
+                ) from error
+    return forbidden_consumer_references(documents)
+
+
 def _reject_constant(value: str) -> None:
     raise IntakeError(f"non-finite JSON number is forbidden: {value}")
 
@@ -130,7 +331,12 @@ def _safe_relative_path(value: Any) -> bool:
 
 def validate_contract(contract: Any) -> dict[str, Any]:
     _require(isinstance(contract, dict), "intake contract must be an object")
+    _require(set(contract) == CONTRACT_FIELDS, "intake contract fields drifted")
     _require(contract.get("schema_version") == "0.1", "unsupported contract schema")
+    _require(
+        contract.get("contract_id") == "untrusted-evidence-intake-v0",
+        "contract_id drifted",
+    )
     _require(
         contract.get("status") == "quarantined_untrusted_snapshot",
         "contract status must remain quarantined",
@@ -158,11 +364,12 @@ def validate_contract(contract: Any) -> dict[str, Any]:
     for index, source in enumerate(sources):
         _require(isinstance(source, dict), f"sources[{index}] must be an object")
         _require(
-            set(source) == {"path", "media_type", "sha256"},
+            set(source) == SOURCE_FIELDS,
             f"sources[{index}] has invalid fields",
         )
         path = source["path"]
         digest = source["sha256"]
+        blob_digest = source["git_blob_sha1"]
         _require(
             isinstance(path, str)
             and path not in seen_paths
@@ -181,6 +388,16 @@ def validate_contract(contract: Any) -> dict[str, Any]:
             isinstance(digest, str) and re.fullmatch(r"[0-9a-f]{64}", digest) is not None,
             f"sources[{index}].sha256 is invalid",
         )
+        _require(
+            isinstance(blob_digest, str)
+            and re.fullmatch(r"[0-9a-f]{40}", blob_digest) is not None,
+            f"sources[{index}].git_blob_sha1 is invalid",
+        )
+    parsing = contract.get("parsing_contract")
+    _require(
+        parsing == PARSING_CONTRACT,
+        "parsing_contract semantics drifted",
+    )
     authority = contract.get("authority_ceiling")
     _require(isinstance(authority, dict), "authority_ceiling must be an object")
     _require(set(authority) == AUTHORITY_KEYS, "authority_ceiling fields drifted")
@@ -197,6 +414,7 @@ def validate_contract(contract: Any) -> dict[str, Any]:
     )
     required = contract.get("required_state")
     _require(isinstance(required, dict), "required_state must be an object")
+    _require(set(required) == REQUIRED_STATE_FIELDS, "required_state fields drifted")
     _require(required.get("intake_status") == contract["status"], "status binding drifted")
     _require(required.get("join_status") == "not_present", "join must remain absent")
     _require(required.get("verified_join") is False, "verified_join must remain false")
@@ -209,8 +427,50 @@ def validate_contract(contract: Any) -> dict[str, Any]:
     observations = contract.get("expected_observations")
     _require(isinstance(observations, dict), "expected_observations must be an object")
     _require(
+        set(observations) == EXPECTED_OBSERVATION_FIELDS,
+        "expected_observations fields drifted",
+    )
+    _require(
         all(type(value) is int and value >= 0 for value in observations.values()),
         "expected observations must be non-negative integers",
+    )
+    receipt = contract.get("protected_main_receipt")
+    _require(isinstance(receipt, dict), "protected_main_receipt must be an object")
+    _require(
+        set(receipt) == PROTECTED_RECEIPT_FIELDS,
+        "protected_main_receipt fields drifted",
+    )
+    _require(
+        receipt.get("mode") == "freeze_after_first_protected_main_acceptance",
+        "protected_main_receipt mode drifted",
+    )
+    _require(
+        receipt.get("protected_ref") == "origin/main",
+        "protected_main_receipt ref must remain origin/main",
+    )
+    _require(
+        receipt.get("contract_path")
+        == "repo/UNTRUSTED_EVIDENCE_INTAKE_V0.json",
+        "protected_main_receipt path drifted",
+    )
+    _require(
+        receipt.get("frozen_fields") == list(PROTECTED_FROZEN_FIELDS),
+        "protected_main_receipt frozen fields drifted",
+    )
+    _require(
+        contract.get("regenerate")
+        == "python3 scripts/build_untrusted_evidence_intake.py",
+        "regenerate command drifted",
+    )
+    _require(
+        contract.get("check")
+        == "python3 scripts/build_untrusted_evidence_intake.py --check",
+        "check command drifted",
+    )
+    _require(
+        contract.get("test")
+        == "python3 scripts/test_untrusted_evidence_intake.py",
+        "test command drifted",
     )
     return contract
 
@@ -288,7 +548,7 @@ def analyze_atlas(
             {
                 "mechanism_id": mechanism_id,
                 "json_pointer": f"/{index}",
-                "raw_record_sha256": sha256_json(mechanism),
+                "canonical_record_sha256": sha256_json(mechanism),
                 "source_status_annotation": status,
                 "requirement_count": len(requirements),
                 "tp_like_references": sorted(set(all_refs)),
@@ -334,7 +594,7 @@ def analyze_atlas(
             {
                 "property_id": key,
                 "json_pointer": pointer,
-                "raw_record_sha256": sha256_json(prop),
+                "canonical_record_sha256": sha256_json(prop),
                 "declared_type": declared_type,
                 "declared_type_parseable": parseable,
                 "source_status_annotation": prop["status"],
@@ -404,6 +664,13 @@ def analyze_atlas(
 
 def build_state(contract: dict[str, Any], *, root: Path = ROOT) -> dict[str, Any]:
     validate_contract(contract)
+    validate_protected_main_receipt(contract, root=root)
+    consumer_references = scan_forbidden_consumers(root=root)
+    _require(
+        not consumer_references,
+        "quarantine referenced by prohibited consumer: "
+        + ", ".join(consumer_references),
+    )
     source_dir = root / contract["source_directory"]
     source_artifacts: list[dict[str, Any]] = []
     payloads: dict[str, bytes] = {}
@@ -414,12 +681,18 @@ def build_state(contract: dict[str, Any], *, root: Path = ROOT) -> dict[str, Any
         payload = path.read_bytes()
         digest = sha256_bytes(payload)
         _require(digest == source["sha256"], f"source hash mismatch: {relative}")
+        blob_digest = git_blob_sha1(payload)
+        _require(
+            blob_digest == source["git_blob_sha1"],
+            f"source Git blob hash mismatch: {relative}",
+        )
         payloads[relative] = payload
         source_artifacts.append(
             {
                 "path": f"{contract['source_directory']}/{relative}",
                 "media_type": source["media_type"],
                 "sha256": digest,
+                "git_blob_sha1": blob_digest,
                 "bytes": len(payload),
             }
         )
@@ -498,6 +771,11 @@ def build_state(contract: dict[str, Any], *, root: Path = ROOT) -> dict[str, Any
             "safe_for_calibration": required["safe_for_calibration"],
             "safe_for_authorization": required["safe_for_authorization"],
             "canonical_write_prohibited": contract["canonical_write_prohibited"],
+            "negative_dependency_scan": {
+                "status": "passed",
+                "prohibited_consumer_references": consumer_references,
+                "scan_roots": list(QUARANTINE_REFERENCE_SCAN_ROOTS),
+            },
             "boundary": (
                 "Every mechanism, property, requirement, heat label, source status, "
                 "and conclusion remains an untrusted annotation pending a separate "
@@ -550,6 +828,7 @@ def validation_problems(state: Any, contract: dict[str, Any]) -> list[str]:
             if (
                 expected is None
                 or artifact.get("sha256") != expected["sha256"]
+                or artifact.get("git_blob_sha1") != expected["git_blob_sha1"]
                 or artifact.get("media_type") != expected["media_type"]
                 or type(artifact.get("bytes")) is not int
                 or artifact["bytes"] <= 0
@@ -571,6 +850,14 @@ def validation_problems(state: Any, contract: dict[str, Any]) -> list[str]:
     ):
         if safety.get(key) is not False:
             problems.append(f"{key} must remain false")
+    dependency_scan = safety.get("negative_dependency_scan", {})
+    if (
+        dependency_scan.get("status") != "passed"
+        or dependency_scan.get("prohibited_consumer_references") != []
+        or dependency_scan.get("scan_roots")
+        != list(QUARANTINE_REFERENCE_SCAN_ROOTS)
+    ):
+        problems.append("negative dependency scan drifted")
     if state.get("observations") != contract.get("expected_observations"):
         problems.append("reviewed observations drifted")
     plan = state.get("canonical_import_plan", {})
