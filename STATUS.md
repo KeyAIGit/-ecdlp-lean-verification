@@ -6,7 +6,8 @@
 > `repo/ECDLP_TYPED_EVIDENCE_V0.json`, `data/typed_evidence_state.json`, and
 > `data/research_engine_state.json`, `data/research_engine_v02_state.json`, and
 > `data/research_engine_shadow_intake.json`, and
-> `data/hypothesis_space_run_state.json`.
+> `data/hypothesis_space_run_state.json`, and
+> `data/hypothesis_space_campaign_state.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -127,6 +128,8 @@ Selected bounded explorations: **0** (none). Ready now: **0** (none). **0 candid
 
 The million-cell projection has **1 immutable operational run record** across **1 distinct map root**. Its latest completed median throughput is **11,879,612 typed cells/minute**. These are engineering measurements and structural-screen aggregates: they create **0 scientific outcomes**, **0 ranker labels**, and **0 authorizations**. Cold cells are not falsified hypotheses, and repeated measurements of one root are not new research coverage.
 
+No immutable unique-coverage campaign is retained yet.
+
 ## Research Engine v0.2 lifecycle
 The v0.2 lifecycle currently contains
 **0 immutable candidate snapshots**,
@@ -224,8 +227,10 @@ The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view i
 The engine policies are `repo/RESEARCH_ENGINE_V0.json`,
 `repo/HYPOTHESIS_GENERATION_V0.json`, and
 `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`; million-space operational memory is
-owned by `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json` and summarized in
-`data/hypothesis_space_run_state.json`; typed applicability is owned by
+owned by `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json`; finite unique coverage is
+owned by `repo/HYPOTHESIS_SPACE_CAMPAIGN_V1.json`; their generated views are
+`data/hypothesis_space_run_state.json` and
+`data/hypothesis_space_campaign_state.json`; typed applicability is owned by
 `repo/ECDLP_TYPED_EVIDENCE_V0.json`, materialized in
 `data/typed_evidence_state.json`, and the combined generated state is
 `data/research_engine_state.json`. The v0.2 lifecycle and shadow intake are
@@ -247,6 +252,8 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 `repo/HYPOTHESIS_GENERATION_V0.json` (seed and proposal-quality policy) ·
 `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json` (operational run-memory policy) ·
 `data/hypothesis_space_run_state.json` (benchmarks, failures, and map-root history) ·
+`repo/HYPOTHESIS_SPACE_CAMPAIGN_V1.json` (finite unique-coverage policy) ·
+`data/hypothesis_space_campaign_state.json` (campaign coverage and exhaustion) ·
 `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json` (immutable candidate lifecycle) ·
 `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json` (19 regression cases) ·
 `data/typed_evidence_state.json` (materialized mechanism/property cells) ·

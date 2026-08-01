@@ -11,7 +11,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 16594
+        "bytes": 16993
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -23,7 +23,7 @@
         "path": "repo/RESEARCH_ENGINE_V0.json",
         "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
         "exists": true,
-        "bytes": 38171
+        "bytes": 39415
       },
       {
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
@@ -71,7 +71,7 @@
         "path": "data/hypothesis_space_state.json",
         "reason": "generated one-million-cell screening state and bounded review queue",
         "exists": true,
-        "bytes": 97525
+        "bytes": 97526
       },
       {
         "path": "data/hypothesis_space_map.json",
@@ -95,7 +95,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 78508
+        "bytes": 81768
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -169,7 +169,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 16594
+        "bytes": 16993
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -181,7 +181,7 @@
         "path": "repo/RESEARCH_ENGINE_V0.json",
         "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
         "exists": true,
-        "bytes": 38171
+        "bytes": 39415
       },
       {
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
@@ -229,7 +229,7 @@
         "path": "data/hypothesis_space_state.json",
         "reason": "generated one-million-cell screening state and bounded review queue",
         "exists": true,
-        "bytes": 97525
+        "bytes": 97526
       },
       {
         "path": "data/hypothesis_space_map.json",
@@ -253,7 +253,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 78508
+        "bytes": 81768
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -325,7 +325,7 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 12533
+        "bytes": 12759
       },
       {
         "path": "AGENTS.md",
@@ -531,7 +531,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 16594
+        "bytes": 16993
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -543,7 +543,7 @@
         "path": "repo/RESEARCH_ENGINE_V0.json",
         "reason": "bounded exploration policy, selector, taxonomy, budgets, and promotion boundary",
         "exists": true,
-        "bytes": 38171
+        "bytes": 39415
       },
       {
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
@@ -591,7 +591,7 @@
         "path": "data/hypothesis_space_state.json",
         "reason": "generated one-million-cell screening state and bounded review queue",
         "exists": true,
-        "bytes": 97525
+        "bytes": 97526
       },
       {
         "path": "data/hypothesis_space_map.json",
@@ -615,7 +615,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 78508
+        "bytes": 81768
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -687,7 +687,7 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 12533
+        "bytes": 12759
       },
       {
         "path": "AGENTS.md",
@@ -891,7 +891,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 693031
+        "bytes": 695132
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

@@ -17,6 +17,7 @@ from hypothesis_space_run_ledger import (
     build_state,
     create_run_record,
     github_push_before_sha,
+    historical_subject,
     load_anchored_records,
     load_policy,
     main as ledger_main,
@@ -161,7 +162,12 @@ class HypothesisSpaceRunLedgerTests(unittest.TestCase):
         if not self.records:
             self.skipTest("no anchored run yet")
         run_date = datetime.now(timezone.utc).date().isoformat()
+        source_commit = self.records[-1]["subject"]["source_commit"]
+        frozen_subject = historical_subject(self.policy, source_commit)
         with patch(
+            "hypothesis_space_run_ledger.assert_checkout_matches_source",
+            return_value=frozen_subject,
+        ), patch(
             "hypothesis_space_run_ledger.run_space",
             side_effect=RuntimeError("fault injection"),
         ):
@@ -169,7 +175,7 @@ class HypothesisSpaceRunLedgerTests(unittest.TestCase):
                 self.policy,
                 run_id=f"HSR-{run_date}-999",
                 sequence=999,
-                source_commit=self.records[-1]["subject"]["source_commit"],
+                source_commit=source_commit,
                 repetitions=3,
                 warmups=1,
                 previous_record_sha256=None,

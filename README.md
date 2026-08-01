@@ -137,6 +137,7 @@ concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofRed
 | `repo/ECDLP_TYPED_EVIDENCE_V0.json` · `data/typed_evidence_state.json` | typed source claims, target properties, mechanisms, barriers, cost quantities, regenerated cells, and non-experimental desk decisions |
 | `repo/RESEARCH_ENGINE_V0.json` · `repo/HYPOTHESIS_GENERATION_V0.json` · `data/research_engine_state.json` | bounded generation/selector policies and generated proposal, exploration, and outcome state |
 | `repo/HYPOTHESIS_SPACE_V2.json` · `data/hypothesis_space_map.json` | million-cell typed screening policy and aggregate evidence-bounded hot/warm/cold map; cells are questions, not independent hypotheses |
+| `repo/HYPOTHESIS_SPACE_CAMPAIGN_V1.json` / `data/hypothesis_space_campaign_state.json` | resumable unique-coverage protocol and immutable exhaustion memory; repeated roots are operational replay, not new research coverage |
 | `repo/PRODUCT_MODEL.json` | product category, current stage, public claim boundary, and MVP evidence gate |
 | `scripts/site_generator.py` | generates the product site, operator workspace, and canonical route explorer |
 | `experiments/framework/` · `experiments/engine/` | candidate-neutral validation, generated-proposal intake, adversarial reviews, and append-only outcomes |

@@ -8756,7 +8756,28 @@
         "decision_delta": {
           "effect": "retained_history",
           "statement": "Retain the scoped historical evidence; no automatic route decision follows."
-        }
+        },
+        "recorded_scope": {
+          "target_kind": "toy",
+          "curve_family": "cofactor-1 toy j=0 curves",
+          "field_bits": [
+            16,
+            20
+          ],
+          "threat_model": "classical-single-target-plain",
+          "claim_boundary": "m=3 custom Macaulay proxy under the historical pure-Python implementation."
+        },
+        "effective_scope": {
+          "target_kind": "toy",
+          "curve_family": "cofactor-1 toy j=0 curves",
+          "field_bits": [
+            16
+          ],
+          "threat_model": "classical-single-target-plain",
+          "claim_boundary": "m=3 custom Macaulay proxy under the historical pure-Python implementation.",
+          "scope_correction": "The immutable migrated event overstates the m=3 field-size scope. The actual m=3 manifest rows are 16-bit only; 20-bit rows belong to m=2. Treat this event as single-size resource-exhaustion evidence without rewriting the reviewed historical bytes."
+        },
+        "scope_correction_id": "HSCORR-2026-08-01-P3-M3-BITS"
       },
       {
         "event_id": "REO-2026-07-24-007",
@@ -8936,7 +8957,28 @@
         "decision_delta": {
           "effect": "retained_history",
           "statement": "Retain the scoped historical evidence; no automatic route decision follows."
-        }
+        },
+        "recorded_scope": {
+          "target_kind": "toy",
+          "curve_family": "cofactor-1 toy j=0 curves",
+          "field_bits": [
+            16,
+            20
+          ],
+          "threat_model": "classical-single-target-plain",
+          "claim_boundary": "m=3 custom Macaulay proxy under the historical pure-Python implementation."
+        },
+        "effective_scope": {
+          "target_kind": "toy",
+          "curve_family": "cofactor-1 toy j=0 curves",
+          "field_bits": [
+            16
+          ],
+          "threat_model": "classical-single-target-plain",
+          "claim_boundary": "m=3 custom Macaulay proxy under the historical pure-Python implementation.",
+          "scope_correction": "The immutable migrated event overstates the m=3 field-size scope. The actual m=3 manifest rows are 16-bit only; 20-bit rows belong to m=2. Treat this event as single-size resource-exhaustion evidence without rewriting the reviewed historical bytes."
+        },
+        "scope_correction_id": "HSCORR-2026-08-01-P3-M3-BITS"
       },
       {
         "event_id": "REO-2026-07-24-007",
@@ -10451,24 +10493,24 @@
       "exact_target_execution": false,
       "stream_digest_version": "rfc6962-binary-leaf-v2",
       "coverage_merkle_root_sha256": "dff1e8cb52594158fc94556cbef3025be647fab310132c34ee58aed3b8399207",
-      "instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
+      "instance_root_sha256": "976bd0d497b0dd3643bbda8f9be6617bc774f45fa63bf1871e7b3d351338ef63",
       "challenge_indices": [
-        65190,
-        88542,
-        99893,
-        106469,
-        159295,
-        331135,
-        360634,
-        372725,
-        518183,
-        553299,
-        662081,
-        724199,
-        801472,
-        857341,
-        868527,
-        969801
+        24598,
+        71830,
+        121002,
+        177726,
+        195097,
+        216007,
+        317558,
+        391257,
+        421140,
+        486583,
+        486801,
+        489367,
+        661160,
+        669663,
+        705122,
+        771721
       ]
     },
     "coverage_boundary": "Coverage is complete only for this frozen finite Cartesian projection. It is not coverage of all ECDLP ideas or literature.",

@@ -1,0 +1,371 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.org/schemas/hypothesis-space-campaign-v1.json",
+  "title": "Finite unique-coverage hypothesis-space campaign",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "campaign_id",
+    "record_kind",
+    "status",
+    "recorded_at_utc",
+    "subject",
+    "universe",
+    "evaluation",
+    "evaluation_claim",
+    "harness",
+    "budget",
+    "coverage",
+    "screening_snapshot",
+    "performance",
+    "operational_diagnostics",
+    "knowledge_effect",
+    "record_payload_sha256"
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "nonnegative": {"type": "integer", "minimum": 0},
+    "positive": {"type": "integer", "minimum": 1},
+    "digestMap": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/sha256"}
+    },
+    "counterMap": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/nonnegative"}
+    },
+    "artifactAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "campaign_id": {
+      "type": "string",
+      "pattern": "^HSC-[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{3}$"
+    },
+    "record_kind": {"const": "finite_unique_coverage_campaign"},
+    "status": {"const": "completed_exhausted"},
+    "recorded_at_utc": {"type": "string", "format": "date-time"},
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_commit",
+        "space_id",
+        "space_instance_root_sha256",
+        "coverage_merkle_root_sha256",
+        "full_universe_count",
+        "path_sha256"
+      ],
+      "properties": {
+        "source_commit": {"$ref": "#/$defs/commit"},
+        "space_id": {"type": "string", "minLength": 1},
+        "space_instance_root_sha256": {"$ref": "#/$defs/sha256"},
+        "coverage_merkle_root_sha256": {"$ref": "#/$defs/sha256"},
+        "full_universe_count": {"$ref": "#/$defs/positive"},
+        "path_sha256": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "space_policy_path",
+            "space_state_path",
+            "space_map_path",
+            "runner_path"
+          ],
+          "properties": {
+            "space_policy_path": {"$ref": "#/$defs/sha256"},
+            "space_state_path": {"$ref": "#/$defs/sha256"},
+            "space_map_path": {"$ref": "#/$defs/sha256"},
+            "runner_path": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      }
+    },
+    "universe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "space_id",
+        "axis_order",
+        "axes",
+        "cardinality",
+        "ordinal_codec",
+        "cell_leaf_codec",
+        "ordered_rejection_reasons",
+        "threat_model",
+        "input_pool_path",
+        "input_pool_canonical_lf_sha256",
+        "exact_semantic_axis_duplicate_count",
+        "semantic_novelty_proved",
+        "universe_id_sha256"
+      ],
+      "properties": {
+        "schema_version": {"const": "1.0-universe"},
+        "space_id": {"type": "string", "minLength": 1},
+        "axis_order": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "axes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "radix", "ordered_item_ids", "ordered_semantic_sha256"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "radix": {"$ref": "#/$defs/positive"},
+              "ordered_item_ids": {"type": "array", "items": {"type": "string"}},
+              "ordered_semantic_sha256": {
+                "type": "array",
+                "items": {"$ref": "#/$defs/sha256"}
+              }
+            }
+          }
+        },
+        "cardinality": {"$ref": "#/$defs/positive"},
+        "ordinal_codec": {"const": "zero-based-big-endian-mixed-radix-v1"},
+        "cell_leaf_codec": {"const": "HQS-CELL-V2+struct->4BII7B"},
+        "ordered_rejection_reasons": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "threat_model": {"type": "string", "minLength": 1},
+        "input_pool_path": {"type": "string", "minLength": 1},
+        "input_pool_canonical_lf_sha256": {"$ref": "#/$defs/sha256"},
+        "exact_semantic_axis_duplicate_count": {"const": 0},
+        "semantic_novelty_proved": {"const": false},
+        "universe_id_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "universe_id_sha256",
+        "generation_policy_sha256",
+        "evidence_snapshot_sha256",
+        "parent_generation_policy_sha256",
+        "parent_merkle_root_sha256",
+        "evaluator_contract",
+        "source_runner_sha256",
+        "campaign_evaluator_sha256",
+        "dependency_sha256",
+        "dependency_closure_sha256",
+        "evaluation_id_sha256"
+      ],
+      "properties": {
+        "schema_version": {"const": "1.0-evaluation"},
+        "universe_id_sha256": {"$ref": "#/$defs/sha256"},
+        "generation_policy_sha256": {"$ref": "#/$defs/sha256"},
+        "evidence_snapshot_sha256": {"$ref": "#/$defs/sha256"},
+        "parent_generation_policy_sha256": {"$ref": "#/$defs/sha256"},
+        "parent_merkle_root_sha256": {"$ref": "#/$defs/sha256"},
+        "evaluator_contract": {"const": "hypothesis-space-structural-screen-v2"},
+        "source_runner_sha256": {"$ref": "#/$defs/sha256"},
+        "campaign_evaluator_sha256": {"$ref": "#/$defs/sha256"},
+        "dependency_sha256": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scripts/hypothesis_funnel.py",
+            "scripts/hypothesis_space_funnel.py",
+            "scripts/hypothesis_space_run_ledger.py",
+            "scripts/hypothesis_space_campaign.py",
+            "experiments/engine/hypothesis_space_campaign.schema.json",
+            "experiments/engine/hypothesis_space_campaign_receipt.schema.json",
+            "experiments/engine/hypothesis_space_campaign_error.schema.json"
+          ],
+          "properties": {
+            "scripts/hypothesis_funnel.py": {"$ref": "#/$defs/sha256"},
+            "scripts/hypothesis_space_funnel.py": {"$ref": "#/$defs/sha256"},
+            "scripts/hypothesis_space_run_ledger.py": {"$ref": "#/$defs/sha256"},
+            "scripts/hypothesis_space_campaign.py": {"$ref": "#/$defs/sha256"},
+            "experiments/engine/hypothesis_space_campaign.schema.json": {"$ref": "#/$defs/sha256"},
+            "experiments/engine/hypothesis_space_campaign_receipt.schema.json": {"$ref": "#/$defs/sha256"},
+            "experiments/engine/hypothesis_space_campaign_error.schema.json": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        "dependency_closure_sha256": {"$ref": "#/$defs/sha256"},
+        "evaluation_id_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "evaluation_claim": {"$ref": "#/$defs/artifactAnchor"},
+    "harness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "resolution_rule",
+        "schema_path",
+        "schema_sha256",
+        "receipt_schema_path",
+        "receipt_schema_sha256",
+        "error_schema_path",
+        "error_schema_sha256"
+      ],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "resolution_rule": {"type": "string", "minLength": 1},
+        "schema_path": {"type": "string", "minLength": 1},
+        "schema_sha256": {"$ref": "#/$defs/sha256"},
+        "receipt_schema_path": {"type": "string", "minLength": 1},
+        "receipt_schema_sha256": {"$ref": "#/$defs/sha256"},
+        "error_schema_path": {"type": "string", "minLength": 1},
+        "error_schema_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["finalization_invocation_budget_seconds", "termination_reason", "retained_shard_elapsed_ns", "stopped_early_because_universe_exhausted"],
+      "properties": {
+        "finalization_invocation_budget_seconds": {"type": "number", "exclusiveMinimum": 0},
+        "termination_reason": {"const": "finite_universe_exhausted"},
+        "retained_shard_elapsed_ns": {"$ref": "#/$defs/positive"},
+        "stopped_early_because_universe_exhausted": {"const": true}
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ordinal_start",
+        "ordinal_end_exclusive",
+        "full_universe_count",
+        "physical_evaluations",
+        "unique_universe_cells_added",
+        "unique_evaluation_cells_added",
+        "duplicate_evaluations",
+        "typed_duplicates",
+        "exact_semantic_axis_duplicates",
+        "exhausted",
+        "coverage_fraction",
+        "coverage_merkle_root_sha256",
+        "shard_size",
+        "shard_count",
+        "receipt_anchor_root_sha256",
+        "receipt_anchors"
+      ],
+      "properties": {
+        "ordinal_start": {"const": 0},
+        "ordinal_end_exclusive": {"$ref": "#/$defs/positive"},
+        "full_universe_count": {"$ref": "#/$defs/positive"},
+        "physical_evaluations": {"$ref": "#/$defs/positive"},
+        "unique_universe_cells_added": {"$ref": "#/$defs/nonnegative"},
+        "unique_evaluation_cells_added": {"$ref": "#/$defs/positive"},
+        "duplicate_evaluations": {"const": 0},
+        "typed_duplicates": {"const": 0},
+        "exact_semantic_axis_duplicates": {"const": 0},
+        "exhausted": {"const": true},
+        "coverage_fraction": {"const": 1.0},
+        "coverage_merkle_root_sha256": {"$ref": "#/$defs/sha256"},
+        "shard_size": {"$ref": "#/$defs/positive"},
+        "shard_count": {"$ref": "#/$defs/positive"},
+        "receipt_anchor_root_sha256": {"$ref": "#/$defs/sha256"},
+        "receipt_anchors": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["shard_index", "start_ordinal", "end_ordinal_exclusive", "path", "sha256"],
+            "properties": {
+              "shard_index": {"$ref": "#/$defs/nonnegative"},
+              "start_ordinal": {"$ref": "#/$defs/nonnegative"},
+              "end_ordinal_exclusive": {"$ref": "#/$defs/positive"},
+              "path": {"type": "string", "minLength": 1},
+              "sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        }
+      }
+    },
+    "screening_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cold", "warm", "hot", "type_counts", "mask_counts"],
+      "properties": {
+        "cold": {"$ref": "#/$defs/nonnegative"},
+        "warm": {"$ref": "#/$defs/nonnegative"},
+        "hot": {"const": 0},
+        "type_counts": {"$ref": "#/$defs/counterMap"},
+        "mask_counts": {"$ref": "#/$defs/counterMap"}
+      }
+    },
+    "performance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimum_shard_signatures_per_minute", "median_shard_signatures_per_minute", "maximum_shard_signatures_per_minute", "performance_is_operational_only", "timing_assurance", "throughput_is_coverage_evidence", "runtime_fingerprint"],
+      "properties": {
+        "minimum_shard_signatures_per_minute": {"$ref": "#/$defs/positive"},
+        "median_shard_signatures_per_minute": {"$ref": "#/$defs/positive"},
+        "maximum_shard_signatures_per_minute": {"$ref": "#/$defs/positive"},
+        "performance_is_operational_only": {"const": true},
+        "timing_assurance": {"const": "producer_self_timed_untrusted"},
+        "throughput_is_coverage_evidence": {"const": false},
+        "runtime_fingerprint": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["python_implementation", "python_version", "operating_system", "machine"],
+          "properties": {
+            "python_implementation": {"type": "string", "minLength": 1},
+            "python_version": {"type": "string", "minLength": 1},
+            "operating_system": {"type": "string", "minLength": 1},
+            "machine": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "operational_diagnostics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pipeline_errors", "invariant_violations", "error_anchor_root_sha256", "error_anchors"],
+      "properties": {
+        "pipeline_errors": {"$ref": "#/$defs/nonnegative"},
+        "invariant_violations": {"const": 0},
+        "error_anchor_root_sha256": {"$ref": "#/$defs/sha256"},
+        "error_anchors": {"type": "array", "items": {"$ref": "#/$defs/artifactAnchor"}}
+      }
+    },
+    "knowledge_effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scientific_outcome",
+        "claim_disposition",
+        "ranker_training_eligible",
+        "brier_calibration_eligible",
+        "candidate_admissible",
+        "candidate_recommended",
+        "experiment_authorized",
+        "route_promotion",
+        "interpretation"
+      ],
+      "properties": {
+        "scientific_outcome": {"const": "none"},
+        "claim_disposition": {"const": "none"},
+        "ranker_training_eligible": {"const": false},
+        "brier_calibration_eligible": {"const": false},
+        "candidate_admissible": {"const": false},
+        "candidate_recommended": {"const": false},
+        "experiment_authorized": {"const": false},
+        "route_promotion": {"const": false},
+        "interpretation": {"type": "string", "minLength": 1}
+      }
+    },
+    "record_payload_sha256": {"$ref": "#/$defs/sha256"}
+  }
+}

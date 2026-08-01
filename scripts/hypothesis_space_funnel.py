@@ -216,6 +216,57 @@ def validate_injective_axes(
     anchors = [typed_anchor_digest(base) for base in bases]
     if len(anchors) != len(set(anchors)):
         raise ValueError("typed base semantic anchors are not unique")
+    semantic_collections = {
+        "mechanism": [
+            sha256_json(
+                {
+                    "role": "mechanism",
+                    "label": normalized_text(item.label),
+                    "compatible_types": sorted(item.compatible_types),
+                    "capabilities": sorted(item.capabilities),
+                    "dimensions": dict(sorted(item.dimensions.items())),
+                }
+            )
+            for item in mechanisms
+        ],
+        "cost": [
+            sha256_json(
+                {
+                    "role": "cost",
+                    "label": normalized_text(item.label),
+                    "compatible_types": sorted(item.compatible_types),
+                    "capabilities": sorted(item.capabilities),
+                    "dimensions": dict(sorted(item.dimensions.items())),
+                }
+            )
+            for item in costs
+        ],
+        "test": [
+            sha256_json(
+                {
+                    "role": "test",
+                    "label": normalized_text(item.label),
+                    "compatible_types": sorted(item.compatible_types),
+                    "capabilities": sorted(item.capabilities),
+                    "dimensions": dict(sorted(item.dimensions.items())),
+                }
+            )
+            for item in tests
+        ],
+        "challenge": [
+            sha256_json(
+                {
+                    "role": "challenge",
+                    "label": normalized_text(item.label),
+                    "compatible_types": sorted(item.compatible_types),
+                }
+            )
+            for item in challenges
+        ],
+    }
+    for label, digests in semantic_collections.items():
+        if len(digests) != len(set(digests)):
+            raise ValueError(f"{label} axis contains exact semantic aliases")
     return anchors
 
 

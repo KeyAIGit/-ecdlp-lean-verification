@@ -797,6 +797,39 @@
       ]
     }
   ],
+  "historical_scope_corrections": [
+    {
+      "correction_id": "HSCORR-2026-08-01-P3-M3-BITS",
+      "event_id": "REO-2026-07-24-006",
+      "event_sha256": "3ef46d8f1bd57ca757c8ec3b85636d7f5e94d7e516486410f0076d527efda872",
+      "recorded_field_bits": [
+        16,
+        20
+      ],
+      "effective_field_bits": [
+        16
+      ],
+      "excluded_field_bits": [
+        20
+      ],
+      "machine_check": {
+        "path": "experiments/p3_sm_system/runs/HYP_GLV_SEMAEV_001_p3-sm-system_fa4fed78efc9.json",
+        "sha256": "e30314f755cbcf98ea1491ecd6e7148fadb3c23c27f4616c111096b478aba564",
+        "parameter_arrays": [
+          "dreg_grid",
+          "prob_grid"
+        ],
+        "field_bits_index": 0,
+        "arity_index": 2,
+        "arity_value": 3
+      },
+      "supporting_report": {
+        "path": "experiments/p3_sm_system/RESULTS.md",
+        "sha256": "3231950cbfa0d9734551127b21d30e25be22608a1a9794c72c30f827a08ef56f"
+      },
+      "interpretation": "The immutable migrated event overstates the m=3 field-size scope. The actual m=3 manifest rows are 16-bit only; 20-bit rows belong to m=2. Treat this event as single-size resource-exhaustion evidence without rewriting the reviewed historical bytes."
+    }
+  ],
   "feedback_contract": {
     "append_only_input": "experiments/engine/outcomes/",
     "generated_updates": [

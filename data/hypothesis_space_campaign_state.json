@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0-generated",
+  "ledger_id": "HYPOTHESIS-SPACE-UNIQUE-CAMPAIGN-V1",
+  "status": "operational_unique_coverage_memory_non_scientific",
+  "immutable_record_count": 0,
+  "immutable_record_root_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "counts": {
+    "campaign_records": 0,
+    "completed_exhausted_campaigns": 0,
+    "distinct_universes": 0,
+    "distinct_evaluations": 0,
+    "distinct_space_instance_roots": 0,
+    "physical_evaluations": 0,
+    "unique_universe_cells": 0,
+    "unique_evaluation_cells": 0,
+    "repeated_cells_processed": 0,
+    "duplicate_evaluations": 0,
+    "pipeline_errors": 0,
+    "invariant_violations": 0,
+    "scientific_outcomes": 0,
+    "ranker_training_labels": 0,
+    "brier_calibration_records": 0,
+    "admissible": 0,
+    "recommended": 0,
+    "authorized": 0,
+    "route_promotions": 0
+  },
+  "latest_campaign": null,
+  "coverage_history": [],
+  "current_identity": {
+    "universe_id_sha256": "bd2b291c0b98f0c8a80ac9d87ac54fd0fa3ec4974da5cab93d269c4caf9def52",
+    "evaluation_id_sha256": "0a8dda2e6e54351530ef60f6d6bec642b2f66be36636f30fc0b8f03ae1c28f46",
+    "universe_cardinality": 1000000,
+    "universe_covered": false,
+    "evaluation_exhausted": false
+  },
+  "interpretation": {
+    "current_finite_universe_exhausted": false,
+    "current_finite_universe_size": 1000000,
+    "current_universe_covered_under_any_evaluation": false,
+    "current_evaluation_pending": true,
+    "additional_repetitions_add_unique_coverage": false,
+    "larger_campaign_requires_new_evidence_bounded_grammar": true,
+    "cold_is_structural_rejection_not_falsification": true,
+    "warm_is_seed_not_hypothesis": true
+  },
+  "epistemic_contract": {
+    "screening_rejection_is_falsification": false,
+    "campaign_is_scientific_outcome": false,
+    "campaign_is_ranker_training_data": false,
+    "campaign_is_brier_calibration_data": false,
+    "campaign_can_authorize": false,
+    "campaign_can_recommend": false,
+    "campaign_can_promote_route": false,
+    "cold_cell": "A typed cell failed a deterministic structural gate. It is not a tested mathematical hypothesis.",
+    "warm_cell": "A typed cell survived structural gates but still lacks an assured mechanism and independent review.",
+    "scientific_feedback_paths": [
+      "experiments/engine/outcomes",
+      "experiments/engine/desk_decisions",
+      "data/research_claim_state.json"
+    ]
+  }
+}

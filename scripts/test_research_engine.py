@@ -58,9 +58,11 @@ from research_engine_lib import (
     validate_policy,
     validate_pure_validator_source,
     validate_historical_scope_guards,
+    validate_historical_scope_corrections,
     validate_historical_outcome_baseline,
     validate_external_bounded_sequence,
     validate_retrospective,
+    effective_event_scope,
 )
 from scientific_provenance import (
     repository_text_sha256,
@@ -1703,6 +1705,73 @@ class ResearchEngineTests(unittest.TestCase):
         )
         self.assertTrue(
             any("forbidden field-bit scope reappeared" in item for item in problems),
+            msg=problems,
+        )
+
+    def test_p3_m3_scope_correction_preserves_event_bytes(self) -> None:
+        outcomes = [event for _, event in self.outcomes]
+        self.assertEqual(
+            [], validate_historical_scope_corrections(self.policy, outcomes)
+        )
+        event = next(
+            item for item in outcomes if item["event_id"] == "REO-2026-07-24-006"
+        )
+        self.assertEqual(event["scope"]["field_bits"], [16, 20])
+        effective, correction_id = effective_event_scope(self.policy, event)
+        self.assertEqual(effective["field_bits"], [16])
+        self.assertEqual(correction_id, "HSCORR-2026-08-01-P3-M3-BITS")
+
+    def test_p3_m3_scope_correction_is_machine_checked(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        correction = policy["historical_scope_corrections"][0]
+        correction["effective_field_bits"] = [16, 20]
+        correction["excluded_field_bits"] = [20]
+        problems = validate_historical_scope_corrections(
+            policy, [event for _, event in self.outcomes]
+        )
+        self.assertTrue(
+            any("effective and excluded" in item for item in problems),
+            msg=problems,
+        )
+        self.assertTrue(
+            any("planned machine-check rows imply [16]" in item for item in problems),
+            msg=problems,
+        )
+
+    def test_p3_m3_scope_correction_uses_actual_measurements(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        correction = policy["historical_scope_corrections"][0]
+        source_path = POLICY_PATH.parent.parent / correction["machine_check"]["path"]
+        manifest = json.loads(source_path.read_text(encoding="utf-8"))
+        injected = copy.deepcopy(manifest["results"]["measurements"][0])
+        injected["m"] = 3
+        injected["bits"] = 20
+        manifest["results"]["measurements"].append(injected)
+        with tempfile.TemporaryDirectory(
+            prefix=".p3-scope-fault-", dir=POLICY_PATH.parent.parent
+        ) as raw:
+            path = Path(raw) / "manifest.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            correction["machine_check"]["path"] = str(
+                path.relative_to(POLICY_PATH.parent.parent)
+            ).replace("\\", "/")
+            correction["machine_check"]["sha256"] = file_sha256(path)
+            problems = validate_historical_scope_corrections(
+                policy, [event for _, event in self.outcomes]
+            )
+        self.assertTrue(
+            any("actual measurements imply [16, 20]" in item for item in problems),
+            msg=problems,
+        )
+
+    def test_scope_corrections_allow_only_one_overlay_per_event(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        duplicate = copy.deepcopy(policy["historical_scope_corrections"][0])
+        duplicate["correction_id"] += "-DUP"
+        policy["historical_scope_corrections"].append(duplicate)
+        problems = validate_policy(policy, self.decisions, self.hypotheses)
+        self.assertTrue(
+            any("at most one overlay per event" in item for item in problems),
             msg=problems,
         )
 
