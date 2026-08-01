@@ -60,6 +60,7 @@ def main() -> int:
     decisions = read_json("repo/ECDLP_DECISION_SUBSTRATE.json")
     typed_evidence = read_json("data/typed_evidence_state.json")
     engine = read_json("data/research_engine_state.json")
+    hypothesis_space_runs = read_json("data/hypothesis_space_run_state.json")
     product = read_json("repo/PRODUCT_MODEL.json")
     pilot_protocol = read_json("repo/PILOT_PROTOCOL.json")
     status = read_text("STATUS.md")
@@ -336,6 +337,16 @@ def main() -> int:
         "knowledge graph outcome count must match research_engine_state.json",
     )
     check(
+        graph_counts.get("hypothesis_space_run_records")
+        == hypothesis_space_runs.get("counts", {}).get("runs")
+        and graph_counts.get("hypothesis_space_distinct_roots")
+        == hypothesis_space_runs.get("counts", {}).get("distinct_instance_roots")
+        and graph_counts.get("hypothesis_space_operational_errors")
+        == hypothesis_space_runs.get("counts", {}).get("pipeline_errors", 0)
+        + hypothesis_space_runs.get("counts", {}).get("invariant_violations", 0),
+        "knowledge graph hypothesis-space run memory must match its generated state",
+    )
+    check(
         graph_counts.get("selected_explorations")
         == engine.get("counts", {}).get("selected_explorations"),
         "knowledge graph selected exploration count must match research_engine_state.json",
@@ -369,6 +380,16 @@ def main() -> int:
         graph_engine.get("hypothesis_generation")
         == engine.get("hypothesis_generation"),
         "knowledge graph hypothesis-generation view must match engine state",
+    )
+    check(
+        graph.get("hypothesis_space", {}).get("run_memory", {}).get("counts")
+        == hypothesis_space_runs.get("counts"),
+        "knowledge graph run-memory view must match hypothesis_space_run_state.json",
+    )
+    check(
+        f"{hypothesis_space_runs.get('counts', {}).get('runs', 0)} immutable"
+        in status,
+        "STATUS.md must expose the immutable hypothesis-space run count",
     )
     graph_typed = graph.get("typed_evidence", {})
     expected_cell_index = [

@@ -47,6 +47,7 @@ TYPED_EVIDENCE_STATE = ROOT / "data" / "typed_evidence_state.json"
 HYPOTHESIS_GENERATION_POLICY = ROOT / "repo" / "HYPOTHESIS_GENERATION_V0.json"
 HYPOTHESIS_SPACE_STATE = ROOT / "data" / "hypothesis_space_state.json"
 HYPOTHESIS_SPACE_MAP = ROOT / "data" / "hypothesis_space_map.json"
+HYPOTHESIS_SPACE_RUN_STATE = ROOT / "data" / "hypothesis_space_run_state.json"
 SOURCE_REGISTRY = ROOT / "data" / "source_registry.json"
 
 
@@ -298,6 +299,9 @@ def build() -> dict:
         HYPOTHESIS_SPACE_STATE.read_text(encoding="utf-8")
     )
     hypothesis_map = json.loads(HYPOTHESIS_SPACE_MAP.read_text(encoding="utf-8"))
+    hypothesis_space_runs = json.loads(
+        HYPOTHESIS_SPACE_RUN_STATE.read_text(encoding="utf-8")
+    )
     leading_warm_regions = sorted(
         hypothesis_map["regions"],
         key=lambda item: (-item["warm"], item["family"]),
@@ -650,6 +654,12 @@ def build() -> dict:
             "typed_screening_cold": hypothesis_space["counts"]["cold"],
             "typed_screening_warm": hypothesis_space["counts"]["warm"],
             "typed_screening_hot": hypothesis_space["counts"]["hot"],
+            "hypothesis_space_run_records": hypothesis_space_runs["counts"]["runs"],
+            "hypothesis_space_distinct_roots": hypothesis_space_runs["counts"]["distinct_instance_roots"],
+            "hypothesis_space_operational_errors": (
+                hypothesis_space_runs["counts"]["pipeline_errors"]
+                + hypothesis_space_runs["counts"]["invariant_violations"]
+            ),
             "selected_explorations": engine["counts"]["selected_explorations"],
             "decision_level_bounded_authorizations": int(
                 isinstance(
@@ -760,6 +770,16 @@ def build() -> dict:
             "temperature_legend": hypothesis_map["temperature_legend"],
             "region_count": len(hypothesis_map["regions"]),
             "leading_warm_regions": leading_warm_regions,
+            "run_memory": {
+                "policy_source": "repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json",
+                "state_source": "data/hypothesis_space_run_state.json",
+                "counts": hypothesis_space_runs["counts"],
+                "latest_completed_run": hypothesis_space_runs["latest_completed_run"],
+                "map_revisions": hypothesis_space_runs["map_revisions"],
+                "scientific_memory_boundary": hypothesis_space_runs[
+                    "scientific_memory_boundary"
+                ],
+            },
         },
         "source_index": {
             "registry_source": "data/source_registry.json",
@@ -1077,6 +1097,22 @@ def render_markdown(graph: dict) -> str:
             f"| `{region['family']}` | `{region['type']}` | "
             f"{region['warm']} | {region['cold']} |"
         )
+    lines.append("")
+    run_memory = space["run_memory"]
+    latest_run = run_memory["latest_completed_run"]
+    latest_rate = (
+        f"{latest_run['median_signatures_per_minute']:,} typed cells/minute"
+        if latest_run
+        else "not yet measured"
+    )
+    lines.append(
+        f"Operational memory retains **{run_memory['counts']['runs']}** immutable "
+        f"run record(s) over **{run_memory['counts']['distinct_instance_roots']}** "
+        f"distinct map root(s); latest median throughput is **{latest_rate}**. "
+        "These records preserve engineering performance and failures only. "
+        "Structural rejects are not falsified hypotheses, and the run ledger "
+        "cannot supply scientific labels, calibration, or authorization."
+    )
     lines.append("")
 
     gates = engine["gate_status"]

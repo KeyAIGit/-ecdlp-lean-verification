@@ -11,7 +11,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 15791
+        "bytes": 16594
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -78,6 +78,18 @@
         "reason": "aggregate evidence-bounded hot/warm/cold research-space map",
         "exists": true,
         "bytes": 86681
+      },
+      {
+        "path": "repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json",
+        "reason": "append-only operational-run policy and scientific-evidence exclusion boundary",
+        "exists": true,
+        "bytes": 3245
+      },
+      {
+        "path": "data/hypothesis_space_run_state.json",
+        "reason": "auditable benchmark, pipeline-error, and distinct-map-root history",
+        "exists": true,
+        "bytes": 3919
       },
       {
         "path": "data/research_engine_state.json",
@@ -157,7 +169,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 15791
+        "bytes": 16594
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -224,6 +236,18 @@
         "reason": "aggregate evidence-bounded hot/warm/cold research-space map",
         "exists": true,
         "bytes": 86681
+      },
+      {
+        "path": "repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json",
+        "reason": "append-only operational-run policy and scientific-evidence exclusion boundary",
+        "exists": true,
+        "bytes": 3245
+      },
+      {
+        "path": "data/hypothesis_space_run_state.json",
+        "reason": "auditable benchmark, pipeline-error, and distinct-map-root history",
+        "exists": true,
+        "bytes": 3919
       },
       {
         "path": "data/research_engine_state.json",
@@ -307,7 +331,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 16593
+        "bytes": 17061
       },
       {
         "path": "VERIFIED.md",
@@ -343,7 +367,7 @@
         "path": "experiments/engine/README.md",
         "reason": "Research Engine event lifecycle and regeneration contract",
         "exists": true,
-        "bytes": 8295
+        "bytes": 9999
       },
       {
         "path": "experiments/engine/hypothesis_seed.schema.json",
@@ -410,6 +434,12 @@
         "reason": "lane-specific applicability, structural, mechanism, validator, experiment, and formal gates",
         "exists": true,
         "bytes": 4441
+      },
+      {
+        "path": "experiments/engine/hypothesis_space_run.schema.json",
+        "reason": "strict non-scientific screening-run and benchmark record contract",
+        "exists": true,
+        "bytes": 10936
       },
       {
         "path": "notes/RESEARCH_ENGINE_V0_TO_V0_2.md",
@@ -501,7 +531,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 15791
+        "bytes": 16594
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -568,6 +598,18 @@
         "reason": "aggregate evidence-bounded hot/warm/cold research-space map",
         "exists": true,
         "bytes": 86681
+      },
+      {
+        "path": "repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json",
+        "reason": "append-only operational-run policy and scientific-evidence exclusion boundary",
+        "exists": true,
+        "bytes": 3245
+      },
+      {
+        "path": "data/hypothesis_space_run_state.json",
+        "reason": "auditable benchmark, pipeline-error, and distinct-map-root history",
+        "exists": true,
+        "bytes": 3919
       },
       {
         "path": "data/research_engine_state.json",
@@ -651,7 +693,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 16593
+        "bytes": 17061
       },
       {
         "path": "VERIFIED.md",
@@ -687,7 +729,7 @@
         "path": "experiments/engine/README.md",
         "reason": "Research Engine event lifecycle and regeneration contract",
         "exists": true,
-        "bytes": 8295
+        "bytes": 9999
       },
       {
         "path": "experiments/engine/hypothesis_seed.schema.json",
@@ -754,6 +796,12 @@
         "reason": "lane-specific applicability, structural, mechanism, validator, experiment, and formal gates",
         "exists": true,
         "bytes": 4441
+      },
+      {
+        "path": "experiments/engine/hypothesis_space_run.schema.json",
+        "reason": "strict non-scientific screening-run and benchmark record contract",
+        "exists": true,
+        "bytes": 10936
       },
       {
         "path": "notes/RESEARCH_ENGINE_V0_TO_V0_2.md",
@@ -843,13 +891,13 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 690794
+        "bytes": 693031
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 20588
+        "bytes": 21528
       },
       {
         "path": "PUBLISHABLE_UNITS.md",
@@ -916,6 +964,12 @@
         "reason": "Research Engine outcome with an invalid or unknown provenance kind",
         "exists": true,
         "bytes": 3636
+      },
+      {
+        "path": "experiments/engine/hypothesis_space_runs/HSR-2026-08-01-001.json",
+        "reason": "immutable operational screening benchmark; never scientific outcome evidence",
+        "exists": true,
+        "bytes": 9374
       }
     ]
   }

@@ -58,6 +58,10 @@ _SMALL = [
      "generated one-million-cell screening state and bounded review queue"),
     ("data/hypothesis_space_map.json",
      "aggregate evidence-bounded hot/warm/cold research-space map"),
+    ("repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json",
+     "append-only operational-run policy and scientific-evidence exclusion boundary"),
+    ("data/hypothesis_space_run_state.json",
+     "auditable benchmark, pipeline-error, and distinct-map-root history"),
     ("data/research_engine_state.json",
      "generated dual-gate state, selected sequence, and retained outcome summaries"),
     ("repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -116,6 +120,8 @@ _MEDIUM_EXTRA = [
      "raw-artifact recomputation and three-axis validator independence"),
     ("experiments/engine/research_lane.schema.json",
      "lane-specific applicability, structural, mechanism, validator, experiment, and formal gates"),
+    ("experiments/engine/hypothesis_space_run.schema.json",
+     "strict non-scientific screening-run and benchmark record contract"),
     ("notes/RESEARCH_ENGINE_V0_TO_V0_2.md",
      "migration boundary, preserved history, lifecycle semantics, and regeneration order"),
     ("experiments/engine/outcome.schema.json", "strict terminal-outcome event schema"),
@@ -146,12 +152,21 @@ _OUTCOME_FILES = [
     (path.relative_to(ROOT).as_posix(), outcome_reason(path))
     for path in sorted((ROOT / "experiments" / "engine" / "outcomes").glob("*.json"))
 ]
+_HYPOTHESIS_SPACE_RUN_FILES = [
+    (
+        path.relative_to(ROOT).as_posix(),
+        "immutable operational screening benchmark; never scientific outcome evidence",
+    )
+    for path in sorted(
+        (ROOT / "experiments" / "engine" / "hypothesis_space_runs").glob("*.json")
+    )
+]
 _LARGE_EXTRA = [
     ("data/knowledge_graph.json", "full machine-readable theorem/dependency/barrier graph"),
     ("REPOSITORY_ARCHITECTURE.md", "whole-repo map: canonical / generated / scratch / archive"),
     ("PUBLISHABLE_UNITS.md", "the standalone publishable narratives with honest scope"),
     ("TRUST_REPORT.md", "the trust boundary: what native_decide adds to the TCB"),
-] + _OUTCOME_FILES
+] + _OUTCOME_FILES + _HYPOTHESIS_SPACE_RUN_FILES
 
 TIERS: dict[str, list[tuple[str, str]]] = {
     "small": _SMALL,
@@ -178,6 +193,7 @@ Ground rules:
 - `repo/RESEARCH_CLAIMS_V0.json` owns exact child-claim dispositions and assurance; a child result never closes its route by implication.
 - `repo/HYPOTHESIS_GENERATION_V0.json` owns non-executable seed and proposal-quality compilation.
 - `repo/HYPOTHESIS_MODEL_DRAFTER_V0.json` owns optional model drafting; its output is untrusted and non-executable.
+- `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json` owns operational benchmark/error memory; screening rejects are not scientific outcomes.
 - `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json` owns immutable candidate lifecycle and portfolio selection.
 - `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json` owns the 19 required regression cases.
 - `repo/PRODUCT_MODEL.json` owns product rhetoric, current capability, and MVP boundaries.

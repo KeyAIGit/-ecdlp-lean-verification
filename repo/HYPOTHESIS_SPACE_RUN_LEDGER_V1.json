@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "ledger_id": "HYPOTHESIS-SPACE-RUN-LEDGER-V1",
+  "status": "accepted_non_scientific_operational_memory",
+  "constitution_source": "repo/HYPOTHESIS_SELECTION_CONSTITUTION_V3.md",
+  "protected_base_ref": "refs/remotes/origin/main",
+  "harness": {
+    "path": "scripts/hypothesis_space_run_ledger.py",
+    "resolution_rule": "The recorded SHA-256 must match the current path or the same path in reachable Git history."
+  },
+  "subject": {
+    "space_policy_path": "repo/HYPOTHESIS_SPACE_V2.json",
+    "state_path": "data/hypothesis_space_state.json",
+    "map_path": "data/hypothesis_space_map.json",
+    "runner_path": "scripts/hypothesis_space_funnel.py",
+    "shared_funnel_path": "scripts/hypothesis_funnel.py"
+  },
+  "benchmark_contract": {
+    "method": "in_process_run_space_core_plus_output_equality_v1",
+    "minimum_measured_repetitions": 3,
+    "maximum_measured_repetitions": 9,
+    "minimum_warmup_repetitions": 1,
+    "timing_clock": "time.perf_counter_ns",
+    "recorded_at_utc_semantics": "benchmark start time",
+    "target_source": "subject data/hypothesis_space_state.json performance_contract",
+    "performance_is_hardware_and_load_dependent": true
+  },
+  "retention_contract": {
+    "raw_cells_retained": false,
+    "whole_space_identity": "RFC6962 coverage root plus instance root",
+    "screening_diagnostics": "exact aggregate histograms plus bounded witnesses in the subject state",
+    "run_history": "SHA-256-anchored append-only records",
+    "map_history": "one delta per distinct instance root; repeated benchmarks do not create knowledge revisions",
+    "preflight_failures": "invalid provenance or source mismatch fails closed before a run record exists; only failures after provenance preflight enter operational history"
+  },
+  "epistemic_contract": {
+    "cold_cell": "A typed combination failed one or more deterministic screening rules; it is not a falsified mathematical hypothesis.",
+    "warm_cell": "A typed combination survived structural screening but still lacks the evidence needed to be a hypothesis candidate.",
+    "hot_cell": "Reserved for a mechanism-assured and independently reviewed proposal; this ledger cannot create one.",
+    "completed_run": "Engineering evidence that one frozen finite projection was processed reproducibly.",
+    "failed_run": "Operational evidence about the pipeline, not evidence for or against an ECDLP claim.",
+    "scientific_outcome_source": "experiments/engine/outcomes and typed desk decisions, never this run ledger"
+  },
+  "prohibited_inferences": [
+    "typed combinations are not independently generated hypotheses",
+    "screening rejection is not falsification",
+    "throughput is not research progress",
+    "repeating an unchanged instance root is not new map coverage",
+    "a benchmark record is not ranker training data or Brier calibration data",
+    "this ledger cannot authorize execution, recommend a candidate, promote a route, or change the threat model"
+  ],
+  "immutable_record_anchors": [
+    {
+      "run_id": "HSR-2026-08-01-001",
+      "path": "experiments/engine/hypothesis_space_runs/HSR-2026-08-01-001.json",
+      "sha256": "cd7ccc3783fd99e98d0e9e48f9e0a57027521e7ac595ebb2a0641028464b61db"
+    }
+  ]
+}
