@@ -37,11 +37,11 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1183,
+    "edges": 1187,
     "by_edge_type": {
       "imports": 525,
       "member_of": 307,
-      "grounded_in_source_claim": 58,
+      "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
       "decision_grounded_in": 25,
@@ -9421,8 +9421,8 @@
       "generator_id": "ecdlp-hypothesis-generation-v0",
       "source_hashes": {
         "generation_policy_sha256": "a753b9991261ffbd684da4a7d132cbbaba5b94e1a568f6776192bd5f19293880",
-        "typed_evidence_state_sha256": "add66a4fd90e659be89e87999e297543dbe1109bdd90870a6341cce422517264",
-        "research_claim_state_sha256": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e",
+        "typed_evidence_state_sha256": "ec715ed18f3c869a32f3ddcc6ac173ab0d55dab3b6cd9a4e67e571aa361e6a6e",
+        "research_claim_state_sha256": "86c50ca17907d5fc38a9d979f2b810a6cd01fc1c07614413a72074cad91105af",
         "proposals_sha256": "581cf3109a9f2bfdaeacf895664e816ab22f0f47a72140385dab1c69d04d0a34",
         "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
       },
@@ -9445,7 +9445,7 @@
         "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
         "target_id": "secp256k1-classical-single-target-plain",
         "counts": {
-          "source_claims": 32,
+          "source_claims": 36,
           "target_properties": 11,
           "mechanisms": 8,
           "cells": 8,
@@ -9457,10 +9457,10 @@
           "desk_decisions": 4
         },
         "source_hashes": {
-          "policy_sha256": "a9e18742d11ece81bf5e6abaff2cade27e5525ad6d3e9220b184ce059e83963f",
+          "policy_sha256": "daecc24d673bf7125d4c3b96478feee956e824af9a6e30d842ac3dd821710e77",
           "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
           "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-          "evidence_files_sha256": "ddd8a056c6bc68fe784d30f3b42e071bc77d6a3ac8741aaeb82edf636f24cd34",
+          "evidence_files_sha256": "59f6597d9a97b8afdd8cb561f5addbcce93eee974e2cd299cd97c2d96beb2ebd",
           "desk_decisions_sha256": "1e66e8b2f3e196736c2196042817a23632b7760b02dbd1663408f81359dad608"
         },
         "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
@@ -9471,13 +9471,13 @@
         "counts": {
           "routes_represented": 2,
           "research_questions": 2,
-          "claims": 6,
+          "claims": 7,
           "closed_child_claims": 2,
           "inconclusive_claims": 1,
-          "confirmed_claims": 3,
-          "mechanism_variants": 4,
+          "confirmed_claims": 4,
+          "mechanism_variants": 5,
           "proposal_seed_eligible_variants": 0,
-          "evidence_events": 10,
+          "evidence_events": 11,
           "calibration_eligible_events": 0
         },
         "open_routes": [
@@ -9489,7 +9489,7 @@
           "route_promotions": 0,
           "exact_target_runs": 0
         },
-        "state_sha256": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e"
+        "state_sha256": "86c50ca17907d5fc38a9d979f2b810a6cd01fc1c07614413a72074cad91105af"
       },
       "seed_coverage": {
         "threshold": 12,
@@ -9497,7 +9497,7 @@
         "overflow_triggered": false,
         "represented_seed_ids": [
           "HGS-5CC94AD51AE6",
-          "HGS-029AFA3EA451"
+          "HGS-D2572A6530D8"
         ],
         "represented_cell_ids": [
           "CELL-M-PKC-AUXILIARY-CURVE",
@@ -9530,7 +9530,7 @@
           "seed_id": "HGS-5CC94AD51AE6",
           "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
           "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-          "claim_state_digest": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e",
+          "claim_state_digest": "86c50ca17907d5fc38a9d979f2b810a6cd01fc1c07614413a72074cad91105af",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9675,10 +9675,10 @@
           }
         },
         {
-          "seed_id": "HGS-029AFA3EA451",
+          "seed_id": "HGS-D2572A6530D8",
           "cell_id": "CELL-M-PKC-SMOOTH-M16",
-          "typed_evidence_digest": "5d928412a43530859a86db03c6ebc0d98a97340252e652db5a680e392530ad26",
-          "claim_state_digest": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e",
+          "typed_evidence_digest": "68c5d12f2843505d54a34aea27da89b55476eee4b587a5e6e8e1f96341668c1b",
+          "claim_state_digest": "86c50ca17907d5fc38a9d979f2b810a6cd01fc1c07614413a72074cad91105af",
           "route_id": "R-PETIT-COMPOSED-MAPS",
           "route_source_ids": [
             "amadori_pintore_sala2018",
@@ -9697,7 +9697,7 @@
             "mechanism_id": "M-PKC-SMOOTH-M16",
             "status": "open",
             "intake_mode": "desk_cost_bridge",
-            "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
+            "construction": "Specialize the published chain to L1(x)=x^2, L2(x)=x^3, L3(x)=x^7, and L4(x)=1-x^13441, so L=1-x^564522. At arity sixteen the direct source System (4) has 64 factor coordinates and 65 equation members. The available divisor clears the raw and source-yield thresholds, but target-bound recovery is an explicit repository completion and complete cost remains open.",
             "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and the end-to-end common-root corollary while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. TASK-020 kernel-checks the actual frozenC family, exact coefficient-map specialization with unit 1 and affine and [1:0] output branches, the universal output-degree bound, and the unconditional one-step common-projective-root equivalence. TASK-021 kernel-checks the exact declared-degree projective evaluation bridges and the universal all-stage frozen witness-chain equivalence, including the C16 chain with fourteen intermediate projective slots and infinity allowed at every level. TASK-022 kernel-checks the exact literal finite MvPolynomial family for the frozen stage-14 predicate after injective base change: one GuardVar assignment satisfies every GuardedEquation, with fourteen raw projective slots, 56 scalar variables, fifteen H equations, fourteen guards, and total degree at most four. It is equivalent to the recursive chain, not a parallel recursive syntax. TASK-023 kernel-checks the exact affine/infinity chart-polynomial cover. Each fixed InfinityMask I has exactly 14 - I.card affine scalar variables, no guard equations, and fifteen literal H equations with degree ceilings 2/4/2; the cover is equivalent to the chain, guarded system, and source predicate after base change. TASK-024 kernel-checks necessary infinity-stratum pruning: affine external inputs restrict the exact cover from 16384 masks to 987 separated masks, while nonzero endpoint determinants conditionally restrict it to 377 interior masks. Isolated infinity slots force existing affine neighbors to q.u / q.v. TASK-025 kernel-checks the nested local reductions 377 to 129 to 69 to 36, with the independent boundary-only branch 129 to 60, and proves over any field that an internal infinity forces an explicit frozen prefix or suffix obstruction to vanish. Under affine inputs, endpoint nonvanishing, and BalancedPropagatedRegular (the twelve balanced obstruction nonvanishing conditions), every solution uses the empty mask and the exact chart cover is the single affine chart. The source-stage bridge additionally assumes injective base change into an algebraically closed target and balanced regularity for the mapped target data; source-field computation does not automatically establish that mapped-target regularity. The remaining mechanism gap is symbolic nonzeroness and nonemptiness of a usable regular locus or orchestration of its exceptional complement, together with usable relation yield and rank, solving, recovery, and total cost.",
             "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
             "cost_quantity": {
@@ -9708,8 +9708,12 @@
               "measurement": "An exact symbolic size bound must precede any solver run; degree, monomial count, memory, and recovery are all included.",
               "status": "partial",
               "source_claim_ids": [
+                "SC-PKC-SYSTEM4-EXACT",
+                "SC-PKC-PMINUS1-MAP-EXACT",
+                "SC-PKC-PARTIAL-COST-EXACT",
                 "SC-PKC-SMOOTH-SUBGROUP",
                 "SC-PKC-RELATION-YIELD",
+                "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY",
                 "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
                 "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
                 "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
@@ -9766,9 +9770,13 @@
               "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
               "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS",
               "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
+              "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY",
               "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
+              "SC-PKC-PARTIAL-COST-EXACT",
+              "SC-PKC-PMINUS1-MAP-EXACT",
               "SC-PKC-RELATION-YIELD",
               "SC-PKC-SMOOTH-SUBGROUP",
+              "SC-PKC-SYSTEM4-EXACT",
               "SC-SECP-PMINUS1-FACTORIZATION",
               "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
               "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
@@ -9802,7 +9810,7 @@
             "experiments/p4_petit/README.md",
             "experiments/p4_petit/RESULTS.md"
           ],
-          "deduplication_key": "029afa3ea4510527ae25677e1cdd653aea446dce927ce9a90b095fc425b9f97d",
+          "deduplication_key": "d2572a6530d8b5a7dca87bd4d95989aba5e83f1abfcf0e637bcdaea25ee55e6e",
           "proposal_packet": {
             "required_sections": [
               "new_premise",
@@ -10221,6 +10229,7 @@
           "experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json",
           "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json",
           "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
+          "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json",
           "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
         ],
         "lifecycle_state": "idea",
@@ -10519,24 +10528,24 @@
       "exact_target_execution": false,
       "stream_digest_version": "rfc6962-binary-leaf-v2",
       "coverage_merkle_root_sha256": "dff1e8cb52594158fc94556cbef3025be647fab310132c34ee58aed3b8399207",
-      "instance_root_sha256": "c6d51c3734e3b96d79db3a0db096aa3d3e3fc9b9bb716603655e8e56395c7834",
+      "instance_root_sha256": "46e6d4b952caae95eb60bb502e22fce30d7069213ac2112bebf9064796914218",
       "challenge_indices": [
-        28820,
-        102094,
-        154917,
-        194205,
-        265439,
-        314983,
-        361741,
-        443761,
-        497625,
-        577788,
-        720276,
-        733971,
-        775448,
-        783983,
-        870784,
-        911714
+        3633,
+        28798,
+        96077,
+        235306,
+        423007,
+        471990,
+        597416,
+        708123,
+        716347,
+        796086,
+        850506,
+        899109,
+        903954,
+        927968,
+        957919,
+        987676
       ]
     },
     "coverage_boundary": "Coverage is complete only for this frozen finite Cartesian projection. It is not coverage of all ECDLP ideas or literature.",
@@ -11107,7 +11116,7 @@
     "state_source": "data/typed_evidence_state.json",
     "policy_source": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
     "counts": {
-      "source_claims": 32,
+      "source_claims": 36,
       "target_properties": 11,
       "mechanisms": 8,
       "cells": 8,
@@ -11119,10 +11128,10 @@
       "desk_decisions": 4
     },
     "source_hashes": {
-      "policy_sha256": "a9e18742d11ece81bf5e6abaff2cade27e5525ad6d3e9220b184ce059e83963f",
+      "policy_sha256": "daecc24d673bf7125d4c3b96478feee956e824af9a6e30d842ac3dd821710e77",
       "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
       "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-      "evidence_files_sha256": "ddd8a056c6bc68fe784d30f3b42e071bc77d6a3ac8741aaeb82edf636f24cd34",
+      "evidence_files_sha256": "59f6597d9a97b8afdd8cb561f5addbcce93eee974e2cd299cd97c2d96beb2ebd",
       "desk_decisions_sha256": "1e66e8b2f3e196736c2196042817a23632b7760b02dbd1663408f81359dad608"
     },
     "trust_boundary": {
@@ -11267,7 +11276,7 @@
           }
         ],
         "seed_eligible": true,
-        "evidence_digest": "5d928412a43530859a86db03c6ebc0d98a97340252e652db5a680e392530ad26",
+        "evidence_digest": "68c5d12f2843505d54a34aea27da89b55476eee4b587a5e6e8e1f96341668c1b",
         "authorization": "none"
       },
       {
@@ -16841,7 +16850,22 @@
     },
     {
       "from": "CELL-M-PKC-SMOOTH-M16",
+      "to": "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-PKC-SMOOTH-M16",
       "to": "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-PKC-SMOOTH-M16",
+      "to": "SC-PKC-PARTIAL-COST-EXACT",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-PKC-SMOOTH-M16",
+      "to": "SC-PKC-PMINUS1-MAP-EXACT",
       "type": "grounded_in_source_claim"
     },
     {
@@ -16852,6 +16876,11 @@
     {
       "from": "CELL-M-PKC-SMOOTH-M16",
       "to": "SC-PKC-SMOOTH-SUBGROUP",
+      "type": "grounded_in_source_claim"
+    },
+    {
+      "from": "CELL-M-PKC-SMOOTH-M16",
+      "to": "SC-PKC-SYSTEM4-EXACT",
       "type": "grounded_in_source_claim"
     },
     {
@@ -17129,7 +17158,7 @@
       "type": "generated_from_cell"
     },
     {
-      "from": "HGS-029AFA3EA451",
+      "from": "HGS-D2572A6530D8",
       "to": "CELL-M-PKC-SMOOTH-M16",
       "type": "generated_from_cell"
     },

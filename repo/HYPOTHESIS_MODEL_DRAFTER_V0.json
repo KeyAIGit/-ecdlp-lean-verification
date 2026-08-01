@@ -17,12 +17,12 @@
       "skip_submitted_seeds_by_default": true,
       "admissions": [
         {
-          "seed_id": "HGS-029AFA3EA451",
+          "seed_id": "HGS-D2572A6530D8",
           "research_object_id": "HYP-M16-SOLVER-SLOPE-001",
           "scope": "non_executable_proposal_only"
         }
       ],
-      "boundary": "The current decision admits formulation only of HYP-M16-SOLVER-SLOPE-001. This reviewed drafter policy maps that object to scoped seed HGS-029AFA3EA451 and pins the mapping to the exact decision digest. Existing proposal HGP-M16-SOLVER-SLOPE-001 remains immutable under authenticated legacy alias HGS-DC5FF2FC9E71, but the exact factor-base census changed the scoped M16 cell identity, so that alias is historical-only and stale_seed_snapshot blocks it. The current seed has no compatible submitted proposal; one non-executable typed-evidence request is therefore expected. Every supplied source claim and evidence file is digest-bound. Model-authored claim links remain unverified schema assertions and cannot supply source assurance."
+      "boundary": "The current decision admits formulation only of HYP-M16-SOLVER-SLOPE-001. This reviewed drafter policy maps that object to scoped seed HGS-D2572A6530D8 and pins the mapping to the exact decision digest. Existing proposal HGP-M16-SOLVER-SLOPE-001 remains immutable under authenticated legacy alias HGS-DC5FF2FC9E71, but the exact factor-base census and source-faithful mechanism closure changed the scoped M16 cell identity, so that alias is historical-only and stale_seed_snapshot blocks it. The current seed has no compatible submitted proposal; one non-executable typed-evidence request is therefore expected. Every supplied source claim and evidence file is digest-bound. Model-authored claim links remain unverified schema assertions and cannot supply source assurance."
     },
     "brainstorm_queue": {
       "scientific_identity": "untrusted_brainstorm_fragment",

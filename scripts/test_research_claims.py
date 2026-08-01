@@ -78,6 +78,39 @@ class ResearchClaimTests(unittest.TestCase):
         )
         self.assertFalse(variant["proposal_seed_eligible"])
 
+    def test_m16_source_mechanism_is_confirmed_but_non_executable(self) -> None:
+        problems, state = self.build()
+        self.assertEqual([], problems)
+        variant = next(
+            item
+            for item in state["mechanism_variants"]
+            if item["mechanism_variant_id"]
+            == "MV-PKC-PMINUS1-M16-PUBLISHED-SYSTEM4"
+        )
+        self.assertEqual(
+            "mechanism_specified_cost_unresolved",
+            variant["mechanism_status"],
+        )
+        self.assertFalse(variant["proposal_seed_eligible"])
+        claim = next(
+            item
+            for item in state["claims"]
+            if item["claim_id"]
+            == "CLM-PKC-M16-SOURCE-MECHANISM-RECOVERY"
+        )
+        self.assertEqual("confirmed", claim["claim_disposition"])
+        self.assertIn("against the sampled target", claim["statement"])
+        event = next(
+            item
+            for item in state["evidence_events"]
+            if item["evidence_event_id"]
+            == "CEV-PKC-M16-SOURCE-MECHANISM-RECOVERY"
+        )
+        self.assertEqual("structural", event["event_class"])
+        self.assertFalse(event["calibration_eligible"])
+        self.assertEqual("none", event["authorization"])
+        self.assertIn("R-PETIT-COMPOSED-MAPS", state["open_routes"])
+
     def test_m16_structural_events_cannot_enter_brier_calibration(self) -> None:
         policy = copy.deepcopy(self.policy)
         event = next(

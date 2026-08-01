@@ -56,7 +56,7 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 32,
+                "source_claims": 36,
                 "target_properties": 11,
                 "mechanisms": 8,
                 "cells": 8,
@@ -300,6 +300,14 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual(
             ["B-PKC-M16-COMPLETE-COST-BRIDGE"], m16["barrier_ids"]
         )
+        for claim_id in (
+            "SC-PKC-SYSTEM4-EXACT",
+            "SC-PKC-PMINUS1-MAP-EXACT",
+            "SC-PKC-PARTIAL-COST-EXACT",
+            "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY",
+        ):
+            self.assertIn(claim_id, m16["source_claim_ids"])
+            self.assertIn(claim_id, m16["cost_quantity"]["source_claim_ids"])
         self.assertIn(
             "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
             m16["source_claim_ids"],
@@ -393,6 +401,21 @@ class TypedEvidenceTests(unittest.TestCase):
         claims = {
             item["id"]: item for item in state["source_claims"]
         }
+        source_mechanism_claim = claims[
+            "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY"
+        ]
+        self.assertEqual(
+            "experiments/engine/"
+            "pkc_smooth_m16_source_faithful_mechanism/artifact.json",
+            source_mechanism_claim["evidence_path"],
+        )
+        self.assertEqual(
+            "66e59afa20fb8721eef1ad5f15e6ce0d2c8cab1e8e545c92c4a3a5e4981307e5",
+            source_mechanism_claim["artifact_sha256"],
+        )
+        self.assertIn("repository completion", source_mechanism_claim["boundary"])
+        self.assertIn("source independence is not established", source_mechanism_claim["boundary"])
+        self.assertIn("no solver", source_mechanism_claim["boundary"])
         self.assertEqual(
             "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json",
             claims["SC-PKC-M16-SYMBOLIC-DESK-RESULT"]["evidence_path"],

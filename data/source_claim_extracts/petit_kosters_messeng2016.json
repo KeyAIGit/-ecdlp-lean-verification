@@ -13,6 +13,33 @@
   },
   "claims": [
     {
+      "claim_id": "SC-PKC-SYSTEM4-EXACT",
+      "locator": {
+        "kind": "section",
+        "value": "Section 3.1, Algorithm 1, System (4), published p. 9"
+      },
+      "paraphrase": "After sampling a and b and forming the target point (X,Y)=aP+bQ, Algorithm 1 solves one Semaev equation S_(m+1)(x_11,...,x_m1,X)=0 together with m copies of the composed-map chain x_(i,j+1)=L_j(x_(i,j)) and the terminal equations L_(n')(x_(i,n'))=0. Rational-map denominators are moved to the left-hand sides.",
+      "boundary": "The printed Step 4c checks whether recovered factor-base points satisfy sum_i P_i=0 and does not explicitly bind that check to the sampled target (X,Y), even though X occurs in System (4). A target-bound signed elliptic-curve recovery check is therefore a repository completion justified by summation-polynomial semantics, not a verbatim source claim."
+    },
+    {
+      "claim_id": "SC-PKC-PMINUS1-MAP-EXACT",
+      "locator": {
+        "kind": "section",
+        "value": "Section 3.3, published p. 10"
+      },
+      "paraphrase": "If p-1=r times the product of factors p_i and their product is about p^(1/m), the source takes the multiplicative subgroup of that product order, sets L_j(x)=x^(p_j) for j<n', sets L_(n')(x)=1-x^(p_(n')), and composes the maps. A coset variant is also mentioned.",
+      "boundary": "This specifies the root-map construction, not a fast solver for System (4). Calling every specialized component low degree requires an explicit arithmetic-circuit cost; for secp256k1 the selected factorization contains the degree-13441 terminal component."
+    },
+    {
+      "claim_id": "SC-PKC-PARTIAL-COST-EXACT",
+      "locator": {
+        "kind": "section",
+        "value": "Section 3.2, published p. 10"
+      },
+      "paraphrase": "In a unit-cost model the source defines preprocessing P(p,m) and System-(4) solving time T(E,m,L), estimates decompositions by (deg L)^m/(m!p), and writes total cost P(p,m)+(m!p/(deg L)^(m-1))T(E,m,L)+(deg L)^omega. At the balance (deg L)^m approximately m!p, beating square-root work requires T below p^(1/2-1/m).",
+      "boundary": "The paper explicitly leaves the complexity open and reports that it had not investigated an algorithm better than Groebner-basis methods for System (4). The formula is a partial model: it does not prove relation independence, recovery completeness, a common-unit comparison, or an end-to-end secp256k1 advantage."
+    },
+    {
       "claim_id": "SC-PKC-SMOOTH-SUBGROUP",
       "locator": {
         "kind": "section",

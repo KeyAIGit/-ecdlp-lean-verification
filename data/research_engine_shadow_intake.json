@@ -3,9 +3,9 @@
   "state_id": "research-engine-shadow-intake-v0",
   "status": "shadow_non_executing",
   "source_hashes": {
-    "source_registry_sha256": "47418679621b39d365ecfa093fe645d6fdc5821abc1afe2b3b4b38098dfa498a",
-    "typed_evidence_state_sha256": "a711846cfc4da1201c0b8ff1469866bd8bdefbf0d0140f1acf3789e0f4b832fa",
-    "research_claim_state_sha256": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e"
+    "source_registry_sha256": "4fad0eff139704107e69096302bfe0ffa7b8910af4a6d7d1a3ed72085cca8f21",
+    "typed_evidence_state_sha256": "3ad4ecff0fd694b8ef3ae7cd1ee6d8820ea069f3a00a54420206d4324d18cf7b",
+    "research_claim_state_sha256": "86c50ca17907d5fc38a9d979f2b810a6cd01fc1c07614413a72074cad91105af"
   },
   "counts": {
     "proposal_stubs": 4,
@@ -108,6 +108,7 @@
         "experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json",
         "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json",
         "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
+        "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json",
         "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
       ],
       "lifecycle_state": "idea",

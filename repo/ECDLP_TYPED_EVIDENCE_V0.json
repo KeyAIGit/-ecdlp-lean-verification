@@ -28,6 +28,54 @@
       "evidence_path": "data/source_claim_extracts/fhjrv2014.json"
     },
     {
+      "id": "SC-PKC-SYSTEM4-EXACT",
+      "source_id": "petit_kosters_messeng2016",
+      "source_type": "primary_literature",
+      "citation": "Petit, Kosters, and Messeng, PKC 2016, Algorithm 1 and System (4).",
+      "read_status": "full_text_obtained",
+      "url": "https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf",
+      "artifact_sha256": "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943",
+      "locator": {
+        "kind": "section",
+        "value": "Section 3.1, Algorithm 1, System (4), published p. 9"
+      },
+      "statement": "After sampling a target point, System (4) joins one target-specialized Semaev equation to m copies of the decomposed root-map chain and its terminal equations.",
+      "boundary": "The printed recovery line says sum_i P_i=0 without explicitly binding the recovered relation to the sampled target. The repository's target-bound signed elliptic-curve check is a derived completion, not a verbatim source claim.",
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+    },
+    {
+      "id": "SC-PKC-PMINUS1-MAP-EXACT",
+      "source_id": "petit_kosters_messeng2016",
+      "source_type": "primary_literature",
+      "citation": "Petit, Kosters, and Messeng, PKC 2016, p-minus-one composed-map construction.",
+      "read_status": "full_text_obtained",
+      "url": "https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf",
+      "artifact_sha256": "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943",
+      "locator": {
+        "kind": "section",
+        "value": "Section 3.3, published p. 10"
+      },
+      "statement": "For a selected smooth divisor of p-1, the source uses power maps L_j(x)=x^(p_j) followed by L_(n')(x)=1-x^(p_(n')) so that the composed root set is the multiplicative subgroup or a coset.",
+      "boundary": "This specifies the root map, not a generalized-root solver. In the secp256k1 M16 specialization the literal source chain has a degree-13441 terminal component unless a separately costed circuit representation is used.",
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+    },
+    {
+      "id": "SC-PKC-PARTIAL-COST-EXACT",
+      "source_id": "petit_kosters_messeng2016",
+      "source_type": "primary_literature",
+      "citation": "Petit, Kosters, and Messeng, PKC 2016, partial cost model.",
+      "read_status": "full_text_obtained",
+      "url": "https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf",
+      "artifact_sha256": "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943",
+      "locator": {
+        "kind": "section",
+        "value": "Section 3.2, published p. 10"
+      },
+      "statement": "The source's unit-cost model is P(p,m)+(m!p/(deg L)^(m-1))T(E,m,L)+(deg L)^omega, with heuristic yield (deg L)^m/(m!p) and an explicitly unresolved System-(4) solving term T.",
+      "boundary": "The source leaves asymptotic complexity open. The formula does not prove relation independence, recovery completeness, a common-unit comparison, or an end-to-end advantage on secp256k1.",
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+    },
+    {
       "id": "SC-PKC-SMOOTH-SUBGROUP",
       "source_id": "petit_kosters_messeng2016",
       "source_type": "primary_literature",
@@ -250,6 +298,22 @@
       "statement": "The formalized Semaev polynomials provide checked algebraic implications between point-sum relations and polynomial vanishing in the covered cases.",
       "boundary": "The current Lean package is not an end-to-end prime-field index-calculus algorithm and does not supply relation probabilities or solver complexity.",
       "evidence_path": "Ecdlp/Proved/SemaevFour.lean"
+    },
+    {
+      "id": "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY",
+      "source_id": "repo:certificate",
+      "source_type": "certificate",
+      "citation": "Deterministic PKC M16 source-faithful mechanism and recovery-closure certificate.",
+      "read_status": "certificate_replayed",
+      "url": null,
+      "artifact_sha256": "66e59afa20fb8721eef1ad5f15e6ce0d2c8cab1e8e545c92c4a3a5e4981307e5",
+      "locator": {
+        "kind": "certificate_field",
+        "value": "terminal.scientific_disposition"
+      },
+      "statement": "Exact replay specializes the published p-minus-one map to L4 o L3 o L2 o L1 equals 1-x^564522, fixes the 64-coordinate and 65-equation direct System-(4) presentation, separates source-chain and quadratic-circuit semantics, and supplies an explicit target-bound signed recovery check after identifying the source's printed recovery ambiguity.",
+      "boundary": "The map and system input are specified, but the target-bound recovery is a repository completion rather than a verbatim source claim. Generalized-root solving, usable regular-locus probability, relation independence and rank, recovery distribution, sparse linear algebra, and complete equal-success cost remain unresolved. Assurance is certificate_replayed, source independence is not established, calibration is excluded, and no solver, experiment, retention, authorization, route rejection, route promotion, novelty, or ECDLP consequence is claimed.",
+      "evidence_path": "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json"
     },
     {
       "id": "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
@@ -726,8 +790,12 @@
       "measurement": "An exact symbolic size bound must precede any solver run; degree, monomial count, memory, and recovery are all included.",
       "status": "partial",
       "source_claim_ids": [
+        "SC-PKC-SYSTEM4-EXACT",
+        "SC-PKC-PMINUS1-MAP-EXACT",
+        "SC-PKC-PARTIAL-COST-EXACT",
         "SC-PKC-SMOOTH-SUBGROUP",
         "SC-PKC-RELATION-YIELD",
+        "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY",
         "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
         "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
         "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
@@ -789,6 +857,7 @@
       "disposition": "open",
       "exact_scope": "For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, the M16 input presentations and set-theoretic homogeneous projective S3 caterpillar semantics are exact, including identity, tangent, rational two-torsion, duplicate, extension-only, non-lift, topology, recovery, and GLV lift-sign strata. TASK-018 freezes the recursive projective S17 contract, including fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, coefficient-map and algebraic-closure reflection variants, the literal TASK-018 Sylvester matrix bridge with coefficient unit 1, and its end-to-end common-root corollary, while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. TASK-020 kernel-checks the actual frozenC family, exact same-field and coefficient-map specialization at formal degrees (2^(s+1),2) with coefficient unit 1, separate affine [y:1] and infinity [1:0] branches, the universal output-degree bound, and the unconditional one-step common-projective-root equivalence. TASK-021 kernel-checks exact declared-degree projective evaluation and the all-stage frozen projective witness-chain equivalence, including the stage-14 C16 chain with fourteen intermediate projective slots and [1:0] allowed at every level. TASK-022 kernel-checks an exact literal finite MvPolynomial family for the frozen stage-14 predicate after injective base change: one GuardVar assignment satisfies every GuardedEquation, fourteen raw projective slots give 56 scalar variables, fifteen literal H equations plus fourteen nonzero-pair guards give 29 equation-family members, and every equation has total degree at most four. This family is equivalent to the recursive chain, not a parallel recursive syntax. The guards exclude [0:0] and retain [1:0]. TASK-023 kernel-checks an exact affine/infinity chart-polynomial cover: each InfinityMask I fixes selected slots to [1:0], gives one scalar [X_i:1] for every remaining slot, and has exactly 14 - I.card variables and fifteen H equations with base, internal-step, and final degree ceilings 2, 4, and 2. The existential cover is exactly equivalent to the projective chain, guarded system, and source frozen stage-14 predicate after the existing injective base change. The 2^14 logical masks are not enumerated or materialized. TASK-024 kernel-checks necessary infinity-stratum pruning: affine external inputs forbid adjacent infinity slots, so the exact cover restricts from 16384 masks to 987 separated masks. Selected boundary infinities satisfy endpoint determinant equations, and nonzero endpoint determinants conditionally restrict the exact cover to 377 interior masks. An isolated infinity forces each existing affine neighbor to q.u / q.v. These filters are necessary, not sufficient or unique, and the production mask families are not enumerated or materialized. TASK-025 kernel-checks explicit infinity propagation. Under its named nonvanishing assumptions the nested local mask family contracts from 377 to 129 after distance two, to 69 after distance three, and to 36 after also excluding the two boundary-near slots; the separate boundary-only refinement contracts 129 to 60 and is not the distance-three count. A one-way resultant implication propagates frozen projective chains over any field. Six prefix and six suffix obstruction values, with maximum frozen stage five, cover all twelve internal infinity slots. Under affine inputs, nonzero endpoint determinants, and BalancedPropagatedRegular, every solution mask is empty and both exact chart covers reduce to the single affine chart. The source-stage bridge still requires an injective map into an algebraically closed target and balanced regularity assumed for the mapped target data. Symbolic nonzeroness, nonemptiness, density, probability, and genericity of that regular locus are not proved; source-field computation does not automatically establish mapped-target regularity; no witness uniqueness or target-witness descent is claimed. These counts do not establish dimension, independent relations, rank, yield, or solving complexity. The barrier remains open on proving a nonempty usable regular locus or orchestrating its exceptional complement, then establishing usable relation yield and rank, solving degree and fill-in, preprocessing, sparse linear algebra, recovery cost, and total work. CQ-SEMAEV-S17-SYSTEM-COST remains partial and unpriced.",
       "source_claim_ids": [
+        "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY",
         "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
         "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
         "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
@@ -956,13 +1025,17 @@
       "threat_model": "classical-single-target-plain",
       "status": "published",
       "scope": "Desk-cost analysis of the PKC 2016 smooth-subgroup construction at the first arity where the available divisor clears both the source's raw size condition and relation-yield balance.",
-      "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
+      "construction": "Specialize the published chain to L1(x)=x^2, L2(x)=x^3, L3(x)=x^7, and L4(x)=1-x^13441, so L=1-x^564522. At arity sixteen the direct source System (4) has 64 factor coordinates and 65 equation members. The available divisor clears the raw and source-yield thresholds, but target-bound recovery is an explicit repository completion and complete cost remains open.",
       "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and the end-to-end common-root corollary while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. TASK-020 kernel-checks the actual frozenC family, exact coefficient-map specialization with unit 1 and affine and [1:0] output branches, the universal output-degree bound, and the unconditional one-step common-projective-root equivalence. TASK-021 kernel-checks the exact declared-degree projective evaluation bridges and the universal all-stage frozen witness-chain equivalence, including the C16 chain with fourteen intermediate projective slots and infinity allowed at every level. TASK-022 kernel-checks the exact literal finite MvPolynomial family for the frozen stage-14 predicate after injective base change: one GuardVar assignment satisfies every GuardedEquation, with fourteen raw projective slots, 56 scalar variables, fifteen H equations, fourteen guards, and total degree at most four. It is equivalent to the recursive chain, not a parallel recursive syntax. TASK-023 kernel-checks the exact affine/infinity chart-polynomial cover. Each fixed InfinityMask I has exactly 14 - I.card affine scalar variables, no guard equations, and fifteen literal H equations with degree ceilings 2/4/2; the cover is equivalent to the chain, guarded system, and source predicate after base change. TASK-024 kernel-checks necessary infinity-stratum pruning: affine external inputs restrict the exact cover from 16384 masks to 987 separated masks, while nonzero endpoint determinants conditionally restrict it to 377 interior masks. Isolated infinity slots force existing affine neighbors to q.u / q.v. TASK-025 kernel-checks the nested local reductions 377 to 129 to 69 to 36, with the independent boundary-only branch 129 to 60, and proves over any field that an internal infinity forces an explicit frozen prefix or suffix obstruction to vanish. Under affine inputs, endpoint nonvanishing, and BalancedPropagatedRegular (the twelve balanced obstruction nonvanishing conditions), every solution uses the empty mask and the exact chart cover is the single affine chart. The source-stage bridge additionally assumes injective base change into an algebraically closed target and balanced regularity for the mapped target data; source-field computation does not automatically establish that mapped-target regularity. The remaining mechanism gap is symbolic nonzeroness and nonemptiness of a usable regular locus or orchestration of its exceptional complement, together with usable relation yield and rank, solving, recovery, and total cost.",
       "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
       "cost_quantity_id": "CQ-SEMAEV-S17-SYSTEM-COST",
       "source_claim_ids": [
+        "SC-PKC-SYSTEM4-EXACT",
+        "SC-PKC-PMINUS1-MAP-EXACT",
+        "SC-PKC-PARTIAL-COST-EXACT",
         "SC-PKC-SMOOTH-SUBGROUP",
         "SC-PKC-RELATION-YIELD",
+        "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY",
         "SC-SECP-PMINUS1-FACTORIZATION",
         "SC-SEMAEV-RELATION-SEMANTICS",
         "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS",

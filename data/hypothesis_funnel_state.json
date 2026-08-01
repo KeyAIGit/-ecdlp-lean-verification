@@ -7,13 +7,13 @@
   "source_bindings": {
     "input_pool_path": "data/hyp_select_004_raw_100.tsv",
     "input_pool_sha256": "c6874df026b5d1dda5c9ad0f6680c92fb355be8303898924128dd2fda48ceea9",
-    "evidence_snapshot_sha256": "b407a47a8d5a8d405ec64f160a32397838255625a55726b85aa1121af4e38a84",
+    "evidence_snapshot_sha256": "f96f0a692358dccce3cc359428f428d7d3d126302259bbeef256e5b59f83467a",
     "evidence_input_sha256": {
       "data/attack_registry.json": "96bc878e6e78712ee5410b723615475a043d5c019b44b6a96c261ff6eccd1101",
-      "data/research_claim_state.json": "0ee2038cc6d36e4ddd3441e0eeacc9c1b4d25a3526a1a51e5fffc64a6d10432e",
-      "data/research_engine_state.json": "2d7876455c187713fe2fef1fc5f31d2a88de59f5054345112bf295d1c2f9e259",
-      "data/source_registry.json": "714dcd1b2a99aef88f90aa95e5b28871f86bb29d591d0806bdbbea6510f5b587",
-      "data/typed_evidence_state.json": "f99cb14bf76b44fa0740222596d1d9d71ce2d8fd868d5267bd2d6aee86af6250",
+      "data/research_claim_state.json": "037acefd6534499bfe8ad4a4a687b1311bac48f871dd13011af11945d12303f0",
+      "data/research_engine_state.json": "ae932aed6b37ae5541f44793b60ff1908a89096a0a84cbd3778404d41a662997",
+      "data/source_registry.json": "ce73a6daaa669325e20fa129afa3c41a2814271217655c1e7c914e3a0c3beb90",
+      "data/typed_evidence_state.json": "817b1a24d10efc9be892f54f72293c45b73365f0b4d0f61a7ae309090989c7f8",
       "experiments/HYPOTHESES.yaml": "12f0df0623f2a104389cb191da565e69bacbf926b305d3f298051d7bc7489afb",
       "notes/reviews/HYP_SELECT_003.md": "0cef4ab8696e1932716f8d0a20f24778c7bec6f13baa9a05e12a5d41f134688b",
       "repo/ECDLP_DECISION_SUBSTRATE.json": "df246ede77b391d731754b389feb55a7b775df2b8b07cf7399d301a1efa3f672",
@@ -32,24 +32,24 @@
     "route_promotion": false,
     "exact_target_execution": false,
     "stream_digest_version": "rfc6962-merkle-v1",
-    "merkle_root_sha256": "a29ddfbbac9c1687a83dc892d046eee8b657496cb6d4227b72a553199ef908c7",
+    "merkle_root_sha256": "bbad8e2f6eea93b9b751f1ebac20ad77de7ae274066119c90d996e98d84c6f60",
     "challenge_indices": [
-      5335,
-      8124,
-      8688,
-      9440,
-      40965,
-      41275,
-      52108,
-      52702,
-      63457,
-      67217,
-      70862,
-      85019,
-      89831,
-      92006,
-      95429,
-      97723
+      9892,
+      11926,
+      16336,
+      21585,
+      26233,
+      26559,
+      39647,
+      49146,
+      56192,
+      59184,
+      60785,
+      67135,
+      68143,
+      81528,
+      86761,
+      94263
     ]
   },
   "counts": {
@@ -100,271 +100,271 @@
   "rejection_samples": {
     "attack_without_discriminating_test": [
       {
-        "seed_id": "HQS1-0004EF0769EA087F13378208CC584B55",
-        "base_id": "HCS-010",
-        "family": "isogeny-representation",
+        "seed_id": "HQS1-00026078457B2140687B8CFC89D3B787",
+        "base_id": "H4-E09",
+        "family": "auxiliary-curve",
         "type": "ATTACK",
-        "mechanism_obligation_id": "M08-STRUCTURAL-INVARIANT",
-        "cost_bridge_id": "C08-END-TO-END",
-        "decisive_test_id": "T10-KERNEL-PACKAGE"
-      },
-      {
-        "seed_id": "HQS1-0005574EA0E9401833F64FCB410B116A",
-        "base_id": "HCS-003",
-        "family": "glv-rank-amplification",
-        "type": "ATTACK",
-        "mechanism_obligation_id": "M05-SCOPED-BARRIER",
-        "cost_bridge_id": "C03-ALGEBRAIC-SOLVING",
-        "decisive_test_id": "T01-DESK-THEOREM"
-      },
-      {
-        "seed_id": "HQS1-0006C2AC79D4763E110BCEEC39B5BA45",
-        "base_id": "HCS-013",
-        "family": "twist-transfer",
-        "type": "ATTACK",
-        "mechanism_obligation_id": "M01-EXACT-MAP",
-        "cost_bridge_id": "C09-BARRIER-COVERAGE",
-        "decisive_test_id": "T01-DESK-THEOREM"
-      }
-    ],
-    "attack_without_scaling_bridge": [
-      {
-        "seed_id": "HQS1-0006C2AC79D4763E110BCEEC39B5BA45",
-        "base_id": "HCS-013",
-        "family": "twist-transfer",
-        "type": "ATTACK",
-        "mechanism_obligation_id": "M01-EXACT-MAP",
-        "cost_bridge_id": "C09-BARRIER-COVERAGE",
-        "decisive_test_id": "T01-DESK-THEOREM"
-      },
-      {
-        "seed_id": "HQS1-0008C7AE44946D8DD61DAEDE81A63EBC",
-        "base_id": "HCS-006",
-        "family": "growing-cm-shell",
-        "type": "ATTACK",
-        "mechanism_obligation_id": "M03-FIXED-TARGET",
-        "cost_bridge_id": "C05-RECOVERY",
-        "decisive_test_id": "T03-ARTIFACT-REPLAY"
-      },
-      {
-        "seed_id": "HQS1-000E42B5877624FE02936F1487AE23A8",
-        "base_id": "HCS-024",
-        "family": "auxiliary-torsion-crt",
-        "type": "ATTACK",
-        "mechanism_obligation_id": "M03-FIXED-TARGET",
-        "cost_bridge_id": "C05-RECOVERY",
-        "decisive_test_id": "T03-ARTIFACT-REPLAY"
-      }
-    ],
-    "barrier_without_scoped_mechanism": [
-      {
-        "seed_id": "HQS1-000F2E5EB5B66809FDB02BD109DAECF0",
-        "base_id": "ALG-006",
-        "family": "generic-preprocessing",
-        "type": "BARRIER",
-        "mechanism_obligation_id": "M10-VALIDATED-INTERFACE",
-        "cost_bridge_id": "C08-END-TO-END",
-        "decisive_test_id": "T04-MATCHED-TOY-LADDER"
-      },
-      {
-        "seed_id": "HQS1-00107B85E2B4CD0850B8F50187C4B5C5",
-        "base_id": "ALG-023",
-        "family": "exceptional-mask-density",
-        "type": "BARRIER",
-        "mechanism_obligation_id": "M10-VALIDATED-INTERFACE",
-        "cost_bridge_id": "C08-END-TO-END",
-        "decisive_test_id": "T09-BOUNDARY-COUNTEREXAMPLE"
-      },
-      {
-        "seed_id": "HQS1-00108587C149FD840829E8701F8EAF9C",
-        "base_id": "ALG-006",
-        "family": "generic-preprocessing",
-        "type": "BARRIER",
-        "mechanism_obligation_id": "M10-VALIDATED-INTERFACE",
-        "cost_bridge_id": "C06-PRECOMPUTATION",
-        "decisive_test_id": "T05-SLOPE-SEPARATION"
-      }
-    ],
-    "cost_type_mismatch": [
-      {
-        "seed_id": "HQS1-00021D674DE45074FF8A88BDC5D9FD1C",
-        "base_id": "HCS-026",
-        "family": "infinity-density",
-        "type": "ENABLING",
-        "mechanism_obligation_id": "M03-FIXED-TARGET",
-        "cost_bridge_id": "C09-BARRIER-COVERAGE",
-        "decisive_test_id": "T04-MATCHED-TOY-LADDER"
-      },
-      {
-        "seed_id": "HQS1-0006C2AC79D4763E110BCEEC39B5BA45",
-        "base_id": "HCS-013",
-        "family": "twist-transfer",
-        "type": "ATTACK",
-        "mechanism_obligation_id": "M01-EXACT-MAP",
-        "cost_bridge_id": "C09-BARRIER-COVERAGE",
-        "decisive_test_id": "T01-DESK-THEOREM"
-      },
-      {
-        "seed_id": "HQS1-0007113870CFDAE26A389850A0F6C52A",
-        "base_id": "ALG-015",
-        "family": "coordinate-ablation",
-        "type": "ENABLING",
-        "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
-        "cost_bridge_id": "C01-ONLINE-EXPONENT",
-        "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE"
-      }
-    ],
-    "enabling_without_dependency_bridge": [
-      {
-        "seed_id": "HQS1-0007113870CFDAE26A389850A0F6C52A",
-        "base_id": "ALG-015",
-        "family": "coordinate-ablation",
-        "type": "ENABLING",
-        "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
-        "cost_bridge_id": "C01-ONLINE-EXPONENT",
-        "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE"
-      },
-      {
-        "seed_id": "HQS1-000F59D65588C939D3120A5CA4BA4996",
-        "base_id": "H4-E19",
-        "family": "monodromy-rank",
-        "type": "ENABLING",
-        "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+        "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
         "cost_bridge_id": "C10-INFORMATION-GAIN",
         "decisive_test_id": "T08-PRIMARY-SOURCE-AUDIT"
       },
       {
-        "seed_id": "HQS1-001556F3291E4974CF9E6A50316D6581",
-        "base_id": "ALG-029",
-        "family": "ml-counterexample-search",
-        "type": "ENABLING",
-        "mechanism_obligation_id": "M05-SCOPED-BARRIER",
-        "cost_bridge_id": "C01-ONLINE-EXPONENT",
-        "decisive_test_id": "T05-SLOPE-SEPARATION"
-      }
-    ],
-    "forbidden_type": [
-      {
-        "seed_id": "HQS1-0027A2625B3F12A90604BF9F0249E654",
-        "base_id": "ALG-026",
-        "family": "noisy-hnp-map",
-        "type": "ADJACENT",
-        "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
-        "cost_bridge_id": "C02-RELATION-YIELD",
-        "decisive_test_id": "T05-SLOPE-SEPARATION"
-      },
-      {
-        "seed_id": "HQS1-002B5B4D72796DAD679DF21C96D76C3F",
-        "base_id": "ALG-026",
-        "family": "noisy-hnp-map",
-        "type": "ADJACENT",
-        "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
-        "cost_bridge_id": "C06-PRECOMPUTATION",
-        "decisive_test_id": "T07-RECOVERY-ROUNDTRIP"
-      },
-      {
-        "seed_id": "HQS1-004E4E27DFB815DCA73622D858A988FA",
-        "base_id": "ALG-026",
-        "family": "noisy-hnp-map",
-        "type": "ADJACENT",
-        "mechanism_obligation_id": "M06-REDUCTION",
-        "cost_bridge_id": "C01-ONLINE-EXPONENT",
-        "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE"
-      }
-    ],
-    "known_closed_pattern_unreopened": [
-      {
-        "seed_id": "HQS1-0005574EA0E9401833F64FCB410B116A",
-        "base_id": "HCS-003",
-        "family": "glv-rank-amplification",
-        "type": "ATTACK",
-        "mechanism_obligation_id": "M05-SCOPED-BARRIER",
-        "cost_bridge_id": "C03-ALGEBRAIC-SOLVING",
-        "decisive_test_id": "T01-DESK-THEOREM"
-      },
-      {
-        "seed_id": "HQS1-0008F56A9DA36E7CA55ACFEC0D1E8D64",
-        "base_id": "HCS-008",
-        "family": "glv-scalar-split",
+        "seed_id": "HQS1-000292A515DDBEF2DA22C37D079376C6",
+        "base_id": "HCS-030",
+        "family": "coordinate-character-shift",
         "type": "ATTACK",
         "mechanism_obligation_id": "M10-VALIDATED-INTERFACE",
-        "cost_bridge_id": "C04-LINEAR-ALGEBRA",
-        "decisive_test_id": "T09-BOUNDARY-COUNTEREXAMPLE"
-      },
-      {
-        "seed_id": "HQS1-001B49CD03EFF44FA04543A9291AB391",
-        "base_id": "H4-E27",
-        "family": "glv-trace-norm",
-        "type": "ATTACK",
-        "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
-        "cost_bridge_id": "C01-ONLINE-EXPONENT",
+        "cost_bridge_id": "C05-RECOVERY",
         "decisive_test_id": "T08-PRIMARY-SOURCE-AUDIT"
-      }
-    ],
-    "mechanism_type_mismatch": [
-      {
-        "seed_id": "HQS1-0005574EA0E9401833F64FCB410B116A",
-        "base_id": "HCS-003",
-        "family": "glv-rank-amplification",
-        "type": "ATTACK",
-        "mechanism_obligation_id": "M05-SCOPED-BARRIER",
-        "cost_bridge_id": "C03-ALGEBRAIC-SOLVING",
-        "decisive_test_id": "T01-DESK-THEOREM"
       },
       {
-        "seed_id": "HQS1-0007113870CFDAE26A389850A0F6C52A",
-        "base_id": "ALG-015",
-        "family": "coordinate-ablation",
-        "type": "ENABLING",
-        "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
-        "cost_bridge_id": "C01-ONLINE-EXPONENT",
-        "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE"
-      },
-      {
-        "seed_id": "HQS1-000AAA022B9E67836BB4A542C15DE9B3",
-        "base_id": "H4-E26",
-        "family": "cm-norm-shell",
+        "seed_id": "HQS1-0004D75C5F4EC00B42A0C692C349FF05",
+        "base_id": "H4-E22",
+        "family": "artificial-weil-restriction",
         "type": "ATTACK",
         "mechanism_obligation_id": "M09-REENCODING-CHECK",
         "cost_bridge_id": "C03-ALGEBRAIC-SOLVING",
         "decisive_test_id": "T08-PRIMARY-SOURCE-AUDIT"
       }
     ],
-    "test_type_mismatch": [
+    "attack_without_scaling_bridge": [
       {
-        "seed_id": "HQS1-0002712979BFE80D7E0F8E5CA158B3ED",
-        "base_id": "ALG-004",
-        "family": "genericity-trace",
-        "type": "BARRIER",
-        "mechanism_obligation_id": "M06-REDUCTION",
+        "seed_id": "HQS1-00026078457B2140687B8CFC89D3B787",
+        "base_id": "H4-E09",
+        "family": "auxiliary-curve",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
         "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T08-PRIMARY-SOURCE-AUDIT"
+      },
+      {
+        "seed_id": "HQS1-000292A515DDBEF2DA22C37D079376C6",
+        "base_id": "HCS-030",
+        "family": "coordinate-character-shift",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M10-VALIDATED-INTERFACE",
+        "cost_bridge_id": "C05-RECOVERY",
+        "decisive_test_id": "T08-PRIMARY-SOURCE-AUDIT"
+      },
+      {
+        "seed_id": "HQS1-0003B4D2385110E0193F278E1EEB69FA",
+        "base_id": "H4-E07",
+        "family": "additive-energy",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M06-REDUCTION",
+        "cost_bridge_id": "C05-RECOVERY",
+        "decisive_test_id": "T04-MATCHED-TOY-LADDER"
+      }
+    ],
+    "barrier_without_scoped_mechanism": [
+      {
+        "seed_id": "HQS1-00067B7CD2F66EBE828701C6B485B7A9",
+        "base_id": "ALG-001",
+        "family": "structured-generic-group",
+        "type": "BARRIER",
+        "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+        "cost_bridge_id": "C01-ONLINE-EXPONENT",
+        "decisive_test_id": "T06-CAUSAL-CONTROLS"
+      },
+      {
+        "seed_id": "HQS1-0025191E0DAB864DAFAF0A894E056B47",
+        "base_id": "ALG-001",
+        "family": "structured-generic-group",
+        "type": "BARRIER",
+        "mechanism_obligation_id": "M02-FAITHFUL-RECOVERY",
+        "cost_bridge_id": "C05-RECOVERY",
         "decisive_test_id": "T04-MATCHED-TOY-LADDER"
       },
       {
-        "seed_id": "HQS1-0004EF0769EA087F13378208CC584B55",
-        "base_id": "HCS-010",
-        "family": "isogeny-representation",
+        "seed_id": "HQS1-0026359C99097AE1333A2A33C0C48A3C",
+        "base_id": "H4-E34",
+        "family": "complete-cost",
+        "type": "BARRIER",
+        "mechanism_obligation_id": "M02-FAITHFUL-RECOVERY",
+        "cost_bridge_id": "C08-END-TO-END",
+        "decisive_test_id": "T05-SLOPE-SEPARATION"
+      }
+    ],
+    "cost_type_mismatch": [
+      {
+        "seed_id": "HQS1-00026078457B2140687B8CFC89D3B787",
+        "base_id": "H4-E09",
+        "family": "auxiliary-curve",
         "type": "ATTACK",
+        "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T08-PRIMARY-SOURCE-AUDIT"
+      },
+      {
+        "seed_id": "HQS1-00069266D469BA2A746E5911CD36806A",
+        "base_id": "HCS-026",
+        "family": "infinity-density",
+        "type": "ENABLING",
+        "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+        "cost_bridge_id": "C09-BARRIER-COVERAGE",
+        "decisive_test_id": "T03-ARTIFACT-REPLAY"
+      },
+      {
+        "seed_id": "HQS1-000B4BC923455AA78BA504C7ECF84D92",
+        "base_id": "HCS-016",
+        "family": "c6-xcube-quotient",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M08-STRUCTURAL-INVARIANT",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T02-SYMBOLIC-CERTIFICATE"
+      }
+    ],
+    "enabling_without_dependency_bridge": [
+      {
+        "seed_id": "HQS1-001D0F3E14FB8E91216ECBAA0631482E",
+        "base_id": "H4-E16",
+        "family": "regular-locus-density",
+        "type": "ENABLING",
         "mechanism_obligation_id": "M08-STRUCTURAL-INVARIANT",
         "cost_bridge_id": "C08-END-TO-END",
         "decisive_test_id": "T10-KERNEL-PACKAGE"
       },
       {
-        "seed_id": "HQS1-0005574EA0E9401833F64FCB410B116A",
+        "seed_id": "HQS1-0029983C64F48288B02A2F3712FA1D07",
+        "base_id": "ALG-028",
+        "family": "ml-solver-predictor",
+        "type": "ENABLING",
+        "mechanism_obligation_id": "M06-REDUCTION",
+        "cost_bridge_id": "C01-ONLINE-EXPONENT",
+        "decisive_test_id": "T04-MATCHED-TOY-LADDER"
+      },
+      {
+        "seed_id": "HQS1-0035FCDE5D6CED96842A362E19ACA564",
+        "base_id": "ALG-015",
+        "family": "coordinate-ablation",
+        "type": "ENABLING",
+        "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T05-SLOPE-SEPARATION"
+      }
+    ],
+    "forbidden_type": [
+      {
+        "seed_id": "HQS1-0027F0956A091F3838D2633EA094DC05",
+        "base_id": "ALG-026",
+        "family": "noisy-hnp-map",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M06-REDUCTION",
+        "cost_bridge_id": "C07-RESOURCE-ENVELOPE",
+        "decisive_test_id": "T08-PRIMARY-SOURCE-AUDIT"
+      },
+      {
+        "seed_id": "HQS1-003B00361B263A91932FE7FDABD66E30",
+        "base_id": "ALG-026",
+        "family": "noisy-hnp-map",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M04-NONGENERIC-SOURCE",
+        "cost_bridge_id": "C05-RECOVERY",
+        "decisive_test_id": "T03-ARTIFACT-REPLAY"
+      },
+      {
+        "seed_id": "HQS1-006AA816CF57B5E245B9FFE4C2C9FED0",
+        "base_id": "ALG-024",
+        "family": "nonce-hnp",
+        "type": "ADJACENT",
+        "mechanism_obligation_id": "M01-EXACT-MAP",
+        "cost_bridge_id": "C07-RESOURCE-ENVELOPE",
+        "decisive_test_id": "T09-BOUNDARY-COUNTEREXAMPLE"
+      }
+    ],
+    "known_closed_pattern_unreopened": [
+      {
+        "seed_id": "HQS1-000581221EE71F58EF4F85CD913DDCC9",
+        "base_id": "HCS-002",
+        "family": "glv-relation-yield",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M02-FAITHFUL-RECOVERY",
+        "cost_bridge_id": "C07-RESOURCE-ENVELOPE",
+        "decisive_test_id": "T06-CAUSAL-CONTROLS"
+      },
+      {
+        "seed_id": "HQS1-001D8A39ED980161999BB3E475A29FE7",
         "base_id": "HCS-003",
         "family": "glv-rank-amplification",
         "type": "ATTACK",
-        "mechanism_obligation_id": "M05-SCOPED-BARRIER",
+        "mechanism_obligation_id": "M03-FIXED-TARGET",
+        "cost_bridge_id": "C07-RESOURCE-ENVELOPE",
+        "decisive_test_id": "T03-ARTIFACT-REPLAY"
+      },
+      {
+        "seed_id": "HQS1-002A9DCAEB219ED0F575CBD8E27D703B",
+        "base_id": "HCS-003",
+        "family": "glv-rank-amplification",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M10-VALIDATED-INTERFACE",
+        "cost_bridge_id": "C06-PRECOMPUTATION",
+        "decisive_test_id": "T07-RECOVERY-ROUNDTRIP"
+      }
+    ],
+    "mechanism_type_mismatch": [
+      {
+        "seed_id": "HQS1-0004D75C5F4EC00B42A0C692C349FF05",
+        "base_id": "H4-E22",
+        "family": "artificial-weil-restriction",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M09-REENCODING-CHECK",
         "cost_bridge_id": "C03-ALGEBRAIC-SOLVING",
-        "decisive_test_id": "T01-DESK-THEOREM"
+        "decisive_test_id": "T08-PRIMARY-SOURCE-AUDIT"
+      },
+      {
+        "seed_id": "HQS1-00067B7CD2F66EBE828701C6B485B7A9",
+        "base_id": "ALG-001",
+        "family": "structured-generic-group",
+        "type": "BARRIER",
+        "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+        "cost_bridge_id": "C01-ONLINE-EXPONENT",
+        "decisive_test_id": "T06-CAUSAL-CONTROLS"
+      },
+      {
+        "seed_id": "HQS1-00093968AA952F453071D9C5A75BF762",
+        "base_id": "ALG-009",
+        "family": "multi-target",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M09-REENCODING-CHECK",
+        "cost_bridge_id": "C05-RECOVERY",
+        "decisive_test_id": "T04-MATCHED-TOY-LADDER"
+      }
+    ],
+    "test_type_mismatch": [
+      {
+        "seed_id": "HQS1-00026078457B2140687B8CFC89D3B787",
+        "base_id": "H4-E09",
+        "family": "auxiliary-curve",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M07-CAUSAL-ABLATION",
+        "cost_bridge_id": "C10-INFORMATION-GAIN",
+        "decisive_test_id": "T08-PRIMARY-SOURCE-AUDIT"
+      },
+      {
+        "seed_id": "HQS1-000292A515DDBEF2DA22C37D079376C6",
+        "base_id": "HCS-030",
+        "family": "coordinate-character-shift",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M10-VALIDATED-INTERFACE",
+        "cost_bridge_id": "C05-RECOVERY",
+        "decisive_test_id": "T08-PRIMARY-SOURCE-AUDIT"
+      },
+      {
+        "seed_id": "HQS1-0004D75C5F4EC00B42A0C692C349FF05",
+        "base_id": "H4-E22",
+        "family": "artificial-weil-restriction",
+        "type": "ATTACK",
+        "mechanism_obligation_id": "M09-REENCODING-CHECK",
+        "cost_bridge_id": "C03-ALGEBRAIC-SOLVING",
+        "decisive_test_id": "T08-PRIMARY-SOURCE-AUDIT"
       }
     ]
   },
   "review_queue": [
     {
-      "seed_id": "HQS1-653E5D4673998338DB6A35E454A33F57",
+      "seed_id": "HQS1-7F687ECAA4CA66813CF4FD6637D05C66",
       "semantic_signature_sha256": "04a8e74464d44704a7e36a545778addec93b395f6467146314c296a3c578cf36",
-      "signature_instance_sha256": "653e5d4673998338db6a35e454a33f57af3d6ef39169c3542b1515b914c0ccdf",
+      "signature_instance_sha256": "7f687ecaa4ca66813cf4fd6637d05c660f629355473264d21cfed0f4a368d1ae",
       "base_id": "H4-E05",
       "family": "nonsplit-torus-trace",
       "type": "ATTACK",
@@ -404,9 +404,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-105000EAECB720607FF1FB8A547872EE",
+      "seed_id": "HQS1-2036F9E4A3B322571BA7D000580E4D9C",
       "semantic_signature_sha256": "0b2f73fd8d4dd51fd7d0dac8b85dcc00a12f693257edd296d74a14ec1aedf943",
-      "signature_instance_sha256": "105000eaecb720607ff1fb8a547872ee5aece32bb70bbb0118f535a3c18198f8",
+      "signature_instance_sha256": "2036f9e4a3b322571ba7d000580e4d9c6f06cb694775e398318b1e7e92f900bb",
       "base_id": "ALG-012",
       "family": "arithmetic-radding",
       "type": "ATTACK",
@@ -443,9 +443,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-F94847CD2B542C214A199782A0F139A8",
+      "seed_id": "HQS1-9C992881CFAECFAF37740D0BD47E8C67",
       "semantic_signature_sha256": "0b684c64bb245ea31915392fc03df47d12089c6ce877fe54b789dd91e2014717",
-      "signature_instance_sha256": "f94847cd2b542c214a199782a0f139a87f98b1474059c799df71e17825c95083",
+      "signature_instance_sha256": "9c992881cfaecfaf37740d0bd47e8c67e9a67c532ce4ba574b2d9d0be848d094",
       "base_id": "H4-E28",
       "family": "pminus1-m16",
       "type": "ATTACK",
@@ -484,9 +484,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-DA84555AA0D6AFF21785F03A0FDEBA15",
+      "seed_id": "HQS1-7A7D3E64A3F2331099E028416893F3A5",
       "semantic_signature_sha256": "0d3590d385f518d3f53eb04ea1d38b6a161d2d968b1612cd62f1da560b72a94c",
-      "signature_instance_sha256": "da84555aa0d6aff21785f03a0fdeba1510a24d133716ab6e39ac9491d2fd9dbd",
+      "signature_instance_sha256": "7a7d3e64a3f2331099e028416893f3a5215c2bf4a032e07d78a4909f8ce94784",
       "base_id": "H4-E02",
       "family": "signed-coordinates",
       "type": "ATTACK",
@@ -523,9 +523,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-FC9FEE988C3F9F5B377E583F382D7012",
+      "seed_id": "HQS1-AF359748D2632FBC47E2DB55192453BB",
       "semantic_signature_sha256": "0d62c41c12d8c0d0d3894d56bf6b164a6e8685184240edfa39c2061921cfef9f",
-      "signature_instance_sha256": "fc9fee988c3f9f5b377e583f382d7012845e52c47829a7f58419ae736fe8556e",
+      "signature_instance_sha256": "af359748d2632fbc47e2db55192453bb25d0c2605fce2dd9ee6da301cde34a18",
       "base_id": "HCS-021",
       "family": "frobenius-characteristic",
       "type": "ATTACK",
@@ -563,9 +563,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-E0A66A475941DA9B54BC50D8F96B45EC",
+      "seed_id": "HQS1-FED462BD2C0FA6EEB33F8630CA996A16",
       "semantic_signature_sha256": "0d7e4742a5d13ceb7eb99dddafb7c5b1bb19083dcf93e1a051f62d80ab97cd23",
-      "signature_instance_sha256": "e0a66a475941da9b54bc50d8f96b45ec769f99afcb1478e73647b90e8674b191",
+      "signature_instance_sha256": "fed462bd2c0fa6eeb33f8630ca996a16d0cfa5dd2353a3cc67e775bc00cb39d2",
       "base_id": "H4-E01",
       "family": "semaev-tree",
       "type": "ATTACK",
@@ -603,9 +603,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-3FBD090CA659FC72DBEE5BE9728F56DE",
+      "seed_id": "HQS1-C818F722D859EC74E32DA8DD93888451",
       "semantic_signature_sha256": "00413d4a83f944803a8f3e1a9c6366495e4f492d158942a91341ce1326d4465a",
-      "signature_instance_sha256": "3fbd090ca659fc72dbee5be9728f56de60e6e857b4ec93430242dc1b609bd03c",
+      "signature_instance_sha256": "c818f722d859ec74e32da8dd93888451629de1606ecc2524ac9764fea72cf836",
       "base_id": "HCS-009",
       "family": "c6-rho",
       "type": "ATTACK",
@@ -643,9 +643,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-9D90B26E77B5702A1BB9BAB35E555D4A",
+      "seed_id": "HQS1-955E53A606A3AC74DE307D2453DA4F9C",
       "semantic_signature_sha256": "00d939f60bd256aab7eaa99d0ae6fc8fac937450e7e93465ecc2ca3f9bf7505e",
-      "signature_instance_sha256": "9d90b26e77b5702a1bb9bab35e555d4abf2997a1b738bf4c563b6a234628c954",
+      "signature_instance_sha256": "955e53a606a3ac74de307d2453da4f9cd4df6c03194e9bd1d4c8884350061c5c",
       "base_id": "HCS-019",
       "family": "multiple-padiclifts",
       "type": "ATTACK",
@@ -683,9 +683,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-EC127B0E733CD8E22625C0A4ECAA7F1A",
+      "seed_id": "HQS1-668B2682BA1F4FC701C6BC3A0E03F61D",
       "semantic_signature_sha256": "03869ede7a28158ee8970176565e689c3352dadb439b054c99b6ce2cb6d3bcba",
-      "signature_instance_sha256": "ec127b0e733cd8e22625c0a4ecaa7f1a2dae760d3e8f8bac67d504a8f20361fd",
+      "signature_instance_sha256": "668b2682ba1f4fc701c6bc3a0e03f61dc3eb234d0906c0d9f1c76191e1753447",
       "base_id": "ALG-016",
       "family": "exception-aware-walk",
       "type": "ATTACK",
@@ -722,9 +722,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-6AFAE906A453FDA58DC7798C49510638",
+      "seed_id": "HQS1-DB82BC16022BC6704E8E0E24EF3DB335",
       "semantic_signature_sha256": "0565fa656a8c32b6bb8ef7e16edeb18ececd1b58f8df5fb1895329307e6548fe",
-      "signature_instance_sha256": "6afae906a453fda58dc7798c49510638bcf9b97d0ff8bf324206a11301791c74",
+      "signature_instance_sha256": "db82bc16022bc6704e8e0e24ef3db3355c15bb2107b7bd464758635daacb328a",
       "base_id": "H4-E11",
       "family": "toric-elimination",
       "type": "ATTACK",
@@ -761,9 +761,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-F0E8218C34F691F31CC97BD0439F245A",
+      "seed_id": "HQS1-2B0EBE04F4A2979E1B3F1D4A9CFDD580",
       "semantic_signature_sha256": "05d8428d038648841737e12ce96304d82a700004e5f03f95364a554ddc424c53",
-      "signature_instance_sha256": "f0e8218c34f691f31cc97bd0439f245a3891ef2358f250e262f20648338e82d5",
+      "signature_instance_sha256": "2b0ebe04f4a2979e1b3f1d4a9cfdd580a8f365d34d73b6fc15a4fb6fee9c648d",
       "base_id": "HCS-006",
       "family": "growing-cm-shell",
       "type": "ATTACK",
@@ -801,9 +801,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-CCA73A75ED6AD9556002F343F3D3CDB8",
+      "seed_id": "HQS1-542CC89DB1300A67A687FE9FBEB65ADB",
       "semantic_signature_sha256": "0909be12f22a42cacbe4a97017583af7e55b7f887b9548ddf1fb49f5545d0dff",
-      "signature_instance_sha256": "cca73a75ed6ad9556002f343f3d3cdb86773610013f4a0d116dcddff49eddbd5",
+      "signature_instance_sha256": "542cc89db1300a67a687fe9fbeb65adbe67d0c75baa65e32e83eb33f47b96fe7",
       "base_id": "ALG-007",
       "family": "algebraic-preprocessing",
       "type": "ATTACK",
@@ -841,9 +841,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-F3101B3B742D11AC5401C17BFB95E16D",
+      "seed_id": "HQS1-9E03DB5F33071F86AB18A564A3582F8E",
       "semantic_signature_sha256": "02608c42e3a2f4bdb740a90cb5a11db5f031be383b9aa52b8d8791e2e9f591c9",
-      "signature_instance_sha256": "f3101b3b742d11ac5401c17bfb95e16d990ac60f09070260d3d8a65892d51cd6",
+      "signature_instance_sha256": "9e03db5f33071f86ab18a564a3582f8eba13c0249ebc44a2148c6473fdc9b8da",
       "base_id": "ALG-017",
       "family": "rayleigh-null",
       "type": "BARRIER",
@@ -880,9 +880,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-6D3152D49004CACBFECC03FF04903FAD",
+      "seed_id": "HQS1-2F2B3A9607C3942567594520634124E8",
       "semantic_signature_sha256": "038bc0e758ea6a2d18131a98d7bcbe07d6bd067f4a24262c73a885aa54251634",
-      "signature_instance_sha256": "6d3152d49004cacbfecc03ff04903fad5027f460f99201cdeaf566417fc1b813",
+      "signature_instance_sha256": "2f2b3a9607c3942567594520634124e82cbccce32ffaca0bf52ccbab6bb5fe42",
       "base_id": "HCS-005",
       "family": "endomorphism-ring",
       "type": "BARRIER",
@@ -920,9 +920,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-6C70FF0B03D2BC1CEF423B18085A4244",
+      "seed_id": "HQS1-580DEF8C7617D39104679B4C94CEC39C",
       "semantic_signature_sha256": "043d2f854faa4a052cd30e63c816de749a5902de1dca43786a8e7a914c68f8af",
-      "signature_instance_sha256": "6c70ff0b03d2bc1cef423b18085a4244cd4e93205a586c7cfa9c04403032caac",
+      "signature_instance_sha256": "580def8c7617d39104679b4c94cec39c5f91603a4360d40fad8a7ac1d005a521",
       "base_id": "H4-E17",
       "family": "repetition-stabilizer",
       "type": "BARRIER",
@@ -959,9 +959,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-EB8E1E15DF0243B82B5DFC6F2C8330B6",
+      "seed_id": "HQS1-F068F6620E157BFA9892FBFB3FBC5EB1",
       "semantic_signature_sha256": "06e4ff5f7ebbfa5c6764fa8f334db2f870b4310c6353daff895d7d13f1759ccf",
-      "signature_instance_sha256": "eb8e1e15df0243b82b5dfc6f2c8330b63ca913a7f00bdafe16015a170046e3e3",
+      "signature_instance_sha256": "f068f6620e157bfa9892fbfb3fbc5eb1e7255bde2edbe0acfea4a17758e06860",
       "base_id": "H4-E18",
       "family": "singular-locus",
       "type": "BARRIER",
@@ -998,9 +998,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-C3E797837B87964BEED97C0E082BBF87",
+      "seed_id": "HQS1-9B0DD05511DFCEB101595E96BA403B31",
       "semantic_signature_sha256": "0739acd53e94775217d0c66ebe09d77fff73a653644c8de2db3a8bfab6933986",
-      "signature_instance_sha256": "c3e797837b87964beed97c0e082bbf87e710af40ae152a38b2b906ad6874751a",
+      "signature_instance_sha256": "9b0dd05511dfceb101595e96ba403b31b4a7d5e77ef00538b73ae18c2cd7240b",
       "base_id": "ALG-014",
       "family": "induced-subset",
       "type": "BARRIER",
@@ -1039,9 +1039,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-9986ABDDB3295239ED2066A241D6993D",
+      "seed_id": "HQS1-8C76FC970359424A31EA20295B035FBC",
       "semantic_signature_sha256": "097db59084ca784b98a436c8d1c6747a3d6715a0da5b12486dfe4f1483f7587a",
-      "signature_instance_sha256": "9986abddb3295239ed2066a241d6993deed1b32dc3d40d35925de008b7c70347",
+      "signature_instance_sha256": "8c76fc970359424a31ea20295b035fbc481d79540f6af6a9d57d8d2b49fc863b",
       "base_id": "ALG-002",
       "family": "x-only-operation",
       "type": "BARRIER",
@@ -1078,9 +1078,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-67E44B6853C2A85EB2C8438A78AF988C",
+      "seed_id": "HQS1-FCC23967433260CA561E0EE411723265",
       "semantic_signature_sha256": "0158da79b8a619efb33ab562ac8f392f27305eb522d0ddc9af94bb6318f358e7",
-      "signature_instance_sha256": "67e44b6853c2a85eb2c8438a78af988ca0368e9e2644ab496cae4dc4803d662c",
+      "signature_instance_sha256": "fcc23967433260ca561e0ee4117232658c3288dc5f07322245be3d16892036ec",
       "base_id": "H4-E20",
       "family": "relation-uniformity",
       "type": "ENABLING",
@@ -1118,9 +1118,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-F094EED08436E57EBA2C6E4763B6D6B1",
+      "seed_id": "HQS1-795C522A43AEB8529971DA01207E1C13",
       "semantic_signature_sha256": "0d5b1055585b7cd98d8f022580c2a977c3c05d044d466e9118cf95c8d5dc9ecf",
-      "signature_instance_sha256": "f094eed08436e57eba2c6e4763b6d6b15c3c40dd5ab5dc5cd52686127ed9a915",
+      "signature_instance_sha256": "795c522a43aeb8529971da01207e1c13b8b58a9f9412a59e07649398663f4e02",
       "base_id": "H4-E16",
       "family": "regular-locus-density",
       "type": "ENABLING",
@@ -1158,9 +1158,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-C10F436CB2E80C335A0C047527688742",
+      "seed_id": "HQS1-319EC0F1412C0F24BF7677F3677FA989",
       "semantic_signature_sha256": "177c68d47c17cca97fe726281b0e17f359947e13a01334f59f367cdce1491cfa",
-      "signature_instance_sha256": "c10f436cb2e80c335a0c047527688742734531c8b902ffaaf51d92d1ed80ef57",
+      "signature_instance_sha256": "319ec0f1412c0f24bf7677f3677fa989a4de7dba74d52e89ed838ab2cb7c3ac7",
       "base_id": "HCS-025",
       "family": "division-polynomial-invariants",
       "type": "ENABLING",
@@ -1198,9 +1198,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-BF15CB0186D940533D737DE0141D47DC",
+      "seed_id": "HQS1-766110A70B4376DE17AC4582DF36E133",
       "semantic_signature_sha256": "17e294b2518cc3e1062d55465667b0d885cca5b8876b90bb75ca669c46a6d5d5",
-      "signature_instance_sha256": "bf15cb0186d940533d737de0141d47dc55b3a17aa4d2102aa842fa01ace83f0e",
+      "signature_instance_sha256": "766110a70b4376de17ac4582df36e133111b6ad27da542acf780f4ec6222379d",
       "base_id": "ALG-029",
       "family": "ml-counterexample-search",
       "type": "ENABLING",
@@ -1237,9 +1237,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-5D2A9D0F180097CE6DBBFA5664B0BEC4",
+      "seed_id": "HQS1-4FBFF489934BE6344EE751D39E1AF605",
       "semantic_signature_sha256": "20f5d7acb6d070560132035450a51cc7fba54ea5daf0a17aaf317e3cd0f98cc0",
-      "signature_instance_sha256": "5d2a9d0f180097ce6dbbfa5664b0bec4b9a23aacceffd932c086869f763e9306",
+      "signature_instance_sha256": "4fbff489934be6344ee751d39e1af605737fe2f2544bb0d599910c87f7401765",
       "base_id": "ALG-015",
       "family": "coordinate-ablation",
       "type": "ENABLING",
@@ -1277,9 +1277,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-22F676D512EBB628A6CA90F2841C4B11",
+      "seed_id": "HQS1-323142F88336353F934BABE1530FA5B9",
       "semantic_signature_sha256": "312cf42db7c32244d56a9a73f1d9fd3c72ccd120969808d3fea539572d2c7a51",
-      "signature_instance_sha256": "22f676d512ebb628a6ca90f2841c4b11bd4dcde09cdfcb6ef3a2102aecd6ba7d",
+      "signature_instance_sha256": "323142f88336353f934babe1530fa5b979d8ee5a7a72c9f9e546288a2a4706a8",
       "base_id": "ALG-030",
       "family": "ml-relation-invariant",
       "type": "ENABLING",
@@ -1316,9 +1316,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-0C99E7ED3C42D2AB952F0760F100FF64",
+      "seed_id": "HQS1-0C54E711A40505C332AC6A71C2C3001D",
       "semantic_signature_sha256": "086751e9408bb6874301e93593c5b66cd348c9adf63cae825db2a9fb9f30e0e5",
-      "signature_instance_sha256": "0c99e7ed3c42d2ab952f0760f100ff64164e38afa338c1617590f255a2b95eb2",
+      "signature_instance_sha256": "0c54e711a40505c332ac6a71c2c3001d62fe92e7897400f6a0f30a803e1ccd50",
       "base_id": "HCS-026",
       "family": "infinity-density",
       "type": "ENABLING",
@@ -1356,9 +1356,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-A3DC3F8E210947868D46B01AD048F61F",
+      "seed_id": "HQS1-D9F114FFE65DE28BA6A5491AA2DD55FB",
       "semantic_signature_sha256": "099cc94ef1aef4e95991634b1fd7b8a0f8cbe19f3c70ee9201ad446b4bcc9b5a",
-      "signature_instance_sha256": "a3dc3f8e210947868d46b01ad048f61f119a9212d1672158ef0a98b2d7e198c1",
+      "signature_instance_sha256": "d9f114ffe65de28ba6a5491aa2dd55fb54af55691471fd4af0604e92ab1ea2f1",
       "base_id": "ALG-028",
       "family": "ml-solver-predictor",
       "type": "ENABLING",
@@ -1395,9 +1395,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-BF1A1F06761D9F27F1835936618D855B",
+      "seed_id": "HQS1-9D7B38623DEE5DD00DDD265A9B3616F4",
       "semantic_signature_sha256": "10e22ef9b39c5862ae55a279db8cf685a8405c7e1ebc520c45eeca5d22889401",
-      "signature_instance_sha256": "bf1a1f06761d9f27f1835936618d855b5f7e95b057d2a94e9d071b97c39f0917",
+      "signature_instance_sha256": "9d7b38623dee5dd00ddd265a9b3616f4971574b38be5d62f1e1545e5b7c60d00",
       "base_id": "H4-E25",
       "family": "norm-one-dickson-circuit",
       "type": "ENABLING",
@@ -1436,9 +1436,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-271BC06EB49283ECF6DC51280FE74866",
+      "seed_id": "HQS1-68A5EA5B7DDD284A8120890E6E5DB41D",
       "semantic_signature_sha256": "1afa951efafbfcb607708b8b122ba223ff6923a6c4edb516398ba4179187b0a4",
-      "signature_instance_sha256": "271bc06eb49283ecf6dc51280fe748665d75e51257499ec9270a95a2ea9ca5f4",
+      "signature_instance_sha256": "68a5ea5b7ddd284a8120890e6e5db41d1052961110dd76cc1eb9f89e26c43802",
       "base_id": "ALG-031",
       "family": "mechanism-registry",
       "type": "ENABLING",
@@ -1476,9 +1476,9 @@
       ]
     },
     {
-      "seed_id": "HQS1-751DAB6A525E80B957B10DB45BDBDAC0",
+      "seed_id": "HQS1-CBFC6221F13BA0E679B23124544A20F7",
       "semantic_signature_sha256": "56ddf6359e0bdb520c02fce8469b01d866f361a77180afc6e7ad4ef10cbb9f76",
-      "signature_instance_sha256": "751dab6a525e80b957b10db45bdbdac015d43e850624cc47d7e6833c6d288726",
+      "signature_instance_sha256": "cbfc6221f13ba0e679b23124544a20f7079e35d66228cf18eaa9754d43466cb0",
       "base_id": "H4-E19",
       "family": "monodromy-rank",
       "type": "ENABLING",
@@ -1535,9 +1535,9 @@
   ],
   "final_research_bets": [
     {
-      "seed_id": "HQS1-C3E797837B87964BEED97C0E082BBF87",
+      "seed_id": "HQS1-9B0DD05511DFCEB101595E96BA403B31",
       "semantic_signature_sha256": "0739acd53e94775217d0c66ebe09d77fff73a653644c8de2db3a8bfab6933986",
-      "signature_instance_sha256": "c3e797837b87964beed97c0e082bbf87e710af40ae152a38b2b906ad6874751a",
+      "signature_instance_sha256": "9b0dd05511dfceb101595e96ba403b31b4a7d5e77ef00538b73ae18c2cd7240b",
       "attempt_index": 13478,
       "base_id": "ALG-014",
       "family": "induced-subset",
@@ -1607,7 +1607,7 @@
           "no attack consequence by itself",
           "this migrated review is not independent in source, model family, or context"
         ],
-        "resolved_seed_id": "HQS1-C3E797837B87964BEED97C0E082BBF87"
+        "resolved_seed_id": "HQS1-9B0DD05511DFCEB101595E96BA403B31"
       },
       "review_record_sha256": "9eb61f851dcae8619cd9ca987eaea74b46e349edee20370f2629be3c1a5e9a83",
       "scientific_identity": "non_executable_research_bet",
