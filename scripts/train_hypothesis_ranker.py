@@ -19,6 +19,7 @@ from hypothesis_ranker import (
     SPEC_PATH,
     STATE_PATH,
     activation_report,
+    aggregate_training_examples,
     build_state,
     load_json,
     load_review_ledger,
@@ -152,8 +153,8 @@ def family_holdout_validation(
     }
 
 
-def train_model(labels: list[dict[str, Any]], spec: dict[str, Any]) -> dict[str, Any]:
-    rows = [row for row in labels if row["training_eligible"]]
+def train_model(examples: list[dict[str, Any]], spec: dict[str, Any]) -> dict[str, Any]:
+    rows = [row for row in examples if row["training_eligible"]]
     names = spec["feature_contract"]["numeric"]
     algorithm = spec["training_algorithm"]
     validation = family_holdout_validation(rows, names, algorithm)
@@ -173,13 +174,13 @@ def train_model(labels: list[dict[str, Any]], spec: dict[str, Any]) -> dict[str,
     bias, weights, stats = fit_logistic(rows, names, algorithm)
     snapshot = [
         {
-            "label_id": row["label_id"],
-            "review_record_sha256": row["review_record_sha256"],
+            "candidate_version_sha256": row["candidate_version_sha256"],
+            "label_ids": row["label_ids"],
             "semantic_signature_sha256": row["semantic_signature_sha256"],
             "binary_label": row["binary_label"],
             "features": row["features"],
         }
-        for row in sorted(rows, key=lambda item: item["label_id"])
+        for row in sorted(rows, key=lambda item: item["candidate_version_sha256"])
     ]
     root = sha256_json(snapshot)
     return {
@@ -193,9 +194,11 @@ def train_model(labels: list[dict[str, Any]], spec: dict[str, Any]) -> dict[str,
         "bias": bias,
         "weights": weights,
         "training_snapshot": {
-            "eligible_label_count": len(rows),
-            "label_snapshot_sha256": root,
-            "label_ids": [row["label_id"] for row in snapshot],
+            "eligible_candidate_version_count": len(rows),
+            "candidate_version_snapshot_sha256": root,
+            "candidate_version_ids": [
+                row["candidate_version_sha256"] for row in snapshot
+            ],
             "algorithm": algorithm,
         },
         "validation": validation,
@@ -218,8 +221,9 @@ def main() -> int:
     ledger = load_review_ledger()
     validate_current_review_bindings(ledger, policy, funnel_state)
     labels = review_labels(ledger, spec)
+    examples = aggregate_training_examples(labels)
     native_outcomes = len(load_json(ENGINE_STATE_PATH).get("native_outcomes", []))
-    activation = activation_report(labels, native_outcomes, spec)
+    activation = activation_report(examples, native_outcomes, spec)
     if not activation["ready_for_training"]:
         print(
             "HYP_RANKER_TRAIN_BLOCKED "
@@ -230,7 +234,7 @@ def main() -> int:
         print("HYP_RANKER_TRAIN_READY")
         return 0
 
-    model = train_model(labels, spec)
+    model = train_model(examples, spec)
     model_path = ROOT / spec["model_artifact"]["path"]
     model_path.write_text(
         json.dumps(model, ensure_ascii=True, indent=2, allow_nan=False) + "\n",
@@ -245,7 +249,7 @@ def main() -> int:
     )
     print(
         "HYP_RANKER_TRAINED "
-        f"labels={model['training_snapshot']['eligible_label_count']} "
+        f"candidate_versions={model['training_snapshot']['eligible_candidate_version_count']} "
         f"auc={model['validation']['auc']:.3f} "
         "selection_influence=false"
     )

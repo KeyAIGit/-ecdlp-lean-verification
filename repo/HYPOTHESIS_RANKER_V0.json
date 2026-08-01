@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "ranker_id": "HYPOTHESIS-RANKER-SHADOW-V0",
   "status": "shadow_untrained",
   "purpose": "Provide a reproducible learning boundary for ranking non-executable research-question seeds without allowing synthetic labels or the model itself to authorize research.",
@@ -33,7 +33,21 @@
   },
   "label_contract": {
     "persistent_ledger": "data/hypothesis_review_ledger.jsonl",
-    "append_only_identity": "label_id plus review_record_sha256 plus frozen candidate feature snapshot",
+    "current_entry_schema": "2.0",
+    "append_only_identity": "label_id and ledger_entry_sha256 bind the review, frozen candidate snapshot, candidate-specific evidence manifest, evidence closure, funnel root, and schema version",
+    "protected_prefix_ref": "refs/remotes/origin/main",
+    "legacy_prefix": {
+      "line_count": 6,
+      "raw_sha256": "1c20302bfb22dbd146b8fe4ad0b8983eed91e175d6e98ea2a25badd0e79f0939",
+      "disposition": "byte_preserved_ineligible_legacy_rows"
+    },
+    "training_unit": "immutable_candidate_version",
+    "candidate_version_identity": "frozen candidate snapshot plus candidate-specific reviewed evidence closure, including proposal, five reviews, every review evidence input, and the exact review policy/schema/interpreter contract",
+    "evidence_closure_contract": "Only exact artifacts named by the review canonical binding and review bundle affect training eligibility; referenced evidence inputs and the review-contract files are SHA-256 bound. The global evidence root is retained as an audit snapshot but does not invalidate unrelated candidate reviews.",
+    "scientific_review_registry": "repo/HYPOTHESIS_REVIEW_REGISTRY_V1.json",
+    "registration_contract": "A ledger row is retained for history but can train only when its exact ledger digest and immutable candidate version are present in the append-only scientific review registry. The current funnel queue and its single portfolio decision are not that registry.",
+    "independence_contract": "Self-declared booleans and generated summaries are insufficient. The ranker validates the proposal plus all five digest-bound review artifacts directly, requires complete roles, distinct reviewers and contexts, cross-family coverage, blinded reviews, and proposer separation for the independent roles, and derives positive or negative direction from that bundle.",
+    "aggregation": "All eligible reviews of one candidate version form one training example; conflicting binary verdicts produce disagreement and are ineligible.",
     "positive": ["retain_non_executable_research_bet"],
     "negative": ["reject_known_or_unsupported"],
     "excluded": [
@@ -45,10 +59,10 @@
       "structural_truth_update"
     ],
     "required_independence_axes": ["source", "model_family", "context"],
-    "immutable_identity": "review_record_sha256"
+    "immutable_identity": "ledger_entry_sha256"
   },
   "activation_gate": {
-    "minimum_eligible_labels": 30,
+    "minimum_eligible_candidate_versions": 30,
     "minimum_positive_labels": 5,
     "minimum_negative_labels": 10,
     "minimum_distinct_families": 5,

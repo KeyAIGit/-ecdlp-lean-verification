@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "ledger_id": "HYPOTHESIS-SPACE-UNIQUE-CAMPAIGN-V1",
+  "status": "accepted_non_scientific_operational_memory",
+  "constitution_source": "repo/HYPOTHESIS_SELECTION_CONSTITUTION_V3.md",
+  "protected_base_ref": "refs/remotes/origin/main",
+  "subject": {
+    "space_policy_path": "repo/HYPOTHESIS_SPACE_V2.json",
+    "space_state_path": "data/hypothesis_space_state.json",
+    "space_map_path": "data/hypothesis_space_map.json",
+    "runner_path": "scripts/hypothesis_space_funnel.py"
+  },
+  "campaign_contract": {
+    "identity": "contiguous_mixed_radix_ordinal_v1",
+    "default_shard_size": 131072,
+    "checkpoint_boundary": "create-only fixed-range shard receipts plus one evaluation reservation; immutable only after their hashes are committed to protected Git history",
+    "writer_model": "one create-only reservation per evaluation ID plus one create-only local writer lock per campaign ID; concurrent acquisition under either the same or a second campaign ID fails before shard evaluation",
+    "resume_rule": "Acquire the first missing fixed shard. Existing valid receipts are idempotent checkpoints; a conflicting receipt is retained as an invariant error.",
+    "deduplication": "Typed identity is the unique ordinal in the frozen Cartesian universe. Exact duplicate semantic axis definitions fail preflight. Broader semantic equivalence remains a review obligation.",
+    "coverage_proof": "Gap-free non-overlapping power-of-two shard ranges plus composable RFC6962 range frontiers must reconstruct the canonical frozen-space root.",
+    "repeat_policy": "stop_at_finite_universe_exhaustion",
+    "larger_space_rule": "A larger campaign requires a new evidence-bounded grammar and a new universe ID. A new evidence snapshot creates a new evaluation ID, not new universe coverage.",
+    "error_retention": "Only post-preflight operational failures belong here. Scientific support or refutation belongs in typed desk decisions or experiment outcomes."
+  },
+  "retention_contract": {
+    "raw_cells_retained": false,
+    "shard_receipts_retained": true,
+    "checkpoint_is_scientific_evidence": false,
+    "completed_record_is_immutable": true,
+    "pre_anchor_deletion_resistant": false,
+    "pre_anchor_trust_boundary": "Before a Git commit anchors the claim, receipts and errors are crash-resumable and tamper-evident while present, but a privileged local actor can delete them. No stronger durability is claimed.",
+    "full_cell_identity": "canonical space instance root plus mixed-radix ordinal",
+    "physical_evaluation_accounting": "Successful retained receipt evaluations are exact. Failed attempts are retained as operational error events because a crash may make their partial cell count unknowable.",
+    "bounded_diagnostics": "aggregate masks, type counts, shard roots, endpoint leaf hashes, and operational errors"
+  },
+  "epistemic_contract": {
+    "screening_rejection_is_falsification": false,
+    "campaign_is_scientific_outcome": false,
+    "campaign_is_ranker_training_data": false,
+    "campaign_is_brier_calibration_data": false,
+    "campaign_can_authorize": false,
+    "campaign_can_recommend": false,
+    "campaign_can_promote_route": false,
+    "cold_cell": "A typed cell failed a deterministic structural gate. It is not a tested mathematical hypothesis.",
+    "warm_cell": "A typed cell survived structural gates but still lacks an assured mechanism and independent review.",
+    "scientific_feedback_paths": [
+      "experiments/engine/outcomes",
+      "experiments/engine/desk_decisions",
+      "data/research_claim_state.json"
+    ]
+  },
+  "immutable_record_anchors": []
+}

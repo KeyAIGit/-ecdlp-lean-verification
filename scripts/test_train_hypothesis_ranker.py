@@ -21,8 +21,10 @@ def synthetic_labels(*, separable: bool) -> list[dict[str, object]]:
             labels.append(
                 {
                     "label_id": f"SYN-{family_index}-{item_index}",
+                    "label_ids": [f"SYN-{family_index}-{item_index}"],
                     "review_record_sha256": f"{family_index:02x}{item_index:02x}" * 16,
                     "semantic_signature_sha256": f"{family_index:02x}{item_index:02x}" * 16,
+                    "candidate_version_sha256": f"{family_index:02x}{item_index:02x}" * 16,
                     "family": f"family-{family_index}",
                     "binary_label": label,
                     "training_eligible": True,

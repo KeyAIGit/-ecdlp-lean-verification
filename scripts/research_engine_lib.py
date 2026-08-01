@@ -322,6 +322,26 @@ HISTORICAL_SCOPE_GUARD_FIELDS = {
     "field_bits",
     "forbidden_field_bits",
 }
+HISTORICAL_SCOPE_CORRECTION_FIELDS = {
+    "correction_id",
+    "event_id",
+    "event_sha256",
+    "recorded_field_bits",
+    "effective_field_bits",
+    "excluded_field_bits",
+    "machine_check",
+    "supporting_report",
+    "interpretation",
+}
+HISTORICAL_SCOPE_MACHINE_CHECK_FIELDS = {
+    "path",
+    "sha256",
+    "parameter_arrays",
+    "field_bits_index",
+    "arity_index",
+    "arity_value",
+}
+HISTORICAL_SCOPE_SUPPORT_FIELDS = {"path", "sha256"}
 HISTORICAL_BASELINE_FIELDS = {"status", "anchor_sha256", "events"}
 HISTORICAL_BASELINE_EVENT_FIELDS = {"event_id", "event_sha256"}
 HISTORICAL_BASELINE_EVENT_IDS = {
@@ -2875,6 +2895,68 @@ def validate_policy(
                     )
                 ):
                     problems.append(f"{label}.{field} must be unique bit sizes")
+    corrections = policy.get("historical_scope_corrections")
+    if not isinstance(corrections, list) or not corrections:
+        problems.append("historical_scope_corrections must retain explicit overlays")
+    else:
+        correction_ids = [item.get("correction_id") for item in corrections]
+        if len(correction_ids) != len(set(correction_ids)):
+            problems.append("historical_scope_corrections IDs must be unique")
+        correction_event_ids = [item.get("event_id") for item in corrections]
+        if len(correction_event_ids) != len(set(correction_event_ids)):
+            problems.append(
+                "historical_scope_corrections must contain at most one overlay per event"
+            )
+        for index, correction in enumerate(corrections):
+            label = f"historical_scope_corrections[{index}]"
+            if not _exact_keys(
+                correction, HISTORICAL_SCOPE_CORRECTION_FIELDS, label, problems
+            ):
+                continue
+            if not _nonempty_text(correction.get("correction_id")):
+                problems.append(f"{label}.correction_id must be nonempty")
+            if not isinstance(correction.get("event_id"), str) or not EVENT_ID.fullmatch(
+                correction["event_id"]
+            ):
+                problems.append(f"{label}.event_id is invalid")
+            if not isinstance(correction.get("event_sha256"), str) or not HASH_ID.fullmatch(
+                correction["event_sha256"]
+            ):
+                problems.append(f"{label}.event_sha256 is invalid")
+            for field in (
+                "recorded_field_bits",
+                "effective_field_bits",
+                "excluded_field_bits",
+            ):
+                values = correction.get(field)
+                if (
+                    not isinstance(values, list)
+                    or not values
+                    or len(values) != len(set(values))
+                    or not all(
+                        isinstance(value, int)
+                        and not isinstance(value, bool)
+                        and value >= 2
+                        for value in values
+                    )
+                ):
+                    problems.append(f"{label}.{field} must be unique bit sizes")
+            machine = correction.get("machine_check")
+            _exact_keys(
+                machine,
+                HISTORICAL_SCOPE_MACHINE_CHECK_FIELDS,
+                f"{label}.machine_check",
+                problems,
+            )
+            support = correction.get("supporting_report")
+            _exact_keys(
+                support,
+                HISTORICAL_SCOPE_SUPPORT_FIELDS,
+                f"{label}.supporting_report",
+                problems,
+            )
+            if not _nonempty_text(correction.get("interpretation")):
+                problems.append(f"{label}.interpretation must be nonempty")
     baseline = policy.get("historical_outcome_baseline")
     if not _exact_keys(
         baseline,
@@ -4316,6 +4398,7 @@ def build_state(
     by_route: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for event in event_values:
         candidate = candidate_index.get(event["candidate_id"])
+        effective_scope, scope_correction_id = effective_event_scope(policy, event)
         summary = {
             "event_id": event["event_id"],
             "candidate_id": event["candidate_id"],
@@ -4325,6 +4408,14 @@ def build_state(
             "reopening_condition": event["reopening_condition"],
             "decision_delta": decision_delta_for_event(event, candidate),
         }
+        if scope_correction_id is not None:
+            summary.update(
+                {
+                    "recorded_scope": event["scope"],
+                    "effective_scope": effective_scope,
+                    "scope_correction_id": scope_correction_id,
+                }
+            )
         by_hypothesis[event["hypothesis_id"]].append(summary)
         by_route[event["route_id"]].append(summary)
 
@@ -4405,27 +4496,34 @@ def build_state(
         )
 
     outcome_counts = Counter(event["outcome"] for event in event_values)
-    event_summaries = sorted(
-        [
-            {
-                "event_id": event["event_id"],
-                "candidate_id": event["candidate_id"],
-                "hypothesis_id": event["hypothesis_id"],
-                "route_id": event["route_id"],
-                "outcome": event["outcome"],
-                "source_kind": event["provenance"]["source_kind"],
-                "claim_boundary": event["scope"]["claim_boundary"],
-                "evidence_files": event["evidence_files"],
-                "reopening_condition": event["reopening_condition"],
-                "decision_delta": decision_delta_for_event(
-                    event,
-                    candidate_index.get(event["candidate_id"]),
-                ),
-            }
-            for event in event_values
-        ],
-        key=lambda item: item["event_id"],
-    )
+    event_summaries = []
+    for event in event_values:
+        effective_scope, correction_id = effective_event_scope(policy, event)
+        summary = {
+            "event_id": event["event_id"],
+            "candidate_id": event["candidate_id"],
+            "hypothesis_id": event["hypothesis_id"],
+            "route_id": event["route_id"],
+            "outcome": event["outcome"],
+            "source_kind": event["provenance"]["source_kind"],
+            "claim_boundary": event["scope"]["claim_boundary"],
+            "evidence_files": event["evidence_files"],
+            "reopening_condition": event["reopening_condition"],
+            "decision_delta": decision_delta_for_event(
+                event,
+                candidate_index.get(event["candidate_id"]),
+            ),
+        }
+        if correction_id is not None:
+            summary.update(
+                {
+                    "recorded_scope": event["scope"],
+                    "effective_scope": effective_scope,
+                    "scope_correction_id": correction_id,
+                }
+            )
+        event_summaries.append(summary)
+    event_summaries.sort(key=lambda item: item["event_id"])
     source_counts = Counter(
         event["provenance"]["source_kind"] for event in event_values
     )
@@ -4558,6 +4656,9 @@ def build_state(
             for event in event_summaries
             if event["source_kind"] == "external_bounded_decision_run"
         ],
+        "historical_scope_corrections": policy.get(
+            "historical_scope_corrections", []
+        ),
         "route_evidence_state": route_states,
         "route_axis_contract": {
             "primary_threat_model": primary_threat_model,
@@ -4649,6 +4750,110 @@ def validate_historical_scope_guards(
     return problems
 
 
+def validate_historical_scope_corrections(
+    policy: dict[str, Any], outcomes: list[dict[str, Any]]
+) -> list[str]:
+    problems: list[str] = []
+    event_index = {event.get("event_id"): event for event in outcomes}
+    for correction in policy.get("historical_scope_corrections", []):
+        event_id = correction.get("event_id")
+        label = f"historical scope correction {correction.get('correction_id')}"
+        event = event_index.get(event_id)
+        if event is None:
+            problems.append(f"{label}: event is missing")
+            continue
+        if sha256_json(event) != correction.get("event_sha256"):
+            problems.append(f"{label}: immutable event digest changed")
+        recorded_bits = event.get("scope", {}).get("field_bits")
+        if recorded_bits != correction.get("recorded_field_bits"):
+            problems.append(f"{label}: recorded field-bit scope changed")
+        effective = correction.get("effective_field_bits", [])
+        excluded = correction.get("excluded_field_bits", [])
+        if set(effective) & set(excluded):
+            problems.append(f"{label}: effective and excluded bit scopes overlap")
+        if set(effective) | set(excluded) != set(recorded_bits or []):
+            problems.append(f"{label}: correction does not partition recorded scope")
+        machine = correction.get("machine_check", {})
+        path = ROOT / str(machine.get("path", ""))
+        if not path.is_file() or file_sha256(path) != machine.get("sha256"):
+            problems.append(f"{label}: machine-check artifact digest mismatch")
+        else:
+            try:
+                manifest = load_json(path)
+                params = manifest.get("params", {})
+                rows: list[list[Any]] = []
+                for name in machine.get("parameter_arrays", []):
+                    value = params.get(name)
+                    if not isinstance(value, list):
+                        raise ValueError(f"parameter array {name} is missing")
+                    rows.extend(value)
+                arity_index = machine["arity_index"]
+                field_bits_index = machine["field_bits_index"]
+                arity_value = machine["arity_value"]
+                observed = sorted(
+                    {
+                        row[field_bits_index]
+                        for row in rows
+                        if isinstance(row, list)
+                        and len(row) > max(arity_index, field_bits_index)
+                        and row[arity_index] == arity_value
+                    }
+                )
+                if observed != effective:
+                    problems.append(
+                        f"{label}: planned machine-check rows imply {observed}, not {effective}"
+                    )
+                measurements = manifest.get("results", {}).get("measurements")
+                if not isinstance(measurements, list):
+                    raise ValueError("results.measurements is missing")
+                actual = sorted(
+                    {
+                        row.get("bits")
+                        for row in measurements
+                        if isinstance(row, dict)
+                        and row.get("m") == arity_value
+                        and isinstance(row.get("bits"), int)
+                        and not isinstance(row.get("bits"), bool)
+                    }
+                )
+                if actual != effective:
+                    problems.append(
+                        f"{label}: actual measurements imply {actual}, not {effective}"
+                    )
+                if not set(actual).issubset(observed):
+                    problems.append(
+                        f"{label}: actual measurement scope is outside the planned grid"
+                    )
+            except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+                problems.append(f"{label}: machine-check query failed: {exc}")
+        support = correction.get("supporting_report", {})
+        support_path = ROOT / str(support.get("path", ""))
+        if not support_path.is_file() or file_sha256(support_path) != support.get(
+            "sha256"
+        ):
+            problems.append(f"{label}: supporting report digest mismatch")
+    return problems
+
+
+def effective_event_scope(
+    policy: dict[str, Any], event: dict[str, Any]
+) -> tuple[dict[str, Any], str | None]:
+    scope = copy.deepcopy(event["scope"])
+    correction = next(
+        (
+            item
+            for item in policy.get("historical_scope_corrections", [])
+            if item.get("event_id") == event.get("event_id")
+        ),
+        None,
+    )
+    if correction is None:
+        return scope, None
+    scope["field_bits"] = correction["effective_field_bits"]
+    scope["scope_correction"] = correction["interpretation"]
+    return scope, correction["correction_id"]
+
+
 def validate_all() -> tuple[list[str], dict[str, Any]]:
     problems: list[str] = []
     problems.extend(scientific_provenance_problems())
@@ -4698,6 +4903,11 @@ def validate_all() -> tuple[list[str], dict[str, Any]]:
     )
     problems.extend(
         validate_historical_scope_guards(
+            policy, [event for _, event in outcomes]
+        )
+    )
+    problems.extend(
+        validate_historical_scope_corrections(
             policy, [event for _, event in outcomes]
         )
     )

@@ -12,6 +12,7 @@ Every number here is pulled live from the machine sources, never hand-typed, so 
   - data/research_engine_v02_state.json (immutable lifecycle and authorization)
   - data/research_engine_shadow_intake.json (non-executable proposal stubs)
   - data/hypothesis_space_run_state.json (operational screening-run memory)
+  - data/hypothesis_space_campaign_state.json (unique finite-space coverage)
 Other summary docs should link to STATUS.md rather than duplicate counts.
 
 Run: python3 scripts/gen_status.py   (also run by the docs-sync workflow on every ledger change)
@@ -31,6 +32,7 @@ ENGINE = ROOT / "data" / "research_engine_state.json"
 ENGINE_V02 = ROOT / "data" / "research_engine_v02_state.json"
 SHADOW_INTAKE = ROOT / "data" / "research_engine_shadow_intake.json"
 HYPOTHESIS_SPACE_RUNS = ROOT / "data" / "hypothesis_space_run_state.json"
+HYPOTHESIS_SPACE_CAMPAIGNS = ROOT / "data" / "hypothesis_space_campaign_state.json"
 OUT = ROOT / "STATUS.md"
 
 
@@ -69,6 +71,9 @@ def main() -> int:
     hypothesis_space_runs = json.loads(
         HYPOTHESIS_SPACE_RUNS.read_text(encoding="utf-8")
     )
+    hypothesis_space_campaigns = json.loads(
+        HYPOTHESIS_SPACE_CAMPAIGNS.read_text(encoding="utf-8")
+    )
     run_counts = hypothesis_space_runs["counts"]
     run_count = run_counts["runs"]
     root_count = run_counts["distinct_instance_roots"]
@@ -92,6 +97,34 @@ def main() -> int:
         "falsified hypotheses, and repeated measurements of one root are not new "
         "research coverage."
     )
+    campaign_counts = hypothesis_space_campaigns["counts"]
+    latest_campaign = hypothesis_space_campaigns["latest_campaign"]
+    if latest_campaign:
+        elapsed_seconds = (
+            latest_campaign["retained_shard_elapsed_ns"] / 1_000_000_000
+        )
+        current = hypothesis_space_campaigns["current_identity"]
+        current_text = (
+            "The current evidence-bound evaluation is exhausted."
+            if current["evaluation_exhausted"]
+            else "The universe is covered under an earlier evaluation, but the current evidence-bound evaluation is pending."
+        )
+        hypothesis_space_campaign_summary = (
+            f"Finite-space campaign memory contains "
+            f"**{campaign_counts['campaign_records']} exhausted evaluation(s)** over "
+            f"**{campaign_counts['unique_universe_cells']:,} unique typed cells**. "
+            f"The latest retained receipts contain **{elapsed_seconds:.2f} seconds** "
+            f"of producer self-timed shard work; the finalization invocation allowed "
+            f"**{latest_campaign['finalization_invocation_budget_seconds']:.0f} seconds**. "
+            f"**{campaign_counts['repeated_cells_processed']:,} cell evaluations** "
+            f"revisit an already known universe under a different evidence version. "
+            f"{current_text} The stop condition fires at finite-universe exhaustion; "
+            "a larger universe requires a new evidence-bounded grammar."
+        )
+    else:
+        hypothesis_space_campaign_summary = (
+            "No immutable unique-coverage campaign is retained yet."
+        )
     ss = fm["status_summary"]
     meta = fm["meta"]
     total = meta.get("corpus_claims", sum(ss.values()))
@@ -134,7 +167,8 @@ def main() -> int:
 > `repo/ECDLP_TYPED_EVIDENCE_V0.json`, `data/typed_evidence_state.json`, and
 > `data/research_engine_state.json`, `data/research_engine_v02_state.json`, and
 > `data/research_engine_shadow_intake.json`, and
-> `data/hypothesis_space_run_state.json`.
+> `data/hypothesis_space_run_state.json`, and
+> `data/hypothesis_space_campaign_state.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -255,6 +289,8 @@ Creative output is untrusted and zero retained drafts is a valid cycle result.
 
 {hypothesis_space_run_summary}
 
+{hypothesis_space_campaign_summary}
+
 ## Research Engine v0.2 lifecycle
 The v0.2 lifecycle currently contains
 **{engine_v02['engine']['input_candidate_count']} immutable candidate snapshots**,
@@ -352,8 +388,10 @@ The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view i
 The engine policies are `repo/RESEARCH_ENGINE_V0.json`,
 `repo/HYPOTHESIS_GENERATION_V0.json`, and
 `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`; million-space operational memory is
-owned by `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json` and summarized in
-`data/hypothesis_space_run_state.json`; typed applicability is owned by
+owned by `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json`; finite unique coverage is
+owned by `repo/HYPOTHESIS_SPACE_CAMPAIGN_V1.json`; their generated views are
+`data/hypothesis_space_run_state.json` and
+`data/hypothesis_space_campaign_state.json`; typed applicability is owned by
 `repo/ECDLP_TYPED_EVIDENCE_V0.json`, materialized in
 `data/typed_evidence_state.json`, and the combined generated state is
 `data/research_engine_state.json`. The v0.2 lifecycle and shadow intake are
@@ -375,6 +413,8 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 `repo/HYPOTHESIS_GENERATION_V0.json` (seed and proposal-quality policy) ·
 `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json` (operational run-memory policy) ·
 `data/hypothesis_space_run_state.json` (benchmarks, failures, and map-root history) ·
+`repo/HYPOTHESIS_SPACE_CAMPAIGN_V1.json` (finite unique-coverage policy) ·
+`data/hypothesis_space_campaign_state.json` (campaign coverage and exhaustion) ·
 `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json` (immutable candidate lifecycle) ·
 `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json` (19 regression cases) ·
 `data/typed_evidence_state.json` (materialized mechanism/property cells) ·

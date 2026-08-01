@@ -2,7 +2,7 @@
   "schema_version": "0.1-generated",
   "engine_id": "ecdlp-research-engine-v0",
   "source_hashes": {
-    "policy_sha256": "98cd94709ff77ff3491e56cbf10422f796cfa34a7797997d9c7c8683f0c03c3a",
+    "policy_sha256": "fb3e74227bd5613e33f5bab234a40d0d1dccf23a6c048e6094433a2dbebcdddf",
     "hypothesis_generation_policy_sha256": "cb61708d473f667ee2b9d4bdba8199ac87de4fa079e3ca41bf6ddc42fe612054",
     "typed_evidence_state_sha256": "09cb8c4f032d4d1314189cf0b2cbd912654cada60c4905e91b3092b63a46f503",
     "research_claim_state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
@@ -531,7 +531,28 @@
       "decision_delta": {
         "effect": "retained_history",
         "statement": "Retain the scoped historical evidence; no automatic route decision follows."
-      }
+      },
+      "recorded_scope": {
+        "target_kind": "toy",
+        "curve_family": "cofactor-1 toy j=0 curves",
+        "field_bits": [
+          16,
+          20
+        ],
+        "threat_model": "classical-single-target-plain",
+        "claim_boundary": "m=3 custom Macaulay proxy under the historical pure-Python implementation."
+      },
+      "effective_scope": {
+        "target_kind": "toy",
+        "curve_family": "cofactor-1 toy j=0 curves",
+        "field_bits": [
+          16
+        ],
+        "threat_model": "classical-single-target-plain",
+        "claim_boundary": "m=3 custom Macaulay proxy under the historical pure-Python implementation.",
+        "scope_correction": "The immutable migrated event overstates the m=3 field-size scope. The actual m=3 manifest rows are 16-bit only; 20-bit rows belong to m=2. Treat this event as single-size resource-exhaustion evidence without rewriting the reviewed historical bytes."
+      },
+      "scope_correction_id": "HSCORR-2026-08-01-P3-M3-BITS"
     },
     {
       "event_id": "REO-2026-07-24-007",
@@ -711,7 +732,28 @@
       "decision_delta": {
         "effect": "retained_history",
         "statement": "Retain the scoped historical evidence; no automatic route decision follows."
-      }
+      },
+      "recorded_scope": {
+        "target_kind": "toy",
+        "curve_family": "cofactor-1 toy j=0 curves",
+        "field_bits": [
+          16,
+          20
+        ],
+        "threat_model": "classical-single-target-plain",
+        "claim_boundary": "m=3 custom Macaulay proxy under the historical pure-Python implementation."
+      },
+      "effective_scope": {
+        "target_kind": "toy",
+        "curve_family": "cofactor-1 toy j=0 curves",
+        "field_bits": [
+          16
+        ],
+        "threat_model": "classical-single-target-plain",
+        "claim_boundary": "m=3 custom Macaulay proxy under the historical pure-Python implementation.",
+        "scope_correction": "The immutable migrated event overstates the m=3 field-size scope. The actual m=3 manifest rows are 16-bit only; 20-bit rows belong to m=2. Treat this event as single-size resource-exhaustion evidence without rewriting the reviewed historical bytes."
+      },
+      "scope_correction_id": "HSCORR-2026-08-01-P3-M3-BITS"
     },
     {
       "event_id": "REO-2026-07-24-007",
@@ -778,6 +820,39 @@
         "effect": "external_bounded_result_retained",
         "statement": "Retain the exact decision-authorized result outside native selection and calibration; no automatic promotion follows."
       }
+    }
+  ],
+  "historical_scope_corrections": [
+    {
+      "correction_id": "HSCORR-2026-08-01-P3-M3-BITS",
+      "event_id": "REO-2026-07-24-006",
+      "event_sha256": "3ef46d8f1bd57ca757c8ec3b85636d7f5e94d7e516486410f0076d527efda872",
+      "recorded_field_bits": [
+        16,
+        20
+      ],
+      "effective_field_bits": [
+        16
+      ],
+      "excluded_field_bits": [
+        20
+      ],
+      "machine_check": {
+        "path": "experiments/p3_sm_system/runs/HYP_GLV_SEMAEV_001_p3-sm-system_fa4fed78efc9.json",
+        "sha256": "e30314f755cbcf98ea1491ecd6e7148fadb3c23c27f4616c111096b478aba564",
+        "parameter_arrays": [
+          "dreg_grid",
+          "prob_grid"
+        ],
+        "field_bits_index": 0,
+        "arity_index": 2,
+        "arity_value": 3
+      },
+      "supporting_report": {
+        "path": "experiments/p3_sm_system/RESULTS.md",
+        "sha256": "3231950cbfa0d9734551127b21d30e25be22608a1a9794c72c30f827a08ef56f"
+      },
+      "interpretation": "The immutable migrated event overstates the m=3 field-size scope. The actual m=3 manifest rows are 16-bit only; 20-bit rows belong to m=2. Treat this event as single-size resource-exhaustion evidence without rewriting the reviewed historical bytes."
     }
   ],
   "route_evidence_state": [

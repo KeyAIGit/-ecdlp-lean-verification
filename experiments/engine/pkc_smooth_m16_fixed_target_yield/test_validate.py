@@ -34,7 +34,14 @@ def load_producer():
         raise RuntimeError("could not load producer")
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
-    spec.loader.exec_module(module)
+    resource_missing = importlib.util.find_spec("resource") is None
+    if resource_missing:
+        sys.modules["resource"] = mock.Mock(name="posix_resource_import_stub")
+    try:
+        spec.loader.exec_module(module)
+    finally:
+        if resource_missing:
+            sys.modules.pop("resource", None)
     return module
 
 

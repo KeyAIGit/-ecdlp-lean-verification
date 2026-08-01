@@ -7,20 +7,22 @@
   "route_promotion_capability": false,
   "source_bindings": {
     "ranker_spec_path": "repo/HYPOTHESIS_RANKER_V0.json",
-    "ranker_spec_sha256": "69cdbf7d176f10c8794b282135a0acc42128cd344ac684c8f650b307b61ccef6",
+    "ranker_spec_sha256": "3b8b95753744f1c7e12d51858f7b7d60391a114faf6e702a8e922347289119dc",
     "model_path": "models/hypothesis_ranker_v0/model.json",
     "model_sha256": "ae192abc6995da510840373b66bb7536b77b68bb74e08d14dca4b657fbe96e74",
     "funnel_state_path": "data/hypothesis_funnel_state.json",
-    "funnel_state_sha256": "85e285c195adcc268a22182b3a15974dbd6d35dc6651637e89c433775acba4c4",
+    "funnel_state_sha256": "5a2c732c07b05008e5c71aeb47fa72c613e27c8fc6e7362f62d442f9e6da359c",
     "current_review_policy_path": "repo/HYPOTHESIS_FUNNEL_V1.json",
     "current_review_records_sha256": "1577b808a4d845a8dd30c9e0e61463d7f01f9ba5b51955eefc657b85b0d2dd6c",
     "persistent_review_ledger_path": "data/hypothesis_review_ledger.jsonl",
-    "persistent_review_ledger_sha256": "1c20302bfb22dbd146b8fe4ad0b8983eed91e175d6e98ea2a25badd0e79f0939"
+    "persistent_review_ledger_sha256": "1c20302bfb22dbd146b8fe4ad0b8983eed91e175d6e98ea2a25badd0e79f0939",
+    "scientific_review_registry_path": "repo/HYPOTHESIS_REVIEW_REGISTRY_V1.json",
+    "scientific_review_registry_sha256": "5c7b1cf093272923ad3f61431ba2773f4a5775c67f269c586c0f9ddfbafaa5f4"
   },
   "activation": {
     "ready_for_training": false,
     "observed": {
-      "eligible_labels": 0,
+      "eligible_candidate_versions": 0,
       "positive_labels": 0,
       "negative_labels": 0,
       "distinct_families": 0,
@@ -28,7 +30,7 @@
       "native_outcomes": 0
     },
     "required": {
-      "eligible_labels": 30,
+      "eligible_candidate_versions": 30,
       "positive_labels": 5,
       "negative_labels": 10,
       "distinct_families": 5,
@@ -36,7 +38,7 @@
       "native_outcomes": 3
     },
     "unmet": [
-      "eligible_labels",
+      "eligible_candidate_versions",
       "positive_labels",
       "negative_labels",
       "distinct_families",
@@ -45,12 +47,52 @@
     ],
     "required_validation": "frozen-family-holdout"
   },
+  "current_review_bindings": [
+    {
+      "review_id": "HFR-2026-07-31-004",
+      "label_id": "HRL-86B96DB225CAF29ED3713F9F",
+      "source_batch_merkle_root_sha256": "30ccc4af1cced508d7249be519bb541658ba972025fbac127fe2d1c8302221ef",
+      "current_batch_merkle_root_sha256": "012ef353f566766ece76b43e640695a16f5c9a947fb1d2d889bef14bcd1513db",
+      "reused_across_evidence_snapshot": true,
+      "reviewed_evidence_closure_sha256": null,
+      "reviewed_evidence_manifest": [],
+      "current_evidence_closure_sha256": "de6db61e3dfba5fa7485d592e5353047dbe7646aa261b7af0ab1c4fdd5b6aa1a",
+      "evidence_closure_current": false,
+      "global_evidence_snapshot_current": false
+    },
+    {
+      "review_id": "HFR-2026-07-31-005",
+      "label_id": "HRL-9EB61F851DCAE8619CD9CA98",
+      "source_batch_merkle_root_sha256": "30ccc4af1cced508d7249be519bb541658ba972025fbac127fe2d1c8302221ef",
+      "current_batch_merkle_root_sha256": "012ef353f566766ece76b43e640695a16f5c9a947fb1d2d889bef14bcd1513db",
+      "reused_across_evidence_snapshot": true,
+      "reviewed_evidence_closure_sha256": null,
+      "reviewed_evidence_manifest": [],
+      "current_evidence_closure_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "evidence_closure_current": false,
+      "global_evidence_snapshot_current": false
+    },
+    {
+      "review_id": "HFR-2026-07-31-006",
+      "label_id": "HRL-FBBE2AD601B404BD6BAA7B3E",
+      "source_batch_merkle_root_sha256": "30ccc4af1cced508d7249be519bb541658ba972025fbac127fe2d1c8302221ef",
+      "current_batch_merkle_root_sha256": "012ef353f566766ece76b43e640695a16f5c9a947fb1d2d889bef14bcd1513db",
+      "reused_across_evidence_snapshot": true,
+      "reviewed_evidence_closure_sha256": null,
+      "reviewed_evidence_manifest": [],
+      "current_evidence_closure_sha256": "bb66e4f02bdf2d354e9de598f2061eb761fda892fe08d974a55c18afab0bffa4",
+      "evidence_closure_current": false,
+      "global_evidence_snapshot_current": false
+    }
+  ],
   "labels": [
     {
       "label_id": "HRL-6BB9A46E5E822385D0049879",
       "review_id": "HFR-2026-07-31-001",
       "review_record_sha256": "6bb9a46e5e822385d0049879467c20c98b4367ab39aab40640303a5bbf85dd61",
       "semantic_signature_sha256": "0b684c64bb245ea31915392fc03df47d12089c6ce877fe54b789dd91e2014717",
+      "candidate_version_sha256": "ffebc66ea122e2a7254528c3d7c65709850477497395dfcf287041ccb91a5439",
+      "reviewed_evidence_closure_sha256": null,
       "funnel_id": "HYP-SELECT-005-100K",
       "batch_merkle_root_sha256": "9db58a99db5aafb50b501e2e0654444994f201fba38ec089d5fd5233e7e5d5a8",
       "family": "pminus1-m16",
@@ -60,7 +102,10 @@
       "training_eligible": false,
       "exclusion_reasons": [
         "historical_migration",
-        "independence_not_established"
+        "independence_not_established",
+        "legacy_review_schema",
+        "reviewed_evidence_closure_unbound",
+        "unregistered_review_artifact"
       ],
       "features": {
         "exactness": 5.0,
@@ -77,6 +122,8 @@
       "review_id": "HFR-2026-07-31-004",
       "review_record_sha256": "86b96db225caf29ed3713f9f1728907a40f208cceca1e4f6b8bbfb67514c74ef",
       "semantic_signature_sha256": "0b684c64bb245ea31915392fc03df47d12089c6ce877fe54b789dd91e2014717",
+      "candidate_version_sha256": "ffebc66ea122e2a7254528c3d7c65709850477497395dfcf287041ccb91a5439",
+      "reviewed_evidence_closure_sha256": null,
       "funnel_id": "HYP-SELECT-005-100K",
       "batch_merkle_root_sha256": "30ccc4af1cced508d7249be519bb541658ba972025fbac127fe2d1c8302221ef",
       "family": "pminus1-m16",
@@ -86,7 +133,10 @@
       "training_eligible": false,
       "exclusion_reasons": [
         "historical_migration",
-        "independence_not_established"
+        "independence_not_established",
+        "legacy_review_schema",
+        "reviewed_evidence_closure_unbound",
+        "unregistered_review_artifact"
       ],
       "features": {
         "exactness": 5.0,
@@ -103,6 +153,8 @@
       "review_id": "HFR-2026-07-31-003",
       "review_record_sha256": "9dedc72a7da7a1019220b563ad456f5e9e8b3c527b8909b2ca5ed8e3b261c8b2",
       "semantic_signature_sha256": "04a8e74464d44704a7e36a545778addec93b395f6467146314c296a3c578cf36",
+      "candidate_version_sha256": "2f92ce95df3f613282559b6cbfa7e514a839b59c008fb2762c0af2b185c3ce6e",
+      "reviewed_evidence_closure_sha256": null,
       "funnel_id": "HYP-SELECT-005-100K",
       "batch_merkle_root_sha256": "9db58a99db5aafb50b501e2e0654444994f201fba38ec089d5fd5233e7e5d5a8",
       "family": "nonsplit-torus-trace",
@@ -112,7 +164,10 @@
       "training_eligible": false,
       "exclusion_reasons": [
         "historical_migration",
-        "independence_not_established"
+        "independence_not_established",
+        "legacy_review_schema",
+        "reviewed_evidence_closure_unbound",
+        "unregistered_review_artifact"
       ],
       "features": {
         "exactness": 5.0,
@@ -129,6 +184,8 @@
       "review_id": "HFR-2026-07-31-005",
       "review_record_sha256": "9eb61f851dcae8619cd9ca987eaea74b46e349edee20370f2629be3c1a5e9a83",
       "semantic_signature_sha256": "0739acd53e94775217d0c66ebe09d77fff73a653644c8de2db3a8bfab6933986",
+      "candidate_version_sha256": "a060aaef7a2a70d4b71fcf4a8fb18bfe6a7dcd809402dc19306b5be8baa444cd",
+      "reviewed_evidence_closure_sha256": null,
       "funnel_id": "HYP-SELECT-005-100K",
       "batch_merkle_root_sha256": "30ccc4af1cced508d7249be519bb541658ba972025fbac127fe2d1c8302221ef",
       "family": "induced-subset",
@@ -138,7 +195,10 @@
       "training_eligible": false,
       "exclusion_reasons": [
         "historical_migration",
-        "independence_not_established"
+        "independence_not_established",
+        "legacy_review_schema",
+        "reviewed_evidence_closure_unbound",
+        "unregistered_review_artifact"
       ],
       "features": {
         "exactness": 5.0,
@@ -155,6 +215,8 @@
       "review_id": "HFR-2026-07-31-002",
       "review_record_sha256": "bc30d148dded31f3b9e94a3be3a128b5ea2e08bf5af7b2b516064d61abdf9b69",
       "semantic_signature_sha256": "0739acd53e94775217d0c66ebe09d77fff73a653644c8de2db3a8bfab6933986",
+      "candidate_version_sha256": "a060aaef7a2a70d4b71fcf4a8fb18bfe6a7dcd809402dc19306b5be8baa444cd",
+      "reviewed_evidence_closure_sha256": null,
       "funnel_id": "HYP-SELECT-005-100K",
       "batch_merkle_root_sha256": "9db58a99db5aafb50b501e2e0654444994f201fba38ec089d5fd5233e7e5d5a8",
       "family": "induced-subset",
@@ -164,7 +226,10 @@
       "training_eligible": false,
       "exclusion_reasons": [
         "historical_migration",
-        "independence_not_established"
+        "independence_not_established",
+        "legacy_review_schema",
+        "reviewed_evidence_closure_unbound",
+        "unregistered_review_artifact"
       ],
       "features": {
         "exactness": 5.0,
@@ -181,6 +246,8 @@
       "review_id": "HFR-2026-07-31-006",
       "review_record_sha256": "fbbe2ad601b404bd6baa7b3e9c6d40f3ca732fccb068a1b37a77fded35623004",
       "semantic_signature_sha256": "04a8e74464d44704a7e36a545778addec93b395f6467146314c296a3c578cf36",
+      "candidate_version_sha256": "2f92ce95df3f613282559b6cbfa7e514a839b59c008fb2762c0af2b185c3ce6e",
+      "reviewed_evidence_closure_sha256": null,
       "funnel_id": "HYP-SELECT-005-100K",
       "batch_merkle_root_sha256": "30ccc4af1cced508d7249be519bb541658ba972025fbac127fe2d1c8302221ef",
       "family": "nonsplit-torus-trace",
@@ -190,7 +257,10 @@
       "training_eligible": false,
       "exclusion_reasons": [
         "historical_migration",
-        "independence_not_established"
+        "independence_not_established",
+        "legacy_review_schema",
+        "reviewed_evidence_closure_unbound",
+        "unregistered_review_artifact"
       ],
       "features": {
         "exactness": 5.0,
@@ -203,14 +273,103 @@
       }
     }
   ],
+  "training_examples": [
+    {
+      "candidate_version_sha256": "2f92ce95df3f613282559b6cbfa7e514a839b59c008fb2762c0af2b185c3ce6e",
+      "semantic_signature_sha256": "04a8e74464d44704a7e36a545778addec93b395f6467146314c296a3c578cf36",
+      "family": "nonsplit-torus-trace",
+      "features": {
+        "exactness": 5.0,
+        "mechanism": 5.0,
+        "barrier_escape": 4.0,
+        "discrimination": 5.0,
+        "falsifiability": 5.0,
+        "scaling": 5.0,
+        "strategic_value": 5.0
+      },
+      "review_ids": [
+        "HFR-2026-07-31-003",
+        "HFR-2026-07-31-006"
+      ],
+      "label_ids": [
+        "HRL-9DEDC72A7DA7A1019220B563",
+        "HRL-FBBE2AD601B404BD6BAA7B3E"
+      ],
+      "review_count": 2,
+      "eligible_review_count": 0,
+      "reviewer_actor_ids": [],
+      "binary_label": null,
+      "training_eligible": false,
+      "consensus": "unlabelled"
+    },
+    {
+      "candidate_version_sha256": "a060aaef7a2a70d4b71fcf4a8fb18bfe6a7dcd809402dc19306b5be8baa444cd",
+      "semantic_signature_sha256": "0739acd53e94775217d0c66ebe09d77fff73a653644c8de2db3a8bfab6933986",
+      "family": "induced-subset",
+      "features": {
+        "exactness": 5.0,
+        "mechanism": 4.0,
+        "barrier_escape": 5.0,
+        "discrimination": 5.0,
+        "falsifiability": 5.0,
+        "scaling": 5.0,
+        "strategic_value": 5.0
+      },
+      "review_ids": [
+        "HFR-2026-07-31-002",
+        "HFR-2026-07-31-005"
+      ],
+      "label_ids": [
+        "HRL-9EB61F851DCAE8619CD9CA98",
+        "HRL-BC30D148DDED31F3B9E94A3B"
+      ],
+      "review_count": 2,
+      "eligible_review_count": 0,
+      "reviewer_actor_ids": [],
+      "binary_label": null,
+      "training_eligible": false,
+      "consensus": "unlabelled"
+    },
+    {
+      "candidate_version_sha256": "ffebc66ea122e2a7254528c3d7c65709850477497395dfcf287041ccb91a5439",
+      "semantic_signature_sha256": "0b684c64bb245ea31915392fc03df47d12089c6ce877fe54b789dd91e2014717",
+      "family": "pminus1-m16",
+      "features": {
+        "exactness": 5.0,
+        "mechanism": 5.0,
+        "barrier_escape": 4.0,
+        "discrimination": 5.0,
+        "falsifiability": 5.0,
+        "scaling": 5.0,
+        "strategic_value": 5.0
+      },
+      "review_ids": [
+        "HFR-2026-07-31-001",
+        "HFR-2026-07-31-004"
+      ],
+      "label_ids": [
+        "HRL-6BB9A46E5E822385D0049879",
+        "HRL-86B96DB225CAF29ED3713F9F"
+      ],
+      "review_count": 2,
+      "eligible_review_count": 0,
+      "reviewer_actor_ids": [],
+      "binary_label": null,
+      "training_eligible": false,
+      "consensus": "unlabelled"
+    }
+  ],
   "label_exclusion_histogram": {
     "historical_migration": 6,
-    "independence_not_established": 6
+    "independence_not_established": 6,
+    "legacy_review_schema": 6,
+    "reviewed_evidence_closure_unbound": 6,
+    "unregistered_review_artifact": 6
   },
   "shadow_ranking": [
     {
       "semantic_signature_sha256": "04a8e74464d44704a7e36a545778addec93b395f6467146314c296a3c578cf36",
-      "seed_id": "HQS1-8C8051396E30CD228DBFB9AF9F42F3DA",
+      "seed_id": "HQS1-9CF6F76C7804104A6CE62327EDE2421D",
       "base_id": "H4-E05",
       "family": "nonsplit-torus-trace",
       "type": "ATTACK",
@@ -227,7 +386,7 @@
     },
     {
       "semantic_signature_sha256": "0b2f73fd8d4dd51fd7d0dac8b85dcc00a12f693257edd296d74a14ec1aedf943",
-      "seed_id": "HQS1-0D4E9F90109383C04C7F1AAF146BD69C",
+      "seed_id": "HQS1-88618D52840E67C31337D88AEE53BED5",
       "base_id": "ALG-012",
       "family": "arithmetic-radding",
       "type": "ATTACK",
@@ -244,7 +403,7 @@
     },
     {
       "semantic_signature_sha256": "0b684c64bb245ea31915392fc03df47d12089c6ce877fe54b789dd91e2014717",
-      "seed_id": "HQS1-79A4578A6FB7E1B37CD1A445686E7829",
+      "seed_id": "HQS1-896F84BC7AC9B2440606604753B4D6CB",
       "base_id": "H4-E28",
       "family": "pminus1-m16",
       "type": "ATTACK",
@@ -261,7 +420,7 @@
     },
     {
       "semantic_signature_sha256": "0d3590d385f518d3f53eb04ea1d38b6a161d2d968b1612cd62f1da560b72a94c",
-      "seed_id": "HQS1-21D14194DA7DB2415C7F4A7C3F770BEC",
+      "seed_id": "HQS1-00CD93E00CBD1C1E3937BAAD732F0DB3",
       "base_id": "H4-E02",
       "family": "signed-coordinates",
       "type": "ATTACK",
@@ -278,7 +437,7 @@
     },
     {
       "semantic_signature_sha256": "0d62c41c12d8c0d0d3894d56bf6b164a6e8685184240edfa39c2061921cfef9f",
-      "seed_id": "HQS1-E25075A1D1588D8D6EEF823F7C169ECB",
+      "seed_id": "HQS1-FFCC85B9E9F16FFEFBE3DBB950BB03AA",
       "base_id": "HCS-021",
       "family": "frobenius-characteristic",
       "type": "ATTACK",
@@ -295,7 +454,7 @@
     },
     {
       "semantic_signature_sha256": "0d7e4742a5d13ceb7eb99dddafb7c5b1bb19083dcf93e1a051f62d80ab97cd23",
-      "seed_id": "HQS1-8EC12BA7F3C1D20413F3E8F64C0358B5",
+      "seed_id": "HQS1-A1C30F3A05F3784DFDFD76A344172F24",
       "base_id": "H4-E01",
       "family": "semaev-tree",
       "type": "ATTACK",
@@ -312,7 +471,7 @@
     },
     {
       "semantic_signature_sha256": "00413d4a83f944803a8f3e1a9c6366495e4f492d158942a91341ce1326d4465a",
-      "seed_id": "HQS1-9F13B8928E46A68873DEDBC6C6334E0D",
+      "seed_id": "HQS1-2F6AD0EA60228FB9D91D72A6438D6C4A",
       "base_id": "HCS-009",
       "family": "c6-rho",
       "type": "ATTACK",
@@ -329,7 +488,7 @@
     },
     {
       "semantic_signature_sha256": "00d939f60bd256aab7eaa99d0ae6fc8fac937450e7e93465ecc2ca3f9bf7505e",
-      "seed_id": "HQS1-5E112153480B4B3E2CF4CABC31812D72",
+      "seed_id": "HQS1-73BBDDABBF8A08979FF7AE57A4CE977D",
       "base_id": "HCS-019",
       "family": "multiple-padiclifts",
       "type": "ATTACK",
@@ -346,7 +505,7 @@
     },
     {
       "semantic_signature_sha256": "03869ede7a28158ee8970176565e689c3352dadb439b054c99b6ce2cb6d3bcba",
-      "seed_id": "HQS1-AC73F058A61DA00AAE5E3438DF9C6D94",
+      "seed_id": "HQS1-EF9618B93E2942D72A718C3010F5A6C9",
       "base_id": "ALG-016",
       "family": "exception-aware-walk",
       "type": "ATTACK",
@@ -363,7 +522,7 @@
     },
     {
       "semantic_signature_sha256": "0565fa656a8c32b6bb8ef7e16edeb18ececd1b58f8df5fb1895329307e6548fe",
-      "seed_id": "HQS1-26E000BB4E621F9ECF4211F81FD3238D",
+      "seed_id": "HQS1-37DC5A020AF887AAF8C0D90F1962AB45",
       "base_id": "H4-E11",
       "family": "toric-elimination",
       "type": "ATTACK",
@@ -380,7 +539,7 @@
     },
     {
       "semantic_signature_sha256": "05d8428d038648841737e12ce96304d82a700004e5f03f95364a554ddc424c53",
-      "seed_id": "HQS1-0FE6BF1176A4278F7FE13AFC3F157C32",
+      "seed_id": "HQS1-F1DAB9B3CE15C660DFB68409993D5AEE",
       "base_id": "HCS-006",
       "family": "growing-cm-shell",
       "type": "ATTACK",
@@ -397,7 +556,7 @@
     },
     {
       "semantic_signature_sha256": "0909be12f22a42cacbe4a97017583af7e55b7f887b9548ddf1fb49f5545d0dff",
-      "seed_id": "HQS1-441F01981CEFD897D8394BA86D8A10B4",
+      "seed_id": "HQS1-767FB83D3509612A9A49A06671E197FE",
       "base_id": "ALG-007",
       "family": "algebraic-preprocessing",
       "type": "ATTACK",
@@ -414,7 +573,7 @@
     },
     {
       "semantic_signature_sha256": "02608c42e3a2f4bdb740a90cb5a11db5f031be383b9aa52b8d8791e2e9f591c9",
-      "seed_id": "HQS1-051E7B5B9DDA865D9B1380E00E5424B4",
+      "seed_id": "HQS1-AEB0EC3934F8AB6D82CB3DD866E9355F",
       "base_id": "ALG-017",
       "family": "rayleigh-null",
       "type": "BARRIER",
@@ -431,7 +590,7 @@
     },
     {
       "semantic_signature_sha256": "038bc0e758ea6a2d18131a98d7bcbe07d6bd067f4a24262c73a885aa54251634",
-      "seed_id": "HQS1-29FE3549A9505EC23385997D29A5FC26",
+      "seed_id": "HQS1-0207F4636C6CBC897036E278AEB90DEA",
       "base_id": "HCS-005",
       "family": "endomorphism-ring",
       "type": "BARRIER",
@@ -448,7 +607,7 @@
     },
     {
       "semantic_signature_sha256": "043d2f854faa4a052cd30e63c816de749a5902de1dca43786a8e7a914c68f8af",
-      "seed_id": "HQS1-8BAB040F29A6149D9DF8C8BE9878B697",
+      "seed_id": "HQS1-9CB7A9C04756C4EEBD9D5ACC8DCF5FE3",
       "base_id": "H4-E17",
       "family": "repetition-stabilizer",
       "type": "BARRIER",
@@ -465,7 +624,7 @@
     },
     {
       "semantic_signature_sha256": "06e4ff5f7ebbfa5c6764fa8f334db2f870b4310c6353daff895d7d13f1759ccf",
-      "seed_id": "HQS1-A879C8C7994971AC35F031D920820C69",
+      "seed_id": "HQS1-3A4E76683553ECE4F54CEE117DB1E309",
       "base_id": "H4-E18",
       "family": "singular-locus",
       "type": "BARRIER",
@@ -482,7 +641,7 @@
     },
     {
       "semantic_signature_sha256": "0739acd53e94775217d0c66ebe09d77fff73a653644c8de2db3a8bfab6933986",
-      "seed_id": "HQS1-DD56EF683E969F7600062DB263EC720F",
+      "seed_id": "HQS1-0AE5A57281177E4782F7CA8DFD626C07",
       "base_id": "ALG-014",
       "family": "induced-subset",
       "type": "BARRIER",
@@ -499,7 +658,7 @@
     },
     {
       "semantic_signature_sha256": "097db59084ca784b98a436c8d1c6747a3d6715a0da5b12486dfe4f1483f7587a",
-      "seed_id": "HQS1-D12EDBCD5BD4E3D47FFCB245812589A0",
+      "seed_id": "HQS1-25D14A69B60BAEF7F9A24126B35CF6AA",
       "base_id": "ALG-002",
       "family": "x-only-operation",
       "type": "BARRIER",
@@ -516,7 +675,7 @@
     },
     {
       "semantic_signature_sha256": "0158da79b8a619efb33ab562ac8f392f27305eb522d0ddc9af94bb6318f358e7",
-      "seed_id": "HQS1-31106D90DAA57BE60185E257D60F981C",
+      "seed_id": "HQS1-C4B315D7D0AEAEE609CC99898DA13965",
       "base_id": "H4-E20",
       "family": "relation-uniformity",
       "type": "ENABLING",
@@ -533,7 +692,7 @@
     },
     {
       "semantic_signature_sha256": "0d5b1055585b7cd98d8f022580c2a977c3c05d044d466e9118cf95c8d5dc9ecf",
-      "seed_id": "HQS1-3A8AA170DE492A047268E31A06FBB518",
+      "seed_id": "HQS1-CCA04F8292D76CF99D5462C8A54550D4",
       "base_id": "H4-E16",
       "family": "regular-locus-density",
       "type": "ENABLING",
@@ -550,7 +709,7 @@
     },
     {
       "semantic_signature_sha256": "177c68d47c17cca97fe726281b0e17f359947e13a01334f59f367cdce1491cfa",
-      "seed_id": "HQS1-31BB5F12A5A12658A53498EDFD8119E9",
+      "seed_id": "HQS1-BFA863AD2862BAFD71406ACBFE324600",
       "base_id": "HCS-025",
       "family": "division-polynomial-invariants",
       "type": "ENABLING",
@@ -567,7 +726,7 @@
     },
     {
       "semantic_signature_sha256": "17e294b2518cc3e1062d55465667b0d885cca5b8876b90bb75ca669c46a6d5d5",
-      "seed_id": "HQS1-05AB97076C80CA2710E78F50D4C49145",
+      "seed_id": "HQS1-E12C34E267A882CD8890932C11A2909E",
       "base_id": "ALG-029",
       "family": "ml-counterexample-search",
       "type": "ENABLING",
@@ -584,7 +743,7 @@
     },
     {
       "semantic_signature_sha256": "20f5d7acb6d070560132035450a51cc7fba54ea5daf0a17aaf317e3cd0f98cc0",
-      "seed_id": "HQS1-A00ABFFD099DE0C57FB624C28CD28753",
+      "seed_id": "HQS1-6FEA40F226CA42251CCD0E22290D0CD5",
       "base_id": "ALG-015",
       "family": "coordinate-ablation",
       "type": "ENABLING",
@@ -601,7 +760,7 @@
     },
     {
       "semantic_signature_sha256": "312cf42db7c32244d56a9a73f1d9fd3c72ccd120969808d3fea539572d2c7a51",
-      "seed_id": "HQS1-78A80594988163E15A6263B7121D38B9",
+      "seed_id": "HQS1-BA701836DA0643C220E921339DDE5E3C",
       "base_id": "ALG-030",
       "family": "ml-relation-invariant",
       "type": "ENABLING",
@@ -618,7 +777,7 @@
     },
     {
       "semantic_signature_sha256": "086751e9408bb6874301e93593c5b66cd348c9adf63cae825db2a9fb9f30e0e5",
-      "seed_id": "HQS1-824CE9B635516DDE89DB2BBFCB1FD191",
+      "seed_id": "HQS1-BF29AE26C676C6B114C708715CE0A174",
       "base_id": "HCS-026",
       "family": "infinity-density",
       "type": "ENABLING",
@@ -635,7 +794,7 @@
     },
     {
       "semantic_signature_sha256": "099cc94ef1aef4e95991634b1fd7b8a0f8cbe19f3c70ee9201ad446b4bcc9b5a",
-      "seed_id": "HQS1-AB40F65D4A8F5EB07ABE5D3080E82542",
+      "seed_id": "HQS1-CC317803D8DAB7ABB22F6791E626C1AF",
       "base_id": "ALG-028",
       "family": "ml-solver-predictor",
       "type": "ENABLING",
@@ -652,7 +811,7 @@
     },
     {
       "semantic_signature_sha256": "10e22ef9b39c5862ae55a279db8cf685a8405c7e1ebc520c45eeca5d22889401",
-      "seed_id": "HQS1-D922943647962E83CA355054B7A6ED25",
+      "seed_id": "HQS1-1B839B0B52D7700FA7FDAB3A555C57A3",
       "base_id": "H4-E25",
       "family": "norm-one-dickson-circuit",
       "type": "ENABLING",
@@ -669,7 +828,7 @@
     },
     {
       "semantic_signature_sha256": "1afa951efafbfcb607708b8b122ba223ff6923a6c4edb516398ba4179187b0a4",
-      "seed_id": "HQS1-8B306B7D735CC3370064E7AD493E9633",
+      "seed_id": "HQS1-19D9CBD13A6E45640BAFEE7D5ED7E8C6",
       "base_id": "ALG-031",
       "family": "mechanism-registry",
       "type": "ENABLING",
@@ -686,7 +845,7 @@
     },
     {
       "semantic_signature_sha256": "56ddf6359e0bdb520c02fce8469b01d866f361a77180afc6e7ad4ef10cbb9f76",
-      "seed_id": "HQS1-9B0A167B144C603835500DAF332F9D87",
+      "seed_id": "HQS1-92A666149F4AC038C6C906F84DB13F4D",
       "base_id": "H4-E19",
       "family": "monodromy-rank",
       "type": "ENABLING",
@@ -717,6 +876,8 @@
   "boundaries": [
     "Deterministic screening labels are not scientific ranker labels.",
     "A migrated or non-independent review cannot train the ranker.",
+    "A scientific review is reusable only while its candidate version and reviewed evidence closure remain unchanged.",
+    "Multiple reviews of one immutable candidate version aggregate to one consensus or disagreement training example.",
     "An untrained model emits no learned score.",
     "Even a trained v0 model remains shadow-only and cannot select, authorize, or promote research."
   ]
