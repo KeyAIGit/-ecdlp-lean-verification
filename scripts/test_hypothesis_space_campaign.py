@@ -18,6 +18,9 @@ from hypothesis_funnel import Operator
 from hypothesis_space_run_ledger import payload_digest, sha256_bytes
 
 
+SOURCE_EVALUATOR_DEPENDENCY_DIGESTS = campaign.source_evaluator_dependency_digests
+
+
 class HypothesisSpaceCampaignTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -104,7 +107,14 @@ class HypothesisSpaceCampaignTests(unittest.TestCase):
         cls.temporary.cleanup()
 
     def test_committed_campaign_memory_matches_generated_state(self) -> None:
-        with patch.object(campaign, "RECORD_DIR", self.original_record_dir):
+        with (
+            patch.object(campaign, "RECORD_DIR", self.original_record_dir),
+            patch.object(
+                campaign,
+                "source_evaluator_dependency_digests",
+                SOURCE_EVALUATOR_DEPENDENCY_DIGESTS,
+            ),
+        ):
             records, problems = campaign.load_records(self.canonical_policy)
         self.assertEqual(problems, [])
         expected = campaign.build_state(self.canonical_policy, records)
