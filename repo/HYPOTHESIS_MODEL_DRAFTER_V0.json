@@ -1,14 +1,49 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "drafter_id": "keyai-hypothesis-model-drafter-v0",
   "status": "shadow_non_executing",
-  "purpose": "Turn a small deterministic review queue into untrusted proposal fragments. The model may suggest missing mechanism fields; it cannot clear a scientific gate, review itself, authorize work, or create an experiment event.",
-  "source_state": "data/hypothesis_space_state.json",
+  "required_environment_attestation": "protected-main-v1",
+  "purpose": "Turn a bounded deterministic queue into untrusted proposal fragments. The default provenance-bound lane binds each request to an exact typed-evidence cell, claim packet, and evidence-file manifest. A separate brainstorm lane may explore the broad million-cell review queue but carries no source assurance. Neither lane can clear a scientific gate, review itself, authorize work, or create an experiment event.",
+  "default_lane": "typed_evidence",
+  "lanes": {
+    "typed_evidence": {
+      "scientific_identity": "provenance_bound_untrusted_fragment",
+      "source_state": "data/research_engine_state.json",
+      "typed_evidence_state": "data/typed_evidence_state.json",
+      "decision_state": "repo/ECDLP_DECISION_SUBSTRATE.json",
+      "required_decision_mode": "post_task026_proposal_only_promotion_closed",
+      "required_decision_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
+      "input_provenance_bound": true,
+      "skip_submitted_seeds_by_default": true,
+      "admissions": [
+        {
+          "seed_id": "HGS-DC5FF2FC9E71",
+          "research_object_id": "HYP-M16-SOLVER-SLOPE-001",
+          "scope": "non_executable_proposal_only"
+        }
+      ],
+      "boundary": "The current decision admits formulation only of HYP-M16-SOLVER-SLOPE-001. This reviewed drafter policy maps that object to generated seed HGS-DC5FF2FC9E71 and pins the mapping to the exact decision digest. That seed already has a submitted proposal and is skipped by default, so zero requests is the correct current result. Every supplied source claim and evidence file is digest-bound. Model-authored claim links remain unverified schema assertions and cannot supply source assurance."
+    },
+    "brainstorm_queue": {
+      "scientific_identity": "untrusted_brainstorm_fragment",
+      "source_state": "data/hypothesis_space_state.json",
+      "input_provenance_bound": false,
+      "skip_submitted_seeds_by_default": false,
+      "boundary": "This lane explores bounded review-queue representatives from the structural million-cell projection. Its input is not provenance-bound evidence and its output cannot enter scientific review without later typed-evidence binding."
+    }
+  },
   "limits": {
     "max_queue_items": 30,
     "max_live_calls": 30,
     "max_completion_tokens": 1800,
-    "max_concurrency": 1
+    "max_concurrency": 1,
+    "max_source_claims_per_request": 64,
+    "max_evidence_files_per_request": 64,
+    "max_evidence_file_bytes": 16777216,
+    "max_evidence_total_bytes": 67108864,
+    "max_context_bytes_per_request": 131072,
+    "max_prompt_bytes": 262144,
+    "max_provider_response_bytes": 1048576
   },
   "providers": {
     "featherless": {
@@ -41,6 +76,7 @@
   },
   "output_contract": {
     "scientific_identity": "untrusted_proposal_fragment",
+    "abstention_sentinel": "not_specified_due_to_abstention",
     "required_fields": [
       "abstain",
       "new_premise",
@@ -50,8 +86,18 @@
       "cost_changing_quantity",
       "falsifiable_prediction",
       "missing_evidence",
+      "evidence_claim_ids",
+      "field_evidence_claim_ids",
       "claim_boundary"
     ],
+    "claim_linking": {
+      "non_abstaining_typed_claim_ids_must_be_nonempty": true,
+      "claim_ids_must_be_a_subset_of_the_supplied_packet": true,
+      "per_field_claim_link_map_required": true,
+      "brainstorm_claim_ids_must_be_empty": true,
+      "model_output_cannot_create_source_assurance": true,
+      "claim_links_are_not_semantic_support": true
+    },
     "prohibited_claims": [
       "global novelty",
       "proved",
@@ -65,11 +111,21 @@
   "safety": {
     "live_calls_default": false,
     "all_outputs_executable": false,
+    "any_output_executable": false,
     "admissible_count": 0,
     "recommended_count": 0,
     "authorized_count": 0,
+    "scientific_outcome_count": 0,
+    "ranker_label_count": 0,
     "route_promotions": 0,
     "exact_target_execution": false,
+    "submitted_seed_live_replay": false,
+    "live_requires_clean_protected_main_ancestor": true,
+    "typed_evidence_bytes_read_from_source_commit_git_blobs": true,
+    "partial_provider_failure_exit_nonzero": true,
+    "output_single_writer_lease": true,
+    "provider_transport_cryptographically_attested": false,
+    "external_host_is_credential_trusted": true,
     "self_review_satisfies_independence": false
   }
 }
