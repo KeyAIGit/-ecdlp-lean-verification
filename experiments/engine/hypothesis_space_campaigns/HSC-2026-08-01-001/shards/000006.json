@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0-receipt",
+  "record_kind": "finite_unique_coverage_shard",
+  "campaign_id": "HSC-2026-08-01-001",
+  "universe_id_sha256": "bd2b291c0b98f0c8a80ac9d87ac54fd0fa3ec4974da5cab93d269c4caf9def52",
+  "evaluation_id_sha256": "0a8dda2e6e54351530ef60f6d6bec642b2f66be36636f30fc0b8f03ae1c28f46",
+  "shard_index": 6,
+  "start_ordinal": 786432,
+  "end_ordinal_exclusive": 917504,
+  "previous_receipt_file_sha256": "236ceda5afe32d6903a53ce7c10993bf48fea26eea898aeb5c476cfc0befbd17",
+  "range_merkle_root_sha256": "0a6cd6ef406b6972e571940cc91e84dd6afd22942a9ee2921c614494baa74823",
+  "range_frontier": [
+    {
+      "height": 17,
+      "leaf_count": 131072,
+      "sha256": "0a6cd6ef406b6972e571940cc91e84dd6afd22942a9ee2921c614494baa74823"
+    }
+  ],
+  "first_leaf_sha256": "d775476d7c4dde15b04fefbba9a590addb24d50492874ef5f0f30c2bf98790dd",
+  "last_leaf_sha256": "dfd1664e23141db098826c99f0b44d1f2790702d7a366579bcb618b1ef057bca",
+  "aggregates": {
+    "cold": 104730,
+    "warm": 26342,
+    "type_counts": {
+      "ATTACK": 123568,
+      "ENABLING": 7504
+    },
+    "mask_counts": {
+      "0": 26342,
+      "2": 6250,
+      "4": 768,
+      "8": 448,
+      "12": 192,
+      "16": 448,
+      "20": 192,
+      "24": 112,
+      "28": 48,
+      "32": 14838,
+      "34": 3750,
+      "36": 9900,
+      "38": 2500,
+      "72": 24550,
+      "74": 6250,
+      "104": 14830,
+      "106": 3750,
+      "108": 9900,
+      "110": 2500,
+      "258": 1540,
+      "262": 704,
+      "266": 384,
+      "270": 176,
+      "274": 384,
+      "278": 176,
+      "282": 96,
+      "286": 44
+    }
+  },
+  "physical_evaluations": 131072,
+  "unique_evaluation_cells_added": 131072,
+  "duplicate_evaluations": 0,
+  "elapsed_ns": 377836400,
+  "signatures_per_minute": 20814088,
+  "harness": {
+    "path": "scripts/hypothesis_space_campaign.py",
+    "sha256": "9c21ac7afece151c7a043f873e0198a0e826198c6158e1fe66e7aa79c567a0b0",
+    "resolution_rule": "The recorded SHA-256 must match the current path or the same path in reachable Git history."
+  },
+  "receipt_payload_sha256": "f6682d1fdb31cb510223fe4cba85fb1b77c15b1c5d516d0458e315ccdc217cf3"
+}

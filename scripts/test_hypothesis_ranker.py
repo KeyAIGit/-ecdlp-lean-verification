@@ -379,8 +379,50 @@ class HypothesisRankerTests(unittest.TestCase):
                 "owner_decision_id": "RS-FABRICATED-001",
             }
         ]
-        with patch.object(ranker, "load_json", return_value=document):
+        protected_ref = subprocess.CompletedProcess(
+            args=["git", "rev-parse"], returncode=0, stdout="main\n", stderr=""
+        )
+        missing_registry = subprocess.CompletedProcess(
+            args=["git", "show"], returncode=1, stdout="", stderr="missing"
+        )
+        with patch.object(ranker, "load_json", return_value=document), patch.object(
+            ranker.subprocess,
+            "run",
+            side_effect=[protected_ref, missing_registry],
+        ):
             with self.assertRaisesRegex(ValueError, "empty genesis"):
+                load_review_registry()
+
+    def test_scientific_review_registry_extends_protected_prefix(self) -> None:
+        document = load_json(ranker.REVIEW_REGISTRY_PATH)
+        document["status"] = "active"
+        document["registrations"] = [
+            {
+                "registration_id": "HSRR-CURRENT-001",
+                "label_id": "HRL-CURRENT",
+                "ledger_entry_sha256": "a" * 64,
+                "candidate_version_sha256": "b" * 64,
+                "registered_on": "2026-08-01",
+                "owner_decision_id": "RS-CURRENT-001",
+            }
+        ]
+        prior = copy.deepcopy(document)
+        prior["registrations"][0]["registration_id"] = "HSRR-PROTECTED-001"
+        protected_ref = subprocess.CompletedProcess(
+            args=["git", "rev-parse"], returncode=0, stdout="main\n", stderr=""
+        )
+        protected_registry = subprocess.CompletedProcess(
+            args=["git", "show"],
+            returncode=0,
+            stdout=json.dumps(prior),
+            stderr="",
+        )
+        with patch.object(ranker, "load_json", return_value=document), patch.object(
+            ranker.subprocess,
+            "run",
+            side_effect=[protected_ref, protected_registry],
+        ):
+            with self.assertRaisesRegex(ValueError, "append-only extension"):
                 load_review_registry()
 
     def test_registered_label_survives_current_queue_rotation(self) -> None:
