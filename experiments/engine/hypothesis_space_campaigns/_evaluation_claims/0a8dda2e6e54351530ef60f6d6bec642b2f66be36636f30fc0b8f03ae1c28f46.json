@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0-evaluation-claim",
+  "record_kind": "pre_anchor_evaluation_reservation",
+  "campaign_id": "HSC-2026-08-01-001",
+  "source_commit": "af2455ebc3c8ea9447530a301eb3b2e03be8cb18",
+  "universe_id_sha256": "bd2b291c0b98f0c8a80ac9d87ac54fd0fa3ec4974da5cab93d269c4caf9def52",
+  "evaluation_id_sha256": "0a8dda2e6e54351530ef60f6d6bec642b2f66be36636f30fc0b8f03ae1c28f46",
+  "assurance": "create_only_local_reservation_until_git_anchored",
+  "pre_anchor_deletion_resistant": false,
+  "claim_payload_sha256": "74bc9220ef7fc5e247667f9bbcd6999e6f88428221c256adba8442cfc82e18eb"
+}

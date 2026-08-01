@@ -128,7 +128,7 @@ Selected bounded explorations: **0** (none). Ready now: **0** (none). **0 candid
 
 The million-cell projection has **1 immutable operational run record** across **1 distinct map root**. Its latest completed median throughput is **11,879,612 typed cells/minute**. These are engineering measurements and structural-screen aggregates: they create **0 scientific outcomes**, **0 ranker labels**, and **0 authorizations**. Cold cells are not falsified hypotheses, and repeated measurements of one root are not new research coverage.
 
-No immutable unique-coverage campaign is retained yet.
+Finite-space campaign memory contains **1 exhausted evaluation(s)** over **1,000,000 unique typed cells**. The latest retained receipts contain **2.87 seconds** of producer self-timed shard work; the finalization invocation allowed **600 seconds**. **0 cell evaluations** revisit an already known universe under a different evidence version. The current evidence-bound evaluation is exhausted. The stop condition fires at finite-universe exhaustion; a larger universe requires a new evidence-bounded grammar.
 
 ## Research Engine v0.2 lifecycle
 The v0.2 lifecycle currently contains

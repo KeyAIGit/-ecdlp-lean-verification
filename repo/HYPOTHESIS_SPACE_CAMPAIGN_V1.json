@@ -49,5 +49,11 @@
       "data/research_claim_state.json"
     ]
   },
-  "immutable_record_anchors": []
+  "immutable_record_anchors": [
+    {
+      "campaign_id": "HSC-2026-08-01-001",
+      "path": "experiments/engine/hypothesis_space_campaigns/HSC-2026-08-01-001/manifest.json",
+      "sha256": "466dc258a8a2f925dfe01500143084a6b4467121ca1424d88e6133298f9029d4"
+    }
+  ]
 }

@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0-receipt",
+  "record_kind": "finite_unique_coverage_shard",
+  "campaign_id": "HSC-2026-08-01-001",
+  "universe_id_sha256": "bd2b291c0b98f0c8a80ac9d87ac54fd0fa3ec4974da5cab93d269c4caf9def52",
+  "evaluation_id_sha256": "0a8dda2e6e54351530ef60f6d6bec642b2f66be36636f30fc0b8f03ae1c28f46",
+  "shard_index": 2,
+  "start_ordinal": 262144,
+  "end_ordinal_exclusive": 393216,
+  "previous_receipt_file_sha256": "f5e4b201d9b27ecaa176d69315d76a37d6a19f3991ae0e41aaf7003205c55c8a",
+  "range_merkle_root_sha256": "e62033bd00549d9a23c8794c10735b5003a654a2fcf3ea8377fc76851c075666",
+  "range_frontier": [
+    {
+      "height": 17,
+      "leaf_count": 131072,
+      "sha256": "e62033bd00549d9a23c8794c10735b5003a654a2fcf3ea8377fc76851c075666"
+    }
+  ],
+  "first_leaf_sha256": "1cde160a5c194142a7011e93c4b98fb3269f33b39267132b7a5d1038255f6e96",
+  "last_leaf_sha256": "a6fdd812f790df77a1011ac1e4c4b7057480477c6d615e5fc442701f459299a3",
+  "aggregates": {
+    "cold": 100552,
+    "warm": 30520,
+    "type_counts": {
+      "ADJACENT": 7856,
+      "ATTACK": 63216,
+      "BARRIER": 20000,
+      "ENABLING": 40000
+    },
+    "mask_counts": {
+      "0": 30520,
+      "2": 3000,
+      "4": 5376,
+      "8": 4416,
+      "12": 1344,
+      "16": 4416,
+      "20": 1344,
+      "24": 1104,
+      "28": 336,
+      "31": 7856,
+      "32": 7650,
+      "34": 1800,
+      "36": 5100,
+      "38": 1200,
+      "72": 12860,
+      "74": 3000,
+      "104": 7650,
+      "106": 1800,
+      "108": 5100,
+      "110": 1200,
+      "130": 4608,
+      "134": 512,
+      "138": 1152,
+      "142": 128,
+      "146": 1152,
+      "150": 128,
+      "154": 288,
+      "158": 32,
+      "258": 7168,
+      "262": 3072,
+      "266": 1792,
+      "270": 768,
+      "274": 1792,
+      "278": 768,
+      "282": 448,
+      "286": 192
+    }
+  },
+  "physical_evaluations": 131072,
+  "unique_evaluation_cells_added": 131072,
+  "duplicate_evaluations": 0,
+  "elapsed_ns": 378119100,
+  "signatures_per_minute": 20798526,
+  "harness": {
+    "path": "scripts/hypothesis_space_campaign.py",
+    "sha256": "9c21ac7afece151c7a043f873e0198a0e826198c6158e1fe66e7aa79c567a0b0",
+    "resolution_rule": "The recorded SHA-256 must match the current path or the same path in reachable Git history."
+  },
+  "receipt_payload_sha256": "7e09ad717f7c0ecaa1cf7c4eaa30ebd890aa09e2a07f233e6eb9785d9a4e9061"
+}

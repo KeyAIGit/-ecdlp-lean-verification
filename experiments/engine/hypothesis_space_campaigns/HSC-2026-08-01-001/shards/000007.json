@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0-receipt",
+  "record_kind": "finite_unique_coverage_shard",
+  "campaign_id": "HSC-2026-08-01-001",
+  "universe_id_sha256": "bd2b291c0b98f0c8a80ac9d87ac54fd0fa3ec4974da5cab93d269c4caf9def52",
+  "evaluation_id_sha256": "0a8dda2e6e54351530ef60f6d6bec642b2f66be36636f30fc0b8f03ae1c28f46",
+  "shard_index": 7,
+  "start_ordinal": 917504,
+  "end_ordinal_exclusive": 1000000,
+  "previous_receipt_file_sha256": "419d7de0042b7a474e74ec903fac971fdef297d57746964a2ec164681cb0048e",
+  "range_merkle_root_sha256": "8d02100e0fead84f5abbd76886db981f00933aa7bdff356b23ed30970d2f6a60",
+  "range_frontier": [
+    {
+      "height": 16,
+      "leaf_count": 65536,
+      "sha256": "0b00aa11d658dde3c0f8d27c45615be8d283f5b052300568766832ac3a4a3d8e"
+    },
+    {
+      "height": 14,
+      "leaf_count": 16384,
+      "sha256": "800887d7766cbd83b3ae85d79784899863f651621a28cb795bd25caf75cd349a"
+    },
+    {
+      "height": 9,
+      "leaf_count": 512,
+      "sha256": "c8b2474340c60ceca9a83019e74554081ae6e80cfbb47cdc90c704565bea3475"
+    },
+    {
+      "height": 6,
+      "leaf_count": 64,
+      "sha256": "80f7de676d4c253e949559500f8eff35b511361ac673d0868a3ea40f711c901c"
+    }
+  ],
+  "first_leaf_sha256": "6a4a00af9d41e73fd73c6197fb05b8350ddc65c6cf4d953e2b72b8ddb3822f8c",
+  "last_leaf_sha256": "8c86adc1527dcc54c4b77f5ce1870a48b242cd6e07cf5094961df551cfc138ee",
+  "aggregates": {
+    "cold": 62000,
+    "warm": 20496,
+    "type_counts": {
+      "ATTACK": 50000,
+      "BARRIER": 20000,
+      "ENABLING": 12496
+    },
+    "mask_counts": {
+      "0": 20496,
+      "2": 2500,
+      "4": 2304,
+      "8": 2624,
+      "12": 576,
+      "16": 2624,
+      "20": 576,
+      "24": 656,
+      "28": 144,
+      "32": 6000,
+      "34": 1500,
+      "36": 4000,
+      "38": 1000,
+      "72": 10000,
+      "74": 2500,
+      "104": 6000,
+      "106": 1500,
+      "108": 4000,
+      "110": 1000,
+      "130": 4608,
+      "134": 512,
+      "138": 1152,
+      "142": 128,
+      "146": 1152,
+      "150": 128,
+      "154": 288,
+      "158": 32,
+      "258": 2044,
+      "262": 832,
+      "266": 512,
+      "270": 208,
+      "274": 512,
+      "278": 208,
+      "282": 128,
+      "286": 52
+    }
+  },
+  "physical_evaluations": 82496,
+  "unique_evaluation_cells_added": 82496,
+  "duplicate_evaluations": 0,
+  "elapsed_ns": 236610600,
+  "signatures_per_minute": 20919435,
+  "harness": {
+    "path": "scripts/hypothesis_space_campaign.py",
+    "sha256": "9c21ac7afece151c7a043f873e0198a0e826198c6158e1fe66e7aa79c567a0b0",
+    "resolution_rule": "The recorded SHA-256 must match the current path or the same path in reachable Git history."
+  },
+  "receipt_payload_sha256": "4e9910cedd272e71abc182b73805392e263ad35d054507e2c38dd1264672445c"
+}
