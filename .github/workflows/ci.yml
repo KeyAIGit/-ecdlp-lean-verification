@@ -189,6 +189,11 @@ jobs:
           python3 scripts/hypothesis_space_funnel.py --check
           python3 scripts/test_hypothesis_space_funnel.py
 
+      - name: Check immutable hypothesis-space run memory
+        run: |
+          python3 scripts/hypothesis_space_run_ledger.py --check
+          python3 scripts/test_hypothesis_space_run_ledger.py
+
       - name: Check hypothesis review ledger and shadow ranker
         run: |
           python3 scripts/sync_hypothesis_review_ledger.py --check

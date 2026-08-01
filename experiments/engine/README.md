@@ -58,6 +58,38 @@ typed cell into a candidate is not implemented, so neither a seed nor a cleared
 draft can currently enter execution. Zero retained drafts is an acceptable
 successful cycle.
 
+## Million-space operational memory
+
+`repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json` and the anchored records under
+`hypothesis_space_runs/` preserve benchmark and pipeline history for the
+million-cell deterministic projection. `data/hypothesis_space_run_state.json`
+is their generated summary. A run records the exact source commit, subject-file
+hashes, Merkle/instance roots, aggregate screening snapshot, timing boundary,
+environment, and operational errors. Distinct instance roots create map
+revisions; repeated benchmarks of one root create only performance observations.
+The `subject.source_commit` must already be reachable from protected `main`;
+the recorder harness is bound separately by SHA-256 and must resolve either in
+the current checkout or at the same path in reachable Git history.
+Invalid provenance or a source mismatch fails closed before a run exists; only
+failures after that preflight are eligible for anchored operational history.
+
+This is operational evidence. A cold cell failed a structural rule; it was not
+mathematically falsified. Run records are permanently ineligible for hypothesis
+labels, Brier calibration, ranker training, recommendation, authorization, and
+route promotion. Scientific outcomes remain exclusively in `outcomes/` and
+typed desk decisions.
+
+Record a benchmark explicitly, then add the printed file digest to the policy's
+immutable anchors and regenerate the summary:
+
+```text
+python scripts/hypothesis_space_run_ledger.py --record \
+  --run-id HSR-YYYY-MM-DD-NNN --source-commit <protected-main-sha>
+python scripts/hypothesis_space_run_ledger.py
+python scripts/hypothesis_space_run_ledger.py --check
+python scripts/test_hypothesis_space_run_ledger.py
+```
+
 An outcome event records what a run actually established. It never overwrites a
 prior event, promotes a route, authorizes exact-target work, or claims a
 secp256k1 break. The allowed terminal outcomes are:

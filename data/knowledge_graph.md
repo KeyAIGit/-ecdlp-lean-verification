@@ -140,6 +140,8 @@ The frozen projection contains **1,000,000** typed challenge cells: **768,880 co
 | `guessed-nonce-bits` | `BARRIER` | 3456 | 6544 |
 | `induced-subset` | `BARRIER` | 3456 | 6544 |
 
+Operational memory retains **1** immutable run record(s) over **1** distinct map root(s); latest median throughput is **11,879,612 typed cells/minute**. These records preserve engineering performance and failures only. Structural rejects are not falsified hypotheses, and the run ledger cannot supply scientific labels, calibration, or authorization.
+
 ## Research Engine v0
 
 The engine may schedule cheap, preregistered toy-curve exploration within the declared budget. It cannot promote a route, authorize exact-target work, or support a secp256k1 complexity claim.

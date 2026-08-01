@@ -11,6 +11,7 @@ Every number here is pulled live from the machine sources, never hand-typed, so 
   - data/research_engine_state.json (dual gates, selected explorations, outcomes)
   - data/research_engine_v02_state.json (immutable lifecycle and authorization)
   - data/research_engine_shadow_intake.json (non-executable proposal stubs)
+  - data/hypothesis_space_run_state.json (operational screening-run memory)
 Other summary docs should link to STATUS.md rather than duplicate counts.
 
 Run: python3 scripts/gen_status.py   (also run by the docs-sync workflow on every ledger change)
@@ -29,6 +30,7 @@ PILOT = ROOT / "repo" / "PILOT_PROTOCOL.json"
 ENGINE = ROOT / "data" / "research_engine_state.json"
 ENGINE_V02 = ROOT / "data" / "research_engine_v02_state.json"
 SHADOW_INTAKE = ROOT / "data" / "research_engine_shadow_intake.json"
+HYPOTHESIS_SPACE_RUNS = ROOT / "data" / "hypothesis_space_run_state.json"
 OUT = ROOT / "STATUS.md"
 
 
@@ -64,6 +66,32 @@ def main() -> int:
     engine = json.loads(ENGINE.read_text(encoding="utf-8"))
     engine_v02 = json.loads(ENGINE_V02.read_text(encoding="utf-8"))
     shadow_intake = json.loads(SHADOW_INTAKE.read_text(encoding="utf-8"))
+    hypothesis_space_runs = json.loads(
+        HYPOTHESIS_SPACE_RUNS.read_text(encoding="utf-8")
+    )
+    run_counts = hypothesis_space_runs["counts"]
+    run_count = run_counts["runs"]
+    root_count = run_counts["distinct_instance_roots"]
+    latest_run = hypothesis_space_runs["latest_completed_run"]
+    throughput_text = (
+        f"Its latest completed median throughput is "
+        f"**{latest_run['median_signatures_per_minute']:,} typed cells/minute**."
+        if latest_run
+        else "No completed throughput measurement is retained yet."
+    )
+    run_noun = "record" if run_count == 1 else "records"
+    root_noun = "root" if root_count == 1 else "roots"
+    hypothesis_space_run_summary = (
+        f"The million-cell projection has **{run_count} immutable operational run "
+        f"{run_noun}** across **{root_count} distinct map {root_noun}**. "
+        f"{throughput_text} "
+        "These are engineering measurements and structural-screen aggregates: they "
+        f"create **{run_counts['scientific_outcomes']} scientific outcomes**, "
+        f"**{run_counts['ranker_training_labels']} ranker labels**, and "
+        f"**{run_counts['authorizations']} authorizations**. Cold cells are not "
+        "falsified hypotheses, and repeated measurements of one root are not new "
+        "research coverage."
+    )
     ss = fm["status_summary"]
     meta = fm["meta"]
     total = meta.get("corpus_claims", sum(ss.values()))
@@ -105,7 +133,8 @@ def main() -> int:
 > `repo/PILOT_PROTOCOL.json`, `repo/ECDLP_DECISION_SUBSTRATE.json`, and
 > `repo/ECDLP_TYPED_EVIDENCE_V0.json`, `data/typed_evidence_state.json`, and
 > `data/research_engine_state.json`, `data/research_engine_v02_state.json`, and
-> `data/research_engine_shadow_intake.json`.
+> `data/research_engine_shadow_intake.json`, and
+> `data/hypothesis_space_run_state.json`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -224,6 +253,8 @@ nothing. The generation layer currently emits
 Creative output is untrusted and zero retained drafts is a valid cycle result.
 {engine_queue_summary}
 
+{hypothesis_space_run_summary}
+
 ## Research Engine v0.2 lifecycle
 The v0.2 lifecycle currently contains
 **{engine_v02['engine']['input_candidate_count']} immutable candidate snapshots**,
@@ -320,7 +351,9 @@ customer hypotheses, and future product direction.
 The route authority is `repo/ECDLP_DECISION_SUBSTRATE.json`; its Markdown view is generated.
 The engine policies are `repo/RESEARCH_ENGINE_V0.json`,
 `repo/HYPOTHESIS_GENERATION_V0.json`, and
-`repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`; typed applicability is owned by
+`repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`; million-space operational memory is
+owned by `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json` and summarized in
+`data/hypothesis_space_run_state.json`; typed applicability is owned by
 `repo/ECDLP_TYPED_EVIDENCE_V0.json`, materialized in
 `data/typed_evidence_state.json`, and the combined generated state is
 `data/research_engine_state.json`. The v0.2 lifecycle and shadow intake are
@@ -340,6 +373,8 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 `repo/RESEARCH_ENGINE_V0.json` (exploration policy and selector) ·
 `repo/ECDLP_TYPED_EVIDENCE_V0.json` (claim-level applicability screens) ·
 `repo/HYPOTHESIS_GENERATION_V0.json` (seed and proposal-quality policy) ·
+`repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json` (operational run-memory policy) ·
+`data/hypothesis_space_run_state.json` (benchmarks, failures, and map-root history) ·
 `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json` (immutable candidate lifecycle) ·
 `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json` (19 regression cases) ·
 `data/typed_evidence_state.json` (materialized mechanism/property cells) ·

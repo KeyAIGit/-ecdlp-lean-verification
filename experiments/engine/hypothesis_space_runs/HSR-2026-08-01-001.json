@@ -1,0 +1,257 @@
+{
+  "schema_version": "1.0",
+  "run_id": "HSR-2026-08-01-001",
+  "sequence": 1,
+  "recorded_at_utc": "2026-08-01T01:13:28Z",
+  "record_kind": "deterministic_screening_benchmark",
+  "status": "completed",
+  "harness": {
+    "path": "scripts/hypothesis_space_run_ledger.py",
+    "sha256": "58d42282216d94abf428c216af9dc061b4790c74235b520b72c657b11578ae2c",
+    "resolution_rule": "current checkout or reachable Git history contains matching path bytes"
+  },
+  "subject": {
+    "source_commit": "beae675e7deeff7c844c95729c1e66735cd635d2",
+    "space_id": "HYP-SELECT-006-1M",
+    "source_paths_sha256": {
+      "map_path": "ab9f73b41a110b28a3ce7242f3de9ff96ee5c745c1d3b6cc34193d51aec5ef18",
+      "runner_path": "d628ac666996a8b01ebef4d3f946fe3ec7117e1b0103e7fdf262b66647117a4a",
+      "shared_funnel_path": "21b46a4a5bb4579b74a1111e256b29053647488d104730221c9e60a39a250fcb",
+      "space_policy_path": "5cf26185cc90e77d5186c8de2359a54a9dd42d899069327006784e70fc40cb88",
+      "state_path": "bcc5996e255967739cbffc28e6ef290072a0055f07cbb565510409fb3855481e"
+    },
+    "source_bindings": {
+      "generation_policy_path": "repo/HYPOTHESIS_SPACE_V2.json",
+      "generation_policy_sha256": "5e919d36921978370706c8ea0a087710deef4e1c7e5fb2e1174fd73249feb30f",
+      "evidence_snapshot_sha256": "8defc167349858eb5755122d0b79f6f85b69e938e8b6c25a0e07ceb168c30c75",
+      "parent_policy_sha256": "5b46038f2cd679b5b65985df6780786fbc9e826490dc3d0b0a5fefea942681b9",
+      "parent_state_sha256": "85e285c195adcc268a22182b3a15974dbd6d35dc6651637e89c433775acba4c4",
+      "parent_generation_policy_sha256": "4db7a5653e5f930899e513f2f4ccbcf6b99f88a5d839b39d8a05424126657d82",
+      "parent_merkle_root_sha256": "30ccc4af1cced508d7249be519bb541658ba972025fbac127fe2d1c8302221ef",
+      "evidence_input_sha256": {
+        "data/hypothesis_review_ledger.jsonl": "1c20302bfb22dbd146b8fe4ad0b8983eed91e175d6e98ea2a25badd0e79f0939",
+        "data/research_claim_state.json": "75e69cdb98bccc43639f09e351c1ebe022860151e7ca95a09363a0eee7812c49",
+        "data/research_engine_state.json": "d5e5b39d205273e5005935d49c5bf64a1188891061681c0cb2af67d596716934",
+        "data/research_engine_v02_state.json": "565cb6ee244eeb571ebb948f7d4000e33956fb5196e90fdba44fd5c5376d4ba7",
+        "data/typed_evidence_state.json": "2b26569421251b45965906649d2723ca793242921f6f0cd230ec21ded6101f04"
+      }
+    },
+    "instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
+    "coverage_merkle_root_sha256": "dff1e8cb52594158fc94556cbef3025be647fab310132c34ee58aed3b8399207",
+    "attempts": 1000000
+  },
+  "screening_snapshot": {
+    "counts": {
+      "attempts": 1000000,
+      "typed_cells": 1000000,
+      "cold": 768880,
+      "warm": 231120,
+      "hot": 0,
+      "pareto_records_before_review_queue": 4064,
+      "review_queue": 35,
+      "admissible": 0,
+      "recommended": 0,
+      "authorized": 0,
+      "route_promotions": 0,
+      "experiment_events": 0
+    },
+    "counts_by_type": {
+      "ADJACENT": 30000,
+      "ATTACK": 600000,
+      "BARRIER": 260000,
+      "ENABLING": 110000
+    },
+    "challenge_coverage": {
+      "G01-THREAT-MODEL": {
+        "attempts": 100000,
+        "cold": 73960,
+        "warm": 26040
+      },
+      "G02-TARGET-PROPERTY": {
+        "attempts": 100000,
+        "cold": 73960,
+        "warm": 26040
+      },
+      "G03-PRIOR-ART": {
+        "attempts": 100000,
+        "cold": 73960,
+        "warm": 26040
+      },
+      "G04-MECHANISM-COMPLETENESS": {
+        "attempts": 100000,
+        "cold": 84904,
+        "warm": 15096
+      },
+      "G05-RECOVERY-COMPLETENESS": {
+        "attempts": 100000,
+        "cold": 84904,
+        "warm": 15096
+      },
+      "G06-PRECOMPUTATION": {
+        "attempts": 100000,
+        "cold": 73960,
+        "warm": 26040
+      },
+      "G07-END-TO-END-COST": {
+        "attempts": 100000,
+        "cold": 77656,
+        "warm": 22344
+      },
+      "G08-SCALING-SEPARATION": {
+        "attempts": 100000,
+        "cold": 77656,
+        "warm": 22344
+      },
+      "G09-VALIDATOR-INDEPENDENCE": {
+        "attempts": 100000,
+        "cold": 73960,
+        "warm": 26040
+      },
+      "G10-REOPENING-PREMISE": {
+        "attempts": 100000,
+        "cold": 73960,
+        "warm": 26040
+      }
+    },
+    "rejection_histogram": {
+      "attack_without_discriminating_test": 300000,
+      "attack_without_scaling_bridge": 300000,
+      "barrier_without_scoped_mechanism": 104000,
+      "challenge_type_mismatch": 104000,
+      "cost_type_mismatch": 209000,
+      "enabling_without_dependency_bridge": 44000,
+      "forbidden_type": 30000,
+      "known_closed_pattern_unreopened": 40000,
+      "mechanism_type_mismatch": 298000,
+      "test_type_mismatch": 404000
+    },
+    "primary_rejection_histogram": {
+      "attack_without_scaling_bridge": 72000,
+      "challenge_type_mismatch": 29856,
+      "cost_type_mismatch": 131400,
+      "forbidden_type": 30000,
+      "known_closed_pattern_unreopened": 8304,
+      "mechanism_type_mismatch": 268000,
+      "test_type_mismatch": 229320
+    },
+    "warning_histogram": {
+      "challenge_unresolved": 1000000,
+      "exact_mechanism_missing": 1000000,
+      "historical_canonical_cluster": 220000,
+      "historical_kill_label": 330000,
+      "historical_reformulate_label": 180000,
+      "historical_shortlist_label": 80000,
+      "novelty_unverified": 1000000,
+      "source_independence_unestablished": 1000000,
+      "typed_identity_not_semantic_novelty": 1000000
+    },
+    "review_queue_seed_ids": [
+      "HQS2-8958A6EBB0B41219B9AA2944B87CA89A",
+      "HQS2-FACAEF8D4BAA384CC95269975A91C6F9",
+      "HQS2-32CB2CF5374D435541095DEBE69FB9CF",
+      "HQS2-68AA94A3E9E8C41EF40E29A3D6949B0B",
+      "HQS2-0E482EC058F25E39115DAF484D9775C5",
+      "HQS2-FBE259FFEAA88A101638DE16DF5D8C23",
+      "HQS2-8BB4AEF8537CEFA7B9334FBC8E5A8EEF",
+      "HQS2-CD35381C866440CC412BEC1B199D34E2",
+      "HQS2-9507CE47F3FFF97EFABD5DB99215BAC4",
+      "HQS2-76F718BD576B9D395940C65031ED25A2",
+      "HQS2-4507FD3CA88B9651A9F1A11761F7E289",
+      "HQS2-97E1CE550B2032698A5AF42726965BAE",
+      "HQS2-7FDFBEFD9F62753A253CC710DBD8A0E1",
+      "HQS2-1040A5A4150B4C458A7287FB6AC6B8FB",
+      "HQS2-71BCAA9383D944DC221ECE3A6BAAC1BC",
+      "HQS2-5F95175AE6F4EB7D5382850A5BDB66CD",
+      "HQS2-C074F3EFFA8ADED36A14D011C16C771B",
+      "HQS2-9BEB1D80CB447CBE361A8D627B0CBDB2",
+      "HQS2-2075C602992728BCBF1A07903950C3AE",
+      "HQS2-7961531464CD5A900AAEEA5622AC3DC5",
+      "HQS2-6D62702E90C7F8D47C4ABAAC841FB3FB",
+      "HQS2-1AA60527E9C2E29F8B298E6AFF3695E6",
+      "HQS2-D5B52507C19DB9B0AFB7E24F1E976C2E",
+      "HQS2-5C29F48B8357E7975E46F56ED18406D5",
+      "HQS2-4F7DC58404E3C46A477BB379832702E4",
+      "HQS2-3A04D32DA04D555651B916787DF29497",
+      "HQS2-C18DB1251656B96EA02CF801012C6313",
+      "HQS2-BE332B7B2E8B29E0AF8557B1A85ACC8F",
+      "HQS2-6A3AFEEC42F84AA52EC3C8DA237B606C",
+      "HQS2-CC59F4D63A8EDD9CCCE580BEC1FFAEA9",
+      "HQS2-CA85A65D85217CA55246082F1D710F05",
+      "HQS2-6EB4B9ABDCE7938791DD28E5FD2AEE0C",
+      "HQS2-419A31A93B20EF3C2DADFC2E917A4147",
+      "HQS2-1E306F13F86AE79AA40E773EA11EF620",
+      "HQS2-5259B3F30284899AABAC9BAE6329D3C9"
+    ]
+  },
+  "execution": {
+    "method": "in_process_run_space_core_plus_output_equality_v1",
+    "warmup_repetitions": 1,
+    "measured_repetitions": 5,
+    "elapsed_ns": [
+      5106461100,
+      5039757500,
+      5050669900,
+      5046303300,
+      5156405500
+    ],
+    "signatures_per_minute": [
+      11749820,
+      11905335,
+      11879612,
+      11889892,
+      11636013
+    ],
+    "performance_summary": {
+      "minimum_signatures_per_minute": 11636013,
+      "median_signatures_per_minute": 11879612,
+      "maximum_signatures_per_minute": 11905335
+    },
+    "target_signatures_per_minute": 1000000,
+    "performance_target_status": "target_met",
+    "timing_scope": "run_space core plus exact output equality check; excludes process startup and JSON rendering",
+    "canonical_argv": [
+      "scripts/hypothesis_space_run_ledger.py",
+      "--record",
+      "--run-id",
+      "HSR-2026-08-01-001",
+      "--source-commit",
+      "beae675e7deeff7c844c95729c1e66735cd635d2",
+      "--repetitions",
+      "5",
+      "--warmups",
+      "1"
+    ],
+    "subject_files_match_source_commit": true,
+    "environment": {
+      "python_version": "3.12.13",
+      "python_implementation": "CPython",
+      "platform_system": "Windows",
+      "platform_machine": "AMD64",
+      "logical_cpu_count": 12
+    }
+  },
+  "operational_diagnostics": {
+    "pipeline_errors": 0,
+    "invariant_violations": 0,
+    "error_classes": []
+  },
+  "knowledge_effect": {
+    "scientific_outcome": "none",
+    "claim_disposition": "none",
+    "ranker_training_eligible": false,
+    "brier_calibration_eligible": false,
+    "candidate_admissible": false,
+    "candidate_recommended": false,
+    "experiment_authorized": false,
+    "route_promotion": false,
+    "evidence_class": "operational",
+    "operational_calibration_scope": "throughput_only",
+    "scientific_exclusion_reasons": [
+      "deterministic_hard_gate",
+      "nonexperimental_benchmark"
+    ],
+    "interpretation": "This is a reproducible engineering benchmark and structural-screen snapshot, not an ECDLP result."
+  },
+  "previous_record_sha256": null,
+  "record_payload_sha256": "583e87b673c4fa5eb3aaa1fddc750b8425fc47a71afeea8015073d9f1eeaa708"
+}

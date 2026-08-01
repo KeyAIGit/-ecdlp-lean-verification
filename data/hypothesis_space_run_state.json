@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0-generated",
+  "ledger_id": "HYPOTHESIS-SPACE-RUN-LEDGER-V1",
+  "status": "operational_memory_non_scientific",
+  "immutable_record_count": 1,
+  "immutable_record_root_sha256": "fd19ab48391deea564ea14072de0654a8f37bc4696f0d57b20487bde1283e63c",
+  "counts": {
+    "runs": 1,
+    "completed_runs": 1,
+    "failed_runs": 0,
+    "pipeline_errors": 0,
+    "invariant_violations": 0,
+    "distinct_instance_roots": 1,
+    "scientific_outcomes": 0,
+    "ranker_training_labels": 0,
+    "brier_calibration_records": 0,
+    "authorizations": 0,
+    "route_promotions": 0
+  },
+  "latest_completed_run": {
+    "run_id": "HSR-2026-08-01-001",
+    "recorded_at_utc": "2026-08-01T01:13:28Z",
+    "source_commit": "beae675e7deeff7c844c95729c1e66735cd635d2",
+    "instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
+    "minimum_signatures_per_minute": 11636013,
+    "median_signatures_per_minute": 11879612,
+    "maximum_signatures_per_minute": 11905335,
+    "target_signatures_per_minute": 1000000,
+    "performance_target_status": "target_met"
+  },
+  "performance_history": [
+    {
+      "run_id": "HSR-2026-08-01-001",
+      "recorded_at_utc": "2026-08-01T01:13:28Z",
+      "source_commit": "beae675e7deeff7c844c95729c1e66735cd635d2",
+      "instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
+      "minimum_signatures_per_minute": 11636013,
+      "median_signatures_per_minute": 11879612,
+      "maximum_signatures_per_minute": 11905335,
+      "target_signatures_per_minute": 1000000,
+      "performance_target_status": "target_met"
+    }
+  ],
+  "map_revisions": [
+    {
+      "run_id": "HSR-2026-08-01-001",
+      "instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
+      "counts": {
+        "attempts": 1000000,
+        "typed_cells": 1000000,
+        "cold": 768880,
+        "warm": 231120,
+        "hot": 0,
+        "pareto_records_before_review_queue": 4064,
+        "review_queue": 35,
+        "admissible": 0,
+        "recommended": 0,
+        "authorized": 0,
+        "route_promotions": 0,
+        "experiment_events": 0
+      },
+      "delta_from_previous_distinct_root": null
+    }
+  ],
+  "operational_failures": [],
+  "retention_contract": {
+    "raw_cells_retained": false,
+    "whole_space_identity": "RFC6962 coverage root plus instance root",
+    "screening_diagnostics": "exact aggregate histograms plus bounded witnesses in the subject state",
+    "run_history": "SHA-256-anchored append-only records",
+    "map_history": "one delta per distinct instance root; repeated benchmarks do not create knowledge revisions",
+    "preflight_failures": "invalid provenance or source mismatch fails closed before a run record exists; only failures after provenance preflight enter operational history"
+  },
+  "epistemic_contract": {
+    "cold_cell": "A typed combination failed one or more deterministic screening rules; it is not a falsified mathematical hypothesis.",
+    "warm_cell": "A typed combination survived structural screening but still lacks the evidence needed to be a hypothesis candidate.",
+    "hot_cell": "Reserved for a mechanism-assured and independently reviewed proposal; this ledger cannot create one.",
+    "completed_run": "Engineering evidence that one frozen finite projection was processed reproducibly.",
+    "failed_run": "Operational evidence about the pipeline, not evidence for or against an ECDLP claim.",
+    "scientific_outcome_source": "experiments/engine/outcomes and typed desk decisions, never this run ledger"
+  },
+  "scientific_memory_boundary": {
+    "screening_rejections_are_falsifications": false,
+    "repeated_root_is_new_knowledge": false,
+    "outcome_events_path": "experiments/engine/outcomes",
+    "typed_desk_decisions_path": "experiments/engine/desk_decisions",
+    "claim_state_path": "data/research_claim_state.json"
+  }
+}

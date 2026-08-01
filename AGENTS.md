@@ -10,6 +10,7 @@ For a small-context start, read `STATUS.md`, then
 `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/RESEARCH_ENGINE_V0.json`,
 `repo/HYPOTHESIS_GENERATION_V0.json`,
 `repo/HYPOTHESIS_SPACE_V2.json`,
+`repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json`,
 `data/research_engine_state.json`, `repo/PRODUCT_MODEL.json`,
 `repo/PILOT_PROTOCOL.json`, then use `tasks/NEXT.md` to choose
 `tasks/ECDLP_RESEARCH.md` or `tasks/KEYAI_PRODUCT.md`; load
@@ -67,6 +68,12 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
   `scripts/build_knowledge_graph.py` — theorems, dependencies, areas, barriers,
   route decisions, selected bounded explorations, and retained outcomes.
 
+- Million-scale screening is an evidence-bounded structural projection, not a
+  million independently invented hypotheses. Its immutable operational run
+  history is summarized in `data/hypothesis_space_run_state.json`; screening
+  rejects are not scientific falsifications and cannot train the ranker or
+  authorize work.
+
 ## How to verify
 - **CI-only (web sandbox)**: push to a branch → GitHub Actions `lake build` + no-sorry
   gate (~5 min/cycle). The web sandbox's egress blocks the Lean toolchain, so no
@@ -81,6 +88,7 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
   `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/RESEARCH_ENGINE_V0.json`,
   `repo/ECDLP_TYPED_EVIDENCE_V0.json`,
   `repo/HYPOTHESIS_GENERATION_V0.json`,
+  `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json`,
   `data/typed_evidence_state.json`, `data/research_engine_state.json`,
   `repo/PRODUCT_MODEL.json`,
   `repo/PILOT_PROTOCOL.json`, the queue router and both owning queues,
@@ -90,7 +98,8 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
   claim-level records under `data/source_claim_extracts/`, and the Research
   Engine event contract/schema.
 - **large** — adds `data/knowledge_graph.json`, `REPOSITORY_ARCHITECTURE.md`,
-  `PUBLISHABLE_UNITS.md`, `TRUST_REPORT.md`, and review-anchored outcome events.
+  `PUBLISHABLE_UNITS.md`, `TRUST_REPORT.md`, review-anchored outcome events,
+  and immutable hypothesis-space operational run records.
 
 Print a self-contained pack on demand with
 `python3 scripts/export_agent_bundle.py --tier <small|medium|large>` (packs are NOT

@@ -30,6 +30,9 @@
     "typed_screening_cold": 768880,
     "typed_screening_warm": 231120,
     "typed_screening_hot": 0,
+    "hypothesis_space_run_records": 1,
+    "hypothesis_space_distinct_roots": 1,
+    "hypothesis_space_operational_errors": 0,
     "selected_explorations": 0,
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
@@ -10824,7 +10827,63 @@
         "review_records": 2,
         "independent_review_records": 0
       }
-    ]
+    ],
+    "run_memory": {
+      "policy_source": "repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json",
+      "state_source": "data/hypothesis_space_run_state.json",
+      "counts": {
+        "runs": 1,
+        "completed_runs": 1,
+        "failed_runs": 0,
+        "pipeline_errors": 0,
+        "invariant_violations": 0,
+        "distinct_instance_roots": 1,
+        "scientific_outcomes": 0,
+        "ranker_training_labels": 0,
+        "brier_calibration_records": 0,
+        "authorizations": 0,
+        "route_promotions": 0
+      },
+      "latest_completed_run": {
+        "run_id": "HSR-2026-08-01-001",
+        "recorded_at_utc": "2026-08-01T01:13:28Z",
+        "source_commit": "beae675e7deeff7c844c95729c1e66735cd635d2",
+        "instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
+        "minimum_signatures_per_minute": 11636013,
+        "median_signatures_per_minute": 11879612,
+        "maximum_signatures_per_minute": 11905335,
+        "target_signatures_per_minute": 1000000,
+        "performance_target_status": "target_met"
+      },
+      "map_revisions": [
+        {
+          "run_id": "HSR-2026-08-01-001",
+          "instance_root_sha256": "11c7b0922d99370f96fc45bf75d572117feda524241cbdda252c4f7881084e2d",
+          "counts": {
+            "attempts": 1000000,
+            "typed_cells": 1000000,
+            "cold": 768880,
+            "warm": 231120,
+            "hot": 0,
+            "pareto_records_before_review_queue": 4064,
+            "review_queue": 35,
+            "admissible": 0,
+            "recommended": 0,
+            "authorized": 0,
+            "route_promotions": 0,
+            "experiment_events": 0
+          },
+          "delta_from_previous_distinct_root": null
+        }
+      ],
+      "scientific_memory_boundary": {
+        "screening_rejections_are_falsifications": false,
+        "repeated_root_is_new_knowledge": false,
+        "outcome_events_path": "experiments/engine/outcomes",
+        "typed_desk_decisions_path": "experiments/engine/desk_decisions",
+        "claim_state_path": "data/research_claim_state.json"
+      }
+    }
   },
   "source_index": {
     "registry_source": "data/source_registry.json",
