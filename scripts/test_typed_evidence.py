@@ -56,8 +56,8 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual([], problems)
         self.assertEqual(
             {
-                "source_claims": 31,
-                "target_properties": 6,
+                "source_claims": 32,
+                "target_properties": 11,
                 "mechanisms": 8,
                 "cells": 8,
                 "open_cells": 3,
@@ -104,6 +104,36 @@ class TypedEvidenceTests(unittest.TestCase):
         self.assertEqual(
             "certificate_replayed",
             claims["SC-SECP-PMINUS1-FACTORIZATION"]["read_status"],
+        )
+
+    def test_m16_census_is_exact_but_does_not_rewrite_the_open_cell(self) -> None:
+        problems, state = self.build()
+        self.assertEqual([], problems)
+        properties = {
+            item["id"]: item for item in self.policy["target_properties"]
+        }
+        expected = {
+            "TP-SECP-PKC-M16-CHARACTER-SUM": 2532,
+            "TP-SECP-PKC-M16-LIFTABLE-X": 283527,
+            "TP-SECP-PKC-M16-SIGNED-POINTS": 567054,
+            "TP-SECP-PKC-M16-GLV-ORBIT-CLASSES": 94509,
+            "TP-SECP-PKC-M16-ZERO-RHS-X": 0,
+        }
+        for property_id, value in expected.items():
+            self.assertEqual(value, properties[property_id]["value"])
+            self.assertEqual(
+                "certificate_replayed", properties[property_id]["status"]
+            )
+        cell = next(
+            item
+            for item in state["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        self.assertEqual("open", cell["status"])
+        self.assertTrue(cell["seed_eligible"])
+        self.assertIn(
+            "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS",
+            cell["source_claim_ids"],
         )
 
     def test_evidence_file_hash_is_recomputed(self) -> None:

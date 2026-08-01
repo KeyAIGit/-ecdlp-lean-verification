@@ -1,5 +1,11 @@
 # HYP-SELECT-005: 100k research-question funnel
 
+> **Frozen-snapshot correction (2026-08-01).** The review below records the
+> 2026-07-31 state. TASK-027 later bound an exact M16 factor-base census to
+> `CELL-M-PKC-SMOOTH-M16`, making `HGP-M16-SOLVER-SLOPE-001` a historical-only
+> `stale_seed_snapshot`. The current generated funnel preserves that review as
+> audit evidence but excludes it from `final_research_bets`.
+
 Date: 2026-07-31
 
 Audited base: `main` at

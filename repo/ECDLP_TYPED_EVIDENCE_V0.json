@@ -506,6 +506,22 @@
       "statement": "Exact integer arithmetic factors secp256k1 p+1 as 2^4 times a 23-bit prime times a 46-bit prime times a 184-bit cofactor; consequently its largest power-of-two divisor is exactly 16, while the submitted m=6 and m=7 trace candidate uses the 46-bit prime itself as one unpriced map-degree step.",
       "boundary": "The certificate screens the published low-degree N=2^r trace instantiation and the specific submitted direct prime-factor chain. It does not prove that no alternative bounded-degree arithmetic circuit, Dickson presentation, rational map, or nonsplit-torus mechanism exists.",
       "evidence_path": "experiments/engine/pkc_nonsplit_torus_desk_screen/artifact.json"
+    },
+    {
+      "id": "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS",
+      "source_id": "repo:certificate",
+      "source_type": "certificate",
+      "citation": "KeyAI exact secp256k1 M16 smooth-subgroup factor-base census.",
+      "read_status": "certificate_replayed",
+      "url": null,
+      "artifact_sha256": "dc514544bf388562a3ebed312aef56bc87b00527f32ce6d131a2f5371dba2744",
+      "locator": {
+        "kind": "certificate_field",
+        "value": "factor_base_census, yield_models, and proposal_regime"
+      },
+      "statement": "For the exact order-564522 subgroup of the secp256k1 base field, the replayed character sum for x^3+7 is 2532: 283527 subgroup coordinates lift to 567054 signed affine points, no coordinate has zero right-hand side, and pairing the two y signs by elliptic-curve point negation after the free GLV action leaves 94509 orbit classes.",
+      "boundary": "This is exact structural and combinatorial arithmetic. It does not construct a relation system, run a solver, establish relation independence or rank, price recovery or linear algebra, validate an asymptotic attack, or authorize secp256k1 ECDLP computation.",
+      "evidence_path": "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json"
     }
   ],
   "target_properties": [
@@ -570,6 +586,66 @@
       "scope": "Public secp256k1 domain parameters and classical non-generic analysis.",
       "source_claim_ids": [
         "SC-SECP-PRIME-FIELD"
+      ]
+    },
+    {
+      "id": "TP-SECP-PKC-M16-CHARACTER-SUM",
+      "label": "M16 subgroup character sum",
+      "value_type": "integer",
+      "value": 2532,
+      "status": "certificate_replayed",
+      "statement": "The exact sum of the quadratic character of x^3+7 over the order-564522 subgroup is 2532.",
+      "scope": "The direct PKC p-minus-one subgroup specialized to the secp256k1 base field and curve coefficient seven.",
+      "source_claim_ids": [
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+      ]
+    },
+    {
+      "id": "TP-SECP-PKC-M16-LIFTABLE-X",
+      "label": "M16 liftable subgroup coordinates",
+      "value_type": "integer",
+      "value": 283527,
+      "status": "certificate_replayed",
+      "statement": "Exactly 283527 coordinates in the order-564522 subgroup lift to affine secp256k1 points.",
+      "scope": "Coordinate liftability inside the direct p-minus-one factor base only; no relation independence is implied.",
+      "source_claim_ids": [
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+      ]
+    },
+    {
+      "id": "TP-SECP-PKC-M16-SIGNED-POINTS",
+      "label": "M16 signed affine factor points",
+      "value_type": "integer",
+      "value": 567054,
+      "status": "certificate_replayed",
+      "statement": "The liftable subgroup coordinates produce exactly 567054 signed affine secp256k1 factor-base points.",
+      "scope": "Both y signs are counted before coordinate negation or GLV orbit identification.",
+      "source_claim_ids": [
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+      ]
+    },
+    {
+      "id": "TP-SECP-PKC-M16-GLV-ORBIT-CLASSES",
+      "label": "M16 GLV and negation orbit classes",
+      "value_type": "integer",
+      "value": 94509,
+      "status": "certificate_replayed",
+      "statement": "Exact free three-element coordinate GLV orbits, together with the two y signs paired by negation, leave 94509 orbit classes.",
+      "scope": "Exact coordinate-orbit bookkeeping only; identifying these classes with usable factor-log columns requires additional group-action and relation semantics and is not asserted here.",
+      "source_claim_ids": [
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+      ]
+    },
+    {
+      "id": "TP-SECP-PKC-M16-ZERO-RHS-X",
+      "label": "M16 zero-right-hand-side coordinates",
+      "value_type": "integer",
+      "value": 0,
+      "status": "certificate_replayed",
+      "statement": "No coordinate in the order-564522 subgroup satisfies x^3+7=0 in the secp256k1 base field.",
+      "scope": "The direct p-minus-one subgroup factor base only; this is not a general no-two-torsion theorem.",
+      "source_claim_ids": [
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS"
       ]
     },
     {
@@ -889,6 +965,7 @@
         "SC-PKC-RELATION-YIELD",
         "SC-SECP-PMINUS1-FACTORIZATION",
         "SC-SEMAEV-RELATION-SEMANTICS",
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS",
         "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
         "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
         "SC-PKC-M16-FROZEN-CR-SPECIALIZATION-RESULT",

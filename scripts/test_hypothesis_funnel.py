@@ -207,8 +207,11 @@ class FunnelTests(unittest.TestCase):
         self.assertFalse(self.state["bulk_contract"]["exact_target_execution"])
         for key in ("authorized", "route_promotions", "experiment_events"):
             self.assertEqual(self.state["counts"][key], 0)
-        self.assertEqual(self.state["counts"]["final_research_bets"], 2)
+        self.assertEqual(self.state["counts"]["final_research_bets"], 1)
         self.assertEqual(self.state["counts"]["review_records"], 3)
+        self.assertEqual(
+            self.state["counts"]["historical_only_review_bindings"], 1
+        )
         self.assertEqual(self.state["counts"]["independent_review_records"], 0)
         self.assertEqual(
             self.state["counts"]["unreviewed_queue_items"],
@@ -224,6 +227,12 @@ class FunnelTests(unittest.TestCase):
             self.assertFalse(bet["recommended"])
             self.assertFalse(bet["authorized"])
             self.assertFalse(bet["route_promotion"])
+        stale = next(
+            item
+            for item in self.state["review_binding_statuses"]
+            if item["review_id"] == "HFR-2026-07-31-004"
+        )
+        self.assertEqual("historical_only", stale["lifecycle"])
 
     def test_all_100000_normal_forms_are_unique(self) -> None:
         self.assertEqual(

@@ -156,12 +156,13 @@
     },
     {
       "id": "RE02-REG-15",
-      "requirement": "A canonical claim mutation updates seeds or breaks the generated fixpoint.",
-      "invariant": "Seeds bind the generated claim-state digest without a second hand-maintained copy.",
+      "requirement": "An unrelated canonical claim mutation updates provenance without churning scoped seed identity, while a mutation of the bound cell invalidates that seed.",
+      "invariant": "Seed identity binds exactly the declared cell, mechanism, axes, threat model, evidence digest, and synthesis rule; the full claim-state digest is provenance only.",
       "test_refs": [
-        "scripts/test_research_engine.py::test_canonical_claim_change_invalidates_generated_seeds"
+        "scripts/test_research_engine.py::test_unrelated_claim_change_preserves_scoped_seed_identity",
+        "scripts/test_research_engine.py::test_scoped_cell_change_invalidates_only_that_seed_identity"
       ],
-      "fault_injection": "Generate seed identity without the canonical claim-state digest.",
+      "fault_injection": "Include the global claim-state digest in seed identity, or omit the bound cell evidence digest.",
       "status": "implemented"
     },
     {

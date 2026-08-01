@@ -18,6 +18,7 @@ from hypothesis_generation_lib import (
     REVIEW_FIELDS,
     REVIEWS_DIR,
     build_generation_state,
+    _frozen_seed_records,
     generate_seeds,
     git_file_sha256,
     mechanism_signature,
@@ -25,6 +26,7 @@ from hypothesis_generation_lib import (
     proposal_integrity_problems,
     proposal_sha256,
     sha256_json,
+    validate_proposals,
 )
 from typed_evidence_lib import load_and_build as load_typed_evidence_state
 from research_claims import load_and_build as load_research_claim_state
@@ -3000,7 +3002,7 @@ class ResearchEngineTests(unittest.TestCase):
         observed = generate_seeds(reordered, self.decisions, self.policy)
         self.assertEqual(expected, observed)
 
-    def test_canonical_claim_change_invalidates_generated_seeds(self) -> None:
+    def test_unrelated_claim_change_preserves_scoped_seed_identity(self) -> None:
         claim_problems, claim_state = load_research_claim_state()
         self.assertEqual([], claim_problems)
         expected = generate_seeds(
@@ -3017,13 +3019,114 @@ class ResearchEngineTests(unittest.TestCase):
             self.policy,
             claim_state=changed,
         )
-        self.assertNotEqual(
+        self.assertEqual(
             [seed["seed_id"] for seed in expected],
             [seed["seed_id"] for seed in observed],
         )
         self.assertNotEqual(
             [seed["claim_state_digest"] for seed in expected],
             [seed["claim_state_digest"] for seed in observed],
+        )
+
+    def test_scoped_cell_change_invalidates_only_that_seed_identity(self) -> None:
+        typed_problems, typed_state = load_typed_evidence_state()
+        self.assertEqual([], typed_problems)
+        expected = generate_seeds(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            typed_evidence_state=typed_state,
+        )
+        changed = copy.deepcopy(typed_state)
+        target = next(
+            item
+            for item in changed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        target["evidence_digest"] = "f" * 64
+        observed = generate_seeds(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            typed_evidence_state=changed,
+        )
+        expected_ids = {item["cell_id"]: item["seed_id"] for item in expected}
+        observed_ids = {item["cell_id"]: item["seed_id"] for item in observed}
+        self.assertNotEqual(
+            expected_ids["CELL-M-PKC-SMOOTH-M16"],
+            observed_ids["CELL-M-PKC-SMOOTH-M16"],
+        )
+        self.assertEqual(
+            expected_ids["CELL-M-PKC-AUXILIARY-CURVE"],
+            observed_ids["CELL-M-PKC-AUXILIARY-CURVE"],
+        )
+
+    def test_frozen_seed_alias_is_historical_after_scoped_evidence_change(
+        self,
+    ) -> None:
+        proposal = load_json(
+            PROPOSALS_DIR / "HGP-M16-SOLVER-SLOPE-001.json"
+        )
+        records = [
+            (PROPOSALS_DIR / "HGP-M16-SOLVER-SLOPE-001.json", proposal)
+        ]
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            records,
+            [],
+        )
+        self.assertEqual([], problems)
+        intake = state["proposal_intake"][0]
+        self.assertEqual("frozen_historical_only", intake["seed_resolution"])
+        self.assertIn("stale_seed_snapshot", intake["blockers"])
+        self.assertEqual("hard_rejected", intake["disposition"])
+        self.assertEqual(
+            "provenance_only_not_seed_identity",
+            state["seed_lifecycle"]["claim_state_digest_role"],
+        )
+
+    def test_frozen_alias_can_resolve_only_for_exact_scoped_snapshot(self) -> None:
+        proposal = load_json(
+            PROPOSALS_DIR / "HGP-M16-SOLVER-SLOPE-001.json"
+        )
+        records = [
+            (PROPOSALS_DIR / "HGP-M16-SOLVER-SLOPE-001.json", proposal)
+        ]
+        frozen_problems: list[str] = []
+        frozen_seeds = _frozen_seed_records(
+            self.generation_policy, frozen_problems
+        )
+        self.assertEqual([], frozen_problems)
+        self.assertEqual(1, len(frozen_seeds))
+        problems, blockers, resolutions = validate_proposals(
+            records,
+            frozen_seeds,
+            self.generation_policy,
+        )
+        self.assertEqual([], problems)
+        self.assertEqual(
+            "frozen_alias_current_scoped_identity",
+            resolutions["HGP-M16-SOLVER-SLOPE-001"],
+        )
+        self.assertNotIn(
+            "stale_seed_snapshot",
+            blockers["HGP-M16-SOLVER-SLOPE-001"],
+        )
+
+    def test_frozen_seed_snapshot_hash_is_verified(self) -> None:
+        policy = copy.deepcopy(self.generation_policy)
+        policy["frozen_seed_bindings"][0]["source_sha256"] = "0" * 64
+        problems, _ = build_generation_state(
+            policy,
+            self.decisions,
+            self.policy,
+            [],
+            [],
+        )
+        self.assertTrue(
+            any("source snapshot hash mismatch" in item for item in problems)
         )
 
     def test_decided_typed_cells_never_generate_seeds(self) -> None:

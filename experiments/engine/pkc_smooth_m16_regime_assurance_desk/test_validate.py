@@ -44,8 +44,8 @@ def must_reject(
 
 def mutate_multiset_plus(document: dict[str, Any]) -> None:
     counts = document["yield_models"]["exact_combinatorial_counts"]
-    model = document["yield_models"]["models"]["signed_multiset_uniform_nonidentity_null"]
-    document["yield_models"]["models"]["signed_multiset_uniform_nonidentity_null"] = wrong_fraction(
+    model = document["yield_models"]["conditioned_null_comparators"]["signed_multiset_conditioned_nonidentity"]
+    document["yield_models"]["conditioned_null_comparators"]["signed_multiset_conditioned_nonidentity"] = wrong_fraction(
         int(counts["signed_point_multisets"]) + int(counts["negation_fixed_multisets"]),
         validate.N - 1,
         model,
@@ -54,23 +54,23 @@ def mutate_multiset_plus(document: dict[str, Any]) -> None:
 
 def mutate_omit_fixed_distinct(document: dict[str, Any]) -> None:
     counts = document["yield_models"]["exact_combinatorial_counts"]
-    model = document["yield_models"]["models"]["distinct_signed_uniform_nonidentity_null"]
-    document["yield_models"]["models"]["distinct_signed_uniform_nonidentity_null"] = wrong_fraction(
+    model = document["yield_models"]["conditioned_null_comparators"]["distinct_signed_conditioned_nonidentity"]
+    document["yield_models"]["conditioned_null_comparators"]["distinct_signed_conditioned_nonidentity"] = wrong_fraction(
         int(counts["distinct_signed_configurations"]), validate.N - 1, model
     )
 
 
 def mutate_p_denominator(document: dict[str, Any]) -> None:
-    model = document["yield_models"]["models"]["distinct_signed_uniform_nonidentity_null"]
+    model = document["yield_models"]["conditioned_null_comparators"]["distinct_signed_conditioned_nonidentity"]
     numerator = validate.comb(567_054, 16) - validate.comb(283_527, 8)
-    document["yield_models"]["models"]["distinct_signed_uniform_nonidentity_null"] = wrong_fraction(
+    document["yield_models"]["conditioned_null_comparators"]["distinct_signed_conditioned_nonidentity"] = wrong_fraction(
         numerator, validate.P, model
     )
 
 
 def mutate_omit_sign_factor(document: dict[str, Any]) -> None:
-    model = document["yield_models"]["models"]["distinct_x_signed_uniform_null"]
-    document["yield_models"]["models"]["distinct_x_signed_uniform_null"] = wrong_fraction(
+    model = document["yield_models"]["conditioned_null_comparators"]["distinct_x_signed_conditioned_nonidentity"]
+    document["yield_models"]["conditioned_null_comparators"]["distinct_x_signed_conditioned_nonidentity"] = wrong_fraction(
         validate.comb(283_527, 16), validate.N - 1, model
     )
 
@@ -111,7 +111,8 @@ def main() -> int:
         ("p-instead-of-n-minus-one", mutate_p_denominator),
         ("omit-two-power-sixteen", mutate_omit_sign_factor),
         ("repeat-on-x-not-signed-points", mutate_x_repeat_denominator),
-        ("float-only-ratio", lambda value: value["yield_models"]["models"]["paper_source_heuristic"].pop("numerator")),
+        ("float-only-ratio", lambda value: value["yield_models"]["source_heuristic"].pop("numerator")),
+        ("null-boundary-removed", lambda value: value["yield_models"]["conditioned_null_boundary"].pop()),
         ("proposal-binding-drift", lambda value: value["upstream_bindings"].__setitem__("experiments/engine/proposals/HGP-M16-SOLVER-SLOPE-001.json", "0" * 64)),
         ("upstream-binding-drift", lambda value: value["upstream_bindings"].__setitem__("Ecdlp/Secp256k1Verified.lean", "f" * 64)),
         ("cell-closure", lambda value: value["terminal"].__setitem__("cell_transition", "open_to_closed")),

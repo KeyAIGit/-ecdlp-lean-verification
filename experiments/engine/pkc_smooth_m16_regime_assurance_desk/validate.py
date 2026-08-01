@@ -60,7 +60,7 @@ class ValidationFailure(Exception):
 
 
 class Replay:
-    """Cache of the expensive independent census and exact null models."""
+    """Cache of the census and exact conditioned null comparators."""
 
     def __init__(self, census: dict[str, Any], yields: dict[str, Any]) -> None:
         self.census = census
@@ -259,7 +259,7 @@ def independent_census() -> dict[str, Any]:
         "character_sum_over_H": character_sum,
         "glv_orbits": {
             "all_x_orbits": len(all_representatives),
-            "factor_log_columns_modulo_negation_and_glv": len(
+            "orbit_classes_modulo_negation_and_glv": len(
                 positive_representatives
             ),
             "liftable_signed_point_orbits": signed_points // 3,
@@ -289,6 +289,14 @@ def independent_yield_models(census: dict[str, Any]) -> dict[str, Any]:
     ordered = signed_points**ARITY
     ordered_distinct = falling_factorial(signed_points, ARITY)
     return {
+        "notation": {
+            "A_signed_affine_points": signed_points,
+            "D_source_coordinate_subgroup": D,
+            "U_liftable_x": usable_x,
+            "k_arity": ARITY,
+            "p_base_field_order": str(P),
+            "q_curve_group_order": str(N),
+        },
         "exact_combinatorial_counts": {
             "distinct_signed_configurations": str(distinct_signed),
             "distinct_x_with_sign_configurations": str(distinct_x_signed),
@@ -296,48 +304,58 @@ def independent_yield_models(census: dict[str, Any]) -> dict[str, Any]:
             "negation_fixed_multisets": str(fixed_multisets),
             "signed_point_multisets": str(multiset_count),
         },
-        "models": {
-            "distinct_signed_uniform_nonidentity_null": fraction_record(
+        "source_heuristic": fraction_record(
+            D**ARITY,
+            factorial(ARITY) * P,
+            formula="D^16/(16!*p)",
+            interpretation=(
+                "The PKC 2016 source-level coordinate-root heuristic, "
+                "retained as a comparator rather than target truth."
+            ),
+        ),
+        "conditioned_null_comparators": {
+            "distinct_signed_conditioned_nonidentity": fraction_record(
                 distinct_signed - fixed_distinct,
                 group_nonidentity,
-                formula="(C(N,16)-C(U,8))/(n-1)",
+                formula="(C(A,16)-C(U,8))/(q-1)",
                 interpretation=(
-                    "Expected count under a uniform-nonidentity null after "
-                    "removing exactly negation-fixed distinct subsets."
+                    "Counterfactual comparator after removing exactly the "
+                    "negation-fixed distinct subsets, then conditioning every "
+                    "remaining configuration on a nonidentity sum uniform over "
+                    "q-1 targets. Other zero-sum configurations may exist."
                 ),
             ),
-            "distinct_x_signed_uniform_null": fraction_record(
+            "distinct_x_signed_conditioned_nonidentity": fraction_record(
                 distinct_x_signed,
                 group_nonidentity,
-                formula="2^16*C(U,16)/(n-1)",
+                formula="2^16*C(U,16)/(q-1)",
                 interpretation=(
-                    "A distinct-x signed null model. It does not assert that "
-                    "all configurations are independent or nonzero-sum."
+                    "Counterfactual distinct-x signed comparator conditioned "
+                    "on a nonidentity sum uniform over q-1 targets. The exact "
+                    "numerator can still contain non-pairwise zero sums."
                 ),
             ),
-            "paper_source_heuristic": fraction_record(
-                D**ARITY,
-                factorial(ARITY) * P,
-                formula="D^16/(16!*p)",
-                interpretation=(
-                    "The PKC 2016 source-level coordinate-root heuristic, "
-                    "retained as a comparator rather than target truth."
-                ),
-            ),
-            "signed_multiset_uniform_nonidentity_null": fraction_record(
+            "signed_multiset_conditioned_nonidentity": fraction_record(
                 multiset_count - fixed_multisets,
                 group_nonidentity,
-                formula="(C(N+15,16)-C(U+7,8))/(n-1)",
+                formula="(C(A+15,16)-C(U+7,8))/(q-1)",
                 interpretation=(
-                    "Expected count under a uniform-nonidentity null after "
-                    "removing exactly negation-fixed signed multisets."
+                    "Counterfactual comparator after removing exactly the "
+                    "negation-fixed signed multisets, then conditioning every "
+                    "remaining configuration on a nonidentity sum uniform over "
+                    "q-1 targets. Other cancellation relations may exist."
                 ),
             ),
         },
+        "conditioned_null_boundary": [
+            "A=567054 signed affine factor points, U=283527 liftable x values, q is the prime curve-group order, D=564522, and k=16.",
+            "The q-1 denominators define counterfactual conditioning; they do not establish the actual group-sum distribution.",
+            "Only explicitly counted negation-fixed cancellations are removed. Additional zero-sum or dependent configurations are neither counted nor excluded.",
+        ],
         "ordered_sampling_repeat_probability": fraction_record(
             ordered - ordered_distinct,
             ordered,
-            formula="1-(N)_16/N^16",
+            formula="1-(A)_16/A^16",
             interpretation=(
                 "Collision probability for sixteen iid signed affine factor "
                 "points; this is not the distinct-x collision probability."
@@ -438,7 +456,7 @@ def check_proposal_and_terminal(document: dict[str, Any]) -> None:
         boundary["interpretation"],
         (
             "Exact subgroup and combinatorial arithmetic update target "
-            "properties and null-model comparators only. They do not "
+            "properties and conditioned null comparators only. They do not "
             "measure a solver or validate the M16 attack mechanism."
         ),
     )

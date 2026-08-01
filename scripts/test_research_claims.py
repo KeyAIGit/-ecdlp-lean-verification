@@ -29,8 +29,11 @@ class ResearchClaimTests(unittest.TestCase):
     def test_canonical_claim_state_is_non_authorizing(self) -> None:
         problems, state = self.build()
         self.assertEqual([], problems)
-        self.assertEqual(["R-GLV-SEMAEV"], state["open_routes"])
-        self.assertEqual(1, state["counts"]["closed_child_claims"])
+        self.assertEqual(
+            ["R-GLV-SEMAEV", "R-PETIT-COMPOSED-MAPS"],
+            state["open_routes"],
+        )
+        self.assertEqual(2, state["counts"]["closed_child_claims"])
         self.assertEqual(0, state["counts"]["proposal_seed_eligible_variants"])
         self.assertEqual(0, state["counts"]["calibration_eligible_events"])
         self.assertEqual(
@@ -53,6 +56,41 @@ class ResearchClaimTests(unittest.TestCase):
         )
         self.assertEqual("bounded_negative", child["claim_disposition"])
         self.assertIn("R-GLV-SEMAEV", state["open_routes"])
+
+    def test_m16_regime_screen_does_not_close_mechanism_or_route(self) -> None:
+        problems, state = self.build()
+        self.assertEqual([], problems)
+        claims = {item["claim_id"]: item for item in state["claims"]}
+        census = claims["CLM-PKC-M16-SECP-FACTOR-BASE-CENSUS"]
+        regime = claims["CLM-PKC-M16-CURRENT-MAX24-REGIME"]
+        self.assertEqual("confirmed", census["claim_disposition"])
+        self.assertEqual("inapplicable", regime["claim_disposition"])
+        self.assertIn("frozen in HGP-M16", regime["scope"])
+        reopening = " ".join(regime["reopening_conditions"])
+        self.assertIn("new claim ID", reopening)
+        self.assertIn("scoped truth", reopening)
+        self.assertIn("R-PETIT-COMPOSED-MAPS", state["open_routes"])
+        variant = next(
+            item
+            for item in state["mechanism_variants"]
+            if item["mechanism_variant_id"]
+            == "MV-PKC-PMINUS1-M16-SOLVER-SLOPE"
+        )
+        self.assertFalse(variant["proposal_seed_eligible"])
+
+    def test_m16_structural_events_cannot_enter_brier_calibration(self) -> None:
+        policy = copy.deepcopy(self.policy)
+        event = next(
+            item
+            for item in policy["evidence_events"]
+            if item["evidence_event_id"]
+            == "CEV-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+        )
+        event["calibration_eligible"] = True
+        problems, _ = self.build(policy=policy)
+        self.assertTrue(
+            any("calibration_eligible contradicts" in item for item in problems)
+        )
 
     def test_certificate_claim_cannot_be_relabelled_lean_kernel(self) -> None:
         policy = copy.deepcopy(self.policy)

@@ -56,6 +56,18 @@
       "status": "active"
     }
   ],
+  "frozen_seed_bindings": [
+    {
+      "seed_id": "HGS-DC5FF2FC9E71",
+      "identity_version": "legacy-global-claim-state-v0",
+      "source_commit": "bc2f04a71d168b34bce3d68c1d7cef33b4af9e4e",
+      "source_path": "data/research_engine_state.json",
+      "source_sha256": "2cbcf9f08810d9a746f34e3c6247033603833779795bf0b496dd977d072f4a46",
+      "recorded_on": "2026-08-01",
+      "status": "frozen_alias",
+      "reason": "Preserve the immutable HGP-M16-SOLVER-SLOPE-001 binding after unrelated claim-state additions while current compatibility is decided only from the scoped seed identity."
+    }
+  ],
   "lifecycle": [
     "evidence_snapshot",
     "typed_evidence_cell",
@@ -149,7 +161,8 @@
       "targets_secp256k1_directly",
       "threat_model_drift",
       "typed_evidence_mismatch",
-      "target_property_violated"
+      "target_property_violated",
+      "stale_seed_snapshot"
     ],
     "zero_retention_allowed": true,
     "overflow_rule": "If more than three proposals clear every quality gate, retain none automatically and require an explicit comparative portfolio decision; do not silently truncate or rank by model confidence."

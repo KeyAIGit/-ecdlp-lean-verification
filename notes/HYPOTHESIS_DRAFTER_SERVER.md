@@ -16,11 +16,13 @@ The drafter has two explicit lanes:
   Seeds that already have a submitted proposal are skipped unless a local caller
   explicitly requests a replay. The current research decision admits formulation
   only of `HYP-M16-SOLVER-SLOPE-001`; this reviewed drafter policy maps that
-  object to seed `HGS-DC5FF2FC9E71`. The seed already has
-  `HGP-M16-SOLVER-SLOPE-001`, so the default typed-evidence request count is
-  intentionally zero. Skipping it prevents duplicate drafting; it is not a
-  quality signal. The proposal remains `needs_revision`, unreviewed,
-  non-executable, unauthorized, and blocked on `missing_exact_mechanism`. The
+  object to scoped seed `HGS-029AFA3EA451`. The exact M16 factor-base census
+  changed that cell's scientific identity. Existing proposal
+  `HGP-M16-SOLVER-SLOPE-001` remains immutable through authenticated legacy
+  alias `HGS-DC5FF2FC9E71`, but the alias is now historical-only and blocked by
+  `stale_seed_snapshot`; it is not counted as a proposal for the current seed.
+  The default typed-evidence request count is therefore one. The new request is
+  non-executable and unauthorized, and it cannot clear any scientific gate. The
   parked auxiliary-curve seed is not silently drafted. A zero-request dispatch
   records `skipped_no_eligible_seed`, provisions no provider secret, and makes
   no provider call. Submitted seeds may be included only in a local dry

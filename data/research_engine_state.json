@@ -3,9 +3,9 @@
   "engine_id": "ecdlp-research-engine-v0",
   "source_hashes": {
     "policy_sha256": "fb3e74227bd5613e33f5bab234a40d0d1dccf23a6c048e6094433a2dbebcdddf",
-    "hypothesis_generation_policy_sha256": "cb61708d473f667ee2b9d4bdba8199ac87de4fa079e3ca41bf6ddc42fe612054",
-    "typed_evidence_state_sha256": "09cb8c4f032d4d1314189cf0b2cbd912654cada60c4905e91b3092b63a46f503",
-    "research_claim_state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
+    "hypothesis_generation_policy_sha256": "a753b9991261ffbd684da4a7d132cbbaba5b94e1a568f6776192bd5f19293880",
+    "typed_evidence_state_sha256": "add66a4fd90e659be89e87999e297543dbe1109bdd90870a6341cce422517264",
+    "research_claim_state_sha256": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e",
     "decision_substrate_sha256": "0d3dd95e3079d5ad21db2c1f517ba8e29b1e170e61c9dbc8a2dfcb7d56745879",
     "hypotheses_sha256": "12f0df0623f2a104389cb191da565e69bacbf926b305d3f298051d7bc7489afb",
     "outcome_events_sha256": "b29a7ad2d159cebc54d70771dbbdf36a0cf7d767114d63c8eb11efc7ec88744d",
@@ -1258,9 +1258,9 @@
     "schema_version": "0.1-generated",
     "generator_id": "ecdlp-hypothesis-generation-v0",
     "source_hashes": {
-      "generation_policy_sha256": "cb61708d473f667ee2b9d4bdba8199ac87de4fa079e3ca41bf6ddc42fe612054",
-      "typed_evidence_state_sha256": "09cb8c4f032d4d1314189cf0b2cbd912654cada60c4905e91b3092b63a46f503",
-      "research_claim_state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
+      "generation_policy_sha256": "a753b9991261ffbd684da4a7d132cbbaba5b94e1a568f6776192bd5f19293880",
+      "typed_evidence_state_sha256": "add66a4fd90e659be89e87999e297543dbe1109bdd90870a6341cce422517264",
+      "research_claim_state_sha256": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e",
       "proposals_sha256": "581cf3109a9f2bfdaeacf895664e816ab22f0f47a72140385dab1c69d04d0a34",
       "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
@@ -1283,8 +1283,8 @@
       "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
       "target_id": "secp256k1-classical-single-target-plain",
       "counts": {
-        "source_claims": 31,
-        "target_properties": 6,
+        "source_claims": 32,
+        "target_properties": 11,
         "mechanisms": 8,
         "cells": 8,
         "open_cells": 3,
@@ -1295,10 +1295,10 @@
         "desk_decisions": 4
       },
       "source_hashes": {
-        "policy_sha256": "12e191edb2f8c94da2eec0c94701ab4bd1847f1cd0f6202ddfe86eb19d7f2915",
+        "policy_sha256": "a9e18742d11ece81bf5e6abaff2cade27e5525ad6d3e9220b184ce059e83963f",
         "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
         "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-        "evidence_files_sha256": "dbc79d963123a330014049bb9eaf70c2bf1218bbd19d7e801b1594f14a4b1855",
+        "evidence_files_sha256": "ddd8a056c6bc68fe784d30f3b42e071bc77d6a3ac8741aaeb82edf636f24cd34",
         "desk_decisions_sha256": "1e66e8b2f3e196736c2196042817a23632b7760b02dbd1663408f81359dad608"
       },
       "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
@@ -1307,34 +1307,35 @@
     "research_claims": {
       "claim_model_id": "ECDLP-RESEARCH-CLAIMS-V0",
       "counts": {
-        "routes_represented": 1,
-        "research_questions": 1,
-        "claims": 4,
-        "closed_child_claims": 1,
+        "routes_represented": 2,
+        "research_questions": 2,
+        "claims": 6,
+        "closed_child_claims": 2,
         "inconclusive_claims": 1,
-        "confirmed_claims": 2,
-        "mechanism_variants": 3,
+        "confirmed_claims": 3,
+        "mechanism_variants": 4,
         "proposal_seed_eligible_variants": 0,
-        "evidence_events": 8,
+        "evidence_events": 10,
         "calibration_eligible_events": 0
       },
       "open_routes": [
-        "R-GLV-SEMAEV"
+        "R-GLV-SEMAEV",
+        "R-PETIT-COMPOSED-MAPS"
       ],
       "authorization": {
         "experiments": 0,
         "route_promotions": 0,
         "exact_target_runs": 0
       },
-      "state_sha256": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b"
+      "state_sha256": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e"
     },
     "seed_coverage": {
       "threshold": 12,
       "eligible_seed_count": 2,
       "overflow_triggered": false,
       "represented_seed_ids": [
-        "HGS-2F4C661E5578",
-        "HGS-DC5FF2FC9E71"
+        "HGS-5CC94AD51AE6",
+        "HGS-029AFA3EA451"
       ],
       "represented_cell_ids": [
         "CELL-M-PKC-AUXILIARY-CURVE",
@@ -1343,12 +1344,31 @@
       "disposition": "within_declared_coverage",
       "rule": "An overflow is materialized rather than hidden or treated as a generation failure. Every seed remains non-executable; the coverage artifact must be reviewed before a later cycle may change the threshold or synthesis partition."
     },
+    "seed_lifecycle": {
+      "identity_scope": [
+        "cell_id",
+        "typed_mechanism_id",
+        "feature_id",
+        "mechanism_primitive_id",
+        "uncertainty_id",
+        "route_id",
+        "threat_model",
+        "evidence_digest",
+        "synthesis_rule_id",
+        "synthesis_rule_version"
+      ],
+      "claim_state_digest_role": "provenance_only_not_seed_identity",
+      "frozen_alias_ids": [
+        "HGS-DC5FF2FC9E71"
+      ],
+      "rule": "A frozen legacy id resolves to current state only while its scoped scientific identity is unchanged; otherwise it is a historical-only snapshot and cannot quality-clear."
+    },
     "generated_seeds": [
       {
-        "seed_id": "HGS-2F4C661E5578",
+        "seed_id": "HGS-5CC94AD51AE6",
         "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
         "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-        "claim_state_digest": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
+        "claim_state_digest": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1430,7 +1450,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "2f4c661e5578e1ef46f01ac8eb3759ec9bf5fa4e1e8047f5b113608bf724ee75",
+        "deduplication_key": "5cc94ad51ae69ea05f2c01c4b68d3b68bae616650b4348c46eb8689ad382eb44",
         "proposal_packet": {
           "required_sections": [
             "new_premise",
@@ -1486,16 +1506,17 @@
             "targets_secp256k1_directly",
             "threat_model_drift",
             "typed_evidence_mismatch",
-            "target_property_violated"
+            "target_property_violated",
+            "stale_seed_snapshot"
           ],
           "instruction": "Return a provenance-bound arithmetic construction, a scoped no-instance result, or the smallest exact blocker. Do not return an attack claim or experiment; unresolved conditions remain unknown."
         }
       },
       {
-        "seed_id": "HGS-DC5FF2FC9E71",
+        "seed_id": "HGS-029AFA3EA451",
         "cell_id": "CELL-M-PKC-SMOOTH-M16",
-        "typed_evidence_digest": "180bd1dd2be5f4ed04530ff962865bb4ae3aac1438f4499e05dde06e9104bcfe",
-        "claim_state_digest": "f4793142a8088599f1fc533c381b03768c3101a725a5e6eca19bdb714679705b",
+        "typed_evidence_digest": "5d928412a43530859a86db03c6ebc0d98a97340252e652db5a680e392530ad26",
+        "claim_state_digest": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1581,6 +1602,7 @@
             "SC-PKC-M16-INFINITY-STRATA-RESULT",
             "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
             "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
+            "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS",
             "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
             "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
             "SC-PKC-RELATION-YIELD",
@@ -1618,7 +1640,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "dc5ff2fc9e71400c0d347a9bd13297629c0c0c79119b8e1cfeaac89a50f8f4fd",
+        "deduplication_key": "029afa3ea4510527ae25677e1cdd653aea446dce927ce9a90b095fc425b9f97d",
         "proposal_packet": {
           "required_sections": [
             "new_premise",
@@ -1674,7 +1696,8 @@
             "targets_secp256k1_directly",
             "threat_model_drift",
             "typed_evidence_mismatch",
-            "target_property_violated"
+            "target_property_violated",
+            "stale_seed_snapshot"
           ],
           "instruction": "Return an exact symbolic size and cost bridge or a scoped blocker. Do not request compute while the complete desk bridge is unresolved."
         }
@@ -1688,14 +1711,16 @@
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "title": "HYP-M16-SOLVER-SLOPE-001: conditional source-faithful attempt and complete-cost slope",
         "proposal_sha256": "0212ce7acafe39c2afde448789d151bfc400cc7e2fe55dbd29dae9f518605f9a",
+        "seed_resolution": "frozen_historical_only",
         "review_roles_present": [],
         "review_independence": "not_reviewed",
         "blockers": [
           "adversarial_review_incomplete",
           "missing_exact_mechanism",
-          "review_independence_unestablished"
+          "review_independence_unestablished",
+          "stale_seed_snapshot"
         ],
-        "disposition": "needs_revision",
+        "disposition": "hard_rejected",
         "authorization": "none"
       }
     ],

@@ -11,7 +11,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 17447
+        "bytes": 17502
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -29,37 +29,37 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 81325
+        "bytes": 85289
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 104267
+        "bytes": 108313
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
         "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
         "exists": true,
-        "bytes": 10802
+        "bytes": 15321
       },
       {
         "path": "data/research_claim_state.json",
         "reason": "generated claim-level truth state and calibration-exclusion boundary",
         "exists": true,
-        "bytes": 10558
+        "bytes": 15218
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
         "reason": "typed-evidence-bound seed axes, proposal quality gates, and adversarial review contract",
         "exists": true,
-        "bytes": 15469
+        "bytes": 16106
       },
       {
         "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
         "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
         "exists": true,
-        "bytes": 5637
+        "bytes": 5887
       },
       {
         "path": "repo/HYPOTHESIS_SPACE_V2.json",
@@ -71,7 +71,7 @@
         "path": "data/hypothesis_space_state.json",
         "reason": "generated one-million-cell screening state and bounded review queue",
         "exists": true,
-        "bytes": 97526
+        "bytes": 97527
       },
       {
         "path": "data/hypothesis_space_map.json",
@@ -95,7 +95,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 81768
+        "bytes": 82658
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -113,13 +113,13 @@
         "path": "data/research_engine_shadow_intake.json",
         "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
         "exists": true,
-        "bytes": 8242
+        "bytes": 8323
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
         "reason": "the 19 owner regression cases and their concrete fault-injection tests",
         "exists": true,
-        "bytes": 17271
+        "bytes": 17568
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -143,7 +143,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 97638
+        "bytes": 101850
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -169,7 +169,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 17447
+        "bytes": 17502
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -187,37 +187,37 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 81325
+        "bytes": 85289
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 104267
+        "bytes": 108313
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
         "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
         "exists": true,
-        "bytes": 10802
+        "bytes": 15321
       },
       {
         "path": "data/research_claim_state.json",
         "reason": "generated claim-level truth state and calibration-exclusion boundary",
         "exists": true,
-        "bytes": 10558
+        "bytes": 15218
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
         "reason": "typed-evidence-bound seed axes, proposal quality gates, and adversarial review contract",
         "exists": true,
-        "bytes": 15469
+        "bytes": 16106
       },
       {
         "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
         "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
         "exists": true,
-        "bytes": 5637
+        "bytes": 5887
       },
       {
         "path": "repo/HYPOTHESIS_SPACE_V2.json",
@@ -229,7 +229,7 @@
         "path": "data/hypothesis_space_state.json",
         "reason": "generated one-million-cell screening state and bounded review queue",
         "exists": true,
-        "bytes": 97526
+        "bytes": 97527
       },
       {
         "path": "data/hypothesis_space_map.json",
@@ -253,7 +253,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 81768
+        "bytes": 82658
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -271,13 +271,13 @@
         "path": "data/research_engine_shadow_intake.json",
         "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
         "exists": true,
-        "bytes": 8242
+        "bytes": 8323
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
         "reason": "the 19 owner regression cases and their concrete fault-injection tests",
         "exists": true,
-        "bytes": 17271
+        "bytes": 17568
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -301,7 +301,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 97638
+        "bytes": 101850
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -531,7 +531,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 17447
+        "bytes": 17502
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -549,37 +549,37 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 81325
+        "bytes": 85289
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 104267
+        "bytes": 108313
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
         "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
         "exists": true,
-        "bytes": 10802
+        "bytes": 15321
       },
       {
         "path": "data/research_claim_state.json",
         "reason": "generated claim-level truth state and calibration-exclusion boundary",
         "exists": true,
-        "bytes": 10558
+        "bytes": 15218
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
         "reason": "typed-evidence-bound seed axes, proposal quality gates, and adversarial review contract",
         "exists": true,
-        "bytes": 15469
+        "bytes": 16106
       },
       {
         "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
         "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
         "exists": true,
-        "bytes": 5637
+        "bytes": 5887
       },
       {
         "path": "repo/HYPOTHESIS_SPACE_V2.json",
@@ -591,7 +591,7 @@
         "path": "data/hypothesis_space_state.json",
         "reason": "generated one-million-cell screening state and bounded review queue",
         "exists": true,
-        "bytes": 97526
+        "bytes": 97527
       },
       {
         "path": "data/hypothesis_space_map.json",
@@ -615,7 +615,7 @@
         "path": "data/research_engine_state.json",
         "reason": "generated dual-gate state, selected sequence, and retained outcome summaries",
         "exists": true,
-        "bytes": 81768
+        "bytes": 82658
       },
       {
         "path": "repo/RESEARCH_ENGINE_LIFECYCLE_V0.json",
@@ -633,13 +633,13 @@
         "path": "data/research_engine_shadow_intake.json",
         "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
         "exists": true,
-        "bytes": 8242
+        "bytes": 8323
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
         "reason": "the 19 owner regression cases and their concrete fault-injection tests",
         "exists": true,
-        "bytes": 17271
+        "bytes": 17568
       },
       {
         "path": "repo/PRODUCT_MODEL.json",
@@ -663,7 +663,7 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 97638
+        "bytes": 101850
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -891,7 +891,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 695132
+        "bytes": 696300
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

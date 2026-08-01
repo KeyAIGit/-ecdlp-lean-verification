@@ -36,6 +36,7 @@
     "paths": [
       "data/typed_evidence_state.json",
       "data/research_claim_state.json",
+      "data/research_engine_state.json",
       "repo/ECDLP_DECISION_SUBSTRATE.json",
       "data/attack_registry.json",
       "data/source_registry.json",

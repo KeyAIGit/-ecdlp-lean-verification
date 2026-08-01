@@ -599,16 +599,18 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         self.assertIsNone(batch["errors"][0]["error_body"])
         self.assertFalse(batch["errors"][0]["error_body_truncated"])
 
-    def test_typed_evidence_is_default_and_skips_submitted_seed(self) -> None:
+    def test_typed_evidence_is_default_and_refreshes_stale_seed(self) -> None:
         packets = build_request_packets(
             self.policy,
             self.engine_state,
             limit=10,
             typed_evidence_state=self.typed_evidence_state,
         )
-        self.assertEqual([], packets)
+        self.assertEqual(1, len(packets))
+        self.assertEqual("HGS-029AFA3EA451", packets[0]["seed_id"])
+        self.assertEqual([], packets[0]["existing_proposal_ids"])
 
-    def test_submitted_seed_requires_explicit_replay_flag(self) -> None:
+    def test_historical_proposal_is_not_compatible_with_current_seed(self) -> None:
         packets = build_request_packets(
             self.policy,
             self.engine_state,
@@ -620,11 +622,8 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         packet = packets[0]
         self.assertEqual("typed_evidence", packet["lane"])
         self.assertTrue(packet["input_provenance_bound"])
-        self.assertEqual("HGS-DC5FF2FC9E71", packet["seed_id"])
-        self.assertEqual(
-            ["HGP-M16-SOLVER-SLOPE-001"],
-            packet["existing_proposal_ids"],
-        )
+        self.assertEqual("HGS-029AFA3EA451", packet["seed_id"])
+        self.assertEqual([], packet["existing_proposal_ids"])
         self.assertTrue(packet["allowed_evidence_claim_ids"])
         self.assertTrue(packet["evidence_manifest"])
         self.assertEqual("none", packet["authorization"])
@@ -749,7 +748,7 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         seed = next(
             item
             for item in route_drift["hypothesis_generation"]["generated_seeds"]
-            if item["seed_id"] == "HGS-DC5FF2FC9E71"
+            if item["seed_id"] == "HGS-029AFA3EA451"
         )
         seed["route_id"] = "R-WRONG"
         with self.assertRaises(ValueError):
@@ -764,7 +763,7 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         seed = next(
             item
             for item in semantic_drift["hypothesis_generation"]["generated_seeds"]
-            if item["seed_id"] == "HGS-DC5FF2FC9E71"
+            if item["seed_id"] == "HGS-029AFA3EA451"
         )
         seed["research_question"] = (
             "Use nonce leakage and multi-target amortization under a false plain tag."
@@ -792,7 +791,7 @@ class HypothesisModelDrafterTests(unittest.TestCase):
             for item in self.engine_state["hypothesis_generation"][
                 "generated_seeds"
             ]
-            if item["seed_id"] == "HGS-DC5FF2FC9E71"
+            if item["seed_id"] == "HGS-029AFA3EA451"
         )
         manifest_paths = {entry["path"] for entry in packet["evidence_manifest"]}
         self.assertTrue(set(seed["evidence_inputs"]) <= manifest_paths)
