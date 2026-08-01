@@ -130,12 +130,34 @@ secp256k1 key.
 
 ## Model-assisted draft boundary
 
-`scripts/hypothesis_model_drafter.py` is the optional middle layer between the
-deterministic review queue and full scientific contracts. By default it performs
-no API calls and emits only digest-bound request packets. A live call requires
-both `--live` and `HYPOTHESIS_DRAFTER_LIVE=1`; every response remains an
-`untrusted_proposal_fragment` with zero authorization and cannot satisfy any
+`scripts/hypothesis_model_drafter.py` is an optional untrusted drafting layer,
+not a source join or scientific reviewer. Its default `typed_evidence` lane
+accepts only policy-owned mappings pinned to the exact current decision digest,
+rebuilds the canonical Research Engine state, and binds each packet to the
+typed cell, claim rows, locators, any explicitly declared context documents,
+and evidence-file hashes. Those source bytes come from immutable blobs at the
+declared Git commit and are read once into the packet snapshot. The separate
+`brainstorm_queue` lane samples broad structural representatives and carries no
+source assurance. It cannot enter scientific review without later typed-evidence
+binding.
+
+The current decision admits formulation only of M16; the drafter policy owns and
+digest-binds the mapping to its already-submitted seed. The default run therefore
+emits zero requests, provisions no provider secret, and makes no provider call.
+This suppresses duplication and says nothing positive about proposal quality.
+Changing provider, model, inference parameters, source commit, or drafter
+implementation changes `inference_request_sha256`; scientific and inference
+identities remain separate. Response claim IDs and per-field claim maps are
+schema checks only. A schema-clear fragment is still untrusted and may be
+mathematically false. A
+live call requires `--live`, `HYPOTHESIS_DRAFTER_LIVE=1`, an exact protected-main
+source commit, and an unsubmitted admitted seed in a clean checkout. It remains
+non-executable, carries zero scientific/ranker labels, and cannot satisfy any
 review-independence axis.
+
+Live checkpoints use a single-writer output lease. Provider failures retain a
+bounded replay record and return nonzero; partial output is memory of an
+operational failure, never a scientific outcome.
 
 The preferred provider is the existing Featherless subscription, with direct
 DeepSeek and Moonshot/Kimi APIs retained only as explicit fallbacks. Model

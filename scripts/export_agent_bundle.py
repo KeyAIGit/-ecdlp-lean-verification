@@ -49,7 +49,7 @@ _SMALL = [
     ("data/research_claim_state.json",
      "generated claim-level truth state and calibration-exclusion boundary"),
     ("repo/HYPOTHESIS_GENERATION_V0.json",
-     "source-grounded seed axes, proposal quality gates, and adversarial review contract"),
+     "typed-evidence-bound seed axes, proposal quality gates, and adversarial review contract"),
     ("repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
      "bounded provider policy for untrusted, non-executable model-assisted proposal fragments"),
     ("repo/HYPOTHESIS_SPACE_V2.json",
@@ -192,7 +192,7 @@ Ground rules:
 - `repo/ECDLP_TYPED_EVIDENCE_V0.json` owns claim-level target-property and mechanism applicability screens.
 - `repo/RESEARCH_CLAIMS_V0.json` owns exact child-claim dispositions and assurance; a child result never closes its route by implication.
 - `repo/HYPOTHESIS_GENERATION_V0.json` owns non-executable seed and proposal-quality compilation.
-- `repo/HYPOTHESIS_MODEL_DRAFTER_V0.json` owns optional model drafting; its output is untrusted and non-executable.
+- `repo/HYPOTHESIS_MODEL_DRAFTER_V0.json` owns optional model drafting. Its default typed-evidence input is provenance-bound; its separate brainstorm input is not. Model-authored claim links are not semantic support, and both outputs remain untrusted and non-executable.
 - `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json` owns operational benchmark/error memory; screening rejects are not scientific outcomes.
 - `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json` owns immutable candidate lifecycle and portfolio selection.
 - `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json` owns the 19 required regression cases.

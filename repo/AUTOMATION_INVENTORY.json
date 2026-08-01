@@ -61,7 +61,7 @@
       "trigger_policy": "manual_only",
       "disposition": "keep_conditional",
       "spends_external_budget": true,
-      "reason": "Explicitly dispatched external-host drafting of at most 30 untrusted, non-executable fragments after a zero-token Featherless probe; cannot clear Engine gates."
+      "reason": "Protected-main, environment-gated external-host drafting of at most 30 provenance-bound or brainstorm fragments after a zero-token Featherless probe. The host is credential-trusted, provider transport is unattested, outputs are untrusted and non-executable, and the workflow cannot clear Engine gates."
     },
     {
       "file": ".github/workflows/server-bootstrap.yml",

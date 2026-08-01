@@ -133,6 +133,14 @@ branch from current `main`; preserve any unrelated local changes.
   hypothesis, or authorize execution.
 - Generated seeds and quality-cleared drafts are non-executable. Creative model
   output is untrusted; zero retained drafts is a valid cycle result.
+- Optional model drafting has two explicit lanes. `typed_evidence` is the
+  default provenance-bound input lane and binds each request to the exact cell,
+  source-claim packet, locators, artifact hashes, repository evidence bytes, and
+  the current dated decision mode. The separate `brainstorm_queue` lane samples
+  the broad structural map and carries no source assurance; it cannot enter
+  scientific review without later typed-evidence binding. Neither lane supplies
+  independent review or authorization. Model-authored claim links are schema
+  assertions, not proof that the cited claim supports the generated prose.
 - `HYP-SELECT-006-1M` is the current bulk screening layer. It enumerates one
   million typed challenge cells without model calls, writes only aggregate
   hot/warm/cold coverage plus a bounded review queue, and proves typed tuple

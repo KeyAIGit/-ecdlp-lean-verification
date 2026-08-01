@@ -51,7 +51,7 @@
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
-        "reason": "source-grounded seed axes, proposal quality gates, and adversarial review contract",
+        "reason": "typed-evidence-bound seed axes, proposal quality gates, and adversarial review contract",
         "exists": true,
         "bytes": 15469
       },
@@ -59,7 +59,7 @@
         "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
         "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
         "exists": true,
-        "bytes": 2401
+        "bytes": 5637
       },
       {
         "path": "repo/HYPOTHESIS_SPACE_V2.json",
@@ -209,7 +209,7 @@
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
-        "reason": "source-grounded seed axes, proposal quality gates, and adversarial review contract",
+        "reason": "typed-evidence-bound seed axes, proposal quality gates, and adversarial review contract",
         "exists": true,
         "bytes": 15469
       },
@@ -217,7 +217,7 @@
         "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
         "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
         "exists": true,
-        "bytes": 2401
+        "bytes": 5637
       },
       {
         "path": "repo/HYPOTHESIS_SPACE_V2.json",
@@ -331,7 +331,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 17061
+        "bytes": 17684
       },
       {
         "path": "VERIFIED.md",
@@ -571,7 +571,7 @@
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
-        "reason": "source-grounded seed axes, proposal quality gates, and adversarial review contract",
+        "reason": "typed-evidence-bound seed axes, proposal quality gates, and adversarial review contract",
         "exists": true,
         "bytes": 15469
       },
@@ -579,7 +579,7 @@
         "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
         "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
         "exists": true,
-        "bytes": 2401
+        "bytes": 5637
       },
       {
         "path": "repo/HYPOTHESIS_SPACE_V2.json",
@@ -693,7 +693,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 17061
+        "bytes": 17684
       },
       {
         "path": "VERIFIED.md",
