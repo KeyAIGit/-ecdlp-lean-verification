@@ -37,6 +37,49 @@ class ScientificSemanticTests(unittest.TestCase):
     def test_canonical_semantics_agree(self) -> None:
         self.assertEqual([], self.validate())
 
+    def test_m16_source_mechanism_hash_drift_fails(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY"
+        )
+        claim["artifact_sha256"] = "0" * 64
+        self.assertIn(
+            "M16 source-mechanism artifact hash drifted",
+            self.validate(typed=typed),
+        )
+
+    def test_m16_source_mechanism_cannot_be_relabelled_as_lean(self) -> None:
+        claims = copy.deepcopy(self.claims)
+        claim = next(
+            item
+            for item in claims["claims"]
+            if item["claim_id"]
+            == "CLM-PKC-M16-SOURCE-MECHANISM-RECOVERY"
+        )
+        claim["assurance"] = ["lean_kernel"]
+        self.assertIn(
+            "M16 source-mechanism child claim must remain certificate-backed",
+            self.validate(claims=claims),
+        )
+
+    def test_m16_source_mechanism_must_remain_on_cost_barrier(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        barrier = next(
+            item
+            for item in typed["barriers"]
+            if item["id"] == "B-PKC-M16-COMPLETE-COST-BRIDGE"
+        )
+        barrier["source_claim_ids"].remove(
+            "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY"
+        )
+        self.assertIn(
+            "M16 complete-cost barrier must retain its source-faithful "
+            "mechanism certificate",
+            self.validate(typed=typed),
+        )
+
     def test_torus_seeds_remain_non_executable_and_route_open(self) -> None:
         funnel = load_json("data/hypothesis_funnel_state.json")
         queue = {item["base_id"]: item for item in funnel["review_queue"]}

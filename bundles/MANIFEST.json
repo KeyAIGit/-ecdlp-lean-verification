@@ -29,25 +29,25 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 90546
+        "bytes": 90570
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 113816
+        "bytes": 113917
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
         "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
         "exists": true,
-        "bytes": 17804
+        "bytes": 17812
       },
       {
         "path": "data/research_claim_state.json",
         "reason": "generated claim-level truth state and calibration-exclusion boundary",
         "exists": true,
-        "bytes": 17701
+        "bytes": 17709
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
@@ -59,7 +59,7 @@
         "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
         "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
         "exists": true,
-        "bytes": 5887
+        "bytes": 5935
       },
       {
         "path": "repo/HYPOTHESIS_SPACE_V2.json",
@@ -71,7 +71,7 @@
         "path": "data/hypothesis_space_state.json",
         "reason": "generated one-million-cell screening state and bounded review queue",
         "exists": true,
-        "bytes": 97524
+        "bytes": 97527
       },
       {
         "path": "data/hypothesis_space_map.json",
@@ -113,7 +113,7 @@
         "path": "data/research_engine_shadow_intake.json",
         "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
         "exists": true,
-        "bytes": 8408
+        "bytes": 8485
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
@@ -137,13 +137,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 9552
+        "bytes": 9592
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 105044
+        "bytes": 105250
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -187,25 +187,25 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 90546
+        "bytes": 90570
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 113816
+        "bytes": 113917
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
         "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
         "exists": true,
-        "bytes": 17804
+        "bytes": 17812
       },
       {
         "path": "data/research_claim_state.json",
         "reason": "generated claim-level truth state and calibration-exclusion boundary",
         "exists": true,
-        "bytes": 17701
+        "bytes": 17709
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
@@ -217,7 +217,7 @@
         "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
         "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
         "exists": true,
-        "bytes": 5887
+        "bytes": 5935
       },
       {
         "path": "repo/HYPOTHESIS_SPACE_V2.json",
@@ -229,7 +229,7 @@
         "path": "data/hypothesis_space_state.json",
         "reason": "generated one-million-cell screening state and bounded review queue",
         "exists": true,
-        "bytes": 97524
+        "bytes": 97527
       },
       {
         "path": "data/hypothesis_space_map.json",
@@ -271,7 +271,7 @@
         "path": "data/research_engine_shadow_intake.json",
         "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
         "exists": true,
-        "bytes": 8408
+        "bytes": 8485
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
@@ -295,13 +295,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 9552
+        "bytes": 9592
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 105044
+        "bytes": 105250
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -511,7 +511,13 @@
         "path": "data/source_claim_extracts/petit_kosters_messeng2016.json",
         "reason": "claim-level primary-source extraction bound to the typed evidence layer",
         "exists": true,
-        "bytes": 5216
+        "bytes": 2771
+      },
+      {
+        "path": "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 3285
       },
       {
         "path": "data/source_claim_extracts/yokota_kudo_yasuda2017_wcc.json",
@@ -549,25 +555,25 @@
         "path": "repo/ECDLP_TYPED_EVIDENCE_V0.json",
         "reason": "claim-level evidence, target properties, mechanism requirements, and scoped barriers",
         "exists": true,
-        "bytes": 90546
+        "bytes": 90570
       },
       {
         "path": "data/typed_evidence_state.json",
         "reason": "materialized applicability cells and non-experimental desk decisions",
         "exists": true,
-        "bytes": 113816
+        "bytes": 113917
       },
       {
         "path": "repo/RESEARCH_CLAIMS_V0.json",
         "reason": "route-question-claim-variant-event truth model with disposition and assurance separated",
         "exists": true,
-        "bytes": 17804
+        "bytes": 17812
       },
       {
         "path": "data/research_claim_state.json",
         "reason": "generated claim-level truth state and calibration-exclusion boundary",
         "exists": true,
-        "bytes": 17701
+        "bytes": 17709
       },
       {
         "path": "repo/HYPOTHESIS_GENERATION_V0.json",
@@ -579,7 +585,7 @@
         "path": "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json",
         "reason": "bounded provider policy for untrusted, non-executable model-assisted proposal fragments",
         "exists": true,
-        "bytes": 5887
+        "bytes": 5935
       },
       {
         "path": "repo/HYPOTHESIS_SPACE_V2.json",
@@ -591,7 +597,7 @@
         "path": "data/hypothesis_space_state.json",
         "reason": "generated one-million-cell screening state and bounded review queue",
         "exists": true,
-        "bytes": 97524
+        "bytes": 97527
       },
       {
         "path": "data/hypothesis_space_map.json",
@@ -633,7 +639,7 @@
         "path": "data/research_engine_shadow_intake.json",
         "reason": "derived unread-source, applicability, and cost-contract proposal stubs",
         "exists": true,
-        "bytes": 8408
+        "bytes": 8485
       },
       {
         "path": "repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json",
@@ -657,13 +663,13 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate ECDLP research and KeyAI product queues",
         "exists": true,
-        "bytes": 9552
+        "bytes": 9592
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 105044
+        "bytes": 105250
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -873,7 +879,13 @@
         "path": "data/source_claim_extracts/petit_kosters_messeng2016.json",
         "reason": "claim-level primary-source extraction bound to the typed evidence layer",
         "exists": true,
-        "bytes": 5216
+        "bytes": 2771
+      },
+      {
+        "path": "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
+        "reason": "claim-level primary-source extraction bound to the typed evidence layer",
+        "exists": true,
+        "bytes": 3285
       },
       {
         "path": "data/source_claim_extracts/yokota_kudo_yasuda2017_wcc.json",
@@ -891,7 +903,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 697443
+        "bytes": 697525
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",

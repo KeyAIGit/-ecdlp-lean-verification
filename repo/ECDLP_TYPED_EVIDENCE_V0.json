@@ -41,7 +41,7 @@
       },
       "statement": "After sampling a target point, System (4) joins one target-specialized Semaev equation to m copies of the decomposed root-map chain and its terminal equations.",
       "boundary": "The printed recovery line says sum_i P_i=0 without explicitly binding the recovered relation to the sampled target. The repository's target-bound signed elliptic-curve check is a derived completion, not a verbatim source claim.",
-      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016_task028.json"
     },
     {
       "id": "SC-PKC-PMINUS1-MAP-EXACT",
@@ -57,7 +57,7 @@
       },
       "statement": "For a selected smooth divisor of p-1, the source uses power maps L_j(x)=x^(p_j) followed by L_(n')(x)=1-x^(p_(n')) so that the composed root set is the multiplicative subgroup or a coset.",
       "boundary": "This specifies the root map, not a generalized-root solver. In the secp256k1 M16 specialization the literal source chain has a degree-13441 terminal component unless a separately costed circuit representation is used.",
-      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016_task028.json"
     },
     {
       "id": "SC-PKC-PARTIAL-COST-EXACT",
@@ -73,7 +73,7 @@
       },
       "statement": "The source's unit-cost model is P(p,m)+(m!p/(deg L)^(m-1))T(E,m,L)+(deg L)^omega, with heuristic yield (deg L)^m/(m!p) and an explicitly unresolved System-(4) solving term T.",
       "boundary": "The source leaves asymptotic complexity open. The formula does not prove relation independence, recovery completeness, a common-unit comparison, or an end-to-end advantage on secp256k1.",
-      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016_task028.json"
     },
     {
       "id": "SC-PKC-SMOOTH-SUBGROUP",
@@ -306,7 +306,7 @@
       "citation": "Deterministic PKC M16 source-faithful mechanism and recovery-closure certificate.",
       "read_status": "certificate_replayed",
       "url": null,
-      "artifact_sha256": "66e59afa20fb8721eef1ad5f15e6ce0d2c8cab1e8e545c92c4a3a5e4981307e5",
+      "artifact_sha256": "56260976b2051ab2d91a990329620b4355b7057e7bfd5d5e59814a10d21f702e",
       "locator": {
         "kind": "certificate_field",
         "value": "terminal.scientific_disposition"

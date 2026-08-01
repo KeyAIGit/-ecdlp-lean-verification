@@ -1895,13 +1895,13 @@ Route state: `R-PETIT-COMPOSED-MAPS` remains `open_parked`
 Authorization: none
 Calibration: excluded_nonexperimental
 Outcome: `mechanism_specified_cost_unresolved`
-Lifecycle: exact source claims and the mechanism certificate produce current
-seed `HGS-D2572A6530D8`; the earlier submitted proposal remains an immutable,
+Lifecycle: exact source claims and the versioned mechanism certificate produce
+current seed `HGS-756950525445`; the earlier submitted proposal remains an immutable,
 historical-only stale snapshot.
 Artifact:
 - `experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json`
 - ID `PKC-M16-SOURCE-FAITHFUL-MECHANISM-RECOVERY-001`
-- SHA-256 `66e59afa20fb8721eef1ad5f15e6ce0d2c8cab1e8e545c92c4a3a5e4981307e5`
+- SHA-256 `56260976b2051ab2d91a990329620b4355b7057e7bfd5d5e59814a10d21f702e`
 
 Why it matters: the typed cell previously cited a coarse source summary while
 the exact map chain, System (4), recovery boundary, and partial cost formula

@@ -3,10 +3,10 @@
   "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
   "target_id": "secp256k1-classical-single-target-plain",
   "source_hashes": {
-    "policy_sha256": "daecc24d673bf7125d4c3b96478feee956e824af9a6e30d842ac3dd821710e77",
+    "policy_sha256": "a45927c8dea7c01aa4f7825ac77af89065e639ce23483ca25247c68a712ddd7a",
     "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
     "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-    "evidence_files_sha256": "59f6597d9a97b8afdd8cb561f5addbcce93eee974e2cd299cd97c2d96beb2ebd",
+    "evidence_files_sha256": "94f7dd6f6944b553b9baae5beb19515e707a7afc7440f9eca5a437315d9efa02",
     "desk_decisions_sha256": "1e66e8b2f3e196736c2196042817a23632b7760b02dbd1663408f81359dad608"
   },
   "trust_boundary": {
@@ -339,7 +339,7 @@
       "citation": "Deterministic PKC M16 source-faithful mechanism and recovery-closure certificate.",
       "read_status": "certificate_replayed",
       "url": null,
-      "artifact_sha256": "66e59afa20fb8721eef1ad5f15e6ce0d2c8cab1e8e545c92c4a3a5e4981307e5",
+      "artifact_sha256": "56260976b2051ab2d91a990329620b4355b7057e7bfd5d5e59814a10d21f702e",
       "locator": {
         "kind": "certificate_field",
         "value": "terminal.scientific_disposition"
@@ -378,7 +378,7 @@
       },
       "statement": "The source's unit-cost model is P(p,m)+(m!p/(deg L)^(m-1))T(E,m,L)+(deg L)^omega, with heuristic yield (deg L)^m/(m!p) and an explicitly unresolved System-(4) solving term T.",
       "boundary": "The source leaves asymptotic complexity open. The formula does not prove relation independence, recovery completeness, a common-unit comparison, or an end-to-end advantage on secp256k1.",
-      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016_task028.json"
     },
     {
       "id": "SC-PKC-PMINUS1-MAP-EXACT",
@@ -394,7 +394,7 @@
       },
       "statement": "For a selected smooth divisor of p-1, the source uses power maps L_j(x)=x^(p_j) followed by L_(n')(x)=1-x^(p_(n')) so that the composed root set is the multiplicative subgroup or a coset.",
       "boundary": "This specifies the root map, not a generalized-root solver. In the secp256k1 M16 specialization the literal source chain has a degree-13441 terminal component unless a separately costed circuit representation is used.",
-      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016_task028.json"
     },
     {
       "id": "SC-PKC-RELATION-YIELD",
@@ -442,7 +442,7 @@
       },
       "statement": "After sampling a target point, System (4) joins one target-specialized Semaev equation to m copies of the decomposed root-map chain and its terminal equations.",
       "boundary": "The printed recovery line says sum_i P_i=0 without explicitly binding the recovered relation to the sampled target. The repository's target-bound signed elliptic-curve check is a derived completion, not a verbatim source claim.",
-      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+      "evidence_path": "data/source_claim_extracts/petit_kosters_messeng2016_task028.json"
     },
     {
       "id": "SC-SECP-NO-TWO-TORSION",
@@ -1277,6 +1277,7 @@
         "Ecdlp/Proved/Secp256k1PrimeP.lean",
         "Ecdlp/Proved/SemaevFour.lean",
         "data/source_claim_extracts/petit_kosters_messeng2016.json",
+        "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
         "experiments/engine/pkc_smooth_desk_screen/artifact.json",
         "experiments/engine/pkc_smooth_m16_exact_chart_cover/artifact.json",
         "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
@@ -1292,7 +1293,7 @@
         "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json",
         "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
       ],
-      "evidence_digest": "68c5d12f2843505d54a34aea27da89b55476eee4b587a5e6e8e1f96341668c1b",
+      "evidence_digest": "bb55967f3ceb7540886145201675f3a9f4f2e4f3f0900c1c10e14d2973fc84b6",
       "seed_axes": {
         "target_feature_id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
         "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",

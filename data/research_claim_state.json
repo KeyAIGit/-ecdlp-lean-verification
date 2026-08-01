@@ -3,7 +3,7 @@
   "claim_model_id": "ECDLP-RESEARCH-CLAIMS-V0",
   "status": "non_executable_truth_state",
   "source_hashes": {
-    "claim_policy_sha256": "96d4967a72d827f4c5636cc4f2d3a31f80be57b83240ecc3ec85d2d5e7f212b0",
+    "claim_policy_sha256": "ceb847d1f1c59047bb7a95dbf77510c2b1751254e06d49e261e5c1bad6646dcd",
     "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d"
   },
   "counts": {
@@ -328,7 +328,7 @@
       "assurance": "certificate_replayed",
       "outcome": "confirmed",
       "evidence_refs": [
-        "data/source_claim_extracts/petit_kosters_messeng2016.json",
+        "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
         "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json",
         "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/validate.py"
       ],

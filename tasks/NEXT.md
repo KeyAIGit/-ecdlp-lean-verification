@@ -123,7 +123,7 @@ Current scientific activation order:
     completion. Generalized-root solving, rank, recovery distribution, sparse
     linear algebra, and complete equal-success cost remain unresolved.
 17. Only a source-grounded, non-executable `HYP-M16-SOLVER-SLOPE-001` draft for
-    current seed `HGS-D2572A6530D8` may now be written and reviewed. Any solver,
+    current seed `HGS-756950525445` may now be written and reviewed. Any solver,
     exact-target work, route promotion,
     different candidate, or follow-on experiment requires a new review and
     separate dated authorization. A scoped blocker or abstention is correct if

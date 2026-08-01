@@ -25,8 +25,8 @@ ARTIFACT_PATH = HERE / "artifact.json"
 HASH_PATH = HERE / "artifact.sha256"
 
 EXPECTED_UPSTREAM = {
-    "data/source_claim_extracts/petit_kosters_messeng2016.json": (
-        "32bc5b4f91b05d23d902f4a1a073c4453ff94b346bfac3bc541e2c6e688dfce1"
+    "data/source_claim_extracts/petit_kosters_messeng2016_task028.json": (
+        "4687da1bd3e87f2adfb0379b3336c8f4c19057350ae425f49df6f36da3ed30ea"
     ),
     "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json": (
         "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7"
@@ -120,7 +120,7 @@ def validate_source_binding(document: dict[str, Any]) -> None:
     exact(
         "source extract path",
         binding["claim_extract_path"],
-        "data/source_claim_extracts/petit_kosters_messeng2016.json",
+        "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
     )
     exact(
         "source extract hash",

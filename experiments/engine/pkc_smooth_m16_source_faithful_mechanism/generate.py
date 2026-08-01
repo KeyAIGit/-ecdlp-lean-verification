@@ -26,8 +26,8 @@ ARTIFACT_PATH = HERE / "artifact.json"
 HASH_PATH = HERE / "artifact.sha256"
 
 UPSTREAM_BINDINGS = {
-    "data/source_claim_extracts/petit_kosters_messeng2016.json": (
-        "32bc5b4f91b05d23d902f4a1a073c4453ff94b346bfac3bc541e2c6e688dfce1"
+    "data/source_claim_extracts/petit_kosters_messeng2016_task028.json": (
+        "4687da1bd3e87f2adfb0379b3336c8f4c19057350ae425f49df6f36da3ed30ea"
     ),
     "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json": (
         "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7"
@@ -84,7 +84,10 @@ def assert_upstream_bindings() -> None:
 
 
 def assert_source_extract() -> None:
-    path = ROOT / "data/source_claim_extracts/petit_kosters_messeng2016.json"
+    path = (
+        ROOT
+        / "data/source_claim_extracts/petit_kosters_messeng2016_task028.json"
+    )
     source = json.loads(path.read_text(encoding="utf-8"))
     claims = {
         claim["claim_id"]: claim
@@ -139,10 +142,10 @@ def build_artifact() -> dict[str, Any]:
                 "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943"
             ),
             "claim_extract_path": (
-                "data/source_claim_extracts/petit_kosters_messeng2016.json"
+                "data/source_claim_extracts/petit_kosters_messeng2016_task028.json"
             ),
             "claim_extract_sha256": UPSTREAM_BINDINGS[
-                "data/source_claim_extracts/petit_kosters_messeng2016.json"
+                "data/source_claim_extracts/petit_kosters_messeng2016_task028.json"
             ],
             "claim_ids": list(SOURCE_CLAIM_IDS),
             "review_status": "full_text_obtained",

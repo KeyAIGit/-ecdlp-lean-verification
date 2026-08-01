@@ -2,6 +2,9 @@
 
 This desk package binds the direct `p-1` construction in Petit, Kosters, and
 Messeng (PKC 2016) to the exact secp256k1 M16 specialization.
+Its three source claims live in the versioned
+`data/source_claim_extracts/petit_kosters_messeng2016_task028.json` blob so
+earlier certificates remain bound to their unchanged primary-source extract.
 
 It freezes four distinctions that are easy to lose in prose:
 

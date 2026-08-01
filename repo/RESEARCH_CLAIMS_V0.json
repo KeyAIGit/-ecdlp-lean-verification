@@ -291,7 +291,7 @@
       "assurance": "certificate_replayed",
       "outcome": "confirmed",
       "evidence_refs": [
-        "data/source_claim_extracts/petit_kosters_messeng2016.json",
+        "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
         "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json",
         "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/validate.py"
       ],
