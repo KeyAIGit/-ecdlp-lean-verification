@@ -187,6 +187,12 @@ jobs:
           python3 scripts/build_research_shadow_intake.py --check
           python3 scripts/test_research_shadow_intake.py
 
+      - name: Check quarantined untrusted evidence intake
+        run: |
+          python3 scripts/build_untrusted_evidence_intake.py --check
+          python3 scripts/test_untrusted_evidence_intake.py
+          python3 -m py_compile scripts/build_untrusted_evidence_intake.py scripts/test_untrusted_evidence_intake.py
+
       - name: Replay 100k research-question funnel
         run: |
           python3 scripts/hypothesis_funnel.py --check

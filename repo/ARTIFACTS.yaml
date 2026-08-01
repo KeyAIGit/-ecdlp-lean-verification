@@ -117,6 +117,7 @@ classes:
       - data/research_engine_state.json
       - data/research_engine_v02_state.json
       - data/research_engine_shadow_intake.json
+      - data/untrusted_evidence_intake/
       - data/hypothesis_funnel_state.json
       - data/hypothesis_space_state.json
       - data/hypothesis_space_map.json
@@ -144,6 +145,7 @@ classes:
       - scripts/build_research_engine_state.py
       - scripts/build_research_engine_v02_state.py
       - scripts/build_research_shadow_intake.py
+      - scripts/build_untrusted_evidence_intake.py
       - scripts/hypothesis_funnel.py
       - scripts/hypothesis_space_funnel.py
       - scripts/hypothesis_space_run_ledger.py
@@ -161,6 +163,7 @@ classes:
       - scripts/build_research_engine_state.py --check
       - scripts/build_research_engine_v02_state.py --check
       - scripts/build_research_shadow_intake.py --check
+      - scripts/build_untrusted_evidence_intake.py --check
       - scripts/hypothesis_funnel.py --check
       - scripts/test_hypothesis_funnel.py
       - scripts/hypothesis_space_funnel.py --check
@@ -178,6 +181,7 @@ classes:
       - scripts/test_research_claims.py
       - scripts/test_research_engine_v02.py
       - scripts/test_research_shadow_intake.py
+      - scripts/test_untrusted_evidence_intake.py
       - scripts/check_research_engine_v02_acceptance.py
       - scripts/check_research_engine.py
       - scripts/check_product_model.py
@@ -236,6 +240,7 @@ classes:
       - repo/RESEARCH_ENGINE_LIFECYCLE_V0.json
       - repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json
       - repo/SCIENTIFIC_PROVENANCE_V0.json
+      - repo/UNTRUSTED_EVIDENCE_INTAKE_V0.json
       - repo/PRODUCT_MODEL.json
       - repo/PILOT_PROTOCOL.json
       - repo/AUTOMATION_INVENTORY.json
@@ -311,6 +316,7 @@ classes:
       - archive/scratch/
       - archive/platform/
       - archive/generator-report.md
+      - archive/untrusted_intake/
     owner: history
     hand_edit: false
     generated: false
