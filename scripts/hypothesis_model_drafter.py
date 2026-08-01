@@ -792,13 +792,32 @@ def build_typed_evidence_request_packets(
     if None in claim_index or len(claim_index) != len(claims):
         raise ValueError("typed-evidence source-claim identities are invalid")
 
+    current_seed_ids = set(seed_ids)
+    current_seed_by_cell = {
+        seed.get("cell_id"): seed.get("seed_id") for seed in seeds
+    }
+    if None in current_seed_by_cell or len(current_seed_by_cell) != len(seeds):
+        raise ValueError("generated typed-evidence seed cells are not unique")
     proposals_by_seed: dict[str, list[str]] = {}
     for proposal in proposals:
         seed_id = proposal.get("seed_id")
         proposal_id = proposal.get("proposal_id")
         if not isinstance(seed_id, str) or not isinstance(proposal_id, str):
             raise ValueError("proposal intake lacks stable seed/proposal identity")
-        proposals_by_seed.setdefault(seed_id, []).append(proposal_id)
+        resolution = proposal.get("seed_resolution")
+        if seed_id in current_seed_ids and resolution == "current_scoped_identity":
+            resolved_seed_id = seed_id
+        elif resolution == "frozen_alias_current_scoped_identity":
+            resolved_seed_id = current_seed_by_cell.get(proposal.get("cell_id"))
+            if not isinstance(resolved_seed_id, str):
+                raise ValueError(
+                    "compatible frozen proposal has no current scoped seed"
+                )
+        elif resolution == "frozen_historical_only":
+            continue
+        else:
+            raise ValueError("proposal intake seed resolution is invalid")
+        proposals_by_seed.setdefault(resolved_seed_id, []).append(proposal_id)
 
     required = policy["output_contract"]["required_fields"]
     policy_digest = sha256_json(policy)

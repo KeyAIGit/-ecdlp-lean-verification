@@ -233,6 +233,14 @@ jobs:
         run: |
           python3 experiments/engine/pkc_smooth_m16_symbolic_desk/generate.py --check
           python3 experiments/engine/pkc_smooth_m16_symbolic_desk/validate.py
+
+      - name: PKC M16 factor-base census and regime assurance
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_regime_assurance_desk/generate.py --check
+          python3 experiments/engine/pkc_smooth_m16_regime_assurance_desk/validate.py
+          python3 experiments/engine/pkc_smooth_m16_regime_assurance_desk/test_validate.py
+          python3 -m py_compile experiments/engine/pkc_smooth_m16_regime_assurance_desk/*.py
+          (cd experiments/engine/pkc_smooth_m16_regime_assurance_desk && sha256sum -c artifact.sha256)
       - name: PKC M16 semantic bridge certificate
         run: |
           python3 experiments/engine/pkc_smooth_m16_semantic_bridge/generate.py --check

@@ -1,0 +1,139 @@
+{
+  "artifact_id": "PKC-SMOOTH-M16-REGIME-ASSURANCE-DESK-001",
+  "artifact_kind": "structural_applicability_desk_certificate",
+  "factor_base_census": {
+    "character_sum_over_H": 2532,
+    "glv_orbits": {
+      "all_x_orbits": 188174,
+      "liftable_signed_point_orbits": 189018,
+      "liftable_x_orbits": 94509,
+      "nonliftable_x_orbits": 93665,
+      "orbit_action_verified_elementwise": true,
+      "orbit_classes_modulo_negation_and_glv": 94509,
+      "orbit_size": 3,
+      "zero_rhs_x_orbits": 0
+    },
+    "liftable_x": 283527,
+    "nonliftable_x": 280995,
+    "signed_affine_factor_points": 567054,
+    "subgroup_x_total": 564522,
+    "zero_rhs_x": 0
+  },
+  "inputs": {
+    "D": 564522,
+    "arity": 16,
+    "b": 7,
+    "beta": "55594575648329892869085402983802832744385952214688224221778511981742606582254",
+    "n": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+    "small_prime_factors": [
+      2,
+      3,
+      7,
+      13441
+    ]
+  },
+  "method": {
+    "algorithm": "Find the first exact-order-D subgroup generator, enumerate D/3 explicit GLV orbit representatives, verify all three members and evaluate Euler's criterion on their shared cube.",
+    "generator": "82848990384721873837542085774364474839392473759419163642662585798722904926012",
+    "generator_order": 564522,
+    "generator_search_base": 3,
+    "large_cofactor": "205115282021455665897114700593932402728804164701536103180137503955397371",
+    "representatives_enumerated": 188174
+  },
+  "proposal_regime": {
+    "classification": "INAPPLICABLE_UNDER_CURRENT_MAX24",
+    "frozen_max_field_bits": 24,
+    "reason": "The immutable proposal states that its <=24-bit ladder is calibration-only and cannot support the M16 exponent claim.",
+    "scope": "proposal_execution_regime_only"
+  },
+  "terminal": {
+    "M16_mechanism_falsified": false,
+    "authorization": "none",
+    "calibration": "excluded_nonexperimental",
+    "cell_transition": "open_to_open",
+    "census": "confirmed",
+    "classification": "INAPPLICABLE_UNDER_CURRENT_MAX24",
+    "novelty_claimed": false,
+    "route_status": "open_parked",
+    "scope": "proposal_execution_regime_only",
+    "source_independence": "not_established"
+  },
+  "trust_boundary": {
+    "excluded": [
+      "Semaev system construction or solver execution",
+      "relation independence, rank, solving-degree, or fill-in claim",
+      "asymptotic or secp256k1 ECDLP improvement",
+      "route rejection, route promotion, or experiment authorization",
+      "global novelty or Kudo full-text claim"
+    ],
+    "interpretation": "Exact subgroup and combinatorial arithmetic update target properties and conditioned null comparators only. They do not measure a solver or validate the M16 attack mechanism."
+  },
+  "upstream_bindings": {
+    "Ecdlp/Secp256k1Verified.lean": "f0ddddc4a890d9b9eab350ae7374e4f0e0bef62d3ec75adaee1f166ade2c3037",
+    "experiments/engine/outcomes/REO-2026-07-31-001.json": "340ce99d4cb87f63212d9e298cdf2fd7da8c171ffce5d23132f862a5df792d02",
+    "experiments/engine/pkc_smooth_desk_screen/artifact.json": "7d2338eadefd7b531b83fc77a4e944a32aef5ab8646cacef5eb3b26191c7f78e",
+    "experiments/engine/pkc_smooth_m16_fixed_target_yield/artifact.json": "21a95ea4ea71c02d0199c331e549ca2e4ec2fbf7c1d8d70fe6651bea292d6413",
+    "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json": "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7",
+    "experiments/engine/proposals/HGP-M16-SOLVER-SLOPE-001.json": "14bfab1eb68f6e6b03e5754302fbe888f250121d1125e1202167d5af35e455c9"
+  },
+  "yield_models": {
+    "conditioned_null_boundary": [
+      "A=567054 signed affine factor points, U=283527 liftable x values, q is the prime curve-group order, D=564522, and k=16.",
+      "The q-1 denominators define counterfactual conditioning; they do not establish the actual group-sum distribution.",
+      "Only explicitly counted negation-fixed cancellations are removed. Additional zero-sum or dependent configurations are neither counted nor excluded."
+    ],
+    "conditioned_null_comparators": {
+      "distinct_signed_conditioned_nonidentity": {
+        "decimal_display": "4.716287841557413898552818332229177366E+1",
+        "denominator": "603083798111021851164432213586916186733528980620181793659401891362073757783",
+        "formula": "(C(A,16)-C(U,8))/(q-1)",
+        "interpretation": "Counterfactual comparator after removing exactly the negation-fixed distinct subsets, then conditioning every remaining configuration on a nonidentity sum uniform over q-1 targets. Other zero-sum configurations may exist.",
+        "numerator": "28443167844712784157912288468956028140738554967680568358502967263926454493940"
+      },
+      "distinct_x_signed_conditioned_nonidentity": {
+        "decimal_display": "4.715289858774978642853791767376418592E+1",
+        "denominator": "603083798111021851164432213586916186733528980620181793659401891362073757783",
+        "formula": "2^16*C(U,16)/(q-1)",
+        "interpretation": "Counterfactual distinct-x signed comparator conditioned on a nonidentity sum uniform over q-1 targets. The exact numerator can still contain non-pairwise zero sums.",
+        "numerator": "28437149172243979561992225683679060552994287262473155611517095527784751554560"
+      },
+      "signed_multiset_conditioned_nonidentity": {
+        "decimal_display": "4.718284386243769381983544232544998686E+1",
+        "denominator": "2412335192444087404657728854347664746934115922480727174637607565448295031132",
+        "formula": "(C(A+15,16)-C(U+7,8))/(q-1)",
+        "interpretation": "Counterfactual comparator after removing exactly the negation-fixed signed multisets, then conditioning every remaining configuration on a nonidentity sum uniform over q-1 targets. Other cancellation relations may exist.",
+        "numerator": "113820834728952962384150751569272775304130946053791764568567245570841990920985"
+      }
+    },
+    "exact_combinatorial_counts": {
+      "distinct_signed_configurations": "5461088226184854558319159386039557403022838153619007298153937766124361150157680",
+      "distinct_x_with_sign_configurations": "5459932641070844075902507331266379626174903154394845877411282341334672298475520",
+      "negation_fixed_distinct_configurations": "1035599824338173321368051450481887321200",
+      "negation_fixed_multisets": "1035804387987361222091416151712514934379",
+      "signed_point_multisets": "5463400066989742194439236075325093214599321214969992060513319203552128079141659"
+    },
+    "notation": {
+      "A_signed_affine_points": 567054,
+      "D_source_coordinate_subgroup": 564522,
+      "U_liftable_x": 283527,
+      "k_arity": 16,
+      "p_base_field_order": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+      "q_curve_group_order": "115792089237316195423570985008687907852837564279074904382605163141518161494337"
+    },
+    "ordered_sampling_repeat_probability": {
+      "decimal_display": "2.115995951814784168162112058997274754E-4",
+      "denominator": "8437014806333149377590993198277994101795053043293247579778379462158413264778767",
+      "formula": "1-(A)_16/A^16",
+      "interpretation": "Collision probability for sixteen iid signed affine factor points; this is not the distinct-x collision probability.",
+      "numerator": "1785268917560233933081028983011013107505882350818785923508072653754409723767"
+    },
+    "source_heuristic": {
+      "decimal_display": "4.391323785272725197475155749294967670E+1",
+      "denominator": "2069783595117026993196331357030296352877200975898325082205304314141370419755976125",
+      "formula": "D^16/(16!*p)",
+      "interpretation": "The PKC 2016 source-level coordinate-root heuristic, retained as a comparator rather than target truth.",
+      "numerator": "90890899316046926334192120626585174166336600840165897538119716103792388946417943282"
+    }
+  }
+}

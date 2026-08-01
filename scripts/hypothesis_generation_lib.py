@@ -50,6 +50,7 @@ GENERATION_POLICY_FIELDS = {
     "limits",
     "typed_evidence_contract",
     "synthesis_rules",
+    "frozen_seed_bindings",
     "lifecycle",
     "fingerprint_contract",
     "compatibility_rule",
@@ -73,6 +74,16 @@ SYNTHESIS_RULE_FIELDS = {
     "required_predicates",
     "seed_identity_fields",
     "status",
+}
+FROZEN_SEED_BINDING_FIELDS = {
+    "seed_id",
+    "identity_version",
+    "source_commit",
+    "source_path",
+    "source_sha256",
+    "recorded_on",
+    "status",
+    "reason",
 }
 FINGERPRINT_CONTRACT_FIELDS = {
     "premise_version",
@@ -299,10 +310,12 @@ HYPOTHESIS_HARD_REJECTIONS = {
     "review_independence_unestablished",
     "typed_evidence_mismatch",
     "target_property_violated",
+    "stale_seed_snapshot",
 }
 
 PROPOSAL_ID = re.compile(r"^HGP-[A-Z0-9][A-Z0-9-]{4,80}$")
 REVIEW_ID = re.compile(r"^HGR-[A-Z0-9][A-Z0-9-]{4,80}$")
+SEED_ID = re.compile(r"^HGS-[A-F0-9]{12}$")
 HASH_ID = re.compile(r"^[0-9a-f]{64}$")
 COMMIT_ID = re.compile(r"^[0-9a-f]{40}$")
 IDENTITY_TOKEN = re.compile(r"^[a-z0-9][a-z0-9._-]{2,80}$")
@@ -388,6 +401,113 @@ def _valid_date(value: Any) -> bool:
 def git_file_sha256(commit: str, relative: str) -> str | None:
     payload = git_file_bytes(commit, relative)
     return hashlib.sha256(payload).hexdigest() if payload is not None else None
+
+
+def _seed_scoped_identity(seed: dict[str, Any]) -> dict[str, Any]:
+    """Return the policy-declared scientific identity of a generated seed."""
+    return {
+        "cell_id": seed["cell_id"],
+        "typed_mechanism_id": seed["typed_cell"]["mechanism_id"],
+        "feature_id": seed["target_feature"]["id"],
+        "mechanism_primitive_id": seed["mechanism_primitive"]["id"],
+        "uncertainty_id": seed["unresolved_question"]["id"],
+        "route_id": seed["route_id"],
+        "threat_model": seed["threat_model"],
+        "evidence_digest": seed["typed_evidence_digest"],
+        "synthesis_rule_id": seed["synthesis_rule"]["id"],
+        "synthesis_rule_version": seed["synthesis_rule"]["version"],
+    }
+
+
+def _frozen_seed_records(
+    policy: dict[str, Any], problems: list[str]
+) -> list[dict[str, Any]]:
+    """Load and authenticate legacy seeds from protected-main snapshots."""
+    bindings = policy.get("frozen_seed_bindings")
+    if not isinstance(bindings, list):
+        problems.append("frozen_seed_bindings must be an array")
+        return []
+    records: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for index, binding in enumerate(bindings):
+        label = f"frozen_seed_bindings[{index}]"
+        if not _exact_keys(
+            binding, FROZEN_SEED_BINDING_FIELDS, label, problems
+        ):
+            continue
+        seed_id = binding.get("seed_id")
+        if not isinstance(seed_id, str) or SEED_ID.fullmatch(seed_id) is None:
+            problems.append(f"{label}.seed_id is invalid")
+            continue
+        if seed_id in seen:
+            problems.append(f"{label}.seed_id is duplicated")
+            continue
+        seen.add(seed_id)
+        if binding.get("identity_version") != "legacy-global-claim-state-v0":
+            problems.append(f"{label}.identity_version is unsupported")
+        if binding.get("source_path") != "data/research_engine_state.json":
+            problems.append(f"{label}.source_path is not canonical")
+        source_commit = binding.get("source_commit")
+        if (
+            not isinstance(source_commit, str)
+            or COMMIT_ID.fullmatch(source_commit) is None
+        ):
+            problems.append(f"{label}.source_commit is invalid")
+            continue
+        source_sha = binding.get("source_sha256")
+        if not isinstance(source_sha, str) or HASH_ID.fullmatch(source_sha) is None:
+            problems.append(f"{label}.source_sha256 is invalid")
+            continue
+        if not _valid_date(binding.get("recorded_on")):
+            problems.append(f"{label}.recorded_on must be YYYY-MM-DD")
+        if binding.get("status") != "frozen_alias":
+            problems.append(f"{label}.status must be frozen_alias")
+        if not _substantive_text(binding.get("reason")):
+            problems.append(f"{label}.reason must be substantive")
+        payload = git_file_bytes(source_commit, binding["source_path"])
+        if payload is None:
+            problems.append(
+                f"{label}: source snapshot is not reproducible from protected main"
+            )
+            continue
+        if hashlib.sha256(payload).hexdigest() != source_sha:
+            problems.append(f"{label}: source snapshot hash mismatch")
+            continue
+        try:
+            source_state = json.loads(payload)
+            generated = source_state["hypothesis_generation"]["generated_seeds"]
+        except (KeyError, TypeError, json.JSONDecodeError):
+            problems.append(f"{label}: source snapshot has no generated seed set")
+            continue
+        matches = [item for item in generated if item.get("seed_id") == seed_id]
+        if len(matches) != 1:
+            problems.append(f"{label}: seed is not unique in source snapshot")
+            continue
+        seed = matches[0]
+        claim_digest = seed.get("claim_state_digest")
+        if (
+            not isinstance(claim_digest, str)
+            or HASH_ID.fullmatch(claim_digest) is None
+        ):
+            problems.append(f"{label}: legacy seed claim digest is invalid")
+            continue
+        try:
+            legacy_identity = _seed_scoped_identity(seed)
+        except (KeyError, TypeError):
+            problems.append(f"{label}: legacy seed identity is malformed")
+            continue
+        legacy_identity["claim_state_digest"] = claim_digest
+        expected_digest = sha256_json(legacy_identity)
+        if seed.get("deduplication_key") != expected_digest or seed_id != (
+            f"HGS-{expected_digest[:12].upper()}"
+        ):
+            problems.append(f"{label}: legacy seed identity does not replay")
+            continue
+        if seed.get("authorization") != "none":
+            problems.append(f"{label}: frozen seed must authorize nothing")
+            continue
+        records.append(seed)
+    return records
 
 
 def _working_tree_text_sha256(relative: Any) -> str | None:
@@ -676,6 +796,8 @@ def validate_generation_policy(
         if isinstance(rule, dict)
     ) != 1:
         problems.append("exactly one v0.1 synthesis rule must be active")
+
+    _frozen_seed_records(policy, problems)
 
     lifecycle = policy.get("lifecycle")
     if lifecycle != [
@@ -1039,7 +1161,7 @@ def generate_seeds(
         common_tags &= set(uncertainty["compatibility_tags"])
         if not common_tags:
             continue
-        identity = {
+        identity_values = {
             "cell_id": cell["cell_id"],
             "typed_mechanism_id": cell["mechanism_id"],
             "feature_id": feature["id"],
@@ -1048,9 +1170,12 @@ def generate_seeds(
             "route_id": route_id,
             "threat_model": primary,
             "evidence_digest": cell["evidence_digest"],
-            "claim_state_digest": claim_state_digest,
             "synthesis_rule_id": synthesis_rule["id"],
             "synthesis_rule_version": synthesis_rule["version"],
+        }
+        identity = {
+            field: identity_values[field]
+            for field in synthesis_rule["seed_identity_fields"]
         }
         seed_id = f"HGS-{sha256_json(identity)[:12].upper()}"
         evidence_inputs = sorted(
@@ -1175,6 +1300,8 @@ def _proposal_blockers(
     duplicate_mechanism_signatures: set[str],
 ) -> set[str]:
     blockers: set[str] = set()
+    if seed.get("_seed_resolution") == "frozen_historical_only":
+        blockers.add("stale_seed_snapshot")
     primary = seed["threat_model"]
     if proposal.get("threat_model") != primary:
         blockers.add("threat_model_drift")
@@ -1355,14 +1482,51 @@ def _proposal_blockers(
     return blockers
 
 
+def _resolved_seed_index(
+    seeds: list[dict[str, Any]], policy: dict[str, Any]
+) -> tuple[dict[str, dict[str, Any]], dict[str, str]]:
+    """Resolve current IDs and authenticated legacy aliases.
+
+    A frozen alias inherits current scientific state only when every scoped
+    identity field still matches. Otherwise it remains readable as historical
+    provenance but is forced behind ``stale_seed_snapshot``.
+    """
+    seed_index: dict[str, dict[str, Any]] = {}
+    resolutions: dict[str, str] = {}
+    current_by_scoped_digest: dict[str, dict[str, Any]] = {}
+    for seed in seeds:
+        current = dict(seed)
+        current["_seed_resolution"] = "current_scoped_identity"
+        seed_index[seed["seed_id"]] = current
+        resolutions[seed["seed_id"]] = "current_scoped_identity"
+        current_by_scoped_digest[sha256_json(_seed_scoped_identity(seed))] = seed
+
+    frozen_problems: list[str] = []
+    for frozen in _frozen_seed_records(policy, frozen_problems):
+        scoped_digest = sha256_json(_seed_scoped_identity(frozen))
+        current = current_by_scoped_digest.get(scoped_digest)
+        if current is None:
+            resolved = dict(frozen)
+            resolution = "frozen_historical_only"
+        else:
+            resolved = dict(current)
+            resolution = "frozen_alias_current_scoped_identity"
+        resolved["seed_id"] = frozen["seed_id"]
+        resolved["_seed_resolution"] = resolution
+        seed_index[frozen["seed_id"]] = resolved
+        resolutions[frozen["seed_id"]] = resolution
+    return seed_index, resolutions
+
+
 def validate_proposals(
     records: list[tuple[Path, dict[str, Any]]],
     seeds: list[dict[str, Any]],
     policy: dict[str, Any],
-) -> tuple[list[str], dict[str, set[str]]]:
+) -> tuple[list[str], dict[str, set[str]], dict[str, str]]:
     problems: list[str] = []
     blockers_by_proposal: dict[str, set[str]] = {}
-    seed_index = {seed["seed_id"]: seed for seed in seeds}
+    seed_resolution_by_proposal: dict[str, str] = {}
+    seed_index, seed_resolutions = _resolved_seed_index(seeds, policy)
     known_fingerprints = {
         premise_fingerprint(item["basis"])
         for item in policy["known_premises"]
@@ -1435,6 +1599,9 @@ def validate_proposals(
         if seed is None:
             problems.append(f"{label}: seed_id does not resolve")
             continue
+        seed_resolution_by_proposal[proposal_id] = seed_resolutions[
+            proposal["seed_id"]
+        ]
         if not _nonempty_text(proposal.get("cell_id")):
             problems.append(f"{label}: cell_id must be nonempty")
         typed_digest = proposal.get("typed_evidence_digest")
@@ -1674,7 +1841,7 @@ def validate_proposals(
         blockers_by_proposal[proposal_id] = blockers
     if len(proposal_ids) != len(set(proposal_ids)):
         problems.append("hypothesis proposal ids must be unique")
-    return problems, blockers_by_proposal
+    return problems, blockers_by_proposal, seed_resolution_by_proposal
 
 
 def validate_reviews(
@@ -1833,9 +2000,11 @@ def build_generation_state(
         "max_generated_seeds", 0
     )
     seed_overflow = len(seeds) > max_generated_seeds
-    proposal_problems, blockers_by_proposal = validate_proposals(
-        proposals, seeds, policy
-    )
+    (
+        proposal_problems,
+        blockers_by_proposal,
+        seed_resolution_by_proposal,
+    ) = validate_proposals(proposals, seeds, policy)
     problems.extend(proposal_problems)
     review_problems, reviews_by_proposal = validate_reviews(
         reviews, proposals, policy
@@ -1928,6 +2097,7 @@ def build_generation_state(
             "adversarial_review_blocked",
             "typed_evidence_mismatch",
             "target_property_violated",
+            "stale_seed_snapshot",
         }:
             disposition = "hard_rejected"
         else:
@@ -1940,6 +2110,9 @@ def build_generation_state(
                 "route_id": proposal["route_id"],
                 "title": proposal["title"],
                 "proposal_sha256": proposal_sha256(proposal),
+                "seed_resolution": seed_resolution_by_proposal.get(
+                    proposal_id, "unresolved"
+                ),
                 "review_roles_present": sorted(role_index),
                 "review_independence": (
                     "cross_family_attested_not_mechanically_proved"
@@ -2106,6 +2279,21 @@ def build_generation_state(
                 "a generation failure. Every seed remains non-executable; the "
                 "coverage artifact must be reviewed before a later cycle may "
                 "change the threshold or synthesis partition."
+            ),
+        },
+        "seed_lifecycle": {
+            "identity_scope": policy["synthesis_rules"][0][
+                "seed_identity_fields"
+            ],
+            "claim_state_digest_role": "provenance_only_not_seed_identity",
+            "frozen_alias_ids": sorted(
+                binding["seed_id"]
+                for binding in policy["frozen_seed_bindings"]
+            ),
+            "rule": (
+                "A frozen legacy id resolves to current state only while its "
+                "scoped scientific identity is unchanged; otherwise it is a "
+                "historical-only snapshot and cannot quality-clear."
             ),
         },
         "generated_seeds": seeds,

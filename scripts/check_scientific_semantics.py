@@ -140,6 +140,7 @@ def validate_semantics(
     sources = _index(source_registry.get("sources"))
     cells = _index(typed_state.get("cells"), "cell_id")
     typed_claims = _index(typed_state.get("source_claims"))
+    target_properties = _index(typed_state.get("target_properties"))
     typed_barriers = _index(typed_state.get("barriers"))
     claims = _index(claim_state.get("claims"), "claim_id")
 
@@ -148,6 +149,11 @@ def validate_semantics(
         problems.append("R-GLV-SEMAEV must remain open_parked")
     if glv_route.get("authorized_experiment") is not False:
         problems.append("R-GLV-SEMAEV must not authorize an experiment")
+    petit_route = routes.get("R-PETIT-COMPOSED-MAPS", {})
+    if petit_route.get("status") != "open_parked":
+        problems.append("R-PETIT-COMPOSED-MAPS must remain open_parked")
+    if petit_route.get("authorized_experiment") is not False:
+        problems.append("R-PETIT-COMPOSED-MAPS must not authorize an experiment")
 
     cube_claim = claims.get(
         "CLM-GLV-INDEPENDENT-CUBES-FIXED-TARGET", {}
@@ -190,7 +196,7 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 31,
+        "source_claims": 32,
         "cells": 8,
         "seed_eligible_cells": 2,
         "desk_decisions": 4,
@@ -203,6 +209,58 @@ def validate_semantics(
     m16_cell = cells.get("CELL-M-PKC-SMOOTH-M16", {})
     if m16_cell.get("status") != "open":
         problems.append("M16 scoped blocker must leave the cell open")
+    m16_census_claim = claims.get(
+        "CLM-PKC-M16-SECP-FACTOR-BASE-CENSUS", {}
+    )
+    if m16_census_claim.get("claim_disposition") != "confirmed":
+        problems.append("M16 factor-base census must remain confirmed")
+    if m16_census_claim.get("assurance") != ["certificate_replayed"]:
+        problems.append("M16 factor-base census must remain certificate-backed")
+    m16_regime_claim = claims.get(
+        "CLM-PKC-M16-CURRENT-MAX24-REGIME", {}
+    )
+    if m16_regime_claim.get("claim_disposition") != "inapplicable":
+        problems.append("M16 current max24 regime must remain inapplicable")
+    regime_scope = m16_regime_claim.get("scope", "")
+    if not isinstance(regime_scope, str) or (
+        "does not falsify the M16 mechanism" not in regime_scope
+        or "close its parent cell or route" not in regime_scope
+    ):
+        problems.append("M16 regime screen must retain its child-only boundary")
+    regime_reopening = " ".join(
+        item
+        for item in m16_regime_claim.get("reopening_conditions", [])
+        if isinstance(item, str)
+    )
+    if (
+        "new claim ID" not in regime_reopening
+        or "hash binding" not in regime_reopening
+        or "scoped truth" not in regime_reopening
+    ):
+        problems.append(
+            "M16 immutable regime claim must not be reopened by a larger proposal"
+        )
+    if "R-PETIT-COMPOSED-MAPS" not in claim_state.get("open_routes", []):
+        problems.append("M16 regime screen cannot close the Petit route")
+    expected_m16_properties = {
+        "TP-SECP-PKC-M16-CHARACTER-SUM": 2532,
+        "TP-SECP-PKC-M16-LIFTABLE-X": 283527,
+        "TP-SECP-PKC-M16-SIGNED-POINTS": 567054,
+        "TP-SECP-PKC-M16-GLV-ORBIT-CLASSES": 94509,
+        "TP-SECP-PKC-M16-ZERO-RHS-X": 0,
+    }
+    for property_id, expected in expected_m16_properties.items():
+        record = target_properties.get(property_id, {})
+        if record.get("value") != expected:
+            problems.append(f"M16 census property {property_id} drifted")
+        if record.get("status") != "certificate_replayed":
+            problems.append(
+                f"M16 census property {property_id} lost certificate assurance"
+            )
+    if "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS" not in m16_cell.get(
+        "source_claim_ids", []
+    ):
+        problems.append("M16 census must remain bound to the evolving M16 cell")
     torus_cell = cells.get("CELL-M-WCC-PPLUS1-TRACE-M67", {})
     if torus_cell.get("status") != "decided_inapplicable":
         problems.append("WCC p-plus-one m6/7 cell must remain inapplicable")

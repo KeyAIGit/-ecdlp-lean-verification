@@ -3,10 +3,10 @@
   "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
   "target_id": "secp256k1-classical-single-target-plain",
   "source_hashes": {
-    "policy_sha256": "12e191edb2f8c94da2eec0c94701ab4bd1847f1cd0f6202ddfe86eb19d7f2915",
+    "policy_sha256": "a9e18742d11ece81bf5e6abaff2cade27e5525ad6d3e9220b184ce059e83963f",
     "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
     "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-    "evidence_files_sha256": "dbc79d963123a330014049bb9eaf70c2bf1218bbd19d7e801b1594f14a4b1855",
+    "evidence_files_sha256": "ddd8a056c6bc68fe784d30f3b42e071bc77d6a3ac8741aaeb82edf636f24cd34",
     "desk_decisions_sha256": "1e66e8b2f3e196736c2196042817a23632b7760b02dbd1663408f81359dad608"
   },
   "trust_boundary": {
@@ -16,8 +16,8 @@
     "authorization_boundary": "Typed cells, generated seeds, and desk decisions authorize no experiment, target computation, route promotion, or security claim."
   },
   "counts": {
-    "source_claims": 31,
-    "target_properties": 6,
+    "source_claims": 32,
+    "target_properties": 11,
     "mechanisms": 8,
     "cells": 8,
     "open_cells": 3,
@@ -301,6 +301,22 @@
       "evidence_path": "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json"
     },
     {
+      "id": "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS",
+      "source_id": "repo:certificate",
+      "source_type": "certificate",
+      "citation": "KeyAI exact secp256k1 M16 smooth-subgroup factor-base census.",
+      "read_status": "certificate_replayed",
+      "url": null,
+      "artifact_sha256": "dc514544bf388562a3ebed312aef56bc87b00527f32ce6d131a2f5371dba2744",
+      "locator": {
+        "kind": "certificate_field",
+        "value": "factor_base_census, yield_models, and proposal_regime"
+      },
+      "statement": "For the exact order-564522 subgroup of the secp256k1 base field, the replayed character sum for x^3+7 is 2532: 283527 subgroup coordinates lift to 567054 signed affine points, no coordinate has zero right-hand side, and pairing the two y signs by elliptic-curve point negation after the free GLV action leaves 94509 orbit classes.",
+      "boundary": "This is exact structural and combinatorial arithmetic. It does not construct a relation system, run a solver, establish relation independence or rank, price recovery or linear algebra, validate an asymptotic attack, or authorize secp256k1 ECDLP computation.",
+      "evidence_path": "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json"
+    },
+    {
       "id": "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
       "source_id": "repo:certificate",
       "source_type": "certificate",
@@ -561,6 +577,66 @@
       "scope": "The shared base field and the exact PKC 2016 auxiliary-curve construction; no isogeny to secp256k1 is required.",
       "source_claim_ids": [
         "SC-PKC-AUXILIARY-CURVE"
+      ]
+    },
+    {
+      "id": "TP-SECP-PKC-M16-CHARACTER-SUM",
+      "label": "M16 subgroup character sum",
+      "value_type": "integer",
+      "value": 2532,
+      "status": "certificate_replayed",
+      "statement": "The exact sum of the quadratic character of x^3+7 over the order-564522 subgroup is 2532.",
+      "scope": "The direct PKC p-minus-one subgroup specialized to the secp256k1 base field and curve coefficient seven.",
+      "source_claim_ids": [
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+      ]
+    },
+    {
+      "id": "TP-SECP-PKC-M16-GLV-ORBIT-CLASSES",
+      "label": "M16 GLV and negation orbit classes",
+      "value_type": "integer",
+      "value": 94509,
+      "status": "certificate_replayed",
+      "statement": "Exact free three-element coordinate GLV orbits, together with the two y signs paired by negation, leave 94509 orbit classes.",
+      "scope": "Exact coordinate-orbit bookkeeping only; identifying these classes with usable factor-log columns requires additional group-action and relation semantics and is not asserted here.",
+      "source_claim_ids": [
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+      ]
+    },
+    {
+      "id": "TP-SECP-PKC-M16-LIFTABLE-X",
+      "label": "M16 liftable subgroup coordinates",
+      "value_type": "integer",
+      "value": 283527,
+      "status": "certificate_replayed",
+      "statement": "Exactly 283527 coordinates in the order-564522 subgroup lift to affine secp256k1 points.",
+      "scope": "Coordinate liftability inside the direct p-minus-one factor base only; no relation independence is implied.",
+      "source_claim_ids": [
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+      ]
+    },
+    {
+      "id": "TP-SECP-PKC-M16-SIGNED-POINTS",
+      "label": "M16 signed affine factor points",
+      "value_type": "integer",
+      "value": 567054,
+      "status": "certificate_replayed",
+      "statement": "The liftable subgroup coordinates produce exactly 567054 signed affine secp256k1 factor-base points.",
+      "scope": "Both y signs are counted before coordinate negation or GLV orbit identification.",
+      "source_claim_ids": [
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+      ]
+    },
+    {
+      "id": "TP-SECP-PKC-M16-ZERO-RHS-X",
+      "label": "M16 zero-right-hand-side coordinates",
+      "value_type": "integer",
+      "value": 0,
+      "status": "certificate_replayed",
+      "statement": "No coordinate in the order-564522 subgroup satisfies x^3+7=0 in the secp256k1 base field.",
+      "scope": "The direct p-minus-one subgroup factor base only; this is not a general no-two-torsion theorem.",
+      "source_claim_ids": [
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS"
       ]
     },
     {
@@ -1104,6 +1180,7 @@
         "SC-PKC-M16-INFINITY-STRATA-RESULT",
         "SC-PKC-M16-PROJECTIVE-RESULTANT-KERNEL-RESULT",
         "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
+        "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS",
         "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
         "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
         "SC-PKC-RELATION-YIELD",
@@ -1133,10 +1210,11 @@
         "experiments/engine/pkc_smooth_m16_infinity_strata/artifact.json",
         "experiments/engine/pkc_smooth_m16_projective_bridge/artifact.json",
         "experiments/engine/pkc_smooth_m16_projective_resultant_kernel/artifact.json",
+        "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json",
         "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
         "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
       ],
-      "evidence_digest": "180bd1dd2be5f4ed04530ff962865bb4ae3aac1438f4499e05dde06e9104bcfe",
+      "evidence_digest": "5d928412a43530859a86db03c6ebc0d98a97340252e652db5a680e392530ad26",
       "seed_axes": {
         "target_feature_id": "TF-LOW-DEGREE-COMPOSED-FACTOR-BASE",
         "mechanism_primitive_id": "MP-GENERALIZED-ROOT-RECOVERY",

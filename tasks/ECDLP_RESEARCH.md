@@ -1807,3 +1807,80 @@ How to verify:
 - after execution, independent full replay plus `sha256sum -c artifact.sha256`
 - decision-substrate, scientific-semantic, generated-fixpoint, artifact,
   branch-inventory, and full CI gates
+
+### TASK-027 - Recompute the exact M16 factor-base census and current proposal regime
+
+Status: completed_non_experimental_certificate
+Kind: structural applicability | desk | review
+Hypothesis: `HYP-M16-SOLVER-SLOPE-001` remains non-executable
+Route state: `R-PETIT-COMPOSED-MAPS` remains `open_parked`
+Authorization: none
+Calibration: excluded_nonexperimental
+Outcome: exact census confirmed; current proposal regime inapplicable only for
+M16 exponent inference
+Lifecycle: the census changes the scoped M16 evidence-cell identity. Immutable
+proposal `HGP-M16-SOLVER-SLOPE-001` is retained as historical-only under
+`stale_seed_snapshot`; current seed `HGS-029AFA3EA451` requires a new
+source-grounded, non-executable draft.
+Artifact:
+- `experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json`
+- ID `PKC-SMOOTH-M16-REGIME-ASSURANCE-DESK-001`
+- SHA-256 `dc514544bf388562a3ebed312aef56bc87b00527f32ce6d131a2f5371dba2744`
+Typed claim:
+- `SC-PKC-M16-SECP-FACTOR-BASE-CENSUS`
+
+Why it matters: the source heuristic used all `D=564522` subgroup
+coordinates, while the exact curve factor base depends on whether
+`x^3+7` is a square. This task resolves that target property and records
+separate exact conditioned null comparators before any solver proposal can
+interpret a toy slope. These comparators do not establish the actual group-sum
+distribution and may leave additional zero-sum configurations uncounted. The
+task also binds the immutable proposal's own statement that its current
+at-most-24-bit ladder is calibration-only.
+
+Recorded result:
+- The exact quadratic-character sum over the subgroup is `2532`.
+- Exactly `283527` subgroup coordinates lift, `280995` do not lift, and none
+  has zero right-hand side; both signs give `567054` affine factor points.
+- Explicit three-element GLV orbits give `94509` liftable x orbits,
+  `189018` signed-point orbits, and `94509` orbit classes after pairing the two
+  y signs by elliptic-curve point negation. Calling these classes usable
+  factor-log columns would require additional relation and group-action
+  semantics not asserted by this certificate.
+- Exact rational models retain the source heuristic `D^16/(16!*p)`, signed
+  multiset and distinct-point uniform-null comparators, and the ordered
+  repeat probability without using floating-point values as evidence.
+- The proposal's current `<=24`-bit ladder remains inapplicable to exponent
+  inference. This is a property of that frozen execution regime, not a
+  falsification of M16.
+
+Decision boundary:
+- This task performs exact public-parameter structural/applicability
+  arithmetic only. It does not use a private or third-party target.
+- Do not construct S17, run a solver, repeat TASK-026, perform a scaling
+  sweep, compute a discrete logarithm, or authorize an experiment.
+- Do not infer an actual group-sum distribution, relation independence, rank,
+  solving degree, fill-in,
+  recovery cost, sparse-linear-algebra cost, total attack cost, or an
+  asymptotic advantage from the conditioned comparators.
+- Keep `CELL-M-PKC-SMOOTH-M16` open, its complete-cost barrier unresolved,
+  the route parked, and all promotion and exact-target gates closed.
+- Kudo full-text status and global novelty are outside this certificate.
+
+Independent replay:
+- The producer finds one exact-order-`D` generator and enumerates `D/3`
+  explicit GLV orbit representatives.
+- The validator constructs the four prime-order components independently,
+  multiplies them, enumerates all `D` subgroup elements, and recomputes the
+  census, orbits, combinations, falling factorial, and reduced fractions
+  without importing the producer.
+- Path and artifact independence are checked. Source independence remains
+  `not_established`.
+
+How to verify:
+- `python3 experiments/engine/pkc_smooth_m16_regime_assurance_desk/generate.py --check`
+- `python3 experiments/engine/pkc_smooth_m16_regime_assurance_desk/validate.py`
+- `python3 experiments/engine/pkc_smooth_m16_regime_assurance_desk/test_validate.py`
+- `sha256sum -c experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.sha256`
+- typed-evidence, claim-level, scientific-semantic, generated-fixpoint,
+  no-sorry, axiom-audit, docs-sync, and full CI gates

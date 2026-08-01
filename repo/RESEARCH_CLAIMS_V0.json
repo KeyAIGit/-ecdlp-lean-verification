@@ -25,6 +25,20 @@
         "A materially different phase-preserving map supplies exact fixed-target semantics, recovery, exceptional components, and a non-orbit cost bridge.",
         "A reviewed primary source supplies a concrete mechanism not represented by the closed independent-cube child claim."
       ]
+    },
+    {
+      "research_question_id": "RQ-PKC-M16-COMPLETE-COST",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "hypothesis_ids": [
+        "HYP-M16-SOLVER-SLOPE-001"
+      ],
+      "statement": "Can the source-faithful p-minus-one M16 construction turn its exact secp256k1 factor base into an independently recoverable relation stream whose complete equal-success cost scales below the generic baseline?",
+      "status": "open_parked",
+      "threat_model": "classical-single-target-plain",
+      "reopening_conditions": [
+        "A separately authorized safe regime can distinguish the preregistered solver-slope and complete-cost laws.",
+        "The remaining rank, solving, recovery, preprocessing, sparse-linear-algebra, and common-cost obligations are specified without changing the threat model."
+      ]
     }
   ],
   "mechanism_variants": [
@@ -50,6 +64,14 @@
       "kind": "desired_property_only",
       "description": "Retain relative phases, fixed-target semantics, and recovery while changing a full cost quantity; no exact map currently exists.",
       "mechanism_status": "parked_without_exact_mechanism",
+      "proposal_seed_eligible": false
+    },
+    {
+      "mechanism_variant_id": "MV-PKC-PMINUS1-M16-SOLVER-SLOPE",
+      "research_question_id": "RQ-PKC-M16-COMPLETE-COST",
+      "kind": "historical_non_executable_proposal",
+      "description": "Use the exact order-564522 multiplicative subgroup as the source-faithful coordinate factor base at arity sixteen. HGP-M16-SOLVER-SLOPE-001 predates the exact factor-base census and remains an immutable historical snapshot; the current scoped seed requires a refreshed source-grounded proposal.",
+      "mechanism_status": "stale_seed_snapshot_pending_source_grounded_redraft",
       "proposal_seed_eligible": false
     }
   ],
@@ -141,6 +163,46 @@
       "assurance": [
         "literature_only"
       ]
+    },
+    {
+      "claim_id": "CLM-PKC-M16-SECP-FACTOR-BASE-CENSUS",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "research_question_id": "RQ-PKC-M16-COMPLETE-COST",
+      "statement": "The exact order-564522 subgroup has character sum 2532 for x^3+7, exactly 283527 liftable coordinates, 567054 signed affine factor points, and 94509 orbit classes after the free GLV action and elliptic-curve point negation.",
+      "threat_model": "classical-single-target-plain",
+      "mechanism_variant_id": "MV-PKC-PMINUS1-M16-SOLVER-SLOPE",
+      "scope": "Exact secp256k1 target-property census for the direct p-minus-one factor base; no relation, rank, solver, recovery, or complexity conclusion follows.",
+      "claim_disposition": "confirmed",
+      "supersedes": [],
+      "reopening_conditions": [
+        "Reopen only if the public constants, subgroup definition, curve equation, or independently replayed certificate binding changes."
+      ],
+      "evidence_event_ids": [
+        "CEV-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+      ],
+      "assurance": [
+        "certificate_replayed"
+      ]
+    },
+    {
+      "claim_id": "CLM-PKC-M16-CURRENT-MAX24-REGIME",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "research_question_id": "RQ-PKC-M16-COMPLETE-COST",
+      "statement": "The immutable proposal's current at-most-24-bit calibration ladder is inapplicable to inference of the M16 exponent or complete-cost claim.",
+      "threat_model": "classical-single-target-plain",
+      "mechanism_variant_id": "MV-PKC-PMINUS1-M16-SOLVER-SLOPE",
+      "scope": "Only the execution regime frozen in HGP-M16-SOLVER-SLOPE-001; this does not falsify the M16 mechanism or close its parent cell or route.",
+      "claim_disposition": "inapplicable",
+      "supersedes": [],
+      "reopening_conditions": [
+        "Reopen this exact immutable-scope claim only if its proposal bytes, hash binding, or interpretation is shown erroneous; a larger proposal must use a new claim ID and may supersede this claim without changing its scoped truth."
+      ],
+      "evidence_event_ids": [
+        "CEV-PKC-M16-CURRENT-MAX24-SCREEN"
+      ],
+      "assurance": [
+        "certificate_replayed"
+      ]
     }
   ],
   "evidence_events": [
@@ -191,6 +253,30 @@
       "evidence_refs": [
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "repo/ECDLP_DECISION_SUBSTRATE.json"
+      ],
+      "calibration_eligible": false,
+      "authorization": "none"
+    },
+    {
+      "evidence_event_id": "CEV-PKC-M16-SECP-FACTOR-BASE-CENSUS",
+      "event_class": "structural",
+      "assurance": "certificate_replayed",
+      "outcome": "confirmed",
+      "evidence_refs": [
+        "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json",
+        "experiments/engine/pkc_smooth_m16_regime_assurance_desk/validate.py"
+      ],
+      "calibration_eligible": false,
+      "authorization": "none"
+    },
+    {
+      "evidence_event_id": "CEV-PKC-M16-CURRENT-MAX24-SCREEN",
+      "event_class": "structural",
+      "assurance": "certificate_replayed",
+      "outcome": "inapplicable",
+      "evidence_refs": [
+        "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json",
+        "experiments/engine/proposals/HGP-M16-SOLVER-SLOPE-001.json"
       ],
       "calibration_eligible": false,
       "authorization": "none"

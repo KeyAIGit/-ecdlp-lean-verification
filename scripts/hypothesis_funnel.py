@@ -546,6 +546,10 @@ def compile_review_decisions(
             raise ValueError(f"unknown review verdict: {decision['verdict']}")
         if decision["verdict"] != "retain_non_executable_research_bet":
             continue
+        if canonical_binding_lifecycle(decision["canonical_binding"]) == (
+            "historical_only"
+        ):
+            continue
         record = copy.deepcopy(
             queue_by_signature[decision["semantic_signature_sha256"]]
         )
@@ -621,6 +625,36 @@ def validate_canonical_binding(binding: dict[str, Any]) -> None:
     for key in ("proposal_sha256", "cell_id", "route_id"):
         if match.get(key) != binding[key]:
             raise ValueError(f"canonical proposal binding mismatch: {key}")
+
+
+def canonical_binding_lifecycle(binding: dict[str, Any]) -> str:
+    """Classify whether a valid review binding still names current science."""
+    if binding.get("kind") != "research_engine_proposal":
+        return "not_applicable"
+    state = json.loads(
+        (ROOT / "data" / "research_engine_state.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    proposals = state.get("hypothesis_generation", {}).get(
+        "proposal_intake", []
+    )
+    match = next(
+        (
+            item
+            for item in proposals
+            if item.get("proposal_id") == binding.get("proposal_id")
+        ),
+        None,
+    )
+    if match is None:
+        return "missing"
+    if (
+        match.get("seed_resolution") == "frozen_historical_only"
+        or "stale_seed_snapshot" in match.get("blockers", [])
+    ):
+        return "historical_only"
+    return "current_non_executable"
 
 
 def public_candidate(record: dict[str, Any]) -> dict[str, Any]:
@@ -822,6 +856,20 @@ def run_funnel(
     reviews_compiled = compile_reviews and attempt_limit is None
     final_bets = compile_review_decisions(queue, policy) if reviews_compiled else []
     review_records = policy["review_decisions"] if reviews_compiled else []
+    review_binding_statuses = (
+        [
+            {
+                "review_id": record["review_id"],
+                "canonical_binding_kind": record["canonical_binding"]["kind"],
+                "lifecycle": canonical_binding_lifecycle(
+                    record["canonical_binding"]
+                ),
+            }
+            for record in review_records
+        ]
+        if reviews_compiled
+        else []
+    )
     independent_review_records = sum(
         all(record["independence"].values()) for record in review_records
     )
@@ -869,6 +917,10 @@ def run_funnel(
             "pareto_records_before_review_queue": len(candidates),
             "review_queue": len(public_queue),
             "review_records": len(review_records),
+            "historical_only_review_bindings": sum(
+                item["lifecycle"] == "historical_only"
+                for item in review_binding_statuses
+            ),
             "independent_review_records": independent_review_records,
             "unreviewed_queue_items": len(public_queue) - len(review_records),
             "final_research_bets": len(final_bets),
@@ -885,6 +937,7 @@ def run_funnel(
             key: values for key, values in sorted(samples.items())
         },
         "review_queue": public_queue,
+        "review_binding_statuses": review_binding_statuses,
         "final_research_bets": final_bets,
         "memory_contract": {
             "raw_record_retention": 0,
@@ -901,6 +954,7 @@ def run_funnel(
             "The historical source labels are advisory and are not scientific gates.",
             "No lexical or typed digest proves semantic novelty.",
             "A portfolio review record is not independent unless source, model-family, and context independence are all recorded true.",
+            "A historical-only canonical proposal binding remains audit evidence but cannot enter current final_research_bets.",
             "Every retained item still lacks an assured exact mechanism and independent source review.",
             "No output is executable, admissible, recommended, authorized, or route-promoting."
         ],

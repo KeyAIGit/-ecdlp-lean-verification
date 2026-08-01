@@ -206,6 +206,59 @@ class ScientificSemanticTests(unittest.TestCase):
             "M16 semantic result cannot authorize execution", problems
         )
 
+    def test_m16_regime_screen_cannot_close_route_or_claim_mechanism(self) -> None:
+        decisions = copy.deepcopy(self.decisions)
+        route = next(
+            item
+            for item in decisions["routes"]
+            if item["id"] == "R-PETIT-COMPOSED-MAPS"
+        )
+        route["status"] = "closed"
+        claims = copy.deepcopy(self.claims)
+        regime = next(
+            item
+            for item in claims["claims"]
+            if item["claim_id"] == "CLM-PKC-M16-CURRENT-MAX24-REGIME"
+        )
+        regime["scope"] = "The whole M16 mechanism is impossible."
+        regime["reopening_conditions"] = [
+            "A larger proposal reopens and replaces this claim."
+        ]
+        problems = self.validate(decisions=decisions, claims=claims)
+        self.assertIn("R-PETIT-COMPOSED-MAPS must remain open_parked", problems)
+        self.assertIn(
+            "M16 regime screen must retain its child-only boundary", problems
+        )
+        self.assertIn(
+            "M16 immutable regime claim must not be reopened by a larger proposal",
+            problems,
+        )
+
+    def test_m16_census_cannot_be_relabelled_lean_or_detached_from_cell(self) -> None:
+        claims = copy.deepcopy(self.claims)
+        census = next(
+            item
+            for item in claims["claims"]
+            if item["claim_id"] == "CLM-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+        )
+        census["assurance"] = ["lean_kernel"]
+        typed = copy.deepcopy(self.typed)
+        cell = next(
+            item
+            for item in typed["cells"]
+            if item["cell_id"] == "CELL-M-PKC-SMOOTH-M16"
+        )
+        cell["source_claim_ids"].remove(
+            "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS"
+        )
+        problems = self.validate(claims=claims, typed=typed)
+        self.assertIn(
+            "M16 factor-base census must remain certificate-backed", problems
+        )
+        self.assertIn(
+            "M16 census must remain bound to the evolving M16 cell", problems
+        )
+
     def test_m16_semantic_certificate_cannot_be_detached(self) -> None:
         typed = copy.deepcopy(self.typed)
         claim_id = "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT"
