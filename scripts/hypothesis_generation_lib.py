@@ -21,6 +21,10 @@ from scientific_provenance import (
     scientific_source_commit_allowed,
 )
 from research_contract_binding import scientific_contract_digests
+from hypothesis_fragment_contract import (
+    build_typed_evidence_prompt,
+    fragment_value_problems,
+)
 from research_claims import load_and_build as load_research_claim_state
 from research_engine_v02 import (
     MECHANISM_ASSURANCE_STATUSES,
@@ -40,6 +44,8 @@ ROOT = Path(__file__).resolve().parent.parent
 GENERATION_POLICY_PATH = ROOT / "repo" / "HYPOTHESIS_GENERATION_V0.json"
 PROPOSALS_DIR = ROOT / "experiments" / "engine" / "proposals"
 REVIEWS_DIR = ROOT / "experiments" / "engine" / "proposal_reviews"
+DRAFT_ATTEMPTS_DIR = ROOT / "experiments" / "engine" / "draft_attempts"
+DRAFTER_POLICY_PATH = ROOT / "repo" / "HYPOTHESIS_MODEL_DRAFTER_V0.json"
 
 GENERATION_POLICY_FIELDS = {
     "schema_version",
@@ -138,6 +144,95 @@ KNOWN_PREMISE_FIELDS = {
     "basis",
     "disposition",
     "evidence_inputs",
+}
+
+DRAFT_ATTEMPT_FIELDS = {
+    "schema_version",
+    "attempt_id",
+    "task_id",
+    "attempted_on",
+    "scientific_identity",
+    "seed_binding",
+    "packet_binding",
+    "synthesis_provenance",
+    "fragment",
+    "fragment_sha256",
+    "parser_replay",
+    "review_observations",
+    "blockers",
+    "reopening_conditions",
+    "disposition",
+    "boundary",
+}
+DRAFT_SEED_BINDING_FIELDS = {
+    "seed_id",
+    "cell_id",
+    "route_id",
+    "threat_model",
+    "typed_evidence_digest",
+    "source_commit",
+    "source_main_ancestor",
+}
+DRAFT_PACKET_BINDING_FIELDS = {
+    "binding_mode",
+    "packet_contract_version",
+    "drafter_id",
+    "lane",
+    "policy_sha256",
+    "source_state_sha256",
+    "typed_evidence_state_sha256",
+    "decision_state_sha256",
+    "source_claim_packet_sha256",
+    "evidence_manifest_sha256",
+    "context_documents_sha256",
+    "decision_mode",
+    "research_object_id",
+    "canonical_prompt_sha256",
+    "scientific_packet_sha256",
+    "prior_draft_attempts_sha256",
+    "canonical_prompt_delivered_to_synthesis_agent",
+    "allowed_evidence_claim_ids",
+}
+DRAFT_SYNTHESIS_PROVENANCE_FIELDS = {
+    "mode",
+    "family",
+    "version",
+    "provider_transport_attested",
+    "source_independence",
+    "model_family_independence",
+    "shared_parent_context",
+}
+DRAFT_PARSER_REPLAY_FIELDS = {
+    "contract",
+    "accepted",
+    "problems",
+    "provenance_bound",
+    "replayed_on",
+}
+DRAFT_REVIEW_OBSERVATION_FIELDS = {
+    "role",
+    "session_id",
+    "family",
+    "version",
+    "prompt_sha256",
+    "verdict",
+    "source_independence",
+    "summary",
+}
+DRAFT_DISPOSITION_FIELDS = {
+    "status",
+    "proposal_created",
+    "scientific_outcome",
+    "calibration",
+    "ranker_label",
+    "retention",
+    "candidate_admissible",
+    "recommended",
+    "authorized",
+    "executable",
+    "route_effect",
+    "cell_effect",
+    "novelty_claimed",
 }
 
 PROPOSAL_FIELDS = {
@@ -1961,12 +2056,479 @@ def validate_reviews(
     return problems, by_proposal
 
 
+def validate_draft_attempts(
+    records: list[tuple[Path, dict[str, Any]]],
+    seeds: list[dict[str, Any]],
+) -> tuple[list[str], list[dict[str, Any]]]:
+    """Replay non-proposal draft attempts without creating scientific labels."""
+    problems: list[str] = []
+    states: list[dict[str, Any]] = []
+    attempt_ids: list[str] = []
+    seed_index = {seed.get("seed_id"): seed for seed in seeds}
+    for path, attempt in records:
+        label = path.relative_to(ROOT).as_posix()
+        if not _exact_keys(attempt, DRAFT_ATTEMPT_FIELDS, label, problems):
+            continue
+        attempt_id = attempt.get("attempt_id")
+        attempt_ids.append(attempt_id)
+        if (
+            not isinstance(attempt_id, str)
+            or re.fullmatch(r"HGA-[A-Z0-9][A-Z0-9-]{4,96}", attempt_id)
+            is None
+        ):
+            problems.append(f"{label}: invalid attempt_id")
+        if attempt.get("schema_version") != "0.1":
+            problems.append(f"{label}: schema_version must be 0.1")
+        if re.fullmatch(r"TASK-[0-9]{3}", str(attempt.get("task_id"))) is None:
+            problems.append(f"{label}: invalid task_id")
+        if not _valid_date(attempt.get("attempted_on")):
+            problems.append(f"{label}: attempted_on must be YYYY-MM-DD")
+        if (
+            attempt.get("scientific_identity")
+            != "untrusted_source_grounded_draft_attempt"
+        ):
+            problems.append(f"{label}: scientific_identity is invalid")
+
+        binding = attempt.get("seed_binding")
+        if not _exact_keys(
+            binding, DRAFT_SEED_BINDING_FIELDS, f"{label}.seed_binding", problems
+        ):
+            continue
+        seed = seed_index.get(binding.get("seed_id"))
+        if seed is None:
+            problems.append(f"{label}: seed_id does not resolve to current state")
+            continue
+        for field in ("cell_id", "route_id", "threat_model", "typed_evidence_digest"):
+            if binding.get(field) != seed.get(field):
+                problems.append(f"{label}: seed binding drifted at {field}")
+        source_commit = binding.get("source_commit")
+        if not scientific_source_commit_allowed(source_commit):
+            problems.append(
+                f"{label}: source_commit is not reproducible from protected main "
+                "or a registered immutable evidence ref"
+            )
+            continue
+        if binding.get("source_main_ancestor") is not True:
+            problems.append(f"{label}: source_main_ancestor must be true")
+
+        packet = attempt.get("packet_binding")
+        if not _exact_keys(
+            packet, DRAFT_PACKET_BINDING_FIELDS, f"{label}.packet_binding", problems
+        ):
+            continue
+        if packet.get("binding_mode") != (
+            "posthoc_parser_replay_against_commit_bound_packet"
+        ):
+            problems.append(f"{label}: unsupported packet binding mode")
+        if packet.get("packet_contract_version") not in {"0.2", "0.3"}:
+            problems.append(f"{label}: unsupported packet contract version")
+        if packet.get("lane") != "typed_evidence":
+            problems.append(f"{label}: draft attempt must use typed_evidence lane")
+        if packet.get("canonical_prompt_delivered_to_synthesis_agent") is not False:
+            problems.append(
+                f"{label}: posthoc synthesis cannot claim canonical prompt delivery"
+            )
+        for field in (
+            "policy_sha256",
+            "source_state_sha256",
+            "typed_evidence_state_sha256",
+            "decision_state_sha256",
+            "source_claim_packet_sha256",
+            "evidence_manifest_sha256",
+            "context_documents_sha256",
+            "canonical_prompt_sha256",
+            "scientific_packet_sha256",
+        ):
+            value = packet.get(field)
+            if not isinstance(value, str) or HASH_ID.fullmatch(value) is None:
+                problems.append(f"{label}: {field} must be lowercase 64-hex")
+        prior_attempts_sha = packet.get("prior_draft_attempts_sha256")
+        if packet.get("packet_contract_version") == "0.2":
+            if prior_attempts_sha is not None:
+                problems.append(f"{label}: v0.2 packet cannot bind draft memory")
+        elif (
+            not isinstance(prior_attempts_sha, str)
+            or HASH_ID.fullmatch(prior_attempts_sha) is None
+        ):
+            problems.append(f"{label}: v0.3 draft-memory hash is invalid")
+
+        try:
+            source_state = json.loads(
+                git_file_bytes(source_commit, "data/research_engine_state.json")
+            )
+            source_typed = json.loads(
+                git_file_bytes(source_commit, "data/typed_evidence_state.json")
+            )
+            source_decision = json.loads(
+                git_file_bytes(source_commit, "repo/ECDLP_DECISION_SUBSTRATE.json")
+            )
+            source_drafter_policy = json.loads(
+                git_file_bytes(source_commit, "repo/HYPOTHESIS_MODEL_DRAFTER_V0.json")
+            )
+        except (FileNotFoundError, KeyError, TypeError, json.JSONDecodeError) as exc:
+            problems.append(f"{label}: source packet cannot be replayed: {exc}")
+            continue
+        expected_source_hashes = {
+            "policy_sha256": sha256_json(source_drafter_policy),
+            "source_state_sha256": sha256_json(source_state),
+            "typed_evidence_state_sha256": sha256_json(source_typed),
+            "decision_state_sha256": sha256_json(source_decision),
+        }
+        for field, expected in expected_source_hashes.items():
+            if packet.get(field) != expected:
+                problems.append(f"{label}: {field} does not match source_commit")
+
+        source_seeds = source_state.get("hypothesis_generation", {}).get(
+            "generated_seeds", []
+        )
+        source_seed_matches = [
+            item for item in source_seeds if item.get("seed_id") == binding["seed_id"]
+        ]
+        source_cells = source_typed.get("cells", [])
+        source_cell_matches = [
+            item for item in source_cells if item.get("cell_id") == binding["cell_id"]
+        ]
+        if len(source_seed_matches) != 1 or len(source_cell_matches) != 1:
+            problems.append(f"{label}: source seed or cell is not unique")
+            continue
+        source_seed = source_seed_matches[0]
+        source_cell = source_cell_matches[0]
+        if source_seed.get("typed_evidence_digest") != binding.get(
+            "typed_evidence_digest"
+        ):
+            problems.append(f"{label}: source seed typed-evidence digest drifted")
+        source_claim_ids = sorted(source_cell.get("source_claim_ids", []))
+        if packet.get("allowed_evidence_claim_ids") != source_claim_ids:
+            problems.append(f"{label}: allowed evidence claims drifted")
+        source_claim_index = {
+            claim.get("id"): claim for claim in source_typed.get("source_claims", [])
+        }
+        if any(claim_id not in source_claim_index for claim_id in source_claim_ids):
+            problems.append(f"{label}: source claim packet does not resolve")
+            continue
+        source_claim_packet = [
+            source_claim_index[claim_id] for claim_id in source_claim_ids
+        ]
+        if packet.get("source_claim_packet_sha256") != sha256_json(
+            source_claim_packet
+        ):
+            problems.append(f"{label}: source claim packet hash drifted")
+
+        evidence_paths = sorted(
+            set(source_cell.get("evidence_paths", []))
+            | set(source_seed.get("evidence_inputs", []))
+        )
+        evidence_manifest: list[dict[str, Any]] = []
+        try:
+            for relative in evidence_paths:
+                payload = git_file_bytes(source_commit, relative)
+                evidence_manifest.append(
+                    {
+                        "path": relative,
+                        "sha256": hashlib.sha256(payload).hexdigest(),
+                        "size_bytes": len(payload),
+                    }
+                )
+            context_documents = []
+            for relative in sorted(source_seed.get("evidence_inputs", [])):
+                payload = git_file_bytes(source_commit, relative)
+                context_documents.append(
+                    {
+                        "path": relative,
+                        "sha256": hashlib.sha256(payload).hexdigest(),
+                        "content": payload.decode("utf-8"),
+                    }
+                )
+        except (FileNotFoundError, UnicodeDecodeError, TypeError) as exc:
+            problems.append(f"{label}: evidence packet cannot be replayed: {exc}")
+            continue
+        if packet.get("evidence_manifest_sha256") != sha256_json(evidence_manifest):
+            problems.append(f"{label}: evidence manifest hash drifted")
+        if packet.get("context_documents_sha256") != sha256_json(context_documents):
+            problems.append(f"{label}: context documents hash drifted")
+
+        source_lane = source_drafter_policy.get("lanes", {}).get(
+            "typed_evidence", {}
+        )
+        admission_index = {
+            item.get("seed_id"): item for item in source_lane.get("admissions", [])
+        }
+        admission = admission_index.get(binding["seed_id"])
+        if not isinstance(admission, dict):
+            problems.append(f"{label}: source drafter admission does not resolve")
+            continue
+        expected_packet_scalars = {
+            "drafter_id": source_drafter_policy.get("drafter_id"),
+            "decision_mode": source_lane.get("required_decision_mode"),
+            "research_object_id": admission.get("research_object_id"),
+        }
+        for field, expected in expected_packet_scalars.items():
+            if packet.get(field) != expected:
+                problems.append(f"{label}: {field} drifted from source policy")
+        source_existing_proposal_ids: list[str] = []
+        for proposal in source_state.get("hypothesis_generation", {}).get(
+            "proposal_intake", []
+        ):
+            resolution = proposal.get("seed_resolution")
+            if (
+                resolution == "current_scoped_identity"
+                and proposal.get("seed_id") == binding.get("seed_id")
+            ) or (
+                resolution == "frozen_alias_current_scoped_identity"
+                and proposal.get("cell_id") == binding.get("cell_id")
+            ):
+                proposal_id = proposal.get("proposal_id")
+                if isinstance(proposal_id, str):
+                    source_existing_proposal_ids.append(proposal_id)
+        source_existing_proposal_ids.sort()
+        source_prior_attempts = sorted(
+            [
+                item
+                for item in source_state.get("hypothesis_generation", {}).get(
+                    "draft_attempt_memory", []
+                )
+                if item.get("seed_id") == binding.get("seed_id")
+            ],
+            key=lambda item: item.get("attempt_id", ""),
+        )
+        packet_contract_version = packet.get("packet_contract_version")
+        try:
+            expected_prompt = build_typed_evidence_prompt(
+                source_seed,
+                source_cell,
+                source_claim_packet,
+                evidence_manifest,
+                context_documents,
+                source_existing_proposal_ids,
+                admission.get("research_object_id"),
+                source_lane.get("required_decision_mode"),
+                source_drafter_policy.get("output_contract", {}).get(
+                    "required_fields", []
+                ),
+                packet_contract_version=packet_contract_version,
+                prior_draft_attempts=source_prior_attempts,
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            problems.append(f"{label}: canonical prompt cannot be replayed: {exc}")
+            expected_prompt = ""
+        expected_prompt_sha = hashlib.sha256(
+            expected_prompt.encode("utf-8")
+        ).hexdigest()
+        if packet.get("canonical_prompt_sha256") != expected_prompt_sha:
+            problems.append(f"{label}: canonical prompt hash does not replay")
+        packet_identity = {
+            "drafter_id": packet.get("drafter_id"),
+            "policy_sha256": packet.get("policy_sha256"),
+            "lane": "typed_evidence",
+            "input_provenance_bound": True,
+            "source_state_sha256": packet.get("source_state_sha256"),
+            "typed_evidence_state_sha256": packet.get(
+                "typed_evidence_state_sha256"
+            ),
+            "decision_state_sha256": packet.get("decision_state_sha256"),
+            "decision_mode": packet.get("decision_mode"),
+            "research_object_id": packet.get("research_object_id"),
+            "typed_evidence_digest": binding.get("typed_evidence_digest"),
+            "source_claim_packet_sha256": packet.get(
+                "source_claim_packet_sha256"
+            ),
+            "evidence_manifest_sha256": packet.get("evidence_manifest_sha256"),
+            "context_documents_sha256": packet.get(
+                "context_documents_sha256"
+            ),
+            "seed_id": binding.get("seed_id"),
+            "prompt_sha256": packet.get("canonical_prompt_sha256"),
+        }
+        if packet.get("packet_contract_version") == "0.3":
+            if packet.get("prior_draft_attempts_sha256") != sha256_json(
+                source_prior_attempts
+            ):
+                problems.append(f"{label}: prior draft-attempt memory hash drifted")
+            packet_identity["packet_contract_version"] = "0.3"
+            packet_identity["prior_draft_attempts_sha256"] = packet.get(
+                "prior_draft_attempts_sha256"
+            )
+        if packet.get("scientific_packet_sha256") != sha256_json(packet_identity):
+            problems.append(f"{label}: scientific packet identity does not replay")
+
+        provenance = attempt.get("synthesis_provenance")
+        if _exact_keys(
+            provenance,
+            DRAFT_SYNTHESIS_PROVENANCE_FIELDS,
+            f"{label}.synthesis_provenance",
+            problems,
+        ):
+            for field in ("mode", "family", "version"):
+                if not _nonempty_text(provenance.get(field)):
+                    problems.append(f"{label}: synthesis {field} must be nonempty")
+            for field in (
+                "provider_transport_attested",
+                "source_independence",
+                "model_family_independence",
+            ):
+                expected = False if field == "provider_transport_attested" else (
+                    "not_established"
+                )
+                if provenance.get(field) != expected:
+                    problems.append(f"{label}: synthesis {field} is overclaimed")
+            if provenance.get("shared_parent_context") is not True:
+                problems.append(f"{label}: shared parent context must remain explicit")
+
+        fragment = attempt.get("fragment")
+        required_fields = source_drafter_policy.get("output_contract", {}).get(
+            "required_fields", []
+        )
+        fragment_problems = fragment_value_problems(
+            fragment,
+            required_fields,
+            source_drafter_policy.get("output_contract", {}).get(
+                "prohibited_claims", []
+            ),
+            allowed_evidence_claim_ids=source_claim_ids,
+            provenance_bound=True,
+        )
+        if not isinstance(fragment, dict) or fragment.get("abstain") is not True:
+            problems.append(f"{label}: draft_attempts accepts abstentions only")
+        if attempt.get("fragment_sha256") != sha256_json(fragment):
+            problems.append(f"{label}: fragment_sha256 does not replay")
+
+        replay = attempt.get("parser_replay")
+        if _exact_keys(
+            replay, DRAFT_PARSER_REPLAY_FIELDS, f"{label}.parser_replay", problems
+        ):
+            if replay.get("contract") != "hypothesis-fragment-v0.2":
+                problems.append(f"{label}: parser contract version is invalid")
+            if replay.get("provenance_bound") is not True:
+                problems.append(f"{label}: parser replay must be provenance-bound")
+            if not _valid_date(replay.get("replayed_on")):
+                problems.append(f"{label}: parser replay date is invalid")
+            if replay.get("problems") != fragment_problems:
+                problems.append(f"{label}: parser problem replay drifted")
+            if replay.get("accepted") is not (not fragment_problems):
+                problems.append(f"{label}: parser acceptance does not replay")
+        problems.extend(f"{label}.fragment: {item}" for item in fragment_problems)
+
+        observations = attempt.get("review_observations")
+        if not isinstance(observations, list) or not observations:
+            problems.append(f"{label}: review observations must be nonempty")
+            observations = []
+        sessions: list[str] = []
+        roles: list[str] = []
+        for index, observation in enumerate(observations):
+            observation_label = f"{label}.review_observations[{index}]"
+            if not _exact_keys(
+                observation,
+                DRAFT_REVIEW_OBSERVATION_FIELDS,
+                observation_label,
+                problems,
+            ):
+                continue
+            for field in ("role", "session_id", "family", "version", "summary"):
+                if not _nonempty_text(observation.get(field)):
+                    problems.append(f"{observation_label}: {field} must be nonempty")
+            sessions.append(observation.get("session_id"))
+            roles.append(observation.get("role"))
+            prompt_sha = observation.get("prompt_sha256")
+            if not isinstance(prompt_sha, str) or HASH_ID.fullmatch(prompt_sha) is None:
+                problems.append(f"{observation_label}: prompt_sha256 is invalid")
+            if observation.get("verdict") not in {"abstain", "block_proposal"}:
+                problems.append(f"{observation_label}: verdict is invalid")
+            if observation.get("source_independence") != "not_established":
+                problems.append(f"{observation_label}: source independence overclaimed")
+        if len(sessions) != len(set(sessions)):
+            problems.append(f"{label}: review observation sessions must be unique")
+        if len(roles) != len(set(roles)):
+            problems.append(f"{label}: review observation roles must be unique")
+
+        blockers = attempt.get("blockers")
+        required_blockers = {
+            "missing_exact_mechanism",
+            "missing_cost_changing_bridge",
+            "missing_independent_validator_plan",
+            "review_independence_unestablished",
+        }
+        if (
+            not isinstance(blockers, list)
+            or len(blockers) != len(set(blockers))
+            or not required_blockers <= set(blockers)
+        ):
+            problems.append(f"{label}: blockers do not retain the abstention gates")
+        reopening = attempt.get("reopening_conditions")
+        if (
+            not isinstance(reopening, list)
+            or not reopening
+            or len(reopening) != len(set(reopening))
+            or not all(_substantive_text(item) for item in reopening)
+        ):
+            problems.append(f"{label}: reopening_conditions are invalid")
+        disposition = attempt.get("disposition")
+        expected_disposition = {
+            "status": "not_specified_due_to_abstention",
+            "proposal_created": False,
+            "scientific_outcome": False,
+            "calibration": "excluded_nonexperimental",
+            "ranker_label": False,
+            "retention": "zero",
+            "candidate_admissible": False,
+            "recommended": False,
+            "authorized": False,
+            "executable": False,
+            "route_effect": "none",
+            "cell_effect": "open_to_open",
+            "novelty_claimed": False,
+        }
+        if not _exact_keys(
+            disposition,
+            DRAFT_DISPOSITION_FIELDS,
+            f"{label}.disposition",
+            problems,
+        ) or disposition != expected_disposition:
+            problems.append(f"{label}: disposition violates the non-executing boundary")
+        if not _substantive_text(attempt.get("boundary")):
+            problems.append(f"{label}: boundary must be substantive")
+
+        states.append(
+            {
+                "attempt_id": attempt_id,
+                "task_id": attempt.get("task_id"),
+                "seed_id": binding.get("seed_id"),
+                "cell_id": binding.get("cell_id"),
+                "route_id": binding.get("route_id"),
+                "source_commit": source_commit,
+                "scientific_packet_sha256": packet.get(
+                    "scientific_packet_sha256"
+                ),
+                "fragment_sha256": attempt.get("fragment_sha256"),
+                "status": "not_specified_due_to_abstention",
+                "missing_evidence": fragment.get("missing_evidence", [])
+                if isinstance(fragment, dict)
+                else [],
+                "blockers": sorted(blockers) if isinstance(blockers, list) else [],
+                "review_roles": sorted(roles),
+                "source_independence": "not_established",
+                "model_family_independence": "not_established",
+                "scientific_outcome": False,
+                "calibration": "excluded_nonexperimental",
+                "ranker_label": False,
+                "authorization": "none",
+                "executable": False,
+                "route_effect": "none",
+                "cell_effect": "open_to_open",
+                "attempt_sha256": sha256_json(attempt),
+            }
+        )
+    if len(attempt_ids) != len(set(attempt_ids)):
+        problems.append("hypothesis draft attempt ids must be unique")
+    return problems, sorted(states, key=lambda item: item["attempt_id"])
+
+
 def build_generation_state(
     policy: dict[str, Any],
     decisions: dict[str, Any],
     engine_policy: dict[str, Any],
     proposals: list[tuple[Path, dict[str, Any]]],
     reviews: list[tuple[Path, dict[str, Any]]],
+    draft_attempts: list[tuple[Path, dict[str, Any]]] | None = None,
     typed_evidence_state: dict[str, Any] | None = None,
     claim_state: dict[str, Any] | None = None,
 ) -> tuple[list[str], dict[str, Any]]:
@@ -2010,6 +2572,11 @@ def build_generation_state(
         reviews, proposals, policy
     )
     problems.extend(review_problems)
+    attempt_records = draft_attempts or []
+    attempt_problems, attempt_states = validate_draft_attempts(
+        attempt_records, seeds
+    )
+    problems.extend(attempt_problems)
 
     required_roles = set(policy["quality_gate"]["required_review_roles"])
     independent_roles = set(
@@ -2227,12 +2794,20 @@ def build_generation_state(
             "reviews_sha256": sha256_json(
                 [review for _, review in reviews]
             ),
+            "draft_attempts_sha256": sha256_json(
+                [attempt for _, attempt in attempt_records]
+            ),
         },
         "trust_boundary": policy["trust_boundary"],
         "counts": {
             "generated_seeds": len(seeds),
             "submitted_proposals": len(proposals),
             "adversarial_reviews": len(reviews),
+            "draft_attempts": len(attempt_states),
+            "draft_abstentions": sum(
+                attempt["status"] == "not_specified_due_to_abstention"
+                for attempt in attempt_states
+            ),
             "quality_cleared_proposals": len(cleared),
             "retained_hypothesis_drafts": len(hypothesis_drafts),
             "typed_evidence_cells": typed_evidence_state.get(
@@ -2298,6 +2873,7 @@ def build_generation_state(
         },
         "generated_seeds": seeds,
         "proposal_intake": proposal_states,
+        "draft_attempt_memory": attempt_states,
         "collision_groups": {
             "premise_fingerprints": [
                 {

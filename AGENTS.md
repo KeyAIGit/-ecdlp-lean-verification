@@ -231,6 +231,13 @@ branch from current `main`; preserve any unrelated local changes.
   unresolved; the cell stays open and non-executable.
   This result is not a selected hypothesis, candidate, solver authorization,
   cost claim, or attack route.
+  `TASK-029` then attempted the only admitted source-grounded cost-bridge draft and
+  correctly abstained. The immutable `HGA-M16-COST-BRIDGE-ABSTAIN-001` record binds
+  that abstention to the current seed, source commit, typed evidence, parser replay,
+  and review observations. It is untrusted search memory, not a proposal,
+  scientific outcome, calibration label, or route disposition. Future drafting
+  must address `MISSING-M16-GR-SOLVER-001` and
+  `MISSING-M16-COST-THEOREM-001`; renaming the same absent solver is not progress.
 - `TASK-008` remains the parked proposal-intake lane. Intake does not bypass
   owner authorization or authorize promotion by itself.
 - The division-polynomial, torsion, Weil, Semaev, cost-model, lattice, isogeny,

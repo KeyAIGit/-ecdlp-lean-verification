@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any
 
 from hypothesis_generation_lib import (
+    DRAFT_ATTEMPTS_DIR,
     GENERATION_POLICY_PATH,
     PROPOSALS_DIR,
     REVIEWS_DIR,
@@ -4384,6 +4385,7 @@ def build_state(
             policy,
             load_hypothesis_generation_records(PROPOSALS_DIR),
             load_hypothesis_generation_records(REVIEWS_DIR),
+            load_hypothesis_generation_records(DRAFT_ATTEMPTS_DIR),
         )
     event_values = [event for _, event in outcomes]
     selection = apply_execution_feedback(
@@ -4864,6 +4866,9 @@ def validate_all() -> tuple[list[str], dict[str, Any]]:
     generation_policy = load_json(GENERATION_POLICY_PATH)
     generation_proposals = load_hypothesis_generation_records(PROPOSALS_DIR)
     generation_reviews = load_hypothesis_generation_records(REVIEWS_DIR)
+    generation_draft_attempts = load_hypothesis_generation_records(
+        DRAFT_ATTEMPTS_DIR
+    )
     problems.extend(validate_policy(policy, decisions, hypotheses))
     generation_problems, generation_state = build_generation_state(
         generation_policy,
@@ -4871,6 +4876,7 @@ def validate_all() -> tuple[list[str], dict[str, Any]]:
         policy,
         generation_proposals,
         generation_reviews,
+        generation_draft_attempts,
     )
     problems.extend(generation_problems)
     source_reviews = {

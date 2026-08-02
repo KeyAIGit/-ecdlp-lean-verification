@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.org/schemas/hypothesis-draft-attempt-v0.1.json",
+  "title": "KeyAI untrusted hypothesis draft attempt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "attempt_id",
+    "task_id",
+    "attempted_on",
+    "scientific_identity",
+    "seed_binding",
+    "packet_binding",
+    "synthesis_provenance",
+    "fragment",
+    "fragment_sha256",
+    "parser_replay",
+    "review_observations",
+    "blockers",
+    "reopening_conditions",
+    "disposition",
+    "boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^HGA-[A-Z0-9][A-Z0-9-]{4,96}$"
+    },
+    "task_id": {"type": "string", "pattern": "^TASK-[0-9]{3}$"},
+    "attempted_on": {"type": "string", "format": "date"},
+    "scientific_identity": {"const": "untrusted_source_grounded_draft_attempt"},
+    "seed_binding": {"type": "object"},
+    "packet_binding": {"type": "object"},
+    "synthesis_provenance": {"type": "object"},
+    "fragment": {"type": "object"},
+    "fragment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "parser_replay": {"type": "object"},
+    "review_observations": {"type": "array", "minItems": 1},
+    "blockers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "reopening_conditions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "disposition": {"type": "object"},
+    "boundary": {"type": "string", "minLength": 1}
+  }
+}

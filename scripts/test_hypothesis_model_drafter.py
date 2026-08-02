@@ -610,6 +610,48 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         self.assertEqual("HGS-3266E42A729C", packets[0]["seed_id"])
         self.assertEqual([], packets[0]["existing_proposal_ids"])
 
+    def test_typed_packet_binds_prior_abstention_as_untrusted_memory(self) -> None:
+        packets = build_request_packets(
+            self.policy,
+            self.engine_state,
+            limit=10,
+            typed_evidence_state=self.typed_evidence_state,
+            include_submitted=True,
+        )
+        self.assertEqual(1, len(packets))
+        packet = packets[0]
+        attempts = self.engine_state["hypothesis_generation"][
+            "draft_attempt_memory"
+        ]
+        self.assertEqual(1, len(attempts))
+        attempt = attempts[0]
+        self.assertEqual("0.3", packet["packet_contract_version"])
+        self.assertRegex(
+            packet["prior_draft_attempts_sha256"], r"^[0-9a-f]{64}$"
+        )
+        self.assertIn(attempt["attempt_id"], packet["prompt"])
+        self.assertIn("Prior draft attempts are untrusted search memory", packet["prompt"])
+        self.assertIn("missing_exact_mechanism", packet["prompt"])
+        self.assertEqual("none", attempt["authorization"])
+        self.assertFalse(attempt["scientific_outcome"])
+        self.assertFalse(attempt["ranker_label"])
+
+    def test_draft_attempt_memory_cannot_open_execution(self) -> None:
+        changed = copy.deepcopy(self.engine_state)
+        attempt = changed["hypothesis_generation"]["draft_attempt_memory"][0]
+        attempt["authorization"] = "owner"
+        attempt["executable"] = True
+        with patch(
+            "hypothesis_model_drafter.validate_canonical_typed_sources"
+        ), self.assertRaisesRegex(ValueError, "non-executing boundary"):
+            build_request_packets(
+                self.policy,
+                changed,
+                limit=10,
+                typed_evidence_state=self.typed_evidence_state,
+                include_submitted=True,
+            )
+
     def test_historical_proposal_is_not_compatible_with_current_seed(self) -> None:
         packets = build_request_packets(
             self.policy,

@@ -12,6 +12,8 @@ from unittest.mock import patch
 
 from gen_status import render_engine_queue_summary
 from hypothesis_generation_lib import (
+    DRAFT_ATTEMPT_FIELDS,
+    DRAFT_ATTEMPTS_DIR,
     GENERATION_POLICY_PATH,
     PROPOSAL_FIELDS,
     PROPOSALS_DIR,
@@ -3129,6 +3131,118 @@ class ResearchEngineTests(unittest.TestCase):
             any("source snapshot hash mismatch" in item for item in problems)
         )
 
+    def test_draft_abstention_is_replayed_as_non_scientific_memory(self) -> None:
+        path = DRAFT_ATTEMPTS_DIR / "HGA-M16-COST-BRIDGE-ABSTAIN-001.json"
+        attempt = load_json(path)
+        problems, state = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [],
+            [],
+            [(path, attempt)],
+        )
+        self.assertEqual([], problems)
+        self.assertEqual(1, state["counts"]["draft_attempts"])
+        self.assertEqual(1, state["counts"]["draft_abstentions"])
+        self.assertEqual([], state["proposal_intake"])
+        self.assertEqual([], state["retained_hypothesis_drafts"])
+        memory = state["draft_attempt_memory"][0]
+        self.assertEqual(attempt["attempt_id"], memory["attempt_id"])
+        self.assertEqual("not_specified_due_to_abstention", memory["status"])
+        self.assertFalse(memory["scientific_outcome"])
+        self.assertEqual("excluded_nonexperimental", memory["calibration"])
+        self.assertFalse(memory["ranker_label"])
+        self.assertEqual("none", memory["authorization"])
+        self.assertFalse(memory["executable"])
+        self.assertEqual("none", memory["route_effect"])
+        self.assertEqual("open_to_open", memory["cell_effect"])
+
+    def test_draft_abstention_fails_closed_under_binding_mutations(self) -> None:
+        path = DRAFT_ATTEMPTS_DIR / "HGA-M16-COST-BRIDGE-ABSTAIN-001.json"
+        baseline = load_json(path)
+        mutations: list[tuple[str, dict]] = []
+
+        changed = copy.deepcopy(baseline)
+        changed["seed_binding"]["source_commit"] = "0" * 40
+        mutations.append(("source_commit", changed))
+
+        changed = copy.deepcopy(baseline)
+        changed["seed_binding"]["typed_evidence_digest"] = "f" * 64
+        mutations.append(("typed_evidence_digest", changed))
+
+        changed = copy.deepcopy(baseline)
+        changed["packet_binding"]["allowed_evidence_claim_ids"].append(
+            "SC-NOT-IN-SOURCE-PACKET"
+        )
+        mutations.append(("allowed_evidence_claim_ids", changed))
+
+        changed = copy.deepcopy(baseline)
+        changed["fragment"]["exact_map"] += " Mutated after parser replay."
+        mutations.append(("fragment_sha256", changed))
+
+        changed = copy.deepcopy(baseline)
+        changed["disposition"]["authorized"] = True
+        mutations.append(("authorization", changed))
+
+        for label, attempt in mutations:
+            with self.subTest(label=label):
+                problems, state = build_generation_state(
+                    self.generation_policy,
+                    self.decisions,
+                    self.policy,
+                    [],
+                    [],
+                    [(path, attempt)],
+                )
+                self.assertTrue(problems)
+                self.assertEqual([], state["retained_hypothesis_drafts"])
+
+    def test_draft_abstention_cannot_self_sign_a_forged_prompt(self) -> None:
+        path = DRAFT_ATTEMPTS_DIR / "HGA-M16-COST-BRIDGE-ABSTAIN-001.json"
+        attempt = load_json(path)
+        packet = attempt["packet_binding"]
+        packet["canonical_prompt_sha256"] = "f" * 64
+        packet_identity = {
+            "drafter_id": packet["drafter_id"],
+            "policy_sha256": packet["policy_sha256"],
+            "lane": "typed_evidence",
+            "input_provenance_bound": True,
+            "source_state_sha256": packet["source_state_sha256"],
+            "typed_evidence_state_sha256": packet[
+                "typed_evidence_state_sha256"
+            ],
+            "decision_state_sha256": packet["decision_state_sha256"],
+            "decision_mode": packet["decision_mode"],
+            "research_object_id": packet["research_object_id"],
+            "typed_evidence_digest": attempt["seed_binding"][
+                "typed_evidence_digest"
+            ],
+            "source_claim_packet_sha256": packet[
+                "source_claim_packet_sha256"
+            ],
+            "evidence_manifest_sha256": packet[
+                "evidence_manifest_sha256"
+            ],
+            "context_documents_sha256": packet[
+                "context_documents_sha256"
+            ],
+            "seed_id": attempt["seed_binding"]["seed_id"],
+            "prompt_sha256": packet["canonical_prompt_sha256"],
+        }
+        packet["scientific_packet_sha256"] = sha256_json(packet_identity)
+        problems, _ = build_generation_state(
+            self.generation_policy,
+            self.decisions,
+            self.policy,
+            [],
+            [],
+            [(path, attempt)],
+        )
+        self.assertTrue(
+            any("canonical prompt hash does not replay" in item for item in problems)
+        )
+
     def test_decided_typed_cells_never_generate_seeds(self) -> None:
         typed_problems, typed_state = load_typed_evidence_state()
         self.assertEqual([], typed_problems)
@@ -3496,11 +3610,18 @@ class ResearchEngineTests(unittest.TestCase):
         review_schema = load_json(
             root / "experiments" / "engine" / "hypothesis_review.schema.json"
         )
+        attempt_schema = load_json(
+            root
+            / "experiments"
+            / "engine"
+            / "hypothesis_draft_attempt.schema.json"
+        )
         seed_schema = load_json(
             root / "experiments" / "engine" / "hypothesis_seed.schema.json"
         )
         self.assertEqual(PROPOSAL_FIELDS, set(proposal_schema["required"]))
         self.assertEqual(REVIEW_FIELDS, set(review_schema["required"]))
+        self.assertEqual(DRAFT_ATTEMPT_FIELDS, set(attempt_schema["required"]))
         seed = generate_seeds(
             self.generation_policy, self.decisions, self.policy
         )[0]

@@ -1951,3 +1951,64 @@ How to verify:
 - `sha256sum -c experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.sha256`
 - typed-evidence, claim-level, scientific-semantic, generated-fixpoint,
   no-sorry, axiom-audit, docs-sync, and full CI gates
+
+### TASK-029 - Attempt the source-grounded M16 complete-cost proposal
+
+Status: completed by strict abstention on 2026-08-01
+
+Kind: source-grounded proposal drafting | provenance replay | non-scientific memory
+
+Hypothesis: the current typed evidence either supports one exact M16 complete-cost
+proposal or must produce a source-bound abstention naming the smallest missing
+mechanism and cost objects
+
+Seed: `HGS-3266E42A729C`
+
+Cell: `CELL-M-PKC-SMOOTH-M16`
+
+Route: `R-PETIT-COMPOSED-MAPS` remains `open_parked`
+
+Why it matters: an ungrounded model can turn an unspecified solver request into a
+plausible-looking proposal. Retaining a verified abstention prevents that failure
+from being repeated while keeping the unresolved route and cell scientifically open.
+
+Question: does the current source-grounded packet support an exact,
+non-executable `HYP-M16-SOLVER-SLOPE-001` proposal rather than a request to invent
+an unspecified generalized-root solver?
+
+Result:
+
+- the exact source mechanism, fixed-target scope, partial cost expression, and
+  sound acceptance filter are retained;
+- no supplied claim specifies the generalized-root algorithm `A`, complete
+  direct-System-(4) recovery, or a common-unit cost theorem;
+- the correct output is `not_specified_due_to_abstention`;
+- `HGA-M16-COST-BRIDGE-ABSTAIN-001` is immutable untrusted search memory only;
+- proposal count, scientific outcomes, Brier calibration, ranker training,
+  route/cell status, recommendation, authorization, and execution are unchanged.
+
+Exact blockers:
+
+- `MISSING-M16-GR-SOLVER-001`
+- `MISSING-M16-COST-THEOREM-001`
+- `missing_independent_validator_plan`
+- `review_independence_unestablished`
+
+The engine deterministically replays the seed/source/packet/fragment bindings and
+fails closed under source-commit, typed-evidence, source-claim, fragment, or
+authorization mutation. Future source-grounded prompts receive the attempt as
+untrusted memory and must resolve its blockers rather than repeat them.
+
+Canonical note:
+`notes/TASK029_M16_COST_BRIDGE_ABSTENTION.md`
+
+No TASK-026 rerun, solver, direct secp256k1 target, experiment, promotion, or
+novelty claim is authorized.
+
+How to verify:
+
+- `python3 scripts/check_research_engine.py`
+- `python3 scripts/test_research_engine.py`
+- `python3 scripts/test_hypothesis_model_drafter.py`
+- generated-fixpoint, artifact, scientific-semantic, no-sorry, axiom-audit,
+  docs-sync, and full CI gates

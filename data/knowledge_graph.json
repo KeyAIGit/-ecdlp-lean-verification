@@ -9424,7 +9424,8 @@
         "typed_evidence_state_sha256": "c63f2355626f141d01b8f228bfe49df80af984e5d76cd6be0821514402d33c3a",
         "research_claim_state_sha256": "24ba13ca696b3affdd28acc7058a2d921e244dc37a39d39593c260eedf78bd38",
         "proposals_sha256": "581cf3109a9f2bfdaeacf895664e816ab22f0f47a72140385dab1c69d04d0a34",
-        "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "draft_attempts_sha256": "dac9b1b1f4eae6a6bba6c7e57c705b42bdeaf0d354619d04cf0b4e468a36ed25"
       },
       "trust_boundary": {
         "creative_output": "A generated seed or proposer-authored mechanism is untrusted research input. It may be novel, mistaken, duplicated, or merely a renamed representation.",
@@ -9436,6 +9437,8 @@
         "generated_seeds": 2,
         "submitted_proposals": 1,
         "adversarial_reviews": 0,
+        "draft_attempts": 1,
+        "draft_abstentions": 1,
         "quality_cleared_proposals": 0,
         "retained_hypothesis_drafts": 0,
         "typed_evidence_cells": 8,
@@ -9892,6 +9895,44 @@
           ],
           "disposition": "hard_rejected",
           "authorization": "none"
+        }
+      ],
+      "draft_attempt_memory": [
+        {
+          "attempt_id": "HGA-M16-COST-BRIDGE-ABSTAIN-001",
+          "task_id": "TASK-029",
+          "seed_id": "HGS-3266E42A729C",
+          "cell_id": "CELL-M-PKC-SMOOTH-M16",
+          "route_id": "R-PETIT-COMPOSED-MAPS",
+          "source_commit": "b8871e529923c1189da6330dfa0b320edf1f3fa9",
+          "scientific_packet_sha256": "fb4384aedf160cd435f4a7950b73dca57d074f32eeb792b00571d1e95376d23f",
+          "fragment_sha256": "804c2843eef630184d156dbcfd490c887fc503fbacedc5f95ca1d80cd2da24b4",
+          "status": "not_specified_due_to_abstention",
+          "missing_evidence": [
+            "MISSING-M16-GR-SOLVER-001: a fully specified source-faithful generalized-root algorithm A for the exact 65-member nonidentity-target M16 System (4), including representation, exceptional-locus policy, termination, and complete direct-System-(4) recovery semantics.",
+            "MISSING-M16-COST-THEOREM-001: a correctness and common-unit cost theorem for A that bounds T_A, recovery, preprocessing, memory, independent-relation collection, rank, and sparse linear algebra and implies total cost below the matched baseline over a declared scaling family."
+          ],
+          "blockers": [
+            "missing_cost_changing_bridge",
+            "missing_exact_mechanism",
+            "missing_independent_validator_plan",
+            "review_independence_unestablished"
+          ],
+          "review_roles": [
+            "computational_algebra_cost",
+            "creative_proposer",
+            "recovery_provenance_skeptic"
+          ],
+          "source_independence": "not_established",
+          "model_family_independence": "not_established",
+          "scientific_outcome": false,
+          "calibration": "excluded_nonexperimental",
+          "ranker_label": false,
+          "authorization": "none",
+          "executable": false,
+          "route_effect": "none",
+          "cell_effect": "open_to_open",
+          "attempt_sha256": "3f25b3474451c2c07c8c84d9dceac975e3cd8918120e563c0823f512a2c4246c"
         }
       ],
       "collision_groups": {
@@ -10529,24 +10570,24 @@
       "exact_target_execution": false,
       "stream_digest_version": "rfc6962-binary-leaf-v2",
       "coverage_merkle_root_sha256": "dff1e8cb52594158fc94556cbef3025be647fab310132c34ee58aed3b8399207",
-      "instance_root_sha256": "18d69f987c503a947cd55feee077a631df9a3baa0be54b2bd5144f568ac8e592",
+      "instance_root_sha256": "75b45aea3fe593a5ec95f2315e33c868f1edd1f362ee3a368f7b0ae84e9730f9",
       "challenge_indices": [
-        231293,
-        236390,
-        236785,
-        244341,
-        316725,
-        413420,
-        449709,
-        574876,
-        594838,
-        606150,
-        612038,
-        772978,
-        783340,
-        784192,
-        791609,
-        811002
+        96502,
+        169535,
+        437494,
+        461133,
+        569450,
+        662755,
+        726233,
+        757996,
+        788516,
+        791411,
+        812790,
+        821356,
+        860936,
+        898622,
+        944962,
+        996636
       ]
     },
     "coverage_boundary": "Coverage is complete only for this frozen finite Cartesian projection. It is not coverage of all ECDLP ideas or literature.",

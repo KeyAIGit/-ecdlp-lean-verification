@@ -30,6 +30,13 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 from hypothesis_generation_lib import sha256_json
+from hypothesis_fragment_contract import (
+    ABSTENTION_SENTINEL,
+    EVIDENCE_MAPPED_FIELDS,
+    FRAGMENT_FIELDS,
+    build_typed_evidence_prompt,
+    fragment_value_problems,
+)
 from research_engine_lib import validate_all as rebuild_research_engine_state
 
 
@@ -42,7 +49,6 @@ TEMPERATURE = 0.6
 MAX_JSON_DEPTH = 64
 MAX_JSON_NODES = 50000
 MAX_ERROR_MESSAGE_BYTES = 4096
-ABSTENTION_SENTINEL = "not_specified_due_to_abstention"
 ALLOWED_PROVIDER_IDENTITIES = {
     "featherless": (
         "https://api.featherless.ai/v1",
@@ -57,28 +63,6 @@ ALLOWED_PROVIDER_IDENTITIES = {
         "KIMI_API_KEY",
     ),
 }
-FRAGMENT_FIELDS = (
-    "abstain",
-    "new_premise",
-    "exact_map",
-    "fixed_target_semantics",
-    "recovery_map",
-    "cost_changing_quantity",
-    "falsifiable_prediction",
-    "missing_evidence",
-    "evidence_claim_ids",
-    "field_evidence_claim_ids",
-    "claim_boundary",
-)
-EVIDENCE_MAPPED_FIELDS = (
-    "new_premise",
-    "exact_map",
-    "fixed_target_semantics",
-    "recovery_map",
-    "cost_changing_quantity",
-    "falsifiable_prediction",
-    "claim_boundary",
-)
 LANE_IDS = ("typed_evidence", "brainstorm_queue")
 
 
@@ -578,76 +562,6 @@ def build_brainstorm_prompt(
     )
 
 
-def build_typed_evidence_prompt(
-    seed: dict[str, Any],
-    cell: dict[str, Any],
-    source_claims: list[dict[str, Any]],
-    evidence_manifest: list[dict[str, Any]],
-    context_documents: list[dict[str, str]],
-    existing_proposal_ids: list[str],
-    research_object_id: str,
-    decision_mode: str,
-    required_fields: list[str],
-) -> str:
-    typed_cell = {
-        key: cell.get(key)
-        for key in (
-            "cell_id",
-            "mechanism_id",
-            "route_id",
-            "threat_model",
-            "status",
-            "scope",
-            "construction",
-            "relation_action",
-            "changed_quantity",
-            "cost_quantity",
-            "requirement_results",
-            "boundary",
-        )
-    }
-    packet = {
-        "scientific_identity": "provenance_bound_research_question_seed",
-        "lane": "typed_evidence",
-        "input_provenance_bound": True,
-        "seed_id": seed["seed_id"],
-        "research_object_id": research_object_id,
-        "decision_mode": decision_mode,
-        "cell_id": seed["cell_id"],
-        "typed_evidence_digest": seed["typed_evidence_digest"],
-        "route_id": seed["route_id"],
-        "threat_model": seed["threat_model"],
-        "research_question": seed["research_question"],
-        "typed_cell": typed_cell,
-        "target_feature": seed["target_feature"],
-        "mechanism_primitive": seed["mechanism_primitive"],
-        "unresolved_question": seed["unresolved_question"],
-        "source_claims": source_claims,
-        "evidence_manifest": evidence_manifest,
-        "context_documents": context_documents,
-        "existing_proposal_ids": existing_proposal_ids,
-        "proposal_contract": seed["proposal_packet"],
-    }
-    allowed_ids = [claim["id"] for claim in source_claims]
-    return (
-        "You are an untrusted creative drafter inside a verified ECDLP research "
-        "system. Draft only from the supplied typed-evidence packet. In a "
-        "non-abstaining fragment, every factual field must cite one or more "
-        "supplied claim IDs in "
-        f"field_evidence_claim_ids for {list(EVIDENCE_MAPPED_FIELDS)}; "
-        "evidence_claim_ids must equal the union of those per-field IDs. "
-        "you may not create source assurance or treat an unread source as read. "
-        f"Allowed claim IDs: {allowed_ids}. Do not claim global novelty, proof, "
-        "independent validation, authorization, route promotion, or a secp256k1 "
-        "break. If the packet does not support an exact mechanism, set abstain=true, "
-        "identify the missing evidence, and do not manufacture evidence links for "
-        f"unsupported fields; set each uncited factual field to {ABSTENTION_SENTINEL!r}. "
-        "Return one strict JSON object with "
-        f"exactly these keys: {required_fields}. Evidence packet:\n"
-        + json.dumps(packet, ensure_ascii=True, sort_keys=True)
-    )
-
-
 def _validate_limit(policy: dict[str, Any], limit: int) -> None:
     maximum = policy["limits"]["max_queue_items"]
     if not 1 <= limit <= maximum:
@@ -744,9 +658,14 @@ def build_typed_evidence_request_packets(
         raise ValueError("Research Engine hypothesis_generation state is missing")
     seeds = generation.get("generated_seeds")
     proposals = generation.get("proposal_intake")
+    draft_attempts = generation.get("draft_attempt_memory")
     cells = typed_evidence_state.get("cells")
     claims = typed_evidence_state.get("source_claims")
-    if not isinstance(seeds, list) or not isinstance(proposals, list):
+    if (
+        not isinstance(seeds, list)
+        or not isinstance(proposals, list)
+        or not isinstance(draft_attempts, list)
+    ):
         raise ValueError("typed-evidence seed or proposal intake is missing")
     if not isinstance(cells, list) or not isinstance(claims, list):
         raise ValueError("typed-evidence cells or source claims are missing")
@@ -818,6 +737,19 @@ def build_typed_evidence_request_packets(
         else:
             raise ValueError("proposal intake seed resolution is invalid")
         proposals_by_seed.setdefault(resolved_seed_id, []).append(proposal_id)
+    attempts_by_seed: dict[str, list[dict[str, Any]]] = {}
+    for attempt in draft_attempts:
+        seed_id = attempt.get("seed_id")
+        if not isinstance(seed_id, str) or seed_id not in current_seed_ids:
+            raise ValueError("draft attempt memory has no current seed identity")
+        if (
+            attempt.get("authorization") != "none"
+            or attempt.get("executable") is not False
+            or attempt.get("scientific_outcome") is not False
+            or attempt.get("ranker_label") is not False
+        ):
+            raise ValueError("draft attempt memory violates non-executing boundary")
+        attempts_by_seed.setdefault(seed_id, []).append(attempt)
 
     required = policy["output_contract"]["required_fields"]
     policy_digest = sha256_json(policy)
@@ -830,6 +762,10 @@ def build_typed_evidence_request_packets(
         if seed_id not in admitted_seed_ids:
             continue
         existing_proposal_ids = sorted(proposals_by_seed.get(seed_id, []))
+        prior_draft_attempts = sorted(
+            attempts_by_seed.get(seed_id, []),
+            key=lambda item: item.get("attempt_id", ""),
+        )
         if existing_proposal_ids and not include_submitted:
             continue
         cell = cell_index.get(seed.get("cell_id"))
@@ -922,10 +858,13 @@ def build_typed_evidence_request_packets(
             admissions[seed_id]["research_object_id"],
             required_mode,
             required,
+            packet_contract_version="0.3",
+            prior_draft_attempts=prior_draft_attempts,
         )
         if len(prompt.encode("utf-8")) > policy["limits"]["max_prompt_bytes"]:
             raise ValueError(f"{seed_id}: prompt exceeds the policy byte bound")
         identity = {
+            "packet_contract_version": "0.3",
             "drafter_id": policy["drafter_id"],
             "policy_sha256": policy_digest,
             "lane": "typed_evidence",
@@ -940,6 +879,7 @@ def build_typed_evidence_request_packets(
             "evidence_manifest_sha256": sha256_json(evidence_manifest),
             "context_documents_sha256": sha256_json(context_documents),
             "seed_id": seed_id,
+            "prior_draft_attempts_sha256": sha256_json(prior_draft_attempts),
             "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
         }
         packets.append(
@@ -1020,111 +960,13 @@ def parse_fragment(
         return None, ["response_is_not_strict_json"]
     if not isinstance(value, dict):
         return None, ["response_is_not_object"]
-    problems: list[str] = []
-    if set(value) != set(required_fields):
-        problems.append("response_fields_do_not_match_contract")
-    abstain = value.get("abstain")
-    if not isinstance(abstain, bool):
-        problems.append("abstain_is_not_boolean")
-    missing = value.get("missing_evidence")
-    if not isinstance(missing, list):
-        problems.append("missing_evidence_is_not_array")
-    elif (
-        not all(isinstance(item, str) and item.strip() for item in missing)
-        or len(missing) != len(set(missing))
-    ):
-        problems.append("missing_evidence_items_are_invalid")
-    elif abstain is True and not missing:
-        problems.append("abstention_requires_missing_evidence")
-    evidence_claim_ids = value.get("evidence_claim_ids")
-    if not isinstance(evidence_claim_ids, list):
-        problems.append("evidence_claim_ids_is_not_array")
-    elif (
-        not all(
-            isinstance(item, str) and item.strip()
-            for item in evidence_claim_ids
-        )
-        or len(evidence_claim_ids) != len(set(evidence_claim_ids))
-    ):
-        problems.append("evidence_claim_ids_are_invalid")
-    else:
-        allowed = set(allowed_evidence_claim_ids or [])
-        unknown = sorted(set(evidence_claim_ids) - allowed)
-        if unknown:
-            problems.append("evidence_claim_ids_not_supplied")
-        if provenance_bound and abstain is False and not evidence_claim_ids:
-            problems.append("provenance_bound_fragment_has_no_evidence_claim_ids")
-        if not provenance_bound and evidence_claim_ids:
-            problems.append("brainstorm_fragment_claims_source_grounding")
-    field_evidence = value.get("field_evidence_claim_ids")
-    mapped_union: set[str] = set()
-    if not isinstance(field_evidence, dict):
-        problems.append("field_evidence_claim_ids_is_not_object")
-    elif set(field_evidence) != set(EVIDENCE_MAPPED_FIELDS):
-        problems.append("field_evidence_claim_ids_fields_do_not_match")
-    else:
-        allowed = set(allowed_evidence_claim_ids or [])
-        for field in EVIDENCE_MAPPED_FIELDS:
-            field_ids = field_evidence[field]
-            if (
-                not isinstance(field_ids, list)
-                or not all(
-                    isinstance(item, str) and item.strip()
-                    for item in field_ids
-                )
-                or len(field_ids) != len(set(field_ids))
-            ):
-                problems.append(f"field_evidence_claim_ids_invalid:{field}")
-                continue
-            mapped_union.update(field_ids)
-            if set(field_ids) - allowed:
-                problems.append(f"field_evidence_claim_ids_not_supplied:{field}")
-            if provenance_bound and abstain is False and not field_ids:
-                problems.append(f"provenance_bound_field_has_no_claim_link:{field}")
-            if not provenance_bound and field_ids:
-                problems.append(f"brainstorm_field_claims_source_grounding:{field}")
-        if isinstance(evidence_claim_ids, list) and mapped_union != set(
-            evidence_claim_ids
-        ):
-            problems.append("evidence_claim_ids_do_not_match_field_union")
-        if abstain is True:
-            for field in EVIDENCE_MAPPED_FIELDS:
-                field_ids = field_evidence.get(field)
-                if field_ids == [] and value.get(field) != ABSTENTION_SENTINEL:
-                    problems.append(f"uncited_abstention_text:{field}")
-    for field in required_fields:
-        if field in {
-            "abstain",
-            "missing_evidence",
-            "evidence_claim_ids",
-            "field_evidence_claim_ids",
-        }:
-            continue
-        if not isinstance(value.get(field), str) or not value[field].strip():
-            problems.append(f"{field}_is_not_nonempty_text")
-    folded = json.dumps(value, ensure_ascii=True, sort_keys=True).casefold()
-    for claim in prohibited_claims or []:
-        escaped = re.escape(claim.casefold())
-        pattern = re.compile(
-            rf"(?<![a-z0-9]){escaped}(?![a-z0-9])"
-        )
-        unnegated = False
-        for match in pattern.finditer(folded):
-            prefix = folded[max(0, match.start() - 64) : match.start()]
-            if re.search(
-                r"\b(?:no|not|without|cannot|never|zero)\b[^.!?;,:{}]{0,40}$",
-                prefix,
-            ):
-                continue
-            unnegated = True
-            break
-        if unnegated:
-            normalized = re.sub(
-                r"[^a-z0-9]+", "_", claim.casefold()
-            ).strip("_")
-            problems.append(
-                "prohibited_claim:" + normalized
-            )
+    problems = fragment_value_problems(
+        value,
+        required_fields,
+        prohibited_claims,
+        allowed_evidence_claim_ids=allowed_evidence_claim_ids,
+        provenance_bound=provenance_bound,
+    )
     return value, problems
 
 

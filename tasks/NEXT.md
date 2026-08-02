@@ -130,6 +130,13 @@ Current scientific activation order:
     different candidate, or follow-on experiment requires a new review and
     separate dated authorization. A scoped blocker or abstention is correct if
     no exact cost-changing proposal can be supplied.
+18. `TASK-029` completed that attempt with strict abstention. The engine retains
+    `HGA-M16-COST-BRIDGE-ABSTAIN-001` only as non-scientific draft memory. It creates
+    no proposal, outcome, calibration label, recommendation, authorization, or
+    route/cell transition. The smallest missing objects are an exact source-faithful
+    generalized-root solver and a complete common-unit cost theorem. The next work
+    is desk-only source/applicability closure for those objects; no solver run is
+    admitted.
 
 These entries freeze further engine-schema expansion by default. The consumed
 TASK-026 authorization permits no rerun, solver, route promotion, exact-target
