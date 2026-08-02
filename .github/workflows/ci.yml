@@ -96,6 +96,14 @@ jobs:
           python3 -m py_compile experiments/engine/pkc_smooth_m16_regime_assurance_desk/*.py
           (cd experiments/engine/pkc_smooth_m16_regime_assurance_desk && sha256sum -c artifact.sha256)
 
+      - name: Replay PKC M16 source-faithful mechanism and recovery closure
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_source_faithful_mechanism/generate.py --check
+          python3 experiments/engine/pkc_smooth_m16_source_faithful_mechanism/validate.py
+          python3 experiments/engine/pkc_smooth_m16_source_faithful_mechanism/test_validate.py
+          python3 -m py_compile experiments/engine/pkc_smooth_m16_source_faithful_mechanism/*.py
+          (cd experiments/engine/pkc_smooth_m16_source_faithful_mechanism && sha256sum -c artifact.sha256)
+
       - name: Replay PKC M16 semantic bridge certificate
         run: |
           python3 experiments/engine/pkc_smooth_m16_semantic_bridge/generate.py --check
