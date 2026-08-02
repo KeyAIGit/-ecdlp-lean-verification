@@ -19,7 +19,7 @@
         "value": "Section 3.1, Algorithm 1, System (4), published p. 9"
       },
       "paraphrase": "After sampling a and b and forming the target point (X,Y)=aP+bQ, Algorithm 1 solves one Semaev equation S_(m+1)(x_11,...,x_m1,X)=0 together with m copies of the composed-map chain x_(i,j+1)=L_j(x_(i,j)) and the terminal equations L_(n')(x_(i,n'))=0. Rational-map denominators are moved to the left-hand sides.",
-      "boundary": "The printed Step 4c checks whether recovered factor-base points satisfy sum_i P_i=0 and does not explicitly bind that check to the sampled target (X,Y), even though X occurs in System (4). A target-bound signed elliptic-curve recovery check is therefore a repository completion justified by summation-polynomial semantics, not a verbatim source claim."
+      "boundary": "The printed Step 4c checks whether recovered factor-base points satisfy sum_i P_i=0 and does not explicitly bind that check to the sampled target (X,Y), even though X occurs in System (4). A target-bound signed elliptic-curve acceptance check is therefore a repository completion justified by summation-polynomial semantics, not a verbatim source claim; it is sound for accepted candidates but does not prove complete recovery from direct System (4). The displayed affine system also requires R=aP+bQ to be nonidentity so that X exists; R=O requires resampling or separate handling."
     },
     {
       "claim_id": "SC-PKC-PMINUS1-MAP-EXACT",

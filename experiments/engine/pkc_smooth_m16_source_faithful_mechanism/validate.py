@@ -26,7 +26,7 @@ HASH_PATH = HERE / "artifact.sha256"
 
 EXPECTED_UPSTREAM = {
     "data/source_claim_extracts/petit_kosters_messeng2016_task028.json": (
-        "4687da1bd3e87f2adfb0379b3336c8f4c19057350ae425f49df6f36da3ed30ea"
+        "a1af4d460f6677d449ba99eae4d3b79c75b265ea8c53f740de28d85e948b942a"
     ),
     "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json": (
         "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7"
@@ -110,6 +110,11 @@ def validate_source_binding(document: dict[str, Any]) -> None:
         },
     )
     exact("source id", binding["source_id"], "petit_kosters_messeng2016")
+    exact(
+        "source URL",
+        binding["url"],
+        "https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf",
+    )
     exact("source review status", binding["review_status"], "full_text_obtained")
     exact("source independence", binding["source_independence"], "not_established")
     exact(
@@ -135,6 +140,8 @@ def validate_source_binding(document: dict[str, Any]) -> None:
     exact("source claim ids", binding["claim_ids"], expected_ids)
 
     source = load_json(ROOT / binding["claim_extract_path"])
+    exact("source extract id", source["source_id"], binding["source_id"])
+    exact("source extract URL", source["source_url"], binding["url"])
     exact("source extract artifact hash", source["source_artifact_sha256"], binding["artifact_sha256"])
     exact("source extract review", source["review_status"], "full_text_obtained")
     claims = {claim["claim_id"]: claim for claim in source["claims"]}
@@ -148,9 +155,25 @@ def validate_source_binding(document: dict[str, Any]) -> None:
             "value": "Section 3.1, Algorithm 1, System (4), published p. 9",
         },
     )
+    exact(
+        "p-minus-one map locator",
+        claims["SC-PKC-PMINUS1-MAP-EXACT"]["locator"],
+        {"kind": "section", "value": "Section 3.3, published p. 10"},
+    )
+    exact(
+        "partial-cost locator",
+        claims["SC-PKC-PARTIAL-COST-EXACT"]["locator"],
+        {"kind": "section", "value": "Section 3.2, published p. 10"},
+    )
     require(
         "sum_i P_i=0" in claims["SC-PKC-SYSTEM4-EXACT"]["boundary"]
-        and "does not explicitly bind" in claims["SC-PKC-SYSTEM4-EXACT"]["boundary"],
+        and "does not explicitly bind" in claims["SC-PKC-SYSTEM4-EXACT"]["boundary"]
+        and "does not prove complete recovery" in claims[
+            "SC-PKC-SYSTEM4-EXACT"
+        ]["boundary"]
+        and "R=O requires resampling" in claims[
+            "SC-PKC-SYSTEM4-EXACT"
+        ]["boundary"],
         "source recovery ambiguity was weakened",
     )
     require(
@@ -212,16 +235,23 @@ def validate_specialization(document: dict[str, Any]) -> None:
     exact("maximum source component degree", chain["maximum_component_degree"], 13_441)
     exact("root count", chain["root_count_in_f_p"], D)
     exact("root set", chain["root_set"], "the unique order-564522 subgroup H of F_p^*")
+    exact(
+        "pointwise root equivalence",
+        chain["pointwise_root_equivalence"],
+        "For x in F_p, L(x)=0 iff x^564522=1.",
+    )
 
     system = exact_keys(
         "system4_specialization",
         document["system4_specialization"],
         {
+            "affine_target_required",
             "direct_relation",
             "direct_relation_per_leaf_degree",
             "direct_relation_target_specialized_total_degree_upper_bound",
             "equation_members",
             "factor_coordinates",
+            "identity_target_policy",
             "sampled_target_precedes_system",
             "target_definition",
             "terminal_equations",
@@ -240,6 +270,14 @@ def validate_specialization(document: dict[str, Any]) -> None:
         524_288,
     )
     exact("target chronology", system["sampled_target_precedes_system"], True)
+    exact("affine target precondition", system["affine_target_required"], True)
+    exact("target definition", system["target_definition"], "R=(X,Y)=aP+bQ with R != O")
+    exact(
+        "identity target policy",
+        system["identity_target_policy"],
+        "If R=O, the affine target coordinate X is undefined; resample "
+        "(a,b) or process that case outside this affine specialization.",
+    )
 
     symbolic = load_json(
         ROOT / "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
@@ -272,6 +310,13 @@ def validate_boundaries(document: dict[str, Any]) -> None:
     exact("ideal nonclaim", representation["same_polynomial_ideal_claimed"], False)
     exact("complexity nonclaim", representation["same_solving_complexity_claimed"], False)
     exact("source max degree", representation["source_factor_chain_maximum_degree"], 13_441)
+    exact(
+        "representation warning",
+        representation["warning"],
+        "Replacing the source chain by an addition-chain circuit preserves "
+        "pointwise membership only; it does not transfer solving-degree, "
+        "fill-in, multiplicity, saturation, or complexity claims.",
+    )
 
     recovery = exact_keys(
         "recovery_contract",
@@ -289,6 +334,11 @@ def validate_boundaries(document: dict[str, Any]) -> None:
         },
     )
     exact("printed acceptance", source_exact["printed_acceptance"], "sum_i P_i = O")
+    exact(
+        "source solution quotient",
+        source_exact["solutions_quotiented_by"],
+        "permutations of x_i1",
+    )
     exact("printed target binding", source_exact["printed_target_binding_explicit"], False)
     exact(
         "source recovery status",
@@ -301,21 +351,47 @@ def validate_boundaries(document: dict[str, Any]) -> None:
         {
             "assurance",
             "bind_sampled_target",
+            "direct_system4_recovery_completeness",
             "enumerate_f_p_curve_lifts",
             "exceptional_and_infinity_fibers",
             "final_acceptance",
             "permutation_and_duplicate_accounting_required",
+            "soundness_scope",
             "target_sign_recorded_in_relation",
         },
     )
     exact("target-bound completion", completion["bind_sampled_target"], True)
+    exact(
+        "acceptance-filter assurance",
+        completion["assurance"],
+        "derived_sound_acceptance_filter_only",
+    )
+    exact(
+        "direct recovery completeness",
+        completion["direct_system4_recovery_completeness"],
+        "unproved",
+    )
     exact("F_p lift recovery", completion["enumerate_f_p_curve_lifts"], True)
     exact("duplicate accounting", completion["permutation_and_duplicate_accounting_required"], True)
     exact("target sign", completion["target_sign_recorded_in_relation"], True)
-    require(
-        "epsilon_R R = O" in completion["final_acceptance"]
-        and "independent elliptic-curve arithmetic" in completion["final_acceptance"],
-        "target-bound independent recovery check was weakened",
+    exact(
+        "exceptional-fiber boundary",
+        completion["exceptional_and_infinity_fibers"],
+        "referenced upstream but do not establish direct-System-(4) "
+        "recovery completeness",
+    )
+    exact(
+        "acceptance-filter soundness scope",
+        completion["soundness_scope"],
+        "Passing this filter validates a candidate relation; it does not "
+        "prove that every direct-System-(4) solution is recovered.",
+    )
+    exact(
+        "target-bound independent recovery check",
+        completion["final_acceptance"],
+        "Accept only a recovered signed relation "
+        "sum_i epsilon_i P_i + epsilon_R R = O, with every point "
+        "and coefficient checked by independent elliptic-curve arithmetic.",
     )
 
     cost = exact_keys(
@@ -334,8 +410,25 @@ def validate_boundaries(document: dict[str, Any]) -> None:
         "P(p,16) + (16!*p/D^15)*T(E,16,L) + D^omega",
     )
     exact("source yield", cost["known_source_yield_heuristic"], "D^16/(16!*p)")
-    require("No dedicated generalized-root algorithm" in cost["source_solver_status"], "solver gap was removed")
-    require(isinstance(cost["unresolved"], list) and len(cost["unresolved"]) == 7, "cost ledger must retain seven unresolved fields")
+    exact(
+        "source solver boundary",
+        cost["source_solver_status"],
+        "No dedicated generalized-root algorithm or cost theorem is provided; "
+        "the source leaves asymptotic complexity open.",
+    )
+    exact(
+        "unresolved cost ledger",
+        cost["unresolved"],
+        [
+            "generalized-root solving degree and fill-in",
+            "usable regular-locus probability and exceptional-complement orchestration",
+            "independent-relation probability and rank",
+            "direct-System-(4) recovery completeness, multiplicity, and online cost",
+            "preprocessing and amortization",
+            "sparse linear-algebra time, memory, and storage",
+            "common-unit equal-success comparison with Pollard rho",
+        ],
+    )
 
     assurance = document["assurance_matrix"]
     exact(
@@ -347,7 +440,9 @@ def validate_boundaries(document: dict[str, Any]) -> None:
             "primary_source_map_and_system": "source_exact",
             "printed_recovery_target_binding": "source_ambiguous",
             "projective_semantics": "lean_kernel_and_certificate_replayed",
-            "repository_recovery_completion": "derived_and_replay_bound",
+            "repository_recovery_completion": (
+                "derived_sound_filter_completeness_unproved"
+            ),
             "solver_and_complete_cost": "unknown",
         },
     )

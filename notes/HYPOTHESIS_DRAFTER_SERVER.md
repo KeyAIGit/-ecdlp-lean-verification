@@ -16,9 +16,9 @@ The drafter has two explicit lanes:
   Seeds that already have a submitted proposal are skipped unless a local caller
   explicitly requests a replay. The current research decision admits formulation
   only of `HYP-M16-SOLVER-SLOPE-001`; this reviewed drafter policy maps that
-  object to scoped seed `HGS-756950525445`. The exact M16 factor-base census
-  and versioned source-faithful mechanism closure changed that cell's scientific
-  identity. Existing proposal
+  object to scoped seed `HGS-3266E42A729C`. The exact M16 factor-base census,
+  versioned source-faithful mechanism binding, and adversarial recovery-scope
+  correction changed that cell's scientific identity. Existing proposal
   `HGP-M16-SOLVER-SLOPE-001` remains immutable through authenticated legacy
   alias `HGS-DC5FF2FC9E71`, but the alias is now historical-only and blocked by
   `stale_seed_snapshot`; it is not counted as a proposal for the current seed.

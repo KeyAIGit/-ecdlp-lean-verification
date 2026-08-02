@@ -27,7 +27,7 @@ HASH_PATH = HERE / "artifact.sha256"
 
 UPSTREAM_BINDINGS = {
     "data/source_claim_extracts/petit_kosters_messeng2016_task028.json": (
-        "4687da1bd3e87f2adfb0379b3336c8f4c19057350ae425f49df6f36da3ed30ea"
+        "a1af4d460f6677d449ba99eae4d3b79c75b265ea8c53f740de28d85e948b942a"
     ),
     "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json": (
         "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7"
@@ -173,13 +173,18 @@ def build_artifact() -> dict[str, Any]:
             "root_set": "the unique order-564522 subgroup H of F_p^*",
         },
         "system4_specialization": {
+            "affine_target_required": True,
             "direct_relation": "S17(x_11,...,x_16, X)=0",
             "direct_relation_per_leaf_degree": 32_768,
             "direct_relation_target_specialized_total_degree_upper_bound": 524_288,
             "equation_members": 1 + transition_equations + terminal_equations,
             "factor_coordinates": source_chain_variables,
             "sampled_target_precedes_system": True,
-            "target_definition": "R=(X,Y)=aP+bQ",
+            "identity_target_policy": (
+                "If R=O, the affine target coordinate X is undefined; resample "
+                "(a,b) or process that case outside this affine specialization."
+            ),
+            "target_definition": "R=(X,Y)=aP+bQ with R != O",
             "terminal_equations": terminal_equations,
             "transition_equations": transition_equations,
         },
@@ -202,11 +207,13 @@ def build_artifact() -> dict[str, Any]:
                 "status": "internally_ambiguous_with_target_dependent_system",
             },
             "repository_completion": {
-                "assurance": "derived_from_summation_semantics_and_replayed_artifacts",
+                "assurance": "derived_sound_acceptance_filter_only",
                 "bind_sampled_target": True,
+                "direct_system4_recovery_completeness": "unproved",
                 "enumerate_f_p_curve_lifts": True,
                 "exceptional_and_infinity_fibers": (
-                    "bound to the existing projective and exceptional-fiber artifacts"
+                    "referenced upstream but do not establish direct-System-(4) "
+                    "recovery completeness"
                 ),
                 "final_acceptance": (
                     "Accept only a recovered signed relation "
@@ -214,6 +221,10 @@ def build_artifact() -> dict[str, Any]:
                     "and coefficient checked by independent elliptic-curve arithmetic."
                 ),
                 "permutation_and_duplicate_accounting_required": True,
+                "soundness_scope": (
+                    "Passing this filter validates a candidate relation; it does "
+                    "not prove that every direct-System-(4) solution is recovered."
+                ),
                 "target_sign_recorded_in_relation": True,
             },
         },
@@ -230,7 +241,7 @@ def build_artifact() -> dict[str, Any]:
                 "generalized-root solving degree and fill-in",
                 "usable regular-locus probability and exceptional-complement orchestration",
                 "independent-relation probability and rank",
-                "recovery multiplicity and online cost",
+                "direct-System-(4) recovery completeness, multiplicity, and online cost",
                 "preprocessing and amortization",
                 "sparse linear-algebra time, memory, and storage",
                 "common-unit equal-success comparison with Pollard rho",
@@ -242,7 +253,9 @@ def build_artifact() -> dict[str, Any]:
             "pointwise_chain_arithmetic": "derived_arithmetic",
             "projective_semantics": "lean_kernel_and_certificate_replayed",
             "printed_recovery_target_binding": "source_ambiguous",
-            "repository_recovery_completion": "derived_and_replay_bound",
+            "repository_recovery_completion": (
+                "derived_sound_filter_completeness_unproved"
+            ),
             "solver_and_complete_cost": "unknown",
         },
         "upstream_bindings": dict(UPSTREAM_BINDINGS),

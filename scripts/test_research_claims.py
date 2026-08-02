@@ -99,7 +99,9 @@ class ResearchClaimTests(unittest.TestCase):
             == "CLM-PKC-M16-SOURCE-MECHANISM-RECOVERY"
         )
         self.assertEqual("confirmed", claim["claim_disposition"])
-        self.assertIn("against the sampled target", claim["statement"])
+        self.assertIn("sound acceptance filter", claim["statement"])
+        self.assertIn("recovery completeness unproved", claim["statement"])
+        self.assertIn("Identity samples require resampling", claim["scope"])
         event = next(
             item
             for item in state["evidence_events"]

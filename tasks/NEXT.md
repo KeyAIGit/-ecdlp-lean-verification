@@ -118,12 +118,14 @@ Current scientific activation order:
 16. `TASK-028` is complete: the PKC 2016 source chain specializes exactly to
     `L4 o L3 o L2 o L1 = 1 - x^564522`, and direct System (4) has 64 factor
     coordinates and 65 equation members at arity sixteen. The source's printed
-    recovery line does not explicitly bind the sampled target, so the
-    repository records a target-bound signed elliptic-curve check as a derived
-    completion. Generalized-root solving, rank, recovery distribution, sparse
-    linear algebra, and complete equal-success cost remain unresolved.
+    recovery line does not explicitly bind the sampled target, so for `R != O`
+    the repository records a target-bound signed elliptic-curve check as a
+    derived sound acceptance filter. Identity samples require resampling or
+    separate handling. Complete direct-System-(4) recovery, generalized-root
+    solving, rank, recovery distribution, sparse linear algebra, and complete
+    equal-success cost remain unresolved.
 17. Only a source-grounded, non-executable `HYP-M16-SOLVER-SLOPE-001` draft for
-    current seed `HGS-756950525445` may now be written and reviewed. Any solver,
+    current seed `HGS-3266E42A729C` may now be written and reviewed. Any solver,
     exact-target work, route promotion,
     different candidate, or follow-on experiment requires a new review and
     separate dated authorization. A scoped blocker or abstention is correct if

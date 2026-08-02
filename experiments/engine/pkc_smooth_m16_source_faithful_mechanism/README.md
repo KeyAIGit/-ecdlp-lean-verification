@@ -1,4 +1,4 @@
-# PKC M16 source-faithful mechanism and recovery closure
+# PKC M16 source-faithful mechanism and sound acceptance contract
 
 This desk package binds the direct `p-1` construction in Petit, Kosters, and
 Messeng (PKC 2016) to the exact secp256k1 M16 specialization.
@@ -15,7 +15,10 @@ It freezes four distinctions that are easy to lose in prose:
 - Algorithm 1 prints a recovery check `sum_i P_i = O` even though its System
   (4) contains the sampled target coordinate `X`;
 - the repository therefore supplies an explicit target-bound signed
-  elliptic-curve check as a derived completion, not as a source quotation.
+  elliptic-curve check as a derived sound acceptance filter, not as a source
+  quotation or a proof that direct System (4) recovery is complete;
+- the displayed affine target specialization requires `R != O`; an identity
+  sample has no affine `X` and must be resampled or handled separately.
 
 The package does not build `S17`, run a solver, estimate solving degree, or
 authorize an experiment. Its terminal state is

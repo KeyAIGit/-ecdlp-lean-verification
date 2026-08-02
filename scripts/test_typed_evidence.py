@@ -410,7 +410,7 @@ class TypedEvidenceTests(unittest.TestCase):
             source_mechanism_claim["evidence_path"],
         )
         self.assertEqual(
-            "56260976b2051ab2d91a990329620b4355b7057e7bfd5d5e59814a10d21f702e",
+            "79ee65104cfbd45ee902fbf59524a705e6db8590c8d5845a6a20cd63239c774c",
             source_mechanism_claim["artifact_sha256"],
         )
         self.assertIn("repository completion", source_mechanism_claim["boundary"])

@@ -101,7 +101,7 @@ M16_SOURCE_MECHANISM_ARTIFACT_PATH = (
     "pkc_smooth_m16_source_faithful_mechanism/artifact.json"
 )
 M16_SOURCE_MECHANISM_ARTIFACT_SHA256 = (
-    "56260976b2051ab2d91a990329620b4355b7057e7bfd5d5e59814a10d21f702e"
+    "79ee65104cfbd45ee902fbf59524a705e6db8590c8d5845a6a20cd63239c774c"
 )
 PKC_2016_PRIMARY_SHA256 = (
     "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943"
@@ -283,7 +283,7 @@ def validate_semantics(
     primary_source_expectations = {
         "SC-PKC-SYSTEM4-EXACT": (
             "Section 3.1, Algorithm 1, System (4), published p. 9",
-            "target-bound signed elliptic-curve check",
+            "sound acceptance filter",
         ),
         "SC-PKC-PMINUS1-MAP-EXACT": (
             "Section 3.3, published p. 10",
@@ -327,6 +327,9 @@ def validate_semantics(
     source_mechanism_boundary = source_mechanism.get("boundary", "")
     for token, label in (
         ("repository completion", "derived recovery boundary"),
+        ("Passing it validates a candidate relation", "sound acceptance boundary"),
+        ("complete direct-System-(4) recovery is unproved", "recovery completeness boundary"),
+        ("identity targets require resampling", "affine identity-target boundary"),
         ("Generalized-root solving", "unresolved solver boundary"),
         ("complete equal-success cost", "unresolved complete cost"),
         ("source independence is not established", "source independence"),
@@ -348,6 +351,18 @@ def validate_semantics(
         )
     if source_research_claim.get("route_id") != "R-PETIT-COMPOSED-MAPS":
         problems.append("M16 source-mechanism child claim lost its parent route")
+    source_research_statement = source_research_claim.get("statement", "")
+    if (
+        "sound acceptance filter" not in source_research_statement
+        or "recovery completeness unproved" not in source_research_statement
+    ):
+        problems.append(
+            "M16 source-mechanism child claim overstates recovery closure"
+        )
+    if "Identity samples require resampling" not in source_research_claim.get(
+        "scope", ""
+    ):
+        problems.append("M16 source-mechanism child claim lost affine target scope")
     source_variant = mechanism_variants.get(
         "MV-PKC-PMINUS1-M16-PUBLISHED-SYSTEM4", {}
     )
@@ -355,6 +370,10 @@ def validate_semantics(
         "mechanism_specified_cost_unresolved"
     ):
         problems.append("M16 published mechanism variant status drifted")
+    if source_variant.get("kind") != (
+        "published_mechanism_with_repo_sound_acceptance_filter"
+    ):
+        problems.append("M16 published mechanism variant recovery scope drifted")
     if source_variant.get("proposal_seed_eligible") is not False:
         problems.append("M16 source mechanism certificate cannot become a seed")
     source_event = evidence_events.get(

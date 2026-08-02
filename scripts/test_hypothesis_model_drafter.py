@@ -607,7 +607,7 @@ class HypothesisModelDrafterTests(unittest.TestCase):
             typed_evidence_state=self.typed_evidence_state,
         )
         self.assertEqual(1, len(packets))
-        self.assertEqual("HGS-756950525445", packets[0]["seed_id"])
+        self.assertEqual("HGS-3266E42A729C", packets[0]["seed_id"])
         self.assertEqual([], packets[0]["existing_proposal_ids"])
 
     def test_historical_proposal_is_not_compatible_with_current_seed(self) -> None:
@@ -622,7 +622,7 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         packet = packets[0]
         self.assertEqual("typed_evidence", packet["lane"])
         self.assertTrue(packet["input_provenance_bound"])
-        self.assertEqual("HGS-756950525445", packet["seed_id"])
+        self.assertEqual("HGS-3266E42A729C", packet["seed_id"])
         self.assertEqual([], packet["existing_proposal_ids"])
         self.assertTrue(packet["allowed_evidence_claim_ids"])
         self.assertTrue(packet["evidence_manifest"])
@@ -748,7 +748,7 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         seed = next(
             item
             for item in route_drift["hypothesis_generation"]["generated_seeds"]
-            if item["seed_id"] == "HGS-756950525445"
+            if item["seed_id"] == "HGS-3266E42A729C"
         )
         seed["route_id"] = "R-WRONG"
         with self.assertRaises(ValueError):
@@ -763,7 +763,7 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         seed = next(
             item
             for item in semantic_drift["hypothesis_generation"]["generated_seeds"]
-            if item["seed_id"] == "HGS-756950525445"
+            if item["seed_id"] == "HGS-3266E42A729C"
         )
         seed["research_question"] = (
             "Use nonce leakage and multi-target amortization under a false plain tag."
@@ -791,7 +791,7 @@ class HypothesisModelDrafterTests(unittest.TestCase):
             for item in self.engine_state["hypothesis_generation"][
                 "generated_seeds"
             ]
-            if item["seed_id"] == "HGS-756950525445"
+            if item["seed_id"] == "HGS-3266E42A729C"
         )
         manifest_paths = {entry["path"] for entry in packet["evidence_manifest"]}
         self.assertTrue(set(seed["evidence_inputs"]) <= manifest_paths)

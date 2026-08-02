@@ -13,6 +13,58 @@ import validate
 Mutation = Callable[[dict[str, Any]], None]
 
 
+def leaf_paths(value: Any, prefix: tuple[Any, ...] = ()) -> list[tuple[Any, ...]]:
+    if isinstance(value, dict):
+        return [
+            path
+            for key in sorted(value)
+            for path in leaf_paths(value[key], prefix + (key,))
+        ]
+    if isinstance(value, list):
+        return [
+            path
+            for index, item in enumerate(value)
+            for path in leaf_paths(item, prefix + (index,))
+        ]
+    return [prefix]
+
+
+def replace_leaf(value: Any, path: tuple[Any, ...]) -> None:
+    parent = value
+    for key in path[:-1]:
+        parent = parent[key]
+    key = path[-1]
+    current = parent[key]
+    if isinstance(current, bool):
+        parent[key] = not current
+    elif isinstance(current, int):
+        parent[key] = current + 1
+    elif isinstance(current, str):
+        parent[key] = current + " [fault]"
+    elif current is None:
+        parent[key] = "fault"
+    else:
+        raise TypeError(f"unsupported leaf type at {path}: {type(current)}")
+
+
+def exhaustive_leaf_fault_sweep(baseline: dict[str, Any]) -> int:
+    accepted: list[str] = []
+    paths = leaf_paths(baseline)
+    for path in paths:
+        candidate = copy.deepcopy(baseline)
+        replace_leaf(candidate, path)
+        try:
+            validate.validate_document(candidate)
+        except validate.ValidationFailure:
+            continue
+        accepted.append("/".join(str(item) for item in path))
+    if accepted:
+        raise AssertionError(
+            "validator accepted scalar leaf mutations: " + ", ".join(accepted)
+        )
+    return len(paths)
+
+
 def must_reject(name: str, baseline: dict[str, Any], mutation: Mutation) -> None:
     candidate = copy.deepcopy(baseline)
     mutation(candidate)
@@ -61,6 +113,12 @@ def main() -> int:
             ),
         ),
         (
+            "pointwise-root-equivalence",
+            lambda value: value["source_map_chain"].__setitem__(
+                "pointwise_root_equivalence", "all nonzero x are roots"
+            ),
+        ),
+        (
             "system-equation-count",
             lambda value: value["system4_specialization"].__setitem__(
                 "equation_members", 64
@@ -73,9 +131,33 @@ def main() -> int:
             ),
         ),
         (
+            "affine-target-precondition",
+            lambda value: value["system4_specialization"].__setitem__(
+                "affine_target_required", False
+            ),
+        ),
+        (
+            "target-definition",
+            lambda value: value["system4_specialization"].__setitem__(
+                "target_definition", "R=aP+bQ"
+            ),
+        ),
+        (
+            "identity-target-policy",
+            lambda value: value["system4_specialization"].__setitem__(
+                "identity_target_policy", "assume X always exists"
+            ),
+        ),
+        (
             "circuit-complexity-equivalence",
             lambda value: value["representation_boundary"].__setitem__(
                 "same_solving_complexity_claimed", True
+            ),
+        ),
+        (
+            "representation-warning",
+            lambda value: value["representation_boundary"].__setitem__(
+                "warning", "the circuit preserves solving complexity"
             ),
         ),
         (
@@ -91,10 +173,42 @@ def main() -> int:
             ),
         ),
         (
+            "source-solution-quotient",
+            lambda value: value["recovery_contract"]["source_exact"].__setitem__(
+                "solutions_quotiented_by", "all signed lift choices"
+            ),
+        ),
+        (
             "completion-target-unbound",
             lambda value: value["recovery_contract"][
                 "repository_completion"
             ].__setitem__("bind_sampled_target", False),
+        ),
+        (
+            "completion-assurance-upgrade",
+            lambda value: value["recovery_contract"][
+                "repository_completion"
+            ].__setitem__("assurance", "proved_complete_recovery"),
+        ),
+        (
+            "direct-recovery-completeness-upgrade",
+            lambda value: value["recovery_contract"][
+                "repository_completion"
+            ].__setitem__("direct_system4_recovery_completeness", "proved"),
+        ),
+        (
+            "exceptional-fiber-overclaim",
+            lambda value: value["recovery_contract"][
+                "repository_completion"
+            ].__setitem__(
+                "exceptional_and_infinity_fibers", "complete recovery is proved"
+            ),
+        ),
+        (
+            "acceptance-filter-overclaim",
+            lambda value: value["recovery_contract"][
+                "repository_completion"
+            ].__setitem__("soundness_scope", "all solutions are recovered"),
         ),
         (
             "independent-curve-check-removed",
@@ -111,6 +225,18 @@ def main() -> int:
         (
             "cost-ledger-shortened",
             lambda value: value["cost_contract"]["unresolved"].pop(),
+        ),
+        (
+            "cost-ledger-replaced",
+            lambda value: value["cost_contract"]["unresolved"].__setitem__(
+                3, "complete recovery theorem"
+            ),
+        ),
+        (
+            "cost-ledger-duplicate",
+            lambda value: value["cost_contract"]["unresolved"].__setitem__(
+                3, value["cost_contract"]["unresolved"][0]
+            ),
         ),
         (
             "solver-assurance-upgrade",
@@ -159,9 +285,12 @@ def main() -> int:
     for name, mutation in mutations:
         must_reject(name, baseline, mutation)
 
+    leaf_count = exhaustive_leaf_fault_sweep(baseline)
+
     print(
         "PKC M16 source mechanism mutation tests PASS: "
-        f"{len(mutations)}/{len(mutations)}"
+        f"{len(mutations)}/{len(mutations)} targeted; "
+        f"{leaf_count}/{leaf_count} scalar leaves"
     )
     return 0
 

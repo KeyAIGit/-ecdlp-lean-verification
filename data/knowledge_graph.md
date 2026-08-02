@@ -100,7 +100,7 @@ The typed mechanism and cell are part of scientific identity. The three synthesi
 | seed | typed mechanism and cell | target feature | mechanism primitive | unresolved question | status |
 |---|---|---|---|---|---|
 | **HGS-5CC94AD51AE6** | `M-PKC-AUXILIARY-CURVE` / `CELL-M-PKC-AUXILIARY-CURVE` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `property_resolution_required`, authorization `none` |
-| **HGS-756950525445** | `M-PKC-SMOOTH-M16` / `CELL-M-PKC-SMOOTH-M16` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `desk_cost_bridge_required`, authorization `none` |
+| **HGS-3266E42A729C** | `M-PKC-SMOOTH-M16` / `CELL-M-PKC-SMOOTH-M16` | `TF-LOW-DEGREE-COMPOSED-FACTOR-BASE` | `MP-GENERALIZED-ROOT-RECOVERY` | `U-PETIT-GENERALIZED-ROOT-COST` | `desk_cost_bridge_required`, authorization `none` |
 
 | shadow stub | anchor | kind | executable | authorized |
 |---|---|---|---:|---:|

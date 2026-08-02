@@ -6,7 +6,7 @@
     "primary_source_map_and_system": "source_exact",
     "printed_recovery_target_binding": "source_ambiguous",
     "projective_semantics": "lean_kernel_and_certificate_replayed",
-    "repository_recovery_completion": "derived_and_replay_bound",
+    "repository_recovery_completion": "derived_sound_filter_completeness_unproved",
     "solver_and_complete_cost": "unknown"
   },
   "cost_contract": {
@@ -17,7 +17,7 @@
       "generalized-root solving degree and fill-in",
       "usable regular-locus probability and exceptional-complement orchestration",
       "independent-relation probability and rank",
-      "recovery multiplicity and online cost",
+      "direct-System-(4) recovery completeness, multiplicity, and online cost",
       "preprocessing and amortization",
       "sparse linear-algebra time, memory, and storage",
       "common-unit equal-success comparison with Pollard rho"
@@ -26,12 +26,14 @@
   "kind": "deterministic_nonexperimental_source_mechanism_desk",
   "recovery_contract": {
     "repository_completion": {
-      "assurance": "derived_from_summation_semantics_and_replayed_artifacts",
+      "assurance": "derived_sound_acceptance_filter_only",
       "bind_sampled_target": true,
+      "direct_system4_recovery_completeness": "unproved",
       "enumerate_f_p_curve_lifts": true,
-      "exceptional_and_infinity_fibers": "bound to the existing projective and exceptional-fiber artifacts",
+      "exceptional_and_infinity_fibers": "referenced upstream but do not establish direct-System-(4) recovery completeness",
       "final_acceptance": "Accept only a recovered signed relation sum_i epsilon_i P_i + epsilon_R R = O, with every point and coefficient checked by independent elliptic-curve arithmetic.",
       "permutation_and_duplicate_accounting_required": true,
+      "soundness_scope": "Passing this filter validates a candidate relation; it does not prove that every direct-System-(4) solution is recovered.",
       "target_sign_recorded_in_relation": true
     },
     "source_exact": {
@@ -52,7 +54,7 @@
   "source_binding": {
     "artifact_sha256": "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943",
     "claim_extract_path": "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
-    "claim_extract_sha256": "4687da1bd3e87f2adfb0379b3336c8f4c19057350ae425f49df6f36da3ed30ea",
+    "claim_extract_sha256": "a1af4d460f6677d449ba99eae4d3b79c75b265ea8c53f740de28d85e948b942a",
     "claim_ids": [
       "SC-PKC-SYSTEM4-EXACT",
       "SC-PKC-PMINUS1-MAP-EXACT",
@@ -115,13 +117,15 @@
     "smooth_divisor": 564522
   },
   "system4_specialization": {
+    "affine_target_required": true,
     "direct_relation": "S17(x_11,...,x_16, X)=0",
     "direct_relation_per_leaf_degree": 32768,
     "direct_relation_target_specialized_total_degree_upper_bound": 524288,
     "equation_members": 65,
     "factor_coordinates": 64,
+    "identity_target_policy": "If R=O, the affine target coordinate X is undefined; resample (a,b) or process that case outside this affine specialization.",
     "sampled_target_precedes_system": true,
-    "target_definition": "R=(X,Y)=aP+bQ",
+    "target_definition": "R=(X,Y)=aP+bQ with R != O",
     "terminal_equations": 16,
     "transition_equations": 48
   },
@@ -139,7 +143,7 @@
   },
   "upstream_bindings": {
     "Ecdlp/Proved/SemaevThree.lean": "b469c41b89a5e1522fa7bdf5f9264a5fc50a45910929c1da9432298be8da4d9d",
-    "data/source_claim_extracts/petit_kosters_messeng2016_task028.json": "4687da1bd3e87f2adfb0379b3336c8f4c19057350ae425f49df6f36da3ed30ea",
+    "data/source_claim_extracts/petit_kosters_messeng2016_task028.json": "a1af4d460f6677d449ba99eae4d3b79c75b265ea8c53f740de28d85e948b942a",
     "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json": "578db732807a452e26de03dcd338d62c25a7d90490a62bbf427b1f96c3a869cf",
     "experiments/engine/pkc_smooth_m16_frozen_projective_witness/artifact.json": "89c645545d89334473d51654a41ff7ec2364857d034c64ce08d505337fa1e2d4",
     "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json": "dc514544bf388562a3ebed312aef56bc87b00527f32ce6d131a2f5371dba2744",

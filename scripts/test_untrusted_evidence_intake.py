@@ -125,6 +125,14 @@ class UntrustedEvidenceIntakeTests(unittest.TestCase):
             append_only_receipt_problems(current, self.contract),
         )
 
+    def test_build_state_enforces_protected_main_receipt(self) -> None:
+        mutated = copy.deepcopy(self.contract)
+        mutated["sources"][0]["sha256"] = "0" * 64
+        with self.assertRaisesRegex(
+            IntakeError, "protected-main receipt drifted: sources"
+        ):
+            build_state(mutated)
+
     def test_quarantine_reference_in_scientific_consumer_is_rejected(self) -> None:
         references = forbidden_consumer_references(
             {

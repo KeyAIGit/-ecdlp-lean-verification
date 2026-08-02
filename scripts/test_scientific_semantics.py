@@ -50,6 +50,22 @@ class ScientificSemanticTests(unittest.TestCase):
             self.validate(typed=typed),
         )
 
+    def test_m16_source_mechanism_recovery_overclaim_fails(self) -> None:
+        typed = copy.deepcopy(self.typed)
+        claim = next(
+            item
+            for item in typed["source_claims"]
+            if item["id"] == "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY"
+        )
+        claim["boundary"] = claim["boundary"].replace(
+            "complete direct-System-(4) recovery is unproved",
+            "complete direct-System-(4) recovery is proved",
+        )
+        self.assertIn(
+            "M16 source-mechanism claim must retain recovery completeness boundary",
+            self.validate(typed=typed),
+        )
+
     def test_m16_source_mechanism_cannot_be_relabelled_as_lean(self) -> None:
         claims = copy.deepcopy(self.claims)
         claim = next(
