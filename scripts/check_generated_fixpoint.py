@@ -19,6 +19,9 @@ GENERATORS = [
     ["scripts/gen_result_registry.py"],
     ["scripts/gen_axiom_audit.py"],
     ["scripts/gen_source_registry.py"],
+    [
+        "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/generate.py"
+    ],
     ["scripts/build_typed_evidence_state.py"],
     ["scripts/research_claims.py"],
     ["scripts/build_research_engine_state.py"],
@@ -45,6 +48,8 @@ PURE_ARTIFACTS = [
     "data/result_registry.json",
     "Ecdlp/LedgerAxiomAudit.lean",
     "data/source_registry.json",
+    "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json",
+    "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.sha256",
     "data/typed_evidence_state.json",
     "data/research_claim_state.json",
     "data/research_engine_state.json",

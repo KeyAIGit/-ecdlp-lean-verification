@@ -21,7 +21,9 @@ Canonical start order:
 5. Execute only a task contract from that queue.
 
 Current central decision: formulate and review, but do not execute,
-`HYP-M16-SOLVER-SLOPE-001`. `TASK-026` completed once under
+`HYP-M16-SOLVER-SLOPE-001`. The published M16 map and System (4) input are
+now specified, while generalized-root solving and complete equal-success cost
+remain unresolved. `TASK-026` completed once under
 `AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01`; independent replay recorded
 `REO-2026-07-31-001` with terminal
 `CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION`. The authorization is consumed and
@@ -109,10 +111,25 @@ Current scientific activation order:
     independent replay passed, the primary enabling availability claim is
     supported, and the GLV-specific `H_NEW` branch is bounded negative under
     the matched controls. The exact bundle and unfavorable branch are retained.
-15. Only a source-faithful `HYP-M16-SOLVER-SLOPE-001` proposal may now be
-    written and reviewed. Any solver, exact-target work, route promotion,
+15. `TASK-027` is complete: exact enumeration gives 283527 liftable subgroup
+    coordinates and 567054 signed affine factor points. It also retires only
+    the immutable at-most-24-bit proposal regime as inapplicable to M16
+    exponent inference; the M16 mechanism and cell remain open.
+16. `TASK-028` is complete: the PKC 2016 source chain specializes exactly to
+    `L4 o L3 o L2 o L1 = 1 - x^564522`, and direct System (4) has 64 factor
+    coordinates and 65 equation members at arity sixteen. The source's printed
+    recovery line does not explicitly bind the sampled target, so for `R != O`
+    the repository records a target-bound signed elliptic-curve check as a
+    derived sound acceptance filter. Identity samples require resampling or
+    separate handling. Complete direct-System-(4) recovery, generalized-root
+    solving, rank, recovery distribution, sparse linear algebra, and complete
+    equal-success cost remain unresolved.
+17. Only a source-grounded, non-executable `HYP-M16-SOLVER-SLOPE-001` draft for
+    current seed `HGS-3266E42A729C` may now be written and reviewed. Any solver,
+    exact-target work, route promotion,
     different candidate, or follow-on experiment requires a new review and
-    separate dated authorization.
+    separate dated authorization. A scoped blocker or abstention is correct if
+    no exact cost-changing proposal can be supplied.
 
 These entries freeze further engine-schema expansion by default. The consumed
 TASK-026 authorization permits no rerun, solver, route promotion, exact-target

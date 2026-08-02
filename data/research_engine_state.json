@@ -4,8 +4,8 @@
   "source_hashes": {
     "policy_sha256": "fb3e74227bd5613e33f5bab234a40d0d1dccf23a6c048e6094433a2dbebcdddf",
     "hypothesis_generation_policy_sha256": "a753b9991261ffbd684da4a7d132cbbaba5b94e1a568f6776192bd5f19293880",
-    "typed_evidence_state_sha256": "add66a4fd90e659be89e87999e297543dbe1109bdd90870a6341cce422517264",
-    "research_claim_state_sha256": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e",
+    "typed_evidence_state_sha256": "c63f2355626f141d01b8f228bfe49df80af984e5d76cd6be0821514402d33c3a",
+    "research_claim_state_sha256": "24ba13ca696b3affdd28acc7058a2d921e244dc37a39d39593c260eedf78bd38",
     "decision_substrate_sha256": "0d3dd95e3079d5ad21db2c1f517ba8e29b1e170e61c9dbc8a2dfcb7d56745879",
     "hypotheses_sha256": "12f0df0623f2a104389cb191da565e69bacbf926b305d3f298051d7bc7489afb",
     "outcome_events_sha256": "b29a7ad2d159cebc54d70771dbbdf36a0cf7d767114d63c8eb11efc7ec88744d",
@@ -1259,8 +1259,8 @@
     "generator_id": "ecdlp-hypothesis-generation-v0",
     "source_hashes": {
       "generation_policy_sha256": "a753b9991261ffbd684da4a7d132cbbaba5b94e1a568f6776192bd5f19293880",
-      "typed_evidence_state_sha256": "add66a4fd90e659be89e87999e297543dbe1109bdd90870a6341cce422517264",
-      "research_claim_state_sha256": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e",
+      "typed_evidence_state_sha256": "c63f2355626f141d01b8f228bfe49df80af984e5d76cd6be0821514402d33c3a",
+      "research_claim_state_sha256": "24ba13ca696b3affdd28acc7058a2d921e244dc37a39d39593c260eedf78bd38",
       "proposals_sha256": "581cf3109a9f2bfdaeacf895664e816ab22f0f47a72140385dab1c69d04d0a34",
       "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
@@ -1283,7 +1283,7 @@
       "evidence_id": "ECDLP-TYPED-EVIDENCE-V0",
       "target_id": "secp256k1-classical-single-target-plain",
       "counts": {
-        "source_claims": 32,
+        "source_claims": 36,
         "target_properties": 11,
         "mechanisms": 8,
         "cells": 8,
@@ -1295,10 +1295,10 @@
         "desk_decisions": 4
       },
       "source_hashes": {
-        "policy_sha256": "a9e18742d11ece81bf5e6abaff2cade27e5525ad6d3e9220b184ce059e83963f",
+        "policy_sha256": "25a7398e0f89f5088655fc1eac8a4244bafc5dad44ba966d95f371957b5bbdb1",
         "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d",
         "source_registry_identity_sha256": "535619fd9e64481c52999dda62f333e73573cfa16d46e699b29582ca95075459",
-        "evidence_files_sha256": "ddd8a056c6bc68fe784d30f3b42e071bc77d6a3ac8741aaeb82edf636f24cd34",
+        "evidence_files_sha256": "c0e2366acda6428f7f4cdbfcb3ea915f90243adedab2e505835a3ea764cb173c",
         "desk_decisions_sha256": "1e66e8b2f3e196736c2196042817a23632b7760b02dbd1663408f81359dad608"
       },
       "authorization_boundary": "Typed cells and desk decisions authorize nothing. Only an open cell may seed an untrusted proposal, and every later experiment and promotion gate remains separate.",
@@ -1309,13 +1309,13 @@
       "counts": {
         "routes_represented": 2,
         "research_questions": 2,
-        "claims": 6,
+        "claims": 7,
         "closed_child_claims": 2,
         "inconclusive_claims": 1,
-        "confirmed_claims": 3,
-        "mechanism_variants": 4,
+        "confirmed_claims": 4,
+        "mechanism_variants": 5,
         "proposal_seed_eligible_variants": 0,
-        "evidence_events": 10,
+        "evidence_events": 11,
         "calibration_eligible_events": 0
       },
       "open_routes": [
@@ -1327,7 +1327,7 @@
         "route_promotions": 0,
         "exact_target_runs": 0
       },
-      "state_sha256": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e"
+      "state_sha256": "24ba13ca696b3affdd28acc7058a2d921e244dc37a39d39593c260eedf78bd38"
     },
     "seed_coverage": {
       "threshold": 12,
@@ -1335,7 +1335,7 @@
       "overflow_triggered": false,
       "represented_seed_ids": [
         "HGS-5CC94AD51AE6",
-        "HGS-029AFA3EA451"
+        "HGS-3266E42A729C"
       ],
       "represented_cell_ids": [
         "CELL-M-PKC-AUXILIARY-CURVE",
@@ -1368,7 +1368,7 @@
         "seed_id": "HGS-5CC94AD51AE6",
         "cell_id": "CELL-M-PKC-AUXILIARY-CURVE",
         "typed_evidence_digest": "324128326a3d56dbe4ab697efafefb12d34ba6ba44983883c8d04fe2493832dc",
-        "claim_state_digest": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e",
+        "claim_state_digest": "24ba13ca696b3affdd28acc7058a2d921e244dc37a39d39593c260eedf78bd38",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1513,10 +1513,10 @@
         }
       },
       {
-        "seed_id": "HGS-029AFA3EA451",
+        "seed_id": "HGS-3266E42A729C",
         "cell_id": "CELL-M-PKC-SMOOTH-M16",
-        "typed_evidence_digest": "5d928412a43530859a86db03c6ebc0d98a97340252e652db5a680e392530ad26",
-        "claim_state_digest": "5e6c6fa617072a516875f873c226d178408233495c268ec3e3d6dbd1552df84e",
+        "typed_evidence_digest": "602d93c115099c81f02b8a8ac531e33036e6988d5d3ddf2ec257b1118e5cd75d",
+        "claim_state_digest": "24ba13ca696b3affdd28acc7058a2d921e244dc37a39d39593c260eedf78bd38",
         "route_id": "R-PETIT-COMPOSED-MAPS",
         "route_source_ids": [
           "amadori_pintore_sala2018",
@@ -1535,7 +1535,7 @@
           "mechanism_id": "M-PKC-SMOOTH-M16",
           "status": "open",
           "intake_mode": "desk_cost_bridge",
-          "construction": "Use the available divisor 564522 of p-minus-one, which exceeds both the exact arity-sixteen raw threshold 65536 and balance threshold 445676, then price the complete map, relation system, and recovery path.",
+          "construction": "Specialize the published chain to L1(x)=x^2, L2(x)=x^3, L3(x)=x^7, and L4(x)=1-x^13441, so L=1-x^564522. At arity sixteen and a nonidentity affine target, direct source System (4) has 64 factor coordinates and 65 equation members. The available divisor clears the raw and source-yield thresholds, but the repository contributes only a target-bound sound acceptance filter; complete recovery and complete cost remain open, and identity samples require separate handling.",
           "relation_action": "The construction clears both arithmetic predicates only by moving to a high-arity Semaev relation. For nonsingular y^2=x^3+7 in characteristic not in {2,3,7}, TASK-017 fixes the exact set-theoretic projective S3-tree semantics, every named exceptional fiber, supplied-coordinate recovery, and GLV lift signs. TASK-018 freezes the recursive projective S17 contract with fixed degrees and the literal Sylvester determinant under the frozen coefficient, argument, and row order. TASK-019 kernel-checks the fixed-degree projective resultant common-root theorem, the literal TASK-018 Sylvester matrix and determinant with coefficient unit 1, and the end-to-end common-root corollary while retaining formal-degree drops, zero forms, affine witnesses, and [1:0]. TASK-020 kernel-checks the actual frozenC family, exact coefficient-map specialization with unit 1 and affine and [1:0] output branches, the universal output-degree bound, and the unconditional one-step common-projective-root equivalence. TASK-021 kernel-checks the exact declared-degree projective evaluation bridges and the universal all-stage frozen witness-chain equivalence, including the C16 chain with fourteen intermediate projective slots and infinity allowed at every level. TASK-022 kernel-checks the exact literal finite MvPolynomial family for the frozen stage-14 predicate after injective base change: one GuardVar assignment satisfies every GuardedEquation, with fourteen raw projective slots, 56 scalar variables, fifteen H equations, fourteen guards, and total degree at most four. It is equivalent to the recursive chain, not a parallel recursive syntax. TASK-023 kernel-checks the exact affine/infinity chart-polynomial cover. Each fixed InfinityMask I has exactly 14 - I.card affine scalar variables, no guard equations, and fifteen literal H equations with degree ceilings 2/4/2; the cover is equivalent to the chain, guarded system, and source predicate after base change. TASK-024 kernel-checks necessary infinity-stratum pruning: affine external inputs restrict the exact cover from 16384 masks to 987 separated masks, while nonzero endpoint determinants conditionally restrict it to 377 interior masks. Isolated infinity slots force existing affine neighbors to q.u / q.v. TASK-025 kernel-checks the nested local reductions 377 to 129 to 69 to 36, with the independent boundary-only branch 129 to 60, and proves over any field that an internal infinity forces an explicit frozen prefix or suffix obstruction to vanish. Under affine inputs, endpoint nonvanishing, and BalancedPropagatedRegular (the twelve balanced obstruction nonvanishing conditions), every solution uses the empty mask and the exact chart cover is the single affine chart. The source-stage bridge additionally assumes injective base change into an algebraically closed target and balanced regularity for the mapped target data; source-field computation does not automatically establish that mapped-target regularity. The remaining mechanism gap is symbolic nonzeroness and nonemptiness of a usable regular locus or orchestration of its exceptional complement, together with usable relation yield and rank, solving, recovery, and total cost.",
           "changed_quantity": "Total construction, representation, solving, and recovery cost of the corresponding S17 system.",
           "cost_quantity": {
@@ -1546,8 +1546,12 @@
             "measurement": "An exact symbolic size bound must precede any solver run; degree, monomial count, memory, and recovery are all included.",
             "status": "partial",
             "source_claim_ids": [
+              "SC-PKC-SYSTEM4-EXACT",
+              "SC-PKC-PMINUS1-MAP-EXACT",
+              "SC-PKC-PARTIAL-COST-EXACT",
               "SC-PKC-SMOOTH-SUBGROUP",
               "SC-PKC-RELATION-YIELD",
+              "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY",
               "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
               "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
               "SC-PKC-M16-EXCEPTIONAL-FIBER-RESULT",
@@ -1604,9 +1608,13 @@
             "SC-PKC-M16-PROJECTIVE-S17-BRIDGE-RESULT",
             "SC-PKC-M16-SECP-FACTOR-BASE-CENSUS",
             "SC-PKC-M16-SEMANTIC-BRIDGE-RESULT",
+            "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY",
             "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
+            "SC-PKC-PARTIAL-COST-EXACT",
+            "SC-PKC-PMINUS1-MAP-EXACT",
             "SC-PKC-RELATION-YIELD",
             "SC-PKC-SMOOTH-SUBGROUP",
+            "SC-PKC-SYSTEM4-EXACT",
             "SC-SECP-PMINUS1-FACTORIZATION",
             "SC-SECP-PMINUS1-LARGE-COFACTOR-PRIME",
             "SC-SECP-PMINUS1-SMOOTH-DIVISOR-CEILING",
@@ -1640,7 +1648,7 @@
           "experiments/p4_petit/README.md",
           "experiments/p4_petit/RESULTS.md"
         ],
-        "deduplication_key": "029afa3ea4510527ae25677e1cdd653aea446dce927ce9a90b095fc425b9f97d",
+        "deduplication_key": "3266e42a729cfe7d8fc01a8d973cf37793e6ec812cd14f6a4acb521b4859ebcf",
         "proposal_packet": {
           "required_sections": [
             "new_premise",

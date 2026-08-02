@@ -217,6 +217,18 @@ branch from current `main`; preserve any unrelated local changes.
   solving, recovery, and cost remain unproved. The M16 cell therefore remains
   open and non-executable, and no successor execution is currently
   authorized.
+  `TASK-026` then completed the one authorized fixed-target toy campaign;
+  its enabling availability claim was supported while the GLV-specific arm
+  was bounded negative. `TASK-027` independently enumerated the exact M16
+  factor-base lifts and retired only the frozen at-most-24-bit proposal regime.
+  `TASK-028` now binds the published p-minus-one map chain and direct System
+  (4) input to the M16 specialization, records the source's printed
+  target-recovery ambiguity, and supplies a target-bound signed sound acceptance
+  filter as a repository-derived completion for nonidentity affine targets.
+  Identity samples require resampling or separate handling, and complete direct-
+  System-(4) recovery, generalized-root solving, relation rank, recovery
+  distribution, sparse linear algebra, and complete equal-success cost remain
+  unresolved; the cell stays open and non-executable.
   This result is not a selected hypothesis, candidate, solver authorization,
   cost claim, or attack route.
 - `TASK-008` remains the parked proposal-intake lane. Intake does not bypass

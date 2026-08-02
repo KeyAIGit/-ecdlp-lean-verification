@@ -1,0 +1,152 @@
+{
+  "artifact_id": "PKC-M16-SOURCE-FAITHFUL-MECHANISM-RECOVERY-001",
+  "assurance_matrix": {
+    "m16_factor_base_census": "certificate_replayed",
+    "pointwise_chain_arithmetic": "derived_arithmetic",
+    "primary_source_map_and_system": "source_exact",
+    "printed_recovery_target_binding": "source_ambiguous",
+    "projective_semantics": "lean_kernel_and_certificate_replayed",
+    "repository_recovery_completion": "derived_sound_filter_completeness_unproved",
+    "solver_and_complete_cost": "unknown"
+  },
+  "cost_contract": {
+    "known_source_formula": "P(p,16) + (16!*p/D^15)*T(E,16,L) + D^omega",
+    "known_source_yield_heuristic": "D^16/(16!*p)",
+    "source_solver_status": "No dedicated generalized-root algorithm or cost theorem is provided; the source leaves asymptotic complexity open.",
+    "unresolved": [
+      "generalized-root solving degree and fill-in",
+      "usable regular-locus probability and exceptional-complement orchestration",
+      "independent-relation probability and rank",
+      "direct-System-(4) recovery completeness, multiplicity, and online cost",
+      "preprocessing and amortization",
+      "sparse linear-algebra time, memory, and storage",
+      "common-unit equal-success comparison with Pollard rho"
+    ]
+  },
+  "kind": "deterministic_nonexperimental_source_mechanism_desk",
+  "recovery_contract": {
+    "repository_completion": {
+      "assurance": "derived_sound_acceptance_filter_only",
+      "bind_sampled_target": true,
+      "direct_system4_recovery_completeness": "unproved",
+      "enumerate_f_p_curve_lifts": true,
+      "exceptional_and_infinity_fibers": "referenced upstream but do not establish direct-System-(4) recovery completeness",
+      "final_acceptance": "Accept only a recovered signed relation sum_i epsilon_i P_i + epsilon_R R = O, with every point and coefficient checked by independent elliptic-curve arithmetic.",
+      "permutation_and_duplicate_accounting_required": true,
+      "soundness_scope": "Passing this filter validates a candidate relation; it does not prove that every direct-System-(4) solution is recovered.",
+      "target_sign_recorded_in_relation": true
+    },
+    "source_exact": {
+      "printed_acceptance": "sum_i P_i = O",
+      "printed_target_binding_explicit": false,
+      "solutions_quotiented_by": "permutations of x_i1",
+      "status": "internally_ambiguous_with_target_dependent_system"
+    }
+  },
+  "representation_boundary": {
+    "quadratic_circuit_pointwise_equivalent": true,
+    "same_polynomial_ideal_claimed": false,
+    "same_solving_complexity_claimed": false,
+    "source_factor_chain_maximum_degree": 13441,
+    "warning": "Replacing the source chain by an addition-chain circuit preserves pointwise membership only; it does not transfer solving-degree, fill-in, multiplicity, saturation, or complexity claims."
+  },
+  "schema_version": "1.0",
+  "source_binding": {
+    "artifact_sha256": "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943",
+    "claim_extract_path": "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
+    "claim_extract_sha256": "a1af4d460f6677d449ba99eae4d3b79c75b265ea8c53f740de28d85e948b942a",
+    "claim_ids": [
+      "SC-PKC-SYSTEM4-EXACT",
+      "SC-PKC-PMINUS1-MAP-EXACT",
+      "SC-PKC-PARTIAL-COST-EXACT"
+    ],
+    "review_status": "full_text_obtained",
+    "source_id": "petit_kosters_messeng2016",
+    "source_independence": "not_established",
+    "url": "https://www.iacr.org/archive/pkc2016/96140156/96140156.pdf"
+  },
+  "source_map_chain": {
+    "components": [
+      {
+        "degree": 2,
+        "factor": 2,
+        "index": 1,
+        "map": "L1(x)=x^2"
+      },
+      {
+        "degree": 3,
+        "factor": 3,
+        "index": 2,
+        "map": "L2(x)=x^3"
+      },
+      {
+        "degree": 7,
+        "factor": 7,
+        "index": 3,
+        "map": "L3(x)=x^7"
+      },
+      {
+        "degree": 13441,
+        "factor": 13441,
+        "index": 4,
+        "map": "L4(x)=1-x^13441"
+      }
+    ],
+    "composed_polynomial": "L(x)=1-x^564522",
+    "composition_convention": "L=L4 o L3 o L2 o L1",
+    "maximum_component_degree": 13441,
+    "pointwise_root_equivalence": "For x in F_p, L(x)=0 iff x^564522=1.",
+    "prefix_exponents": [
+      2,
+      6,
+      42
+    ],
+    "root_count_in_f_p": 564522,
+    "root_set": "the unique order-564522 subgroup H of F_p^*"
+  },
+  "specialization": {
+    "arity": 16,
+    "divides_p_minus_one": true,
+    "factorization": [
+      2,
+      3,
+      7,
+      13441
+    ],
+    "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+    "smooth_divisor": 564522
+  },
+  "system4_specialization": {
+    "affine_target_required": true,
+    "direct_relation": "S17(x_11,...,x_16, X)=0",
+    "direct_relation_per_leaf_degree": 32768,
+    "direct_relation_target_specialized_total_degree_upper_bound": 524288,
+    "equation_members": 65,
+    "factor_coordinates": 64,
+    "identity_target_policy": "If R=O, the affine target coordinate X is undefined; resample (a,b) or process that case outside this affine specialization.",
+    "sampled_target_precedes_system": true,
+    "target_definition": "R=(X,Y)=aP+bQ with R != O",
+    "terminal_equations": 16,
+    "transition_equations": 48
+  },
+  "task_id": "TASK-028",
+  "terminal": {
+    "authorization": "none",
+    "calibration": "excluded_nonexperimental",
+    "cell_transition": "open_to_open",
+    "hypothesis_effect": "none",
+    "novelty_claimed": false,
+    "retention": "zero",
+    "route_effect": "none",
+    "scientific_disposition": "mechanism_specified_cost_unresolved",
+    "source_independence": "not_established"
+  },
+  "upstream_bindings": {
+    "Ecdlp/Proved/SemaevThree.lean": "b469c41b89a5e1522fa7bdf5f9264a5fc50a45910929c1da9432298be8da4d9d",
+    "data/source_claim_extracts/petit_kosters_messeng2016_task028.json": "a1af4d460f6677d449ba99eae4d3b79c75b265ea8c53f740de28d85e948b942a",
+    "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json": "578db732807a452e26de03dcd338d62c25a7d90490a62bbf427b1f96c3a869cf",
+    "experiments/engine/pkc_smooth_m16_frozen_projective_witness/artifact.json": "89c645545d89334473d51654a41ff7ec2364857d034c64ce08d505337fa1e2d4",
+    "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json": "dc514544bf388562a3ebed312aef56bc87b00527f32ce6d131a2f5371dba2744",
+    "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json": "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7"
+  }
+}

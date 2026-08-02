@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import copy
 import unittest
+from unittest.mock import patch
 
 from build_untrusted_evidence_intake import (
     CONTRACT_PATH,
@@ -89,14 +90,22 @@ class UntrustedEvidenceIntakeTests(unittest.TestCase):
     def test_invalid_source_hash_is_rejected(self) -> None:
         mutated = copy.deepcopy(self.contract)
         mutated["sources"][0]["sha256"] = "0" * 64
-        with self.assertRaisesRegex(IntakeError, "source hash mismatch"):
-            build_state(mutated)
+        with patch(
+            "build_untrusted_evidence_intake.validate_protected_main_receipt"
+        ):
+            with self.assertRaisesRegex(IntakeError, "source hash mismatch"):
+                build_state(mutated)
 
     def test_invalid_source_git_blob_hash_is_rejected(self) -> None:
         mutated = copy.deepcopy(self.contract)
         mutated["sources"][0]["git_blob_sha1"] = "0" * 40
-        with self.assertRaisesRegex(IntakeError, "source Git blob hash mismatch"):
-            build_state(mutated)
+        with patch(
+            "build_untrusted_evidence_intake.validate_protected_main_receipt"
+        ):
+            with self.assertRaisesRegex(
+                IntakeError, "source Git blob hash mismatch"
+            ):
+                build_state(mutated)
 
     def test_parsing_contract_semantics_are_closed(self) -> None:
         for field in ("join_rule", "source_status_rule"):
@@ -115,6 +124,14 @@ class UntrustedEvidenceIntakeTests(unittest.TestCase):
             "protected-main receipt drifted: sources",
             append_only_receipt_problems(current, self.contract),
         )
+
+    def test_build_state_enforces_protected_main_receipt(self) -> None:
+        mutated = copy.deepcopy(self.contract)
+        mutated["sources"][0]["sha256"] = "0" * 64
+        with self.assertRaisesRegex(
+            IntakeError, "protected-main receipt drifted: sources"
+        ):
+            build_state(mutated)
 
     def test_quarantine_reference_in_scientific_consumer_is_rejected(self) -> None:
         references = forbidden_consumer_references(

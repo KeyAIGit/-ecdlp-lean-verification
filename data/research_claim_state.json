@@ -3,19 +3,19 @@
   "claim_model_id": "ECDLP-RESEARCH-CLAIMS-V0",
   "status": "non_executable_truth_state",
   "source_hashes": {
-    "claim_policy_sha256": "8e02022110e1933611938f937902395d14ec2d9c95c2513abf4d553ab1c363d3",
+    "claim_policy_sha256": "a0ae2b197007ddae1b7c5a3b0e76df8c6350464a414bdf0d5c62748b2a2d25f1",
     "decision_substrate_sha256": "9cdaec7be46068996c3d7da6c1956aa3cae060298547e8d54354209340edf75d"
   },
   "counts": {
     "routes_represented": 2,
     "research_questions": 2,
-    "claims": 6,
+    "claims": 7,
     "closed_child_claims": 2,
     "inconclusive_claims": 1,
-    "confirmed_claims": 3,
-    "mechanism_variants": 4,
+    "confirmed_claims": 4,
+    "mechanism_variants": 5,
     "proposal_seed_eligible_variants": 0,
-    "evidence_events": 10,
+    "evidence_events": 11,
     "calibration_eligible_events": 0
   },
   "research_questions": [
@@ -77,6 +77,14 @@
       "kind": "desired_property_only",
       "description": "Retain relative phases, fixed-target semantics, and recovery while changing a full cost quantity; no exact map currently exists.",
       "mechanism_status": "parked_without_exact_mechanism",
+      "proposal_seed_eligible": false
+    },
+    {
+      "mechanism_variant_id": "MV-PKC-PMINUS1-M16-PUBLISHED-SYSTEM4",
+      "research_question_id": "RQ-PKC-M16-COMPLETE-COST",
+      "kind": "published_mechanism_with_repo_sound_acceptance_filter",
+      "description": "Use the exact PKC 2016 p-minus-one map chain and affine-target System (4) at arity sixteen. The source map and polynomial input are specified for R != O; the repository resolves the source's ambiguous printed recovery line with a sound target-bound signed elliptic-curve acceptance filter. Direct-System-(4) recovery completeness, solver, and complete cost remain unresolved.",
+      "mechanism_status": "mechanism_specified_cost_unresolved",
       "proposal_seed_eligible": false
     },
     {
@@ -216,6 +224,26 @@
       "assurance": [
         "certificate_replayed"
       ]
+    },
+    {
+      "claim_id": "CLM-PKC-M16-SOURCE-MECHANISM-RECOVERY",
+      "route_id": "R-PETIT-COMPOSED-MAPS",
+      "research_question_id": "RQ-PKC-M16-COMPLETE-COST",
+      "statement": "For a nonidentity affine sampled target, the published p-minus-one map specializes to L4 o L3 o L2 o L1 equals 1-x^564522 and a 64-coordinate, 65-equation direct System (4); the source's printed recovery line is target-ambiguous, so the canonical sound acceptance filter independently checks a signed relation against that target while leaving direct-System-(4) recovery completeness unproved.",
+      "threat_model": "classical-single-target-plain",
+      "mechanism_variant_id": "MV-PKC-PMINUS1-M16-PUBLISHED-SYSTEM4",
+      "scope": "Exact source-map and nonidentity affine input-system specification plus a repository-derived target-bound sound acceptance rule. Identity samples require resampling or separate handling. This claim does not prove complete recovery, a generalized-root solver, relation rank, solving or sparse-linear-algebra cost, total ECDLP cost, or route promotion.",
+      "claim_disposition": "confirmed",
+      "supersedes": [],
+      "reopening_conditions": [
+        "Reopen only if the primary-source transcription, factor-chain arithmetic, affine-target domain, target-bound acceptance semantics, or independently replayed artifact binding is shown incorrect. Recovery completeness remains a separate open obligation rather than a reopening condition."
+      ],
+      "evidence_event_ids": [
+        "CEV-PKC-M16-SOURCE-MECHANISM-RECOVERY"
+      ],
+      "assurance": [
+        "certificate_replayed"
+      ]
     }
   ],
   "evidence_events": [
@@ -290,6 +318,19 @@
       "evidence_refs": [
         "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json",
         "experiments/engine/pkc_smooth_m16_regime_assurance_desk/validate.py"
+      ],
+      "calibration_eligible": false,
+      "authorization": "none"
+    },
+    {
+      "evidence_event_id": "CEV-PKC-M16-SOURCE-MECHANISM-RECOVERY",
+      "event_class": "structural",
+      "assurance": "certificate_replayed",
+      "outcome": "confirmed",
+      "evidence_refs": [
+        "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
+        "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json",
+        "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/validate.py"
       ],
       "calibration_eligible": false,
       "authorization": "none"

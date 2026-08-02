@@ -1820,7 +1820,7 @@ Outcome: exact census confirmed; current proposal regime inapplicable only for
 M16 exponent inference
 Lifecycle: the census changes the scoped M16 evidence-cell identity. Immutable
 proposal `HGP-M16-SOLVER-SLOPE-001` is retained as historical-only under
-`stale_seed_snapshot`; current seed `HGS-029AFA3EA451` requires a new
+`stale_seed_snapshot`; the then-current seed `HGS-029AFA3EA451` required a new
 source-grounded, non-executable draft.
 Artifact:
 - `experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json`
@@ -1882,5 +1882,72 @@ How to verify:
 - `python3 experiments/engine/pkc_smooth_m16_regime_assurance_desk/validate.py`
 - `python3 experiments/engine/pkc_smooth_m16_regime_assurance_desk/test_validate.py`
 - `sha256sum -c experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.sha256`
+- typed-evidence, claim-level, scientific-semantic, generated-fixpoint,
+  no-sorry, axiom-audit, docs-sync, and full CI gates
+
+### TASK-028 - Close the source-faithful M16 mechanism and sound acceptance contract
+
+Status: completed_nonexperimental_certificate
+Kind: primary-source mechanism | recovery acceptance | desk review
+Hypothesis: the published M16 input mechanism can be specified exactly without
+pretending that generalized-root solving or complete cost is known
+Route state: `R-PETIT-COMPOSED-MAPS` remains `open_parked`
+Authorization: none
+Calibration: excluded_nonexperimental
+Outcome: `mechanism_specified_cost_unresolved`
+Lifecycle: exact source claims and the versioned mechanism certificate produce
+current seed `HGS-3266E42A729C`; the earlier submitted proposal remains an immutable,
+historical-only stale snapshot.
+Artifact:
+- `experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json`
+- ID `PKC-M16-SOURCE-FAITHFUL-MECHANISM-RECOVERY-001`
+- SHA-256 `79ee65104cfbd45ee902fbf59524a705e6db8590c8d5845a6a20cd63239c774c`
+
+Why it matters: the typed cell previously cited a coarse source summary while
+the exact map chain, System (4), recovery boundary, and partial cost formula
+were distributed across prose and older certificates. This task binds those
+facts to exact primary-source locators and separates source statements from
+repository-derived completion semantics.
+
+Recorded result:
+- With factors `2,3,7,13441`, the literal source chain is
+  `L1(x)=x^2`, `L2(x)=x^3`, `L3(x)=x^7`, and
+  `L4(x)=1-x^13441`, hence `L=1-x^564522`.
+- At arity sixteen the direct source System (4) has 64 factor coordinates,
+  48 transition equations, 16 terminal equations, and one target-specialized
+  `S17` relation, for 65 equation members.
+- A quadratic addition-chain circuit may encode the same pointwise membership
+  predicate, but no equality of ideals, solving degree, fill-in, or solving
+  complexity follows from that equivalence.
+- Algorithm 1 samples `(X,Y)=aP+bQ` and inserts `X` into System (4), while its
+  printed Step 4c says `sum_i P_i=O` without explicitly binding the recovered
+  relation to `(X,Y)`. For `R != O`, the canonical repository completion
+  therefore accepts only an independently checked signed relation
+  `sum_i epsilon_i P_i + epsilon_R R = O` and records the target sign. This is
+  a sound acceptance filter, not a proof that every direct-System-(4) solution
+  is recovered. If `R=O`, affine `X` is undefined and the sample must be
+  resampled or handled separately.
+- The source supplies the partial formula
+  `P(p,16)+(16!*p/D^15)T(E,16,L)+D^omega`, but supplies no dedicated
+  generalized-root algorithm or complete-cost theorem for `T`.
+
+Decision boundary:
+- Treat the map and System-(4) input as specified, not the solver or cost bridge.
+- Treat the target-bound rule as a derived sound acceptance filter, not as a
+  verbatim source claim or a complete direct-System-(4) recovery theorem.
+- Restrict the displayed affine specialization to `R != O`; resample or handle
+  the identity target separately.
+- Keep source independence `not_established`, the M16 cell `open`, retention
+  zero, and every solver, exact-target, experiment, promotion, and novelty gate
+  closed.
+- Do not infer recovery completeness, relation independence, rank, solving
+  degree, recovery distribution, sparse-linear-algebra cost, or an ECDLP
+  improvement.
+
+How to verify:
+- `python3 experiments/engine/pkc_smooth_m16_source_faithful_mechanism/generate.py --check`
+- `python3 experiments/engine/pkc_smooth_m16_source_faithful_mechanism/validate.py`
+- `python3 experiments/engine/pkc_smooth_m16_source_faithful_mechanism/test_validate.py`
+- `sha256sum -c experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.sha256`
 - typed-evidence, claim-level, scientific-semantic, generated-fixpoint,
   no-sorry, axiom-audit, docs-sync, and full CI gates
