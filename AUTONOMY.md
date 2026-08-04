@@ -9,7 +9,7 @@ manual-only until the isolation gate in `notes/EXECUTION_SECURITY.md` is satisfi
 
 It does **not** replace the domain protocol. Authority order:
 `CLAUDE.md` (conventions) → `AGENTS.md` (prover-loop protocol) → this file (loop
-governance) → `tasks/NEXT.md` (queue router) → the owning research or product queue →
+governance) → `tasks/NEXT.md` (queue router) → the owning domain or product queue →
 `STATUS.md` (canonical machine snapshot).
 If prose conflicts, `STATUS.md` wins on numbers; `AGENTS.md` wins on method; this file
 wins on *when to act alone vs. escalate*.
@@ -35,8 +35,9 @@ only judge; CI is how the kernel votes here.
    `git merge --ff-only origin/main`. Never use `git reset --hard`, force checkout, or
    destructive cleanup as cycle setup. Read `STATUS.md`, `tasks/NEXT.md`, and this file.
    Never rely on memory across cycles; durable state lives in git.
-1. **Health-gate main (local, no API).** Scan the built base (everything under `Ecdlp/`
-   except `Ecdlp/Targets/`) for real `sorry`/`admit`/`axiom`; run the full gate battery
+1. **Health-gate main (local, no API).** Scan the built base (`Ecdlp.lean`, everything
+   under `Ecdlp/` except `Ecdlp/Targets/`, `ResearchOS.lean`, and everything under
+   `ResearchOS/`) for real `sorry`/`admit`/`axiom`; run the full gate battery
    (`check_counts`, `check_status_consistency`, `check_semantic_drift`, `check_targets`,
    `check_repo_artifacts`, `check_domains`, `gen_result_registry --check`,
    `gen_source_registry --check`). If main is unhealthy, fixing it is the whole cycle.
@@ -52,13 +53,17 @@ only judge; CI is how the kernel votes here.
    threat-model review, frontend QA, or CI diagnosis. Runtime agent instances are
    temporary; the role contracts below are persistent. The project lead re-reviews every
    result and owns integration. Never merge a subagent's work on faith.
-4. **Integrate.** Wire the import into `Ecdlp.lean`; add the `#print axioms` line in
-   `Ecdlp/AxiomAudit.lean`; append a **pure-fact** `VERIFIED.md` row; regenerate all
-   derived artifacts; run the full gate battery **and** a hard conflict-marker scan as a
-   *separate* step (never chain `git add && commit` past a marker scan); commit → push →
-   PR → merge on green CI (build + docs-sync).
+4. **Integrate through the owning domain.** For an ECDLP theorem, wire the import into
+   `Ecdlp.lean`, add the `#print axioms` line in `Ecdlp/AxiomAudit.lean`, and append a
+   **pure-fact** `VERIFIED.md` row. For a non-ECDLP theorem, use the `ResearchOS.lean`
+   surface plus the domain result ledger and axiom audit named by its owning queue. If
+   that ledger or audit does not yet exist, designing and validating it is the whole
+   cycle; do not add or count the theorem. Regenerate all derived artifacts; run the
+   full gate battery **and** a hard conflict-marker scan as a *separate* step (never
+   chain `git add && commit` past a marker scan); commit → push → PR → merge on green
+   CI (build + docs-sync).
 5. **Bookkeep.** Update the owning queue and its router if needed, keep `STATUS.md`
-   canonical, and keep the two queues at 3–7 active contracts in total.
+   canonical, and keep the three owning queues at 3–7 actionable contracts in total.
 6. **Report only if it matters.** Message the user (in Russian) only for: a milestone
    landed, a decision that is genuinely theirs, or a blocker. Otherwise end the cycle in
    silence.
@@ -88,6 +93,10 @@ reproduces risky checks, and records the accepted disposition. Agent consensus i
 proof and does not override the Lean kernel, measured pilot behavior, or the route gate.
 
 ## Hypothesis unlock rule
+
+This rule governs the ECDLP track only. RH work follows
+`tasks/RIEMANN_HYPOTHESIS.md` and cannot borrow an ECDLP authorization, result,
+metric, or decision.
 
 No new cryptanalytic experiment or formal-foundation build starts merely because an
 agent proposes it. `repo/RESEARCH_ENGINE_V0.json` may authorize only a preregistered,
@@ -208,17 +217,20 @@ round trip. Closing that gap is where a ~10× lives. The levers, split by who ca
 
 1. **Health of `main`** — the invariant and the gate battery, always first.
 2. **Reconcile orphaned parallel PRs** onto main (honest, CI-green, overclaim-stripped).
-3. **Research Engine v0 (`TASK-013`)** — run only the selected bounded sequence in
+3. **Riemann Hypothesis Stage 0** — execute only the single contract marked `ACTIVE`
+   in `tasks/RIEMANN_HYPOTHESIS.md`. Do not begin a theorem attempt or computation
+   before that queue's dependency gates allow it.
+4. **Research Engine v0 (`TASK-013`)** — run only the selected bounded sequence in
    dependency order, independently validate it, retain every outcome, and keep promotion closed.
-4. **Evidence-gated candidate intake (`TASK-008`)** — accept new primary evidence or a
+5. **Evidence-gated candidate intake (`TASK-008`)** — accept new primary evidence or a
    complete proposal without treating intake as route authorization.
-5. **External product pilot (`TASK-011`)** — recruit and observe a non-owner, preserve
+6. **External product pilot (`TASK-011`)** — recruit and observe a non-owner, preserve
    the public/sanitized boundary, and record behavior before changing hypothesis status.
-6. **Pilot disposition** — make the explicit build/change/stop/pending decision and update product
+7. **Pilot disposition** — make the explicit build/change/stop/pending decision and update product
    claims only to the level supported by direct evidence.
-7. **Configurable intake (`TASK-012`)** — begin only if the pilot identifies the
+8. **Configurable intake (`TASK-012`)** — begin only if the pilot identifies the
    smallest real adapter contract; do not build speculative platform breadth.
-8. **Promotion work (`TASK-009`)** — begin only after a superseding route decision
+9. **Promotion work (`TASK-009`)** — begin only after a superseding route decision
    selects it and names its falsifiable gate. Otherwise maintain the mapped substrate,
    provenance, generated views, and rollback safety.
 

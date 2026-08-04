@@ -7,7 +7,8 @@
 > `data/research_engine_state.json`, `data/research_engine_v02_state.json`, and
 > `data/research_engine_shadow_intake.json`, and
 > `data/hypothesis_space_run_state.json`, and
-> `data/hypothesis_space_campaign_state.json`.
+> `data/hypothesis_space_campaign_state.json`, and
+> `tasks/RIEMANN_HYPOTHESIS.md`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -68,8 +69,14 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
   (`secp256k1_glvHom_eq_zsmul_unconditional`, no remaining hypotheses). The real prover path is the
   **tactic ladder + human-in-loop** (external model-provers attempted, 0 accepted).
 
-## Main current bottleneck
-The current bottleneck is **a missing proposal-level non-generic mechanism, not theorem
+## Portfolio priority and domain bottlenecks
+The primary new-science priority is **Riemann Hypothesis Stage 0, task
+`RH-001`**: pinned formal capability and barrier map (queue status: `ACTIVE`). This is an
+exploratory specification and route-audit program, not a proof candidate or progress on
+the conjecture itself. Its authority is `tasks/RIEMANN_HYPOTHESIS.md`; ECDLP evidence
+and authorizations do not transfer to it.
+
+The current ECDLP bottleneck is **a missing proposal-level non-generic mechanism, not theorem
 volume**. Decision `RS-2026-07-24-001` evaluated all **17 attack routes** and
 recorded **1 route in completed bounded structural work**
 (`R-GLV-SEMAEV`), while promoting
@@ -214,10 +221,11 @@ a new dated decision plus the normal fixed budgets, dependency order, and retain
 outcome.
 
 ## Active work protocol
-`tasks/NEXT.md` is the queue router. ECDLP research is owned by
-`tasks/ECDLP_RESEARCH.md`; product validation is owned by `tasks/KEYAI_PRODUCT.md`. Together they
-retain 3-7 active task contracts. Product traffic, site work, pilots, and portability never count
-as ECDLP progress.
+`tasks/NEXT.md` is the queue router. RH research is owned by
+`tasks/RIEMANN_HYPOTHESIS.md`; ECDLP research is owned by
+`tasks/ECDLP_RESEARCH.md`; product validation is owned by `tasks/KEYAI_PRODUCT.md`.
+Together they retain 3-7 actionable task contracts. RH, ECDLP, and product evidence,
+decisions, ledgers, and metrics remain mutually non-transferable.
 
 The product authority is `repo/PRODUCT_MODEL.json`; `scripts/check_product_model.py` enforces its
 claim boundary. Public surfaces must distinguish current capabilities, the reference deployment,
@@ -260,7 +268,10 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 `data/research_engine_state.json` (generated engine state) ·
 `data/research_engine_v02_state.json` (generated lifecycle state) ·
 `data/research_engine_shadow_intake.json` (non-executable shadow queue) ·
-`tasks/NEXT.md` (queue router) · `tasks/ECDLP_RESEARCH.md` (research queue) ·
+`domains/riemann-hypothesis/README.md` (RH boundary) ·
+`domains/riemann-hypothesis/corpus.md` (RH source and claim map) ·
+`tasks/NEXT.md` (queue router) · `tasks/RIEMANN_HYPOTHESIS.md` (RH queue) ·
+`tasks/ECDLP_RESEARCH.md` (ECDLP research queue) ·
 `tasks/KEYAI_PRODUCT.md` (product queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
 standalone results) · `ROADMAP.md` (strategy & program) · `VERIFIED.md` (ledger) ·

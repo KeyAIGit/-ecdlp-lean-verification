@@ -6,14 +6,17 @@ blocked and why). The prover-loop protocol is §"Prover-loop protocol" below;
 conventions: `CLAUDE.md`. **When an autonomous cycle is explicitly dispatched,
 `AUTONOMY.md` governs when to act alone vs. escalate** (merge authority is
 delegated but bounded; the kernel/CI remains the sole judge).
-For a small-context start, read `STATUS.md`, then
+For a small-context start, read `STATUS.md`, then the active domain boundary
+named there. For the current portfolio priority, read
+`domains/riemann-hypothesis/README.md`, `domains/riemann-hypothesis/corpus.md`,
+and `tasks/RIEMANN_HYPOTHESIS.md`. For ECDLP or product work, continue with
 `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/RESEARCH_ENGINE_V0.json`,
 `repo/HYPOTHESIS_GENERATION_V0.json`,
 `repo/HYPOTHESIS_SPACE_V2.json`,
 `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json`,
 `data/research_engine_state.json`, `repo/PRODUCT_MODEL.json`,
-`repo/PILOT_PROTOCOL.json`, then use `tasks/NEXT.md` to choose
-`tasks/ECDLP_RESEARCH.md` or `tasks/KEYAI_PRODUCT.md`; load
+`repo/PILOT_PROTOCOL.json`, then use `tasks/NEXT.md` to choose exactly one of
+the RH, ECDLP, or product owning queues; load
 `experiments/HYPOTHESES.yaml` when the task touches hypotheses, experiments,
 frontier interpretation, or publication planning. Before moving, deleting, or
 reclassifying files, read `REPOSITORY_ARCHITECTURE.md`, `repo/ARTIFACTS.yaml`,

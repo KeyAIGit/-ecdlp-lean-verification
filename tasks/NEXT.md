@@ -33,7 +33,7 @@ For the RH lane, read `domains/riemann-hypothesis/README.md` and
 Stage 0 audit until `RH-001` exits and route triage explicitly selects a
 successor.
 
-Current central decision: formulate and review, but do not execute,
+Current ECDLP decision: formulate and review, but do not execute,
 `HYP-M16-SOLVER-SLOPE-001`. The published M16 map and System (4) input are
 now specified, while generalized-root solving and complete equal-success cost
 remain unresolved. `TASK-026` completed once under

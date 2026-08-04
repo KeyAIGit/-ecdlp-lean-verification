@@ -13,6 +13,7 @@ Every number here is pulled live from the machine sources, never hand-typed, so 
   - data/research_engine_shadow_intake.json (non-executable proposal stubs)
   - data/hypothesis_space_run_state.json (operational screening-run memory)
   - data/hypothesis_space_campaign_state.json (unique finite-space coverage)
+  - tasks/RIEMANN_HYPOTHESIS.md (active RH Stage 0 queue and stop rules)
 Other summary docs should link to STATUS.md rather than duplicate counts.
 
 Run: python3 scripts/gen_status.py   (also run by the docs-sync workflow on every ledger change)
@@ -20,6 +21,7 @@ Run: python3 scripts/gen_status.py   (also run by the docs-sync workflow on ever
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -33,7 +35,39 @@ ENGINE_V02 = ROOT / "data" / "research_engine_v02_state.json"
 SHADOW_INTAKE = ROOT / "data" / "research_engine_shadow_intake.json"
 HYPOTHESIS_SPACE_RUNS = ROOT / "data" / "hypothesis_space_run_state.json"
 HYPOTHESIS_SPACE_CAMPAIGNS = ROOT / "data" / "hypothesis_space_campaign_state.json"
+RH_TASKS = ROOT / "tasks" / "RIEMANN_HYPOTHESIS.md"
 OUT = ROOT / "STATUS.md"
+
+
+def active_rh_task(queue_text: str) -> tuple[str, str, str]:
+    """Return the sole active RH contract as (id, title, normalized status)."""
+    sections = re.findall(
+        r"^## (RH-\d+)(?::\s*([^\n]+))?\n.*?(?=^## RH-\d+|\Z)",
+        queue_text,
+        flags=re.MULTILINE | re.DOTALL,
+    )
+    active: list[tuple[str, str, str]] = []
+    for task_id, title in sections:
+        section_match = re.search(
+            rf"^## {re.escape(task_id)}\b.*?(?=^## RH-\d+|\Z)",
+            queue_text,
+            flags=re.MULTILINE | re.DOTALL,
+        )
+        if section_match is None:
+            raise ValueError(f"cannot recover section for {task_id}")
+        status_lines = re.findall(
+            r"^Status:\s*(.+?)\s*$", section_match.group(0), flags=re.MULTILINE
+        )
+        if len(status_lines) != 1:
+            raise ValueError(
+                f"{task_id} must contain exactly one Status line, found {len(status_lines)}"
+            )
+        status = re.sub(r"[*`]", "", status_lines[0]).strip()
+        if status.upper().startswith("ACTIVE"):
+            active.append((task_id, title.strip(), status))
+    if len(active) != 1:
+        raise ValueError(f"RH queue must contain exactly one ACTIVE task, found {len(active)}")
+    return active[0]
 
 
 def render_engine_queue_summary(
@@ -73,6 +107,9 @@ def main() -> int:
     )
     hypothesis_space_campaigns = json.loads(
         HYPOTHESIS_SPACE_CAMPAIGNS.read_text(encoding="utf-8")
+    )
+    rh_task_id, rh_task_title, rh_task_status = active_rh_task(
+        RH_TASKS.read_text(encoding="utf-8")
     )
     run_counts = hypothesis_space_runs["counts"]
     run_count = run_counts["runs"]
@@ -168,7 +205,8 @@ def main() -> int:
 > `data/research_engine_state.json`, `data/research_engine_v02_state.json`, and
 > `data/research_engine_shadow_intake.json`, and
 > `data/hypothesis_space_run_state.json`, and
-> `data/hypothesis_space_campaign_state.json`.
+> `data/hypothesis_space_campaign_state.json`, and
+> `tasks/RIEMANN_HYPOTHESIS.md`.
 > Do not hand-edit the numbers. Other summary docs should link here, not duplicate counts.
 
 ## Verified asset (the ledger)
@@ -229,8 +267,14 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
   (`secp256k1_glvHom_eq_zsmul_unconditional`, no remaining hypotheses). The real prover path is the
   **tactic ladder + human-in-loop** (external model-provers attempted, 0 accepted).
 
-## Main current bottleneck
-The current bottleneck is **a missing proposal-level non-generic mechanism, not theorem
+## Portfolio priority and domain bottlenecks
+The primary new-science priority is **Riemann Hypothesis Stage 0, task
+`{rh_task_id}`**: {rh_task_title} (queue status: `{rh_task_status}`). This is an
+exploratory specification and route-audit program, not a proof candidate or progress on
+the conjecture itself. Its authority is `tasks/RIEMANN_HYPOTHESIS.md`; ECDLP evidence
+and authorizations do not transfer to it.
+
+The current ECDLP bottleneck is **a missing proposal-level non-generic mechanism, not theorem
 volume**. Decision `{selection['decision_id']}` evaluated all **{len(routes)} attack routes** and
 recorded **{len(selected_structural)} route in completed bounded structural work**
 ({", ".join(f"`{item}`" for item in selected_structural) or "none"}), while promoting
@@ -375,10 +419,11 @@ a new dated decision plus the normal fixed budgets, dependency order, and retain
 outcome.
 
 ## Active work protocol
-`tasks/NEXT.md` is the queue router. ECDLP research is owned by
-`tasks/ECDLP_RESEARCH.md`; product validation is owned by `tasks/KEYAI_PRODUCT.md`. Together they
-retain 3-7 active task contracts. Product traffic, site work, pilots, and portability never count
-as ECDLP progress.
+`tasks/NEXT.md` is the queue router. RH research is owned by
+`tasks/RIEMANN_HYPOTHESIS.md`; ECDLP research is owned by
+`tasks/ECDLP_RESEARCH.md`; product validation is owned by `tasks/KEYAI_PRODUCT.md`.
+Together they retain 3-7 actionable task contracts. RH, ECDLP, and product evidence,
+decisions, ledgers, and metrics remain mutually non-transferable.
 
 The product authority is `repo/PRODUCT_MODEL.json`; `scripts/check_product_model.py` enforces its
 claim boundary. Public surfaces must distinguish current capabilities, the reference deployment,
@@ -421,7 +466,10 @@ frontier, graph, dashboard/site counters, tasks, or hypotheses change.
 `data/research_engine_state.json` (generated engine state) ·
 `data/research_engine_v02_state.json` (generated lifecycle state) ·
 `data/research_engine_shadow_intake.json` (non-executable shadow queue) ·
-`tasks/NEXT.md` (queue router) · `tasks/ECDLP_RESEARCH.md` (research queue) ·
+`domains/riemann-hypothesis/README.md` (RH boundary) ·
+`domains/riemann-hypothesis/corpus.md` (RH source and claim map) ·
+`tasks/NEXT.md` (queue router) · `tasks/RIEMANN_HYPOTHESIS.md` (RH queue) ·
+`tasks/ECDLP_RESEARCH.md` (ECDLP research queue) ·
 `tasks/KEYAI_PRODUCT.md` (product queue) ·
 `experiments/HYPOTHESES.yaml` (hypotheses + exit criteria) · `PUBLISHABLE_UNITS.md` (the 3
 standalone results) · `ROADMAP.md` (strategy & program) · `VERIFIED.md` (ledger) ·

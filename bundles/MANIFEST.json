@@ -11,7 +11,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 17502
+        "bytes": 18190
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
@@ -143,7 +143,7 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate RH, ECDLP, and KeyAI product queues",
         "exists": true,
-        "bytes": 10658
+        "bytes": 10656
       },
       {
         "path": "tasks/RIEMANN_HYPOTHESIS.md",
@@ -181,7 +181,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 17502
+        "bytes": 18190
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
@@ -313,7 +313,7 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate RH, ECDLP, and KeyAI product queues",
         "exists": true,
-        "bytes": 10658
+        "bytes": 10656
       },
       {
         "path": "tasks/RIEMANN_HYPOTHESIS.md",
@@ -355,7 +355,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 19585
+        "bytes": 19823
       },
       {
         "path": "domains/riemann-hypothesis/corpus.md",
@@ -567,7 +567,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 17502
+        "bytes": 18190
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
@@ -699,7 +699,7 @@
         "path": "tasks/NEXT.md",
         "reason": "router for the separate RH, ECDLP, and KeyAI product queues",
         "exists": true,
-        "bytes": 10658
+        "bytes": 10656
       },
       {
         "path": "tasks/RIEMANN_HYPOTHESIS.md",
@@ -741,7 +741,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 19585
+        "bytes": 19823
       },
       {
         "path": "domains/riemann-hypothesis/corpus.md",
