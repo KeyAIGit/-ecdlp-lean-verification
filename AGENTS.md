@@ -21,6 +21,12 @@ reclassifying files, read `REPOSITORY_ARCHITECTURE.md`, `repo/ARTIFACTS.yaml`,
 `repo/FINAL_REVIEW_PACKET.md` is the frozen historical review contract for
 draft PR #235. It does not govern current merge authority or product claims.
 
+Portfolio priority, 2026-08-04: primary new-science work is routed through
+`tasks/RIEMANN_HYPOTHESIS.md`, `domains/riemann-hypothesis/README.md`, and
+`domains/riemann-hypothesis/corpus.md`. Execute `RH-001` before beginning new
+discretionary frontier work. The ECDLP decision and engine contracts govern
+ECDLP only; they neither authorize nor score Riemann Hypothesis work.
+
 ## What this project actually is (read this first)
 KeyAI is a **verification workspace for AI research**. This repository is its
 public reference deployment: a machine-checked formalization of ECDLP /
@@ -30,6 +36,11 @@ break and claims no shortcut: the best audited plain classical baseline remains
 roughly `2^128` work, and no validated subgeneric route is registered. Product
 category, current capability, public rhetoric, and the MVP evidence threshold
 are canonical in `repo/PRODUCT_MODEL.json`.
+
+The repository also contains an active exploratory Riemann Hypothesis Stage 0
+lane. It currently provides an exact pinned target, source map, and audit queue,
+not a proof candidate or a verified result about RH. Its evidence, decisions,
+and future metrics remain isolated from ECDLP.
 
 ## The one invariant
 Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorry`/
@@ -85,16 +96,18 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
 `bundles/MANIFEST.json` is the routing table for three cumulative tiers (source of truth:
 `TIERS` in `scripts/export_agent_bundle.py`):
 - **small** — the live snapshot: `STATUS.md`,
+  `domains/riemann-hypothesis/README.md`,
   `repo/ECDLP_DECISION_SUBSTRATE.json`, `repo/RESEARCH_ENGINE_V0.json`,
   `repo/ECDLP_TYPED_EVIDENCE_V0.json`,
   `repo/HYPOTHESIS_GENERATION_V0.json`,
   `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json`,
   `data/typed_evidence_state.json`, `data/research_engine_state.json`,
   `repo/PRODUCT_MODEL.json`,
-  `repo/PILOT_PROTOCOL.json`, the queue router and both owning queues,
+  `repo/PILOT_PROTOCOL.json`, the queue router and all three owning queues,
   `data/stats.json`, `data/frontier_map.json`.
 - **medium** — adds `README.md`, this file, `VERIFIED.md`, `BARRIERS.md`,
-  `notes/SECURITY_SCOPE.md`, `notes/FOUNDATIONS.md`, `experiments/HYPOTHESES.yaml`,
+  `domains/riemann-hypothesis/corpus.md`, `notes/SECURITY_SCOPE.md`,
+  `notes/FOUNDATIONS.md`, `experiments/HYPOTHESES.yaml`,
   claim-level records under `data/source_claim_extracts/`, and the Research
   Engine event contract/schema.
 - **large** — adds `data/knowledge_graph.json`, `REPOSITORY_ARCHITECTURE.md`,
@@ -112,6 +125,12 @@ local Mathlib source for exact API. 3. Push → CI (or local build). 4. On green
 branch from current `main`; preserve any unrelated local changes.
 
 ## Current work selection
+
+Portfolio priority, 2026-08-04: complete `RH-001`, then adversarially triage the
+top three RH routes before activating any theorem attempt or computation. The
+ECDLP state recorded below is preserved unchanged and remains authoritative
+within the ECDLP track.
+
 - Route decision `RS-2026-07-24-001` completed the non-experimental
   `GLV-SEMAEV-ITER-001` on `R-GLV-SEMAEV`. Only the diagonal `C3` covariance
   survived; the route remains parked and no experiment, solver sweep, or

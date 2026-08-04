@@ -8,6 +8,14 @@ elliptic curve, an evidence-gated map of classical ECDLP routes, and the provena
 contracts around both. It is a *verified research substrate* and an honest no-go map —
 **not** a solution to any hard problem and not yet a self-serve hosted product.
 
+**Portfolio priority update, 2026-08-04:** primary new frontier work is now an
+isolated Riemann Hypothesis Stage 0 lane under
+`domains/riemann-hypothesis/` and `tasks/RIEMANN_HYPOTHESIS.md`. It begins with
+the exact target already present in pinned Mathlib, a declaration-level
+foundation audit, and adversarial route triage. The repository claims no RH
+proof candidate or progress on the conjecture. Existing ECDLP results,
+decisions, and authorizations remain unchanged.
+
 This file is the front door for humans and low-context agents alike. Strategy lives in
 `ROADMAP.md`; live numbers live in `STATUS.md`; exact attack-route decisions live in
 `repo/ECDLP_DECISION_SUBSTRATE.json`; bounded exploration policy lives in

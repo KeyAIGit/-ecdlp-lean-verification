@@ -56,6 +56,21 @@
       "notes": "LIVE (first non-ECC instance). Kernel-verified in the separate `ResearchOS` lake library (a second build target alongside `Ecdlp`): 2017 prime, the Mersenne prime M₁₃=8191, and 561 (smallest Carmichael number) composite with its Korselt factorization 3·11·17. All `norm_num`, so they stay inside the standard axiom base (no `native_decide`); audited by `Ecdlp/AxiomAudit.lean`. Deliberately minimal — a proof of pipeline portability to an unrelated subject, not a number-theory research program. metrics_source is null (this domain does not feed the ECDLP headline count, which stays frozen)."
     },
     {
+      "id": "riemann-hypothesis",
+      "title": "Riemann Hypothesis",
+      "status": "exploratory",
+      "one_liner": "Active, foundation-first program toward a proof or disproof of the classical Riemann Hypothesis.",
+      "slots": {
+        "corpus": "domains/riemann-hypothesis/corpus.md",
+        "ontology": null,
+        "verifier": "lean-kernel"
+      },
+      "metrics_source": null,
+      "frontier_source": null,
+      "site": null,
+      "notes": "Primary new-science priority as of 2026-08-04. Exploratory describes current formal readiness, not organizational priority. Stage 0 audits the exact target already present in pinned Mathlib, missing foundations, equivalent criteria, and source provenance. This entry claims neither a proof candidate nor progress on the conjecture."
+    },
+    {
       "id": "curve25519",
       "title": "Curve25519 / Ed25519",
       "status": "planned",

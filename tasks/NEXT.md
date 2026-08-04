@@ -6,11 +6,19 @@ Choose the queue that owns the objective:
 | queue | canonical file | objective | primary KPI family |
 |---|---|---|---|
 | ECDLP research | `tasks/ECDLP_RESEARCH.md` | Reduce uncertainty about plain single-target secp256k1 ECDLP | Mechanisms resolved, independently validated outcomes, false promotions, information gain per cost |
+| Riemann Hypothesis research | `tasks/RIEMANN_HYPOTHESIS.md` | Build a source-grounded, formally exact route toward proving or disproving RH | Foundation closure, exact specification, independently reviewed route decisions, kernel-verified intermediate results |
 | KeyAI product | `tasks/KEYAI_PRODUCT.md` | Validate the control plane with external formal-research teams | Orientation time, provenance completeness, state drift, pilot completion, return evidence |
 
-Product work never counts as ECDLP progress. Theorem volume and toy
-measurements count only when they resolve a named ECDLP uncertainty. ECDLP
-results never count as external product validation.
+Portfolio priority decision, 2026-08-04: primary new scientific work begins
+with `RH-001`. This changes resource allocation, not the scientific disposition,
+authorization state, or history of the ECDLP track. The ECDLP state below
+remains authoritative inside that domain.
+
+Product work never counts as ECDLP progress. Product work never counts as
+Riemann Hypothesis progress. ECDLP and RH evidence, decisions, ledgers, and
+metrics are mutually non-transferable. Theorem volume and toy measurements
+count only when they resolve a named uncertainty in their owning domain. ECDLP
+and RH results never count as external product validation.
 
 Canonical start order:
 
@@ -19,6 +27,11 @@ Canonical start order:
 3. Open exactly one owning queue.
 4. Read the canonical policy named by that queue.
 5. Execute only a task contract from that queue.
+
+For the RH lane, read `domains/riemann-hypothesis/README.md` and
+`domains/riemann-hypothesis/corpus.md` before the owning queue. Execute only the
+Stage 0 audit until `RH-001` exits and route triage explicitly selects a
+successor.
 
 Current central decision: formulate and review, but do not execute,
 `HYP-M16-SOLVER-SLOPE-001`. The published M16 map and System (4) input are
