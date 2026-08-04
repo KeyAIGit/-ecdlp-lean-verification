@@ -1857,11 +1857,11 @@ def validate() -> list[str]:
     if maintenance.get("historical_outcomes_mutable") is not False:
         problems.append("maintenance cycle must preserve historical outcomes")
     if (
-        "Current central decision: formulate and review, but do not execute,"
+        "Current ECDLP decision: formulate and review, but do not execute,"
         not in next_tasks_text
     ):
         problems.append(
-            "tasks/NEXT.md must expose the exact authorized central task"
+            "tasks/NEXT.md must expose the exact authorized ECDLP task"
         )
     for binding in (
         BOUNDED_AUTHORIZATION_ID,
