@@ -43,7 +43,8 @@ The "Verify Lean proofs" job is the sole correctness signal. In order:
    pull a `sorry` into the build graph).
 4. **Build** — install elan → `lake exe cache get` → restore cached `.lake/build` →
    `lake build`. The kernel verifies every theorem.
-5. **Axiom audit** — elaborates `Ecdlp/AxiomAudit.lean`, then `scripts/check_axioms.py`
+5. **Axiom audit** — elaborates the generated `Ecdlp/LedgerAxiomAudit.lean` and
+   `ResearchOS/LedgerAxiomAudit.lean`, then `scripts/check_axioms.py`
    asserts no result depends on `sorryAx` or any axiom outside the allowed base
    `{propext, Classical.choice, Quot.sound, Lean.ofReduceBool}`. This is what makes
    "0 custom axioms" machine-enforced, not just documented.

@@ -80,6 +80,7 @@ classes:
     description: Human-auditable theorem ledger and public trust boundaries.
     paths:
       - VERIFIED.md
+      - VERIFIED_RESEARCHOS.md
       - TRUST_REPORT.md
       - ABSTRACT_SCOPE.md
       - BARRIERS.md
@@ -126,6 +127,8 @@ classes:
       - data/hypothesis_ranker_state.json
       - repo/ECDLP_DECISION_SUBSTRATE.md
       - Ecdlp/LedgerAxiomAudit.lean
+      - data/researchos_result_registry.json
+      - ResearchOS/LedgerAxiomAudit.lean
     owner: generators
     hand_edit: false
     generated: true
@@ -153,12 +156,15 @@ classes:
       - scripts/hypothesis_ranker.py
       - scripts/build_ecdlp_decision_view.py
       - scripts/gen_axiom_audit.py
+      - scripts/gen_researchos_registry.py
     gates:
       - scripts/check_status_consistency.py
       - scripts/check_counts.py
       - scripts/check_repo_artifacts.py
       - scripts/export_agent_bundle.py --check
       - scripts/gen_result_registry.py --check
+      - scripts/gen_researchos_registry.py --check
+      - scripts/check_ledger_isolation.py
       - scripts/build_ecdlp_decision_view.py --check
       - scripts/build_research_engine_state.py --check
       - scripts/build_research_engine_v02_state.py --check
@@ -390,6 +396,7 @@ allowed_overlap_paths:
   - explore.html
   - pilot.html
   - Ecdlp/LedgerAxiomAudit.lean
+  - ResearchOS/LedgerAxiomAudit.lean
   - experiments/HYPOTHESES.yaml
   - notes/SECURITY_SCOPE.md
   - notes/reviews/PORTABILITY_REHEARSAL_001.md
