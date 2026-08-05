@@ -222,7 +222,10 @@ Expected output:
 
 - one scoped built module under the non-ECDLP `ResearchOS` lane;
 - a domain-specific result record and axiom-audit coverage designed before the
-  theorem is counted;
+  theorem is counted; a proposed design now exists
+  (`domains/riemann-hypothesis/S0_TRUST_DESIGN.md`, v2, adversarially
+  reviewed `SOUND_WITH_FIXES`) — its implementation requires a separate
+  ops-lane task/PR and is not authorized by the RH lane;
 - CI-green proof with exact trust and claim scope.
 
 Exit criteria:
