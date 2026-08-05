@@ -11,10 +11,16 @@ this queue during the RH activation cycle.
 
 ## Current decision
 
-Execute `RH-001` first. Do not begin a proof attempt, large computation, new
-equivalence formalization, or autonomous hypothesis sweep before `RH-001` has
-produced a pinned dependency map and `RH-002` has completed adversarial route
-triage.
+Decision date: 2026-08-05. `RH-001` is complete (independent replay recorded).
+`RH-002` is executed: all three admitted route families are `PARK`ed with
+preregistered revival bars and reconsideration triggers, **no theorem-bearing
+route is selected**, and the dispositions await independent review
+(`domains/riemann-hypothesis/ROUTE_TRIAGE.md`). `RH-003` is now the sole
+active contract: the frozen route-neutral target-bridge theorem contract
+(`domains/riemann-hypothesis/TARGET_BRIDGE_CONTRACT.md`) awaits independent
+review. Do not begin a proof attempt, large computation, new equivalence
+formalization, or autonomous hypothesis sweep. No built Lean until `S0-TRUST`
+closes and `RH-003` review passes.
 
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
@@ -23,7 +29,20 @@ The exact Lean target is the already-pinned Mathlib declaration
 
 ID: `RH-001`
 
-Status: **ACTIVE**
+Status: **COMPLETE 2026-08-05**
+
+Closure evidence: the capability map was independently replayed against the
+exact pinned Mathlib revision — 0 mismatches across all positive inventory
+rows, 12/12 negative rows confirmed (several strengthened tree-wide), the
+`Λ₀` sign-inconsistency claim confirmed, the missing `riemannZeta_zero`
+anchor recorded (`RiemannZeta.lean:149`), and exactly three candidates
+admitted to `RH-002`. Record:
+`notes/reviews/RH001_INDEPENDENT_REPLAY_2026_08_05.md`; dated addendum in
+`domains/riemann-hypothesis/MATHLIB_CAPABILITY_MAP.md`. Scoped carve-out:
+the adversarial source-to-formalization review of `SOURCE_CONTRACTS.md`
+against the SHA-256-pinned PDFs is **not** part of this closure; it is
+carried as an explicit `RH-003` review precondition, and
+`SOURCE_CONTRACTS.md` remains "proposed under independent review".
 
 Kind: research / review
 
@@ -91,7 +110,22 @@ How to verify:
 
 ID: `RH-002`
 
-Status: **BLOCKED on RH-001**
+Status: **EXECUTED 2026-08-05 — dispositions `PARK`/`PARK`/`PARK`, no
+`SELECT`; pending independent disposition review**
+
+Outcome record: `domains/riemann-hypothesis/ROUTE_TRIAGE.md`. Each admitted
+family's preregistered day-45 bar is provably unreachable short of RH itself
+(Weil-first Li via the Bombieri-Lagarias/Voros oscillation dichotomy;
+Nyman-Beurling via the unconditional closure→RH direction; explicit-formula
+via the absence of any individual-zero-exclusion mechanism in the
+literature). Zero theorem-bearing routes selected ("at most one" is
+satisfied by zero); Route B's 20% pilot execution cap is untouched; every
+route retains a scoped reason, a preregistered revival bar, and
+reconsideration triggers. The successor work item is foundation, not route
+execution: `RH-003` activates under the capability map's "First
+implementable foundation and stop rule" (the route-neutral target bridge
+closes named barrier `S1-TARGET`), explicitly not as a route `SELECT` and
+not as progress on RH.
 
 Kind: research / review
 
@@ -133,12 +167,31 @@ How to verify:
 
 ID: `RH-003`
 
-Status: **BLOCKED on RH-002 SELECT**
+Status: **ACTIVE**
 
 Kind: theorem / review
 
-Hypothesis: The selected route contains one missing lemma whose proof or failure
-would change the route decision.
+Activation basis (2026-08-05): `RH-002` produced no route `SELECT`, so the
+original "BLOCKED on RH-002 SELECT" clause is superseded by a dated
+decision: `RH-003` activates under the capability map's "First implementable
+foundation and stop rule" — the first Lean PR may contain only the
+route-neutral target-equivalence bridge, which closes named barrier
+`S1-TARGET` and is shared infrastructure for every admitted route. This is
+foundation work, not a selected theorem-bearing route and not progress on
+RH.
+
+Hypothesis: The route-neutral target bridge (exact nontrivial-zero domain
+plus the zero-free-half-plane and critical-line equivalences for the
+totalized `riemannZeta`) is provable from pinned Mathlib theorems alone,
+with every exceptional point explicit and no new axiom, and its frozen
+contract will survive independent review without weakening any exclusion.
+
+Frozen contract: `domains/riemann-hypothesis/TARGET_BRIDGE_CONTRACT.md`
+(draft v2, adversarially reviewed once, verdict `SOUND_WITH_FIXES`, all
+findings applied). Remaining exit requirements: independent reviewer
+acceptance of the statements against the contract (including the FE-first
+scope note), closure of `S0-TRUST` before any built Lean, and the
+`SOURCE_CONTRACTS.md` acceptance review before any Annex A xi work.
 
 Expected output:
 

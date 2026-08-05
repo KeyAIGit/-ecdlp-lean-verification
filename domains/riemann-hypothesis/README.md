@@ -1,6 +1,7 @@
 # Riemann Hypothesis research track
 
-Status: **exploratory, active Stage 0**
+Status: **exploratory; Stage 0 executed 2026-08-05, pending independent
+review**
 
 Priority date: 2026-08-04
 
@@ -31,6 +32,20 @@ Stage 0 is a foundation and specification audit:
    retain a precise blocker if no candidate survives.
 
 The detailed source, claim, route, and evidence map is in `corpus.md`.
+
+Stage 0 execution state (2026-08-05): items 1-4 are complete — the exact
+target is frozen, the pinned audit exists and has been independently
+replayed with 0 mismatches
+(`notes/reviews/RH001_INDEPENDENT_REPLAY_2026_08_05.md`), and the admitted
+routes were adversarially compared (`ROUTE_TRIAGE.md`: `PARK`/`PARK`/`PARK`,
+no route selected, each day-45 bar shown unreachable short of RH itself).
+Item 6 resolved to the foundation path: one kernel-checkable intermediate
+candidate is frozen as a non-built contract
+(`TARGET_BRIDGE_CONTRACT.md`, the route-neutral target bridge closing
+barrier `S1-TARGET`), pending independent review and `S0-TRUST` closure.
+The `SOURCE_CONTRACTS.md` acceptance review remains open and is a carried
+precondition. This stage-closure PR adds no Lean declaration, consistent
+with the repository isolation rules below.
 
 ## Evidence boundary
 
