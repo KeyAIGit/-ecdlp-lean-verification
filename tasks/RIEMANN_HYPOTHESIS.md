@@ -261,7 +261,11 @@ Exit criteria:
 
 ID: `RH-006`
 
-Status: **ACTIVE**
+Status: **ACTIVE — replay executed 2026-08-06, record committed
+(`notes/reviews/RH006_SOURCE_REPLAY_2026_08_06.md`: 56/58 rows confirmed,
+one load-bearing `SC-WEIL-01` involution-attribution discrepancy and one
+cosmetic `SC-NB-04` quotation discrepancy flagged); pending external
+acceptance/amendment of `SOURCE_CONTRACTS.md`**
 
 Kind: research / review
 
