@@ -181,24 +181,42 @@ def check_audit_files(root: Path, errors: list[str]) -> None:
                     f"whitelist {sorted(AUDIT_WHITELIST)} may match "
                     "*AxiomAudit.lean (glob exemptions are an escape hatch)"
                 )
+    # Lane membership is decided by the lane REGISTRY, not by a namespace
+    # prefix: contract-frozen RH declarations legitimately live in the root
+    # namespace while being defined in ResearchOS source (2026-08-06 note in
+    # S0_TRUST_DESIGN.md §4.6).
+    researchos_registry_path = root / "data" / "researchos_result_registry.json"
+    researchos_names: set[str] = set()
+    if researchos_registry_path.exists():
+        researchos_names = set(
+            json.loads(researchos_registry_path.read_text(encoding="utf-8"))
+            .get("ledger_declarations", [])
+        )
     ecdlp_audit = root / "Ecdlp" / "LedgerAxiomAudit.lean"
     if ecdlp_audit.exists():
         for name in PRINT_AXIOMS_RE.findall(
             ecdlp_audit.read_text(encoding="utf-8")
         ):
-            if name.startswith("ResearchOS."):
+            if name.startswith("ResearchOS.") or name in researchos_names:
                 errors.append(
                     f"Ecdlp/LedgerAxiomAudit.lean prints {name!r} — the ECDLP "
-                    "audit must not cover ResearchOS declarations"
+                    "audit must not cover ResearchOS-lane declarations"
                 )
     researchos_audit = root / "ResearchOS" / "LedgerAxiomAudit.lean"
     if researchos_audit.exists():
         text = researchos_audit.read_text(encoding="utf-8")
         for name in PRINT_AXIOMS_RE.findall(text):
-            if not name.startswith("ResearchOS."):
+            if not (name.startswith("ResearchOS.") or name in researchos_names):
                 errors.append(
                     f"ResearchOS/LedgerAxiomAudit.lean prints {name!r} — the "
-                    "ResearchOS audit must only cover ResearchOS declarations"
+                    "ResearchOS audit must only cover ResearchOS-lane "
+                    "declarations (ResearchOS.* namespace or a "
+                    "researchos_result_registry ledger declaration)"
+                )
+            if name.startswith("Ecdlp."):
+                errors.append(
+                    f"ResearchOS/LedgerAxiomAudit.lean prints {name!r} — the "
+                    "ResearchOS audit must not cover Ecdlp declarations"
                 )
         for line in text.splitlines():
             match = IMPORT_RE.match(line)

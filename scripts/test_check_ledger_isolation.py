@@ -63,6 +63,9 @@ def clean_fixture(root: Path) -> None:
     write(root, "ResearchOS/LedgerAxiomAudit.lean",
           "import ResearchOS\n\n"
           "#print axioms ResearchOS.NumberTheory.prime_2017\n")
+    write(root, "data/researchos_result_registry.json", json.dumps(
+        {"ledger_declarations": ["ResearchOS.NumberTheory.prime_2017",
+                                 "rootNamespaceBridgeThm"]}))
 
 
 def run_checker(root: Path) -> int:
@@ -120,6 +123,25 @@ def main() -> int:
             r, "ResearchOS/LedgerAxiomAudit.lean",
             "import Ecdlp\nimport ResearchOS\n\n"
             "#print axioms ResearchOS.NumberTheory.prime_2017\n")),
+        ("ResearchOS audit printing a registry-listed root-namespace name", 0,
+         lambda r: write(
+            r, "ResearchOS/LedgerAxiomAudit.lean",
+            "import ResearchOS\n\n"
+            "#print axioms ResearchOS.NumberTheory.prime_2017\n"
+            "#print axioms rootNamespaceBridgeThm\n")),
+        ("ResearchOS audit printing an unregistered root-namespace name", 1,
+         lambda r: write(
+            r, "ResearchOS/LedgerAxiomAudit.lean",
+            "import ResearchOS\n\n"
+            "#print axioms someUnregisteredName\n")),
+        ("ResearchOS audit printing an Ecdlp declaration", 1, lambda r: write(
+            r, "ResearchOS/LedgerAxiomAudit.lean",
+            "import ResearchOS\n\n#print axioms Ecdlp.foo\n")),
+        ("ECDLP audit printing a registry-listed root-namespace RH name", 1,
+         lambda r: write(
+            r, "Ecdlp/LedgerAxiomAudit.lean",
+            "import Ecdlp\n\n#print axioms Ecdlp.foo\n"
+            "#print axioms rootNamespaceBridgeThm\n")),
         ("hand-declared axiom in ResearchOS source", 1, lambda r: write(
             r, "ResearchOS/NumberTheory/Elementary.lean",
             "namespace ResearchOS.NumberTheory\n"
