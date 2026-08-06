@@ -1,15 +1,15 @@
-# RH xi-package theorem contract (A/C follow-on): draft v1
+# RH xi-package theorem contract (A/C follow-on): draft v2
 
-Status: **DRAFT v2 (2026-08-05) — non-built review artifact, adversarially
-reviewed once (verdict `SOUND_WITH_FIXES`; all four findings applied — Annex B).
-Not Lean-checked. No file in `Ecdlp/`, `ResearchOS/`, or any built target may
-be created from this document before independent review and the remaining
-preconditions carried from `TARGET_BRIDGE_CONTRACT.md` are met. The
-`S0-TRUST` prerequisite was satisfied by merged PR #298 (`d6e146fa`) on
-2026-08-05. The `SOURCE_CONTRACTS.md` package prerequisite was satisfied by
-the accepted `RH-006` replay and amendments on 2026-08-06. Independent
-acceptance of this X1-X11 contract remains open, and built promotion is not
-authorized until that acceptance has its own dated record.**
+Status: **DRAFT v2 (2026-08-06) — non-built review artifact. The initial
+adversarial verdict was `SOUND_WITH_FIXES`, with all four findings applied in
+Annex B. Independent statement acceptance is complete with editorial-only
+fixes; record: `notes/reviews/RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`.
+Not Lean-checked. A separate built promotion may attempt only the accepted
+X1-X11 surface and must pass kernel, ledger, registry, no-incomplete-proof,
+and axiom CI before any declaration is claimed proved. `S0-TRUST` was
+satisfied by PR #298 (`d6e146fa`), the target bridge by PR #299 (`288d65b`),
+and the source-contract prerequisite by the accepted `RH-006` replay and
+amendments on 2026-08-06.**
 
 Scope: the package designated by `MATHLIB_CAPABILITY_MAP.md` §"Gate 0: safe entire xi specification" and §"First implementable foundation and stop rule" (*"A following A/C-only foundation PR may contain the normalized xi bridge package"*), with the statement list frozen in `TARGET_BRIDGE_CONTRACT.md` Annex A. It contains no Li coefficients, no zero enumeration, no divisor packaging, no conjugation symmetry, no growth theorem, and no claim of progress on RH. X11 is the only `S1-MULTIPLICITY`-adjacent statement and transports local analytic order only; it does not construct a divisor.
 
@@ -20,8 +20,8 @@ Package prerequisites (cited as **bridge prerequisites**, not pinned Mathlib): `
 ## Candidate fields
 
 - **Mechanism.** The entire pole-removed completion `completedRiemannZeta₀` and the proved sign identity `completedRiemannZeta_eq` (`Λ(s) = Λ₀(s) − 1/s − 1/(1−s)`, RiemannZeta.lean:84 — the theorem, not the conflicting module comment) determine the chosen entire normalization `riemannXi` under this contract, with `ξ(0) = ξ(1) = 1/2`, `ξ(1−s) = ξ(s)`, zeros exactly the nontrivial zeta zeros, and local analytic order equal to zeta's inside the open strip. No uniqueness claim is made beyond these frozen contract choices.
-- **Expected information gain.** Closes `S1-XI`; converts the map's `NOT-FOUND` rows "standard Riemann xi" and "zeta/xi analytic order equality" into theorems; partially advances `S1-MULTIPLICITY` (order transport only — no divisor, no symmetry action). No information about the truth of RH is produced.
-- **Claim boundary.** All eleven statements are unconditional consequences of pinned Mathlib theorems plus bridge P2. Nothing touches enumeration, growth, Hadamard products, conjugation, or any route's research obligation.
+- **Expected information gain.** If promoted and kernel-checked, closes `S1-XI`; would convert the map's `NOT-FOUND` rows "standard Riemann xi" and "zeta/xi analytic order equality" into theorems; would partially advance `S1-MULTIPLICITY` (order transport only — no divisor, no symmetry action). No information about the truth of RH is produced.
+- **Claim boundary.** All eleven contract clauses (twelve public declarations) are unconditional consequences of pinned Mathlib theorems plus bridge P2. Nothing touches enumeration, growth, Hadamard products, conjugation, or any route's research obligation.
 - **Death condition (stop rule).** Stop or split if any proof requires weakening an exclusion, assuming a hidden nonvanishing fact, treating a totalized exceptional value as a meromorphic value, or introducing a competing RH proposition. A clean blocker is preferable to a false xi bridge.
 
 Proposed module preamble (name-resolution review only; the eventual built file also imports the built bridge module):
@@ -652,7 +652,7 @@ All paths relative to the pinned Mathlib tree; all line numbers grep-verified th
 - **No conjugation symmetry, no Euler product, no multiplicity beyond local order:** verified per-statement; X11 transports `analyticOrderAt` only and constructs no divisor (per `S1-MULTIPLICITY`, the divisor/symmetry package is a separate later contract).
 - **Name collisions:** zero `riemannXi*` hits at the pin (grep-verified this session).
 
-## Obligation register (v1 summary)
+## Obligation register (v2 summary)
 
 | id | severity | content |
 |---|---|---|
