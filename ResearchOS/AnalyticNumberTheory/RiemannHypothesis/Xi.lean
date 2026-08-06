@@ -275,19 +275,18 @@ theorem analyticOrderAt_riemannXi_eq_riemannZeta {s : ℂ} (h0 : 0 < s.re) (h1 :
       h.differentiableWithinAt
     exact ((differentiableAt_id.neg.div_const 2).const_cpow
         (Or.inl (Complex.ofReal_ne_zero.mpr Real.pi_ne_zero))).mul
-      ((Complex.differentiableAt_Gamma _ hz2).comp
+      (DifferentiableAt.fun_comp' z
+        (Complex.differentiableAt_Gamma _ hz2)
         (differentiableAt_id.div_const 2))
-      -- review fix F1: `DifferentiableAt.comp` takes NO explicit point at the pin
-      -- (FDeriv/Comp.lean:127); lambda-shape alternative: `DifferentiableAt.fun_comp'`
-      -- (FDeriv/Comp.lean:121, conclusion `fun x => g (f x)`).
+      -- First kernel feedback: use the point-explicit lambda-safe composition
+      -- form. The earlier `.comp` call omitted its explicit section variable.
       -- LOWCONF: OBLIG X11-b / fix F3 (b),(c) — `differentiableAt_id.neg` is the
       -- Pi-neg `(-id)` defeq-matched against the exponent `fun z => -z / 2` inside
       -- `const_cpow`, `.mul` is Pi-mul defeq-matched against the unfolded `Gammaℝ`
       -- body (`Gammaℝ_def` is `rfl`, Deligne.lean:45), and `g ∘ f` vs the lambda in
-      -- the Gamma factor; the identical incantation elaborates at the pin inside
-      -- `differentiable_Gammaℝ_inv` (Deligne.lean:88); alternate: prefix with
-      -- `simp only [Complex.Gammaℝ_def]`-style `show`, and/or use
-      -- `DifferentiableAt.fun_comp'`.
+      -- the Gamma factor; `DifferentiableAt.fun_comp'` fixes that shape and was
+      -- confirmed by a narrow kernel build. Alternate: prefix with
+      -- `simp only [Complex.Gammaℝ_def]`-style `show`.
   have hG : AnalyticAt ℂ Gammaℝ s := hGdiff.analyticAt (hHopen.mem_nhds h0)
   -- (2) the nonvanishing analytic cofactor u = fun z => z * (z - 1) / 2 * Gammaℝ z
   have hu : AnalyticAt ℂ (fun z : ℂ => z * (z - 1) / 2 * Gammaℝ z) s :=

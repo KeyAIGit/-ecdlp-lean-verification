@@ -58,6 +58,28 @@ route and provides no evidence for or against RH. Before a green merge,
 `S1-MULTIPLICITY` remains open because no divisor or full symmetry package is
 present.
 
+## First kernel-feedback repair
+
+The first promotion head (`9180963`) passed Docs sync and every Lean-lane
+gate through dependency caching, then failed only when X11 attempted to
+compose Gamma differentiability with `t / 2` using a `.comp` call that omitted
+the pinned API's explicit section point. The failure was elaboration-only; no
+mathematical goal or theorem statement was rejected.
+
+The built module, synchronized draft, and contract skeleton now use
+
+```lean
+DifferentiableAt.fun_comp' z
+  (Complex.differentiableAt_Gamma _ hz2)
+  (differentiableAt_id.div_const 2)
+```
+
+A fresh narrow build on Lean 4.31.0 completed all 3520 dependencies and built
+`ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Xi` successfully. No
+declaration name, binder, hypothesis, conclusion, or claim scope changed. The
+full repository build and both axiom audits must still rerun on the repaired
+head before merge.
+
 ## Pending kernel verdict
 
 The authoritative verdict belongs to GitHub CI on the exact promotion head.
