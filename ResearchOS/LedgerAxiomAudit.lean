@@ -21,3 +21,11 @@ CI elaborates it standalone and validates the output with
 #print axioms ResearchOS.NumberTheory.prime_10007
 #print axioms ResearchOS.NumberTheory.prime_10009
 #print axioms ResearchOS.NumberTheory.prime_2017
+#print axioms one_notMem_riemannZetaZeros
+#print axioms riemannHypothesis_iff_zero_free_gt_half
+#print axioms riemannHypothesis_iff_zetaZeros_re_eq_half
+#print axioms riemannHypothesis_iff_zetaZeros_re_eq_half'
+#print axioms riemannZeta_ne_zero_of_re_eq_zero
+#print axioms riemannZeta_ne_zero_of_re_le_zero
+#print axioms riemannZeta_one_sub_eq_zero_iff
+#print axioms riemannZeta_zero_mem_critical_strip

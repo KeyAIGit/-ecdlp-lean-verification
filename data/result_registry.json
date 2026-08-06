@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1015,
-  "distinct_qualified_names": 1015,
+  "declaration_count": 1023,
+  "distinct_qualified_names": 1023,
   "verified_md_citations": 677,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -17162,6 +17162,13 @@
       "file": "Ecdlp/Proved/FiveTorsionStructure.lean",
       "line": 54
     },
+    "one_notMem_riemannZetaZeros": {
+      "name": "one_notMem_riemannZetaZeros",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 179
+    },
     "order_dvd_card": {
       "name": "order_dvd_card",
       "namespace": "",
@@ -17175,6 +17182,55 @@
       "kind": "def",
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
       "line": 258
+    },
+    "riemannHypothesis_iff_zero_free_gt_half": {
+      "name": "riemannHypothesis_iff_zero_free_gt_half",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 145
+    },
+    "riemannHypothesis_iff_zetaZeros_re_eq_half": {
+      "name": "riemannHypothesis_iff_zetaZeros_re_eq_half",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 182
+    },
+    "riemannHypothesis_iff_zetaZeros_re_eq_half'": {
+      "name": "riemannHypothesis_iff_zetaZeros_re_eq_half'",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 199
+    },
+    "riemannZeta_ne_zero_of_re_eq_zero": {
+      "name": "riemannZeta_ne_zero_of_re_eq_zero",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 115
+    },
+    "riemannZeta_ne_zero_of_re_le_zero": {
+      "name": "riemannZeta_ne_zero_of_re_le_zero",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 29
+    },
+    "riemannZeta_one_sub_eq_zero_iff": {
+      "name": "riemannZeta_one_sub_eq_zero_iff",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 127
+    },
+    "riemannZeta_zero_mem_critical_strip": {
+      "name": "riemannZeta_zero_mem_critical_strip",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 104
     },
     "tying": {
       "name": "tying",

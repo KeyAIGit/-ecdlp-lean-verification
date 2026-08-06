@@ -1,19 +1,21 @@
 /-
-NON-BUILT DRAFT — route-neutral RH target bridge.
+Route-neutral RH target bridge — the first built module of the RH lane
+(RH-004 promotion of `domains/riemann-hypothesis/TARGET_BRIDGE_CONTRACT.md`,
+draft v2, adversarially reviewed; RH-003 acceptance: reviewed-and-merged
+PR #297, reviewer tightening commit 38a70f0, squash 8c70680).
 
-This file implements the frozen contract
-`domains/riemann-hypothesis/TARGET_BRIDGE_CONTRACT.md` (DRAFT v2, 2026-08-05),
-declarations P1-P5. It is NOT part of any lake target: it must not be imported
-from `Ecdlp.lean` or any built module, and it is pending RH-003 independent
-review. `S0-TRUST` was closed by PR #298 (`d6e146fa`) on 2026-08-05. The
-Lean kernel has NOT checked this file;
-nothing in it is claimed proved until the RH-004 built PR is kernel-verified.
+Content: P1 (no zeros in `re ≤ 0` except the trivial ones), P2 (open
+critical-strip localization), P3 (zero reflection via the completed zeta),
+P4 (`RiemannHypothesis ↔ ∀ s, 1/2 < s.re → riemannZeta s ≠ 0`), P5
+(critical-line formulations via `riemannZetaZeros`). Every analytic input
+is a pinned Mathlib theorem; this module closes the named barrier
+`S1-TARGET` and asserts NOTHING about the truth of RH.
+
+Ledger: `VERIFIED_RESEARCHOS.md` rows `RH-BRIDGE-*`; audited by the
+generated `ResearchOS/LedgerAxiomAudit.lean` + `scripts/check_axioms.py`
+(axiom base: standard, per row).
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
-Every cited lemma name and signature below was grep-verified at that exact
-revision. Obligations discharged inline: P1-c (field cancellation), P1-d
-(ℤ→ℕ→ℂ witness casts), P2-a/P4-a (real-part cast forms), P3-a (simp closure
-of the ∨-iff), P4-b/P5-a (`RiemannHypothesis` def unfolding via `show`).
 -/
 import Mathlib.NumberTheory.LSeries.ZetaZeros          -- riemannZetaZeros, Nonvanishing (transitively)
 import Mathlib.NumberTheory.Harmonic.ZetaAsymp          -- riemannZeta_one, riemannZeta_one_ne_zero

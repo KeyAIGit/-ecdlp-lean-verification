@@ -411,6 +411,14 @@ the cheap pre-build phase):
    exact three of §2.1; `Ecdlp/LedgerAxiomAudit.lean` contains no
    `#print axioms ResearchOS.` line and `ResearchOS/LedgerAxiomAudit.lean`
    contains no `#print axioms` for a non-ResearchOS namespace.
+   *Amendment 2026-08-06 (RH-004 promotion):* lane membership is decided by
+   the lane **registry**, not the namespace string — contract-frozen RH
+   declarations (e.g. `riemannZeta_zero_mem_critical_strip`) legitimately
+   live in the root namespace while being defined in ResearchOS source. The
+   implemented check accepts a printed name iff it is `ResearchOS.*` or a
+   `researchos_result_registry.json` ledger declaration, and rejects
+   `Ecdlp.*` in the ResearchOS audit and ResearchOS-lane names in the Ecdlp
+   audit.
 7. **Axiom-keyword ban (v2, ADV-1):** no `axiom` declaration appears
    anywhere in `ResearchOS/**.lean` source. (Extending to `Ecdlp/` is a
    Phase-1 ops line item.)

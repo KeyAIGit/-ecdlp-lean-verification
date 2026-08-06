@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "VERIFIED_RESEARCHOS.md + built public ResearchOS source (audit harnesses excluded by exact path)",
-  "ledger_rows": 11,
+  "ledger_rows": 19,
   "ledger_declarations": [
     "ResearchOS.NumberTheory.carmichael_1105_factorization",
     "ResearchOS.NumberTheory.carmichael_1105_not_prime",
@@ -14,7 +14,15 @@
     "ResearchOS.NumberTheory.mersenne_M19_prime",
     "ResearchOS.NumberTheory.prime_10007",
     "ResearchOS.NumberTheory.prime_10009",
-    "ResearchOS.NumberTheory.prime_2017"
+    "ResearchOS.NumberTheory.prime_2017",
+    "one_notMem_riemannZetaZeros",
+    "riemannHypothesis_iff_zero_free_gt_half",
+    "riemannHypothesis_iff_zetaZeros_re_eq_half",
+    "riemannHypothesis_iff_zetaZeros_re_eq_half'",
+    "riemannZeta_ne_zero_of_re_eq_zero",
+    "riemannZeta_ne_zero_of_re_le_zero",
+    "riemannZeta_one_sub_eq_zero_iff",
+    "riemannZeta_zero_mem_critical_strip"
   ],
   "axiom_base": {
     "ResearchOS.NumberTheory.carmichael_1105_factorization": "standard",
@@ -28,7 +36,15 @@
     "ResearchOS.NumberTheory.mersenne_M19_prime": "standard",
     "ResearchOS.NumberTheory.prime_10007": "standard",
     "ResearchOS.NumberTheory.prime_10009": "standard",
-    "ResearchOS.NumberTheory.prime_2017": "standard"
+    "ResearchOS.NumberTheory.prime_2017": "standard",
+    "one_notMem_riemannZetaZeros": "standard",
+    "riemannHypothesis_iff_zero_free_gt_half": "standard",
+    "riemannHypothesis_iff_zetaZeros_re_eq_half": "standard",
+    "riemannHypothesis_iff_zetaZeros_re_eq_half'": "standard",
+    "riemannZeta_ne_zero_of_re_eq_zero": "standard",
+    "riemannZeta_ne_zero_of_re_le_zero": "standard",
+    "riemannZeta_one_sub_eq_zero_iff": "standard",
+    "riemannZeta_zero_mem_critical_strip": "standard"
   },
   "ledger_entries": [
     {
@@ -174,6 +190,110 @@
       "axiom_base": "standard",
       "method": "norm_num",
       "status": "proved"
+    },
+    {
+      "claim_id": "RH-BRIDGE-P1",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannZeta_ne_zero_of_re_le_zero"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-BRIDGE-P2",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannZeta_zero_mem_critical_strip"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-BRIDGE-P2C",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannZeta_ne_zero_of_re_eq_zero"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-BRIDGE-P3",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannZeta_one_sub_eq_zero_iff"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-BRIDGE-P4",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannHypothesis_iff_zero_free_gt_half"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-BRIDGE-P5T",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "one_notMem_riemannZetaZeros"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-BRIDGE-P5",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannHypothesis_iff_zetaZeros_re_eq_half"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-BRIDGE-P5X",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannHypothesis_iff_zetaZeros_re_eq_half'"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
     }
   ],
   "declarations": {
@@ -248,6 +368,54 @@
       "file": "ResearchOS/NumberTheory/Elementary.lean",
       "line": 22,
       "anchor": "ResearchOS/NumberTheory/Elementary.lean:22@sha256:ec11f2f4623e"
+    },
+    "one_notMem_riemannZetaZeros": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 179,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:179@sha256:e0394e7ae2d9"
+    },
+    "riemannHypothesis_iff_zero_free_gt_half": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 145,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:145@sha256:944bb7e25a77"
+    },
+    "riemannHypothesis_iff_zetaZeros_re_eq_half": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 182,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:182@sha256:15928427f29b"
+    },
+    "riemannHypothesis_iff_zetaZeros_re_eq_half'": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 199,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:199@sha256:178ea7b80b8d"
+    },
+    "riemannZeta_ne_zero_of_re_eq_zero": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 115,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:115@sha256:467d1ce9f875"
+    },
+    "riemannZeta_ne_zero_of_re_le_zero": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 29,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:29@sha256:0ad64bd634a1"
+    },
+    "riemannZeta_one_sub_eq_zero_iff": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 127,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:127@sha256:945c2e31b47c"
+    },
+    "riemannZeta_zero_mem_critical_strip": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
+      "line": 104,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:104@sha256:07a12f9ec473"
     }
   }
 }

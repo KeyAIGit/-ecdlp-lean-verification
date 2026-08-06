@@ -170,7 +170,14 @@ How to verify:
 
 ID: `RH-003`
 
-Status: **ACTIVE**
+Status: **COMPLETE 2026-08-06**
+
+Closure evidence: the frozen contract and its non-built Lean draft were
+independently reviewed and merged by the external reviewer (tightening
+commit `38a70f0`, squash-merge of PR #297 as `8c70680`); per the owner's
+instruction, review-and-merge is the acceptance step for this lane. The
+`SOURCE_CONTRACTS.md` acceptance review remains open and continues to gate
+Annex A xi work only.
 
 Kind: theorem / review
 
@@ -215,7 +222,18 @@ Exit criteria:
 
 ID: `RH-004`
 
-Status: **BLOCKED on RH-003 review**
+Status: **ACTIVE**
+
+Activation basis (2026-08-06): `RH-003` completed (reviewed-and-merged
+PR #297) and `S0-TRUST` is closed (merged PR #298), so this contract's
+blocking conditions are discharged. The promotion PR carries the built
+module `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean`
+(byte-identical proof bodies to the audited draft), its eight `RH-BRIDGE-*`
+rows in `VERIFIED_RESEARCHOS.md`, the regenerated registry and audit, and
+the promotion review record
+(`notes/reviews/RH_BRIDGE_PROMOTION_2026_08_06.md`) — in one PR, as the
+inverse-coverage gate requires. The Lean kernel's verdict arrives via that
+PR's CI; if it is red, the promotion halts and nothing is counted.
 
 Kind: theorem
 
