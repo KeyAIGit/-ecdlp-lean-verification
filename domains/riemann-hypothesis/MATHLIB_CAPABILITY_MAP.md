@@ -378,7 +378,7 @@ theorem-execution budget until a concrete family survives a new review.
 
 | severity | barrier | blocks | exit evidence |
 |---|---|---|---|
-| `S0-TRUST` | non-ECDLP domain result ledger and generated axiom audit do not yet exist | adding or counting any RH Lean theorem | dedicated ledger schema, generated audit, CI coverage, and isolation test |
+| `S0-TRUST` — **CLOSED 2026-08-05** by PR #298 (`d6e146fa`) | non-ECDLP domain result ledger and generated axiom audit were absent | adding or counting any RH Lean theorem | dedicated ledger schema, generated audit, CI coverage, and isolation test — all merged and green |
 | `S0-SEMANTIC` | totalized exceptional values and the `Λ₀` sign inconsistency invite a false bridge | every route | reviewed xi contract derived from proved declarations, with `0`, `1`, trivial-zero, and gamma cases explicit |
 | `S1-TARGET` | no exact bridge from Mathlib's target to the source-side critical-line and zero-free-half-plane formulations | every route | kernel-checked exceptional-point and functional-equation bridge plus independent statement review |
 | `S1-XI` | no standard entire xi/zero bridge | Li/Weil and explicit formula | kernel-checked normalized xi package plus independent statement review |

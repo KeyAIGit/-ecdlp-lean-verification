@@ -4,7 +4,8 @@ Status: **DRAFT v2 (2026-08-05) — non-built review artifact, adversarially
 reviewed once (verdict `SOUND_WITH_FIXES`, all five findings applied below;
 see Annex B). Not Lean-checked. No file in `Ecdlp/`, `ResearchOS/`, or any
 built target may be created from this document before independent review
-(RH-003 exit) and `S0-TRUST` closure.**
+(RH-003 exit). The separate `S0-TRUST` prerequisite was satisfied by merged
+PR #298 (`d6e146fa`) on 2026-08-05.**
 
 Scope: the package designated by `MATHLIB_CAPABILITY_MAP.md` §"First
 implementable foundation and stop rule": *"After `S0-TRUST` is closed, the

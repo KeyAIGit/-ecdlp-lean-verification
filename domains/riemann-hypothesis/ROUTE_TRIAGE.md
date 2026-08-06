@@ -83,7 +83,7 @@ bar — and any theorem meeting it would itself be a proof of RH.**
   dichotomy — under RH, `λ_n` grows temperedly `~ (n/2)(log n + γ − 1 −
   log 2π)`; if RH is false, `Re λ_n` oscillates with exponentially growing
   amplitude and is negative infinitely often. This is a named unconditional
-  theorem, but it **proves the bar unreachable short of RH**: tail
+  theorem, and it **shows that meeting the bar would itself prove RH**: tail
   positivity `Re λ_n ≥ 0` for all `n ≥ N₀` already forces RH.
 - Finite numerics (Keiper, Maslanka, `n ≲ 10⁵`) `[D]`: bounded computational
   evidence only, per the corpus rules.
@@ -157,10 +157,12 @@ identities, equivalences, and obstructions:
   coefficient choice with a proved decaying bound;
 - equivalences: Nyman, Beurling, Báez-Duarte 2002/2003 (`RH-SRC-005` /
   `BD02-v2`), Balazard-Saias `[D]`;
-- obstructions: the BDBLS/Burnol unconditional lower bound
-  `d_N² ≥ (Σ_{ρ distinct} 1/|ρ|² + o(1)) / log N` `[D]`, and the `BD02-v2`
-  (1.2) universal bound `‖F − χ‖ ≥ C/√(log N(F))` — the distance cannot
-  decay faster than order `1/log N`, and the matching upper asymptotic
+- obstructions: Burnol's unconditional asymptotic lower bound
+  `liminf_{N→∞} d_N² log N ≥ Σ_{Re ρ = 1/2} m(ρ)²/|ρ|²` `[D]`, with zeros
+  counted through their multiplicities, and the `BD02-v2` (1.2) universal
+  bound `‖F − χ‖ ≥ C/√(log N(F))` — the distance cannot decay faster than
+  order `1/√(log N)` (equivalently, its squared error cannot decay faster
+  than order `1/log N`), and the matching upper asymptotic
   `d_N² ~ (2 + γ − log 4π)/log N` is known only under RH (plus simplicity
   hypotheses in the sharpest forms).
 
@@ -170,8 +172,9 @@ non-decaying bound" (the only unconditional upper-bound type available);
 `re(s) > 1/2` input" (the sole published decay mechanism is exactly this
 chain); "the divergent raw family `Σ_{a≤N} μ(a) ρ_a`" (rejected by the
 source itself, `BD02-v2` (1.1), and by `SC-NB-06`). Burnol's lower bound
-additionally pre-falsifies any preregistered rate faster than order
-`1/log N` — such a rate is an automatic `STOP` at preregistration time.
+additionally pre-falsifies any preregistered squared-error rate
+`o(1/log N)` (equivalently, distance `o(1/√(log N))`) — such a rate is an
+automatic `STOP` at preregistration time.
 
 **Disposition: `PARK` as a route to RH. 0% of the 20% pilot execution cap
 spent, and none should be spent** hunting an object whose existence proof is
@@ -199,13 +202,13 @@ complete proved identity for `‖χ − F_N‖²_H` in `H = L²((0,∞), dx)`
 (Vasyunin/Bettin-Conrey entries admissible); an explicit unconditional
 `B(N)` with proved `B(N) → 0`, admissible target window only
 `B(N) = C/log N + o(1/log N)` with
-`C ≥ Σ_{ρ distinct} 1/|ρ|²`; `limsup_{N→∞} B(N)·log N` proved finite with an
-explicit value; no Littlewood/Lindelöf/zero-free-`re>1/2` input outside an
-explicit RH hypothesis; no unquantified iterated limits passed off as a
-diagonal family; the raw Möbius family and any mollified variant require
-their own pinned source contract. Satisfying this block unconditionally is
-equivalent to proving RH; it is recorded so future claims are judged against
-it, not because it is expected to be met.
+`C ≥ Σ_{Re ρ = 1/2} m(ρ)²/|ρ|²`; `limsup_{N→∞} B(N)·log N` proved finite
+with an explicit value; no Littlewood/Lindelöf/zero-free-`re>1/2` input
+outside an explicit RH hypothesis; no unquantified iterated limits passed
+off as a diagonal family; the raw Möbius family and any mollified variant
+require their own pinned source contract. Satisfying this block
+unconditionally is equivalent to proving RH; it is recorded so future
+claims are judged against it, not because it is expected to be met.
 
 ---
 
@@ -290,23 +293,27 @@ independently per the `SC` contract rules.
    are `PARK`ed with scoped reasons, preregistered revival bars, and
    reconsideration triggers, as recorded above. This satisfies the `RH-002`
    requirement "at most one selected theorem-bearing candidate" by selecting
-   zero, and it is the honest reading of the evidence: each route's day-45
-   bar is provably unreachable short of RH itself.
+   zero. Route A's full tail-positivity bar and Route B's unconditional
+   closure bar would each imply RH. For Route C, no known published mechanism
+   meets the all-heights individual-zero-exclusion bar; satisfying that full
+   bar would imply RH, but this literature gap is not an impossibility proof.
 2. **The successor work item is foundation, not route execution.** Per the
    capability map's "First implementable foundation and stop rule", the next
    kernel-checkable step is the **route-neutral target-equivalence bridge**,
    which closes the named barrier `S1-TARGET`. Under corpus rule
    "equivalent restatements are not progress unless they remove a named
    barrier", this qualifies as admissible foundation work — and it is
-   explicitly **not** counted as a selected route, **not** counted as
-   progress on RH, and **not** buildable before `S0-TRUST` closes.
+   explicitly **not** counted as a selected route and **not** counted as
+   progress on RH. `S0-TRUST` subsequently closed through PR #298
+   (`d6e146fa`); independent review remains the active build gate.
    `RH-003` is activated on this basis; its frozen contract is
    `TARGET_BRIDGE_CONTRACT.md`.
 3. **90-day exit clause 5** ("either one kernel-checked missing foundation
    or an honest `PARK`/`STOP` decision") is on track via the foundation
    path: this cycle delivers the honest `PARK` decisions plus a frozen,
    adversarially reviewed foundation contract; the kernel check itself
-   remains gated on `S0-TRUST` and independent review (`RH-004`).
+   remains gated on independent review (`RH-004`); the `S0-TRUST` gate is
+   now satisfied by PR #298 (`d6e146fa`).
 4. **Pending for finality:** independent mathematical review of all three
    dispositions; second-agent replay of every `[D]` citation's exact
    locator; acceptance review of `SOURCE_CONTRACTS.md`.

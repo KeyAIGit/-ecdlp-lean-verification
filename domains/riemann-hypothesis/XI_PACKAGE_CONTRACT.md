@@ -1,7 +1,14 @@
 # RH xi-package theorem contract (A/C follow-on): draft v1
 
 Status: **DRAFT v2 (2026-08-05) — non-built review artifact, adversarially
-reviewed once (verdict `SOUND_WITH_FIXES`; all four findings applied — Annex B). Not Lean-checked. No file in `Ecdlp/`, `ResearchOS/`, or any built target may be created from this document before independent review and the preconditions carried from `TARGET_BRIDGE_CONTRACT.md` (RH-003 exit, `S0-TRUST` closure) are met. This package additionally requires the `SOURCE_CONTRACTS.md` package-acceptance review to complete first, per RH-003 §Review preconditions item 3 (this is Annex A xi work touching `LAG07` conventions).**
+reviewed once (verdict `SOUND_WITH_FIXES`; all four findings applied — Annex B).
+Not Lean-checked. No file in `Ecdlp/`, `ResearchOS/`, or any built target may
+be created from this document before independent review and the remaining
+preconditions carried from `TARGET_BRIDGE_CONTRACT.md` are met. The
+`S0-TRUST` prerequisite was satisfied by merged PR #298 (`d6e146fa`) on
+2026-08-05. This package additionally requires the `SOURCE_CONTRACTS.md`
+package-acceptance review to complete first, per RH-003 §Review preconditions
+item 3 (this is Annex A xi work touching `LAG07` conventions).**
 
 Scope: the package designated by `MATHLIB_CAPABILITY_MAP.md` §"Gate 0: safe entire xi specification" and §"First implementable foundation and stop rule" (*"A following A/C-only foundation PR may contain the normalized xi bridge package"*), with the statement list frozen in `TARGET_BRIDGE_CONTRACT.md` Annex A. It contains no Li coefficients, no zero enumeration, no divisor packaging, no conjugation symmetry, no growth theorem, and no claim of progress on RH. X11 is the only `S1-MULTIPLICITY`-adjacent statement and transports local analytic order only; it does not construct a divisor.
 
@@ -11,7 +18,7 @@ Package prerequisites (cited as **bridge prerequisites**, not pinned Mathlib): `
 
 ## Candidate fields
 
-- **Mechanism.** The entire pole-removed completion `completedRiemannZeta₀` and the proved sign identity `completedRiemannZeta_eq` (`Λ(s) = Λ₀(s) − 1/s − 1/(1−s)`, RiemannZeta.lean:84 — the theorem, not the conflicting module comment) determine a unique safe entire normalization `riemannXi` with `ξ(0) = ξ(1) = 1/2`, `ξ(1−s) = ξ(s)`, zeros exactly the nontrivial zeta zeros, and local analytic order equal to zeta's inside the open strip.
+- **Mechanism.** The entire pole-removed completion `completedRiemannZeta₀` and the proved sign identity `completedRiemannZeta_eq` (`Λ(s) = Λ₀(s) − 1/s − 1/(1−s)`, RiemannZeta.lean:84 — the theorem, not the conflicting module comment) determine the chosen entire normalization `riemannXi` under this contract, with `ξ(0) = ξ(1) = 1/2`, `ξ(1−s) = ξ(s)`, zeros exactly the nontrivial zeta zeros, and local analytic order equal to zeta's inside the open strip. No uniqueness claim is made beyond these frozen contract choices.
 - **Expected information gain.** Closes `S1-XI`; converts the map's `NOT-FOUND` rows "standard Riemann xi" and "zeta/xi analytic order equality" into theorems; partially advances `S1-MULTIPLICITY` (order transport only — no divisor, no symmetry action). No information about the truth of RH is produced.
 - **Claim boundary.** All eleven statements are unconditional consequences of pinned Mathlib theorems plus bridge P2. Nothing touches enumeration, growth, Hadamard products, conjugation, or any route's research obligation.
 - **Death condition (stop rule).** Stop or split if any proof requires weakening an exclusion, assuming a hidden nonvanishing fact, treating a totalized exceptional value as a meromorphic value, or introducing a competing RH proposition. A clean blocker is preferable to a false xi bridge.
@@ -640,7 +647,7 @@ All paths relative to the pinned Mathlib tree; all line numbers grep-verified th
 - **Exact trivial-zero form:** every exclusion is literally `¬∃ n : ℕ, s = -2 * (n + 1)`, character-identical to `RiemannHypothesis` (RiemannZeta.lean:182). The strictly larger `Gammaℝ` zero set `-(2*n)` (which contains `0`) is decomposed **exactly once**, in X6, as `{0} ∪ {-2(n+1)}`, with `hs0` covering the first component and `htriv` the second — never conflated.
 - **Totalized values:** `ξ(0)`, `ξ(1)` are read from the entire formula (X4), never from a totalized pointwise product; `riemannZeta_def_of_ne_zero` is applied only under proved `≠ 0` (X6, X11); X5's exclusions are exactly the appearing denominators; the X11 factorization lives strictly inside the open strip.
 - **Signs from `completedRiemannZeta_eq` the theorem:** the whole sign chain is derived once in §Sign derivation from RiemannZeta.lean:84 and re-checked by X4's endpoint values; the conflicting module comment is never used.
-- **No competing definitions:** `riemannXi` is the unique new object (Gate-0 normalization verbatim); X10's left side is `_root_.RiemannHypothesis` verbatim; no new `Prop` restates RH.
+- **No competing definitions:** `riemannXi` is the sole new object introduced by this package (Gate-0 normalization verbatim); X10's left side is `_root_.RiemannHypothesis` verbatim; no new `Prop` restates RH.
 - **No conjugation symmetry, no Euler product, no multiplicity beyond local order:** verified per-statement; X11 transports `analyticOrderAt` only and constructs no divisor (per `S1-MULTIPLICITY`, the divisor/symmetry package is a separate later contract).
 - **Name collisions:** zero `riemannXi*` hits at the pin (grep-verified this session).
 

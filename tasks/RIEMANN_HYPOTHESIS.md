@@ -116,12 +116,12 @@ ID: `RH-002`
 Status: **EXECUTED 2026-08-05 — dispositions `PARK`/`PARK`/`PARK`, no
 `SELECT`; pending independent disposition review**
 
-Outcome record: `domains/riemann-hypothesis/ROUTE_TRIAGE.md`. Each admitted
-family's preregistered day-45 bar is provably unreachable short of RH itself
-(Weil-first Li via the Bombieri-Lagarias/Voros oscillation dichotomy;
-Nyman-Beurling via the unconditional closure→RH direction; explicit-formula
-via the absence of any individual-zero-exclusion mechanism in the
-literature). Zero theorem-bearing routes selected ("at most one" is
+Outcome record: `domains/riemann-hypothesis/ROUTE_TRIAGE.md`. Route A's full
+tail-positivity bar and Route B's unconditional closure bar would each imply
+RH. For Route C, no known published mechanism meets the preregistered
+all-heights individual-zero-exclusion bar; satisfying that full bar would
+imply RH, but the present literature gap is not an impossibility theorem.
+Zero theorem-bearing routes selected ("at most one" is
 satisfied by zero); Route B's 20% pilot execution cap is untouched; every
 route retains a scoped reason, a preregistered revival bar, and
 reconsideration triggers. The successor work item is foundation, not route
@@ -226,10 +226,10 @@ Expected output:
 
 - one scoped built module under the non-ECDLP `ResearchOS` lane;
 - a domain-specific result record and axiom-audit coverage designed before the
-  theorem is counted; a proposed design now exists
+  theorem is counted; the reviewed design
   (`domains/riemann-hypothesis/S0_TRUST_DESIGN.md`, v2, adversarially
-  reviewed `SOUND_WITH_FIXES`) — its implementation requires a separate
-  ops-lane task/PR and is not authorized by the RH lane;
+  reviewed `SOUND_WITH_FIXES`) was implemented and merged through PR #298
+  (`d6e146fa`), so this trust prerequisite is satisfied;
 - CI-green proof with exact trust and claim scope.
 
 Exit criteria:

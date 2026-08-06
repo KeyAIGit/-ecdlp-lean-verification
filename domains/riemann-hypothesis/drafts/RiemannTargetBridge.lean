@@ -5,7 +5,8 @@ This file implements the frozen contract
 `domains/riemann-hypothesis/TARGET_BRIDGE_CONTRACT.md` (DRAFT v2, 2026-08-05),
 declarations P1-P5. It is NOT part of any lake target: it must not be imported
 from `Ecdlp.lean` or any built module, and it is pending RH-003 independent
-review and `S0-TRUST` closure. The Lean kernel has NOT checked this file;
+review. `S0-TRUST` was closed by PR #298 (`d6e146fa`) on 2026-08-05. The
+Lean kernel has NOT checked this file;
 nothing in it is claimed proved until the RH-004 built PR is kernel-verified.
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).

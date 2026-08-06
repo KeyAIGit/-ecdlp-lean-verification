@@ -7,6 +7,11 @@ authorized by this document (§5). This document is the ledger-contract
 proposal that `domains/riemann-hypothesis/README.md:74-75` requires to
 exist before `metrics_source` may ever become non-null.**
 
+**Implementation addendum (2026-08-05): the design was implemented in
+PR #298 and squash-merged as `d6e146fa`. The dedicated ledger, generated
+audit, CI coverage, and isolation gate all passed. Pre-implementation wording
+below is retained as design provenance, not as the current repository state.**
+
 Barrier being closed: `S0-TRUST` — "non-ECDLP domain result ledger and
 generated axiom audit do not yet exist", blocking "adding or counting any
 RH Lean theorem"; exit evidence "dedicated ledger schema, generated audit,

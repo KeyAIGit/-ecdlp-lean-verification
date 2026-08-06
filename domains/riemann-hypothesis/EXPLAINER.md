@@ -38,8 +38,10 @@ in full is exactly as hard as RH itself. A century and a half of partial
 results (zero-free regions, zero-density estimates, "at least 41% of zeros
 on the line") all stop structurally short of excluding even one hypothetical
 off-line zero at large height. This repository's route triage
-(`ROUTE_TRIAGE.md`) records, with sources, why each admitted attack route's
-success criterion is currently unreachable short of RH itself.
+(`ROUTE_TRIAGE.md`) records, with sources, that no known result currently
+meets any admitted route's full success criterion; meeting those full
+criteria would imply RH. This is a state-of-the-literature finding, not an
+impossibility proof.
 
 ## How long would a proof be?
 
