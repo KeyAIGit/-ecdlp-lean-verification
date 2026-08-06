@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1023,
-  "distinct_qualified_names": 1023,
+  "declaration_count": 1035,
+  "distinct_qualified_names": 1035,
   "verified_md_citations": 677,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -17064,6 +17064,13 @@
       "file": "Ecdlp/Proved/QuadrupleMultiplicationYFormula.lean",
       "line": 12
     },
+    "analyticOrderAt_riemannXi_eq_riemannZeta": {
+      "name": "analyticOrderAt_riemannXi_eq_riemannZeta",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 248
+    },
     "cMin": {
       "name": "cMin",
       "namespace": "",
@@ -17098,6 +17105,13 @@
       "kind": "lemma",
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
       "line": 328
+    },
+    "differentiable_riemannXi": {
+      "name": "differentiable_riemannXi",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 46
     },
     "fires": {
       "name": "fires",
@@ -17183,6 +17197,13 @@
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
       "line": 258
     },
+    "riemannHypothesis_iff_riemannXi_zeros_re_eq_half": {
+      "name": "riemannHypothesis_iff_riemannXi_zeros_re_eq_half",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 208
+    },
     "riemannHypothesis_iff_zero_free_gt_half": {
       "name": "riemannHypothesis_iff_zero_free_gt_half",
       "namespace": "",
@@ -17203,6 +17224,69 @@
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
       "line": 199
+    },
+    "riemannXi": {
+      "name": "riemannXi",
+      "namespace": "",
+      "kind": "def",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 41
+    },
+    "riemannXi_eq_of_ne": {
+      "name": "riemannXi_eq_of_ne",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 89
+    },
+    "riemannXi_eq_zero_iff_riemannZeta_eq_zero": {
+      "name": "riemannXi_eq_zero_iff_riemannZeta_eq_zero",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 120
+    },
+    "riemannXi_ne_zero_of_one_le_re": {
+      "name": "riemannXi_ne_zero_of_one_le_re",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 157
+    },
+    "riemannXi_ne_zero_of_re_le_zero": {
+      "name": "riemannXi_ne_zero_of_re_le_zero",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 180
+    },
+    "riemannXi_one": {
+      "name": "riemannXi_one",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 78
+    },
+    "riemannXi_one_sub": {
+      "name": "riemannXi_one_sub",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 61
+    },
+    "riemannXi_zero": {
+      "name": "riemannXi_zero",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 72
+    },
+    "riemannXi_zero_mem_critical_strip": {
+      "name": "riemannXi_zero_mem_critical_strip",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 192
     },
     "riemannZeta_ne_zero_of_re_eq_zero": {
       "name": "riemannZeta_ne_zero_of_re_eq_zero",

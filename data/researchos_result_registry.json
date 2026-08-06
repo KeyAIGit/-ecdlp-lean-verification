@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "VERIFIED_RESEARCHOS.md + built public ResearchOS source (audit harnesses excluded by exact path)",
-  "ledger_rows": 19,
+  "ledger_rows": 31,
   "ledger_declarations": [
     "ResearchOS.NumberTheory.carmichael_1105_factorization",
     "ResearchOS.NumberTheory.carmichael_1105_not_prime",
@@ -15,10 +15,22 @@
     "ResearchOS.NumberTheory.prime_10007",
     "ResearchOS.NumberTheory.prime_10009",
     "ResearchOS.NumberTheory.prime_2017",
+    "analyticOrderAt_riemannXi_eq_riemannZeta",
+    "differentiable_riemannXi",
     "one_notMem_riemannZetaZeros",
+    "riemannHypothesis_iff_riemannXi_zeros_re_eq_half",
     "riemannHypothesis_iff_zero_free_gt_half",
     "riemannHypothesis_iff_zetaZeros_re_eq_half",
     "riemannHypothesis_iff_zetaZeros_re_eq_half'",
+    "riemannXi",
+    "riemannXi_eq_of_ne",
+    "riemannXi_eq_zero_iff_riemannZeta_eq_zero",
+    "riemannXi_ne_zero_of_one_le_re",
+    "riemannXi_ne_zero_of_re_le_zero",
+    "riemannXi_one",
+    "riemannXi_one_sub",
+    "riemannXi_zero",
+    "riemannXi_zero_mem_critical_strip",
     "riemannZeta_ne_zero_of_re_eq_zero",
     "riemannZeta_ne_zero_of_re_le_zero",
     "riemannZeta_one_sub_eq_zero_iff",
@@ -37,10 +49,22 @@
     "ResearchOS.NumberTheory.prime_10007": "standard",
     "ResearchOS.NumberTheory.prime_10009": "standard",
     "ResearchOS.NumberTheory.prime_2017": "standard",
+    "analyticOrderAt_riemannXi_eq_riemannZeta": "standard",
+    "differentiable_riemannXi": "standard",
     "one_notMem_riemannZetaZeros": "standard",
+    "riemannHypothesis_iff_riemannXi_zeros_re_eq_half": "standard",
     "riemannHypothesis_iff_zero_free_gt_half": "standard",
     "riemannHypothesis_iff_zetaZeros_re_eq_half": "standard",
     "riemannHypothesis_iff_zetaZeros_re_eq_half'": "standard",
+    "riemannXi": "standard",
+    "riemannXi_eq_of_ne": "standard",
+    "riemannXi_eq_zero_iff_riemannZeta_eq_zero": "standard",
+    "riemannXi_ne_zero_of_one_le_re": "standard",
+    "riemannXi_ne_zero_of_re_le_zero": "standard",
+    "riemannXi_one": "standard",
+    "riemannXi_one_sub": "standard",
+    "riemannXi_zero": "standard",
+    "riemannXi_zero_mem_critical_strip": "standard",
     "riemannZeta_ne_zero_of_re_eq_zero": "standard",
     "riemannZeta_ne_zero_of_re_le_zero": "standard",
     "riemannZeta_one_sub_eq_zero_iff": "standard",
@@ -294,6 +318,162 @@
       "axiom_base": "standard",
       "method": "Mathlib",
       "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X1",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X2",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "differentiable_riemannXi"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X3",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_one_sub"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X4Z",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_zero"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X4O",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_one"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X5",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_eq_of_ne"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X6",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_eq_zero_iff_riemannZeta_eq_zero"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X7",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_ne_zero_of_one_le_re"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X8",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_ne_zero_of_re_le_zero"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X9",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_zero_mem_critical_strip"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X10",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannHypothesis_iff_riemannXi_zeros_re_eq_half"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-XI-X11",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "analyticOrderAt_riemannXi_eq_riemannZeta"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
     }
   ],
   "declarations": {
@@ -369,11 +549,29 @@
       "line": 22,
       "anchor": "ResearchOS/NumberTheory/Elementary.lean:22@sha256:ec11f2f4623e"
     },
+    "analyticOrderAt_riemannXi_eq_riemannZeta": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 248,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:248@sha256:4a34d9d6b179"
+    },
+    "differentiable_riemannXi": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 46,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:46@sha256:be8d508e1a10"
+    },
     "one_notMem_riemannZetaZeros": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
       "line": 179,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:179@sha256:e0394e7ae2d9"
+    },
+    "riemannHypothesis_iff_riemannXi_zeros_re_eq_half": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 208,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:208@sha256:e1a8f5a1ea99"
     },
     "riemannHypothesis_iff_zero_free_gt_half": {
       "kind": "theorem",
@@ -392,6 +590,60 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
       "line": 199,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:199@sha256:178ea7b80b8d"
+    },
+    "riemannXi": {
+      "kind": "def",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 41,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:41@sha256:5c3f17a41eff"
+    },
+    "riemannXi_eq_of_ne": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 89,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:89@sha256:7d5e3cb98fb4"
+    },
+    "riemannXi_eq_zero_iff_riemannZeta_eq_zero": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 120,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:120@sha256:73e7599fdfbc"
+    },
+    "riemannXi_ne_zero_of_one_le_re": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 157,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:157@sha256:46201261e2e8"
+    },
+    "riemannXi_ne_zero_of_re_le_zero": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 180,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:180@sha256:773f4b09a9ae"
+    },
+    "riemannXi_one": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 78,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:78@sha256:2e9b8a17b932"
+    },
+    "riemannXi_one_sub": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 61,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:61@sha256:1eb89b1c9fec"
+    },
+    "riemannXi_zero": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 72,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:72@sha256:d357d494bff8"
+    },
+    "riemannXi_zero_mem_critical_strip": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
+      "line": 192,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:192@sha256:b526a937c6bb"
     },
     "riemannZeta_ne_zero_of_re_eq_zero": {
       "kind": "theorem",

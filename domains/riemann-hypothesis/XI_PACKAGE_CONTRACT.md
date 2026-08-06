@@ -1,12 +1,15 @@
 # RH xi-package theorem contract (A/C follow-on): draft v2
 
 Status: **DRAFT v2 (2026-08-06) — non-built review artifact. The initial
-adversarial verdict was `SOUND_WITH_FIXES`, with all four findings applied in
-Annex B. Independent statement acceptance is complete with editorial-only
+adversarial verdict was `SOUND_WITH_FIXES`; its four findings are dispositioned
+in Annex B, with the F1 usage correction recorded in Annex C. Independent statement acceptance is complete with editorial-only
 fixes; record: `notes/reviews/RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`.
-Not Lean-checked. A separate built promotion may attempt only the accepted
-X1-X11 surface and must pass kernel, ledger, registry, no-incomplete-proof,
-and axiom CI before any declaration is claimed proved. `S0-TRUST` was
+No successful full kernel verdict exists yet. The first promotion pass exposed
+one proof-only X11 composition-call error; the statement-preserving repair is
+recorded in Annex C and awaits a fresh full CI run. A separate built promotion
+may attempt only the accepted X1-X11 surface and must pass kernel, ledger,
+registry, no-incomplete-proof, and axiom CI before any declaration is claimed
+proved. `S0-TRUST` was
 satisfied by PR #298 (`d6e146fa`), the target bridge by PR #299 (`288d65b`),
 and the source-contract prerequisite by the accepted `RH-006` replay and
 amendments on 2026-08-06.**
@@ -517,11 +520,11 @@ theorem analyticOrderAt_riemannXi_eq_riemannZeta {s : ℂ} (h0 : 0 < s.re) (h1 :
       linarith
     exact (((differentiableAt_id.neg.div_const 2).const_cpow
         (Or.inl (Complex.ofReal_ne_zero.mpr Real.pi_ne_zero))).mul
-      ((Complex.differentiableAt_Gamma _ hz2).comp
+      (DifferentiableAt.fun_comp' z
+        (Complex.differentiableAt_Gamma _ hz2)
         (differentiableAt_id.div_const 2))).differentiableWithinAt
-      -- review fix F1: DifferentiableAt.comp takes NO explicit point at the pin
-      -- (FDeriv/Comp.lean:127); lambda-shape alternative: DifferentiableAt.fun_comp'
-      -- (FDeriv/Comp.lean:121, conclusion `fun x => g (f x)`)
+      -- first kernel feedback: the lambda-safe form supplies the explicit point
+      -- required by the pinned composition API (FDeriv/Comp.lean:121)
   have hG : AnalyticAt ℂ Gammaℝ s := hGdiff.analyticAt (hHopen.mem_nhds h0)
   -- (2) the nonvanishing analytic cofactor u = fun z => z * (z - 1) / 2 * Gammaℝ z
   have hu : AnalyticAt ℂ (fun z : ℂ => z * (z - 1) / 2 * Gammaℝ z) s :=
@@ -564,7 +567,7 @@ X5; `analyticOrderAt` (Analysis/Analytic/Order.lean:47), `analyticOrderAt_congr`
 
 - **OBLIGATION X11-G (MEDIUM — the package's only genuinely missing interface):** there is **no pinned lemma** asserting differentiability or analyticity of `Gammaℝ` (grep-confirmed: only `differentiable_Gammaℝ_inv`, Deligne.lean:88, the inverse). The skeleton assembles it from pinned parts: `Gammaℝ = fun s => π ^ (-s/2) * Gamma (s/2)` (`Gammaℝ_def` is `rfl`, Deligne.lean:45), the cpow factor via `DifferentiableAt.const_cpow` with `(π : ℂ) ≠ 0`, the Gamma factor via `Complex.differentiableAt_Gamma` at `z/2` (pole-free since `re(z/2) > 0`), then `DifferentiableOn.analyticAt` on the open half-plane. All ingredients pinned; estimate 10–15 lines; the unfolding `Gammaℝ_def` step may need an explicit `simp only [Complex.Gammaℝ_def]`/`show` to expose the product to the two `DifferentiableAt` constructors. No analytic gap — this is assembly cost, not a missing theorem. (Upstreaming a `differentiableAt_Gammaℝ_of_re_pos` to Mathlib is the natural follow-up but is not assumed.)
 - **OBLIGATION X11-a (LOW):** the `re`-computation `z / 2 ≠ -m` from `0 < re z`: essentially discharged by the pinned `Complex.div_ofNat_re` (Data/Complex/Basic.lean:763, `(z / OfNat n).re = z.re / n`) + `neg_re`/`natCast_re` + `linarith`; exact simp form to be fixed in build.
-- **OBLIGATION X11-b (MEDIUM):** elaboration shapes: `analyticAt_id` is stated for `id`, not `fun z => z`; `AnalyticAt.div_const` is stated as `(f · / c)`; `analyticOrderAt_mul`'s `f * g` is Pi-mul against the lambda in `hfac`; review fix F3 adds two more registered shapes — (a) `hstrip` is built as `IsOpen (A ∩ B)` via `.inter` while the goal set is the set-builder `{z | 0 < z.re ∧ z.re < 1}` (defeq, not syntactic; fallback `show IsOpen ({z : ℂ | 0 < z.re} ∩ {z : ℂ | z.re < 1})`), and (b) `differentiableAt_id.neg` produces the Pi-neg `(-id)` which must defeq-match the exponent `fun z => -z / 2` inside `const_cpow`; plus (c) the `g ∘ f` vs lambda shape of `DifferentiableAt.comp` (fix F1; alternative `DifferentiableAt.fun_comp'`). Expected to elaborate by defeq/eta; fallback for `hu` if fragile: prove `DifferentiableOn ℂ (fun z => z * (z - 1) / 2 * Gammaℝ z) {z | 0 < z.re}` in one stroke (polynomial part differentiable everywhere + `hGdiff`) and apply `DifferentiableOn.analyticAt` once, avoiding the `AnalyticAt` constructor chain entirely.
+- **OBLIGATION X11-b (MEDIUM):** elaboration shapes: `analyticAt_id` is stated for `id`, not `fun z => z`; `AnalyticAt.div_const` is stated as `(f · / c)`; `analyticOrderAt_mul`'s `f * g` is Pi-mul against the lambda in `hfac`; review fix F3 adds two more registered shapes — (a) `hstrip` is built as `IsOpen (A ∩ B)` via `.inter` while the goal set is the set-builder `{z | 0 < z.re ∧ z.re < 1}` (defeq, not syntactic; fallback `show IsOpen ({z : ℂ | 0 < z.re} ∩ {z : ℂ | z.re < 1})`), and (b) `differentiableAt_id.neg` produces the Pi-neg `(-id)` which must defeq-match the exponent `fun z => -z / 2` inside `const_cpow`. The former composition-shape risk is discharged by the kernel-confirmed point-explicit `DifferentiableAt.fun_comp'`. Fallback for `hu` if still fragile: prove `DifferentiableOn ℂ (fun z => z * (z - 1) / 2 * Gammaℝ z) {z | 0 < z.re}` in one stroke (polynomial part differentiable everywhere + `hGdiff`) and apply `DifferentiableOn.analyticAt` once, avoiding the `AnalyticAt` constructor chain entirely.
 - No analytic obligation: every analytic input (entirety of `Λ₀`, analyticity of `ζ` off 1, differentiability of `Gamma` off the poles, Cauchy–Goursat analyticity upgrade, order product law) is a quoted pinned theorem.
 
 ---
@@ -687,8 +690,34 @@ only as an `=ᶠ[𝓝 s]` equality on the open strip); no competing RH
 proposition, no conjugation use, no growth/Hadamard/Li leakage; and the
 grep-confirmed absence of any `Gammaℝ` differentiability lemma validates
 OBLIGATION X11-G as the package's only genuinely missing interface.
-Findings, all severity S2, all applied in v2: **F1** `DifferentiableAt.comp`
-takes no explicit point at the pin (fixed in the X11 skeleton), **F2** the
-advertised `linear_combination` fallback for X5 could not close without
-denominator-clearing (obligation reworded), **F3** two uncovered defeq-shape
-risks folded into X11-b, **F4** a cosmetic locator range corrected.
+Findings, all severity S2: **F1** historically recorded
+`DifferentiableAt.comp` as taking no explicit point; the first promotion
+kernel pass refuted that usage-level claim and Annex C records the repair.
+**F2** found that the advertised `linear_combination` fallback for X5 could
+not close without denominator-clearing (obligation reworded), **F3** folded
+two uncovered defeq-shape risks into X11-b, and **F4** corrected a cosmetic
+locator range.
+
+## ANNEX C: first promotion kernel feedback (2026-08-06)
+
+The first built promotion head elaborated through X10 and reached X11, where
+the Gamma composition call
+
+```lean
+(Complex.differentiableAt_Gamma _ hz2).comp
+  (differentiableAt_id.div_const 2)
+```
+
+failed because the pinned composition API's section point is explicit. The
+statement-preserving repair uses the lambda-safe constructor with that point:
+
+```lean
+DifferentiableAt.fun_comp' z
+  (Complex.differentiableAt_Gamma _ hz2)
+  (differentiableAt_id.div_const 2)
+```
+
+A narrow kernel build confirmed the repaired X1-X11 module. The built file,
+draft, and this proof skeleton carry the same repair; authoritative full build
+and both axiom audits must rerun on the new promotion head before merge. No
+declaration name, binder, hypothesis, conclusion, or claim boundary changed.
