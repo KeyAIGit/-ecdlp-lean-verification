@@ -1,8 +1,8 @@
 # Riemann Hypothesis research track
 
-Status: **exploratory; Stage 0 evidence package assembled 2026-08-05.
-RH-001 is closed; RH-002 disposition review and source-contract acceptance
-remain pending.**
+Status: **exploratory; Stage 0 evidence package assembled. RH-001, RH-003,
+and RH-004 are closed; RH-002 disposition review and RH-006 source-contract
+acceptance remain pending.**
 
 Priority date: 2026-08-04
 
@@ -34,23 +34,23 @@ Stage 0 is a foundation and specification audit:
 
 The detailed source, claim, route, and evidence map is in `corpus.md`.
 
-Stage 0 execution state (2026-08-05): items 1-3 are complete — the exact
+Stage 0 execution state (updated 2026-08-06): items 1-3 are complete — the exact
 target is frozen and the pinned audit has been independently replayed with
 0 mismatches (`notes/reviews/RH001_INDEPENDENT_REPLAY_2026_08_05.md`). The
-source contracts are assembled, but their acceptance review remains open.
+source contracts are assembled. Their 59-row replay confirms 57 rows and
+flags two exact amendments; acceptance remains open under `RH-006`.
 The admitted routes were adversarially compared (`ROUTE_TRIAGE.md`:
 `PARK`/`PARK`/`PARK`, no route selected), with the dispositions still pending
 independent review. The full Route A and Route B success bars would imply RH;
 for Route C, no known published mechanism meets the all-heights
 individual-zero-exclusion bar, and meeting that full bar would imply RH.
-Item 6 provisionally resolved to the foundation path: one kernel-checkable
-intermediate candidate is frozen as a non-built contract
-(`TARGET_BRIDGE_CONTRACT.md`, the route-neutral target bridge closing
-barrier `S1-TARGET`), pending independent review. `S0-TRUST` was closed by
-PR #298 (`d6e146fa`) on 2026-08-05.
-The `SOURCE_CONTRACTS.md` acceptance review remains open and is a carried
-precondition. This partial-closure PR adds no Lean declaration, consistent
-with the repository isolation rules below.
+Item 6 resolved to the foundation path: the route-neutral target bridge from
+`TARGET_BRIDGE_CONTRACT.md` is kernel-checked in the repo-local
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean` module
+(PR #299, `288d65b`), closing `S1-TARGET` without making any claim about the
+truth of RH. `S0-TRUST` was closed by PR #298 (`d6e146fa`). The
+`SOURCE_CONTRACTS.md` acceptance review and the remaining foundation packages
+stay explicit preconditions.
 
 ## Evidence boundary
 
@@ -75,7 +75,8 @@ with the repository isolation rules below.
 - Future theorem-bearing RH modules belong under
   `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/`.
 - No RH theorem is added to the built surface until a domain ledger and axiom
-  audit cover it. The current activation PR contains no new Lean declaration.
+  audit cover it. PR #299 satisfies that rule for the target bridge; the
+  current review work adds no built Lean declaration.
 - This domain keeps `metrics_source: null` until an independently honest metric
   and ledger contract exists.
 

@@ -54,4 +54,10 @@ point in P1-d: the compact `push_cast [Int.toNat_of_nonneg ...]` closer left
 draft, and contract proof skeleton now use the audit-recorded alternate:
 an explicit equality through `Int.cast_natCast` and `Int.toNat_of_nonneg`,
 followed by `push_cast` and `ring`. No theorem statement or claim scope
-changed. A successful promotion CI rerun is still required before merge.
+changed. The repair therefore required a fresh promotion CI rerun before
+merge; its result is recorded below.
+
+## Completion note
+
+The repaired final head passed `lake build`, the no-sorry gate, and both axiom
+audits, and was squash-merged as PR #299 (`288d65b`).
