@@ -360,6 +360,55 @@ analytic-order-transport component is discharged, but `S1-MULTIPLICITY`
 remains open pending a divisor interface and multiplicity-preserving
 symmetries.
 
+## RH-008: conjugation-package promotion
+
+ID: `RH-008`
+
+Status: **PROPOSED — not ACTIVE; `RH-002` holds the single ACTIVE slot**
+
+Queue discipline: this entry deliberately does **not** claim the ACTIVE slot.
+`RH-002`'s independent disposition review is the current ACTIVE task, and the
+queue invariant is exactly one ACTIVE task. The promotion change is offered
+for review with its kernel gates attached; the reviewer decides sequencing —
+either by closing `RH-002` first, or by activating `RH-008` in the same
+acceptance act.
+
+Kind: theorem / review
+
+Activation basis (2026-08-06): both prerequisites the `S1-CONJ` contract
+carries are now kernel-checked on `main` — bridge P2/P3 (PR #299, `288d65b`)
+for Z8, and the xi definition X1 (PR #304, `afdae08`) for Z7 and Z9-xi. The
+contract's statement surface was independently accepted in PR #301
+(`7bf13ab`), including the corrected Annex-B `F1` sign. The reserved-draft
+clause recorded there ("reserved for a later, separately reviewed promotion
+after its prerequisites are accepted") is therefore satisfied.
+
+Hypothesis: the accepted Z1-Z9 statement surface can be promoted without any
+statement change — module + sixteen `RH-CONJ-*` ledger rows + regenerated
+registry and axiom audit + promotion review record in one change, with the
+kernel verdict delivered by CI, exactly as the bridge (RH-004) and the xi
+package (RH-007) were.
+
+Expected output:
+
+- built `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean`
+  (Z1-Z9, sixteen public declarations) importing the built bridge and xi
+  modules directly;
+- a drafts-lane mirror byte-identical from the first `import` to end of file;
+- sixteen ledger rows at axiom base `standard`, complete inverse coverage,
+  and `notes/reviews/RH_CONJ_PROMOTION_2026_08_06.md`.
+
+Exit criteria:
+
+- the full build, no-incomplete-proof gate, inverse ledger coverage, and both
+  axiom audits are green on the exact merged head;
+- no statement deviates from the accepted contract; a statement change stops
+  promotion and returns to contract review;
+- the capability map records the conjugation leg only: `S1-CONJ` stays open
+  because divisor invariance under `ρ ↦ 1 − conj ρ` belongs to the still-open
+  `S1-MULTIPLICITY` package;
+- no claim about the truth of RH is made or implied.
+
 ## RH-005: bounded computation policy
 
 ID: `RH-005`

@@ -592,3 +592,34 @@ is repository-local. X11 also discharges the local xi/zeta
 remains open: no divisor interface, reflection-order package, or
 multiplicity-preserving divisor symmetries are present. The package proves an
 equivalence of formulations, not RH, and selects no theorem-bearing route.
+## Addendum 2026-08-06 (fifth): `S1-CONJ` conjugation leg landed — barrier STILL OPEN
+
+The RH-008 promotion change offers
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean`: the sixteen
+Z1-Z9 declarations of the independently accepted
+`CONJ_SYMMETRY_CONTRACT.md` — conjugation symmetry for `riemannZeta`, both
+completions, and the built `riemannXi`; set-level zero-set invariance under
+conjugation; the fourfold zero action over `ρ`, `1 − ρ`, `conj ρ`,
+`1 − conj ρ`; and pointwise `analyticOrderAt` transport under conjugation,
+including the two generic complex-analysis lemmas that are genuinely absent at
+the pin (`AnalyticAt.conj_conj`, `analyticOrderAt_conj_conj`, contract
+obligation `S1C-ORD`).
+
+Conjugation is proved independently of the functional equation, as this map
+requires: from the Dirichlet series on `1 < re s` plus the pinned identity
+principle on `{1}ᶜ`, with the totalized value at `s = 1` handled as the
+coercion of a real number. `1 − s` enters only in Z8, through the already
+kernel-checked bridge P3, after conjugation is established.
+
+**`S1-CONJ` remains OPEN.** Its exit evidence is the conjugation theorem
+*together with* divisor invariance under `ρ ↦ 1 − conj ρ`. This package
+supplies the conjugation leg and the pointwise order transport only; the
+divisor interface and multiplicity-preserving divisor symmetries belong to the
+still-open `S1-MULTIPLICITY` package. Pinned-Mathlib inventory rows stay
+`NOT-FOUND-IN-SCOPE`: the package is repository-local, and no conjugation
+lemma for `riemannZeta`, `completedRiemannZeta(₀)`, `hurwitzZetaEven`, or any
+`LSeries` exists at the pin.
+
+The kernel verdict for this addendum is the CI result on the promotion change
+itself; until that is green and merged, no row here counts as built. No claim
+about the truth of RH is made, and no route is selected.
