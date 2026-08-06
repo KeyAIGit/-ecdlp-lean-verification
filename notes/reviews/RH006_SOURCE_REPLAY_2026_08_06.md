@@ -48,6 +48,12 @@ contract line is wrong. Required amendment: quote the source involution as
 for its use in the pairing. Until amended, no Lean statement may cite the
 current `SC-WEIL-01` involution line as `SOURCE`.
 
+**Amendment disposition (2026-08-06): resolved.** `SOURCE_CONTRACTS.md` now
+quotes the source-named tilde as `G(1-s)`, introduces `J` separately as a
+`DERIVED` conjugate-linear involution preserving `A`, and cites (3.1)/(A.7)
+only for its operational use. The pairing and its multiplicity, convergence,
+and sesquilinearity claims are unchanged.
+
 ## Discrepancy 2 (cosmetic): `SC-NB-04` erratum-2 quotation
 
 The substantive erratum is real — the PDF typesets the K-display measure
@@ -57,6 +63,12 @@ with exponent `-1/2` (`(2pi)^(-1/2) dt`) where Plancherel requires
 `tau` in (2.6) and `t` in the K display — a further internal inconsistency
 the contract's quote silently normalizes). Suggested amendment: quote the
 source measure as `(2pi)^(-1/2) dt`.
+
+**Amendment disposition (2026-08-06): resolved.** `SOURCE_CONTRACTS.md` now
+quotes `(2*pi)^(-1/2) dt` literally, treats `tau` only as the formal
+bound-variable renaming used in (2.6), and retains the independently derived
+Plancherel measure `d tau/(2*pi)`. No formal obligation or route conclusion
+changes.
 
 ## Notable confirmations (selection)
 
@@ -101,7 +113,7 @@ source measure as `(2pi)^(-1/2) dt`.
 | SC-LI-03: relation localLambda_n = lambda_(-n) | Text after (1.3), printed p. 1690 (PDF p.3) | **CONFIRMED** | The source states `localLambda_n = lambda_(-n)` for `n > 0`; equality with `lambda_n` then uses the zeta-specific symmetry (1.2). The contract therefore correctly forbids replacing the negative-index coefficient before the required symmetry and reality facts are proved. |
 | SC-LI-04: Theorem 2.4 one-sided criterion with rho -> 1-conj(rho) invariance | Theorem 2.4 and (2.20), printed p. 1702 (PDF p.15); Theorem 2.1(5), printed p. 1698 (PDF p.11) | **CONFIRMED** | Theorem 2.4 makes `Re(lambda_n(pi)) >= 0` for every positive `n` equivalent to RH for `xi(s,pi)`. Its proof explicitly uses that `Z(pi)` omits `0,1` and is invariant under `rho -> 1-conj(rho)`, exactly the symmetry prerequisite retained by the contract. |
 | SC-WEIL-01: class A and the O(1/\|s\|) bound for \|im s\| >= 1 | Class-A definition paragraph, printed p. 1704 (PDF p.17); L-subset-A passage, printed p. 1705 (PDF p.18) | **CONFIRMED** | Definition: 'the vector space A of all functions F(s) holomorphic in the strip 0 < Re(s) < 1 which satisfy a uniform growth bound F(s) = O(1/\|s\|) in the strip outside(2) the region \|Im(s)\| <= 1, with O-constant depending on the function.' Later, p. 1705: 'the vanishing condition at infinity implies a bound F(s) = O(1/\|s\|) uniformly in the region \|Im(s)\| >= 1.' |
-| SC-WEIL-01: the involution tilde(G)(s) = conj(G(1 - conj(s))) | Class-A paragraph and (3.1), printed p. 1704 (PDF p.17); (A.1)-(A.2), p. 1735; (A.7), p. 1737 | **DISCREPANCY** | LAG07's named involution is `tilde(G)(s) = G(1-s)`, with no conjugation; (A.2) agrees. The adjoint reflection `conj(G(1-conj(s)))` occurs in (3.1) and is realized in (A.7) as the Mellin transform of "tilde of g-bar", but it is not the source's named tilde. |
+| SC-WEIL-01: pre-amendment involution attribution `tilde(G)(s) = conj(G(1 - conj(s)))` | Class-A paragraph and (3.1), printed p. 1704 (PDF p.17); (A.1)-(A.2), p. 1735; (A.7), p. 1737 | **DISCREPANCY — RESOLVED 2026-08-06** | LAG07's named involution is `tilde(G)(s) = G(1-s)`, with no conjugation; the amended contract now quotes it exactly. The separately named derived adjoint reflection `J(G)(s) = conj(G(1-conj(s)))` occurs in (3.1) and is realized in (A.7) as the Mellin transform of "tilde of g-bar". |
 | SC-WEIL-01: (3.1) definition, multiplicity, absolute convergence, sesquilinearity | Eq. (3.1) and following paragraph, printed p. 1704 (PDF p.17) | **CONFIRMED** | '(3.1) <F,G>_{W(pi)} := sum_{rho in Z(pi)} F(rho) conj(G(1 - conj(rho))).' (rendered image shows the overline spanning G(1-rho-bar)). 'The sum on the right counts zeros with multiplicity, and it converges absolutely due to the growth bound on F and G for large \|s\|. This scalar product is linear in the first factor and conjugate-linear in the second factor.' |
 | SC-WEIL-02: Li class L and (3.2) G_n definition | Li-class paragraph and eq. (3.2), printed p. 1705 (PDF p.18) | **CONFIRMED** | 'We define the Li class L of test functions to be the set of rational functions in the function field C(s) that vanish at infinity (on the Riemann sphere) and whose polar divisor is contained in the set {0, 1}.' '(3.2) G_n(s) := 1 - (1 - 1/s)^n for n in Z.' Also: 'every nonzero member of it has a pole at either s = 0 or s = 1, or both.' |
 | SC-WEIL-02: Theorem 3.1 Gram identities | Theorem 3.1, eqs. (3.3)-(3.4), printed p. 1705 (PDF p.18), rendered image verified | **CONFIRMED** | '(3.3) <G_n, G_m>_{W(pi)} = lambda_n(pi) + lambda_{-m}(pi) - lambda_{n-m}(pi).' 'In particular (3.4) \|\|G_n\|\|^2_{W(pi)} = lambda_n(pi) + lambda_{-n}(pi) = 2 Re(lambda_n(pi)).' No conjugation bars on any lambda term (image-verified). The proof runs all three sums under one common star-sum before splitting, supporting the contract's common-cutoff requirement. |
@@ -145,7 +157,7 @@ source measure as `(2pi)^(-1/2) dt`.
 | SC-NB-03 a-scaled version: integral x^(s-1) rho_a(x) dx = -a^(-s) zeta(s)/s | p.4, implicit in the step from the Titchmarsh identity to (2.7) | **CONFIRMED** | Substitution `y = a*x` gives the factor `a^(-s)`, and specialization to (2.7) reproduces its exponent `a^(1/2+epsilon+i*tau)`. The contract correctly presents this as a consequence of the displayed source identity, not as a verbatim source display. |
 | SC-NB-04 M0(f)(tau) = integral_0^infinity x^(-1/2 + i*tau) f(x) dx | p.4, equation (2.6) | **CONFIRMED** | PDF (2.6): 'M(f)(tau) := integral_0^infinity x^(-1/2 + i*tau) f(x) dx', called the Fourier-Mellin map, asserted to be 'an invertible isometry from H to K'. |
 | SC-NB-04 erratum 1: target interval typeset as (infinity, infinity) | p.4, display 'K := L2((infinity,infinity),(2pi)^(-1/2) dt)' after (2.5) | **CONFIRMED** | PDF p.4 literally typesets 'K := L2((infinity, infinity), (2pi)^(-1/2) dt)' with NO minus sign before the first infinity. Verified in two independent text extractors (pypdf, PyMuPDF) and visually in the rendered page image; minus signs elsewhere on the same page extract correctly, so this is not an extraction artifact. Intended is R = (-infinity, infinity). |
-| SC-NB-04 erratum 2: measure typeset as (2*pi)^(-1/2) d tau | p.4, same K display | **DISCREPANCY** | The display literally has `(2*pi)^(-1/2) dt`, while the contract's purportedly literal erratum quote says `d tau`. This is only a bound-variable letter discrepancy; the substantive exponent error and the contract's corrected Plancherel measure `d tau/(2*pi)` are both right. |
+| SC-NB-04 erratum 2 (pre-amendment wording): measure typeset as (2*pi)^(-1/2) d tau | p.4, same K display | **DISCREPANCY — RESOLVED 2026-08-06** | The display literally has `(2*pi)^(-1/2) dt`; the contract now quotes that text exactly. Its formal `d tau` is only a bound-variable renaming, and the independently derived Plancherel measure `d tau/(2*pi)` is unchanged. |
 | SC-NB-04 correct derivation gives L2(R, d tau/(2*pi)) | derived; source asserts isometry below (2.6), p.4 | **CONFIRMED** | Independent replay: with x = e^u, M(f)(tau) is the unnormalized Fourier transform of g(u) = e^(u/2) f(e^u), and \|\|f\|\|_H^2 = integral \|g\|^2 du = (2pi)^(-1) integral \|M(f)(tau)\|^2 d tau. So M is unitary H_C <-> L2_C(R, d tau/(2pi)), as the contract states; neither of the source's typeset K parameters ((infinity,infinity), (2pi)^(-1/2)) is literally correct. |
 | SC-NB-05 Littlewood convergence sum mu(a) a^(-s) = 1/zeta(s) for re(s) > 1/2 under RH | p.3, sect. 2.1 first paragraph (citing [15] Theorem 14.25 (A)); reused p.4 after (2.7) | **CONFIRMED** | PDF p.3: 'the well-known theorem of Littlewood ... to the effect that under the Riemann hypothesis sum_{a=1}^infinity mu(a) a^(-s) converges to 1/zeta(s) for Re(s) > 1/2'. RH-dependent exactly as the contract's ledger tags it. |
 | SC-NB-05 Lemma 2.1 zero-free specialization | p.3, Lemma 2.1 / (2.1); specialization p.5 top | **CONFIRMED** | Lemma 2.1 assumes zero-freeness on `Re(s) > alpha`. The proof then chooses `alpha = 1/2` and `delta = epsilon`, so this use is under the standing RH hypothesis, exactly as the contract's dependency ledger requires. |
@@ -172,3 +184,12 @@ amendments proposed above (one load-bearing for the Weil lane, one cosmetic).
 Acceptance of the amended package clears the `RH-006` source-contract gate;
 `RH-007` remains separately subject to independent acceptance of its xi
 contract and to the normal promotion/CI gates.
+
+## External acceptance disposition (2026-08-06)
+
+**ACCEPT WITH APPLIED AMENDMENTS.** Both discrepancies above are resolved in
+`SOURCE_CONTRACTS.md`; the separate acceptance record is
+`RH006_SOURCE_CONTRACT_ACCEPTANCE_2026_08_06.md`. The historical replay result
+remains 57 confirmed rows plus 2 discrepancies. The completion result is
+**59/59 rows dispositioned: 57 confirmed, 2 amended, 0 open**. This closes
+`RH-006` only; it does not accept the xi contract or authorize built promotion.

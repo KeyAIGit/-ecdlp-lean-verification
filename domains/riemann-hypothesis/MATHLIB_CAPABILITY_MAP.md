@@ -342,12 +342,13 @@ This is the Báez-Duarte natural-span `(0,∞), dx` normalization. The closure i
 first a real-Hilbert-space statement; the Fourier-Mellin argument uses its
 complexification with the transform and target measure above. The v2 PDF
 literally typesets the target interval as `(∞,∞)` and its measure as
-`(2π)^(-1/2) dτ`; these are recorded as apparent source errata, not copied into
-the formal contract. Substituting `x = exp(u)` and applying standard Plancherel
-to the unnormalized Fourier transform gives `ℝ` and `dτ/(2π)`. The source
-extract and formal proof must preserve this derivation explicitly. If a later source extract
-uses the classical `(0,1)` generators `{θ/x}`, its Mellin identity contains the
-affine term `θ/(s-1) - θ^s ζ(s)/s`; cancellation requires the source side
+`(2π)^(-1/2) dt`; these are recorded as apparent source errata, not copied into
+the formal contract. Renaming the bound variable from `t` to `τ` to match (2.6),
+substituting `x = exp(u)`, and applying standard Plancherel to the unnormalized
+Fourier transform gives `ℝ` and `dτ/(2π)`. The source extract and formal proof
+must preserve this derivation explicitly. If a later source extract uses the
+classical `(0,1)` generators `{θ/x}`, its Mellin identity contains the affine
+term `θ/(s-1) - θ^s ζ(s)/s`; cancellation requires the source side
 condition `Σ c_k θ_k = 0`. The two normalizations must not be mixed silently.
 The published RH-to-closure direction also uses RH-dependent Littlewood and
 Lindelof inputs for `1/ζ`. Those are legitimate inside an equivalence proof

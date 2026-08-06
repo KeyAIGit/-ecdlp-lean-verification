@@ -6,9 +6,10 @@ Not Lean-checked. No file in `Ecdlp/`, `ResearchOS/`, or any built target may
 be created from this document before independent review and the remaining
 preconditions carried from `TARGET_BRIDGE_CONTRACT.md` are met. The
 `S0-TRUST` prerequisite was satisfied by merged PR #298 (`d6e146fa`) on
-2026-08-05. This package additionally requires the `SOURCE_CONTRACTS.md`
-package-acceptance review to complete first, per RH-003 §Review preconditions
-item 3 (this is Annex A xi work touching `LAG07` conventions).**
+2026-08-05. The `SOURCE_CONTRACTS.md` package prerequisite was satisfied by
+the accepted `RH-006` replay and amendments on 2026-08-06. Independent
+acceptance of this X1-X11 contract remains open, and built promotion is not
+authorized until that acceptance has its own dated record.**
 
 Scope: the package designated by `MATHLIB_CAPABILITY_MAP.md` §"Gate 0: safe entire xi specification" and §"First implementable foundation and stop rule" (*"A following A/C-only foundation PR may contain the normalized xi bridge package"*), with the statement list frozen in `TARGET_BRIDGE_CONTRACT.md` Annex A. It contains no Li coefficients, no zero enumeration, no divisor packaging, no conjugation symmetry, no growth theorem, and no claim of progress on RH. X11 is the only `S1-MULTIPLICITY`-adjacent statement and transports local analytic order only; it does not construct a divisor.
 

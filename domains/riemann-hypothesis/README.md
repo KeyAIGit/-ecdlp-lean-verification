@@ -1,8 +1,8 @@
 # Riemann Hypothesis research track
 
 Status: **exploratory; Stage 0 evidence package assembled. RH-001, RH-003,
-and RH-004 are closed; RH-002 disposition review and RH-006 source-contract
-acceptance remain pending.**
+RH-004, and RH-006 are closed; RH-002 disposition review remains pending,
+and RH-007 is active only for independent xi-contract acceptance.**
 
 Priority date: 2026-08-04
 
@@ -37,8 +37,8 @@ The detailed source, claim, route, and evidence map is in `corpus.md`.
 Stage 0 execution state (updated 2026-08-06): items 1-3 are complete — the exact
 target is frozen and the pinned audit has been independently replayed with
 0 mismatches (`notes/reviews/RH001_INDEPENDENT_REPLAY_2026_08_05.md`). The
-source contracts are assembled. Their 59-row replay confirms 57 rows and
-flags two exact amendments; acceptance remains open under `RH-006`.
+source contracts are accepted after a 59-row replay: 57 rows were confirmed
+and 2 were amended, leaving 0 open source discrepancies (`RH-006`).
 The admitted routes were adversarially compared (`ROUTE_TRIAGE.md`:
 `PARK`/`PARK`/`PARK`, no route selected), with the dispositions still pending
 independent review. The full Route A and Route B success bars would imply RH;
@@ -49,8 +49,9 @@ Item 6 resolved to the foundation path: the route-neutral target bridge from
 `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean` module
 (PR #299, `288d65b`), closing `S1-TARGET` without making any claim about the
 truth of RH. `S0-TRUST` was closed by PR #298 (`d6e146fa`). The
-`SOURCE_CONTRACTS.md` acceptance review and the remaining foundation packages
-stay explicit preconditions.
+source-contract prerequisite is now satisfied; independent acceptance of the
+xi contract and the remaining foundation packages stay explicit
+preconditions. No xi promotion is authorized by source acceptance alone.
 
 ## Evidence boundary
 

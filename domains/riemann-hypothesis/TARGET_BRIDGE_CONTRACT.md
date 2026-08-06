@@ -56,6 +56,10 @@ independent agents; all `file:line` locators are from that tree.
    blocker for this route-neutral package (which cites no external PDF), but
    must complete before any Annex A xi work that touches `LAG07` conventions.
 
+Subsequent gate note (2026-08-06): item 3 completed through the accepted
+`RH-006` replay and amendments. This does not retrospectively change the
+bridge review or accept the separate xi contract.
+
 ## Scope note (adversarial-review finding F5, resolved)
 
 P1-P2 derive critical-strip localization **FE-first** (from

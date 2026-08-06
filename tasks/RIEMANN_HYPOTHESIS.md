@@ -11,19 +11,19 @@ this queue during the RH activation cycle.
 
 ## Current decision
 
-Decision update: 2026-08-06. `RH-001`, `RH-003`, and `RH-004` are complete.
+Decision update: 2026-08-06. `RH-001`, `RH-003`, `RH-004`, and `RH-006` are complete.
 `S0-TRUST` is closed by PR #298, and the repo-local target bridge is built,
 audited, and merged by PR #299, closing `S1-TARGET`. `RH-002` remains
 `PARK`/`PARK`/`PARK`, with no theorem-bearing route selected and its
-dispositions still pending independent review. `RH-006` is the sole active
-contract: its 59-row source replay is complete as a review record, with 57
-rows confirmed and two exact amendments awaiting external acceptance in
-`SOURCE_CONTRACTS.md`. Do not begin a route proof attempt, large computation,
-new equivalence formalization, or autonomous hypothesis sweep. `RH-007`
-remains blocked on both the `RH-006` source-contract acceptance and an explicit
-independent acceptance record for `XI_PACKAGE_CONTRACT.md`; any eventual built
-module must carry its `RH-*` ledger rows, registry entries, audit lines, and
-promotion review in the same PR.
+dispositions still pending independent review. The `RH-006` source replay has
+59/59 rows dispositioned (57 confirmed, 2 amended), and the accepted package
+is recorded in `RH006_SOURCE_CONTRACT_ACCEPTANCE_2026_08_06.md`. `RH-007` is
+the sole active contract, limited to independent acceptance of
+`XI_PACKAGE_CONTRACT.md`; built promotion is not yet authorized. Do not begin
+a route proof attempt, large computation, new equivalence formalization, or
+autonomous hypothesis sweep. Any eventual built xi module must carry its
+`RH-*` ledger rows, registry entries, audit lines, and promotion review in the
+same later PR.
 
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
@@ -45,7 +45,9 @@ admitted to `RH-002`. Record:
 the adversarial source-to-formalization review of `SOURCE_CONTRACTS.md`
 against the SHA-256-pinned PDFs is **not** part of this closure; it is
 carried as an explicit `RH-003` review precondition, and
-`SOURCE_CONTRACTS.md` remains "proposed under independent review".
+`SOURCE_CONTRACTS.md` remained "proposed under independent review" at this
+closure point. Subsequent update (2026-08-06): `RH-006` accepted the amended
+package; see `RH006_SOURCE_CONTRACT_ACCEPTANCE_2026_08_06.md`.
 
 Kind: research / review
 
@@ -176,8 +178,10 @@ Closure evidence: the frozen contract and its non-built Lean draft were
 independently reviewed and merged by the external reviewer (tightening
 commit `38a70f0`, squash-merge of PR #297 as `8c70680`); per the owner's
 instruction, review-and-merge is the acceptance step for this lane. The
-`SOURCE_CONTRACTS.md` acceptance review remains open and continues to gate
-Annex A xi work only.
+`SOURCE_CONTRACTS.md` acceptance review was still open at this closure point
+and gated Annex A xi work only. Subsequent update (2026-08-06): `RH-006`
+accepted the amended package; independent acceptance of the xi contract is
+the remaining review gate.
 
 Kind: theorem / review
 
@@ -201,7 +205,8 @@ Frozen contract: `domains/riemann-hypothesis/TARGET_BRIDGE_CONTRACT.md`
 findings applied). Remaining exit requirements: independent reviewer
 acceptance of the statements against the contract (including the FE-first
 scope note) and the `SOURCE_CONTRACTS.md` acceptance review before any
-Annex A xi work. The `S0-TRUST` precondition is satisfied as of 2026-08-06
+Annex A xi work. That source review was subsequently satisfied by `RH-006` on
+2026-08-06. The `S0-TRUST` precondition is satisfied as of 2026-08-06
 (PR #298 merged; see the capability map's dated closure addendum).
 
 Expected output:
@@ -261,11 +266,15 @@ Exit criteria:
 
 ID: `RH-006`
 
-Status: **ACTIVE — replay executed 2026-08-06, record committed
-(`notes/reviews/RH006_SOURCE_REPLAY_2026_08_06.md`: 57/59 rows confirmed,
-one load-bearing `SC-WEIL-01` involution-attribution discrepancy and one
-cosmetic `SC-NB-04` quotation discrepancy flagged); pending external
-acceptance/amendment of `SOURCE_CONTRACTS.md`**
+Status: **COMPLETE 2026-08-06**
+
+Closure evidence: the replay record dispositioned all 59 rows (57 confirmed,
+2 flagged), and the external acceptance pass applied both amendments with no
+open source discrepancy. The source-named `LAG07` tilde and the derived
+conjugate-adjoint reflection are now distinct; the `BD02-v2` measure quote now
+uses literal `dt` while preserving the derived `d tau/(2*pi)` normalization.
+Records: `notes/reviews/RH006_SOURCE_REPLAY_2026_08_06.md` and
+`notes/reviews/RH006_SOURCE_CONTRACT_ACCEPTANCE_2026_08_06.md`.
 
 Kind: research / review
 
@@ -276,11 +285,12 @@ confirm every transcription (signs, cutoffs, measures, multiplicity
 conventions, recorded errata) or surface exact discrepancies before any
 LAG07-convention-touching Lean work begins.
 
-Why it matters: `SOURCE_CONTRACTS.md` is still "proposed under independent
-review"; its acceptance is a required gate before the xi-package promotion
-(`RH-007`) and every later Li/Weil/Nyman contract. The xi contract also needs
-an explicit independent acceptance record before promotion. A wrong sign or
-cutoff transcribed from a source would poison every downstream formalization.
+Why it matters: before this task, `SOURCE_CONTRACTS.md` was still "proposed
+under independent review"; its acceptance was a required gate before the
+xi-package promotion (`RH-007`) and every later Li/Weil/Nyman contract. The xi
+contract still needs its own explicit independent acceptance record before
+promotion. A wrong sign or cutoff transcribed from a source would poison every
+downstream formalization.
 
 Expected output: a replay record under `notes/reviews/` comparing each
 `SOURCE`-role statement in `SOURCE_CONTRACTS.md` with the pinned PDFs
@@ -297,24 +307,35 @@ sufficient for the external reviewer to accept or amend
 
 Files allowed to edit: `notes/reviews/`, `tasks/RIEMANN_HYPOTHESIS.md`.
 
-## RH-007: xi-package promotion
+## RH-007: independent xi-contract acceptance, then promotion
 
 ID: `RH-007`
 
-Status: **BLOCKED on RH-006 acceptance and explicit independent acceptance of
-`XI_PACKAGE_CONTRACT.md`**
+Status: **ACTIVE - independent xi-contract acceptance only; built promotion is not authorized**
 
-Kind: theorem
+Kind: theorem / review
 
-Hypothesis: the reviewed xi-package contract
+Activation basis (2026-08-06): `RH-006` accepted the amended source-contract
+package. The remaining immediate decision is whether the xi contract itself
+deserves explicit independent acceptance. Static plausibility of its draft is
+not a kernel verdict and does not authorize promotion.
+
+Hypothesis: the xi-package contract
 (`domains/riemann-hypothesis/XI_PACKAGE_CONTRACT.md`, draft v2) and its
 non-built Lean draft (`drafts/RiemannXi.lean`, statically audited) can be
-promoted to the built surface exactly as the bridge was — module +
+accepted without changing the X1-X11 statement surface, then promoted in a
+separate change exactly as the bridge was — module +
 `RH-XI-*` ledger rows + regenerated registry/audit in one PR, kernel
-verdict via CI — once the external reviewer accepts the source-contract
-package (the xi contract's own gate) and the contract itself.
+verdict via CI — only after a dated independent acceptance record exists.
 
-Expected output: built
+Immediate expected output:
+`notes/reviews/RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`, with an explicit
+`ACCEPT`, `ACCEPT_WITH_APPLIED_FIXES`, or blocking verdict. The review must
+check all X1-X11 statements, the X5 sign, the X6 zero-set split, exceptional
+points, the canonical RH target, X11's analytic-order transport, and the
+boundary between static review and kernel verification.
+
+Later promotion output, authorized only after acceptance: built
 `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean` (X1-X11),
 closing barrier `S1-XI` and the analytic-order-transport half of
 `S1-MULTIPLICITY`; ledger, registry, audit, and promotion review record in
