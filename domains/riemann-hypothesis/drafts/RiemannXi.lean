@@ -12,8 +12,9 @@ inverses; F3: the registered X11 defeq shapes, discharged at X11's `hstrip`,
 
 It is NOT part of any lake target: it must not be imported from `Ecdlp.lean`
 or any built module. S0-TRUST was satisfied by PR #298; this draft remains
-pending independent review and the RH-004 built-promotion gate carried from
-`TARGET_BRIDGE_CONTRACT.md`.
+outside the build after independent contract acceptance. The target bridge
+was kernel-checked in PR #299 and the source gate closed through RH-006; the
+remaining step is a separate RH-007 built-promotion change.
 The Lean kernel has NOT checked this file; nothing in it is claimed proved
 until a built PR is kernel-verified.
 
@@ -30,7 +31,9 @@ The X10 reverse direction uses bridge P2, whose statement is exactly:
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 Every cited lemma name and signature below was grep-verified at that exact
-revision this session. Obligations discharged inline: X2-a (id/Pi vs lambda
+revision this session. Candidate bodies for the registered obligations are
+supplied inline, but only the future kernel run can discharge them:
+X2-a (id/Pi vs lambda
 defeq shapes), X4-a (endpoint `norm_num` set), X5-a (denominator-clearing
 field algebra per fix F2), X6-a (ℕ→ℂ witness cast and the `n = 0` branch),
 X7-a/X10-a (real-part cast form, shared discharge with bridge P2-a/P4-a),

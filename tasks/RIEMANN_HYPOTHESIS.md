@@ -18,10 +18,11 @@ audited, and merged by PR #299, closing `S1-TARGET`. `RH-002` remains
 dispositions still pending independent review. The `RH-006` source replay has
 59/59 rows dispositioned (57 confirmed, 2 amended), and the accepted package
 is recorded in `RH006_SOURCE_CONTRACT_ACCEPTANCE_2026_08_06.md`. `RH-007` is
-the sole active contract, limited to independent acceptance of
-`XI_PACKAGE_CONTRACT.md`; built promotion is not yet authorized. Do not begin
-a route proof attempt, large computation, new equivalence formalization, or
-autonomous hypothesis sweep. Any eventual built xi module must carry its
+the sole active task. Its X1-X11 statement surface is independently
+accepted in `RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`; the only authorized
+next action is a separate built promotion with kernel and axiom CI. Do not
+begin a route proof attempt, large computation, new equivalence formalization,
+or autonomous hypothesis sweep. The built xi module must carry its
 `RH-*` ledger rows, registry entries, audit lines, and promotion review in the
 same later PR.
 
@@ -307,37 +308,40 @@ sufficient for the external reviewer to accept or amend
 
 Files allowed to edit: `notes/reviews/`, `tasks/RIEMANN_HYPOTHESIS.md`.
 
-## RH-007: independent xi-contract acceptance, then promotion
+## RH-007: xi-package promotion after contract acceptance
 
 ID: `RH-007`
 
-Status: **ACTIVE - independent xi-contract acceptance only; built promotion is not authorized**
+Status: **ACTIVE - xi contract accepted; separate built promotion authorized, pending kernel and axiom CI**
 
 Kind: theorem / review
 
 Activation basis (2026-08-06): `RH-006` accepted the amended source-contract
 package. The remaining immediate decision is whether the xi contract itself
 deserves explicit independent acceptance. Static plausibility of its draft is
-not a kernel verdict and does not authorize promotion.
+not a kernel verdict. Subsequent update (2026-08-06): the independent review
+accepted all twelve X1-X11 declarations with editorial-only fixes; record:
+`notes/reviews/RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`. Promotion is now
+authorized only as a separate kernel-checking change.
 
-Hypothesis: the xi-package contract
+Hypothesis: the accepted xi-package contract
 (`domains/riemann-hypothesis/XI_PACKAGE_CONTRACT.md`, draft v2) and its
 non-built Lean draft (`drafts/RiemannXi.lean`, statically audited) can be
-accepted without changing the X1-X11 statement surface, then promoted in a
-separate change exactly as the bridge was — module +
+promoted without changing the X1-X11 statement surface, exactly as the bridge
+was — module +
 `RH-XI-*` ledger rows + regenerated registry/audit in one PR, kernel
-verdict via CI — only after a dated independent acceptance record exists.
+verdict via CI.
 
-Immediate expected output:
+Completed acceptance output:
 `notes/reviews/RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`, with an explicit
-`ACCEPT`, `ACCEPT_WITH_APPLIED_FIXES`, or blocking verdict. The review must
-check all X1-X11 statements, the X5 sign, the X6 zero-set split, exceptional
-points, the canonical RH target, X11's analytic-order transport, and the
-boundary between static review and kernel verification.
+`ACCEPT WITH APPLIED EDITORIAL FIXES`. The review checks all X1-X11
+statements, the X5 sign, the X6 zero-set split, exceptional points, the
+canonical RH target, X11's analytic-order transport, and the boundary between
+static review and kernel verification.
 
-Later promotion output, authorized only after acceptance: built
+Current expected output: built
 `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean` (X1-X11),
-closing barrier `S1-XI` and the analytic-order-transport half of
+closing barrier `S1-XI` and the analytic-order-transport component of
 `S1-MULTIPLICITY`; ledger, registry, audit, and promotion review record in
 the same PR.
 

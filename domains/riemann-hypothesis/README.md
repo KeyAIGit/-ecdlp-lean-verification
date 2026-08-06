@@ -2,7 +2,7 @@
 
 Status: **exploratory; Stage 0 evidence package assembled. RH-001, RH-003,
 RH-004, and RH-006 are closed; RH-002 disposition review remains pending,
-and RH-007 is active only for independent xi-contract acceptance.**
+and RH-007 is active only for the separately gated xi kernel promotion.**
 
 Priority date: 2026-08-04
 
@@ -15,8 +15,9 @@ The canonical formal target is the pinned Mathlib declaration
 `_root_.RiemannHypothesis`. In human terms, every nontrivial zero of the
 analytically continued Riemann zeta function must have real part `1/2`.
 
-The repository currently claims no proof candidate, no new equivalence, and no
-progress on the conjecture itself.
+The repository currently claims no proof candidate and no progress on the
+conjecture itself. The built target reformulations and the accepted non-built
+xi equivalence contract are foundation interfaces only.
 
 ## Current stage
 
@@ -50,8 +51,12 @@ Item 6 resolved to the foundation path: the route-neutral target bridge from
 (PR #299, `288d65b`), closing `S1-TARGET` without making any claim about the
 truth of RH. `S0-TRUST` was closed by PR #298 (`d6e146fa`). The
 source-contract prerequisite is now satisfied; independent acceptance of the
-xi contract and the remaining foundation packages stay explicit
-preconditions. No xi promotion is authorized by source acceptance alone.
+xi contract is also complete
+(`notes/reviews/RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`). The accepted
+surface is still non-built: only a separate module/ledger/registry/audit
+change with green kernel and axiom CI may close `S1-XI`. The remaining
+foundation packages stay explicit preconditions, and no claim about RH's
+truth changes.
 
 ## Evidence boundary
 

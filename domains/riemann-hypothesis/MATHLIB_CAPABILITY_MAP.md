@@ -380,7 +380,7 @@ theorem-execution budget until a concrete family survives a new review.
 | severity | barrier | blocks | exit evidence |
 |---|---|---|---|
 | `S0-TRUST` — **CLOSED 2026-08-05** by PR #298 (`d6e146fa`) | non-ECDLP domain result ledger and generated axiom audit were absent | adding or counting any RH Lean theorem | dedicated ledger schema, generated audit, CI coverage, and isolation test — all merged and green |
-| `S0-SEMANTIC` | totalized exceptional values and the `Λ₀` sign inconsistency invite a false bridge | every route | reviewed xi contract derived from proved declarations, with `0`, `1`, trivial-zero, and gamma cases explicit |
+| `S0-SEMANTIC` — **CLOSED 2026-08-06** by `RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md` | totalized exceptional values and the `Λ₀` sign inconsistency invite a false bridge | every route | reviewed xi contract derived from proved declarations, with `0`, `1`, trivial-zero, and gamma cases explicit — all independently accepted |
 | `S1-TARGET` — **CLOSED 2026-08-06** by PR #299 (`288d65b`) | pinned Mathlib has no exact bridge from its target to the source-side critical-line and zero-free-half-plane formulations | every route | repo-local kernel-checked exceptional-point and functional-equation bridge plus independent statement review — merged and green |
 | `S1-XI` | no standard entire xi/zero bridge | Li/Weil and explicit formula | kernel-checked normalized xi package plus independent statement review |
 | `S1-MULTIPLICITY` | zero set loses analytic multiplicity and no conjugation/reflection action preserves it | Li/Weil and explicit formula | analytic-order equality, zeta/xi divisor interface, and multiplicity-preserving divisor symmetries |
@@ -548,5 +548,24 @@ is an operational dependency node, not an inventory row, and is now
 discharged in-repo. One kernel round exposed exactly the pre-registered P1-d
 witness-cast obligation; the audit-recorded alternate closed it (see the
 promotion review record). No claim about the truth of RH is made; the remaining severity rows
-(`S1-XI` — contract + draft staged; `S1-MULTIPLICITY`, `S1-GLOBAL-ZEROS`,
+(`S1-XI` — accepted contract + draft staged, kernel promotion pending;
+`S1-MULTIPLICITY`, `S1-GLOBAL-ZEROS`,
 `S1-GROWTH`, `S1-CONJ`, `S1-EXPLICIT`, `S2-*`) stay open.
+
+## Addendum 2026-08-06 (third): barrier `S0-SEMANTIC` CLOSED
+
+The severity table's semantic false-bridge risk is closed at the contract
+boundary by `notes/reviews/RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`.
+Independent review accepted all twelve X1-X11 declaration surfaces after
+re-deriving the `completedRiemannZeta_eq` sign, checking `xi(0) = xi(1) =
+1/2` from the entire formula, exhausting the larger `GammaR` zero set into
+the zero and negative-even cases, preserving the canonical
+`_root_.RiemannHypothesis`, and restricting analytic-order transport to an
+open-strip neighborhood with a nonvanishing analytic cofactor.
+
+This closes only the reviewed semantic specification risk. The Lean draft is
+still outside every build target, so `S1-XI` remains open until a separate
+promotion passes the kernel, no-incomplete-proof gate, ledger/registry inverse
+coverage, generated axiom audit, and both axiom CI checks. No divisor,
+conjugation, growth, zero-enumeration, route-selection, or RH-truth claim is
+created by this addendum.
