@@ -84,12 +84,15 @@ theorem riemannZeta_ne_zero_of_re_le_zero {s : ℂ} (hs : s.re ≤ 0)
       have hk1 : 1 ≤ k := by omega
       -- produce the exact trivial-zero witness `n := (k - 1).toNat`
       refine htriv ⟨(k - 1).toNat, ?_⟩
-      rw [hs_eq]
-      push_cast [Int.toNat_of_nonneg (by omega : (0 : ℤ) ≤ k - 1)]
-      ring  -- LOWCONF: push_cast must rewrite the ℕ→ℂ cast through Int.toNat_of_nonneg;
-            -- alternate: rw [show (((k - 1).toNat : ℕ) : ℂ) = (k : ℂ) - 1 by
-            --   rw [← Int.cast_natCast, Int.toNat_of_nonneg (by omega : (0 : ℤ) ≤ k - 1)];
-            --   push_cast; ring]; ring
+      rw [hs_eq, show (((k - 1).toNat : ℕ) : ℂ) = (k : ℂ) - 1 by
+        rw [← Int.cast_natCast, Int.toNat_of_nonneg (by omega : (0 : ℤ) ≤ k - 1)]
+        push_cast
+        ring]
+      ring
+      -- (P1-d, first CI round: the primary `push_cast [Int.toNat_of_nonneg ...]`
+      -- left `-(↑k * 2) = -2 - ↑(-1 + k).toNat * 2` unsolved — the ℕ→ℂ cast did
+      -- not route through the ℤ-level lemma; this explicit-rewrite form is the
+      -- audit-verified alternate, promoted to primary.)
     · -- `ζ(1 - s) ≠ 0` on the closed half-plane `re ≥ 1` (Nonvanishing.lean:410,
       -- strict-implicit ⦃s⦄ instantiated by the explicit argument)
       exact riemannZeta_ne_zero_of_one_le_re hw_re

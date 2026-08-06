@@ -244,8 +244,10 @@ theorem riemannZeta_ne_zero_of_re_le_zero {s : ℂ} (hs : s.re ≤ 0)
       have hk1 : 1 ≤ k := by omega
       -- produce the exact trivial-zero witness
       exact htriv ⟨(k - 1).toNat, by
-        rw [hs_eq]
-        push_cast [Int.toNat_of_nonneg (by omega : (0 : ℤ) ≤ k - 1)]
+        rw [hs_eq, show (((k - 1).toNat : ℕ) : ℂ) = (k : ℂ) - 1 by
+          rw [← Int.cast_natCast, Int.toNat_of_nonneg (by omega : (0 : ℤ) ≤ k - 1)]
+          push_cast
+          ring]
         ring⟩
     · -- ζ(1 - s) ≠ 0 on the closed right half-plane
       exact riemannZeta_ne_zero_of_one_le_re hw_re
@@ -273,8 +275,11 @@ theorem riemannZeta_ne_zero_of_re_le_zero {s : ℂ} (hs : s.re ≤ 0)
   `linear_combination` coefficient is a placeholder.
 - **OBLIGATION P1-d (LOW):** `ℤ → ℕ → ℂ` cast bookkeeping for the witness
   `(k - 1).toNat` and the identity `-2 * (((k-1).toNat : ℂ) + 1) = -2 * k`
-  under `1 ≤ k`; `push_cast`+`omega`+`ring`. The `hk0` derivation above is
-  spelled out longhand; a build may compress it.
+  under `1 ≤ k`. The first RH-004 kernel round confirmed that a compact
+  `push_cast [Int.toNat_of_nonneg ...]` does not route the `ℕ → ℂ` cast
+  through the integer lemma. The skeleton now uses the registered explicit
+  `Int.cast_natCast` rewrite followed by `push_cast` and `ring`; the promotion
+  rerun remains the final check.
 - P1-e (the `Gamma` glue-term shape) — **resolved in v2** by fix F1.
 - No analytic obligation remains: every nonvanishing input is a pinned
   theorem.
