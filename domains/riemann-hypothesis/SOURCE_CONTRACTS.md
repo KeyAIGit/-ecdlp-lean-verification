@@ -1,11 +1,12 @@
 # RH source contracts
 
-Status: **proposed source-contract package under independent review; no proof
-or progress claim**
+Status: **accepted source-contract package after independent replay and
+amendment, 2026-08-06; no proof or progress claim**
 
-These contracts propose the source semantics for the Li/Weil and
-Nyman-Beurling/Báez-Duarte screens. They become normative only after review.
-They do not assert that any missing theorem has been proved or formalized.
+These contracts specify the reviewed source semantics for the Li/Weil and
+Nyman-Beurling/Báez-Duarte screens. They are normative only at the source-
+semantics boundary. They do not assert that any missing theorem has been
+proved or formalized.
 
 Publishing this document does not complete `RH-001`, activate `RH-002`, or
 close `S0-TRUST`. The unnamed direct explicit-formula route remains `PARKED`;
@@ -29,6 +30,28 @@ estimate.
 A sum over zeros always counts analytic multiplicity. No source star-limit may
 be replaced by `tsum`, reordered, or assigned a different cutoff without a
 proved conversion theorem.
+
+## Independent acceptance record (2026-08-06)
+
+The `RH-006` replay checked all 59 source-contract rows against the three
+checksum-pinned primary PDFs. Final disposition: **59/59 rows dispositioned;
+57 confirmed and 2 amended**. The two amendments are:
+
+1. `SC-WEIL-01` now distinguishes `LAG07`'s source-named linear involution
+   `tilde(G)(s) = G(1-s)` from the contract-defined conjugate-adjoint
+   reflection `J(G)(s) = conj(G(1-conj(s)))` used in (3.1) and realized on the
+   Mellin side in (A.7).
+2. `SC-NB-04` now quotes the `BD02-v2` display literally as
+   `(2*pi)^(-1/2) dt`; the change from `t` to `tau` is only a formal bound-
+   variable renaming, while the target measure `d tau/(2*pi)` remains the
+   independently derived Plancherel normalization.
+
+The detailed replay and amendment dispositions are recorded in
+`notes/reviews/RH006_SOURCE_REPLAY_2026_08_06.md` and
+`notes/reviews/RH006_SOURCE_CONTRACT_ACCEPTANCE_2026_08_06.md`. Acceptance
+makes this package normative only for the quoted source semantics. It does
+not discharge any `FORMAL-OBLIGATION` or `RESEARCH-OBLIGATION`, select a route,
+promote a Lean module, close `S1-XI`, or provide evidence for or against RH.
 
 ## Local pinned source table
 
@@ -328,22 +351,42 @@ and satisfying uniformly
 F(s) = O(1 / |s|) for |im(s)| >= 1.
 ```
 
-Define the involution
+`SOURCE` (`LAG07`, class-`A` paragraph and Appendix (A.1)-(A.2)):
+the source's named involution is
 
 ```text
-tilde(G)(s) = conj(G(1 - conj(s))).
+tilde(G)(s) = G(1 - s).
 ```
 
-For `F, G` in `A`, define
+The class `A` is closed under this involution.
+
+`DERIVED`: define the conjugate-adjoint reflection
+
+```text
+J(G)(s) = conj(G(1 - conj(s))).
+```
+
+The map `J` is a conjugate-linear involution and preserves `A`: the reflected
+argument preserves the open strip and `|im(s)|`, conjugating the reflected
+local power series preserves holomorphicity, and the `O(1 / |s|)` bound is
+preserved up to a uniform constant. This closure statement is derived from the
+definition of `A`; `LAG07` does not call `J` its tilde involution.
+
+`SOURCE` (`LAG07` (3.1)): for `F, G` in `A`, define
 
 ```text
 <F, G>_W =
   sum_{rho in S_xi}
-    m(rho) * F(rho) * conj(G(1 - conj(rho))).
+    m(rho) * F(rho) * J(G)(rho)
+  = sum_{rho in S_xi}
+      m(rho) * F(rho) * conj(G(1 - conj(rho))).
 ```
 
-This is `LAG07` (3.1). The combined sum is absolutely convergent. It is
-linear in the first argument and conjugate-linear in the second.
+The combined sum is absolutely convergent. It is linear in the first argument
+and conjugate-linear in the second. Appendix (A.7) realizes the same second-
+factor operation on the Mellin side: if `G = hat(g)`, then
+`J(G) = hat(tilde(conj(g)))`, where this `tilde` is the source involution from
+(A.1)-(A.2).
 
 ### `SC-WEIL-02`: Li test class and Gram identity
 
@@ -700,10 +743,23 @@ equivalence class. `DERIVED`: the norm identity follows from the substitution
 Source errata:
 
 - `BD02-v2` typesets the target interval as `(infinity, infinity)`;
-- `BD02-v2` typesets the measure as `(2*pi)^(-1/2) d tau`.
+- `BD02-v2` typesets the measure as `(2*pi)^(-1/2) dt`.
 
-The formal contract uses `R` and `d tau/(2*pi)`, with the derivation recorded
-rather than attributed literally to the typeset formula.
+*Amendment 2026-08-06 (`RH-006`):* the second bullet now transcribes the PDF's
+bound-variable letter literally. The earlier `d tau` wording silently renamed
+the printed `dt`; it was a quotation error, not a change to the mathematics.
+The formal contract renames the variable to `tau` to match (2.6). With
+`g(u) = exp(u/2) * f(exp(u))`, `M0(f)` is the unnormalized Fourier transform
+of `g`, so
+
+```text
+||f||_H^2 = ||g||_L2^2
+            = (1/(2*pi)) * integral_R |M0(f)(tau)|^2 d tau.
+```
+
+Thus the formal target remains `R` with `d tau/(2*pi)`; that normalization is
+derived from Plancherel and is not attributed literally to the typeset
+formula.
 
 ### `SC-NB-05`: proof dependency ledger
 
@@ -823,7 +879,8 @@ All names above are proposed interfaces, not declarations claimed to exist.
 - multiplicity preserved;
 - cutoff shape and boundary convention explicit;
 - conditional and absolute convergence distinguished;
-- transform exponent and normalization explicit;
+- transform exponent, literal source measure, formal bound-variable renaming,
+  and derived normalization explicit;
 - sign and conjugation conventions replayed independently;
 - every RH-dependent lemma tagged;
 - target maps to `_root_.RiemannHypothesis`;

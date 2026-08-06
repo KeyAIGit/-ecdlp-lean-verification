@@ -22,7 +22,9 @@ never admitted and stay `PARK`/evidence-only.
 
 Inputs: `MATHLIB_CAPABILITY_MAP.md` (independently replayed 2026-08-05 with
 0 mismatches — `notes/reviews/RH001_INDEPENDENT_REPLAY_2026_08_05.md`),
-`SOURCE_CONTRACTS.md` (still "proposed under independent review"),
+`SOURCE_CONTRACTS.md` (still "proposed under independent review" at this
+triage's execution date; subsequently accepted with two applied amendments by
+`RH-006` on 2026-08-06),
 `corpus.md`, and the pinned Mathlib tree at
 `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`.
 
@@ -315,5 +317,6 @@ independently per the `SC` contract rules.
    remains gated on independent review (`RH-004`); the `S0-TRUST` gate is
    now satisfied by PR #298 (`d6e146fa`).
 4. **Pending for finality:** independent mathematical review of all three
-   dispositions; second-agent replay of every `[D]` citation's exact
-   locator; acceptance review of `SOURCE_CONTRACTS.md`.
+   dispositions and second-agent replay of every `[D]` citation's exact
+   locator. The separate `SOURCE_CONTRACTS.md` acceptance review completed
+   through `RH-006` on 2026-08-06 and no longer gates this list.

@@ -18,4 +18,5 @@ Promotion invariant: after independent contract acceptance, a draft moves to
 the built surface only together with its `RH-*` ledger rows, registry entries,
 generated audit lines, and promotion review in the same PR; inverse coverage
 fails CI otherwise. The bridge completed this path in PR #299. The xi package
-remains gated by RH-006 and its own acceptance record.
+has satisfied its RH-006 source gate but remains gated by its own explicit
+independent acceptance record.
