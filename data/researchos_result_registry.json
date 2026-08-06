@@ -372,32 +372,32 @@
     "one_notMem_riemannZetaZeros": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 176,
-      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:176@sha256:e0394e7ae2d9"
+      "line": 179,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:179@sha256:e0394e7ae2d9"
     },
     "riemannHypothesis_iff_zero_free_gt_half": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 142,
-      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:142@sha256:944bb7e25a77"
+      "line": 145,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:145@sha256:944bb7e25a77"
     },
     "riemannHypothesis_iff_zetaZeros_re_eq_half": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 179,
-      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:179@sha256:15928427f29b"
+      "line": 182,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:182@sha256:15928427f29b"
     },
     "riemannHypothesis_iff_zetaZeros_re_eq_half'": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 196,
-      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:196@sha256:178ea7b80b8d"
+      "line": 199,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:199@sha256:178ea7b80b8d"
     },
     "riemannZeta_ne_zero_of_re_eq_zero": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 112,
-      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:112@sha256:467d1ce9f875"
+      "line": 115,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:115@sha256:467d1ce9f875"
     },
     "riemannZeta_ne_zero_of_re_le_zero": {
       "kind": "theorem",
@@ -408,14 +408,14 @@
     "riemannZeta_one_sub_eq_zero_iff": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 124,
-      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:124@sha256:945c2e31b47c"
+      "line": 127,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:127@sha256:945c2e31b47c"
     },
     "riemannZeta_zero_mem_critical_strip": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 101,
-      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:101@sha256:07a12f9ec473"
+      "line": 104,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:104@sha256:07a12f9ec473"
     }
   }
 }

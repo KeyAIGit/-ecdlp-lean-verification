@@ -17167,7 +17167,7 @@
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 176
+      "line": 179
     },
     "order_dvd_card": {
       "name": "order_dvd_card",
@@ -17188,28 +17188,28 @@
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 142
+      "line": 145
     },
     "riemannHypothesis_iff_zetaZeros_re_eq_half": {
       "name": "riemannHypothesis_iff_zetaZeros_re_eq_half",
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 179
+      "line": 182
     },
     "riemannHypothesis_iff_zetaZeros_re_eq_half'": {
       "name": "riemannHypothesis_iff_zetaZeros_re_eq_half'",
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 196
+      "line": 199
     },
     "riemannZeta_ne_zero_of_re_eq_zero": {
       "name": "riemannZeta_ne_zero_of_re_eq_zero",
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 112
+      "line": 115
     },
     "riemannZeta_ne_zero_of_re_le_zero": {
       "name": "riemannZeta_ne_zero_of_re_le_zero",
@@ -17223,14 +17223,14 @@
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 124
+      "line": 127
     },
     "riemannZeta_zero_mem_critical_strip": {
       "name": "riemannZeta_zero_mem_critical_strip",
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
-      "line": 101
+      "line": 104
     },
     "tying": {
       "name": "tying",

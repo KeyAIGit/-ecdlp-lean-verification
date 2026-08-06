@@ -42,6 +42,14 @@ multiplicity, growth, counting, or route research obligation is touched.
 
 ## Differences from the audited draft
 
-Header comment only (draft disclaimer replaced by the built-module header);
-imports, statements, and proof bodies are byte-identical to the audited
-draft.
+1. Header comment (draft disclaimer replaced by the built-module header).
+2. P1-d witness cast, after the first CI kernel round: the primary
+   `push_cast [Int.toNat_of_nonneg ...]` closer left
+   `-(↑k * 2) = -2 - ↑(-1 + k).toNat * 2` unsolved; it was replaced by the
+   audit-verified alternate (explicit
+   `rw [show (((k-1).toNat : ℕ) : ℂ) = (k : ℂ) - 1 ...]` through
+   `Int.cast_natCast` + `Int.toNat_of_nonneg`) — exactly the fallback the
+   elaboration audit had verified lemma-by-lemma and recorded inline. This
+   was the audit's single least-mechanical step (its finding F1). No
+   statement changed; every other proof body is byte-identical to the
+   audited draft and passed the kernel on the first round.
