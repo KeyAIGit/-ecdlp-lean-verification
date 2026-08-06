@@ -13,11 +13,12 @@ This drafts-lane copy remains outside every lake target. S0-TRUST was
 satisfied by PR #298; the target bridge was kernel-checked in PR #299; the
 source gate closed through RH-006; and the statement surface was accepted in
 PR #303. It is synchronized with the separate RH-007 built-promotion
-candidate, but nothing here is counted until that candidate passes kernel and
-axiom CI and is merged.
+counterpart merged in PR #304 (`afdae08`); that counterpart's twelve
+declarations passed the full build and both axiom audits. This drafts-lane file
+remains non-built and is retained for provenance.
 
 BRIDGE DEPENDENCY: this file explicitly imports the already built P1–P5 target
-bridge, matching the promotion candidate. The bridge theorem is referenced by
+bridge, matching the built xi counterpart. The bridge theorem is referenced by
 name and is not re-proved here.
 The X10 reverse direction uses bridge P2, whose statement is exactly:
 
@@ -26,8 +27,8 @@ The X10 reverse direction uses bridge P2, whose statement is exactly:
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 Every cited lemma name and signature below was grep-verified at that exact
-revision this session. Candidate bodies for the registered obligations are
-supplied inline, but only the future kernel run can discharge them:
+revision this session. The synchronized bodies were checked through the built
+counterpart; the obligation comments below retain the pre-kernel risk record:
 X2-a (id/Pi vs lambda
 defeq shapes), X4-a (endpoint `norm_num` set), X5-a (denominator-clearing
 field algebra per fix F2), X6-a (ℕ→ℂ witness cast and the `n = 0` branch),

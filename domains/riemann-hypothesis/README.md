@@ -1,8 +1,9 @@
 # Riemann Hypothesis research track
 
 Status: **exploratory; Stage 0 evidence package assembled. RH-001, RH-003,
-RH-004, and RH-006 are closed; RH-002 disposition review remains pending,
-and RH-007 is active only for the separately gated xi kernel promotion.**
+RH-004, RH-006, and RH-007 are closed; RH-002 is active only for independent
+review of the three retained `PARK` dispositions. No route execution is
+authorized.**
 
 Priority date: 2026-08-04
 
@@ -16,8 +17,8 @@ The canonical formal target is the pinned Mathlib declaration
 analytically continued Riemann zeta function must have real part `1/2`.
 
 The repository currently claims no proof candidate and no progress on the
-conjecture itself. The built target reformulations and the accepted non-built
-xi equivalence contract are foundation interfaces only.
+conjecture itself. The built target reformulations and kernel-checked xi
+equivalence package are foundation interfaces only.
 
 ## Current stage
 
@@ -53,10 +54,12 @@ truth of RH. `S0-TRUST` was closed by PR #298 (`d6e146fa`). The
 source-contract prerequisite is now satisfied; independent acceptance of the
 xi contract is also complete
 (`notes/reviews/RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`). The accepted
-surface is still non-built: only a separate module/ledger/registry/audit
-change with green kernel and axiom CI may close `S1-XI`. The remaining
-foundation packages stay explicit preconditions, and no claim about RH's
-truth changes.
+surface was promoted in PR #304 (`afdae08`) as twelve built declarations with
+ledger, registry, full-build, and axiom-audit coverage, closing `S1-XI`.
+X11 discharges only local analytic-order transport; `S1-MULTIPLICITY` remains
+open because no divisor or complete multiplicity-preserving symmetry package
+exists. The remaining foundation packages stay explicit preconditions, and
+no claim about RH's truth changes.
 
 ## Evidence boundary
 
@@ -81,8 +84,8 @@ truth changes.
 - Future theorem-bearing RH modules belong under
   `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/`.
 - No RH theorem is added to the built surface until a domain ledger and axiom
-  audit cover it. PR #299 satisfies that rule for the target bridge; the
-  current review work adds no built Lean declaration.
+  audit cover it. PR #299 satisfies that rule for the target bridge, and
+  PR #304 satisfies it for the twelve-declaration xi package.
 - This domain keeps `metrics_source: null` until an independently honest metric
   and ledger contract exists.
 

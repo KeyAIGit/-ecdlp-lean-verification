@@ -21,10 +21,10 @@ cited by the twelve `RH-XI-*` rows in `VERIFIED_RESEARCHOS.md`.
    kernel-checked TargetBridge package. X10 uses bridge P2 only for the reverse
    implication's critical-strip localization. No theorem is re-proved through
    an unstated sibling dependency.
-4. **Trust boundary.** The promotion is counted only if the exact PR head
-   passes the full build, the no-incomplete-proof scan, ResearchOS inverse
-   ledger coverage, and both generated axiom audits with every new row at
-   axiom base `standard`.
+4. **Trust boundary.** The promotion was counted only after the exact repaired
+   PR head passed the full build, the no-incomplete-proof scan, ResearchOS
+   inverse ledger coverage, and both generated axiom audits with every new row
+   at axiom base `standard`.
 
 ## Load-bearing checks
 
@@ -53,10 +53,9 @@ This package provides a chosen entire xi normalization, its elementary
 functional symmetry and endpoint values, exact zero correspondence away from
 the exceptional points, critical-strip localization, an equivalent xi-zero
 formulation of RH, and local analytic-order transport. It closes no research
-route and provides no evidence for or against RH. Before a green merge,
-`S1-XI` remains open; after a green merge it may close, while
-`S1-MULTIPLICITY` remains open because no divisor or full symmetry package is
-present.
+route and provides no evidence for or against RH. The green merge closes
+`S1-XI`; `S1-MULTIPLICITY` remains open because no divisor or full symmetry
+package is present.
 
 ## First kernel-feedback repair
 
@@ -77,11 +76,17 @@ DifferentiableAt.fun_comp' z
 A fresh narrow build on Lean 4.31.0 completed all 3520 dependencies and built
 `ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Xi` successfully. No
 declaration name, binder, hypothesis, conclusion, or claim scope changed. The
-full repository build and both axiom audits must still rerun on the repaired
-head before merge.
+full repository build and both axiom audits then passed on the repaired head.
 
-## Pending kernel verdict
+## Completion note
 
-The authoritative verdict belongs to GitHub CI on the exact promotion head.
-Until the full build and both axiom audits succeed, the twelve ledger rows are
-proposed promotion records only and the module must not be merged.
+PR #304 final head `1aed6d6d894aa3e1a29308cb709998aacfcd1183`
+passed Docs sync run `31077632257` and Verify Lean run `31077632309`. The Lean
+job passed the no-incomplete-proof scan, `Build and verify ALL proofs`, the
+ECDLP axiom audit, the ResearchOS per-row axiom audit, and open-target-stem
+typechecking. It was squash-merged as `afdae088fddd899ca3eab3ec41e87972fe682b38`.
+
+The twelve `RH-XI-*` rows are therefore built, inverse-covered, and audited at
+axiom base `standard`. This completes `RH-007` and permits the separate
+bookkeeping closure of `S1-XI`; it does not complete `S1-MULTIPLICITY`, select
+a research route, or change the truth status of RH.
