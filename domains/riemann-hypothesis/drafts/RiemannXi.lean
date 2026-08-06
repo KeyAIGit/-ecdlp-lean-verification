@@ -11,8 +11,9 @@ inverses; F3: the registered X11 defeq shapes, discharged at X11's `hstrip`,
 `hGdiff`, and `hu`).
 
 It is NOT part of any lake target: it must not be imported from `Ecdlp.lean`
-or any built module, and it is pending independent review and the
-S0-TRUST / RH-004 gating carried from `TARGET_BRIDGE_CONTRACT.md`.
+or any built module. S0-TRUST was satisfied by PR #298; this draft remains
+pending independent review and the RH-004 built-promotion gate carried from
+`TARGET_BRIDGE_CONTRACT.md`.
 The Lean kernel has NOT checked this file; nothing in it is claimed proved
 until a built PR is kernel-verified.
 
