@@ -4,10 +4,18 @@ divisor half of the S1-CONJ exit), statements M1–M17.
 
 This file implements the frozen contract
 `domains/riemann-hypothesis/MULTIPLICITY_CONTRACT.md` (DRAFT v1, 2026-08-06,
-statement surface M1–M17 after adversarial findings A1–A10). Every `theorem`
-signature below is reproduced CHARACTER-IDENTICALLY from that contract; only
-the proof bodies, the section prose, and the inline obligation/fallback
-comments are authored here. Working module name for the eventual built copy:
+statement surface M1–M17 after adversarial findings A1–A10). Thirty of the
+thirty-four `theorem` signatures below are reproduced CHARACTER-IDENTICALLY
+from that contract. The remaining four — the `Set.univ` and open-strip
+instances of M15 (`riemannXi_divisor_univ_conj`, `riemannXi_divisor_strip_conj`,
+`riemannXi_divisor_univ_one_sub_conj`, `riemannXi_divisor_strip_one_sub_conj`)
+— are the instances the contract mandates in prose at its M15 ("with the same
+`Set.univ` and open-strip instances as M14", MULTIPLICITY_CONTRACT.md:1084-1085)
+and are built by applying M14's instance pattern unchanged, with M14's carrier
+sets (`Set.univ` and `{z : ℂ | 0 < z.re ∧ z.re < 1}`) and M14's `_univ_`/`_strip_`
+naming; see the M15 section note. Beyond those four signatures, only the proof
+bodies, the section prose, and the inline obligation/fallback comments are
+authored here. Working module name for the eventual built copy:
 `ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Mult`.
 
 STATUS. This drafts-lane file is outside every lake target (`lakefile.toml`
@@ -124,25 +132,32 @@ import Mathlib.Analysis.Complex.CauchyIntegral  -- Complex.analyticOnNhd_univ_if
 -- `Xi.lean:20` (`Mathlib.NumberTheory.LSeries.ZetaZeros`), because M4/M6/M8 and all
 -- of Block E name `riemannZeta` and M16 names `differentiableAt_riemannZeta`
 -- (RiemannZeta.lean:137) directly. `Mathlib.Topology.LocallyFinsupp`
--- (`apply_eq_zero_of_notMem` :197, `FunLike` :125, pointwise `LE` :401),
--- `Mathlib.Algebra.Order.WithTop.Untop0` (`untop₀` :30) and
--- `Mathlib.Data.ENat.Basic` (`ENat.map_eq_top_iff` :526) arrive as `public import`s
--- of `Mathlib/Analysis/Meromorphic/Divisor.lean` (:7-:10) and are not re-listed.
+-- (`apply_eq_zero_of_notMem` :197, `FunLike` :125, pointwise `LE` :401) and
+-- `Mathlib.Algebra.Order.WithTop.Untop0` (`untop₀` :30) are direct `public import`s
+-- of `Mathlib/Analysis/Meromorphic/Divisor.lean` (:11 and :8 respectively; the
+-- block runs :8-:11). `Mathlib.Data.ENat.Basic` (`ENat.map_eq_top_iff` :526) is
+-- NOT a direct import of that file; it is reached through the transitive
+-- `public import` closure (verified this session: the closure of the six Mathlib
+-- imports below contains `Mathlib.Data.ENat.Basic`; the exact module count is
+-- not restated here, since two independent BFS runs disagreed on it). Because
+-- the pin uses the Lean module system (`module` / `public import` at
+-- Divisor.lean:6, :8-:11), visibility here is a closure property, not an
+-- import-line property. None of the three is re-listed.
 -- `Mathlib.Analysis.Calculus.InverseFunctionTheorem.Analytic` (the `CompleteSpace ℂ`
 -- / `CharZero ℂ` machinery consumed inside Order.lean:561) arrives via
 -- Order.lean:10 — note :10, NOT :9, which is `Mathlib.Analysis.Calculus.Deriv.Pow`
 -- (contract finding A6).
 
 open Complex
--- `open Complex` is the house convention of both built siblings (Xi.lean:28,
--- Conj.lean:30) AND is load-bearing here: every inline fallback recorded below
+-- `open Complex` is the house convention of both built siblings (Xi.lean:27,
+-- Conj.lean:44) AND is load-bearing here: every inline fallback recorded below
 -- spells `Complex`-namespace lemmas unqualified (`conj_re`, `one_re`, `sub_re`,
 -- `continuous_re`, `analyticOnNhd_univ_iff_differentiable`), exactly as the two
 -- in-tree call sites of the last of these do. The primary spellings are
 -- nevertheless fully qualified, so a lost `open` degrades to a fallback, not a
 -- break.
 open Filter
--- Carried from the contract preamble and from Xi.lean:28 / Conj.lean:32. Not
+-- Carried from the contract preamble and from Xi.lean:27 / Conj.lean:46. Not
 -- load-bearing for any primary step below (no `∀ᶠ`/`=ᶠ` goal is written here);
 -- kept because `IsOpen.mem_nhds` in M16 and `analyticOrderAt`'s own
 -- characterizations are stated in `Filter` terms and a fallback that has to
@@ -220,8 +235,18 @@ theorem analyticOrderAt_comp_const_sub {E : Type*} [NormedAddCommGroup E]
     -- `deriv_const_sub_id` is stated at (`(c - ·)`, i.e. `fun x => c - x`; binder
     -- name is irrelevant). Re-read at the pin, inside `section Sub`
     -- (Deriv/Add.lean:341-476) with `{x : 𝕜}` the section variable, so `x := c - z`
-    -- is inferred from the goal. Fallbacks: `simp [deriv_const_sub_id']` (the
-    -- `@[simp]` twin at :453), or `((hasDerivAt_id (c - z)).const_sub c).deriv`.
+    -- is inferred from the goal.
+    -- Fallback 1 (preferred — the `@[simp]` twin `deriv_const_sub_id'` at
+    --   Deriv/Add.lean:453, `deriv (c - ·) = fun _ => -1`, closes the whole `≠ 0`
+    --   goal in one step): `simp [deriv_const_sub_id']`.
+    -- Fallback 2 (`((hasDerivAt_id (c - z)).const_sub c).deriv`, via
+    --   `HasDerivAt.const_sub`, Deriv/Add.lean:434,
+    --   `(c : F) (hf : HasDerivAt f f' x) : HasDerivAt (fun x => c - f x) (-f') x`):
+    --   this is a REPLACEMENT FOR THE `rw [deriv_const_sub_id]` STEP ONLY — it
+    --   produces the equation `= -1`, so `exact neg_ne_zero.mpr one_ne_zero` must
+    --   still follow. Note its lambda elaborates as `fun x => c - id x`, not the
+    --   goal's `fun w : ℂ => c - w`; `rw` should still match (keyed on `deriv`,
+    --   then `isDefEq` unfolds the reducible `id`), but Fallback 1 is strictly safer.
   simpa only [sub_sub_cancel] using
     analyticOrderAt_comp_of_deriv_ne_zero (f := f) hg hg'   -- Order.lean:561
   -- BETA-REDEX HAZARD, resolved (contract finding A2 — this is why the closer is
@@ -381,7 +406,7 @@ theorem analyticOrderAt_riemannZeta_one_sub_conj {s : ℂ} (h0 : 0 < s.re) (h1 :
 /-! ## M7. ξ fourfold order action `[#306]`
 
 Deliberately shaped as the order-level analogue of `riemannZeta_fourfold_zero`
-(repo:`Conj.lean:292`): the built conjugation package says the four points are
+(repo:`Conj.lean:306`): the built conjugation package says the four points are
 ZEROS TOGETHER; M7 says they are zeros OF THE SAME MULTIPLICITY. That upgrade
 is the barrier's exit sentence — and it is multiplicity PRESERVATION, never a
 multiplicity BOUND (no simplicity is claimed anywhere). -/
@@ -452,13 +477,16 @@ theorem riemannXi_divisor_apply {U : Set ℂ} {z : ℂ} (hz : z ∈ U) :
   -- OBLIG S1M-10 (MEDIUM), LOWCONF: the `(↑)` in `.map (↑)` must elaborate as
   -- `Nat.cast : ℕ → ℤ` (so `ENat.map (↑) : ℕ∞ → WithTop ℤ`, and `.untop₀ : WithTop ℤ → ℤ`,
   -- Untop0.lean:30) IDENTICALLY on both sides of the equation and in the pinned
-  -- lemma. Fallback 1: pin the cast by hand in the statement's RHS,
-  --   `((analyticOrderAt riemannXi z).map (Nat.cast : ℕ → ℤ)).untop₀`.
-  -- Fallback 2 (route through the meromorphic `_apply` instead, Divisor.lean:68):
+  -- lemma.
+  -- Fallback 1 (STATEMENT-PRESERVING; route through the meromorphic `_apply`,
+  --   Divisor.lean:68, exactly as Divisor.lean:71 is itself proved at the pin):
   --   by rw [MeromorphicOn.divisor_apply (meromorphicOn_riemannXi U) hz,
   --          ((analyticOnNhd_riemannXi U) z hz).meromorphicOrderAt_eq]
-  --   using `AnalyticAt.meromorphicOrderAt_eq` (Meromorphic/Order.lean:279), which
-  --   is literally how Divisor.lean:71 itself is proved at the pin.
+  --   (`AnalyticAt.meromorphicOrderAt_eq`, Meromorphic/Order.lean:279.)
+  -- Fallback 2 (LAST RESORT — pinning the cast by hand in the statement's RHS,
+  --   `((analyticOrderAt riemannXi z).map (Nat.cast : ℕ → ℤ)).untop₀`, CHANGES a
+  --   frozen contract statement and therefore RETURNS TO CONTRACT REVIEW; it may
+  --   not be applied as a CI repair.)
 
 /-! ## M11. The ξ divisor is effective (non-negative) `[PIN]`
 
@@ -492,7 +520,8 @@ theorem analyticOrderAt_riemannXi_ne_top (z : ℂ) : analyticOrderAt riemannXi z
   have hA : ∀ z₀ : ℂ, AnalyticAt ℂ riemannXi z₀ :=
     fun z₀ => analyticOnNhd_riemannXi Set.univ z₀ (Set.mem_univ z₀)
     -- `AnalyticOnNhd f s` unfolds to `∀ x, x ∈ s → AnalyticAt 𝕜 f x`
-    -- (Analytic/Basic.lean:118), so the two-argument application is literal, not defeq.
+    -- (definition at Analytic/Basic.lean:117, body :118), so the two-argument
+    -- application is literal, not defeq.
   intro htop
   have hzero : riemannXi = 0 :=
     (AnalyticOnNhd.analyticOrderAt_eq_top_iff_eq_zero z hA).mp htop
@@ -715,6 +744,12 @@ theorem riemannXi_divisor_strip_one_sub_conj (s : ℂ) :
   · simp only [Set.mem_setOf_eq, Complex.sub_re, Complex.one_re]
     constructor <;> (rintro ⟨a, b⟩; exact ⟨by linarith, by linarith⟩)
   · simp only [Set.mem_setOf_eq, Complex.conj_re]
+    -- After `Complex.conj_re` both sides are literally `0 < z.re ∧ z.re < 1`, so
+    -- `simp only` closes the `Iff` by `rfl` only if it can reduce `P ↔ P` to `True`
+    -- (`iff_self` is NOT in a `simp only` set). Fallback: append
+    --   exact Iff.rfl
+    -- on the next line, at the same indentation. Same fallback as the one recorded
+    -- at `riemannXi_divisor_strip_conj` above.
 
 /-! ## Block E — the ζ divisor on the open strip (exit item (d), ζ half)
 
@@ -743,23 +778,32 @@ divisor on a set containing `1`. -/
 theorem analyticOnNhd_riemannZeta_strip :
     AnalyticOnNhd ℂ riemannZeta {z : ℂ | 0 < z.re ∧ z.re < 1} := by
   have hopen : IsOpen {z : ℂ | 0 < z.re ∧ z.re < 1} :=
-    (isOpen_lt continuous_const Complex.continuous_re).inter
+    (isOpen_lt continuous_const Complex.continuous_re).and
       (isOpen_lt Complex.continuous_re continuous_const)
   intro z hz
   refine DifferentiableOn.analyticAt (fun w hw => ?_) (hopen.mem_nhds hz)
   exact (differentiableAt_riemannZeta (fun e => by simp [e] at hw)).differentiableWithinAt
-  -- OBLIG S1M-16a (MEDIUM), LOWCONF: `IsOpen.inter` produces
-  -- `IsOpen ({z | 0 < z.re} ∩ {z | z.re < 1})`, which must unify with
-  -- `IsOpen {z | 0 < z.re ∧ z.re < 1}` (`Set.inter` of `setOf` vs `setOf` of `∧`).
-  -- Defeq, but at `exact` level. Fallback (make it syntactic first):
+  -- OBLIG S1M-16a (MEDIUM), LOWCONF: `IsOpen.and` (Topology/Basic.lean:116) is stated
+  -- directly on set-builders, `IsOpen {x | p₁ x} → IsOpen {x | p₂ x} → IsOpen {x | p₁ x ∧ p₂ x}`,
+  -- so its conclusion matches this goal with no `∩`-vs-`setOf` unfolding (it is
+  -- *definitionally* `IsOpen.inter`, Topology/Defs/Basic.lean:96, so the swap costs
+  -- nothing). This is the repo's own kernel-checked spelling at repo:`Xi.lean:308-310`
+  -- (recorded there as "fix F3 (a) discharged syntactically"); do NOT "simplify" it
+  -- back to `.inter`.
+  -- Fallback 1 (the contract's M16 skeleton spelling; needs the `∩`-vs-set-builder defeq):
+  --   have hopen : IsOpen {z : ℂ | 0 < z.re ∧ z.re < 1} :=
+  --     (isOpen_lt continuous_const Complex.continuous_re).inter
+  --       (isOpen_lt Complex.continuous_re continuous_const)
+  -- Fallback 2 (make the `∩` syntactic first, `Set.setOf_and` = Data/Set/Basic.lean:214):
   --   have hopen : IsOpen {z : ℂ | 0 < z.re ∧ z.re < 1} := by
-  --     simp only [Set.setOf_and]           -- Data/Set/Basic.lean:214
+  --     simp only [Set.setOf_and]
   --     exact (isOpen_lt continuous_const Complex.continuous_re).inter
   --       (isOpen_lt Complex.continuous_re continuous_const)
   -- The `isOpen_lt` idiom (Topology/Order/OrderClosed.lean:556,
   -- `(hf : Continuous f) (hg : Continuous g) : IsOpen {b | f b < g b}`) is the repo's
-  -- own, already compiled at repo:`Xi.lean:255` and again at repo:`Xi.lean:309`;
-  -- `Complex.continuous_re` is Analysis/Complex/Basic.lean:153.
+  -- own, already compiled at repo:`Xi.lean:255` (the single-inequality
+  -- `IsOpen {z : ℂ | 0 < z.re}`) and again as the two arguments of the `.and` at
+  -- repo:`Xi.lean:308-310`; `Complex.continuous_re` is Analysis/Complex/Basic.lean:153.
   -- OBLIG S1M-16b (LOW): `w ≠ 1` from `hw`. `fun e => by simp [e] at hw` is the repo
   -- idiom compiled at repo:`Xi.lean:250-251` (also :214-215, :233-234, :318-319);
   -- it substitutes `w = 1`, reduces `(1 : ℂ).re` by the `@[simp]` `Complex.one_re`
@@ -779,7 +823,8 @@ theorem riemannZeta_divisor_strip_apply {z : ℂ} (hz : z ∈ {w : ℂ | 0 < w.r
       = ((analyticOrderAt riemannZeta z).map (↑)).untop₀ :=
   MeromorphicOn.AnalyticOnNhd.divisor_apply analyticOnNhd_riemannZeta_strip hz
   -- Same §1 naming trap and same S1M-10 `(↑) = Nat.cast` risk as M10; same two
-  -- fallbacks. Note the binder is spelled `w` here and `z` in M17 — the two
+  -- fallbacks, in the same order, including the contract-review gate on the
+  -- cast-pinning one. Note the binder is spelled `w` here and `z` in M17 — the two
   -- set-builder literals are the same term up to bound-variable naming, so the
   -- rewrites in M17 match.
 
@@ -876,6 +921,12 @@ theorem riemannZeta_divisor_strip_conj (s : ℂ) :
       ↔ z ∈ {w : ℂ | 0 < w.re ∧ w.re < 1} := by
     intro z
     simp only [Set.mem_setOf_eq, Complex.conj_re]
+    -- After `Complex.conj_re` both sides are literally `0 < z.re ∧ z.re < 1`, so
+    -- `simp only` closes the `Iff` by `rfl` only if it can reduce `P ↔ P` to `True`
+    -- (`iff_self` is NOT in a `simp only` set). Fallback: append
+    --   exact Iff.rfl
+    -- on the next line, at the same indentation. Same fallback as the one recorded
+    -- at `riemannXi_divisor_strip_conj`.
   by_cases hs : s ∈ {z : ℂ | 0 < z.re ∧ z.re < 1}
   · rw [riemannZeta_divisor_strip_apply ((hconj s).mpr hs),
         riemannZeta_divisor_strip_apply hs,
@@ -898,6 +949,12 @@ theorem riemannZeta_divisor_strip_one_sub_conj (s : ℂ) :
       ↔ z ∈ {w : ℂ | 0 < w.re ∧ w.re < 1} := by
     intro z
     simp only [Set.mem_setOf_eq, Complex.conj_re]
+    -- After `Complex.conj_re` both sides are literally `0 < z.re ∧ z.re < 1`, so
+    -- `simp only` closes the `Iff` by `rfl` only if it can reduce `P ↔ P` to `True`
+    -- (`iff_self` is NOT in a `simp only` set). Fallback: append
+    --   exact Iff.rfl
+    -- on the next line, at the same indentation. Same fallback as the one recorded
+    -- at `riemannXi_divisor_strip_conj`.
   by_cases hs : s ∈ {z : ℂ | 0 < z.re ∧ z.re < 1}
   · obtain ⟨h0, h1⟩ := hs
     have hcs : (starRingEnd ℂ) s ∈ {w : ℂ | 0 < w.re ∧ w.re < 1} := (hconj s).mpr ⟨h0, h1⟩
