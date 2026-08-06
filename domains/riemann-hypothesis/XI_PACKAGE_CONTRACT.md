@@ -1,15 +1,15 @@
 # RH xi-package theorem contract (A/C follow-on): draft v2
 
-Status: **DRAFT v2 (2026-08-06) — non-built review artifact. The initial
+Status: **DRAFT v2 (2026-08-06) — retained non-built review artifact. The initial
 adversarial verdict was `SOUND_WITH_FIXES`; its four findings are dispositioned
-in Annex B, with the F1 usage correction recorded in Annex C. Independent statement acceptance is complete with editorial-only
+in Annex B, with the F1 usage correction recorded in Annex C. Independent
+statement acceptance is complete with editorial-only
 fixes; record: `notes/reviews/RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`.
-No successful full kernel verdict exists yet. The first promotion pass exposed
-one proof-only X11 composition-call error; the statement-preserving repair is
-recorded in Annex C and awaits a fresh full CI run. A separate built promotion
-may attempt only the accepted X1-X11 surface and must pass kernel, ledger,
-registry, no-incomplete-proof, and axiom CI before any declaration is claimed
-proved. `S0-TRUST` was
+The separate built counterpart merged in PR #304 (`afdae08`) after the first
+promotion pass exposed one proof-only X11 composition-call error. The
+statement-preserving repair is recorded in Annex C; the final head passed the
+full build, no-incomplete-proof gate, ledger/registry coverage, and both axiom
+audits. `S0-TRUST` was
 satisfied by PR #298 (`d6e146fa`), the target bridge by PR #299 (`288d65b`),
 and the source-contract prerequisite by the accepted `RH-006` replay and
 amendments on 2026-08-06.**
@@ -23,7 +23,7 @@ Package prerequisites (cited as **bridge prerequisites**, not pinned Mathlib): `
 ## Candidate fields
 
 - **Mechanism.** The entire pole-removed completion `completedRiemannZeta₀` and the proved sign identity `completedRiemannZeta_eq` (`Λ(s) = Λ₀(s) − 1/s − 1/(1−s)`, RiemannZeta.lean:84 — the theorem, not the conflicting module comment) determine the chosen entire normalization `riemannXi` under this contract, with `ξ(0) = ξ(1) = 1/2`, `ξ(1−s) = ξ(s)`, zeros exactly the nontrivial zeta zeros, and local analytic order equal to zeta's inside the open strip. No uniqueness claim is made beyond these frozen contract choices.
-- **Expected information gain.** If promoted and kernel-checked, closes `S1-XI`; would convert the map's `NOT-FOUND` rows "standard Riemann xi" and "zeta/xi analytic order equality" into theorems; would partially advance `S1-MULTIPLICITY` (order transport only — no divisor, no symmetry action). No information about the truth of RH is produced.
+- **Expected information gain.** The kernel-checked promotion closes the repo-local `S1-XI` barrier and supplies theorems for the map's pinned-Mathlib `NOT-FOUND` capabilities "standard Riemann xi" and "zeta/xi analytic order equality"; it partially advances `S1-MULTIPLICITY` (order transport only — no divisor, no symmetry action). No information about the truth of RH is produced.
 - **Claim boundary.** All eleven contract clauses (twelve public declarations) are unconditional consequences of pinned Mathlib theorems plus bridge P2. Nothing touches enumeration, growth, Hadamard products, conjugation, or any route's research obligation.
 - **Death condition (stop rule).** Stop or split if any proof requires weakening an exclusion, assuming a hidden nonvanishing fact, treating a totalized exceptional value as a meromorphic value, or introducing a competing RH proposition. A clean blocker is preferable to a false xi bridge.
 
@@ -655,7 +655,7 @@ All paths relative to the pinned Mathlib tree; all line numbers grep-verified th
 - **No conjugation symmetry, no Euler product, no multiplicity beyond local order:** verified per-statement; X11 transports `analyticOrderAt` only and constructs no divisor (per `S1-MULTIPLICITY`, the divisor/symmetry package is a separate later contract).
 - **Name collisions:** zero `riemannXi*` hits at the pin (grep-verified this session).
 
-## Obligation register (v2 summary)
+## Pre-kernel obligation register (v2 historical summary)
 
 | id | severity | content |
 |---|---|---|
@@ -669,7 +669,7 @@ All paths relative to the pinned Mathlib tree; all line numbers grep-verified th
 | X11-a | LOW | `z/2 ≠ -m` from `0 < re z`; core discharged by pinned `Complex.div_ofNat_re` (Data/Complex/Basic.lean:763) |
 | X11-b | MEDIUM | elaboration shapes (Pi-mul vs lambda, `AnalyticAt.div_const` eta, `analyticAt_id`); fallback: one-shot `DifferentiableOn.analyticAt` for the whole cofactor on the half-plane |
 
-No obligation is analytic. Every analytic input — entirety of `Λ₀`, the `Λ₀` functional equation, `Λ = Λ₀ − 1/s − 1/(1−s)`, analyticity of `ζ` off `1`, `Gamma` differentiability off its poles, the Cauchy–Goursat analyticity upgrade, the `Gammaℝ` and `Gamma` zero classifications, closed-half-plane zeta nonvanishing, and the analytic-order congruence/product/unit laws — is a quoted pinned theorem at `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`. Nothing here is claimed proved until the kernel checks it in a built PR after independent review, bridge (P1–P5) landing, and closure of the carried preconditions.
+No obligation was analytic. Every analytic input — entirety of `Λ₀`, the `Λ₀` functional equation, `Λ = Λ₀ − 1/s − 1/(1−s)`, analyticity of `ζ` off `1`, `Gamma` differentiability off its poles, the Cauchy–Goursat analyticity upgrade, the `Gammaℝ` and `Gamma` zero classifications, closed-half-plane zeta nonvanishing, and the analytic-order congruence/product/unit laws — is a quoted pinned theorem at `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`. The merged built counterpart in PR #304 kernel-checked these obligations after independent review, bridge P1–P5 landing, and closure of the carried preconditions; the contract itself remains the retained specification artifact.
 
 ---
 
@@ -718,6 +718,7 @@ DifferentiableAt.fun_comp' z
 ```
 
 A narrow kernel build confirmed the repaired X1-X11 module. The built file,
-draft, and this proof skeleton carry the same repair; authoritative full build
-and both axiom audits must rerun on the new promotion head before merge. No
-declaration name, binder, hypothesis, conclusion, or claim boundary changed.
+draft, and this proof skeleton carry the same repair. The repaired PR #304 head
+then passed the full repository build and both axiom audits and was merged as
+`afdae08`. No declaration name, binder, hypothesis, conclusion, or claim
+boundary changed.

@@ -11,20 +11,20 @@ this queue during the RH activation cycle.
 
 ## Current decision
 
-Decision update: 2026-08-06. `RH-001`, `RH-003`, `RH-004`, and `RH-006` are complete.
+Decision update: 2026-08-06. `RH-001`, `RH-003`, `RH-004`, `RH-006`, and
+`RH-007` are complete.
 `S0-TRUST` is closed by PR #298, and the repo-local target bridge is built,
 audited, and merged by PR #299, closing `S1-TARGET`. `RH-002` remains
 `PARK`/`PARK`/`PARK`, with no theorem-bearing route selected and its
-dispositions still pending independent review. The `RH-006` source replay has
+dispositions now the sole active independent-review task; no route execution
+is authorized. The `RH-006` source replay has
 59/59 rows dispositioned (57 confirmed, 2 amended), and the accepted package
-is recorded in `RH006_SOURCE_CONTRACT_ACCEPTANCE_2026_08_06.md`. `RH-007` is
-the sole active task. Its X1-X11 statement surface is independently
-accepted in `RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`; the only authorized
-next action is a separate built promotion with kernel and axiom CI. Do not
-begin a route proof attempt, large computation, new equivalence formalization,
-or autonomous hypothesis sweep. The built xi module must carry its
-`RH-*` ledger rows, registry entries, audit lines, and promotion review in the
-same later PR.
+is recorded in `RH006_SOURCE_CONTRACT_ACCEPTANCE_2026_08_06.md`. `RH-007`
+completed through merged PR #304 (`afdae08`): its twelve X1-X11 declarations
+are built, ledgered, registry-covered, and axiom-audited, closing `S1-XI`.
+This is a foundation interface only; `S1-MULTIPLICITY` remains open and no
+claim about RH's truth changes. Do not begin a route proof attempt, large
+computation, new equivalence formalization, or autonomous hypothesis sweep.
 
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
@@ -116,8 +116,13 @@ How to verify:
 
 ID: `RH-002`
 
-Status: **EXECUTED 2026-08-05 — dispositions `PARK`/`PARK`/`PARK`, no
-`SELECT`; pending independent disposition review**
+Status: **ACTIVE — independent disposition review only; no route execution authorized**
+
+Reactivation basis (2026-08-06): the route-neutral foundation cycle through
+`RH-007` is complete. The only unfinished RH-002 exit item is independent
+review of the three recorded dispositions, their source anchors, and revival
+bars. This review may confirm or amend a disposition but does not itself
+authorize theorem construction, computation, or route execution.
 
 Outcome record: `domains/riemann-hypothesis/ROUTE_TRIAGE.md`. Route A's full
 tail-positivity bar and Route B's unconditional closure bar would each imply
@@ -312,7 +317,15 @@ Files allowed to edit: `notes/reviews/`, `tasks/RIEMANN_HYPOTHESIS.md`.
 
 ID: `RH-007`
 
-Status: **ACTIVE - xi contract accepted; separate built promotion authorized, pending kernel and axiom CI**
+Status: **COMPLETE 2026-08-06**
+
+Closure evidence: independently accepted statement surface in PR #303
+(`202eba0`), followed by the separately gated built promotion in PR #304
+(`afdae08`). The promotion carries exactly twelve `RH-XI-*` ledger rows,
+complete ResearchOS inverse coverage, the generated axiom audit, and the
+promotion review record. Its repaired final head passed the full build,
+no-incomplete-proof gate, ECDLP axiom audit, and ResearchOS per-row axiom
+audit. This closes `S1-XI` only; `S1-MULTIPLICITY` remains open.
 
 Kind: theorem / review
 
@@ -339,11 +352,13 @@ statements, the X5 sign, the X6 zero-set split, exceptional points, the
 canonical RH target, X11's analytic-order transport, and the boundary between
 static review and kernel verification.
 
-Current expected output: built
+Completed output: built
 `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean` (X1-X11),
-closing barrier `S1-XI` and the analytic-order-transport component of
-`S1-MULTIPLICITY`; ledger, registry, audit, and promotion review record in
-the same PR.
+merged in PR #304 with twelve ledger rows, registry coverage, generated audit,
+and promotion review in the same PR. Barrier `S1-XI` is closed; the local
+analytic-order-transport component is discharged, but `S1-MULTIPLICITY`
+remains open pending a divisor interface and multiplicity-preserving
+symmetries.
 
 ## RH-005: bounded computation policy
 

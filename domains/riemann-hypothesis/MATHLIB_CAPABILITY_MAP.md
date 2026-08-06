@@ -382,8 +382,8 @@ theorem-execution budget until a concrete family survives a new review.
 | `S0-TRUST` — **CLOSED 2026-08-05** by PR #298 (`d6e146fa`) | non-ECDLP domain result ledger and generated axiom audit were absent | adding or counting any RH Lean theorem | dedicated ledger schema, generated audit, CI coverage, and isolation test — all merged and green |
 | `S0-SEMANTIC` — **CLOSED 2026-08-06** by `RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md` | totalized exceptional values and the `Λ₀` sign inconsistency invite a false bridge | every route | reviewed xi contract derived from proved declarations, with `0`, `1`, trivial-zero, and gamma cases explicit — all independently accepted |
 | `S1-TARGET` — **CLOSED 2026-08-06** by PR #299 (`288d65b`) | pinned Mathlib has no exact bridge from its target to the source-side critical-line and zero-free-half-plane formulations | every route | repo-local kernel-checked exceptional-point and functional-equation bridge plus independent statement review — merged and green |
-| `S1-XI` | no standard entire xi/zero bridge | Li/Weil and explicit formula | kernel-checked normalized xi package plus independent statement review |
-| `S1-MULTIPLICITY` | zero set loses analytic multiplicity and no conjugation/reflection action preserves it | Li/Weil and explicit formula | analytic-order equality, zeta/xi divisor interface, and multiplicity-preserving divisor symmetries |
+| `S1-XI` — **CLOSED 2026-08-06** by PR #304 (`afdae08`) | pinned Mathlib has no standard entire xi/zero bridge | Li/Weil and explicit formula | independently accepted, kernel-checked normalized xi package with twelve ledgered and axiom-audited declarations — merged and green |
+| `S1-MULTIPLICITY` — **OPEN; local xi/zeta analytic-order equality discharged by PR #304** | zero set loses analytic multiplicity and no conjugation/reflection action preserves it | Li/Weil and explicit formula | remaining exit evidence: zeta/xi divisor interface and multiplicity-preserving divisor symmetries |
 | `S1-GLOBAL-ZEROS` | no global enumeration, symmetric truncation, convergence, or counting API | Li sums, canonical product, explicit formula | finite divisor sums, weighted summability, star convergence of `Σ 1/ρ`, existence of source-matched limits with multiplicity, including `|ρ| ≤ T` for Li and `|Im ρ| < T` for Weil, plus absolute convergence of the Weil scalar-product combination |
 | `S1-GROWTH` | no zeta/xi vertical or order-one growth theorem | Hadamard and contour shifts | explicit quantitative bounds sufficient for the selected theorem |
 | `S1-CONJ` | no named zeta/xi conjugation symmetry or multiplicity-preserving fourfold zero action | one-sided Li positivity and Weil Gram identities | conjugation theorem plus divisor invariance under `ρ ↦ 1-conj(ρ)` |
@@ -547,10 +547,11 @@ only on the repo-local built surface. The cross-route target-bridge DAG node
 is an operational dependency node, not an inventory row, and is now
 discharged in-repo. One kernel round exposed exactly the pre-registered P1-d
 witness-cast obligation; the audit-recorded alternate closed it (see the
-promotion review record). No claim about the truth of RH is made; the remaining severity rows
-(`S1-XI` — accepted contract + draft staged, kernel promotion pending;
-`S1-MULTIPLICITY`, `S1-GLOBAL-ZEROS`,
-`S1-GROWTH`, `S1-CONJ`, `S1-EXPLICIT`, `S2-*`) stay open.
+promotion review record). No claim about the truth of RH is made. At this
+addendum point the remaining severity rows included `S1-XI` (accepted contract
+and draft staged, kernel promotion pending), `S1-MULTIPLICITY`,
+`S1-GLOBAL-ZEROS`, `S1-GROWTH`, `S1-CONJ`, `S1-EXPLICIT`, and `S2-*`.
+The fourth addendum records the later repo-local `S1-XI` closure.
 
 ## Addendum 2026-08-06 (third): barrier `S0-SEMANTIC` CLOSED
 
@@ -563,9 +564,31 @@ the zero and negative-even cases, preserving the canonical
 `_root_.RiemannHypothesis`, and restricting analytic-order transport to an
 open-strip neighborhood with a nonvanishing analytic cofactor.
 
-This closes only the reviewed semantic specification risk. The Lean draft is
-still outside every build target, so `S1-XI` remains open until a separate
-promotion passes the kernel, no-incomplete-proof gate, ledger/registry inverse
-coverage, generated axiom audit, and both axiom CI checks. No divisor,
-conjugation, growth, zero-enumeration, route-selection, or RH-truth claim is
-created by this addendum.
+This addendum closed only the reviewed semantic specification risk. At that
+acceptance point the Lean draft was still outside every build target, so
+`S1-XI` remained open pending a separate promotion. The fourth addendum records
+that promotion. No divisor, conjugation, growth, zero-enumeration,
+route-selection, or RH-truth claim was created by the semantic acceptance.
+
+## Addendum 2026-08-06 (fourth): barrier `S1-XI` CLOSED
+
+Merged PR #304 (`afdae08`) promotes the independently accepted X1-X11 surface
+to `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean`: eleven
+contract clauses represented by twelve public declarations. The final repaired
+head passed the full repository build, no-incomplete-proof gate, complete
+ResearchOS inverse ledger coverage, ECDLP axiom audit, and ResearchOS per-row
+axiom audit with every new row at axiom base `standard`.
+
+The first promotion head exposed one proof-only X11 composition-call error.
+The synchronized built file, draft, and contract skeleton now use the
+point-explicit `DifferentiableAt.fun_comp'`; no statement or claim boundary
+changed. Details are retained in
+`notes/reviews/RH_XI_PROMOTION_2026_08_06.md`.
+
+This closes the repo-local normalized-xi and zero-bridge barrier `S1-XI`.
+Pinned-Mathlib inventory rows remain `NOT-FOUND-IN-SCOPE`, because the package
+is repository-local. X11 also discharges the local xi/zeta
+`analyticOrderAt`-equality component of `S1-MULTIPLICITY`, but that barrier
+remains open: no divisor interface, reflection-order package, or
+multiplicity-preserving divisor symmetries are present. The package proves an
+equivalence of formulations, not RH, and selects no theorem-bearing route.
