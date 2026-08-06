@@ -380,7 +380,7 @@ theorem-execution budget until a concrete family survives a new review.
 |---|---|---|---|
 | `S0-TRUST` — **CLOSED 2026-08-05** by PR #298 (`d6e146fa`) | non-ECDLP domain result ledger and generated axiom audit were absent | adding or counting any RH Lean theorem | dedicated ledger schema, generated audit, CI coverage, and isolation test — all merged and green |
 | `S0-SEMANTIC` | totalized exceptional values and the `Λ₀` sign inconsistency invite a false bridge | every route | reviewed xi contract derived from proved declarations, with `0`, `1`, trivial-zero, and gamma cases explicit |
-| `S1-TARGET` | no exact bridge from Mathlib's target to the source-side critical-line and zero-free-half-plane formulations | every route | kernel-checked exceptional-point and functional-equation bridge plus independent statement review |
+| `S1-TARGET` — **CLOSED 2026-08-06** by PR #299 (`288d65b`) | pinned Mathlib has no exact bridge from its target to the source-side critical-line and zero-free-half-plane formulations | every route | repo-local kernel-checked exceptional-point and functional-equation bridge plus independent statement review — merged and green |
 | `S1-XI` | no standard entire xi/zero bridge | Li/Weil and explicit formula | kernel-checked normalized xi package plus independent statement review |
 | `S1-MULTIPLICITY` | zero set loses analytic multiplicity and no conjugation/reflection action preserves it | Li/Weil and explicit formula | analytic-order equality, zeta/xi divisor interface, and multiplicity-preserving divisor symmetries |
 | `S1-GLOBAL-ZEROS` | no global enumeration, symmetric truncation, convergence, or counting API | Li sums, canonical product, explicit formula | finite divisor sums, weighted summability, star convergence of `Σ 1/ρ`, existence of source-matched limits with multiplicity, including `|ρ| ≤ T` for Li and `|Im ρ| < T` for Weil, plus absolute convergence of the Weil scalar-product combination |
@@ -523,8 +523,29 @@ CI there:
    RH/ResearchOS result can reach the ECDLP headline surfaces.
 
 Consequence: the "adding or counting any RH Lean theorem" block is lifted on
-the infrastructure side. A built RH module remains gated **only** on the
-`RH-003` independent review (and must land with its `RH-*` ledger row,
-registry entry, and audit line in one PR, or inverse coverage fails CI).
+the infrastructure side. Every built RH module still requires its owning
+review contract and must land with its `RH-*` ledger rows, registry entries,
+audit lines, and promotion review in one PR, or inverse coverage fails CI.
 Design record: `S0_TRUST_DESIGN.md` (Phase 1 executed; this addendum is its
 Phase 2).
+
+## Addendum 2026-08-06 (second): barrier `S1-TARGET` CLOSED
+
+The severity table's `S1-TARGET` row ("no exact bridge from Mathlib's target
+to the source-side critical-line and zero-free-half-plane formulations") is
+closed by kernel check. Evidence: merged PR #299 (`288d65b`) builds
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean` —
+P1-P5 of `TARGET_BRIDGE_CONTRACT.md`, eight declarations, `lake build`
+green, no-sorry gate green, generated audit green with `standard` axiom
+base per row — with the eight `RH-BRIDGE-*` ledger rows and the promotion
+review record (`notes/reviews/RH_BRIDGE_PROMOTION_2026_08_06.md`) in the
+same PR. Independent statement review: reviewed-and-merged by the external
+reviewer. The pinned-Mathlib inventory row "critical-strip localization"
+correctly remains `NOT-FOUND-IN-SCOPE`; PR #299 supplies the missing bridge
+only on the repo-local built surface. The cross-route target-bridge DAG node
+is an operational dependency node, not an inventory row, and is now
+discharged in-repo. One kernel round exposed exactly the pre-registered P1-d
+witness-cast obligation; the audit-recorded alternate closed it (see the
+promotion review record). No claim about the truth of RH is made; the remaining severity rows
+(`S1-XI` — contract + draft staged; `S1-MULTIPLICITY`, `S1-GLOBAL-ZEROS`,
+`S1-GROWTH`, `S1-CONJ`, `S1-EXPLICIT`, `S2-*`) stay open.
