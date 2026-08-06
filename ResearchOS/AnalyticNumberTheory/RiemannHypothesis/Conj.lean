@@ -200,13 +200,12 @@ theorem completedRiemannZeta₀_conj (s : ℂ) :
         rw [riemannZeta_def_of_ne_zero hw0, mul_div_cancel₀ _ hG]
       have h := completedRiemannZeta_eq w      -- Λ w = Λ₀ w − 1/w − 1/(1−w) (the THEOREM)
       linear_combination hΛ - h
-      -- CONTRACT ERRATUM (confirmed by review findings CONJ-R1-1, CONJ-R2-1, L3-3):
-      -- the contract's recorded review fix F1 (`linear_combination h - hΛ`,
-      -- CONJ_SYMMETRY_CONTRACT.md:311) is WRONG-SIGNED — it yields the negative of
-      -- the goal difference and `ring1` would fail. Do NOT "restore" `h - hΛ` at
-      -- build time; `hΛ - h` below is the independently re-derived correct closer.
-      -- (Proof-internal deviation from a skeleton is permitted; statements are the
-      -- frozen surface.) Re-derivation —
+      -- SIGN NOTE (corrected per review findings CONJ-L1-1, CONJ-L2-3): this closer
+      -- MATCHES the merged contract's recorded review fix F1
+      -- (`linear_combination hΛ - h  -- review fix F1 (sign)`,
+      -- CONJ_SYMMETRY_CONTRACT.md:315; Acceptance note: "corrected F1 to
+      -- linear_combination hΛ - h"). The pre-review draft's `h - hΛ` was the
+      -- wrong-signed order; do NOT "restore" it. Independent re-derivation —
       -- goalL − goalR = Λ₀ − Gζ − 1/w − 1/(1−w);
       -- (hΛL − hΛR) − (hL − hR) = (Λ − Gζ) − (Λ − Λ₀ + 1/w + 1/(1−w))
       --                        = Λ₀ − Gζ − 1/w − 1/(1−w)  ✓  — so `hΛ - h`, not `h - hΛ`.
@@ -387,9 +386,22 @@ theorem analyticOrderAt_conj_conj (f : ℂ → ℂ) (z : ℂ) :
       obtain ⟨g, hg_an, hg_ne, hg_ev⟩ := hf.analyticOrderAt_eq_natCast.mp hn.symm
       obtain ⟨t, ht, htopen, hzt⟩ := eventually_nhds_iff.mp hg_ev
       have hgc_ne : ((starRingEnd ℂ) ∘ g ∘ (starRingEnd ℂ)) ((starRingEnd ℂ) z) ≠ 0 := by
-        simp only [Function.comp_apply, Complex.conj_conj, ne_eq, starRingEnd_apply,
-          star_eq_zero]
+        simp only [Function.comp_apply, Complex.conj_conj]
+        rw [ne_eq, starRingEnd_apply, star_eq_zero]
         exact hg_ne
+        -- FIXED per finding L3E-1 (S2): the previous single simp set mixed
+        -- `starRingEnd_apply` with `Complex.conj_conj`; simp rewrites bottom-up, so
+        -- the innermost `(starRingEnd ℂ) z` became `star z` BEFORE the enclosing
+        -- conj-conj node was visited, `Complex.conj_conj` (pattern
+        -- `starRingEnd R (starRingEnd R x)`) never fired, and the goal stuck as
+        -- `¬ g (star (star z)) = 0` (`star_star` was not in the set). Now the simp
+        -- set carries no `starRingEnd_apply`, so `conj_conj` collapses the inner
+        -- pair to `g z`; the sequential `rw` then converts only the OUTER conj to
+        -- `star` form and discharges via `star_eq_zero` (Algebra/Star/Basic.lean:267).
+        -- Fallback if `rw [ne_eq]` misfires on the already-unfolded `≠`:
+        --   simp only [Function.comp_apply, Complex.conj_conj]
+        --   rw [starRingEnd_apply, star_ne_zero]
+        --   exact hg_ne
       rw [← hn]
       refine hf.conj_conj.analyticOrderAt_eq_natCast.mpr
         ⟨(starRingEnd ℂ) ∘ g ∘ (starRingEnd ℂ), hg_an.conj_conj, hgc_ne, ?_⟩
