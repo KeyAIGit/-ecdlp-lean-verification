@@ -500,3 +500,31 @@ changes any label, any disposition, or any evidence status.
    domain" is a bridge output). The xi package still proves its own xi-side
    localization in the A/C follow-on. This note requires explicit reviewer
    acknowledgment at RH-003 exit.
+
+## Addendum 2026-08-06: barrier `S0-TRUST` CLOSED
+
+The severity table's `S0-TRUST` row ("non-ECDLP domain result ledger and
+generated axiom audit do not yet exist") is closed. Evidence, one-to-one
+against its exit string "dedicated ledger schema, generated audit, CI
+coverage, and isolation test", all merged to `main` in PR #298 and green in
+CI there:
+
+1. **dedicated ledger schema** — `VERIFIED_RESEARCHOS.md` (strict 12-column
+   parser; kernel-checked-only rule; the 12 pre-existing
+   `ResearchOS.NumberTheory` declarations backfilled with a dated review);
+2. **generated audit** — `ResearchOS/LedgerAxiomAudit.lean` generated from
+   `data/researchos_result_registry.json`, elaborated by CI and validated by
+   `scripts/check_axioms.py` with per-row `axiom_base` enforcement and
+   native-aux-axiom provenance;
+3. **CI coverage** — registry `--check`, inverse coverage
+   ("built ⇒ ledgered ⇒ audited"), cross-import guard, tightened no-sorry
+   exclusions, and the audit elaboration step in `ci.yml`;
+4. **isolation test** — `scripts/check_ledger_isolation.py` + fixtures: no
+   RH/ResearchOS result can reach the ECDLP headline surfaces.
+
+Consequence: the "adding or counting any RH Lean theorem" block is lifted on
+the infrastructure side. A built RH module remains gated **only** on the
+`RH-003` independent review (and must land with its `RH-*` ledger row,
+registry entry, and audit line in one PR, or inverse coverage fails CI).
+Design record: `S0_TRUST_DESIGN.md` (Phase 1 executed; this addendum is its
+Phase 2).

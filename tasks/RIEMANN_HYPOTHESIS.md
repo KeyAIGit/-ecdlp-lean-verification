@@ -19,8 +19,11 @@ route is selected**, and the dispositions await independent review
 active contract: the frozen route-neutral target-bridge theorem contract
 (`domains/riemann-hypothesis/TARGET_BRIDGE_CONTRACT.md`) awaits independent
 review. Do not begin a proof attempt, large computation, new equivalence
-formalization, or autonomous hypothesis sweep. No built Lean until `S0-TRUST`
-closes and `RH-003` review passes.
+formalization, or autonomous hypothesis sweep. Update 2026-08-06: `S0-TRUST`
+is CLOSED (PR #298 merged to `main`; dated addendum in
+`domains/riemann-hypothesis/MATHLIB_CAPABILITY_MAP.md`). No built RH Lean
+until `RH-003` review passes; the promoted module must carry its `RH-*`
+ledger row, registry entry, and audit line in the same PR.
 
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
@@ -190,8 +193,9 @@ Frozen contract: `domains/riemann-hypothesis/TARGET_BRIDGE_CONTRACT.md`
 (draft v2, adversarially reviewed once, verdict `SOUND_WITH_FIXES`, all
 findings applied). Remaining exit requirements: independent reviewer
 acceptance of the statements against the contract (including the FE-first
-scope note), closure of `S0-TRUST` before any built Lean, and the
-`SOURCE_CONTRACTS.md` acceptance review before any Annex A xi work.
+scope note) and the `SOURCE_CONTRACTS.md` acceptance review before any
+Annex A xi work. The `S0-TRUST` precondition is satisfied as of 2026-08-06
+(PR #298 merged; see the capability map's dated closure addendum).
 
 Expected output:
 
