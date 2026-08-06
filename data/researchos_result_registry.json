@@ -1,0 +1,253 @@
+{
+  "schema_version": 1,
+  "source": "VERIFIED_RESEARCHOS.md + built public ResearchOS source (audit harnesses excluded by exact path)",
+  "ledger_rows": 11,
+  "ledger_declarations": [
+    "ResearchOS.NumberTheory.carmichael_1105_factorization",
+    "ResearchOS.NumberTheory.carmichael_1105_not_prime",
+    "ResearchOS.NumberTheory.carmichael_1729_factorization",
+    "ResearchOS.NumberTheory.carmichael_1729_not_prime",
+    "ResearchOS.NumberTheory.carmichael_561_factorization",
+    "ResearchOS.NumberTheory.carmichael_561_not_prime",
+    "ResearchOS.NumberTheory.mersenne_M13_prime",
+    "ResearchOS.NumberTheory.mersenne_M17_prime",
+    "ResearchOS.NumberTheory.mersenne_M19_prime",
+    "ResearchOS.NumberTheory.prime_10007",
+    "ResearchOS.NumberTheory.prime_10009",
+    "ResearchOS.NumberTheory.prime_2017"
+  ],
+  "axiom_base": {
+    "ResearchOS.NumberTheory.carmichael_1105_factorization": "standard",
+    "ResearchOS.NumberTheory.carmichael_1105_not_prime": "standard",
+    "ResearchOS.NumberTheory.carmichael_1729_factorization": "standard",
+    "ResearchOS.NumberTheory.carmichael_1729_not_prime": "standard",
+    "ResearchOS.NumberTheory.carmichael_561_factorization": "standard",
+    "ResearchOS.NumberTheory.carmichael_561_not_prime": "standard",
+    "ResearchOS.NumberTheory.mersenne_M13_prime": "standard",
+    "ResearchOS.NumberTheory.mersenne_M17_prime": "standard",
+    "ResearchOS.NumberTheory.mersenne_M19_prime": "standard",
+    "ResearchOS.NumberTheory.prime_10007": "standard",
+    "ResearchOS.NumberTheory.prime_10009": "standard",
+    "ResearchOS.NumberTheory.prime_2017": "standard"
+  },
+  "ledger_entries": [
+    {
+      "claim_id": "nt-prime-2017",
+      "domain": "number-theory-elementary",
+      "declarations": [
+        "ResearchOS.NumberTheory.prime_2017"
+      ],
+      "files": [
+        "ResearchOS/NumberTheory/Elementary.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "norm_num",
+      "status": "proved"
+    },
+    {
+      "claim_id": "nt-mersenne-m13",
+      "domain": "number-theory-elementary",
+      "declarations": [
+        "ResearchOS.NumberTheory.mersenne_M13_prime"
+      ],
+      "files": [
+        "ResearchOS/NumberTheory/Elementary.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "norm_num",
+      "status": "proved"
+    },
+    {
+      "claim_id": "nt-carmichael-561-composite",
+      "domain": "number-theory-elementary",
+      "declarations": [
+        "ResearchOS.NumberTheory.carmichael_561_not_prime"
+      ],
+      "files": [
+        "ResearchOS/NumberTheory/Elementary.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "norm_num",
+      "status": "proved"
+    },
+    {
+      "claim_id": "nt-carmichael-561-korselt",
+      "domain": "number-theory-elementary",
+      "declarations": [
+        "ResearchOS.NumberTheory.carmichael_561_factorization"
+      ],
+      "files": [
+        "ResearchOS/NumberTheory/Elementary.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "norm_num",
+      "status": "proved"
+    },
+    {
+      "claim_id": "nt-mersenne-m17",
+      "domain": "number-theory-elementary",
+      "declarations": [
+        "ResearchOS.NumberTheory.mersenne_M17_prime"
+      ],
+      "files": [
+        "ResearchOS/NumberTheory/MoreFacts.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "norm_num",
+      "status": "proved"
+    },
+    {
+      "claim_id": "nt-mersenne-m19",
+      "domain": "number-theory-elementary",
+      "declarations": [
+        "ResearchOS.NumberTheory.mersenne_M19_prime"
+      ],
+      "files": [
+        "ResearchOS/NumberTheory/MoreFacts.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "norm_num",
+      "status": "proved"
+    },
+    {
+      "claim_id": "nt-carmichael-1105-composite",
+      "domain": "number-theory-elementary",
+      "declarations": [
+        "ResearchOS.NumberTheory.carmichael_1105_not_prime"
+      ],
+      "files": [
+        "ResearchOS/NumberTheory/MoreFacts.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "norm_num",
+      "status": "proved"
+    },
+    {
+      "claim_id": "nt-carmichael-1105-korselt",
+      "domain": "number-theory-elementary",
+      "declarations": [
+        "ResearchOS.NumberTheory.carmichael_1105_factorization"
+      ],
+      "files": [
+        "ResearchOS/NumberTheory/MoreFacts.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "norm_num",
+      "status": "proved"
+    },
+    {
+      "claim_id": "nt-carmichael-1729-composite",
+      "domain": "number-theory-elementary",
+      "declarations": [
+        "ResearchOS.NumberTheory.carmichael_1729_not_prime"
+      ],
+      "files": [
+        "ResearchOS/NumberTheory/MoreFacts.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "norm_num",
+      "status": "proved"
+    },
+    {
+      "claim_id": "nt-carmichael-1729-korselt",
+      "domain": "number-theory-elementary",
+      "declarations": [
+        "ResearchOS.NumberTheory.carmichael_1729_factorization"
+      ],
+      "files": [
+        "ResearchOS/NumberTheory/MoreFacts.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "norm_num",
+      "status": "proved"
+    },
+    {
+      "claim_id": "nt-twin-10007-10009",
+      "domain": "number-theory-elementary",
+      "declarations": [
+        "ResearchOS.NumberTheory.prime_10007",
+        "ResearchOS.NumberTheory.prime_10009"
+      ],
+      "files": [
+        "ResearchOS/NumberTheory/MoreFacts.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "norm_num",
+      "status": "proved"
+    }
+  ],
+  "declarations": {
+    "ResearchOS.NumberTheory.carmichael_1105_factorization": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/MoreFacts.lean",
+      "line": 33,
+      "anchor": "ResearchOS/NumberTheory/MoreFacts.lean:33@sha256:9dbd4969ea42"
+    },
+    "ResearchOS.NumberTheory.carmichael_1105_not_prime": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/MoreFacts.lean",
+      "line": 29,
+      "anchor": "ResearchOS/NumberTheory/MoreFacts.lean:29@sha256:eee042c70faf"
+    },
+    "ResearchOS.NumberTheory.carmichael_1729_factorization": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/MoreFacts.lean",
+      "line": 42,
+      "anchor": "ResearchOS/NumberTheory/MoreFacts.lean:42@sha256:9eeefd242cc5"
+    },
+    "ResearchOS.NumberTheory.carmichael_1729_not_prime": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/MoreFacts.lean",
+      "line": 38,
+      "anchor": "ResearchOS/NumberTheory/MoreFacts.lean:38@sha256:0c8c6135c9f3"
+    },
+    "ResearchOS.NumberTheory.carmichael_561_factorization": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/Elementary.lean",
+      "line": 34,
+      "anchor": "ResearchOS/NumberTheory/Elementary.lean:34@sha256:3acdc80793c9"
+    },
+    "ResearchOS.NumberTheory.carmichael_561_not_prime": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/Elementary.lean",
+      "line": 30,
+      "anchor": "ResearchOS/NumberTheory/Elementary.lean:30@sha256:b4bead1872bf"
+    },
+    "ResearchOS.NumberTheory.mersenne_M13_prime": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/Elementary.lean",
+      "line": 26,
+      "anchor": "ResearchOS/NumberTheory/Elementary.lean:26@sha256:eb24f7243824"
+    },
+    "ResearchOS.NumberTheory.mersenne_M17_prime": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/MoreFacts.lean",
+      "line": 23,
+      "anchor": "ResearchOS/NumberTheory/MoreFacts.lean:23@sha256:8cb349683e9b"
+    },
+    "ResearchOS.NumberTheory.mersenne_M19_prime": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/MoreFacts.lean",
+      "line": 26,
+      "anchor": "ResearchOS/NumberTheory/MoreFacts.lean:26@sha256:b82156df3a60"
+    },
+    "ResearchOS.NumberTheory.prime_10007": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/MoreFacts.lean",
+      "line": 45,
+      "anchor": "ResearchOS/NumberTheory/MoreFacts.lean:45@sha256:b1aca2326739"
+    },
+    "ResearchOS.NumberTheory.prime_10009": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/MoreFacts.lean",
+      "line": 48,
+      "anchor": "ResearchOS/NumberTheory/MoreFacts.lean:48@sha256:b120feaab434"
+    },
+    "ResearchOS.NumberTheory.prime_2017": {
+      "kind": "theorem",
+      "file": "ResearchOS/NumberTheory/Elementary.lean",
+      "line": 22,
+      "anchor": "ResearchOS/NumberTheory/Elementary.lean:22@sha256:ec11f2f4623e"
+    }
+  }
+}

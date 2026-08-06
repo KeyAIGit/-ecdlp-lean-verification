@@ -53,7 +53,7 @@
       "metrics_source": null,
       "frontier_source": null,
       "site": null,
-      "notes": "LIVE (first non-ECC instance). Kernel-verified in the separate `ResearchOS` lake library (a second build target alongside `Ecdlp`): 2017 prime, the Mersenne prime M₁₃=8191, and 561 (smallest Carmichael number) composite with its Korselt factorization 3·11·17. All `norm_num`, so they stay inside the standard axiom base (no `native_decide`); audited by `Ecdlp/AxiomAudit.lean`. Deliberately minimal — a proof of pipeline portability to an unrelated subject, not a number-theory research program. metrics_source is null (this domain does not feed the ECDLP headline count, which stays frozen)."
+      "notes": "LIVE (first non-ECC instance). Kernel-verified in the separate `ResearchOS` lake library (a second build target alongside `Ecdlp`): 2017 prime, the Mersenne prime M₁₃=8191, and 561 (smallest Carmichael number) composite with its Korselt factorization 3·11·17. All `norm_num`, so they stay inside the standard axiom base (no `native_decide`); audited by the generated `ResearchOS/LedgerAxiomAudit.lean` + `scripts/check_axioms.py` CI gate, and ledgered in `VERIFIED_RESEARCHOS.md`. Deliberately minimal — a proof of pipeline portability to an unrelated subject, not a number-theory research program. metrics_source is null (this domain does not feed the ECDLP headline count, which stays frozen)."
     },
     {
       "id": "riemann-hypothesis",

@@ -54,9 +54,11 @@ only judge; CI is how the kernel votes here.
    temporary; the role contracts below are persistent. The project lead re-reviews every
    result and owns integration. Never merge a subagent's work on faith.
 4. **Integrate through the owning domain.** For an ECDLP theorem, wire the import into
-   `Ecdlp.lean`, add the `#print axioms` line in `Ecdlp/AxiomAudit.lean`, and append a
-   **pure-fact** `VERIFIED.md` row. For a non-ECDLP theorem, use the `ResearchOS.lean`
-   surface plus the domain result ledger and axiom audit named by its owning queue. If
+   `Ecdlp.lean` and append a **pure-fact** `VERIFIED.md` row (the generated audit
+   `Ecdlp/LedgerAxiomAudit.lean` follows from the registry). For a non-ECDLP theorem,
+   wire the import into `ResearchOS.lean` and append a `VERIFIED_RESEARCHOS.md` row
+   (the generated `ResearchOS/LedgerAxiomAudit.lean` follows; inverse coverage fails
+   CI until the row exists). If
    that ledger or audit does not yet exist, designing and validating it is the whole
    cycle; do not add or count the theorem. Regenerate all derived artifacts; run the
    full gate battery **and** a hard conflict-marker scan as a *separate* step (never

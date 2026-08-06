@@ -15,7 +15,8 @@
   `native_decide` **additionally** trust the Lean compiler via the
   `Lean.ofReduceBool` axiom — a *real* extension of the trusted computing base,
   not a logical axiom. This is machine-enforced by the axiom-audit CI gate
-  (`Ecdlp/AxiomAudit.lean` + `scripts/check_axioms.py`), which fails the build if
+  (the generated `Ecdlp/LedgerAxiomAudit.lean` / `ResearchOS/LedgerAxiomAudit.lean`
+  + `scripts/check_axioms.py`), which fails the build if
   any other axiom (or a `sorryAx`) appears in a result's transitive dependencies.
 - **TASK-025 is a conditional representation theorem, not an ECDLP
   algorithm.** Explicit local nonvanishing conditions reduce the 377 logical

@@ -122,7 +122,8 @@ identities, instantiations) — honestly ~10–15% substantive, ~85% routine; th
 audited in `COVERAGE.md`.
 
 **Trust base (precise).** No result depends on any *custom* axiom or `sorryAx` —
-machine-enforced by the axiom-audit gate (`Ecdlp/AxiomAudit.lean` +
+machine-enforced by the axiom-audit gate (the generated
+`Ecdlp/LedgerAxiomAudit.lean` / `ResearchOS/LedgerAxiomAudit.lean` +
 `scripts/check_axioms.py`). "0 axioms" means none beyond Lean/Mathlib's standard
 `{propext, Classical.choice, Quot.sound}`. Results proved by `native_decide` (the
 concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofReduceBool`
