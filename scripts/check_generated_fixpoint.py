@@ -17,6 +17,7 @@ GENERATORS = [
     ["scripts/gen_stats.py"],
     ["scripts/build_frontier_map.py"],
     ["scripts/gen_result_registry.py"],
+    ["scripts/gen_researchos_registry.py"],
     ["scripts/gen_axiom_audit.py"],
     ["scripts/gen_source_registry.py"],
     [
@@ -46,7 +47,9 @@ PURE_ARTIFACTS = [
     "badges/theorems.json",
     "data/frontier_map.json",
     "data/result_registry.json",
+    "data/researchos_result_registry.json",
     "Ecdlp/LedgerAxiomAudit.lean",
+    "ResearchOS/LedgerAxiomAudit.lean",
     "data/source_registry.json",
     "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json",
     "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.sha256",

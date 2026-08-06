@@ -76,6 +76,9 @@ def main(argv: list[str]) -> int:
         return 1
 
     audited_names = {name for name, _ in blocks} | set(nodep)
+    declared_bases: dict[str, str] = {}
+    known_declarations: set[str] = set()
+    per_row_mode = False
     if len(argv) == 3:
         import json
 
@@ -90,6 +93,15 @@ def main(argv: list[str]) -> int:
             for name in unexpected:
                 print(f"  [unexpected] {name}")
             return 1
+        # Per-row mode (S0_TRUST_DESIGN.md §2.3): when the registry carries an
+        # `axiom_base` map, a declaration whose observed axioms exceed its
+        # declared base fails, and per-declaration native_decide aux axioms
+        # must be provenance-checked against the registry's declarations map
+        # (a hand-declared axiom NAMED like a compiler aux axiom must not pass
+        # as compiler trust — review finding ADV-1).
+        declared_bases = registry.get("axiom_base", {})
+        known_declarations = set(registry.get("declarations", {}))
+        per_row_mode = bool(declared_bases)
 
     violations: list[str] = []
     native_decide_users: list[str] = []
@@ -104,8 +116,20 @@ def main(argv: list[str]) -> int:
                 pass
             elif is_native_decide(ax):
                 uses_native = True
+                if per_row_mode and ax not in NATIVE_DECIDE_EXACT:
+                    # Provenance: `<decl>._native.native_decide.ax_*` is
+                    # compiler trust only if `<decl>` is a real built
+                    # declaration known to the registry.
+                    owner = ax.split("._native", 1)[0]
+                    if owner not in known_declarations:
+                        bad.add(ax)
             else:
                 bad.add(ax)
+        if per_row_mode and uses_native and declared_bases.get(name) == "standard":
+            violations.append(
+                f"  {name}: declared axiom_base 'standard' but the audit "
+                "observed a native_decide/compiler-trust axiom"
+            )
         if bad:
             violations.append(f"  {name}: disallowed axiom(s) {sorted(bad)}")
         if uses_native:
