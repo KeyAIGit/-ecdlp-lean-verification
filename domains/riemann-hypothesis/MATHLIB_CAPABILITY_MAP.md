@@ -1,7 +1,9 @@
 # RH-001 pinned Mathlib capability and barrier map
 
-Status: **drafted from the exact pinned revision; independently replayed and
-ready for draft-PR publication from green post-activation `main`**
+Status: **drafted from the exact pinned revision; independently replayed
+2026-08-05 with 0 mismatches (all positive rows) and 12/12 negative rows
+confirmed — see `notes/reviews/RH001_INDEPENDENT_REPLAY_2026_08_05.md` and
+the dated addendum at the end of this file**
 
 Audit date: 2026-08-04
 
@@ -376,7 +378,7 @@ theorem-execution budget until a concrete family survives a new review.
 
 | severity | barrier | blocks | exit evidence |
 |---|---|---|---|
-| `S0-TRUST` | non-ECDLP domain result ledger and generated axiom audit do not yet exist | adding or counting any RH Lean theorem | dedicated ledger schema, generated audit, CI coverage, and isolation test |
+| `S0-TRUST` — **CLOSED 2026-08-05** by PR #298 (`d6e146fa`) | non-ECDLP domain result ledger and generated axiom audit were absent | adding or counting any RH Lean theorem | dedicated ledger schema, generated audit, CI coverage, and isolation test — all merged and green |
 | `S0-SEMANTIC` | totalized exceptional values and the `Λ₀` sign inconsistency invite a false bridge | every route | reviewed xi contract derived from proved declarations, with `0`, `1`, trivial-zero, and gamma cases explicit |
 | `S1-TARGET` | no exact bridge from Mathlib's target to the source-side critical-line and zero-free-half-plane formulations | every route | kernel-checked exceptional-point and functional-equation bridge plus independent statement review |
 | `S1-XI` | no standard entire xi/zero bridge | Li/Weil and explicit formula | kernel-checked normalized xi package plus independent statement review |
@@ -463,3 +465,66 @@ ordinary meromorphic values. A clean blocker is preferable to a false xi bridge.
 - Lagarias, [Li coefficients and the Weil scalar product](https://arxiv.org/pdf/math/0404394), equations (1.1)-(1.9), Theorem 2.2, equation (3.1), and Theorem 3.1; exact extracts remain an RH source-package task.
 - Bombieri, [official Clay problem description](https://www.claymath.org/wp-content/uploads/2022/05/riemann.pdf), section V, pages 8-9, for the Weil explicit-formula class, transform, cutoff, moment, and sign conventions.
 - Báez-Duarte, [A strengthening of the Nyman-Beurling criterion, v2](https://arxiv.org/pdf/math/0202141), Theorem 1.1, equations (1.1)-(1.3), and (2.6)-(2.8), for the exact `L²((0,∞), dx)` criterion and Mellin normalization.
+
+## Addendum 2026-08-05 (post-replay)
+
+Recorded after the independent replay
+(`notes/reviews/RH001_INDEPENDENT_REPLAY_2026_08_05.md`); nothing below
+changes any label, any disposition, or any evidence status.
+
+1. **Replay result.** All positive inventory rows confirmed at the exact
+   claimed `file:line` (0 mismatches); all 12 `NOT-FOUND-IN-SCOPE` rows
+   confirmed, with `riemannXi`, Hadamard factorization for finite-order
+   entire functions, and any zeta/conjugation theorem additionally absent
+   tree-wide at the pin. The `Λ₀` sign inconsistency between the module
+   comment and `completedRiemannZeta_eq` is independently confirmed; the
+   theorem remains authoritative. `riemannZeta_zero` (cited above without a
+   locator) is at `RiemannZeta.lean:149`.
+2. **Two additional `PRESENT` generic capabilities** (verified at the pin):
+   Fourier-Plancherel on `L²` — `MeasureTheory.Lp.fourierTransformₗᵢ`,
+   `Mathlib/Analysis/Fourier/LpSpace.lean:50`, and
+   `MeasureTheory.Lp.norm_fourier_eq`, line 89 — which lowers the estimated
+   cost of the `SC-NB-04` Fourier-Mellin isometry to the log-substitution
+   and scaling unitaries plus the dense-core pointwise formula; and
+   Borel-Caratheodory — `Complex.borelCaratheodory`,
+   `Mathlib/Analysis/Complex/BorelCaratheodory.lean` — a generic input to
+   future Landau-type log-derivative estimates. Also useful for `SC-NB-03`:
+   the Abel-summation machinery `LSeries_eq_mul_integral`
+   (`Mathlib/NumberTheory/LSeries/SumCoeff.lean:137`).
+3. **Stop-rule reconciliation (dated note).** The missing-interface row
+   "critical-strip localization … must be derived with the xi bridge" is
+   superseded for the route-neutral node: the frozen `RH-003` contract
+   (`TARGET_BRIDGE_CONTRACT.md`) derives localization FE-first from
+   `riemannZeta_one_sub` inside the bridge package, as the "Cross-route
+   target bridge" DAG above already requires ("exact nontrivial-zero
+   domain" is a bridge output). The xi package still proves its own xi-side
+   localization in the A/C follow-on. This note requires explicit reviewer
+   acknowledgment at RH-003 exit.
+
+## Addendum 2026-08-06: barrier `S0-TRUST` CLOSED
+
+The severity table's `S0-TRUST` row ("non-ECDLP domain result ledger and
+generated axiom audit do not yet exist") is closed. Evidence, one-to-one
+against its exit string "dedicated ledger schema, generated audit, CI
+coverage, and isolation test", all merged to `main` in PR #298 and green in
+CI there:
+
+1. **dedicated ledger schema** — `VERIFIED_RESEARCHOS.md` (strict 12-column
+   parser; kernel-checked-only rule; the 12 pre-existing
+   `ResearchOS.NumberTheory` declarations backfilled with a dated review);
+2. **generated audit** — `ResearchOS/LedgerAxiomAudit.lean` generated from
+   `data/researchos_result_registry.json`, elaborated by CI and validated by
+   `scripts/check_axioms.py` with per-row `axiom_base` enforcement and
+   native-aux-axiom provenance;
+3. **CI coverage** — registry `--check`, inverse coverage
+   ("built ⇒ ledgered ⇒ audited"), cross-import guard, tightened no-sorry
+   exclusions, and the audit elaboration step in `ci.yml`;
+4. **isolation test** — `scripts/check_ledger_isolation.py` + fixtures: no
+   RH/ResearchOS result can reach the ECDLP headline surfaces.
+
+Consequence: the "adding or counting any RH Lean theorem" block is lifted on
+the infrastructure side. A built RH module remains gated **only** on the
+`RH-003` independent review (and must land with its `RH-*` ledger row,
+registry entry, and audit line in one PR, or inverse coverage fails CI).
+Design record: `S0_TRUST_DESIGN.md` (Phase 1 executed; this addendum is its
+Phase 2).

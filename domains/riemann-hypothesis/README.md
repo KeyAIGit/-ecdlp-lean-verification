@@ -1,6 +1,8 @@
 # Riemann Hypothesis research track
 
-Status: **exploratory, active Stage 0**
+Status: **exploratory; Stage 0 evidence package assembled 2026-08-05.
+RH-001 is closed; RH-002 disposition review and source-contract acceptance
+remain pending.**
 
 Priority date: 2026-08-04
 
@@ -31,6 +33,24 @@ Stage 0 is a foundation and specification audit:
    retain a precise blocker if no candidate survives.
 
 The detailed source, claim, route, and evidence map is in `corpus.md`.
+
+Stage 0 execution state (2026-08-05): items 1-3 are complete — the exact
+target is frozen and the pinned audit has been independently replayed with
+0 mismatches (`notes/reviews/RH001_INDEPENDENT_REPLAY_2026_08_05.md`). The
+source contracts are assembled, but their acceptance review remains open.
+The admitted routes were adversarially compared (`ROUTE_TRIAGE.md`:
+`PARK`/`PARK`/`PARK`, no route selected), with the dispositions still pending
+independent review. The full Route A and Route B success bars would imply RH;
+for Route C, no known published mechanism meets the all-heights
+individual-zero-exclusion bar, and meeting that full bar would imply RH.
+Item 6 provisionally resolved to the foundation path: one kernel-checkable
+intermediate candidate is frozen as a non-built contract
+(`TARGET_BRIDGE_CONTRACT.md`, the route-neutral target bridge closing
+barrier `S1-TARGET`), pending independent review. `S0-TRUST` was closed by
+PR #298 (`d6e146fa`) on 2026-08-05.
+The `SOURCE_CONTRACTS.md` acceptance review remains open and is a carried
+precondition. This partial-closure PR adds no Lean declaration, consistent
+with the repository isolation rules below.
 
 ## Evidence boundary
 
