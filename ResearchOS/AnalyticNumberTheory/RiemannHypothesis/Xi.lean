@@ -1,43 +1,20 @@
 /-
-NON-BUILT DRAFT — RH xi package (safe entire normalization), statements X1–X11.
+Built RH xi package: RH-007 promotion of the independently accepted X1–X11
+statement surface in `domains/riemann-hypothesis/XI_PACKAGE_CONTRACT.md`.
 
-This file implements the frozen contract
-`domains/riemann-hypothesis/XI_PACKAGE_CONTRACT.md` (DRAFT v2, 2026-08-05),
-with the adversarial-review fixes F1–F3 folded in
-(F1: `DifferentiableAt.comp` WITHOUT an explicit point argument, per the pinned
-signature at FDeriv/Comp.lean:127; F2: every X5 field-algebra variant clears
-denominators under `hs0`/`hs1` — never a bare `linear_combination` over
-inverses; F3: the registered X11 defeq shapes, discharged at X11's `hstrip`,
-`hGdiff`, and `hu`).
+The package defines the chosen entire xi normalization, proves its elementary
+symmetries and endpoint values, relates its zeros to zeta's nontrivial zeros,
+records the equivalent xi-zero formulation of RH, and transports local
+analytic order inside the open critical strip. These are foundation
+interfaces only: the equivalence proves neither side and supplies no evidence
+for or against the Riemann Hypothesis.
 
-This drafts-lane copy remains outside every lake target. S0-TRUST was
-satisfied by PR #298; the target bridge was kernel-checked in PR #299; the
-source gate closed through RH-006; and the statement surface was accepted in
-PR #303. It is synchronized with the separate RH-007 built-promotion
-candidate, but nothing here is counted until that candidate passes kernel and
-axiom CI and is merged.
-
-BRIDGE DEPENDENCY: this file explicitly imports the already built P1–P5 target
-bridge, matching the promotion candidate. The bridge theorem is referenced by
-name and is not re-proved here.
-The X10 reverse direction uses bridge P2, whose statement is exactly:
-
-  theorem riemannZeta_zero_mem_critical_strip {s : ℂ} (hz : riemannZeta s = 0)
-      (htriv : ¬∃ n : ℕ, s = -2 * (n + 1)) : 0 < s.re ∧ s.re < 1
+The X10 reverse direction imports the already kernel-checked target bridge P2.
+All twelve public declarations are ledgered as `RH-XI-*` rows in
+`VERIFIED_RESEARCHOS.md` and audited through the generated
+`ResearchOS/LedgerAxiomAudit.lean` with axiom base `standard`.
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
-Every cited lemma name and signature below was grep-verified at that exact
-revision this session. Candidate bodies for the registered obligations are
-supplied inline, but only the future kernel run can discharge them:
-X2-a (id/Pi vs lambda
-defeq shapes), X4-a (endpoint `norm_num` set), X5-a (denominator-clearing
-field algebra per fix F2), X6-a (ℕ→ℂ witness cast and the `n = 0` branch),
-X7-a/X10-a (real-part cast form, shared discharge with bridge P2-a/P4-a),
-X10-b (`RiemannHypothesis` def unfolding via `show`, as bridge P4-b/P5-a),
-X11-G (assembly of `Gammaℝ` differentiability from pinned parts — no pinned
-`Gammaℝ` differentiability lemma exists, only `differentiable_Gammaℝ_inv`),
-X11-a (`z / 2 ≠ -m` re-computed via `Complex.div_ofNat_re`,
-Data/Complex/Basic.lean:763), X11-b (defeq shapes per fix F3).
 -/
 import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.TargetBridge
 import Mathlib.NumberTheory.LSeries.ZetaZeros              -- riemannZeta API (transitively RiemannZeta.lean)
