@@ -4,8 +4,8 @@
 > `DIRECTOR_CHARTER.md`, and `notes/V0_COMPLETION_PLAN.md` (all preserved under
 > `archive/docs/`). Those five files held four different north stars; drift between
 > them was itself a defect. From here on: **one strategy file**. Live numbers stay in
-> `STATUS.md`; `tasks/NEXT.md` routes to separate ECDLP research and KeyAI product
-> queues; this file is direction and structure only. Exact route and foundation
+> `STATUS.md`; `tasks/NEXT.md` routes to separate RH research, ECDLP research,
+> and KeyAI product queues; this file is direction and structure only. Exact route and foundation
 > decisions live in `repo/ECDLP_DECISION_SUBSTRATE.json`; bounded exploration policy
 > lives in `repo/RESEARCH_ENGINE_V0.json`. Product category, current capability,
 > customer hypotheses, public rhetoric, and MVP exit criteria live in
@@ -57,6 +57,14 @@ progress end to end.** Recovering the discrete logarithm is the long-term
 research objective; the repository makes no assumption that a classical
 subgeneric route exists.
 
+**Portfolio research priority, 2026-08-04:** primary new frontier work is the
+Riemann Hypothesis track, beginning with exact specification, source provenance,
+and a pinned-Mathlib foundation audit. ECDLP remains the durable verified
+reference deployment and maintenance track. This priority decision does not
+rewrite theorem history, route dispositions, negative results, or ECDLP
+authorization state. It also makes no claim that an RH proof route has been
+found.
+
 The formal library remains the durable core. Value also flows through three
 external channels:
 
@@ -84,7 +92,8 @@ platform ahead of evidence; investor-facing document growth.
    else. Strategy: this file. Route decisions:
    `repo/ECDLP_DECISION_SUBSTRATE.json`. Exploration:
    `repo/RESEARCH_ENGINE_V0.json`. Queue routing: `tasks/NEXT.md`; ownership:
-   `tasks/ECDLP_RESEARCH.md` and `tasks/KEYAI_PRODUCT.md`. Scope/trust wording:
+   `tasks/RIEMANN_HYPOTHESIS.md`, `tasks/ECDLP_RESEARCH.md`, and
+   `tasks/KEYAI_PRODUCT.md`. Scope/trust wording:
    `TRUST_REPORT.md` + `ABSTRACT_SCOPE.md` + `notes/SECURITY_SCOPE.md`. A new prose
    document must displace an old one, not join it.
 3. **Structure over gates.** Gates stay (they caught real drift), but the first fix
@@ -123,6 +132,29 @@ Root prose after both tranches (~12 files): `README` · `STATUS`* · `VERIFIED` 
 (* = generated).
 
 ## 5. Program
+
+**Riemann Hypothesis Stage 0, primary new research:**
+
+1. Use the existing pinned Mathlib declaration `_root_.RiemannHypothesis` as the
+   canonical formal target. Do not create a competing definition.
+2. Route the work through `tasks/RIEMANN_HYPOTHESIS.md` and
+   `domains/riemann-hypothesis/`. RH evidence and decisions remain isolated from
+   ECDLP metrics, route state, and experiment authorizations.
+3. Complete the declaration-level Mathlib and primary-source audit before any
+   theorem attempt, autonomous hypothesis sweep, or large computation.
+4. Adversarially compare the Li/Weil positivity, Nyman-Beurling closure, and
+   explicit-formula or zero-free inequality tracks. Activate at most one
+   theorem-bearing route.
+5. Treat finite zero verification and coefficient computation as bounded
+   evidence only. They cannot establish the universal target.
+6. Add no RH theorem to the built `ResearchOS` surface until a domain ledger and
+   axiom-audit path cover it.
+7. At the 90-day review, select one reviewed theorem candidate or retain an
+   evidence-backed `PARK` or `STOP`. Create a separate repository only if a
+   selected route needs its own dependency graph, ledger, or CI surface.
+
+The current ECDLP program below is preserved as domain history and remains the
+authority for ECDLP-specific work.
 
 **Current phase — proposal intake after the GLV-Semaev structural result:**
 

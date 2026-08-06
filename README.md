@@ -8,6 +8,14 @@ elliptic curve, an evidence-gated map of classical ECDLP routes, and the provena
 contracts around both. It is a *verified research substrate* and an honest no-go map —
 **not** a solution to any hard problem and not yet a self-serve hosted product.
 
+**Portfolio priority update, 2026-08-04:** primary new frontier work is now an
+isolated Riemann Hypothesis Stage 0 lane under
+`domains/riemann-hypothesis/` and `tasks/RIEMANN_HYPOTHESIS.md`. It begins with
+the exact target already present in pinned Mathlib, a declaration-level
+foundation audit, and adversarial route triage. The repository claims no RH
+proof candidate or progress on the conjecture. Existing ECDLP results,
+decisions, and authorizations remain unchanged.
+
 This file is the front door for humans and low-context agents alike. Strategy lives in
 `ROADMAP.md`; live numbers live in `STATUS.md`; exact attack-route decisions live in
 `repo/ECDLP_DECISION_SUBSTRATE.json`; bounded exploration policy lives in
@@ -114,7 +122,8 @@ identities, instantiations) — honestly ~10–15% substantive, ~85% routine; th
 audited in `COVERAGE.md`.
 
 **Trust base (precise).** No result depends on any *custom* axiom or `sorryAx` —
-machine-enforced by the axiom-audit gate (`Ecdlp/AxiomAudit.lean` +
+machine-enforced by the axiom-audit gate (the generated
+`Ecdlp/LedgerAxiomAudit.lean` / `ResearchOS/LedgerAxiomAudit.lean` +
 `scripts/check_axioms.py`). "0 axioms" means none beyond Lean/Mathlib's standard
 `{propext, Classical.choice, Quot.sound}`. Results proved by `native_decide` (the
 concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofReduceBool`

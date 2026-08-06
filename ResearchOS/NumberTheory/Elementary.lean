@@ -12,8 +12,8 @@ verifier does not know or care that these are number-theory facts rather than cu
 which is exactly the reusable-engine claim, now demonstrated on a second, unrelated subject.
 
 All results are elementary and kernel-checked by `norm_num` (no `native_decide`, so they
-stay strictly inside the standard axiom base {propext, Classical.choice, Quot.sound} — the
-`#print axioms` lines in `Ecdlp/AxiomAudit.lean` enforce this).
+stay strictly inside the standard axiom base {propext, Classical.choice, Quot.sound} —
+enforced per row by `ResearchOS/LedgerAxiomAudit.lean` + `scripts/check_axioms.py`).
 -/
 
 namespace ResearchOS.NumberTheory

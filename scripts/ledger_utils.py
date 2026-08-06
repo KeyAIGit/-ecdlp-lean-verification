@@ -91,6 +91,67 @@ def expand_braces(pattern: str) -> list[str]:
     ]
 
 
+RESEARCHOS_LEDGER = "VERIFIED_RESEARCHOS.md"
+RESEARCHOS_COLUMNS = [
+    "claim_id", "domain", "declaration", "file", "statement_anchor",
+    "source_contract", "review_record", "axiom_base", "method", "date",
+    "status", "claim_scope",
+]
+
+
+def parse_researchos_ledger(root: Path) -> list[dict]:
+    """Strict 12-column parser for the ResearchOS-wide result ledger.
+
+    Deliberately NOT `parse_ledger` (whose `ROW_RE` is a fixed greedy 5-cell
+    pattern that would silently mis-assign a 12-column row). Contract, per
+    `domains/riemann-hypothesis/S0_TRUST_DESIGN.md` §1.2: every data row must
+    split into exactly 12 cells or the parse HARD-FAILS, and a literal `|`
+    inside any cell is forbidden (it changes the cell count and is caught by
+    the same check). Reuses `strip_md` / `strip_status` / `extract_files` /
+    `extract_name_patterns` / `expand_braces` unchanged.
+    """
+    path = root / RESEARCHOS_LEDGER
+    rows: list[dict] = []
+    seen_header = False
+    if not path.exists():
+        raise FileNotFoundError(f"{RESEARCHOS_LEDGER} not found under {root}")
+    for line_number, line in enumerate(
+        path.read_text(encoding="utf-8").splitlines(), 1
+    ):
+        stripped = line.strip()
+        if not (stripped.startswith("|") and stripped.endswith("|")):
+            continue
+        cells = [cell.strip() for cell in stripped[1:-1].split("|")]
+        if not seen_header:
+            if [cell.lower() for cell in cells] == RESEARCHOS_COLUMNS:
+                seen_header = True
+            continue
+        if set("".join(cells)) <= set("-: "):
+            continue
+        if len(cells) != len(RESEARCHOS_COLUMNS):
+            raise ValueError(
+                f"{RESEARCHOS_LEDGER}:{line_number}: expected exactly "
+                f"{len(RESEARCHOS_COLUMNS)} cells, found {len(cells)} — a "
+                "literal '|' inside a cell is forbidden; reword the cell"
+            )
+        row = dict(zip(RESEARCHOS_COLUMNS, cells))
+        row["line"] = line_number
+        row["claim_id"] = strip_md(row["claim_id"])
+        row["domain"] = strip_md(row["domain"])
+        row["files"] = extract_files(root, row["file"])
+        row["name_patterns"] = extract_name_patterns(row["declaration"])
+        row["axiom_base"] = strip_md(row["axiom_base"])
+        row["method"] = strip_md(row["method"])
+        row["status"] = strip_status(row["status"])
+        rows.append(row)
+    if not seen_header:
+        raise ValueError(
+            f"{RESEARCHOS_LEDGER}: header row with the exact 12-column "
+            "schema was not found"
+        )
+    return rows
+
+
 def parse_ledger(root: Path) -> list[dict]:
     rows: list[dict] = []
     seen_header = False

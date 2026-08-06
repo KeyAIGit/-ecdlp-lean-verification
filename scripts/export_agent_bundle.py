@@ -36,6 +36,8 @@ ROOT = Path(__file__).resolve().parent.parent
 # Keep this the ONLY place tiers are defined; AGENTS.md mirrors it in prose.
 _SMALL = [
     ("STATUS.md", "canonical live snapshot — counts, active goal, bottleneck; wins over prose"),
+    ("domains/riemann-hypothesis/README.md",
+     "active RH Stage 0 boundary, exact target, evidence rules, and repository isolation"),
     ("repo/ECDLP_DECISION_SUBSTRATE.json",
      "exact target, route dispositions, evidence gates, and foundation priority"),
     ("repo/RESEARCH_ENGINE_V0.json",
@@ -76,7 +78,9 @@ _SMALL = [
      "product category, current-vs-future boundary, public claims, and MVP evidence gate"),
     ("repo/PILOT_PROTOCOL.json",
      "TASK-011 discovery contract, safety boundary, evidence schema, and disposition gate"),
-    ("tasks/NEXT.md", "router for the separate ECDLP research and KeyAI product queues"),
+    ("tasks/NEXT.md", "router for the separate RH, ECDLP, and KeyAI product queues"),
+    ("tasks/RIEMANN_HYPOTHESIS.md",
+     "active RH foundation-audit contracts, route gates, and hard stop rules"),
     ("tasks/ECDLP_RESEARCH.md", "bounded ECDLP research contracts and exit criteria"),
     ("tasks/KEYAI_PRODUCT.md", "product-validation contracts and separate product KPIs"),
     ("data/stats.json", "machine-readable headline counts (ledger rows / distinct / modules)"),
@@ -92,6 +96,8 @@ _SOURCE_CLAIM_EXTRACTS = [
 _MEDIUM_EXTRA = [
     ("README.md", "the front door: what this is, what it does NOT claim"),
     ("AGENTS.md", "agent operating rules, invariants, and forbidden moves"),
+    ("domains/riemann-hypothesis/corpus.md",
+     "RH source register, formal baseline, claim map, route ranking, and red-team checks"),
     ("VERIFIED.md", "the canonical ledger — every kernel-verified theorem, one row each"),
     ("BARRIERS.md", "the no-go / blocked map — what needs missing Mathlib foundations"),
     ("notes/SECURITY_SCOPE.md", "precise scope of the generic-hardness claim (not unconditional)"),
@@ -180,13 +186,17 @@ HEADER = """\
 # KeyAI Research OS — agent context bundle ({tier} tier)
 
 You are working on KeyAI, a verification workspace for AI research. Its public reference
-deployment is a Lean 4 + Mathlib environment for secp256k1 / ECDLP. The Lean kernel is the
-only judge of proof acceptance: a green build means every listed theorem is fully proved,
-with no `sorry` and no custom axioms. This is a **verified research asset**, not an attempt
-to break secp256k1 or a claim that the hosted product is complete.
+deployment is a Lean 4 + Mathlib environment for secp256k1 / ECDLP, and its primary new
+frontier lane is an exploratory Stage 0 program for the Riemann Hypothesis. The Lean kernel
+is the only judge of proof acceptance: a green build means every listed theorem is fully
+proved, with no `sorry` and no custom axioms. The RH lane currently claims no proof candidate
+or result on the conjecture. This is a **verified research asset**, not an attempt to break
+secp256k1 or a claim that the hosted product is complete.
 
 Ground rules:
 - `STATUS.md` is the canonical live snapshot. If prose anywhere conflicts with it, STATUS wins.
+- `domains/riemann-hypothesis/README.md` and `tasks/RIEMANN_HYPOTHESIS.md` own RH Stage 0.
+  ECDLP evidence, decisions, metrics, and authorizations do not transfer to RH.
 - `repo/ECDLP_DECISION_SUBSTRATE.json` owns route applicability and foundation priority.
 - `repo/RESEARCH_ENGINE_V0.json` owns bounded exploration; generated evidence cannot promote a route.
 - `repo/ECDLP_TYPED_EVIDENCE_V0.json` owns claim-level target-property and mechanism applicability screens.
@@ -199,7 +209,7 @@ Ground rules:
 - `repo/PRODUCT_MODEL.json` owns product rhetoric, current capability, and MVP boundaries.
 - `repo/PILOT_PROTOCOL.json` owns TASK-011 discovery, safety, evidence, and disposition.
 - Never weaken a proof, add a `sorry`/`admit`, or add an axiom to make anything pass.
-- Use `tasks/NEXT.md` to route work to the owning research or product queue.
+- Use `tasks/NEXT.md` to route work to the owning RH, ECDLP, or product queue.
 
 The files below are inlined in full, in load order for this tier.
 """

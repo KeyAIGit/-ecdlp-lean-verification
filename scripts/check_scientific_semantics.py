@@ -93,6 +93,19 @@ M16_PROPAGATION_ARTIFACT_PATH = (
 M16_PROPAGATION_ARTIFACT_SHA256 = (
     "9330603ba1f0af9ee4902c263200709e2ec6f8c50d8d7eaab3b55bcba78e388f"
 )
+M16_SOURCE_MECHANISM_CLAIM_ID = (
+    "SC-PKC-M16-SOURCE-MECHANISM-RECOVERY"
+)
+M16_SOURCE_MECHANISM_ARTIFACT_PATH = (
+    "experiments/engine/"
+    "pkc_smooth_m16_source_faithful_mechanism/artifact.json"
+)
+M16_SOURCE_MECHANISM_ARTIFACT_SHA256 = (
+    "79ee65104cfbd45ee902fbf59524a705e6db8590c8d5845a6a20cd63239c774c"
+)
+PKC_2016_PRIMARY_SHA256 = (
+    "2958155e2c0a379b79490be7c2dab6658bda896cce2c1b517634b4cb6892d943"
+)
 
 PETIT_WEIL_CONTRADICTIONS = (
     re.compile(
@@ -143,6 +156,12 @@ def validate_semantics(
     target_properties = _index(typed_state.get("target_properties"))
     typed_barriers = _index(typed_state.get("barriers"))
     claims = _index(claim_state.get("claims"), "claim_id")
+    mechanism_variants = _index(
+        claim_state.get("mechanism_variants"), "mechanism_variant_id"
+    )
+    evidence_events = _index(
+        claim_state.get("evidence_events"), "evidence_event_id"
+    )
 
     glv_route = routes.get("R-GLV-SEMAEV", {})
     if glv_route.get("status") != "open_parked":
@@ -196,7 +215,7 @@ def validate_semantics(
 
     typed_counts = typed_state.get("counts", {})
     expected_typed_counts = {
-        "source_claims": 32,
+        "source_claims": 36,
         "cells": 8,
         "seed_eligible_cells": 2,
         "desk_decisions": 4,
@@ -261,6 +280,112 @@ def validate_semantics(
         "source_claim_ids", []
     ):
         problems.append("M16 census must remain bound to the evolving M16 cell")
+    primary_source_expectations = {
+        "SC-PKC-SYSTEM4-EXACT": (
+            "Section 3.1, Algorithm 1, System (4), published p. 9",
+            "sound acceptance filter",
+        ),
+        "SC-PKC-PMINUS1-MAP-EXACT": (
+            "Section 3.3, published p. 10",
+            "not a generalized-root solver",
+        ),
+        "SC-PKC-PARTIAL-COST-EXACT": (
+            "Section 3.2, published p. 10",
+            "leaves asymptotic complexity open",
+        ),
+    }
+    for claim_id, (locator, boundary_token) in (
+        primary_source_expectations.items()
+    ):
+        source_claim = typed_claims.get(claim_id, {})
+        if source_claim.get("read_status") != "full_text_obtained":
+            problems.append(f"{claim_id} must remain primary-full-text evidence")
+        if source_claim.get("artifact_sha256") != PKC_2016_PRIMARY_SHA256:
+            problems.append(f"{claim_id} primary PDF hash drifted")
+        if source_claim.get("evidence_path") != (
+            "data/source_claim_extracts/petit_kosters_messeng2016_task028.json"
+        ):
+            problems.append(f"{claim_id} source-extract path drifted")
+        if source_claim.get("locator") != {
+            "kind": "section",
+            "value": locator,
+        }:
+            problems.append(f"{claim_id} exact primary-source locator drifted")
+        if boundary_token not in source_claim.get("boundary", ""):
+            problems.append(f"{claim_id} claim boundary drifted")
+    source_mechanism = typed_claims.get(M16_SOURCE_MECHANISM_CLAIM_ID, {})
+    if source_mechanism.get("read_status") != "certificate_replayed":
+        problems.append("M16 source-mechanism assurance must remain replayed")
+    if source_mechanism.get(
+        "artifact_sha256"
+    ) != M16_SOURCE_MECHANISM_ARTIFACT_SHA256:
+        problems.append("M16 source-mechanism artifact hash drifted")
+    if source_mechanism.get(
+        "evidence_path"
+    ) != M16_SOURCE_MECHANISM_ARTIFACT_PATH:
+        problems.append("M16 source-mechanism evidence path drifted")
+    source_mechanism_boundary = source_mechanism.get("boundary", "")
+    for token, label in (
+        ("repository completion", "derived recovery boundary"),
+        ("Passing it validates a candidate relation", "sound acceptance boundary"),
+        ("complete direct-System-(4) recovery is unproved", "recovery completeness boundary"),
+        ("identity targets require resampling", "affine identity-target boundary"),
+        ("Generalized-root solving", "unresolved solver boundary"),
+        ("complete equal-success cost", "unresolved complete cost"),
+        ("source independence is not established", "source independence"),
+        ("calibration is excluded", "calibration exclusion"),
+        ("no solver, experiment, retention, authorization", "zero execution"),
+        ("route promotion", "no route promotion"),
+        ("novelty", "no novelty"),
+    ):
+        if token not in source_mechanism_boundary:
+            problems.append(f"M16 source-mechanism claim must retain {label}")
+    source_research_claim = claims.get(
+        "CLM-PKC-M16-SOURCE-MECHANISM-RECOVERY", {}
+    )
+    if source_research_claim.get("claim_disposition") != "confirmed":
+        problems.append("M16 source-mechanism child claim must remain confirmed")
+    if source_research_claim.get("assurance") != ["certificate_replayed"]:
+        problems.append(
+            "M16 source-mechanism child claim must remain certificate-backed"
+        )
+    if source_research_claim.get("route_id") != "R-PETIT-COMPOSED-MAPS":
+        problems.append("M16 source-mechanism child claim lost its parent route")
+    source_research_statement = source_research_claim.get("statement", "")
+    if (
+        "sound acceptance filter" not in source_research_statement
+        or "recovery completeness unproved" not in source_research_statement
+    ):
+        problems.append(
+            "M16 source-mechanism child claim overstates recovery closure"
+        )
+    if "Identity samples require resampling" not in source_research_claim.get(
+        "scope", ""
+    ):
+        problems.append("M16 source-mechanism child claim lost affine target scope")
+    source_variant = mechanism_variants.get(
+        "MV-PKC-PMINUS1-M16-PUBLISHED-SYSTEM4", {}
+    )
+    if source_variant.get("mechanism_status") != (
+        "mechanism_specified_cost_unresolved"
+    ):
+        problems.append("M16 published mechanism variant status drifted")
+    if source_variant.get("kind") != (
+        "published_mechanism_with_repo_sound_acceptance_filter"
+    ):
+        problems.append("M16 published mechanism variant recovery scope drifted")
+    if source_variant.get("proposal_seed_eligible") is not False:
+        problems.append("M16 source mechanism certificate cannot become a seed")
+    source_event = evidence_events.get(
+        "CEV-PKC-M16-SOURCE-MECHANISM-RECOVERY", {}
+    )
+    if (
+        source_event.get("calibration_eligible") is not False
+        or source_event.get("authorization") != "none"
+    ):
+        problems.append(
+            "M16 source mechanism event must remain non-calibrating and unauthorized"
+        )
     torus_cell = cells.get("CELL-M-WCC-PPLUS1-TRACE-M67", {})
     if torus_cell.get("status") != "decided_inapplicable":
         problems.append("WCC p-plus-one m6/7 cell must remain inapplicable")
@@ -294,6 +419,10 @@ def validate_semantics(
     ]:
         problems.append("M16 cell must retain its open complete-cost barrier")
     for claim_id, label in (
+        (
+            M16_SOURCE_MECHANISM_CLAIM_ID,
+            "source-faithful mechanism certificate",
+        ),
         (
             "SC-PKC-M16-SYMBOLIC-DESK-RESULT",
             "symbolic desk certificate",
@@ -1039,6 +1168,20 @@ def validate_semantics(
         problems.append(
             "M16 complete-cost barrier must retain its infinity-propagation "
             "kernel certificate"
+        )
+    if M16_SOURCE_MECHANISM_CLAIM_ID not in m16_barrier.get(
+        "source_claim_ids", []
+    ):
+        problems.append(
+            "M16 complete-cost barrier must retain its source-faithful "
+            "mechanism certificate"
+        )
+    if M16_SOURCE_MECHANISM_CLAIM_ID not in m16_cell.get(
+        "cost_quantity", {}
+    ).get("source_claim_ids", []):
+        problems.append(
+            "M16 cost quantity must retain its source-faithful mechanism "
+            "certificate"
         )
     m16_scope = m16_barrier.get("exact_scope", "")
     for token, label in (

@@ -72,6 +72,7 @@ def main() -> int:
     pilot = read_text("pilot.html")
     tasks = read_text("tasks/NEXT.md")
     research_tasks = read_text("tasks/ECDLP_RESEARCH.md")
+    rh_tasks = read_text("tasks/RIEMANN_HYPOTHESIS.md")
     product_tasks = read_text("tasks/KEYAI_PRODUCT.md")
     hypotheses = read_text("experiments/HYPOTHESES.yaml")
     autonomy = read_text("AUTONOMY.md")
@@ -567,27 +568,75 @@ def main() -> int:
 
     check("Task contract template" in tasks,
           "tasks/NEXT.md must include the task contract template")
-    all_task_text = research_tasks + "\n" + product_tasks
-    task_sections = re.findall(
-        r"^### TASK-\d+\b.*?(?=^### TASK-\d+\b|\Z)",
-        all_task_text,
-        flags=re.MULTILINE | re.DOTALL,
+    queue_specs = (
+        ("ECDLP", research_tasks, r"^### TASK-\d+\b"),
+        ("RH", rh_tasks, r"^## RH-\d+\b"),
+        ("product", product_tasks, r"^### TASK-\d+\b"),
     )
-    active_task_count = sum(
-        not re.search(
-            r"^Status: (?:completed|evidence_closed)",
-            section,
-            flags=re.MULTILINE,
+    active_task_count = 0
+    active_rh_contracts: list[tuple[str, str]] = []
+    for queue_name, queue_text, heading_pattern in queue_specs:
+        sections = re.findall(
+            rf"{heading_pattern}.*?(?={heading_pattern}|\Z)",
+            queue_text,
+            flags=re.MULTILINE | re.DOTALL,
         )
-        for section in task_sections
-    )
+        check(bool(sections), f"{queue_name} queue must contain task contracts")
+        for section in sections:
+            heading = section.splitlines()[0]
+            status_lines = re.findall(
+                r"^Status:\s*(.+?)\s*$", section, flags=re.MULTILINE
+            )
+            check(
+                len(status_lines) == 1,
+                f"{heading} must contain exactly one Status line",
+            )
+            if len(status_lines) != 1:
+                continue
+            task_status = re.sub(r"[*`]", "", status_lines[0]).strip()
+            if task_status.lower().startswith(("active", "maintenance")):
+                active_task_count += 1
+            if queue_name == "RH" and task_status.upper().startswith("ACTIVE"):
+                task_match = re.match(r"^## (RH-\d+)(?::\s*(.*))?$", heading)
+                if task_match is not None:
+                    active_rh_contracts.append(
+                        (task_match.group(1), (task_match.group(2) or "").strip())
+                    )
     check(3 <= active_task_count <= 7,
-          "the two owning queues must keep 3-7 active task contracts in total")
+          "the three owning queues must keep 3-7 actionable task contracts in total")
+    check(
+        len(active_rh_contracts) == 1,
+        "the RH queue must contain exactly one ACTIVE contract",
+    )
     check(
         "tasks/ECDLP_RESEARCH.md" in tasks
+        and "tasks/RIEMANN_HYPOTHESIS.md" in tasks
         and "tasks/KEYAI_PRODUCT.md" in tasks
         and "Product work never counts as ECDLP progress" in tasks,
-        "tasks/NEXT.md must route to separate research and product queues",
+        "tasks/NEXT.md must route to separate RH, ECDLP, and product queues",
+    )
+    check(
+        "Current ECDLP decision:" in tasks
+        and "Current central decision:" not in tasks,
+        "tasks/NEXT.md must scope the legacy M16 decision to ECDLP",
+    )
+    if len(active_rh_contracts) == 1:
+        active_rh_id, active_rh_title = active_rh_contracts[0]
+        check(
+            f"`{active_rh_id}`**: {active_rh_title}" in status
+            and "tasks/RIEMANN_HYPOTHESIS.md" in status,
+            "STATUS.md must derive its RH priority from the active queue contract",
+        )
+    startup_block = agents.split("## What this project actually is", 1)[0]
+    check(
+        "For a small-context start" in startup_block
+        and "domains/riemann-hypothesis/README.md" in startup_block
+        and "domains/riemann-hypothesis/corpus.md" in startup_block
+        and "tasks/RIEMANN_HYPOTHESIS.md" in startup_block
+        and "choose exactly one" in startup_block
+        and "tasks/RIEMANN_HYPOTHESIS.md" in autonomy
+        and "three owning queues" in autonomy,
+        "agent control documents must route RH work through its isolated queue",
     )
     check("canonical_source: STATUS.md" in hypotheses,
           "experiments/HYPOTHESES.yaml must point at STATUS.md")

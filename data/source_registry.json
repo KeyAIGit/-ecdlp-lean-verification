@@ -484,6 +484,7 @@
       "note": "An open official IACR archival PDF exists. The earlier repository statement that this source was unavailable or only paywalled was incorrect. A full-text construction and term review found no GLV, automorphism, endomorphism, invariant-coordinate, or fixed-target symmetry claim; its relevance is the faithful composed-map factor-base construction, not overlap with the bounded GLV-SEMAEV-ITER-001 stabilizer result.",
       "where_used": [
         "experiments/engine/pkc_nonsplit_torus_desk_screen/README.md",
+        "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/README.md",
         "experiments/p4_petit/README.md",
         "experiments/p4_petit/RESULTS.md",
         "notes/GLV_SEMAEV_ITERATION_001.md",

@@ -22,7 +22,9 @@ name: Docs sync
 #     COVERAGE.md                              (coverage_report.py)
 #     STATUS.md                                (gen_status.py)
 #     data/result_registry.json                (gen_result_registry.py)
+#     data/researchos_result_registry.json     (gen_researchos_registry.py)
 #     Ecdlp/LedgerAxiomAudit.lean              (gen_axiom_audit.py)
+#     ResearchOS/LedgerAxiomAudit.lean         (gen_axiom_audit.py)
 #     data/source_registry.json                (gen_source_registry.py)
 #     data/typed_evidence_state.json           (build_typed_evidence_state.py)
 #     data/research_claim_state.json            (research_claims.py)
@@ -122,7 +124,9 @@ env:
     COVERAGE.md
     STATUS.md
     data/result_registry.json
+    data/researchos_result_registry.json
     Ecdlp/LedgerAxiomAudit.lean
+    ResearchOS/LedgerAxiomAudit.lean
     data/source_registry.json
     data/typed_evidence_state.json
     data/research_claim_state.json
@@ -159,7 +163,9 @@ jobs:
         run: python3 scripts/build_frontier_map.py
       - name: Result registry (data/result_registry.json — Lean decls vs VERIFIED.md citations)
         run: python3 scripts/gen_result_registry.py
-      - name: Full-ledger axiom audit
+      - name: ResearchOS result registry (data/researchos_result_registry.json — VERIFIED_RESEARCHOS.md)
+        run: python3 scripts/gen_researchos_registry.py
+      - name: Full-ledger axiom audits (Ecdlp + ResearchOS)
         run: python3 scripts/gen_axiom_audit.py
       - name: Source registry (data/source_registry.json — cited works ↔ docs provenance)
         run: python3 scripts/gen_source_registry.py
@@ -249,6 +255,13 @@ jobs:
           python3 experiments/engine/pkc_smooth_m16_regime_assurance_desk/test_validate.py
           python3 -m py_compile experiments/engine/pkc_smooth_m16_regime_assurance_desk/*.py
           (cd experiments/engine/pkc_smooth_m16_regime_assurance_desk && sha256sum -c artifact.sha256)
+      - name: PKC M16 source-faithful mechanism and sound acceptance
+        run: |
+          python3 experiments/engine/pkc_smooth_m16_source_faithful_mechanism/generate.py --check
+          python3 experiments/engine/pkc_smooth_m16_source_faithful_mechanism/validate.py
+          python3 experiments/engine/pkc_smooth_m16_source_faithful_mechanism/test_validate.py
+          python3 -m py_compile experiments/engine/pkc_smooth_m16_source_faithful_mechanism/*.py
+          (cd experiments/engine/pkc_smooth_m16_source_faithful_mechanism && sha256sum -c artifact.sha256)
       - name: PKC M16 semantic bridge certificate
         run: |
           python3 experiments/engine/pkc_smooth_m16_semantic_bridge/generate.py --check
