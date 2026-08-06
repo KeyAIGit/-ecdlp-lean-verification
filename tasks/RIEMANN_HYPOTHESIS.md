@@ -222,18 +222,18 @@ Exit criteria:
 
 ID: `RH-004`
 
-Status: **ACTIVE**
+Status: **COMPLETE 2026-08-06**
 
-Activation basis (2026-08-06): `RH-003` completed (reviewed-and-merged
-PR #297) and `S0-TRUST` is closed (merged PR #298), so this contract's
-blocking conditions are discharged. The promotion PR carries the built
+Closure evidence: merged PR #299 (`288d65b`). `lake build`, the no-sorry
+gate, and the generated ResearchOS axiom audit are green on the built
 module `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean`
-(byte-identical proof bodies to the audited draft), its eight `RH-BRIDGE-*`
-rows in `VERIFIED_RESEARCHOS.md`, the regenerated registry and audit, and
-the promotion review record
-(`notes/reviews/RH_BRIDGE_PROMOTION_2026_08_06.md`) — in one PR, as the
-inverse-coverage gate requires. The Lean kernel's verdict arrives via that
-PR's CI; if it is red, the promotion halts and nothing is counted.
+(eight declarations, `standard` axiom base per row); the eight
+`RH-BRIDGE-*` ledger rows, regenerated registries/audits, and the promotion
+review record (`notes/reviews/RH_BRIDGE_PROMOTION_2026_08_06.md`) landed in
+the same PR. One kernel round exposed exactly the pre-registered P1-d
+witness-cast obligation; the audit-recorded alternate closed it. Named
+barrier `S1-TARGET` is closed (dated addendum in the capability map). This
+changes a named blocker, not the truth status of RH.
 
 Kind: theorem
 
@@ -256,6 +256,63 @@ Exit criteria:
 - no-sorry and axiom audits cover the declaration;
 - independent review confirms the Lean statement matches the paper statement;
 - the result changes a named route decision or blocker.
+
+## RH-006: second-agent replay of the source-contract package
+
+ID: `RH-006`
+
+Status: **ACTIVE**
+
+Kind: research / review
+
+Hypothesis: A statement-by-statement replay of `SOURCE_CONTRACTS.md` against
+the three SHA-256-pinned PDFs (checksums re-verified 2026-08-05 —
+`notes/reviews/RH_SOURCE_PDF_CHECKSUM_REPLAY_2026_08_05.md`) will either
+confirm every transcription (signs, cutoffs, measures, multiplicity
+conventions, recorded errata) or surface exact discrepancies before any
+LAG07-convention-touching Lean work begins.
+
+Why it matters: `SOURCE_CONTRACTS.md` is still "proposed under independent
+review"; its acceptance is the last gate before the xi-package promotion
+(`RH-007`) and every later Li/Weil/Nyman contract. A wrong sign or cutoff
+transcribed from a source would poison every downstream formalization.
+
+Expected output: a replay record under `notes/reviews/` comparing each
+`SOURCE`-role statement in `SOURCE_CONTRACTS.md` with the pinned PDFs
+(exact locators), explicitly re-checking: the Λ normalization and LAG07
+(2.7) factor-2 note; SC-LI-01/02/03 cutoffs and star limits; SC-WEIL-01/02;
+SC-BOMB-01/02/03 including the trace-formula signs and the autocorrelation
+measure (`dy`, not `dy/y`); SC-BRIDGE-01..04; SC-NB-01..06 including both
+recorded v2 errata. Discrepancies listed with severity; no contract text
+edited by this task.
+
+Exit criteria: every `SOURCE` row confirmed or flagged; the record is
+sufficient for the external reviewer to accept or amend
+`SOURCE_CONTRACTS.md` in one pass.
+
+Files allowed to edit: `notes/reviews/`, `tasks/RIEMANN_HYPOTHESIS.md`.
+
+## RH-007: xi-package promotion
+
+ID: `RH-007`
+
+Status: **BLOCKED on RH-006 acceptance**
+
+Kind: theorem
+
+Hypothesis: the reviewed xi-package contract
+(`domains/riemann-hypothesis/XI_PACKAGE_CONTRACT.md`, draft v2) and its
+non-built Lean draft (`drafts/RiemannXi.lean`, statically audited) can be
+promoted to the built surface exactly as the bridge was — module +
+`RH-XI-*` ledger rows + regenerated registry/audit in one PR, kernel
+verdict via CI — once the external reviewer accepts the source-contract
+package (the xi contract's own gate) and the contract itself.
+
+Expected output: built
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean` (X1-X11),
+closing barrier `S1-XI` and the analytic-order-transport half of
+`S1-MULTIPLICITY`; ledger, registry, audit, and promotion review record in
+the same PR.
 
 ## RH-005: bounded computation policy
 

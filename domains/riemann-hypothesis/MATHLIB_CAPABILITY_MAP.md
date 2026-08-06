@@ -528,3 +528,22 @@ the infrastructure side. A built RH module remains gated **only** on the
 registry entry, and audit line in one PR, or inverse coverage fails CI).
 Design record: `S0_TRUST_DESIGN.md` (Phase 1 executed; this addendum is its
 Phase 2).
+
+## Addendum 2026-08-06 (second): barrier `S1-TARGET` CLOSED
+
+The severity table's `S1-TARGET` row ("no exact bridge from Mathlib's target
+to the source-side critical-line and zero-free-half-plane formulations") is
+closed by kernel check. Evidence: merged PR #299 (`288d65b`) builds
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean` —
+P1-P5 of `TARGET_BRIDGE_CONTRACT.md`, eight declarations, `lake build`
+green, no-sorry gate green, generated audit green with `standard` axiom
+base per row — with the eight `RH-BRIDGE-*` ledger rows and the promotion
+review record (`notes/reviews/RH_BRIDGE_PROMOTION_2026_08_06.md`) in the
+same PR. Independent statement review: reviewed-and-merged by the external
+reviewer. The map's `NOT-FOUND` rows "critical-strip localization" and the
+cross-route target bridge DAG node are now `PRESENT` in-repo. One kernel
+round exposed exactly the pre-registered P1-d witness-cast obligation; the
+audit-recorded alternate closed it (see the promotion review record). No
+claim about the truth of RH is made; the remaining severity rows
+(`S1-XI` — contract + draft staged; `S1-MULTIPLICITY`, `S1-GLOBAL-ZEROS`,
+`S1-GROWTH`, `S1-CONJ`, `S1-EXPLICIT`, `S2-*`) stay open.
