@@ -71,7 +71,7 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 
 ## Portfolio priority and domain bottlenecks
 The primary new-science priority is **Riemann Hypothesis Stage 0, task
-`RH-002`**: route triage and candidate selection (queue status: `ACTIVE — independent disposition review only; no route execution authorized`). This is an
+`RH-009`**: independent acceptance of the multiplicity/divisor statement surface (queue status: `ACTIVE 2026-08-07 — acceptance-only; produces no built module and`). This is an
 exploratory specification and route-audit program, not a proof candidate or progress on
 the conjecture itself. Its authority is `tasks/RIEMANN_HYPOTHESIS.md`; ECDLP evidence
 and authorizations do not transfer to it.

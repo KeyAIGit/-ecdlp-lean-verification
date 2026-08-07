@@ -1,5 +1,7 @@
 # DRAFT queue entries for the multiplicity/divisor package — NOT INSTALLED
 
+> **Installed 2026-08-07 at `RH-002` closure:** both variants below were installed in `tasks/RIEMANN_HYPOTHESIS.md` — `RH-009` (acceptance-only, now the sole ACTIVE task) and `RH-010` (promotion follow-on, BLOCKED on `RH-009`); this draft is retained as provenance only (see `notes/reviews/RH002_DISPOSITION_REVIEW_2026_08_07.md`).
+
 Prepared 2026-08-07. This file is a **draft only**. Nothing here is installed in
 `tasks/RIEMANN_HYPOTHESIS.md`; that file is out of scope for this round and is
 not edited by this slab. When these entries are eventually installed, they go

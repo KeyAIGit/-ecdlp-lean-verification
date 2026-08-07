@@ -1,7 +1,8 @@
 # RH source contracts
 
 Status: **accepted source-contract package after independent replay and
-amendment, 2026-08-06; no proof or progress claim**
+amendment, 2026-08-06; one shared-notation wording amendment 2026-08-07
+(`RH-002` disposition review); no proof or progress claim**
 
 These contracts specify the reviewed source semantics for the Li/Weil and
 Nyman-Beurling/Báez-Duarte screens. They are normative only at the source-
@@ -52,6 +53,17 @@ The detailed replay and amendment dispositions are recorded in
 makes this package normative only for the quoted source semantics. It does
 not discharge any `FORMAL-OBLIGATION` or `RESEARCH-OBLIGATION`, select a route,
 promote a Lean module, close `S1-XI`, or provide evidence for or against RH.
+
+*Amendment 2026-08-07 (`RH-002` disposition review):* the shared-notation
+section formerly read "A Lean `Multiset` cannot represent the infinite
+divisor", asserting infinitude of the divisor support — a recurrence of a
+previously withdrawn claim. Only local finiteness is established at the pin,
+and no row below uses or needs infinitude (infinitude does follow classically
+from `LAG07` Theorem 2.1(4)/(2.11), but this document does not cite it for
+that purpose). The sentence now states exactly what is supported. No quoted
+source semantics change; the `RH-006` acceptance and its two applied
+amendments are unaffected. Record:
+`notes/reviews/RH002_DISPOSITION_REVIEW_2026_08_07.md`.
 
 ## Local pinned source table
 
@@ -116,8 +128,13 @@ m(rho) = ord_rho(riemannXi).
 The pinned natural-number representation is
 `analyticOrderNatAt riemannXi rho`, derived from `analyticOrderAt` after
 proving analyticity and that the order is not `top`. The zero support and this
-weight must be packaged as a locally finite divisor. A Lean `Multiset` cannot
-represent the infinite divisor.
+weight must be packaged as a locally finite divisor. A Lean `Multiset` may not
+be used: nothing here proves the support finite, and only local finiteness is
+available at the pin (`isClosed_riemannZetaZeros`,
+`isDiscrete_riemannZetaZeros`, `IsCompact.inter_riemannZetaZeros_finite` —
+`Mathlib/NumberTheory/LSeries/ZetaZeros.lean:57,60,64`). Infinitude of `S_xi`
+is not asserted here, is not proved in pinned Mathlib, and is not needed by
+any row of this package.
 
 Every displayed zero sum below ranges over `S_xi` and multiplies by `m(rho)`
 exactly once. This weighted-support model represents the source multiset
