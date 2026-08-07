@@ -1,7 +1,10 @@
 # RH-002 route triage record
 
 Status: **executed 2026-08-05 — dispositions `PARK` / `PARK` / `PARK`, no
-`SELECT`; pending independent disposition review**
+`SELECT`; independent disposition review completed 2026-08-07, all three
+`PARK`s CONFIRMED (see "Independent disposition review 2026-08-07" below);
+second-agent replay of the load-bearing `[D]` citation locators remains the
+outstanding finality gate**
 
 This document is the `RH-002` output: one source-anchored desk screen per
 admitted route family, matched budgets, an explicit disposition for every
@@ -13,10 +16,14 @@ by a second agent; until then this record is a first-agent output.
 
 ## Inputs and admitted candidates
 
-Candidates admitted from `RH-001` (exactly three, per the capability map's
-"RH-002 admission decision" table): Weil-first Li positivity,
-Nyman-Beurling/Báez-Duarte closure, and the explicit-formula-plus-global-
-inequality family. The de Bruijn-Newman route, mollifier sweeps, spectral
+Route families screened in `RH-002` (three, per the capability map's
+"RH-002 admission decision" table, which admits two as candidates and had
+already parked the third): Weil-first Li positivity (`ADMIT` as the main
+direct screen) and Nyman-Beurling/Báez-Duarte closure (`ADMIT` as a pilot
+capped at 20% of later execution budget), plus the
+explicit-formula-plus-global-inequality family, carried at its pre-cycle
+disposition "`PARK` as a direct route; `REQUIRED DEPENDENCY SCREEN` for Li"
+and re-screened here. The de Bruijn-Newman route, mollifier sweeps, spectral
 analogies without an identified operator, and bounded zero computation were
 never admitted and stay `PARK`/evidence-only.
 
@@ -43,9 +50,13 @@ performed.
 
 ## Citation policy for this record
 
-Sources already pinned with locators and checksums (`LAG07`, `BOM-CLAY`,
-`BD02-v2` in `SOURCE_CONTRACTS.md`; `RH-SRC-001..008` in `corpus.md`) are
-cited by those IDs. All other literature references below are **desk-level
+Sources pinned with normative locators and audited PDF checksums (`LAG07`,
+`BOM-CLAY`, `BD02-v2` in `SOURCE_CONTRACTS.md`) are cited by those IDs. The
+`corpus.md` register IDs `RH-SRC-001..008` are URL-pinned only: no checksum,
+and no page-level locator except where they coincide with the three audited
+PDFs (`RH-SRC-001` = `BOM-CLAY`, `RH-SRC-005` = `BD02-v2`). Any load-bearing
+theorem citation to a `RH-SRC-00x` ID therefore counts as a `[D]` desk
+citation and must have its exact locator replayed before finality. All other literature references below are **desk-level
 citations** from the screening session; the independent disposition review
 must pin exact locators for every load-bearing one before the dispositions
 become final. Load-bearing desk citations are marked `[D]`.
@@ -90,7 +101,7 @@ bar — and any theorem meeting it would itself be a proof of RH.**
 - Finite numerics (Keiper, Maslanka, `n ≲ 10⁵`) `[D]`: bounded computational
   evidence only, per the corpus rules.
 
-**Death conditions already triggered at desk time** (4 of 6 from the
+**Death conditions already triggered at desk time** (5 of 6 from the
 admission row): "only definitions/equivalences"; "finite positive
 coefficients or PSD blocks, numerics"; "a bound with no strict asymptotic
 margin"; "an RH-equivalent premise" — decisively, the day-45 target itself
@@ -104,21 +115,29 @@ explicit formula) is exactly the shared infrastructure Route C's dependency
 screen also needs. Recorded status: **PARKED-DIRECT /
 ALIVE-AS-FORMALIZATION-LANE**.
 
-**Reconsideration triggers (preregistered):**
+**Reconsideration triggers (preregistered; each reopens desk review only,
+never auto-`SELECT`):**
 
 - `A-T1`: peer-reviewed unconditional bound on the prime-side term `P(n)` of
   the form `|P(n)| ≤ (1−η)·A(n)` with explicit `η > 0` and explicit `N₀` on
   an infinite tail — to be triaged at full RH-proof severity, since it
   implies RH;
-- `A-T2`: any published unconditional `Re λ_n ≥ ε·n` on a tail (same
-  severity note);
+- `A-T2`: any published unconditional `Re λ_n ≥ ε·n` on a tail, or any
+  published unconditional `Re λ_n ≥ 0` for all `n ≥ N₀` on the full infinite
+  tail even with no growing margin — by the recorded Voros dichotomy the
+  latter already implies RH, so both are triaged at full RH-proof severity;
+  the strict-margin threshold in the preregistration block remains the day-45
+  evidence bar for any route execution, not the bar for reopening desk
+  review;
 - `A-T3`: a materially new positivity mechanism for the Weil quadratic form
   provably not an RH restatement (corpus rule 4);
 - `A-T4` (cost-only): Mathlib gains Hadamard factorization, order-one growth
   for completed L-functions, or a Riemann-Weil explicit formula.
 
 **Preregistration binding any revival:** conventions frozen per
-`SOURCE_CONTRACTS.md` (`S_xi` per Gate 0; multiplicity
+`SOURCE_CONTRACTS.md` (`S_xi` per the `SOURCE_CONTRACTS.md` shared-notation
+section, which realizes the capability map's Gate 0 normalization;
+multiplicity
 `analyticOrderNatAt riemannXi ρ` counted exactly once; `λ_n` by the
 `SC-LI-02` star limit with radial cutoff `|ρ| ≤ T`; no `tsum` substitution;
 no cutoff swap without `SC-BRIDGE-02`). Parameter: the Li index `n → ∞`,
@@ -185,17 +204,23 @@ RH. The route's **foundation objects remain clean and valuable**:
 `measurable_fract`-class and `rpow`-integrability API present at the pin),
 `SC-NB-03` (the Mellin identity `−ζ(s)/s = ∫₀^∞ x^{s−1} ρ₁(x) dx` on
 `0 < re(s) < 1` — de-risked by the present Abel-summation machinery
-`LSeries_eq_tsum...`/`LSeries_eq_mul_integral`,
+`LSeries_eq_mul_integral`,
 `Mathlib/NumberTheory/LSeries/SumCoeff.lean:137`), and `SC-NB-04` (the
 Fourier-Mellin unitary — de-risked by the newly recorded Fourier-Plancherel
 `L²` capability, `Mathlib/Analysis/Fourier/LpSpace.lean:50,89`). These are
-formalization-only items, ordered strictly after the route-neutral bridge
-and `S0-TRUST`, and are not progress on RH.
+formalization-only items and are not progress on RH. They are unscheduled
+and unauthorized: the route-neutral bridge and `S0-TRUST` are now complete,
+but no `SC-NB` work may begin while the `RH-002` dispositions are under
+independent review, and each item would require its own preregistered task.
+Nothing in this paragraph spends or alters the 20% pilot execution cap,
+which remains 0% spent.
 
-**Reconsideration trigger** `B-T1`: a new peer-reviewed unconditional
-quantitative theorem changing the structure — e.g. an unconditional `o(1)`
-upper bound for any modified natural-span family (RH-grade news, triaged as
-such), or an unconditional change to the Burnol lower-bound landscape.
+**Reconsideration trigger (reopens desk review only, never auto-`SELECT`)**
+`B-T1`: a new peer-reviewed unconditional quantitative theorem changing the
+structure — e.g. an unconditional `o(1)` upper bound for any modified
+natural-span family (RH-grade news, triaged at the repository's highest
+review severity), or an unconditional change to the Burnol lower-bound
+landscape.
 
 **Preregistration binding any future pilot:** parameter `N → ∞` declared as
 the scale `N(F_N) = max_k a_k` over positive-natural indices (not the term
@@ -225,8 +250,10 @@ reasons:**
 
 - zero-free regions (de la Vallée Poussin; Vinogradov-Korobov `[D]`) exclude
   individual zeros only in a region shrinking to `re = 1`; for any fixed
-  `β > 1/2` the exclusion holds only up to bounded height; no uniform
-  vertical-strip zero-free region `σ ≥ σ₀ < 1` exists;
+  `β > 1/2` the published exclusions reach only bounded height; no uniform
+  vertical-strip zero-free region `σ ≥ σ₀`, `σ₀ < 1`, is known — whether one
+  exists is open, and RH would imply one, so this is a gap in the literature
+  and not an impossibility result;
 - zero-density estimates (Ingham, Huxley, Bourgain, Guth-Maynard `[D]`) are
   cardinality upper bounds `≥ 1` in the relevant ranges — structurally
   incapable of excluding a single zero (the map's semantic-mismatch register
@@ -235,9 +262,11 @@ reasons:**
   Yoshida `[D]` and Connes' trace-formula program `[D]` prove positivity
   unconditionally only on restricted/truncated classes; Connes-Consani
   finite/low-frequency positivity `[D]` is support/bandwidth-restricted, so
-  it can only certify zero-freeness already covered by bounded-height
-  verification (`RH-SRC-007`); the support parameter does not tend to
-  infinity with controlled constants;
+  any zero-freeness it certifies is confined to a bounded height determined
+  by the support parameter; no explicit constant for that height is on
+  record here, so it has not been compared with the `RH-SRC-007` verified
+  range, and the support parameter does not tend to infinity with controlled
+  constants;
 - mollifier/proportion results (Selberg; Levinson ≥ 1/3; Conrey ≥ 40%;
   Pratt-Robles-Zaharescu-Zeindler > 41.7% `[D]`) bound the proportion of
   on-line zeros and exclude nothing off-line;
@@ -320,3 +349,105 @@ independently per the `SC` contract rules.
    dispositions and second-agent replay of every `[D]` citation's exact
    locator. The separate `SOURCE_CONTRACTS.md` acceptance review completed
    through `RH-006` on 2026-08-06 and no longer gates this list.
+
+---
+
+## Independent disposition review 2026-08-07 (`RH-002` closure)
+
+Three independent per-route reviews (one reviewer per route, each working
+read-only against this record, `SOURCE_CONTRACTS.md`,
+`MATHLIB_CAPABILITY_MAP.md`, `corpus.md`, the `RH-006` replay and acceptance
+records, the 2026-08-07 claims audit, and the pinned Mathlib checkout —
+`fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`, verified by `git rev-parse` in
+each review) completed the `RH-002` exit item "independent mathematical
+review of all three dispositions" on 2026-08-07. Full record:
+`notes/reviews/RH002_DISPOSITION_REVIEW_2026_08_07.md`.
+
+**Verdicts — all three dispositions CONFIRMED as recorded; no `PARK` becomes
+`SELECT`; nothing in this section authorizes theorem construction,
+computation, or route execution; no claim about RH's truth changes:**
+
+- **Route A (Weil-first Li positivity): CONFIRM** — `PARK` (PARKED-DIRECT /
+  ALIVE-AS-FORMALIZATION-LANE) stands as recorded.
+- **Route B (Nyman-Beurling/Báez-Duarte): CONFIRM** — `PARK` as route-to-RH
+  stands; foundation objects clean; the 20% pilot execution cap is
+  unchanged and remains 0% spent.
+- **Route C (explicit formula + global inequality): CONFIRM** — `PARK` as a
+  direct route stands; `REQUIRED DEPENDENCY SCREEN` for Route A retained,
+  budget still charged to Route A.
+
+**Wording amendments applied by this review** (all to supporting prose;
+dispositions, budgets, bars, and preregistration thresholds are unchanged
+except the explicitly preregistered broadening of trigger `A-T2` in item 5):
+
+1. *(Audit D2)* The "Citation policy for this record" sentence was replaced:
+   only `LAG07`, `BOM-CLAY`, and `BD02-v2` carry normative locators and
+   audited checksums; `RH-SRC-001..008` are URL-pinned only, so any
+   load-bearing theorem citation to a `RH-SRC-00x` ID counts as a `[D]` desk
+   citation. In particular, "Li 1997 (`RH-SRC-003`, Thm 1)" and the
+   `RH-SRC-004` abstract-criterion citation in the Route A screen are
+   `[D]`-class; the equivalence content of both is independently carried by
+   the checksum-pinned `LAG07` (Theorem 2.4 and (1.6)/(1.8), replayed under
+   `RH-006`).
+2. *(Audit D5)* The admitted-candidates sentence was replaced: the capability
+   map's admission table admits two candidates and had already parked the
+   third; three families were screened.
+3. *(Audit D23)* Route A's death-condition count corrected from "4 of 6" to
+   "5 of 6"; the quoted string "finite positive coefficients or PSD blocks,
+   numerics" covers two distinct row items. Only "a rearranged conditional
+   sum" was untriggered. The disposition is unaffected.
+4. The Route A trigger preamble now carries the explicit "each reopens desk
+   review only, never auto-`SELECT`" clause Route C already had. This was
+   always the operative rule; it is now explicit for Route A.
+5. `A-T2` was broadened to close a coverage gap found by the Route A review:
+   by the recorded Voros dichotomy, unconditional full-tail `Re λ_n ≥ 0`
+   with no growing margin already implies RH, yet as previously worded it
+   met no Route A trigger. The strict-margin threshold in the
+   preregistration block remains the day-45 evidence bar for any route
+   execution; it is not the bar for reopening desk review.
+6. The preregistration clause "`S_xi` per Gate 0" was corrected to point at
+   the `SOURCE_CONTRACTS.md` shared-notation section, which realizes the
+   capability map's Gate 0 normalization; "Gate 0" is a heading of
+   `MATHLIB_CAPABILITY_MAP.md`, not of `SOURCE_CONTRACTS.md`.
+7. *(Audit D1)* The Route C survey clause asserting in the indicative that
+   no uniform vertical-strip zero-free region exists was replaced by the
+   supported non-knowledge statement ("… is known — whether one exists is
+   open, and RH would imply one, so this is a gap in the literature and not
+   an impossibility result"). As previously written the clause entailed ¬RH
+   and contradicted outcome item 1. Graded **S1** per the concurring
+   recommendation of the Route B and Route C reviewers, with the S0
+   boundary considered explicitly on the record: the enclosing paragraph is
+   a literature survey, and no decision or RH-truth claim was ever derived
+   from the defective sentence. Route B's analogous sentence ("None
+   exists") survives review unchanged: it asserts the nonexistence of a
+   publication, not a truth claim about RH.
+8. *(Audit D3)* The Connes-Consani clause no longer asserts an uncompared
+   domination by the `RH-SRC-007` verified range; the support-restriction
+   fact alone triggers the "output controls only bounded height" death
+   condition.
+9. *(Audit D6)* The phantom declaration name `LSeries_eq_tsum...` was
+   removed from the `SC-NB-03` de-risking note; `LSeries_eq_mul_integral`
+   (`Mathlib/NumberTheory/LSeries/SumCoeff.lean:137`) exists at the pin and
+   carries the note alone.
+10. *(Audit D7)* Route B's foundation-objects ordering clause, whose
+    preconditions have since been discharged and which had therefore
+    inverted into an apparent authorization, now states explicitly that the
+    items are unscheduled and unauthorized and that the 20% pilot cap is
+    untouched.
+11. *(Audit D4, in `SOURCE_CONTRACTS.md`)* The shared-notation `Multiset`
+    sentence no longer asserts infinitude of the divisor support; see the
+    dated amendment there. Independently checked by the Route B review: no
+    `SC-NB` row consumes the zero divisor or infinitude, and the Burnol sum
+    in the revival bar converges regardless of the support's cardinality.
+12. The status line of this document was updated to record this completed
+    review and the remaining finality gate.
+
+**Remaining finality gate (unchanged by this review):** second-agent replay
+of the exact locators of every load-bearing `[D]` desk citation — above all
+Voros 2004/2006 (the "meeting the bar would itself prove RH" claim and the
+broadened `A-T2` rest on it), Burnol (the Route B revival-bar window
+constant `C ≥ Σ_{Re ρ = 1/2} m(ρ)²/|ρ|²` and the `o(1/log N)`
+automatic-STOP clause), and secondarily Vasyunin and Bettin-Conrey. The
+pinned `LAG07`/`BOM-CLAY`/`BD02-v2` anchors alone already support all three
+`PARK`s. This gate discharges the second half of outcome item 4; the first
+half (independent review) is discharged by this section.
