@@ -4,9 +4,10 @@
 A recurring re-encoding move in algebraic attacks on ECDLP is to *adjoin an auxiliary
 variable together with its defining equation*: replace a system `I ⊆ k[x]` by the system
 `I + ⟨t₁ − g₁(x), …, t_m − g_m(x)⟩ ⊆ k[x, t]`, where each `g_j` is a polynomial in the
-variables already present. Straight-line/circuit encodings, the `U = X³` Semaev
-re-encoding of `experiments/p3_sm_system/`, and the auxiliary-variable splittings of
-`experiments/p4_petit/` are all instances of this move.
+variables already present. The `U = X³` Semaev re-encoding of `experiments/p3_sm_system/`
+(`semaev_system.py:408` emits literally `Poly(uv - xv ** 3)`) is an instance of this move,
+and is the only re-encoding in this repository that is. The auxiliary-variable splittings of
+`experiments/p4_petit/` are **not** — see the limits at the end of this docstring.
 
 This module proves, over an arbitrary `CommRing k` and arbitrary (possibly infinite)
 index types `σ` (original variables) and `τ` (auxiliary variables), that the move only
@@ -50,21 +51,33 @@ contractions*, i.e. about the variety and about which relations are derivable. T
 **nothing whatever** about the cost of computing with either presentation: not about
 Gröbner/F4 running time, not about solving degree or degree of regularity, not about
 Macaulay matrix size, not about the leading-term ideal or the standard-monomial
-staircase. Every one of those depends on the presentation *and* on the monomial order,
-and every one of them is observed in this repository to move by orders of magnitude
-under exactly the re-encodings covered here (both directions: a degree proxy can fall
-while wall-clock rises by three orders of magnitude). Citing this module to argue
-"therefore a compact circuit encoding cannot help" is an overclaim. Its correct use is
-narrow and negative: it falsifies **one** class of explanation for a re-encoding —
-"the re-encoding shrank the variety, lowered the solution count, or manufactured a new
-algebraic consequence" — and nothing beyond that.
+staircase. All of those depend on the presentation *and* on the monomial order, and the
+one covered re-encoding this repository has measured moves them — upward. At matched
+`|F| = 6`, `experiments/p3_sm_system/runs/HYP_GLV_SEMAEV_001_p3-sm-system_fa4fed78efc9.json`
+records the `U = X³` adjunction lowering the solving-degree proxy `13 → 9` while the
+Macaulay matrix grows `188×136 → 2750×1365` (≈147× by entries) and the proxy linear
+algebra rises `0.3767 s → 34.1792 s` (≈91×) — at **unchanged** quotient dimension (2 in
+both presentations). So a degree proxy can fall while cost rises by two orders of
+magnitude; no recorded case in this repository shows a covered re-encoding lowering any
+cost proxy. (The numbers above are the run manifest's. The prose table of that
+experiment's `RESULTS.md` rounds them to `32.5 s` / `0.39 s`, "≈ 80× slower"; those bytes
+are digest-pinned by `HSCORR-2026-08-01-P3-M3-BITS` in `repo/RESEARCH_ENGINE_V0.json` and
+so are deliberately not edited here. Cite the manifest, not the prose.) Citing this module to argue "therefore a compact circuit encoding cannot
+help" is an overclaim. Its correct use is narrow and negative: it falsifies **one** class
+of explanation for a re-encoding — "the re-encoding shrank the variety, lowered the
+solution count, or manufactured a new algebraic consequence" — and nothing beyond that.
 
-Two further limits. (i) Only *graph* adjunctions `t = g(x)` are covered; proposals that
+Two further limits, and they exclude a real experiment in this repository, not a
+hypothetical one. (i) Only *graph* adjunctions `t = g(x)` are covered; proposals that
 project, restrict, or adjoin field equations are not retractions and genuinely can
-change the variety, so applying this module to them is a category error. (ii) The `G`
-here are polynomials in the original variables only — a *flat* adjunction. A chained
-straight-line program `t₂ = g₂(x, t₁)` reduces to this form only after a triangular
-change of generators, which is not carried out here.
+change the variety, so applying this module to them is a category error. This rules out
+`experiments/p4_petit/`'s `product_2aux`, whose defining equation `X_i − ρ(σ(t1,t2))`
+(`semaev_petit.py:230`) runs the other way: the *original* variable is a polynomial in
+the *auxiliary* ones, so no retraction fixing `k[x]` exists. (ii) The `G` here are
+polynomials in the original variables only — a *flat* adjunction. A chained straight-line
+program `t₂ = g₂(x, t₁)` reduces to this form only after a triangular change of
+generators, which is not carried out here; this rules out the same experiment's
+`single_aux_composed` (`X = r₂(w)`, `w = r₁(t)`, `semaev_petit.py:253`).
 -/
 import Mathlib
 

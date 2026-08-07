@@ -10225,7 +10225,7 @@
     },
     {
       "id": "ledger-311",
-      "claim": "Graph-ideal invariance: adjoining `t = g(x)` changes only the presentation (over an arbitrary `CommRing k` and arbitrary, possibly infinite, index types, the re-encoding `I ⊆ k[x] ↦ I + ⟨t_j − g_j(x)⟩ ⊆ k[x,t]` is a retraction of `k`-algebras. Hence the extended ideal is the contraction `comap π I`, the kernel of the substitution is exactly `⟨t_j − g_j⟩`, and eliminating the adjoined variables returns `I` on the nose — a polynomial relation among the original variables holds in the re-encoded system iff it already held in `I`. Point-level: solutions neither split nor merge. Mathlib v4.31.0 states nothing of this kind for `MvPolynomial`; the closest item is the univariate constant-`g` case `Polynomial.quotientSpanXSubCAlgEquiv`. Honest scope: these are statements about ideals and their contractions. They say nothing about the cost of computing with either presentation — not solving degree, not degree of regularity, not Macaulay matrix size, not the leading-term ideal, not wall-clock — all of which depend on the presentation *and* the monomial order and are observed in this repository to move by orders of magnitude under exactly these re-encodings, in both directions. Correct use is narrow and negative: it falsifies one class of explanation for a re-encoding (\"it shrank the variety / lowered the solution count / manufactured a new algebraic consequence\") and nothing beyond. Two further limits: only *graph* adjunctions are covered — projections and adjoined field equations are not retractions and genuinely can change the variety — and only *flat* ones, a chained straight-line program `t₂ = g₂(x,t₁)` requiring a triangular change of generators that is not carried out)",
+      "claim": "Graph-ideal invariance: adjoining `t = g(x)` changes only the presentation (over an arbitrary `CommRing k` and arbitrary, possibly infinite, index types, the re-encoding `I ⊆ k[x] ↦ I + ⟨t_j − g_j(x)⟩ ⊆ k[x,t]` is a retraction of `k`-algebras. Hence the extended ideal is the contraction `comap π I`, the kernel of the substitution is exactly `⟨t_j − g_j⟩`, and eliminating the adjoined variables returns `I` on the nose — a polynomial relation among the original variables holds in the re-encoded system iff it already held in `I`. Point-level: solutions neither split nor merge. Mathlib v4.31.0 states nothing of this kind for `MvPolynomial`; the closest item is the univariate constant-`g` case `Polynomial.quotientSpanXSubCAlgEquiv`. Honest scope: these are statements about ideals and their contractions. They say nothing about the cost of computing with either presentation — not solving degree, not degree of regularity, not Macaulay matrix size, not the leading-term ideal, not wall-clock — all of which depend on the presentation *and* the monomial order. The one covered re-encoding this repository has actually measured moves them upward: at matched `|F| = 6`, `experiments/p3_sm_system/` records `U = X³` lowering the degree proxy `13 → 9` while the Macaulay matrix grows `188×136 → 2750×1365` (≈147× by entries) and proxy linear algebra rises `0.3767 s → 34.1792 s` (≈91×), at unchanged quotient dimension 2. No recorded case shows a covered re-encoding lowering any cost proxy. Correct use is narrow and negative: it falsifies one class of explanation for a re-encoding (\"it shrank the variety / lowered the solution count / manufactured a new algebraic consequence\") and nothing beyond. Two further limits, and both exclude a real experiment here rather than a hypothetical one: only *graph* adjunctions are covered — projections and adjoined field equations are not retractions and genuinely can change the variety, which rules out `experiments/p4_petit/`'s `product_2aux`, whose defining equation `X_i − ρ(σ(t1,t2))` writes the *original* variable in terms of the *auxiliary* ones so that no retraction fixing `k[x]` exists — and only *flat* ones, which rules out the same experiment's chained `single_aux_composed` (`X = r₂(w)`, `w = r₁(t)`))",
       "theorem_cell": "`Ecdlp.GraphIdeal.comap_eq_map_sup_ker`, `Ecdlp.GraphIdeal.comap_comap_eq_self`, `Ecdlp.GraphIdeal.aeval_sumElim_comp_rename_inl`, `Ecdlp.GraphIdeal.aeval_sumElim_rename_inl`, `Ecdlp.GraphIdeal.sub_rename_aeval_mem`, `Ecdlp.GraphIdeal.ker_aeval_sumElim`, `Ecdlp.GraphIdeal.comap_aeval_sumElim`, `Ecdlp.GraphIdeal.elimination_eq_self`, `Ecdlp.GraphIdeal.aeval_comp_aeval_sumElim`",
       "declared_files": [
         "Ecdlp/Proved/GraphIdealInvariance.lean"
@@ -10239,7 +10239,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-          "line": 86
+          "line": 99
         },
         {
           "cited": "Ecdlp.GraphIdeal.comap_comap_eq_self",
@@ -10247,7 +10247,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-          "line": 104
+          "line": 117
         },
         {
           "cited": "Ecdlp.GraphIdeal.aeval_sumElim_comp_rename_inl",
@@ -10255,7 +10255,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-          "line": 119
+          "line": 132
         },
         {
           "cited": "Ecdlp.GraphIdeal.aeval_sumElim_rename_inl",
@@ -10263,7 +10263,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-          "line": 126
+          "line": 139
         },
         {
           "cited": "Ecdlp.GraphIdeal.sub_rename_aeval_mem",
@@ -10271,7 +10271,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-          "line": 138
+          "line": 151
         },
         {
           "cited": "Ecdlp.GraphIdeal.ker_aeval_sumElim",
@@ -10279,7 +10279,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-          "line": 160
+          "line": 173
         },
         {
           "cited": "Ecdlp.GraphIdeal.comap_aeval_sumElim",
@@ -10287,7 +10287,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-          "line": 182
+          "line": 195
         },
         {
           "cited": "Ecdlp.GraphIdeal.elimination_eq_self",
@@ -10295,7 +10295,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-          "line": 195
+          "line": 208
         },
         {
           "cited": "Ecdlp.GraphIdeal.aeval_comp_aeval_sumElim",
@@ -10303,7 +10303,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-          "line": 208
+          "line": 221
         }
       ]
     }
@@ -15319,63 +15319,63 @@
       "namespace": "Ecdlp.GraphIdeal",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-      "line": 208
+      "line": 221
     },
     "Ecdlp.GraphIdeal.aeval_sumElim_comp_rename_inl": {
       "name": "aeval_sumElim_comp_rename_inl",
       "namespace": "Ecdlp.GraphIdeal",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-      "line": 119
+      "line": 132
     },
     "Ecdlp.GraphIdeal.aeval_sumElim_rename_inl": {
       "name": "aeval_sumElim_rename_inl",
       "namespace": "Ecdlp.GraphIdeal",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-      "line": 126
+      "line": 139
     },
     "Ecdlp.GraphIdeal.comap_aeval_sumElim": {
       "name": "comap_aeval_sumElim",
       "namespace": "Ecdlp.GraphIdeal",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-      "line": 182
+      "line": 195
     },
     "Ecdlp.GraphIdeal.comap_comap_eq_self": {
       "name": "comap_comap_eq_self",
       "namespace": "Ecdlp.GraphIdeal",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-      "line": 104
+      "line": 117
     },
     "Ecdlp.GraphIdeal.comap_eq_map_sup_ker": {
       "name": "comap_eq_map_sup_ker",
       "namespace": "Ecdlp.GraphIdeal",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-      "line": 86
+      "line": 99
     },
     "Ecdlp.GraphIdeal.elimination_eq_self": {
       "name": "elimination_eq_self",
       "namespace": "Ecdlp.GraphIdeal",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-      "line": 195
+      "line": 208
     },
     "Ecdlp.GraphIdeal.ker_aeval_sumElim": {
       "name": "ker_aeval_sumElim",
       "namespace": "Ecdlp.GraphIdeal",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-      "line": 160
+      "line": 173
     },
     "Ecdlp.GraphIdeal.sub_rename_aeval_mem": {
       "name": "sub_rename_aeval_mem",
       "namespace": "Ecdlp.GraphIdeal",
       "kind": "theorem",
       "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
-      "line": 138
+      "line": 151
     },
     "Ecdlp.MovReduction.mov_random_q_success_probability": {
       "name": "mov_random_q_success_probability",
