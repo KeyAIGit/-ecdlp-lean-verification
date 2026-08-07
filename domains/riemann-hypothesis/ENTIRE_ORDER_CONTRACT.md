@@ -1,7 +1,10 @@
 # RH growth-order definition contract (S1-GROWTH, definitional pillar): DRAFT v1
 
 Status: **DRAFT v1 (2026-08-07) — non-built review artifact, offered for STAGE ONE
-(INDEPENDENT CONTRACT ACCEPTANCE) ONLY. NOT Lean-checked.** No declaration below
+(INDEPENDENT CONTRACT ACCEPTANCE) ONLY. NOT Lean-checked.** Red-team audited
+2026-08-07 (§Annex A: every citation re-verified at the pin; one locator
+corrected, two obligations sharpened, one docstring gap filled; no signature
+changed). No declaration below
 has been elaborated; no `lake build` has been run against any of it. Under the one
 invariant, the Lean kernel via CI is the sole judge of every statement in this
 contract, and this document carries no kernel verdict of any kind.
@@ -395,6 +398,11 @@ Degenerate-case conventions, stated exactly and shared verbatim with `growthType
   would receive order 1 (see contract §1.1);
 * outer clamp `ENNReal.ofReal`: transient negative quotients (outer log of a value
   in `[0,1)`, i.e. `1 ≤ M(f,r) ≤ e`) collapse to `0`;
+* `maxModulus` junk (empty sphere at `r < 0`, `Real.sSup_empty`; unbounded
+  norm-image at some `r`, `Real.sSup_of_not_bddAbove` — impossible for entire `f`
+  but the definition is total): the junk value `0` is lifted to `1` by the inner
+  clamp and contributes `0`; identical in `growthType` through the common `G0`
+  carrier, so this junk convention is symmetric by construction;
 * consequences: `growthOrder f = 0` for `f = 0`, for constants, and for every `f`
   with `maxModulus f · ≤ 1` eventually — the textbook convention for bounded
   entire functions;
@@ -486,11 +494,16 @@ Proof skeleton:
 
 Pinned dependencies (L1): all cited inline above.
 
-Obligations (L1): **S1G-L1** (MEDIUM): the case split and the
-`Tendsto.limsup_eq` closer need the `OrderTopology ℝ≥0∞` instance to be found
-by instance search (it is the standard ENNReal topology; not settleable by
-source reading alone — CI is the judge). Fallback: replace the tendsto route
-by an `∀ ε > 0` eventual-bound argument closed with `limsup_le_iff`.
+Obligations (L1): **S1G-L1** (LOW — downgraded from MEDIUM by the 2026-08-07
+red-team audit, Annex A finding F2): the closer's instances are pinned
+declarations, not instance-search folklore — `instance : TopologicalSpace ℝ≥0∞
+:= Preorder.topology ℝ≥0∞` (Topology/Order/Real.lean:53) and `instance :
+OrderTopology ℝ≥0∞ := ⟨rfl⟩` (:55) — and `Tendsto.limsup_eq`'s section
+variables (Topology/Order/LiminfLimsup.lean:151) are exactly
+`[ConditionallyCompleteLinearOrder α] [TopologicalSpace α] [OrderTopology α]`,
+all satisfied by `ℝ≥0∞`, plus `[NeBot f]`, satisfied by `atTop : Filter ℝ`.
+Fallback (kept for the record): the `∀ ε > 0` eventual-bound route closed with
+`limsup_le_iff`.
 
 ---
 
@@ -575,9 +588,11 @@ Pinned dependencies (L3): all cited inline; every locator in §0.
 
 Obligations (L3): **S1G-L3** (LOW-MEDIUM): elaboration only. Named risks: the
 `IsGreatest` pair must be assembled in the image-form `(norm ∘ exp) '' sphere`
-(fallback: rewrite with `Set.mem_image` and `mem_sphere_zero_iff_norm` —
-name verified in use at the pin, e.g. Geometry/Manifold/Instances/Sphere.lean:131);
-`max_eq_left` orientation.
+(fallback: rewrite with `Set.mem_image` and `mem_sphere_zero_iff_norm` — this
+name is `to_additive`-GENERATED from `mem_sphere_one_iff_norm`,
+Analysis/Normed/Group/Basic.lean:302–303, so a grep for its own declaration
+finds nothing; cite the generation site, and see it in use at e.g.
+Geometry/Manifold/Instances/Sphere.lean:131); `max_eq_left` orientation.
 
 ---
 
@@ -724,8 +739,10 @@ rpow-vs-npow elaboration pitfall of S1G-2 applies here concretely.
 `Algebra/Order/Archimedean/Real/Basic.lean` :171, :189, :294.
 `Order/ConditionallyCompleteLattice/Basic.lean` :198, :202.
 `Order/ConditionallyCompletePartialOrder/Basic.lean` :72, :120.
-`Analysis/Complex/Trigonometric.lean` :995 (inside `namespace Complex`,
-opened :24 — the bare `norm_exp` spelling needs `open Complex`).
+`Analysis/Complex/Trigonometric.lean` :995 (inside `namespace Complex`; the
+span containing :995 opens at :954 and closes at :1002 — an earlier draft said
+:24, which is a *different, earlier* `Complex` span in the same file; corrected
+by Annex A finding F1. The bare `norm_exp` spelling needs `open Complex`).
 `Analysis/Complex/Norm.lean` :43, :106. `Data/Complex/Basic.lean` :88.
 `Analysis/Complex/Exponential.lean` :279, :315.
 `Analysis/Polynomial/Basic.lean` :362 (namespace `Polynomial` :32; section
@@ -733,6 +750,10 @@ variables :341). `Analysis/Normed/Module/RCLike/Real.lean` :128.
 `Topology/MetricSpace/ProperSpace.lean` :45. `Topology/Order/Compact.lean` :322.
 `Topology/Order/LiminfLimsup.lean` :191. `Topology/Algebra/Order/Field.lean` :222.
 `Order/MinMax.lean` :54. `Algebra/Order/GroupWithZero/Basic.lean` :1199.
+`Topology/Order/Real.lean` :53 (`TopologicalSpace ℝ≥0∞ := Preorder.topology`),
+:55 (`OrderTopology ℝ≥0∞`) — added by Annex A finding F2 (L1's closer).
+`Analysis/Normed/Group/Basic.lean` :302–:303 (`mem_sphere_one_iff_norm`,
+`to_additive` source of `mem_sphere_zero_iff_norm`) — added by Annex A F3.
 Comparison-only (codomain argument, §1): `Data/EReal/Basic.lean` :35;
 `Analysis/Asymptotics/ExpGrowth.lean` :38, :41;
 `Analysis/SpecialFunctions/Log/ENNRealLog.lean` :46;
@@ -745,7 +766,7 @@ Comparison-only (codomain argument, §1): `Data/EReal/Basic.lean` :35;
 | S1G-0 | LOW | G0 | elaboration; junk values are the documented `sSup` ones |
 | S1G-1 | LOW | G1 | elaboration; design risk is the review itself (§1.3) |
 | S1G-2 | LOW | G2 | `r ^ p` elaborates via `Pow ℝ ℝ` (Pow/Real.lean:38), not npow |
-| S1G-L1 | MEDIUM | L1 | `OrderTopology ℝ≥0∞` instance search for the `Tendsto.limsup_eq` closer; fallback ε-route recorded |
+| S1G-L1 | LOW *(was MEDIUM; Annex A F2)* | L1 | closer instances pinned: Topology/Order/Real.lean:53/:55; fallback ε-route kept for the record |
 | S1G-L2 | **HIGH** | L2 | the unassembled `log log (C·rⁿ)/log r → 0` asymptotic (same gap `UPSTREAM_POOL.md` §1.3 names); may split to its own stage-two PR |
 | S1G-L3 | LOW-MED | L3 | `IsGreatest` assembly in image form; **pinned ingredients suffice — no asymptotics** |
 | S1G-L4 | MEDIUM | L4 | the two-branch clamp case split; no unassembled asymptotics |

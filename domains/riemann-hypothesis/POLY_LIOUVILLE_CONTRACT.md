@@ -753,6 +753,133 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
 
 ---
 
+## ANNEX A: adversarial review record (2026-08-07)
+
+Independent adversarial review of the draft-v1 statement surface. Mathlib
+checkout re-verified by `git rev-parse HEAD` at
+`/workspace/leanprover-community/mathlib4` →
+`fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`; repo agreement re-verified at
+`lake-manifest.json:8`. Every `file:line` in the contract was re-opened at that
+revision; the repo-side citations were re-opened on the working tree. Attack
+fronts assigned to this review: (1) the formal-multilinear-series vs
+`Polynomial` bridge, (2) radius-to-infinity limit bookkeeping, (3) scope creep.
+
+**Verdict: `SOUND_WITH_FIXES`.** Five findings (A1–A5), all resolved in place
+above. The statement surface L1–L5 is unchanged — every fix is to a locator, a
+proof skeleton, or prose; no signature moved. This verdict accepts a statement
+surface only: it is not a Lean kernel verdict, it does not promote a module,
+and it closes no barrier row.
+
+### A. Findings resolved in place
+
+| ID | Severity | Finding | Fix applied |
+|---|---|---|---|
+| **A1** | MEDIUM | L1 Step 2's degree chain closed with `by gcongr`, but **none** of `degree_mul_le` (Degree/Defs.lean:396), `degree_C_le` (:153), `degree_pow_le` (:402), `degree_add_le` (:326), `degree_X_le` (:240) carries `@[gcongr]` at the pin (attribute grep over `Degree/Defs.lean` and `Degree/Operations.lean`: zero attribute hits), and the goal `degree P ≤ 0 + n • 1` is a bound, not a gcongr congruence shape — the tactic has nothing to fire and the step fails outright, unlike the Step 1 norm `gcongr`, whose `pow_le_pow_left₀` really is tagged (`@[mono, gcongr, bound]`, GroupWithZero/Basic.lean:469-470). PL-1b under-scoped this as merely "untested" | Skeleton rewritten to an explicit term chain via `degree_pow_le_of_le` (Degree/Defs.lean:406); PL-1b restated with the residual `WithBot ℕ` risks and the `:406` mul-shape (`b * a`) vs `:402` smul-shape (`n • degree p`) distinction; L1 pinned-dependencies row given full locators |
+| **A2** | LOW | The `mem_sphere_iff_norm.1 hz` precedent inside the pinned Cauchy estimate is at **Liouville.lean:49**, not `:47` as cited in three places (§0 quote comment, L1 skeleton comment, L1 pinned dependencies) | All three occurrences corrected to `:49` |
+| **A3** | LOW | Scope paragraph and L1 Honesty note claimed "every statement in the pinned `Liouville.lean` hypothesises `IsBounded (range f)`" — false as universally quantified: the Cauchy estimates (`:44`, `:69`) hypothesise a sphere bound, and `eq_const_of_tendsto_cocompact` (`:135`) hypothesises a cocompact limit, not `IsBounded (range f)`. The load-bearing absence claim (no growth-to-degree conclusion anywhere in the file) is **correct** and was re-verified | Both passages reworded to quantify over the Liouville-type conclusions (`:114`/`:123`/`:128` bounded, `:135` cocompact) and keep the absence claim |
+| **A4** | LOW | Death condition 5's fallback cited `tsum_eq_sum` with no locator and no SummationFilter caveat. At the pin it is the `@[to_additive]` twin of `tprod_eq_prod`, **InfiniteSum/Basic.lean:457**, hypothesis `[L.LeAtTop]` — the fallback therefore sits on the *same* PL-2a seam it is meant to escape (though `tsum_eq_sum` composes two lemmas where the primary route composes three) | Locator and caveat added to death condition 5 |
+| **A5** | LOW | The §0 quote block gave TaylorSeries.lean:35 as "variables" but omitted `:124` (section `entire`: `⦃f⦄ (hf : Differentiable ℂ f) (c z : ℂ)`), the line that makes `hf`, `c`, `z` explicit — the fact L2's three-argument application depends on | `:124` added to the quote block with the binder detail spelled out |
+
+### B. Citations re-verified as CORRECT (no change)
+
+Pinned Mathlib — `Analysis/Complex/Liouville.lean` :44 (Cauchy estimate,
+signature verbatim incl. `[CompleteSpace F]`, section variables `:32-33`),
+:109 (`namespace Differentiable`), :114, :123, :128, :135 (bounded family).
+`Analysis/Complex/TaylorSeries.lean` :33 (`open Nat`), :35 (variables incl.
+`[CompleteSpace E]`), :122-:124 (section `entire`), :129, :137, :143 (statements
+and smul-shape/factor-order verbatim; the locator-corrections table's `:137` /
+`:143` against the pool's `:139` is right).
+`Topology/Algebra/InfiniteSum/Defs.lean` :106 (`HasProd` with defaulted
+`L := unconditional β`), :149/:194 (section variables `{L}`, `{f a s}` — all
+implicit, consistent with PL-2a's `(L := unconditional ℕ)` fallback), :295
+(`hasProd_prod_of_ne_finset_one` with `[L.LeAtTop]`), :323 (`[T2Space α]
+[L.NeBot]`), :326 (`HasProd.unique`).
+`Topology/Algebra/InfiniteSum/SummationFilter.lean` :168, :171, :173 (both
+default-filter instances present).
+`Analysis/Polynomial/Basic.lean` :32 (`namespace Polynomial`), :34 (explicit
+`(P Q : 𝕜[X])`), :161 (`div_tendsto_atTop_zero_of_degree_lt` verbatim).
+`Algebra/Polynomial/BigOperators.lean` :45 (`variable (s : Finset ι)` —
+explicit, so L3's `natDegree_sum_le_of_forall_le _ _ fun i hi ↦ …` application
+pattern is exactly the in-tree use at `:311`), :61, :65.
+`Algebra/Polynomial/Degree/Defs.lean` :365, :514, :518.
+`Algebra/Polynomial/Eval/Defs.lean` :343 (`eval_finsetSum`), :347 (deprecated
+alias, date string `"2026-04-08"` verbatim).
+`Algebra/Polynomial/Degree/Operations.lean` :479.
+`Algebra/Polynomial/Degree/SmallDegree.lean` :43, :50.
+`Algebra/Order/GroupWithZero/Basic.lean` :469-:470 (`@[mono, gcongr, bound]`
+confirmed on `pow_le_pow_left₀`).
+`Topology/Order/OrderClosed.lean` :130 (`@[to_dual ge_of_tendsto]`), :131,
+:469 (`le_of_tendsto_of_tendsto` — PL-1c's fallback name is real).
+`Order/Filter/AtTopBot/Defs.lean` :61. `Order/Filter/Tendsto.lean` :105
+(`Tendsto.congr'`). `Order/Filter/AtTopBot/Ring.lean` :36 (`tendsto_pow_atTop`,
+PL-1b fallback) and in-tree `Tendsto.inv_tendsto_atTop` uses confirmed.
+`Analysis/Normed/Group/Basic.lean` :181-:182 (`@[to_additive]` on
+`norm_le_norm_add_norm_div'`; additive use precedent
+`Analysis/Normed/Algebra/Spectrum.lean:716`), :885-:886, :990-:991.
+`Analysis/Normed/Group/Bounded.lean` :71-:72.
+`Analysis/Calculus/DiffContOnCl.lean` :42.
+`Analysis/Calculus/IteratedDeriv/Defs.lean` :55, :227.
+`Analysis/Analytic/CPolynomialDef.lean` :62, :72, :79, :94, :99, :215 (the
+collapse + `.unique` precedent pair is exactly as described, and `:215` passes
+`(f := …) (s := …)` explicitly — consistent with the implicit binders found at
+InfiniteSum/Defs.lean:194).
+
+Repo — `lakefile.toml:2` (`defaultTargets`), `.github/workflows/ci.yml:359`
+(no-incomplete-proof scan) and `:420` (`lake build`),
+`domains/riemann-hypothesis/MATHLIB_CAPABILITY_MAP.md:388` (`S1-GROWTH` row
+text verbatim: "no zeta/xi vertical or order-one growth theorem").
+`UPSTREAM_POOL.md` locator-corrections table verified honest against the pool
+itself: the pool really does cite `TaylorSeries.lean:139` (pool `:461`), really
+does name deprecated `Polynomial.eval_finset_sum` (pool `:472`), and really does
+locate the collapse lemma only by its in-tree uses (pool `:462`); all three
+contract corrections stand.
+
+### C. Attack fronts, disposition
+
+1. **Formal-multilinear-series vs `Polynomial` bridge — held.** The package
+   never touches `FormalMultilinearSeries`: at this pin the entire-Taylor
+   lemmas (TaylorSeries.lean:129/:137) are already stated in `iteratedDeriv`
+   form, so no coefficient extraction from an FMS (`p.coeff`,
+   `changeOrigin`, `partialSum`) is needed anywhere on the L1→L2→L3 path; the
+   `Polynomial ℂ` term in L3 is *constructed* explicitly as
+   `∑ i ∈ range (n+1), C ((i !)⁻¹ * iteratedDeriv i f 0) * X ^ i`, not
+   extracted. Re-verified that no reverse bridge exists at the pin to
+   duplicate: `Analysis/Analytic/Polynomial.lean` is forward-only (polynomials
+   are analytic — `AnalyticAt.aeval_polynomial` and friends); grep for a
+   `∃ p : Polynomial` conclusion over `Analysis/Complex/` and
+   `Analysis/Analytic/` returns zero hits; `CPolynomialAt`/`CPolynomialOn`
+   never produce a `Polynomial` term. Decision point 5's rejection of the
+   `CPolynomialOn` carrier and DEFERRED-PL-1 are accurate as written.
+2. **Radius-to-infinity bookkeeping — one real defect (A1), rest held.**
+   Squeeze orientation checked: `ge_of_tendsto hlim h : ‖iteratedDeriv k f c‖ ≤ 0`
+   with `h : ∀ᶠ R in atTop, ‖iteratedDeriv k f c‖ ≤ bound R` is the correct
+   instantiation of the `to_dual` twin at OrderClosed.lean:130-131, and
+   `rw [← norm_le_zero_iff]` produces exactly that goal. `Tendsto.congr'`
+   orientation checked (`f₁ =ᶠ f₂` with `f₁` the `eval` form: matches the
+   `refine h.congr' ?_` use). `eventually_gt_atTop` supplies `0 < R` on the
+   filter; `atTop : Filter ℝ` is `NeBot`, discharging `ge_of_tendsto`'s
+   instance. The C-slot of the Cauchy estimate unifies with the compound bound
+   `C * (1 + ‖c‖ + R) ^ n` because it is a bare implicit `{C : ℝ}`. The one
+   defect was the unfireable degree-chain `gcongr` (A1, fixed).
+3. **Scope creep — none found.** Five signatures, zero `def`s, no growth-order
+   notion, no maximum-modulus input, no `riemannZeta`/`riemannXi`/`LSeries`
+   token anywhere in the contract's Lean blocks; `S1-GROWTH` (capability map
+   `:388`) is about order-one *exponential* growth of the ζ/ξ layer and is
+   correctly left untouched by the claim boundary; the two-stage gate matches
+   `MULTIPLICITY_CONTRACT.md`'s, and stage two's Mathlib-CI fork correctly
+   re-derives locators rather than trusting this contract. Name-collision scan
+   re-run at the pin and over the repo for all five proposed names: zero hits
+   each.
+
+### D. What this annex does not do
+
+No statement was added or removed; no Lean file was created; nothing was
+elaborated. Under the one invariant, every claim above is source reading
+against the pinned tree, and only a stage-two build can turn any of L1–L5 into
+a theorem.
+
+---
+
 ## Two-stage gate and promotion ordering
 
 Restated for this file, matching `MULTIPLICITY_CONTRACT.md`:

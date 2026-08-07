@@ -69,7 +69,7 @@ theorem. This is deliberate: the package is generic and must remain promotable
   Analyticity of the limit is pinned: `TendstoLocallyUniformlyOn.differentiableOn`
   (LocallyUniformLimit.lean:135) applies **by defeq** to
   `HasProdLocallyUniformlyOn` (UniformOn.lean:152), with the in-tree precedent
-  `DedekindEta.lean:92` using exactly this dot-notation unfolding. The zero-set
+  `DedekindEta.lean:91` using exactly this dot-notation unfolding. The zero-set
   and order layer runs through the **pointwise** complement split
   `Multipliable.tprod_mul_tprod_compl` (InfiniteSum/Basic.lean:752) — *not*
   through the pool's conjectured `HasProdLocallyUniformlyOn.mul_compl`; §1.4
@@ -360,7 +360,7 @@ point `w` actually needs is:
 gap row, `MultipliableLocallyUniformlyOn.differentiableOn` (§0 row 13), is
 also **not a real gap** — `TendstoLocallyUniformlyOn.differentiableOn`
 (LocallyUniformLimit.lean:135) applies to a `HasProdLocallyUniformlyOn`
-hypothesis **by definitional unfolding**, and `DedekindEta.lean:92` is the
+hypothesis **by definitional unfolding**, and `DedekindEta.lean:91` is the
 in-tree precedent doing exactly that (§0). What remains expensive is the
 **assembly** of 1–4 into `analyticOrderAt_weierstrassProduct` — fiber
 finiteness, `tprod`-to-`Finset.prod` conversion under the pin's
@@ -819,7 +819,7 @@ lemma analyticAt_weierstrassProduct (hane : ∀ i, a i ≠ 0)
   have h := hasProdLocallyUniformlyOn_weierstrassProduct hane hsum      -- W8
   -- HasProdLocallyUniformlyOn is DEFEQ to TendstoLocallyUniformlyOn (UniformOn.lean:152);
   -- generalized field notation resolves .differentiableOn through the def —
-  -- in-tree precedent: DedekindEta.lean:92.
+  -- in-tree precedent: DedekindEta.lean:91.
   have hd : DifferentiableOn ℂ (weierstrassProduct p a) Set.univ :=
     h.differentiableOn
       (.of_forall fun s ↦ by
@@ -849,7 +849,7 @@ directed order for **every** `ι`, including `ι` empty, via `⟨∅⟩`);
 
 - **S1W-DIFF** (LOW-MEDIUM): the dot-notation unfolding
   `HasProdLocallyUniformlyOn → TendstoLocallyUniformlyOn` is precedented
-  (DedekindEta.lean:92) but is resolution magic; if it fails here, the
+  (DedekindEta.lean:91) but is resolution magic; if it fails here, the
   zero-cost fallback is
   `rw [hasProdLocallyUniformlyOn_iff_tendstoLocallyUniformlyOn] at h`
   (UniformOn.lean:162, an `Iff.rfl`) and a direct application. **This
@@ -969,8 +969,9 @@ the default `unconditional` filter); `div_self` (GroupWithZero core).
 
 - **S1W-SING** (LOW): the singleton-`tprod` collapse; two candidate pinned
   routes (`tprod_fintype` with `Fintype ({i₀} : Set ι)` vs
-  `tprod_eq_mulSingle`, Basic.lean:459 region). Either works; pick at build
-  time.
+  `tprod_eq_mulSingle`, Basic.lean:495, which also carries `[L.LeAtTop]` —
+  satisfied by the default `unconditional` filter). Either works; pick at build
+  time. (Locator corrected from ":459 region" by Annex B item 2.)
 
 ---
 
@@ -988,8 +989,14 @@ lemma analyticOrderAt_weierstrassFactor_div {p : ℕ} {c : ℂ} (hc : c ≠ 0) :
     analyticOrderAt (fun z ↦ weierstrassFactor p (z / c)) c = 1
 
 /-- `[GEN]` Order is additive over finite products of analytic functions. Absent at
-the pin (only the binary `analyticOrderAt_mul`, Order.lean:497, exists); a
-routine `Finset.cons_induction`. Natural Mathlib upstream. -/
+the pin AS A NAME in the analytic carrier (only the binary `analyticOrderAt_mul`,
+Order.lean:497, exists there); a routine `Finset.cons_induction`. NOTE (Annex B
+item 1): the MEROMORPHIC twin `meromorphicOrderAt_prod` IS pinned
+(Meromorphic/Order.lean:437, with `meromorphicOrderAt_fun_prod` at :456 already
+handling the `Finset.prod_apply` seam), and the carrier bridge
+`AnalyticAt.meromorphicOrderAt_eq` (:279) transfers it — so this lemma is
+derivable by transfer instead of fresh induction. Natural Mathlib upstream
+either way. -/
 lemma analyticOrderAt_finsetProd {ι : Type*} (s : Finset ι) {f : ι → ℂ → ℂ} {z₀ : ℂ}
     (hf : ∀ i ∈ s, AnalyticAt ℂ (f i) z₀) :
     analyticOrderAt (∏ i ∈ s, f i) z₀ = ∑ i ∈ s, analyticOrderAt (f i) z₀
@@ -1052,7 +1059,10 @@ hane hsum w` (W7); `haveI := hS.fintype`.
 4. `analyticOrderAt F w = ∑ i ∈ hS.toFinset, 1 = hS.toFinset.card` by
    `analyticOrderAt_finsetProd` + the factor-at-`c` lemma (each `i ∈ S` has
    `a i = w`, `hane i`), then `hS.toFinset.card = Nat.card {i | a i = w}`
-   (`Nat.card_eq_toFinset_card'`-family).
+   (`Nat.card_coe_set_eq`, Data/Set/Card.lean:642, then
+   `Set.ncard_eq_toFinset_card'`, Data/Set/Card.lean:649 — the name
+   `Nat.card_eq_toFinset_card'` cited in draft v1 does not exist at the pin;
+   corrected by Annex B item 2).
 5. `analyticOrderAt T w = 0` by Order.lean:133 with `T w ≠ 0` (W10 third
    signature applied to the subfamily, whose members all have `a i ≠ w` by
    construction).
@@ -1072,6 +1082,18 @@ factors as `𝕜 → 𝕜`); `AnalyticAt.analyticOrderAt_eq_one_of_zero_deriv_ne
 as an eventual rather than global identity); `deriv_const_sub_id` —
 Deriv/Add.lean:449; `deriv_div_const` — Deriv/Mul.lean:593; `tprod_fintype` —
 Basic.lean:481; `Complex.exp_ne_zero` — Exponential.lean:160; W2, W3, W7, W10.
+
+**Meromorphic-carrier fallback route (Annex B item 1, pinned):**
+`meromorphicOrderAt_prod` — Meromorphic/Order.lean:437;
+`meromorphicOrderAt_fun_prod` — Meromorphic/Order.lean:456;
+`meromorphicOrderAt_mul` — Meromorphic/Order.lean (binary, above :437);
+`AnalyticAt.meromorphicOrderAt_eq` — Meromorphic/Order.lean:279
+(`meromorphicOrderAt f x = (analyticOrderAt f x).map (↑)`);
+`MeromorphicAt.prod` — Meromorphic/Basic.lean:109. If the `ℕ∞` assembly of
+S1W-ORD seizes up, steps 3–6 can be run in `WithTop ℤ` via the bridge and
+transferred back once (injectivity of `ENat.map (↑· : ℕ → ℤ)` plus the `≠ ⊤`
+companion signature). This changes no statement in W12; it is proof-route
+insurance only.
 
 ### Obligations (W12)
 
@@ -1095,7 +1117,12 @@ Basic.lean:481; `Complex.exp_ne_zero` — Exponential.lean:160; W2, W3, W7, W10.
   `[NontriviallyNormedField 𝕜]` at build time if the induction goes through
   verbatim — contract states it over ℂ to keep the surface minimal, and
   widening is a permitted stage-two strengthening (not a statement change for
-  consumers).
+  consumers). Risk further reduced by Annex B item 1: the pinned
+  `meromorphicOrderAt_prod` (Meromorphic/Order.lean:437) +
+  `AnalyticAt.meromorphicOrderAt_eq` (:279) give a derivation by transfer if
+  the direct induction misbehaves; `meromorphicOrderAt_prod`'s own proof
+  (`Finset.induction` + binary `meromorphicOrderAt_mul` + `MeromorphicAt.prod`)
+  is the in-tree template for the direct induction as well.
 
 ---
 
@@ -1269,7 +1296,7 @@ Three corrections and two confirmations worth recording:
    names — but §1.4 shows neither is needed: the first is replaced by the
    pinned pointwise split (Basic.lean:752) plus subfamily instantiation, the
    second by defeq dot-notation into LocallyUniformLimit.lean:135
-   (precedent: DedekindEta.lean:92). The cost moves into S1W-ORD; it does not
+   (precedent: DedekindEta.lean:91). The cost moves into S1W-ORD; it does not
    vanish.
 
 ---
@@ -1291,3 +1318,161 @@ discipline; this contract does not claim a slot.
 
 **Return-to-stage-one condition:** death condition 10, or any statement-shape
 change requested at stage two.
+
+---
+
+## ANNEX B: RED-TEAM RE-VERIFICATION (2026-08-07)
+
+Independent adversarial re-verification of draft v1 against the pin
+(`fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`, re-confirmed via `git rev-parse
+HEAD` this session). Method: every `file:line` locator in §0, §2, and the
+dependencies table was re-printed from the tree and compared against the quoted
+shape; hard greps were run for every "absent at the pin" claim and every
+fallback lemma name in the proof skeletons; the four invited attack fronts
+(§Two-stage gate) were each pressed. Corrections were applied **in place**
+(marked "Annex B item N" at the edit sites); this annex is the record. Same
+regime as draft v1: **no kernel verdict, no built module, no barrier change.**
+
+### Verdict
+
+**ACCEPT AT STAGE ONE, AS CORRECTED.** All 47 spot-checked locators match the
+pin verbatim (zero phantom citations; zero wrong-shape quotes among the
+load-bearing §0 quotes). The four attack fronts resolve as follows — one
+substantive finding (item 1, a missed pinned asset, favorable), three locator
+defects (item 2, fixed in place), zero soundness defects. Death condition 10
+is **not** triggered: no cited pinned locator lacked its quoted shape; the
+item-2 defects sit in fallback-route prose, not in the §0 interface quotes or
+the dependencies table.
+
+### Attack front 1 — the product-lemma gap (§1.4)
+
+**Claim survives.** `HasProdLocallyUniformlyOn.mul_compl` and
+`HasProdUniformlyOn.mul_compl` have **zero hits** at the pin (re-grepped this
+session; only three files in the entire tree even mention
+`HasProdLocallyUniformlyOn`: UniformOn.lean, MultipliableUniformlyOn.lean,
+Cotangent.lean — none contains a compl-split). The pool's §0 rows 13–14
+(UPSTREAM_POOL.md:82–83) and its Tier-4 pricing prose (:339, "weeks") are
+quoted accurately by §1.4. The re-derivation is sound as stated:
+`analyticOrderAt` is a local invariant, so W12 needs the split only as a
+*function identity plus analyticity of each factor at `w`* — which the
+pointwise `Multipliable.tprod_mul_tprod_compl` (Basic.lean:752, re-verified
+verbatim, stated in plain `∏'` with no `SummationFilter` side conditions;
+`HasProd.mul_compl` at :379 likewise plain) delivers at every `z`, with tail
+analyticity from subfamily-W9. The pool's Tier-4 objection ("the pointwise
+split does not deliver an identity of analytic functions on a neighbourhood",
+UPSTREAM_POOL.md:340–343) is answered, not dodged: an identity holding at
+*every* point of ℂ between functions each analytic at `w` is exactly what
+`analyticOrderAt_mul` consumes. No locally-uniform split is needed. DEFERRED-W4
+stands.
+
+### Attack front 2 — zero set of an infinite product (no-accumulation)
+
+**In scope and honestly registered; not dodged.** The two classical
+obligations behind an unrestricted zero-set/order statement are both carried
+by named signatures, not assumed:
+
+- *Non-accumulation.* `hsum` forces `‖a i‖⁻¹ ^ (p+1) → 0` along `cofinite`,
+  i.e. the family escapes every ball cofinitely — that is precisely W7's
+  `eventually_cofinite_le_norm` (derived, with a full skeleton, from the
+  additive `Summable.tendsto_cofinite_zero`, Group.lean:365, `@[to_additive]`
+  attribute re-verified on the pin). Fiber finiteness
+  (`finite_setOf_apply_eq`) is its stated corollary. Nothing stronger is ever
+  used: no step of W10–W12 needs "zeros avoid a punctured neighbourhood of
+  `w`" — the fiber split plus tail-factor nonvanishing *at the single point
+  `w`* suffices, and indices of `Sᶜ` are free to crowd `w` in norm without
+  affecting any step.
+- *A convergent product of nonzero factors could still vanish.* Closed by the
+  pinned `tprod_one_add_ne_zero_of_summable` (Log/Summable.lean:216;
+  `[NormMulClass ℂ]` discharged by `NormedDivisionRing.toNormMulClass`,
+  Analysis/Normed/Field/Basic.lean:54–55). This is the exact lemma the
+  Cotangent development uses only *off* the zero set; W10/W11 deploy it at
+  arbitrary `w` against the fiber complement. The Cotangent-dodge description
+  in §1.3 re-verified line-exact: `sineTerm` :78, `sineTerm_ne_zero` :80 (`hx
+  : x ∈ ℂ_ℤ`), :94, :99, :105, :118, :125 (`hZ2 : Z ⊆ ℂ_ℤ`), :132 (on `ℂ_ℤ`)
+  all correct.
+
+### Attack front 3 — local-order additivity across the product
+
+**Honestly registered (S1W-ORD, HIGH) — and draft v1 missed a pinned asset
+(item 1 below).** The decomposition in §1.4/W12 is complete: every consumed
+order lemma (`analyticOrderAt_mul` :497 with `𝕜 → 𝕜` section variables :488,
+`_eq_zero` :133, `_eq_one_of_zero_deriv_ne_zero` :328,
+`_comp_of_deriv_ne_zero` :561, `_congr` :175) re-verified verbatim. The one
+`[GEN]` lemma is real but smaller than drafted:
+
+1. **(Substantive, favorable.) Finite-product order additivity already exists
+   at the pin in the meromorphic carrier.** `meromorphicOrderAt_prod`
+   (Meromorphic/Order.lean:437) and `meromorphicOrderAt_fun_prod` (:456 —
+   which even pre-solves the `Finset.prod_apply` seam S1W-PI worries about)
+   are pinned, together with the carrier bridge
+   `AnalyticAt.meromorphicOrderAt_eq` (:279:
+   `meromorphicOrderAt f x = (analyticOrderAt f x).map (↑)`) and
+   `MeromorphicAt.prod` (Meromorphic/Basic.lean:109). Draft v1's "genuinely
+   absent at the pin" was true only of the *analytic-carrier name*;
+   the mathematical content is pinned one bridge away. Consequence:
+   `analyticOrderAt_finsetProd` (still worth stating, still `[GEN]`) is
+   derivable by transfer, and S1W-ORD gains a second fallback route (run
+   steps 3–6 in `WithTop ℤ`, transfer once). W12's docstring, pinned
+   dependencies, and S1W-GEN were amended in place. Severity ratings
+   unchanged: S1W-ORD remains HIGH — the seams it names (funext lift,
+   `tprod_fintype`/`toFinset`, `Pi.mul` defeq, `Nat.card` cast chain) are
+   untouched by this find.
+
+### Attack front 4 — hidden dependence on an enumeration
+
+**None found.** Variable blocks of every load-bearing file re-read at the pin:
+UniformOn.lean:30 (`{α β ι : Type*}`), MultipliableUniformlyOn.lean:24/:82
+(`{α ι : Type*}`, `namespace Summable` spans :80–:157 as claimed),
+Log/Summable.lean:21 (`variable {ι : Type*}`), InfiniteSum/Basic.lean and
+Group.lean generic. `grep Countable\|Encodable\|Denumerable` over all six
+load-bearing files: one hit total (`Multipliable.countable_mulSupport`,
+Group.lean:388 — unrelated, not consumed). The only `Fintype` in the package
+is on the *finite fiber* via `Set.Finite.fintype` (choice, not enumeration).
+The claim-boundary assertion "nothing in this package can even express an
+enumeration of zeta zeros" is accurate as to statement surface.
+
+### Item 2 — locator defects found and fixed in place
+
+| # | Draft v1 said | Pin says | Fix |
+|---|---|---|---|
+| 2a | `DedekindEta.lean:92` for the dot-notation chain (5 sites) | chain sits at **:91** (`multipliableLocallyUniformlyOn_one_sub_pow.hasProdLocallyUniformlyOn.differentiableOn`); :92 is the `.of_forall` continuation | all 5 sites corrected to :91; the `:89–95` range citations were already correct |
+| 2b | `tprod_eq_mulSingle`, "Basic.lean:459 region" (S1W-SING) | **Basic.lean:495**, and it carries `[L.LeAtTop]` (satisfied by `unconditional`) | corrected in W11 obligations |
+| 2c | "`Nat.card_eq_toFinset_card'`-family" (W12 step 4) | no such name at the pin; the pinned chain is `Nat.card_coe_set_eq` (Data/Set/Card.lean:642, `Nat.card ↥s = s.ncard`) + `Set.ncard_eq_toFinset_card'` (:649) | corrected in W12 skeleton |
+
+None of the three touches a statement, an obligation severity, or a §0 quote;
+all three sit in fallback/bookkeeping prose. Remaining fallback names spot-
+checked and confirmed at the pin: `Summable.of_norm_bounded_eventually`
+(Analysis/Normed/Group/InfiniteSum.lean:180), `div_eq_one_iff_eq`
+(Algebra/GroupWithZero/Units/Basic.lean:359, hypothesis `b ≠ 0` as used),
+`pow_lt_pow_iff_left₀` (Algebra/Order/GroupWithZero/Basic.lean:642),
+`inv_lt_inv₀` (:1222), `Summable.mul_left`
+(Topology/Algebra/InfiniteSum/Ring.lean:45), `WithTop.natCast_ne_top`
+(Algebra/Order/Monoid/Unbundled/WithTop.lean:298),
+`Bornology.IsBounded.subset_closedBall` (Topology/MetricSpace/Bounded.lean:101),
+`logTaylor_succ` (LogBounds.lean:75, "`:73` region" as drafted),
+`Finset.sum_range_succ'` (core BigOperators, confirmed in use),
+`hasProdLocallyUniformlyOn_iff_tendstoLocallyUniformlyOn` (UniformOn.lean:162),
+`HasProdLocallyUniformlyOn.tprod_eqOn` (UniformOn.lean:256). Namespace-span
+claims verified: LogBounds `namespace Complex` :32–:290; Exponential
+:90–:198 and :347–:509 with the `Real` twin `exp_ne_zero` at :235 as warned;
+CauchyIntegral `namespace Complex` opens :173 (contains :678); Complex/Basic
+`namespace Complex` :566–:710 (contains :689); Arg :24–:663 (contains :544);
+Log/Summable homonyms at :49/:94 take `Summable f` exactly as the W10
+dependency note warns. Annex A items 1–5 all re-confirmed, including the pool's
+"plain `def`" error (UPSTREAM_POOL.md:301, :848 vs the `noncomputable` modifier
+on LogBounds.lean:67) and the `:87` docstring's "open compact" pin-side typo.
+
+### Scout B's grounding claim, settled
+
+The counterintuitive pool claim — *the classically hard estimate already
+exists at the pin* — is **confirmed at the strongest reading**:
+`norm_log_one_sub_inv_add_logTaylor_neg_le` sits at LogBounds.lean:231–232
+character-for-character as quoted in §0, and its own proof (:233–:236) performs
+the identical slit-plane discharge W5's skeleton copies, so even the seam
+lemmas are precedented in the pin's own text. The real blockers are, as
+scouted, bookkeeping — now with one of them (finite-product order additivity)
+found to be more pinned than the pool or draft v1 believed.
+
+*This annex records a source-reading review only. No Lean was elaborated; the
+kernel remains the sole judge at stage two. No barrier row changes, no route is
+selected, and nothing here is a claim about the truth of RH.*
