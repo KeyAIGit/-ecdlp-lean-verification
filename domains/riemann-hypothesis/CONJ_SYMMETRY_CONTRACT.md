@@ -2,6 +2,8 @@
 
 Status: **DRAFT v2 (2026-08-06) — non-built review artifact. Not Lean-checked. Independent statement review is complete; built promotion remains blocked until the preconditions carried from `TARGET_BRIDGE_CONTRACT.md` / `XI_PACKAGE_CONTRACT.md` are met and the real module passes kernel and axiom CI. The `S0-TRUST` prerequisite was satisfied by merged PR #298 (`d6e146fa`) on 2026-08-05. The internal adversarial verdict was `SOUND_WITH_FIXES` with zero S0/S1/S2 findings; the external acceptance pass synchronized both LOW proof skeletons, including the corrected F1 sign (Annex B and the dated acceptance note below).**
 
+**Status addendum (2026-08-07).** The status paragraph above is the frozen pre-promotion text, retained verbatim; it no longer describes the current state. The built counterpart merged as PR #307 (`c277b86`) into `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean` (the sixteen Z1-Z9 declarations, including the two `S1C-ORD` generic lemmas `AnalyticAt.conj_conj` and `analyticOrderAt_conj_conj`) after both carried preconditions landed — the target bridge in PR #299 (`288d65b`), the xi package in PR #304 (`afdae08`) — and after the head passed the full build, the no-incomplete-proof scan, ResearchOS inverse ledger coverage, and both axiom audits with every `RH-CONJ-*` row at axiom base `standard`. This document is retained as the specification artifact. Two corrections to the frozen text above: (i) "zero S0/S1/S2 findings" is a retroactive grading the review record does not carry — Annex B records four findings (F1/F2 LOW, F3/F4 INFO), none statement-level: no declaration name, binder, hypothesis, conclusion, or claim boundary was challenged, and all four were proof-skeleton or locator fixes of the class the sibling bridge and xi reviews scored S2/S3; the corrected F1 sign is preserved as history in Z3, Annex B, and the acceptance note below, and in the merged module (`Conj.lean:202-207`). (ii) Promotion does **not** close the barrier: `S1-CONJ` remains OPEN — see the Barrier-closure boundary below.
+
 Scope: the `S1-CONJ` barrier of `MATHLIB_CAPABILITY_MAP.md` ("no named zeta/xi conjugation symmetry or multiplicity-preserving fourfold zero action"), i.e. the A/C-DAG node "conjugation symmetry for xi/zeta" and the local-order part of its follow-on "analytic-order equality … invariant under reflection/conjugation". It contains no divisor construction, no Li coefficients, no zero enumeration, no growth theorem, and no claim of progress on RH. Per the capability map, conjugation symmetry **must not be silently inferred from the `s ↦ 1−s` functional equation**; this package proves it independently, from the Dirichlet series and the identity theorem.
 
 Pinned Mathlib: `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f` (v4.31.0), verified this session via `git -C /workspace/leanprover-community/mathlib4 rev-parse HEAD`. Every declaration cited below was grep-verified at that exact revision this session; all `file:line` locators are from that tree (paths relative to the `Mathlib/` root of the pin).
@@ -15,12 +17,12 @@ Barrier-closure boundary (stated up front, honestly): `S1-CONJ`'s exit evidence 
 
 ## Candidate fields
 
-- **Mechanism.** The Dirichlet series `zeta_eq_tsum_one_div_nat_cpow` has termwise-real coefficients and a real-positive cpow base, so `conj ∘ ζ ∘ conj` agrees with `ζ` on the open half-plane `1 < re s`; both are analytic on the preconnected set `{1}ᶜ`, so the pinned identity principle `AnalyticOnNhd.eqOn_of_preconnected_of_eventuallyEq` propagates the agreement to all `s ≠ 1`; the totalized value `ζ(1) = (γ − log(4π))/2` is real, closing the last point. A second, puncture-free identity-theorem pass gives the same symmetry for the entire `completedRiemannZeta₀`, from which `completedRiemannZeta` and `riemannXi` inherit it by totalized field algebra. The zero-set, fourfold-action, and order-transport corollaries follow.
+- **Mechanism.** The Dirichlet series `zeta_eq_tsum_one_div_nat_cpow` has termwise-real coefficients and a real-**nonnegative** cpow base `(n : ℂ)` — including `n = 0`, whose `arg` is `0 ≠ π` by `natCast_arg`, so no term is split off — hence `conj ∘ ζ ∘ conj` agrees with `ζ` on the open half-plane `1 < re s`; both are analytic on the preconnected set `{1}ᶜ`, so the pinned identity principle `AnalyticOnNhd.eqOn_of_preconnected_of_eventuallyEq` propagates the agreement to all `s ≠ 1`; the totalized value `ζ(1) = (γ − log(4π))/2` is real, closing the last point. A second, puncture-free identity-theorem pass gives the same symmetry for the entire `completedRiemannZeta₀`, from which `completedRiemannZeta` and `riemannXi` inherit it by totalized field algebra. The zero-set, fourfold-action, and order-transport corollaries follow.
 - **Expected information gain.** Supplies a repo-local theorem package for the capability that remains `NOT-FOUND-IN-SCOPE` in the pinned Mathlib inventory; supplies the `ρ ↦ conj ρ` leg of the three symmetries required by `SOURCE_CONTRACTS.md` before `SC-LI-04`'s one-sided Li criterion; partially advances `S1-CONJ` (see boundary above). No information about the truth of RH is produced.
 - **Claim boundary.** Z1–Z6 are unconditional consequences of pinned Mathlib theorems. Z7 and Z9-xi additionally assume the xi package (X1); Z8 additionally assumes bridge P2/P3. Nothing touches divisors, enumeration, growth, Hadamard products, Li coefficients, or any route's research obligation. The two generic order lemmas of Z9 are genuinely missing at the pin and are registered as this contract's main obligation, with a complete assembly sketch from pinned ingredients.
 - **Death condition (stop rule).** Stop or split if any proof requires weakening an exclusion, deriving conjugation from the `s ↦ 1−s` functional equation, treating a totalized exceptional value as a meromorphic value, transferring `Λ` pointwise from `ζ` across the `Gammaℝ` zero set, or introducing a competing RH proposition. A clean blocker is preferable to a false symmetry.
 
-Proposed module preamble (name-resolution review only; the eventual built file also imports the built bridge/xi modules where required):
+Proposed module preamble (name-resolution review only; the built file — `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean`, merged as PR #307 (`c277b86`) — also imports the built bridge/xi modules where required):
 
 ```lean
 import Mathlib.NumberTheory.LSeries.ZetaZeros              -- riemannZeta API (transitively RiemannZeta.lean)
@@ -36,8 +38,11 @@ import Mathlib.Analysis.Complex.CauchyIntegral             -- DifferentiableOn.a
 -- + import of the built xi module providing riemannXi (Z7, Z9-xi)
 
 open Complex
-open scoped Real ComplexConjugate
+open Filter
+open scoped Real ComplexConjugate Topology
 ```
+
+(The `Filter` and `Topology` opens are required for the `eventually_of_mem` / `∀ᶠ` / `=ᶠ` API and the `𝓝` notation used by the Z2/Z3/Z9 skeletons; the merged module carries them at `Conj.lean:46-50`.)
 
 Name-collision scan (grep over the pinned tree this session): **zero hits** for every proposed name — `riemannZeta_conj`, `riemannZeta_comp_conj`, `completedRiemannZeta_conj`, `completedRiemannZeta₀_conj`, `Gammaℝ_conj`, `riemannZeta_conj_eq_zero_iff`, `riemannZetaZeros_conj_preimage`, `riemannZetaZeros_conj_image`, `riemannXi_conj`, `riemannXi_comp_conj`, `riemannZeta_fourfold_zero`, `riemannZeta_fourfold_zero'`, `AnalyticAt.conj_conj`, `analyticOrderAt_conj_conj`, `analyticOrderAt_riemannZeta_conj`, `analyticOrderAt_riemannXi_conj`. The scan also confirms the map's `NOT-FOUND` row: no conjugation lemma for `riemannZeta`, `completedRiemannZeta(₀)`, `hurwitzZetaEven`, or any `LSeries` exists at the pin.
 
@@ -520,7 +525,7 @@ Z5; **bridge prerequisites** `riemannZeta_one_sub_eq_zero_iff` (TARGET_BRIDGE_CO
 
 ### Obligations (Z8)
 
-None beyond the bridge landing (P2/P3 must be kernel-checked first; this is a package-ordering constraint, not a proof risk).
+None beyond the bridge landing (P2/P3 kernel-checked first — a package-ordering constraint, not a proof risk; satisfied: the bridge merged as PR #299 (`288d65b`) and the promotion PR #307 (`c277b86`) imports it).
 
 ---
 
@@ -588,7 +593,7 @@ Z2 (`riemannZeta_comp_conj`), Z7 (`riemannXi_comp_conj`, xi-conditional); `analy
 
 ### Obligations (Z9)
 
-- **OBLIGATION S1C-ORD (MEDIUM-HIGH — the contract's main obligation):** the two generic lemmas above do not exist at the pin and must be assembled per the sketch. Fallback if assembly stalls: mark `analyticOrderAt_riemannXi_conj`/`_riemannZeta_conj` as split-off to the divisor package **with** this sketch attached — but no mathematical blocker was found, so the default plan is to build them in this package.
+- **OBLIGATION S1C-ORD (MEDIUM-HIGH — the contract's main obligation):** the two generic lemmas above do not exist at the pin and must be assembled per the sketch. Fallback if assembly stalls: mark `analyticOrderAt_riemannXi_conj`/`_riemannZeta_conj` as split-off to the divisor package **with** this sketch attached — but no mathematical blocker was found, so the default plan is to build them in this package. **Discharged (2026-08-07 note):** both generic lemmas were built in this package and kernel-checked in merged PR #307 (`c277b86`), at `Conj.lean:336` (`AnalyticAt.conj_conj`) and `Conj.lean:357` (`analyticOrderAt_conj_conj`); no split-off was needed.
 
 ---
 
@@ -689,7 +694,7 @@ In-tree template witnesses (not dependencies): `NumberTheory/LSeries/DirichletCo
 | S1C-10 | LOW | Z7 normal-form alignment after the Z3 rewrite |
 | **S1C-ORD** | **MEDIUM-HIGH (main)** | **`AnalyticAt.conj_conj` and `analyticOrderAt_conj_conj` do not exist at the pin**; full assembly sketch given (three-case split over `analyticOrderAt_of_not_analyticAt` :64 / `analyticOrderAt_eq_top` :75 / `analyticOrderAt_eq_natCast` :86, witness transport `g ↦ conj∘g∘conj`, involution trick); all ingredients pinned, no analytic gap; ~40-60 lines |
 
-No obligation is analytic. Every analytic input — the Dirichlet series on `1 < re`, zeta's analyticity off `1`, entirety of `Λ₀`, `Λ = Λ₀ − 1/s − 1/(1−s)`, `Gamma` conjugation, `cpow` conjugation off the branch cut, antiholomorphic-composition differentiability, the identity principle, preconnectedness of `ℂ` and `ℂ∖{1}`, the totalized `ζ(1)` value, and the analytic-order characterization API — is a quoted pinned theorem at `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`. Nothing here is claimed proved until the kernel checks it in a built PR after independent review, bridge (P1-P5) landing (for Z8), xi-package landing (for Z7/Z9-xi), and closure of the carried preconditions.
+No obligation is analytic. Every analytic input — the Dirichlet series on `1 < re`, zeta's analyticity off `1`, entirety of `Λ₀`, `Λ = Λ₀ − 1/s − 1/(1−s)`, `Gamma` conjugation, `cpow` conjugation off the branch cut, antiholomorphic-composition differentiability, the identity principle, preconnectedness of `ℂ` and `ℂ∖{1}`, the totalized `ζ(1)` value, and the analytic-order characterization API — is a quoted pinned theorem at `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`. These obligations were kernel-checked by the merged promotion PR #307 (`c277b86`), after independent review, bridge (P1-P5) landing in PR #299 (for Z8), xi-package landing in PR #304 (for Z7/Z9-xi), and closure of the carried preconditions; the contract itself remains the retained specification artifact. Kernel verification of the package does not close `S1-CONJ`.
 
 ---
 
@@ -718,3 +723,11 @@ review synchronized the Z2 skeleton with its coherent real-value proof and
 corrected F1 to `linear_combination hΛ - h`; the opposite order is the
 negative of the goal. This accepts the contract surface only. It is not a Lean
 kernel verdict, does not promote a module, and does not close `S1-CONJ`.
+
+**Post-promotion addendum (2026-08-07).** The note above is retained verbatim
+as a dated record of the acceptance pass; it was accurate when written and its
+boundaries stand. The promotion it declined to perform subsequently occurred
+as merged PR #307 (`c277b86`) — see the status addendum at the head of this
+document. The merged module carries the corrected F1 sign
+(`linear_combination hΛ - h`, `Conj.lean:202`) and preserves the sign history
+as history (`Conj.lean:205-207`). `S1-CONJ` remains OPEN.

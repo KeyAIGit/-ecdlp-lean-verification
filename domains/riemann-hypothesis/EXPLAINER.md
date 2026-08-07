@@ -3,8 +3,10 @@
 Status: **informal, non-normative**. This file explains the research target
 for readers outside analytic number theory. Nothing here is a contract, a
 claim, or evidence; the normative documents are `README.md`, `corpus.md`,
-`MATHLIB_CAPABILITY_MAP.md`, `SOURCE_CONTRACTS.md`, `ROUTE_TRIAGE.md`, and
-`TARGET_BRIDGE_CONTRACT.md`.
+`MATHLIB_CAPABILITY_MAP.md`, `SOURCE_CONTRACTS.md`, `ROUTE_TRIAGE.md`,
+`TARGET_BRIDGE_CONTRACT.md`, `XI_PACKAGE_CONTRACT.md`, and
+`CONJ_SYMMETRY_CONTRACT.md`; the owning queue is
+`tasks/RIEMANN_HYPOTHESIS.md`.
 
 ## What the conjecture says
 
@@ -63,10 +65,16 @@ Not claiming a proof. The honest, machine-checked path is:
 2. map exactly which foundations exist and which are missing (done,
    independently replayed — `MATHLIB_CAPABILITY_MAP.md`);
 3. adversarially triage the attack routes with preregistered success bars
-   (done — all currently `PARK`ed, honestly);
+   (done — all currently `PARK`ed, honestly, and all three `PARK`
+   dispositions were independently confirmed on 2026-08-07);
 4. build the missing kernel-checked foundations in dependency order,
    starting with the route-neutral bridge between the formal target and the
-   classical formulations (contract frozen — `TARGET_BRIDGE_CONTRACT.md`);
+   classical formulations (under way — the bridge, the xi equivalence
+   package, and the conjugation-symmetry package are kernel-checked and
+   merged, PRs #299/#304/#307; the divisor-invariance half of the
+   conjugation barrier and the whole multiplicity layer remain open, the
+   latter with only a non-built statement surface awaiting independent
+   acceptance);
 5. re-open a route only when a genuinely new mechanism appears — with the
    preregistered bars deciding, not enthusiasm.
 

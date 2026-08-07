@@ -1599,8 +1599,10 @@ factorization).
   collapsing `⊤`. `analyticOrderAt`'s junk value `0` at non-analytic points
   (Order.lean:64) is audited on both sides of every ζ equality (M4 exceptional-
   point audit); M2 inherits Order.lean:561's own internal junk discharge.
-- **Exceptional points.** Every ζ statement (M4, M6, M8, M16–M17) carries
-  `0 < s.re` and `s.re < 1`. Ω excludes `1` (the ζ pole), `0`, and every Γℝ
+- **Exceptional points.** Every ζ statement is strip-bound: M4/M6/M8 carry
+  `0 < s.re` and `s.re < 1` as hypotheses; M16–M17 carry Ω as the divisor's
+  carrier set, outside which both sides are zero by
+  `apply_eq_zero_of_notMem`. Ω excludes `1` (the ζ pole), `0`, and every Γℝ
   pole `0, -2, -4, …`. ξ is entire, so no exceptional point arises in M1–M3,
   M5, M7, M9–M15.
 - **No inference from an unproved fact.** X11 (repo:`Xi.lean:248`) is a
@@ -1878,10 +1880,13 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
    `meromorphicOrderAt … ≠ ⊤`) is a different notion, is not covered by this
    condition, and never yields a growth statement.
 5. **M12 (S1M-FIN) cannot be discharged.** If `analyticOrderAt riemannXi z ≠ ⊤`
-   resists all three recorded routes, M13 must be dropped and the divisor
-   block reduced to M9–M11 + M14/M15 (which do not need it), with the support
-   identification recorded as a new deferred item. Do **not** state M13 with
-   the `≠ ⊤` hypothesis floated to the caller and then call the exit closed.
+   resists all three recorded routes, M13 — and with it M16' and M16'', which
+   derive their finiteness from M12 through X11 — must be dropped, and the
+   divisor block reduced to M9–M11, M14/M15, M16 and M17 (none of which needs
+   M12), with both support identifications (ξ on `U`, ζ on Ω) recorded as a new
+   deferred item. Do **not** state M13 or M16'' with the `≠ ⊤` hypothesis
+   floated to the caller and then call either half of the interface exit item
+   closed.
 6. **A ζ statement is proposed without the strip hypotheses.** M4/M6/M8
    without `0 < s.re` and `s.re < 1` are false statements, not hard ones.
 7. **A new definition is proposed.** The package must contain zero `def`s. If

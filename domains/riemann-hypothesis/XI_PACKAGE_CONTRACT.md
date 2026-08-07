@@ -27,7 +27,7 @@ Package prerequisites (cited as **bridge prerequisites**, not pinned Mathlib): `
 - **Claim boundary.** All eleven contract clauses (twelve public declarations) are unconditional consequences of pinned Mathlib theorems plus bridge P2. Nothing touches enumeration, growth, Hadamard products, conjugation, or any route's research obligation.
 - **Death condition (stop rule).** Stop or split if any proof requires weakening an exclusion, assuming a hidden nonvanishing fact, treating a totalized exceptional value as a meromorphic value, or introducing a competing RH proposition. A clean blocker is preferable to a false xi bridge.
 
-Proposed module preamble (name-resolution review only; the eventual built file also imports the built bridge module):
+Proposed module preamble (name-resolution review only; the built file merged in PR #304 also imports the built bridge module):
 
 ```lean
 import Mathlib.NumberTheory.LSeries.ZetaZeros              -- riemannZeta API (transitively RiemannZeta.lean)
@@ -38,9 +38,12 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Deriv         -- DifferentiableAt.c
 import Mathlib.Analysis.Complex.CauchyIntegral             -- DifferentiableOn.analyticAt (X11)
 -- + import of the built bridge module providing P1–P5
 
-open Complex
-open scoped Real
+open Complex Filter
+open scoped Real Topology
 ```
+
+(The `Filter`/`Topology` opens are required for X11's `=ᶠ[𝓝 s]` and
+`filter_upwards`; the merged `Xi.lean:27-28` carries exactly this preamble.)
 
 Name-collision scan: `grep -rn "riemannXi" Mathlib/` over the pinned tree returns **zero hits** (verified this session). None of the proposed names (`riemannXi`, `differentiable_riemannXi`, `riemannXi_one_sub`, `riemannXi_zero`, `riemannXi_one`, `riemannXi_eq_of_ne`, `riemannXi_eq_zero_iff_riemannZeta_eq_zero`, `riemannXi_ne_zero_of_one_le_re`, `riemannXi_ne_zero_of_re_le_zero`, `riemannXi_zero_mem_critical_strip`, `riemannHypothesis_iff_riemannXi_zeros_re_eq_half`, `analyticOrderAt_riemannXi_eq_riemannZeta`) collides with any pinned declaration.
 
@@ -291,9 +294,10 @@ theorem riemannXi_eq_zero_iff_riemannZeta_eq_zero {s : ℂ} (hs0 : s ≠ 0) (hs1
   have hG : Gammaℝ s ≠ 0 := by
     rw [Ne, Complex.Gammaℝ_eq_zero_iff]
     rintro ⟨n, rfl⟩
-    match n with
-    | 0     => exact hs0 (by norm_num)
-    | m + 1 => exact htriv ⟨m, by push_cast; ring⟩          -- OBLIG X6-a
+    cases n with
+    -- (`cases` substitutes in `hs0`/`htriv`, unlike a tactic-`match` on the goal alone)
+    | zero => exact hs0 (by norm_num)
+    | succ m => exact htriv ⟨m, by push_cast; ring⟩          -- OBLIG X6-a
   have hs1' : s - 1 ≠ 0 := sub_ne_zero.mpr hs1
   rw [riemannXi_eq_of_ne hs0 hs1,                            -- X5
       riemannZeta_def_of_ne_zero hs0,                        -- ζ = Λ / Gammaℝ, only under s ≠ 0
@@ -330,7 +334,7 @@ X5; `riemannZeta_def_of_ne_zero` (RiemannZeta.lean:152), `Complex.Gammaℝ_eq_ze
 theorem riemannXi_ne_zero_of_one_le_re {s : ℂ} (hs : 1 ≤ s.re) : riemannXi s ≠ 0
 ```
 
-`s = 1` is handled by the totalized-free value `riemannXi_one` (X4) — the closed half-plane comes for free, mirroring the bridge's use of `riemannZeta_ne_zero_of_one_le_re` which itself covers the totalized point 1 via `riemannZeta_one_ne_zero` (Nonvanishing.lean:412-415).
+`s = 1` is handled by the totalized-free value `riemannXi_one` (X4) — the closed half-plane comes for free, mirroring the bridge's use of `riemannZeta_ne_zero_of_one_le_re` which itself covers the totalized point 1 via `riemannZeta_one_ne_zero` (Nonvanishing.lean:412-414).
 
 ### Proof skeleton
 
@@ -524,7 +528,9 @@ theorem analyticOrderAt_riemannXi_eq_riemannZeta {s : ℂ} (h0 : 0 < s.re) (h1 :
         (Complex.differentiableAt_Gamma _ hz2)
         (differentiableAt_id.div_const 2))).differentiableWithinAt
       -- first kernel feedback: the lambda-safe form supplies the explicit point
-      -- required by the pinned composition API (FDeriv/Comp.lean:121)
+      -- required by the pinned composition API (`DifferentiableAt.fun_comp'`,
+      -- FDeriv/Comp.lean:122; its section point is explicit: `variable (x)` is
+      -- in force from :45 through :224)
   have hG : AnalyticAt ℂ Gammaℝ s := hGdiff.analyticAt (hHopen.mem_nhds h0)
   -- (2) the nonvanishing analytic cofactor u = fun z => z * (z - 1) / 2 * Gammaℝ z
   have hu : AnalyticAt ℂ (fun z : ℂ => z * (z - 1) / 2 * Gammaℝ z) s :=
@@ -537,8 +543,10 @@ theorem analyticOrderAt_riemannXi_eq_riemannZeta {s : ℂ} (h0 : 0 < s.re) (h1 :
     analyticOn_riemannZeta s (Set.mem_compl_singleton_iff.mpr hs1)
   -- (4) pointwise factorization on the OPEN strip, upgraded to a 𝓝 s eventual equality
   have hstrip : IsOpen {z : ℂ | 0 < z.re ∧ z.re < 1} :=
-    (isOpen_lt continuous_const Complex.continuous_re).inter
+    (isOpen_lt continuous_const Complex.continuous_re).and
       (isOpen_lt Complex.continuous_re continuous_const)
+    -- `IsOpen.and` (Topology/Basic.lean:116) is stated on set-builders, avoiding
+    -- the `∩`-vs-set-builder defeq gap of `.inter` entirely (matches merged Xi.lean)
   have hfac : riemannXi =ᶠ[𝓝 s]
       (fun z : ℂ => z * (z - 1) / 2 * Gammaℝ z) * riemannZeta := by
     filter_upwards [hstrip.mem_nhds ⟨h0, h1⟩] with z hz
@@ -561,13 +569,13 @@ Anti-pitfall checks specific to X11, verified: the pointwise identity is asserte
 
 ### Pinned dependencies (X11)
 
-X5; `analyticOrderAt` (Analysis/Analytic/Order.lean:47), `analyticOrderAt_congr` (:175), `analyticOrderAt_mul` (:497), `AnalyticAt.analyticOrderAt_eq_zero` (:133); `analyticOn_riemannZeta` (RiemannZeta.lean:144), `riemannZeta_def_of_ne_zero` (:152); `Complex.Gammaℝ_ne_zero_of_re_pos` (Deligne.lean:66), `Complex.Gammaℝ` (:43); `DifferentiableOn.analyticAt` (Analysis/Complex/CauchyIntegral.lean:625); `Complex.differentiableAt_Gamma` (Gamma/Deriv.lean:65); `DifferentiableAt.const_cpow` (Pow/Deriv.lean:111); `differentiableAt_id` (FDeriv/Basic.lean:697), `DifferentiableAt.neg` (FDeriv/Add.lean:544), `DifferentiableAt.mul` (FDeriv/Mul.lean:217), `DifferentiableAt.div_const` (Deriv/Mul.lean:576), `DifferentiableAt.comp` (FDeriv/Comp.lean:127); `analyticAt_id` (Analytic/Linear.lean:156), `analyticAt_const` (Analytic/Constructions.lean:54), `AnalyticAt.sub` (:187), `AnalyticAt.mul` (:639), `AnalyticAt.div_const` (:244); `isOpen_lt` (Topology/Order/OrderClosed.lean:556), `Complex.continuous_re` (Analysis/Complex/Basic.lean:153), `IsOpen.mem_nhds` (Topology/Neighborhoods.lean:90), `Set.mem_compl_singleton_iff` (Order/BooleanAlgebra/Set.lean:195); `mul_div_cancel₀` (Algebra/GroupWithZero/Units/Basic.lean:458), `div_ne_zero` (:284), `mul_ne_zero` (Algebra/GroupWithZero/Basic.lean:84), `two_ne_zero` (Algebra/NeZero.lean:36), `sub_ne_zero` (Algebra/Group/Basic.lean:753, to_additive), `Complex.div_ofNat_re` (Data/Complex/Basic.lean:763), `Complex.neg_re` (:184), `Complex.natCast_re` (:356), `Complex.ofReal_ne_zero` (:140), `Real.pi_ne_zero` (Trigonometric/Basic.lean:165), `Pi.mul_apply`/`zero_add`/`Nat.cast_nonneg` (core).
+X5; `analyticOrderAt` (Analysis/Analytic/Order.lean:47), `analyticOrderAt_congr` (:175), `analyticOrderAt_mul` (:497), `AnalyticAt.analyticOrderAt_eq_zero` (:133); `analyticOn_riemannZeta` (RiemannZeta.lean:144), `riemannZeta_def_of_ne_zero` (:152); `Complex.Gammaℝ_ne_zero_of_re_pos` (Deligne.lean:66), `Complex.Gammaℝ` (:43); `DifferentiableOn.analyticAt` (Analysis/Complex/CauchyIntegral.lean:625); `Complex.differentiableAt_Gamma` (Gamma/Deriv.lean:65); `DifferentiableAt.const_cpow` (Pow/Deriv.lean:111); `differentiableAt_id` (FDeriv/Basic.lean:697), `DifferentiableAt.neg` (FDeriv/Add.lean:544), `DifferentiableAt.mul` (FDeriv/Mul.lean:217), `DifferentiableAt.div_const` (Deriv/Mul.lean:576), `DifferentiableAt.fun_comp'` (FDeriv/Comp.lean:122); `analyticAt_id` (Analytic/Linear.lean:156), `analyticAt_const` (Analytic/Constructions.lean:54), `AnalyticAt.sub` (:187), `AnalyticAt.mul` (:639), `AnalyticAt.div_const` (:244); `isOpen_lt` (Topology/Order/OrderClosed.lean:556), `Complex.continuous_re` (Analysis/Complex/Basic.lean:153), `IsOpen.mem_nhds` (Topology/Neighborhoods.lean:90), `Set.mem_compl_singleton_iff` (Order/BooleanAlgebra/Set.lean:195); `mul_div_cancel₀` (Algebra/GroupWithZero/Units/Basic.lean:458), `div_ne_zero` (:284), `mul_ne_zero` (Algebra/GroupWithZero/Basic.lean:84), `two_ne_zero` (Algebra/NeZero.lean:36), `sub_ne_zero` (Algebra/Group/Basic.lean:753, to_additive), `Complex.div_ofNat_re` (Data/Complex/Basic.lean:763), `Complex.neg_re` (:184), `Complex.natCast_re` (:356), `Complex.ofReal_ne_zero` (:140), `Real.pi_ne_zero` (Trigonometric/Basic.lean:165), `Pi.mul_apply`/`zero_add`/`Nat.cast_nonneg` (core).
 
 ### Obligations (X11)
 
 - **OBLIGATION X11-G (MEDIUM — the package's only genuinely missing interface):** there is **no pinned lemma** asserting differentiability or analyticity of `Gammaℝ` (grep-confirmed: only `differentiable_Gammaℝ_inv`, Deligne.lean:88, the inverse). The skeleton assembles it from pinned parts: `Gammaℝ = fun s => π ^ (-s/2) * Gamma (s/2)` (`Gammaℝ_def` is `rfl`, Deligne.lean:45), the cpow factor via `DifferentiableAt.const_cpow` with `(π : ℂ) ≠ 0`, the Gamma factor via `Complex.differentiableAt_Gamma` at `z/2` (pole-free since `re(z/2) > 0`), then `DifferentiableOn.analyticAt` on the open half-plane. All ingredients pinned; estimate 10–15 lines; the unfolding `Gammaℝ_def` step may need an explicit `simp only [Complex.Gammaℝ_def]`/`show` to expose the product to the two `DifferentiableAt` constructors. No analytic gap — this is assembly cost, not a missing theorem. (Upstreaming a `differentiableAt_Gammaℝ_of_re_pos` to Mathlib is the natural follow-up but is not assumed.)
-- **OBLIGATION X11-a (LOW):** the `re`-computation `z / 2 ≠ -m` from `0 < re z`: essentially discharged by the pinned `Complex.div_ofNat_re` (Data/Complex/Basic.lean:763, `(z / OfNat n).re = z.re / n`) + `neg_re`/`natCast_re` + `linarith`; exact simp form to be fixed in build.
-- **OBLIGATION X11-b (MEDIUM):** elaboration shapes: `analyticAt_id` is stated for `id`, not `fun z => z`; `AnalyticAt.div_const` is stated as `(f · / c)`; `analyticOrderAt_mul`'s `f * g` is Pi-mul against the lambda in `hfac`; review fix F3 adds two more registered shapes — (a) `hstrip` is built as `IsOpen (A ∩ B)` via `.inter` while the goal set is the set-builder `{z | 0 < z.re ∧ z.re < 1}` (defeq, not syntactic; fallback `show IsOpen ({z : ℂ | 0 < z.re} ∩ {z : ℂ | z.re < 1})`), and (b) `differentiableAt_id.neg` produces the Pi-neg `(-id)` which must defeq-match the exponent `fun z => -z / 2` inside `const_cpow`. The former composition-shape risk is discharged by the kernel-confirmed point-explicit `DifferentiableAt.fun_comp'`. Fallback for `hu` if still fragile: prove `DifferentiableOn ℂ (fun z => z * (z - 1) / 2 * Gammaℝ z) {z | 0 < z.re}` in one stroke (polynomial part differentiable everywhere + `hGdiff`) and apply `DifferentiableOn.analyticAt` once, avoiding the `AnalyticAt` constructor chain entirely.
+- **OBLIGATION X11-a (LOW):** the `re`-computation `z / 2 ≠ -m` from `0 < re z`: essentially discharged by the pinned `Complex.div_ofNat_re` (Data/Complex/Basic.lean:763, `(z / OfNat n).re = z.re / n`) + `neg_re`/`natCast_re` + `linarith`; the exact form was fixed in the merged PR #304 build (an `rw`, with a `simp only` alternate recorded in the module).
+- **OBLIGATION X11-b (MEDIUM):** elaboration shapes: `analyticAt_id` is stated for `id`, not `fun z => z`; `AnalyticAt.div_const` is stated as `(f · / c)`; `analyticOrderAt_mul`'s `f * g` is Pi-mul against the lambda in `hfac`; review fix F3 adds two more registered shapes — (a) `hstrip` — **discharged syntactically**: `IsOpen.and` (Topology/Basic.lean:116) is stated on set-builders `{x | p x ∧ q x}`, so the `∩`-vs-set-builder defeq gap of `.inter` never arises, and (b) `differentiableAt_id.neg` produces the Pi-neg `(-id)` which must defeq-match the exponent `fun z => -z / 2` inside `const_cpow`. The former composition-shape risk is discharged by the kernel-confirmed point-explicit `DifferentiableAt.fun_comp'`. Fallback for `hu` if still fragile: prove `DifferentiableOn ℂ (fun z => z * (z - 1) / 2 * Gammaℝ z) {z | 0 < z.re}` in one stroke (polynomial part differentiable everywhere + `hGdiff`) and apply `DifferentiableOn.analyticAt` once, avoiding the `AnalyticAt` constructor chain entirely.
 - No analytic obligation: every analytic input (entirety of `Λ₀`, analyticity of `ζ` off 1, differentiability of `Gamma` off the poles, Cauchy–Goursat analyticity upgrade, order product law) is a quoted pinned theorem.
 
 ---
@@ -616,12 +624,14 @@ All paths relative to the pinned Mathlib tree; all line numbers grep-verified th
 | `Differentiable.mul` | Mathlib/Analysis/Calculus/FDeriv/Mul.lean:226 | X2 |
 | `DifferentiableAt.div_const` | Mathlib/Analysis/Calculus/Deriv/Mul.lean:576 | X11 |
 | `Differentiable.div_const` | Mathlib/Analysis/Calculus/Deriv/Mul.lean:585 | X2 |
-| `DifferentiableAt.comp` | Mathlib/Analysis/Calculus/FDeriv/Comp.lean:127 | X11 |
+| `DifferentiableAt.fun_comp'` | Mathlib/Analysis/Calculus/FDeriv/Comp.lean:122 | X11 (post-Annex-C repair) |
+| `DifferentiableAt.comp` | Mathlib/Analysis/Calculus/FDeriv/Comp.lean:127 | superseded by `fun_comp'` — see Annex C |
 | `analyticAt_id` | Mathlib/Analysis/Analytic/Linear.lean:156 | X11 |
 | `analyticAt_const` | Mathlib/Analysis/Analytic/Constructions.lean:54 | X11 |
 | `AnalyticAt.sub` | Mathlib/Analysis/Analytic/Constructions.lean:187 | X11 |
 | `AnalyticAt.div_const` | Mathlib/Analysis/Analytic/Constructions.lean:244 | X11 |
 | `AnalyticAt.mul` | Mathlib/Analysis/Analytic/Constructions.lean:639 | X11 |
+| `IsOpen.and` | Mathlib/Topology/Basic.lean:116 | X11 (`hstrip`) |
 | `isOpen_lt` | Mathlib/Topology/Order/OrderClosed.lean:556 | X11 |
 | `Complex.continuous_re` | Mathlib/Analysis/Complex/Basic.lean:153 | X11 |
 | `IsOpen.mem_nhds` | Mathlib/Topology/Neighborhoods.lean:90 | X11 |

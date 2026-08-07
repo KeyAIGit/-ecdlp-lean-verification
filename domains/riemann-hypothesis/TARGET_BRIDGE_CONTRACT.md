@@ -7,6 +7,20 @@ built target may be created from this document before independent review
 (RH-003 exit). The separate `S0-TRUST` prerequisite was satisfied by merged
 PR #298 (`d6e146fa`) on 2026-08-05.**
 
+Status addendum (2026-08-07): the frozen status text above is retained as
+draft-time provenance; it no longer describes the current merged state. The
+independent review it required (RH-003 exit) completed, and the built
+counterpart merged as PR #299 (`288d65b`, 2026-08-05) into
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean` (P1–P5
+plus the three recorded corollaries; eight declarations, ledgered as
+`RH-BRIDGE-*`). The merged head passed the full build, the
+no-incomplete-proof scan, ResearchOS inverse ledger coverage, and both axiom
+audits with every `RH-BRIDGE-*` row at axiom base `standard`; the promotion
+record is `notes/reviews/RH_BRIDGE_PROMOTION_2026_08_06.md`. This document is
+now a retained specification artifact. The Annex A xi statements were
+subsequently built and merged separately as PR #304 (`afdae08`); see
+`XI_PACKAGE_CONTRACT.md`.
+
 Scope: the package designated by `MATHLIB_CAPABILITY_MAP.md` §"First
 implementable foundation and stop rule": *"After `S0-TRUST` is closed, the
 first Lean PR should contain only the route-neutral target-equivalence
@@ -35,7 +49,8 @@ independent agents; all `file:line` locators are from that tree.
   `S0-SEMANTIC` boundary (totalized values, trivial-zero form, Gammaℝ zero
   set) into kernel-checked facts instead of conventions. No information
   about the truth of RH is produced.
-- **Claim boundary.** All five theorems are unconditional consequences of
+- **Claim boundary.** All five numbered theorems and their three recorded
+  corollaries (eight declarations in total) are unconditional consequences of
   pinned Mathlib theorems; none touches multiplicity, growth, zero counting,
   or any route's research obligation. The equivalences are admissible under
   corpus rule "equivalent restatements are not progress unless they remove a
@@ -80,8 +95,9 @@ def RiemannHypothesis : Prop :=
   ∀ (s : ℂ) (_ : riemannZeta s = 0) (_ : ¬∃ n : ℕ, s = -2 * (n + 1)) (_ : s ≠ 1), s.re = 1 / 2
 ```
 
-Proposed module preamble for the eventual built file (recorded here for
-name-resolution review only):
+Proposed module preamble for the built file (recorded here for
+name-resolution review only; the module merged in PR #299 carries these
+imports and opens verbatim):
 
 ```lean
 import Mathlib.NumberTheory.LSeries.ZetaZeros          -- riemannZetaZeros, Nonvanishing (transitively)
@@ -231,7 +247,9 @@ theorem riemannZeta_ne_zero_of_re_le_zero {s : ℂ} (hs : s.re ≤ 0)
       -- cancel π/2 : π * (1 - s) / 2 = (2k+1) * π / 2  ⟹  s = -2k        (OBLIG P1-c)
       have hs_eq : s = -2 * (k : ℂ) := by
         field_simp at hk
-        linear_combination (2 / (π : ℂ)) * hk   -- exact incantation to be fixed in build
+        linear_combination (2 / (π : ℂ)) * hk   -- draft placeholder; the merged module
+        -- (PR #299, `TargetBridge.lean:64-70`) discharges P1-c instead via
+        -- `linear_combination 2 * hk` then `mul_left_cancel₀ hpi`
       -- real part: -2k ≤ 0 ⟹ 0 ≤ k; s ≠ 0 ⟹ k ≠ 0 ⟹ 1 ≤ k             (OBLIG P1-d)
       have hk_re : s.re = -2 * (k : ℝ) := by
         rw [hs_eq]; simp [Complex.mul_re, Complex.intCast_re, Complex.intCast_im]
@@ -283,7 +301,8 @@ theorem riemannZeta_ne_zero_of_re_le_zero {s : ℂ} (hs : s.re ≤ 0)
   `push_cast [Int.toNat_of_nonneg ...]` does not route the `ℕ → ℂ` cast
   through the integer lemma. The skeleton now uses the registered explicit
   `Int.cast_natCast` rewrite followed by `push_cast` and `ring`; the promotion
-  rerun remains the final check.
+  rerun (merged PR #299, `288d65b`) was the final check and confirmed this
+  form as primary.
 - P1-e (the `Gamma` glue-term shape) — **resolved in v2** by fix F1.
 - No analytic obligation remains: every nonvanishing input is a pinned
   theorem.
@@ -621,13 +640,16 @@ and adversarial reviewer).
 | `Complex.Gamma_ne_zero_of_re_pos` | Mathlib/Analysis/SpecialFunctions/Gamma/Beta.lean:453 | P1 |
 | `Complex.cos_eq_zero_iff` | Mathlib/Analysis/SpecialFunctions/Trigonometric/Complex.lean:33 | P1 |
 | `Complex.sin_eq_zero_iff` | Mathlib/Analysis/SpecialFunctions/Trigonometric/Complex.lean:46 | unused (pinned FE uses `cos`) |
-| `Complex.cpow_eq_zero_iff` | Mathlib/Analysis/SpecialFunctions/Pow/Complex.lean:45 | P1 |
+| `Complex.cpow_ne_zero_iff` | Mathlib/Analysis/SpecialFunctions/Pow/Complex.lean:49 | P1 (primary in the merged module) |
+| `Complex.cpow_eq_zero_iff` | Mathlib/Analysis/SpecialFunctions/Pow/Complex.lean:45 | P1 (recorded alternate in the merged module) |
 | `Real.pi_ne_zero` | Mathlib/Analysis/SpecialFunctions/Trigonometric/Basic.lean:165 | P1 |
 | `Complex.ofReal_ne_zero` | Mathlib/Data/Complex/Basic.lean:140 | P1 |
 | `Complex.zero_re` | Mathlib/Data/Complex/Basic.lean:125 | P3 (fix F4) |
 | `Complex.one_re` | Mathlib/Data/Complex/Basic.lean:147 | P1-P4 |
 | `Complex.neg_re` | Mathlib/Data/Complex/Basic.lean:184 | P1 |
+| `Complex.mul_re` | Mathlib/Data/Complex/Basic.lean:214 | P1-d, P2-a/P4-a (merged-module cast discharge) |
 | `Complex.natCast_re` | Mathlib/Data/Complex/Basic.lean:356 | P1 |
+| `Complex.natCast_im` | Mathlib/Data/Complex/Basic.lean:357 | P2-a/P4-a (merged-module cast discharge) |
 | `Complex.intCast_re` | Mathlib/Data/Complex/Basic.lean:358 | P1 (fix F4) |
 | `Complex.intCast_im` | Mathlib/Data/Complex/Basic.lean:359 | P1 (fix F4) |
 | `Complex.sub_re` | Mathlib/Data/Complex/Basic.lean:640 | P1-P4 |
@@ -671,7 +693,7 @@ proposed name (`riemannZeta_ne_zero_of_re_le_zero`,
 - **No multiplicity claims:** `riemannZetaZeros` is used as a set only (P5);
   multiplicity transport is explicitly deferred to the annex/A-C PR.
 
-## Obligation register (v2 summary)
+## Obligation register (v2 historical summary)
 
 | id | severity | content |
 |---|---|---|
@@ -687,9 +709,10 @@ and the scope-expansion question (fix F5, §Scope note).
 
 No obligation is analytic; every analytic input (functional equations,
 closed-half-plane nonvanishing, `ζ(0)`, `ζ(1) ≠ 0`, Gamma/cos zero
-classifications, cpow nonvanishing) is a quoted pinned theorem. Nothing here
-is claimed proved until the kernel checks it in the RH-004 built PR after
-independent review.
+classifications, cpow nonvanishing) is a quoted pinned theorem. All five open
+rows above (P1-c, P1-d, P2-a/P4-a, P3-a, P4-b/P5-a) were discharged by the
+kernel in the merged RH-004 promotion PR #299 (`288d65b`) after independent
+review; the contract itself remains the retained specification artifact.
 
 ---
 
