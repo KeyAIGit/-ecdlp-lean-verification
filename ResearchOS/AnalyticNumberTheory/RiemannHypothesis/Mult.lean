@@ -1,15 +1,32 @@
 /-
-DRAFTS-LANE MIRROR — RH multiplicity/divisor package (S1-MULTIPLICITY), M1-M17.
+Built RH multiplicity/divisor package: RH-010 promotion of the independently
+accepted M1-M17 statement surface in
+`domains/riemann-hypothesis/MULTIPLICITY_CONTRACT.md` (acceptance record:
+`notes/reviews/RH009_MULT_CONTRACT_ACCEPTANCE_2026_08_07.md`).
 
-This file is the drafts-lane copy of the built module
-`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean`, implementing
-`domains/riemann-hypothesis/MULTIPLICITY_CONTRACT.md` (statement surface
-independently accepted 2026-08-07, RH-009). From the first `import` below
-through end of file it is byte-identical to the built module; only this
-leading header differs. It is NOT part of any lake target and is not itself
-kernel-checked: the kernel's verdict applies to the built copy, and any
-proof-only repair must be applied to both copies before a new CI run. A
-statement change stops promotion and returns to contract review.
+The package proves: local analytic-order transport for the built riemannXi
+and (inside the open critical strip) for riemannZeta under the reflection
+s ↦ 1 − s, under conjugation composed with reflection, and across the full
+fourfold symmetry orbit; the divisor interface over Mathlib's own
+`MeromorphicOn.divisor` carrier for xi on arbitrary sets and for zeta on the
+open strip — pointwise value, nonnegativity, finite local analytic and
+meromorphic order everywhere on the carrier, and support equal to the zero
+set; and the three multiplicity-preserving symmetries of those divisors.
+Every "finite order" here is a finite LOCAL order; nothing is a growth order
+of an entire function, which belongs to the still-open `S1-GROWTH` barrier.
+
+Only local finiteness and support identity are asserted; no zero enumeration,
+no counting function, no infinitude claim, no growth bound, and no route
+selection. These are foundation interfaces only: nothing here proves,
+disproves, or supplies evidence about the Riemann Hypothesis.
+
+Barrier effect on green merge (and only then): closes `S1-MULTIPLICITY` and,
+together with the merged conjugation package (PR #307), completes the exit
+evidence of `S1-CONJ`. The kernel via CI is the sole judge.
+
+All thirty-four public declarations are ledgered as `RH-MULT-*` rows in
+`VERIFIED_RESEARCHOS.md` and audited through the generated
+`ResearchOS/LedgerAxiomAudit.lean` with axiom base `standard`.
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 -/

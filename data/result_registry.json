@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1051,
-  "distinct_qualified_names": 1051,
+  "declaration_count": 1085,
+  "distinct_qualified_names": 1085,
   "verified_md_citations": 677,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -17078,6 +17078,27 @@
       "file": "Ecdlp/Proved/QuadrupleMultiplicationYFormula.lean",
       "line": 12
     },
+    "analyticOnNhd_riemannXi": {
+      "name": "analyticOnNhd_riemannXi",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 361
+    },
+    "analyticOnNhd_riemannZeta_strip": {
+      "name": "analyticOnNhd_riemannZeta_strip",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 743
+    },
+    "analyticOrderAt_comp_const_sub": {
+      "name": "analyticOrderAt_comp_const_sub",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 128
+    },
     "analyticOrderAt_conj_conj": {
       "name": "analyticOrderAt_conj_conj",
       "namespace": "",
@@ -17099,12 +17120,68 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
       "line": 248
     },
+    "analyticOrderAt_riemannXi_fourfold": {
+      "name": "analyticOrderAt_riemannXi_fourfold",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 328
+    },
+    "analyticOrderAt_riemannXi_ne_top": {
+      "name": "analyticOrderAt_riemannXi_ne_top",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 444
+    },
+    "analyticOrderAt_riemannXi_one_sub": {
+      "name": "analyticOrderAt_riemannXi_one_sub",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 197
+    },
+    "analyticOrderAt_riemannXi_one_sub_conj": {
+      "name": "analyticOrderAt_riemannXi_one_sub_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 279
+    },
     "analyticOrderAt_riemannZeta_conj": {
       "name": "analyticOrderAt_riemannZeta_conj",
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
       "line": 440
+    },
+    "analyticOrderAt_riemannZeta_fourfold": {
+      "name": "analyticOrderAt_riemannZeta_fourfold",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 342
+    },
+    "analyticOrderAt_riemannZeta_ne_top_of_mem_strip": {
+      "name": "analyticOrderAt_riemannZeta_ne_top_of_mem_strip",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 812
+    },
+    "analyticOrderAt_riemannZeta_one_sub": {
+      "name": "analyticOrderAt_riemannZeta_one_sub",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 253
+    },
+    "analyticOrderAt_riemannZeta_one_sub_conj": {
+      "name": "analyticOrderAt_riemannZeta_one_sub_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 310
     },
     "cMin": {
       "name": "cMin",
@@ -17175,6 +17252,34 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
       "line": 21
+    },
+    "meromorphicOn_riemannXi": {
+      "name": "meromorphicOn_riemannXi",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 377
+    },
+    "meromorphicOn_riemannZeta_strip": {
+      "name": "meromorphicOn_riemannZeta_strip",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 782
+    },
+    "meromorphicOrderAt_riemannXi_ne_top": {
+      "name": "meromorphicOrderAt_riemannXi_ne_top",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 504
+    },
+    "meromorphicOrderAt_riemannZeta_ne_top_of_mem_strip": {
+      "name": "meromorphicOrderAt_riemannZeta_ne_top_of_mem_strip",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 823
     },
     "negOnePow_cMin": {
       "name": "negOnePow_cMin",
@@ -17288,12 +17393,103 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
       "line": 292
     },
+    "riemannXi_comp_one_sub": {
+      "name": "riemannXi_comp_one_sub",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 94
+    },
     "riemannXi_conj": {
       "name": "riemannXi_conj",
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
       "line": 282
+    },
+    "riemannXi_divisor_apply": {
+      "name": "riemannXi_divisor_apply",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 388
+    },
+    "riemannXi_divisor_conj": {
+      "name": "riemannXi_divisor_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 634
+    },
+    "riemannXi_divisor_nonneg": {
+      "name": "riemannXi_divisor_nonneg",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 410
+    },
+    "riemannXi_divisor_one_sub": {
+      "name": "riemannXi_divisor_one_sub",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 573
+    },
+    "riemannXi_divisor_one_sub_conj": {
+      "name": "riemannXi_divisor_one_sub_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 670
+    },
+    "riemannXi_divisor_strip_conj": {
+      "name": "riemannXi_divisor_strip_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 650
+    },
+    "riemannXi_divisor_strip_one_sub": {
+      "name": "riemannXi_divisor_strip_one_sub",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 598
+    },
+    "riemannXi_divisor_strip_one_sub_conj": {
+      "name": "riemannXi_divisor_strip_one_sub_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 694
+    },
+    "riemannXi_divisor_support": {
+      "name": "riemannXi_divisor_support",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 538
+    },
+    "riemannXi_divisor_univ_conj": {
+      "name": "riemannXi_divisor_univ_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 645
+    },
+    "riemannXi_divisor_univ_one_sub": {
+      "name": "riemannXi_divisor_univ_one_sub",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 593
+    },
+    "riemannXi_divisor_univ_one_sub_conj": {
+      "name": "riemannXi_divisor_univ_one_sub_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 689
     },
     "riemannXi_eq_of_ne": {
       "name": "riemannXi_eq_of_ne",
@@ -17385,6 +17581,48 @@
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
       "line": 246
+    },
+    "riemannZeta_divisor_strip_apply": {
+      "name": "riemannZeta_divisor_strip_apply",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 786
+    },
+    "riemannZeta_divisor_strip_conj": {
+      "name": "riemannZeta_divisor_strip_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 887
+    },
+    "riemannZeta_divisor_strip_nonneg": {
+      "name": "riemannZeta_divisor_strip_nonneg",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 796
+    },
+    "riemannZeta_divisor_strip_one_sub": {
+      "name": "riemannZeta_divisor_strip_one_sub",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 863
+    },
+    "riemannZeta_divisor_strip_one_sub_conj": {
+      "name": "riemannZeta_divisor_strip_one_sub_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 919
+    },
+    "riemannZeta_divisor_strip_support": {
+      "name": "riemannZeta_divisor_strip_support",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
+      "line": 837
     },
     "riemannZeta_fourfold_zero": {
       "name": "riemannZeta_fourfold_zero",
