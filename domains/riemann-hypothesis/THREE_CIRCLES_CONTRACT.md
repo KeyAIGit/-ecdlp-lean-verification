@@ -10,9 +10,15 @@ contract, and this document carries no kernel verdict of any kind.
 `UPSTREAM_POOL.md` §3 ("Hadamard three-circles"), whose §3.1–§3.3 were
 **re-verified against the pin this session** rather than trusted (one divergence
 found and absorbed; see §1, decision 3). It is an *offered artifact*, not an
-active task. The RH queue — `tasks/RIEMANN_HYPOTHESIS.md`, under which `RH-002`
-is the sole ACTIVE task ("independent disposition review only; no route
-execution authorized") — is the authority for this lane;
+active task. An adversarial red-team review of this contract was run
+2026-08-07 (verdict **SOUND_WITH_FIXES**, findings B1–B2, both applied in
+place; see Annex A). That review accepts a statement surface only: it is not
+a kernel verdict and promotes nothing. The RH queue —
+`tasks/RIEMANN_HYPOTHESIS.md`, whose dated decision of 2026-08-07 records
+`RH-002` as **complete** (all three PARK dispositions CONFIRMED) and moves
+the single ACTIVE slot to `RH-011` (acceptance-only review of the zero-set
+slice statement surface; no built module, no kernel verdict, no route
+execution authorized) — is the authority for this lane;
 `repo/ECDLP_DECISION_SUBSTRATE.json` governs the ECDLP lane and its current
 dated decision selects no route. Nothing here is authorization to work a route,
 and this contract must not be cited as evidence that any route is selected.
@@ -178,7 +184,7 @@ theorem exp_log (hx : 0 < x) : exp (log x) = x         -- Analysis/SpecialFuncti
 theorem log_zero : log 0 = 0                           -- Log/Basic.lean:102 (the junk value)
 theorem log_div (hx : x ≠ 0) (hy : y ≠ 0) : log (x / y) = log x - log y   -- Log/Basic.lean:137
 theorem log_le_log_iff (h : 0 < x) (h₁ : 0 < y) : log x ≤ log y ↔ x ≤ y   -- Log/Basic.lean:146
-@[gcongr, bound] lemma log_le_log (hx : 0 < x) (hxy : x ≤ y) : log x ≤ log y  -- Log/Basic.lean:149
+@[gcongr, bound] lemma log_le_log (hx : 0 < x) (hxy : x ≤ y) : log x ≤ log y  -- Log/Basic.lean:150
 @[gcongr, bound] theorem log_lt_log (hx : 0 < x) (h : x < y) : log x < log y  -- Log/Basic.lean:154
 
 -- Strip topology
