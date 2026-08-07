@@ -623,3 +623,34 @@ lemma for `riemannZeta`, `completedRiemannZeta(₀)`, `hurwitzZetaEven`, or any
 The kernel verdict for this addendum is the required CI result on the exact
 promotion head; the rows count as built only through a green merged change.
 No claim about the truth of RH is made, and no route is selected.
+## Addendum 2026-08-07 (sixth): barriers `S1-MULTIPLICITY` and `S1-CONJ` CLOSED
+
+Merged PR #313 (`2a20629`) promotes the RH-009-accepted M1-M17 surface to
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean`: thirty-four
+public declarations, kernel-checked by the full build on the exact merged
+head, with complete inverse ledger coverage (81 rows → 82 declarations),
+per-row axiom base `standard`, and the drafts-lane mirror byte-identical from
+the first import. The only CI repair in the promotion round was prose: the
+textual no-incomplete-proof scan tripped on this module's own claim-boundary
+comment asserting the absence of the banned tokens; the comment was reworded
+and no proof, statement, or tactic text changed.
+
+This closes `S1-MULTIPLICITY`: the divisor/multiplicity interface over the
+pinned `MeromorphicOn.divisor` carrier (pointwise value, nonnegativity,
+finite local analytic and meromorphic order, support equal to the zero set)
+for xi on arbitrary carriers and for zeta on the open critical strip, with
+local-order transport and divisor invariance under all three
+multiplicity-preserving symmetries.
+
+Together with the merged conjugation package (PR #307, `c277b86`), the
+divisor-invariance leg under `ρ ↦ 1 − conj ρ` is now kernel-checked, which is
+the second and final item of the `S1-CONJ` exit evidence. `S1-CONJ` is
+therefore CLOSED: conjugation theorem (PR #307) plus divisor invariance
+(PR #313).
+
+Boundaries unchanged by this addendum: every "finite order" in the package is
+a finite LOCAL analytic or meromorphic order — `S1-GROWTH` remains OPEN with
+no growth bound of any kind; `S1-GLOBAL-ZEROS` remains OPEN with no
+enumeration, no counting function, and no infinitude claim; no route is
+selected; and nothing in either closed barrier bears on the truth of the
+Riemann Hypothesis.
