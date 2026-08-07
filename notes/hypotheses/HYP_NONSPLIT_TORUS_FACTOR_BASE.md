@@ -83,8 +83,8 @@ degree.
 
 ```
 p - 1 = 2 · 3 · 7 · 13441 · P₂₃₇
-p + 1 = 2⁴ · 7322137 · 45422601869677 · P₁₈₃
-        P₁₈₃ = 21759506893163426790183529804034058295931507131047955271
+p + 1 = 2⁴ · 7322137 · 45422601869677 · P₁₈₄
+        P₁₈₄ = 21759506893163426790183529804034058295931507131047955271
 ```
 
 Divisors avoiding the huge prime: `p - 1` has 16, maximum `2^19.1067`; `p + 1` has 20, maximum
@@ -106,8 +106,20 @@ Applying both, with the 2-to-1 trace loss:
 | 12 | 2^23.804 | 2^22.804 | 2^23.7363 | −0.9325 | fails yield |
 | 13 | 2^22.804 | 2^21.804 | 2^22.1951 | −0.3912 | fails yield |
 
-**For `p - 1` the window is empty at every `m`** — which independently reproduces the closure of
-PKC instance (i) reached in the OPUS-001 audit (PR #255) by a different argument.
+**For `p - 1` the window is not empty — it opens at `m = 16`.** With `deg L = D = 564522` the
+yield leg first passes at `m = 16`: `16!·p = 2^300.2501` against `D^16 = 2^305.7067`, a margin of
+`+5.4566` bits. It fails at `m = 15` by `−9.6501` bits (`15!·p = 2^296.2501` against
+`D^15 = 2^286.6001`), and `m = 16` is the unique minimal arity. The linear-algebra leg is slack at
+every divisor of `p − 1` — `D^2 = 318685088484 = 2^38.2133`, i.e. `2^87.79` under the ceiling — so
+the split side is yield-bound only, and `m = 16` is invariant under any linear-algebra budget above
+`2^38.22`. The table above stops at `m = 13`; the yield margin is *increasing* in `m` while
+`m < D`, its increment being `log₂ D − log₂ m`, so a failure at small `m` does not extend to large
+`m` and must never be read as a closure. This paragraph therefore reproduces no closure of PKC
+instance (i): canonical state records that instance as open at this arity —
+`CELL-M-PKC-SMOOTH-M16` is `open_non_executable` (`BARRIERS.md`), with the finding logged in
+`experiments/HYPOTHESES.yaml` (`HYP_GLV_SEMAEV_001.evidence_against`) and
+`notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md`, and the whole M16/S17 programme exists because
+of it.
 
 **For `p + 1` the window is non-empty at `m ∈ {6, 7}`**, with `|H| = 45422601869677` and
 `deg L = 2^44.368`. Linear algebra there costs `2^88.74`, comfortably under the baseline.
@@ -118,7 +130,7 @@ PKC instance (i) reached in the OPUS-001 audit (PR #255) by a different argument
 
 > **HYP-TORUS-001.** The nonsplit torus `T_2(F_p)` of order `p + 1` supplies an algebraic factor
 > base for the PKC 2016 prime-field decomposition method at arities `m ∈ {6, 7}` on secp256k1,
-> where the split torus `F_p^*` supplies none at any arity. The required summation polynomial is
+> where the split torus `F_p^*` supplies one only from `m = 16` upward. The required summation polynomial is
 > therefore `S_7` or `S_8` with per-variable degree `2^5 = 32` or `2^6 = 64`, rather than the
 > `S_17` with per-variable degree `2^15` that the `p - 1` construction would demand.
 
