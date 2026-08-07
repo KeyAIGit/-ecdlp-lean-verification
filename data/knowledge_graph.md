@@ -2,7 +2,7 @@
 
 > Auto-generated from `VERIFIED.md` + the Lean import surface by `scripts/build_knowledge_graph.py`. Machine source of truth: `data/knowledge_graph.json`. Every ledger row below cites kernel-checked declarations (no `sorry`, no custom axioms).
 
-**307 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **8 typed evidence cells** · **4 desk-decided cells** · **2 research-question seeds** · **4 shadow proposal stubs** · **0 bounded explorations selected** · **1 exact decision-level toy authorization** · **9 retained outcomes** · **1187 edges**
+**307 ledger-row nodes** · **8 result families** · **17 critical nodes** · **17 attack routes** · **11 decision foundations** · **1 bounded structural route recorded** · **0 routes promoted** · **8 typed evidence cells** · **4 desk-decided cells** · **2 research-question seeds** · **4 shadow proposal stubs** · **0 bounded explorations selected** · **1 exact decision-level toy authorization** · **9 retained outcomes** · **1190 edges**
 
 > A ledger-row node may cite several Lean declarations. `STATUS.md` owns headline counts; `data/result_registry.json` owns declaration-level resolution.
 
@@ -10,7 +10,7 @@ By proof method: Mathlib (106), Mathlib + native_decide (31), native_decide (20)
 
 By research area: curve-torsion (153), primality (55), other (33), generic-hardness (30), protocol-soundness (23), attack-resistance (7), reduction (5), params (1)
 
-By edge type: imports (525), member_of (307), grounded_in_source_claim (62), requires_foundation (41), supports (27), decision_grounded_in (25), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), requires_target_property (10), records_outcome_for (9), updates_hypothesis (9), records_route_evidence (9), instantiates_mechanism (8), evaluates_route (8), must_change_cost_quantity (8), binds_target_feature (8), binds_mechanism_primitive (8), binds_unresolved_question (8), blocked_by (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (4), bounded_by_research_barrier (4), follows_up_cell (3), depends_on_candidate (3), generated_from_cell (2), follows_up_source (1)
+By edge type: imports (528), member_of (307), grounded_in_source_claim (62), requires_foundation (41), supports (27), decision_grounded_in (25), depends_on (18), evaluated_under (18), detailed_by (15), extends_frontier (15), frontier_of (13), requires_target_property (10), records_outcome_for (9), updates_hypothesis (9), records_route_evidence (9), instantiates_mechanism (8), evaluates_route (8), must_change_cost_quantity (8), binds_target_feature (8), binds_mechanism_primitive (8), binds_unresolved_question (8), blocked_by (7), tests_hypothesis (6), explores_route (6), governs_hypothesis (4), bounded_by_research_barrier (4), follows_up_cell (3), depends_on_candidate (3), generated_from_cell (2), follows_up_source (1)
 
 ## secp256k1 route decisions
 
@@ -592,10 +592,10 @@ Each barrier is a foundation Mathlib lacks. The *frontier* lists verified ledger
 - **Partial progress:** Mathlib has curve and division-polynomial prerequisites; the audited pinned/current trees have no elliptic-isogeny or pairing module.
 - **Verified frontier:** `secp256k1_j_eq_zero`, `secp256k1_embedding_degree_gt_100`, `secp256k1_trace_ordinary_nonanomalous`, `secp256k1_Ψ₂Sq`, `secp256k1_Ψ₂Sq_root_of_two_torsion`
 
-### B3-point-counting — Concrete point count #E(F_p) = n not kernel-computable
+### B3-point-counting — No general Schoof / Hasse point counting in Mathlib
 
-- **Missing:** Schoof / efficient point counting in Mathlib
-- **Blocks:** deriving #E = n abstractly for the concrete curve
-- **Partial progress:** the concrete order is instead pinned via native_decide / the published value; primality of n is machine-checked (Pratt).
+- **Missing:** general Schoof / Hasse-based point counting in Mathlib
+- **Blocks:** exact #E for any curve with no curve-specific certificate route; notably P-256, where j != 0 blocks the secp256k1 argument
+- **Partial progress:** closed for secp256k1: #E(F_p) = n is a kernel theorem (secp256k1_card_point_eq_n, Ecdlp/Proved/CurveCardinalityExact.lean) via a curve-specific certificate needing no Hasse/Schoof; native_decide discharges only the 256-bit non-cube leaf and the literal arithmetic inside that proof, it does not assert the order. Primality of n is machine-checked (Pratt).
 - **Verified frontier:** `secp256k1_n_prime`, `secp256k1_p_prime`
 

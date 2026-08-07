@@ -84,6 +84,7 @@ import Ecdlp.Proved.TorsionPointCount
 import Ecdlp.Proved.TwoTorsionCount
 import Ecdlp.Proved.GlvTorsionAction
 import Ecdlp.Proved.ScalarGroupStructure
+import Ecdlp.Proved.PrimeFieldNoDescent
 import Ecdlp.Proved.EcdsaKeyRecovery
 import Ecdlp.Proved.ShamirSSS
 import Ecdlp.Proved.MovRandomQ
@@ -161,6 +162,7 @@ import Ecdlp.Proved.WeilDivisorRepIndep
 import Ecdlp.Proved.WeilMillerEval
 import Ecdlp.Proved.MultiplicationXCoordinateRing
 import Ecdlp.Proved.DivisionPolynomialDoubling
+import Ecdlp.Proved.DivisionPolynomialDoublingUniform
 import Ecdlp.Proved.MultiplicationYFormula
 import Ecdlp.Proved.DoublingPointFormula
 import Ecdlp.Proved.DoublingPointFormulaBar
