@@ -1,6 +1,7 @@
-# Weierstrass elementary factors / canonical product contract: draft v1
+# Weierstrass elementary factors / canonical product contract: draft v1.1
 
-Status: **DRAFT v1 (2026-08-07) — non-built review artifact, offered for STAGE ONE
+Status: **DRAFT v1.1 (2026-08-07; v1 same day, corrected in place per the
+red-team re-verification recorded in Annex B) — non-built review artifact, offered for STAGE ONE
 (INDEPENDENT CONTRACT ACCEPTANCE) ONLY. NOT Lean-checked.** No declaration below
 has been elaborated; no `lake build` has been run against any of it. Under the one
 invariant, the Lean kernel via CI is the sole judge of every statement in this

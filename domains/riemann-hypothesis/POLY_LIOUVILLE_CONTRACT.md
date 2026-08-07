@@ -4,7 +4,10 @@ Status: **DRAFT v1 (2026-08-07) — non-built review artifact, offered for STAGE
 (INDEPENDENT CONTRACT ACCEPTANCE) ONLY. NOT Lean-checked.** No declaration below
 has been elaborated; no `lake build` has been run against any of it. Under the one
 invariant, the Lean kernel via CI is the sole judge of every statement in this
-contract, and this document carries no kernel verdict of any kind.
+contract, and this document carries no kernel verdict of any kind. Adversarially
+reviewed 2026-08-07 (verdict `SOUND_WITH_FIXES`, five findings A1–A5, all
+applied in place; see Annex A). That review is a source-reading verdict on the
+statement surface only — it is not a kernel verdict either.
 
 **Two-stage gate (same constraint as `MULTIPLICITY_CONTRACT.md`).** Stage one is
 *independent contract acceptance*: a review of the statement surface L1–L5 only.
@@ -40,9 +43,12 @@ every one spelled explicitly in a `lean` statement block in §2. No signature of
 this package is mandated in prose only.
 
 Scope: the missing statement family identified by `UPSTREAM_POOL.md` §0 row 5
-(re-verified this session: every statement in the pinned `Liouville.lean`
-hypothesises `IsBounded (range f)`; no degree conclusion exists anywhere in the
-file): *an entire function bounded by `C * (1 + ‖z‖) ^ n` is a polynomial of
+(re-verified this session: every Liouville-type *conclusion* in the pinned
+`Liouville.lean` — the `Differentiable` family at `:114`/`:123`/`:128` —
+hypothesises `IsBounded (range f)`, with `:135` assuming the strictly stronger
+cocompact-limit hypothesis; the Cauchy estimates at `:44`/`:69` are radius-local
+bounds, not Liouville statements; and no degree conclusion exists anywhere in
+the file): *an entire function bounded by `C * (1 + ‖z‖) ^ n` is a polynomial of
 degree at most `n`*, factored through the vanishing-coefficient lemma that
 carries all the analysis, plus the degree-0 corollary (which must recover
 pinned Liouville — the sanity anchor) and the degree-1 corollary. It contains
@@ -147,7 +153,7 @@ theorem norm_iteratedDeriv_le_of_forall_mem_sphere_norm_le [CompleteSpace F] {c 
     {f : ℂ → F} (n : ℕ) (hR : 0 < R) (hf : DiffContOnCl ℂ f (ball c R))
     (hC : ∀ z ∈ sphere c R, ‖f z‖ ≤ C) :
     ‖iteratedDeriv n f c‖ ≤ n.factorial * C / R ^ n
--- Its own proof body uses `mem_sphere_iff_norm.1 hz` at :47 — the sphere-membership
+-- Its own proof body uses `mem_sphere_iff_norm.1 hz` at :49 — the sphere-membership
 -- rewrite L1 needs is precedented in the very file being extended.
 
 -- Analysis/Complex/Liouville.lean:114, :123, :128, :135 — the bounded-only family
@@ -336,7 +342,7 @@ theorem Complex.iteratedDeriv_eq_zero_of_norm_le_pow
     intro R hR
     refine norm_iteratedDeriv_le_of_forall_mem_sphere_norm_le k hR hf.diffContOnCl ?_
     intro z hz
-    have hz' : ‖z - c‖ = R := mem_sphere_iff_norm.mp hz          -- Liouville.lean:47 precedent
+    have hz' : ‖z - c‖ = R := mem_sphere_iff_norm.mp hz          -- Liouville.lean:49 precedent
     have hzb : ‖z‖ ≤ ‖c‖ + R := by
       calc ‖z‖ ≤ ‖c‖ + ‖z - c‖ := norm_le_norm_add_norm_sub' z c
         _ = ‖c‖ + R := by rw [hz']
@@ -351,10 +357,16 @@ theorem Complex.iteratedDeriv_eq_zero_of_norm_le_pow
     have h := Polynomial.div_tendsto_atTop_zero_of_degree_lt
       (P := Polynomial.C ((k.factorial : ℝ) * C) * (Polynomial.C (1 + ‖c‖) + Polynomial.X) ^ n)
       (Q := Polynomial.X ^ k) (by
-        -- degree P ≤ n < k = degree Q
+        -- degree P ≤ n < k = degree Q. Explicit term chain: the degree_*_le family
+        -- carries NO @[gcongr] at the pin (re-verified, Annex A finding A1), and the
+        -- goal is a bound, not a gcongr congruence shape — gcongr has nothing to fire.
         refine lt_of_le_of_lt ?_ ?_
-        · calc Polynomial.degree _ ≤ 0 + n • (1 : WithBot ℕ) := by
-                gcongr  -- degree_mul_le, degree_C_le, degree_pow_le, degree_add_le, degree_X_le
+        · calc Polynomial.degree _
+              ≤ 0 + (n : WithBot ℕ) * 1 :=
+                (Polynomial.degree_mul_le _ _).trans (add_le_add Polynomial.degree_C_le
+                  ((Polynomial.degree_pow_le_of_le n ((Polynomial.degree_add_le _ _).trans
+                    (max_le (Polynomial.degree_C_le.trans zero_le_one)
+                      Polynomial.degree_X_le)))))
           _ ≤ (n : WithBot ℕ) := by simp
         · rw [Polynomial.degree_X_pow]; exact_mod_cast hnk)
     refine h.congr' ?_
@@ -378,13 +390,18 @@ theorem Complex.iteratedDeriv_eq_zero_of_norm_le_pow
   specialises to every `ball c R` with no side goal).
 - `mem_sphere_iff_norm` — Normed/Group/Basic.lean:885-886 (`@[to_additive
   (attr := simp high)]` twin); used in exactly this position by
-  Liouville.lean:47 itself.
+  Liouville.lean:49 itself.
 - `norm_le_norm_add_norm_sub'` — Basic.lean:182 (additive twin).
 - `pow_le_pow_left₀` — GroupWithZero/Basic.lean:470, carries `@[gcongr]`.
 - `Polynomial.div_tendsto_atTop_zero_of_degree_lt` —
-  Analysis/Polynomial/Basic.lean:161; degree chain from `degree_mul_le`,
-  `degree_C_le`, `degree_pow_le`, `degree_add_le`, `degree_X_le`,
-  `degree_X_pow` (Degree/Defs.lean:514).
+  Analysis/Polynomial/Basic.lean:161 (section variables `(P Q : 𝕜[X])`
+  explicit, `:34`; `𝕜 := ℝ` instantiates `[NormedField] [LinearOrder]
+  [IsStrictOrderedRing]`); degree chain from `degree_mul_le` (Degree/Defs.lean:396),
+  `degree_C_le` (:153), `degree_pow_le_of_le` (:406 — conclusion `b * a`,
+  multiplication in `WithBot ℕ`, **not** the `n • degree p` smul shape of
+  `degree_pow_le` at :402; do not mix the two), `degree_add_le` (:326),
+  `degree_X_le` (:240), `degree_X_pow` (:514); `Tendsto.congr'` —
+  Order/Filter/Tendsto.lean:105.
 - `ge_of_tendsto` — OrderClosed.lean:130-131 (`@[to_dual]` of `le_of_tendsto`);
   `eventually_gt_atTop` — AtTopBot/Defs.lean:61; `norm_le_zero_iff` —
   Basic.lean:990-991.
