@@ -578,9 +578,9 @@ theorem image_one_sub_of_symm {K : Set ℂ} (hK : ∀ z : ℂ, (1 - z) ∈ K ↔
   --   show (1 - z) ∈ K ↔ z ∈ K
   --   exact hK z
   -- Alternative route (contract-recorded):
-  -- `Function.Involutive.image_eq_preimage_symm`-style transport via
-  -- `Function.Involutive.image_eq_preimage` (Data/Set/Image.lean:351,
-  -- declared `_root_.`) plus `Set.ext hK`.
+  -- `Function.Involutive.image_eq_preimage_symm` (Data/Set/Image.lean:351,
+  -- declared `_root_.`; that `_symm`-suffixed name is the one declared at the
+  -- pin — no un-suffixed `image_eq_preimage` exists there) plus `Set.ext hK`.
 
 theorem image_conj_of_symm {K : Set ℂ} (hK : ∀ z : ℂ, (starRingEnd ℂ) z ∈ K ↔ z ∈ K) :
     (starRingEnd ℂ) '' K = K := by
