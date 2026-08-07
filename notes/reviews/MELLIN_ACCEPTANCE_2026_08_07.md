@@ -8,8 +8,11 @@ editorial fixes applied in place during this acceptance session.
 
 ## Reviewed baseline
 
-- repository branch `claude/rimmen-hypothesis-b6gd62` at
-  `3201153651e9a5c6a4b4491a807f6cda57417933`;
+- repository branch `claude/rimmen-hypothesis-b6gd62`; review baseline
+  commit `3201153651e9a5c6a4b4491a807f6cda57417933` (the branch advanced
+  during the session under the parallel review workflow, which swept the
+  applied fixes into its in-flight commits — the post-fix Git blob below is
+  the identity of record and is what the branch tree now carries);
 - reviewed object `domains/riemann-hypothesis/MELLIN_BOUND_CONTRACT.md`
   (754 lines pre-fix, SHA-256
   `23ddf0b7e1880da1df6d1e044ed2d763f7ac18c5217bf69a0a420f6434f0ce8a`, Git
