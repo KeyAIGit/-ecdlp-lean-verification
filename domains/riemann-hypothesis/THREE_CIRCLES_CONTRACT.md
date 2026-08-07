@@ -669,7 +669,7 @@ Hadamard.lean:607 (hypothesis order `hul hz hd hB ha hb`; conclusion
 `‖f z‖ ≤ a ^ (1 - (z.re - l) / (u - l)) * b ^ ((z.re - l) / (u - l))`; needs
 only `[NormedAddCommGroup E] [NormedSpace ℂ E]` — section variables
 Hadamard.lean:237/:396, **no `CompleteSpace`**);
-`Real.log_lt_log` — Log/Basic.lean:154; `Real.log_le_log` — Log/Basic.lean:149;
+`Real.log_lt_log` — Log/Basic.lean:154; `Real.log_le_log` — Log/Basic.lean:150;
 `Complex.closure_preimage_re` — ReImTopology.lean:70; `closure_Ioo` —
 DenselyOrdered.lean:72 (hypothesis `a ≠ b`, supplied by `hul.ne`);
 `DiffContOnCl` — DiffContOnCl.lean:33 (anonymous constructor; both fields
@@ -943,7 +943,7 @@ Pow/Real.lean:148.
 | `Complex.exp_add` / `Complex.ofReal_exp` | Analysis/Complex/Exponential.lean:109 / :189 | TC7 |
 | `Complex.differentiable_exp` / `Complex.continuous_exp` | ExpDeriv.lean:97 / Exp.lean:68 | TC8 |
 | `Real.exp_pos` / `exp_lt_exp` / `exp_le_exp` | Analysis/Complex/Exponential.lean:282 / :311 / :315 | TC5, TC6 |
-| `Real.exp_log` / `log_zero` / `log_div` / `log_le_log_iff` / `log_le_log` / `log_lt_log` | Log/Basic.lean:58 / :102 / :137 / :146 / :149 / :154 | TC5–TC10 |
+| `Real.exp_log` / `log_zero` / `log_div` / `log_le_log_iff` / `log_le_log` / `log_lt_log` | Log/Basic.lean:58 / :102 / :137 / :146 / :150 / :154 | TC5–TC10 |
 | `Complex.closure_preimage_re` | ReImTopology.lean:70 | TC8 |
 | `closure_Ioo` | DenselyOrdered.lean:72 | TC8 |
 | `instance : ProperSpace ℂ` | Analysis/Complex/Basic.lean:138 | TC3, TC8 |
@@ -1033,7 +1033,8 @@ sharpened to obligation TC-BB).
   retires a row**. Stage-one acceptance changes no barrier row; even a
   stage-two kernel-checked build would change none.
 - **It selects no route and is not route work.** The RH queue's sole ACTIVE
-  task is `RH-002` (disposition review only); the ECDLP decision substrate
+  task is `RH-011` (acceptance-only review of `ZERO_SET_SLICE_CONTRACT.md`;
+  no built module, no kernel verdict); the ECDLP decision substrate
   selects no route. This document is an offered artifact under the upstream
   pool, prepared so that *if* a future dated decision wants three-circles,
   the statement surface is already reviewed. It must not be cited as momentum
@@ -1094,7 +1095,7 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
    re-proving the annulus transport. Use the TC-BB route or its recorded
    fallback only.
 8. **A barrier row or route authorization is inferred from this contract.**
-   The RH queue (`tasks/RIEMANN_HYPOTHESIS.md`, `RH-002` sole ACTIVE) is the
+   The RH queue (`tasks/RIEMANN_HYPOTHESIS.md`, `RH-011` sole ACTIVE) is the
    lane authority; `repo/ECDLP_DECISION_SUBSTRATE.json` governs the other
    lane and selects no route. This contract is a statement design. Declaring
    any capability-map row stale on the strength of this generic package is
