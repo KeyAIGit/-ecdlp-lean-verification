@@ -71,7 +71,7 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 
 ## Portfolio priority and domain bottlenecks
 The primary new-science priority is **Riemann Hypothesis Stage 0, task
-`RH-011`**: acceptance of the zero-set slice statement surface (queue status: `ACTIVE 2026-08-07 — acceptance-only; produces no built module and`). This is an
+`RH-012`**: zero-set slice drafting and kernel promotion (queue status: `ACTIVE 2026-08-07 — drafting plus kernel promotion as its own`). This is an
 exploratory specification and route-audit program, not a proof candidate or progress on
 the conjecture itself. Its authority is `tasks/RIEMANN_HYPOTHESIS.md`; ECDLP evidence
 and authorizations do not transfer to it.

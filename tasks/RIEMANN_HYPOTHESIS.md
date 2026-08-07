@@ -761,8 +761,18 @@ How to verify:
 
 ID: `RH-011`
 
-Status: **ACTIVE 2026-08-07 — acceptance-only; produces no built module and
-no kernel verdict**
+Status: **COMPLETE 2026-08-07**
+
+Closure evidence: three-lens acceptance panel under owner-delegated review
+authority returned **ACCEPT WITH APPLIED EDITORIAL FIXES** on the 23-signature
+zero-set slice surface — zero blocking items, five consolidated editorial
+fixes applied (queue-position and prerequisite re-anchoring to the built
+Mult.lean, conditionality prose settled, the N-SEQ ordering obligation
+discharged by the merged promotion, and one factual lemma-existence
+correction resolved by direct source read). Record:
+`notes/reviews/RH011_ZERO_SLICE_ACCEPTANCE_2026_08_07.md`. Acceptance covers
+the statement surface only: no kernel verdict, no barrier-row change —
+`S1-GLOBAL-ZEROS` remains OPEN and all routes PARKED.
 
 Kind: review
 
@@ -792,6 +802,34 @@ Exit criteria:
 - any blocking finding stops acceptance and returns the contract to design;
 - this task advances `S1-GLOBAL-ZEROS` bookkeeping only if acceptance lands,
   and closes no barrier in any case.
+
+## RH-012: zero-set slice drafting and kernel promotion
+
+ID: `RH-012`
+
+Status: **ACTIVE 2026-08-07 — drafting plus kernel promotion as its own
+change; the kernel via CI is the sole judge**
+
+Kind: theorem
+
+Activation basis (2026-08-07): `RH-011` accepted the 23-signature slice
+surface with zero blocking items. This dated queue decision moves the single
+ACTIVE slot to the build-out: a drafts-lane Lean file implementing the
+accepted surface (statements character-identical; adversarially reviewed),
+followed by a separate kernel-promotion change carrying the module, its
+`RH-*` ledger rows, regenerated registries and audits, and the promotion
+record — the RH-010 pattern exactly.
+
+Exit criteria:
+
+- the draft passes independent review with statements character-identical to
+  the accepted contract;
+- the promotion change passes the full build, no-incomplete-proof gate,
+  inverse ledger coverage, and both axiom audits on the exact merged head;
+- a statement change at any point stops the task and returns the surface to
+  contract review;
+- on green merge this advances `S1-GLOBAL-ZEROS` bookkeeping without closing
+  it, and no claim about the truth of RH changes.
 
 ## RH-005: bounded computation policy
 
