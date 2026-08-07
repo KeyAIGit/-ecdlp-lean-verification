@@ -177,6 +177,7 @@ import Ecdlp.Proved.DivisionPolynomialPointDoubling
 import Ecdlp.Proved.PrePsiSomos4
 import Ecdlp.Proved.SecantAddX
 import Ecdlp.Proved.OmegaRecurrenceAnchors
+import Ecdlp.Proved.OmegaNumeratorUniform
 import Ecdlp.Proved.NsmulCoordsBaseOne
 import Ecdlp.Proved.NsmulCoordsBaseTwo
 import Ecdlp.Proved.QuadrupleMultiplicationYFormula
@@ -186,3 +187,7 @@ import Ecdlp.Proved.FourTorsionBridgeBar
 import Ecdlp.Proved.FourTorsionStructure
 import Ecdlp.Proved.FourTorsionCount
 import Ecdlp.Proved.CompressedDivisionPoly
+-- Re-encoding invariance: adjoining an auxiliary variable with its defining equation
+-- t_j = g_j(x) is a retraction, so it changes only the presentation, never the variety or
+-- the derivable relations. Says nothing about solving cost -- see the module docstring.
+import Ecdlp.Proved.GraphIdealInvariance

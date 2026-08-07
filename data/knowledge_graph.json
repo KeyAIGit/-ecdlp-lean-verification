@@ -37,9 +37,9 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1190,
+    "edges": 1194,
     "by_edge_type": {
-      "imports": 528,
+      "imports": 532,
       "member_of": 307,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
@@ -12532,6 +12532,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.OmegaNumeratorUniform",
+      "to": "Ecdlp.Proved.DivisionPolynomialDoublingUniform",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.OmegaNumeratorUniform",
+      "to": "Ecdlp.Proved.FiveTorsionBridge",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.OmegaRecurrenceAnchors",
       "to": "Ecdlp.Proved.FiveTorsionBridge",
       "type": "imports"
@@ -14018,6 +14028,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.OmegaNumeratorUniform",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.NsmulCoordsBaseOne",
       "type": "imports"
     },
@@ -14059,6 +14074,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.CompressedDivisionPoly",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.GraphIdealInvariance",
       "type": "imports"
     },
     {

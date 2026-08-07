@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1058,
-  "distinct_qualified_names": 1058,
+  "declaration_count": 1070,
+  "distinct_qualified_names": 1070,
   "verified_md_citations": 677,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -10792,6 +10792,13 @@
       "file": "Ecdlp/Proved/CompressedDivisionPoly.lean",
       "line": 288
     },
+    "Ecdlp.Curve.psi_omega_numerator": {
+      "name": "psi_omega_numerator",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/OmegaNumeratorUniform.lean",
+      "line": 66
+    },
     "Ecdlp.Curve.px": {
       "name": "px",
       "namespace": "Ecdlp.Curve",
@@ -12003,6 +12010,13 @@
       "file": "Ecdlp/Proved/TorsionCoprime.lean",
       "line": 26
     },
+    "Ecdlp.Curve.secp256k1_omega_numerator_evalEval": {
+      "name": "secp256k1_omega_numerator_evalEval",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/OmegaNumeratorUniform.lean",
+      "line": 75
+    },
     "Ecdlp.Curve.secp256k1_omega_recurrence_four": {
       "name": "secp256k1_omega_recurrence_four",
       "namespace": "Ecdlp.Curve",
@@ -12023,6 +12037,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/OmegaRecurrenceAnchors.lean",
       "line": 32
+    },
+    "Ecdlp.Curve.secp256k1_omega_recurrence_two_of_uniform": {
+      "name": "secp256k1_omega_recurrence_two_of_uniform",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/OmegaNumeratorUniform.lean",
+      "line": 93
     },
     "Ecdlp.Curve.secp256k1_one_nsmul_coords": {
       "name": "secp256k1_one_nsmul_coords",
@@ -15061,6 +15082,69 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/Secp256k1GenericSecurity.lean",
       "line": 28
+    },
+    "Ecdlp.GraphIdeal.aeval_comp_aeval_sumElim": {
+      "name": "aeval_comp_aeval_sumElim",
+      "namespace": "Ecdlp.GraphIdeal",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
+      "line": 208
+    },
+    "Ecdlp.GraphIdeal.aeval_sumElim_comp_rename_inl": {
+      "name": "aeval_sumElim_comp_rename_inl",
+      "namespace": "Ecdlp.GraphIdeal",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
+      "line": 119
+    },
+    "Ecdlp.GraphIdeal.aeval_sumElim_rename_inl": {
+      "name": "aeval_sumElim_rename_inl",
+      "namespace": "Ecdlp.GraphIdeal",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
+      "line": 126
+    },
+    "Ecdlp.GraphIdeal.comap_aeval_sumElim": {
+      "name": "comap_aeval_sumElim",
+      "namespace": "Ecdlp.GraphIdeal",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
+      "line": 182
+    },
+    "Ecdlp.GraphIdeal.comap_comap_eq_self": {
+      "name": "comap_comap_eq_self",
+      "namespace": "Ecdlp.GraphIdeal",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
+      "line": 104
+    },
+    "Ecdlp.GraphIdeal.comap_eq_map_sup_ker": {
+      "name": "comap_eq_map_sup_ker",
+      "namespace": "Ecdlp.GraphIdeal",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
+      "line": 86
+    },
+    "Ecdlp.GraphIdeal.elimination_eq_self": {
+      "name": "elimination_eq_self",
+      "namespace": "Ecdlp.GraphIdeal",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
+      "line": 195
+    },
+    "Ecdlp.GraphIdeal.ker_aeval_sumElim": {
+      "name": "ker_aeval_sumElim",
+      "namespace": "Ecdlp.GraphIdeal",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
+      "line": 160
+    },
+    "Ecdlp.GraphIdeal.sub_rename_aeval_mem": {
+      "name": "sub_rename_aeval_mem",
+      "namespace": "Ecdlp.GraphIdeal",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/GraphIdealInvariance.lean",
+      "line": 138
     },
     "Ecdlp.MovReduction.mov_random_q_success_probability": {
       "name": "mov_random_q_success_probability",
