@@ -175,13 +175,17 @@ BARRIERS = [
     },
     {
         "id": "B3-point-counting",
-        "title": "Concrete point count #E(F_p) = n not kernel-computable",
-        "missing_foundation": "Schoof / efficient point counting in Mathlib",
-        "blocks": "deriving #E = n abstractly for the concrete curve",
+        "title": "No general Schoof / Hasse point counting in Mathlib",
+        "missing_foundation": "general Schoof / Hasse-based point counting in Mathlib",
+        "blocks": "exact #E for any curve with no curve-specific certificate route; "
+        "notably P-256, where j != 0 blocks the secp256k1 argument",
         "affected_claims_estimate": 6,
         "mathlib_area": "EllipticCurve (partial)",
-        "partial_progress": "the concrete order is instead pinned via native_decide / "
-        "the published value; primality of n is machine-checked (Pratt).",
+        "partial_progress": "closed for secp256k1: #E(F_p) = n is a kernel theorem "
+        "(secp256k1_card_point_eq_n, Ecdlp/Proved/CurveCardinalityExact.lean) via a "
+        "curve-specific certificate needing no Hasse/Schoof; native_decide discharges "
+        "only the 256-bit non-cube leaf and the literal arithmetic inside that proof, "
+        "it does not assert the order. Primality of n is machine-checked (Pratt).",
     },
 ]
 

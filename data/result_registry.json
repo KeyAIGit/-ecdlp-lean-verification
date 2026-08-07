@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1051,
-  "distinct_qualified_names": 1051,
+  "declaration_count": 1058,
+  "distinct_qualified_names": 1058,
   "verified_md_citations": 677,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -2235,7 +2235,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/EmbeddingDegree.lean",
-          "line": 32
+          "line": 95
         }
       ]
     },
@@ -10386,6 +10386,13 @@
       "file": "Ecdlp/Proved/AnomalousScope.lean",
       "line": 23
     },
+    "Ecdlp.Curve.complEDS₂_mul_ψ₂": {
+      "name": "complEDS₂_mul_ψ₂",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialDoublingUniform.lean",
+      "line": 39
+    },
     "Ecdlp.Curve.cube_covariant_support": {
       "name": "cube_covariant_support",
       "namespace": "Ecdlp.Curve",
@@ -11394,12 +11401,19 @@
       "file": "Ecdlp/Proved/MultiplicationYFormula.lean",
       "line": 41
     },
+    "Ecdlp.Curve.secp256k1_embedding_degree_eq": {
+      "name": "secp256k1_embedding_degree_eq",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EmbeddingDegree.lean",
+      "line": 66
+    },
     "Ecdlp.Curve.secp256k1_embedding_degree_gt_100": {
       "name": "secp256k1_embedding_degree_gt_100",
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/EmbeddingDegree.lean",
-      "line": 32
+      "line": 95
     },
     "Ecdlp.Curve.secp256k1_eval_threeTorsionPoly": {
       "name": "secp256k1_eval_threeTorsionPoly",
@@ -12976,6 +12990,34 @@
       "file": "Ecdlp/Proved/Secp256k1Params.lean",
       "line": 11
     },
+    "Ecdlp.Curve.zmodSubringSubsingleton": {
+      "name": "zmodSubringSubsingleton",
+      "namespace": "Ecdlp.Curve",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/PrimeFieldNoDescent.lean",
+      "line": 78
+    },
+    "Ecdlp.Curve.zmod_no_proper_subring": {
+      "name": "zmod_no_proper_subring",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PrimeFieldNoDescent.lean",
+      "line": 71
+    },
+    "Ecdlp.Curve.zmod_prime_no_proper_addSubgroup": {
+      "name": "zmod_prime_no_proper_addSubgroup",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PrimeFieldNoDescent.lean",
+      "line": 93
+    },
+    "Ecdlp.Curve.zmod_prime_no_proper_subfield": {
+      "name": "zmod_prime_no_proper_subfield",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/PrimeFieldNoDescent.lean",
+      "line": 85
+    },
     "Ecdlp.Curve.Φ_eval_eq_φ_evalEval": {
       "name": "Φ_eval_eq_φ_evalEval",
       "namespace": "Ecdlp.Curve",
@@ -13059,6 +13101,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomialDoubling.lean",
       "line": 39
+    },
+    "Ecdlp.Curve.ψ_two_mul_mul_ψ₂": {
+      "name": "ψ_two_mul_mul_ψ₂",
+      "namespace": "Ecdlp.Curve",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/DivisionPolynomialDoublingUniform.lean",
+      "line": 49
     },
     "Ecdlp.Curve25519.A": {
       "name": "A",
