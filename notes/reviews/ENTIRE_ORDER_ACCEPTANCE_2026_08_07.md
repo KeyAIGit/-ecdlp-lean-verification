@@ -32,7 +32,10 @@ No queue edit is made by this record; queue flips are the orchestrator's.
   blob `61d7110ed724b5c99bd1638bef41392dad6af4f1`); post-editorial-fix state
   (1,013 lines) SHA-256
   `5c45eb9d59ea9f2e20075f239c637bef68df22241970677ccaaa106784f8c8dd`
-  (Git blob `0e0850b598f11c789c98e39d1b107bd3af33e18d`);
+  (Git blob `0e0850b598f11c789c98e39d1b107bd3af33e18d`; the applied fixes
+  landed on the branch in commit `59d5220` — "land in-flight panel edits" —
+  during the parallel review sweep, verified blob-identical to this
+  consolidation's post-fix state);
 - pinned Mathlib revision `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`
   (v4.31.0), re-verified by `git rev-parse HEAD` at
   `/workspace/leanprover-community/mathlib4` by every lens and again at
