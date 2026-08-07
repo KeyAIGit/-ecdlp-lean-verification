@@ -42,9 +42,12 @@ thirty-four M1-M17 declarations on the exact merged head, with complete
 inverse ledger coverage and both axiom audits green. This closes
 `S1-MULTIPLICITY` and — together with merged PR #307 — completes the
 `S1-CONJ` exit evidence; both closures are recorded in the dated
-capability-map addendum. By this dated decision the single ACTIVE slot moves
-to `RH-011` (acceptance-only review of the zero-set slice statement surface,
-`ZERO_SET_SLICE_CONTRACT.md`; no built module, no kernel verdict). Do not
+capability-map addendum. `RH-011` completed 2026-08-07: the three-lens panel
+accepted the 23-signature zero-set slice surface with zero blocking items
+(record `RH011_ZERO_SLICE_ACCEPTANCE_2026_08_07.md`); acceptance changes no
+barrier row — `S1-GLOBAL-ZEROS` remains OPEN. By this dated decision the
+single ACTIVE slot moves to `RH-012` (slice drafting plus separate kernel
+promotion, the RH-010 pattern; CI is the sole judge). Do not
 begin a route proof attempt, large computation, new equivalence formalization,
 or autonomous hypothesis sweep.
 
