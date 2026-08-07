@@ -303,7 +303,6 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Curve.ψ_isEllSequence
 #print axioms Ecdlp.Curve.ψ_succ_mul_ψ_pred
 #print axioms Ecdlp.Curve.ψ_two_mul
-#print axioms Ecdlp.Curve.ψ_two_mul_mul_ψ₂
 #print axioms Ecdlp.Curve25519.Curve25519_a₂_ne_zero
 #print axioms Ecdlp.Curve25519.Curve25519_generator_equation
 #print axioms Ecdlp.Curve25519.Curve25519_Δ_ne_zero

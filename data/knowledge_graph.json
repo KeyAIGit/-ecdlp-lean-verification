@@ -208,12 +208,12 @@
       "Mathlib (`norm_num`)": 1
     },
     "by_area": {
-      "curve-torsion": 156,
+      "curve-torsion": 155,
       "primality": 57,
       "other": 34,
       "generic-hardness": 30,
       "protocol-soundness": 23,
-      "attack-resistance": 8,
+      "attack-resistance": 9,
       "reduction": 5,
       "params": 1
     }
@@ -6385,8 +6385,8 @@
     },
     {
       "id": "thm-307",
-      "name": "Ecdlp.Curve.complEDS₂_mul_ψ₂`, `Ecdlp.Curve.ψ_two_mul_mul_ψ₂",
-      "short_name": "complEDS₂_mul_ψ₂`,",
+      "name": "Ecdlp.Curve.complEDS₂_mul_ψ₂",
+      "short_name": "complEDS₂_mul_ψ₂",
       "module": "Ecdlp.Proved.DivisionPolynomialDoublingUniform",
       "modules": [
         "Ecdlp.Proved.DivisionPolynomialDoublingUniform"
@@ -6395,11 +6395,11 @@
       "files": [
         "Ecdlp/Proved/DivisionPolynomialDoublingUniform.lean"
       ],
-      "claim": "Uniform doubling identity for `ψ₂ₘ` (over an arbitrary `CommRing` and an arbitrary Weierstrass curve, `ψ₂ₘ·ψ₂ = ψ_{m−1}²ψ_mψ_{m+2} − ψ_{m−2}ψ_mψ_{m+1}²` for every `m : ℤ`, together with the expanded complementary factor `complEDS₂(m)·ψ₂`. Direct specialisations of Mathlib's `normEDS_even` and `complEDS₂_mul_b`, available because `W.ψ` is definitionally `normEDS W.ψ₂ (C W.Ψ₃) (C W.preΨ₄)`; neither Mathlib lemma was used anywhere in this repository before. Honest scope: a polynomial identity in `R[X][Y]`. It defines no `ωₙ` — the `÷2` well-definedness step that keeps Mathlib's bivariate `y`-division polynomials an open `TODO` is untouched. It states nothing about `Point`-level `[n]`-arithmetic, nothing about torsion, and nothing about secp256k1 in particular)",
+      "claim": "The complementary doubling factor `ψ₂ₘ/ψₘ`, expanded, uniformly in `m` (over an arbitrary `CommRing` and an arbitrary Weierstrass curve, `complEDS₂(m)·ψ₂ = ψ_{m−1}²ψ_{m+2} − ψ_{m−2}ψ_{m+1}²` for every `m : ℤ`. A specialisation of Mathlib's scalar-EDS `complEDS₂_mul_b`, available because `W.ψ` is definitionally `normEDS W.ψ₂ (C W.Ψ₃) (C W.preΨ₄)`. Mathlib's `WeierstrassCurve` layer has `ψ_even`/`ψ_odd` but no `complEDS₂` lemma at all, so this is the `W`-level form of a fact that exists only in scalar form upstream. Correction: this module originally also carried `ψ_two_mul_mul_ψ₂`, which was character-for-character Mathlib's `WeierstrassCurve.ψ_even` — both are `normEDS_even ..` at the same arguments — and which this repository already used in two places (`DivisionPolynomialPointDoubling.lean`, `OmegaRecurrenceAnchors.lean`). It was a duplicate under a new name and has been removed; the accompanying claim that neither underlying Mathlib lemma had been used here before was wrong for `normEDS_even`. Honest scope: a polynomial identity in `R[X][Y]`. It defines no `ωₙ` — the `÷2` well-definedness step that keeps Mathlib's bivariate `y`-division polynomials an open `TODO` is untouched. It states nothing about `Point`-level `[n]`-arithmetic, nothing about torsion, and nothing about secp256k1 in particular)",
       "method": "Mathlib",
       "status": "proved",
-      "area": "curve-torsion",
-      "family_id": "family-curve-torsion",
+      "area": "attack-resistance",
+      "family_id": "family-attack-resistance",
       "dependency_depth": 0,
       "gated": true
     },
@@ -15840,7 +15840,7 @@
     },
     {
       "from": "thm-307",
-      "to": "family-curve-torsion",
+      "to": "family-attack-resistance",
       "type": "member_of"
     },
     {

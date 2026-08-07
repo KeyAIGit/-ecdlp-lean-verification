@@ -2,14 +2,14 @@
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
   "ledger_rows": 314,
-  "ledger_reference_count": 738,
-  "ledger_named_declarations": 713,
+  "ledger_reference_count": 737,
+  "ledger_named_declarations": 712,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1090,
-  "distinct_qualified_names": 1090,
-  "verified_md_citations": 713,
+  "declaration_count": 1089,
+  "distinct_qualified_names": 1089,
+  "verified_md_citations": 712,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -371,7 +371,6 @@
     "Ecdlp.Curve.ψ_isEllSequence",
     "Ecdlp.Curve.ψ_succ_mul_ψ_pred",
     "Ecdlp.Curve.ψ_two_mul",
-    "Ecdlp.Curve.ψ_two_mul_mul_ψ₂",
     "Ecdlp.Curve25519.Curve25519_a₂_ne_zero",
     "Ecdlp.Curve25519.Curve25519_generator_equation",
     "Ecdlp.Curve25519.Curve25519_Δ_ne_zero",
@@ -10114,8 +10113,8 @@
     },
     {
       "id": "ledger-307",
-      "claim": "Uniform doubling identity for `ψ₂ₘ` (over an arbitrary `CommRing` and an arbitrary Weierstrass curve, `ψ₂ₘ·ψ₂ = ψ_{m−1}²ψ_mψ_{m+2} − ψ_{m−2}ψ_mψ_{m+1}²` for every `m : ℤ`, together with the expanded complementary factor `complEDS₂(m)·ψ₂`. Direct specialisations of Mathlib's `normEDS_even` and `complEDS₂_mul_b`, available because `W.ψ` is definitionally `normEDS W.ψ₂ (C W.Ψ₃) (C W.preΨ₄)`; neither Mathlib lemma was used anywhere in this repository before. Honest scope: a polynomial identity in `R[X][Y]`. It defines no `ωₙ` — the `÷2` well-definedness step that keeps Mathlib's bivariate `y`-division polynomials an open `TODO` is untouched. It states nothing about `Point`-level `[n]`-arithmetic, nothing about torsion, and nothing about secp256k1 in particular)",
-      "theorem_cell": "`Ecdlp.Curve.complEDS₂_mul_ψ₂`, `Ecdlp.Curve.ψ_two_mul_mul_ψ₂`",
+      "claim": "The complementary doubling factor `ψ₂ₘ/ψₘ`, expanded, uniformly in `m` (over an arbitrary `CommRing` and an arbitrary Weierstrass curve, `complEDS₂(m)·ψ₂ = ψ_{m−1}²ψ_{m+2} − ψ_{m−2}ψ_{m+1}²` for every `m : ℤ`. A specialisation of Mathlib's scalar-EDS `complEDS₂_mul_b`, available because `W.ψ` is definitionally `normEDS W.ψ₂ (C W.Ψ₃) (C W.preΨ₄)`. Mathlib's `WeierstrassCurve` layer has `ψ_even`/`ψ_odd` but no `complEDS₂` lemma at all, so this is the `W`-level form of a fact that exists only in scalar form upstream. Correction: this module originally also carried `ψ_two_mul_mul_ψ₂`, which was character-for-character Mathlib's `WeierstrassCurve.ψ_even` — both are `normEDS_even ..` at the same arguments — and which this repository already used in two places (`DivisionPolynomialPointDoubling.lean`, `OmegaRecurrenceAnchors.lean`). It was a duplicate under a new name and has been removed; the accompanying claim that neither underlying Mathlib lemma had been used here before was wrong for `normEDS_even`. Honest scope: a polynomial identity in `R[X][Y]`. It defines no `ωₙ` — the `÷2` well-definedness step that keeps Mathlib's bivariate `y`-division polynomials an open `TODO` is untouched. It states nothing about `Point`-level `[n]`-arithmetic, nothing about torsion, and nothing about secp256k1 in particular)",
+      "theorem_cell": "`Ecdlp.Curve.complEDS₂_mul_ψ₂`",
       "declared_files": [
         "Ecdlp/Proved/DivisionPolynomialDoublingUniform.lean"
       ],
@@ -10125,14 +10124,6 @@
         {
           "cited": "Ecdlp.Curve.complEDS₂_mul_ψ₂",
           "canonical_name": "Ecdlp.Curve.complEDS₂_mul_ψ₂",
-          "resolution": "exact",
-          "kind": "theorem",
-          "file": "Ecdlp/Proved/DivisionPolynomialDoublingUniform.lean",
-          "line": 39
-        },
-        {
-          "cited": "Ecdlp.Curve.ψ_two_mul_mul_ψ₂",
-          "canonical_name": "Ecdlp.Curve.ψ_two_mul_mul_ψ₂",
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/DivisionPolynomialDoublingUniform.lean",
@@ -10799,7 +10790,7 @@
       "namespace": "Ecdlp.Curve",
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomialDoublingUniform.lean",
-      "line": 39
+      "line": 49
     },
     "Ecdlp.Curve.cube_covariant_support": {
       "name": "cube_covariant_support",
@@ -13530,13 +13521,6 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionPolynomialDoubling.lean",
       "line": 39
-    },
-    "Ecdlp.Curve.ψ_two_mul_mul_ψ₂": {
-      "name": "ψ_two_mul_mul_ψ₂",
-      "namespace": "Ecdlp.Curve",
-      "kind": "theorem",
-      "file": "Ecdlp/Proved/DivisionPolynomialDoublingUniform.lean",
-      "line": 49
     },
     "Ecdlp.Curve25519.A": {
       "name": "A",
