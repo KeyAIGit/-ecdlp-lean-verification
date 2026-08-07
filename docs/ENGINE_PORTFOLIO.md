@@ -1,7 +1,7 @@
 # Engine portfolio — "hard-but-short" reasoning challenges
 
 The core product thesis: a **strong model proposes, a machine verifier judges, only truth
-survives**. This file tracks challenges given to the strong model (Fable) that have a *short,
+survives**. This file tracks challenges given to the strong model that have a *short,
 explicit answer but require genuine mathematical reasoning to find* — and, for each, an
 **independent machine verification** of the answer (never the model's own say-so).
 
@@ -14,14 +14,14 @@ own "I ran it" claim.
 
 | # | Challenge | Model | Verified how | Status |
 |---|---|---|---|---|
-| 1 | Weil rung W3: Miller function unique up to a unit | Fable | Lean kernel (full CI) | ✅ verified |
-| 2 | Multiplication-by-3 `x`-coordinate formula, secp256k1 | Fable | sympy, re-run independently | ✅ verified |
-| 3 | Multiplication-by-4 `x`-coordinate formula (double∘double) | Fable | sympy, re-run independently | ✅ verified |
-| 4 | Multiplication-by-5 `x`-coordinate formula (via `ψ₄ψ₆/ψ₅²`) | Fable | sympy, re-run independently | ✅ verified |
-| 5 | Multiplication-by-6, **two composition orders `[2][3]=[3][2]`** agree | Fable | sympy, re-run independently | ✅ verified |
-| 6 | 5- and 7-division polynomials `ψ₅, ψ₇` from the recurrence | Fable | sympy, re-run independently | ✅ verified |
-| 7 | Multiplication-by-7 `x`-coordinate (deg 49; completes `n=2..7`) | Fable | sympy, re-run independently | ✅ verified |
-| 8 | **No-go certificate**: `E[2]` and `E[3]` `x`-loci disjoint — explicit Bézout `u·(x³+7)+v·ψ₃=1`, `Res=−3⁶·7⁴` | Fable | sympy, re-run independently | ✅ verified |
+| 1 | Weil rung W3: Miller function unique up to a unit | strong model | Lean kernel (full CI) | ✅ verified |
+| 2 | Multiplication-by-3 `x`-coordinate formula, secp256k1 | strong model | sympy, re-run independently | ✅ verified |
+| 3 | Multiplication-by-4 `x`-coordinate formula (double∘double) | strong model | sympy, re-run independently | ✅ verified |
+| 4 | Multiplication-by-5 `x`-coordinate formula (via `ψ₄ψ₆/ψ₅²`) | strong model | sympy, re-run independently | ✅ verified |
+| 5 | Multiplication-by-6, **two composition orders `[2][3]=[3][2]`** agree | strong model | sympy, re-run independently | ✅ verified |
+| 6 | 5- and 7-division polynomials `ψ₅, ψ₇` from the recurrence | strong model | sympy, re-run independently | ✅ verified |
+| 7 | Multiplication-by-7 `x`-coordinate (deg 49; completes `n=2..7`) | strong model | sympy, re-run independently | ✅ verified |
+| 8 | **No-go certificate**: `E[2]` and `E[3]` `x`-loci disjoint — explicit Bézout `u·(x³+7)+v·ψ₃=1`, `Res=−3⁶·7⁴` | strong model | sympy, re-run independently | ✅ verified |
 
 These build a coherent, kernel-promotable series (the `x([n]P) = Φₙ/ΨSqₙ` multiplication maps
 for `n = 2..6` and the odd division polynomials) — engine validation **and** corpus growth in one
@@ -37,7 +37,7 @@ verification certificate. This requires deriving the division polynomials `ψ₂
 the multiplication formula, and proving the `y`-cancellation and coprimality — real reasoning, but
 the answer is two short polynomials.
 
-**Fable's answer.**
+**The model's answer.**
 
 ```
 x([3]P) = N(x) / D(x),   in lowest terms,
@@ -121,6 +121,6 @@ precisely the bad-reduction primes of `y² = x³ + 7` (`Δ = −2⁴·3³·7²`)
 other prime (including `secp256k1`'s `p`). This is a clean, kernel-promotable barrier fact and a
 direct sibling of the `E[2]⊥E[3]` certificate (challenge #8). Recorded in `BARRIERS.md`.
 
-*Honest note:* independently derived + sympy-verified in-session (not a Fable round); the sympy
+*Honest note:* independently derived + sympy-verified in-session (not a delegated model round); the sympy
 certificate is reproducible and offline. Promotion target: a Lean `Coprime`/resultant theorem
 alongside the existing `CoprimePsi2Psi3` line.

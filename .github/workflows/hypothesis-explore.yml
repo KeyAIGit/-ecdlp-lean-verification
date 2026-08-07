@@ -111,8 +111,6 @@ jobs:
             echo "these are pre-chewed narrow targets for the Fable depth tier."
             echo
             echo "Proposals only. The Lean kernel remains the sole judge before anything enters the corpus."
-            echo
-            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
           } > pr-body.txt
           gh pr create --draft --base main --head "$branch" \
             --title "hypothesis-explorer: new no-go entries + leads (${ts})" \

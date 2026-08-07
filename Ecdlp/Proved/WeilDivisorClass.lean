@@ -83,7 +83,7 @@ and `g` both generate the principal fractional ideal `(XYIdeal' h)ⁿ` (as submo
 field), they differ by a **unit** of the coordinate ring: `∃ u : F[secp256k1]ˣ, u • f = g`. This is
 the well-definedness input for the Weil pairing `eₙ` — its value must not depend on which Miller
 function is chosen. Mathematically: two generators of the same principal module are associates.
-**Proof designed by the Fable model and kernel-verified** — it reduces the claim to Mathlib's
+**Proof designed by an AI model and kernel-verified** — it reduces the claim to Mathlib's
 `Submodule.span_singleton_eq_span_singleton` (valid since the coordinate ring is a domain and the
 function field is a torsion-free module over it). Rung W3 (representative-independence half); the
 evaluation half needs a rational-function evaluation API absent from Mathlib v4.31. -/

@@ -24,7 +24,7 @@ so B1 is both a bigger effort than the roadmap's "few hundred lines" estimate **
    small, that stand alone and pre-build B1's scaffolding. Free / in-session. Leaves L4 for later.
 2. **Go for the L4 upstream contribution** — prove `IsEllSequence (normEDS …)`, PR it to Mathlib.
    Big (~semester-fraction), prestigious, unblocks B1 *and* benefits the community. Human-led + me.
-3. **Feed the decomposed bounded sub-lemmas to the Opus autonomy** — L5/L6/L2/L3 are now bounded
+3. **Feed the decomposed bounded sub-lemmas to the autonomous harness** — L5/L6/L2/L3 are now bounded
    enough to be autonomous-harness targets (the `$/mo` budget applied to real depth-leaves).
 
 **Recommendation:** start with **L5/L6** (CAS-assisted Bézout certificates — concrete wins that
@@ -33,7 +33,7 @@ deep contribution. Autonomy handles the remaining bounded scaffolding (L2/L3).
 
 ---
 
-## Full sub-lemma plan (Fable-drafted, pure math)
+## Full sub-lemma plan (model-drafted, pure math)
 
 *Pure algebra; none kernel-verified yet. Conventions: Mathlib's `Ψ₂Sq, preΨ, ΨSq, Φ` for
 `W : WeierstrassCurve k` in short form. No group law / no `[n]`-map is used — everything is the

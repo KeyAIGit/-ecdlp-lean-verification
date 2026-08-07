@@ -27,13 +27,13 @@ DISCOVER ──▶ PROVE ──▶ SURFACE
    verifies it with `lake env lean` (the Lean kernel is the only judge), and rejections are
    fed back for repair — budget- and wall-clock-bounded. Every kernel-clean node is kept.
 
-   **Fable-in-CI (`scripts/certify.py`).** When a target rests on a nontrivial algebraic
+   **Model-in-CI (`scripts/certify.py`).** When a target rests on a nontrivial algebraic
    identity (a polynomial identity, an exact `linear_combination` cofactor, a resultant),
    discovery attaches a `certify` claim. Before proving, a model designs a **self-contained
    sympy script** that verifies that identity by exact symbolic computation; the engine
    *runs* it and only a script printing `CERT_OK` counts. The verified certificate (explicit
    polynomials/cofactors) is then prepended to the prover prompt, so the prover transcribes a
-   machine-checked identity instead of guessing one — the same division of labour (Fable
+   machine-checked identity instead of guessing one — the same division of labour (the model
    designs → build agent transcribes) that made the deep torsion results tractable
    interactively. sympy only proposes; the Lean kernel still judges.
 
@@ -72,7 +72,7 @@ identities, abstract DL-crypto protocol facts (ECDSA/Schnorr/SSS-style), secp256
 corollaries, and self-gaps (things asserted in prose but not fully proved). Each is
 kernel-verified before it reaches a PR.
 
-**Does not, fully:** match orchestrated depth. The `certify.py` Fable-in-CI step closes part
+**Does not, fully:** match orchestrated depth. The `certify.py` model-in-CI step closes part
 of the gap — the unattended loop can now get a sympy-verified certificate for a hard algebraic
 identity before proving, which is exactly what unlocked the deep torsion results. What it
 still lacks versus the interactive campaigns is the *adaptive* orchestration around that step:
@@ -82,8 +82,8 @@ engine is best understood as the **autonomous tail** of the pipeline: it harvest
 reachable frontier (now including certificate-backed algebra) between the deeper, human-
 directed campaigns — a strong complement to them, not yet a full replacement.
 
-The maximal "literally the interactive pipeline on a schedule" is a further step: run Claude
-Code itself headless in CI (with the Workflow/Agent tools + direct SSH verify), rather than
+The maximal "literally the interactive pipeline on a schedule" is a further step: run a full
+coding-agent harness headless in CI (with the Workflow/Agent tools + direct SSH verify), rather than
 the raw-API `agent_day` loop. That is more faithful but harder to bound on cost and auth; it
 is deliberately left as a follow-up on top of this controllable base.
 
@@ -98,7 +98,7 @@ Breaking the curve is not a goal (see `BARRIERS.md`, `notes/SECURITY_SCOPE.md`).
 |---|---|
 | `.github/workflows/autonomous-engine.yml` | the orchestrator, dispatch-only (discover → prove → draft PR) |
 | `scripts/autonomous_discover.py` | LLM discovery → `targets/queue.json` (has `--dry-run`) |
-| `scripts/certify.py` | Fable-in-CI: model designs a sympy certificate, we run it (has `--self-test`) |
+| `scripts/certify.py` | model-in-CI: the model designs a sympy certificate, we run it (has `--self-test`) |
 | `scripts/agent_day.py` | budget-bounded prove loop over the queue (runs the certify step) |
 | `scripts/agent_prove.py` | single-target propose → server-verify primitives (reused) |
 | `scripts/generator.py` | deterministic corpus → stems (Layer 3; now exhausted) |

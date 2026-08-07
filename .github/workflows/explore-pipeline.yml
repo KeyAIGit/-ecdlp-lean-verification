@@ -150,8 +150,6 @@ jobs:
             echo "See the run log / artifact for the per-tier cost breakdown."
             echo
             echo "Proposals only. The Lean kernel remains the sole judge before anything enters the corpus."
-            echo
-            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
           } > pr-body.txt
           gh pr create --draft --base main --head "$branch" \
             --title "explore-pipeline: cross-checked leads + ledger (${ts})" \

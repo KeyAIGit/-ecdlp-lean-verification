@@ -145,8 +145,6 @@ jobs:
             echo "These are **proposals**, not promoted proofs. To promote one: move it into"
             echo "\`Ecdlp/Proved/\`, add its import to \`Ecdlp.lean\` (so CI re-verifies), review the"
             echo "statement for meaningfulness, and append a \`VERIFIED.md\` row. Do not merge as-is."
-            echo
-            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
           } > pr-body.txt
           gh pr create --draft --base main --head "$branch" \
             --title "autonomous-engine: ${{ steps.day.outputs.accepted_count }} candidate node(s) for review" \

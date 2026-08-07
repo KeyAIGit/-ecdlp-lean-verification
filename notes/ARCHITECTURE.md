@@ -6,8 +6,8 @@ Everything else (CI runners, the dev sandbox) is ephemeral.
 
 ```mermaid
 flowchart TB
-  subgraph DEV["Dev sandbox — Claude Code (ephemeral)"]
-    C["Claude: writes Lean proofs, docs,<br/>workflows, knowledge graph"]
+  subgraph DEV["Dev sandbox — coding agent (ephemeral)"]
+    C["Agent: writes Lean proofs, docs,<br/>workflows, knowledge graph"]
   end
 
   subgraph GH["GitHub — durable source of truth"]

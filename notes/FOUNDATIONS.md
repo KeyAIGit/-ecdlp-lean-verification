@@ -96,7 +96,7 @@ The concrete sub-ladder, from what is now done to the summit:
 - **W3 — evaluate `f_P` at a divisor** `f_P(D_Q)` and prove independence of the chosen
   representative. The **representative-independence half** is ✓ **done**
   (`secp256k1_miller_function_unique`: two Miller functions differ by a unit of `F[E]`, via
-  `Submodule.span_singleton_eq_span_singleton` — **proof designed by the Fable model,
+  `Submodule.span_singleton_eq_span_singleton` — **proof designed by an AI model,
   kernel-verified**, the first piloted "strong-model + Lean-kernel" rung). The reachable
   **evaluation half is also done**: the **regular-function evaluation
   homomorphism** `evalAt : F[E] →+* F` (value of a regular function at a rational point, via
