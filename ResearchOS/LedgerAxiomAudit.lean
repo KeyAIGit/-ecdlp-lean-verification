@@ -9,6 +9,8 @@ CI elaborates it standalone and validates the output with
 `scripts/check_axioms.py`.
 -/
 
+#print axioms AnalyticAt.conj_conj
+#print axioms Gammaℝ_conj
 #print axioms ResearchOS.NumberTheory.carmichael_1105_factorization
 #print axioms ResearchOS.NumberTheory.carmichael_1105_not_prime
 #print axioms ResearchOS.NumberTheory.carmichael_1729_factorization
@@ -21,7 +23,12 @@ CI elaborates it standalone and validates the output with
 #print axioms ResearchOS.NumberTheory.prime_10007
 #print axioms ResearchOS.NumberTheory.prime_10009
 #print axioms ResearchOS.NumberTheory.prime_2017
+#print axioms analyticOrderAt_conj_conj
+#print axioms analyticOrderAt_riemannXi_conj
 #print axioms analyticOrderAt_riemannXi_eq_riemannZeta
+#print axioms analyticOrderAt_riemannZeta_conj
+#print axioms completedRiemannZeta_conj
+#print axioms completedRiemannZeta₀_conj
 #print axioms differentiable_riemannXi
 #print axioms one_notMem_riemannZetaZeros
 #print axioms riemannHypothesis_iff_riemannXi_zeros_re_eq_half
@@ -29,6 +36,8 @@ CI elaborates it standalone and validates the output with
 #print axioms riemannHypothesis_iff_zetaZeros_re_eq_half
 #print axioms riemannHypothesis_iff_zetaZeros_re_eq_half'
 #print axioms riemannXi
+#print axioms riemannXi_comp_conj
+#print axioms riemannXi_conj
 #print axioms riemannXi_eq_of_ne
 #print axioms riemannXi_eq_zero_iff_riemannZeta_eq_zero
 #print axioms riemannXi_ne_zero_of_one_le_re
@@ -37,6 +46,13 @@ CI elaborates it standalone and validates the output with
 #print axioms riemannXi_one_sub
 #print axioms riemannXi_zero
 #print axioms riemannXi_zero_mem_critical_strip
+#print axioms riemannZetaZeros_conj_image
+#print axioms riemannZetaZeros_conj_preimage
+#print axioms riemannZeta_comp_conj
+#print axioms riemannZeta_conj
+#print axioms riemannZeta_conj_eq_zero_iff
+#print axioms riemannZeta_fourfold_zero
+#print axioms riemannZeta_fourfold_zero'
 #print axioms riemannZeta_ne_zero_of_re_eq_zero
 #print axioms riemannZeta_ne_zero_of_re_le_zero
 #print axioms riemannZeta_one_sub_eq_zero_iff

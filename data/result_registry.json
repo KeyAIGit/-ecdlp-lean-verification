@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1035,
-  "distinct_qualified_names": 1035,
+  "declaration_count": 1051,
+  "distinct_qualified_names": 1051,
   "verified_md_citations": 677,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -10078,6 +10078,13 @@
     }
   ],
   "declarations": {
+    "AnalyticAt.conj_conj": {
+      "name": "AnalyticAt.conj_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 336
+    },
     "EDSPort.HaveSameParity₄": {
       "name": "HaveSameParity₄",
       "namespace": "EDSPort",
@@ -16840,6 +16847,13 @@
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
       "line": 309
     },
+    "Gammaℝ_conj": {
+      "name": "Gammaℝ_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 58
+    },
     "OddRec": {
       "name": "OddRec",
       "namespace": "",
@@ -17064,6 +17078,20 @@
       "file": "Ecdlp/Proved/QuadrupleMultiplicationYFormula.lean",
       "line": 12
     },
+    "analyticOrderAt_conj_conj": {
+      "name": "analyticOrderAt_conj_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 357
+    },
+    "analyticOrderAt_riemannXi_conj": {
+      "name": "analyticOrderAt_riemannXi_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 452
+    },
     "analyticOrderAt_riemannXi_eq_riemannZeta": {
       "name": "analyticOrderAt_riemannXi_eq_riemannZeta",
       "namespace": "",
@@ -17071,12 +17099,33 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
       "line": 248
     },
+    "analyticOrderAt_riemannZeta_conj": {
+      "name": "analyticOrderAt_riemannZeta_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 440
+    },
     "cMin": {
       "name": "cMin",
       "namespace": "",
       "kind": "def",
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
       "line": 326
+    },
+    "completedRiemannZeta_conj": {
+      "name": "completedRiemannZeta_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 234
+    },
+    "completedRiemannZeta₀_conj": {
+      "name": "completedRiemannZeta₀_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 179
     },
     "dMin": {
       "name": "dMin",
@@ -17232,6 +17281,20 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
       "line": 41
     },
+    "riemannXi_comp_conj": {
+      "name": "riemannXi_comp_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 292
+    },
+    "riemannXi_conj": {
+      "name": "riemannXi_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 282
+    },
     "riemannXi_eq_of_ne": {
       "name": "riemannXi_eq_of_ne",
       "namespace": "",
@@ -17287,6 +17350,55 @@
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
       "line": 192
+    },
+    "riemannZetaZeros_conj_image": {
+      "name": "riemannZetaZeros_conj_image",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 262
+    },
+    "riemannZetaZeros_conj_preimage": {
+      "name": "riemannZetaZeros_conj_preimage",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 256
+    },
+    "riemannZeta_comp_conj": {
+      "name": "riemannZeta_comp_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 163
+    },
+    "riemannZeta_conj": {
+      "name": "riemannZeta_conj",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 86
+    },
+    "riemannZeta_conj_eq_zero_iff": {
+      "name": "riemannZeta_conj_eq_zero_iff",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 246
+    },
+    "riemannZeta_fourfold_zero": {
+      "name": "riemannZeta_fourfold_zero",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 306
+    },
+    "riemannZeta_fourfold_zero'": {
+      "name": "riemannZeta_fourfold_zero'",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
+      "line": 317
     },
     "riemannZeta_ne_zero_of_re_eq_zero": {
       "name": "riemannZeta_ne_zero_of_re_eq_zero",

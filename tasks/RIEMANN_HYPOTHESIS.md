@@ -11,8 +11,8 @@ this queue during the RH activation cycle.
 
 ## Current decision
 
-Decision update: 2026-08-06. `RH-001`, `RH-003`, `RH-004`, `RH-006`, and
-`RH-007` are complete.
+Decision update: 2026-08-06. `RH-001`, `RH-003`, `RH-004`, `RH-006`,
+`RH-007`, and `RH-008` are complete.
 `S0-TRUST` is closed by PR #298, and the repo-local target bridge is built,
 audited, and merged by PR #299, closing `S1-TARGET`. `RH-002` remains
 `PARK`/`PARK`/`PARK`, with no theorem-bearing route selected and its
@@ -22,9 +22,12 @@ is authorized. The `RH-006` source replay has
 is recorded in `RH006_SOURCE_CONTRACT_ACCEPTANCE_2026_08_06.md`. `RH-007`
 completed through merged PR #304 (`afdae08`): its twelve X1-X11 declarations
 are built, ledgered, registry-covered, and axiom-audited, closing `S1-XI`.
-This is a foundation interface only; `S1-MULTIPLICITY` remains open and no
-claim about RH's truth changes. Do not begin a route proof attempt, large
-computation, new equivalence formalization, or autonomous hypothesis sweep.
+The reviewed RH-008 reconciliation builds and audits the sixteen Z1-Z9
+conjugation declarations. It closes only the conjugation leg: `S1-CONJ`
+remains open on divisor invariance, `S1-MULTIPLICITY` remains open, and no
+claim about RH's truth changes. `RH-002` remains the sole ACTIVE task. Do not
+begin a route proof attempt, large computation, new equivalence formalization,
+or autonomous hypothesis sweep.
 
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
@@ -359,6 +362,60 @@ and promotion review in the same PR. Barrier `S1-XI` is closed; the local
 analytic-order-transport component is discharged, but `S1-MULTIPLICITY`
 remains open pending a divisor interface and multiplicity-preserving
 symmetries.
+
+## RH-008: conjugation-package promotion
+
+ID: `RH-008`
+
+Status: **COMPLETE 2026-08-06**
+
+Acceptance disposition: the reviewed promotion atomically activated and
+completed `RH-008` while reconciling already-pushed in-flight work under the
+repository charter. It did not select or execute an RH route. `RH-002` keeps
+the sole ACTIVE slot for its independent `PARK`/`PARK`/`PARK` disposition
+review.
+
+Closure evidence: the built module, sixteen ledger rows, inverse registry
+coverage, generated axiom audit, synchronized draft, and promotion review
+land together. The exact promotion head must pass the full build,
+no-incomplete-proof gate, and both axiom audits before merge. This closes no
+named barrier: the divisor-invariance half of `S1-CONJ` remains open.
+
+Kind: theorem / review
+
+Activation basis (2026-08-06): both prerequisites the `S1-CONJ` contract
+carries are now kernel-checked on `main` — bridge P2/P3 (PR #299, `288d65b`)
+for Z8, and the xi definition X1 (PR #304, `afdae08`) for Z7 and Z9-xi. The
+contract's statement surface was independently accepted in PR #301
+(`7bf13ab`), including the corrected Annex-B `F1` sign. The reserved-draft
+clause recorded there ("reserved for a later, separately reviewed promotion
+after its prerequisites are accepted") is therefore satisfied.
+
+Hypothesis: the accepted Z1-Z9 statement surface can be promoted without any
+statement change — module + sixteen `RH-CONJ-*` ledger rows + regenerated
+registry and axiom audit + promotion review record in one change, with the
+kernel verdict delivered by CI, exactly as the bridge (RH-004) and the xi
+package (RH-007) were.
+
+Expected output:
+
+- built `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean`
+  (Z1-Z9, sixteen public declarations) importing the built bridge and xi
+  modules directly;
+- a drafts-lane mirror byte-identical from the first `import` to end of file;
+- sixteen ledger rows at axiom base `standard`, complete inverse coverage,
+  and `notes/reviews/RH_CONJ_PROMOTION_2026_08_06.md`.
+
+Exit criteria:
+
+- the full build, no-incomplete-proof gate, inverse ledger coverage, and both
+  axiom audits are green on the exact merged head;
+- no statement deviates from the accepted contract; a statement change stops
+  promotion and returns to contract review;
+- the capability map records the conjugation leg only: `S1-CONJ` stays open
+  because divisor invariance under `ρ ↦ 1 − conj ρ` belongs to the still-open
+  `S1-MULTIPLICITY` package;
+- no claim about the truth of RH is made or implied.
 
 ## RH-005: bounded computation policy
 
