@@ -12,7 +12,10 @@ Audit date: 2026-08-07
 
 Mathlib revision: `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f` (v4.31.0), verified
 this session by `git -C /workspace/leanprover-community/mathlib4 rev-parse HEAD`.
-Repository HEAD at write time: `aab3ad2`. Local checkouts read with
+Repository HEAD at write time: `6a1195f` — a PR #315 working-branch commit;
+the mainline carries the identical content as the squash commit `9129e8c`,
+and none of this note's branch hashes is a mainline ancestor (Annex B-1).
+Local checkouts read with
 ripgrep/`sed`/`grep -n` only; **no Lean toolchain is available in this
 container, so every feasibility judgement below is a source-reading estimate
 and none of it has been kernel-checked.** Following `GLOBAL_ZEROS_RECON.md`
@@ -30,13 +33,19 @@ carried into this note):
 > explicit-formula route | exact test class, transform convention, residues,
 > and limiting procedure
 
-Repository state at HEAD `aab3ad2`: `S1-XI`, `S1-MULTIPLICITY`, and `S1-CONJ`
-are CLOSED (map addendum `:626-656`; PRs #304/#307/#313); the single ACTIVE
-queue slot is `RH-012` (zero-set slice drafting under `S1-GLOBAL-ZEROS`;
-`tasks/RIEMANN_HYPOTHESIS.md:45-50`); `drafts/` contains nine files — the four
-merged-package drafts plus five pillar drafts (`MellinBound.lean`,
-`HarnackDisc.lean`, `PolyLiouville.lean`, `ThreeCircles.lean`, and the
-`README.md` ledger) — and **none of them claims `S1-EXPLICIT` scope** (verified
+Repository state at HEAD `6a1195f`: `S1-XI`, `S1-MULTIPLICITY`, and `S1-CONJ`
+are CLOSED (sixth map addendum, ⊙ `:626-656`; PRs #304/#307/#313 — note the
+main-table cell at `map:386` still reads "OPEN; local … discharged", a
+stale-cell/addendum split the closures themselves resolve in the addendum's
+favour per `tasks/RIEMANN_HYPOTHESIS.md:43-45`); the single ACTIVE
+queue slot is `RH-012` (zero-set slice drafting plus separate kernel
+promotion, under `S1-GLOBAL-ZEROS`; ⊙ `tasks/RIEMANN_HYPOTHESIS.md:45-50`,
+activated by the dated RH-011 acceptance — branch commit `e9b5090`, mainline
+squash `9129e8c`); `drafts/` contains
+nine files — the four merged-package drafts, four pillar drafts
+(`MellinBound.lean`, `HarnackDisc.lean`, `PolyLiouville.lean`,
+`ThreeCircles.lean`), and the `README.md` ledger (count corrected, Annex
+B-3) — and **none of them claims `S1-EXPLICIT` scope** (verified
 this session by listing and by `grep -rn "explicit formula" ResearchOS/ Ecdlp/`
 → 0 hits).
 
@@ -66,7 +75,9 @@ Four things, stated separately because they are easy to conflate.
    (`fourierChar`, `Circle.lean:208`: `𝐞 x = exp(2πix)`; `fourierIntegral`,
    `FourierTransform.lean:82`); and `mellinInv` (`MellinTransform.lean:96`) is
    the classical `(2πi)⁻¹∫_{(σ)}` vertical-line integral. No convention
-   translation layer is needed. Additionally, a **Mellin↔Fourier bridge is
+   translation layer is needed. This does not exhaust the clause: its
+   `J`/`tilde` involutions and the `Mellin(f_g)` factorization remain repo
+   work (§4.1; Annex B-6). Additionally, a **Mellin↔Fourier bridge is
    already a pinned theorem** — `mellin_eq_fourier` / `mellinInv_eq_fourierInv`
    (`MellinInversion.lean:49` / `:75`, first re-extracted this session) — and
    is absent from both sibling notes and from `MATHLIB_CAPABILITY_MAP.md`,
@@ -208,8 +219,9 @@ bound for `mellin`**: ⊙ `rg -n "norm_mellin|‖mellin" Mathlib/` → 0 hits,
 re-run this session. Also absent (transforms scout): Mellin-Plancherel, Mellin
 convolution theorem. Present: substitution API (`mellin_comp_rpow` `:116` and
 family), endpoint special values `hasMellin_one_Ioc` `:438` (`= 1/s`) and
-`hasMellin_cpow_Ioc` `:453` — exactly the endpoint-term shapes of
-`SC-BOMB-02`'s `Mellin(f)(0)`/`Mellin(f)(1)`.
+`hasMellin_cpow_Ioc` `:453` — a pinned model of, not identical to, the
+endpoint-term shapes in `SC-BOMB-02`'s `Mellin(f)(0)`/`Mellin(f)(1)` (Annex
+B-5).
 
 **Refinement of both siblings (not a contradiction):** `mellin_eq_fourier` /
 `mellinInv_eq_fourierInv` (§2.1) appear in neither sibling nor in the map. For
@@ -280,8 +292,10 @@ pattern is stated (`q = 1` is not specialized to `riemannZeta`).
 
 No built, in-flight, or queued package consumes any `S1-EXPLICIT` fact:
 ⊙ `grep -rn "explicit formula" ResearchOS/ Ecdlp/` → 0; the xi package claim
-boundary (`XI_PACKAGE_CONTRACT.md:27`) excludes it in writing; the seven pillar
-contracts and the five pillar drafts at HEAD (`MellinBound.lean`,
+boundary (`XI_PACKAGE_CONTRACT.md:27`) excludes every route research
+obligation — the explicit formula falls under that exclusion but is not named
+there (wording corrected, Annex B-2); the seven pillar
+contracts and the four pillar drafts at HEAD (`MellinBound.lean`,
 `HarnackDisc.lean`, `PolyLiouville.lean`, `ThreeCircles.lean` and their
 contracts, headers read by the demand scout, drafts listed this session) all
 sit under `S1-GROWTH` / `S1-GLOBAL-ZEROS` / the upstream pool, and none claims
@@ -417,12 +431,18 @@ everything under this barrier sits in the "large" suffix (vi)–(vii) of the
    anchors are stale by +17 and were correct when written; this note uses
    current anchors throughout. (b) The demand scout's own repo state is
    already stale: it reports HEAD `3783f31` and "current queue RH-011", but
-   HEAD at write time is `aab3ad2` (two later drafts commits adding
-   `MellinBound.lean`, `HarnackDisc.lean`, `PolyLiouville.lean`,
-   `ThreeCircles.lean` — none claiming `S1-EXPLICIT` scope, listing verified ⊙)
-   and `RH-011` is recorded completed 2026-08-07 with the ACTIVE slot moved to
-   `RH-012` (⊙ `tasks/RIEMANN_HYPOTHESIS.md:45-50`). Neither drift changes any
-   verdict; both are recorded so this note does not freeze a stale state.
+   HEAD at write time is `6a1195f`, four commits later (⊙ `git log`): two
+   drafts commits (`ff00bd2`, `aab3ad2`) adding `MellinBound.lean`,
+   `HarnackDisc.lean`, `PolyLiouville.lean`, `ThreeCircles.lean` — none
+   claiming `S1-EXPLICIT` scope, listing verified ⊙ — then the RH-011
+   acceptance and RH-012 activation (`e9b5090`), then the decision-block
+   update (`6a1195f`). All four are PR #315 **branch** hashes: the mainline
+   squash-merged them as the single commit `9129e8c`, so none of the four is
+   an ancestor of any mainline head, and a mainline `git log` will not find
+   them (Annex B-1). `RH-011` is recorded completed 2026-08-07 with the
+   ACTIVE slot moved to `RH-012` (⊙ `tasks/RIEMANN_HYPOTHESIS.md:45-50`).
+   Neither drift changes any verdict; both are recorded so this note does not
+   freeze a stale state.
 
 3. **Overlap claims between the two inventory scouts are complementary, not
    conflicting.** The transforms scout's unmapped finds (`mellin_eq_fourier`,
@@ -474,10 +494,10 @@ cutoff. It does not own G3, the spectral cutoff, or the zero-sum limits.
 
 | item | statements | all ingredients pinned? | blocked on |
 |---|---|---|---|
-| transform-convention reconciliation (source `x^s dx/x` ↔ pinned `mellin`; unitary Fourier) | 0 Lean — a mismatch-register record | — (definitional match, spot-checked ⊙) | nothing. Zero-cost, route-neutral; `map:401` half-carries it already |
+| transform-convention reconciliation (source `x^s dx/x` ↔ pinned `mellin`; unitary Fourier) | 0 Lean — a mismatch-register record | — (definitional match, spot-checked ⊙) | nothing. Zero-cost, route-neutral; `map:404` ("Weil test-function class and transform | generic Fourier/Mellin infrastructure | exact regularity, symmetry, decay, normalization, and residue conditions absent", ⊙) half-carries it already |
 | E1: `L ↗Λ s = s * ∫ t in Ioi 1, (ψ t : ℂ) * t^(-(s+1))` for `re s > 1` | ~2–4 | **yes, spot-checked, seams untested** — `LSeries_eq_mul_integral` (`:137`, `r = 1`), `LSeriesSummable_vonMangoldt` (`Dirichlet.lean:379`), `psi_le_const_mul_self` (`:413`), `psi` (`:70`); casts and `Icc`/`Ioc` seams not stress-tested (§5.4) | nothing. An ingredient, not an exit; `corpus.md:99-100` applies |
 | E2: `L ↗Λ s = Σ'_p Σ'_k log p / p^{(k+1)s}` for `re s > 1` | ~2–3 | **yes, spot-checked, seams untested** — `tsum_eq_tsum_primes_of_support_subset_prime_powers` (`PrimesInAP.lean:87`), `vonMangoldt_ne_zero_iff` (`:92`), `LSeriesSummable_vonMangoldt` | nothing. Same caveat |
-| definition: class `W` (+ midpoint convention) and `BombieriAdmissible` | ~2 defs + ~6–12 API | **partly** — no pinned piecewise-`C¹`/first-kind-discontinuity substrate (§3.1); decay via `=O` filters is pinned | **formulation-selecting** (§4.2); consumers parked |
+| definition: class `W` (+ midpoint convention) and `BombieriAdmissible` | ~2 defs + ~6–12 API — **definition and basic API only**: `SC-BOMB-01`'s strip-analyticity clause (`Mellin(f)` analytic on `−δ < re s < 1+δ`) is consumer-facing work this row does not book, and its piecewise-integrability seams are unpinned (Annex B-4) | **partly** — no pinned piecewise-`C¹`/first-kind-discontinuity substrate (§3.1); decay via `=O` filters is pinned | **formulation-selecting** (§4.2); consumers parked |
 | definition: class `A`, class `L`, involutions `tilde`/`J`, `J` preserves `A` | ~3 defs + ~6–10 | **mostly** — `DifferentiableOn`, `=O`, `starRingEnd` all pinned; the `A.7` Mellin realization of `J` needs the Fourier bridge (pinned, §2.1) | **formulation-selecting**; Route A only |
 | `SC-BOMB-03` autocorrelation closure (`W` closed under `f_g`; Fubini; `Mellin(f_g)` factorization) | unknown; triage-rated blocker | **no** — genuine unproved mathematics; the source itself does not prove it (`SC:515-529`: "a formalization blocker rather than an implicit premise") | the `W` definition; and it is the hardest purely-own item |
 | archimedean term (`(log 4π + γ)f(1) + ∫₁^∞ …`) | ~4–8 once Γ inputs exist | **no** — complex-Γ asymptotics absent (GROWTH §3.1); γ pinned | complex Stirling (`S1-GROWTH` neighbour / upstream) |
@@ -628,16 +648,18 @@ Riemann Hypothesis.
 
 ---
 
-## Annex — verification log, 2026-08-07
+## Annex A — verification log, 2026-08-07
 
 Method: synthesis of three same-day scout passes (transforms, primes-side,
 demand) over the same pin, followed by an independent verification pass this
 session. Re-verified this session by direct extraction (⊙ marks in the text):
-the pin (`git rev-parse HEAD`); repo HEAD `aab3ad2` and the two commits past
-the demand scout's `3783f31`; the barrier row at `map:390` (resolving the
+the pin (`git rev-parse HEAD`); repo HEAD `6a1195f` and the four commits past
+the demand scout's `3783f31` (branch hashes; mainline squash `9129e8c` —
+Annex B-1); the barrier row at `map:390` (resolving the
 transforms scout's `:388` error); five current `SC-*` header anchors
 (`:357/:408/:435/:460/:494` and `SC-BRIDGE` `:549/:586/:603/:614`);
-`map:374-375`, `:345-348`, `:401`, `:485-494`; triage `:287-299` including the
+`map:374-375`, `:345-348`, `:404` (correcting the scouts' `:401` for the
+Weil test-function row), `:485-494`; triage `:287-299` including the
 `SC-BOMB-03` "genuine blocker" sentence; `SC:443-448` and `:512-513`;
 `corpus.md:99-100`; `tasks/RIEMANN_HYPOTHESIS.md:45-50` (RH-011 completed,
 RH-012 active); the `drafts/` listing; the repo-side zero-consumer grep; and
@@ -663,3 +685,68 @@ Re-read end to end for route selection, unparking, staleness assertions,
 barrier closure, or RH progress: **none found.** The verdict "do not attempt"
 is a queue-order recommendation offered to the maintainer, not a row
 amendment. No file other than this note is created or amended.
+
+---
+
+## Annex B — adversarial red-team review, 2026-08-07
+
+Independent hostile pass, same day, same pin (`fabf563a` re-verified;
+mainline head at review `77a6673`). Method: every ⊙ locator re-extracted
+from scratch; every quoted search re-run verbatim; costs, negatives, scope
+boundaries, and route-selection language attacked. Findings fixed in place
+above, each marked with its B-number.
+
+| # | severity | finding | status |
+|---|---|---|---|
+| **B-1** | MEDIUM | **Mainline-unreachable commit hashes.** The header, state block, §5.2, and Annex A cited `ff00bd2`/`aab3ad2`/`e9b5090`/`6a1195f` as "repository HEAD"/"four commits past `3783f31`". All four exist only on the PR #315 working branch; the mainline squash-merged them as the single commit `9129e8c` before this note landed, and `git merge-base --is-ancestor` confirms none is a mainline ancestor. A reader at any mainline head cannot reproduce the note's `git log` claims as written. Every *content* claim survives at `9129e8c` (four pillar drafts added, RH-011 completed, RH-012 activated, decision block updated — re-verified against `tasks/RIEMANN_HYPOTHESIS.md:40-50` and the `drafts/` listing). Same defect class as the lane's locator-discipline lessons (first sibling A-8), on git anchors instead of file lines | **FIXED** — squash mapping added at all four occurrences |
+| **B-2** | MINOR | **Overstated written exclusion, in the convenient direction.** §2.6 claimed the xi claim boundary "excludes it in writing"; `XI_PACKAGE_CONTRACT.md:27` actually excludes "enumeration, growth, Hadamard products, conjugation, or any route's research obligation" — the explicit formula is covered by subsumption, never named. The zero-consumer finding survives regardless (the grep is 0 hits), but the overstatement strengthened §8's verdict, which is exactly the direction this lane must not soften or inflate toward | **FIXED** — reworded |
+| **B-3** | MINOR | **Draft-count arithmetic.** The state block called the `README.md` ledger a "pillar draft" to reach "five"; §2.6 then listed four files as "the five pillar drafts". Actual `drafts/` at HEAD: nine files = four merged-package drafts + four pillar Lean drafts + `README.md` (re-listed this review) | **FIXED** — both occurrences now say four + ledger |
+| **B-4** | MINOR | **Optimistic cost booking on the class-`W` row.** §6's "~2 defs + ~6–12 API" read as if it covered the `SC-BOMB-01` surface, but that contract's strip-analyticity clause (`Mellin(f)` analytic on `−δ < re s < 1+δ`, `SC:454-458`) is separate consumer-facing work whose piecewise-integrability seams have no pinned substrate (§3.1's 0-hit search). The row was already marked "partly" pinned, so no estimate was falsified; it was under-scoped | **FIXED** — obligation named in the row; estimate deliberately not re-guessed |
+| **B-5** | TRIVIAL | §2.4 called `hasMellin_one_Ioc`/`hasMellin_cpow_Ioc` "exactly the endpoint-term shapes" of `SC-BOMB-02`'s `Mellin(f)(0)`/`Mellin(f)(1)`. They are indicator/cpow models with the right pole shape (`1/s`), not those terms — "exactly" overstated an analogy | **FIXED** — "a pinned model of, not identical to" |
+| **B-6** | TRIVIAL | §1(1)'s "largely already satisfied" headline could be read as retiring the transform-convention clause, i.e. incipient barrier re-scoping, since the clause's consuming rows (§4.1) include the unbuilt `J`/`tilde` involutions and the `Mellin(f_g)` factorization. §4.1 disclosed this; §1 did not | **FIXED** — non-exhaustion sentence added to §1(1). The exit string remains quoted in full and un-narrowed |
+
+**What survived attack unchanged.** (i) All eleven quoted searches re-run this
+review and reproduced with the exact reported hit counts: `riemann.?weil|
+weil.?explicit` 0; `perron` in `NumberTheory/` 0 (tree-wide: Perron–Frobenius
+and an author name, as stated); `argument.?principle|winding` 0; `mertens` 0;
+`wiener` 1 (`PrimesInAP.lean:298`, prose); `PrimeNumberTheorem` 1
+(`Chebyshev.lean:56`, attribution); `norm_mellin|‖mellin` 0;
+`first.?kind.*discontinuit` 0; repo `grep -rn "explicit formula" ResearchOS/
+Ecdlp/` 0; `explicit.?formula` over `NumberTheory/`+`Analysis/` value-formula
+docstrings only; `Chebyshev.psi|chebyshev` in `LSeries/` 0. A hunt for a
+residue theorem under unguessed names (`find -iname "*residue*"`, `rg -l
+residue Analysis/Complex/`) found only algebraic-geometry residue fields and
+`SumOverResidueClass` — the §3.1 ABSENT verdicts stand. (ii) Roughly 45
+Mathlib declaration-line locators re-extracted across 25 files — every one
+matched, including the full Chebyshev/AbelSummation inventories (703/399
+lines confirmed, 0 `IsEquivalent`), the `mellin`/`mellinInv` definitions
+byte-for-byte, the 2025-11-16 deprecation layer, and the
+`@[to_additive tsum_eq_tsum_primes_of_support_subset_prime_powers]` attribute
+at `PrimesInAP.lean:86` (so §2.5's `tprod_…` and §6-E2's `tsum_…` names are
+both real, one attribute apart, not a citation error). (iii) The +17 SC
+anchor shift verified directly against `c802dc1^`: `SC-WEIL-01` 340→357,
+`SC-BOMB-01` 418→435, `SC-BRIDGE-04` 597→614, `SC-NB-01` 628→645. (iv) All
+repo-side anchors: `map:386/387/388/390/404` and `:345-348/:374-375/:485-488/
+:626-656`; `triage:296-297` ("genuine blocker" verbatim), `:287-299`,
+`:182-183/:231-232`; `tasks:43-50`; `corpus:99-100`; the SC-BOMB/WEIL/BRIDGE
+content quotes including `:512-513` and `:636-641`. (v) The E1 shape against
+`LSeries_eq_mul_integral`'s actual `Icc 1 ⌊t⌋₊` statement — the disclosed
+`Icc`/`Ioc` seam is real and correctly not waved away. (vi) Sibling mirrors:
+GROWTH §6 owns the `mellin` norm bound (its `:391`), GROWTH `:833` supports
+the "G1 consumed by all three route families" contrast, GLOBAL-ZEROS §7 is
+the truncation-freezing diagnosis §4.2 cites, and the B-1 attribution caveat
+on `A-T4`/`C-T3` is carried correctly. No sibling contradiction found.
+(vii) No softened negative found — B-2 was the dual defect, an overstated
+positive. (viii) No route selection, no unparking, no barrier closure or
+staleness assertion, no RH-truth claim; §8's "do not attempt" is a
+recommendation with grounds that all survived re-verification.
+
+**Red-team verdict: the note SURVIVES.** Its four headline claims, §3's
+ABSENT table, §4's demand analysis, §6's only-pinned-rows calibration
+(E1/E2), §7's misallocation flags, and §8's do-not-attempt verdict are all
+confirmed at the pin after the six corrections above. The two systemic
+lessons for the lane: quote git anchors only from the history a mainline
+reader can reproduce (B-1), and "in writing" means named, not subsumed (B-2).
+This annex amends only this note; nothing else is created, amended, closed,
+selected, or re-scoped, and nothing here bears on the truth of the Riemann
+Hypothesis.
