@@ -11,11 +11,13 @@ about the truth of the Riemann Hypothesis**. It advances the barrier's single
 route-neutral slice — the two halves N2 (zero-set discreteness package) and N1
 (compact divisor sums) — without closing the barrier, and says so plainly.
 
-**Queue position.** This is an offered artifact, not an active task. The RH
-queue's sole ACTIVE task is `RH-010` (kernel promotion of the accepted
-multiplicity surface; `tasks/RIEMANN_HYPOTHESIS.md:616`). This document does
-not occupy a queue slot, does not authorize route work, and enters the queue
-only by a future dated queue decision. The two-stage gate of
+**Queue position (updated at RH-011 acceptance, 2026-08-07).** By the dated
+queue decision of 2026-08-07, the RH queue's sole ACTIVE task is `RH-011` —
+the acceptance-only review of this very statement surface (no built module,
+no kernel verdict; `tasks/RIEMANN_HYPOTHESIS.md:760–764`). `RH-010` completed
+the same day: the accepted multiplicity surface was promoted and merged in
+PR #313 (`2a20629`) and is kernel-checked on `main`. This document still does
+not authorize route work. The two-stage gate of
 `MULTIPLICITY_CONTRACT.md` §Two-stage gate applies to it verbatim: independent
 contract acceptance first, built promotion as a separate change, CI the sole
 judge.
@@ -93,21 +95,25 @@ Repo prerequisites (kernel-checked on `main`; xi package merged in PR #304
 | `riemannXi_comp_conj` | repo:`…/Conj.lean:292` |
 | `analyticOrderAt_riemannXi_conj` | repo:`…/Conj.lean:452` |
 
-Package prerequisites (**PACKAGE PREREQUISITES** — the M1–M17 surface of
+Package prerequisites (**KERNEL-CHECKED ON `main`** — the M1–M17 surface of
 `MULTIPLICITY_CONTRACT.md` was accepted at statement level under `RH-009` on
-2026-08-07 and its kernel promotion `RH-010` is in flight; these are cited as
-prerequisites, **never as pinned Mathlib, and never as already
-kernel-checked**):
+2026-08-07 and its kernel promotion `RH-010` **merged the same day in PR #313
+(`2a20629`)**: every M-statement below is kernel-checked on `main` in the
+built module repo:`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean`,
+imported at `ResearchOS.lean:10`. They remain PACKAGE prerequisites — cited
+never as pinned Mathlib. The built-module locators below are the citation of
+record; the `MULTIPLICITY_CONTRACT.md` locators are retained in parentheses as
+accepted-surface provenance):
 
-| M-statement | Signature consumed | Contract locator | Role here |
+| M-statement | Signature consumed | Built locator (contract provenance) | Role here |
 |---|---|---|---|
-| M9 | `analyticOnNhd_riemannXi` | `MULTIPLICITY_CONTRACT.md:851` | reach the divisor (N1 block; N2 Block A derives its own analyticity inline from repo:`Xi.lean:46` and does **not** wait on it) |
-| M10 | `riemannXi_divisor_apply` | `:882` | the carrier seam (used at `U` and at `Set.univ`); interpretively, divisor value at a support point = local analytic order |
-| M11 | `riemannXi_divisor_nonneg` | `:910` | effectivity → sum nonnegativity, monotonicity |
-| M12 | `analyticOrderAt_riemannXi_ne_top`, `meromorphicOrderAt_riemannXi_ne_top` | `:933` (obligation S1M-FIN) | **semantic license**: without finite local order, `untop₀` conflates "no zero" with "identically zero nearby" and the sums would not read as multiplicity counts; consumed transitively through M13 |
-| M13 | `riemannXi_divisor_support` | `:1056` | **the load-bearing seam**: `Function.support (MeromorphicOn.divisor riemannXi U) = U ∩ riemannXi ⁻¹' {0}` for every `U` — what makes the topology package *multiplicity-aware* (D9, and the alternative route of the unified D8/N1.1) |
-| M14 | `riemannXi_divisor_one_sub` | `:1091` | reflection leg of Block D |
-| M15 | `riemannXi_divisor_conj`, `riemannXi_divisor_one_sub_conj` | `:1160` | conjugation/composite legs of Block D (these carry the M-package's own `[CONJ]` provenance, repo:`Conj.lean:452`, merged PR #307) |
+| M9 | `analyticOnNhd_riemannXi` | repo:`…/Mult.lean:361` (`MULTIPLICITY_CONTRACT.md:851`; also `meromorphicOn_riemannXi` :377) | reach the divisor (N1 block; N2 Block A derives its own analyticity inline from repo:`Xi.lean:46` and does **not** wait on it) |
+| M10 | `riemannXi_divisor_apply` | repo:`…/Mult.lean:388` (`:882`) | the carrier seam (used at `U` and at `Set.univ`); interpretively, divisor value at a support point = local analytic order |
+| M11 | `riemannXi_divisor_nonneg` | repo:`…/Mult.lean:410` (`:910`) | effectivity → sum nonnegativity, monotonicity |
+| M12 | `analyticOrderAt_riemannXi_ne_top`, `meromorphicOrderAt_riemannXi_ne_top` | repo:`…/Mult.lean:444`, `:504` (`:933`, obligation S1M-FIN) | **semantic license**: without finite local order, `untop₀` conflates "no zero" with "identically zero nearby" and the sums would not read as multiplicity counts; consumed transitively through M13 |
+| M13 | `riemannXi_divisor_support` | repo:`…/Mult.lean:538` (`:1056`) | **the load-bearing seam**: `Function.support (MeromorphicOn.divisor riemannXi U) = U ∩ riemannXi ⁻¹' {0}` for every `U` — what makes the topology package *multiplicity-aware* (D9, and the alternative route of the unified D8/N1.1) |
+| M14 | `riemannXi_divisor_one_sub` | repo:`…/Mult.lean:573` (`:1091`) | reflection leg of Block D |
+| M15 | `riemannXi_divisor_conj`, `riemannXi_divisor_one_sub_conj` | repo:`…/Mult.lean:634`, `:670` (`:1160`) | conjugation/composite legs of Block D (these carry the M-package's own `[CONJ]` provenance, repo:`Conj.lean:452`, merged PR #307) |
 
 M12 is cited as the **reading** of the sums (it appears in no proof skeleton
 below); M9–M11, M13–M15 are proof-level dependencies of the statements tagged
@@ -115,8 +121,24 @@ below); M9–M11, M13–M15 are proof-level dependencies of the statements tagge
 itself, per the M-contract, an unconditional consequence of pinned Mathlib
 plus kernel-checked `main` — so nothing below waits on anything outside the
 pin and `main` **mathematically**; the dependency is an **ordering**
-dependency (this contract's built module imports the built Mult module and
-lands only after the `RH-010` promotion merges).
+dependency (this contract's built module imports the built Mult module).
+
+**Supersession note (2026-08-07, RH-011 acceptance).** The `RH-010` promotion
+has merged (PR #313, `2a20629`): the M-package is kernel-checked on `main` as
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean` (imported at
+`ResearchOS.lean:10`). Every consumed signature was re-verified
+character-identical in the built module — name, binder shape, hypothesis
+order, and RHS spelling (M10's RHS
+`((analyticOrderAt riemannXi z).map (↑)).untop₀`; M13's forward orientation
+`Function.support (MeromorphicOn.divisor riemannXi U) = U ∩ riemannXi ⁻¹' {0}`;
+M14/M15's `hU` / `hU₁`,`hU₂` shapes and order verbatim as consumed by
+N1.6–N1.8). Every `[MULT]` statement below is therefore now an unconditional
+consequence of pinned Mathlib plus kernel-checked `main`; the former ordering
+condition is satisfied, and only the import-not-inline discipline (death
+condition 5) survives. Incidentally, the built M13 fixes the support spelling
+as `Function.support (MeromorphicOn.divisor riemannXi U)` — the coercion form
+every signature in this contract already uses — resolving the N2-f
+package-wide spelling decision in favor of that spelling.
 
 **The neutrality rule (load-bearing, stated once for the whole surface).**
 Every compact-finiteness and sum statement below is parameterized by an
@@ -181,8 +203,9 @@ one line; this contract never does.
 - **Claim boundary (summary; full statement below).** D1–D7 and N1.9 are
   unconditional consequences of pinned Mathlib plus kernel-checked repo
   theorems on `main` — they wait on nothing. D8/N1.1, D9, N1.2–N1.8
-  additionally consume M-package prerequisites and are **not provable at this
-  pin until the `RH-010` promotion lands**. Nothing here states or implies a
+  additionally consume M-package prerequisites, **kernel-checked on `main`
+  since the `RH-010` promotion merged (PR #313, `2a20629`)** — the former
+  sequencing condition is satisfied. Nothing here states or implies a
   zero enumeration, an ordering of zeros, a counting asymptotic, a growth or
   density bound, or a summability/convergence fact.
 - **Death conditions (headline; full list below).** Stop if any statement
@@ -196,7 +219,7 @@ Proposed preamble (name-resolution review only):
 
 ```lean
 import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Xi    -- riemannXi, differentiable_riemannXi, riemannXi_zero
-import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Mult  -- M9–M15 (PACKAGE PREREQUISITE; promotion RH-010 in flight)
+import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Mult  -- M9–M15 (PACKAGE PREREQUISITE; kernel-checked on main, merged PR #313)
 import Mathlib.Analysis.Analytic.Order               -- AnalyticOnNhd.preimage_zero_mem_codiscrete
 import Mathlib.Analysis.Complex.CauchyIntegral       -- Complex.analyticOnNhd_univ_iff_differentiable
 import Mathlib.Analysis.Meromorphic.Divisor          -- MeromorphicOn.divisor
@@ -427,9 +450,10 @@ false.**
 ## 2. Statement list
 
 Legend: `[PIN]` provable from pinned Mathlib + kernel-checked `main` alone;
-`[MULT: …]` additionally consumes the named M-package prerequisites (`RH-010`
-promotion in flight — package prerequisites, not kernel-checked tonight);
-`[GEN]` generic, natural Mathlib upstream.
+`[MULT: …]` additionally consumes the named M-package theorems, kernel-checked
+on `main` since merged PR #313 (`2a20629`) — the tag now records provenance
+and import ordering (the built ZeroSet module imports the built Mult module),
+not an open conditionality; `[GEN]` generic, natural Mathlib upstream.
 
 ### Block A — topology of the ξ zero set (N2-D1 … N2-D6)
 
@@ -651,17 +675,18 @@ statement produces is the multiplicity-decorated zero data the Block-C sums
 are indexed by.
 
 Dependencies: **M9, M10 (primary route)** or **D4 + M13 (alternative route)**
-— all PACKAGE PREREQUISITES from the same `RH-010` promotion;
+— all PACKAGE PREREQUISITES from the same `RH-010` promotion (merged PR #313);
 LocallyFinsupp.lean:106, :115, :140; Finite/Basic.lean:497; Basic.lean:814,
 :268.
 
-Obligations: **N-SEQ** (**HIGH — the package's sequencing obligation**,
-shared with D9 and every `[MULT]` statement): no proof route exists at this
-pin without the M-package; if the `RH-010` promotion does not land, the only
-alternative is re-deriving M9–M13 inline here, which would duplicate an
-accepted surface — **forbidden. Land the `[MULT]` statements only after the
-Mult module is kernel-checked and promoted; never split M-package content
-into this package.** Not an analytic risk; purely ordering. **S1N1-1a**
+Obligations: **N-SEQ** (**DISCHARGED 2026-08-07** — the package's sequencing
+obligation, shared with D9 and every `[MULT]` statement): every `[MULT]`
+statement was sequenced behind the `RH-010` kernel promotion of the
+M-package; that promotion is merged (PR #313, `2a20629`) and the Mult module
+is kernel-checked on `main` and importable, so the sequencing condition is
+satisfied. Residual discipline (unchanged, death condition 5): the built
+ZeroSet module must **import** the built Mult module and must never inline
+re-derive M-package content. **S1N1-1a**
 (MEDIUM) — the finiteness term from :115/:106 is stated at
 `(divisor … univ).toFun.support`, the goal at coercion-form support; defeq
 via the `rfl`-simp `toFun_eq_coe` (:130), but `apply Set.Finite.subset` must
@@ -674,9 +699,9 @@ namespace block at :119; verified); fallback fully-qualified. **N2-h(ii)**
 applies (spelling seam; M13's equation is oriented support-to-zero-set, so
 the alternative route's `rw` is forward, no `.symm`).
 
-**All-ingredients verdict: pinned + M-package prerequisite (either route).
-Becomes provable the moment the `RH-010` promotion merges; nothing else is
-waited on.**
+**All-ingredients verdict: pinned + kernel-checked `main` (either route).
+The former sequencing condition is satisfied: the `RH-010` promotion has
+merged (PR #313); provable now from the pin plus `main`.**
 
 ## N2-D9. Divisor support is countable (arbitrary `U`) `[MULT: M13]`
 
@@ -695,11 +720,13 @@ Dependencies: D5 `[PIN]`; M13 (PACKAGE PREREQUISITE); Countable.lean:115
 (subset argument **first** — the explicit application above is
 argument-order-safe); Basic.lean:772.
 
-Obligations: **N-SEQ** (HIGH, shared). **N2-i** (LOW) — `Set.Countable.mono`
+Obligations: **N-SEQ** (DISCHARGED 2026-08-07, shared — see N1.1). **N2-i**
+(LOW) — `Set.Countable.mono`
 argument order; dot form `countable_riemannXi_zeroSet.mono …` also elaborates
 at this pin, explicit form recorded as primary.
 
-**All-ingredients verdict: pinned + M13 package prerequisite.**
+**All-ingredients verdict: pinned + M13 package prerequisite
+(kernel-checked on `main` since merged PR #313).**
 
 ### Block C — the sum over an arbitrary compact is a well-defined finite (natural) number (N1.2 – N1.5)
 
@@ -885,8 +912,11 @@ Package: M15 (which itself consumes the merged conjugation package).
 
 Obligations: **S1N1-7a** (LOW) — `(starRingEnd ℂ) '' K` needs the
 `RingHom → function` coercion under `Set.image`; fallback: explicit lambda.
-**S1N1-7b** (LOW) — do not reach for `Complex.conj_conj`: no such name at the
-pin; `starRingEnd_self_apply` is the pinned spelling.
+**S1N1-7b** (LOW) — `Complex.conj_conj` exists at the pin as
+`alias Complex.conj_conj := starRingEnd_self_apply`
+(Algebra/Star/Basic.lean:364; also `RCLike.conj_conj` :366);
+`starRingEnd_self_apply` (:348) remains the primary recorded spelling, with
+the alias as a same-term fallback (correction recorded at RH-011 acceptance).
 
 ## N1.8. Composite `s ↦ 1 - conj s` `[MULT: M15]`
 
@@ -973,7 +1003,7 @@ nothing else.**
 
 | ID | Statement | Severity | Content | Fallback recorded |
 |---|---|---|---|---|
-| **N-SEQ** | N1.1/D8, D9, N1.2–N1.8 | **HIGH** | every `[MULT]` statement is sequenced behind the `RH-010` kernel promotion of the M-package; no proof route exists at this pin without it, and inline re-derivation of M9–M15 content is forbidden | yes (sequencing: land after the Mult promotion merges; never split M-package content) |
+| **N-SEQ** | N1.1/D8, D9, N1.2–N1.8 | **DISCHARGED 2026-08-07** | every `[MULT]` statement was sequenced behind the `RH-010` kernel promotion of the M-package; that promotion merged (PR #313, `2a20629`) and the Mult module is kernel-checked on `main`, so the sequencing condition is satisfied; inline re-derivation of M9–M15 content remains forbidden (death condition 5) | yes (import the built Mult module; never split M-package content) |
 | N2-a | D1 | MEDIUM | `ConnectedSpace ℂ` instance resolution (Convex.lean:168 → PathConnected.lean:607); mirrors S1M-12a | yes (chain spelled; `inferInstance` probe) |
 | N2-d | D5 | MEDIUM | four-link instance chain to `HereditarilyLindelofSpace ℂ` | yes (closed-ball exhaustion via D4 — proof-internal, statement stays shape-free) |
 | N2-f | D7, N1.1/D8, D9 | MEDIUM | `D.support` (dot) vs `Function.support ⇑D` (coercion) spelling seam against M13's spelling; one spelling fixed package-wide | yes (explicit `⇑`, or dot form + one rewrite; precedent Divisor.lean:91–99) |
@@ -991,7 +1021,7 @@ nothing else.**
 | S1N1-3 | N1.3/N1.5 | LOW | pointwise nonneg extraction: M11 → `le_def` (:404) → Pi order application at `z` → `Pi.zero_apply` | yes (`have` + `simpa`) |
 | S1N1-6 | N1.6–N1.8 | LOW | image-form beta-redex under `exact` (finding-A2 class; harmless as in M3, unlike M2) | yes (`simpa using …`) |
 | S1N1-7a | N1.7 | LOW | `(starRingEnd ℂ) '' K` coercion insertion | yes (explicit lambda) |
-| S1N1-7b | N1.7 | LOW | `Complex.conj_conj` does not exist at the pin | yes (`starRingEnd_self_apply`) |
+| S1N1-7b | N1.7 | LOW | `Complex.conj_conj` exists at the pin only as an alias of `starRingEnd_self_apply` (Star/Basic.lean:364); primary spelling stays `starRingEnd_self_apply` (:348) | yes (alias is a same-term fallback; correction recorded at RH-011 acceptance) |
 | S1N1-8 | N1.8 | LOW | involution `simp only` chain | yes (explicit calc) |
 | S1N1-9 | N1.9 | LOW | `mem_image_iff_of_inverse` orientation + beta-redex membership | yes (`show`) |
 
@@ -1033,8 +1063,10 @@ the truth of the Riemann Hypothesis. Specifically:
 - **What is claimed.** D1–D7 and N1.9 rest on pinned Mathlib plus
   kernel-checked theorems on `main` only. N1.1/D8, D9, and N1.2–N1.8
   additionally cite M-package statements as PACKAGE PREREQUISITES of the
-  surface accepted under `RH-009`, whose promotion `RH-010` is in flight, and
-  are explicitly flagged as sequenced behind it (N-SEQ).
+  surface accepted under `RH-009`, whose promotion `RH-010` merged as PR #313
+  (`2a20629`; kernel-checked `Mult.lean` on `main`); the former N-SEQ
+  sequencing obligation is discharged, and the import-not-inline discipline
+  (death condition 5) remains in force.
 - **What is not claimed.** Closing this contract — even once kernel-checked —
   does **not** close `S1-GLOBAL-ZEROS`. Of the capability row's remaining
   exit evidence, this contract supplies only the cutoff-free "finite divisor
@@ -1159,8 +1191,10 @@ belongs to :149, not to the ssubset variant at :152–:153), :156, :497.
 `Data/Set/Countable.lean` :40, :115 (argument order confirmed), :214, :256.
 `Data/Set/Image.lean` :83 (`rfl`), :351 (`_root_.` confirmed), :355 (inside
 `namespace Set` :45–:1076). `Data/Set/Function.lean` :33, :295.
-`Logic/Function/Basic.lean` :1030. `Algebra/Star/Basic.lean` :348 (and
-`Complex.conj_conj` absence re-confirmed). `Algebra/Group/Basic.lean`
+`Logic/Function/Basic.lean` :1030. `Algebra/Star/Basic.lean` :348
+(`Complex.conj_conj` is present as an alias of it at :364 — the original
+absence claim was wrong; correction recorded at RH-011 acceptance, S1N1-7b
+restated accordingly). `Algebra/Group/Basic.lean`
 :932–:933. `Algebra/Group/Hom/Defs.lean` :234, :460–:461.
 `Algebra/Ring/Hom/Defs.lean` :500. `Algebra/Notation/Pi/Defs.lean` :49.
 `Analysis/Complex/CauchyIntegral.lean` :678 (namespace `Complex` :173).
@@ -1238,8 +1272,9 @@ names plus the superseded `IsCompact.inter_riemannXi_divisor_support_finite`
 
 ### D. Open items
 
-- **N-SEQ** remains the package's HIGH obligation until the `RH-010`
-  promotion merges; it is ordering-only, with no analytic content.
+- **N-SEQ** discharged 2026-08-07 by the merged `RH-010` promotion (PR #313,
+  `2a20629`); only the import-not-inline discipline survives, under death
+  condition 5.
 - **S1N1-SUM** (generated additive names) is the most likely single CI
   bounce; probe with `#check` in the promotion PR before building.
 - The N2-f spelling decision (dot vs coercion support spelling) must be made
