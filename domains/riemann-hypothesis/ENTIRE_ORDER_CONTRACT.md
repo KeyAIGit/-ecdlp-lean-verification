@@ -64,7 +64,11 @@ Pinned Mathlib: `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f` (v4.31.0),
 toolchain `leanprover/lean4:v4.31.0`, verified this session via
 `git -C /workspace/leanprover-community/mathlib4 rev-parse HEAD`. Every
 `file:line` locator below is from that exact tree (paths relative to the
-`Mathlib/` root of the pin) unless prefixed `repo:`. Every locator was
+`Mathlib/` root of the pin) unless prefixed `repo:`. `repo:` locator
+convention: root artifacts are repo-root-relative (`lakefile.toml`,
+`tasks/RIEMANN_HYPOTHESIS.md`); bare filenames of this lane's own documents
+(`MATHLIB_CAPABILITY_MAP.md`, `UPSTREAM_POOL.md`) resolve in this contract's
+domain directory, `domains/riemann-hypothesis/`. Every locator was
 verified by direct source reading this session; **nothing was elaborated** —
 source reading only, no Lean toolchain in this environment.
 
@@ -103,7 +107,7 @@ Name-collision scan run at the pin this session: `maxModulus`, `growthOrder`,
 
 ---
 
-## 0. Exact pinned interface (quoted from the tree at the pin)
+## 0. Exact pinned interface (quoted from the tree at the pin; binders/notation lightly normalized — implicit-binder blocks may be elided and dot-notation `f.limsup u` may be written `limsup u f`; no hypothesis or instance argument is altered)
 
 ```lean
 -- Order/LiminfLimsup.lean:64 — limsup is sInf of eventual upper bounds; total in a
@@ -186,7 +190,7 @@ theorem isBigO_cobounded_of_degree_le (h : P.degree ≤ Q.degree) :
 
 -- Compactness route for the mul lemma:
 theorem isCompact_sphere [ProperSpace α] (x : α) (r : ℝ) : …  -- Topology/MetricSpace/ProperSpace.lean:45
-theorem IsCompact.bddAbove [ClosedIciTopology α] … : BddAbove s  -- Topology/Order/Compact.lean:322
+theorem IsCompact.bddAbove [ClosedIciTopology α] [Nonempty α] … : BddAbove s  -- Topology/Order/Compact.lean:322
 theorem NormedSpace.sphere_nonempty {x : E} {r : ℝ} : (sphere x r).Nonempty ↔ 0 ≤ r
                                                   -- Analysis/Normed/Module/RCLike/Real.lean:128
 
@@ -200,7 +204,8 @@ lemma Filter.Tendsto.const_div_atTop (hg : Tendsto g l atTop) (r : 𝕜) : …
                                                   -- Topology/Algebra/Order/Field.lean:222
 
 -- The design precedent scout A cited, quoted for the codomain comparison (§1):
--- Analysis/Asymptotics/ExpGrowth.lean:38, :41 — codomain EReal, over sequences ℕ → ℝ≥0∞:
+-- Analysis/Asymptotics/ExpGrowth.lean:38 (expGrowthInf, not used), :41 (expGrowthSup)
+-- — codomain EReal, over sequences ℕ → ℝ≥0∞:
 noncomputable def expGrowthSup (u : ℕ → ℝ≥0∞) : EReal := limsup (fun n ↦ log (u n) / n) atTop
 -- EReal := WithBot (WithTop ℝ), deriving CompleteLinearOrder — Data/EReal/Basic.lean:35
 -- ENNReal.log : ℝ≥0∞ → EReal — Analysis/SpecialFunctions/Log/ENNRealLog.lean:46
@@ -259,6 +264,14 @@ Fix: clamp **inside**, before the double log. Replace `maxModulus f r` by
   with the textbook order. For bounded `f` the clamped order is `0`, which IS
   the textbook convention.
 
+**Classical footing (not a deviation):** the inner clamp `max … 1` under
+`Real.log` is exactly `log⁺` (`Real.log (max x 1) = log⁺ x` definitionally),
+and for `r > 1` the outer `ENNReal.ofReal` of the quotient equals dividing
+`log⁺` of the numerator — so G1 is literally the classical
+`limsup log⁺ log⁺ M(f,r) / log r` formulation of order (the Boas/Levin
+convention), a transcription of the textbook `log⁺ log⁺` form, not an
+invention.
+
 **Symmetry (contract requirement):** the *same two clamps in the same order* —
 inner `max … 1`, outer `ENNReal.ofReal` — appear in `growthOrder` (G1) and
 `growthType` (G2). No definition in this surface applies one clamp without
@@ -286,7 +299,7 @@ therefore compare objects with identical degenerate-case conventions.
    | `limsup_le_limsup` autoParams discharge | ✓ complete lattice, `isBoundedDefault` free (Order/LiminfLimsup.lean:198) | ✓ same |
    | `limsup_max` (for L5) | ✓ :1141, autoParams free | ✓ same |
    | `limsup_congr`/`limsup_const` (for L1/L3/L6) | ✓ :265/:284 | ✓ same |
-   | product bound | ✓ `ENNReal.limsup_mul_le'` (Topology/Instances/ENNReal/Lemmas.lean:817), usable at `atTop` | `EReal.limsup_add_le` (Topology/Instances/EReal/Lemmas.lean:265) — additive, needs `⊥/⊤` disjunctions |
+   | product bound | ✓ `ENNReal.limsup_mul_le'` (Topology/Instances/ENNReal/Lemmas.lean:817), usable at `atTop` (codomain evidence only; NOT the L5 route — see S1G-L5) | `EReal.limsup_add_le` (Topology/Instances/EReal/Lemmas.lean:265) — additive, needs `⊥/⊤` disjunctions |
    | order-topology closers (`Tendsto.limsup_eq`) | ✓ Topology/Order/LiminfLimsup.lean:191 applies | ✓ same |
 
    One trap found and recorded: `ENNReal.limsup_add_le`
@@ -318,7 +331,11 @@ therefore compare objects with identical degenerate-case conventions.
 
 **The inner clamp `max (maxModulus f r) 1` is the riskiest choice in this
 contract.** It deviates from the raw textbook formula, from scout A's
-proposal, and from the `expGrowthSup` shape. It is forced by pinned-Mathlib
+proposal, and from the `expGrowthSup` shape. (Per the `log⁺` note in §1.1,
+the clamped form coincides with the classical `log⁺ log⁺` formulation, so
+the deviation is from the *raw* formula only — a transcription, not an
+invention; the review call remains whether to totalize by clamp rather than
+restrict by hypothesis.) It is forced by pinned-Mathlib
 junk semantics (§1.1), it is what makes L4 true and L1–L3 clamp-stable, and
 on nonconstant entire functions it is invisible. But if a reviewer rejects it
 (e.g. prefers restricting by hypothesis instead of totalizing by clamp), then
@@ -759,7 +776,7 @@ variables :341). `Analysis/Normed/Module/RCLike/Real.lean` :128.
 `Analysis/Normed/Group/Basic.lean` :302–:303 (`mem_sphere_one_iff_norm`,
 `to_additive` source of `mem_sphere_zero_iff_norm`) — added by Annex A F3.
 Comparison-only (codomain argument, §1): `Data/EReal/Basic.lean` :35;
-`Analysis/Asymptotics/ExpGrowth.lean` :38, :41;
+`Analysis/Asymptotics/ExpGrowth.lean` :38 (`expGrowthInf`, not used), :41 (`expGrowthSup`);
 `Analysis/SpecialFunctions/Log/ENNRealLog.lean` :46;
 `Topology/Instances/EReal/Lemmas.lean` :265.
 
@@ -877,7 +894,8 @@ acceptance of the definition itself (death condition 1).**
 **A.1 Citation re-verification: every locator printed and compared.**
 All 60 `file:line` locators in §0, G0–G2, L1–L6, and the consolidated table
 were re-printed with `sed -n Np` at the pin and matched the quoted text
-**verbatim** — including the four load-bearing traps: `Real.log` junk
+**verbatim up to §0's declared binder elision and notation normalization** —
+including the four load-bearing traps: `Real.log` junk
 (Log/Basic.lean:44, `log_neg_eq_log` :120), the `[CountableInterFilter f]`
 hypothesis on `ENNReal.limsup_add_le` (Order/Filter/ENNReal.lean:231; `atTop :
 Filter ℝ` is indeed not one: `⋂ n, Set.Ici (n : ℝ) = ∅ ∉ atTop`), the four

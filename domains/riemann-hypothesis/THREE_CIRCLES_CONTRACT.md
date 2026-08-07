@@ -1090,7 +1090,13 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
    (TC1). An annulus `Set` object, a `ConvexOn` wrapper, or any structure
    with a proof-carrying field is out of contract (TC-DEFERRED-1/2); needing
    one signals either scope creep or an upstream-review decision that is not
-   ours to preempt.
+   ours to preempt. Unlike `ENTIRE_ORDER_CONTRACT.md`'s `growthOrder`, the
+   one def TC1 (`sSupNormCircle`) carries no standalone design-bearing
+   acceptance gate: its convention is the pinned `sSupNormIm`'s verbatim
+   (Hadamard.lean:77), the def-free TC8/TC10/TC11 do not depend on it, and
+   no repo module may state theorems about `sSupNormCircle` except through
+   this accepted surface; an upstream re-spelling supersedes it
+   (TC-DEFERRED-1).
 5. **A statement is proposed at `r₁ = 0` (or with `0 < r₁` dropped).**
    `Real.log 0 = 0` (Log/Basic.lean:102) makes every exponent silently junk,
    `hul` fails, and the "annulus" is a punctured disc whose three-circles
