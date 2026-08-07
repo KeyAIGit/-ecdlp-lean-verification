@@ -36,9 +36,15 @@ remains open on divisor invariance, `S1-MULTIPLICITY` remains open, and no
 claim about RH's truth changes. `RH-009` (independent acceptance of the
 multiplicity/divisor statement surface) completed 2026-08-07: ACCEPT WITH
 APPLIED EDITORIAL FIXES, zero blocking items, record
-`RH009_MULT_CONTRACT_ACCEPTANCE_2026_08_07.md`. By this dated decision the
-single ACTIVE slot moves to `RH-010` (kernel promotion of the accepted
-surface, opened as its own change; CI is the sole judge). Do not
+`RH009_MULT_CONTRACT_ACCEPTANCE_2026_08_07.md`. `RH-010` completed
+2026-08-07 through merged PR #313 (`2a20629`): the kernel checked all
+thirty-four M1-M17 declarations on the exact merged head, with complete
+inverse ledger coverage and both axiom audits green. This closes
+`S1-MULTIPLICITY` and — together with merged PR #307 — completes the
+`S1-CONJ` exit evidence; both closures are recorded in the dated
+capability-map addendum. By this dated decision the single ACTIVE slot moves
+to `RH-011` (acceptance-only review of the zero-set slice statement surface,
+`ZERO_SET_SLICE_CONTRACT.md`; no built module, no kernel verdict). Do not
 begin a route proof attempt, large computation, new equivalence formalization,
 or autonomous hypothesis sweep.
 
@@ -617,12 +623,23 @@ How to verify:
 
 ID: `RH-010`
 
-Status: **ACTIVE 2026-08-07 — kernel promotion as its own change; the kernel
-via CI is the sole judge**
+Status: **COMPLETE 2026-08-07**
+
+Closure evidence: merged PR #313 (`2a20629`). The full build on the exact
+merged head kernel-checked all thirty-four declarations; inverse ledger
+coverage is complete (81 rows → 82 declarations); both axiom audits are green
+with every new row at axiom base `standard`; the drafts-lane mirror is
+byte-identical from the first import. The only promotion-round repair was
+prose (the textual no-incomplete-proof scan tripped on the module's own
+claim-boundary comment; reworded, no proof or statement changed). Record:
+`notes/reviews/RH_MULT_PROMOTION_2026_08_07.md`. This closes
+`S1-MULTIPLICITY` and — together with merged PR #307 — completes the
+`S1-CONJ` exit evidence; the dated capability-map addendum records both
+closures. No claim about the truth of RH changes.
 
 Activation basis: `RH-009` accepted the statement surface on 2026-08-07
-(record above); this dated queue decision moves the single ACTIVE slot to the
-promotion task.
+(record above); the dated queue decision of that day moved the single ACTIVE
+slot to this promotion task.
 
 Kind: theorem
 
@@ -739,6 +756,42 @@ How to verify:
   `import` to end of file;
 - confirm the diff and its commit metadata contain no model identifier and no
   reference to PR #306 or PR #308.
+
+## RH-011: acceptance of the zero-set slice statement surface
+
+ID: `RH-011`
+
+Status: **ACTIVE 2026-08-07 — acceptance-only; produces no built module and
+no kernel verdict**
+
+Kind: review
+
+Activation basis (2026-08-07): `RH-010` closed `S1-MULTIPLICITY` and
+completed the `S1-CONJ` exit evidence, so every package prerequisite of the
+route-neutral zero-set slice is kernel-checked on `main`. This dated queue
+decision installs the slice's acceptance as the sole ACTIVE task.
+
+Hypothesis: the drafted contract
+`domains/riemann-hypothesis/ZERO_SET_SLICE_CONTRACT.md` (23 public
+signatures: xi zero-set topology; finite divisor sums over an arbitrary
+compact set; symmetry invariance of those sums — parameterized by an
+arbitrary compact `K`, with no cutoff shape anywhere, because choosing a
+cutoff shape is a route selection and all routes remain PARKED) can pass
+independent statement-surface acceptance without any statement change.
+
+Expected output: an acceptance record under `notes/reviews/` in the RH-009
+format — statement-surface acceptance only, no kernel content, no barrier-row
+change; kernel promotion would be a separate later task under a new dated
+decision.
+
+Exit criteria:
+
+- every statement reviewed for mathematical truth at exceptional points, pin
+  fidelity, and claim boundary;
+- the no-cutoff-shape neutrality property re-verified mechanically;
+- any blocking finding stops acceptance and returns the contract to design;
+- this task advances `S1-GLOBAL-ZEROS` bookkeeping only if acceptance lands,
+  and closes no barrier in any case.
 
 ## RH-005: bounded computation policy
 
