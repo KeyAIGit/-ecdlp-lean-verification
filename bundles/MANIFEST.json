@@ -367,7 +367,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 168414
+        "bytes": 168420
       },
       {
         "path": "BARRIERS.md",
@@ -385,7 +385,7 @@
         "path": "notes/FOUNDATIONS.md",
         "reason": "the Weil/Semaev foundation ladder and its open rungs",
         "exists": true,
-        "bytes": 10238
+        "bytes": 10234
       },
       {
         "path": "experiments/HYPOTHESES.yaml",
@@ -753,7 +753,7 @@
         "path": "VERIFIED.md",
         "reason": "the canonical ledger — every kernel-verified theorem, one row each",
         "exists": true,
-        "bytes": 168414
+        "bytes": 168420
       },
       {
         "path": "BARRIERS.md",
@@ -771,7 +771,7 @@
         "path": "notes/FOUNDATIONS.md",
         "reason": "the Weil/Semaev foundation ladder and its open rungs",
         "exists": true,
-        "bytes": 10238
+        "bytes": 10234
       },
       {
         "path": "experiments/HYPOTHESES.yaml",
@@ -951,7 +951,7 @@
         "path": "data/knowledge_graph.json",
         "reason": "full machine-readable theorem/dependency/barrier graph",
         "exists": true,
-        "bytes": 697633
+        "bytes": 697645
       },
       {
         "path": "REPOSITORY_ARCHITECTURE.md",
@@ -963,7 +963,7 @@
         "path": "PUBLISHABLE_UNITS.md",
         "reason": "the standalone publishable narratives with honest scope",
         "exists": true,
-        "bytes": 22110
+        "bytes": 22091
       },
       {
         "path": "TRUST_REPORT.md",

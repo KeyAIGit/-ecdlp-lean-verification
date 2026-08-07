@@ -1,4 +1,4 @@
-# Claude adversarial review brief: Research Engine v0
+# Adversarial review brief: Research Engine v0
 
 > **FROZEN HISTORICAL SNAPSHOT.** This brief describes a pre-merge branch and
 > is retained for provenance only. Current remediation is governed by
@@ -49,7 +49,7 @@ proposal has both an exact mechanism and an independent raw-artifact validator.
 
 ## Consolidation context
 
-Claude's parallel prototype at `origin/claude/research-engine-v0`
+The parallel prototype at `origin/claude/research-engine-v0`
 (`b1bc926`) was reviewed before this packet. Its strongest design elements were
 integrated here: boolean gates before valuation, mutual-information-based
 expected information gain, preregistered priors/likelihoods, and Brier

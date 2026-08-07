@@ -97,8 +97,6 @@ jobs:
             echo "**Drafter only.** Every proposal is a LEAD; the Lean kernel / CI is the sole verifier."
             echo "Nothing enters the corpus until Lean accepts it. Review and turn the good ones into"
             echo "targets / issues / proof attempts."
-            echo
-            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
           } > pr-body.txt
           gh pr create --draft --base main --head "$branch" \
             --title "kimi repo-study: grounded next-theorem proposals (${ts})" \

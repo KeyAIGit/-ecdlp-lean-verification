@@ -13,7 +13,7 @@ exactly the kind of work the decompose→prove-leaf→autonomy pipeline can clos
 - **Missing:** the elliptic-curve **invariant differential** as a named object, the **isogeny `[n]`
   as a morphism/field-embedding**, `E[n]≅(ℤ/n)²`, separable-degree = fiber-size.
 
-## The two routes, compared (Fable analysis, cross-checked vs the inventory)
+## The two routes, compared (model analysis, cross-checked vs the inventory)
 
 | | **Route A — via the invariant differential** | **Route B — via division polynomials** |
 |---|---|---|
@@ -43,7 +43,7 @@ explicitly-flagged reductions, upgrading a conditional theorem to an uncondition
 
 ## Why this matters for the program
 - The deep gap is **not** monolithic and **not** blocked on the hardest theory. Route B is
-  polynomial algebra — decomposable into leaves that Opus (in-session) and, after decomposition,
+  polynomial algebra — decomposable into leaves that an in-session agent and, after decomposition,
   the autonomous harness can close. This is the concrete sense in which **budget + autonomy can
   attack the frontier**: fund the leaf-closing, hand-do the few genuinely subtle nodes (B4, L2).
 - Route A remains worthwhile as a **long-horizon, upstream-Mathlib contribution** (the invariant
@@ -52,10 +52,10 @@ explicitly-flagged reductions, upgrading a conditional theorem to an uncondition
 
 ---
 
-## Full route analysis (Fable-drafted, pure math)
+## Full route analysis (model-drafted, pure math)
 
 *Pure algebraic geometry / number theory; none of the nodes below is yet kernel-verified — this is
-the plan. Provenance: drafted by Claude Fable 5, cross-checked against the live Mathlib survey.*
+the plan. Provenance: drafted by an AI model, cross-checked against the live Mathlib survey.*
 
 **Target (S).** For `E : y²=x³+Ax+B` over `k` (`char k = 0` or `p∤n`): `[n]` separable,
 `deg[n]=n²`, `#E[n](k̄)=n²`.

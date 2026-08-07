@@ -50,7 +50,7 @@ Record fields per task: claim_id · status · lean_files · lean_theorems · sou
 - barrier: Mathlib has no direct End-ring API → the task's allowed pointwise form is what is
   proved. next_action: none. paper_hook: "pointwise CM quadratic relation φ²+φ+1=0 for j=0".
 - limitations: stated pointwise, not as an End-ring element identity (Mathlib gap, per task's
-  own fallback clause). **(GPT flagged this "most valuable for Fable" — already done.)**
+  own fallback clause). **(An independent model flagged this as most valuable for delegation — already done.)**
 
 ### FBL-PURE-007 — division-polynomial symmetry ψ_m(ωx) — **verified**
 - lean_files: `Ecdlp/Proved/GlvDivPoly.lean`

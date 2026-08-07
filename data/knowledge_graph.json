@@ -165,7 +165,7 @@
       "Mathlib (`Φ_three`, `ΨSq_three`) + repo eval bricks": 1,
       "Mathlib (`Point.toClass`, `toClass_eq_zero`, `map_nsmul`, `ClassGroup`)": 1,
       "Mathlib (`ClassGroup.mk_eq_one_iff`, `Submodule.IsPrincipal`, `Additive.toMul_nsmul`)": 1,
-      "Mathlib (`Submodule.span_singleton_eq_span_singleton`) — proof by Fable": 1,
+      "Mathlib (`Submodule.span_singleton_eq_span_singleton`) — model-designed proof": 1,
       "Mathlib (`CoordinateRing.quotientXYIdealEquiv`, `RingHom.ker_equiv_comp`, `Ideal.mk_ker`)": 1,
       "Mathlib (`Ideal.Quotient.maximal_of_isField`, `MulEquiv.isField`)": 1,
       "Mathlib (`RingEquiv.symm_apply_eq`, `RingEquiv.ofBijective_apply`)": 1,
@@ -5457,8 +5457,8 @@
       "files": [
         "Ecdlp/Proved/WeilDivisorClass.lean"
       ],
-      "claim": "Weil-pairing foundations, rung 3 — the Miller function is unique up to a unit (`secp256k1_miller_function_unique`: two generators `f, g` of the same principal ideal `(XYIdeal' h)ⁿ` differ by a unit of the coordinate ring, `∃ u : F[secp256k1]ˣ, u • f = g` — the well-definedness input for the Weil pairing `eₙ` (its value must not depend on the chosen Miller function). Representative-independence half of rung W3. Proof designed by the Fable model and kernel-verified — a piloted \"strong-model + Lean-kernel\" loop: Fable read the Mathlib source, identified `Submodule.span_singleton_eq_span_singleton`, and produced the proof, which the kernel accepted)",
-      "method": "Mathlib (`Submodule.span_singleton_eq_span_singleton`) — proof by Fable",
+      "claim": "Weil-pairing foundations, rung 3 — the Miller function is unique up to a unit (`secp256k1_miller_function_unique`: two generators `f, g` of the same principal ideal `(XYIdeal' h)ⁿ` differ by a unit of the coordinate ring, `∃ u : F[secp256k1]ˣ, u • f = g` — the well-definedness input for the Weil pairing `eₙ` (its value must not depend on the chosen Miller function). Representative-independence half of rung W3. Proof designed by an AI model and kernel-verified — a piloted \"strong-model + Lean-kernel\" loop: the model read the Mathlib source, identified `Submodule.span_singleton_eq_span_singleton`, and produced the proof, which the kernel accepted)",
+      "method": "Mathlib (`Submodule.span_singleton_eq_span_singleton`) — model-designed proof",
       "status": "proved",
       "area": "curve-torsion",
       "family_id": "family-curve-torsion",

@@ -145,8 +145,6 @@ jobs:
             echo "build\` + the no-sorry gate). Do not merge until CI is green and a human has"
             echo "reviewed the statement for meaningfulness (the kernel checks the proof, not"
             echo "whether the theorem is the one we wanted)."
-            echo
-            echo "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
           } > pr-body.txt
           title="agent candidate: $(printf '%s' "${AGENT_TARGET}" | head -c 60 | tr '\n' ' ')"
           gh pr create --draft --base main --head "$branch" \

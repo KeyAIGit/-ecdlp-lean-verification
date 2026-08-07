@@ -196,7 +196,7 @@ paper could carry both, or they could split).
   are **not** proved. What remains open and hard is Weil reciprocity
   `f(div g) = g(div f)` (W4), then the root-of-unity/bilinearity/non-degeneracy assembly (W5).
   The raw W3 evaluation domain and algebra are present; they are not the pairing.
-- `secp256k1_miller_function_unique` was **designed by the strong model (Fable) and kernel-verified**
+- `secp256k1_miller_function_unique` was **designed by the strong model and kernel-verified**
   — an engine-track provenance note, not a mathematical claim; the result stands on the kernel.
 - Everything is stated for secp256k1, though much of the evaluation layer is curve-agnostic
   (proved for any Weierstrass curve over a field).
@@ -264,7 +264,7 @@ These are coherent enough to publish but are secondary to Units 1–3.
 
 ## Section 5 — The engine story (separate track — NOT a math-content unit)
 
-`docs/ENGINE_PORTFOLIO.md` records a *methods* result: a strong model (Fable) proposes short-but-hard
+`docs/ENGINE_PORTFOLIO.md` records a *methods* result: a strong model proposes short-but-hard
 answers and an independent verifier (a fresh sympy run, or the Lean kernel) judges — "8/8 hard
 problems solved under independent verification," and one kernel-promoted rung
 (`secp256k1_miller_function_unique`) whose *proof* was model-designed. This is a genuine narrative,
@@ -275,7 +275,7 @@ be conflated with Units 1–3:
   `E[5]⊥E[7]` disjointness certificates) are **sympy-verified, not kernel-verified** — offline CAS
   certificates, candidates for promotion, not yet Lean theorems (except where separately landed).
 - The publishable math claim for any promoted result is carried by the **kernel**, independent of
-  who or what designed the proof. Provenance ("designed by Fable") is a footnote, not a theorem.
+  who or what designed the proof. Provenance ("model-designed") is a footnote, not a theorem.
 - Venue for the engine story: **AITP** or a systems/ML-for-math venue — as a paper about the
   propose-and-verify loop, kept distinct from the Lean-content papers so that neither overclaims on
   behalf of the other.

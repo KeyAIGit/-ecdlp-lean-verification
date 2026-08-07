@@ -9,7 +9,7 @@ via the autonomous harness) while flagging the one genuinely hard core item hone
 "Depth is blocked by missing Mathlib theory" is true but not a dead end. The missing theory
 is not monolithic: it decomposes, and most of the pieces are polynomial algebra or finite
 group theory that **are** reachable. This map turns "depth" into a concrete, prioritized
-target list. It was produced by decomposition (Claude Fable 5, pure math) cross-checked
+target list. It was produced by decomposition (model-drafted, pure math) cross-checked
 against a live survey of Mathlib's `AlgebraicGeometry/EllipticCurve/` tree.
 
 ## Live Mathlib survey (what actually exists, checked on the server)
@@ -54,7 +54,7 @@ effort — flagged here, not hidden.
 
 ---
 
-## Full dependency map (Fable-drafted, pure math)
+## Full dependency map (model-drafted, pure math)
 
 *The following graph and node analysis is pure algebraic geometry / number theory; only the
 node marked ✅ above is currently kernel-verified. The rest is the plan.*
@@ -95,6 +95,6 @@ N9 + N11 + N10 + N12 ⇒ N13 = T
 - **N13 (MID)** assemble: two inclusions (N9, N11) + cardinality (N3, N10, N12).
 
 ---
-*Provenance: dependency analysis drafted by Claude Fable 5 (pure math), cross-checked against
+*Provenance: dependency analysis drafted by an AI model (pure math), cross-checked against
 a live Mathlib survey; the reachable-frontier priorities and the single ✅ verified node are
 the actionable output. Only `secp256k1_odd_two_torsion_disjoint` is kernel-verified so far.*

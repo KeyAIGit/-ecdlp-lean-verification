@@ -1,4 +1,4 @@
-# Opus 5 handoff: Research Engine v0 scientific audit
+# Independent handoff: Research Engine v0 scientific audit
 
 > **FROZEN HISTORICAL SNAPSHOT.** This handoff predates the merged v0 baseline
 > and is retained for provenance only. Current remediation is governed by
@@ -8,8 +8,8 @@
 ## Role
 
 Act as an independent mathematical and experimental-design reviewer. Do not
-merge either implementation and do not optimize for agreement with Codex or
-the earlier Claude prototype.
+merge either implementation and do not optimize for agreement with either
+earlier prototype.
 
 Repository: `KeyAIGit/-ecdlp-lean-verification`
 
@@ -52,7 +52,7 @@ that can genuinely recompute from raw artifacts.
 
 ## Why this review exists
 
-The useful parts of the Claude decision-layer prototype have already been
+The useful parts of the parallel decision-layer prototype have already been
 integrated into the repository-native Engine: boolean gates before scoring,
 computed EIG, threat-model-first rejection, retrospective checks, `supported`
 as an empirical outcome, separate threat/decision/evidence axes, and explicit

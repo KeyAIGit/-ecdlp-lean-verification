@@ -103,7 +103,7 @@ The operator identity $\varphi^2 + \varphi + 1 = 0$ in $\mathrm{End}(E)$ and the
 3. W. C. Waterhouse, *Abelian varieties over finite fields*, Ann. Sci. É.N.S. (4) 2 (1969) — endomorphism algebras over prime fields.
 
 ---
-*Provenance: the mathematical exposition (§1–6, Remark) was drafted by an AI model (Claude
-Fable 5) as pure algebraic-geometry background, then adapted here; the "Formalization status"
+*Provenance: the mathematical exposition (§1–6, Remark) was drafted by an AI model
+as pure algebraic-geometry background, then adapted here; the "Formalization status"
 table and framing map it to the repository's kernel-checked theorems. The exposition is
 context, not a proof — only the Lean theorems in the table are machine-verified.*

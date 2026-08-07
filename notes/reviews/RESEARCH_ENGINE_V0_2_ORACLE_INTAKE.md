@@ -2,7 +2,7 @@
 
 Date: 2026-07-25
 
-This note records how the implementation-independent Opus review packet was
+This note records how the implementation-independent review packet was
 used. It is an adoption record, not a replacement for repository validators.
 
 ## Bound review artifact

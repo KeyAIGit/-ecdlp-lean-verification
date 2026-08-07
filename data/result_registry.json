@@ -6957,12 +6957,12 @@
     },
     {
       "id": "ledger-261",
-      "claim": "Weil-pairing foundations, rung 3 — the Miller function is unique up to a unit (`secp256k1_miller_function_unique`: two generators `f, g` of the same principal ideal `(XYIdeal' h)ⁿ` differ by a unit of the coordinate ring, `∃ u : F[secp256k1]ˣ, u • f = g` — the well-definedness input for the Weil pairing `eₙ` (its value must not depend on the chosen Miller function). Representative-independence half of rung W3. Proof designed by the Fable model and kernel-verified — a piloted \"strong-model + Lean-kernel\" loop: Fable read the Mathlib source, identified `Submodule.span_singleton_eq_span_singleton`, and produced the proof, which the kernel accepted)",
+      "claim": "Weil-pairing foundations, rung 3 — the Miller function is unique up to a unit (`secp256k1_miller_function_unique`: two generators `f, g` of the same principal ideal `(XYIdeal' h)ⁿ` differ by a unit of the coordinate ring, `∃ u : F[secp256k1]ˣ, u • f = g` — the well-definedness input for the Weil pairing `eₙ` (its value must not depend on the chosen Miller function). Representative-independence half of rung W3. Proof designed by an AI model and kernel-verified — a piloted \"strong-model + Lean-kernel\" loop: the model read the Mathlib source, identified `Submodule.span_singleton_eq_span_singleton`, and produced the proof, which the kernel accepted)",
       "theorem_cell": "`Ecdlp.Weil.secp256k1_miller_function_unique`",
       "declared_files": [
         "Ecdlp/Proved/WeilDivisorClass.lean"
       ],
-      "method": "Mathlib (`Submodule.span_singleton_eq_span_singleton`) — proof by Fable",
+      "method": "Mathlib (`Submodule.span_singleton_eq_span_singleton`) — model-designed proof",
       "status": "proved",
       "references": [
         {

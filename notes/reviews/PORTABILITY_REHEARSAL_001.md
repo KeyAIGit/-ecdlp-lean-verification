@@ -389,7 +389,7 @@ green run, and squash-merge commit.
 
 ## Adversarial review packet
 
-Claude/Opus should review the final PR once, after implementation and CI are
+An independent reviewer should review the final PR once, after implementation and CI are
 complete. Attempt to falsify `CHANGE` in both directions: find evidence that
 requires `STOP`, or evidence that every required metric actually supports
 `BUILD`.

@@ -20,7 +20,7 @@ which is elementary.
 `E(𝔽_p)` is cyclic. Establishing it requires `#E(𝔽_p) = n` — point-counting (Hasse / Frobenius
 trace), absent from Mathlib for a 256-bit curve. So the verified theorem is a **reduction**: it
 discharges the entire GLV eigenvalue property *elementarily, modulo cyclicity*, and names that
-one input as the remaining barrier. The exposition below (drafted by Claude Fable 5 as pure
+one input as the remaining barrier. The exposition below (drafted by an AI model as pure
 group theory) is the mathematical account of that reduction; only the theorem in the table is
 kernel-verified.
 
@@ -76,7 +76,7 @@ When $p \equiv 1 \pmod 3$, an order-3 automorphism of a curve $y^2 = x^3 + b$ is
 Both record that $\varphi$ generates a copy of $\mathbb{Z}[\zeta_3]$ inside $\operatorname{End}(E)$, whose image in any faithful linear realization — on the tangent space, on coordinates, on the $N$-torsion or the Tate module — must again satisfy $\Phi_3$. But *identifying* the correct correspondence, i.e. which root $\beta$ pairs with which eigenvalue $k$, passes through the action of Frobenius and $\varphi$ on the Tate module. That link is exactly the deep, non-elementary part; everything downstream of it is Lemma 1.
 
 ---
-*Provenance: the exposition (§1–5) was drafted by an AI model (Claude Fable 5) as pure group
+*Provenance: the exposition (§1–5) was drafted by an AI model as pure group
 theory, then adapted here; the "Formalization status" table maps it to the repository's
 kernel-checked theorem. Only `secp256k1_glvHom_eq_zsmul` (and the lemmas it cites) is
 machine-verified — the prose is context, not proof.*
