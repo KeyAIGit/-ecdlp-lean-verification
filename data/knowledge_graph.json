@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 312,
-    "ledger_rows": 312,
+    "theorems": 313,
+    "ledger_rows": 313,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1199,
+    "edges": 1201,
     "by_edge_type": {
-      "imports": 532,
-      "member_of": 312,
+      "imports": 533,
+      "member_of": 313,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -71,7 +71,7 @@
       "follows_up_source": 1
     },
     "by_method": {
-      "Mathlib": 110,
+      "Mathlib": 111,
       "Mathlib + native_decide": 31,
       "native_decide": 20,
       "Bézout certificate + native_decide": 10,
@@ -209,7 +209,7 @@
     "by_area": {
       "curve-torsion": 155,
       "primality": 57,
-      "other": 33,
+      "other": 34,
       "generic-hardness": 30,
       "protocol-soundness": 23,
       "attack-resistance": 8,
@@ -6479,6 +6479,26 @@
       "status": "proved",
       "area": "attack-resistance",
       "family_id": "family-attack-resistance",
+      "dependency_depth": 0,
+      "gated": true
+    },
+    {
+      "id": "thm-312",
+      "name": "Ecdlp.Screen.ne_C_of_natDegree_pos`, `Ecdlp.Screen.card_le_natDegree_of_forall_eval_eq`, `Ecdlp.Screen.card_le_natDegree_of_forall_isRoot`, `Ecdlp.Screen.card_fibre_le_natDegree`, `Ecdlp.Screen.card_fibre_le_natDegree'`, `Ecdlp.Screen.card_fibre_le_natDegree_of_degree_pos`, `Ecdlp.Screen.card_preimage_le_natDegree_mul`, `Ecdlp.Screen.card_le_natDegree_mul_card_image`, `Ecdlp.Screen.card_div_natDegree_le_card_image`, `Ecdlp.Screen.card_image_polynomial_eval_of_degree_pos",
+      "short_name": "ne_C_of_natDegree_pos`,",
+      "module": "Ecdlp.Proved.DegreeCompressionBound",
+      "modules": [
+        "Ecdlp.Proved.DegreeCompressionBound"
+      ],
+      "file": "Ecdlp/Proved/DegreeCompressionBound.lean",
+      "files": [
+        "Ecdlp/Proved/DegreeCompressionBound.lean"
+      ],
+      "claim": "Fibre bound for one-variable polynomial maps, over an arbitrary `Finset` (over any `CommRing` + `IsDomain`, a finite set on which `p` is constantly `y` has at most `natDegree p` elements provided `p ≠ C y`; hence every fibre inside any `s : Finset R` is that small, the part of `s` landing in a target `T` has at most `natDegree p · #T` elements, and `p` cannot compress `s` by a factor better than `natDegree p`. The last of these generalises Mathlib's `FiniteField.card_image_polynomial_eval` from `univ` to any `s`, and `card_image_polynomial_eval_of_degree_pos` recovers the Mathlib statement from it hypothesis-for-hypothesis, so the generalisation is genuine. Mathlib does have the single-fibre bound in `Set`/`ncard` form over the whole domain (`Polynomial.preimage_eval_singleton` composed with `ncard_rootSet_le`); what is new here is the `Finset` form relative to an arbitrary `s`, the preimage-into-a-set form, and that subset generalisation. `p ≠ 0` is not the right hypothesis — for a nonzero constant `p = C c` the fibre over `c` is all of `R` while `natDegree p = 0`; the sharp per-fibre hypothesis is `p ≠ C y` and the uniform one is `0 < p.natDegree`. The bound is tight: over `𝔽₇`, `X³` has fibres of size exactly 3. Honest scope: a counting statement about fibres of *one-variable* polynomial maps. It is not a statement about ECDLP hardness, discrete-log cost, or index calculus, and nothing here lower-bounds an algorithm's work. The two corollaries point in opposite directions and must not be conflated — the preimage bound is an upper bound on a carved-out set and says nothing about it being nonempty, while the image bound is a lower bound on `s.image`. Applying either to a concrete proposal requires separately showing the proposal has this shape; surviving the screen is not soundness. Semaev summation polynomials are multivariate and are not covered)",
+      "method": "Mathlib",
+      "status": "proved",
+      "area": "other",
+      "family_id": "family-other",
       "dependency_depth": 0,
       "gated": true
     }
@@ -14183,6 +14203,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.DegreeCompressionBound",
+      "type": "imports"
+    },
+    {
       "from": "thm-015",
       "to": "B1-cost-model",
       "type": "frontier_of"
@@ -15805,6 +15830,11 @@
     {
       "from": "thm-311",
       "to": "family-attack-resistance",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-312",
+      "to": "family-other",
       "type": "member_of"
     },
     {

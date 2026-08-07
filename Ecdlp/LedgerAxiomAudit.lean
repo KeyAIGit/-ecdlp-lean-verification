@@ -592,6 +592,16 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Schnorr.taproot_tweak_verify
 #print axioms Ecdlp.Schnorr.threshold_elgamal_combine
 #print axioms Ecdlp.Schnorr.threshold_schnorr_aggregate
+#print axioms Ecdlp.Screen.card_div_natDegree_le_card_image
+#print axioms Ecdlp.Screen.card_fibre_le_natDegree
+#print axioms Ecdlp.Screen.card_fibre_le_natDegree'
+#print axioms Ecdlp.Screen.card_fibre_le_natDegree_of_degree_pos
+#print axioms Ecdlp.Screen.card_image_polynomial_eval_of_degree_pos
+#print axioms Ecdlp.Screen.card_le_natDegree_mul_card_image
+#print axioms Ecdlp.Screen.card_le_natDegree_of_forall_eval_eq
+#print axioms Ecdlp.Screen.card_le_natDegree_of_forall_isRoot
+#print axioms Ecdlp.Screen.card_preimage_le_natDegree_mul
+#print axioms Ecdlp.Screen.ne_C_of_natDegree_pos
 #print axioms Ecdlp.Secp256k1Schnorr.secp256k1_schnorr_extract
 #print axioms Ecdlp.Semaev.S₃_diagonal_cube_covariance
 #print axioms Ecdlp.Semaev.S₃_diagonal_cube_zero_iff

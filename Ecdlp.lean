@@ -191,3 +191,6 @@ import Ecdlp.Proved.CompressedDivisionPoly
 -- t_j = g_j(x) is a retraction, so it changes only the presentation, never the variety or
 -- the derivable relations. Says nothing about solving cost -- see the module docstring.
 import Ecdlp.Proved.GraphIdealInvariance
+-- Fibre bound for one-variable polynomial maps, at the level of an arbitrary Finset:
+-- the reusable form of the counting chain several modules here re-derive by hand.
+import Ecdlp.Proved.DegreeCompressionBound
