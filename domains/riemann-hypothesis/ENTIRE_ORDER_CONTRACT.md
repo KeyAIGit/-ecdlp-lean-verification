@@ -4,7 +4,11 @@ Status: **DRAFT v1 (2026-08-07) — non-built review artifact, offered for STAGE
 (INDEPENDENT CONTRACT ACCEPTANCE) ONLY. NOT Lean-checked.** Red-team audited
 2026-08-07 (§Annex A: every citation re-verified at the pin; one locator
 corrected, two obligations sharpened, one docstring gap filled; no signature
-changed). No declaration below
+changed). **Stage-one ACCEPTED 2026-08-07 with applied editorial fixes** —
+acceptance record (the citable object of death condition 1):
+`notes/reviews/ENTIRE_ORDER_ACCEPTANCE_2026_08_07.md`; the drafts-lane
+transcription `drafts/RiemannGrowthOrder.lean` is thereby unlocked; stage two
+(built promotion, CI-judged) remains a separate later change. No declaration below
 has been elaborated; no `lake build` has been run against any of it. Under the one
 invariant, the Lean kernel via CI is the sole judge of every statement in this
 contract, and this document carries no kernel verdict of any kind.
@@ -38,11 +42,16 @@ carry a promotion. Any drafts-lane file for this surface (working name
 `drafts/RiemannGrowthOrder.lean`) lies outside every lake target
 (`lakefile.toml:2` declares `defaultTargets = ["Ecdlp", "ResearchOS"]`), so
 **no green CI run on an acceptance PR is evidence of anything about the
-draft.**
+draft.** The stage-one acceptance record, if granted, is a dated file under
+`notes/reviews/` (form precedent:
+`notes/reviews/RH011_ZERO_SLICE_ACCEPTANCE_2026_08_07.md`); that file, not
+this draft, is the object death condition 1 requires consumers to cite.
 
 **Ordering / authority.** The authority for this lane is the RH queue,
 repo:`tasks/RIEMANN_HYPOTHESIS.md`; no route execution is authorized, and
-this document is an offered artifact, not an active task.
+this document is an offered artifact, not an active task (the queue's sole
+ACTIVE slot as of 2026-08-07 is `RH-012`, the zero-set slice build-out — a
+route-neutral task in a different lane; this surface holds no slot).
 `repo/ECDLP_DECISION_SUBSTRATE.json` governs the ECDLP lane and is not the
 authority here. `repo/FINAL_REVIEW_PACKET.md` is frozen to draft PR #235 and
 is not reused by this document.
@@ -100,10 +109,12 @@ honored here): `analyticOrderAt` (`Analysis/Analytic/Order.lean:47`) is the
 below is therefore named `growthOrder`, never `Complex.order`, and this
 contract never uses the bare word "order" in a signature.
 
-Name-collision scan run at the pin this session: `maxModulus`, `growthOrder`,
+Name-collision scan run at the pin **and against repo Lean sources
+(`ResearchOS/`, `Ecdlp/`, root modules, `drafts/`)** this session:
+`maxModulus`, `growthOrder`,
 `growthType`, `growthOrder_const`, `growthOrder_polynomial`, `growthOrder_exp`,
 `growthOrder_le_of_eventually_le`, `growthOrder_mul_le`, `growthType_exp` —
-**zero hits for all**.
+**zero hits for all, in both scopes**.
 
 ---
 
@@ -809,8 +820,9 @@ contract, and must not ride along with the definitional acceptance.
   (repo:`MATHLIB_CAPABILITY_MAP.md:388`) or any other row. Stage-one
   acceptance changes **no** barrier row. The row's exit evidence is "explicit
   quantitative bounds sufficient for the selected theorem"; **definitions
-  supply zero bounds**, and no selected theorem exists (no route is active in
-  the RH queue).
+  supply zero bounds**, and no selected theorem exists (all routes remain
+  PARKED; the queue's ACTIVE slot (`RH-012`) is route-neutral and in a
+  different lane).
 - What acceptance DOES produce: a reviewed, frozen definitional target so
   that any future growth theorem in this lane is stated about a vetted object
   instead of an improvised one. That is the entire claim.
@@ -840,6 +852,11 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
    document is that the object is reviewed **before** it acquires dependents.
    Corollary: this contract must be re-opened (not patched) if review rejects
    the inner clamp or the codomain — every signature changes (§1.3).
+   (The L1–L6 calibration lemmas of this contract's own surface — including
+   their character-identical transcription into
+   `drafts/RiemannGrowthOrder.lean` — are the object under review, not
+   downstream consumers; "downstream" means any statement outside the
+   9-signature surface.)
 2. **A new axiom would be needed.** No `axiom`, `sorry`, `admit`, or
    `native_decide` on an unproved side condition, anywhere in stage two.
 3. **Any dependency on an unproved conjecture** — including smuggled binders.

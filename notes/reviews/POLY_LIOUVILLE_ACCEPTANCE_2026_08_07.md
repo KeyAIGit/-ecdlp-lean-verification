@@ -2,8 +2,9 @@
 
 Date: 2026-08-07
 
-Status: FINAL — committed as the stage-one acceptance change for
-`POLY_LIOUVILLE_CONTRACT.md`; format precedent
+Status: FINAL — the six applied editorial fixes landed on the branch in the
+in-flight panel-edits commit `59d5220` (post-fix contract blob `d09f5fa`
+verified identical at HEAD); this record accompanies them. Format precedent
 `notes/reviews/RH011_ZERO_SLICE_ACCEPTANCE_2026_08_07.md`.
 
 ## Reviewed baseline
