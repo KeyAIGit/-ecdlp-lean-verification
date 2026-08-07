@@ -11,23 +11,31 @@ contract, and this document carries no kernel verdict of any kind.
 stage one is acceptance of the statement surface H1–H5 only and produces **no
 built module, no ledger row, and no kernel verdict**; any built form is a
 separate PR whose verdict is delivered by CI. A drafts-lane file (working name
-`drafts/Harnack.lean`) lies outside every lake target (`lakefile.toml:2`
+realized as `drafts/HarnackDisc.lean`, per `drafts/README.md:32`; updated at
+acceptance, 2026-08-07) lies outside every lake target (`lakefile.toml:2`
 declares `defaultTargets = ["Ecdlp", "ResearchOS"]`), so **no green CI run on
 an acceptance PR is evidence of anything about this draft.**
 
 **Lane authority.** The RH queue (`tasks/RIEMANN_HYPOTHESIS.md`) is the
-authority for this lane; per its dated decision update of 2026-08-07, `RH-002`
+authority for this lane; per its dated decision updates of 2026-08-07, `RH-002`
 is COMPLETE (all three PARK dispositions confirmed, no route selected) and the
-sole ACTIVE task is `RH-010` (kernel promotion of the accepted multiplicity
-surface). No route execution is authorized. [Corrected from "RH-002" — Annex
-A, finding A3.] This document is an
+sole ACTIVE task is `RH-012` (zero-set slice drafting plus kernel promotion,
+`tasks/RIEMANN_HYPOTHESIS.md:809–:824`); `RH-010` and `RH-011` completed
+2026-08-07 (merged PR #313 `2a20629`; acceptance record
+`notes/reviews/RH011_ZERO_SLICE_ACCEPTANCE_2026_08_07.md`). No route execution
+is authorized. [Corrected from "RH-002" — Annex A, finding A3; the A3
+correction's `RH-010` value was itself superseded by the queue before
+acceptance and was updated to `RH-012` at acceptance, 2026-08-07.] This
+document is an
 offered artifact against `UPSTREAM_POOL.md` §5 (Harnack inequality), **not** an
 active task, **not** a route, and **not** authorization to work one. It closes
 no barrier: no row of `MATHLIB_CAPABILITY_MAP.md` names Harnack as exit
 evidence, and none is retired here. Nothing below bears on the truth of the
 Riemann Hypothesis.
 
-Working name: `drafts/Harnack.lean`. Eventual natural home is **upstream
+Working name: `drafts/HarnackDisc.lean` (realized in the drafts lane,
+`drafts/README.md:32`; updated at acceptance, 2026-08-07). Eventual natural
+home is **upstream
 Mathlib** (`Mathlib/Analysis/Complex/Harmonic/`, per `UPSTREAM_POOL.md` §5);
 upstreaming is a separate maintainer decision, not part of this contract.
 Statement surface: **H1 – H5**, comprising **exactly 5 public signatures**,
@@ -198,7 +206,11 @@ Name-collision scan (grep over the pinned tree this session): **zero hits** for
 all five proposed names — `poissonKernel_mem_Icc`, `continuousOn_poissonKernel`,
 `InnerProductSpace.HarmonicOnNhd.harnack`, `…harnack_half`,
 `…pos_of_pos_center` — and zero hits for `harnack` in any casing anywhere in
-`Mathlib/`.
+`Mathlib/`. Repo-side scan (recorded at acceptance, 2026-08-07): zero hits for
+`harnack` in any casing and for each of the five names across `ResearchOS/`,
+`Ecdlp/`, the root modules, and the drafts lane, except
+`domains/riemann-hypothesis/drafts/HarnackDisc.lean` — the surface's own
+draft, not a collision.
 
 Proposed draft preamble (name-resolution review only; a drafts-lane file, so
 plain `import`, not the pin's `module`/`public import` idiom):
@@ -304,7 +316,8 @@ theorem continuousOn_poissonKernel {c w : ℂ} {R : ℝ} (hw : w ∈ Metric.ball
 `poissonKernel` — `Poisson.lean:54` (a plain quotient of continuous real
 expressions); `mem_ball_iff_norm` / `mem_sphere_iff_norm` —
 `Analysis/Normed/Group/Basic.lean` `to_additive` layer (both used in-tree in
-exactly this position at `Harmonic/Poisson.lean:65` and `Poisson.lean:108`).
+exactly this position: `mem_sphere_iff_norm` at `Harmonic/Poisson.lean:65`,
+`mem_ball_iff_norm` at `Poisson.lean:108`).
 In-tree precedent for the proof *pattern* (nonvanishing `have` + `fun_prop`):
 the `private` lemma `continuousOn_herglotz_riesz`, `Harmonic/Poisson.lean:30–35`.
 
@@ -490,7 +503,8 @@ membership does not force `0 < R` the way H3's open-ball hypothesis does.)
 ### Pinned dependencies (H4)
 
 H3; `mem_closedBall_iff_norm` / `mem_ball_iff_norm` — to_additive twins,
-`Analysis/Normed/Group/Basic.lean:875/:868`; `Metric.mem_closedBall_self` —
+`Analysis/Normed/Group/Basic.lean:877/:869` (attrs `:876/:868`);
+`Metric.mem_closedBall_self` —
 `Pseudo/Defs.lean:460`; `div_le_div_iff₀` —
 `Algebra/Order/GroupWithZero/Basic.lean:1430` (the `₀`-suffixed name is the
 pinned spelling, used in-tree at `Poisson.lean:87/:118`).
@@ -624,9 +638,11 @@ Explicitly **not** consumed (interior to pinned proofs, or private):
   evidence, and generic pinned machinery never retires a row regardless —
   MULTIPLICITY_CONTRACT.md death condition 9 is adopted here as death
   condition 6), selects no route, and is not authorization to work one. The
-  RH queue's sole ACTIVE task is `RH-010` (per the queue's 2026-08-07
-  decision update; corrected from `RH-002` — Annex A3), and this contract
-  does not occupy it.
+  RH queue's sole ACTIVE task is `RH-012` (zero-set slice drafting plus
+  kernel promotion, `tasks/RIEMANN_HYPOTHESIS.md:809–:824`; `RH-010` and
+  `RH-011` completed 2026-08-07 — per the queue's dated decision updates;
+  corrected from `RH-002` — Annex A3, further updated to `RH-012` at
+  acceptance), and this contract does not occupy it.
 - **No RH content.** ζ, ξ, and their zeros appear nowhere in H1–H5. Harnack
   inequalities feed positive-harmonic-function arguments generically; nothing
   here supplies evidence for or against the Riemann Hypothesis, and this
@@ -690,3 +706,53 @@ acceptance PR must not carry a promotion. Because the natural home of a built
 form is upstream Mathlib rather than this repository's built targets, a third
 possible disposition — an upstream PR against Mathlib — is likewise a separate
 maintainer decision that this document does not make.
+
+---
+
+## Annex A — pre-acceptance adversarial audit findings (2026-08-07; all corrections already applied in the text above)
+
+This annex records the findings of the adversarial audit that preceded this
+contract's acceptance review, so that every in-text citation "Annex A,
+finding An" resolves inside this document (house convention:
+`MULTIPLICITY_CONTRACT.md` embeds its annexes; `ZERO_SET_SLICE_CONTRACT.md`
+carries Annex N/D in-file). The audit's original finding numbering is
+preserved exactly as cited (A2–A7). Every correction below was applied in
+place in the body of this contract; none touches a declaration name, binder,
+hypothesis, conclusion, or skeleton step.
+
+- **A2 — root-level mean-value namespace.** `Harmonic/MeanValue.lean` at the
+  pin contains **no** `namespace` command (only
+  `open InnerProductSpace Metric Real` at `:18`) and no `export` exists in
+  any harmonic file, so `HarmonicOnNhd.circleAverage_eq` (`:27`) and
+  `HarmonicContOnCl.circleAverage_eq` (`:50`) are root-level
+  (`_root_.HarmonicOnNhd.circleAverage_eq`); dot notation on an
+  `InnerProductSpace.HarmonicOnNhd` term does not resolve them. Applied in
+  §0a item 3, §0b, the H3 skeleton and dependencies, and the dependencies
+  table; the H3 skeleton's bare-name call is the correct spelling.
+- **A3 — queue-position correction.** The draft's original lane-authority
+  text named `RH-002` as the sole ACTIVE task; the audit corrected it to
+  `RH-010`, the queue state at drafting. That value was itself superseded by
+  the queue before acceptance: at acceptance (2026-08-07) the sole ACTIVE
+  task is `RH-012`, with `RH-010` and `RH-011` completed the same day (see
+  the lane-authority header and the Claim boundary, both updated at
+  acceptance).
+- **A4 — death condition 5 wording.** H4 stated without `hR : 0 < R` is
+  **true** (at `R = 0`, `hw` forces `w = c` and `h₀` closes both halves; at
+  `R < 0` the closed ball is empty and the statement is vacuous) but **not
+  provable by the recorded H4 skeleton**, whose `hw'` and `hc` steps both
+  consume `0 < R`. The earlier "is false at `R = 0`" wording was wrong and
+  was replaced in death condition 5.
+- **A5 — `Normed/Group/Basic.lean` locators.** `mem_ball_iff_norm` /
+  `mem_closedBall_iff_norm` are `to_additive`-generated at theorem lines
+  `:869`/`:877` (attribute lines `:868`/`:876`); the earlier `:868`/`:875`
+  locators were corrected in §0b and the dependencies table (one uncorrected
+  residue in H4's dependency block was found and fixed at acceptance).
+- **A6 — private-proof shape.** The in-tree `private`
+  `continuousOn_herglotz_riesz` (`Harmonic/Poisson.lean:30–35`) uses a
+  **plain** `fun_prop` with the nonvanishing fact as an anonymous `have` in
+  the local context (no `disch` argument); recorded in H-2a as the first
+  shape to try.
+- **A7 — `div_le_iff₀` exists at the pin.** The one-sided form is pinned at
+  `Algebra/Order/GroupWithZero/Basic.lean:1138`, so H4's previously recorded
+  `3 = 3 / 1` contingency was retired in H-4a (kept available as a fallback
+  only).

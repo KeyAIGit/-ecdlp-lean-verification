@@ -397,7 +397,11 @@ Degenerate-case conventions, stated exactly and shared verbatim with `growthType
   the inner log is `≥ 0`; without this clamp a modulus decaying like `exp (-r)`
   would receive order 1 (see contract §1.1);
 * outer clamp `ENNReal.ofReal`: transient negative quotients (outer log of a value
-  in `[0,1)`, i.e. `1 ≤ M(f,r) ≤ e`) collapse to `0`;
+  in `(0,1)`, i.e. `1 < maxModulus f r < e`; endpoints give quotient exactly `0` —
+  at `M ≤ 1` the outer-log argument is `0` and `log 0 = 0`, at `M = e` it is `1`)
+  collapse to `0`;
+* classical footing: `Real.log (max x 1)` is exactly `log⁺ x`, so with the outer
+  clamp this definition is the textbook `log⁺ log⁺` formulation of order (see §1.1);
 * `maxModulus` junk (empty sphere at `r < 0`, `Real.sSup_empty`; unbounded
   norm-image at some `r`, `Real.sSup_of_not_bddAbove` — impossible for entire `f`
   but the definition is total): the junk value `0` is lifted to `1` by the inner

@@ -15,10 +15,11 @@ active task. An adversarial red-team review of this contract was run
 place; see Annex A). That review accepts a statement surface only: it is not
 a kernel verdict and promotes nothing. The RH queue —
 `tasks/RIEMANN_HYPOTHESIS.md`, whose dated decision of 2026-08-07 records
-`RH-002` as **complete** (all three PARK dispositions CONFIRMED) and moves
-the single ACTIVE slot to `RH-011` (acceptance-only review of the zero-set
-slice statement surface; no built module, no kernel verdict, no route
-execution authorized) — is the authority for this lane;
+`RH-011` as **complete** (23-signature zero-set slice surface accepted with
+zero blocking items; record
+`notes/reviews/RH011_ZERO_SLICE_ACCEPTANCE_2026_08_07.md`) and moves the
+single ACTIVE slot to `RH-012` (zero-set slice drafting plus separate kernel
+promotion; CI the sole judge) — is the authority for this lane;
 `repo/ECDLP_DECISION_SUBSTRATE.json` governs the ECDLP lane and its current
 dated decision selects no route. Nothing here is authorization to work a route,
 and this contract must not be cited as evidence that any route is selected.
@@ -108,19 +109,26 @@ Notation used below: the closed annulus is the set-builder literal
 `{w : ℂ | r₁ < ‖w‖ ∧ ‖w‖ < r₃}`, **written inline at each use site, not as a
 new definition** (decision 1, §1). Circles enter theorem binders as `‖w‖ = r`
 hypotheses; the set `Metric.sphere (0 : ℂ) r` (Topology/MetricSpace/
-Pseudo/Defs.lean:429) appears only inside the helper block TC1–TC4.
+Pseudo/Defs.lean:429) appears in no theorem *statement* outside the helper
+block TC1–TC4 (proof-internal uses in the TC9/TC11 skeletons are expected).
 
 Name-collision scan (grep over the pinned tree this session): **zero hits** in
 `Mathlib/` for every proposed name — `sSupNormCircle`, `sSupNormCircle_nonneg`,
 `bddAbove_image_norm_sphere`, `le_sSupNormCircle`,
 `exp_mem_annulus_of_mem_verticalClosedStrip`,
 `exp_mem_annulus_of_mem_verticalStrip`, `exists_exp_eq_of_norm_eq`,
-`norm_le_interp_of_norm_eq`, `sSupNormCircle_le_interp`,
-`norm_le_of_mem_annulus`. A repo-wide scan (`.lean` and `.md`) returns exactly
+`norm_le_interp_of_norm_eq`, `norm_le_interp_of_norm_eq'`,
+`sSupNormCircle_le_interp`, `norm_le_of_mem_annulus`. A repo-wide scan
+(`.lean` and `.md`) returns exactly
 one textual hit: `UPSTREAM_POOL.md:371`'s own proposed name
 `Complex.norm_le_interp_of_norm_eq_of_le_of_le`, of which TC8's name is a
 substring — a prose mention in the pool document, not a declaration; no code
-collision. An annulus scan at the pin: `grep -rn "def annulus\|Annulus"
+collision. *(Staleness note, 2026-08-07 acceptance, post-PR #315: the
+drafts-lane file `domains/riemann-hypothesis/drafts/ThreeCircles.lean` now
+exists and intentionally carries all eleven names — self-hits of the very
+surface under review; that file is non-built, outside every lake target, and
+carries no kernel verdict. Foreign collisions remain zero in pinned
+`Mathlib/` and the repo.)* An annulus scan at the pin: `grep -rn "def annulus\|Annulus"
 Mathlib/` finds **no `Set`-level annulus object** and `Hadamard.lean` itself
 never says "annulus" (0 case-insensitive hits) — re-verifying
 `UPSTREAM_POOL.md` §0 row 11 rather than trusting it.
@@ -554,7 +562,8 @@ sides are `0`), so no `z ≠ 0` hypothesis is needed even though `hr` supplies
 one; `Complex.exp_add` — Analysis/Complex/Exponential.lean:109;
 `Complex.ofReal_exp` — Exponential.lean:189 (`@[simp, norm_cast]`);
 `Real.exp_log` — Log/Basic.lean:58; re-arithmetic — Data/Complex/Basic.lean:88
-(`ofReal_re`), :169 (`add_re`), :266 (`mul_I_re`).
+(`ofReal_re`), :92 (`ofReal_im`, `@[simp, norm_cast]` — used by the
+skeleton's simp set), :169 (`add_re`), :266 (`mul_I_re`).
 
 ### Obligations (TC7)
 
@@ -963,7 +972,7 @@ Pow/Real.lean:148.
 | `Set.image_comp` / `Set.image_mono` / `Set.MapsTo.image_subset` / `Set.mem_image_of_mem` | Image.lean:224 / :219 / Function.lean:137 / Operations.lean:140 | TC4, TC8 |
 | `Real.rpow_one` / `rpow_nonneg` / `rpow_add'` | Pow/Real.lean:148 / :163 / :210 | TC9, TC11 |
 | `sub_add_cancel` (to_additive-simp of Group/Defs.lean:1253) | Group/Defs.lean:1253 | TC11 |
-| `Complex.ofReal_re` / `add_re` / `mul_I_re` | Data/Complex/Basic.lean:88 / :169 / :266 | TC7 |
+| `Complex.ofReal_re` / `ofReal_im` / `add_re` / `mul_I_re` | Data/Complex/Basic.lean:88 / :92 / :169 / :266 | TC7 |
 
 ---
 
@@ -1033,8 +1042,9 @@ sharpened to obligation TC-BB).
   retires a row**. Stage-one acceptance changes no barrier row; even a
   stage-two kernel-checked build would change none.
 - **It selects no route and is not route work.** The RH queue's sole ACTIVE
-  task is `RH-011` (acceptance-only review of `ZERO_SET_SLICE_CONTRACT.md`;
-  no built module, no kernel verdict); the ECDLP decision substrate
+  task is `RH-012` (zero-set slice drafting plus separate kernel promotion;
+  CI the sole judge; `RH-011` completed 2026-08-07, record
+  `RH011_ZERO_SLICE_ACCEPTANCE_2026_08_07.md`); the ECDLP decision substrate
   selects no route. This document is an offered artifact under the upstream
   pool, prepared so that *if* a future dated decision wants three-circles,
   the statement surface is already reviewed. It must not be cited as momentum
@@ -1095,8 +1105,8 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
    re-proving the annulus transport. Use the TC-BB route or its recorded
    fallback only.
 8. **A barrier row or route authorization is inferred from this contract.**
-   The RH queue (`tasks/RIEMANN_HYPOTHESIS.md`, `RH-011` sole ACTIVE) is the
-   lane authority; `repo/ECDLP_DECISION_SUBSTRATE.json` governs the other
+   The RH queue (`tasks/RIEMANN_HYPOTHESIS.md`, `RH-012` sole ACTIVE;
+   `RH-011` completed 2026-08-07) is the lane authority; `repo/ECDLP_DECISION_SUBSTRATE.json` governs the other
    lane and selects no route. This contract is a statement design. Declaring
    any capability-map row stale on the strength of this generic package is
    itself a death condition (the MULTIPLICITY finding-A4 rule, inherited
@@ -1201,7 +1211,7 @@ claim about the truth of RH.
    `Analysis.Calculus.FDeriv.Comp`, `Analysis.Complex.Basic`
    (`ProperSpace ℂ`). The preamble resolves everything it needs. PASS.
 6. **Name-collision and annulus scans reproduced.** Zero hits in `Mathlib/`
-   for all ten proposed names; repo-wide exactly one textual hit
+   for all eleven proposed names; repo-wide exactly one textual hit
    (`UPSTREAM_POOL.md:371`, prose); no `Set`-level annulus object at the
    pin; `Hadamard.lean` contains zero case-insensitive "annulus" hits. All
    as the contract records. PASS.
