@@ -642,6 +642,13 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.Semaev.secp256k1_semaev_three_point
 #print axioms Ecdlp.Semaev.secp256k1_semaev_three_point_double
 #print axioms Ecdlp.Semaev.secp256k1_semaev_three_tangent
+#print axioms Ecdlp.SizeBalance.arity_five_yield_leg_fails
+#print axioms Ecdlp.SizeBalance.arity_six_yield_leg_holds
+#print axioms Ecdlp.SizeBalance.nextCandidate_linearAlgebra_leg_fails
+#print axioms Ecdlp.SizeBalance.size_window_crosses_between_five_and_six
+#print axioms Ecdlp.SizeBalance.traceBaseBound_eq
+#print axioms Ecdlp.SizeBalance.traceBaseBound_linearAlgebra_leg
+#print axioms Ecdlp.SizeBalance.traceSubgroupOrder_dvd
 #print axioms Ecdlp.Targets.glv_eigenvalue_zmod
 #print axioms Ecdlp.TaskSylvester.det_taskSylvester_eq_resultant
 #print axioms Ecdlp.TaskSylvester.det_taskSylvester_eq_zero_iff_common_projective_root

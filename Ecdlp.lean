@@ -194,3 +194,6 @@ import Ecdlp.Proved.GraphIdealInvariance
 -- Fibre bound for one-variable polynomial maps, at the level of an arbitrary Finset:
 -- the reusable form of the counting chain several modules here re-derive by hand.
 import Ecdlp.Proved.DegreeCompressionBound
+-- Index-calculus size balance for the p+1 nonsplit-torus trace factor base: a bounded
+-- sharpness pair (closed at arity 5, open at arity 6). Two inequalities, not a mechanism.
+import Ecdlp.Proved.NonsplitTorusAritySizeBalance

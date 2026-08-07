@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 313,
-    "ledger_rows": 313,
+    "theorems": 314,
+    "ledger_rows": 314,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1201,
+    "edges": 1204,
     "by_edge_type": {
-      "imports": 533,
-      "member_of": 313,
+      "imports": 535,
+      "member_of": 314,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -204,10 +204,11 @@
       "exact two-chart normalization + literal fixed-mask `MvPolynomial` family + TASK-021/TASK-022 equivalences + injective base change; `native_decide` only for `card_chartEquation": 1,
       "local projective `H` identities + exact TASK-023 cover restriction + path-independent-set counts; `native_decide` only for the three cardinalities": 1,
       "exact local substitution + fixed-degree projective-resultant forward implication + balanced prefix/suffix frozen specializations + exact chart-cover restriction; `native_decide` only for the four mask cardinalities": 1,
-      "Mathlib + existing Pratt certificates": 1
+      "Mathlib + existing Pratt certificates": 1,
+      "Mathlib (`norm_num`)": 1
     },
     "by_area": {
-      "curve-torsion": 155,
+      "curve-torsion": 156,
       "primality": 57,
       "other": 34,
       "generic-hardness": 30,
@@ -6501,6 +6502,26 @@
       "family_id": "family-other",
       "dependency_depth": 0,
       "gated": true
+    },
+    {
+      "id": "thm-313",
+      "name": "Ecdlp.SizeBalance.traceBaseBound_eq`, `Ecdlp.SizeBalance.traceSubgroupOrder_dvd`, `Ecdlp.SizeBalance.traceBaseBound_linearAlgebra_leg`, `Ecdlp.SizeBalance.nextCandidate_linearAlgebra_leg_fails`, `Ecdlp.SizeBalance.arity_five_yield_leg_fails`, `Ecdlp.SizeBalance.arity_six_yield_leg_holds`, `Ecdlp.SizeBalance.size_window_crosses_between_five_and_six",
+      "short_name": "traceBaseBound_eq`,",
+      "module": "Ecdlp.Proved.NonsplitTorusAritySizeBalance",
+      "modules": [
+        "Ecdlp.Proved.NonsplitTorusAritySizeBalance"
+      ],
+      "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+      "files": [
+        "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean"
+      ],
+      "claim": "Size-balance sharpness pair for the `p+1` nonsplit-torus trace factor base (`p+1` has the known small factors `2⁴ · 7322137 · 45422601869677`; among the divisors they build, the trace-orbit count `(|H| + gcd(|H|,2))/2` is maximised subject to the linear-algebra leg by `H = 2⁴·45422601869677`, giving `traceBaseBound = 363380814957417 ≈ 2^48.37`, and the next candidate up violates that leg at `≈ 2^142.4`. Kernel-checked: `H ∣ p+1` with explicit cofactor; `traceBaseBound² ≤ 2^126`; negative witness `traceBaseBound⁵ < 5!·p`; positive witness `6!·p ≤ traceBaseBound⁶`. So the size window is closed at arity 5 and open at arity 6, and both sides of the crossing are proved. The pair exists because a one-sided bound invites generalisation past its own range, which already happened here: the quarantined intake `OPUS-ECDLP-SCREEN-ATLAS-2026-07-26` records “fails for every `m` in range” from a table stopping at `m = 8`. Honest scope: this is arithmetic about two size inequalities and nothing else. The yield leg is a heuristic model of relation yield; the kernel checks the inequality, not the model. Passing the size legs is not an attack and not a mechanism — the route stays parked because no exact low-degree polynomial is known whose roots are the required traces (recorded verdict `rejected_missing_exact_low_degree_mechanism`; decision `EDD-2026-07-31-001` records the *submitted* construction supplying 9 trace roots against the 345156162942 needed at `m = 7`). Having a subgroup of adequate order is not having a computable low-degree description of its traces; only the former is proved, and only at `m = 6`. Maximality is among divisors built from the three known small factors; the 184-bit cofactor is not factored here. No `native_decide` — every fact is `norm_num` on `Nat` literals, so nothing is added to the trust base)",
+      "method": "Mathlib (`norm_num`)",
+      "status": "proved",
+      "area": "curve-torsion",
+      "family_id": "family-curve-torsion",
+      "dependency_depth": 1,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12608,6 +12629,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.NonsplitTorusAritySizeBalance",
+      "to": "Ecdlp.Secp256k1Verified",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.NormEDSConsecutiveZeros",
       "to": "Ecdlp.Proved.NormEDSIsElliptic",
       "type": "imports"
@@ -14205,6 +14231,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.DegreeCompressionBound",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.NonsplitTorusAritySizeBalance",
       "type": "imports"
     },
     {
@@ -15835,6 +15866,11 @@
     {
       "from": "thm-312",
       "to": "family-other",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-313",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {

@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 313,
-  "ledger_reference_count": 731,
-  "ledger_named_declarations": 706,
+  "ledger_rows": 314,
+  "ledger_reference_count": 738,
+  "ledger_named_declarations": 713,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1080,
-  "distinct_qualified_names": 1080,
-  "verified_md_citations": 706,
+  "declaration_count": 1090,
+  "distinct_qualified_names": 1090,
+  "verified_md_citations": 713,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -710,6 +710,13 @@
     "Ecdlp.Semaev.secp256k1_semaev_three_point",
     "Ecdlp.Semaev.secp256k1_semaev_three_point_double",
     "Ecdlp.Semaev.secp256k1_semaev_three_tangent",
+    "Ecdlp.SizeBalance.arity_five_yield_leg_fails",
+    "Ecdlp.SizeBalance.arity_six_yield_leg_holds",
+    "Ecdlp.SizeBalance.nextCandidate_linearAlgebra_leg_fails",
+    "Ecdlp.SizeBalance.size_window_crosses_between_five_and_six",
+    "Ecdlp.SizeBalance.traceBaseBound_eq",
+    "Ecdlp.SizeBalance.traceBaseBound_linearAlgebra_leg",
+    "Ecdlp.SizeBalance.traceSubgroupOrder_dvd",
     "Ecdlp.Targets.glv_eigenvalue_zmod",
     "Ecdlp.TaskSylvester.det_taskSylvester_eq_resultant",
     "Ecdlp.TaskSylvester.det_taskSylvester_eq_zero_iff_common_projective_root",
@@ -10408,6 +10415,74 @@
           "line": 184
         }
       ]
+    },
+    {
+      "id": "ledger-313",
+      "claim": "Size-balance sharpness pair for the `p+1` nonsplit-torus trace factor base (`p+1` has the known small factors `2⁴ · 7322137 · 45422601869677`; among the divisors they build, the trace-orbit count `(|H| + gcd(|H|,2))/2` is maximised subject to the linear-algebra leg by `H = 2⁴·45422601869677`, giving `traceBaseBound = 363380814957417 ≈ 2^48.37`, and the next candidate up violates that leg at `≈ 2^142.4`. Kernel-checked: `H ∣ p+1` with explicit cofactor; `traceBaseBound² ≤ 2^126`; negative witness `traceBaseBound⁵ < 5!·p`; positive witness `6!·p ≤ traceBaseBound⁶`. So the size window is closed at arity 5 and open at arity 6, and both sides of the crossing are proved. The pair exists because a one-sided bound invites generalisation past its own range, which already happened here: the quarantined intake `OPUS-ECDLP-SCREEN-ATLAS-2026-07-26` records “fails for every `m` in range” from a table stopping at `m = 8`. Honest scope: this is arithmetic about two size inequalities and nothing else. The yield leg is a heuristic model of relation yield; the kernel checks the inequality, not the model. Passing the size legs is not an attack and not a mechanism — the route stays parked because no exact low-degree polynomial is known whose roots are the required traces (recorded verdict `rejected_missing_exact_low_degree_mechanism`; decision `EDD-2026-07-31-001` records the *submitted* construction supplying 9 trace roots against the 345156162942 needed at `m = 7`). Having a subgroup of adequate order is not having a computable low-degree description of its traces; only the former is proved, and only at `m = 6`. Maximality is among divisors built from the three known small factors; the 184-bit cofactor is not factored here. No `native_decide` — every fact is `norm_num` on `Nat` literals, so nothing is added to the trust base)",
+      "theorem_cell": "`Ecdlp.SizeBalance.traceBaseBound_eq`, `Ecdlp.SizeBalance.traceSubgroupOrder_dvd`, `Ecdlp.SizeBalance.traceBaseBound_linearAlgebra_leg`, `Ecdlp.SizeBalance.nextCandidate_linearAlgebra_leg_fails`, `Ecdlp.SizeBalance.arity_five_yield_leg_fails`, `Ecdlp.SizeBalance.arity_six_yield_leg_holds`, `Ecdlp.SizeBalance.size_window_crosses_between_five_and_six`",
+      "declared_files": [
+        "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean"
+      ],
+      "method": "Mathlib (`norm_num`)",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.SizeBalance.traceBaseBound_eq",
+          "canonical_name": "Ecdlp.SizeBalance.traceBaseBound_eq",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+          "line": 100
+        },
+        {
+          "cited": "Ecdlp.SizeBalance.traceSubgroupOrder_dvd",
+          "canonical_name": "Ecdlp.SizeBalance.traceSubgroupOrder_dvd",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+          "line": 104
+        },
+        {
+          "cited": "Ecdlp.SizeBalance.traceBaseBound_linearAlgebra_leg",
+          "canonical_name": "Ecdlp.SizeBalance.traceBaseBound_linearAlgebra_leg",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+          "line": 109
+        },
+        {
+          "cited": "Ecdlp.SizeBalance.nextCandidate_linearAlgebra_leg_fails",
+          "canonical_name": "Ecdlp.SizeBalance.nextCandidate_linearAlgebra_leg_fails",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+          "line": 114
+        },
+        {
+          "cited": "Ecdlp.SizeBalance.arity_five_yield_leg_fails",
+          "canonical_name": "Ecdlp.SizeBalance.arity_five_yield_leg_fails",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+          "line": 118
+        },
+        {
+          "cited": "Ecdlp.SizeBalance.arity_six_yield_leg_holds",
+          "canonical_name": "Ecdlp.SizeBalance.arity_six_yield_leg_holds",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+          "line": 127
+        },
+        {
+          "cited": "Ecdlp.SizeBalance.size_window_crosses_between_five_and_six",
+          "canonical_name": "Ecdlp.SizeBalance.size_window_crosses_between_five_and_six",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+          "line": 134
+        }
+      ]
     }
   ],
   "declarations": {
@@ -16766,6 +16841,76 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/SemaevThree.lean",
       "line": 184
+    },
+    "Ecdlp.SizeBalance.arity_five_yield_leg_fails": {
+      "name": "arity_five_yield_leg_fails",
+      "namespace": "Ecdlp.SizeBalance",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+      "line": 118
+    },
+    "Ecdlp.SizeBalance.arity_six_yield_leg_holds": {
+      "name": "arity_six_yield_leg_holds",
+      "namespace": "Ecdlp.SizeBalance",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+      "line": 127
+    },
+    "Ecdlp.SizeBalance.nextCandidateTraceBound": {
+      "name": "nextCandidateTraceBound",
+      "namespace": "Ecdlp.SizeBalance",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+      "line": 98
+    },
+    "Ecdlp.SizeBalance.nextCandidate_linearAlgebra_leg_fails": {
+      "name": "nextCandidate_linearAlgebra_leg_fails",
+      "namespace": "Ecdlp.SizeBalance",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+      "line": 114
+    },
+    "Ecdlp.SizeBalance.size_window_crosses_between_five_and_six": {
+      "name": "size_window_crosses_between_five_and_six",
+      "namespace": "Ecdlp.SizeBalance",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+      "line": 134
+    },
+    "Ecdlp.SizeBalance.traceBaseBound": {
+      "name": "traceBaseBound",
+      "namespace": "Ecdlp.SizeBalance",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+      "line": 94
+    },
+    "Ecdlp.SizeBalance.traceBaseBound_eq": {
+      "name": "traceBaseBound_eq",
+      "namespace": "Ecdlp.SizeBalance",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+      "line": 100
+    },
+    "Ecdlp.SizeBalance.traceBaseBound_linearAlgebra_leg": {
+      "name": "traceBaseBound_linearAlgebra_leg",
+      "namespace": "Ecdlp.SizeBalance",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+      "line": 109
+    },
+    "Ecdlp.SizeBalance.traceSubgroupOrder": {
+      "name": "traceSubgroupOrder",
+      "namespace": "Ecdlp.SizeBalance",
+      "kind": "def",
+      "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+      "line": 91
+    },
+    "Ecdlp.SizeBalance.traceSubgroupOrder_dvd": {
+      "name": "traceSubgroupOrder_dvd",
+      "namespace": "Ecdlp.SizeBalance",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/NonsplitTorusAritySizeBalance.lean",
+      "line": 104
     },
     "Ecdlp.Targets.glv_eigenvalue_zmod": {
       "name": "glv_eigenvalue_zmod",
