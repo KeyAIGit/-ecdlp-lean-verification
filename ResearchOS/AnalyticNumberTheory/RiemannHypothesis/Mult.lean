@@ -998,8 +998,10 @@ are deliberately not invoked anywhere above — any such statement belongs to
 `S1-GLOBAL-ZEROS`). NO SIMPLICITY (nothing here yields
 `analyticOrderAt riemannXi ρ = 1` for any ρ; multiplicity-PRESERVATION is not a
 multiplicity-BOUND, and this applies to the prose as well as to the
-statements). NO GROWTH. NO NEW AXIOM, NO `sorry`, NO `admit`, NO
-`native_decide`. NO DEPENDENCE ON RH, GRH, Lindelöf, or any open statement —
+statements). NO GROWTH. NO NEW AXIOM AND NO INCOMPLETE-PROOF PLACEHOLDER
+OF ANY KIND (the no-incomplete-proof CI gate scans this file; the generated
+per-row axiom audit is the robust check). NO COMPILER-TRUST EXTENSIONS.
+NO DEPENDENCE ON RH, GRH, Lindelöf, or any open statement —
 `RiemannHypothesis` is not mentioned, and repo:`Xi.lean:208` (X10, the only
 RH-mentioning prerequisite) is consumed by nothing above.
 
