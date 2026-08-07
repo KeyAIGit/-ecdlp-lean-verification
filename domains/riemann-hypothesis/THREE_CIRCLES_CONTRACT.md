@@ -1106,3 +1106,153 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
 
 *End of contract. 11 signatures (1 def + 10 theorems), 13 obligation rows,
 zero repo prerequisites, zero kernel verdicts.*
+
+---
+
+## ANNEX A: adversarial red-team review record (2026-08-07)
+
+**Verdict: SOUND_WITH_FIXES.** Two findings (B1–B2), both applied in place
+above. Every `file:line` locator in this contract was independently
+re-verified against the pinned tree at
+`fabf563a7c95a166b8d7b6efca11c8b4dc9d911f` (`git -C
+/workspace/leanprover-community/mathlib4 rev-parse HEAD` re-run this review;
+toolchain `leanprover/lean4:v4.31.0` re-confirmed from `lean-toolchain`).
+This annex accepts a statement surface only. It is **not** a kernel verdict,
+it promotes nothing, it closes no barrier, selects no route, and makes no
+claim about the truth of RH.
+
+### A. Findings applied in place
+
+- **B1 (LOW, citation).** `Real.log_le_log` is declared at
+  **Log/Basic.lean:150**, not `:149` — line 149 is its `@[gcongr, bound]`
+  attribute line. Every other declaration citation in this contract points at
+  the declaration line itself. Fixed at three sites (§0 quote block, TC8
+  pinned dependencies, pinned API table). The attribute claim itself
+  (`@[gcongr, bound]` present at the pin) is CONFIRMED.
+- **B2 (MEDIUM, authority staleness).** The contract named `RH-002` as the
+  RH queue's sole ACTIVE task. The queue's own dated decision (2026-08-07,
+  `tasks/RIEMANN_HYPOTHESIS.md` §Current decision) records `RH-002` as
+  **complete** (all three PARK dispositions CONFIRMED, no route selected)
+  and moves the single ACTIVE slot to `RH-011` (acceptance-only review of
+  `ZERO_SET_SLICE_CONTRACT.md`). Fixed at three sites (Authority and
+  standing; Claim boundary, route bullet; death condition 8). No standing
+  changes: this contract remains an offered artifact under the upstream
+  pool either way, and nothing in it became route work.
+
+### B. Attack fronts run, all passed (no change needed)
+
+1. **Circle-sup vs strip-edge-sup under `exp` (the periodicity attack).**
+   Attack: transporting three-lines to three-circles is unsound if any step
+   identifies `sup` over a boundary circle with `sup` over the boundary
+   *line*, unless the strip is one period (`2π`) wide in the imaginary
+   direction or the sup-functional is shown period-insensitive. Result:
+   **the contract never forms that identification and never needs it.** The
+   consumed input is the *endpoint-bound* form :607 — re-verified verbatim
+   at the pin: its boundary hypotheses are
+   `ha : ∀ z ∈ re ⁻¹' {l}, ‖f z‖ ≤ a` / `hb : ∀ z ∈ re ⁻¹' {u}, ‖f z‖ ≤ b`,
+   i.e. **pointwise bounds quantified over the entire line**, and its `hB`
+   is boundedness, not a sup value. The `sSupNormIm`-valued form :588 is
+   quoted for reference only and consumed nowhere (re-confirmed: no TC
+   statement or skeleton mentions `sSupNormIm` except TC1's convention
+   note). The discharge direction is line → circle: every point `y` of
+   `re ⁻¹' {log rᵢ}` satisfies `‖exp y‖ = Real.exp y.re = rᵢ`
+   (`Complex.norm_exp` :995 + `Real.exp_log` :58), so the circle-wide
+   hypothesis `hM_i` applies pointwise, at every one of the
+   infinitely-many preimages alike. The strip being infinitely many periods
+   wide is therefore harmless — more line points only means more instances
+   of the same circle bound. Surjectivity is needed at exactly one point
+   (the TC7 witness), as the contract's periodicity honesty note already
+   states. The lone `sSup` comparison in the package (TC9) runs through
+   `Real.sSup_le` on the *circle image* plus TC4's `le_csSup` — a `≤` in
+   each direction actually needed, never an equality of sups across `exp`.
+   CONFIRMED sound as written.
+2. **Branch/`log`-section issues.** TC7's witness `Real.log r + z.arg * I`
+   uses the total `Complex.arg`; `Complex.norm_mul_exp_arg_mul_I`
+   (Arg.lean:56) re-verified verbatim — stated for **all** `x`, no `x ≠ 0`
+   hypothesis, so no branch choice ever enters. No skeleton constructs
+   `Complex.log` or any section of `exp`; death condition 3 pre-registers
+   the drift. PASS.
+3. **Analyticity of `f ∘ exp` from pinned composition lemmas.**
+   `DifferentiableOn.comp` (FDeriv/Comp.lean:194) re-verified with exactly
+   the `(hg) (hf) (st : MapsTo f s t)` shape used; `Differentiable.
+   differentiableOn` bridges `Complex.differentiable_exp` (ExpDeriv.lean:97,
+   namespace `Complex` :83, `𝕜 := ℂ` valid); `ContinuousOn.comp`
+   (ContinuousOn.lean:497) likewise. `DiffContOnCl` structure re-verified:
+   both fields `protected` (DiffContOnCl.lean:34–35), so the anonymous-
+   constructor route is forced, as the skeleton has it; the second
+   component's `rw [hcl]` is correctly placed inside that component. The
+   closure identity is honestly flagged as assembled, not pinned
+   (`closure_preimage_re` :70 + `closure_Ioo` :72, `hab : a ≠ b` supplied
+   by `hul.ne`). PASS.
+4. **Scope creep into growth.** None found. No statement mentions growth
+   order, Jensen, counting, canonical products, or any unbounded-domain
+   bound; TC11 is a two-boundary maximum principle on the same compact
+   annulus (the `M₁ = M₃` degeneration of TC8), still local interpolation.
+   The claim boundary's growth disclaimer is accurate as written. PASS.
+5. **Import sufficiency of the preamble (new check, beyond the contract's
+   own name-resolution review).** The pin uses the module system
+   (`public import`). A strict public-import-closure BFS from the seven
+   preamble imports (2 484 modules) contains every module cited by any TC
+   dependency, including the non-obvious ones:
+   `Analysis.Normed.Module.RCLike.Real` (TC11's `sphere_nonempty`),
+   `Topology.Order.Compact` (`bddAbove_image`),
+   `Topology.MetricSpace.ProperSpace`, `Algebra.Order.Archimedean.Real.
+   Basic` (`Real.sSup_le`), `Analysis.Calculus.DiffContOnCl`,
+   `Analysis.Calculus.FDeriv.Comp`, `Analysis.Complex.Basic`
+   (`ProperSpace ℂ`). The preamble resolves everything it needs. PASS.
+6. **Name-collision and annulus scans reproduced.** Zero hits in `Mathlib/`
+   for all ten proposed names; repo-wide exactly one textual hit
+   (`UPSTREAM_POOL.md:371`, prose); no `Set`-level annulus object at the
+   pin; `Hadamard.lean` contains zero case-insensitive "annulus" hits. All
+   as the contract records. PASS.
+7. **Junk-value and degeneration honesty.** `Real.log_zero` re-verified at
+   Log/Basic.lean:102; the `0 < r₁` justification (death condition 5) is
+   real, not decoration. `sub_add_cancel` exists at the pin as the
+   auto-generated `@[to_additive (attr := simp)]` twin of `div_mul_cancel`
+   (Group/Defs.lean:1253) — TC11's rewrite is name-safe. `NormedSpace.
+   sphere_nonempty` (RCLike/Real.lean:128) applies to `ℂ` as claimed. No
+   `CompleteSpace`/`CharZero` anywhere in Hadamard.lean (grep: 0 hits),
+   confirming the §0 section-variable note. PASS.
+8. **Exponent transport audit.** :607's conclusion at `l := Real.log r₁`,
+   `u := Real.log r₃`, evaluation point `w` with `w.re = Real.log r₂`
+   yields literally TC8's exponents; TC10's ratio shapes match
+   `UPSTREAM_POOL.md` §3.1 after the two `log_div` rewrites. The
+   §3.3 "hardest step" (`hB` transport) and the pool's row-11 annulus
+   absence were re-verified against both the pool text and the tree.
+   PASS.
+
+### C. Citations re-verified as CORRECT (no change)
+
+All remaining locators in §0, the per-TC dependency blocks, and the pinned
+API table were re-verified by reading the tree: Hadamard.lean :66/:67/:70/
+:73/:77/:99–102/:237/:396/:588/:607 (including hypothesis order and
+conclusion shape of :607 and the two-namespace naming trap with the prime);
+Trigonometric.lean:995 (namespace :954); Arg.lean:56; Analysis/Complex/
+Exponential.lean :109/:189 (`@[simp, norm_cast]` confirmed at :188–189)/
+:282/:311/:315 (namespaces `Complex` :90, `Real` :200); ExpDeriv.lean:97
+(namespace :83); Exp.lean:68 (namespace :33); Log/Basic.lean :58/:102/:137/
+:146/:154; ReImTopology.lean:70 (namespace :42); DenselyOrdered.lean:72;
+Analysis/Complex/Basic.lean:138; ProperSpace.lean :40/:42/:45;
+Compact.lean:103; Topology/Order/Compact.lean:332 (hypothesis
+`[ClosedIciTopology α] [Nonempty α]` verbatim); OrderClosed.lean:444;
+Bounds/Basic.lean:218; ConditionallyCompleteLattice/Basic.lean:198;
+Archimedean/Real/Basic.lean :228 (`protected` confirmed)/:294;
+Pseudo/Defs.lean :429 (namespace `Metric` :361)/:480;
+Normed/Group/Basic.lean :260/:303 (`@[to_additive]` confirmed on both);
+RCLike/Real.lean:128; Continuity.lean :117/:242; FDeriv/Comp.lean:194;
+ContinuousOn.lean :312/:497; Image.lean :219/:224 (orientation of
+`image_comp` verbatim); Function.lean:137; Operations.lean:140;
+Pow/Real.lean :148/:163/:210; Group/Defs.lean:1253; Data/Complex/Basic.lean
+:88/:169/:266; DiffContOnCl.lean :33/:39/:42. Repo-side: `lakefile.toml:2`
+(`defaultTargets = ["Ecdlp", "ResearchOS"]`) confirmed;
+`UPSTREAM_POOL.md` §0 rows 4/11, §3.1–§3.3 quotations and the :371 name
+mention confirmed.
+
+### D. Standing of this annex
+
+This review ran under the same two-stage gate as the body: it is stage-one
+material only. Nothing here is Lean-elaborated; the obligation register's
+severity calls (TC-BB HIGH included) are design assessments, and the Lean
+kernel via a stage-two built PR remains the sole judge of every statement.
+This annex must not be cited as evidence that any route is selected, any
+barrier row is closed, or any statement is proved.
