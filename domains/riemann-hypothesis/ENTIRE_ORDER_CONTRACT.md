@@ -834,3 +834,120 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
 L1–L6); codomain `ℝ≥0∞` via `ENNReal.ofReal` outer clamp with a `max … 1`
 inner clamp, API verified at the pin; riskiest design choice: the inner clamp
 (§1.3). DRAFT, stage-one acceptance only; closes no barrier.*
+
+---
+
+## Annex A — Red-team audit record (2026-08-07)
+
+**Method.** Independent adversarial re-verification against the pinned tree
+(`git -C /workspace/leanprover-community/mathlib4 rev-parse HEAD` →
+`fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`, re-confirmed this audit). Source
+reading only; no Lean toolchain; nothing elaborated; CI remains the sole
+judge. This annex changes **no signature** and does not constitute stage-one
+acceptance — it is a hostile pre-review, and the honesty constraint stands
+unchanged: **`S1-GROWTH` is neither closed nor advanced by this contract, and
+no downstream growth theorem may consume G1/G2 before independent stage-one
+acceptance of the definition itself (death condition 1).**
+
+**A.1 Citation re-verification: every locator printed and compared.**
+All 60 `file:line` locators in §0, G0–G2, L1–L6, and the consolidated table
+were re-printed with `sed -n Np` at the pin and matched the quoted text
+**verbatim** — including the four load-bearing traps: `Real.log` junk
+(Log/Basic.lean:44, `log_neg_eq_log` :120), the `[CountableInterFilter f]`
+hypothesis on `ENNReal.limsup_add_le` (Order/Filter/ENNReal.lean:231; `atTop :
+Filter ℝ` is indeed not one: `⋂ n, Set.Ici (n : ℝ) = ∅ ∉ atTop`), the four
+`isBoundedDefault` autoParams on `limsup_max` (:1141–:1145, exactly four), and
+`div_le_div_of_nonneg_right` (GroupWithZero/Basic.lean:1199), which needs only
+`0 ≤ c` — *weaker* than the L4 skeleton assumes. Repo-side locators verified:
+`S1-GROWTH` row text at repo:`MATHLIB_CAPABILITY_MAP.md:388`;
+`defaultTargets = ["Ecdlp", "ResearchOS"]` at repo:`lakefile.toml:2`;
+`tasks/RIEMANN_HYPOTHESIS.md` present; scout A's `EReal` `growthOrder` /
+`maxModulus` at `UPSTREAM_POOL.md` (~:110–:128) — same sphere/bare-`sSup`
+carrier, so the claimed **two** load-bearing divergences (codomain, inner
+clamp) are exactly two, not three; §1.3-hardest-step cross-reference (:193)
+accurate; drafts lane exists and contains **no** `RiemannGrowthOrder.lean`
+(the surface has acquired no dependents). Absence audit and all-9-name
+collision scan re-run: **0 hits**, unchanged.
+
+**A.2 Degenerate-point attack on G0/G1/G2 (all survived).**
+* `f = 0`: `maxModulus = sSup {0} = 0` (r ≥ 0) → clamp → `log (log 1) =
+  log 0 = 0` → quotient `0` → `growthOrder 0 = 0`. Matches the docstring.
+* constants: L1's two branches re-derived; `log_nonpos` (:221) hypotheses
+  `0 ≤ log K` (from `K ≥ 1`) and `log K ≤ 1` both available; branch 2's
+  `Tendsto`-chain closes with the now-pinned `OrderTopology ℝ≥0∞` (F2).
+* bounded nonconstant (none is entire; the definition must not care): clamped
+  quotient eventually `≤ log log (max B e) / log r → 0`; order `0`.
+* values with norm `< 1` / `M ∈ [0,1)`: inner clamp lifts to `1` before any
+  log; the negative-log junk region is unreachable, as designed.
+* `sSup = ∞`-type degeneracy (norm-image unbounded at some `r`; impossible
+  for entire `f`): `Real.sSup_of_not_bddAbove` junk `0` → clamp `1` →
+  contributes `0`. The expression is total and typechecks. **Finding F4:**
+  this fourth junk family was handled but *not stated* in G1's docstring,
+  violating the "degenerate cases stated explicitly" brief — fixed in place
+  (bullet added to G1; symmetry with G2 is automatic through the shared G0
+  carrier, so death condition 4 is not tripped).
+* `r ≤ 1` region: `log r ≤ 0`, division junk `x/0 = 0` — all germ-irrelevant
+  under `atTop`; limsup depends only on the filter germ.
+* §1.1 counterexample re-computed: `M = exp (−r)` ⇒ inner `log M = −r` ⇒
+  `Real.log (−r) = Real.log r` ⇒ raw quotient `= 1`. Confirmed: the raw
+  (unclamped) formula assigns order 1 to exponential *decay* and falsifies
+  L4 in every codomain. The inner clamp is load-bearing, as §1.1 argues.
+
+**A.3 Shape-typecheck of the limsup/coercion chain (paper audit).**
+`fun r : ℝ => ENNReal.ofReal (…) : ℝ → ℝ≥0∞`; `Filter.limsup` (:64) at
+`β := ℝ`, `α := ℝ≥0∞` needs `ConditionallyCompleteLattice ℝ≥0∞` — supplied by
+`CompleteLinearOrder ℝ≥0∞` (Data/ENNReal/Basic.lean:152); `atTop : Filter ℝ`
+from `Preorder ℝ`; `NeBot atTop` instance present for `limsup_const`. The
+inner expression is all-`ℝ` with a **single** `ENNReal.ofReal` at the
+boundary — no coercion seam anywhere (scout A's `EReal` version needs an
+`(↑ : ℝ → EReal)` inside the lambda). G2's `r ^ p` with `p : ℝ` resolves to
+the `Pow ℝ ℝ` rpow instance (Pow/Real.lean:38); S1G-2's caution retained.
+
+**A.4 The exp-order-1 claim (L3): [PIN] UPHELD, not demoted.** Every
+ingredient exists at the pin with the exact quoted signature, and the
+namespaces were verified by span: `Complex.norm_exp` at
+Trigonometric.lean:995 inside the `Complex` span :954–:1002 (**finding F1:**
+the consolidated table said "opened :24", which is a different, earlier
+`Complex` span in that file — locator corrected in place; the qualified name
+and usability are unaffected); `Real.one_le_exp` (:279) and `Real.exp_le_exp`
+(:315) inside the `Real` span opening at Analysis/Complex/Exponential.lean:200
+— the file placement is surprising but true at this pin. The route was
+re-derived end-to-end: `IsGreatest` membership needs `0 ≤ r` (eventual under
+`atTop`) via `Complex.norm_of_nonneg` + `mem_sphere_zero_iff_norm` (**finding
+F3:** that name is `to_additive`-generated from `mem_sphere_one_iff_norm`,
+Analysis/Normed/Group/Basic.lean:302–303 — a declaration-grep finds nothing,
+which this audit hit and traced; generation site now recorded in S1G-L3);
+upper bound via `re_le_norm` + `Real.exp_le_exp`; clamp discharged by
+`one_le_exp`; Steps 3–4 close with `log_exp`/`log_pos`/`div_self` and
+`limsup_congr`/`limsup_const` only. **No limsup asymptotic is consumed
+anywhere in L3**; the `[PIN]` tag and the "pinned ingredients SUFFICE" claim
+stand. `NormedSpace.sphere_nonempty` instance context verified: section
+variables `[SeminormedAddCommGroup E] [NormedSpace ℝ E]` (RCLike/Real.lean:38)
++ `[NontrivialTopology E]` (:103), all satisfied at the use site `E := ℂ`.
+
+**A.5 Obligation changes (register updated in place).**
+* **F2 — S1G-L1 downgraded MEDIUM → LOW.** The draft's hedge ("not settleable
+  by source reading alone") was wrong in the safe direction: `instance :
+  TopologicalSpace ℝ≥0∞ := Preorder.topology ℝ≥0∞` and `instance :
+  OrderTopology ℝ≥0∞ := ⟨rfl⟩` are literal pinned declarations
+  (Topology/Order/Real.lean:53/:55), and `Tendsto.limsup_eq`'s section
+  variables (Topology/Order/LiminfLimsup.lean:151) are exactly satisfied.
+* **F3 — S1G-L3 sharpened** (generation-site locator; severity unchanged
+  LOW-MED).
+* S1G-L2 and S1G-L5 remain **HIGH** and are *confirmed* honest: the audit
+  found no assembled `log log (C·rⁿ)/log r → 0` lemma and no
+  `atTop`-compatible ENNReal limsup-additivity at the pin; the demote-or-prove
+  question posed by the audit brief lands on "already registered at the
+  correct severity".
+
+**A.6 What the audit did NOT find.** No false citation (one imprecise span
+locator, F1). No degenerate input on which G1/G2 disagree or fail to
+typecheck. No counterexample to L1, L3, L4, or L6 as stated. No hidden axiom,
+hypothesis smuggling, or route selection. No dependent of `growthOrder` /
+`growthType` anywhere in the repo (death condition 1 unviolated).
+
+**Verdict: PASS WITH CORRECTIONS (all applied in place, this annex is the
+record).** The statement surface G0–G2, L1–L6 is fit to be *offered* for
+stage-one independent acceptance exactly as the contract frames it: a
+design-bearing, unbuilt, kernel-unchecked definitional proposal that closes no
+barrier, advances no route, and asserts nothing about RH.

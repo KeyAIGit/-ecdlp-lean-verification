@@ -158,7 +158,10 @@ theorem exists_const_forall_eq_of_bounded (hf : Differentiable ℂ f)
 theorem exists_eq_const_of_bounded … : ∃ c, f = const E c
 theorem eq_const_of_tendsto_cocompact …
 
--- Analysis/Complex/TaylorSeries.lean:35 (variables), :129, :137, :143.
+-- Analysis/Complex/TaylorSeries.lean:35 (file variables), :124 (section `entire`
+-- variables: ⦃f : ℂ → E⦄ (hf : Differentiable ℂ f) (c z : ℂ) — hf, c, z EXPLICIT,
+-- so L2's application `hasSum_taylorSeries_of_entire hf c z` is the right arity),
+-- :129, :137, :143.
 -- NOTE the smul-shape and the (z - c) ^ n factor ORDER: (n !)⁻¹ • (z-c)^n • deriv.
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E] ⦃f : ℂ → E⦄
 lemma hasSum_taylorSeries_of_entire (hf : Differentiable ℂ f) (c z : ℂ) :
@@ -398,8 +401,16 @@ theorem Complex.iteratedDeriv_eq_zero_of_norm_le_pow
   must turn that into the literal bound expression
   `k.factorial * (C * (1 + ‖c‖ + R) ^ n) / R ^ k` — note `(1 + ‖c‖) + R`
   (polynomial shape) versus `1 + ‖c‖ + R` (goal shape) are the *same term* only
-  up to `add_assoc`, which `ring_nf` normalises; a bare `rw` will not. Also the
-  degree chain's `gcongr` under `WithBot ℕ` is untested here. **Fallback route
+  up to `add_assoc`, which `ring_nf` normalises; a bare `rw` will not. The
+  degree chain is now an explicit term chain (Annex A finding A1 removed the
+  `gcongr` step, which could not fire: none of `degree_mul_le`/`degree_C_le`/
+  `degree_pow_le_of_le`/`degree_add_le`/`degree_X_le` is `@[gcongr]`-tagged at
+  the pin); its residual risks are the `WithBot ℕ` arithmetic
+  (`0 + ↑n * 1 ≤ ↑n` via `simp`; `(0 : WithBot ℕ) ≤ 1` via `zero_le_one` — if
+  the `ZeroLEOneClass (WithBot ℕ)` instance does not fire, close with
+  `by norm_num` or `by decide`) and the `degree_pow_le_of_le` conclusion shape
+  `b * a` (Degree/Defs.lean:406), which is multiplication, not the `n •` smul
+  of `degree_pow_le` (:402). **Fallback route
   (elementary, no Polynomial):** for `R ≥ max 1 (1 + ‖c‖)` bound
   `(1 + ‖c‖ + R) ^ n ≤ (2 * R) ^ n`, so the whole expression is
   `≤ (k.factorial * C * 2 ^ n) * (R ^ k)⁻¹ * R ^ n`, and squeeze with
@@ -417,9 +428,11 @@ theorem Complex.iteratedDeriv_eq_zero_of_norm_le_pow
 ingredient exists at the pin, already in the right shape (the estimate is
 `k`-indexed and radius-uniform). What is absent at the pin is the *assembled
 statement* — `UPSTREAM_POOL.md` §0 row 5, re-verified this session by reading
-`Liouville.lean` in full: every theorem there hypothesises
-`IsBounded (range f)`. L1 must not be presented as "Mathlib cannot do Cauchy
-estimates"; it is the missing one-quantifier-stronger corollary.
+`Liouville.lean` in full: every Liouville-type conclusion there rests on
+`IsBounded (range f)` (`:114`/`:123`/`:128`) or the stronger cocompact-limit
+hypothesis (`:135`), and no growth-to-degree statement exists anywhere in the
+file. L1 must not be presented as "Mathlib cannot do Cauchy estimates"; it is
+the missing one-quantifier-stronger corollary.
 
 ---
 
@@ -714,7 +727,10 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
 5. **The `HasSum` seam (PL-2a) cannot be closed against the SummationFilter
    API.** Fallback *within* the death condition's stop-and-replan: restate L2's
    proof via `tsum` (`taylorSeries_eq_of_entire`, TaylorSeries.lean:137, plus
-   `tsum_eq_sum` over the vanishing complement) rather than `HasSum.unique`. If
+   `tsum_eq_sum` over the vanishing complement — `@[to_additive]` twin of
+   `tprod_eq_prod`, InfiniteSum/Basic.lean:457, hypothesis `[L.LeAtTop]`, so
+   the same SummationFilter seam as PL-2a applies to the fallback too) rather
+   than `HasSum.unique`. If
    *both* routes fail to elaborate, the pool item's "cheap — close to a
    corollary" difficulty assessment is wrong and `UPSTREAM_POOL.md` §4.3 must
    be corrected before any further attempt.
