@@ -33,11 +33,12 @@ are built, ledgered, registry-covered, and axiom-audited, closing `S1-XI`.
 conjugation declarations are built, ledgered, registry-covered, and
 axiom-audited. It closes only the conjugation leg: `S1-CONJ`
 remains open on divisor invariance, `S1-MULTIPLICITY` remains open, and no
-claim about RH's truth changes. By this dated decision, `RH-009`
-(independent acceptance of the multiplicity/divisor statement surface,
-acceptance-only, no built module and no kernel verdict) is now the **sole
-ACTIVE task**, and `RH-010` (kernel promotion of that surface) is installed
-BLOCKED on `RH-009`. Do not
+claim about RH's truth changes. `RH-009` (independent acceptance of the
+multiplicity/divisor statement surface) completed 2026-08-07: ACCEPT WITH
+APPLIED EDITORIAL FIXES, zero blocking items, record
+`RH009_MULT_CONTRACT_ACCEPTANCE_2026_08_07.md`. By this dated decision the
+single ACTIVE slot moves to `RH-010` (kernel promotion of the accepted
+surface, opened as its own change; CI is the sole judge). Do not
 begin a route proof attempt, large computation, new equivalence formalization,
 or autonomous hypothesis sweep.
 
@@ -401,7 +402,7 @@ Acceptance disposition: the reviewed promotion atomically activated and
 completed `RH-008` while reconciling already-pushed in-flight work under the
 repository charter. It did not select or execute an RH route. `RH-002` kept
 the sole ACTIVE slot for its independent `PARK`/`PARK`/`PARK` disposition
-review (closed 2026-08-07; `RH-009` now holds the slot).
+review (closed 2026-08-07; the slot passed through `RH-009`, accepted the same day, to `RH-010`).
 
 Closure evidence: the built module, sixteen ledger rows, inverse registry
 coverage, generated axiom audit, synchronized draft, and promotion review
@@ -449,8 +450,17 @@ Exit criteria:
 
 ID: `RH-009`
 
-Status: **ACTIVE 2026-08-07 — acceptance-only; produces no built module and
-no kernel verdict**
+Status: **COMPLETE 2026-08-07**
+
+Closure evidence: three-lens acceptance panel (mathematical truth, pin
+fidelity, claim boundary) under owner-delegated review authority returned
+**ACCEPT WITH APPLIED EDITORIAL FIXES** — zero blocking items, two editorial
+fixes applied to the contract (death condition 5 rewritten to cover both
+support identifications; the exceptional-points anti-pitfall bullet corrected
+to distinguish binder hypotheses from carrier scoping). Record:
+`notes/reviews/RH009_MULT_CONTRACT_ACCEPTANCE_2026_08_07.md`. Acceptance
+covers the 34-signature statement surface only: it produces no built module,
+no ledger row, and no kernel verdict, and it changes no barrier row.
 
 Kind: review
 
@@ -607,8 +617,12 @@ How to verify:
 
 ID: `RH-010`
 
-Status: **NOT ACTIVE — BLOCKED on `RH-009` acceptance; kernel promotion only,
-opened as its own change**
+Status: **ACTIVE 2026-08-07 — kernel promotion as its own change; the kernel
+via CI is the sole judge**
+
+Activation basis: `RH-009` accepted the statement surface on 2026-08-07
+(record above); this dated queue decision moves the single ACTIVE slot to the
+promotion task.
 
 Kind: theorem
 
