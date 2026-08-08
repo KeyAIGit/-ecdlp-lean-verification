@@ -47,7 +47,24 @@ accepted the 23-signature zero-set slice surface with zero blocking items
 (record `RH011_ZERO_SLICE_ACCEPTANCE_2026_08_07.md`); acceptance changes no
 barrier row — `S1-GLOBAL-ZEROS` remains OPEN. By this dated decision the
 single ACTIVE slot moves to `RH-012` (slice drafting plus separate kernel
-promotion, the RH-010 pattern; CI is the sole judge). Do not
+promotion, the RH-010 pattern; CI is the sole judge).
+
+Decision update: 2026-08-08. `RH-012` completed through merged PR #320
+(`2d80593`): the kernel checked all twenty-three zero-set slice declarations on
+the exact merged head, with complete inverse ledger coverage and both axiom
+audits green. Per its exit criteria this **advances the `S1-GLOBAL-ZEROS`
+bookkeeping and does NOT close it** — that row lists six exit items, of which
+the slice supplies a route-neutral form of one (finite divisor sums over an
+arbitrary compact), leaves four untouched, and cannot reach the remaining two
+(`|ρ| ≤ T` for Li, `|Im ρ| < T` for Weil) because supplying either would be a
+route selection. All three `RH-002` dispositions remain `PARK`/CONFIRMED and no
+route is selected. Separately the same day, eleven domain-neutral analysis
+pillars were promoted to `ResearchOS/Analysis/` through merged PRs #318 and
+#319 (thirty-five declarations under the `MB-`, `HK-`, `PL-`, `TC-` and `GO-`
+prefixes); those are inventory only, took no queue slot, and moved no barrier
+row. By this dated decision the single ACTIVE slot moves to `RH-013`, a
+measurement-only re-verification of the `S1-GLOBAL-ZEROS` cost against a
+directory the original assessment did not examine. Do not
 begin a route proof attempt, large computation, new equivalence formalization,
 or autonomous hypothesis sweep.
 
@@ -810,8 +827,8 @@ Exit criteria:
 
 ID: `RH-012`
 
-Status: **ACTIVE 2026-08-07 — drafting plus kernel promotion as its own
-change; the kernel via CI is the sole judge**
+Status: **COMPLETE 2026-08-08 — kernel-checked through merged PR #320
+(`2d80593`); advances `S1-GLOBAL-ZEROS` bookkeeping without closing it**
 
 Kind: theorem
 
@@ -833,6 +850,55 @@ Exit criteria:
   contract review;
 - on green merge this advances `S1-GLOBAL-ZEROS` bookkeeping without closing
   it, and no claim about the truth of RH changes.
+
+## RH-013: re-verify the `S1-GLOBAL-ZEROS` cost against the unexamined value-distribution directory
+
+ID: `RH-013`
+
+Status: **ACTIVE 2026-08-08 — measurement only; no Lean, no promotion, no
+route**
+
+Kind: reconnaissance
+
+Activation basis (2026-08-08): `RH-012` completed through merged PR #320, and
+the single ACTIVE slot must move (`scripts/gen_status.py:69` and
+`scripts/check_status_consistency.py:609` enforce exactly one ACTIVE RH
+contract). A pool reconnaissance the same day established that the
+`S1-GLOBAL-ZEROS` assessment was made **without examining**
+`Mathlib/Analysis/Complex/ValueDistribution/`, which at the pin carries
+`characteristic` (CharacteristicFunction.lean:53), `logCounting`
+(LogCounting/Basic.lean:96, :272) with monotonicity and bound lemmas,
+`logCounting_isBigO_one_iff_analyticOnNhd` (Asymptotic.lean:108), and a First
+Main Theorem (FirstMainTheorem.lean:97). `logCounting` is a counting function
+and `S1-GLOBAL-ZEROS` is the barrier asking for counting, so the row's cost
+estimate is currently **unverified**, not wrong. The slice promotion made that
+row load-bearing, which is why the check is now worth a slot.
+
+This task is deliberately the cheapest possible successor: it reads the pinned
+tree and writes a dated addendum. It costs no Lean days, promotes nothing, and
+cannot select a route.
+
+Exit criteria:
+
+- every declaration under `Mathlib/Analysis/Complex/ValueDistribution/` is read
+  at the pin and its statement recorded with a locator;
+- a dated capability-map addendum states either that the `S1-GLOBAL-ZEROS`
+  row's cost stands as written, or that it does not, with the evidence either
+  way — a null result is a complete and acceptable outcome;
+- if the directory turns out to bear on the row, the addendum records that as a
+  measurement, and any change to the row's status remains a separate change
+  with its own independent review;
+- nothing in this task closes a barrier, selects a route, or asserts anything
+  about the truth of the Riemann Hypothesis.
+
+Owner note: this slot is a proposal, not a commitment. The competing candidate
+was extending `domains/riemann-hypothesis/PROBE_BATTERY_DESIGN.md` to the five
+promoted `ResearchOS/Analysis/` shelf modules, which that document currently
+does not reference at all — so the eleven generic pillars are unreachable by
+any probe and building more does not advance the automated-checking goal. That
+item is higher leverage and also costs no Lean days, but it is tooling rather
+than an RH barrier claim, and generic-shelf work has consistently taken no
+queue slot. Swapping the two is a one-line edit here.
 
 ## RH-005: bounded computation policy
 

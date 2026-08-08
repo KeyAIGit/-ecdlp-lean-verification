@@ -654,3 +654,52 @@ no growth bound of any kind; `S1-GLOBAL-ZEROS` remains OPEN with no
 enumeration, no counting function, and no infinitude claim; no route is
 selected; and nothing in either closed barrier bears on the truth of the
 Riemann Hypothesis.
+
+## Addendum 2026-08-08: `S1-GLOBAL-ZEROS` ADVANCED, not closed
+
+The zero-set slice package (`RH-012`, promoted in PR #320) is kernel-checked on
+`main`: 23 declarations, ledgered as `RH-SLICE-*`, registry-covered and
+axiom-audited at base `standard`.
+
+Read against this table's `S1-GLOBAL-ZEROS` row (line 387), whose exit evidence
+is listed as "finite divisor sums, weighted summability, star convergence of
+`Σ 1/ρ`, existence of source-matched limits with multiplicity, including
+`|ρ| ≤ T` for Li and `|Im ρ| < T` for Weil, plus absolute convergence of the
+Weil scalar-product combination":
+
+- The package supplies a **route-neutral form of the first listed item only**.
+  It proves the divisor support meets every compact in a finite set, that the
+  `finsum` over a compact is an honest finite `Finset` sum, and that this sum is
+  nonnegative, reads as a natural number, is monotone in the compact, and is
+  invariant under the three symmetries. That is "finite divisor sums" over an
+  ARBITRARY compact.
+- **Every other listed item is untouched**: no weighted summability, no star
+  convergence of `Σ 1/ρ`, no source-matched limits, no absolute convergence of
+  the Weil combination.
+- Two of the listed items — the truncations `|ρ| ≤ T` for Li and `|Im ρ| < T`
+  for Weil — are **route-specific by construction**. Supplying either would mean
+  choosing a truncation shape, which is a route selection. `RH-002`'s three
+  `PARK` dispositions are CONFIRMED and no route is selected, so these items are
+  not merely unfinished: they are deliberately out of reach until a route is
+  chosen by the owner. The slice's use of an arbitrary compact instead of a
+  truncation family is exactly what keeps it route-neutral.
+
+The row therefore **stays OPEN** and its wording is unchanged. Whether the
+route-neutral compact form discharges the row's intent for either route cannot
+be settled without selecting that route, so no stronger word than "advances"
+is used, and no partial-closure is claimed.
+
+Nothing here bears on the truth of the Riemann Hypothesis. No zero is located
+or counted; nothing asserts the zero set is infinite or nonempty.
+
+### Measurement caveat recorded the same day
+
+The `S1-GLOBAL-ZEROS` reconnaissance was carried out without examining
+`Mathlib/Analysis/Complex/ValueDistribution/`, which at the pin contains
+`characteristic` (CharacteristicFunction.lean:53), `logCounting`
+(LogCounting/Basic.lean:96, :272) with monotonicity and bound lemmas, and a
+First Main Theorem (FirstMainTheorem.lean:97). `logCounting` is a counting
+function. **No claim is made that this changes the row.** What is recorded is
+that the row's cost assessment was made without reading a directory that
+contains counting machinery, and should be treated as unverified until someone
+does. See `UPSTREAM_POOL_V2.md` §3.
