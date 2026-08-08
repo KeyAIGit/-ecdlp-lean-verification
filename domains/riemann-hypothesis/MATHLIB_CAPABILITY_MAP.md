@@ -703,3 +703,77 @@ function. **No claim is made that this changes the row.** What is recorded is
 that the row's cost assessment was made without reading a directory that
 contains counting machinery, and should be treated as unverified until someone
 does. See `UPSTREAM_POOL_V2.md` §3.
+
+## Addendum 2026-08-08 (second): `S1-GLOBAL-ZEROS` cost re-verified — the row stands
+
+`RH-014` measured the `S1-GLOBAL-ZEROS` row against
+`Mathlib/Analysis/Complex/ValueDistribution/`, the directory the original
+reconnaissance did not examine. **Result: the row's cost stands as written. No
+row is edited by this addendum.**
+
+### What is in the directory
+
+Six files, 1523 lines, **107 top-level declarations**, all read at the pin
+`fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`: the Nevanlinna characteristic
+(CharacteristicFunction.lean:53), proximity, `logCounting`
+(LogCounting/Basic.lean:96 as an additive hom on divisors, :272 for a function
+at a value), the asymptotic characterization
+(LogCounting/Asymptotic.lean:108), Cartan's identity, and a First Main Theorem
+(FirstMainTheorem.lean:97, :109). This is real machinery and it is more than the
+original reconnaissance knew about.
+
+### The decisive fact
+
+**All 107 declarations quantify over an arbitrary function or an arbitrary
+divisor. Not one names ζ or ξ.** A case-insensitive grep for
+`zeta|riemann|dirichlet` across all six files returns two hits, both import
+lines; `\bxi\b` returns zero. Verified independently three times: by the
+orchestrator before the review, by the inventory agent, and by the adversarial
+enforcer.
+
+Two consequences follow, and they are the whole measurement.
+
+1. **The directory cannot discharge any listed exit item.** Every one of the six
+   items is about ζ or ξ. A theorem about an arbitrary meromorphic function does
+   not become a theorem about ξ until someone instantiates it, and that
+   instantiation is new work — for the truncation items it is itself a
+   truncation-shape commitment, which is a route selection.
+2. **`logCounting` is a `def`, not a theorem.** A definition supplies no
+   quantitative bound. This is the same point the 2026-08-08 `GO-*` promotion
+   records make about `Complex.growthOrder`, and it applies here unchanged.
+
+### Item by item
+
+| # | exit item | does the directory bear on it? |
+|---|---|---|
+| 1 | finite divisor sums | no |
+| 2 | weighted summability | no |
+| 3 | star convergence of `Σ 1/ρ` | no |
+| 4 | source-matched limits with multiplicity, `\|ρ\| ≤ T` (Li) | no |
+| 5 | source-matched limits with multiplicity, `\|Im ρ\| < T` (Weil) | no |
+| 6 | absolute convergence of the Weil combination | no |
+
+A correction applied during review, recorded because it is the exact drift this
+task was written to prevent. The matching agent initially marked items 1 and 4
+as bearing "only for arbitrary functions". The adversarial enforcer rejected
+both: under this repository's own `analysis-generic` rule, a statement
+quantified over an arbitrary function bears **nothing** on a ζ/ξ-specific exit
+item, and any label other than "no" reads as partial bearing to a skimming
+maintainer. The enforcer also struck the phrase "this is the item where the
+directory looks closest" as proximity-to-exit language, noting that labelling it
+a trap does not remove the word from a skim. Both corrections are applied above.
+The agent's prose had said the right thing; its labels had not.
+
+### What this does and does not mean
+
+`S1-GLOBAL-ZEROS` remains **OPEN**, unchanged, with its cost as written. Items 4
+and 5 remain out of reach by design regardless of any library content, since
+supplying either truncation is a route selection and all three `RH-002`
+dispositions are `PARK`/CONFIRMED.
+
+The honest positive: this machinery would lower the cost of a future exit, and
+there is a real adjacency — `logCounting` is built from `divisor f univ`, and
+the merged zero-set slice already supplies ξ's divisor. **That adjacency is
+future work, not a discharged item**, and naming it here is inventory
+bookkeeping, not progress. Nothing in this addendum is evidence for or against
+the Riemann Hypothesis.
