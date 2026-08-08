@@ -851,54 +851,82 @@ Exit criteria:
 - on green merge this advances `S1-GLOBAL-ZEROS` bookkeeping without closing
   it, and no claim about the truth of RH changes.
 
-## RH-013: re-verify the `S1-GLOBAL-ZEROS` cost against the unexamined value-distribution directory
+## RH-013: extend the probe battery design to the whole built surface
 
 ID: `RH-013`
 
-Status: **ACTIVE 2026-08-08 — measurement only; no Lean, no promotion, no
-route**
+Status: **ACTIVE 2026-08-08 — design only; no Lean, no promotion, no route, and
+nothing authorized to run**
 
-Kind: reconnaissance
+Kind: tooling
 
-Activation basis (2026-08-08): `RH-012` completed through merged PR #320, and
-the single ACTIVE slot must move (`scripts/gen_status.py:69` and
-`scripts/check_status_consistency.py:609` enforce exactly one ACTIVE RH
-contract). A pool reconnaissance the same day established that the
-`S1-GLOBAL-ZEROS` assessment was made **without examining**
-`Mathlib/Analysis/Complex/ValueDistribution/`, which at the pin carries
-`characteristic` (CharacteristicFunction.lean:53), `logCounting`
-(LogCounting/Basic.lean:96, :272) with monotonicity and bound lemmas,
-`logCounting_isBigO_one_iff_analyticOnNhd` (Asymptotic.lean:108), and a First
-Main Theorem (FirstMainTheorem.lean:97). `logCounting` is a counting function
-and `S1-GLOBAL-ZEROS` is the barrier asking for counting, so the row's cost
-estimate is currently **unverified**, not wrong. The slice promotion made that
-row load-bearing, which is why the check is now worth a slot.
+Activation basis (2026-08-08, owner decision): `RH-012` completed through
+merged PR #320 and the single ACTIVE slot had to move
+(`scripts/gen_status.py:69`, `scripts/check_status_consistency.py:609` enforce
+exactly one ACTIVE RH contract). Two candidates were put to the owner; the
+owner selected this one. The competing candidate — re-verifying the
+`S1-GLOBAL-ZEROS` cost against `Mathlib/Analysis/Complex/ValueDistribution/`,
+which the original assessment did not examine — is NOT abandoned. It is
+recorded under "Deferred" below and in the 2026-08-08 capability-map addendum,
+and it remains available for a later slot.
 
-This task is deliberately the cheapest possible successor: it reads the pinned
-tree and writes a dated addendum. It costs no Lean days, promotes nothing, and
-cannot select a route.
+The defect being fixed. `domains/riemann-hypothesis/PROBE_BATTERY_DESIGN.md`
+(dated 2026-08-07) declares at its lines 17-26 that the built kernel-checked
+surface — "**the only surface any probe may reference**" — is exactly three
+modules: `TargetBridge.lean` (P1-P5), `Xi.lean` (X1-X11), `Conj.lean` (Z1-Z9).
+It further states that the M1-M17 multiplicity surface is "accepted only", that
+its promotion holds the queue's ACTIVE slot, and that consequently "no probe
+references any M declaration".
+
+Every one of those statements is now false:
+
+- `Mult.lean` (34 declarations, `RH-MULT-*`) was promoted and merged in PR #313;
+- `ZeroSetSlice.lean` (23 declarations, `RH-SLICE-*`) in PR #320;
+- five domain-neutral modules on `ResearchOS/Analysis/` — `MellinBound`,
+  `PolyLiouville`, `HarnackDisc`, `ThreeCircles`, `GrowthOrder` (35
+  declarations under `MB-`, `PL-`, `HK-`, `TC-`, `GO-`) — in PRs #318 and #319.
+
+Because the stale sentence is a governance CONSTRAINT and not merely a
+description, the staleness does not just omit material: it forbids probes that
+are now entirely legitimate. Roughly 92 built declarations across 7 modules are
+currently unreachable by any probe on the strength of a sentence that time has
+falsified.
+
+This matters beyond bookkeeping. The stated purpose of the pillar programme is
+a large body of small, cheaply-repeatable machine checks that run WITHOUT
+building a new pillar each time. Under the current design document, none of the
+eleven pillars promoted on 2026-08-08 can be probed at all, so building further
+pillars does not advance that purpose until this is corrected.
 
 Exit criteria:
 
-- every declaration under `Mathlib/Analysis/Complex/ValueDistribution/` is read
-  at the pin and its statement recorded with a locator;
-- a dated capability-map addendum states either that the `S1-GLOBAL-ZEROS`
-  row's cost stands as written, or that it does not, with the evidence either
-  way — a null result is a complete and acceptable outcome;
-- if the directory turns out to bear on the row, the addendum records that as a
-  measurement, and any change to the row's status remains a separate change
-  with its own independent review;
-- nothing in this task closes a barrier, selects a route, or asserts anything
-  about the truth of the Riemann Hypothesis.
+- the scope statement is rewritten against the ledger `VERIFIED_RESEARCHOS.md`
+  rather than against memory, and states how it is to be kept current;
+- every newly built surface is covered by probe CANDIDATES in the document's
+  existing four classes (A regression, B cross-module composition, C type-level
+  expressibility, D negative boundary) — no new class is invented;
+- every candidate cites only built, merged declarations, each with a `file:line`
+  opened and quoted; a drafts-lane citation fails the task;
+- no candidate selects a route: any probe requiring a cutoff shape, contour,
+  truncation family (`|ρ| ≤ T`, `|Im ρ| < T`) or test-function class is
+  forbidden, and `RH-002`'s three `PARK` dispositions stay CONFIRMED;
+- no candidate lets a green result read as evidence about the Riemann
+  Hypothesis, and no Class D red result is presented as a discovery;
+- in particular, a domain-neutral shelf lemma instantiated at `riemannXi` is an
+  RH-lane claim in disguise and is not a shelf probe;
+- the document's status is unchanged: **DESIGN ONLY, UNAUTHORIZED TO RUN**. This
+  task freezes no batch, opens no batch, and runs nothing. The maintainer
+  decisions MD-1..MD-6 remain outstanding and are not pre-empted;
+- on completion this closes no barrier, changes no barrier row, and adds no
+  ledger row.
 
-Owner note: this slot is a proposal, not a commitment. The competing candidate
-was extending `domains/riemann-hypothesis/PROBE_BATTERY_DESIGN.md` to the five
-promoted `ResearchOS/Analysis/` shelf modules, which that document currently
-does not reference at all — so the eleven generic pillars are unreachable by
-any probe and building more does not advance the automated-checking goal. That
-item is higher leverage and also costs no Lean days, but it is tooling rather
-than an RH barrier claim, and generic-shelf work has consistently taken no
-queue slot. Swapping the two is a one-line edit here.
+Deferred, and deliberately not lost: the `S1-GLOBAL-ZEROS` re-verification
+against `Mathlib/Analysis/Complex/ValueDistribution/` (`characteristic`,
+CharacteristicFunction.lean:53; `logCounting`, LogCounting/Basic.lean:96,:272;
+First Main Theorem, FirstMainTheorem.lean:97). `logCounting` is a counting
+function and that barrier asks for counting, so the row's cost estimate is
+unverified. Any later slot may take it up; until then the caveat stands as
+recorded.
 
 ## RH-005: bounded computation policy
 
