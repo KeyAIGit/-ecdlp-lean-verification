@@ -1,57 +1,61 @@
 /-
-DRAFTS-LANE DRAFT — RH zero-set / compact divisor-sum slice
-(S1-GLOBAL-ZEROS neutral slice), N2-D1–N2-D9 and N1.1–N1.9.
+Built zero-set slice package (RH-012): promotion of the independently accepted
+23-signature statement surface of
+`domains/riemann-hypothesis/ZERO_SET_SLICE_CONTRACT.md` (acceptance record:
+`notes/reviews/RH011_ZERO_SLICE_ACCEPTANCE_2026_08_07.md`; promotion record:
+`notes/reviews/RH_SLICE_PROMOTION_2026_08_08.md`).
 
-This file is the non-built Lean draft of
-`domains/riemann-hypothesis/ZERO_SET_SLICE_CONTRACT.md` (DRAFT v1, 2026-08-07,
-statement surface ACCEPTED at stage one under RH-011; the consolidation
-adversarial review's findings R1-R6 are already folded in, and the proofs
-below follow the POST-fix skeletons). Statement surface: exactly 23 public
-signatures — Block A (N2-D1..D6), Block B (N2-D7 twice, N1.1 = N2-D8 stated
-ONCE per contract Decision 2, N2-D9), Block C (N1.2-N1.5), Block D
-(N1.6-N1.8, two forms each), Block E (N1.9, three set identities) — each
-character-identical to the contract's §2 `lean` statement blocks. It is NOT
-part of any lake target, is outside the no-sorry gate's scan surface, and the
-Lean kernel has NOT checked it: no CI workflow elaborates this path, so no
-kernel verdict of any kind is claimed here. The kernel's verdict, if ever, is
-delivered by a separate stage-two promotion PR (the two-stage gate of
-`MULTIPLICITY_CONTRACT.md` §Two-stage gate, applied verbatim per this
-contract's queue-position note); any statement change stops promotion and
-returns the changed statement to contract review.
+Twenty-three declarations in three blocks. Block D (D1-D9) is the topology of
+the ξ zero set: its complement is codiscrete, the set is closed and discrete,
+it meets every compact in a finite set, it is countable, and its points escape
+every compact in the filter sense; then the same discreteness, closedness,
+compact-finiteness and countability for the SUPPORT of the ξ divisor on an
+arbitrary region `U`. Block N (N1.2-N1.8) is the divisor sum over a compact:
+that the `finsum` is an honest finite sum, that it is nonnegative and reads as
+a natural number, that it is monotone in the compact, and that it is invariant
+under the three symmetries `s ↦ 1 - s`, `s ↦ conj s` and `s ↦ 1 - conj s`,
+each in a substitution form and an image form. Block E (N1.9) is three generic
+set identities saying a window symmetric under one of those maps is its own
+image.
 
-Contents: 23 theorems. Zero `def`s (death condition 4: the ξ zero set is the
-inline `riemannXi ⁻¹' {0}`, M13's spelling; the compact sum is the `∑ᶠ`
-spelling), zero instances, zero axioms, zero `sorry`. NO cutoff shape appears
-in any signature (death condition 2; the neutrality rule): every compact is
-an arbitrary `K : Set ℂ`, every carrier the arbitrary `U : Set ℂ` of the
-M-package. Nothing here states a zero enumeration, an ordering of zeros, a
-counting function, a growth/density bound, a summability or convergence
-fact, or anything about the truth of RH (death conditions 1 and 7; closing
-this surface does NOT close `S1-GLOBAL-ZEROS`).
+WHAT THIS DOES NOT DO, stated before anything else, because this is the RH-lane
+package where a reader is most likely to over-read. No zero is located. No zero
+is counted: there is no counting function, no `N(T)`, no zero-density estimate,
+and no statement that the zero set is infinite or even nonempty — every
+statement here is compatible with ξ having no zeros at all, and none of them
+rules that out. No zero-free region is established, and nothing is said about
+the critical line. The divisor sums are over an ARBITRARY compact `K` and an
+ARBITRARY region `U`; no cutoff shape, contour, or window family is chosen, so
+no proof route is selected or nudged toward. The three symmetry statements
+transport a sum that has already been assumed to be over a symmetric window;
+they do not establish any symmetry of the zeros themselves beyond what the
+merged multiplicity and conjugation packages already proved.
 
-Package prerequisites: the built modules
-`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean` (merged PR #304)
-and `.../Mult.lean` (M9-M15; RH-010 promotion merged PR #313, `2a20629`),
-both kernel-checked on `main`. N-SEQ is DISCHARGED (2026-08-07): the `[MULT]`
-statements below consume M-package theorems by IMPORT of the built Mult
-module only — nothing re-derives M-package content inline (death
-condition 5). Every consumed signature was re-verified character-identical
-against the built `Mult.lean` during drafting (M10 RHS
-`((analyticOrderAt riemannXi z).map (↑)).untop₀`; M13 forward orientation;
-M14/M15 `hU` / `hU₁`,`hU₂` shapes and order).
+Barrier effect: on a green merge this ADVANCES the `S1-GLOBAL-ZEROS`
+bookkeeping and does NOT close it, exactly as `RH-012`'s exit criteria state.
+Global zero counting is what that barrier asks for, and a compact-by-compact
+finiteness statement is not global counting. The capability map is not edited
+by this promotion change; any dated addendum recording the advance is a
+separate change with its own review.
 
-N2-f spelling decision (recorded here for the promotion PR, per contract
-§Open items): the package-wide support spelling is the coercion form
-`Function.support (MeromorphicOn.divisor riemannXi U)` — the spelling the
-built M13 fixes on its left-hand side. At the pin
-`Function.locallyFinsuppWithin.support` is a reducible `abbrev` for exactly
-this term (LocallyFinsupp.lean:138), so the carrier lemmas' `D.support`
-conclusions and the statements below elaborate to the same term.
+Prerequisites, all kernel-checked on `main`: the target bridge (PR #299), the
+xi package (PR #304), the conjugation package (PR #307), and the
+multiplicity/divisor package (PR #313), whose M9-M15 statements Block N
+consumes directly. This module imports the xi and multiplicity modules.
 
-Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0), verified
-this session via `git -C /workspace/leanprover-community/mathlib4 rev-parse
-HEAD`. Every `file:line` locator below is from that tree; each was
-grep-verified again during drafting.
+Kernel verdict: delivered by CI on this promotion change, never by this header.
+`lake build` compiles the module, the no-incomplete-proof gate scans it, the
+regenerated `ResearchOS/LedgerAxiomAudit.lean` + `check_axioms.py` enforce the
+per-row `standard` axiom base, and `gen_researchos_registry.py --check`
+enforces inverse coverage. If any gate is red, no row is counted, and `RH-012`
+is not complete — its exit criteria require the full battery to pass on the
+exact merged head.
+
+All twenty-three public declarations are ledgered as `RH-SLICE-*` rows in
+`VERIFIED_RESEARCHOS.md` and audited through the generated
+`ResearchOS/LedgerAxiomAudit.lean` with axiom base `standard`.
+
+Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 -/
 import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Xi    -- riemannXi, differentiable_riemannXi, riemannXi_zero
 import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Mult  -- M9–M15 (PACKAGE PREREQUISITE; kernel-checked on main, merged PR #313)
