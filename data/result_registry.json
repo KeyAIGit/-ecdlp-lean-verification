@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 314,
-  "ledger_reference_count": 737,
-  "ledger_named_declarations": 712,
+  "ledger_rows": 315,
+  "ledger_reference_count": 751,
+  "ledger_named_declarations": 726,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1089,
-  "distinct_qualified_names": 1089,
-  "verified_md_citations": 712,
+  "declaration_count": 1107,
+  "distinct_qualified_names": 1107,
+  "verified_md_citations": 726,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -611,16 +611,30 @@
     "Ecdlp.P256.Primality.p256_n_prime",
     "Ecdlp.P256.Primality.p256_p_prime",
     "Ecdlp.P256.instFiniteP256Point",
+    "Ecdlp.P256.p256_b_sq_sub_four_ne_zero",
+    "Ecdlp.P256.p256_cubic_no_root",
+    "Ecdlp.P256.p256_curve_of_nonsingular",
     "Ecdlp.P256.p256_embedding_degree_gt_100",
+    "Ecdlp.P256.p256_four_ne_zero",
     "Ecdlp.P256.p256_generator_addOrderOf",
     "Ecdlp.P256.p256_generator_nonsingular",
     "Ecdlp.P256.p256_generator_nsmul_n_eq_zero",
     "Ecdlp.P256.p256_grp_card",
     "Ecdlp.P256.p256_n_dvd_card_point",
+    "Ecdlp.P256.p256_no_nonzero_two_torsion",
+    "Ecdlp.P256.p256_three_dvd_p_sub_one",
     "Ecdlp.P256.p256_trace_ordinary_nonanomalous",
     "Ecdlp.P256.p256_twist_maxprime_prime",
     "Ecdlp.P256.p256_twist_order_factorization",
     "Ecdlp.P256.p256_twist_security_profile",
+    "Ecdlp.P256.p256_two_ne_zero",
+    "Ecdlp.P256.p256_two_nsmul_eq_zero_iff",
+    "Ecdlp.P256.resolventC2_not_cube",
+    "Ecdlp.P256.resolventC_add_C2",
+    "Ecdlp.P256.resolventC_mul_C2",
+    "Ecdlp.P256.resolventC_not_cube",
+    "Ecdlp.P256.resolventC_quadratic",
+    "Ecdlp.P256.resolventS_sq",
     "Ecdlp.PohligHellman.component",
     "Ecdlp.PohligHellman.projection",
     "Ecdlp.PohligHellman.reconstruct",
@@ -10474,6 +10488,130 @@
           "line": 134
         }
       ]
+    },
+    {
+      "id": "ledger-314",
+      "claim": "NIST P-256 has no nonzero 2-torsion point (`E[2] = {O}`) (the one step of the secp256k1 exact-cardinality certificate that does not transport. There `a₄ = 0` collapses the 2-division locus to the binomial `x³ = −7`, so a single non-cube witness kills it; P-256 has `a₄ = −3` and the locus is the general cubic `x³ − 3x + b`. The replacement is a Cardano/resolvent argument run entirely inside `𝔽_p` — no quadratic extension, no Hasse bound, no Schoof, no point counting. The substitution `X = u + u⁻¹` is legitimate exactly because `a₄ = −3`: the `3u + 3u⁻¹` from the cube cancels `−3(u + u⁻¹)` identically, giving the resolvent `u³·f(u+u⁻¹) = u⁶ + bu³ + 1`, so `u³` is a root of `T² + bT + 1` with explicit roots `c`, `c₂`. What would otherwise force `𝔽_{p²}` — producing `u`, which needs `√(r²−4)` — is avoided because `b² − 4` is a quadratic residue (witness `s`) and `b² − 4 = (r²−4)(r²−1)²` holds modulo the cubic, so `σ := s/(r²−1)` is already in the prime field. Closing move is secp256k1's: `const^((p−1)/3) = (u³)^((p−1)/3) = u^(p−1) = 1` by Fermat, against a machine-checked non-cube witness. Certificate hygiene: eight `native_decide` leaves — four literal resolvent certificates plus `b²−4 ≠ 0`, `2 ≠ 0`, `4 ≠ 0`, `3 ∣ p−1` — the same size class as the secp256k1 keystone, and each is disclosed by name in the generated ledger audit. The fifth needed fact `c₂^((p−1)/3) ≠ 1` is derived from `c·c₂ = 1` rather than spending a second 256-bit exponentiation, and `c + c₂ = −b` is derived, not asserted. Every `linear_combination` cofactor was independently re-derived by polynomial division (residual 0). Honest scope: this proves `E[2] = {O}`, not `#E = n`. The interval collapse it feeds — `n ∣ #E` together with `#E ≤ 2p+1 < 3n`, then Cauchy to exclude `2n` — still needs the `#E ≤ 2p+1` fibre bound for P-256, which is not in this module. Until that lands, the conditional caveats in `P256TraceOfFrobenius.lean` and `P256TwistSecurity.lean` are unchanged)",
+      "theorem_cell": "`Ecdlp.P256.resolventS_sq`, `Ecdlp.P256.resolventC_quadratic`, `Ecdlp.P256.resolventC_mul_C2`, `Ecdlp.P256.resolventC_not_cube`, `Ecdlp.P256.resolventC2_not_cube`, `Ecdlp.P256.resolventC_add_C2`, `Ecdlp.P256.p256_b_sq_sub_four_ne_zero`, `Ecdlp.P256.p256_two_ne_zero`, `Ecdlp.P256.p256_four_ne_zero`, `Ecdlp.P256.p256_three_dvd_p_sub_one`, `Ecdlp.P256.p256_cubic_no_root`, `Ecdlp.P256.p256_curve_of_nonsingular`, `Ecdlp.P256.p256_two_nsmul_eq_zero_iff`, `Ecdlp.P256.p256_no_nonzero_two_torsion`",
+      "declared_files": [
+        "Ecdlp/Proved/P256NoTwoTorsion.lean"
+      ],
+      "method": "Mathlib + `native_decide` for eight literal leaves",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.P256.resolventS_sq",
+          "canonical_name": "Ecdlp.P256.resolventS_sq",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 96
+        },
+        {
+          "cited": "Ecdlp.P256.resolventC_quadratic",
+          "canonical_name": "Ecdlp.P256.resolventC_quadratic",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 99
+        },
+        {
+          "cited": "Ecdlp.P256.resolventC_mul_C2",
+          "canonical_name": "Ecdlp.P256.resolventC_mul_C2",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 103
+        },
+        {
+          "cited": "Ecdlp.P256.resolventC_not_cube",
+          "canonical_name": "Ecdlp.P256.resolventC_not_cube",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 108
+        },
+        {
+          "cited": "Ecdlp.P256.resolventC2_not_cube",
+          "canonical_name": "Ecdlp.P256.resolventC2_not_cube",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 126
+        },
+        {
+          "cited": "Ecdlp.P256.resolventC_add_C2",
+          "canonical_name": "Ecdlp.P256.resolventC_add_C2",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 138
+        },
+        {
+          "cited": "Ecdlp.P256.p256_b_sq_sub_four_ne_zero",
+          "canonical_name": "Ecdlp.P256.p256_b_sq_sub_four_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 112
+        },
+        {
+          "cited": "Ecdlp.P256.p256_two_ne_zero",
+          "canonical_name": "Ecdlp.P256.p256_two_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 115
+        },
+        {
+          "cited": "Ecdlp.P256.p256_four_ne_zero",
+          "canonical_name": "Ecdlp.P256.p256_four_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 118
+        },
+        {
+          "cited": "Ecdlp.P256.p256_three_dvd_p_sub_one",
+          "canonical_name": "Ecdlp.P256.p256_three_dvd_p_sub_one",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 121
+        },
+        {
+          "cited": "Ecdlp.P256.p256_cubic_no_root",
+          "canonical_name": "Ecdlp.P256.p256_cubic_no_root",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 167
+        },
+        {
+          "cited": "Ecdlp.P256.p256_curve_of_nonsingular",
+          "canonical_name": "Ecdlp.P256.p256_curve_of_nonsingular",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 236
+        },
+        {
+          "cited": "Ecdlp.P256.p256_two_nsmul_eq_zero_iff",
+          "canonical_name": "Ecdlp.P256.p256_two_nsmul_eq_zero_iff",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 246
+        },
+        {
+          "cited": "Ecdlp.P256.p256_no_nonzero_two_torsion",
+          "canonical_name": "Ecdlp.P256.p256_no_nonzero_two_torsion",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+          "line": 269
+        }
+      ]
     }
   ],
   "declarations": {
@@ -15909,12 +16047,40 @@
       "file": "Ecdlp/Proved/P256Cardinality.lean",
       "line": 36
     },
+    "Ecdlp.P256.p256_b_sq_sub_four_ne_zero": {
+      "name": "p256_b_sq_sub_four_ne_zero",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 112
+    },
+    "Ecdlp.P256.p256_cubic_no_root": {
+      "name": "p256_cubic_no_root",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 167
+    },
+    "Ecdlp.P256.p256_curve_of_nonsingular": {
+      "name": "p256_curve_of_nonsingular",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 236
+    },
     "Ecdlp.P256.p256_embedding_degree_gt_100": {
       "name": "p256_embedding_degree_gt_100",
       "namespace": "Ecdlp.P256",
       "kind": "theorem",
       "file": "Ecdlp/Proved/P256EmbeddingDegree.lean",
       "line": 27
+    },
+    "Ecdlp.P256.p256_four_ne_zero": {
+      "name": "p256_four_ne_zero",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 118
     },
     "Ecdlp.P256.p256_generator_addOrderOf": {
       "name": "p256_generator_addOrderOf",
@@ -15958,6 +16124,20 @@
       "file": "Ecdlp/Proved/P256Cardinality.lean",
       "line": 47
     },
+    "Ecdlp.P256.p256_no_nonzero_two_torsion": {
+      "name": "p256_no_nonzero_two_torsion",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 269
+    },
+    "Ecdlp.P256.p256_three_dvd_p_sub_one": {
+      "name": "p256_three_dvd_p_sub_one",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 121
+    },
     "Ecdlp.P256.p256_trace_ordinary_nonanomalous": {
       "name": "p256_trace_ordinary_nonanomalous",
       "namespace": "Ecdlp.P256",
@@ -15985,6 +16165,90 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/P256TwistSecurity.lean",
       "line": 245
+    },
+    "Ecdlp.P256.p256_two_ne_zero": {
+      "name": "p256_two_ne_zero",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 115
+    },
+    "Ecdlp.P256.p256_two_nsmul_eq_zero_iff": {
+      "name": "p256_two_nsmul_eq_zero_iff",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 246
+    },
+    "Ecdlp.P256.resolventC": {
+      "name": "resolventC",
+      "namespace": "Ecdlp.P256",
+      "kind": "def",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 87
+    },
+    "Ecdlp.P256.resolventC2": {
+      "name": "resolventC2",
+      "namespace": "Ecdlp.P256",
+      "kind": "def",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 92
+    },
+    "Ecdlp.P256.resolventC2_not_cube": {
+      "name": "resolventC2_not_cube",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 126
+    },
+    "Ecdlp.P256.resolventC_add_C2": {
+      "name": "resolventC_add_C2",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 138
+    },
+    "Ecdlp.P256.resolventC_mul_C2": {
+      "name": "resolventC_mul_C2",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 103
+    },
+    "Ecdlp.P256.resolventC_not_cube": {
+      "name": "resolventC_not_cube",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 108
+    },
+    "Ecdlp.P256.resolventC_quadratic": {
+      "name": "resolventC_quadratic",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 99
+    },
+    "Ecdlp.P256.resolventS": {
+      "name": "resolventS",
+      "namespace": "Ecdlp.P256",
+      "kind": "def",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 82
+    },
+    "Ecdlp.P256.resolventS_sq": {
+      "name": "resolventS_sq",
+      "namespace": "Ecdlp.P256",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 96
+    },
+    "Ecdlp.P256.—": {
+      "name": "—",
+      "namespace": "Ecdlp.P256",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "line": 77
     },
     "Ecdlp.PohligHellman.component": {
       "name": "component",

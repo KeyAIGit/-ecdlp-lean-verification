@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 314,
-    "ledger_rows": 314,
+    "theorems": 315,
+    "ledger_rows": 315,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1204,
+    "edges": 1207,
     "by_edge_type": {
-      "imports": 535,
-      "member_of": 314,
+      "imports": 537,
+      "member_of": 315,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -205,11 +205,12 @@
       "local projective `H` identities + exact TASK-023 cover restriction + path-independent-set counts; `native_decide` only for the three cardinalities": 1,
       "exact local substitution + fixed-degree projective-resultant forward implication + balanced prefix/suffix frozen specializations + exact chart-cover restriction; `native_decide` only for the four mask cardinalities": 1,
       "Mathlib + existing Pratt certificates": 1,
-      "Mathlib (`norm_num`)": 1
+      "Mathlib (`norm_num`)": 1,
+      "Mathlib + `native_decide` for eight literal leaves": 1
     },
     "by_area": {
       "curve-torsion": 155,
-      "primality": 57,
+      "primality": 58,
       "other": 34,
       "generic-hardness": 30,
       "protocol-soundness": 23,
@@ -6522,6 +6523,26 @@
       "family_id": "family-curve-torsion",
       "dependency_depth": 1,
       "gated": true
+    },
+    {
+      "id": "thm-314",
+      "name": "Ecdlp.P256.resolventS_sq`, `Ecdlp.P256.resolventC_quadratic`, `Ecdlp.P256.resolventC_mul_C2`, `Ecdlp.P256.resolventC_not_cube`, `Ecdlp.P256.resolventC2_not_cube`, `Ecdlp.P256.resolventC_add_C2`, `Ecdlp.P256.p256_b_sq_sub_four_ne_zero`, `Ecdlp.P256.p256_two_ne_zero`, `Ecdlp.P256.p256_four_ne_zero`, `Ecdlp.P256.p256_three_dvd_p_sub_one`, `Ecdlp.P256.p256_cubic_no_root`, `Ecdlp.P256.p256_curve_of_nonsingular`, `Ecdlp.P256.p256_two_nsmul_eq_zero_iff`, `Ecdlp.P256.p256_no_nonzero_two_torsion",
+      "short_name": "resolventS_sq`,",
+      "module": "Ecdlp.Proved.P256NoTwoTorsion",
+      "modules": [
+        "Ecdlp.Proved.P256NoTwoTorsion"
+      ],
+      "file": "Ecdlp/Proved/P256NoTwoTorsion.lean",
+      "files": [
+        "Ecdlp/Proved/P256NoTwoTorsion.lean"
+      ],
+      "claim": "NIST P-256 has no nonzero 2-torsion point (`E[2] = {O}`) (the one step of the secp256k1 exact-cardinality certificate that does not transport. There `a₄ = 0` collapses the 2-division locus to the binomial `x³ = −7`, so a single non-cube witness kills it; P-256 has `a₄ = −3` and the locus is the general cubic `x³ − 3x + b`. The replacement is a Cardano/resolvent argument run entirely inside `𝔽_p` — no quadratic extension, no Hasse bound, no Schoof, no point counting. The substitution `X = u + u⁻¹` is legitimate exactly because `a₄ = −3`: the `3u + 3u⁻¹` from the cube cancels `−3(u + u⁻¹)` identically, giving the resolvent `u³·f(u+u⁻¹) = u⁶ + bu³ + 1`, so `u³` is a root of `T² + bT + 1` with explicit roots `c`, `c₂`. What would otherwise force `𝔽_{p²}` — producing `u`, which needs `√(r²−4)` — is avoided because `b² − 4` is a quadratic residue (witness `s`) and `b² − 4 = (r²−4)(r²−1)²` holds modulo the cubic, so `σ := s/(r²−1)` is already in the prime field. Closing move is secp256k1's: `const^((p−1)/3) = (u³)^((p−1)/3) = u^(p−1) = 1` by Fermat, against a machine-checked non-cube witness. Certificate hygiene: eight `native_decide` leaves — four literal resolvent certificates plus `b²−4 ≠ 0`, `2 ≠ 0`, `4 ≠ 0`, `3 ∣ p−1` — the same size class as the secp256k1 keystone, and each is disclosed by name in the generated ledger audit. The fifth needed fact `c₂^((p−1)/3) ≠ 1` is derived from `c·c₂ = 1` rather than spending a second 256-bit exponentiation, and `c + c₂ = −b` is derived, not asserted. Every `linear_combination` cofactor was independently re-derived by polynomial division (residual 0). Honest scope: this proves `E[2] = {O}`, not `#E = n`. The interval collapse it feeds — `n ∣ #E` together with `#E ≤ 2p+1 < 3n`, then Cauchy to exclude `2n` — still needs the `#E ≤ 2p+1` fibre bound for P-256, which is not in this module. Until that lands, the conditional caveats in `P256TraceOfFrobenius.lean` and `P256TwistSecurity.lean` are unchanged)",
+      "method": "Mathlib + `native_decide` for eight literal leaves",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 1,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12724,6 +12745,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.P256NoTwoTorsion",
+      "to": "Ecdlp.Proved.P256Curve",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.P256PrimeN",
       "to": "Ecdlp.Proved.P256Curve",
       "type": "imports"
@@ -13976,6 +14002,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.P256Cardinality",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.P256NoTwoTorsion",
       "type": "imports"
     },
     {
@@ -15871,6 +15902,11 @@
     {
       "from": "thm-313",
       "to": "family-curve-torsion",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-314",
+      "to": "family-primality",
       "type": "member_of"
     },
     {

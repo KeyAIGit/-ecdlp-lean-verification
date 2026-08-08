@@ -135,6 +135,11 @@ import Ecdlp.Proved.GlvDivPoly
 import Ecdlp.Proved.FrobeniusCM
 import Ecdlp.Proved.GlvOrbit
 import Ecdlp.Proved.P256Cardinality
+-- P-256 has no nonzero 2-torsion point, by a Cardano/resolvent argument run entirely
+-- inside F_p. This is the one step of the secp256k1 exact-cardinality certificate that
+-- does NOT transport: a4 = 0 there collapses the 2-division locus to a binomial, a4 = -3
+-- here leaves the general cubic.
+import Ecdlp.Proved.P256NoTwoTorsion
 import Ecdlp.Proved.ElevenTorsion
 import Ecdlp.Proved.ThirteenTorsion
 import Ecdlp.Proved.P256TwistSecurity
