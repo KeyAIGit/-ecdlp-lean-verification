@@ -1,33 +1,58 @@
 /-
-NON-BUILT DRAFT — Hadamard three-circles package (upstream pool item 3), TC1-TC11.
+Built Hadamard three-circles package: promotion of the independently accepted
+TC1-TC11 statement surface in
+`domains/riemann-hypothesis/THREE_CIRCLES_CONTRACT.md` (acceptance record:
+`notes/reviews/THREE_CIRCLES_ACCEPTANCE_2026_08_07.md`; promotion record:
+`notes/reviews/THREE_CIRCLES_PROMOTION_2026_08_08.md`).
 
-This file is the drafts-lane Lean draft of
-`domains/riemann-hypothesis/THREE_CIRCLES_CONTRACT.md` (DRAFT v1, 2026-08-07;
-adversarial review Annex A, verdict SOUND_WITH_FIXES, findings B1-B2 applied in
-place — the POST-fix skeletons are the ones followed below). It is NOT part of
-any lake target (`lakefile.toml` declares `defaultTargets = ["Ecdlp",
-"ResearchOS"]`; nothing under `domains/` is built), it is outside the CI
-proof-completeness gate's scan surface, and the Lean kernel has NOT checked
-it. No CI run on any
-acceptance PR is evidence of anything about this file (contract §Two-stage
-gate). The kernel's verdict is delivered only by a separate stage-two built
-promotion PR.
+Eleven declarations, one `def` and ten theorems, proving the Hadamard
+three-circles theorem in the form the pin actually supports. TC1 is the only
+`def`: `sSupNormCircle f r`, the supremum of `‖f‖` over the circle of radius
+`r` about the origin, modelled on the pinned `sSupNormIm`. TC2-TC4 are its
+three helper facts (nonnegativity, boundedness above on a sphere under
+continuity, and the pointwise bound `‖f w‖ ≤ sSupNormCircle f r` for `‖w‖ = r`).
+TC5-TC7 are the `exp` transport: the closed vertical strip lands in the closed
+annulus, the open strip in the open annulus, and every point of a circle of
+radius `r` is `exp w` for some `w` with `w.re = log r`. TC8-TC11 are the
+deliverable, obtained by transporting the pinned three-LINES endpoint form
+(`Complex.HadamardThreeLines`) through `exp`: the pointwise interpolation
+bound with explicit exponents, its supremum-level form (log-convexity of the
+circle maximum), the equivalent log-ratio spelling, and the annulus maximum
+principle that follows when both boundary bounds are the same constant.
 
-Statement surface: TC1-TC11, exactly 11 public signatures (1 `def` + 10
-theorems), each CHARACTER-IDENTICAL to its contract `lean` block. Complete
-proof bodies throughout: no proof placeholder of any kind and no new axiom
-(death condition 1). No repo prerequisite: every
-import below is pinned Mathlib; nothing here mentions ζ, ξ, zero counting,
-growth order, or any route obligation. This draft closes no barrier row,
-selects no route, and carries no claim about the truth of RH (contract §Claim
-boundary; RH-queue authority `tasks/RIEMANN_HYPOTHESIS.md`, sole ACTIVE task
-RH-012 — RH-011 completed 2026-08-07).
+State: this package is GENERIC complex analysis over pinned Mathlib, with zero
+repository prerequisites -- it imports no repo module. It mentions no zeta
+function, no xi, no `completedRiemannZeta₀`, no `LSeries`, no critical strip,
+and no zero of anything; every statement quantifies over an arbitrary
+`f : ℂ → E` into an arbitrary normed space. It closes NO barrier row of
+`domains/riemann-hypothesis/MATHLIB_CAPABILITY_MAP.md` and no `S1-*` item. In
+particular `S1-GROWTH` ("no zeta/xi vertical or order-one growth theorem",
+`MATHLIB_CAPABILITY_MAP.md:388`) remains OPEN and untouched: a convexity
+statement about the maximum modulus of an arbitrary `f` on an annulus is not a
+growth bound for ζ or ξ, and supplies none. The capability-map effect is
+INVENTORY ONLY -- generic machinery lowers the cost of a future exit but never
+retires a row. It proves, disproves, advances, and evidences nothing about the
+Riemann Hypothesis, in either direction, and selects no route.
 
-Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0), toolchain
-`leanprover/lean4:v4.31.0` — re-verified this session via
-`git -C /workspace/leanprover-community/mathlib4 rev-parse HEAD`. Every lemma
-named in a proof or fallback below was grep-verified against that tree this
-session (locators in the contract's §0 / pinned API table).
+Module placement: `ResearchOS/Analysis/`, deliberately NOT
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/`. The surface is
+domain-neutral, so filing it under the RH subtree would present generic
+machinery as RH-lane content; the ledger pins `riemann-hypothesis` rows to that
+subtree for exactly that reason, and these rows are `TC-*` rows of the
+domain-neutral `analysis-generic` lane instead -- the same shelf, and the same
+reasoning, as the `MB-`, `PL-` and `HK-` rows already there.
+
+Kernel verdict: delivered by CI on this promotion change, never by this header.
+`lake build` compiles the module, the no-incomplete-proof gate scans it, the
+regenerated `ResearchOS/LedgerAxiomAudit.lean` + `check_axioms.py` enforce the
+per-row `standard` axiom base, and `gen_researchos_registry.py --check`
+enforces inverse coverage. If any gate is red, no row is counted.
+
+All eleven public declarations are ledgered as `TC-*` rows in
+`VERIFIED_RESEARCHOS.md` and audited through the generated
+`ResearchOS/LedgerAxiomAudit.lean` with axiom base `standard`.
+
+Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 -/
 import Mathlib.Analysis.Complex.Hadamard                 -- three-lines, verticalStrip, sSupNormIm
 import Mathlib.Analysis.SpecialFunctions.Complex.Arg    -- norm_mul_exp_arg_mul_I

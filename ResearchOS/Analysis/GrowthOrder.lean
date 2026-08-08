@@ -1,80 +1,69 @@
 /-
-NON-BUILT DRAFT — growth-order definitional surface (`S1-GROWTH` definitional
-pillar), G0-G2 + L1-L6.
+Built growth-order definitional package: promotion of the independently
+accepted G0-G2 + L1-L6 statement surface in
+`domains/riemann-hypothesis/ENTIRE_ORDER_CONTRACT.md` (acceptance record:
+`notes/reviews/ENTIRE_ORDER_ACCEPTANCE_2026_08_07.md`; promotion record:
+`notes/reviews/ENTIRE_ORDER_PROMOTION_2026_08_08.md`).
 
-This file is the drafts-lane Lean transcription of
-`domains/riemann-hypothesis/ENTIRE_ORDER_CONTRACT.md` (DRAFT v1, 2026-08-07;
-red-team audit Annex A applied in place; stage-one INDEPENDENT ACCEPTANCE
-2026-08-07, record `notes/reviews/ENTIRE_ORDER_ACCEPTANCE_2026_08_07.md` —
-"ACCEPT WITH APPLIED EDITORIAL FIXES", zero signature changes; that record,
-per the contract's death condition 1, is what unlocks exactly this
-transcription and nothing downstream). The POST-fix statement blocks are the
-ones transcribed below. It is NOT part of any lake target (`lakefile.toml`
-declares `defaultTargets = ["Ecdlp", "ResearchOS"]`; nothing under `domains/`
-is built), it is outside the CI proof-completeness gate's scan surface, and
-the Lean kernel has NOT checked it. No CI run on any acceptance PR is
-evidence of anything about this file (contract §Two-stage gate). The kernel's
-verdict is delivered only by a separate stage-two built promotion PR.
+Nine declarations, three `def`s and six theorems. G0 `maxModulus f r` is the
+supremum of `‖f‖` over the sphere of radius `r`; G1 `growthOrder f` is the
+limsup that defines the growth order of `f`, valued in `ℝ≥0∞`; G2
+`growthType f p` is the type at exponent `p`, gated on finite positive order.
+L1-L6 are the six facts that make the definitions worth having: the order of a
+constant is `0`, the order of a polynomial is `0`, the order of `exp` is `1`,
+order is monotone under an eventual pointwise bound, the order of a product is
+at most the max of the two orders, and the type of `exp` at exponent one is `1`.
 
-Statement surface: G0-G2 + L1-L6, exactly 9 public signatures (3 `def` +
-6 theorems), each CHARACTER-IDENTICAL (docstrings included) to its contract
-`lean` block. Complete proof bodies throughout: no proof placeholder of any
-kind and no new axiom (contract death condition 2). Every junk convention is
-kept symmetric between G1 and G2 (death condition 4); L4 is proved
-unconditionally as stated (death condition 5); no statement evaluates
-`growthType` outside its documented gate (death condition 6). Nothing here
-mentions ζ, ξ, zero counting, Hadamard factorization, or any route
-obligation; `S1-GROWTH` (MATHLIB_CAPABILITY_MAP.md:388) remains OPEN — a
-definition supplies zero quantitative bounds — and this file closes no
-barrier row, selects no route, and carries no claim about the truth of RH
-(contract §Claim boundary; RH-queue authority `tasks/RIEMANN_HYPOTHESIS.md`).
+DEFINITIONS ARE A DESIGN COMMITMENT, and this one was accepted as such: G1
+fixes the junk conventions (both `def`s totalized, symmetrically between G1 and
+G2) and every downstream statement inherits them. That is why the surface took
+an independent acceptance of its own before any transcription, and why L1, L3
+and L6 exist at all -- they are the smoke tests that the chosen convention
+computes the classical values on the three cases where the answer is known in
+advance. L2 and L5 were the two HIGH-severity obligations; neither statement
+carries slack (an L5 with statement-level `+ ε` was a pre-labelled failed design
+gate, and the ε that appears inside its proof never reaches the statement).
 
-Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0), toolchain
-`leanprover/lean4:v4.31.0` — re-verified this session via
-`git -C /workspace/leanprover-community/mathlib4 rev-parse HEAD`. Every lemma
-named in a proof below was grep-verified against that tree this session
-(locators in the contract's §0 / pinned API table, plus the additional
-proof-side locators recorded inline below). No Lean toolchain exists in this
-environment; source reading only.
+State: this package is GENERIC complex analysis over pinned Mathlib, with zero
+repository prerequisites -- it imports no repo module. It mentions no zeta
+function, no xi, no `completedRiemannZeta₀`, no `LSeries`, no critical strip,
+and no zero of anything; every statement quantifies over an arbitrary
+`f : ℂ → E`. It closes NO barrier row of
+`domains/riemann-hypothesis/MATHLIB_CAPABILITY_MAP.md` and no `S1-*` item.
 
-Obligation register carried from the contract (severities unchanged):
-S1G-0 LOW, S1G-1 LOW, S1G-2 LOW, S1G-L1 LOW (Annex A F2), S1G-L2 **HIGH**,
-S1G-L3 LOW-MED, S1G-L4 MEDIUM, S1G-L5 **HIGH**, S1G-L6 LOW. The two HIGH
-obligations receive full best-effort bodies below with their routes and
-fallbacks documented inline at the declaration; neither statement is
-weakened (contract: L2 must not become `≤ ε` or `natDegree = 0`; an L5 with
-statement-level `+ ε` slack is a pre-labeled FAILED design gate — the ε used
-inside L5's proof is proof-internal only and never reaches the statement).
+`S1-GROWTH` in particular deserves an explicit sentence, because this is the
+package most likely to be misread as closing it. `S1-GROWTH`
+(`MATHLIB_CAPABILITY_MAP.md:388`) asks for a zeta/xi vertical or order-one
+growth THEOREM. What is promoted here is a DEFINITION of growth order for an
+arbitrary function, plus six facts about that definition on constants,
+polynomials and `exp`. A definition supplies zero quantitative bounds, and none
+of L1-L6 mentions ζ or ξ. `S1-GROWTH` therefore remains OPEN and untouched, and
+is neither closed, advanced, nor partially closed by this change. The
+capability-map effect is INVENTORY ONLY: having the vocabulary lowers the cost
+of a future exit, and never retires a row. This package proves, disproves,
+advances, and evidences nothing about the Riemann Hypothesis, in either
+direction, and selects no route.
 
-Registered proof-shape notes (statements untouched):
-* L1 — the contract skeleton's two constant-branches are subsumed into one
-  `Tendsto` route: `Filter.Tendsto.const_div_atTop` (Field.lean:222) needs no
-  sign hypothesis on the constant, so both branches close through the same
-  `limsup_congr` + `Tendsto.limsup_eq` pair the skeleton already cites.
-* L2 Step 1 uses `Asymptotics.IsBigO.bound` (Asymptotics/Defs.lean:157)
-  rather than `exists_pos`: the inner clamp makes positivity of the
-  polynomial constant unnecessary (it is clamped through `max C 1`).
-* L4 uses `div_le_div_of_nonneg_right` with only `0 ≤ c`, exactly as Annex
-  A.1 sharpened it.
-* L5 Step 4's "ENNReal ε-induction" is realized by
-  `ENNReal.le_of_forall_pos_le_add` (Data/ENNReal/Basic.lean:605) plus
-  constant-translation-commutes-with-limsup via
-  `Monotone.map_limsup_of_continuousAt` (Topology/Order/LiminfLimsup.lean:588,
-  autoParams free in ℝ≥0∞) with `continuous_add_const` and the pinned
-  `instance : ContinuousAdd ℝ≥0∞` (Topology/Algebra/Ring/Real.lean:118),
-  then `limsup_max` (Order/LiminfLimsup.lean:1141). The two traps the
-  contract records are avoided: `ENNReal.limsup_add_le` (needs
-  `[CountableInterFilter]`, which `atTop : Filter ℝ` is not) is never used,
-  and `ENNReal.limsup_mul_le'` is never applied to the quotients.
+Module placement: `ResearchOS/Analysis/`, deliberately NOT
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/`. The surface is
+domain-neutral, so filing it under the RH subtree would present generic
+machinery as RH-lane content -- and for a package whose name invites the
+`S1-GROWTH` misreading, the shelf placement is part of the claim boundary, not
+just bookkeeping. These rows are `GO-*` rows of the domain-neutral
+`analysis-generic` lane, the same shelf as the `MB-`, `PL-`, `HK-` and `TC-`
+rows already there.
 
-Preamble note: the import block is carried character-identical from the
-contract §2 ("name-resolution review only"). Proof-side constants
-(`comap_norm_atTop`, `IsLittleO.tendsto_div_nhds_zero`,
-`Monotone.map_limsup_of_continuousAt`, `Tendsto.const_div_atTop`,
-`NormedSpace.sphere_nonempty`, `isCompact_sphere`) are expected in the
-public-import closure of these five imports; if stage-two elaboration
-reports an unknown constant, the fix is an added import line, never a
-statement change.
+Kernel verdict: delivered by CI on this promotion change, never by this header.
+`lake build` compiles the module, the no-incomplete-proof gate scans it, the
+regenerated `ResearchOS/LedgerAxiomAudit.lean` + `check_axioms.py` enforce the
+per-row `standard` axiom base, and `gen_researchos_registry.py --check`
+enforces inverse coverage. If any gate is red, no row is counted.
+
+All nine public declarations are ledgered as `GO-*` rows in
+`VERIFIED_RESEARCHOS.md` and audited through the generated
+`ResearchOS/LedgerAxiomAudit.lean` with axiom base `standard`.
+
+Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 -/
 import Mathlib.Analysis.Complex.Trigonometric      -- Complex.norm_exp
 import Mathlib.Analysis.Polynomial.Basic           -- Polynomial.isBigO_cobounded_of_degree_le
