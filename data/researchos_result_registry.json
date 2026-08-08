@@ -1,13 +1,22 @@
 {
   "schema_version": 1,
   "source": "VERIFIED_RESEARCHOS.md + built public ResearchOS source (audit harnesses excluded by exact path)",
-  "ledger_rows": 96,
+  "ledger_rows": 116,
   "ledger_declarations": [
     "AnalyticAt.conj_conj",
     "Complex.exists_affine_of_norm_le_pow_one",
     "Complex.exists_const_forall_eq_of_norm_le",
     "Complex.exists_polynomial_of_norm_le_pow",
+    "Complex.growthOrder",
+    "Complex.growthOrder_const",
+    "Complex.growthOrder_exp",
+    "Complex.growthOrder_le_of_eventually_le",
+    "Complex.growthOrder_mul_le",
+    "Complex.growthOrder_polynomial",
+    "Complex.growthType",
+    "Complex.growthType_exp",
     "Complex.iteratedDeriv_eq_zero_of_norm_le_pow",
+    "Complex.maxModulus",
     "Complex.taylorSum_eq_of_norm_le_pow",
     "Gammaℝ_conj",
     "InnerProductSpace.HarmonicOnNhd.harnack",
@@ -40,14 +49,22 @@
     "analyticOrderAt_riemannZeta_ne_top_of_mem_strip",
     "analyticOrderAt_riemannZeta_one_sub",
     "analyticOrderAt_riemannZeta_one_sub_conj",
+    "bddAbove_image_norm_sphere",
     "completedRiemannZeta_conj",
     "completedRiemannZeta₀_conj",
     "continuousOn_poissonKernel",
     "differentiable_riemannXi",
+    "exists_exp_eq_of_norm_eq",
+    "exp_mem_annulus_of_mem_verticalClosedStrip",
+    "exp_mem_annulus_of_mem_verticalStrip",
+    "le_sSupNormCircle",
     "meromorphicOn_riemannXi",
     "meromorphicOn_riemannZeta_strip",
     "meromorphicOrderAt_riemannXi_ne_top",
     "meromorphicOrderAt_riemannZeta_ne_top_of_mem_strip",
+    "norm_le_interp_of_norm_eq",
+    "norm_le_interp_of_norm_eq'",
+    "norm_le_of_mem_annulus",
     "norm_mellin_le",
     "norm_mellin_le_add_of_re_mem_Icc",
     "norm_mellin_le_of_norm_le",
@@ -99,6 +116,9 @@
     "riemannZeta_ne_zero_of_re_le_zero",
     "riemannZeta_one_sub_eq_zero_iff",
     "riemannZeta_zero_mem_critical_strip",
+    "sSupNormCircle",
+    "sSupNormCircle_le_interp",
+    "sSupNormCircle_nonneg",
     "setIntegral_rpow_mul_mono_exponent"
   ],
   "axiom_base": {
@@ -106,7 +126,16 @@
     "Complex.exists_affine_of_norm_le_pow_one": "standard",
     "Complex.exists_const_forall_eq_of_norm_le": "standard",
     "Complex.exists_polynomial_of_norm_le_pow": "standard",
+    "Complex.growthOrder": "standard",
+    "Complex.growthOrder_const": "standard",
+    "Complex.growthOrder_exp": "standard",
+    "Complex.growthOrder_le_of_eventually_le": "standard",
+    "Complex.growthOrder_mul_le": "standard",
+    "Complex.growthOrder_polynomial": "standard",
+    "Complex.growthType": "standard",
+    "Complex.growthType_exp": "standard",
     "Complex.iteratedDeriv_eq_zero_of_norm_le_pow": "standard",
+    "Complex.maxModulus": "standard",
     "Complex.taylorSum_eq_of_norm_le_pow": "standard",
     "Gammaℝ_conj": "standard",
     "InnerProductSpace.HarmonicOnNhd.harnack": "standard",
@@ -139,14 +168,22 @@
     "analyticOrderAt_riemannZeta_ne_top_of_mem_strip": "standard",
     "analyticOrderAt_riemannZeta_one_sub": "standard",
     "analyticOrderAt_riemannZeta_one_sub_conj": "standard",
+    "bddAbove_image_norm_sphere": "standard",
     "completedRiemannZeta_conj": "standard",
     "completedRiemannZeta₀_conj": "standard",
     "continuousOn_poissonKernel": "standard",
     "differentiable_riemannXi": "standard",
+    "exists_exp_eq_of_norm_eq": "standard",
+    "exp_mem_annulus_of_mem_verticalClosedStrip": "standard",
+    "exp_mem_annulus_of_mem_verticalStrip": "standard",
+    "le_sSupNormCircle": "standard",
     "meromorphicOn_riemannXi": "standard",
     "meromorphicOn_riemannZeta_strip": "standard",
     "meromorphicOrderAt_riemannXi_ne_top": "standard",
     "meromorphicOrderAt_riemannZeta_ne_top_of_mem_strip": "standard",
+    "norm_le_interp_of_norm_eq": "standard",
+    "norm_le_interp_of_norm_eq'": "standard",
+    "norm_le_of_mem_annulus": "standard",
     "norm_mellin_le": "standard",
     "norm_mellin_le_add_of_re_mem_Icc": "standard",
     "norm_mellin_le_of_norm_le": "standard",
@@ -198,6 +235,9 @@
     "riemannZeta_ne_zero_of_re_le_zero": "standard",
     "riemannZeta_one_sub_eq_zero_iff": "standard",
     "riemannZeta_zero_mem_critical_strip": "standard",
+    "sSupNormCircle": "standard",
+    "sSupNormCircle_le_interp": "standard",
+    "sSupNormCircle_nonneg": "standard",
     "setIntegral_rpow_mul_mono_exponent": "standard"
   },
   "ledger_entries": [
@@ -1449,6 +1489,266 @@
       "axiom_base": "standard",
       "method": "Mathlib",
       "status": "proved"
+    },
+    {
+      "claim_id": "TC-1",
+      "domain": "analysis-generic",
+      "declarations": [
+        "sSupNormCircle"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ThreeCircles.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "TC-2",
+      "domain": "analysis-generic",
+      "declarations": [
+        "sSupNormCircle_nonneg"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ThreeCircles.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "TC-3",
+      "domain": "analysis-generic",
+      "declarations": [
+        "bddAbove_image_norm_sphere"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ThreeCircles.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "TC-4",
+      "domain": "analysis-generic",
+      "declarations": [
+        "le_sSupNormCircle"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ThreeCircles.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "TC-5",
+      "domain": "analysis-generic",
+      "declarations": [
+        "exp_mem_annulus_of_mem_verticalClosedStrip"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ThreeCircles.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "TC-6",
+      "domain": "analysis-generic",
+      "declarations": [
+        "exp_mem_annulus_of_mem_verticalStrip"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ThreeCircles.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "TC-7",
+      "domain": "analysis-generic",
+      "declarations": [
+        "exists_exp_eq_of_norm_eq"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ThreeCircles.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "TC-8",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_le_interp_of_norm_eq"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ThreeCircles.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "TC-9",
+      "domain": "analysis-generic",
+      "declarations": [
+        "sSupNormCircle_le_interp"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ThreeCircles.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "TC-10",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_le_interp_of_norm_eq'"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ThreeCircles.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "TC-11",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_le_of_mem_annulus"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ThreeCircles.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "GO-1",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.maxModulus"
+      ],
+      "files": [
+        "ResearchOS/Analysis/GrowthOrder.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "GO-2",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.growthOrder"
+      ],
+      "files": [
+        "ResearchOS/Analysis/GrowthOrder.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "GO-3",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.growthType"
+      ],
+      "files": [
+        "ResearchOS/Analysis/GrowthOrder.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "GO-4",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.growthOrder_const"
+      ],
+      "files": [
+        "ResearchOS/Analysis/GrowthOrder.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "GO-5",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.growthOrder_polynomial"
+      ],
+      "files": [
+        "ResearchOS/Analysis/GrowthOrder.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "GO-6",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.growthOrder_exp"
+      ],
+      "files": [
+        "ResearchOS/Analysis/GrowthOrder.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "GO-7",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.growthOrder_le_of_eventually_le"
+      ],
+      "files": [
+        "ResearchOS/Analysis/GrowthOrder.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "GO-8",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.growthOrder_mul_le"
+      ],
+      "files": [
+        "ResearchOS/Analysis/GrowthOrder.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "GO-9",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.growthType_exp"
+      ],
+      "files": [
+        "ResearchOS/Analysis/GrowthOrder.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
     }
   ],
   "declarations": {
@@ -1476,11 +1776,65 @@
       "line": 282,
       "anchor": "ResearchOS/Analysis/PolyLiouville.lean:282@sha256:12272420cfef"
     },
+    "Complex.growthOrder": {
+      "kind": "def",
+      "file": "ResearchOS/Analysis/GrowthOrder.lean",
+      "line": 117,
+      "anchor": "ResearchOS/Analysis/GrowthOrder.lean:117@sha256:654de483c890"
+    },
+    "Complex.growthOrder_const": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/GrowthOrder.lean",
+      "line": 157,
+      "anchor": "ResearchOS/Analysis/GrowthOrder.lean:157@sha256:b64ea67e1762"
+    },
+    "Complex.growthOrder_exp": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/GrowthOrder.lean",
+      "line": 358,
+      "anchor": "ResearchOS/Analysis/GrowthOrder.lean:358@sha256:aaba5b0e8b24"
+    },
+    "Complex.growthOrder_le_of_eventually_le": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/GrowthOrder.lean",
+      "line": 399,
+      "anchor": "ResearchOS/Analysis/GrowthOrder.lean:399@sha256:61edacb1340f"
+    },
+    "Complex.growthOrder_mul_le": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/GrowthOrder.lean",
+      "line": 467,
+      "anchor": "ResearchOS/Analysis/GrowthOrder.lean:467@sha256:79a61da1df54"
+    },
+    "Complex.growthOrder_polynomial": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/GrowthOrder.lean",
+      "line": 227,
+      "anchor": "ResearchOS/Analysis/GrowthOrder.lean:227@sha256:a28a1458e871"
+    },
+    "Complex.growthType": {
+      "kind": "def",
+      "file": "ResearchOS/Analysis/GrowthOrder.lean",
+      "line": 140,
+      "anchor": "ResearchOS/Analysis/GrowthOrder.lean:140@sha256:7e6232d50c8e"
+    },
+    "Complex.growthType_exp": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/GrowthOrder.lean",
+      "line": 644,
+      "anchor": "ResearchOS/Analysis/GrowthOrder.lean:644@sha256:e97c671c7c38"
+    },
     "Complex.iteratedDeriv_eq_zero_of_norm_le_pow": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/PolyLiouville.lean",
       "line": 92,
       "anchor": "ResearchOS/Analysis/PolyLiouville.lean:92@sha256:39332b8109ab"
+    },
+    "Complex.maxModulus": {
+      "kind": "def",
+      "file": "ResearchOS/Analysis/GrowthOrder.lean",
+      "line": 86,
+      "anchor": "ResearchOS/Analysis/GrowthOrder.lean:86@sha256:97fe359113af"
     },
     "Complex.taylorSum_eq_of_norm_le_pow": {
       "kind": "theorem",
@@ -1674,6 +2028,12 @@
       "line": 310,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean:310@sha256:16d1703ec399"
     },
+    "bddAbove_image_norm_sphere": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/ThreeCircles.lean",
+      "line": 123,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:123@sha256:c6a199c6debe"
+    },
     "completedRiemannZeta_conj": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
@@ -1698,6 +2058,30 @@
       "line": 46,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:46@sha256:be8d508e1a10"
     },
+    "exists_exp_eq_of_norm_eq": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/ThreeCircles.lean",
+      "line": 194,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:194@sha256:65e2b71c3359"
+    },
+    "exp_mem_annulus_of_mem_verticalClosedStrip": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/ThreeCircles.lean",
+      "line": 155,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:155@sha256:9a0d40801ab9"
+    },
+    "exp_mem_annulus_of_mem_verticalStrip": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/ThreeCircles.lean",
+      "line": 172,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:172@sha256:f6948ecf350f"
+    },
+    "le_sSupNormCircle": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/ThreeCircles.lean",
+      "line": 137,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:137@sha256:bfad7494c6b0"
+    },
     "meromorphicOn_riemannXi": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
@@ -1721,6 +2105,24 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
       "line": 823,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean:823@sha256:9d6323be464e"
+    },
+    "norm_le_interp_of_norm_eq": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/ThreeCircles.lean",
+      "line": 226,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:226@sha256:97ddf604da73"
+    },
+    "norm_le_interp_of_norm_eq'": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/ThreeCircles.lean",
+      "line": 396,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:396@sha256:86210fd8fc9e"
+    },
+    "norm_le_of_mem_annulus": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/ThreeCircles.lean",
+      "line": 432,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:432@sha256:298bb5bd1889"
     },
     "norm_mellin_le": {
       "kind": "theorem",
@@ -2027,6 +2429,24 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
       "line": 104,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:104@sha256:07a12f9ec473"
+    },
+    "sSupNormCircle": {
+      "kind": "def",
+      "file": "ResearchOS/Analysis/ThreeCircles.lean",
+      "line": 102,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:102@sha256:1daf34350399"
+    },
+    "sSupNormCircle_le_interp": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/ThreeCircles.lean",
+      "line": 351,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:351@sha256:c45c7d127a57"
+    },
+    "sSupNormCircle_nonneg": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/ThreeCircles.lean",
+      "line": 112,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:112@sha256:f67696a255c2"
     },
     "setIntegral_rpow_mul_mono_exponent": {
       "kind": "theorem",
