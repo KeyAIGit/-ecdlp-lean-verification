@@ -68,6 +68,20 @@ directory the original assessment did not examine. Do not
 begin a route proof attempt, large computation, new equivalence formalization,
 or autonomous hypothesis sweep.
 
+Decision update: 2026-08-08 (second). `RH-013` completed through merged PRs #322
+and #324. `PROBE_BATTERY_DESIGN.md`'s scope statement — a governance constraint,
+not a description — had gone stale by 92 built declarations across seven
+modules, and so was silently forbidding probes that had become legitimate. It
+now names all ten built modules and, more usefully, states that the authority is
+`VERIFIED_RESEARCHOS.md` and the `ResearchOS.lean` import list rather than the
+paragraph itself. §F adds 52 probe candidates over the newly built surfaces,
+bringing the document to 84. Two adversarial reviews changed the content before
+it landed, and a self-audit against the exit criteria caught one further defect
+after: a note claiming a witness had been respecified while the text still
+carried the original. Nothing was run; `MD-1`..`MD-6` remain outstanding, so no
+probe is authorized by any of this. No barrier row changed and no ledger row was
+added. By this dated decision the single ACTIVE slot moves to `RH-014`.
+
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
 
@@ -855,8 +869,9 @@ Exit criteria:
 
 ID: `RH-013`
 
-Status: **ACTIVE 2026-08-08 — design only; no Lean, no promotion, no route, and
-nothing authorized to run**
+Status: **COMPLETE 2026-08-08 — the probe battery design now covers the whole
+built surface; merged PRs #322 and #324. Design only: nothing was run and no
+batch was opened**
 
 Kind: tooling
 
@@ -927,6 +942,56 @@ First Main Theorem, FirstMainTheorem.lean:97). `logCounting` is a counting
 function and that barrier asks for counting, so the row's cost estimate is
 unverified. Any later slot may take it up; until then the caveat stands as
 recorded.
+
+## RH-014: re-verify the `S1-GLOBAL-ZEROS` cost against the value-distribution directory
+
+ID: `RH-014`
+
+Status: **ACTIVE 2026-08-08 — measurement only; no Lean, no promotion, no route**
+
+Kind: reconnaissance
+
+Activation basis (2026-08-08): this is the candidate the owner deferred when
+selecting the probe-battery refresh for the `RH-013` slot, recorded at the time
+as "not abandoned … available for a later slot". `RH-013` completed through
+merged PRs #322 and #324, so the slot is free and this takes it.
+
+The defect being measured. The `S1-GLOBAL-ZEROS` reconnaissance was carried out
+without examining `Mathlib/Analysis/Complex/ValueDistribution/`, which at the
+pin contains `characteristic` (CharacteristicFunction.lean:53), `logCounting`
+(LogCounting/Basic.lean:96, :272) with monotonicity and bound lemmas,
+`logCounting_isBigO_one_iff_analyticOnNhd` (Asymptotic.lean:108), and a First
+Main Theorem (FirstMainTheorem.lean:97, :109). `logCounting` is a counting
+function and `S1-GLOBAL-ZEROS` is the barrier asking for counting, so the row's
+cost estimate is **unverified — not wrong, unverified**. The zero-set slice
+promotion (`RH-012`) made that row load-bearing, which is what makes the check
+worth a slot now.
+
+Exit criteria:
+
+- every declaration under `Mathlib/Analysis/Complex/ValueDistribution/` is read
+  at the pin and recorded with a locator and its statement;
+- the reading is set against the six exit items the `S1-GLOBAL-ZEROS` row
+  actually lists, item by item, rather than against the row's title;
+- a dated capability-map addendum states either that the row's cost stands as
+  written or that it does not, with the evidence either way — **a null result is
+  a complete and acceptable outcome**, and is the more likely one;
+- the two route-specific items (`|ρ| ≤ T` for Li, `|Im ρ| < T` for Weil) are
+  reported as out of reach regardless of what the directory contains, since
+  supplying either is a route selection;
+- if the directory does bear on the row, that is recorded as a MEASUREMENT; any
+  change to the row's status remains a separate change with its own independent
+  review, and no barrier is closed by this task;
+- nothing here selects a route, adds a ledger row, or asserts anything about the
+  truth of the Riemann Hypothesis.
+
+Anti-goal, stated because the temptation is real: Nevanlinna theory is the
+natural home of zero-counting, and finding a counting function in Mathlib will
+feel like progress on `S1-GLOBAL-ZEROS`. It is not, until someone shows the
+pinned statements discharge the row's listed exit items for ζ or ξ specifically.
+Generic counting machinery for arbitrary meromorphic functions lowers the cost
+of a future exit and retires no row — the same rule that governs every package
+on the `analysis-generic` shelf.
 
 ## RH-005: bounded computation policy
 
