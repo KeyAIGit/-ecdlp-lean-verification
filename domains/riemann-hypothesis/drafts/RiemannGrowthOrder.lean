@@ -273,14 +273,14 @@ theorem growthOrder_polynomial (P : Polynomial ℂ) :
     intro x r hr1 hlogr1 hx
     have hr0 : (0 : ℝ) < r := lt_trans zero_lt_one hr1
     have hlogr0 : (0 : ℝ) < Real.log r := lt_of_lt_of_le zero_lt_one hlogr1
-    rcases le_or_lt (Real.log (max x 1)) 1 with hL1 | hL1
+    rcases le_or_gt (Real.log (max x 1)) 1 with hL1 | hL1
     · -- degenerate branch: outer log nonpositive, ofReal-collapse (Real.lean:181).
       have hq : Real.log (Real.log (max x 1)) / Real.log r ≤ 0 :=
         div_nonpos_of_nonpos_of_nonneg
           (Real.log_nonpos (Real.log_nonneg (le_max_right _ _)) hL1) hlogr0.le
       calc ENNReal.ofReal (Real.log (Real.log (max x 1)) / Real.log r) = 0 :=
             ENNReal.ofReal_eq_zero.mpr hq
-        _ ≤ _ := zero_le _
+        _ ≤ _ := zero_le
     · -- main branch: 1 < log (max x 1).
       have hM1 : (0 : ℝ) < max x 1 := lt_of_lt_of_le zero_lt_one (le_max_right _ _)
       have hrpow0 : (0 : ℝ) < r ^ P.natDegree := pow_pos hr0 _
@@ -346,7 +346,7 @@ theorem growthOrder_polynomial (P : Polynomial ℂ) :
       (fun r : ℝ => ENNReal.ofReal ((Real.log D + Real.log (Real.log r)) / Real.log r))
       Filter.atTop (𝓝 0) := by
     simpa [Function.comp_def] using (ENNReal.continuous_ofReal.tendsto 0).comp hb
-  refine le_antisymm ?_ (zero_le _)
+  refine le_antisymm ?_ zero_le
   calc Filter.limsup
         (fun r : ℝ =>
           ENNReal.ofReal
@@ -422,10 +422,10 @@ theorem growthOrder_le_of_eventually_le {f : ℂ → E} {g : ℂ → E}
       ENNReal.ofReal (Real.log (Real.log x) / lr)
         ≤ ENNReal.ofReal (Real.log (Real.log y) / lr) := by
     intro x y lr hlr hx hxy
-    rcases le_or_lt (Real.log (Real.log x)) 0 with hc | hc
+    rcases le_or_gt (Real.log (Real.log x)) 0 with hc | hc
     · calc ENNReal.ofReal (Real.log (Real.log x) / lr) = 0 :=
             ENNReal.ofReal_eq_zero.mpr (div_nonpos_of_nonpos_of_nonneg hc hlr.le)
-        _ ≤ _ := zero_le _
+        _ ≤ _ := zero_le
     · have hlx1 : 1 < Real.log x := by
         by_contra hle
         push_neg at hle
@@ -530,13 +530,13 @@ theorem growthOrder_mul_le {f g : ℂ → ℂ} (hf : Continuous f) (hg : Continu
         _ = Real.log x + Real.log y :=
             Real.log_mul (ne_of_gt (lt_of_lt_of_le zero_lt_one hx))
               (ne_of_gt (lt_of_lt_of_le zero_lt_one hy))
-    rcases le_or_lt (Real.log z) 1 with h1 | h1
+    rcases le_or_gt (Real.log z) 1 with h1 | h1
     · -- degenerate branch collapses through the ofReal clamp as in L4.
       have hq : Real.log (Real.log z) / lr ≤ 0 :=
         div_nonpos_of_nonpos_of_nonneg (Real.log_nonpos (Real.log_nonneg hz) h1) hlr.le
       calc ENNReal.ofReal (Real.log (Real.log z) / lr) = 0 :=
             ENNReal.ofReal_eq_zero.mpr hq
-        _ ≤ _ := zero_le _
+        _ ≤ _ := zero_le
     · -- main branch: Lz ≤ Lu + Lv ≤ 2·(the larger), log 2 splits off (log_mul).
       have main : ∀ u v : ℝ, v ≤ u → Real.log z ≤ u + v →
           ENNReal.ofReal (Real.log (Real.log z) / lr)
@@ -589,12 +589,12 @@ theorem growthOrder_mul_le {f g : ℂ → ℂ} (hf : Continuous f) (hg : Continu
     filter_upwards [key, hev] with r h1 h2
     refine h1.trans ?_
     rw [add_comm]
-    refine add_le_add_left ?_ _
+    refine add_le_add le_rfl ?_
     calc ENNReal.ofReal (Real.log 2 / Real.log r)
         ≤ ENNReal.ofReal ((ε : ℝ)) := ENNReal.ofReal_le_ofReal h2
       _ = (ε : ℝ≥0∞) := ENNReal.ofReal_coe_nnreal
   have hmono : Monotone fun x : ℝ≥0∞ => x + (ε : ℝ≥0∞) :=
-    fun _ _ h => add_le_add_right h _
+    fun _ _ h => add_le_add h le_rfl
   calc Filter.limsup
         (fun r : ℝ =>
           ENNReal.ofReal

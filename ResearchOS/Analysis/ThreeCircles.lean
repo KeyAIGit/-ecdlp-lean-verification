@@ -54,18 +54,6 @@ All eleven public declarations are ledgered as `TC-*` rows in
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 -/
-import below is pinned Mathlib; nothing here mentions ζ, ξ, zero counting,
-growth order, or any route obligation. This draft closes no barrier row,
-selects no route, and carries no claim about the truth of RH (contract §Claim
-boundary; RH-queue authority `tasks/RIEMANN_HYPOTHESIS.md`, sole ACTIVE task
-RH-012 — RH-011 completed 2026-08-07).
-
-Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0), toolchain
-`leanprover/lean4:v4.31.0` — re-verified this session via
-`git -C /workspace/leanprover-community/mathlib4 rev-parse HEAD`. Every lemma
-named in a proof or fallback below was grep-verified against that tree this
-session (locators in the contract's §0 / pinned API table).
--/
 import Mathlib.Analysis.Complex.Hadamard                 -- three-lines, verticalStrip, sSupNormIm
 import Mathlib.Analysis.SpecialFunctions.Complex.Arg    -- norm_mul_exp_arg_mul_I
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv       -- Complex.differentiable_exp

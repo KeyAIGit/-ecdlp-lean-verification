@@ -2031,8 +2031,8 @@
     "bddAbove_image_norm_sphere": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 123,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:123@sha256:c6a199c6debe"
+      "line": 111,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:111@sha256:c6a199c6debe"
     },
     "completedRiemannZeta_conj": {
       "kind": "theorem",
@@ -2061,26 +2061,26 @@
     "exists_exp_eq_of_norm_eq": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 194,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:194@sha256:65e2b71c3359"
+      "line": 182,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:182@sha256:65e2b71c3359"
     },
     "exp_mem_annulus_of_mem_verticalClosedStrip": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 155,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:155@sha256:9a0d40801ab9"
+      "line": 143,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:143@sha256:9a0d40801ab9"
     },
     "exp_mem_annulus_of_mem_verticalStrip": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 172,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:172@sha256:f6948ecf350f"
+      "line": 160,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:160@sha256:f6948ecf350f"
     },
     "le_sSupNormCircle": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 137,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:137@sha256:bfad7494c6b0"
+      "line": 125,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:125@sha256:bfad7494c6b0"
     },
     "meromorphicOn_riemannXi": {
       "kind": "theorem",
@@ -2109,20 +2109,20 @@
     "norm_le_interp_of_norm_eq": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 226,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:226@sha256:97ddf604da73"
+      "line": 214,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:214@sha256:97ddf604da73"
     },
     "norm_le_interp_of_norm_eq'": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 396,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:396@sha256:86210fd8fc9e"
+      "line": 384,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:384@sha256:86210fd8fc9e"
     },
     "norm_le_of_mem_annulus": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 432,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:432@sha256:298bb5bd1889"
+      "line": 420,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:420@sha256:298bb5bd1889"
     },
     "norm_mellin_le": {
       "kind": "theorem",
@@ -2433,20 +2433,20 @@
     "sSupNormCircle": {
       "kind": "def",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 102,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:102@sha256:1daf34350399"
+      "line": 90,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:90@sha256:1daf34350399"
     },
     "sSupNormCircle_le_interp": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 351,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:351@sha256:c45c7d127a57"
+      "line": 339,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:339@sha256:c45c7d127a57"
     },
     "sSupNormCircle_nonneg": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 112,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:112@sha256:f67696a255c2"
+      "line": 100,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:100@sha256:f67696a255c2"
     },
     "setIntegral_rpow_mul_mono_exponent": {
       "kind": "theorem",

@@ -17307,7 +17307,7 @@
       "namespace": "",
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 123
+      "line": 111
     },
     "cMin": {
       "name": "cMin",
@@ -17377,21 +17377,21 @@
       "namespace": "",
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 194
+      "line": 182
     },
     "exp_mem_annulus_of_mem_verticalClosedStrip": {
       "name": "exp_mem_annulus_of_mem_verticalClosedStrip",
       "namespace": "",
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 155
+      "line": 143
     },
     "exp_mem_annulus_of_mem_verticalStrip": {
       "name": "exp_mem_annulus_of_mem_verticalStrip",
       "namespace": "",
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 172
+      "line": 160
     },
     "fires": {
       "name": "fires",
@@ -17412,7 +17412,7 @@
       "namespace": "",
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 137
+      "line": 125
     },
     "meromorphicOn_riemannXi": {
       "name": "meromorphicOn_riemannXi",
@@ -17475,21 +17475,21 @@
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 226
+      "line": 214
     },
     "norm_le_interp_of_norm_eq'": {
       "name": "norm_le_interp_of_norm_eq'",
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 396
+      "line": 384
     },
     "norm_le_of_mem_annulus": {
       "name": "norm_le_of_mem_annulus",
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 432
+      "line": 420
     },
     "norm_mellin_le": {
       "name": "norm_mellin_le",
@@ -17888,21 +17888,21 @@
       "namespace": "",
       "kind": "def",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 102
+      "line": 90
     },
     "sSupNormCircle_le_interp": {
       "name": "sSupNormCircle_le_interp",
       "namespace": "",
       "kind": "theorem",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 351
+      "line": 339
     },
     "sSupNormCircle_nonneg": {
       "name": "sSupNormCircle_nonneg",
       "namespace": "",
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 112
+      "line": 100
     },
     "setIntegral_rpow_mul_mono_exponent": {
       "name": "setIntegral_rpow_mul_mono_exponent",
