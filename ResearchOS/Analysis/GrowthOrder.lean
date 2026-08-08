@@ -546,9 +546,9 @@ theorem growthOrder_mul_le {f g : ℂ → ℂ} (hf : Continuous f) (hg : Continu
               ENNReal.ofReal_add_le
       rcases le_total (Real.log y) (Real.log x) with hle | hle
       · exact (main (Real.log x) (Real.log y) hle hLz).trans
-          (add_le_add_left (le_max_left _ _) _)
+          (add_le_add le_rfl (le_max_left _ _))
       · exact (main (Real.log y) (Real.log x) hle (by linarith)).trans
-          (add_le_add_left (le_max_right _ _) _)
+          (add_le_add le_rfl (le_max_right _ _))
   -- The eventual pointwise bound, instantiated at the three clamped carriers.
   have key : ∀ᶠ r : ℝ in Filter.atTop,
       ENNReal.ofReal (Real.log (Real.log (max (maxModulus (f * g) r) 1)) / Real.log r)

@@ -377,12 +377,13 @@ theorem norm_le_interp_of_norm_eq' {E : Type*} [NormedAddCommGroup E]
       = 1 - (Real.log r₂ - Real.log r₁) / (Real.log r₃ - Real.log r₁) := by
     rw [Real.log_div h₃.ne' h₂.ne', Real.log_div h₃.ne' h₁.ne']
     field_simp
+    ring
     -- OBLIG TC-ALG (LOW): the identity `(u - m)/(u - l) = 1 - (m - l)/(u - l)`
-    -- needs `u - l ≠ 0` (`hne`, in context for `field_simp`). Fallback
-    -- (contract-recorded): if `field_simp` leaves a `ring`-shaped residue,
-    -- append `ring`:
-    --   field_simp
-    --   ring
+    -- needs `u - l ≠ 0` (`hne`, in context for `field_simp`). The contract
+    -- recorded that `field_simp` might leave a ring-shaped residue and that the
+    -- fix is to append `ring`; CI confirmed it does, leaving exactly
+    --   log r₃ - log r₂ = log r₃ - log r₁ - (log r₂ - log r₁)
+    -- so the recorded fallback is applied here verbatim.
   rw [e₁, e₂]
   exact norm_le_interp_of_norm_eq h₁ h₁₂ h₂₃ h₁₃ hd hc hM₁ hM₃ hz
 

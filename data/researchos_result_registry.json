@@ -2121,8 +2121,8 @@
     "norm_le_of_mem_annulus": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
-      "line": 420,
-      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:420@sha256:298bb5bd1889"
+      "line": 421,
+      "anchor": "ResearchOS/Analysis/ThreeCircles.lean:421@sha256:298bb5bd1889"
     },
     "norm_mellin_le": {
       "kind": "theorem",

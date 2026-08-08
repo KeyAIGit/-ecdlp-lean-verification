@@ -132,3 +132,24 @@ than the error.
 
 The kernel verdict on the correctly assembled head is again delivered by CI,
 not by this record.
+
+## Kernel round 2 (rejected) — one proof gap, closed by the contract's own fallback
+
+With the packaging defect fixed, the module elaborated for the first time and
+the kernel reached the proofs. It rejected exactly one:
+
+```
+error: ResearchOS/Analysis/ThreeCircles.lean:402:73: unsolved goals
+  ⊢ Real.log r₃ - Real.log r₂ = Real.log r₃ - Real.log r₁ - (Real.log r₂ - Real.log r₁)
+```
+
+This is the `e₁` step of TC10, where `field_simp` clears the denominators of
+`(u - m)/(u - l) = 1 - (m - l)/(u - l)` and leaves a purely ring-shaped
+residue. The contract had registered this exact risk as obligation TC-ALG and
+recorded the fix in advance — "if `field_simp` leaves a `ring`-shaped residue,
+append `ring`" — so the repair is that recorded fallback applied verbatim, and
+the inline note now records that CI confirmed the residue rather than leaving
+it as a hypothetical.
+
+Ten of the eleven declarations drew no error, which is the first direct kernel
+evidence about this package's proofs. No statement moved.

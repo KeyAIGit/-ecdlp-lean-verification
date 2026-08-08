@@ -153,3 +153,35 @@ the two cosmetic `aesop` warnings in the Harnack package earlier the same day.
 contract (9/9 character-identical) and, independently, by the registry
 generator: every shifted anchor kept its `sha256` statement digest. This is a
 proof repair and not a contract-review event.
+
+## Kernel round 2 (rejected) — and a correction to the round-1 record above
+
+Round 2 rejected this module with exactly two errors, both at the two
+`add_le_add_left` sites (lines 549 and 551) that the round-1 entry above said
+"the kernel accepted" and that were therefore restored.
+
+**That inference was wrong, and the reasoning behind it is worth correcting
+rather than quietly deleting.** Those two sites sit inside `growthOrder_mul_le`,
+the same declaration as the round-1 `le_or_lt` failure at line 522. Elaboration
+of a declaration stops at its first hard error, so lines 549 and 551 were never
+reached in round 1. Their absence from the round-1 error list was evidence of
+nothing at all. The rule "do not rewrite what the kernel accepted" is sound; the
+mistake was treating *silence* as acceptance. Absence from an error list only
+means acceptance when the enclosing declaration elaborated to completion.
+
+Round 2 also settled the signature question that round 1 could only hint at.
+The error text is explicit:
+
+```
+add_le_add_left (le_max_left ?a ?b) ?c
+has type   ?a + ?c ≤ max ?a ?b + ?c
+```
+
+so at this pin `add_le_add_left (h : x ≤ y) (c) : x + c ≤ y + c` — the fixed
+summand is on the RIGHT. Both goals at 549 and 551 need it on the LEFT
+(`C + u ≤ C + max u v`), so both are now `add_le_add le_rfl (le_max_left _ _)`
+and `add_le_add le_rfl (le_max_right _ _)`. This also retroactively confirms the
+round-1 repairs at 581 and 586, which used the same symmetric lemma in the two
+opposite orientations and drew no error in round 2.
+
+No statement moved in either round.
