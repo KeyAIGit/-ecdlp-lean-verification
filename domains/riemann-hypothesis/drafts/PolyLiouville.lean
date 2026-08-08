@@ -73,50 +73,83 @@ theorem Complex.iteratedDeriv_eq_zero_of_norm_le_pow
       calc ‖z‖ ≤ ‖c‖ + ‖z - c‖ := norm_le_norm_add_norm_sub' z c  -- Basic.lean:182 twin
         _ = ‖c‖ + R := by rw [hz']
     calc ‖f z‖ ≤ C * (1 + ‖z‖) ^ n := hC z
-      _ ≤ C * (1 + ‖c‖ + R) ^ n := by gcongr <;> linarith [norm_nonneg z]
-        -- gcongr fires mul_le_mul_of_nonneg_left + pow_le_pow_left₀
-        -- (GroupWithZero/Basic.lean:470, @[mono, gcongr, bound]); side goals
-        -- 0 ≤ C (hC0), 0 ≤ 1 + ‖z‖, 1 + ‖z‖ ≤ 1 + ‖c‖ + R (hzb) — `<;> linarith`
-        -- closes whichever of them the discharger leaves (recorded deviation from
-        -- the skeleton's `gcongr; · linarith [norm_nonneg z]`: robust to gcongr
-        -- discharging zero, one, or all side goals itself).
-        -- OBLIG PL-1a (LOW) fallback — exact alternative text (term mode,
-        -- replaces the whole `by gcongr …` closer):
-        --   mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (by positivity) (by linarith) n) hC0
+      _ ≤ C * (1 + ‖c‖ + R) ^ n :=
+        mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (by positivity) (by linarith) n) hC0
+        -- OBLIG PL-1a (LOW), discharged by the contract's registered term-mode
+        -- fallback, applied verbatim after the kernel rejected the tactic closer.
+        -- The first CI round used `by gcongr <;> linarith [norm_nonneg z]` and got
+        -- TWO `linarith failed` errors at this position, cases h₁ and h₂. The RHS
+        -- parses as `(1 + ‖c‖) + R`, so `gcongr` had a second sum to descend into
+        -- on the right against only `1 + ‖z‖` on the left; it matched positionally
+        -- one level too deep and split the intended `1 + ‖z‖ ≤ (1 + ‖c‖) + R` into
+        -- the pair `1 ≤ 1 + ‖c‖` (case h₁, reported with `1 + ‖c‖ < 1 ⊢ False`) and
+        -- `‖z‖ ≤ R` (case h₂, reported with `R < ‖z‖ ⊢ False`). Neither was closed.
+        -- h₁ was merely under-supplied — the term list carried `norm_nonneg z` but
+        -- the goal needs `norm_nonneg c`. h₂ is the fatal one: `‖z‖ ≤ R` is NOT
+        -- provable here, since `hzb : ‖z‖ ≤ ‖c‖ + R` puts no bound of `R` on `‖z‖`
+        -- once `c` is far from the origin. So the defect was the decomposition
+        -- itself, not the discharger, and no stronger tactic and no longer term
+        -- list would have been a legitimate repair.
+        -- The term route names both steps and never exposes that split:
+        -- mul_le_mul_of_nonneg_left (Order/GroupWithZero/Defs.lean:226, shape
+        -- b ≤ c → 0 ≤ a → a * b ≤ a * c) over pow_le_pow_left₀
+        -- (Order/GroupWithZero/Basic.lean:470, shape 0 ≤ a → a ≤ b → ∀ n, aⁿ ≤ bⁿ),
+        -- with `positivity` closing `0 ≤ 1 + ‖z‖` and `linarith` closing
+        -- `1 + ‖z‖ ≤ 1 + ‖c‖ + R` from hzb in one step. Statement unchanged.
   -- Step 2: the R → ∞ kill via the pinned polynomial-division limit
   -- (Polynomial.div_tendsto_atTop_zero_of_degree_lt, Analysis/Polynomial/Basic.lean:161).
   have hlim : Filter.Tendsto
       (fun R : ℝ => k.factorial * (C * (1 + ‖c‖ + R) ^ n) / R ^ k)
       Filter.atTop (nhds 0) := by
+    -- OBLIG PL-1b, first half: degree P ≤ n < k = degree Q. Assembled as a chain
+    -- of NAMED intermediate facts rather than one nested term (Annex A finding A1:
+    -- the degree_*_le family carries no @[gcongr] at the pin, so this must be an
+    -- explicit chain either way).
+    --
+    -- Repair note, first CI round: the same chain was written as
+    -- `refine lt_of_le_of_lt ?_ ?_` followed by two focus bullets, and the whole
+    -- `by` block came back as a bare `unsolved goals` with the original goal and
+    -- no error inside it. `lt_of_le_of_lt`'s middle term `b` occurs in neither
+    -- hypothesis position that `?_` fixes nor in the conclusion, so `refine` was
+    -- left holding an undetermined natural metavariable of type `WithBot ℕ` — it
+    -- aborts on that before the bullets ever run, which is exactly the silent
+    -- shape observed. Every step below instead has its type written out, so no
+    -- metavariable is ever floating; the statement is untouched.
+    have hbase : (Polynomial.C (1 + ‖c‖) + (Polynomial.X : Polynomial ℝ)).degree ≤ 1 :=
+      (Polynomial.degree_add_le _ _).trans
+        (max_le (Polynomial.degree_C_le.trans zero_le_one) Polynomial.degree_X_le)
+      -- degree_add_le Degree/Defs.lean:326; degree_C_le :153; degree_X_le :240.
+      -- `zero_le_one : (0 : WithBot ℕ) ≤ 1` fires through `WithBot.zeroLEOneClass`
+      -- (Algebra/Order/Monoid/Unbundled/WithTop.lean:451, re-read at the pin).
+    have hpow : ((Polynomial.C (1 + ‖c‖) + (Polynomial.X : Polynomial ℝ)) ^ n).degree
+        ≤ (n : WithBot ℕ) := by
+      have hp := Polynomial.degree_pow_le_of_le (a := (1 : WithBot ℕ)) n hbase
+      rwa [mul_one] at hp
+      -- degree_pow_le_of_le :406 has conclusion `degree (p ^ b) ≤ ↑b * a`, a
+      -- multiplication in WithBot ℕ — NOT the `n • degree p` smul shape of
+      -- degree_pow_le at :402; the two must not be mixed.
+    have hPle : (Polynomial.C ((k.factorial : ℝ) * C) *
+        (Polynomial.C (1 + ‖c‖) + (Polynomial.X : Polynomial ℝ)) ^ n).degree
+        ≤ (n : WithBot ℕ) := by
+      have hmul := (Polynomial.degree_mul_le
+        (Polynomial.C ((k.factorial : ℝ) * C))
+        ((Polynomial.C (1 + ‖c‖) + (Polynomial.X : Polynomial ℝ)) ^ n)).trans
+          (add_le_add Polynomial.degree_C_le hpow)
+      rwa [zero_add] at hmul
+      -- degree_mul_le Degree/Defs.lean:396, giving `≤ 0 + ↑n` before zero_add.
+    have hdeg : (Polynomial.C ((k.factorial : ℝ) * C) *
+        (Polynomial.C (1 + ‖c‖) + (Polynomial.X : Polynomial ℝ)) ^ n).degree
+        < ((Polynomial.X : Polynomial ℝ) ^ k).degree := by
+      rw [Polynomial.degree_X_pow]                -- Degree/Defs.lean:514
+      exact lt_of_le_of_lt hPle (by exact_mod_cast hnk)
+      -- here `lt_of_le_of_lt`'s middle term is pinned by hPle, so the metavariable
+      -- that sank the first round cannot arise. Fallback — exact alternative text
+      -- if the ℕ → WithBot ℕ cast is not found by exact_mod_cast (the in-tree
+      -- precedent for `Nat.cast_lt` at this type is Degree/Lemmas.lean:79):
+      --   exact lt_of_le_of_lt hPle (Nat.cast_lt.mpr hnk)
     have h := Polynomial.div_tendsto_atTop_zero_of_degree_lt
       (P := Polynomial.C ((k.factorial : ℝ) * C) * (Polynomial.C (1 + ‖c‖) + Polynomial.X) ^ n)
-      (Q := Polynomial.X ^ k) (by
-        -- degree P ≤ n < k = degree Q. Explicit term chain (Annex A finding A1:
-        -- the degree_*_le family carries NO @[gcongr] at the pin, and the goal is
-        -- a bound, not a gcongr congruence shape — gcongr has nothing to fire).
-        refine lt_of_le_of_lt ?_ ?_
-        · calc Polynomial.degree _
-              ≤ 0 + (n : WithBot ℕ) * 1 :=
-                (Polynomial.degree_mul_le _ _).trans (add_le_add Polynomial.degree_C_le
-                  ((Polynomial.degree_pow_le_of_le n ((Polynomial.degree_add_le _ _).trans
-                    (max_le (Polynomial.degree_C_le.trans zero_le_one)
-                      Polynomial.degree_X_le)))))
-                -- degree_mul_le Degree/Defs.lean:396; degree_C_le :153;
-                -- degree_pow_le_of_le :406 (conclusion `b * a`, multiplication in
-                -- WithBot ℕ — NOT the `n • degree p` smul shape of degree_pow_le
-                -- at :402; do not mix the two); degree_add_le :326; degree_X_le
-                -- :240. `zero_le_one : (0 : WithBot ℕ) ≤ 1` fires through
-                -- `WithBot.zeroLEOneClass` (Algebra/Order/Monoid/Unbundled/WithTop.lean:451).
-                -- OBLIG PL-1b (WithBot ℕ arithmetic) fallback — exact alternative
-                -- text if the ZeroLEOneClass instance does not fire: replace
-                --   `zero_le_one` with `(by norm_num)` or `(by decide)`.
-          _ ≤ (n : WithBot ℕ) := by simp
-            -- `0 + ↑n * 1 ≤ ↑n` via zero_add + mul_one. Fallback — exact
-            -- alternative text: `by norm_num` or `by decide`.
-        · rw [Polynomial.degree_X_pow]; exact_mod_cast hnk)
-            -- degree_X_pow Degree/Defs.lean:514. Fallback — exact alternative
-            -- text if the ℕ → WithBot ℕ cast lemma is not found by exact_mod_cast:
-            --   rw [Polynomial.degree_X_pow]; exact Nat.cast_lt.mpr hnk
+      (Q := Polynomial.X ^ k) hdeg
     refine h.congr' ?_                            -- Tendsto.congr', Order/Filter/Tendsto.lean:105
     filter_upwards [Filter.eventually_gt_atTop (0 : ℝ)] with R hR
     simp only [Polynomial.eval_mul, Polynomial.eval_pow, Polynomial.eval_add,

@@ -158,3 +158,43 @@ evidence for or against the Riemann Hypothesis**, and makes no claim of
 progress on it in either direction. The RH queue is untouched by this change:
 `RH-012` remains the single ACTIVE task, and this promotion neither is that
 task nor competes with it.
+
+## Kernel round 1 (rejected) and the proof-only repair
+
+The first CI run of this promotion (PR #318, run 31237149293) **rejected** this
+module, with one error and two warnings:
+
+1. `HarnackDisc.lean:220:66` — `Application type mismatch`: `hw` has type
+   `w ∈ ball c R` but was expected to have type `w ∈ ball c |(|R|)|`, in the
+   application `continuousOn_poissonKernel hw`. The site is OBLIG H-3b site 2,
+   where `CircleIntegrable.smul_of_continuousOn` (CircleIntegral.lean:247) wants
+   its continuity hypothesis on `sphere c |R|` while H2 supplies it on
+   `sphere c R`. The bridge was written as `habs ▸ continuousOn_poissonKernel hw`
+   with `habs : |R| = R`. That equation admits both rewrite directions against
+   the expected type, and `▸`'s heuristic took the one that replaces `R` by
+   `|R|`; the doubled absolute value in the error message is that substitution
+   applied to the `|R|` already present. Repaired by the contract-recorded
+   fallback, applied verbatim: an explicit `show ContinuousOn (poissonKernel c w)
+   (Metric.sphere c |R|) by rw [habs]; exact continuousOn_poissonKernel hw`,
+   which states the target type outright and rewrites it in the one intended
+   direction, so no heuristic is consulted.
+2. `HarnackDisc.lean:146:21` — two `aesop: failed to prove the goal after
+   exhaustive search` **warnings**, not errors: the H2 line
+   `fun_prop (disch := aesop)` was accepted by the kernel. The diagnosis
+   recorded inline is that the side goal actually needed, `ContinuousOn.div₀`'s
+   `∀ x ∈ s, g x ≠ 0`, is `hne'` verbatim and is closed by `fun_prop`'s built-in
+   `with_reducible assumption` before the discharger runs; the two aesop calls
+   were spent on the unprovable side conditions of the competing `Continuous.div₀`
+   / `ContinuousAt.div₀` candidates. **That line was deliberately left
+   unchanged.** A repair round exists to fix what the kernel rejected; narrowing
+   the discharger to silence cosmetic warnings would be an unforced edit to
+   already-accepted code, and it belongs in its own change with its own CI round.
+
+**Nothing in the H1-H5 statement surface moved** — five of five signatures
+byte-identical to the pre-repair head by mechanical comparison, and the three
+`HK-*` anchors whose line numbers shifted kept their `sha256` statement digest
+exactly. Only one proof term and its surrounding comments changed, so this is a
+proof repair and not a contract-review event.
+
+The kernel verdict on the repaired head is again delivered by CI, not by this
+record. If the re-run is red, no row here counts.

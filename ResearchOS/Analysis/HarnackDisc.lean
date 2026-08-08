@@ -149,6 +149,21 @@ theorem continuousOn_poissonKernel {c w : ℂ} {R : ℝ} (hw : w ∈ Metric.ball
   -- available verbatim as hne'. In-tree precedent for the exact pattern
   -- (nonvanishing `have` + fun_prop on a ContinuousOn-of-quotient goal):
   -- the private Harmonic/Poisson.lean:30-35.
+  -- NOISE NOTE (CI on PR #318): this line was ACCEPTED by the kernel, but it
+  -- emitted two "aesop failed to prove the goal after exhaustive search"
+  -- warnings. Diagnosis: `fun_prop`'s discharger is
+  -- `first | with_reducible assumption | (tac)` (Tactic/FunProp/Elab.lean:87-96).
+  -- The side goal that is actually needed is `ContinuousOn.div₀`'s
+  -- `∀ x ∈ s, g x ≠ 0` (Topology/Algebra/GroupWithZero.lean:233-236) — hne'
+  -- verbatim — so it is closed by `with_reducible assumption` and never reaches
+  -- the discharger at all. The two aesop calls were spent on the UNPROVABLE side
+  -- goals of the competing candidates `Continuous.div₀` / `ContinuousAt.div₀`
+  -- (same file :224-:232), whose conditions `∀ x, g x ≠ 0` / `g a ≠ 0` are false
+  -- off the sphere. The warnings are therefore cosmetic, not a latent defect.
+  -- `(disch := assumption)` would silence them on that reading, but it is a
+  -- change to a line the kernel has already accepted, and this round is a repair
+  -- of three genuine rejections; it is deliberately NOT made here. If the noise
+  -- is ever worth removing, it is a separate change with its own CI round.
   -- Fallback 1 (Annex A6 shape — the in-tree private proof uses a PLAIN
   --   `fun_prop`, no disch argument, with the nonvanishing fact as a `have` in
   --   the local context): fun_prop
@@ -217,13 +232,24 @@ theorem InnerProductSpace.HarmonicOnNhd.harnack {f : ℂ → ℝ} {c w : ℂ} {R
   have hintf : CircleIntegrable f c R := hfc.circleIntegrable hR.le
       -- CircleIntegral.lean:337
   have hint : CircleIntegrable (poissonKernel c w • f) c R :=
-    hintf.smul_of_continuousOn (habs ▸ continuousOn_poissonKernel hw)
+    hintf.smul_of_continuousOn
+      (show ContinuousOn (poissonKernel c w) (Metric.sphere c |R|) by
+        rw [habs]; exact continuousOn_poissonKernel hw)
       -- CircleIntegral.lean:247 (its `g` wants `sphere c |R|`, hence the
-      -- `habs ▸`; 𝕜 := ℝ, F := ℝ, instances NormedRing/Module/NormSMulClass
-      -- all pinned). OBLIG H-3b site 2.
-      -- Fallback: hintf.smul_of_continuousOn
-      --   (show ContinuousOn (poissonKernel c w) (Metric.sphere c |R|) by
-      --     rw [habs]; exact continuousOn_poissonKernel hw)
+      -- explicit `show` + `rw [habs]`; 𝕜 := ℝ, F := ℝ, instances
+      -- NormedRing/Module/NormSMulClass all pinned). OBLIG H-3b site 2,
+      -- discharged by the contract-recorded fallback.
+      -- KERNEL NOTE (CI on PR #318): the earlier spelling
+      --   hintf.smul_of_continuousOn (habs ▸ continuousOn_poissonKernel hw)
+      -- is rejected. With an expected type present, `h ▸ e` rewrites the
+      -- EXPECTED TYPE by `h.symm`, i.e. it replaces every `R` in
+      -- `ContinuousOn (poissonKernel c w) (sphere c |R|)` by `|R|`, yielding
+      -- `sphere c |(|R|)|` and forcing `hw : w ∈ ball c |(|R|)|` — the
+      -- reported application type mismatch. Rewriting the goal forward with
+      -- `rw [habs]` under a `show` fixes the direction: it turns the demanded
+      -- `sphere c |R|` into `sphere c R`, which is exactly H2's carrier.
+      -- Do NOT reintroduce `habs ▸` here (nor `(habs ▸ ·)` variants): the
+      -- direction, not the lemma, was wrong.
   -- pointwise comparison on the sphere (H1 × nonnegativity), OBLIG H-3a:
   have hlow : ∀ z ∈ Metric.sphere c |R|,
       (((R - ‖w - c‖) / (R + ‖w - c‖)) • f) z ≤ (poissonKernel c w • f) z := by
