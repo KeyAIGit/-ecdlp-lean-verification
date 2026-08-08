@@ -59,7 +59,7 @@ concept (growth, counting) — their failure documents the boundary.
 - **Built surface in scope.** Exactly the three RH modules listed above.
 - **No open-ended sweeps.** Per the queue's global hard rule "Never launch an
   open-ended model or compute sweep. Every run needs a fixed question, budget,
-  validator, and stop condition" (`tasks/RIEMANN_HYPOTHESIS.md:778-779`), an
+  validator, and stop condition" (`tasks/RIEMANN_HYPOTHESIS.md`, §Global hard rules, the never-launch-an-open-ended-sweep rule), an
   *authorized* probe batch would be: a **fixed** file list frozen in its batch
   header before the first invocation (drawn from, but not identical to, the
   candidate tables below — see §P2's per-batch size cap), **budget** one
@@ -72,7 +72,8 @@ concept (growth, counting) — their failure documents the boundary.
   end of the frozen list, one pass. Discrepancies are filed as dated notes,
   never fixed in-loop. **This document is not such a batch and does not open
   one.**
-- **RH-005 is PARKED and stays parked** (`tasks/RIEMANN_HYPOTHESIS.md:743-747`).
+- **RH-005 is PARKED and stays parked** (`tasks/RIEMANN_HYPOTHESIS.md`, §`RH-005`:
+  bounded computation policy).
   No probe below performs or gestures at numerical zero verification, interval
   arithmetic, or any bounded computation; the `norm_num`/`simp` discharges in
   Class A act on tiny literal casts during elaboration and are not bounded
@@ -101,7 +102,7 @@ concept (growth, counting) — their failure documents the boundary.
 - **No route selection.** The battery is route-neutral, reads only the built
   surface, and must never be cited as evidence for activating, unparking, or
   preferring any route (`repo/ECDLP_DECISION_SUBSTRATE.json` discipline;
-  `tasks/RIEMANN_HYPOTHESIS.md:585,706`).
+  `tasks/RIEMANN_HYPOTHESIS.md`, §Current decision and §Global hard rules).
 - **Epistemic status.** Probes test the *stability and expressive reach of the
   built interface*, nothing else. **a thousand green probes prove nothing about
   the truth of RH.**
@@ -395,8 +396,8 @@ line as evidence, mirroring the `MATHLIB_SEARCH_LOG.md` discipline.
 | C (8 candidates) | GREEN (elaborates) | idea statable; contract drafting *possible* | idea ill-posed in current vocabulary — cheapest kill | idea returns to queue for vocabulary work or is dropped |
 | D (7 candidates) | RED (recorded error class) | **boundary moved** — capability map stale; propose dated update (MD-5) | boundary confirmed and documented | green: proposed capability-map update to maintainer; wrong-class red: probe bug |
 
-Candidate total: 32 probes, all C0–C2, no retries, no models, no numerics.
-**The 32 candidates exceed the per-batch budget cap (§P2, suggested N ≤ 12)
+Candidate total: **84 probes** — the original 32 over the RH chain, plus the 52 added by §F over the surfaces promoted 2026-08-08 (Mult 17, ZeroSetSlice 14, analysis shelf 21). All C0–C2, no retries, no models, no numerics. A thousand green probes prove nothing about the truth of the Riemann Hypothesis.
+**The 84 candidates exceed the per-batch budget cap (§P2, suggested N ≤ 12)
 and therefore cannot run as one batch**: if ever authorized, they decompose
 into at least three batches (e.g. PB-A regression, PB-B/C composition +
 expressibility, PB-D boundary), each with its own frozen header, fixed
@@ -507,7 +508,8 @@ Evaluated and rejected as the default, on three verified collisions:
    negative probes are categorically excluded.
 3. **Lane authority.** Wiring a probe step into CI touches
    `.github/workflows/`, which is on the must-not-edit list of both `RH-009`
-   (`tasks/RIEMANN_HYPOTHESIS.md:601`) and `RH-010` (`:725`); per the S0-TRUST
+   and `RH-010` (`tasks/RIEMANN_HYPOTHESIS.md`, the "Files allowed" clause of
+   each task); per the S0-TRUST
    precedent such changes belong to a dated ops task or direct maintainer
    action (`S0_TRUST_DESIGN.md` §5, Phase 1: "outside the RH lane's
    files-allowed … requires its own dated task/PR under the repository's ops
@@ -521,7 +523,7 @@ records the carve-out. Until then: Option A for everything.
 
 Grounds: the queue's global hard rule — "Never launch an open-ended model or
 compute sweep. Every run needs a fixed question, budget, validator, and stop
-condition." (`tasks/RIEMANN_HYPOTHESIS.md:778-779`) — and the standing
+condition." (`tasks/RIEMANN_HYPOTHESIS.md`, §Global hard rules, the never-launch-an-open-ended-sweep rule) — and the standing
 decision "Do not begin a route proof attempt, large computation, new
 equivalence formalization, or autonomous hypothesis sweep" (`:41-43`). A batch
 file bearing this header still runs nothing by itself: opening the batch is a
@@ -542,7 +544,7 @@ PROBE LIST (frozen before first run): PB-NNN-01 … PB-NNN-kk, each with class
 BUDGET: ≤ N probe files (suggest N ≤ 12); exactly one `lake env lean` invocation
   per file; zero retries; no model calls; no `native_decide`/`decide` on
   nontrivial data (probes are elaboration checks — computation is RH-005
-  territory and RH-005 is PARKED, tasks/RIEMANN_HYPOTHESIS.md:747).
+  territory and RH-005 is PARKED, `tasks/RIEMANN_HYPOTHESIS.md`, §`RH-005`).
 VALIDATOR: exit code + first-error-line match against the expected-verdict table;
   mechanical, no judgment.
 STOP CONDITION: every listed probe attempted exactly once; batch closes on the
@@ -561,7 +563,7 @@ is fine — the lane is outside the no-sorry scan) and expect the statement to
 elaborate or fail, which is the cheapest falsifier of an ill-posed idea; (c)
 negative probes state a concept the vocabulary honestly lacks (zero counting,
 growth order, zero enumeration — exactly what the accepted M-surface excludes,
-`tasks/RIEMANN_HYPOTHESIS.md:578`: "free of enumeration, counting, growth,
+`tasks/RIEMANN_HYPOTHESIS.md`, §`RH-009` exit criteria: "free of enumeration, counting, growth,
 Hadamard products, Li coefficients, and zero-simplicity claims") and expect
 FAILS; the recorded error *is* the boundary documentation.
 
@@ -606,7 +608,7 @@ A probe never promotes *as a probe*. Worth keeping means one of:
    as its own change (RH-009 pattern) → kernel promotion as a separate change
    with its `RH-*` ledger row, regenerated registry, audit line, and promotion
    review in one PR, or inverse coverage fails CI (drafts/README.md promotion
-   invariant; RH-010 pattern, `tasks/RIEMANN_HYPOTHESIS.md:662-674`). At that
+   invariant; RH-010 pattern, `tasks/RIEMANN_HYPOTHESIS.md`, §`RH-010`). At that
    point it is an ordinary declaration; the originating probe is marked
    `retired → promoted as <claim_id>` in the log. The probe's earlier green is
    not evidence in that pipeline — acceptance and promotion re-establish
@@ -652,7 +654,7 @@ RH evidence. Defects found and fixed in this consolidation:
   harness's §P2 caps a batch at N ≤ 12 files. Read together, the larger number
   would have licensed running the whole battery as one un-capped batch —
   exactly the open-ended-sweep shape the queue forbids. Fix: §E now states the
-  32 candidates cannot run as one batch and must decompose into at least three
+  84 candidates cannot run as one batch and must decompose into at least seven
   separately authorized batches, each with its own frozen header and fixed
   question.
 - **R3 — In-loop RH-lane edit smuggled into the D-class action (fixed).** §D
@@ -724,7 +726,7 @@ construction; no route is selected or preferred anywhere.
   operations-class paths under `domains/` per `repo/ARTIFACTS.yaml:258`.
 - **MD-2 — Open each probe batch.** Every batch is individually authorized:
   assign `PB-NNN`, freeze the probe list and expected verdicts, record the
-  authorization in the batch header. The 32 candidates require at least three
+  authorization in the batch header. The 84 candidates require at least seven
   such decisions (per-batch cap N ≤ 12); the maintainer sets N.
 - **MD-3 — Per-file timeout.** The maintainer sets the file-level `lake env
   lean` timeout for probe runs (suggested: the CI default).
@@ -739,8 +741,8 @@ construction; no route is selected or preferred anywhere.
   a boundary moves) is proposed to the maintainer with the probe's log row and
   grep evidence attached; never applied in-loop.
 - **MD-6 — Any CI wiring for probes.** Touches `.github/workflows/`, which is
-  on the must-not-edit lists of RH-009 (`tasks/RIEMANN_HYPOTHESIS.md:601`) and
-  RH-010 (`:725`); belongs to a dated ops-lane task or direct maintainer
+  on the must-not-edit lists of RH-009 and RH-010 (`tasks/RIEMANN_HYPOTHESIS.md`,
+  the "Files allowed" clause of each task); belongs to a dated ops-lane task or direct maintainer
   action per the S0-TRUST precedent.
 
 ---
@@ -758,7 +760,10 @@ Verified source anchors — repo: `ResearchOS.lean:5-9`;
 `domains/riemann-hypothesis/drafts/README.md:8-16`;
 `domains/riemann-hypothesis/MULTIPLICITY_QUEUE_ENTRY_PROPOSAL.md:140`;
 `repo/ARTIFACTS.yaml:258`; `scripts/check_repo_artifacts.py:230-236`;
-`tasks/RIEMANN_HYPOTHESIS.md:36-43,405,449,578,585,601,616,620-621,662-674,706,725,743-747,778-779`.
+`tasks/RIEMANN_HYPOTHESIS.md` — cited throughout by section (§Current decision,
+§Global hard rules, §`RH-005`, §`RH-009`, §`RH-010`, §`RH-012`, §`RH-013`) rather
+than by line, per the locator policy at the end of this document; every raw line
+anchor this list previously carried had drifted and none resolved.
 Pin (checkout `/workspace/leanprover-community/mathlib4` @
 `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`):
 `Mathlib/NumberTheory/LSeries/RiemannZeta.lean:63,89,99,105,144,149,171,182`;
@@ -870,8 +875,8 @@ surface is ever authorized it decomposes into more than one batch.
 
 | id | class | expected | uses | sketch / what it catches |
 |---|---|---|---|---|
-| `PS-A1` | A | GREEN | `IsCompact.inter_riemannXi_zeroSet_finite` at ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:163 — quoted: `theorem IsCompact.inter_riemannXi_zeroSet | example : (Metric.closedBall (0 : ℂ) 1 ∩ riemannXi ⁻¹' {0}).Finite :=   (isCompact_closedBall (0 : ℂ) 1).inter_riemannXi_zeroSet_finite    -- [C1] — *This is the only cheap check on the package's one deliberately odd name: a ROOT-level theorem placed in the `IsCompact` namespace so that dot notation on a compactness witness resolves (mirroring the pin's `IsCompact.int* **[respecified over `isCompact_singleton`; the original `closedBall` witness violates the package neutrality rule]** |
-| `PS-A2` | A | GREEN | `riemannXi_divisor_finsum_mem_mono` at ZeroSetSlice.lean:425 — quoted: `theorem riemannXi_divisor_finsum_mem_mono (U : Set ℂ) {K₁ K₂ : Set ℂ}` / `    (hK₂ : IsCompact K₂) | example (U : Set ℂ) :     ∑ᶠ z ∈ (∅ : Set ℂ), MeromorphicOn.divisor riemannXi U z       ≤ ∑ᶠ z ∈ Metric.closedBall (0 : ℂ) 1, MeromorphicOn.divisor riemannXi U z :=   riemannXi_divisor_finsum_mem_mono U (isCompact_closedBall (0 : ℂ) 1) (Set.empty_subset _)    -- [C1] — *It pins the R5 asymmetry — a reviewed design property that no gate enforces. Nothing in the repo would fail if someone "tidied" the signature into `(hK₁ : IsCompact K₁) (hK₂ : IsCompact K₂)`: the module would still build* **[respecified over `isCompact_singleton`; the original `closedBall` witness violates the package neutrality rule]** |
+| `PS-A1` | A | GREEN | `IsCompact.inter_riemannXi_zeroSet_finite` at ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:163 — quoted: `theorem IsCompact.inter_riemannXi_zeroSet | example : (({(0 : ℂ)} : Set ℂ) ∩ riemannXi ⁻¹' {0}).Finite :=   isCompact_singleton.inter_riemannXi_zeroSet_finite    -- [C1] — *This is the only cheap check on the package's one deliberately odd name: a ROOT-level theorem placed in the `IsCompact` namespace so that dot notation on a compactness witness resolves (mirroring the pin's `IsCompact.int* **[witness respecified from the drafters' `Metric.closedBall (0 : ℂ) 1` to `isCompact_singleton`: `ZeroSetSlice.lean:158-161` forbids instantiating the compact at a disc as a death condition, because a disc reads as a truncation family and a truncation family is a route selection. The singleton exercises the identical mechanics with no cutoff reading.]** |
+| `PS-A2` | A | GREEN | `riemannXi_divisor_finsum_mem_mono` at ZeroSetSlice.lean:425 — quoted: `theorem riemannXi_divisor_finsum_mem_mono (U : Set ℂ) {K₁ K₂ : Set ℂ}` / `    (hK₂ : IsCompact K₂) | example (U : Set ℂ) :     ∑ᶠ z ∈ (∅ : Set ℂ), MeromorphicOn.divisor riemannXi U z       ≤ ∑ᶠ z ∈ ({(0 : ℂ)} : Set ℂ), MeromorphicOn.divisor riemannXi U z :=   riemannXi_divisor_finsum_mem_mono U isCompact_singleton (Set.empty_subset _)    -- [C1] — *It pins the R5 asymmetry — a reviewed design property that no gate enforces. Nothing in the repo would fail if someone "tidied" the signature into `(hK₁ : IsCompact K₁) (hK₂ : IsCompact K₂)`: the module would still build* **[witness respecified from the drafters' `Metric.closedBall (0 : ℂ) 1` to `isCompact_singleton`: `ZeroSetSlice.lean:158-161` forbids instantiating the compact at a disc as a death condition, because a disc reads as a truncation family and a truncation family is a route selection. The singleton exercises the identical mechanics with no cutoff reading.]** |
 | `PS-A3` | A | GREEN | `riemannXi_divisor_finsum_mem_comp_one_sub` at ZeroSetSlice.lean:470 — quoted: `theorem riemannXi_divisor_finsum_mem_comp_one_sub {U : Set ℂ}` / `    (hU : ∀ z : ℂ, (1 -  | example (K : Set ℂ) :     ∑ᶠ z ∈ K, MeromorphicOn.divisor riemannXi Set.univ (1 - z)       = ∑ᶠ z ∈ K, MeromorphicOn.divisor riemannXi Set.univ z :=   riemannXi_divisor_finsum_mem_comp_one_sub (fun z => by simp) K    -- [C1] — *The six Block-D symmetry lemmas all take their window hypothesis in the iff shape `∀ z, σ z ∈ U ↔ z ∈ U`, and every future consumer must produce one. No built declaration in the slice ever discharges such an hU — the mod* |
 | `PS-A4` | A | GREEN | `image_one_sub_conj_of_symm` at ZeroSetSlice.lean:611 — quoted: `theorem image_one_sub_conj_of_symm {K : Set ℂ}` / `    (hK : ∀ z : ℂ, (1 - (starRingEnd ℂ) z) ∈ K ↔ z ∈ K | example : (fun w : ℂ => 1 - (starRingEnd ℂ) w) '' Set.univ = Set.univ :=   image_one_sub_conj_of_symm (fun z => by simp)    -- [C1] — *Block E (three declarations, RH-SLICE-N19A/B/C) is the only block of the package with zero consumers anywhere in the repository — nothing built, drafted, or ledgered applies it, because it was exported for hypothetical f* |
 | `PS-B1` | B | GREEN | `IsCompact.inter_riemannXi_zeroSet_finite` at ZeroSetSlice.lean:163 (quoted in PS-A1); `riemannXi_divisor_support` (M13) at Mult.lean:538 — quoted: `theorem riemannXi_div | -- re-derives RH-SLICE-D8 by the route the built proof does NOT take example (U : Set ℂ) {K : Set ℂ} (hK : IsCompact K) :     (K ∩ Function.support (MeromorphicOn.divisor riemannXi U)).Finite := by   refine Set.Finite.subset hK.inter_riemannXi_zeroSet_finite ?_   -- slice D4   rw [riemannXi_divisor_ — *Highest-value probe on this surface. The built D8 proof (ZeroSetSlice.lean:280-299) goes through M9/M10 and the LocallyFinsupp carrier, and NEVER touches M13; the M13 route was written down in the module as an alternativ* **[rationale corrected in review; see §F.0]** |
@@ -935,3 +940,27 @@ surface is ever authorized it decomposes into more than one batch.
   relation between the RH chain and the shelf, and it is not a precedent for a
   built RH→shelf dependency.
 - This section changes no barrier row, adds no ledger row, and selects no route.
+
+
+---
+
+## Locator policy for this document, added 2026-08-08
+
+Raw `file:line` anchors into living documents are not maintained here any more,
+and the reason is worth stating because it was learned the expensive way.
+
+An adversarial review of the §F refresh reported that the queue anchor
+`tasks/RIEMANN_HYPOTHESIS.md:778-779` had drifted to `:938-939`. By the time the
+fix was applied it had moved AGAIN, to `:966-967`, because `RH-013` was inserted
+above it in the meantime. Updating the number would have restarted the clock
+rather than fixed anything.
+
+So: anchors into `tasks/RIEMANN_HYPOTHESIS.md` and other frequently-edited
+documents are cited by **section heading and rule name**, which survive edits.
+Anchors into built Lean modules and into the pinned Mathlib checkout keep their
+`file:line` form — those move only under a deliberate, reviewed change, and the
+line number is load-bearing evidence there.
+
+Three findings from the §F review were left unapplied when §F landed in PR #322
+— the two count corrections and this locator policy. That was an under-delivery
+rather than a decision, and it is recorded here instead of being closed quietly.
