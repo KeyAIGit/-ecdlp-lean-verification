@@ -26,13 +26,28 @@ about this draft.**
 `UPSTREAM_POOL.md` §4 ("Polynomial-growth Liouville"), a **generic complex
 analysis** item whose natural home is upstream Mathlib. The RH queue
 (`tasks/RIEMANN_HYPOTHESIS.md`) is the authority for the RH lane; its current
-dated decision has `RH-002` as the sole ACTIVE task and authorizes no route
-execution. `repo/ECDLP_DECISION_SUBSTRATE.json` governs the ECDLP lane, selects
+dated decision has `RH-012` (zero-set slice build-out,
+`tasks/RIEMANN_HYPOTHESIS.md:809–835`) as the sole ACTIVE task; it authorizes
+no route execution and nothing for this pool item *(corrected at the
+2026-08-07 stage-one acceptance: `RH-002` closed the same day,
+`tasks/RIEMANN_HYPOTHESIS.md:476`)*.
+`repo/ECDLP_DECISION_SUBSTRATE.json` governs the ECDLP lane, selects
 no route, and is not the authority here. This document is an offered artifact,
 not an active task, and not authorization to work a route or a barrier.
 
-Working name (if ever drafted in-repo): `drafts/PolyLiouville.lean` — the drafts
-lane, outside every lake target. Intended eventual upstream home: an addition to
+Working name (now drafted, non-built — see the dated note below):
+`drafts/PolyLiouville.lean` — the drafts lane, outside every lake target.
+
+*Drafting-status note (2026-08-07, stage-one acceptance):
+`drafts/PolyLiouville.lean` exists as of PR #315 (`9129e8c`), landed after this
+contract was drafted. It sits outside every lake target and outside the
+`ci.yml:359` no-incomplete-proof scan surface, carries no kernel verdict, and
+has **no standing under this acceptance**: stage one accepts the §2 statement
+blocks only, and any stage-two use of the draft requires an independent
+character-identity check of its statements against §2 (the RH-012 pattern).
+It must not be cited as an accepted or reviewed object.*
+
+Intended eventual upstream home: an addition to
 `Mathlib/Analysis/Complex/Liouville.lean`, or a new
 `Mathlib/Analysis/Complex/PolynomialLiouville.lean` if the import growth
 (TaylorSeries + Polynomial) into `Liouville.lean` is unwelcome — a Mathlib
@@ -139,7 +154,19 @@ Name-collision scan (grep over the pinned tree this session): **zero hits** for
 all five proposed names — `iteratedDeriv_eq_zero_of_norm_le_pow`,
 `taylorSum_eq_of_norm_le_pow`, `exists_polynomial_of_norm_le_pow`,
 `exists_const_forall_eq_of_norm_le`, `exists_affine_of_norm_le_pow_one`. A
-repo-side scan also returns zero hits. The package introduces **no new
+repo-side scan also returns zero hits.
+
+*Supersession note (2026-08-07, stage-one acceptance): post-PR #315
+(`9129e8c`) the repo-side scan hits exactly one file —
+`drafts/PolyLiouville.lean`, this contract's own non-built drafts-lane
+implementing draft, which deliberately carries all five names with
+character-identical statements. This is not a collision. The pin-side
+zero-hit claim stands (re-verified at acceptance over pinned `Mathlib/`), and
+the freshness claim is henceforth scoped to: no colliding declaration exists
+at the pin or in the repo outside the implementing draft — the built targets
+(`Ecdlp/`, `ResearchOS/`) remain at zero hits.*
+
+The package introduces **no new
 definitions** — five theorems over pinned objects only.
 
 ---
@@ -148,7 +175,7 @@ definitions** — five theorems over pinned objects only.
 
 ```lean
 -- Analysis/Complex/Liouville.lean:44 — THE analytic input, already k-indexed.
--- Section variables (:31-32): {F : Type v} [NormedAddCommGroup F] [NormedSpace ℂ F].
+-- Section variables (:33-34): {F : Type v} [NormedAddCommGroup F] [NormedSpace ℂ F].
 theorem norm_iteratedDeriv_le_of_forall_mem_sphere_norm_le [CompleteSpace F] {c : ℂ} {R C : ℝ}
     {f : ℂ → F} (n : ℕ) (hR : 0 < R) (hf : DiffContOnCl ℂ f (ball c R))
     (hC : ∀ z ∈ sphere c R, ‖f z‖ ≤ C) :
@@ -228,7 +255,8 @@ theorem exists_eq_X_add_C_of_natDegree_le_one (h : natDegree p ≤ 1) :
 
 -- Order/limit glue
 @[mono, gcongr, bound]
-theorem pow_le_pow_left₀ (ha : 0 ≤ a) (hab : a ≤ b) : ∀ n, a ^ n ≤ b ^ n
+theorem pow_le_pow_left₀ [PosMulMono M₀] [MulPosMono M₀]
+    (ha : 0 ≤ a) (hab : a ≤ b) : ∀ n, a ^ n ≤ b ^ n
                                                  -- Algebra/Order/GroupWithZero/Basic.lean:470
 theorem le_of_tendsto / ge_of_tendsto (via @[to_dual] at :130)
                                                  -- Topology/Order/OrderClosed.lean:131
@@ -396,7 +424,8 @@ theorem Complex.iteratedDeriv_eq_zero_of_norm_le_pow
 - `Polynomial.div_tendsto_atTop_zero_of_degree_lt` —
   Analysis/Polynomial/Basic.lean:161 (section variables `(P Q : 𝕜[X])`
   explicit, `:34`; `𝕜 := ℝ` instantiates `[NormedField] [LinearOrder]
-  [IsStrictOrderedRing]`); degree chain from `degree_mul_le` (Degree/Defs.lean:396),
+  [IsStrictOrderedRing]` plus `[OrderTopology 𝕜]` (variable `:44`));
+  degree chain from `degree_mul_le` (Degree/Defs.lean:396),
   `degree_C_le` (:153), `degree_pow_le_of_le` (:406 — conclusion `b * a`,
   multiplication in `WithBot ℕ`, **not** the `n • degree p` smul shape of
   `degree_pow_le` at :402; do not mix the two), `degree_add_le` (:326),
@@ -800,7 +829,8 @@ and it closes no barrier row.
 ### B. Citations re-verified as CORRECT (no change)
 
 Pinned Mathlib — `Analysis/Complex/Liouville.lean` :44 (Cauchy estimate,
-signature verbatim incl. `[CompleteSpace F]`, section variables `:32-33`),
+signature verbatim incl. `[CompleteSpace F]`, section variables `:33-34`
+— corrected from `:32-33` at the 2026-08-07 acceptance),
 :109 (`namespace Differentiable`), :114, :123, :128, :135 (bounded family).
 `Analysis/Complex/TaylorSeries.lean` :33 (`open Nat`), :35 (variables incl.
 `[CompleteSpace E]`), :122-:124 (section `entire`), :129, :137, :143 (statements
@@ -886,7 +916,9 @@ contract corrections stand.
    `MULTIPLICITY_CONTRACT.md`'s, and stage two's Mathlib-CI fork correctly
    re-derives locators rather than trusting this contract. Name-collision scan
    re-run at the pin and over the repo for all five proposed names: zero hits
-   each.
+   each. *(2026-08-07 acceptance note: true when this annex was written,
+   pre-PR #315; the repo side is superseded — see the supersession note in
+   §Candidate fields. The pin side stands.)*
 
 ### D. What this annex does not do
 
@@ -912,8 +944,14 @@ Restated for this file, matching `MULTIPLICITY_CONTRACT.md`:
   case the kernel verdict is delivered by Mathlib CI at whatever revision that
   PR targets — and the `file:line` locators of this contract, which are pinned
   to `fabf563a…`, must be re-derived against that revision as part of the PR,
-  not trusted. If instead it is ever drafted in-repo, it goes to the drafts
-  lane (`drafts/PolyLiouville.lean`), which current CI does not elaborate
-  (header, above), and a green acceptance-PR run remains evidence of nothing.
+  not trusted. An in-repo draft now exists *(dated note, 2026-08-07
+  stage-one acceptance)*: `drafts/PolyLiouville.lean` (PR #315, `9129e8c`,
+  landed after this contract was drafted) sits in the drafts lane, which
+  current CI does not elaborate (header, above); it carries no kernel
+  verdict, has **no standing under this stage-one acceptance** — stage one
+  accepts the §2 statement blocks only — and any stage-two use of it
+  requires an independent character-identity check of its statements
+  against §2 (the RH-012 pattern). A green acceptance-PR run remains
+  evidence of nothing.
 - No Routine, target registration, or `targets/*.json` movement follows from
   stage one. Nothing in this file is a promotion.

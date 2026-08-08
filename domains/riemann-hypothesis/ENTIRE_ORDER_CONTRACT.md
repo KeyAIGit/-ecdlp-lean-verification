@@ -4,7 +4,11 @@ Status: **DRAFT v1 (2026-08-07) — non-built review artifact, offered for STAGE
 (INDEPENDENT CONTRACT ACCEPTANCE) ONLY. NOT Lean-checked.** Red-team audited
 2026-08-07 (§Annex A: every citation re-verified at the pin; one locator
 corrected, two obligations sharpened, one docstring gap filled; no signature
-changed). No declaration below
+changed). **Stage-one ACCEPTED 2026-08-07 with applied editorial fixes** —
+acceptance record (the citable object of death condition 1):
+`notes/reviews/ENTIRE_ORDER_ACCEPTANCE_2026_08_07.md`; the drafts-lane
+transcription `drafts/RiemannGrowthOrder.lean` is thereby unlocked; stage two
+(built promotion, CI-judged) remains a separate later change. No declaration below
 has been elaborated; no `lake build` has been run against any of it. Under the one
 invariant, the Lean kernel via CI is the sole judge of every statement in this
 contract, and this document carries no kernel verdict of any kind.
@@ -38,11 +42,16 @@ carry a promotion. Any drafts-lane file for this surface (working name
 `drafts/RiemannGrowthOrder.lean`) lies outside every lake target
 (`lakefile.toml:2` declares `defaultTargets = ["Ecdlp", "ResearchOS"]`), so
 **no green CI run on an acceptance PR is evidence of anything about the
-draft.**
+draft.** The stage-one acceptance record, if granted, is a dated file under
+`notes/reviews/` (form precedent:
+`notes/reviews/RH011_ZERO_SLICE_ACCEPTANCE_2026_08_07.md`); that file, not
+this draft, is the object death condition 1 requires consumers to cite.
 
 **Ordering / authority.** The authority for this lane is the RH queue,
 repo:`tasks/RIEMANN_HYPOTHESIS.md`; no route execution is authorized, and
-this document is an offered artifact, not an active task.
+this document is an offered artifact, not an active task (the queue's sole
+ACTIVE slot as of 2026-08-07 is `RH-012`, the zero-set slice build-out — a
+route-neutral task in a different lane; this surface holds no slot).
 `repo/ECDLP_DECISION_SUBSTRATE.json` governs the ECDLP lane and is not the
 authority here. `repo/FINAL_REVIEW_PACKET.md` is frozen to draft PR #235 and
 is not reused by this document.
@@ -64,7 +73,11 @@ Pinned Mathlib: `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f` (v4.31.0),
 toolchain `leanprover/lean4:v4.31.0`, verified this session via
 `git -C /workspace/leanprover-community/mathlib4 rev-parse HEAD`. Every
 `file:line` locator below is from that exact tree (paths relative to the
-`Mathlib/` root of the pin) unless prefixed `repo:`. Every locator was
+`Mathlib/` root of the pin) unless prefixed `repo:`. `repo:` locator
+convention: root artifacts are repo-root-relative (`lakefile.toml`,
+`tasks/RIEMANN_HYPOTHESIS.md`); bare filenames of this lane's own documents
+(`MATHLIB_CAPABILITY_MAP.md`, `UPSTREAM_POOL.md`) resolve in this contract's
+domain directory, `domains/riemann-hypothesis/`. Every locator was
 verified by direct source reading this session; **nothing was elaborated** —
 source reading only, no Lean toolchain in this environment.
 
@@ -96,14 +109,16 @@ honored here): `analyticOrderAt` (`Analysis/Analytic/Order.lean:47`) is the
 below is therefore named `growthOrder`, never `Complex.order`, and this
 contract never uses the bare word "order" in a signature.
 
-Name-collision scan run at the pin this session: `maxModulus`, `growthOrder`,
+Name-collision scan run at the pin **and against repo Lean sources
+(`ResearchOS/`, `Ecdlp/`, root modules, `drafts/`)** this session:
+`maxModulus`, `growthOrder`,
 `growthType`, `growthOrder_const`, `growthOrder_polynomial`, `growthOrder_exp`,
 `growthOrder_le_of_eventually_le`, `growthOrder_mul_le`, `growthType_exp` —
-**zero hits for all**.
+**zero hits for all, in both scopes**.
 
 ---
 
-## 0. Exact pinned interface (quoted from the tree at the pin)
+## 0. Exact pinned interface (quoted from the tree at the pin; binders/notation lightly normalized — implicit-binder blocks may be elided and dot-notation `f.limsup u` may be written `limsup u f`; no hypothesis or instance argument is altered)
 
 ```lean
 -- Order/LiminfLimsup.lean:64 — limsup is sInf of eventual upper bounds; total in a
@@ -186,7 +201,7 @@ theorem isBigO_cobounded_of_degree_le (h : P.degree ≤ Q.degree) :
 
 -- Compactness route for the mul lemma:
 theorem isCompact_sphere [ProperSpace α] (x : α) (r : ℝ) : …  -- Topology/MetricSpace/ProperSpace.lean:45
-theorem IsCompact.bddAbove [ClosedIciTopology α] … : BddAbove s  -- Topology/Order/Compact.lean:322
+theorem IsCompact.bddAbove [ClosedIciTopology α] [Nonempty α] … : BddAbove s  -- Topology/Order/Compact.lean:322
 theorem NormedSpace.sphere_nonempty {x : E} {r : ℝ} : (sphere x r).Nonempty ↔ 0 ≤ r
                                                   -- Analysis/Normed/Module/RCLike/Real.lean:128
 
@@ -200,7 +215,8 @@ lemma Filter.Tendsto.const_div_atTop (hg : Tendsto g l atTop) (r : 𝕜) : …
                                                   -- Topology/Algebra/Order/Field.lean:222
 
 -- The design precedent scout A cited, quoted for the codomain comparison (§1):
--- Analysis/Asymptotics/ExpGrowth.lean:38, :41 — codomain EReal, over sequences ℕ → ℝ≥0∞:
+-- Analysis/Asymptotics/ExpGrowth.lean:38 (expGrowthInf, not used), :41 (expGrowthSup)
+-- — codomain EReal, over sequences ℕ → ℝ≥0∞:
 noncomputable def expGrowthSup (u : ℕ → ℝ≥0∞) : EReal := limsup (fun n ↦ log (u n) / n) atTop
 -- EReal := WithBot (WithTop ℝ), deriving CompleteLinearOrder — Data/EReal/Basic.lean:35
 -- ENNReal.log : ℝ≥0∞ → EReal — Analysis/SpecialFunctions/Log/ENNRealLog.lean:46
@@ -259,6 +275,14 @@ Fix: clamp **inside**, before the double log. Replace `maxModulus f r` by
   with the textbook order. For bounded `f` the clamped order is `0`, which IS
   the textbook convention.
 
+**Classical footing (not a deviation):** the inner clamp `max … 1` under
+`Real.log` is exactly `log⁺` (`Real.log (max x 1) = log⁺ x` definitionally),
+and for `r > 1` the outer `ENNReal.ofReal` of the quotient equals dividing
+`log⁺` of the numerator — so G1 is literally the classical
+`limsup log⁺ log⁺ M(f,r) / log r` formulation of order (the Boas/Levin
+convention), a transcription of the textbook `log⁺ log⁺` form, not an
+invention.
+
 **Symmetry (contract requirement):** the *same two clamps in the same order* —
 inner `max … 1`, outer `ENNReal.ofReal` — appear in `growthOrder` (G1) and
 `growthType` (G2). No definition in this surface applies one clamp without
@@ -286,7 +310,7 @@ therefore compare objects with identical degenerate-case conventions.
    | `limsup_le_limsup` autoParams discharge | ✓ complete lattice, `isBoundedDefault` free (Order/LiminfLimsup.lean:198) | ✓ same |
    | `limsup_max` (for L5) | ✓ :1141, autoParams free | ✓ same |
    | `limsup_congr`/`limsup_const` (for L1/L3/L6) | ✓ :265/:284 | ✓ same |
-   | product bound | ✓ `ENNReal.limsup_mul_le'` (Topology/Instances/ENNReal/Lemmas.lean:817), usable at `atTop` | `EReal.limsup_add_le` (Topology/Instances/EReal/Lemmas.lean:265) — additive, needs `⊥/⊤` disjunctions |
+   | product bound | ✓ `ENNReal.limsup_mul_le'` (Topology/Instances/ENNReal/Lemmas.lean:817), usable at `atTop` (codomain evidence only; NOT the L5 route — see S1G-L5) | `EReal.limsup_add_le` (Topology/Instances/EReal/Lemmas.lean:265) — additive, needs `⊥/⊤` disjunctions |
    | order-topology closers (`Tendsto.limsup_eq`) | ✓ Topology/Order/LiminfLimsup.lean:191 applies | ✓ same |
 
    One trap found and recorded: `ENNReal.limsup_add_le`
@@ -318,7 +342,11 @@ therefore compare objects with identical degenerate-case conventions.
 
 **The inner clamp `max (maxModulus f r) 1` is the riskiest choice in this
 contract.** It deviates from the raw textbook formula, from scout A's
-proposal, and from the `expGrowthSup` shape. It is forced by pinned-Mathlib
+proposal, and from the `expGrowthSup` shape. (Per the `log⁺` note in §1.1,
+the clamped form coincides with the classical `log⁺ log⁺` formulation, so
+the deviation is from the *raw* formula only — a transcription, not an
+invention; the review call remains whether to totalize by clamp rather than
+restrict by hypothesis.) It is forced by pinned-Mathlib
 junk semantics (§1.1), it is what makes L4 true and L1–L3 clamp-stable, and
 on nonconstant entire functions it is invisible. But if a reviewer rejects it
 (e.g. prefers restricting by hypothesis instead of totalizing by clamp), then
@@ -397,7 +425,11 @@ Degenerate-case conventions, stated exactly and shared verbatim with `growthType
   the inner log is `≥ 0`; without this clamp a modulus decaying like `exp (-r)`
   would receive order 1 (see contract §1.1);
 * outer clamp `ENNReal.ofReal`: transient negative quotients (outer log of a value
-  in `[0,1)`, i.e. `1 ≤ M(f,r) ≤ e`) collapse to `0`;
+  in `(0,1)`, i.e. `1 < maxModulus f r < e`; endpoints give quotient exactly `0` —
+  at `M ≤ 1` the outer-log argument is `0` and `log 0 = 0`, at `M = e` it is `1`)
+  collapse to `0`;
+* classical footing: `Real.log (max x 1)` is exactly `log⁺ x`, so with the outer
+  clamp this definition is the textbook `log⁺ log⁺` formulation of order (see §1.1);
 * `maxModulus` junk (empty sphere at `r < 0`, `Real.sSup_empty`; unbounded
   norm-image at some `r`, `Real.sSup_of_not_bddAbove` — impossible for entire `f`
   but the definition is total): the junk value `0` is lifted to `1` by the inner
@@ -755,7 +787,7 @@ variables :341). `Analysis/Normed/Module/RCLike/Real.lean` :128.
 `Analysis/Normed/Group/Basic.lean` :302–:303 (`mem_sphere_one_iff_norm`,
 `to_additive` source of `mem_sphere_zero_iff_norm`) — added by Annex A F3.
 Comparison-only (codomain argument, §1): `Data/EReal/Basic.lean` :35;
-`Analysis/Asymptotics/ExpGrowth.lean` :38, :41;
+`Analysis/Asymptotics/ExpGrowth.lean` :38 (`expGrowthInf`, not used), :41 (`expGrowthSup`);
 `Analysis/SpecialFunctions/Log/ENNRealLog.lean` :46;
 `Topology/Instances/EReal/Lemmas.lean` :265.
 
@@ -788,8 +820,9 @@ contract, and must not ride along with the definitional acceptance.
   (repo:`MATHLIB_CAPABILITY_MAP.md:388`) or any other row. Stage-one
   acceptance changes **no** barrier row. The row's exit evidence is "explicit
   quantitative bounds sufficient for the selected theorem"; **definitions
-  supply zero bounds**, and no selected theorem exists (no route is active in
-  the RH queue).
+  supply zero bounds**, and no selected theorem exists (all routes remain
+  PARKED; the queue's ACTIVE slot (`RH-012`) is route-neutral and in a
+  different lane).
 - What acceptance DOES produce: a reviewed, frozen definitional target so
   that any future growth theorem in this lane is stated about a vetted object
   instead of an improvised one. That is the entire claim.
@@ -819,6 +852,11 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
    document is that the object is reviewed **before** it acquires dependents.
    Corollary: this contract must be re-opened (not patched) if review rejects
    the inner clamp or the codomain — every signature changes (§1.3).
+   (The L1–L6 calibration lemmas of this contract's own surface — including
+   their character-identical transcription into
+   `drafts/RiemannGrowthOrder.lean` — are the object under review, not
+   downstream consumers; "downstream" means any statement outside the
+   9-signature surface.)
 2. **A new axiom would be needed.** No `axiom`, `sorry`, `admit`, or
    `native_decide` on an unproved side condition, anywhere in stage two.
 3. **Any dependency on an unproved conjecture** — including smuggled binders.
@@ -873,7 +911,8 @@ acceptance of the definition itself (death condition 1).**
 **A.1 Citation re-verification: every locator printed and compared.**
 All 60 `file:line` locators in §0, G0–G2, L1–L6, and the consolidated table
 were re-printed with `sed -n Np` at the pin and matched the quoted text
-**verbatim** — including the four load-bearing traps: `Real.log` junk
+**verbatim up to §0's declared binder elision and notation normalization** —
+including the four load-bearing traps: `Real.log` junk
 (Log/Basic.lean:44, `log_neg_eq_log` :120), the `[CountableInterFilter f]`
 hypothesis on `ENNReal.limsup_add_le` (Order/Filter/ENNReal.lean:231; `atTop :
 Filter ℝ` is indeed not one: `⋂ n, Set.Ici (n : ℝ) = ∅ ∉ atTop`), the four

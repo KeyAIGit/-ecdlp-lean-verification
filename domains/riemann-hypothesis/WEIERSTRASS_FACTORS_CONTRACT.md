@@ -1,7 +1,9 @@
-# Weierstrass elementary factors / canonical product contract: draft v1.1
+# Weierstrass elementary factors / canonical product contract: draft v1.2
 
-Status: **DRAFT v1.1 (2026-08-07; v1 same day, corrected in place per the
-red-team re-verification recorded in Annex B) — non-built review artifact, offered for STAGE ONE
+Status: **DRAFT v1.2 (2026-08-07; v1 and v1.1 same day — v1.1 corrected in place per the
+red-team re-verification recorded in Annex B; v1.2 folds in the two independent
+scout reports recorded in Annex C, which RESOLVE the registered product-lemma
+obligation by sketch and re-price S1W-ORD) — non-built review artifact, offered for STAGE ONE
 (INDEPENDENT CONTRACT ACCEPTANCE) ONLY. NOT Lean-checked.** No declaration below
 has been elaborated; no `lake build` has been run against any of it. Under the one
 invariant, the Lean kernel via CI is the sole judge of every statement in this
@@ -205,6 +207,10 @@ lemma tprod_one_add_ne_zero_of_summable [CompleteSpace R] [NormMulClass R]
 -- NOTE the SummationFilter framework at the pin: ∏' is notation for the
 -- `unconditional` filter (Defs.lean:158); tprod_fintype (:481) needs [L.LeAtTop],
 -- satisfied by `unconditional`.
+-- NOTE (Annex C item 1): tprod_mul_tprod_compl (:752) sits under the section
+-- variable `variable [T2Space α]` at Basic.lean:696 — omitted from the v1.1
+-- quote. Discharged for α = ℂ by instance; no statement impact. mul_compl
+-- (:379) is via HasProd.mul_isCompl (:373) and needs no T2.
 theorem HasProd.mul_compl {s : Set β} (ha : HasProd (f ∘ (↑) : s → α) a)
     (hb : HasProd (f ∘ (↑) : (sᶜ : Set β) → α) b) : HasProd f (a * b)
 protected theorem Multipliable.tprod_mul_tprod_compl {s : Set β}
@@ -1094,7 +1100,14 @@ Basic.lean:481; `Complex.exp_ne_zero` — Exponential.lean:160; W2, W3, W7, W10.
 S1W-ORD seizes up, steps 3–6 can be run in `WithTop ℤ` via the bridge and
 transferred back once (injectivity of `ENat.map (↑· : ℕ → ℤ)` plus the `≠ ⊤`
 companion signature). This changes no statement in W12; it is proof-route
-insurance only.
+insurance only. **Transfer-route completion (Annex C item 3, verified this
+session): the injectivity/distribution steps the v1.1 text left unnamed are
+themselves pinned** — `ENat.map_natCast_injective` (Data/ENat/Basic.lean:546;
+its section needs `[AddMonoidWithOne α] [PartialOrder α] [AddLeftMono α]
+[ZeroLEOneClass α] [CharZero α]`, all instances for α = ℤ), the `@[simp]` iff
+form `ENat.map_natCast_inj` (:548), and `ENat.map_add` (:557, for
+`AddHomClass F ℕ β` casts) to push `ENat.map` through the finite sum. Route (b)
+of S1W-GEN is thus locator-complete end to end.
 
 ### Obligations (W12)
 
@@ -1175,7 +1188,7 @@ insurance only.
 
 | ID | Severity | Attaches to | One-line content |
 |---|---|---|---|
-| **S1W-ORD** | **HIGH — hardest in package** | W12 | capstone assembly: split → `tprod_fintype` → `analyticOrderAt_mul`/`finsetProd` → `Nat.card` cast chain |
+| **S1W-ORD** | **HIGH — hardest in package** | W12 | capstone assembly: split → `tprod_fintype` → `analyticOrderAt_mul`/`finsetProd` → `Nat.card` cast chain. Re-priced by Annex C: zero new analysis, six seams, days of seam work (both scouts independently), not the pool's Tier-4 "weeks" |
 | S1W-CONV | MEDIUM-HIGH | W8 | the `1 + (E - 1) = E` congr on family and limit slots |
 | S1W-SPLIT | MEDIUM | W10 | three pointwise congr-seams + subfamily-defeq |
 | S1W-PI | MEDIUM | W12 | `Pi.mul` / `Finset.prod_apply` / beta seams |
@@ -1205,7 +1218,15 @@ insurance only.
   disc (Rudin RCA 15.8; pool Tier 5). Not required by anything here.
 - **DEFERRED-W4**: `HasProdLocallyUniformlyOn.mul_compl` itself. §1.4 shows
   this package does not need it; if some later consumer does, it should be
-  proposed upstream on its own merits, not smuggled in here.
+  proposed upstream on its own merits, not smuggled in here. **Strengthened by
+  Annex C item 2 (negative result, verified this session):** the pin's only
+  one-hypothesis complement split,
+  `Multipliable.tprod_subtype_mul_tprod_subtype_compl`
+  (Topology/Algebra/InfiniteSum/Group.lean:310), sits inside `section
+  IsTopologicalGroup` under `variable [CommGroup α]` (Group.lean:32) — unusable
+  for ℂ-under-×. The two-multipliability form at Basic.lean:752 is therefore
+  genuinely the minimal pinned tool for W10's split, and the S1W-SUB
+  additive-only discipline is necessary, not stylistic.
 
 ---
 
@@ -1475,5 +1496,154 @@ scouted, bookkeeping — now with one of them (finite-product order additivity)
 found to be more pinned than the pool or draft v1 believed.
 
 *This annex records a source-reading review only. No Lean was elaborated; the
+kernel remains the sole judge at stage two. No barrier row changes, no route is
+selected, and nothing here is a claim about the truth of RH.*
+
+---
+
+## ANNEX C: DUAL-SCOUT FOLD-IN — MAIN OBLIGATION RESOLVED BY SKETCH (2026-08-07)
+
+Two independent scout reports (charge: the registered main obligation — the
+"missing product lemma" plus the zero-set/local-order computation of the
+locally-uniform infinite product) were returned against the pin
+(`fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`, re-confirmed via `git rev-parse
+HEAD` this session) and are folded in here. **Every locator asserted below was
+independently re-printed from the pinned tree by this updater before writing —
+not taken on either scout's word.** ~40 locators re-verified this session; zero
+mismatches against this contract; two mis-cites found *in the scout reports
+themselves* (item C5) and corrected here rather than propagated. Same regime as
+Annexes A–B: **no kernel verdict, no built module, no statement change, no
+barrier change, no route, no RH-truth claim.** Statements W1–W12 are untouched;
+only obligations, skeleton commentary, and this record gained detail (edit
+sites marked "Annex C item N").
+
+### Verdict on the registered main obligation: **RESOLVED BY SKETCH**
+
+The obligation as registered (`UPSTREAM_POOL.md` §2 Tier 4): a missing
+`HasProdLocallyUniformlyOn.mul_compl` priced at "weeks", plus the
+zero-set/local-order computation. Disposition after both scouts and this
+updater's re-verification:
+
+1. **The "missing product lemma" is a phantom — confirmed by both scouts
+   independently and re-verified here.** `mul_compl`/`add_compl` have zero
+   hits in the uniform layer (`Topology/Algebra/InfiniteSum/UniformOn.lean`,
+   `Analysis/Normed/Module/MultipliableUniformlyOn.lean` — both read in full
+   by scout 1; grep re-run by this updater: 0 hits); only three files in the
+   tree mention `HasProdLocallyUniformlyOn` (UniformOn.lean,
+   MultipliableUniformlyOn.lean, Cotangent.lean — re-grepped). The §1.4
+   re-derivation is **confirmed by two independent readings**: `analyticOrderAt`
+   is local, so W12 needs only the pointwise-global split
+   `Multipliable.tprod_mul_tprod_compl` (Basic.lean:752, T2 per item C1) plus
+   per-point analyticity — no uniform-layer split of any kind. DEFERRED-W4
+   stands, now with the item-C2 negative result making the :752 form *minimal*,
+   not merely sufficient.
+2. **Exactly one generic lemma is genuinely missing at the pin** —
+   `analyticOrderAt_finsetProd` (W12, `[GEN]`, statement unchanged) — **and it
+   now has two locator-complete pinned derivation routes**: (a) direct
+   `Finset.induction` on `analyticOrderAt_mul` (Order.lean:497), template =
+   the pin's own proof of `meromorphicOrderAt_prod` (Meromorphic/Order.lean:440–449:
+   `Finset.induction` + binary `meromorphicOrderAt_mul` + `MeromorphicAt.prod`,
+   re-printed this session); (b) carrier transfer through
+   `meromorphicOrderAt_fun_prod` (:456, which pre-solves the
+   `Finset.prod_apply` seam via `convert!` — proof text re-verified) and
+   `AnalyticAt.meromorphicOrderAt_eq` (:279), closed by the **newly verified**
+   `ENat.map_natCast_injective` / `map_natCast_inj` / `ENat.map_add`
+   (Data/ENat/Basic.lean:546/:548/:557 — item C3). S1W-GEN stays LOW.
+3. **The zero-set/local-order computation decomposes into pinned ingredients
+   plus assembly.** Both scouts independently produced the same four-move
+   sketch, recorded as the S1W-ORD capstone sketch below; every cited
+   ingredient re-verified by this updater. No new mathematics remains — the
+   residual cost is seam work, honestly re-priced in the register:
+   **days of seam work, not the pool's "weeks"** (severity kept HIGH: it is
+   still the hardest single proof in the package).
+
+### The S1W-ORD capstone assembly sketch (dual-scout consensus, all locators re-verified)
+
+At `w : ℂ`, `S := {i | a i = w}`, finite via the additive
+`Summable.tendsto_cofinite_zero` (Group.lean:365, `@[to_additive]` re-checked)
+→ W7 escape-to-infinity → fiber finiteness:
+
+1. **Split as a function identity** (`funext`, every `z`): restrict
+   `Summable (fun i ↦ ‖E_p(z / a i) − 1‖)` (W8) through the additive
+   `Summable.subtype` (Group.lean:300) to `S` and `Sᶜ`; re-enter ℂ via
+   `multipliable_one_add_of_summable` (Log/Summable.lean:169) modulo the
+   `1 + (E−1) = E` congr (`tprod_congr`, Basic.lean:471); apply
+   `Multipliable.tprod_mul_tprod_compl` (Basic.lean:752; `[T2Space ℂ]` by
+   instance) pointwise. No uniform content — `analyticOrderAt_mul` consumes
+   only a function identity plus two `AnalyticAt` facts at `w`.
+2. **Head** collapses to a `Finset.prod` by `tprod_fintype` (Basic.lean:481;
+   `[L.LeAtTop]` holds for `unconditional`); each factor has order 1 at `w` by
+   `analyticOrderAt_comp_of_deriv_ne_zero` (Order.lean:561) +
+   `AnalyticAt.analyticOrderAt_eq_one_of_zero_deriv_ne_zero` (:328) +
+   `deriv_const_sub_id` (Deriv/Add.lean:449); sum by
+   `analyticOrderAt_finsetProd` → `Nat.card S` via `Nat.card_coe_set_eq`
+   (Data/Set/Card.lean:642) + `Set.ncard_eq_toFinset_card'` (:649).
+3. **Tail** is the subfamily's own canonical product (defeq, S1W-SPLIT),
+   analytic at `w` by subfamily-W8+W9
+   (`hasProdLocallyUniformlyOn_of_forall_compact` UniformOn.lean:196 +
+   `Summable.hasProdUniformlyOn_one_add` MultipliableUniformlyOn.lean:87 +
+   `TendstoLocallyUniformlyOn.differentiableOn` LocallyUniformLimit.lean:135
+   by defeq, DedekindEta.lean:91 pattern), and **nonzero at `w`** by
+   `tprod_one_add_ne_zero_of_summable` (Log/Summable.lean:216) since every
+   tail factor avoids `w` — order 0 by Order.lean:133.
+4. `analyticOrderAt_mul` (Order.lean:497): total = `Nat.card {i | a i = w} + 0`;
+   the `≠ ⊤` companion by `WithTop.natCast_ne_top`
+   (Algebra/Order/Monoid/Unbundled/WithTop.lean:298).
+
+This is exactly W10–W12's existing skeleton with every previously-prose step
+now carrying a re-verified locator. No statement changed.
+
+### Delta items (edit sites marked in place)
+
+- **C1 (minor amendment, §0).** The v1.1 quote of
+  `Multipliable.tprod_mul_tprod_compl` omitted the section variable
+  `variable [T2Space α]` at Basic.lean:696 (re-printed this session).
+  Harmless — ℂ is T2 — but the quote-comment now says so. `HasProd.mul_compl`
+  (:379, via `HasProd.mul_isCompl` :373) needs no T2.
+- **C2 (negative result, DEFERRED-W4 strengthened).** The pin's one-hypothesis
+  split `Multipliable.tprod_subtype_mul_tprod_subtype_compl` (Group.lean:310)
+  sits under `variable [CommGroup α]` (Group.lean:32, `section
+  IsTopologicalGroup` :30 — section structure walked this session): unusable
+  for ℂ-under-×. Basic.lean:752 is genuinely minimal; S1W-SUB is necessary.
+- **C3 (favorable, W12 fallback route completed).** The transfer route's
+  previously-unnamed closing steps are pinned: `ENat.map_natCast_injective`
+  (Data/ENat/Basic.lean:546), `ENat.map_natCast_inj` (:548, `@[simp]`),
+  `ENat.map_add` (:557). Neither scout supplied these locators; found and
+  verified by this updater. Route (b) of S1W-GEN is locator-complete.
+- **C4 (confirmation, no edit).** The `:87` docstring's "open compact `K`"
+  pin-side typo (MultipliableUniformlyOn.lean:85, hypothesis is `IsCompact K`
+  only) re-confirmed — Annex A item 3 stands verbatim. The `_of_clog`
+  criterion (MultipliableUniformlyOn.lean:59 region) requires nonvanishing on
+  the whole set, so it cannot replace the zero-set statement (scout 1,
+  consistent with §1.3's Cotangent-dodge analysis). Cotangent anchors
+  :78/:80/:94/:99/:105/:118/:125/:132 all re-grepped this session — line-exact.
+- **C5 (scout-report defects, NOT propagated).** Scout 1 cited "Defs.lean:77"
+  for the `unconditional` `∏'` notation — the notation is at **Defs.lean:158**
+  (this contract's existing citation; :74–:80 is the `HasProd` docstring
+  describing the unconditional default) — and ":377" for `HasProd.mul_isCompl`,
+  which sits at **:373**. Both re-printed this session. No contract text ever
+  carried either error; recorded so the scout reports are not treated as
+  locator-authoritative over this annex.
+
+### What the obligation became, and the new riskiest step
+
+- **Registered obligation → RESOLVED BY SKETCH.** No pinned route was
+  "discovered" that removes the package (nothing at the pin states the
+  zero-set/order of a canonical product — the Cotangent dodge is still the
+  in-tree frontier); instead, the missing-lemma half of the obligation
+  dissolved (phantom, twice-confirmed) and the computation half now has a
+  complete assembly sketch from pinned ingredients plus the single small
+  `[GEN]` lemma with two locator-complete derivation routes.
+- **New riskiest step: the S1W-ORD seam cluster, specifically the
+  `funext`-lifted split feeding `analyticOrderAt_mul` through the `Pi.mul`
+  vs `fun z ↦ F z * T z` defeq** (capstone steps 1→4), with the
+  `tprod_fintype`/`toFinset` conversion under the SummationFilter framework
+  as its immediate second. It is bookkeeping, not analysis; pinned fallback
+  if the global identity resists: `analyticOrderAt_congr` (Order.lean:175)
+  needs the identity only on a neighborhood filter. Highest surviving
+  non-capstone obligation: S1W-CONV (MEDIUM-HIGH, the two-slot
+  `1 + (E − 1) = E` congr in W8).
+
+*This annex records a source-reading fold-in only. No Lean was elaborated; the
 kernel remains the sole judge at stage two. No barrier row changes, no route is
 selected, and nothing here is a claim about the truth of RH.*

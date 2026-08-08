@@ -2,12 +2,17 @@
 
 Status: **DRAFT v1 (2026-08-07) — non-built design artifact, offered for STAGE ONE
 (INDEPENDENT CONTRACT ACCEPTANCE) ONLY. NOT Lean-checked.** No declaration below
-has been elaborated; no `lake build` has been run against any of it; no draft
-`.lean` file exists for this package yet. Under the one invariant, the Lean
+has been elaborated; no `lake build` has been run against any of it; a
+non-built companion draft exists at
+`domains/riemann-hypothesis/drafts/MellinBound.lean` (outside every lake
+target and the no-`sorry` gate's scan surface, per `drafts/README.md`); no CI
+workflow elaborates it, and it carries no kernel verdict. Under the one
+invariant, the Lean
 kernel via CI is the sole judge of every statement in this contract, and this
 document carries no kernel verdict of any kind. Red-team re-verification of
-every locator at the pin: **Annex A (2026-08-07)** — four locator corrections
-and one obligation resolution applied in place, no signature changed.
+every locator at the pin: **Annex A (2026-08-07)** — locator corrections
+(R1–R2), one prose-justification repair (R3), and one obligation resolution
+(R4) applied in place, no signature changed.
 
 **Two-stage gate.** Same convention as `MULTIPLICITY_CONTRACT.md`
 (§Two-stage gate and promotion ordering there). Stage one is acceptance of the
@@ -467,19 +472,27 @@ theorem norm_mellin_le_add_of_re_mem_Icc {E : Type*} [NormedAddCommGroup E]
       nlinarith [Real.rpow_nonneg (le_of_lt ht) (b - 1), hg0 t ht,
         mul_le_mul_of_nonneg_right this (hg0 t ht)]
   -- Step 2: middle-exponent integrability from the endpoints (MEL-4a):
+  have hsum : MeasureTheory.IntegrableOn
+      (fun t : ℝ => t ^ (a - 1) * g t + t ^ (b - 1) * g t) (Set.Ioi 0) := hga.add hgb
+  have hms : MeasureTheory.AEStronglyMeasurable (fun t : ℝ => t ^ (s.re - 1) * g t)
+      (MeasureTheory.volume.restrict (Set.Ioi 0)) :=
+    ((((continuousOn_id' (Set.Ioi (0 : ℝ))).rpow_const     -- set arg EXPLICIT (ContinuousOn.lean:737)
+        fun t ht => Or.inl (ne_of_gt ht)).aestronglyMeasurable
+      measurableSet_Ioi).mul hmg)                            -- see MEL-4a (route ii)
   have hgs : MeasureTheory.IntegrableOn (fun t : ℝ => t ^ (s.re - 1) * g t) (Set.Ioi 0) := by
-    refine (hga.add hgb).mono ?_ ?_                          -- L1Space/Integrable.lean:86
-    · exact ((continuousOn_id'.rpow_const fun t ht => Or.inl (ne_of_gt ht)
-        ).aestronglyMeasurable measurableSet_Ioi).mul hmg      -- see MEL-4a (route ii)
-    · filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioi] with t ht
-      have h0 : (0:ℝ) ≤ g t := hg0 t ht
-      rw [Real.norm_of_nonneg (by positivity), Real.norm_of_nonneg (by positivity)]
-      exact hpt t ht
+    refine MeasureTheory.Integrable.mono hsum.integrable hms ?_
+    -- Integrable.mono NAMED, not dot notation: L1Space/Integrable.lean:86 via
+    -- `IntegrableOn.integrable` (IntegrableOn.lean:95); `(hga.add hgb).mono`
+    -- would be captured by `IntegrableOn.mono` (IntegrableOn.lean:124) — see MEL-4a
+    filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioi] with t ht
+    have h0 : (0:ℝ) ≤ g t := hg0 t ht
+    rw [Real.norm_of_nonneg (by positivity), Real.norm_of_nonneg (by positivity)]
+    exact hpt t ht
   -- Step 3: assemble.
   calc ‖mellin f s‖ ≤ ∫ t in Set.Ioi 0, t ^ (s.re - 1) * g t :=
         norm_mellin_le_of_norm_le hgs h                      -- MB2
     _ ≤ ∫ t in Set.Ioi 0, (t ^ (a - 1) * g t + t ^ (b - 1) * g t) :=
-        MeasureTheory.setIntegral_mono_on hgs (hga.add hgb) measurableSet_Ioi hpt
+        MeasureTheory.setIntegral_mono_on hgs hsum measurableSet_Ioi hpt
     _ = _ := MeasureTheory.integral_add hga hgb              -- Bochner/Basic.lean:241
 ```
 
@@ -501,12 +514,23 @@ Bochner/Set.lean:764; `integral_add` Bochner/Basic.lean:241;
   originally-sketched route (i) — a `Measurable.rpow_const` /
   `measurable_rpow` name — has **zero grep hits at the pin** and is
   withdrawn. Route (ii) is now the primary route, fully located at the pin:
-  `continuousOn_id'` (Topology/ContinuousOn.lean:737) `.rpow_const`
+  `continuousOn_id' (Set.Ioi (0 : ℝ))` (Topology/ContinuousOn.lean:737 — the
+  set argument is **explicit** there and must be supplied; bare
+  `continuousOn_id'.rpow_const` is dot notation on a Pi-type term and may not
+  resolve) `.rpow_const`
   (`ContinuousOn.rpow_const`, Analysis/SpecialFunctions/Pow/Continuity.lean:278,
   side condition `∀ t ∈ Ioi 0, t ≠ 0 ∨ _` discharged by `Or.inl (ne_of_gt ht)`),
   then `ContinuousOn.aestronglyMeasurable`
   (MeasureTheory/Integral/IntegrableOn.lean:760; instance side conditions are
-  satisfied by `ℝ`) at `measurableSet_Ioi`, then `.mul hmg`. In-tree analogue
+  satisfied by `ℝ`) at `measurableSet_Ioi`, then `.mul hmg`. The assembly step
+  must call `Integrable.mono` **by name** —
+  `MeasureTheory.Integrable.mono hsum.integrable hms` with the restrict-measure
+  reading made explicit through `IntegrableOn.integrable`
+  (MeasureTheory/Integral/IntegrableOn.lean:95) — because dot notation on an
+  `IntegrableOn`-typed term (`(hga.add hgb).mono`) is captured by
+  `IntegrableOn.mono` (IntegrableOn.lean:124, signature `(hs : s ⊆ t)
+  (hμ : μ ≤ ν)` — a set/measure-monotonicity lemma, the wrong target; same
+  defect class as `MULTIPLICITY_CONTRACT.md` finding A2). In-tree analogue
   of the continuity-on-`Ioi 0` maneuver: the `continuousAt_ofReal_cpow_const`
   usages at MellinTransform.lean:338 and :345 (complex variant).
   Also in this obligation: the two `Real.norm_of_nonneg` rewrites and the
@@ -593,12 +617,14 @@ all**: it is `norm_integral_le_integral_norm` (Bochner/Basic.lean:924, proved
 at the pin with the non-`AEStronglyMeasurable` case internalized) composed
 with `setIntegral_congr_fun`, an integral *congruence* that holds with or
 without integrability. For orientation only, the degenerate case resolves as:
-if the Mellin integrand is not a.e. strongly measurable, both sides are `0`
-(`integral_non_aestronglyMeasurable`, used inside :924's own proof); if it is
-a.e. strongly measurable but not integrable, `integrable_norm_iff` plus
+if the Mellin integrand is not a.e. strongly measurable, the LHS is `0`
+(`integral_non_aestronglyMeasurable`, Bochner/Basic.lean:213, used inside
+:924's own proof) and the RHS is nonnegative (nonneg integrand; it need not be
+`0` — the norm of a non-measurable integrand can itself be integrable); if it
+is a.e. strongly measurable but not integrable, `integrable_norm_iff` plus
 `integral_undef` zero both sides. (An earlier draft cited
 `mellin_convergent_iff_norm` here; that lemma carries an
-`AEStronglyMeasurable f` hypothesis, MellinTransform.lean:190, so it does not
+`AEStronglyMeasurable f` hypothesis, MellinTransform.lean:189, so it does not
 cover the non-measurable case — Annex A finding R3.) Junk-value semantics
 make the real-valued unconditional shape of MB1 honest at the pin; no
 `ENNReal`/`tsub` restatement and no `IntegrableOn` guard is needed on MB1,
@@ -614,7 +640,7 @@ and death condition 3 keeps it that way.
 | MEL-2b | LOW | as MEL-1a/1b for MB2's goal shape |
 | MEL-3a | LOW | `setIntegral_mono_on` `include`-argument order |
 | MEL-3b | LOW | `t = 1` boundary lands in the `1 ≤ t` branch |
-| MEL-4a | **MEDIUM** | MB4 step 2: `AEStronglyMeasurable` of the middle-exponent integrand + `Real.norm_of_nonneg`/`positivity` bookkeeping; route (ii) now fully located at the pin (Continuity.lean:278 + IntegrableOn.lean:760 + ContinuousOn.lean:737 — Annex A R4); route (i) name withdrawn (zero hits); signature-strengthening fallback re-opens MB4 only |
+| MEL-4a | **MEDIUM** | MB4 step 2: `AEStronglyMeasurable` of the middle-exponent integrand + `Real.norm_of_nonneg`/`positivity` bookkeeping; route (ii) now fully located at the pin (Continuity.lean:278 + IntegrableOn.lean:760 + ContinuousOn.lean:737 — Annex A R4); route (i) name withdrawn (zero hits); `Integrable.mono` must be called by name via `IntegrableOn.integrable` (IntegrableOn.lean:95) — dot notation is captured by `IntegrableOn.mono` (:124); `continuousOn_id'`'s set argument is explicit; signature-strengthening fallback re-opens MB4 only |
 | MEL-4b | LOW | structured replacement for the `nlinarith` closers in `hpt` |
 | MEL-4c | LOW | `integral_add` final-step shape |
 
@@ -701,7 +727,8 @@ body; none changes any MB1–MB4 signature, so stage-one status is unaffected
    `by_cases h : AEStronglyMeasurable f μ` and zeroes the non-measurable case),
    and `setIntegral_congr_fun` (Bochner/Set.lean:73) is a congruence needing no
    integrability, so **MB1's unconditional real-valued shape is honest**:
-   in every degenerate case both sides are `0` and the inequality holds. No
+   in every degenerate case the LHS is `0` and the RHS is nonnegative, so the
+   inequality holds. No
    `ENNReal` restatement is needed, and adding an `IntegrableOn` guard to MB1
    would be strictly weaker (death condition 3 correctly forbids it). MB2–MB4
    place `IntegrableOn` on the **bound** integrand, exactly matching the
@@ -724,7 +751,8 @@ body; none changes any MB1–MB4 signature, so stage-one status is unaffected
    evenKernel a` at :255, kernel :65, `evenKernel_def` :77;
    AbstractFuncEq.lean:385/:81/:258); the name-collision scan was re-run this
    session with zero hits for all five proposed names; cross-references stand
-   (`MULTIPLICITY_CONTRACT.md` finding A4 at :1942, death condition 9 at :383;
+   (`MULTIPLICITY_CONTRACT.md` finding A4 at :1942, death condition 9 at
+   :1905, cross-referenced at :383;
    `AnalyticAt.conj_conj` really did ride the conjugation package,
    `CONJ_SYMMETRY_CONTRACT.md`:5, merged PR #307). **PASS; no finding.**
 4. **Citation audit.** All Bochner, Pow/Real, MulAction, L1Space, Restrict,
@@ -737,7 +765,7 @@ body; none changes any MB1–MB4 signature, so stage-one status is unaffected
 |---|---|---|---|
 | R1 | LOW (citation accuracy) | The claim that Mathlib "runs exactly this `simp_rw` chain twice", second occurrence ":349", was wrong on both counts: the full chain `norm_smul, norm_cpow_eq_rpow_re_of_pos, sub_re, one_re` fires **once** (:198); at the second site the pin runs a *different* `simp_rw` set (:351) followed by `rw [norm_cpow_eq_rpow_re_of_pos ht]` at **:353**. (`:349` is the drifted locator inherited from `UPSTREAM_POOL.md:787`, which carries the same error; the pool file is outside this contract's write scope and left untouched.) | Mechanism §, §0 comment, MB1 deps, and pinned-table row corrected to :198 (chain) / :353 (step) |
 | R2 | LOW (citation accuracy) | Strip-split precedent cited as ":350–355"; the split `rcases le_or_gt 1 t` actually spans **:354–:366**. MB2's "`filter_upwards` shape at :347" was doubly off: the in-tree extraction is at **:350** and is spelled `(ae_restrict_mem measurableSet_Ioi).mono`, not `filter_upwards`. | All three citations corrected |
-| R3 | LOW (unsound prose justification; statement unaffected) | The sanity paragraph justified MB1's degenerate case "via `mellin_convergent_iff_norm`", but that lemma requires `hfc : AEStronglyMeasurable f` (MellinTransform.lean:190) and so cannot cover the non-measurable case it was invoked for. MB1's truth never depended on the paragraph (see A.1.1). | Paragraph rewritten with the honest chain: `integral_non_aestronglyMeasurable` / `integrable_norm_iff` + `integral_undef` |
+| R3 | LOW (unsound prose justification; statement unaffected) | The sanity paragraph justified MB1's degenerate case "via `mellin_convergent_iff_norm`", but that lemma requires `hfc : AEStronglyMeasurable f` (MellinTransform.lean:189) and so cannot cover the non-measurable case it was invoked for. MB1's truth never depended on the paragraph (see A.1.1). | Paragraph rewritten with the honest chain: `integral_non_aestronglyMeasurable` / `integrable_norm_iff` + `integral_undef` |
 | R4 | MEDIUM (obligation resolution, favorable) | MEL-4a route (i) hinged on a `Measurable.rpow_const`-style name "if present at the pin — not re-verified". Re-verified: **no such name exists at the pin** (zero grep hits for `Measurable.rpow_const`, `measurable_rpow`, `Measurable.rpow` tree-wide); route (i) as written was dead. Route (ii) was then located exactly: `continuousOn_id'` (Topology/ContinuousOn.lean:737) + `ContinuousOn.rpow_const` (Pow/Continuity.lean:278, side condition by `Or.inl (ne_of_gt ht)`) + `ContinuousOn.aestronglyMeasurable` (Integral/IntegrableOn.lean:760) + `.mul hmg`. | MEL-4a rewritten around route (ii); three locators added to the pinned table; severity kept MEDIUM for the remaining `congr`/`norm_of_nonneg`/`positivity` assembly, but the "lemma name not located" risk is retired |
 
 ### A.3 Verdict
