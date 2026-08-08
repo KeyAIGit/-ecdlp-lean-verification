@@ -10,7 +10,15 @@ CI elaborates it standalone and validates the output with
 -/
 
 #print axioms AnalyticAt.conj_conj
+#print axioms Complex.exists_affine_of_norm_le_pow_one
+#print axioms Complex.exists_const_forall_eq_of_norm_le
+#print axioms Complex.exists_polynomial_of_norm_le_pow
+#print axioms Complex.iteratedDeriv_eq_zero_of_norm_le_pow
+#print axioms Complex.taylorSum_eq_of_norm_le_pow
 #print axioms Gammaℝ_conj
+#print axioms InnerProductSpace.HarmonicOnNhd.harnack
+#print axioms InnerProductSpace.HarmonicOnNhd.harnack_half
+#print axioms InnerProductSpace.HarmonicOnNhd.pos_of_pos_center
 #print axioms ResearchOS.NumberTheory.carmichael_1105_factorization
 #print axioms ResearchOS.NumberTheory.carmichael_1105_not_prime
 #print axioms ResearchOS.NumberTheory.carmichael_1729_factorization
@@ -40,12 +48,18 @@ CI elaborates it standalone and validates the output with
 #print axioms analyticOrderAt_riemannZeta_one_sub_conj
 #print axioms completedRiemannZeta_conj
 #print axioms completedRiemannZeta₀_conj
+#print axioms continuousOn_poissonKernel
 #print axioms differentiable_riemannXi
 #print axioms meromorphicOn_riemannXi
 #print axioms meromorphicOn_riemannZeta_strip
 #print axioms meromorphicOrderAt_riemannXi_ne_top
 #print axioms meromorphicOrderAt_riemannZeta_ne_top_of_mem_strip
+#print axioms norm_mellin_le
+#print axioms norm_mellin_le_add_of_re_mem_Icc
+#print axioms norm_mellin_le_of_norm_le
+#print axioms norm_mellin_le_of_re_le
 #print axioms one_notMem_riemannZetaZeros
+#print axioms poissonKernel_mem_Icc
 #print axioms riemannHypothesis_iff_riemannXi_zeros_re_eq_half
 #print axioms riemannHypothesis_iff_zero_free_gt_half
 #print axioms riemannHypothesis_iff_zetaZeros_re_eq_half
@@ -91,3 +105,4 @@ CI elaborates it standalone and validates the output with
 #print axioms riemannZeta_ne_zero_of_re_le_zero
 #print axioms riemannZeta_one_sub_eq_zero_iff
 #print axioms riemannZeta_zero_mem_critical_strip
+#print axioms setIntegral_rpow_mul_mono_exponent

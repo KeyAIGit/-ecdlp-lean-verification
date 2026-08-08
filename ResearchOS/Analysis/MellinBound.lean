@@ -1,21 +1,50 @@
 /-
-DRAFTS-LANE MIRROR — generic Mellin norm-bound package (UPSTREAM-POOL §6),
-MB1-MB4.
+Built generic Mellin norm-bound package: promotion of the independently
+accepted MB1-MB4 statement surface in
+`domains/riemann-hypothesis/MELLIN_BOUND_CONTRACT.md` (acceptance record:
+`notes/reviews/MELLIN_ACCEPTANCE_2026_08_07.md`; promotion record:
+`notes/reviews/MELLIN_PROMOTION_2026_08_07.md`).
 
-This file is the drafts-lane copy of the built module
-`ResearchOS/Analysis/MellinBound.lean`, implementing
-`domains/riemann-hypothesis/MELLIN_BOUND_CONTRACT.md` (statement surface
-independently accepted 2026-08-07, `notes/reviews/MELLIN_ACCEPTANCE_2026_08_07.md`;
-promotion record `notes/reviews/MELLIN_PROMOTION_2026_08_07.md`). From the
-first `import` below through end of file it is byte-identical to the built
-module; only this leading header differs. It is NOT part of any lake target
-and is not itself kernel-checked: the kernel's verdict applies to the built
-copy, and any proof-only repair must be applied to both copies before a new
-CI run. A statement change stops promotion and returns to contract review.
+The package proves five generic norm inequalities for `mellin f s`, for an
+arbitrary `f : ℝ → E` with `[NormedAddCommGroup E] [NormedSpace ℂ E]`: the
+unconditional bound of `‖mellin f s‖` by the real integral of
+`t ^ (s.re - 1) * ‖f t‖` over `Set.Ioi 0` (MB1); the dominated form in which
+a pointwise majorant `g` of `‖f‖` carries the integrability hypothesis on the
+BOUND, never on `f` (MB2); monotonicity of that real bound in the rpow
+exponent on the integrand class supported in `[1, ∞)`, plus its Mellin-level
+consequence (MB3, two signatures); and a uniform bound on a closed vertical
+strip `a ≤ re s ≤ b` from endpoint data alone (MB4). Nothing is computed and
+nothing is shown convergent: MB2-MB4 ASSUME integrability of the bound, and
+`not_integrableOn_Ioi_rpow` at the pin shows those hypotheses are never
+vacuous.
 
-The package is generic complex analysis and measure theory: it closes no
-barrier row, selects no route, and says nothing about the Riemann
-Hypothesis.
+State: this package is GENERIC complex analysis and measure theory over
+pinned Mathlib, with zero repository prerequisites -- it imports no repo
+module. It mentions no zeta function, no xi, no `completedRiemannZeta₀`, no
+theta kernel, no `WeakFEPair`, and no zero of anything. It closes NO barrier
+row of `domains/riemann-hypothesis/MATHLIB_CAPABILITY_MAP.md` and no `S1-*`
+item; its capability-map effect is INVENTORY ONLY (contract death condition
+6: generic machinery lowers the cost of a future exit but never retires a
+row). It proves, disproves, advances, and evidences nothing about the
+Riemann Hypothesis, in either direction, and selects no route.
+
+Module placement: `ResearchOS/Analysis/`, deliberately NOT
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/`. The surface is
+domain-neutral, so filing it under the RH subtree would present generic
+machinery as RH-lane content; the ledger pins `riemann-hypothesis` rows to
+that subtree for exactly that reason, and these rows are `MB-*` rows of the
+domain-neutral `analysis-generic` lane instead.
+
+Kernel verdict: delivered by CI on this promotion change, never by this
+header. `lake build` compiles the module, the no-incomplete-proof gate scans
+it, the regenerated `ResearchOS/LedgerAxiomAudit.lean` + `check_axioms.py`
+enforce the per-row `standard` axiom base, and
+`gen_researchos_registry.py --check` enforces inverse coverage. If any gate
+is red, no row is counted.
+
+All five public declarations are ledgered as `MB-*` rows in
+`VERIFIED_RESEARCHOS.md` and audited through the generated
+`ResearchOS/LedgerAxiomAudit.lean` with axiom base `standard`.
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 -/

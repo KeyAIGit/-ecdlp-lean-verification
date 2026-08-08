@@ -1,22 +1,58 @@
 /-
-DRAFTS-LANE MIRROR — polynomial-growth Liouville package (UPSTREAM-POOL item
-4), L1-L5.
+Built polynomial-growth Liouville package: promotion of the independently
+accepted L1-L5 statement surface in
+`domains/riemann-hypothesis/POLY_LIOUVILLE_CONTRACT.md` (acceptance record:
+`notes/reviews/POLY_LIOUVILLE_ACCEPTANCE_2026_08_07.md`; promotion record:
+`notes/reviews/POLY_LIOUVILLE_PROMOTION_2026_08_08.md`).
 
-This file is the drafts-lane copy of the built module
-`ResearchOS/Analysis/PolyLiouville.lean`, implementing
-`domains/riemann-hypothesis/POLY_LIOUVILLE_CONTRACT.md` (statement surface
-independently accepted 2026-08-07,
-`notes/reviews/POLY_LIOUVILLE_ACCEPTANCE_2026_08_07.md`; promotion record
-`notes/reviews/POLY_LIOUVILLE_PROMOTION_2026_08_08.md`). From the first
-`import` below through end of file it is byte-identical to the built module;
-only this leading header differs. It is NOT part of any lake target and is
-not itself kernel-checked: the kernel's verdict applies to the built copy,
-and any proof-only repair must be applied to both copies before a new CI run.
-A statement change stops promotion and returns to contract review.
+The package proves five generic statements about entire functions of
+polynomial growth. L1, the statement carrying all the analysis: if
+`f : ℂ → F` is `Differentiable ℂ` into a Banach space and satisfies
+`‖f z‖ ≤ C * (1 + ‖z‖) ^ n` everywhere, then `iteratedDeriv k f c = 0` for
+every `k > n` and every centre `c` — the Cauchy estimate over growing radii,
+killed by a polynomial-division limit. L2, the Banach-valued collapse: such
+an `f` equals its degree-`n` Taylor sum at every centre, obtained by
+uniqueness of `HasSum` against the pinned entire Taylor series. L3, the
+packaging over `ℂ → ℂ`: such an `f` is `Polynomial.eval` of some
+`p : Polynomial ℂ` with `p.natDegree ≤ n`. L4 and L5 are the degree-0 and
+degree-1 corollaries (bounded ⇒ constant, linear growth ⇒ affine); L4 is a
+sanity anchor, since the pinned bounded-family Liouville theorem
+(`Differentiable.exists_const_forall_eq_of_bounded`, Liouville.lean:123)
+proves the same thing by a different route.
 
-The package is generic complex analysis: it closes no barrier row (in
-particular `S1-GROWTH` stays OPEN and untouched), selects no route, and says
-nothing about the Riemann Hypothesis.
+State: this package is GENERIC complex analysis over pinned Mathlib, with
+zero repository prerequisites -- it imports no repo module. It mentions no
+zeta function, no xi, no `completedRiemannZeta₀`, no `LSeries`, no critical
+strip, and no zero of anything; all five statements quantify over an
+arbitrary entire `f`. It closes NO barrier row of
+`domains/riemann-hypothesis/MATHLIB_CAPABILITY_MAP.md` and no `S1-*` item;
+in particular `S1-GROWTH` ("no zeta/xi vertical or order-one growth
+theorem", `MATHLIB_CAPABILITY_MAP.md:388`) remains OPEN and untouched --
+polynomial growth of a generic `f` does not reach that row's order-one
+exponential ζ/ξ scope. The capability-map effect is INVENTORY ONLY (contract
+death condition 6, inheriting `MULTIPLICITY_CONTRACT.md` finding A4: generic
+machinery lowers the cost of a future exit but never retires a row). It
+proves, disproves, advances, and evidences nothing about the Riemann
+Hypothesis, in either direction, and selects no route.
+
+Module placement: `ResearchOS/Analysis/`, deliberately NOT
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/`. The surface is
+domain-neutral, so filing it under the RH subtree would present generic
+machinery as RH-lane content; the ledger pins `riemann-hypothesis` rows to
+that subtree for exactly that reason, and these rows are `PL-*` rows of the
+domain-neutral `analysis-generic` lane instead -- the same shelf, and the
+same reasoning, as the `MB-*` Mellin rows.
+
+Kernel verdict: delivered by CI on this promotion change, never by this
+header. `lake build` compiles the module, the no-incomplete-proof gate scans
+it, the regenerated `ResearchOS/LedgerAxiomAudit.lean` + `check_axioms.py`
+enforce the per-row `standard` axiom base, and
+`gen_researchos_registry.py --check` enforces inverse coverage. If any gate
+is red, no row is counted.
+
+All five public declarations are ledgered as `PL-*` rows in
+`VERIFIED_RESEARCHOS.md` and audited through the generated
+`ResearchOS/LedgerAxiomAudit.lean` with axiom base `standard`.
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 -/

@@ -1,10 +1,18 @@
 {
   "schema_version": 1,
   "source": "VERIFIED_RESEARCHOS.md + built public ResearchOS source (audit harnesses excluded by exact path)",
-  "ledger_rows": 81,
+  "ledger_rows": 96,
   "ledger_declarations": [
     "AnalyticAt.conj_conj",
+    "Complex.exists_affine_of_norm_le_pow_one",
+    "Complex.exists_const_forall_eq_of_norm_le",
+    "Complex.exists_polynomial_of_norm_le_pow",
+    "Complex.iteratedDeriv_eq_zero_of_norm_le_pow",
+    "Complex.taylorSum_eq_of_norm_le_pow",
     "Gammaℝ_conj",
+    "InnerProductSpace.HarmonicOnNhd.harnack",
+    "InnerProductSpace.HarmonicOnNhd.harnack_half",
+    "InnerProductSpace.HarmonicOnNhd.pos_of_pos_center",
     "ResearchOS.NumberTheory.carmichael_1105_factorization",
     "ResearchOS.NumberTheory.carmichael_1105_not_prime",
     "ResearchOS.NumberTheory.carmichael_1729_factorization",
@@ -34,12 +42,18 @@
     "analyticOrderAt_riemannZeta_one_sub_conj",
     "completedRiemannZeta_conj",
     "completedRiemannZeta₀_conj",
+    "continuousOn_poissonKernel",
     "differentiable_riemannXi",
     "meromorphicOn_riemannXi",
     "meromorphicOn_riemannZeta_strip",
     "meromorphicOrderAt_riemannXi_ne_top",
     "meromorphicOrderAt_riemannZeta_ne_top_of_mem_strip",
+    "norm_mellin_le",
+    "norm_mellin_le_add_of_re_mem_Icc",
+    "norm_mellin_le_of_norm_le",
+    "norm_mellin_le_of_re_le",
     "one_notMem_riemannZetaZeros",
+    "poissonKernel_mem_Icc",
     "riemannHypothesis_iff_riemannXi_zeros_re_eq_half",
     "riemannHypothesis_iff_zero_free_gt_half",
     "riemannHypothesis_iff_zetaZeros_re_eq_half",
@@ -84,11 +98,20 @@
     "riemannZeta_ne_zero_of_re_eq_zero",
     "riemannZeta_ne_zero_of_re_le_zero",
     "riemannZeta_one_sub_eq_zero_iff",
-    "riemannZeta_zero_mem_critical_strip"
+    "riemannZeta_zero_mem_critical_strip",
+    "setIntegral_rpow_mul_mono_exponent"
   ],
   "axiom_base": {
     "AnalyticAt.conj_conj": "standard",
+    "Complex.exists_affine_of_norm_le_pow_one": "standard",
+    "Complex.exists_const_forall_eq_of_norm_le": "standard",
+    "Complex.exists_polynomial_of_norm_le_pow": "standard",
+    "Complex.iteratedDeriv_eq_zero_of_norm_le_pow": "standard",
+    "Complex.taylorSum_eq_of_norm_le_pow": "standard",
     "Gammaℝ_conj": "standard",
+    "InnerProductSpace.HarmonicOnNhd.harnack": "standard",
+    "InnerProductSpace.HarmonicOnNhd.harnack_half": "standard",
+    "InnerProductSpace.HarmonicOnNhd.pos_of_pos_center": "standard",
     "ResearchOS.NumberTheory.carmichael_1105_factorization": "standard",
     "ResearchOS.NumberTheory.carmichael_1105_not_prime": "standard",
     "ResearchOS.NumberTheory.carmichael_1729_factorization": "standard",
@@ -118,12 +141,18 @@
     "analyticOrderAt_riemannZeta_one_sub_conj": "standard",
     "completedRiemannZeta_conj": "standard",
     "completedRiemannZeta₀_conj": "standard",
+    "continuousOn_poissonKernel": "standard",
     "differentiable_riemannXi": "standard",
     "meromorphicOn_riemannXi": "standard",
     "meromorphicOn_riemannZeta_strip": "standard",
     "meromorphicOrderAt_riemannXi_ne_top": "standard",
     "meromorphicOrderAt_riemannZeta_ne_top_of_mem_strip": "standard",
+    "norm_mellin_le": "standard",
+    "norm_mellin_le_add_of_re_mem_Icc": "standard",
+    "norm_mellin_le_of_norm_le": "standard",
+    "norm_mellin_le_of_re_le": "standard",
     "one_notMem_riemannZetaZeros": "standard",
+    "poissonKernel_mem_Icc": "standard",
     "riemannHypothesis_iff_riemannXi_zeros_re_eq_half": "standard",
     "riemannHypothesis_iff_zero_free_gt_half": "standard",
     "riemannHypothesis_iff_zetaZeros_re_eq_half": "standard",
@@ -168,7 +197,8 @@
     "riemannZeta_ne_zero_of_re_eq_zero": "standard",
     "riemannZeta_ne_zero_of_re_le_zero": "standard",
     "riemannZeta_one_sub_eq_zero_iff": "standard",
-    "riemannZeta_zero_mem_critical_strip": "standard"
+    "riemannZeta_zero_mem_critical_strip": "standard",
+    "setIntegral_rpow_mul_mono_exponent": "standard"
   },
   "ledger_entries": [
     {
@@ -1224,6 +1254,201 @@
       "axiom_base": "standard",
       "method": "Mathlib",
       "status": "proved"
+    },
+    {
+      "claim_id": "MB-1",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_mellin_le"
+      ],
+      "files": [
+        "ResearchOS/Analysis/MellinBound.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "MB-2",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_mellin_le_of_norm_le"
+      ],
+      "files": [
+        "ResearchOS/Analysis/MellinBound.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "MB-3A",
+      "domain": "analysis-generic",
+      "declarations": [
+        "setIntegral_rpow_mul_mono_exponent"
+      ],
+      "files": [
+        "ResearchOS/Analysis/MellinBound.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "MB-3B",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_mellin_le_of_re_le"
+      ],
+      "files": [
+        "ResearchOS/Analysis/MellinBound.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "MB-4",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_mellin_le_add_of_re_mem_Icc"
+      ],
+      "files": [
+        "ResearchOS/Analysis/MellinBound.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "PL-1",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.iteratedDeriv_eq_zero_of_norm_le_pow"
+      ],
+      "files": [
+        "ResearchOS/Analysis/PolyLiouville.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "PL-2",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.taylorSum_eq_of_norm_le_pow"
+      ],
+      "files": [
+        "ResearchOS/Analysis/PolyLiouville.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "PL-3",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.exists_polynomial_of_norm_le_pow"
+      ],
+      "files": [
+        "ResearchOS/Analysis/PolyLiouville.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "PL-4",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.exists_const_forall_eq_of_norm_le"
+      ],
+      "files": [
+        "ResearchOS/Analysis/PolyLiouville.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "PL-5",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.exists_affine_of_norm_le_pow_one"
+      ],
+      "files": [
+        "ResearchOS/Analysis/PolyLiouville.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "HK-1",
+      "domain": "analysis-generic",
+      "declarations": [
+        "poissonKernel_mem_Icc"
+      ],
+      "files": [
+        "ResearchOS/Analysis/HarnackDisc.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "HK-2",
+      "domain": "analysis-generic",
+      "declarations": [
+        "continuousOn_poissonKernel"
+      ],
+      "files": [
+        "ResearchOS/Analysis/HarnackDisc.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "HK-3",
+      "domain": "analysis-generic",
+      "declarations": [
+        "InnerProductSpace.HarmonicOnNhd.harnack"
+      ],
+      "files": [
+        "ResearchOS/Analysis/HarnackDisc.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "HK-4",
+      "domain": "analysis-generic",
+      "declarations": [
+        "InnerProductSpace.HarmonicOnNhd.harnack_half"
+      ],
+      "files": [
+        "ResearchOS/Analysis/HarnackDisc.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "HK-5",
+      "domain": "analysis-generic",
+      "declarations": [
+        "InnerProductSpace.HarmonicOnNhd.pos_of_pos_center"
+      ],
+      "files": [
+        "ResearchOS/Analysis/HarnackDisc.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
     }
   ],
   "declarations": {
@@ -1233,11 +1458,59 @@
       "line": 336,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean:336@sha256:d32b6bc721d6"
     },
+    "Complex.exists_affine_of_norm_le_pow_one": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/PolyLiouville.lean",
+      "line": 342,
+      "anchor": "ResearchOS/Analysis/PolyLiouville.lean:342@sha256:ce078fb61d06"
+    },
+    "Complex.exists_const_forall_eq_of_norm_le": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/PolyLiouville.lean",
+      "line": 328,
+      "anchor": "ResearchOS/Analysis/PolyLiouville.lean:328@sha256:812a380e99f8"
+    },
+    "Complex.exists_polynomial_of_norm_le_pow": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/PolyLiouville.lean",
+      "line": 282,
+      "anchor": "ResearchOS/Analysis/PolyLiouville.lean:282@sha256:12272420cfef"
+    },
+    "Complex.iteratedDeriv_eq_zero_of_norm_le_pow": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/PolyLiouville.lean",
+      "line": 92,
+      "anchor": "ResearchOS/Analysis/PolyLiouville.lean:92@sha256:39332b8109ab"
+    },
+    "Complex.taylorSum_eq_of_norm_le_pow": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/PolyLiouville.lean",
+      "line": 233,
+      "anchor": "ResearchOS/Analysis/PolyLiouville.lean:233@sha256:fe8e67fd5167"
+    },
     "Gammaℝ_conj": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
       "line": 58,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean:58@sha256:1ab8ed846cb0"
+    },
+    "InnerProductSpace.HarmonicOnNhd.harnack": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/HarnackDisc.lean",
+      "line": 204,
+      "anchor": "ResearchOS/Analysis/HarnackDisc.lean:204@sha256:f51887877578"
+    },
+    "InnerProductSpace.HarmonicOnNhd.harnack_half": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/HarnackDisc.lean",
+      "line": 320,
+      "anchor": "ResearchOS/Analysis/HarnackDisc.lean:320@sha256:99dbf360757c"
+    },
+    "InnerProductSpace.HarmonicOnNhd.pos_of_pos_center": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/HarnackDisc.lean",
+      "line": 359,
+      "anchor": "ResearchOS/Analysis/HarnackDisc.lean:359@sha256:56d420436a46"
     },
     "ResearchOS.NumberTheory.carmichael_1105_factorization": {
       "kind": "theorem",
@@ -1413,6 +1686,12 @@
       "line": 179,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean:179@sha256:5e5ea5cef65b"
     },
+    "continuousOn_poissonKernel": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/HarnackDisc.lean",
+      "line": 128,
+      "anchor": "ResearchOS/Analysis/HarnackDisc.lean:128@sha256:e85ec3318bec"
+    },
     "differentiable_riemannXi": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
@@ -1443,11 +1722,41 @@
       "line": 823,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean:823@sha256:9d6323be464e"
     },
+    "norm_mellin_le": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 86,
+      "anchor": "ResearchOS/Analysis/MellinBound.lean:86@sha256:de5fc22de233"
+    },
+    "norm_mellin_le_add_of_re_mem_Icc": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 224,
+      "anchor": "ResearchOS/Analysis/MellinBound.lean:224@sha256:c58d6cfbf969"
+    },
+    "norm_mellin_le_of_norm_le": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 125,
+      "anchor": "ResearchOS/Analysis/MellinBound.lean:125@sha256:5a0218e7cb04"
+    },
+    "norm_mellin_le_of_re_le": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 200,
+      "anchor": "ResearchOS/Analysis/MellinBound.lean:200@sha256:900d2dd14ab7"
+    },
     "one_notMem_riemannZetaZeros": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
       "line": 179,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:179@sha256:e0394e7ae2d9"
+    },
+    "poissonKernel_mem_Icc": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/HarnackDisc.lean",
+      "line": 93,
+      "anchor": "ResearchOS/Analysis/HarnackDisc.lean:93@sha256:42639f9d53ba"
     },
     "riemannHypothesis_iff_riemannXi_zeros_re_eq_half": {
       "kind": "theorem",
@@ -1718,6 +2027,12 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
       "line": 104,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:104@sha256:07a12f9ec473"
+    },
+    "setIntegral_rpow_mul_mono_exponent": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 169,
+      "anchor": "ResearchOS/Analysis/MellinBound.lean:169@sha256:0195dec37073"
     }
   }
 }
