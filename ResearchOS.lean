@@ -8,6 +8,8 @@ import ResearchOS.NumberTheory.MoreFacts
 -- no conjecture program. Listed before the RH chain because nothing in that chain (or
 -- anywhere else) depends on it today.
 import ResearchOS.Analysis.MellinBound
+import ResearchOS.Analysis.HarnackDisc
+import ResearchOS.Analysis.PolyLiouville
 import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.TargetBridge
 import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Xi
 import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Conj

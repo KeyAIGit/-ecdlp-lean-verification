@@ -1,20 +1,57 @@
 /-
-DRAFTS-LANE MIRROR — Harnack double inequality on a disc (UPSTREAM-POOL §5),
-H1-H5.
+Built generic Harnack disc package: promotion of the independently accepted
+H1-H5 statement surface in `domains/riemann-hypothesis/HARNACK_CONTRACT.md`
+(acceptance record: `notes/reviews/HARNACK_ACCEPTANCE_2026_08_07.md`;
+promotion record: `notes/reviews/HARNACK_PROMOTION_2026_08_08.md`).
 
-This file is the drafts-lane copy of the built module
-`ResearchOS/Analysis/HarnackDisc.lean`, implementing
-`domains/riemann-hypothesis/HARNACK_CONTRACT.md` (statement surface
-independently accepted 2026-08-07, `notes/reviews/HARNACK_ACCEPTANCE_2026_08_07.md`;
-promotion record `notes/reviews/HARNACK_PROMOTION_2026_08_08.md`). From the
-first `import` below through end of file it is byte-identical to the built
-module; only this leading header differs. It is NOT part of any lake target
-and is not itself kernel-checked: the kernel's verdict applies to the built
-copy, and any proof-only repair must be applied to both copies before a new
-CI run. A statement change stops promotion and returns to contract review.
+The package proves five generic statements about the Poisson kernel and
+nonnegative harmonic functions on a disc in ℂ: the two-sided kernel bound
+`poissonKernel c w z ∈ Icc ((R - ‖w - c‖)/(R + ‖w - c‖)) ((R + ‖w - c‖)/(R -
+‖w - c‖))` on the sphere (H1), repackaging the pinned sharp
+Herglotz-Riesz bounds onto `poissonKernel`; continuity of `poissonKernel c w`
+on that sphere (H2), re-proved because the in-tree analogue is `private`; the
+Harnack double inequality with the sharp classical constants for `f` harmonic
+on a neighbourhood of `closedBall c R` and nonnegative there (H3); its
+factor-3 corollary on the half-radius closed ball (H4); and propagation of
+strict positivity from the center to the whole open ball (H5). Sharpness of
+the constants is NOT claimed as a statement, and nothing here is evaluated or
+computed: every conclusion is an inequality between values of a given `f`.
 
-The package is generic complex analysis: it closes no barrier row, selects no
-route, and says nothing about the Riemann Hypothesis.
+State: this package is GENERIC complex analysis over pinned Mathlib, with zero
+repository prerequisites -- it imports no repo module. It mentions no zeta
+function, no xi, no `completedRiemannZeta₀`, no theta kernel, no `WeakFEPair`,
+and no zero of anything. It closes NO barrier row of
+`domains/riemann-hypothesis/MATHLIB_CAPABILITY_MAP.md` and no `S1-*` item; no
+row of that map names Harnack as exit evidence (zero Harnack hits in the map).
+Its capability-map effect is INVENTORY ONLY (contract death condition 6,
+inheriting `MULTIPLICITY_CONTRACT.md` death condition 9: generic machinery
+lowers the cost of a future exit but never retires a row). It proves,
+disproves, advances, and evidences nothing about the Riemann Hypothesis, in
+either direction, and selects no route.
+
+Module placement: `ResearchOS/Analysis/`, deliberately NOT
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/`. The surface is
+domain-neutral, so filing it under the RH subtree would present generic
+machinery as RH-lane content; the ledger pins `riemann-hypothesis` rows to
+that subtree for exactly that reason, and these rows are `HK-*` rows of the
+domain-neutral `analysis-generic` lane instead — the same lane and subtree the
+Mellin norm-bound package already uses, registered before this change.
+
+Junk-value honesty: `Real.circleAverage` is total and returns `0` on a
+non-integrable integrand (`CircleAverage.lean:63`), so both `CircleIntegrable`
+arguments of `Real.circleAverage_mono` are supplied in H3 rather than dropped;
+without them the comparison chain would be unsound.
+
+Kernel verdict: delivered by CI on this promotion change, never by this
+header. `lake build` compiles the module, the no-incomplete-proof gate scans
+it, the regenerated `ResearchOS/LedgerAxiomAudit.lean` + `check_axioms.py`
+enforce the per-row `standard` axiom base, and
+`gen_researchos_registry.py --check` enforces inverse coverage. If any gate
+is red, no row is counted.
+
+All five public declarations are ledgered as `HK-*` rows in
+`VERIFIED_RESEARCHOS.md` and audited through the generated
+`ResearchOS/LedgerAxiomAudit.lean` with axiom base `standard`.
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 -/
